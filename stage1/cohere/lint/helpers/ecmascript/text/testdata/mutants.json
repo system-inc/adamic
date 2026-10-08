@@ -1,0 +1,110 @@
+[
+  {
+    "symbol": "MinimumEditDistance",
+    "file": "minimum_edit_distance.a",
+    "from": "if(first[i] !== second[j])",
+    "to": "if(false)"
+  },
+  {
+    "symbol": "BestMatch",
+    "file": "best_match.a",
+    "from": "distance >= bestDistance",
+    "to": "distance > bestDistance"
+  },
+  {
+    "symbol": "GraphemeCount",
+    "file": "grapheme_count.a",
+    "from": "if(i > 0 && continuesCluster",
+    "to": "if(i > 1 && continuesCluster"
+  },
+  {
+    "symbol": "UnescapeStringLiteralText",
+    "file": "unescape_string_literal_text.a",
+    "from": "result += replacement.replacement;",
+    "to": "result += body;"
+  },
+  {
+    "symbol": "decodeEntity",
+    "file": "decode_entity.a",
+    "from": "value = 0x110000;",
+    "to": "value = 0;"
+  },
+  {
+    "symbol": "hexValue",
+    "file": "hex_value.a",
+    "from": "character <= 70",
+    "to": "character <= 69"
+  },
+  {
+    "symbol": "continuesCluster",
+    "file": "continues_cluster.a",
+    "from": "regional % 2 === 1",
+    "to": "regional % 2 === 0"
+  },
+  {
+    "symbol": "hangulJoins",
+    "file": "hangul_joins.a",
+    "from": "hangulLeading(c) || hangulVowel(c) || hangulSyllable(c)",
+    "to": "hangulLeading(c)"
+  },
+  {
+    "symbol": "hangulLeading",
+    "file": "hangul_leading.a",
+    "from": "<= 4447",
+    "to": "< 4447"
+  },
+  {
+    "symbol": "hangulVowel",
+    "file": "hangul_vowel.a",
+    "from": "<= 4519",
+    "to": "< 4519"
+  },
+  {
+    "symbol": "hangulTrailing",
+    "file": "hangul_trailing.a",
+    "from": "<= 4607",
+    "to": "< 4607"
+  },
+  {
+    "symbol": "hangulSyllable",
+    "file": "hangul_syllable.a",
+    "from": "<= 55203",
+    "to": "< 55203"
+  },
+  {
+    "symbol": "hangulVowelSyllable",
+    "file": "hangul_vowel_syllable.a",
+    "from": "% 28 === 0",
+    "to": "% 28 === 1"
+  },
+  {
+    "symbol": "isGraphemeControl",
+    "file": "is_grapheme_control.a",
+    "from": "category(c, 'Cf') && !isGraphemeExtend(c)",
+    "to": "category(c, 'Cf')"
+  },
+  {
+    "symbol": "isGraphemeExtend",
+    "file": "is_grapheme_extend.a",
+    "from": "c === 0x200d",
+    "to": "c === 0x200e"
+  },
+  {
+    "symbol": "isIndicLinker",
+    "file": "is_indic_linker.a",
+    "from": "c === 0x94d",
+    "to": "c === 0x94e"
+  },
+  {
+    "symbol": "isPictograph",
+    "file": "is_pictograph.a",
+    "from": "return category(c, 'So');",
+    "to": "return false;"
+  },
+  {
+    "symbol": "isRegionalIndicator",
+    "file": "is_regional_indicator.a",
+    "from": "c <= 0x1f1ff",
+    "to": "c <= 0x1f1fe"
+  }
+]

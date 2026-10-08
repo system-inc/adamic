@@ -1,0 +1,56 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { minimumEditDistance } from './minimum_edit_distance.a';
+import { bestMatch } from './best_match.a';
+import { graphemeCount } from './grapheme_count.a';
+import { unescapeStringLiteralText } from './unescape_string_literal_text.a';
+import { decodeEntity } from './decode_entity.a';
+import { hexValue } from './hex_value.a';
+import { continuesCluster } from './continues_cluster.a';
+import { hangulJoins } from './hangul_joins.a';
+import { hangulLeading } from './hangul_leading.a';
+import { hangulVowel } from './hangul_vowel.a';
+import { hangulTrailing } from './hangul_trailing.a';
+import { hangulSyllable } from './hangul_syllable.a';
+import { hangulVowelSyllable } from './hangul_vowel_syllable.a';
+import { isGraphemeControl } from './is_grapheme_control.a';
+import { isGraphemeExtend } from './is_grapheme_extend.a';
+import { isIndicLinker } from './is_indic_linker.a';
+import { isPictograph } from './is_pictograph.a';
+import { isRegionalIndicator } from './is_regional_indicator.a';
+function units(s: string): string { const parts: string[] = []; for(let i = 0; i < s.length; i++) { parts.push(String(s.charCodeAt(i))); } return parts.join(','); }
+const args = programArguments(); const raw = readTextFile(args[0] ?? panic('capture path'));
+if(raw.kind === 'Error') { panic(raw.message); }
+const json = new OptionsJson(raw.text); const root = json.parse(); if(root < 0) { panic(json.error); }
+for(const row of json.node(root).children) {
+ const symbol = json.node(json.field(row, 'symbol')).text;
+ const sf = json.field(row, 's'); const tf = json.field(row, 't');
+ const s = sf < 0 ? '' : json.node(sf).text; const t = tf < 0 ? '' : json.node(tf).text;
+ const nf = json.field(row, 'n'); const mf = json.field(row, 'm'); const kf = json.field(row, 'k'); const bf = json.field(row, 'b');
+ const n = nf < 0 ? 0 : Number(json.node(nf).text); const m = mf < 0 ? 0 : Number(json.node(mf).text); const k = kf < 0 ? 0 : Number(json.node(kf).text);
+ const b = bf < 0 ? false : json.node(bf).text === 'true';
+ const arr: string[] = []; const af = json.field(row, 'arr'); if(af >= 0 && json.node(af).kind === 'array') { for(const a of json.node(af).children) { arr.push(json.node(a).text); } }
+ let result = '';
+ switch(symbol) {
+case 'MinimumEditDistance': { result = String(minimumEditDistance(s, t)); break; }
+case 'BestMatch': { const v = bestMatch(s, arr, n); result = units(v.value) + '|' + String(v.ok); break; }
+case 'GraphemeCount': { result = String(graphemeCount(s)); break; }
+case 'UnescapeStringLiteralText': { result = units(unescapeStringLiteralText(s)); break; }
+case 'decodeEntity': { const v = decodeEntity(s); result = units(v.replacement) + '|' + String(v.ok); break; }
+case 'hexValue': { result = String(hexValue(n)); break; }
+case 'continuesCluster': { result = String(continuesCluster(n, m, b, k)); break; }
+case 'hangulJoins': { result = String(hangulJoins(n, m)); break; }
+case 'hangulLeading': { result = String(hangulLeading(n)); break; }
+case 'hangulVowel': { result = String(hangulVowel(n)); break; }
+case 'hangulTrailing': { result = String(hangulTrailing(n)); break; }
+case 'hangulSyllable': { result = String(hangulSyllable(n)); break; }
+case 'hangulVowelSyllable': { result = String(hangulVowelSyllable(n)); break; }
+case 'isGraphemeControl': { result = String(isGraphemeControl(n)); break; }
+case 'isGraphemeExtend': { result = String(isGraphemeExtend(n)); break; }
+case 'isIndicLinker': { result = String(isIndicLinker(n)); break; }
+case 'isPictograph': { result = String(isPictograph(n)); break; }
+case 'isRegionalIndicator': { result = String(isRegionalIndicator(n)); break; }
+default: panic('unknown text helper');
+}
+console.log(result);
+}

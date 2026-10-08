@@ -1,0 +1,5 @@
+{
+  "name": "try block omitted",
+  "from": "if(!inside || !isReactCompiledFunction(context,enclosing))",
+  "to": "if(inside || !isReactCompiledFunction(context,enclosing))"
+}

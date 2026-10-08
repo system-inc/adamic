@@ -3,7 +3,6 @@ package parser
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"io/fs"
 	"os"
@@ -21,7 +20,7 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-var portFiles = []string{"nodes.ts", "grammar.ts", "lookahead.ts", "statements.ts", "jsx.ts", "parser.ts", "main.ts"}
+var portFiles = []string{"nodes.ts", "grammar.ts", "lookahead.ts", "recovery.ts", "spelling.ts", "lexical.ts", "statements.ts", "jsx.ts", "parser.ts", "main.ts"}
 
 type execution struct {
 	output   []byte
@@ -31,9 +30,7 @@ type execution struct {
 // Output is a file, never a pipe: the large corpus must also work on Node's writev path.
 func execute(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	command.Dir = directory
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
@@ -44,7 +41,7 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	err = parserRunGuard(command, 2*time.Minute)
 	duration := time.Since(started)
 	if err != nil || stderr.Len() != 0 {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
@@ -58,41 +55,35 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 
 func goOracle(t *testing.T) string {
 	t.Helper()
-	root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	side, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	virtual := filepath.Join(root, "adamic_parser_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	directory := t.TempDir()
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(directory, "oracle")
-	execute(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
-	return binary
+	return sharedParserOracle(t)
 }
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
+	absolute, err := filepath.Abs(directory)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if absolute == parserPackageDirectory {
+		return sharedParserPort(t, absolute, sanitize)
+	}
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 	if err != nil {
 		t.Fatal(err)
 	}
+	program.EnableTSGo()
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+	if native.UsesTSGo(lowered) {
+		source, err := native.TSGoC(lowered)
+		if err != nil {
+			t.Fatal(err)
+		}
+		buildParserChecker(t, source, binary, sanitize)
+	} else if err := buildParserC(native.C(lowered), binary, sanitize); err != nil {
 		t.Fatal(err)
 	}
 	return binary
@@ -112,6 +103,11 @@ func copyPort(t *testing.T, file, from, to string) string {
 			t.Fatal(err)
 		}
 		source = strings.ReplaceAll(source, "../scanner/scanner.ts", scannerDirectory)
+		tokensPath, err := filepath.Abs("../scanner/tokens.ts")
+		if err != nil {
+			t.Fatal(err)
+		}
+		source = strings.ReplaceAll(source, "../scanner/tokens.ts", tokensPath)
 		if name == file {
 			if strings.Count(source, from) != 1 {
 				t.Fatalf("mutant must change exactly one site in %s: %q", file, from)
@@ -174,6 +170,7 @@ func difference(got, want []byte) string {
 }
 
 func TestExpressionsAgree(t *testing.T) {
+	t.Parallel()
 	cases := []string{"x => x + 1;", "(x) => x;", "(x);", "(x = 10);", "(x, y);", "(x = 10, y = 2) => x + y;", "() => ({x: 1});", "(x: number, y?: string, ...z: unknown[]) => [x, y, ...z];", "<T extends object>(x: T): T => x;", "async x => await f(x);", "async (x) => await f(x);", "x => { const y = x + 1; return y; };", "(function f(x: number) { return x * 2; });", "(async function() { return await f(); });", "(function*() { yield x; yield* xs; });", "({f(x) {return x;}, get x() {return 1;}, set x(v) {f(v);}, async g() {return await f();}});", "a as T;", "<T[]>a;", "value satisfies { readonly x: number; y?: string };", "value as A | B & C;", "value as readonly [number, string];", "value as const;", "f<T>(x);", "new Foo<T>();", "tag<T>`a${x}b`;", "f?.<T>(x);", "x as typeof ns.value;", "((x): number => x)(1);", "f(x, ...xs,);", "a.b[c](d).e;", "a?.b.c?.[x]?.(y);", "a?.b!.c;", "(a?.b).c;", "new Foo(a).bar();", "new new Foo();", "new Foo; new Foo();", "new.target; import.meta; import('module');", "[x,,y,...xs,];", "[\n1,\n2\n];", "({x, y: 2, [key + 1]: value, ...rest});", "({x = 3,});", "`a${x + y}b${f(z)}c`;", "tag`x${a?.b}y`;", "`a\\r\\n${x}\\u{1f600}`;", "x;", "  x + y * z;", "a - b - c;", "a ** b ** c;", "(a + b) * c;", "a ? b : c ? d : e;", "a = b = c;", "x++, --y;", "typeof x === \"number\";", "a >> b >= c;", "0xff + 1_000 / 2e3;", "'héllo' + \"😀\";", "/a[b]+/gi;", "/* trivia */ (x) + y;"}
 	dir := t.TempDir()
 	var manifest strings.Builder
@@ -272,6 +269,7 @@ func compilerManifest(t *testing.T) (string, int) {
 }
 
 func TestCompilerExpressionsAgree(t *testing.T) {
+	t.Parallel()
 	path, files := compilerManifest(t)
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", path)

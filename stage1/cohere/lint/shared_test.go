@@ -2,7 +2,6 @@ package lint
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/testguard"
@@ -13,10 +12,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -99,36 +94,6 @@ func run(directory string, environment []string, name string, args ...string) ([
 	return os.ReadFile(output.Name())
 }
 
-func buildPortTo(directory string, sanitize bool, binary string) error {
-	if _, err := registry.Generate(directory); err != nil {
-		return err
-	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		return err
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return err
-	}
-	return native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize})
-}
-
-func emitJavaScriptTo(directory, module string) error {
-	if _, err := registry.Generate(directory); err != nil {
-		return err
-	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		return err
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0644)
-}
-
 // goOracleIn builds the Go oracle over sourceRoot's rules into directory, through an overlay inside cohere
 // so the upstream rules stay unmodified.
 func goOracleIn(sourceRoot, directory string) (string, error) {
@@ -204,7 +169,21 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
 		return nil, err
 	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
+	typedHarness := filepath.Join(root, "internal/lint/testing/program.go")
+	typedData, err := os.ReadFile(typedHarness)
+	if err != nil {
+		return nil, fmt.Errorf("%v", err)
+	}
+	typedOriginal := "return Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile:  sourceFile,\n\t\tcapture:     newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}"
+	if strings.Count(string(typedData), typedOriginal) != 1 {
+		return nil, fmt.Errorf("%v", "typed capture overlay anchor changed")
+	}
+	typedReplacement := "result := Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile: sourceFile,\n\t\tcapture: newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}\n\tRecordAssertedCase(t,result)\n\treturn result"
+	typedSide := filepath.Join(directory, "program.go")
+	if err := os.WriteFile(typedSide, []byte(strings.Replace(string(typedData), typedOriginal, typedReplacement, 1)), 0644); err != nil {
+		return nil, fmt.Errorf("%v", err)
+	}
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side, typedHarness: typedSide}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		return nil, err
@@ -300,7 +279,7 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 			case "type T = { m: => void };":
 				mode = "recovery"
 			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
-				mode = "unsupported-recovery"
+				mode = "recovery"
 			}
 		}
 		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
@@ -311,5 +290,48 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	if len(rows) < 150 {
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
-	return rows, nil
+	// Captured fixtures are replayable inputs, including parser diagnostics that
+	// cohere's own rule tests deliberately run on recovered trees. Carry that
+	// boundary in the manifest rather than requiring every consumer to rediscover it.
+	oracleDirectory := filepath.Join(directory, "recovery-oracle")
+	if err := os.MkdirAll(oracleDirectory, 0755); err != nil {
+		return nil, err
+	}
+	oracle, err := goOracleIn(sourceRoot, oracleDirectory)
+	if err != nil {
+		return nil, err
+	}
+	manifest := filepath.Join(directory, "recovery-inputs.txt")
+	if err := os.WriteFile(manifest, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
+		return nil, err
+	}
+	flags, err := run("", nil, oracle, "--manifest", manifest, "--diagnostics")
+	if err != nil {
+		return nil, err
+	}
+	return classifyRecoveryRows(rows, strings.Fields(string(flags)))
+}
+
+// A nonempty mode belongs to its caller. In particular, unsupported-recovery
+// stays visible as a port limitation rather than becoming a successful port case.
+func classifyRecoveryRows(rows, flags []string) ([]string, error) {
+	if len(flags) != len(rows) {
+		return nil, fmt.Errorf("diagnostics answered %d rows of %d", len(flags), len(rows))
+	}
+	result := make([]string, len(rows))
+	for index, row := range rows {
+		result[index] = row
+		if flags[index] != "1" {
+			continue
+		}
+		fields := strings.Split(row, "\t")
+		for len(fields) < 7 {
+			fields = append(fields, "")
+		}
+		if fields[6] == "" {
+			fields[6] = "recovery"
+		}
+		result[index] = strings.Join(fields, "\t")
+	}
+	return result, nil
 }

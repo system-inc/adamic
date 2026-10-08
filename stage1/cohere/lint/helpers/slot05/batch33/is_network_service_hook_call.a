@@ -1,0 +1,17 @@
+import { panic } from 'adamic';
+import type { AnalysisNode } from './model.a';
+export function isNetworkServiceHookCall(nodes: readonly AnalysisNode[], index: number, methods: ReadonlyMap<string, boolean>): boolean {
+    const node = nodes[index] ?? panic('missing call node');
+    if (!node.call) { return panic('expected call expression'); }
+    let callee = node.expression;
+    while ((nodes[callee] ?? panic('missing callee')).parenthesized) { callee = (nodes[callee] ?? panic('missing callee')).expression; }
+    const access = nodes[callee] ?? panic('missing property access');
+    if (!access.property) { return false; }
+    let receiver = access.expression;
+    while ((nodes[receiver] ?? panic('missing receiver')).parenthesized) { receiver = (nodes[receiver] ?? panic('missing receiver')).expression; }
+    const object = nodes[receiver] ?? panic('missing receiver');
+    if (!object.identifier || object.text !== 'networkService') { return false; }
+    if (access.name < 0) { return false; }
+    const method = nodes[access.name] ?? panic('missing method');
+    return methods.get(method.text) ?? false;
+}

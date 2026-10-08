@@ -1,0 +1,35 @@
+export interface NameAnswer {
+    text: string;
+    ok: boolean;
+}
+export class SettledName {
+    text: string = '';
+    ok: boolean = false;
+}
+// Numeric kinds are the Go parser's, validated by the oracle on every run.
+const propertyAccessKind = 213;
+const elementAccessKind = 214;
+const identifierKind = 79;
+const privateIdentifierKind = 80;
+// The caller supplies its node's direct key handle. For an element access this
+// is the argument after the separately owned parser's SkipParentheses operation.
+// -1 is nil. Name's accept mask is forwarded unchanged, and empty settled names
+// remain distinct from a refusal. No node table is read or scanned here.
+export function accessedName(present: boolean, kind: number, keyHandle: number, keyKind: number, accept: number, name: (key: number, accept: number) => NameAnswer): NameAnswer {
+    if(!present) { return new SettledName(); }
+    if(kind === propertyAccessKind) {
+        const value = name(keyHandle, accept);
+        const result = new SettledName();
+        result.text = value.text;
+        result.ok = value.ok;
+        return result;
+    }
+    if(kind === elementAccessKind && keyHandle >= 0 && keyKind !== identifierKind && keyKind !== privateIdentifierKind) {
+        const value = name(keyHandle, accept);
+        const result = new SettledName();
+        result.text = value.text;
+        result.ok = value.ok;
+        return result;
+    }
+    return new SettledName();
+}

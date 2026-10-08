@@ -1,0 +1,50 @@
+=== RUN   TestReactStateInConstructorSelected
+    lint_test.go:290: cohere cases: 3961 unique source/rule/options combinations
+    adamic_react_selected_test.go:10: react/state-in-constructor: 82 captured upstream cases
+    adamic_react_selected_test.go:12: checker compilation phases: load=238.355446ms lower=4.378745501s C=645.87144ms JavaScript=51.679922ms
+    adamic_react_selected_test.go:12: checker native build: 53.666901605s
+    adamic_react_selected_test.go:12: Go, Node, emitted JavaScript, native identical: 39473 bytes
+--- PASS: TestReactStateInConstructorSelected (92.10s)
+=== RUN   TestMutants
+=== RUN   TestMutants/accept-plain-classes
+=== PAUSE TestMutants/accept-plain-classes
+=== CONT  TestMutants/accept-plain-classes
+    lint_test.go:832: checker compilation phases: load=190.530514ms lower=3.508020325s C=562.428868ms JavaScript=36.814622ms
+    lint_test.go:832: checker native mutant build: 4.016613165s
+    lint_test.go:855: accept-plain-classes caught on Node: case 85 line 4375: port "/tmp/adamic-gate/TestMutantsaccept-plain-classes4148587020/016/react-state-in-constructor-0.ts:3:15", Go "fixed\tclass C extends React.Component { state = {}; }\\u000aclass P extends (React.PureComponent) { #state = {}; }\\u000aclass Plain { state = {}; }\\u000a"
+        Go context:
+        range 34 45 stateInitConstructor 			34 45
+        /tmp/adamic-gate/TestMutantsaccept-plain-classes4148587020/016/react-state-in-constructor-0.ts:2:41
+          react/state-in-constructor  This component declares `state` as a class property while the configuration asks for state to be set up in the constructor. Both styles work; what costs the reader is a codebase that uses each in about half its components, because then finding where a component's initial state comes from means checking two places instead of one. Move the initial value into `this.state = ...` in the constructor.
+        
+        range 88 100 stateInitConstructor 			88 100
+        fixed	class C extends React.Component { state = {}; }\u000aclass P extends (React.PureComponent) { #state = {}; }\u000aclass Plain { state = {}; }\u000a
+        case 86
+        /tmp/adamic-gate/TestMutantsaccept-plain-classes4148587020/017/react-state-in-constructor-1.ts:1:62
+          react/state-in-constructor  This component assigns `this.state` in its constructor while the configuration asks for state to be declared as a class property. Both styles work; what costs the reader is a codebase that uses each in about half its components, because then finding where a component's initial state comes from means checking two places instead of one. Declare `state = ...` as a class property instead.
+    lint_test.go:855: accept-plain-classes caught on emitted JavaScript: case 85 line 4375: port "/tmp/adamic-gate/TestMutantsaccept-plain-classes4148587020/016/react-state-in-constructor-0.ts:3:15", Go "fixed\tclass C extends React.Component { state = {}; }\\u000aclass P extends (React.PureComponent) { #state = {}; }\\u000aclass Plain { state = {}; }\\u000a"
+        Go context:
+        range 34 45 stateInitConstructor 			34 45
+        /tmp/adamic-gate/TestMutantsaccept-plain-classes4148587020/016/react-state-in-constructor-0.ts:2:41
+          react/state-in-constructor  This component declares `state` as a class property while the configuration asks for state to be set up in the constructor. Both styles work; what costs the reader is a codebase that uses each in about half its components, because then finding where a component's initial state comes from means checking two places instead of one. Move the initial value into `this.state = ...` in the constructor.
+        
+        range 88 100 stateInitConstructor 			88 100
+        fixed	class C extends React.Component { state = {}; }\u000aclass P extends (React.PureComponent) { #state = {}; }\u000aclass Plain { state = {}; }\u000a
+        case 86
+        /tmp/adamic-gate/TestMutantsaccept-plain-classes4148587020/017/react-state-in-constructor-1.ts:1:62
+          react/state-in-constructor  This component assigns `this.state` in its constructor while the configuration asks for state to be declared as a class property. Both styles work; what costs the reader is a codebase that uses each in about half its components, because then finding where a component's initial state comes from means checking two places instead of one. Declare `state = ...` as a class property instead.
+    lint_test.go:855: accept-plain-classes caught on native: case 85 line 4375: port "/tmp/adamic-gate/TestMutantsaccept-plain-classes4148587020/016/react-state-in-constructor-0.ts:3:15", Go "fixed\tclass C extends React.Component { state = {}; }\\u000aclass P extends (React.PureComponent) { #state = {}; }\\u000aclass Plain { state = {}; }\\u000a"
+        Go context:
+        range 34 45 stateInitConstructor 			34 45
+        /tmp/adamic-gate/TestMutantsaccept-plain-classes4148587020/016/react-state-in-constructor-0.ts:2:41
+          react/state-in-constructor  This component declares `state` as a class property while the configuration asks for state to be set up in the constructor. Both styles work; what costs the reader is a codebase that uses each in about half its components, because then finding where a component's initial state comes from means checking two places instead of one. Move the initial value into `this.state = ...` in the constructor.
+        
+        range 88 100 stateInitConstructor 			88 100
+        fixed	class C extends React.Component { state = {}; }\u000aclass P extends (React.PureComponent) { #state = {}; }\u000aclass Plain { state = {}; }\u000a
+        case 86
+        /tmp/adamic-gate/TestMutantsaccept-plain-classes4148587020/017/react-state-in-constructor-1.ts:1:62
+          react/state-in-constructor  This component assigns `this.state` in its constructor while the configuration asks for state to be declared as a class property. Both styles work; what costs the reader is a codebase that uses each in about half its components, because then finding where a component's initial state comes from means checking two places instead of one. Declare `state = ...` as a class property instead.
+--- PASS: TestMutants (0.02s)
+    --- PASS: TestMutants/accept-plain-classes (9.66s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	101.889s

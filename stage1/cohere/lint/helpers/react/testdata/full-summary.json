@@ -1,0 +1,32 @@
+{
+  "started": 1791457006.794018,
+  "nproc": 5,
+  "load": [
+    4.19482421875,
+    4.2529296875,
+    2.20068359375
+  ],
+  "typescript": "/workspace/scratch/typescript-6.0.3",
+  "wasi": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+  "profile": "/tmp/react-full-profile.fSo6n9",
+  "exit": 1,
+  "wall_seconds": 1828.3363416194916,
+  "load_after": [
+    1.87255859375,
+    2.08251953125,
+    2.26025390625
+  ],
+  "test_counts": {
+    "pass": 112,
+    "skip": 1,
+    "fail": 2
+  },
+  "failures": [
+    "TestJsxLintReleaseAndThroughput",
+    "TestJsxLintTrees"
+  ],
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "package_elapsed_seconds": 1825.912
+}

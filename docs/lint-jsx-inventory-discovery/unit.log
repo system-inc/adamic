@@ -1,0 +1,14 @@
+=== RUN   TestJsxInventoryDiscovery
+=== RUN   TestJsxInventoryDiscovery/new_rule_and_cases_require_no_inventory_edit
+=== RUN   TestJsxInventoryDiscovery/missing_JSX_coverage_is_refused
+=== RUN   TestJsxInventoryDiscovery/unregistered_captured_rule_is_refused
+=== RUN   TestJsxInventoryDiscovery/malformed_row_is_refused
+=== RUN   TestJsxInventoryDiscovery/empty_JSX_inventory_is_refused
+--- PASS: TestJsxInventoryDiscovery (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/new_rule_and_cases_require_no_inventory_edit (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/missing_JSX_coverage_is_refused (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/unregistered_captured_rule_is_refused (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/malformed_row_is_refused (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/empty_JSX_inventory_is_refused (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	0.039s

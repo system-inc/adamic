@@ -1,0 +1,28 @@
+{
+  "started": 1791459292.3690197,
+  "nproc": 5,
+  "load": [
+    0.361328125,
+    0.5439453125,
+    1.4033203125
+  ],
+  "profile": "/tmp/react-merge-profile.h4hZqK",
+  "exit": 0,
+  "wall_seconds": 2265.265895843506,
+  "load_after": [
+    1.69140625,
+    2.40869140625,
+    3.478515625
+  ],
+  "counts": {
+    "pass": 121,
+    "fail": 0,
+    "skip": 1
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "validated_commit": "2986e318b2ceca14e9f4238436b62dc88898c3ea",
+  "merged_fix": "e7c196a9",
+  "package_elapsed_seconds": 2257.901
+}

@@ -1,0 +1,5 @@
+{
+  "name": "inline type gate",
+  "from": "context.node(element).semantic !== '1'",
+  "to": "context.node(element).semantic === '1'"
+}

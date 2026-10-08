@@ -1,0 +1,18 @@
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/stranded-export
+    recovery_test.go:160: Node:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+    recovery_test.go:160: native:  line 1: port "diagnostic 1129 0 6 1\tDeclaration or statement expected.", Go "diagnostic 1128 0 6 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1128 0 6 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 6 0 0 -1 0 0				
+        1 EndOfFile 6 6 0 0 -1 0 0				
+--- PASS: TestRecoveryMutants (11.65s)
+    --- PASS: TestRecoveryMutants/stranded-export (11.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	11.656s

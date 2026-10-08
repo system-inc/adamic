@@ -1,0 +1,5 @@
+import type { CoreArena } from './nodes.a';
+export function isEmptyBracketLiteral(arena: CoreArena, index: number): boolean {
+    if(index < 0) { return false; } const node = arena.node(index);
+    return (node.kind === 'ArrayLiteralExpression' || node.kind === 'ObjectLiteralExpression') && node.elements.length === 0;
+}

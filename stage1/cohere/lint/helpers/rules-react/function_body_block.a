@@ -1,0 +1,2 @@
+import type {RuleContext} from '../../context.ts';
+export function functionBodyBlock(context:RuleContext,index:number):number {if(!['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration'].includes(context.kind(index))){return -1;}const children=context.node(index).children;const body=children[children.length-1] ?? -1;return body>=0 && context.kind(body)==='Block' ? body : -1;}

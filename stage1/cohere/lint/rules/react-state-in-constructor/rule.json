@@ -1,0 +1,15 @@
+{
+  "name": "react/state-in-constructor",
+  "kinds": [
+    "PropertyDeclaration",
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactStateInConstructor",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestStateInConstructor"
+}

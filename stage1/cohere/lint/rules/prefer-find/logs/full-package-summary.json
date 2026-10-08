@@ -1,0 +1,27 @@
+{
+  "exit": 0,
+  "wallSeconds": 1867.6854635570003,
+  "nproc": "5",
+  "loadStart": [
+    1.53564453125,
+    1.86962890625,
+    2.02294921875
+  ],
+  "loadEnd": [
+    2.103515625,
+    2.09716796875,
+    2.2392578125
+  ],
+  "loadMedian1m": 1.2890625,
+  "log": "/workspace/wave15-checker-full-lint-final.jsonl",
+  "testAndSubtestPass": 114,
+  "testAndSubtestFail": 0,
+  "testAndSubtestSkip": 1,
+  "skippedTests": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "packageElapsedSeconds": 1865.733,
+  "mutantsCaught": 76,
+  "base": "9b7547976bea1b00f8b04508b9102d03511f65b3",
+  "command": "GOCACHE=/workspace/scratch/wave15-go-cache GOMAXPROCS=4 GOFLAGS=-buildvcs=false ADAMIC_TYPESCRIPT_SOURCE=/tmp/wave15-checker-typescript ADAMIC_LINT_BENCH=1 ADAMIC_LINT_PROFILE_DIR=/workspace/scratch/wave15-checker-profiles-final ADAMIC_LINT_PROFILE_SNAPSHOTS=/workspace/scratch/wave15-checker-profiles-final go test -json -count=1 -timeout=60m ./stage1/cohere/lint"
+}

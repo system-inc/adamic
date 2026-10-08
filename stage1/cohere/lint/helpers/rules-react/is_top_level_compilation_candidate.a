@@ -1,0 +1,8 @@
+import type {RuleContext} from '../../context.ts';
+import {isFunctionLike} from './is_function_like.a';
+export function isTopLevelCompilationCandidate(context: RuleContext,index:number):boolean {
+    for(let current=context.parent(index);current>=0;current=context.parent(current)) {
+        if(isFunctionLike(context,current) || ['ClassDeclaration','ClassExpression'].includes(context.kind(current))){return false;}
+    }
+    return ['FunctionDeclaration','FunctionExpression','ArrowFunction'].includes(context.kind(index));
+}

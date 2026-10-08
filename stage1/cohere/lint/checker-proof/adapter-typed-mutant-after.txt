@@ -1,0 +1,32 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/boolean_type_verdict_inverted
+=== PAUSE TestMutants/boolean_type_verdict_inverted
+=== CONT  TestMutants/boolean_type_verdict_inverted
+    lint_test.go:955: boolean type verdict inverted caught on native: case 0 line 2: port "fixed\tdeclare const b: boolean; if (b === true) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsboolean_type_verdict_inverted2740372424/016/no-unnecessary-boolean-literal-compare-0.ts:1:31"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsboolean_type_verdict_inverted2740372424/016/no-unnecessary-boolean-literal-compare-0.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+    lint_test.go:955: boolean type verdict inverted caught on Node: case 0 line 2: port "fixed\tdeclare const b: boolean; if (b === true) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsboolean_type_verdict_inverted2740372424/016/no-unnecessary-boolean-literal-compare-0.ts:1:31"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsboolean_type_verdict_inverted2740372424/016/no-unnecessary-boolean-literal-compare-0.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+    lint_test.go:955: boolean type verdict inverted caught on emitted JavaScript: case 0 line 2: port "fixed\tdeclare const b: boolean; if (b === true) {}\\u000a", Go "/tmp/adamic-gate/TestMutantsboolean_type_verdict_inverted2740372424/016/no-unnecessary-boolean-literal-compare-0.ts:1:31"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestMutantsboolean_type_verdict_inverted2740372424/016/no-unnecessary-boolean-literal-compare-0.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+--- PASS: TestMutants (3.72s)
+    --- PASS: TestMutants/boolean_type_verdict_inverted (64.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	67.774s

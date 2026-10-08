@@ -1,0 +1,1 @@
+export const unexpected = "This branch can never execute, because an earlier condition in the same if-else-if chain already covers it. The code inside is unreachable and nothing says so: it compiles, it type-checks, and it silently never runs, which usually means either the condition was meant to be different or the branch was meant to come first.";

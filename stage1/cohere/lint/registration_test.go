@@ -27,6 +27,7 @@ func TestMain(m *testing.M) {
 	}
 	sharedDirectory = directory
 	code := m.Run()
+	cleanupCheckerArchives()
 	if err := os.RemoveAll(directory); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 	}
@@ -34,6 +35,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestOwnedWitnesses(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -43,6 +45,20 @@ func TestOwnedWitnesses(t *testing.T) {
 	for _, d := range prepareRegistry(t, ".") {
 		for _, row := range ownedWitnessRows(t, directory, d) {
 			path := strings.SplitN(row, "\t", 2)[0]
+			if d.Typed {
+				config := filepath.Join(t.TempDir(), "tsconfig.json")
+				options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, path)
+				if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+					t.Fatal(err)
+				}
+				projectManifest := manifest(t, []string{"program " + config, row, path + "\tall"})
+				compare(t, oracle, buildPort(t, directory, true), directory, projectManifest)
+				answer := execute(t, "", oracle, "--manifest", manifest(t, []string{"program " + config, row}), "--count")
+				if string(answer.output) == "0\n" {
+					t.Fatalf("%s typed witness reports no findings", d.Name)
+				}
+				continue
+			}
 			pair := recoveryRows(t, oracle, []string{row, path + "\tall"})
 			answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
 			if string(answer.output) == "0\n" {
@@ -56,6 +72,7 @@ func TestOwnedWitnesses(t *testing.T) {
 }
 
 func TestRegistrationMutant(t *testing.T) {
+	t.Parallel()
 	// This remains a valid descriptor and compiled rule: only its subscription is wrong.
 	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
 	source := ownedWitnesses(t, ".", "no-debugger")[0]
@@ -76,6 +93,7 @@ func TestRegistrationMutant(t *testing.T) {
 }
 
 func TestFactoryHooks(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	module := filepath.Join(directory, "rules/no-debugger/rule.ts")
 	data, err := os.ReadFile(module)
@@ -227,6 +245,7 @@ func ownedWitnessRows(t *testing.T, directory string, d registry.Descriptor) []s
 }
 
 func TestNestedOutsideModuleCopy(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	original := `import { written } from '../../../../typescript/parser/nodes.ts';
 console.log(written('copied'));
@@ -286,6 +305,7 @@ console.log(written('copied'));
 }
 
 func TestDecodedOptionsAndMutant(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)

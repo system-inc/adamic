@@ -1,0 +1,14 @@
+{
+  "name": "@typescript-eslint/consistent-type-definitions",
+  "kinds": [
+    "TypeAliasDeclaration",
+    "InterfaceDeclaration"
+  ],
+  "visit": "visit",
+  "node": true,
+  "oracle": "oracleConsistentTypeDefinitions",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestConsistentTypeDefinitions",
+  "factory": "create",
+  "class": "Rule"
+}

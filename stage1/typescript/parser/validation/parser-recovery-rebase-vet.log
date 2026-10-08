@@ -1,0 +1,2 @@
+stage1/typescript/parser/incomplete_test.go:171:7: call to (*testing.T).Fatal from a non-test goroutine
+stage1/typescript/parser/incomplete_test.go:176:7: call to (*testing.T).Fatalf from a non-test goroutine

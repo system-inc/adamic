@@ -1,0 +1,68 @@
+{
+  "helpers": [
+    {
+      "symbol": "cohere/internal/lint/rules/structure.FileContextFor",
+      "file": "stage1/cohere/lint/helpers/structure_file_context.a",
+      "branch": "codex/lint-helpers-01"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.parameterNodes",
+      "file": "stage1/cohere/lint/helpers/slot03/batch3/parameter_nodes.a",
+      "branch": "codex/lint-helpers-03"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.descendsForJsxSearch",
+      "file": "stage1/cohere/lint/helpers/slot04_wave20/descends_for_jsx_search.a",
+      "branch": "codex/lint-helpers-04"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.isJsxValue",
+      "file": "stage1/cohere/lint/helpers/slot05/batch32/is_jsx_value.a",
+      "branch": "codex/lint-helpers-05"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.jsxAfterParentheses",
+      "file": "stage1/cohere/lint/helpers/slot05/batch32/jsx_after_parentheses.a",
+      "branch": "codex/lint-helpers-05"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.returnArgumentLooksLikeJsx",
+      "file": "stage1/cohere/lint/helpers/slot05/batch32/return_argument_looks_like_jsx.a",
+      "branch": "codex/lint-helpers-05"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.IsLikelyReactComponent",
+      "file": "stage1/cohere/lint/helpers/slot05/batch33/is_likely_react_component.a",
+      "branch": "codex/lint-helpers-05"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.isNetworkServiceHookCall",
+      "file": "stage1/cohere/lint/helpers/slot05/batch33/is_network_service_hook_call.a",
+      "branch": "codex/lint-helpers-05"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.typeReferenceName",
+      "file": "stage1/cohere/lint/helpers/slot05/batch33/type_reference_name.a",
+      "branch": "codex/lint-helpers-05"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.parameterTypeNode",
+      "file": "stage1/cohere/lint/helpers/from_wave1_11/structure_parameter_type_node.a",
+      "branch": "codex/lint-helpers-from-codex/lint-wave1-11"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.HasJsxOrReactHookCalls",
+      "file": "stage1/cohere/lint/helpers/slot04_wave20/has_jsx_or_react_hook_calls.a",
+      "branch": "codex/lint-helpers-04"
+    },
+    {
+      "symbol": "cohere/internal/lint/rules/structure.searchForJsxOrHook",
+      "file": "stage1/cohere/lint/helpers/slot04_wave20/search_for_jsx_or_hook.a",
+      "branch": "codex/lint-helpers-04"
+    }
+  ],
+  "selection": "FileContextFor retained from codex/lint-helpers-01; slot03 duplicate withdrawn by TRIAGE.md d7ab0bc4.",
+  "dependencies": {
+    "cohere/internal/lint/ecmascript/react.IsHookCall": "origin/lint-helpers/react 52f5534e5133d572b481669347e3b56d106c360c"
+  }
+}

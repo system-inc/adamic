@@ -1,0 +1,16 @@
+import { decodeEntity } from './decode_entity.a';
+export function unescapeStringLiteralText(text: string): string {
+    if(!text.includes('&')) { return text; }
+    let result = '';
+    for(let index = 0; index < text.length;) {
+        if(text.charCodeAt(index) !== 38) { result += text.slice(index, index + 1); index++; continue; }
+        const semicolon = text.indexOf(';', index);
+        if(semicolon < index + 2) { result += '&'; index++; continue; }
+        const body = text.slice(index + 1, semicolon);
+        const replacement = decodeEntity(body);
+        if(replacement.ok) { result += replacement.replacement; index = semicolon + 1; continue; }
+        result += '&';
+        index++;
+    }
+    return result;
+}

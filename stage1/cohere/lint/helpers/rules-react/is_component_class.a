@@ -1,0 +1,9 @@
+import type {RuleContext} from '../../context.ts';
+import {isReactComponentBase} from './is_react_component_base.a';
+export function isComponentClass(context:RuleContext,index:number):boolean {
+ if(!['ClassDeclaration','ClassExpression'].includes(context.kind(index))){return false;}
+ for(const clause of context.children(index,'HeritageClause')){
+  if(context.node(clause).operator!=='ExtendsKeyword'){continue;}
+  for(const type of context.node(clause).children){if(context.kind(type)==='ExpressionWithTypeArguments' && isReactComponentBase(context,context.node(type).children[0] ?? -1)){return true;}}
+ }return false;
+}

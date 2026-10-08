@@ -1,0 +1,14 @@
+=== RUN   TestUnit4ScratchShard
+    unit4_scratch_mutant_test.go:10: case testdata/recovery/corePublic.ts-cut-37.ts.txt:  line 2: port "gile", Go "file"
+        Go context:
+        diagnostic 1005 696 0 1	'{' expected.
+        file
+        0 SourceFile 0 696 0 0 -1 0 0				
+        1 VariableStatement 0 214 0 0 -1 0 0				
+        2 ExportKeyword 0 181 0 0 -1 0 0				
+        2 VariableDeclarationList 181 213 0 0 -1 0 0				2
+--- FAIL: TestUnit4ScratchShard (0.79s)
+FAIL
+parser longest native build child: 0s; build hang guard: 4m0s
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	0.797s
+FAIL

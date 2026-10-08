@@ -1,0 +1,67 @@
+=== RUN   TestIncompleteRecoveryCasesAgree
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-bad-constraint.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-bad-parameter.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-missing-body-brace.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-missing-token.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/block-assignment.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/call-bad-type-arguments.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-accessor-eof.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-extra-return-colon.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-invalid-member.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-missing-method-body.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-missing-return-colon.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-modifier-eof.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-private-accessor.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-private-modifier.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-private-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/decorated-expression.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/dotted-missing-type-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/function-expression-reserved-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-empty.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-extra-angle.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-missing-angle.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-missing-body.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-repeated.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/index-signature-missing-bracket.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/interface-modifier.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/method-wrong-return-separator.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/missing-import-type-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/missing-qualified-type-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/missing-type-query-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/tuple-damaged-type.ts.txt
+--- PASS: TestIncompleteRecoveryCasesAgree (16.03s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-bad-constraint.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-bad-parameter.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-missing-body-brace.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-missing-token.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/block-assignment.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/call-bad-type-arguments.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-accessor-eof.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-extra-return-colon.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-invalid-member.ts.txt (0.16s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-missing-method-body.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-missing-return-colon.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-modifier-eof.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-private-accessor.ts.txt (0.16s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-private-modifier.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-private-name.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/decorated-expression.ts.txt (0.18s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/dotted-missing-type-name.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/function-expression-reserved-name.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-empty.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-extra-angle.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-missing-angle.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-missing-body.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-repeated.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/index-signature-missing-bracket.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/interface-modifier.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/method-wrong-return-separator.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/missing-import-type-name.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/missing-qualified-type-name.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/missing-type-query-name.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/tuple-damaged-type.ts.txt (0.13s)
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestWholeCompilerAgrees (24.81s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	40.856s

@@ -1,0 +1,4 @@
+import type {RuleContext} from '../../context.ts';
+export function isFunctionLike(context: RuleContext, index: number): boolean {
+    return ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','Constructor'].includes(context.kind(index));
+}
