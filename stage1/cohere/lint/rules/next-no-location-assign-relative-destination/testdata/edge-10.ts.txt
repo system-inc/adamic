@@ -1,0 +1,2 @@
+globalThis.location.assign('/positive-control');
+const destination = '/outer'; { const destination: string = ''; location.assign(destination); }

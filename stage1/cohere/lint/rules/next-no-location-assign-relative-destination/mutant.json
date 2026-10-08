@@ -1,0 +1,5 @@
+{
+  "name": "no-location-assign-relative-destination-gate-inverted",
+  "from": "if(this.relative(value, []))",
+  "to": "if(!this.relative(value, []))"
+}

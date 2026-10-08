@@ -1,0 +1,308 @@
+import { bindingsOf } from '../../helpers/imports/bindings_of.a';
+import type { HelperNode as ImportNode } from '../../helpers/imports/nodes.a';
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+const assignments = [
+    'EqualsToken',
+    'PlusEqualsToken',
+    'MinusEqualsToken',
+    'AsteriskEqualsToken',
+    'AsteriskAsteriskEqualsToken',
+    'SlashEqualsToken',
+    'PercentEqualsToken',
+    'LessThanLessThanEqualsToken',
+    'AmpersandEqualsToken',
+    'BarEqualsToken',
+    'CaretEqualsToken',
+    'BarBarEqualsToken',
+    'AmpersandAmpersandEqualsToken',
+    'QuestionQuestionEqualsToken',
+];
+const functions = [
+    'FunctionDeclaration',
+    'FunctionExpression',
+    'ArrowFunction',
+    'MethodDeclaration',
+    'Constructor',
+    'GetAccessor',
+    'SetAccessor',
+    'CallSignature',
+    'ConstructSignature',
+    'MethodSignature',
+    'FunctionType',
+    'ConstructorType',
+];
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly importNodes: ImportNode[] = [];
+    readonly absolute = /^(?:[a-z][0-9+.a-z-]*:|\/\/)/i;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    prepare(root: number): void { this.projectImports(); }
+ projectImports(): void {
+  for (const node of this.context.parser.nodes) {
+   let clause = -1; let namedBindings = -1; let name = -1;
+   for (const child of node.children) {
+    const kind = this.context.kind(child);
+    if (node.kind === 'ImportDeclaration' && kind === 'ImportClause') { clause = child; }
+    if (node.kind === 'ImportClause' && (kind === 'NamedImports' || kind === 'NamespaceImport')) { namedBindings = child; }
+    if ((node.kind === 'ImportClause' || node.kind === 'NamespaceImport' || node.kind === 'ImportSpecifier') && kind === 'Identifier') { name = child; }
+   }
+   this.importNodes.push({kind:node.kind,text:node.text,expression:-1,name:name,importClause:clause,namedBindings:namedBindings,propertyName:-1,elements:node.kind === 'NamedImports' ? node.children : []});
+  }
+ }
+    child(index: number, offset: number): number {
+        return this.context.node(index).children[offset] ?? panic('missing navigation node child');
+    }
+    named(index: number, name: string): boolean {
+        return index >= 0 && this.context.node(index).kind === 'Identifier' && this.context.node(index).text === name;
+    }
+    property(index: number, name: string): boolean {
+        const node = this.context.node(index);
+        if(node.kind !== 'PropertyAccessExpression' && node.kind !== 'ElementAccessExpression') {
+            return false;
+        }
+        const key = this.context.node(node.children[node.children.length - 1] ?? panic('member without key'));
+        return (
+            key.kind === (node.kind === 'PropertyAccessExpression' ? 'Identifier' : 'StringLiteral') &&
+            key.text === name
+        );
+    }
+    global(index: number): boolean {
+        const root = this.context.unwrap(index);
+        if(this.named(root, 'location')) {
+            return !this.shadowed(root);
+        }
+        if(!this.property(root, 'location')) {
+            return false;
+        }
+        const receiver = this.context.unwrap(this.child(root, 0));
+        const node = this.context.node(receiver);
+        return (
+            node.kind === 'Identifier' &&
+            ['window', 'globalThis', 'document', 'self'].includes(node.text) &&
+            !this.shadowed(receiver)
+        );
+    }
+    importBinding(index: number, name: string): boolean {
+        const bindings = bindingsOf(this.importNodes,index);
+        if(this.named(bindings.default,name)) { return true; }
+        if(bindings.namespace >= 0 && this.named(this.importNodes[bindings.namespace]?.name ?? -1,name)) { return true; }
+        for(const binding of bindings.named) {
+            if(this.named(this.importNodes[binding]?.name ?? -1,name)) { return true; }
+        }
+        return false;
+    }
+    binding(index: number, name: string): boolean {
+        const node = this.context.node(index);
+        if(node.kind === 'VariableStatement') {
+            for(const child of node.children) {
+                if(this.context.node(child).kind === 'VariableDeclarationList' && this.binding(child, name)) {
+                    return true;
+                }
+            }
+        }
+        if(node.kind === 'VariableDeclarationList') {
+            for(const declaration of node.children) {
+                if(this.named(this.child(declaration, 0), name)) {
+                    return true;
+                }
+            }
+        }
+        if(node.kind === 'FunctionDeclaration' || node.kind === 'ClassDeclaration') {
+            for(const child of node.children) {
+                if(this.context.node(child).kind === 'Identifier') {
+                    return this.named(child, name);
+                }
+            }
+        }
+        return node.kind === 'ImportDeclaration' && this.importBinding(index, name);
+    }
+    scopeBinds(index: number, name: string): boolean {
+        const node = this.context.node(index);
+        for(const child of node.children) {
+            if(this.binding(child, name)) {
+                return true;
+            }
+        }
+        if(node.kind === 'CatchClause') {
+            const first = node.children[0] ?? -1;
+            return (
+                first >= 0 &&
+                this.context.node(first).kind === 'VariableDeclaration' &&
+                this.named(this.child(first, 0), name)
+            );
+        }
+        if(functions.includes(node.kind)) {
+            for(const child of node.children) {
+                const parameter = this.context.node(child);
+                if(parameter.kind !== 'Parameter') {
+                    continue;
+                }
+                for(const part of parameter.children) {
+                    const kind = this.context.node(part).kind;
+                    if(kind.endsWith('Keyword') || kind.endsWith('Token') || kind === 'Decorator') {
+                        continue;
+                    }
+                    if(this.named(part, name)) {
+                        return true;
+                    }
+                    break;
+                }
+            }
+        }
+        return false;
+    }
+    shadowed(index: number): boolean {
+        const name = this.context.node(index).text;
+        let scope = this.context.parents[index] ?? -1;
+        while(scope >= 0) {
+            if(this.scopeBinds(scope, name)) {
+                return true;
+            }
+            scope = this.context.parents[scope] ?? -1;
+        }
+        return false;
+    }
+    declaration(index: number, name: string): number {
+        const node = this.context.node(index);
+        if(node.kind !== 'VariableStatement') {
+            return -1;
+        }
+        for(const child of node.children) {
+            if(this.context.node(child).kind !== 'VariableDeclarationList') {
+                continue;
+            }
+            for(const declaration of this.context.node(child).children) {
+                if(!this.named(this.child(declaration, 0), name)) {
+                    continue;
+                }
+                const parts = this.context.node(declaration).children;
+                // The parser omits '='. Scan the gap after the binding/type to distinguish an initializer.
+                if(parts.length > 1) {
+                    const last = parts[parts.length - 1] ?? panic('declaration without last child');
+                    const previous = parts[parts.length - 2] ?? panic('declaration without previous child');
+                    this.context.scanner.pos = this.context.node(previous).end;
+                    if(this.context.scanner.scan() === 'EqualsToken') {
+                        return last;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+    writtenValue(index: number, name: string): number {
+        const statement = this.context.node(index);
+        if(statement.kind !== 'ExpressionStatement') {
+            return -1;
+        }
+        const expression = this.context.unwrap(this.child(index, 0));
+        const node = this.context.node(expression);
+        if(node.kind !== 'BinaryExpression' || this.context.node(this.child(expression, 1)).kind !== 'EqualsToken') {
+            return -1;
+        }
+        return this.named(this.context.unwrap(this.child(expression, 0)), name) ? expression : -1;
+    }
+    initializer(reference: number): number {
+        const name = this.context.node(reference).text;
+        const position = this.context.node(reference).pos;
+        let scope = this.context.parents[reference] ?? -1;
+        while(scope >= 0) {
+            let declared = -1;
+            let written = -1;
+            let writtenPosition = -1;
+            for(const child of this.context.node(scope).children) {
+                const value = this.declaration(child, name);
+                if(value >= 0) {
+                    declared = value;
+                    continue;
+                }
+                const assignment = this.writtenValue(child, name);
+                if(assignment >= 0) {
+                    const target = this.context.unwrap(this.child(assignment, 0));
+                    const start = this.context.node(target).pos;
+                    if(start < position && start > writtenPosition) {
+                        written = this.child(assignment, 2);
+                        writtenPosition = start;
+                    }
+                }
+            }
+            if(written >= 0) {
+                return written;
+            }
+            if(declared >= 0) {
+                return declared;
+            }
+            if(this.scopeBinds(scope, name)) {
+                return -1;
+            }
+            scope = this.context.parents[scope] ?? -1;
+        }
+        return -1;
+    }
+    relative(index: number, visited: readonly number[]): boolean {
+        const value = this.context.unwrap(index);
+        if(visited.includes(value)) {
+            return false;
+        }
+        const nextVisited = visited.concat([value]);
+        const node = this.context.node(value);
+        if(node.kind === 'StringLiteral' || node.kind === 'NoSubstitutionTemplateLiteral') {
+            return !this.absolute.test(node.text);
+        }
+        if(node.kind === 'TemplateExpression') {
+            return !this.absolute.test(this.context.node(this.child(value, 0)).text);
+        }
+        if(node.kind === 'BinaryExpression' && this.context.node(this.child(value, 1)).kind === 'PlusToken') {
+            return this.relative(this.child(value, 0), nextVisited);
+        }
+        if(node.kind === 'Identifier') {
+            const initializer = this.initializer(value);
+            return initializer >= 0 && this.relative(initializer, nextVisited);
+        }
+        return false;
+    }
+    visit(index: number): void {
+        const node = this.context.node(index);
+        let value: number;
+        if(node.kind === 'CallExpression') {
+            const callee = this.context.unwrap(this.child(index, 0));
+            if(!this.property(callee, 'assign') || !this.global(this.child(callee, 0)) || node.list <= 0) {
+                return;
+            }
+            value = node.children[node.children.length - node.list] ?? -1;
+            if(value < 0 || this.context.node(value).kind === 'SpreadElement') {
+                return;
+            }
+        }
+        else {
+            if(!assignments.includes(this.context.node(this.child(index, 1)).kind)) {
+                return;
+            }
+            const target = this.context.unwrap(this.child(index, 0));
+            if(!this.property(target, 'href') || !this.global(this.child(target, 0))) {
+                return;
+            }
+            value = this.child(index, 2);
+        }
+        if(this.relative(value, [])) {
+            this.context.report(
+                index,
+                '@next/next/no-location-assign-relative-destination',
+                'noLocationAssign',
+                message,
+                '',
+                '',
+                '',
+            );
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

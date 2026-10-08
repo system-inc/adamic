@@ -1,0 +1,2 @@
+globalThis.location.assign('/positive-control');
+location.assign(...parts); location.assign?.('/optional'); window?.location?.assign('/optional');

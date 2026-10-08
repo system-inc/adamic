@@ -1,0 +1,1 @@
+export const message = "Navigating to an internal page through `location.assign` or by writing `location.href` tears down the running application and reloads it from the server, so client state, the router's history entry and any in-flight data are all discarded. Use `redirect()` in the render phase, or `useRouter().push()` in a Client Component's event handler.";
