@@ -1,0 +1,17 @@
+// Reduction of checker.ts withContext: callback results survive a conditional missing exit.
+interface Context { readonly report: boolean; }
+function withContext<T>(context: Context, cb: (context: Context) => T): T | undefined {
+    const result: T = cb(context);
+    if (context.report) {
+        return undefined;
+    }
+    return result;
+}
+console.log(`${withContext({ report: false }, () => 19) ?? -1} ${withContext({ report: true }, () => 23) ?? -1}`);
+console.log(withContext({ report: false }, () => ['optional', 'string'].join('-')) ?? 'missing');
+console.log(withContext({ report: true }, () => ['discarded', 'string'].join('-')) ?? 'missing');
+console.log(`${withContext({ report: false }, () => false) ?? true} ${withContext({ report: true }, () => false) ?? true}`);
+const held = withContext({ report: false }, () => ({ name: ['optional', 'object'].join('-') }));
+console.log(held?.name ?? 'missing');
+const absent = withContext({ report: true }, () => ({ name: ['discarded', 'object'].join('-') }));
+console.log(absent?.name ?? 'missing');
