@@ -10,7 +10,7 @@
 # when a gate starts: what integration is landing first (area/*, and any branch named in the state
 # directory's priority file, one per line, such as a fix-forward), then devtools/*, then workers'
 # codex/*, newest first within each, and only a branch's newest tip. Each tip is classed when queued:
-# big (an area, or more than two touched packages) or small. While a big gate runs and a small change
+# big (an area, a stage3/ change, which runs the stage 3 lane, or more than two touched packages) or small. While a big gate runs and a small change
 # waits, the free slot takes the small one, so a worker's tip waits at most one small gate; with no
 # small change waiting, a second big gate may take it. The gating line names how long a tip waited. Each gate publishes gate-logs/<sha12>/<UTC stamp>/fast
 # like any other, with the branch and, when an ai.db reply names the branch, the worker's session.
@@ -30,8 +30,10 @@ classify() {
   local branch=$1 sha=$2 count
   [[ ${branch} == area/* ]] && { echo B; return; }
   git -C "${here}" fetch -q origin "${sha}" 2>/dev/null || { echo B; return; }
-  count=$(git -C "${here}" diff --name-only "$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)...${sha}" 2>/dev/null |
-    awk '/\/testdata\// {sub("/testdata/.*", ""); print; next} /\.go$/ {sub("/[^/]*$", ""); print}' | sort -u | wc -l)
+  changed=$(git -C "${here}" diff --name-only "$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)...${sha}" 2>/dev/null)
+  # A stage3/ change runs the stage 3 lane (about 10 minutes): big, whatever else it touches.
+  echo "${changed}" | grep -q '^stage3/' && { echo B; return; }
+  count=$(echo "${changed}" | awk '/\/testdata\// {sub("/testdata/.*", ""); print; next} /\.go$/ {sub("/[^/]*$", ""); print}' | sort -u | wc -l)
   [ "${count}" -gt 2 ] && echo B || echo S
 }
 
