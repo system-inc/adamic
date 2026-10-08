@@ -1,0 +1,20 @@
+function cell(value: string | number | undefined): (replacement: number) => string {
+    return replacement => {
+        const before = typeof value === "string" ? value : typeof value === "number" ? value.toString() : "missing";
+        value = replacement === 0 ? undefined : replacement < 0 ? "tail" + "!" : replacement;
+        return before;
+    };
+}
+const change = cell("owned" + "!");
+console.log(change(11));
+console.log(change(0));
+console.log(change(-1));
+console.log(change(23));
+function capture<T>(initial: T): () => string {
+    let value: T = initial;
+    return () => typeof value;
+}
+const text = capture<string | number>("generic" + "!");
+const number = capture<string | number>(9);
+console.log(text());
+console.log(number());
