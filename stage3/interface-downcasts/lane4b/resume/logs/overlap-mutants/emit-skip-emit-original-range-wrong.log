@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong
+    checked_views_intersections_original_test.go:427: exit codes differ; got oracle.run{stdout:[]uint8{0x30, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_intersections_original_test.go:427: exit codes differ; got oracle.run{stdout:[]uint8{0x30, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_intersections_original_test.go:427: exit codes differ; got oracle.run{stdout:[]uint8{0x30, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewIntersectionOriginalNodes (1.37s)
+    --- FAIL: TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong (1.37s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.383s
+FAIL

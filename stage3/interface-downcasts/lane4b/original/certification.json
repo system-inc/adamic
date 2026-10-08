@@ -158,6 +158,55 @@
       "type": "JSDocImplementsTag | JSDocAugmentsTag",
       "field": "comment",
       "candidate_reads": 1
+    },
+    {
+      "type_id": 9474,
+      "type": "BindableStaticAccessExpression",
+      "field": "expression",
+      "candidate_reads": 11,
+      "certificate": "../../lane7/original/certification.json"
+    },
+    {
+      "type_id": 7642,
+      "type": "JSDoc",
+      "field": "parent",
+      "candidate_reads": 10,
+      "certificate": "../../lane7/original/certification.json"
+    },
+    {
+      "type_id": 9476,
+      "type": "BindableStaticPropertyAssignmentExpression",
+      "field": "left",
+      "candidate_reads": 9,
+      "certificate": "../../lane7/original/certification.json"
+    },
+    {
+      "type_id": 9485,
+      "type": "BindablePropertyAssignmentExpression",
+      "field": "left",
+      "candidate_reads": 9,
+      "certificate": "../../lane7/original/certification.json"
+    },
+    {
+      "type_id": 9475,
+      "type": "BindableAccessExpression",
+      "field": "expression",
+      "candidate_reads": 4,
+      "certificate": "../../lane7/original/certification.json"
+    },
+    {
+      "type_id": 7644,
+      "type": "JSDoc | JSDocTypeLiteral",
+      "field": "parent",
+      "candidate_reads": 1,
+      "certificate": "../../lane7/original/certification.json"
+    },
+    {
+      "type_id": 36241,
+      "type": "JSDoc | undefined",
+      "field": "parent",
+      "candidate_reads": 1,
+      "certificate": "../../lane7/original/certification.json"
     }
   ],
   "fixtures": {
@@ -247,5 +296,8 @@
     "package-versionPaths-wrong.a": "1146ba997cb38abdbcdcb176c36aea83c3e28196ad6376aa861826d1479153e2"
   },
   "declaration_manifest": "declaration-manifest.json",
-  "runtime_gate": "../resume/logs/oct13-final-touched.log"
+  "runtime_gate": "../resume/logs/oct13-final-touched.log",
+  "shared_certificates": {
+    "../../lane7/original/certification.json": "09b4b039d393b2e9248a10c29d14aff81327d2c03808e41dea0d96cef9792f40"
+  }
 }

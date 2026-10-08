@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption/wrong
+    checked_views_intersections_absorption_test.go:73: missing named exit 70: oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_intersections_absorption_test.go:73: missing named exit 70: oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_intersections_absorption_test.go:73: missing named exit 70: oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewIntersectionOriginalAbsorption (1.78s)
+    --- FAIL: TestCheckedViewIntersectionOriginalAbsorption/wrong (1.77s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.790s
+FAIL

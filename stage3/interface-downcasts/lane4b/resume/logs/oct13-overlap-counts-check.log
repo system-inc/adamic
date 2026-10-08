@@ -1,0 +1,22 @@
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/bindable-static-good
+    checked_views_object_primitive_overlap_counts_test.go:32: counts lane7/bindable-static-good.a: 9/9/19/21/9/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/bindable-access-good
+    checked_views_object_primitive_overlap_counts_test.go:32: counts lane7/bindable-access-good.a: 9/9/19/21/9/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-parent-good
+    checked_views_object_primitive_overlap_counts_test.go:32: counts lane7/jsdoc-parent-good.a: 6/6/6/13/6/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-root-good
+    checked_views_object_primitive_overlap_counts_test.go:32: counts lane7/jsdoc-root-good.a: 6/6/8/16/6/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+=== RUN   TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-union-parent-good
+    checked_views_object_primitive_overlap_counts_test.go:57: counts lane7/jsdoc-union-parent-good.a: 6/6/6/13/6/0/0/0 (allocations/frees/retains/releases/peak/arena/graph regions/merges)
+--- PASS: TestCheckedViewObjectPrimitiveOverlapCounts (6.56s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/bindable-static-good (1.74s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/bindable-access-good (1.67s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-parent-good (1.04s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-root-good (1.03s)
+    --- PASS: TestCheckedViewObjectPrimitiveOverlapCounts/jsdoc-union-parent-good (1.08s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=5
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.594s

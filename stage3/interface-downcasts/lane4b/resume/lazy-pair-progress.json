@@ -1,14 +1,14 @@
 {
   "basis": "lazy static candidates; exact production reachability unmeasured",
-  "integration_sha": "213c43771bd2f3a3dd9abd69ea088bf13e4c629e",
+  "integration_sha": "ffe428ab26eefb73154adbf570ad99e9c1b4f872",
   "source_sha256": "ff738cfeabeecad1dbf481ee7f2a8b0c68d34eee10ecec573d4daece72d2451c",
   "pairs": 42,
   "candidate_reads": 181,
-  "completed_pairs": 26,
-  "completed_reads": 113,
+  "completed_pairs": 33,
+  "completed_reads": 158,
   "completion_basis": "standalone source oracle using complete original declarations; all recorded sites audited against pinned upstream; whole-tsc execution reachability unmeasured",
-  "remaining_candidate_pairs": 16,
-  "remaining_candidate_reads": 68,
+  "remaining_candidate_pairs": 9,
+  "remaining_candidate_reads": 23,
   "reduced_shape_candidate_pairs": 22,
   "reduced_shape_candidate_reads": 103,
   "candidate_pairs_without_shape_control": 20,
@@ -484,7 +484,7 @@
         }
       ],
       "rank": 3,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 7536,
@@ -699,7 +699,7 @@
         }
       ],
       "rank": 5,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 9858,
@@ -921,7 +921,7 @@
         }
       ],
       "rank": 7,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 9485,
@@ -1020,7 +1020,7 @@
         }
       ],
       "rank": 8,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 7642,
@@ -1669,7 +1669,7 @@
         }
       ],
       "rank": 17,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 97898,
@@ -2295,7 +2295,7 @@
         }
       ],
       "rank": 29,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 8814,
@@ -2528,7 +2528,7 @@
         }
       ],
       "rank": 35,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 64997,

@@ -1,0 +1,111 @@
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption/good
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption/wrong
+--- PASS: TestCheckedViewIntersectionOriginalAbsorption (3.65s)
+    --- PASS: TestCheckedViewIntersectionOriginalAbsorption/good (1.84s)
+    --- PASS: TestCheckedViewIntersectionOriginalAbsorption/wrong (1.80s)
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/string
+    checked_views_intersections_array_blockers_test.go:37: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalArrayBlockers97923string2473651247/001/array-97923.a:2:89: stage 0 can't lower an array of IncrementalMultiFileEmitBuildInfoFileInfo yet
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object
+    checked_views_intersections_array_blockers_test.go:37: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalArrayBlockers97923intersect257845081/001/array-97923.a:2:89: stage 0 can't lower an array of IncrementalMultiFileEmitBuildInfoFileInfo yet
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object
+    checked_views_intersections_array_blockers_test.go:37: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalArrayBlockers97923file-info3255760718/001/array-97923.a:2:89: stage 0 can't lower an array of IncrementalMultiFileEmitBuildInfoFileInfo yet
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/string
+    checked_views_intersections_array_blockers_test.go:37: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalArrayBlockers98493string1328621334/001/array-98493.a:2:141: stage 0 can't lower an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo yet
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/intersection-object
+    checked_views_intersections_array_blockers_test.go:37: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalArrayBlockers98493intersect186995804/001/array-98493.a:2:141: stage 0 can't lower an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo yet
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/file-info-object
+    checked_views_intersections_array_blockers_test.go:37: /tmp/adamic-gate/TestCheckedViewIntersectionOriginalArrayBlockers98493file-info174440030/001/array-98493.a:2:141: stage 0 can't lower an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo yet
+--- PASS: TestCheckedViewIntersectionOriginalArrayBlockers (2.11s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/97923/string (0.39s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object (0.33s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object (0.35s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/98493/string (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/98493/intersection-object (0.37s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/98493/file-info-object (0.35s)
+=== RUN   TestCheckedViewIntersectionOriginalBindable
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-good
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-chain-good
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-good
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-element-good
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-left-wrong
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-wrong
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-left-kind
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-wrong
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-this
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-element-argument-wrong
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-good
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-chain-good
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-left-wrong
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-left-symbol
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-left-kind
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-wrong
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this
+--- PASS: TestCheckedViewIntersectionOriginalBindable (48.99s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-good (3.08s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-chain-good (3.26s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-good (2.58s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-element-good (3.58s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-left-wrong (2.48s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-wrong (2.37s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-left-kind (2.58s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-wrong (3.14s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-this (3.01s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-element-argument-wrong (3.53s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-good (3.15s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-chain-good (3.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-left-wrong (2.26s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-left-symbol (2.24s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-left-kind (2.36s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-wrong (3.00s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this (3.02s)
+=== RUN   TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-good
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-missing
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-wrong
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-good
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-good
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-kind
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-name
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-symbol
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-kind
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-symbol
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-symbol
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-arguments
+--- PASS: TestCheckedViewIntersectionOriginalNodes (40.75s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-good (1.90s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good (1.87s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-missing (1.62s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-wrong (1.63s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong (1.98s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-good (3.26s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-good (2.63s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-kind (2.03s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-name (2.12s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-symbol (1.91s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-kind (2.01s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-symbol (2.03s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good (1.75s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good (1.89s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind (1.74s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters (1.71s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-symbol (1.70s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good (1.72s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol (1.69s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind (1.61s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-arguments (1.95s)
+PASS
+gate cache: native hits=0 misses=14
+gate cache: node hits=0 misses=86
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	95.513s

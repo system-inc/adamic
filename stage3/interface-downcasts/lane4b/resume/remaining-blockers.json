@@ -1,75 +1,11 @@
 {
-  "basis": "observed original-declaration probe failures; group mapping is an inference, not runtime certification",
-  "integration_sha": "213c43771bd2f3a3dd9abd69ea088bf13e4c629e",
-  "certified_pairs": 26,
-  "certified_reads": 113,
-  "remaining_pairs": 16,
-  "remaining_reads": 68,
+  "basis": "exact compiler refusals rechecked on ffe428ab; grouping is dependency inference, not runtime certification",
+  "integration_sha": "ffe428ab26eefb73154adbf570ad99e9c1b4f872",
+  "certified_pairs": 33,
+  "certified_reads": 158,
+  "remaining_pairs": 9,
+  "remaining_reads": 23,
   "groups": [
-    {
-      "dependency": "union intersection",
-      "pairs": 7,
-      "candidate_reads": 45,
-      "rows": [
-        {
-          "rank": 3,
-          "type_id": 9474,
-          "type": "BindableStaticAccessExpression",
-          "field": "expression",
-          "candidate_reads": 11
-        },
-        {
-          "rank": 5,
-          "type_id": 7642,
-          "type": "JSDoc",
-          "field": "parent",
-          "candidate_reads": 10
-        },
-        {
-          "rank": 7,
-          "type_id": 9476,
-          "type": "BindableStaticPropertyAssignmentExpression",
-          "field": "left",
-          "candidate_reads": 9
-        },
-        {
-          "rank": 8,
-          "type_id": 9485,
-          "type": "BindablePropertyAssignmentExpression",
-          "field": "left",
-          "candidate_reads": 9
-        },
-        {
-          "rank": 17,
-          "type_id": 9475,
-          "type": "BindableAccessExpression",
-          "field": "expression",
-          "candidate_reads": 4
-        },
-        {
-          "rank": 29,
-          "type_id": 7644,
-          "type": "JSDoc | JSDocTypeLiteral",
-          "field": "parent",
-          "candidate_reads": 1
-        },
-        {
-          "rank": 35,
-          "type_id": 36241,
-          "type": "JSDoc | undefined",
-          "field": "parent",
-          "candidate_reads": 1
-        }
-      ],
-      "probes": [
-        "bindable-expression-frontier",
-        "bindable-static-left-probe",
-        "bindable-left-probe",
-        "jsdoc-parent-probe",
-        "jsdoc-parent-union-frontier",
-        "jsdoc-parent-optional-frontier"
-      ]
-    },
     {
       "dependency": "dictionary admission",
       "pairs": 2,
