@@ -1,0 +1,19 @@
+interface Plain {
+	readonly size: number;
+}
+interface Listener {
+	readonly onEvent: () => number;
+}
+class Box<Item> {
+	item: Item;
+	constructor(item: Item) {
+		this.item = item;
+	}
+	listen(): Listener {
+		return { onEvent: () => (this.item === undefined ? 0 : 1) };
+	}
+}
+const plain = new Box<Plain>({ size: 1 });
+const listening = new Box<Listener>(plain.listen());
+listening.item = listening.listen();
+

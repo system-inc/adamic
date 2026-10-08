@@ -20,7 +20,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	result := "0"
 	switch visit.Method {
 	case "filter":
-		result = e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", references))
+		result = e.graphArray(fmt.Sprintf("adamic_array_new(0, %t)", references), visit.GraphTypes)
 	case "some", "every":
 		result = e.snapshot(ir.Boolean, strconv.FormatBool(visit.Method == "every"))
 	case "findIndex", "findLastIndex":
@@ -88,6 +88,9 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		release()
 	case "filter":
 		e.line("if (%s.boolean) {", answer)
+		if references && e.graphTypes(visit.GraphTypes) {
+			e.line("\t%s.reference = adamic_graph_take(%s, %s.reference);", element, result, element)
+		}
 		e.line("\tadamic_array_push(%s, %s);", result, element)
 		if references {
 			e.line("} else {")
@@ -139,7 +142,7 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	initial := e.value(reduce.Initial)
 	var accumulator string
 	if reduce.Result.IsReference() {
-		accumulator = e.own(reduce.Result, fmt.Sprintf("adamic_retain(%s)", initial))
+		accumulator = e.own(reduce.Result, retained(initial))
 	} else {
 		accumulator = e.snapshot(reduce.Result, initial)
 	}
@@ -235,7 +238,7 @@ func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
 	}
 	items := []string{}
 	for _, item := range splice.Items {
-		items = append(items, held(splice.Element, e.value(item)))
+		items = append(items, e.heldIn(array, splice.Element, e.value(item)))
 	}
 	packed := "NULL"
 	if len(items) > 0 {

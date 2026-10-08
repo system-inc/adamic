@@ -1,0 +1,13 @@
+import type { Weak } from 'adamic';
+interface Tree { readonly label: string; child: Tree | undefined; parent: Weak<Tree>; }
+function run(index: number): void {
+ const root: Tree = { label: `root${index}`, child: undefined, parent: undefined };
+ const child: Tree = { label: `child${index}`, child: undefined, parent: root };
+ root.child = child;
+ console.log(`${root.child.label} ${child.parent?.label ?? '-'}`);
+}
+run(3);
+
+interface Loop { back: Loop | undefined; readonly serial: number; }
+function loop(): void { const value: Loop = { back: undefined, serial: 1 }; value.back = value; console.log(`${value.serial}`); }
+loop();

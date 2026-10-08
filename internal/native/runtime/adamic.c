@@ -10,16 +10,20 @@
 #include <errno.h>
 #include <pthread.h>
 #ifndef ADAMIC_TARGET_WASI
-#include <signal.h>
 #include <fcntl.h>
+#include <poll.h>
+#include <signal.h>
 #endif
 #include <stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef ADAMIC_TARGET_WASI
+#include <sys/stat.h>
+#endif
 #include <unistd.h>
 
 // write_all writes every byte, through partial writes and interrupted calls. It reports failure
-// rather than retrying forever: a closed stdout is not something a program can wait out.
+// after waiting through EAGAIN on a non-blocking descriptor. A closed reader is a failure.
 static int write_all(int descriptor, const char *bytes, size_t length) {
 	while (length > 0) {
 		ssize_t written = write(descriptor, bytes, length);
@@ -27,6 +31,21 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 			if (errno == EINTR) {
 				continue;
 			}
+#ifndef ADAMIC_TARGET_WASI
+			if (errno == EAGAIN || errno == EWOULDBLOCK) {
+				struct pollfd ready = {descriptor, POLLOUT, 0};
+				int result;
+				do {
+					result = poll(&ready, 1, -1);
+				} while (result < 0 && errno == EINTR);
+				if (result > 0 && (ready.revents & POLLOUT)) {
+					continue;
+				}
+			}
+#endif
+			return -1;
+		}
+		if (written == 0) {
 			return -1;
 		}
 		bytes += written;
@@ -35,15 +54,10 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 	return 0;
 }
 
-// Output is written as Node writes it, so nothing a program prints can be told apart by where it
-// lands or what else lands there. Node writes each console.log at once, to a file, a terminal or (on
-// Linux) a pipe. Stdout here is held in a buffer instead, since a call to write per line costs more
-// than the line, and the buffer goes out at every point the difference could be seen: before anything
-// is written to stderr (which may be the same file), before a file is read or written (which may be
-// stdout itself, or stdin waiting on what was just printed), before a panic's message, at exit, when
-// it's full, after every line when stdout is a terminal, where a person is watching, and when SIGTERM,
-// SIGINT or SIGHUP stops the program. What a reader of a pipe sees is the same bytes, in larger pieces.
-// SIGKILL can't be caught, and what's in the buffer then is lost, as nothing Node holds would be.
+// Node writes each line synchronously to regular files and terminals on POSIX. Match those
+// destinations so a live log reader sees each line. Pipes retain the 64 KiB buffer, flushed before
+// stderr, file operations, panic, exit and catchable external stop signals. Readers get the same bytes
+// in larger pieces. SIGKILL cannot be caught, so a pipe's buffered output is lost then.
 //
 // When a write fails (a pipe whose reader is gone, say), the program goes on as it does on Node,
 // where the stream's error arrives only once the program's own code has run: what it writes there
@@ -52,7 +66,7 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 static char output[1 << 16];
 static size_t output_used;
 
-// output_mode is 0 until the first line, then 1 for a buffer, or 2 for a line at a time (a terminal).
+// output_mode is 0 until the first line, then 1 for a pipe buffer, or 2 for a file or terminal.
 static int output_mode;
 
 // broken is the stream a write to has failed, from then on dropped; 0 while none has.
@@ -115,6 +129,19 @@ void adamic_output_flush(void) {
 #ifndef ADAMIC_TARGET_WASI
 static int stop_pipe[2];
 static pthread_t stop_thread;
+static struct sigaction default_action;
+
+// Catch external stop signals; preserve fault/abort handlers installed by sanitizers.
+static const int stop_signals[] = {
+	SIGTERM, SIGINT, SIGHUP, SIGQUIT, SIGUSR2,
+	SIGALRM, SIGXCPU, SIGVTALRM, SIGPROF,
+#ifdef SIGIO
+	SIGIO,
+#endif
+#ifdef SIGPWR
+	SIGPWR,
+#endif
+};
 
 static void stopped(int signal_number) {
 	int saved_errno = errno;
@@ -131,12 +158,12 @@ static void *stop_loop(void *unused) {
 		ssize_t received = read(stop_pipe[0], &event, 1);
 		if (received < 0 && errno == EINTR) { continue; }
 		if (received != 1 || event == 0) { return NULL; }
-		adamic_output_flush();
-		struct sigaction action;
-		memset(&action, 0, sizeof action);
-		action.sa_handler = SIG_DFL;
-		sigemptyset(&action.sa_mask);
-		sigaction(event, &action, NULL);
+		// A writer holds output_lock until its newline is buffered. Waiting for that lock
+		// flushes complete lines without racing or interrupting a writer midway through one.
+		pthread_mutex_lock(&output_lock);
+		flush();
+		// Keep writers out until the default action terminates the process.
+		sigaction(event, &default_action, NULL);
 		sigset_t delivered;
 		sigemptyset(&delivered);
 		sigaddset(&delivered, event);
@@ -160,9 +187,12 @@ static void stop_start(void) {
 	}
 	sigset_t blocked, previous;
 	sigemptyset(&blocked);
-	sigaddset(&blocked, SIGTERM);
-	sigaddset(&blocked, SIGINT);
-	sigaddset(&blocked, SIGHUP);
+	for (size_t index = 0; index < sizeof stop_signals / sizeof stop_signals[0]; index++) {
+		sigaddset(&blocked, stop_signals[index]);
+	}
+#if defined(SIGRTMIN) && defined(SIGRTMAX)
+	for (int number = SIGRTMIN; number <= SIGRTMAX; number++) { sigaddset(&blocked, number); }
+#endif
 	pthread_sigmask(SIG_BLOCK, &blocked, &previous);
 	int error = pthread_create(&stop_thread, NULL, stop_loop, NULL);
 	pthread_sigmask(SIG_SETMASK, &previous, NULL);
@@ -181,7 +211,7 @@ static void stop_with(int signal_number) {
 	struct sigaction handler;
 	memset(&handler, 0, sizeof handler);
 	handler.sa_handler = stopped;
-	sigemptyset(&handler.sa_mask);
+	sigfillset(&handler.sa_mask);
 	sigaction(signal_number, &handler, NULL);
 }
 
@@ -212,22 +242,56 @@ static void write_text(enum adamic_stream stream, const char *bytes, size_t leng
 }
 
 void adamic_start(int count, char **values) {
+#ifndef ADAMIC_TARGET_WASI
+	// Node opens /dev/null for any closed standard descriptor, in descriptor order. Do this
+	// before opening anything else, so a closed stdout cannot become a program's input file.
+	for (int descriptor = 0; descriptor < 3; descriptor++) {
+		if (fcntl(descriptor, F_GETFD) < 0 && errno == EBADF) {
+			int opened = open("/dev/null", O_RDWR);
+			if (opened < 0 || (opened != descriptor && dup2(opened, descriptor) < 0)) {
+				_exit(70);
+			}
+			if (opened != descriptor) {
+				close(opened);
+			}
+		}
+	}
+#endif
 	adamic_arguments_save(count, values);
 	adamic_node_process_start(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 #ifndef ADAMIC_TARGET_WASI
 	signal(SIGPIPE, SIG_IGN);
+	// Node also ignores file-size-limit signals: writes report EFBIG instead.
+	signal(SIGXFSZ, SIG_IGN);
+	// SIGUSR1 starts Node's inspector, and the program goes on. There's no inspector here, but the
+	// program goes on too.
+	signal(SIGUSR1, SIG_IGN);
+	default_action.sa_handler = SIG_DFL;
+	sigemptyset(&default_action.sa_mask);
 	stop_start();
-	stop_with(SIGTERM);
-	stop_with(SIGINT);
-	stop_with(SIGHUP);
+	for (size_t index = 0; index < sizeof stop_signals / sizeof stop_signals[0]; index++) {
+		stop_with(stop_signals[index]);
+	}
+#if defined(SIGRTMIN) && defined(SIGRTMAX)
+	// Realtime signals also terminate by default. The C library excludes its reserved signals.
+	for (int signal_number = SIGRTMIN; signal_number <= SIGRTMAX; signal_number++) {
+		stop_with(signal_number);
+	}
+#endif
 #endif
 }
 
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 	pthread_mutex_lock(&output_lock);
 	if (output_mode == 0) {
+#ifndef ADAMIC_TARGET_WASI
+		struct stat destination;
+		bool regular_file = fstat(adamic_stdout, &destination) == 0 && S_ISREG(destination.st_mode);
+		output_mode = isatty(adamic_stdout) || regular_file ? 2 : 1;
+#else
 		output_mode = isatty(adamic_stdout) ? 2 : 1;
+#endif
 		atexit(finish);
 	}
 	if (stream == adamic_stderr) {
@@ -269,7 +333,7 @@ _Noreturn void adamic_panic(const char *message, size_t length) {
 	flush();
 	// Best effort: stderr may be what failed.
 	(void)write_all(adamic_stderr, prefix, sizeof prefix - 1);
-	(void)write_all(adamic_stderr, message, length);
+	write_text(adamic_stderr, message, length);
 	(void)write_all(adamic_stderr, "\n", 1);
 	ADAMIC_COUNT_REPORT();
 	_exit(70);

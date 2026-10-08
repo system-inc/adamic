@@ -148,6 +148,9 @@ func TestParallelChecksCatchMutants(t *testing.T) {
 		name, file, old, changed, harness, mode, threads, want string
 		race                                                   bool
 	}{
+		{"view_parent_units", "string_slice_impl.h", "if (slice != string) { slice->units = last - first + 1; }", "slice->units = last - first + 1;", "map.c", "strings", "4", "WARNING: ThreadSanitizer: data race", true},
+		{"view_owner_count", "string_share.c", "size_t references = adamic_reference_count(&owner->heap);", "size_t references = owner->heap.references;", "map.c", "strings", "4", "WARNING: ThreadSanitizer: data race", true},
+		{"ascii_character_write", "string_slice_impl.h", "return &characters[value];", "characters[value].units = 2; return &characters[value];", "string_views.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"skip_items_share", "parallel.c", "adamic_share(items);", "/* mutant: publication without preparation */", "map.c", "strings", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"lazy_cache", "string_index.c", "if (__atomic_compare_exchange_n(&((adamic_string *)string)->index, &expected, candidate,\n\t\tfalse, __ATOMIC_RELEASE, __ATOMIC_ACQUIRE)) { return candidate; }", "((adamic_string *)string)->index = candidate; return candidate;", "cache_race.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"plain_shared_count", "heap.c", "__atomic_fetch_add(&heap->references, 1, __ATOMIC_RELAXED);", "heap->references++;", "memory.c", "", "4", "WARNING: ThreadSanitizer: data race", true},

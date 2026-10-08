@@ -51,7 +51,7 @@ func TestRuntimeStaticsProtectionMutants(t *testing.T) {
 		{"normalization_classes", "normalize.c", "static _Thread_local uint8_t cached_classes", "static uint8_t cached_classes", "normalization"},
 		{"normalization_mappings", "normalize.c", "static _Thread_local const normalize_mapping *cached_mappings", "static const normalize_mapping *cached_mappings", "normalization"},
 		{"normalization_pairs", "normalize.c", "static _Thread_local normalize_pair cached_pairs", "static normalize_pair cached_pairs", "normalization"},
-		{"shared_string_index", "string_index.c", "if (__atomic_compare_exchange_n(&((adamic_string *)string)->index, &expected, candidate,\n\t\tfalse, __ATOMIC_RELEASE, __ATOMIC_ACQUIRE)) { return candidate; }", "((adamic_string *)string)->index = candidate; return candidate;", "string_bmp"},
+		{"shared_string_index", "string_index.c", "if (__atomic_compare_exchange_n(&((adamic_string *)string)->index, &expected, candidate,\n\t\tfalse, __ATOMIC_RELEASE, __ATOMIC_ACQUIRE)) { return candidate; }", "((adamic_string *)string)->index = candidate; return candidate;", "cache_race"},
 	}
 	for _, mutant := range mutants {
 		t.Run(mutant.name, func(t *testing.T) {
@@ -79,7 +79,7 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 	library, root := staticsRaceLibrary(t, "", "", "")
 	binary := staticsRaceFixture(t, root, library, "signal_output")
 	for _, worker := range []bool{false, true} {
-		for _, signal := range []syscall.Signal{0, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP} {
+		for _, signal := range []syscall.Signal{0, syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGUSR2, syscall.SIGALRM, syscall.SIGXCPU, syscall.SIGVTALRM, syscall.SIGPROF, syscall.SIGIO, 30, 34, 64} {
 			if worker && signal == 0 {
 				continue
 			} // Normal exit belongs to the loop thread.
@@ -88,8 +88,11 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 			})
 		}
 	}
+	// Repeat the unsafe access to expose overlap before forwarding terminates the process.
+	// Pause between accesses so writers can run; this adds no synchronization. Every
+	// iteration remains the same unlocked flush.
 	t.Run("handler_buffer_mutant", func(t *testing.T) {
-		library, root := staticsRaceLibrary(t, "adamic.c", "int saved_errno = errno;", "int saved_errno = errno;\n flush();")
+		library, root := staticsRaceLibrary(t, "adamic.c", "int saved_errno = errno;", "int saved_errno = errno;\n struct timespec delay = {0, 100000};\n for (size_t attempt = 0; attempt < 16384; attempt++) { flush(); nanosleep(&delay, NULL); }")
 		binary := staticsRaceFixture(t, root, library, "signal_output")
 		staticsSignalRun(t, binary, true, syscall.SIGTERM, true)
 	})
@@ -98,6 +101,49 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 		binary := staticsRaceFixture(t, root, library, "signal_output")
 		staticsSignalRun(t, binary, false, 0, true)
 	})
+}
+
+// Not parallel: each build occupies the same runtime/TSan budget as the pool proofs.
+func TestRuntimeStopWholeLines(t *testing.T) {
+	if goruntime.GOOS != "linux" {
+		t.Skip("requires Linux signals and ThreadSanitizer")
+	}
+	node := exec.Command("node", "-e", "console.log('first whole line'); console.log('second whole line'); process.kill(process.pid, 'SIGUSR2');")
+	expected, err := node.Output()
+	if err == nil || string(expected) != "first whole line\nsecond whole line\n" || node.ProcessState.Sys().(syscall.WaitStatus).Signal() != syscall.SIGUSR2 {
+		t.Fatalf("unexpected Node observation: %v %q", err, expected)
+	}
+	for _, mutant := range []bool{false, true} {
+		t.Run(fmt.Sprintf("drop_flush_%t", mutant), func(t *testing.T) {
+			file, old, changed := "", "", ""
+			if mutant {
+				file, old, changed = "adamic.c", "\t\tflush();\n\t\t// Keep writers out", "\t\t/* mutant: drop whole-line stop flush */\n\t\t// Keep writers out"
+			}
+			library, root := staticsRaceLibrary(t, file, old, changed)
+			binary := staticsRaceFixture(t, root, library, "stop_whole_lines")
+			for attempt := 0; attempt < 3; attempt++ {
+				ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+				command := exec.CommandContext(ctx, binary)
+				var errors strings.Builder
+				command.Stderr = &errors
+				command.Env = append(os.Environ(), "TSAN_OPTIONS=halt_on_error=1")
+				actual, err := command.Output()
+				timedOut := ctx.Err() != nil
+				cancel()
+				if err == nil || timedOut || command.ProcessState.Sys().(syscall.WaitStatus).Signal() != syscall.SIGUSR2 || errors.Len() != 0 {
+					t.Fatalf("unexpected stop: %v %s", err, errors.String())
+				}
+				if mutant {
+					if len(actual) != 0 {
+						t.Fatalf("drop-flush mutant survived: %q", actual)
+					}
+					t.Logf("caught drop-flush mutant by stdout mismatch: Node %q, mutant %q", expected, actual)
+				} else if string(actual) != string(expected) {
+					t.Fatalf("whole-line output differs: Node %q, native %q", expected, actual)
+				}
+			}
+		})
+	}
 }
 
 func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.Signal, mutant bool) {
@@ -159,6 +205,11 @@ func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, 
 			if !strings.Contains(string(source), old) {
 				t.Fatalf("missing mutant seam in %s: %q", mutantFile, old)
 			}
+			// Stop four completed candidates before publication. A tiny string can otherwise
+			// publish before the next worker enters the builder, letting the mutant survive.
+			if mutantFile == "string_index.c" {
+				source = []byte(cacheBuilderGate(string(source)))
+			}
 			source = []byte(strings.ReplaceAll(string(source), old, changed))
 			if mutantFile == "adamic.c" && old == "pthread_mutex_lock(&output_lock);" {
 				source = []byte(strings.ReplaceAll(string(source), "pthread_mutex_unlock(&output_lock);", "/* mutant: no output unlock */"))
@@ -210,7 +261,11 @@ func staticsCompile(t *testing.T, tool string, arguments ...string) {
 func staticsRaceFixture(t *testing.T, root, library, fixture string) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), fixture)
-	arguments := append(staticsRaceFlags(), "-I", root, "testdata/runtime-statics/"+fixture+".c", "testdata/runtime-statics/tsgo_stub.c", "-Wl,--whole-archive", library, "-Wl,--no-whole-archive", "-lm", "-o", binary)
+	source := "testdata/runtime-statics/" + fixture + ".c"
+	if fixture == "cache_race" {
+		source = "testdata/parallel/cache_race.c"
+	}
+	arguments := append(staticsRaceFlags(), "-I", root, source, "testdata/runtime-statics/tsgo_stub.c", "-Wl,--whole-archive", library, "-Wl,--no-whole-archive", "-lm", "-o", binary)
 	staticsCompile(t, "clang", arguments...)
 	return binary
 }
@@ -232,7 +287,9 @@ func staticsRaceRun(t *testing.T, binary string, mutant bool) {
 		output, err := command.CombinedOutput()
 		timedOut := ctx.Err() != nil
 		cancel()
-		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
+		// Removing a lock can also let another worker free the raced storage.
+		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race") ||
+			strings.Contains(string(output), "WARNING: ThreadSanitizer: heap-use-after-free")
 		if mutant {
 			if err == nil || timedOut || !race {
 				t.Fatalf("race mutant was not caught (attempt %d): %v\n%s", attempt+1, err, output)

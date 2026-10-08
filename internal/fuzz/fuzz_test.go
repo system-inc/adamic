@@ -286,6 +286,7 @@ func TestOwnershipShapes(t *testing.T) {
 	found := map[string]bool{}
 	directory := t.TempDir()
 	for seed := uint64(1); seed <= 8; seed++ {
+		// Moves and parallel programs are refused by design some of the time; every program here must lower.
 		source := GenerateWithout(seed, []string{"moves", "parallel"}).Source()
 		for _, marker := range want {
 			if strings.Contains(source, marker) {

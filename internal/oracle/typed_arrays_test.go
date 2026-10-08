@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"uint8array", "uint16array", "uint16_stop", "int32array", "float64array", "views", "order", "primes", "primes_large", "stats", "stop"} {
+	for _, name := range []string{"uint8array", "uint16array", "uint16_stop", "int32array", "float64array", "views", "order", "primes", "primes_large", "stats", "workers_stats", "stop"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -43,5 +43,33 @@ func TestTypedArrayWriteStopIsPinned(t *testing.T) {
 				t.Errorf("Node no longer silently drops the write: %#v", observed)
 			}
 		})
+	}
+}
+
+// Original platform functions run on Node independently of the typed-array port.
+// This pins the port's arithmetic, not just native agreement with its own source.
+func TestTypedArrayWorkersStatsMatchesPlatforms(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typed_arrays_workers_stats.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	reference, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typed_arrays_workers_stats_reference.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := onNode(t, reference)
+	if expected.exitCode != 0 {
+		t.Fatalf("platforms Node reference: %#v", expected)
+	}
+	p, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	native, _ := natively(t, p)
+	for name, observed := range map[string]run{"source": onNode(t, path), "native": native, "release": released(t, p), "JavaScript": onJavaScriptBackend(t, p)} {
+		if difference := disagreement(expected, observed); difference != "" {
+			t.Errorf("%s: %s: exit %d stdout %q stderr %q", name, difference, observed.exitCode, observed.stdout, observed.stderr)
+		}
 	}
 }

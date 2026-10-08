@@ -434,7 +434,7 @@ int main(void) {
     return 0;
 }`
 	binary := filepath.Join(t.TempDir(), "cache-states")
-	if err := Build(strings.ReplaceAll(source, "@TEXT@", cString(text))+"\n", binary, Options{Sanitize: true}); err != nil {
+	if err := Build(strings.ReplaceAll(source, "@TEXT@", cLiteral(text))+"\n", binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	node := `const literal = "é😀A".repeat(24) + "Z";

@@ -182,3 +182,112 @@ compiler files were restored after each mutant; the final uncached oracle and
 package runs use the restored files. The deliberate write-stop fixture has its
 own assertion, and separately pins Node's silent drop, so agreement between
 two broken backends cannot validate the exception.
+
+## Full runtime-tip merge
+
+At the compiler owner's request, the complete runtime branch tip
+`86769a34ae57226a44722c14704796ebc3860440` was merged after the initial
+compiler push. This includes harness `f0f5836`, report `86769a3`, and the
+runtime-area ancestry of that branch, in addition to the previously imported
+interface and implementation. The merge resolves runtime's document by taking
+its exact version, combines both branches' flow trace exclusions, and
+regenerates the count table for the combined tree.
+
+There is no header/lowering mismatch. The merged `adamic.h`, runtime contract
+and `typed_array.c` exactly match runtime's tip; the compiler makes no local
+changes to those files. Native emission continues using the published functions
+above. `runtime-tip-views.c.gz` in the proof directory is C emitted by the
+merged compiler from `typed_arrays_views.a`, including MaybeNumber reads,
+checked writes, borrowed fill, shared subarray and counted iterator calls.
+
+Post-merge commands, with the setup environment sourced and outputs logged:
+
+```sh
+go test ./internal/native -run '^TestTypedArrayRuntime$' -count=1 -timeout 10m
+go run ./cmd/adamic c internal/oracle/testdata/typed_arrays_views.a
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+go test ./internal/lower ./internal/ir ./internal/flow ./internal/fresh ./internal/javascript -count=1 -timeout 30m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m
+gofmt -l cmd internal
+go vet ./...
+```
+
+The runtime harness passed in 7.968s; C emission exited 0. Count recording
+passed in 52.510s. Lowering, IR, flow and freshness passed in 35.361s,
+27.315s, 74.087s and 38.305s. Formatting and vet exited 0 with no output.
+The ancestry's borrowing changes remove one retain/release from each sieve
+fixture and from stats; allocations and frees remain balanced. Prior mutation
+proofs remain applicable: the typed-array runtime implementation is identical.
+Post-merge logs use the `runtime-tip-` prefix in the proof directory.
+
+The complete diff against the prior compiler tip reports whitespace in
+historical runtime-area logs and saved patch artifacts. Those imported artifacts
+were preserved. `git diff --check MERGE_HEAD`, checking the compiler changes
+against runtime's actual tip, exited 0 with no diagnostics.
+
+The complete post-merge uncached native package passed in 286.469s and the
+complete oracle package in 129.188s, including the normal recorded-counts
+comparison and all compiler typed-array fixtures. Current origin/main remains
+`39638d9e278d38bb5aeae887f46d55a70e47aaad`, already in both merge parents.
+
+## Current-main landing and supplied Workers stats
+
+The final landing merges origin/main at
+`b6b1538b0cebc4ba6741ac34f1aedb60293c1d06`. Conflicts preserve both main's
+predicate proof and typed-array refusals, use main's array-slot lookup for
+plain arrays while keeping typed-array MaybeNumber reads, and retain every
+fixture from both branches. The count table is regenerated for that tree.
+The change to oracle_test.go is only the merge resolution of fixture entries.
+
+Platforms supplied `900409b73d36ea34bb26ec4366c09952839ff897` after the
+initial compiler proof. `typed_arrays_workers_stats.a` now ports the actual
+standalone reducer at `internal/worker/testdata/wasm/stats.a` and the full
+summarize operation from `workers/compute/handler.a`, under the literal
+arithmetic contract in `workers/compute/README.md`. The earlier best/median
+fixture is supplementary and does not substitute for this program.
+
+Input and sorted-copy storage are Float64Array. Stable insertion sort replaces
+plain-array slice/sort using only the supported typed-array operations: allocate,
+set, length and checked numeric reads/writes. Summation and squared-sum
+accumulation remain in original index order. Median, p95 and population
+standard deviation use the original arithmetic. Explicit JSON object literals
+serialize the same result fields because JSON.stringify of structural object
+references is currently NotYet; no JSON feature is added by this unit.
+
+An independent Node witness embeds the original platform functions unchanged
+in arithmetic and runs their original readonly number[] and native Array.sort
+paths. The port's source, sanitized native, release native and JavaScript
+backend all must match that witness, including JSON nonfinite/null behavior.
+Cases cover singletons, odd/even counts, repeated and fractional samples,
+signed-zero stability, summation cancellation, finite-input overflow,
+subnormals, nearest-rank boundaries at 19/20/21 elements, unchanged inputs,
+subarray input and the standalone empty reducer.
+
+A bounds-safe p95 mutant changed the rank to
+`Math.min(count - 1, Math.ceil(0.95 * count))`. All four port paths compiled
+and exited 0, agreeing on wrong output; the original-platform Node witness
+failed each stdout comparison. At count 20 the mutated percentile is 20
+instead of 19. The fixture was restored before the final gate. Its raw proof
+log is `landing-stats-p95-mutant.txt.gz`.
+
+Final landing commands, all with logged output:
+
+```sh
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+go test ./internal/lower ./internal/ir ./internal/flow ./internal/fresh ./internal/javascript -count=1 -timeout 30m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestTypedArrayWorkersStatsMatchesPlatforms|TestTypedArrayWriteStopIsPinned|TestNativeAgreesWithNode/internal/oracle/testdata/typed_arrays_' -count=1 -timeout 30m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m
+gofmt -l cmd internal
+go vet ./...
+```
+
+Focused typed-array and original-platform comparisons passed in 1.815s.
+Count recording passed in 50.033s. Lowering, IR, flow and freshness passed in
+44.705s, 2.004s, 94.749s and 63.457s. Formatting, vet and the diff check
+against the prior compiler tip exited 0 without diagnostics. Landing proof
+logs use `landing-` names. HTTP routing and deployment of the complete
+Workers handler are outside this numeric fixture's proof.
+
+The complete uncached landing native suite passed in 305.735s and the oracle
+suite in 142.527s. A final fetch confirmed origin/main is still the merged
+`b6b1538b0cebc4ba6741ac34f1aedb60293c1d06`.

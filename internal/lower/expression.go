@@ -114,6 +114,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		// A Set is held as a Map whose values aren't used (set.go).
 		return ir.Map, true
+	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Promise"):
+		return ir.Promise, true
 	case flags&checker.TypeFlagsObject != 0 && !isClassInstance(proven) && (l.checker.IsTypeAssignableTo(l.checker.GetNumberType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetStringType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetBooleanType(), proven)):
 		// Structural types such as {} admit primitives. Their slots must preserve
 		// the runtime brand with the same boxes used for scalar/reference unions.
@@ -247,6 +249,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 		}
+		value = l.graphAllocation(value, node)
 	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
@@ -518,6 +521,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return observed, nil
 	}
 	switch node.Kind {
+	case ast.KindAwaitExpression:
+		return l.awaitExpression(node)
 	case ast.KindNullKeyword:
 		return ir.Null{}, nil
 	case ast.KindRegularExpressionLiteral:
@@ -534,6 +539,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		if value, handled := l.staticClassRead(node); handled {
 			return value, nil
+		}
+		if value, handled, err := l.nestedReference(node); handled {
+			return value, err
 		}
 		local, isLocal := l.local(node)
 		if !isLocal && node.Text() == "undefined" {
@@ -616,9 +624,6 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
-		if value, known := l.asyncTypeOf(node); known {
-			return value, nil
-		}
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
 		}
@@ -701,6 +706,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindElementAccessExpression:
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
+		if l.isLibraryGlobal(node.AsNewExpression().Expression, "Promise") {
+			return nil, l.notYet(node, "Promise executors and pending-I/O cancellation")
+		}
 		return l.newExpression(node)
 	case ast.KindThisKeyword:
 		if l.this < 0 {
@@ -726,6 +734,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindFunctionExpression:
 		return l.functionExpression(node)
 	case ast.KindCallExpression:
+		if value, handled, err := l.promiseValue(node); handled {
+			return value, err
+		}
 		if value, known, err := l.optionalIntrinsic(node); known {
 			return value, err
 		}
@@ -1151,6 +1162,21 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
+	if direct := l.nestedSibling(callee); direct >= 0 {
+		arguments := []ir.Expression{}
+		for _, argument := range call.Arguments.Nodes {
+			value, err := l.expression(argument)
+			if err != nil {
+				return nil, err
+			}
+			position := len(arguments)
+			if position < len(l.result.Functions[direct].Parameters) {
+				value = fit(value, l.result.Locals[l.result.Functions[direct].Parameters[position]].Type)
+			}
+			arguments = append(arguments, value)
+		}
+		return ir.CallClosure{Closure: ir.ClosureSelf{}, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+	}
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
 		instance, err := l.instantiateFunction(node, declaration)
 		if err != nil {
@@ -1275,9 +1301,6 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 				return nil, l.notYet(node, "an overloaded function as a value")
 			}
 		}
-	}
-	if l.result.Async != nil {
-		return nil, l.notYet(node, "async function "+node.Text()+" as a value; only direct typeof observations and awaited calls are lowered")
 	}
 	if held, isMade := l.forwarders[target]; isMade {
 		return ir.Read{Local: held, Of: ir.Closure}, nil

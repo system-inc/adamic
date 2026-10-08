@@ -11,10 +11,13 @@ void adamic_release(void *value) { adamic_release_inline(value); }
 #endif
 #include "async.h"
 #include "count.h"
+#include "graph_regions.h"
+#include "slab_quarantine.h"
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdatomic.h>
+#include <string.h>
 
 // Small heap values come from size classes, 16 bytes apart up to 256, carved from 64 KB chunks: each
 // chunk holds one class's slots, its freed ones on a list threaded through them, and each class keeps
@@ -232,7 +235,7 @@ static void drain_remote(chunk *each) {
 	}
 }
 
-void *adamic_allocate(size_t size, enum adamic_kind kind) {
+static void *allocate_storage(size_t size, enum adamic_kind kind) {
 	adamic_heap *heap;
 	uint32_t slab = 0;
 	if (SLABS && size <= CLASSES * GRANULE) {
@@ -249,8 +252,12 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 	heap->references = 1;
 	heap->kind = kind;
 	heap->slab = slab;
-	ADAMIC_COUNT_ALLOCATION();
 	return heap;
+}
+
+void *adamic_allocate(size_t size, enum adamic_kind kind) {
+	ADAMIC_COUNT_ALLOCATION();
+	return allocate_storage(size, kind);
 }
 
 // deallocate gives a value's memory back: to its chunk, or to free.
@@ -260,12 +267,53 @@ static void deallocate(adamic_heap *heap) {
 		free(heap);
 		return;
 	}
+#if ADAMIC_SLAB_QUARANTINE
+	// Sanitized with slabs, a freed slot waits poisoned on this thread before it can be taken again,
+	// so a stale pointer can't read the next value made in it as its own; the slot it evicts is given
+	// back, to its chunk here or to its owner's remote list.
+	void *slot = heap;
+	uint32_t number = slab - 1;
+	if (!adamic_slab_quarantine(&slot, &number, (find_chunk(number)->class + 1) * GRANULE)) {
+		return;
+	}
+	give(slot, number);
+#else
 	give(heap, slab - 1);
+#endif
+}
+
+// Move a still-new allocation into storage with its graph-only prefix. This is
+// one logical allocation, and must happen before aliases or owned slots exist.
+void *adamic_heap_graph_storage(void *value, size_t size) {
+	adamic_heap *old = value;
+	adamic_heap *storage = allocate_storage(size + sizeof(adamic_graph_header), old->kind);
+	uint32_t slab = storage->slab;
+	adamic_graph_header *prefix = (adamic_graph_header *)storage;
+	adamic_heap *heap = (adamic_heap *)(prefix + 1);
+	memcpy(heap, old, size);
+	heap->slab = slab | ADAMIC_GRAPH_FLAG;
+	*prefix = (adamic_graph_header){NULL, NULL};
+	deallocate(old);
+	return heap;
+}
+
+// An environment's interior cell has no count of its own; its environment holds it. Such a cell's
+// count is zero and a graph object's header has ADAMIC_GRAPH_FLAG, so adamic_retain and
+// adamic_release (adamic.h) bring both here and never count them inline.
+static adamic_heap *counted_heap(void *value) {
+	adamic_heap *heap = value;
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = ((adamic_cell *)heap)->owner;
+	}
+	return heap;
 }
 
 void *adamic_retain_slow(void *value) {
-	adamic_heap *heap = value;
-	if (heap != NULL) {
+	adamic_heap *heap = counted_heap(value);
+	if (adamic_graph_is(heap)) {
+		// Graph regions are never shared yet (share.c refuses them), so their counts stay plain.
+		adamic_graph_retain(heap);
+	} else if (heap != NULL) {
 		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
 		// sharing and zero, so the ordinary positive-count path keeps one branch and plain stores.
@@ -297,29 +345,36 @@ static void list(void *value) {
 	freeing[freeing_count++] = value;
 }
 
-// drop_reference never touches the freeing queue unless the last reference went away.
-static bool drop_reference(void *value) {
-	adamic_heap *heap = value;
-	if (heap == NULL) { return false; }
+// drop_reference lets go of one count and says what to free when it was the last: the value, or for
+// an interior cell its environment. It never touches the freeing queue itself.
+static adamic_heap *drop_reference(void *value) {
+	adamic_heap *heap = counted_heap(value);
+	if (heap == NULL) { return NULL; }
+	if (adamic_graph_is(heap)) {
+		// A member reaching zero does not mean its region is unowned: only the region's last
+		// outside release frees it.
+		return adamic_graph_release_last(heap) ? heap : NULL;
+	}
 	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 	if ((intptr_t)count > 0) {
 		heap->references = count - 1;
-		return count == 1;
+		return count == 1 ? heap : NULL;
 	}
 	if (count != 0 && count != ADAMIC_SHARED &&
 		__atomic_fetch_sub(&heap->references, 1, __ATOMIC_RELEASE) == ADAMIC_SHARED + 1) {
 		__atomic_thread_fence(__ATOMIC_ACQUIRE);
-		return true;
+		return heap;
 	}
-	return false;
+	return NULL;
 }
 
 // Children are queued for an outer drain, never freed recursively.
 static void let_go(void *value) {
-	if (drop_reference(value)) { list(value); }
+	adamic_heap *last = drop_reference(value);
+	if (last != NULL) { list(last); }
 }
 
-static void free_one(void *value) {
+void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
 	case adamic_kind_async_frame:
@@ -372,6 +427,11 @@ static void free_one(void *value) {
 		}
 		break;
 	}
+	case adamic_kind_environment: {
+		adamic_environment *environment = value;
+		adamic_environment_drop_cells(environment->cells, environment->count, let_go);
+		break;
+	}
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
 		for (size_t index = 0; index < closure->count; index++) {
@@ -394,10 +454,27 @@ static void free_one(void *value) {
 		break;
 	}
 	}
+}
+
+void adamic_heap_free_storage(void *value, uint32_t slab) {
+	adamic_heap *heap = value;
+	if (adamic_graph_is(heap)) {
+		heap = (adamic_heap *)adamic_graph_header_of(heap);
+	}
+	heap->slab = slab & ~ADAMIC_GRAPH_FLAG;
+	deallocate(heap);
+	ADAMIC_COUNT_FREE();
+}
+
+static void free_one(void *value) {
+	if (adamic_graph_is(value)) {
+		adamic_graph_free(value, let_go);
+		return;
+	}
+	adamic_heap_free_children(value, let_go);
 	// Anything weak that pointed here now points at nothing, before the memory can be anything else.
 	adamic_weak_forget(value);
-	deallocate(value);
-	ADAMIC_COUNT_FREE();
+	adamic_heap_free_storage(value, ((adamic_heap *)value)->slab);
 }
 
 // Keep destruction out of the common release path: null, immortal and still-shared values need
@@ -413,10 +490,15 @@ __attribute__((noinline)) static void release_last(void *value) {
 }
 
 void adamic_release_slow(void *value) {
-	if (drop_reference(value)) { release_last(value); }
+	adamic_heap *last = drop_reference(value);
+	if (last != NULL) { release_last(last); }
 }
 
 void adamic_heap_thread_end(void) {
+#if ADAMIC_SLAB_QUARANTINE
+	// The slots this thread holds go back before its remote frees are drained, so its own come home.
+	adamic_slab_quarantine_drain(give);
+#endif
 	for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) { drain_remote(each); }
 	free(freeing);
 	freeing = NULL;

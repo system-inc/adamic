@@ -56,7 +56,6 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		source string
 		want   string
 	}{
-		{"a closure", "function outer(): number {\n\tfunction inner(): number {\n\t\treturn 1;\n\t}\n\treturn inner();\n}\nconsole.log(`${outer()}`);\n", "main.a:2:2: stage 0 can't lower a function inside a function (a closure) yet"},
 		{"a class inside a function", "function make(): number {\n\tclass Box {\n\t\treadonly size = 1;\n\t}\n\treturn 1;\n}\nconsole.log(`${make()}`);\n", "main.a:2:2: stage 0 can't lower a class inside a function yet"},
 		{"join on an array of functions", "const steps = [(): number => 1];\nconsole.log(steps.join(','));\n", "main.a:2:13: stage 0 can't lower join on an array of objects, arrays, maps or functions yet"},
 		{"concat on an array of arrays", "const grid: number[][] = [[1]];\nconst more = grid.concat([[2]]);\n", "main.a:2:14: stage 0 can't lower concat on an array of arrays yet"},
@@ -121,7 +120,7 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		{"Array.from's undefined typed as a number", "const made = Array.from({ length: 2 }, (value: number, index: number) => value + index);\n", "main.a:1:41: Adamic 0.1 refuses a first Array.from parameter typed number, which is undefined every time;"},
 		{"a parent pointer not declared weak", "interface TreeNode {\n\treadonly name: string;\n\tparent: TreeNode | undefined;\n\treadonly children: readonly TreeNode[];\n}\nconst root: TreeNode = { name: 'root', parent: undefined, children: [] };\nroot.parent = root;\n", "main.a:3:2: Adamic 0.1 refuses TreeNode.parent, a mutable field of type TreeNode | undefined, which can reach back to the TreeNode holding it: a cycle reference counting can't free, and the write at "},
 		{"a doubly linked list with a strong next", "import type { Weak } from 'adamic';\ninterface ListNode {\n\tprev: Weak<ListNode>;\n\tnext: ListNode | undefined;\n}\nconst first: ListNode = { prev: undefined, next: undefined };\nfirst.next = first;\n", "main.a:4:2: Adamic 0.1 refuses ListNode.next, a mutable field of type ListNode | undefined, which can reach back to the ListNode holding it"},
-		{"a closure in a cell it captures", "function run(): number {\n\tlet countdown = (from: number): number => from;\n\tcountdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:6: Adamic 0.1 refuses 'countdown', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function countdown() {})"},
+		{"a closure in a cell it captures", "function run(): number {\n\tlet countdown = (from: number): number => from;\n\tcountdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:6: Adamic 0.1 refuses 'countdown', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing"},
 		{"a mutable array of children", "interface TreeNode {\n\treadonly children: TreeNode[];\n}\nconst root: TreeNode = { children: [] };\nroot.children.push(root);\n", "main.a:2:2: Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at "},
 		{"a callback that captures what holds it", "class Button {\n\tlabel = 'ok';\n\tonClick: () => string = () => '';\n}\nfunction wire(): string {\n\tconst button = new Button();\n\tbutton.onClick = () => button.label;\n\treturn button.onClick();\n}\nconsole.log(wire());\n", "main.a:3:2: Adamic 0.1 refuses Button.onClick, a mutable field of type () => string, which can reach back to the Button holding it"},
 		{"a map whose values reach back", "interface Room {\n\treadonly doors: Map<string, Room>;\n}\nconst hall: Room = { doors: new Map<string, Room>() };\nhall.doors.set('self', hall);\n", "main.a:2:2: Adamic 0.1 refuses Map<string, Room>, a map whose values can reach back to a map like it: a cycle reference counting can't free, and the write at "},
@@ -141,7 +140,14 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+			program, err := lowerSource(t, probe.source)
+			if strings.Contains(probe.want, "cycle reference counting can't free") || strings.Contains(probe.want, "which can reach back") || strings.Contains(probe.want, "can reach back") || strings.Contains(probe.want, "a variable a function value captures") {
+				if err != nil || len(program.GraphTypes) == 0 {
+					t.Errorf("want graph ownership, got %v", err)
+				}
+				return
+			}
+
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
 				t.Errorf("got %v, want a refusal ending %q", err, probe.want)

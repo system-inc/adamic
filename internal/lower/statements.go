@@ -9,7 +9,10 @@ import (
 
 // statements lowers a list of statements.
 func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
-	lowered := []ir.Statement{}
+	lowered, err := l.nestedDeclarations(nodes)
+	if err != nil {
+		return nil, err
+	}
 	for _, node := range nodes {
 		statements, err := l.statement(node)
 		if err != nil {
@@ -43,7 +46,10 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		return nil, &Refused{Where: l.program.Where(node), What: describe(node), Fix: "export named bindings"}
 	case ast.KindFunctionDeclaration:
 		if l.function != nil {
-			return nil, l.notYet(node, "a function inside a function (a closure)")
+			if local, ok := l.locals[l.symbol(node.Name())]; ok && l.result.Locals[local].NestedFunction > 0 {
+				return nil, nil
+			}
+			return nil, l.notYet(node, "a block-scoped nested function declaration")
 		}
 		// Lowered already, by declareModule.
 		return nil, nil
@@ -122,6 +128,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 	}
 	switch expression.Kind {
+	case ast.KindAwaitExpression:
+		value, err := l.awaitExpression(expression)
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	case ast.KindNonNullExpression, ast.KindVoidExpression:
 		value, err := l.expression(expression)
 		if err != nil {
@@ -171,6 +183,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if err != nil {
 			return nil, err
 		}
+		if call.Type() == ir.Promise {
+			return nil, &Refused{Where: l.program.Where(expression), What: "an unawaited async task", Fix: "await the call or keep and return its Promise"}
+		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
 		if expression.AsBinaryExpression().OperatorToken.Kind == ast.KindCommaToken {
@@ -218,5 +233,8 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if l.function.Returns == 0 {
 		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
 	}
-	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
+	if err := l.checkAsyncReturn(expression, value); err != nil {
+		return nil, err
+	}
+	return []ir.Statement{ir.Return{Value: fit(value, l.function.BodyReturns())}}, nil
 }

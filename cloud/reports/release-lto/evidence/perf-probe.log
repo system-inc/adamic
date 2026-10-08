@@ -1,0 +1,10 @@
+
+ Performance counter stats for 'taskset -c 3 /bin/true' (10 runs):
+
+   <not supported>      cycles:u                                                              
+   <not supported>      instructions:u                                                        
+   <not supported>      cache-misses:u                                                        
+   <not supported>      branch-misses:u                                                       
+
+         0.0013709 +- 0.0000661 seconds time elapsed  ( +-  4.82% )
+

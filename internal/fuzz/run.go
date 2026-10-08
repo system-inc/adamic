@@ -9,11 +9,13 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"sort"
 	"strings"
 	"syscall"
 	"time"
 
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -178,7 +180,7 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 	oracle := filepath.Join(c.Root, "oracle", "node.mjs")
 	outcome := Outcome{
 		Node:    execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path),
-		Native:  executeIsolated(directory, nativeEnvironment(false, ""), 20*time.Second, binary),
+		Native:  executeIsolated(directory, nativeEnvironment(""), 20*time.Second, binary),
 		Backend: execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, filepath.Join(directory, "program.mjs")),
 	}
 	judged := c.judge(outcome, binary, directory)
@@ -263,14 +265,18 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 			outcome.Backend.ExitCode, tail(outcome.Backend.Stdout), outcome.Backend.Stderr)
 		return outcome
 	}
-	// Every program that finishes must let go of everything: the same binary again, leak detection on.
+	// Every program that finishes must let go of everything through the shared platform check.
 	// Threads stay at the default here; the one-thread leak check is parallelRuns' job.
 	if outcome.Node.ExitCode == 0 {
-		leaked := executeIsolated(directory, nativeEnvironment(true, ""), 20*time.Second, binary)
-		if leaked.ExitCode != 0 {
-			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(string(leaked.Stderr), 20)
+		report, err := c.leaks(binary, directory, "")
+		if err != nil {
+			report = err.Error()
+		}
+		if report != "" {
+			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(report, 20)
 			return outcome
 		}
+
 	}
 	outcome.Verdict = Agreed
 	return outcome
@@ -319,7 +325,7 @@ func judgeParallelRefusal(expected string, refusal Outcome, lowered Run) Outcome
 // parallelRuns holds an accepted parallel program to one thread, the default pool, and ThreadSanitizer
 // when that runtime built. Any of those disagreeing with Node, or with each other, is a finding.
 func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string) Outcome {
-	one := executeIsolated(directory, nativeEnvironment(false, "1"), 20*time.Second, binary)
+	one := executeIsolated(directory, nativeEnvironment("1"), 20*time.Second, binary)
 	if kind := sanitizerKind(one.Stderr); kind != "" {
 		return Outcome{Verdict: Finding, Key: "sanitizer: " + kind, Detail: firstLines(string(one.Stderr), 20)}
 	}
@@ -334,10 +340,14 @@ func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string
 		return threadFinding("threads differ: "+diff, outcome.Native, one)
 	}
 	if outcome.Verdict == Agreed && outcome.Node.ExitCode == 0 {
-		leaked := executeIsolated(directory, nativeEnvironment(true, "1"), 20*time.Second, binary)
-		if leaked.ExitCode != 0 {
-			return Outcome{Verdict: Finding, Key: "leak at ADAMIC_THREADS=1", Detail: firstLines(string(leaked.Stderr), 20)}
+		report, err := c.leaks(binary, directory, "1")
+		if err != nil {
+			report = err.Error()
 		}
+		if report != "" {
+			return Outcome{Verdict: Finding, Key: "leak at ADAMIC_THREADS=1", Detail: firstLines(report, 20)}
+		}
+
 	}
 	if c.tsanRuntime == "" {
 		return outcome
@@ -408,16 +418,41 @@ func sanitizerKind(stderr []byte) string {
 	}
 }
 
-func nativeEnvironment(leaks bool, threads string) []string {
-	detect := "0"
-	if leaks {
-		detect = "1"
+// Native comparison disables Linux leak detection; the shared check runs it separately.
+func nativeEnvironment(threads string) []string {
+	var extra []string
+	if runtime.GOOS == "linux" {
+		extra = append(extra, "ASAN_OPTIONS=detect_leaks=0")
 	}
-	extra := []string{"ASAN_OPTIONS=detect_leaks=" + detect}
 	if threads != "" {
 		extra = append(extra, "ADAMIC_THREADS="+threads)
 	}
 	return isolatedEnvironment(extra)
+}
+
+// Preserve the fuzzer's isolated environment, deadline and one-worker witness in every leak run.
+func (c *Checkout) leaks(binary, directory, threads string) (string, error) {
+	code, err := os.ReadFile(filepath.Join(directory, "main.c"))
+	if err != nil {
+		return "", err
+	}
+	timedOut := false
+	report, err := leakcheck.Check(leakcheck.Program{
+		C: string(code), Sanitized: binary, Counted: filepath.Join(directory, "program-counted"),
+		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
+			extra := append([]string{}, environment...)
+			if threads != "" {
+				extra = append(extra, "ADAMIC_THREADS="+threads)
+			}
+			result := executeIsolated(directory, isolatedEnvironment(extra), 20*time.Second, name, arguments...)
+			timedOut = timedOut || result.TimedOut
+			return leakcheck.Run{Stdout: result.Stdout, Stderr: result.Stderr, ExitCode: result.ExitCode}
+		},
+	})
+	if timedOut {
+		return "", fmt.Errorf("leak check never finished")
+	}
+	return report, err
 }
 
 func tsanEnvironment(threads string) []string {

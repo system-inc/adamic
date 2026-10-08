@@ -12,18 +12,40 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	goruntime "runtime"
 	"strings"
 )
 
 //go:embed runtime/*.c runtime/*.h
 var runtime embed.FS
 
-// cString is a C string literal holding exactly value's bytes.
+// cString is a C expression for a NUL-terminated string holding exactly value's bytes: a string
+// literal, or, for one longer than C11 promises a literal can be (longestLiteral; a field name of
+// 5,000 bytes, say), a compound literal of its bytes, which has static storage at file scope and
+// lives through the call it's an argument to inside a function. A message array's initializer is
+// cArray instead.
 //
 // Every byte outside printable ASCII becomes a three-digit octal escape, which can't run into the
 // character after it the way \x can, and quote, backslash and question mark are escaped too, the last
 // so no ?? can ever read as a trigraph.
 func cString(value string) string {
+	if len(value) > longestLiteral {
+		return "((const char[]){" + cBytes(value) + ", 0})"
+	}
+	return cLiteral(value)
+}
+
+// cArray is what initializes a char array to value's bytes and a terminator, as
+// static const char message[] = ...; does: the literal, or the bytes when it would be too long.
+func cArray(value string) string {
+	if len(value) > longestLiteral {
+		return "{" + cBytes(value) + ", 0}"
+	}
+	return cLiteral(value)
+}
+
+// cLiteral is the string literal itself, of any length.
+func cLiteral(value string) string {
 	var builder strings.Builder
 	builder.WriteByte('"')
 	for index := 0; index < len(value); index++ {
@@ -44,6 +66,10 @@ func cString(value string) string {
 
 // Options says how to compile.
 type Options struct {
+	// Release selects the native build people ship. Tests leave it false.
+	// Sanitized, counted and WASI builds retain their existing compilation policy.
+	Release bool
+
 	// Target is empty for native, or wasm32-wasi for a WASI module.
 	Target string
 
@@ -83,7 +109,8 @@ type Options struct {
 }
 
 // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
-// with the same ones, so what it finds is what Build would.
+// with the same ones, so what it finds is what Build would. Build also passes the complete
+// list to the link, where ThinLTO generates code. See docs/native-builds.md.
 func Flags(options Options) []string {
 	// A program may declare a variable, a function or a parameter it never uses, or assign a variable
 	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
@@ -123,7 +150,26 @@ func Flags(options Options) []string {
 	if options.Sanitize {
 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	}
-	return append(flags, "-O2")
+	flags = append(flags, "-O2")
+	if shippedRelease(options) {
+		flags = append(flags, "-flto=thin")
+	}
+	return flags
+}
+
+func shippedRelease(options Options) bool {
+	return options.Release && !options.Sanitize && !options.Count && options.Target == ""
+}
+
+// LinkFlags retains every compilation flag, especially -ffp-contract=off and
+// -fno-optimize-sibling-calls, when ThinLTO performs code generation at the link.
+// Linker selection belongs here, never in the runtime's warning-strict clang -c.
+func LinkFlags(options Options) []string {
+	flags := Flags(options)
+	if shippedRelease(options) && goruntime.GOOS != "darwin" {
+		flags = append(flags, "-fuse-ld=lld")
+	}
+	return flags
 }
 
 // Build compiles C source and the runtime into a native binary at output.
@@ -147,7 +193,7 @@ func Build(source string, output string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
-	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output)
+	arguments := append(LinkFlags(options), "-I", filepath.Dir(library), "-o", output)
 	if !options.Request {
 		arguments = append(arguments, filepath.Join(directory, "main.c"))
 	}

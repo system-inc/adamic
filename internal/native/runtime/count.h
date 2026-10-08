@@ -24,6 +24,8 @@ typedef struct adamic_counts {
 	// regions is the values let go of with their region rather than freed one at a time (region.c):
 	// a finished program's allocations are its frees and its regions.
 	_Atomic size_t regions;
+	_Atomic size_t graph_regions;
+	_Atomic size_t graph_merges;
 } adamic_counts;
 
 extern adamic_counts adamic_counted;

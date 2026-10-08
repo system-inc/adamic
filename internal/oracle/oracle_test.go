@@ -7,18 +7,17 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"strconv"
 	"syscall"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -55,6 +54,20 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/non_null_union.a", true, true},
 	{"internal/oracle/testdata/non_null_boolean.a", true, true},
 	{"internal/oracle/testdata/non_null_null.a", true, true},
+	{"internal/oracle/testdata/release_fma.a", true, false},
+	{"internal/oracle/testdata/graph_regions/classification_return.a", true, false},
+	{"internal/oracle/testdata/graph_regions/classification_conditional.a", true, false},
+	{"internal/oracle/testdata/graph_regions/classification_mixed.a", true, false},
+	{"internal/oracle/testdata/graph_regions/classification_override.a", true, false},
+	{"internal/oracle/testdata/string_views_lifetime.a", true, false},
+	{"internal/oracle/testdata/string_views_holders.a", true, false},
+	{"internal/oracle/testdata/string_views_throw.a", true, false},
+	{"internal/oracle/testdata/string_views_loops.a", true, false},
+	{"internal/oracle/testdata/string_views_policy.a", true, false},
+	{"internal/oracle/testdata/string_views_methods.a", true, false},
+	{"internal/oracle/testdata/string_views_characters.a", true, false},
+	{"internal/oracle/testdata/string_views_calls.a", true, false},
+	{"internal/oracle/testdata/string_views_surrogates.a", true, false},
 	{"internal/oracle/testdata/route_targets_callbacks.a", true, false},
 	{"internal/oracle/testdata/route_targets_virtual_fresh.a", true, false},
 	{"internal/oracle/testdata/route_targets_unknown.a", true, false},
@@ -108,6 +121,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/borrow_chain_capture.a", true, false},
 	{"internal/oracle/testdata/borrow_chain_store.a", true, false},
 	{"internal/oracle/testdata/moves/accepted/objects.a", true, false},
+	{"internal/oracle/testdata/async_refused/async_refuse_loop_body_capture.a", false, false},
+	{"internal/oracle/testdata/async_refused/async_refuse_return_thenable.a", false, false},
+	{"internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a", false, false},
+	{"internal/oracle/testdata/async_promise_expression.a", true, false},
+	{"internal/oracle/testdata/async_frame_capture_safe.a", true, false},
 	{"internal/oracle/testdata/async_plain.a", true, false},
 	{"internal/oracle/testdata/async_coverage_unions.a", true, false},
 	{"internal/oracle/testdata/async_coverage_reject_empty.a", true, false},
@@ -121,11 +139,81 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_three.a", true, false},
 	{"internal/oracle/testdata/async_nested.a", true, false},
 	{"internal/oracle/testdata/async_throw.a", true, false},
+	{"internal/oracle/testdata/async_control.a", true, false},
+	{"internal/oracle/testdata/async_operand_order.a", true, false},
+	{"internal/oracle/testdata/async_methods.a", true, false},
+	{"internal/oracle/testdata/async_closures.a", true, false},
+	{"internal/oracle/testdata/async_live_values.a", true, false},
+	{"internal/oracle/testdata/async_catches.a", true, false},
+	{"internal/oracle/testdata/async_escaped_capture.a", true, false},
+	{"internal/oracle/testdata/async_conditions.a", true, false},
+	{"internal/oracle/testdata/async_snapshots.a", true, false},
+	{"internal/oracle/testdata/async_receiver.a", true, false},
+	{"internal/oracle/testdata/async_mutation.a", true, false},
+	{"internal/oracle/testdata/async_catch_return.a", true, false},
+	{"internal/oracle/testdata/async_fresh_holder.a", true, false},
+
+	{"internal/oracle/testdata/graph_regions_weak_mixed.a", true, false},
+	{"internal/oracle/testdata/graph_regions_structural_literal.a", true, false},
+	{"internal/oracle/testdata/graph_regions_counted_container.a", true, false},
+	{"internal/oracle/testdata/weak_region_review.a", true, false},
+	{"internal/oracle/testdata/graph_regions_throw.a", true, false},
+	{"internal/oracle/testdata/graph_regions_static_private.a", true, false},
+	{"internal/oracle/testdata/graph_regions_generic_capture.a", true, false},
+	{"internal/oracle/testdata/graph_regions_nested_self.a", true, false},
+	{"internal/oracle/testdata/graph_regions_nested_disjoint.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_readonly.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_iterator.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_boundary.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_closure_loop.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_throw.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_arrays.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_maps.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_payload_loop.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_spread.a", true, false},
+	{"internal/oracle/testdata/graph_regions_coverage_merge.a", true, false},
+	{"internal/oracle/testdata/graph_regions_entries.a", true, false},
+	{"internal/oracle/testdata/graph_regions/million.a", true, false},
+	{"internal/oracle/testdata/graph_regions_accessor.a", true, false},
+	{"internal/oracle/testdata/graph_regions_literal_method.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_01.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_02.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_03.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_04.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_05.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_06.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_07.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_08.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_09.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_10.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_11.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_12.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_13.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_14.a", true, false},
+	{"internal/oracle/testdata/graph_regions_regression_15.a", true, false},
+	{"internal/oracle/testdata/graph_regions_static.a", true, false},
+	{"internal/oracle/testdata/graph_regions_static_interface.a", true, false},
+	{"internal/oracle/testdata/graph_regions_static_parent.a", true, false},
+	{"internal/oracle/testdata/graph_regions_anchor.a", true, false},
+	{"internal/oracle/testdata/graph_regions_cache.a", true, false},
+	{"internal/oracle/testdata/graph_regions_closure.a", true, false},
+	{"internal/oracle/testdata/graph_regions_escape.a", true, false},
+	{"internal/oracle/testdata/graph_regions_flow.a", true, false},
+	{"internal/oracle/testdata/graph_regions_list.a", true, false},
+	{"internal/oracle/testdata/graph_regions_literals.a", true, false},
+	{"internal/oracle/testdata/graph_regions_parse.a", true, false},
+	{"internal/oracle/testdata/graph_regions_symbols.a", true, false},
 	{"internal/oracle/testdata/call_targets_element.a", true, false},
 	{"internal/oracle/testdata/call_targets_region.a", true, false},
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
 	{"internal/oracle/testdata/call_targets_closure.a", true, false},
 	{"internal/oracle/testdata/call_targets_sort.a", true, false},
+	// Small programs documented in docs/memory.md, held to Node and the leak check.
+	{"internal/oracle/testdata/memory_examples/list.a", true, false},
+	{"internal/oracle/testdata/memory_examples/tree.a", true, false},
+	{"internal/oracle/testdata/memory_examples/closures.a", true, false},
+	{"internal/oracle/testdata/memory_examples/regions.a", true, false},
+	{"internal/oracle/testdata/memory_examples/strings.a", true, false},
 	{"internal/oracle/testdata/library_object_keys.a", true, false},
 	{"internal/oracle/testdata/library_object_is.a", true, false},
 	{"internal/oracle/testdata/library_object_has_own.a", true, false},
@@ -303,6 +391,11 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/string_limits.a", true, false},
 	{"internal/oracle/testdata/string_too_long.a", true, false},
 	{"internal/oracle/testdata/pad_too_long.a", true, false},
+	// The length checks that stop a pad or a repeat before it's built, and normalize past its first
+	// block of points (integration's reading of d96d304).
+	{"internal/oracle/testdata/pad_infinity.a", true, false},
+	{"internal/oracle/testdata/repeat_huge.a", true, false},
+	{"internal/oracle/testdata/normalize_long.a", true, false},
 	{"internal/oracle/testdata/stack_overflow.a", true, false},
 	{"internal/oracle/testdata/adversarial_order.a", true, false},
 	{"internal/oracle/testdata/adversarial_exits.a", true, false},
@@ -357,11 +450,23 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
 	// Regions: a statement's fresh values let go of together, and every way one could escape kept off it.
 	{"internal/oracle/testdata/regions.a", true, false},
+	{"internal/oracle/testdata/region_end.a", true, false},
 	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
 	{"internal/oracle/testdata/regions_throw.a", true, false},
 	// A constructor whose object a closure captures, kept in a global (integration's reading of
 	// fa49e43): the object outlives its statement, so no region.
 	{"internal/oracle/testdata/regions_constructor_capture.a", true, false},
+	// Guards and paths no fixture reached, from integration's readings of aa17d3c and fa49e43
+	// (#fxspptb): a comparator that spreads its parameter, a global moved before it's declared, the
+	// ways a parameter escapes, a spread returned as fresh, an object bigger than a region's first
+	// block, and region paths through asides, nested literals and try/finally.
+	{"internal/oracle/testdata/reuse_comparator_spread.a", true, false},
+	{"internal/oracle/testdata/reuse_move_before_ready.a", true, false},
+	{"internal/oracle/testdata/regions_escapes.a", true, false},
+	{"internal/oracle/testdata/regions_spread_fresh.a", true, false},
+	{"internal/oracle/testdata/regions_big.a", true, false},
+	{"internal/oracle/testdata/regions_paths.a", true, false},
+	{"internal/oracle/testdata/reduce_undefined_initial.a", true, false},
 	// A variable borrowed from an array, beside every way the array could lose the element while it lives.
 	{"internal/oracle/testdata/borrow_element.a", true, false},
 	{"internal/oracle/testdata/borrow_loop.a", true, false},
@@ -466,10 +571,42 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_throw.a", true, false},
 	{"internal/oracle/testdata/reuse_narrowed.a", true, false},
 	{"internal/oracle/testdata/reuse_lent_global.a", true, false},
+	// A field name longer than a C string literal may be (integration's reading of 4ddd17f).
+	{"internal/oracle/testdata/long_field_name.a", true, false},
 	// A method called on a spread's source inside the literal runs code with the source as this
 	// (integration's reading of aa17d3c): the source is not only read there, so it isn't reused.
 	{"internal/oracle/testdata/reuse_spread_method.a", true, false},
 	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
+	// A move handed to a call whose later argument throws (reuse.go, handOver).
+	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
+	// A throw from inside a ?:, && or ?? arm after the statement built strings (9984394).
+	{"internal/oracle/testdata/aside_throw.a", true, false},
+	// Spreading an Error, directly and through a view (integration's reading of 9984394): not yet.
+	{"internal/oracle/testdata/error_spread.a", false, false},
+	{"internal/oracle/testdata/error_spread_view.a", false, false},
+	// An uncaught error with an empty name, and with both empty (integration's reading of 9984394).
+	{"internal/oracle/testdata/uncaught_names.a", true, false},
+	{"internal/oracle/testdata/uncaught_names_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_error_construct.a", false, false},
+	{"internal/oracle/testdata/coverage_error_call.a", false, false},
+	{"internal/oracle/testdata/coverage_error_mutated.a", false, false},
+	{"internal/oracle/testdata/coverage_error_optional.a", false, false},
+	{"internal/oracle/testdata/coverage_error_view_return.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_literal.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_new.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_call.a", false, false},
+	{"internal/oracle/testdata/coverage_regexp_view.a", false, false},
+	{"internal/oracle/testdata/coverage_plain_view.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_default_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_custom_empty.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_custom_message.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_empty_changed.a", true, false},
+	{"internal/oracle/testdata/coverage_uncaught_no_argument.a", true, false},
+	{"internal/oracle/testdata/coverage_view_array.a", false, false},
+	{"internal/oracle/testdata/coverage_view_number.a", false, false},
+	{"internal/oracle/testdata/coverage_view_string.a", false, false},
+	{"internal/oracle/testdata/coverage_view_boolean.a", false, false},
+	{"internal/oracle/testdata/coverage_view_closure.a", false, false},
 	// Assignments inside a try (integration 9): a parameter assigned there, a counter assigned there,
 	// and a counted loop inside one.
 	{"internal/oracle/testdata/try_assignments.a", true, false},
@@ -510,6 +647,15 @@ type run struct {
 func execute(t *testing.T, name string, arguments ...string) run {
 	t.Helper()
 	return executeWith(t, nil, name, arguments...)
+}
+
+// leakSanitizer asks AddressSanitizer to check for leaks where it can. macOS's has no leak detector
+// and aborts when asked for one; there the leak check is internal/leakcheck's counted build.
+func leakSanitizer() string {
+	if runtime.GOOS == "darwin" {
+		return "ASAN_OPTIONS=detect_leaks=0"
+	}
+	return "ASAN_OPTIONS=detect_leaks=1"
 }
 
 // executeWith runs a command with environment added to the test's own; a later value for the same
@@ -672,90 +818,33 @@ func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
 }
 
 // leaks returns a report of everything a finished program never let go of, or "" when it let go of
-// everything. No garbage collector means every reference the compiler hands out has to come back;
-// this is where a missing release shows. Only programs Node finishes with exit 0 are asked.
-//
-// macOS has the counted build, and leaks --atExit run on it; Linux has LeakSanitizer, part of ASan
-// there, run on the sanitized binary the comparison already built.
+// everything: the leak check every test of a native program runs (internal/leakcheck), with each
+// command run as the oracle runs its own. Only programs Node finishes with exit 0 are asked.
 func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
 	t.Helper()
-	switch runtime.GOOS {
-	case "darwin":
-		return leaksCounted(t, native.C(program))
-	case "linux":
-		return leakSanitizer(t, sanitized)
-	}
-	t.Fatalf("no leak check for %s: the oracle knows macOS's counted build and Linux's LeakSanitizer", runtime.GOOS)
-	return ""
+	return leakChecked(t, native.C(program), sanitized)
 }
 
-// leaksCounted builds C counted (runtime/count.h) and returns a report of what it never let go of, or
-// "" when it let go of everything. It runs the binary twice: on its own, where its allocations must be
-// its frees and its values in regions, the rule the counts table is read by; then under leaks --atExit.
-//
-// The counts are the check for values. Outside the sanitizers every small value lives in a chunk of
-// the runtime's size-class allocator (heap.c), and every chunk stays reachable from the runtime's own
-// table of them, so to macOS's leaks tool a value the program never let go of still reads as
-// reachable: with an array's elements never let go of, leaks --atExit passed 260 of the 261 fixtures
-// it was asked about, and the counts failed 141. leaks --atExit is the check for what the runtime
-// takes from malloc outside the counts (an array's elements, a map's table, a region's blocks): with
-// a region's blocks never freed, the counts balance and leaks finds the blocks.
-func leaksCounted(t *testing.T, code string) string {
+// leakChecked is the leak check for a program's C and the sanitized binary built from it.
+func leakChecked(t *testing.T, code string, sanitized string) string {
 	t.Helper()
-	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
+	report, err := leakcheck.Check(leakcheck.Program{
+		C:         code,
+		Sanitized: sanitized,
+		Counted:   filepath.Join(t.TempDir(), "counted"),
+		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
+			return leakRun(executeWith(t, environment, name, arguments...))
+		},
+	})
+	if err != nil {
 		t.Fatal(err)
 	}
-	if report := unbalanced(t, execute(t, binary)); report != "" {
-		return report
-	}
-	return leaksTool(execute(t, "leaks", "--atExit", "--", binary))
+	return report
 }
 
-// leaksTool reads a run of macOS's leaks --atExit: its report when it found memory nothing reaches,
-// or "".
-func leaksTool(report run) string {
-	if report.exitCode == 0 {
-		return ""
-	}
-	return string(report.stdout)
-}
-
-// unbalanced reads a counted run's counts and returns a report when the program finished holding heap
-// values, or "" when its allocations are its frees and its values in regions.
-func unbalanced(t *testing.T, counted run) string {
-	t.Helper()
-	match := countsLine.FindSubmatch(counted.stderr)
-	if counted.exitCode != 0 || match == nil {
-		return fmt.Sprintf("the counted build didn't finish with its counts: exit %d, stderr %q", counted.exitCode, counted.stderr)
-	}
-	allocations, frees, regions := countOf(t, match[1]), countOf(t, match[2]), countOf(t, match[6])
-	if allocations == frees+regions {
-		return ""
-	}
-	return fmt.Sprintf("heap values leaked: %d (allocations %d, frees %d, in regions %d)", allocations-frees-regions, allocations, frees, regions)
-}
-
-// countOf is one number of a counts line, signed, so frees past allocations read as a negative leak.
-func countOf(t *testing.T, digits []byte) int64 {
-	t.Helper()
-	count, err := strconv.ParseInt(string(digits), 10, 64)
-	if err != nil {
-		t.Fatalf("counts: %v", err)
-	}
-	return count
-}
-
-// leakSanitizer runs a sanitized binary again with leak detection on, and returns LeakSanitizer's
-// report when anything leaked. The program finished with exit 0 on the comparison run, so any other
-// exit here is the sanitizer's.
-func leakSanitizer(t *testing.T, binary string) string {
-	t.Helper()
-	report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
-	if report.exitCode == 0 {
-		return ""
-	}
-	return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+// leakRun is a run as the leak check reads it.
+func leakRun(result run) leakcheck.Run {
+	return leakcheck.Run{Stdout: result.stdout, Stderr: result.stderr, ExitCode: result.exitCode}
 }
 
 // disagreement says how two runs differ, or "" when they don't.

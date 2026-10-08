@@ -54,6 +54,7 @@ var Features = []string{
 	"optional-chains",   // ?. and ?? through a linked list that may end anywhere
 	"number-formats",    // toExponential and toPrecision
 	"array-from",        // Array.from({ length }, callback)
+	"parallel",          // parallelMap over readonly values, plus a share of programs that must be refused
 	"inheritance",       // a subclass, an override, a super call, and a base-typed virtual call
 	"map-keys",          // a number Map and a number Set, including NaN and -0
 	"regex",             // regular expression literals: exec, replace, replaceAll and split

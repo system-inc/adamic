@@ -129,6 +129,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 		}
 		object := e.own(ir.Object, e.spreadCopy(literal, source))
+		e.adoptGraphObject(object, literal)
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -141,8 +142,8 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			e.line("adamic_object_field_types(%s)[(size_t)(%s - %s->slots)] = %d;", object, slot, object, field.Value.Type())
 			e.line("adamic_object_initialized(%s)[(size_t)(%s - %s->slots)] = %d;", object, slot, object, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
-				e.line("adamic_release(%s->reference);", slot)
-				e.line("%s->reference = %s;", slot, e.kept(values[index]))
+				e.dropIn(object, slot+"->reference")
+				e.line("%s->reference = %s;", slot, e.keptIn(object, values[index]))
 			} else {
 				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 			}
@@ -166,9 +167,15 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	}
 	object := ""
 	if region {
-		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.literalShape(literal)))
+		allocator := "adamic_object_new_filled_in"
+		if literal.Class != 0 {
+			// Constructor writes can call or throw after allocation, so its untouched slots need zero.
+			allocator = "adamic_object_new_in"
+		}
+		object = e.regionValue(fmt.Sprintf("%s(region, &%s)", allocator, e.literalShape(literal)))
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
+		e.adoptGraphObject(object, literal)
 	}
 	if len(literal.Fields) > 0 && e.dynamicProperties() {
 		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
@@ -203,7 +210,11 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			continue
 		}
 		if field.Value.Type().IsReference() {
-			value = e.kept(value)
+			if region && !constantUndefined.MatchString(value) {
+				// Report both retained and moved heap references. Constants pass over at runtime.
+				e.line("adamic_region_hold(region, %s);", value)
+			}
+			value = e.keptIn(object, value)
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
