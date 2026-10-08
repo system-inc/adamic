@@ -1,0 +1,286 @@
+Built: same-tree convention-only parser identity, no unused optional parser thunks, and all four owner runtime sites carried through the shared typedef. Parser C cmp=0 and release binary cmp=0 against be3926dc with only counted transport reverted.
+Commits: d2c2dc2b carries typed owner sites and receiver-aware optional admission; be3926dc selects owner modules consistently in cache harnesses. Exact scratch refusal remains proven by 6114dc36. Report/evidence follow on codex/closure-convention; neither scratch worktree is pushed.
+Commands and outputs: full native 193.860s, lower 53.986s and IR 17.792s pass; final uncached release/sanitized reader and two-backend Node gate 16.961s passes; touched vet passes. Both identical release parsers print 10523, exit 0, empty stderr.
+Mutants: each of four owner drop-count sites fails expected 3, have 2; missing required optional thunk compiles but Node catches native exit 70; forced unused thunk fails the emitted-C pin. Existing drop-count, wrong-order, cast and clean wrong-slot mutants remain caught.
+Not covered: hardware instructions/cycles, complete repository gate, broad new performance-host or threaded-runtime activation. Taste21 is an unchanged recursive checked-views gap for the views lanes. Historical main-only identity failures below do not isolate convention overhead.
+
+One convention
+
+Plain code: adamic_code(self, arguments). Counted code: adamic_counted_code(self, arguments, argument_count).
+Plain methods: adamic_method(self, arguments). Counted methods: adamic_counted_method(self, arguments, argument_count).
+Each shape has exactly one typedef. No call uses a function-pointer cast. Typed union dispatch selects the shape of the actual closure or method.
+Count observations include arguments.length, rest binding, and incompatible optional absence representations in the closed-world function-type candidate set. Compatible omitted slots are padded by the caller.
+Receiver packing and canonical frame support have independent feature flags. Neither creates a counted convention by itself. Receiver packing copies the packed layout, not the observable argument count, so rest slots survive prefixing this.
+Canonical counted constructors use the same argument order as ordinary closures; cache comparisons select the active typed pointer member.
+
+Hunk decisions and witnesses
+
+Checked union narrowing is retained instead of incoming unchecked ir.Narrow. Array predicate narrowing retains the declared element contract and checks the runtime array brand.
+Witnesses: e4eec87_f2_union_narrow_call.a, e4eec87_f2b_union_narrow_number.a, host_array_predicate.a, host_array_unknown_predicate.a. All passed the Node oracle in both backends.
+Break.Depth retains scope and finally cleanup. Break.Label and Continue.Label use their named target and perform the corresponding cleanup.
+Witnesses: taste_labels.a and stage3/fixtures/taste/23_labels_finally.a. Both passed the Node oracle.
+Nested preallocation does not replace definite-assignment declarations. Non-null assertions unwrap synthetic checked union loads before performing their own nullish check.
+Witnesses: non_null.a, non_null_definite.a, non_null_initialized.a; the latter two passed after restoring field readiness on writes.
+Imported const labels retain front-3's proof. Host effectful case expressions remain accepted and short-circuited. Literal-only cases retain main's original emission.
+Witnesses: imported_const_cases/*, switch_case_declarations/*, taste_stage3_representations.a, and the switch mutants.
+New joining witnesses: closure_convention_nested.a and closure_convention_receiver_rest.a; Node agreement, sanitizers, release and leak checks passed.
+Hunk-by-hunk resolution audit: /tmp/closure-convention-front-hunk-decisions.json.
+
+Runtime audit
+
+Searches: rg -n -e '->code\s*\(' -e '\.code\s*\(' -e 'counted_code\s*\(' internal/native/runtime, and rg -n adamic_method internal/native/runtime.
+Live tree: array.c's sort comparator calls adamic_closure_call(compare, {left,right}, 2). The helper calls adamic_code with two arguments or adamic_counted_code with three. No cast.
+adamic.h:137 and :141 are the counted/plain closure invocations; :290 and :291 are the counted/plain method invocations. One typedef per shape.
+object.c:67 and :93 retrieve adamic_method_entry; they do not invoke a code pointer. union.c:135 inspects a method table; class_inheritance.c inspects function-index virtual tables.
+map_set.c: collection_next ignores presence, so its definition and constructor use adamic_code(self, arguments), with no count.
+This branch also carries regexp_replace.c:114 through the typed closure helper. The external library snapshot 132d9919 contains node_process.c:436/:441 and parallel.c:197/:300; those four sites remain outside this branch and their integration is not claimed.
+
+Retains
+
+CLI counted release builds: weak_parent allocations/frees 86/86, retains/releases 253/302, peak 41; typeof_dispatch 9/9, 6/16, peak 3. Both match main.
+The previous +2/+2 and +1/+1 were owned Weak/Union values created by fitting fixed call arguments before ownership planning. Fixed fitting remains at the native boundary; only rest-tail elements are fitted in lowering. Counts are numbers and do not retain.
+Counts were re-recorded with TestCountsAreRecorded, excluding only stage3/fixtures/taste/21_truthy_loops.a. Its incoming row is preserved, not asserted remeasured.
+The complete counts attempt failed because that source casts to a recursive object-field checked view, which interface_cast.go refuses. The source and its expected-success fixture remain intact; the test was not weakened.
+
+Parser observation
+
+Same canonical entry, Go -buildvcs=false, default release -O2, same flags and toolchain as main 48c05d09. No counted or canonical macro or argument_count binding occurs in the parser C.
+The post-merge comparison failed. Earlier artifacts: C 9134350a0e5089c7c0211e5c1d5fcac6d37634271a3f79d90f19932195b0e1e2, binary f488ecf95f6d2b774e2f18b01be52be1910fc7c657edfb0ee1ff1028862bc719.
+Main: C 1e6bfaa8b9e114078056060a632f9e8e3d782d511badeed1ab0030cba674a5d9, binary db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e.
+After removing unobserved field bookkeeping, remaining C differences include new optional-boolean method table entries and an unused string interned by an admission probe. Runtime object-state allocation and newly merged host translation units also differ from main. Identity has not been established.
+Earlier best-of-five parse: main 10.330 ms; merged 18.774 ms; each printed 10523. That measurement precedes removal of unobserved field bookkeeping and is not a measurement of this final merge.
+perf_event_open for instructions and cycles returns errno 2; no CPU PMU exists on this box. Hardware values are unavailable, not zero.
+Historical checkpoint 4526aa46 was byte-identical; it does not prove post-merge identity.
+
+Validation logs
+
+/tmp/closure-convention-front-commit-native.log: native ABI pins and drop-count mutant passed, 0.320s.
+/tmp/closure-convention-front-commit-oracle.log: reader, optional/default, nested, omitted, host, imported const, switch fixtures and mutants passed, 21.171s.
+/tmp/closure-convention-front-metadata.log: host, non-null, census and closure joining witnesses passed, 11.615s.
+/tmp/closure-convention-front-canonical.log: canonical nested reference and switch mutants passed, 5.667s.
+/tmp/closure-convention-front-conflict-proofs.log: union, array and label decisions passed, 1.482s.
+/tmp/closure-convention-front-call-targets-final.log: shared call-target guard passed, 33.147s.
+/tmp/closure-convention-front-lower-final.log: nested-rest admission and array predicate proof tests passed, 0.502s.
+/tmp/closure-convention-front-counts-selected.log: executable counts passed, 52.598s; taste 21 excluded explicitly.
+The full touched-package attempt passed native (469.753s), load (9.566s), fresh (182.986s). Lower and IR failures were fixed and rechecked. The final complete flow run passed in 177.169s, including SSA, reaching definitions, mutation ranges and Node trace edges. A tentative readiness-edge change was removed after its mutant survived; the existing declaration fixes already made that fixture pass. No unproven graph change is retained.
+Setup succeeded in 52.417s; nproc 5, CPU quota 4; Go 1.27.1, clang 20.1.8, Node 24.19.0. Setup timing details remain in the historical checkpoint and /tmp/closure-convention-setup.log.
+
+Checkpoint evidence after current-main integration
+
+Observed: git merge-base --is-ancestor succeeds for 24a2b287, b788e96e, 28a10122, 9534e8ab and current origin/main ce0750f2. Front-3 and host tips were unchanged by the final fetch. Main advanced by a signal-reset runtime patch and meter evidence; both were merged, without conflicts, and the inherited-signal Node checks passed.
+
+Observed: the final parser C contains no ADAMIC_CLOSURE_CONVENTION macro and no argument_count binding. C SHA256 e5115e8d8daacce460238b6266e9ef3dbe2ecd05aff2fe1c3f47aeb300a95951 differs from main 48c05d09's 1e6bfaa8b9e114078056060a632f9e8e3d782d511badeed1ab0030cba674a5d9. Final release binary SHA256 a0d99447bda0c8d31fb2579d2d7d108221ee11bdf93eed119d13967ededb2c48 differs from main's db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e. Identity FAIL is an outstanding requirement, not a successful no-cost claim.
+Observed: five alternating release runs, after other test runs stopped, all exited zero and printed 10523. Main wall milliseconds: 20.184, 9.658, 9.699, 9.347, 9.957. Merged: 18.937, 10.354, 19.608, 12.058, 10.137. Best of five: 9.347 / 10.137 ms. This is not an instructions/cycles measurement or proof that performance is unchanged within noise. Both requested hardware events return perf_event_open errno 2 because this machine lacks a CPU PMU.
+Observed C differences: the optional-method admission adds four method-table entries and an unused interned string; the normalized semantic diff is preserved. Host-blockers adds object state allocation and runtime translation units even when parser field checks do not observe them. Current main also changes startup signal behavior. Inference: selective count emission alone cannot establish byte identity until these remaining merged features are made selective too.
+
+Host fixture 24
+
+Exact source preserved as closure-convention-evidence/host24.a, from codex/host-proof-combined. SHA256 4a30cf39a2b30c91703baf39ba4f3574921f30cafedf1c91ee528499c2025159 matches the upstream fixture byte for byte. Node prints false, false, true, false, aBc_09.TS, one per line. At checkpoint 28443efc both C and JS compilation stopped at line 23: stage 0 can't lower node:fs.mkdtempSync yet. The host dependency port below resolves that refusal and establishes end-to-end agreement.
+The required filesystem scratch operations are library commit 82c12699, as-const stat options ed957219, with path/process and RegExp callback support on the library branches; they are absent from the three requested compiler tips. Merely changing a closure signature cannot implement those operations. Further library integration must preserve their error and ownership behavior and adapt callback rest slots to this convention.
+
+Runtime audit completeness
+
+The whole merged runtime has exactly four code-pointer invocation sites, all in adamic.h: counted closure at 137, plain closure at 141, counted method at 290 and plain method at 291. Their typedefs are respectively adamic_counted_code, adamic_code, adamic_counted_method and adamic_method. There is no function-pointer cast. The sort caller at array.c:198 dispatches through those closure typedefs.
+The requested six source call sites are each listed in closure-convention-evidence/runtime-sites.json. array.c:198 and regexp_replace.c:114 are now present and typed in this branch. The two node_process.c performance sites and two parallel.c sites belong to an external library runtime. Audit is complete; integration of those four sites is incomplete. Their old direct calls must not be accepted as evidence of typed compatibility with this header. Process builtin initializers and callback rest packing also require adaptation, so a five-line call replacement alone would not be a sound port.
+
+Final commands
+
+ADAMIC_GATE_UNCACHED=1 go test ./internal/flow -count=1 -timeout 15m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -run 'TestClosureConventionDropCount|TestNoReaderCallingConvention|TestASignalLeavesWhatWasPrinted|TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length|TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention|TestNativeAgreesWithNode/internal/oracle/testdata/census_optional_values|TestNativeAgreesWithNode/internal/oracle/testdata/host_' -count=1 -timeout 15m
+The two commands passed uncached; their logs are committed in closure-convention-evidence. The complete gate is not green: stage3/fixtures/taste/21_truthy_loops.a:34:25 still refuses checked view field objectType of type Type. Its source, success expectation and incoming counts row remain intact.
+The excess-count mutant changes packedClosureCall's selector to always true. TestNoReaderCallingConvention rejects both an unobserved program's count binding and a count reaching an unrelated function type. The source is restored. The drop-count mutant removes the actual call's last argument; clang rejects expected 3, have 2 under -Werror. Neither mutant survives.
+
+Host fixture completion
+
+Observed: exact host fixture 24 is registered as closure_convention_host24.a, with its source unchanged. Both backends agree with Node on false, false, true, false, aBc_09.TS. Release, sanitizers and leak checks passed. Its counted run records allocations/frees 219/219, retains/releases 162/200, peak 53.
+The port carries Adamic library scratch operations from 82c12699, exact as-const stat-option proof from ed957219, the lexical join and process directory behavior from codex/host-proof-combined, and guarded RegExp replacement from 96bb40f6 / 132d9919. No cohere code was copied. Unimplemented Node members keep their named refusal.
+The callback uses the same counted/plain pointer types and argument order. Its actual count includes captures, offset, input and optional named groups; packing uses the program's reserved rest slot. JS receives the original argument list and uses its existing rest binding. The obsolete library arrow-only rest path was removed, so there is one binding rule.
+The new closure_convention_regexp_count.a witness checks named function callbacks with arguments.length, both with and without named groups, plus a callback with a heterogeneous rest tail. All agree with Node. The original callback, arguments, throw, argument_guard and group_guard fixtures are preserved, as are scratch mkdtemp and rm fixtures.
+Callbacks are accounted for in exception edges, freshness, mutation inference and global move planning. ABI flags are emitted from IR observations, never selected by a name occurring in a user literal. Node host and replacement translation units are omitted when unused; scratch definitions are similarly guarded. The host port leaves the parser C and release binary byte-identical to checkpoint 28443efc: C e5115e8d8daacce460238b6266e9ef3dbe2ecd05aff2fe1c3f47aeb300a95951, binary a0d99447bda0c8d31fb2579d2d7d108221ee11bdf93eed119d13967ededb2c48. They still differ from main 48c05d09; that acceptance condition remains open.
+
+Host validation and mutants
+
+Uncached host/replacement Node gate: 38.225s. Scratch admission and refusal gate: lower 14.837s; typed generated/runtime drop-count and no-reader pins: native 9.020s; all filesystem input fixtures and 31 existing filesystem mutants: oracle 20.127s. Final IR marker/host/mutant gate: native 0.694s, oracle 4.084s. Final contracts: native 0.580s, lower 1.767s. Full flow after the port: 195.888s, passed. Counts update excluding only the blocked taste 21: 160.115s, passed; its incoming row was restored in the proper table position and is not claimed remeasured. Existing counts, including weak_parent and typeof_dispatch, did not move.
+Drop the count at regexp_replace.c:114: clang under -Werror rejects expected 3, have 2. Offset off by one, swapped capture order and omitted named groups: only source-on-Node stdout caught each, with clean sanitizer/leak runs. Remove argument or group guards: the checked backend comparison caught each, with clean mutant execution. Select runtime code by matching keywords in user literals: TestClosureConventionRuntimeFeaturesIgnoreLiterals rejects the unused feature. All compiler source mutations were restored.
+The matching-subset counts assertion passed in 40.443s before adding host fixtures, with only the explicitly skipped taste-21 row temporarily excluded from the expected subset and restored afterward. No numeric expectation was changed for that assertion. The ordinary whole-file counts check remains blocked by taste 21's unsupported recursive checked view.
+
+Remaining work
+
+Parser identity to main 48c05d09 remains false because of the merged optional method-table additions, admission string and host object-state/runtime changes. Hardware instructions and cycles remain unavailable on this box. Four external runtime sites remain outside this compiler branch: node_process.c performance invocation at 436/441 and parallel.c at 197/300. This port exposes only cwd/chdir/tmpdir/join; it does not pretend to implement performance or parallel scheduling. The six-site audit identifies the required typed dispatcher and actual count for every site, but does not claim those external modules have been compiled against this header.
+
+Priority ABI enforcement checkpoint
+
+The parser worker found a real silent miscompile in its unpublished scratch
+33bf53aca3ce199aa05fe7bd2e7898e7c5ef2d5b. Its evidence at c109c06d records
+native 9 versus Node 1, both exit 0 and empty stderr. This is evidence supplied
+by that worker; the exact scratch has not yet been rebuilt on this box.
+
+All closure definitions now have a prior declaration using the runtime function
+type underlying the one pointer typedef for their shape. Method thunks and
+runtime collection_next have the same check. Constructors use C11 _Generic
+checks on the unconverted source expression: Clang accepts some function to
+void pointer casts even with -pedantic, so an ordinary typed parameter alone
+would not forbid that escape. Generic checks reject it without runtime work.
+Clang also uses -Wcast-function-type-strict under -Werror.
+
+Every signature-erasing function pointer cast found in the native compiler:
+1. class_inheritance.go classDeclarations: (adamic_virtual_method) followed by
+   a native method symbol. Removed; the virtual table stores closed-world
+   function identities as size_t, never erased function pointers.
+2. class_inheritance.go callCode: ((result (*)(parameters))adamic_virtual(...)).
+   Removed; an emitted dispatcher switches on that identity and uses typed
+   direct calls to the closed-world candidates. C checks each actual signature.
+No closure or interface-method pointer cast was present in the reconciled tree.
+Object/data pointer casts remain; they do not carry function code.
+
+Pinned mutants in TestClosureConventionWrongOrder, all caught:
+- swapped counted definition: conflicting types for adamic_function_4_reader_value;
+  previous declaration: static adamic_counted_code_function ...;
+- swapped call: incompatible integer to pointer conversion passing int to
+  adamic_value *, and incompatible pointer to integer conversion to size_t;
+- incompatible function-pointer cast: converts to incompatible function type
+  [-Werror,-Wcast-function-type-strict];
+- void-pointer-erased constructor: controlling expression type void * not
+  compatible with any generic association type.
+Full compiler errors: closure-convention-evidence/abi-order-mutants.log.
+Generated and runtime drop-count mutants still fail with expected 3, have 2.
+
+Node acceptance includes the exact native-arguments-length-value.a source from
+c109c06d, arguments_length_value_count.a, and arguments_length_reduce_left.a.
+TestArgumentsLengthTypeScriptSource checks source Node, release -O2 native,
+ASan/UBSan native, leak counts, and the JavaScript backend. The uncached final
+focused gate passed: native 12.349s before constructor guards; the subsequent
+final gate includes those guards and all arguments fixtures (see saved log).
+New probe counts: 3 allocations, 3 frees, 2 retains, 7 releases, peak 3.
+
+Warning commit: fa48dc2d73363ea7daa06f634685c8540ce4ff7b on codex/arguments-length
+adds notes/arguments-length/DO_NOT_MERGE_ALONE.md, names reconciliation checkpoint
+9b6b451c3479c043501c346a24570299f069d750, and requires landing only through this
+branch. This additional own-branch push is explicitly authorized by the user.
+
+Exact scratch reproduction remains pending: 33bf53ac and its precursor e4cc453a
+are unpublished commits, absent from this object store and the fetched proof
+branch. The front25 saved patch is incremental against e4cc453a; treating the
+current reconciled tree as that base would not reproduce the recorded compiler
+set. Requested a bundle or complete compiler tree from the parser worker.
+Wrong-order and cast mutants are observed C compiler failures here, not claimed
+as the requested exact scratch replay. Earlier parser byte-identity failure and
+best-five numbers predate this enforcement change; a fresh identity check follows.
+
+Post-enforcement validation and legacy slot removal
+
+The IR previously retained ArgumentCountSlot as a misleading name for the end
+of fixed/rest storage. It is now FixedArgumentSlots, with no numeric count word
+reserved. Rest offsets and emitted C are unchanged; parser C cmp passes against
+2b98fb26's output. Legacy code that reads Program.ArgumentCountSlot no longer
+builds against this IR. The actual count remains the separate typed parameter.
+
+TestArgumentsLengthWrongSlotMutant replaces the actual binding with
+arguments[0].number in the exact parser probe. It compiles, prints 9, exits 0,
+and writes no stderr under release and ASan/UBSan. Source Node prints 1.
+Both runs are caught only by stdout comparison, reproducing the reported silent
+miscompile as a proving mutant; this is not claimed as the exact scratch replay.
+
+Full IR initially found an unapproved direct Call.Function read in non_null.go.
+Checked-union synthetic-load recognition now uses CallTargets and requires one
+checked helper candidate. It preserves the terminal nullish check and never
+peels a multi-target virtual call. The existing closed-world reader guard,
+non-null and checked-union fixtures pass; no allowlist exception was added.
+Full IR/lower and touched-package go vet then pass (see saved logs).
+
+Fresh release parser identity (same -O2 flags, pinned main 48c05d09):
+C main 1e6bfaa8b9e114078056060a632f9e8e3d782d511badeed1ab0030cba674a5d9
+C branch 4e1ecc52120c88b612992fbfb53b9ac80cd3078226ad8522ba34dcf6635b253d
+binary main db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e
+binary branch 8dd60d220fb73218f2665f0b6cc2e3e399541cf05271b8013e34a7e994cea83d
+Both comparisons are false. New typedef-derived declarations and virtual-table
+identities add differences to the already documented merged host/method changes.
+This is an acceptance failure, not a byte-identity or performance parity claim.
+Best-five runs alternate the two release binaries on the idle box with identical
+--manifest, --count and --whole flags: main 10.208 ms, branch 10.854 ms; every
+run prints 10523, exits 0, empty stderr. CPU PMU instructions and cycles remain
+unmeasured: perf_event_open returns ENOENT (errno 2) for each event.
+
+Exact replay investigation: front5's compiler patch matches all 64 old blob
+hashes against compiler/stage3-front-2 860a0d5e. Its compiler files apply in a
+fresh detached worktree. Later saved patches reconstruct 64 of 77 front25
+compiler postimages with matching Git hashes; 13 remain unavailable, including
+emit_functions.go fc6b74df -> 6d27d8b6, IR, lowering and JavaScript files.
+No invented conflict resolutions or discovery stubs are substituted. A separate
+host-only merge attempt cannot replay the parser's resolver: its object.go hunk
+lacks the expected CallbackType context. That disposable merge is aborted.
+Need the parser worker's unpublished scratch bundle or complete compiler tree
+to perform the exact requested C refusal build. Published branch evidence and
+our four C compiler error mutants are not a substitute for this requirement.
+
+Pushed follow-up a02dd049 artifact confirmation
+
+Rebuilt parser C and release binary at a02dd0498efeb17d0fd2c9283bfc980ff529ad8d.
+Both are byte-identical to the measured 2b98fb26 artifacts above; both still
+fail identity to main 48c05d09. The 10.208/10.854 ms best-five measurements
+therefore apply to the pushed follow-up's exact binary, not an assumed rebuild.
+Final runtime grep includes ->code(), .code(), ->counted_code(),
+.counted_code() and adamic_method_call(), across every runtime C/header file.
+All actual indirect closure/method calls in this tree are the typed dispatchers
+in adamic.h. array.c and regexp_replace.c call the closure dispatcher. The
+four external process/parallel sites remain listed individually in runtime-sites.json.
+
+Latest requested diagnosis after b8acd621
+
+Literal cmp of both parser C and release binary against pinned main 48c05d09
+fails; the 10.208/10.854 ms best-five numbers are not measurements of identical
+bytes. parser-function-comparison.json compares balanced emitted C definitions
+after replacing interned string identifiers with their exact literal contents:
+all 295 existing definitions are unchanged; four method thunks are added:
+adamic_method_65 Parser.type, _97 Parser.assignment, _98 Parser.allowInAssignment,
+and _130 Statements.type. Optional/MaybeBoolean method admission uses the
+closed-world function-type candidates and adds those method-table entries.
+An unused admission-probe string "Ok" shifts subsequent interned identifiers.
+Typedef-derived prototypes and numeric nominal virtual-table identities also
+change C outside the definitions. Main's erased function-pointer table casts
+cannot be restored while satisfying the higher-priority no-cast requirement.
+Runtime object allocation reserves and initializes two state bytes per field;
+region allocation likewise differs. Current-main's signal-reset integration
+also changes startup. These are observed merged differences, not count overhead:
+parser C still has no count binding or counted-convention feature definition.
+Literal byte identity remains unsatisfied; no performance parity is claimed.
+
+All six runtime sites, owner areas and exact one-line replacements for the four
+absent sites are recorded in runtime-owner-handoff.md and runtime-sites.json.
+Those external translation units have not been compiled here.
+
+Taste21 Node succeeds; branch refuses recursive checked objectType at 34:25.
+Main refuses its numeric condition at 31:13. Separate unchanged ancestor/label
+loops compile and match Node. The full acceptance failure remains real and
+its source/expectation/counts row were not weakened. Raw diagnosis logs and
+loops-only witness are committed.
+
+Exact scratch 33bf53ac: waiting for the parser worker's published branch as
+requested. No reconstruction substitutes for that exact tree.
+
+Exact published scratch refusal completed
+
+Fetched publication be7bdb8b and checked out unchanged 33bf53ac in a detached,
+never-pushed worktree. Original compiler builds; exact witness builds, exits 0,
+empty stderr and prints 9 against Node 1. Applied the saved enforcement-only
+patch, leaving its erroneous calls and buffer-slot binding unreconciled.
+Enforced Go compiler builds; native Build exits 1 under -Werror:
+array.c:202:72: error: too many arguments to function call, expected 2, have 3.
+Runtime compilation stops first. Independently compiling its exact emitted C
+against the same header also exits 1, at the witness constructor:
+controlling expression type 'adamic_counted_code_function *' not compatible
+with any generic association type. The plain constructor rejects a counted
+function; no missing host declaration or erased pointer cast causes this result.
+Full errors, original/enforced C, exact patch, hashes and replay commands are
+committed in closure-convention-evidence/exact-parser-* files.
+The exact replay requirement is now covered; historical pending statements above
+are superseded. Parser byte identity and the full taste21 acceptance remain open.
+Literal C/binary cmp both exit 1; parser-literal-cmp.log records byte locations
+and all four artifact hashes. No performance parity is claimed.
+
+Convention-only completion
+
+See closure-convention-evidence/clean-parser-identity.md and .json for the exact
+three-file reverted baseline, hashes, commands, cmp=0 results, runtime audit and
+mutants. Earlier claims that four sites remain external or clean byte identity
+is unmet are superseded. Taste21 remains assigned to checked views.

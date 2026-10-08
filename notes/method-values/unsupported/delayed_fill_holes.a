@@ -1,0 +1,1 @@
+const method = Array.prototype.fill; const filled: number[] = method.call(new Array<number>(3), 1); console.log(filled.join('|'));

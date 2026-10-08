@@ -1,0 +1,3 @@
+function take(value: IArguments): void { console.log(`${value.length}`); }
+function rejected() { const alias = arguments; console.log(`${alias.length}`); }
+rejected();
