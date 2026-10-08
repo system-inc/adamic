@@ -126,22 +126,33 @@ func goOracleFrom(t *testing.T, sourceRoot string) string {
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
-	if isPackage(directory) {
-		value := shared(fmt.Sprintf("port sanitize=%t", sanitize), func(value *sharedValue) {
-			value.path, value.err = sharedPath("scanner")
-			if value.err == nil {
-				value.err = buildPortTo(directory, sanitize, value.path)
-			}
-		})
-		if value.err != nil {
-			t.Fatal(value.err)
-		}
-		return value.path
+	built := checkerCompile(t, directory)
+	archive := ""
+	if built.bridge {
+		archive = checkerArchive(t, sanitize)
 	}
-	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := buildPortTo(directory, sanitize, binary); err != nil {
+	started := time.Now()
+	binary := checkerBinary(t, built.c, archive, sanitize)
+	t.Logf("checker native build: %s", time.Since(started))
+	return binary
+}
+
+// Each registered mutant is built once and owns its binary until its subtest
+// completes. Retaining all 75 checker-linked binaries adds no build reuse.
+func buildMutantPort(t *testing.T, directory string) string {
+	t.Helper()
+	built := checkerCompile(t, directory)
+	archive := ""
+	if built.bridge {
+		archive = checkerArchive(t, true)
+	}
+	started := time.Now()
+	binary, err := compileCheckerBinary(built.c, archive, true)
+	if err != nil {
 		t.Fatal(err)
 	}
+	t.Cleanup(func() { os.RemoveAll(filepath.Dir(binary)) })
+	t.Logf("checker native mutant build: %s", time.Since(started))
 	return binary
 }
 
@@ -310,6 +321,31 @@ func compare(t *testing.T, oracle, binary, directory, path string) []byte {
 func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module string) []byte {
 	t.Helper()
 	want := execute(t, "", oracle, "--manifest", path)
+	manifestText, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bytes.HasPrefix(manifestText, []byte("program ")) {
+		prefix := filepath.Join(t.TempDir(), "transcript")
+		native := execute(t, "", binary, "--manifest", path, "--record", prefix)
+		runner := filepath.Join(repository, "oracle/node.mjs")
+		t.Logf("typed runtime time: Go program and lint=%s native program, lint and recording=%s", want.duration, native.duration)
+		for _, side := range []struct {
+			name string
+			run  execution
+		}{
+			{"native", native},
+			{"Node", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--replay", prefix)},
+			{"emitted JavaScript", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, module, "--manifest", path, "--replay", prefix)},
+		} {
+			if diff := difference(side.run.output, want.output); diff != "" {
+				t.Fatalf("%s: %s", side.name, diff)
+			}
+			t.Logf("typed runtime time: %s=%s", side.name, side.run.duration)
+		}
+		t.Logf("live Go, native, Node and emitted JavaScript replay identical: %d bytes", len(want.output))
+		return want.output
+	}
 	for _, side := range []struct {
 		name string
 		run  execution
@@ -331,8 +367,21 @@ func TestRulesAgree(t *testing.T) {
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
 	rows := generated(t)
+	module := emittedJavaScript(t, directory)
+	typed := map[string]bool{}
+	for _, descriptor := range prepareRegistry(t, directory) {
+		typed[descriptor.Name] = descriptor.Typed
+	}
 	for _, row := range upstream(t) {
-		if strings.HasSuffix(row, "\tunsupported-recovery") {
+		fields := strings.Split(row, "\t")
+		if len(fields) > 1 && typed[fields[1]] {
+			config := filepath.Join(t.TempDir(), "tsconfig.json")
+			options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, fields[0])
+			if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+				t.Fatal(err)
+			}
+			compareWithJavaScript(t, oracle, binary, directory, manifest(t, []string{"program " + config, row}), module)
+		} else if strings.HasSuffix(row, "\tunsupported-recovery") {
 			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
 			checkRecoveryRefusal(t, oracle, binary, directory, row)
 		} else {
@@ -644,7 +693,7 @@ func TestLegacyMutants(t *testing.T) {
 			for _, side := range []struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.name, side.name)
 				}
@@ -659,12 +708,14 @@ func TestDecorationOptionMutant(t *testing.T) {
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
 	directory := mutant(t, "foldedRange(character, first, last)", "foldedRange(character, first, first)", "comments.ts")
+	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if bytes.Equal(side.run.output, want) {
 			t.Fatalf("decoration range mutant survived on %s", side.name)
@@ -684,12 +735,14 @@ func TestCountGuardMutant(t *testing.T) {
 	answer := execute(t, "", oracle, "--manifest", path).output
 	count := execute(t, "", oracle, "--manifest", path, "--count").output
 	directory := mutant(t, "if(countOnly) {\n        return linter.findings.length;", "if(countOnly) {\n        return linter.findings.length + 1;", "main.ts")
+	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name            string
 		ordinary, count execution
 	}{
 		{"Node", node(t, directory, path, false), node(t, directory, path, true)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false), emittedNode(t, directory, path, true)},
+		{"native", execute(t, "", binary, "--manifest", path), execute(t, "", binary, "--manifest", path, "--count")},
 	} {
 		if !bytes.Equal(side.ordinary.output, answer) {
 			t.Fatalf("%s mutant was caught outside the count check", side.name)
@@ -861,6 +914,8 @@ func TestShardsAgree(t *testing.T) {
 // One edited JSX rule is the native canary. Semantic mutations are held to Go on
 // Node and emitted JavaScript; this copy also proves sanitized native matches the
 // mutated Node result, including JSX parsing, text spans and finding serialization.
+var mutantBuilds = make(chan struct{}, min(runtime.NumCPU(), 4))
+
 const nativeCanaryRule = "react/jsx-no-comment-textnodes"
 
 func TestMutants(t *testing.T) {
@@ -898,18 +953,56 @@ func TestMutants(t *testing.T) {
 					rows = append(rows, row)
 				}
 			}
-			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
+			if descriptor.Typed {
+				// Typed witnesses need a real project; syntax-only rows would skip the mutant.
+				rows = ownedWitnessRows(t, ".", descriptor)
+				files := make([]string, 0, len(rows))
+				for _, row := range rows {
+					files = append(files, strings.SplitN(row, "\t", 2)[0])
+				}
+				config := filepath.Join(t.TempDir(), "tsconfig.json")
+				options, err := json.Marshal(map[string]any{"compilerOptions": map[string]bool{"strict": true}, "files": files})
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(config, options, 0644); err != nil {
+					t.Fatal(err)
+				}
+				rows = append([]string{"program " + config}, rows...)
+			} else {
+				rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
+			}
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
 			if change.File == "" {
 				change.File = descriptor.Module
 			}
 			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
-			mutatedNode := node(t, directory, path, false)
-			for _, side := range []struct {
+			// The slot is released by defer: buildPort fails with t.Fatal, which ends this goroutine, and a
+			// slot held by a failed build would leave every other subtest waiting until the package timed out.
+			binary := func() string {
+				mutantBuilds <- struct{}{}
+				defer func() { <-mutantBuilds }()
+				return buildMutantPort(t, directory)
+			}()
+			type runtimeSide struct {
 				name string
 				run  execution
-			}{{"Node", mutatedNode}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
+			}
+			var sides []runtimeSide
+			if descriptor.Typed {
+				prefix := filepath.Join(t.TempDir(), "transcript")
+				live := execute(t, "", binary, "--manifest", path, "--record", prefix)
+				runner := filepath.Join(repository, "oracle/node.mjs")
+				sides = []runtimeSide{
+					{"native", live},
+					{"Node", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--replay", prefix)},
+					{"emitted JavaScript", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emittedJavaScript(t, directory), "--manifest", path, "--replay", prefix)},
+				}
+			} else {
+				sides = []runtimeSide{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}}
+			}
+			for _, side := range sides {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
 				}
@@ -918,7 +1011,7 @@ func TestMutants(t *testing.T) {
 			if descriptor.Name == nativeCanaryRule {
 				binary := buildPort(t, directory, true)
 				got := execute(t, "", binary, "--manifest", path)
-				if diff := difference(got.output, mutatedNode.output); diff != "" {
+				if diff := difference(got.output, sides[0].run.output); diff != "" {
 					t.Fatalf("native canary differs from mutated Node: %s", diff)
 				}
 				t.Logf("sanitized native canary %s equals mutated Node: %d bytes", descriptor.Name, len(got.output))
@@ -956,24 +1049,14 @@ func rewritePortImports(t *testing.T, file, source string) string {
 
 func emittedJavaScript(t *testing.T, directory string) string {
 	t.Helper()
-	if isPackage(directory) {
-		value := shared("emitted JavaScript", func(value *sharedValue) {
-			value.path, value.err = sharedPath("lint.mjs")
-			if value.err == nil {
-				value.err = emitJavaScriptTo(directory, value.path)
-			}
-		})
-		if value.err != nil {
-			t.Fatal(value.err)
-		}
-		return value.path
-	}
+	built := checkerCompile(t, directory)
 	path := filepath.Join(t.TempDir(), "lint.mjs")
-	if err := emitJavaScriptTo(directory, path); err != nil {
+	if err := os.WriteFile(path, []byte(built.javascript), 0644); err != nil {
 		t.Fatal(err)
 	}
 	return path
 }
+
 func emittedNode(t *testing.T, directory, manifest string, count bool) execution {
 	t.Helper()
 	return runJavaScript(t, emittedJavaScript(t, directory), manifest, count)

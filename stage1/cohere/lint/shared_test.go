@@ -206,7 +206,21 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
 		return nil, err
 	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side}})
+	typedHarness := filepath.Join(root, "internal/lint/testing/program.go")
+	typedData, err := os.ReadFile(typedHarness)
+	if err != nil {
+		return nil, fmt.Errorf("%v", err)
+	}
+	typedOriginal := "return Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile:  sourceFile,\n\t\tcapture:     newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}"
+	if strings.Count(string(typedData), typedOriginal) != 1 {
+		return nil, fmt.Errorf("%v", "typed capture overlay anchor changed")
+	}
+	typedReplacement := "result := Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile: sourceFile,\n\t\tcapture: newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}\n\tRecordAssertedCase(t,result)\n\treturn result"
+	typedSide := filepath.Join(directory, "program.go")
+	if err := os.WriteFile(typedSide, []byte(strings.Replace(string(typedData), typedOriginal, typedReplacement, 1)), 0644); err != nil {
+		return nil, fmt.Errorf("%v", err)
+	}
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side, typedHarness: typedSide}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		return nil, err
