@@ -18,8 +18,9 @@
       "candidate_reads": 1,
       "dependency": "tuple alternatives in object-plus-primitive unions",
       "probe": "incremental-out-signature-frontier",
-      "status": "queued",
-      "overlaps_primary": true
+      "status": "certified: exact original frontier string input plus tuple and wrong-primitive controls",
+      "overlaps_primary": true,
+      "evidence": "TestCheckedViewTupleLane4bOutSignature and three lane4b-out-signature .a fixtures"
     }
   ]
 }

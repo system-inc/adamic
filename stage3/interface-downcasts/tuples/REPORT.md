@@ -1,3 +1,20 @@
+Built: original lane 4b outSignature frontier certified with string, tuple and wrong-primitive inputs; primary total remains 10 pairs / 15 candidate reads.
+Commits: frontier certification follows blocked direct-cast witness 348c4d74e5f3faacac80efe6e570f7ab4b7e9f8d.
+Checks: three Node/JS/native release/sanitized witnesses PASS 2.919s with finishing leak checks; 82 tuple and two legacy Map count rows refreshed PASS 54.120s.
+Mutants: unchecked outSignature returns boolean and exit zero instead of the tuple-union refusal (FAIL 0.751s).
+Remaining: one overlapping lane 4b direct array-to-tuple cast frontier, four candidate reads; primary pairs and optional/rest forms are complete.
+
+Commands: TestCheckedViewTupleLane4bOutSignature -count=1 -v
+(/tmp/views-tuples-lane4b-out-signature.log);
+ADAMIC_TUPLE_NUMERIC_MUTANT=outSignature on lane4b-out-signature-wrong
+(/tmp/views-tuples-lane4b-out-signature-mutant.log); scoped counts
+-args -update-counts (/tmp/views-tuples-lane4b-out-signature-counts.log).
+The string input is the exact original handoff source. Tuple and wrong-kind
+controls retain the original complete IncrementalBundleEmitBuildInfo receiver.
+No additional primary production reads are counted for this overlapping check.
+
+---
+
 Built: preserve and pin the exact lane 4b direct array-to-tuple cast frontier; no new runtime certificate.
 Commits: frontier witness follows Map expectation refresh 75c9ef06.
 Checks: source Node prints string; exact compiler adamic/no-unchecked-cast refusal PASS 0.399s.

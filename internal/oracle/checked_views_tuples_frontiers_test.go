@@ -30,3 +30,11 @@ func TestCheckedViewTupleLane4bCastFrontier(t *testing.T) {
 	}
 	t.Logf("original source Node=string; retained compiler boundary: %v", err)
 }
+
+func TestCheckedViewTupleLane4bOutSignature(t *testing.T) {
+	verifyOriginalTupleCases(t, []originalTupleCase{
+		{"lane4b-out-signature-string", "string\n", "", ""},
+		{"lane4b-out-signature-tuple", "object\n", "", ""},
+		{"lane4b-out-signature-wrong", "boolean\n", "", "field read failed: node.outSignature matches no member of EmitSignature | undefined; expected EmitSignature | undefined, found boolean"},
+	})
+}

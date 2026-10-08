@@ -58,7 +58,7 @@
       "type_id": 68230,
       "field": "0",
       "reads": 1,
-      "commit": "module kind pair commit"
+      "commit": "3c32b869f9a53a357e0de9074948f7ee194d52c9"
     }
   ],
   "remaining": [],
@@ -66,7 +66,7 @@
     "optional_tuple_map": "certified absent, present undefined and present with Node, both backends and leaks",
     "rest_tuple_map": "certified zero, one, many and mismatched rest contracts with Node and both backends; completing cases leak checked"
   },
-  "lane4b_checks": "queued after primary; two overlapping frontier obligations, no added production reads",
+  "lane4b_checks": "outSignature frontier certified; direct array-to-tuple cast frontier blocked at adamic/no-unchecked-cast; both overlap primary census",
   "exact_reaching_view_coverage": "not measured",
   "approval_blockers": []
 }
