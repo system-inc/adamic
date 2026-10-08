@@ -1,0 +1,23 @@
+=== RUN   TestShapeGraphReportedFrontiers
+=== RUN   TestShapeGraphReportedFrontiers/cache
+=== RUN   TestShapeGraphReportedFrontiers/entries
+=== RUN   TestShapeGraphReportedFrontiers/literals
+=== RUN   TestShapeGraphReportedFrontiers/regression_06
+=== RUN   TestShapeGraphReportedFrontiers/regression_07
+=== RUN   TestShapeGraphReportedFrontiers/regression_08
+=== RUN   TestShapeGraphReportedFrontiers/regression_09
+=== RUN   TestShapeGraphReportedFrontiers/symbols
+--- PASS: TestShapeGraphReportedFrontiers (5.14s)
+    --- PASS: TestShapeGraphReportedFrontiers/cache (0.72s)
+    --- PASS: TestShapeGraphReportedFrontiers/entries (0.71s)
+    --- PASS: TestShapeGraphReportedFrontiers/literals (0.66s)
+    --- PASS: TestShapeGraphReportedFrontiers/regression_06 (0.54s)
+    --- PASS: TestShapeGraphReportedFrontiers/regression_07 (0.58s)
+    --- PASS: TestShapeGraphReportedFrontiers/regression_08 (0.78s)
+    --- PASS: TestShapeGraphReportedFrontiers/regression_09 (0.57s)
+    --- PASS: TestShapeGraphReportedFrontiers/symbols (0.59s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.148s

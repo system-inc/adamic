@@ -50,7 +50,13 @@ void *adamic_graph_adopt(void *value, size_t bytes) {
 	if (heap == NULL || heap != value || heap->references != 1 || adamic_graph_is(heap)) {
 		FAIL("compiler bug: graph adoption needs a new allocation");
 	}
+	// Object layout includes readiness, representations and aligned contracts.
+	// Runtime producers and older emission sites must preserve the entire layout.
+	if (heap->kind == adamic_kind_object) { bytes = adamic_object_size(((adamic_object *)heap)->shape->count); }
+	// Map entries can point into the allocation that adoption relocates.
+	bool inline_map = heap->kind == adamic_kind_map && ((adamic_map *)heap)->entries == ((adamic_map *)heap)->small;
 	heap = adamic_heap_graph_storage(value, bytes);
+	if (inline_map) { ((adamic_map *)heap)->entries = ((adamic_map *)heap)->small; }
 	// Interior cells must point at the environment's final address.
 	if (heap->kind == adamic_kind_environment) {
 		adamic_environment *environment = (adamic_environment *)heap;
@@ -236,7 +242,7 @@ bool adamic_graph_counted(const void *value) {
 #ifdef ADAMIC_COUNT
 static size_t bytes(adamic_heap *heap) {
 	switch (heap->kind) {
-	case adamic_kind_object: return sizeof(adamic_object) + ((adamic_object *)heap)->shape->count * (sizeof(adamic_value) + 2);
+	case adamic_kind_object: return adamic_object_size(((adamic_object *)heap)->shape->count);
 	case adamic_kind_array: return sizeof(adamic_array) + ((adamic_array *)heap)->capacity * sizeof(adamic_value);
 	case adamic_kind_map: {
 		adamic_map *map = (adamic_map *)heap;
