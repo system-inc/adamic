@@ -1,0 +1,11 @@
+interface Fields { first?: number | undefined; }
+const literal: { first: number | undefined } = { first: 1 };
+const optional: Fields = literal;
+delete optional.first;
+console.log(`${'first' in literal}`);
+console.log(`[${Object.keys(literal).join(',')}]`);
+console.log(`${Object.hasOwn(literal, 'first')}`);
+optional.first = undefined;
+console.log(`${'first' in literal}`);
+console.log(`[${Object.keys(literal).join(',')}]`);
+console.log(`${Object.hasOwn(literal, 'first')}`);

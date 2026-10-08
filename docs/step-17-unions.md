@@ -299,3 +299,33 @@ inventory is string | null (6,421 historically attributed bytes), followed by
 string | null | undefined (1,382). Preserving these ordinary JS values requires
 no new coercion, mutation, overload or widening permission. They are the proposed
 focused implementation target, after recording current source outcomes.
+
+## Probe outcomes on the delivery base
+
+[Baseline log](step-17-unions/evidence/baseline.log) records original source Node,
+then actual lowering outcomes. All six source programs exit 0 with empty stderr.
+The tsc probes are reductions retaining sourcemap.ts's content arm types and
+null tests, not claims of reproducing a full caller's census boundary. No code
+was copied from cohere. Port reductions already in Adamic were preserved.
+
+| Probe | Source Node stdout | Current compiler outcome |
+| --- | --- | --- |
+| selector-optional-boolean.a | true | NotYet: a field of type boolean \| undefined |
+| values-optional-boolean.a | true | NotYet: a field of type boolean \| undefined |
+| hir-optional-boolean.a | true | Both backends, ASan/UBSan, release and leaks agree |
+| tsc-source-content.a | source; missing | NotYet: a value of type string \| null |
+| tsc-nullish-content.a | string; source; object; null; undefined; undefined | NotYet: a value of type string \| null \| undefined |
+| presence.a | false; []; false; true; [first]; true | Refused: delete; fixed shape |
+
+The HIR original was found on `stage1-hir/wip` at `3714b319`,
+`stage1/cohere/high_level_intermediate_representation/testdata/optional-boolean-gap.a`.
+Its GAPS.md confirms the requested first HIR gap and records 74/1,465 graph impact.
+That is the port's historical census, not newly retired graph bytes. HIR's
+interface read works already; the two class-field reductions still stop. No
+port workaround is removed by measuring these reductions.
+
+The focused runner now pins each remaining stop rather than accepting any error.
+It originally supplied a relative path to the oracle cache; that harness error
+was corrected and the passing measurement uses absolute paths. These standalone
+probes have not been registered as positive count fixtures; no allocation row is
+claimed for a refused program. No inherited-field/delete policy was changed.

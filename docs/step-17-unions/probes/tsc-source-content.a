@@ -1,0 +1,8 @@
+// Reduced from TypeScript sourcemap.ts setSourceContent; imports/timers omitted.
+// The original storage type and null-versus-string test are retained.
+function sourceContent(content: string | null): string {
+    if (content !== null) return content;
+    return 'missing';
+}
+console.log(sourceContent('source'));
+console.log(sourceContent(null));
