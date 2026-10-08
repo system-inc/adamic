@@ -419,6 +419,20 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		return result, nil
 	}
+	if access.QuestionDotToken != nil && object.Type() == ir.Map && name == "size" {
+		// Hold the receiver once, including calls, before testing either nullish value.
+		function := len(l.result.Functions)
+		held := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "receiver", Type: ir.Map, Function: function})
+		read := ir.Read{Local: held, Of: ir.Map}
+		result := ir.Conditional{
+			Condition: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}},
+			WhenTrue:  ir.MaybeOf{Of: ir.MaybeNumber},
+			WhenNot:   ir.MaybeOf{Value: ir.MapSize{Map: read}, Of: ir.MaybeNumber},
+		}
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "optional_size", Parameters: []int{held}, Returns: ir.MaybeNumber, Body: []ir.Statement{ir.Return{Value: result}}})
+		return ir.Call{Function: function, Arguments: []ir.Expression{object}, Returns: ir.MaybeNumber}, nil
+	}
 	if access.QuestionDotToken != nil && object.Type() != ir.Object {
 		return nil, l.notYet(node, "optional chaining to ."+name+" on a "+typeName(object.Type()))
 	}
