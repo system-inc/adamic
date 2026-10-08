@@ -93,7 +93,13 @@ base = main
 chain = []
 trainHeads = remoteHeads("cloud/land-train-*")
 for number, (slug, source, owner) in enumerate(slices(), start=1):
-    sourceSha = git("rev-parse", "-q", "--verify", f"origin/{source}", check=False)
+    # A source is a branch, or branch@trailer: the newest commit on that branch whose message carries
+    # "Train-slice: <slug>", so slices built stacked on one rehearsal branch each become their own car.
+    if "@" in source:
+        branch, _, trailer = source.partition("@")
+        sourceSha = git("log", "-1", "--format=%H", f"--grep=^Train-slice: {trailer}$", f"origin/{branch}", check=False)
+    else:
+        sourceSha = git("rev-parse", "-q", "--verify", f"origin/{source}", check=False)
     if not sourceSha:
         break
     if subprocess.run(["git", "merge-base", "--is-ancestor", sourceSha, base]).returncode == 0:
@@ -134,7 +140,7 @@ if not chain:
 number, slug, source, owner, name, candidate, candidateBase = chain[0]
 # An owner can hold a source commit from landing (it still gates): a file hold-<source8> in the state
 # directory, holding why. A new commit on the source is a new candidate, so the hold lapses with it.
-sourceSha = git("rev-parse", f"origin/{source}")
+sourceSha = chain[0][5] and git("rev-parse", f"{candidate}^2")
 hold = os.path.join(state, f"hold-{sourceSha[:8]}")
 if os.path.exists(hold):
     log(f"held: {name} ({open(hold).read().strip()})")
@@ -160,7 +166,7 @@ if not mainLog or mainStatus.startswith("running") or not (mainStatus.startswith
 log(f"landing {name} on {reference}")
 if dryRun:
     sys.exit(0)
-note = f"the star's train, slice {number} ({slug}): {source} {git('rev-parse', 'origin/' + source)[:8]}"
+note = f"the star's train, slice {number} ({slug}): {source} {git('rev-parse', candidate + '^2')[:8]}"
 pushed = subprocess.run(["bash", os.path.join(directory, "push-main.sh"), "--full-gate", reference, candidate, note], capture_output=True, text=True)
 with open(os.path.join(state, f"push-{candidate[:12]}.log"), "w") as handle:
     handle.write(pushed.stdout + pushed.stderr)
