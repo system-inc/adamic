@@ -14,7 +14,8 @@
         "target": "es2015",
         "strict": false,
         "strictFunctionTypes": false
-      }
+      },
+      "path": "corpus/001_varianceCantBeStrictWhileStructureIsnt/varianceCantBeStrictWhileStructureIsnt.ts"
     },
     {
       "id": "002_conditionalEqualityTestingNullability",
@@ -27,7 +28,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/002_conditionalEqualityTestingNullability/conditionalEqualityTestingNullability.ts"
     },
     {
       "id": "003_commentOnClassAccessor1",
@@ -39,7 +41,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/003_commentOnClassAccessor1/commentOnClassAccessor1.ts"
     },
     {
       "id": "004_metadataOfUnion",
@@ -54,7 +57,8 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "strictPropertyInitialization": false
-      }
+      },
+      "path": "corpus/004_metadataOfUnion/metadataOfUnion.ts"
     },
     {
       "id": "005_ambientEnumElementInitializer3",
@@ -66,7 +70,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/005_ambientEnumElementInitializer3/ambientEnumElementInitializer3.ts"
     },
     {
       "id": "006_arrayDestructuringInSwitch1",
@@ -78,7 +83,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/006_arrayDestructuringInSwitch1/arrayDestructuringInSwitch1.ts"
     },
     {
       "id": "007_nestedBlockScopedBindings15",
@@ -90,7 +96,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/007_nestedBlockScopedBindings15/nestedBlockScopedBindings15.ts"
     },
     {
       "id": "008_library_StringSlice",
@@ -102,7 +109,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/008_library_StringSlice/library_StringSlice.ts"
     },
     {
       "id": "009_es6ModuleWithModuleGenTargetCommonjs",
@@ -115,7 +123,8 @@
       "options": {
         "target": "ES6",
         "module": "commonjs"
-      }
+      },
+      "path": "corpus/009_es6ModuleWithModuleGenTargetCommonjs/es6ModuleWithModuleGenTargetCommonjs.ts"
     },
     {
       "id": "010_nestedTypeVariableInfersLiteral",
@@ -127,7 +136,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/010_nestedTypeVariableInfersLiteral/nestedTypeVariableInfersLiteral.ts"
     },
     {
       "id": "011_namespaces2",
@@ -139,7 +149,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/011_namespaces2/namespaces2.ts"
     },
     {
       "id": "012_expandoFunctionExpressionsWithDynamicNames2",
@@ -155,7 +166,8 @@
         "lib": [
           "esnext"
         ]
-      }
+      },
+      "path": "corpus/012_expandoFunctionExpressionsWithDynamicNames2/expandoFunctionExpressionsWithDynamicNames2.ts"
     },
     {
       "id": "013_parseEntityNameWithReservedWord",
@@ -167,7 +179,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/013_parseEntityNameWithReservedWord/parseEntityNameWithReservedWord.ts"
     },
     {
       "id": "014_keyofObjectWithGlobalSymbolIncluded",
@@ -180,7 +193,8 @@
       "options": {
         "target": "es6",
         "strict": true
-      }
+      },
+      "path": "corpus/014_keyofObjectWithGlobalSymbolIncluded/keyofObjectWithGlobalSymbolIncluded.ts"
     },
     {
       "id": "015_decoratorReferences",
@@ -194,7 +208,8 @@
         "target": "es2015",
         "strict": false,
         "experimentalDecorators": true
-      }
+      },
+      "path": "corpus/015_decoratorReferences/decoratorReferences.ts"
     },
     {
       "id": "016_yieldStarContextualType",
@@ -206,7 +221,8 @@
       "codes": [],
       "options": {
         "target": "esnext"
-      }
+      },
+      "path": "corpus/016_yieldStarContextualType/yieldStarContextualType.ts"
     },
     {
       "id": "017_binopAssignmentShouldHaveType",
@@ -222,7 +238,8 @@
         "lib": [
           "es5"
         ]
-      }
+      },
+      "path": "corpus/017_binopAssignmentShouldHaveType/binopAssignmentShouldHaveType.ts"
     },
     {
       "id": "018_typeofUsedBeforeBlockScoped",
@@ -234,7 +251,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/018_typeofUsedBeforeBlockScoped/typeofUsedBeforeBlockScoped.ts"
     },
     {
       "id": "019_superHasMethodsFromMergedInterface",
@@ -246,7 +264,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/019_superHasMethodsFromMergedInterface/superHasMethodsFromMergedInterface.ts"
     },
     {
       "id": "020_intersectionApparentTypeCaching",
@@ -259,7 +278,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/020_intersectionApparentTypeCaching/intersectionApparentTypeCaching.ts"
     },
     {
       "id": "021_commentOnArrayElement12",
@@ -271,7 +291,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/021_commentOnArrayElement12/commentOnArrayElement12.ts"
     },
     {
       "id": "022_nestedBlockScopedBindings4",
@@ -284,7 +305,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/022_nestedBlockScopedBindings4/nestedBlockScopedBindings4.ts"
     },
     {
       "id": "023_capturedLetConstInLoop10_ES6",
@@ -297,7 +319,8 @@
       "options": {
         "strict": false,
         "target": "ES6"
-      }
+      },
+      "path": "corpus/023_capturedLetConstInLoop10_ES6/capturedLetConstInLoop10_ES6.ts"
     },
     {
       "id": "024_genericTypeParameterEquivalence2",
@@ -310,7 +333,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/024_genericTypeParameterEquivalence2/genericTypeParameterEquivalence2.ts"
     },
     {
       "id": "025_exportArrayBindingPattern",
@@ -323,7 +347,8 @@
       "options": {
         "target": "es2015",
         "module": "commonjs"
-      }
+      },
+      "path": "corpus/025_exportArrayBindingPattern/exportArrayBindingPattern.ts"
     },
     {
       "id": "026_functionAssignmentError",
@@ -336,7 +361,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/026_functionAssignmentError/functionAssignmentError.ts"
     },
     {
       "id": "027_multiExtendsSplitInterfaces1",
@@ -348,7 +374,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/027_multiExtendsSplitInterfaces1/multiExtendsSplitInterfaces1.ts"
     },
     {
       "id": "028_stringMatchAll",
@@ -360,7 +387,8 @@
       "codes": [],
       "options": {
         "target": "es2020"
-      }
+      },
+      "path": "corpus/028_stringMatchAll/stringMatchAll.ts"
     },
     {
       "id": "029_enumLiteralUnionNotWidened",
@@ -372,7 +400,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/029_enumLiteralUnionNotWidened/enumLiteralUnionNotWidened.ts"
     },
     {
       "id": "030_asyncYieldStarContextualType",
@@ -384,7 +413,8 @@
       "codes": [],
       "options": {
         "target": "esnext"
-      }
+      },
+      "path": "corpus/030_asyncYieldStarContextualType/asyncYieldStarContextualType.ts"
     },
     {
       "id": "031_commentInNamespaceDeclarationWithIdentifierPathName",
@@ -396,7 +426,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/031_commentInNamespaceDeclarationWithIdentifierPathName/commentInNamespaceDeclarationWithIdentifierPathName.ts"
     },
     {
       "id": "032_templateLiteralsAndDecoratorMetadata",
@@ -410,7 +441,8 @@
         "target": "es2015",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
-      }
+      },
+      "path": "corpus/032_templateLiteralsAndDecoratorMetadata/templateLiteralsAndDecoratorMetadata.ts"
     },
     {
       "id": "033_assignmentCompatability6",
@@ -422,7 +454,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/033_assignmentCompatability6/assignmentCompatability6.ts"
     },
     {
       "id": "034_parseReplacementCharacter",
@@ -434,7 +467,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/034_parseReplacementCharacter/parseReplacementCharacter.ts"
     },
     {
       "id": "035_classOrder1",
@@ -446,7 +480,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/035_classOrder1/classOrder1.ts"
     },
     {
       "id": "036_conditionalExpressions2",
@@ -460,7 +495,8 @@
         "target": "es2015",
         "strict": false,
         "allowUnreachableCode": true
-      }
+      },
+      "path": "corpus/036_conditionalExpressions2/conditionalExpressions2.ts"
     },
     {
       "id": "037_singletonLabeledTuple",
@@ -472,7 +508,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/037_singletonLabeledTuple/singletonLabeledTuple.ts"
     },
     {
       "id": "038_breakInIterationOrSwitchStatement1",
@@ -484,7 +521,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/038_breakInIterationOrSwitchStatement1/breakInIterationOrSwitchStatement1.ts"
     },
     {
       "id": "039_narrowByClauseExpressionInSwitchTrue2",
@@ -497,7 +535,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/039_narrowByClauseExpressionInSwitchTrue2/narrowByClauseExpressionInSwitchTrue2.ts"
     },
     {
       "id": "040_emitOneLineVariableDeclarationRemoveCommentsFalse",
@@ -509,7 +548,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/040_emitOneLineVariableDeclarationRemoveCommentsFalse/emitOneLineVariableDeclarationRemoveCommentsFalse.ts"
     },
     {
       "id": "041_nongenericConditionalNotPartiallyComputed",
@@ -521,7 +561,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/041_nongenericConditionalNotPartiallyComputed/nongenericConditionalNotPartiallyComputed.ts"
     },
     {
       "id": "042_exportDefaultForNonInstantiatedModule",
@@ -533,7 +574,8 @@
       "codes": [],
       "options": {
         "target": "ES6"
-      }
+      },
+      "path": "corpus/042_exportDefaultForNonInstantiatedModule/exportDefaultForNonInstantiatedModule.ts"
     },
     {
       "id": "043_collisionThisExpressionAndLocalVarInProperty",
@@ -546,7 +588,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/043_collisionThisExpressionAndLocalVarInProperty/collisionThisExpressionAndLocalVarInProperty.ts"
     },
     {
       "id": "044_functionWithDefaultParameterWithNoStatements10",
@@ -558,7 +601,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/044_functionWithDefaultParameterWithNoStatements10/functionWithDefaultParameterWithNoStatements10.ts"
     },
     {
       "id": "045_discriminantUsingEvaluatableTemplateExpression",
@@ -571,7 +615,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/045_discriminantUsingEvaluatableTemplateExpression/discriminantUsingEvaluatableTemplateExpression.ts"
     },
     {
       "id": "046_assignmentCompatForEnums",
@@ -584,7 +629,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/046_assignmentCompatForEnums/assignmentCompatForEnums.ts"
     },
     {
       "id": "047_promiseWithResolvers",
@@ -596,7 +642,8 @@
       "codes": [],
       "options": {
         "target": "esnext"
-      }
+      },
+      "path": "corpus/047_promiseWithResolvers/promiseWithResolvers.ts"
     },
     {
       "id": "048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds",
@@ -609,7 +656,8 @@
       "options": {
         "strict": true,
         "target": "es6"
-      }
+      },
+      "path": "corpus/048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds/uniqueSymbolAssignmentOnGlobalAugmentationSuceeds.ts"
     },
     {
       "id": "049_decoratorMetadataNoStrictNull",
@@ -624,7 +672,8 @@
         "strict": false,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
-      }
+      },
+      "path": "corpus/049_decoratorMetadataNoStrictNull/decoratorMetadataNoStrictNull.ts"
     },
     {
       "id": "050_unusedInterfaceinNamespace4",
@@ -638,7 +687,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/050_unusedInterfaceinNamespace4/unusedInterfaceinNamespace4.ts"
     },
     {
       "id": "051_extendedUnicodeEscapeSequenceIdentifiers",
@@ -650,7 +700,8 @@
       "codes": [],
       "options": {
         "target": "es6"
-      }
+      },
+      "path": "corpus/051_extendedUnicodeEscapeSequenceIdentifiers/extendedUnicodeEscapeSequenceIdentifiers.ts"
     },
     {
       "id": "052_commentOnClassAccessor2",
@@ -662,7 +713,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/052_commentOnClassAccessor2/commentOnClassAccessor2.ts"
     },
     {
       "id": "053_contextualTypeBasedOnIntersectionWithAnyInTheMix5",
@@ -675,7 +727,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/053_contextualTypeBasedOnIntersectionWithAnyInTheMix5/contextualTypeBasedOnIntersectionWithAnyInTheMix5.ts"
     },
     {
       "id": "054_contextualTyping19",
@@ -687,7 +740,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/054_contextualTyping19/contextualTyping19.ts"
     },
     {
       "id": "055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib",
@@ -705,7 +759,8 @@
           "es2015.core",
           "es2015.symbol.wellknown"
         ]
-      }
+      },
+      "path": "corpus/055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib/modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib.ts"
     },
     {
       "id": "056_genericCallInferenceInConditionalTypes1",
@@ -718,7 +773,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/056_genericCallInferenceInConditionalTypes1/genericCallInferenceInConditionalTypes1.ts"
     },
     {
       "id": "057_localImportNameVsGlobalName",
@@ -730,7 +786,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/057_localImportNameVsGlobalName/localImportNameVsGlobalName.ts"
     },
     {
       "id": "058_contextualTypingOfConditionalExpression",
@@ -743,7 +800,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/058_contextualTypingOfConditionalExpression/contextualTypingOfConditionalExpression.ts"
     },
     {
       "id": "059_functionOverloads31",
@@ -755,7 +813,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/059_functionOverloads31/functionOverloads31.ts"
     },
     {
       "id": "060_numberAsInLHS",
@@ -767,7 +826,8 @@
       "codes": [],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/060_numberAsInLHS/numberAsInLHS.ts"
     },
     {
       "id": "061_constEnumErrors",
@@ -791,7 +851,8 @@
         "lib": [
           "es5"
         ]
-      }
+      },
+      "path": "corpus/061_constEnumErrors/constEnumErrors.ts"
     },
     {
       "id": "062_interfaceDeclaration1",
@@ -810,7 +871,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/062_interfaceDeclaration1/interfaceDeclaration1.ts"
     },
     {
       "id": "063_didYouMeanSuggestionErrors",
@@ -832,7 +894,8 @@
         "lib": [
           "es5"
         ]
-      }
+      },
+      "path": "corpus/063_didYouMeanSuggestionErrors/didYouMeanSuggestionErrors.ts"
     },
     {
       "id": "064_recursiveFunctionTypes",
@@ -851,7 +914,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/064_recursiveFunctionTypes/recursiveFunctionTypes.ts"
     },
     {
       "id": "065_callOverloads2",
@@ -870,7 +934,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/065_callOverloads2/callOverloads2.ts"
     },
     {
       "id": "066_decoratorUsedBeforeDeclaration",
@@ -889,7 +954,8 @@
       "options": {
         "target": "es2015",
         "experimentalDecorators": true
-      }
+      },
+      "path": "corpus/066_decoratorUsedBeforeDeclaration/decoratorUsedBeforeDeclaration.ts"
     },
     {
       "id": "067_undefinedTypeAssignment4",
@@ -906,7 +972,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/067_undefinedTypeAssignment4/undefinedTypeAssignment4.ts"
     },
     {
       "id": "068_emitCapturingThisInTupleDestructuring1",
@@ -923,7 +990,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/068_emitCapturingThisInTupleDestructuring1/emitCapturingThisInTupleDestructuring1.ts"
     },
     {
       "id": "069_computedPropertiesInDestructuring1",
@@ -941,7 +1009,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/069_computedPropertiesInDestructuring1/computedPropertiesInDestructuring1.ts"
     },
     {
       "id": "070_assignmentToReferenceTypes",
@@ -959,7 +1028,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/070_assignmentToReferenceTypes/assignmentToReferenceTypes.ts"
     },
     {
       "id": "071_overloadModifiersMustAgree",
@@ -978,7 +1048,8 @@
         "target": "es2015",
         "strict": false,
         "module": "commonjs"
-      }
+      },
+      "path": "corpus/071_overloadModifiersMustAgree/overloadModifiersMustAgree.ts"
     },
     {
       "id": "072_noImplicitAnyForIn",
@@ -995,7 +1066,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/072_noImplicitAnyForIn/noImplicitAnyForIn.ts"
     },
     {
       "id": "073_superNewCall1",
@@ -1012,7 +1084,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/073_superNewCall1/superNewCall1.ts"
     },
     {
       "id": "074_parseInvalidNullableTypes",
@@ -1030,7 +1103,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/074_parseInvalidNullableTypes/parseInvalidNullableTypes.ts"
     },
     {
       "id": "075_recursiveConditionalCrash4",
@@ -1047,7 +1121,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/075_recursiveConditionalCrash4/recursiveConditionalCrash4.ts"
     },
     {
       "id": "076_interfacedeclWithIndexerErrors",
@@ -1064,7 +1139,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/076_interfacedeclWithIndexerErrors/interfacedeclWithIndexerErrors.ts"
     },
     {
       "id": "077_objectLitIndexerContextualType",
@@ -1081,7 +1157,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/077_objectLitIndexerContextualType/objectLitIndexerContextualType.ts"
     },
     {
       "id": "078_weakType",
@@ -1098,7 +1175,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/078_weakType/weakType.ts"
     },
     {
       "id": "079_nullableFunctionError",
@@ -1115,7 +1193,8 @@
       "options": {
         "target": "es2015",
         "strictNullChecks": true
-      }
+      },
+      "path": "corpus/079_nullableFunctionError/nullableFunctionError.ts"
     },
     {
       "id": "080_builtinIterator",
@@ -1134,7 +1213,8 @@
       "options": {
         "target": "esnext",
         "strict": true
-      }
+      },
+      "path": "corpus/080_builtinIterator/builtinIterator.ts"
     },
     {
       "id": "081_errorForUsingPropertyOfTypeAsType03",
@@ -1151,7 +1231,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/081_errorForUsingPropertyOfTypeAsType03/errorForUsingPropertyOfTypeAsType03.ts"
     },
     {
       "id": "082_unusedDestructuring",
@@ -1170,7 +1251,8 @@
         "strict": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/082_unusedDestructuring/unusedDestructuring.ts"
     },
     {
       "id": "083_indirectSelfReferenceGeneric",
@@ -1185,7 +1267,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/083_indirectSelfReferenceGeneric/indirectSelfReferenceGeneric.ts"
     },
     {
       "id": "084_thisInModule",
@@ -1200,7 +1283,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/084_thisInModule/thisInModule.ts"
     },
     {
       "id": "085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1",
@@ -1216,7 +1300,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1/narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1.ts"
     },
     {
       "id": "086_noImplicitSymbolToString",
@@ -1231,7 +1316,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/086_noImplicitSymbolToString/noImplicitSymbolToString.ts"
     },
     {
       "id": "087_strictModeInConstructor",
@@ -1246,7 +1332,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/087_strictModeInConstructor/strictModeInConstructor.ts"
     },
     {
       "id": "088_baseConstraintOfDecorator",
@@ -1263,7 +1350,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/088_baseConstraintOfDecorator/baseConstraintOfDecorator.ts"
     },
     {
       "id": "089_moduleVisibilityTest3",
@@ -1278,7 +1366,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/089_moduleVisibilityTest3/moduleVisibilityTest3.ts"
     },
     {
       "id": "090_constraintWithIndexedAccess",
@@ -1293,7 +1382,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/090_constraintWithIndexedAccess/constraintWithIndexedAccess.ts"
     },
     {
       "id": "091_excessivelyLargeTupleSpread",
@@ -1308,7 +1398,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/091_excessivelyLargeTupleSpread/excessivelyLargeTupleSpread.ts"
     },
     {
       "id": "092_omittedExpressionForOfLoop",
@@ -1325,7 +1416,8 @@
       "options": {
         "strict": true,
         "target": "es2015"
-      }
+      },
+      "path": "corpus/092_omittedExpressionForOfLoop/omittedExpressionForOfLoop.ts"
     },
     {
       "id": "093_typeOfEnumAndVarRedeclarations",
@@ -1340,7 +1432,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/093_typeOfEnumAndVarRedeclarations/typeOfEnumAndVarRedeclarations.ts"
     },
     {
       "id": "094_assignmentToParenthesizedExpression1",
@@ -1355,7 +1448,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/094_assignmentToParenthesizedExpression1/assignmentToParenthesizedExpression1.ts"
     },
     {
       "id": "095_interfaceExtendsClassWithPrivate1",
@@ -1370,7 +1464,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/095_interfaceExtendsClassWithPrivate1/interfaceExtendsClassWithPrivate1.ts"
     },
     {
       "id": "096_importDeclRefereingExternalModuleWithNoResolve",
@@ -1387,7 +1482,8 @@
         "target": "es2015",
         "module": "commonjs",
         "noResolve": true
-      }
+      },
+      "path": "corpus/096_importDeclRefereingExternalModuleWithNoResolve/importDeclRefereingExternalModuleWithNoResolve.ts"
     },
     {
       "id": "097_mappedTypeGenericWithKnownKeys",
@@ -1403,7 +1499,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/097_mappedTypeGenericWithKnownKeys/mappedTypeGenericWithKnownKeys.ts"
     },
     {
       "id": "098_moduleAugmentationGlobal7_1",
@@ -1419,7 +1516,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/098_moduleAugmentationGlobal7_1/moduleAugmentationGlobal7_1.ts"
     },
     {
       "id": "099_untypedFunctionCallsWithTypeParameters1",
@@ -1437,7 +1535,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/099_untypedFunctionCallsWithTypeParameters1/untypedFunctionCallsWithTypeParameters1.ts"
     },
     {
       "id": "100_scopeCheckExtendedClassInsidePublicMethod2",
@@ -1453,7 +1552,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/100_scopeCheckExtendedClassInsidePublicMethod2/scopeCheckExtendedClassInsidePublicMethod2.ts"
     },
     {
       "id": "101_noUncheckedIndexedAccessCompoundAssignments",
@@ -1470,7 +1570,8 @@
         "target": "es2015",
         "strict": true,
         "noUncheckedIndexedAccess": true
-      }
+      },
+      "path": "corpus/101_noUncheckedIndexedAccessCompoundAssignments/noUncheckedIndexedAccessCompoundAssignments.ts"
     },
     {
       "id": "102_implicitAnyDeclareTypePropertyWithoutType",
@@ -1487,7 +1588,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/102_implicitAnyDeclareTypePropertyWithoutType/implicitAnyDeclareTypePropertyWithoutType.ts"
     },
     {
       "id": "103_circularReferenceInReturnType2",
@@ -1503,7 +1605,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts"
     },
     {
       "id": "104_mixedStaticAndInstanceClassMembers",
@@ -1518,7 +1621,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/104_mixedStaticAndInstanceClassMembers/mixedStaticAndInstanceClassMembers.ts"
     },
     {
       "id": "105_exportDefaultTypeClassAndValue",
@@ -1534,7 +1638,8 @@
       "options": {
         "module": "commonjs",
         "target": "es2015"
-      }
+      },
+      "path": "corpus/105_exportDefaultTypeClassAndValue/exportDefaultTypeClassAndValue.ts"
     },
     {
       "id": "106_interfaceMergeWithNonGenericTypeArguments",
@@ -1549,7 +1654,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/106_interfaceMergeWithNonGenericTypeArguments/interfaceMergeWithNonGenericTypeArguments.ts"
     },
     {
       "id": "107_objectFreeze",
@@ -1565,7 +1671,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/107_objectFreeze/objectFreeze.ts"
     },
     {
       "id": "108_redeclareParameterInCatchBlock",
@@ -1581,7 +1688,8 @@
       "options": {
         "strict": false,
         "target": "es6"
-      }
+      },
+      "path": "corpus/108_redeclareParameterInCatchBlock/redeclareParameterInCatchBlock.ts"
     },
     {
       "id": "109_classExtendsNull2",
@@ -1597,7 +1705,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/109_classExtendsNull2/classExtendsNull2.ts"
     },
     {
       "id": "110_importDeclWithExportModifierAndExportAssignment",
@@ -1614,7 +1723,8 @@
       "options": {
         "target": "es2015",
         "module": "commonjs"
-      }
+      },
+      "path": "corpus/110_importDeclWithExportModifierAndExportAssignment/importDeclWithExportModifierAndExportAssignment.ts"
     },
     {
       "id": "111_circularlyReferentialInterfaceAccessNoCrash",
@@ -1629,7 +1739,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/111_circularlyReferentialInterfaceAccessNoCrash/circularlyReferentialInterfaceAccessNoCrash.ts"
     },
     {
       "id": "112_noImplicitAnyParametersInInterface",
@@ -1646,7 +1757,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/112_noImplicitAnyParametersInInterface/noImplicitAnyParametersInInterface.ts"
     },
     {
       "id": "113_duplicateSymbolsExportMatching",
@@ -1662,7 +1774,8 @@
       "options": {
         "target": "es2015",
         "module": "commonjs"
-      }
+      },
+      "path": "corpus/113_duplicateSymbolsExportMatching/duplicateSymbolsExportMatching.ts"
     },
     {
       "id": "114_truthinessPromiseCoercion",
@@ -1677,7 +1790,8 @@
       "options": {
         "strictNullChecks": true,
         "target": "esnext"
-      }
+      },
+      "path": "corpus/114_truthinessPromiseCoercion/truthinessPromiseCoercion.ts"
     },
     {
       "id": "115_unusedClassesinNamespace4",
@@ -1693,7 +1807,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/115_unusedClassesinNamespace4/unusedClassesinNamespace4.ts"
     },
     {
       "id": "116_recursivelyExpandingUnionNoStackoverflow",
@@ -1708,7 +1823,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/116_recursivelyExpandingUnionNoStackoverflow/recursivelyExpandingUnionNoStackoverflow.ts"
     },
     {
       "id": "117_typeUsedAsTypeLiteralIndex",
@@ -1723,7 +1839,8 @@
       ],
       "options": {
         "target": "esnext"
-      }
+      },
+      "path": "corpus/117_typeUsedAsTypeLiteralIndex/typeUsedAsTypeLiteralIndex.ts"
     },
     {
       "id": "118_anyMappedTypesError",
@@ -1738,7 +1855,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/118_anyMappedTypesError/anyMappedTypesError.ts"
     },
     {
       "id": "119_yieldExpressionInFlowLoop",
@@ -1753,7 +1871,8 @@
       "options": {
         "noImplicitAny": true,
         "target": "es6"
-      }
+      },
+      "path": "corpus/119_yieldExpressionInFlowLoop/yieldExpressionInFlowLoop.ts"
     },
     {
       "id": "120_excessPropertyCheckWithSpread",
@@ -1768,7 +1887,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/120_excessPropertyCheckWithSpread/excessPropertyCheckWithSpread.ts"
     },
     {
       "id": "121_switchCasesExpressionTypeMismatch",
@@ -1782,7 +1902,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/121_switchCasesExpressionTypeMismatch/switchCasesExpressionTypeMismatch.ts"
     },
     {
       "id": "122_literalsInComputedProperties1",
@@ -1797,7 +1918,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/122_literalsInComputedProperties1/literalsInComputedProperties1.ts"
     },
     {
       "id": "123_narrowByEquality",
@@ -1813,7 +1935,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/123_narrowByEquality/narrowByEquality.ts"
     },
     {
       "id": "124_this_inside-enum-should-not-be-allowed",
@@ -1828,7 +1951,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/124_this_inside-enum-should-not-be-allowed/this_inside-enum-should-not-be-allowed.ts"
     },
     {
       "id": "125_noMappedGetSet",
@@ -1843,7 +1967,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/125_noMappedGetSet/noMappedGetSet.ts"
     },
     {
       "id": "126_restInvalidArgumentType",
@@ -1858,7 +1983,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/126_restInvalidArgumentType/restInvalidArgumentType.ts"
     },
     {
       "id": "127_forInStatement4",
@@ -1873,7 +1999,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/127_forInStatement4/forInStatement4.ts"
     },
     {
       "id": "128_noImplicitAnyUnionNormalizedObjectLiteral1",
@@ -1889,7 +2016,8 @@
         "target": "es2015",
         "strictNullChecks": false,
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/128_noImplicitAnyUnionNormalizedObjectLiteral1/noImplicitAnyUnionNormalizedObjectLiteral1.ts"
     },
     {
       "id": "129_enumWithPrimitiveName",
@@ -1903,7 +2031,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/129_enumWithPrimitiveName/enumWithPrimitiveName.ts"
     },
     {
       "id": "130_inheritedStringIndexersFromDifferentBaseTypes2",
@@ -1918,7 +2047,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/130_inheritedStringIndexersFromDifferentBaseTypes2/inheritedStringIndexersFromDifferentBaseTypes2.ts"
     },
     {
       "id": "131_errorsForCallAndAssignmentAreSimilar",
@@ -1932,7 +2062,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/131_errorsForCallAndAssignmentAreSimilar/errorsForCallAndAssignmentAreSimilar.ts"
     },
     {
       "id": "132_missingCommaInTemplateStringsArray",
@@ -1946,7 +2077,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/132_missingCommaInTemplateStringsArray/missingCommaInTemplateStringsArray.ts"
     },
     {
       "id": "133_forInStatement2",
@@ -1961,7 +2093,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/133_forInStatement2/forInStatement2.ts"
     },
     {
       "id": "134_augmentedTypesEnum",
@@ -1977,7 +2110,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/134_augmentedTypesEnum/augmentedTypesEnum.ts"
     },
     {
       "id": "135_narrowingTruthyObject",
@@ -1992,7 +2126,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/135_narrowingTruthyObject/narrowingTruthyObject.ts"
     },
     {
       "id": "136_nestedFreshLiteral",
@@ -2007,7 +2142,8 @@
       "options": {
         "target": "es2015",
         "strictNullChecks": true
-      }
+      },
+      "path": "corpus/136_nestedFreshLiteral/nestedFreshLiteral.ts"
     },
     {
       "id": "137_duplicateErrorNameNotFound",
@@ -2023,7 +2159,8 @@
         "module": "commonjs",
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/137_duplicateErrorNameNotFound/duplicateErrorNameNotFound.ts"
     },
     {
       "id": "138_voidAsOperator",
@@ -2037,7 +2174,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/138_voidAsOperator/voidAsOperator.ts"
     },
     {
       "id": "139_typeParametersInStaticAccessors",
@@ -2052,7 +2190,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/139_typeParametersInStaticAccessors/typeParametersInStaticAccessors.ts"
     },
     {
       "id": "140_arrayAssignmentTest5",
@@ -2067,7 +2206,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/140_arrayAssignmentTest5/arrayAssignmentTest5.ts"
     },
     {
       "id": "141_forInStrictNullChecksNoError",
@@ -2082,7 +2222,8 @@
       "options": {
         "target": "es2015",
         "strictNullChecks": true
-      }
+      },
+      "path": "corpus/141_forInStrictNullChecksNoError/forInStrictNullChecksNoError.ts"
     },
     {
       "id": "142_spreadUnionPropOverride",
@@ -2097,7 +2238,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/142_spreadUnionPropOverride/spreadUnionPropOverride.ts"
     },
     {
       "id": "143_enumPropertyAccessBeforeInitalisation",
@@ -2111,7 +2253,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/143_enumPropertyAccessBeforeInitalisation/enumPropertyAccessBeforeInitalisation.ts"
     },
     {
       "id": "144_inheritedStringIndexersFromDifferentBaseTypes",
@@ -2125,7 +2268,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/144_inheritedStringIndexersFromDifferentBaseTypes/inheritedStringIndexersFromDifferentBaseTypes.ts"
     },
     {
       "id": "145_ClassDeclaration10",
@@ -2141,7 +2285,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/145_ClassDeclaration10/ClassDeclaration10.ts"
     },
     {
       "id": "146_noImplicitAnyIndexing",
@@ -2158,7 +2303,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/146_noImplicitAnyIndexing/noImplicitAnyIndexing.ts"
     },
     {
       "id": "147_genericMappedTypeAsClause",
@@ -2175,7 +2321,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/147_genericMappedTypeAsClause/genericMappedTypeAsClause.ts"
     },
     {
       "id": "148_nonArrayRestArgs",
@@ -2190,7 +2337,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/148_nonArrayRestArgs/nonArrayRestArgs.ts"
     },
     {
       "id": "149_undefinedTypeAssignment1",
@@ -2204,7 +2352,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/149_undefinedTypeAssignment1/undefinedTypeAssignment1.ts"
     },
     {
       "id": "150_useUnknownInCatchVariables01",
@@ -2219,7 +2368,8 @@
       "options": {
         "target": "es2015",
         "useUnknownInCatchVariables": true
-      }
+      },
+      "path": "corpus/150_useUnknownInCatchVariables01/useUnknownInCatchVariables01.ts"
     },
     {
       "id": "151_normalizedIntersectionTooComplex",
@@ -2235,7 +2385,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/151_normalizedIntersectionTooComplex/normalizedIntersectionTooComplex.ts"
     },
     {
       "id": "152_errorOnEnumReferenceInCondition",
@@ -2250,7 +2401,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/152_errorOnEnumReferenceInCondition/errorOnEnumReferenceInCondition.ts"
     },
     {
       "id": "153_returnTypeTypeArguments",
@@ -2265,7 +2417,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/153_returnTypeTypeArguments/returnTypeTypeArguments.ts"
     },
     {
       "id": "154_emitThisInSuperMethodCall",
@@ -2279,7 +2432,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/154_emitThisInSuperMethodCall/emitThisInSuperMethodCall.ts"
     },
     {
       "id": "155_varianceReferences",
@@ -2295,7 +2449,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/155_varianceReferences/varianceReferences.ts"
     },
     {
       "id": "156_misspelledNewMetaProperty",
@@ -2309,7 +2464,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/156_misspelledNewMetaProperty/misspelledNewMetaProperty.ts"
     },
     {
       "id": "157_varNameConflictsWithImportInDifferentPartOfModule",
@@ -2323,7 +2479,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/157_varNameConflictsWithImportInDifferentPartOfModule/varNameConflictsWithImportInDifferentPartOfModule.ts"
     },
     {
       "id": "158_incorrectRecursiveMappedTypeConstraint",
@@ -2338,7 +2495,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/158_incorrectRecursiveMappedTypeConstraint/incorrectRecursiveMappedTypeConstraint.ts"
     },
     {
       "id": "159_objectBindingPattern_restElementWithPropertyName",
@@ -2352,7 +2510,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/159_objectBindingPattern_restElementWithPropertyName/objectBindingPattern_restElementWithPropertyName.ts"
     },
     {
       "id": "160_incompatibleAssignmentOfIdenticallyNamedTypes",
@@ -2367,7 +2526,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/160_incompatibleAssignmentOfIdenticallyNamedTypes/incompatibleAssignmentOfIdenticallyNamedTypes.ts"
     },
     {
       "id": "161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled",
@@ -2384,7 +2544,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled/didYouMeanElaborationsForExpressionsWhichCouldBeCalled.ts"
     },
     {
       "id": "162_instanceofWithPrimitiveUnion",
@@ -2398,7 +2559,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/162_instanceofWithPrimitiveUnion/instanceofWithPrimitiveUnion.ts"
     },
     {
       "id": "163_ArrowFunctionExpression1",
@@ -2412,7 +2574,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/163_ArrowFunctionExpression1/ArrowFunctionExpression1.ts"
     },
     {
       "id": "164_staticOffOfInstance1",
@@ -2426,7 +2589,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/164_staticOffOfInstance1/staticOffOfInstance1.ts"
     },
     {
       "id": "165_defaultValueInConstructorOverload1",
@@ -2440,7 +2604,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/165_defaultValueInConstructorOverload1/defaultValueInConstructorOverload1.ts"
     },
     {
       "id": "166_inheritanceMemberFuncOverridingProperty",
@@ -2455,7 +2620,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/166_inheritanceMemberFuncOverridingProperty/inheritanceMemberFuncOverridingProperty.ts"
     },
     {
       "id": "167_compareTypeParameterConstrainedByLiteralToLiteral",
@@ -2469,7 +2635,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/167_compareTypeParameterConstrainedByLiteralToLiteral/compareTypeParameterConstrainedByLiteralToLiteral.ts"
     },
     {
       "id": "168_importedModuleAddToGlobal",
@@ -2483,7 +2650,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/168_importedModuleAddToGlobal/importedModuleAddToGlobal.ts"
     },
     {
       "id": "169_spreadInvalidArgumentType",
@@ -2497,7 +2665,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/169_spreadInvalidArgumentType/spreadInvalidArgumentType.ts"
     },
     {
       "id": "170_decrementAndIncrementOperators",
@@ -2512,7 +2681,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts"
     },
     {
       "id": "171_extendPrivateConstructorClass",
@@ -2526,7 +2696,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/171_extendPrivateConstructorClass/extendPrivateConstructorClass.ts"
     },
     {
       "id": "172_constDeclarationShadowedByVarDeclaration",
@@ -2540,7 +2711,8 @@
       ],
       "options": {
         "target": "ES6"
-      }
+      },
+      "path": "corpus/172_constDeclarationShadowedByVarDeclaration/constDeclarationShadowedByVarDeclaration.ts"
     },
     {
       "id": "173_selfReferencesInFunctionParameters",
@@ -2555,7 +2727,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/173_selfReferencesInFunctionParameters/selfReferencesInFunctionParameters.ts"
     },
     {
       "id": "174_baseExpressionTypeParameters",
@@ -2569,7 +2742,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/174_baseExpressionTypeParameters/baseExpressionTypeParameters.ts"
     },
     {
       "id": "175_propertyOrdering",
@@ -2585,7 +2759,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/175_propertyOrdering/propertyOrdering.ts"
     },
     {
       "id": "176_exportSpecifierReferencingOuterDeclaration1",
@@ -2599,7 +2774,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/176_exportSpecifierReferencingOuterDeclaration1/exportSpecifierReferencingOuterDeclaration1.ts"
     },
     {
       "id": "177_readonlyTupleAndArrayElaboration",
@@ -2615,7 +2791,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/177_readonlyTupleAndArrayElaboration/readonlyTupleAndArrayElaboration.ts"
     },
     {
       "id": "178_bitwiseCompoundAssignmentOperators",
@@ -2631,7 +2808,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/178_bitwiseCompoundAssignmentOperators/bitwiseCompoundAssignmentOperators.ts"
     },
     {
       "id": "179_callOnClass",
@@ -2645,7 +2823,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/179_callOnClass/callOnClass.ts"
     },
     {
       "id": "180_keywordExpressionInternalComments",
@@ -2659,7 +2838,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/180_keywordExpressionInternalComments/keywordExpressionInternalComments.ts"
     },
     {
       "id": "181_noImplicitAnyDestructuringParameterDeclaration",
@@ -2676,7 +2856,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/181_noImplicitAnyDestructuringParameterDeclaration/noImplicitAnyDestructuringParameterDeclaration.ts"
     },
     {
       "id": "182_propertyAccessibility1",
@@ -2691,7 +2872,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/182_propertyAccessibility1/propertyAccessibility1.ts"
     },
     {
       "id": "183_internalImportInstantiatedModuleNotReferencingInstance",
@@ -2705,7 +2887,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/183_internalImportInstantiatedModuleNotReferencingInstance/internalImportInstantiatedModuleNotReferencingInstance.ts"
     },
     {
       "id": "184_bindingPatternCannotBeOnlyInferenceSource",
@@ -2722,7 +2905,8 @@
       "options": {
         "target": "es2015",
         "strictNullChecks": true
-      }
+      },
+      "path": "corpus/184_bindingPatternCannotBeOnlyInferenceSource/bindingPatternCannotBeOnlyInferenceSource.ts"
     },
     {
       "id": "185_restParamsWithNonRestParams",
@@ -2736,7 +2920,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/185_restParamsWithNonRestParams/restParamsWithNonRestParams.ts"
     },
     {
       "id": "186_superInConstructorParam1",
@@ -2752,7 +2937,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/186_superInConstructorParam1/superInConstructorParam1.ts"
     },
     {
       "id": "187_deleteReadonlyInStrictNullChecks",
@@ -2767,7 +2953,8 @@
       "options": {
         "target": "es2015",
         "strictNullChecks": true
-      }
+      },
+      "path": "corpus/187_deleteReadonlyInStrictNullChecks/deleteReadonlyInStrictNullChecks.ts"
     },
     {
       "id": "188_uncalledFunctionChecksInConditional",
@@ -2782,7 +2969,8 @@
       "options": {
         "target": "es2015",
         "strictNullChecks": true
-      }
+      },
+      "path": "corpus/188_uncalledFunctionChecksInConditional/uncalledFunctionChecksInConditional.ts"
     },
     {
       "id": "189_circularModuleImports",
@@ -2796,7 +2984,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/189_circularModuleImports/circularModuleImports.ts"
     },
     {
       "id": "190_interfaceMayNotBeExtendedWitACall",
@@ -2810,7 +2999,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/190_interfaceMayNotBeExtendedWitACall/interfaceMayNotBeExtendedWitACall.ts"
     },
     {
       "id": "191_extendedInterfacesWithDuplicateTypeParameters",
@@ -2825,7 +3015,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/191_extendedInterfacesWithDuplicateTypeParameters/extendedInterfacesWithDuplicateTypeParameters.ts"
     },
     {
       "id": "192_constructorOverloads1",
@@ -2840,7 +3031,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/192_constructorOverloads1/constructorOverloads1.ts"
     },
     {
       "id": "193_capturedParametersInInitializers1",
@@ -2855,7 +3047,8 @@
       "options": {
         "strict": false,
         "target": "es6"
-      }
+      },
+      "path": "corpus/193_capturedParametersInInitializers1/capturedParametersInInitializers1.ts"
     },
     {
       "id": "194_reachabilityChecks1",
@@ -2872,7 +3065,8 @@
         "strict": false,
         "allowUnreachableCode": false,
         "preserveConstEnums": true
-      }
+      },
+      "path": "corpus/194_reachabilityChecks1/reachabilityChecks1.ts"
     },
     {
       "id": "195_inheritanceMemberAccessorOverridingProperty",
@@ -2887,7 +3081,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/195_inheritanceMemberAccessorOverridingProperty/inheritanceMemberAccessorOverridingProperty.ts"
     },
     {
       "id": "196_typeArgumentDefaultUsesConstraintOnCircularDefault",
@@ -2902,7 +3097,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/196_typeArgumentDefaultUsesConstraintOnCircularDefault/typeArgumentDefaultUsesConstraintOnCircularDefault.ts"
     },
     {
       "id": "197_classExtendsInterfaceInModule",
@@ -2916,7 +3112,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/197_classExtendsInterfaceInModule/classExtendsInterfaceInModule.ts"
     },
     {
       "id": "198_shadowPrivateMembers",
@@ -2930,7 +3127,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/198_shadowPrivateMembers/shadowPrivateMembers.ts"
     },
     {
       "id": "199_getterMissingReturnError",
@@ -2944,7 +3142,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/199_getterMissingReturnError/getterMissingReturnError.ts"
     },
     {
       "id": "200_instantiationExpressionErrorNoCrash",
@@ -2959,7 +3158,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/200_instantiationExpressionErrorNoCrash/instantiationExpressionErrorNoCrash.ts"
     },
     {
       "id": "201_thisPredicateInObjectLiteral",
@@ -2974,7 +3174,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/201_thisPredicateInObjectLiteral/thisPredicateInObjectLiteral.ts"
     },
     {
       "id": "202_reservedNameOnInterfaceImport",
@@ -2988,7 +3189,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/202_reservedNameOnInterfaceImport/reservedNameOnInterfaceImport.ts"
     },
     {
       "id": "203_incrementOnTypeParameter",
@@ -3002,7 +3204,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/203_incrementOnTypeParameter/incrementOnTypeParameter.ts"
     },
     {
       "id": "204_classExpressionExtendingAbstractClass",
@@ -3016,7 +3219,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/204_classExpressionExtendingAbstractClass/classExpressionExtendingAbstractClass.ts"
     },
     {
       "id": "205_noImplicitReturnsInAsync2",
@@ -3032,7 +3236,8 @@
         "strict": false,
         "target": "es6",
         "noImplicitReturns": true
-      }
+      },
+      "path": "corpus/205_noImplicitReturnsInAsync2/noImplicitReturnsInAsync2.ts"
     },
     {
       "id": "206_recursiveResolveTypeMembers",
@@ -3047,7 +3252,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/206_recursiveResolveTypeMembers/recursiveResolveTypeMembers.ts"
     },
     {
       "id": "207_uniqueSymbolAllowsIndexInObjectWithIndexSignature",
@@ -3064,7 +3270,8 @@
         "lib": [
           "es6"
         ]
-      }
+      },
+      "path": "corpus/207_uniqueSymbolAllowsIndexInObjectWithIndexSignature/uniqueSymbolAllowsIndexInObjectWithIndexSignature.ts"
     },
     {
       "id": "208_importAliasInModuleAugmentation",
@@ -3080,7 +3287,8 @@
       "options": {
         "module": "commonjs",
         "target": "es2015"
-      }
+      },
+      "path": "corpus/208_importAliasInModuleAugmentation/importAliasInModuleAugmentation.ts"
     },
     {
       "id": "209_genericSpecializations2",
@@ -3096,7 +3304,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/209_genericSpecializations2/genericSpecializations2.ts"
     },
     {
       "id": "210_illegalSuperCallsInConstructor",
@@ -3112,7 +3321,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/210_illegalSuperCallsInConstructor/illegalSuperCallsInConstructor.ts"
     },
     {
       "id": "211_functionParameterArityMismatch",
@@ -3128,7 +3338,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/211_functionParameterArityMismatch/functionParameterArityMismatch.ts"
     },
     {
       "id": "212_duplicateIdentifierDifferentModifiers",
@@ -3143,7 +3354,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/212_duplicateIdentifierDifferentModifiers/duplicateIdentifierDifferentModifiers.ts"
     },
     {
       "id": "213_inheritanceMemberPropertyOverridingAccessor",
@@ -3158,7 +3370,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/213_inheritanceMemberPropertyOverridingAccessor/inheritanceMemberPropertyOverridingAccessor.ts"
     },
     {
       "id": "214_ambientExternalModuleWithRelativeModuleName",
@@ -3172,7 +3385,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/214_ambientExternalModuleWithRelativeModuleName/ambientExternalModuleWithRelativeModuleName.ts"
     },
     {
       "id": "215_classImplementsPrimitive",
@@ -3186,7 +3400,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/215_classImplementsPrimitive/classImplementsPrimitive.ts"
     },
     {
       "id": "216_functionTypeArgumentArityErrors",
@@ -3202,7 +3417,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/216_functionTypeArgumentArityErrors/functionTypeArgumentArityErrors.ts"
     },
     {
       "id": "217_fallFromLastCase2",
@@ -3218,7 +3434,8 @@
         "target": "es2015",
         "strict": false,
         "noFallthroughCasesInSwitch": true
-      }
+      },
+      "path": "corpus/217_fallFromLastCase2/fallFromLastCase2.ts"
     },
     {
       "id": "218_shorthandPropertyUndefined",
@@ -3232,7 +3449,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/218_shorthandPropertyUndefined/shorthandPropertyUndefined.ts"
     },
     {
       "id": "219_classImplementsClass4",
@@ -3247,7 +3465,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/219_classImplementsClass4/classImplementsClass4.ts"
     },
     {
       "id": "220_bigIntWithTargetLessThanES2016",
@@ -3264,7 +3483,8 @@
         "lib": [
           "esnext"
         ]
-      }
+      },
+      "path": "corpus/220_bigIntWithTargetLessThanES2016/bigIntWithTargetLessThanES2016.ts"
     },
     {
       "id": "221_unusedParameterProperty2",
@@ -3282,7 +3502,8 @@
         "strict": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/221_unusedParameterProperty2/unusedParameterProperty2.ts"
     },
     {
       "id": "222_staticPrototypeProperty",
@@ -3297,7 +3518,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/222_staticPrototypeProperty/staticPrototypeProperty.ts"
     },
     {
       "id": "223_instanceofOnInstantiationExpression",
@@ -3311,7 +3533,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/223_instanceofOnInstantiationExpression/instanceofOnInstantiationExpression.ts"
     },
     {
       "id": "224_newFunctionImplicitAny",
@@ -3326,7 +3549,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/224_newFunctionImplicitAny/newFunctionImplicitAny.ts"
     },
     {
       "id": "225_returnInConstructor1",
@@ -3342,7 +3566,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/225_returnInConstructor1/returnInConstructor1.ts"
     },
     {
       "id": "226_assigningFromObjectToAnythingElse",
@@ -3357,7 +3582,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/226_assigningFromObjectToAnythingElse/assigningFromObjectToAnythingElse.ts"
     },
     {
       "id": "227_classFieldSuperNotAccessible",
@@ -3371,7 +3597,8 @@
       ],
       "options": {
         "target": "esnext"
-      }
+      },
+      "path": "corpus/227_classFieldSuperNotAccessible/classFieldSuperNotAccessible.ts"
     },
     {
       "id": "228_inKeywordAndUnknown",
@@ -3386,7 +3613,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/228_inKeywordAndUnknown/inKeywordAndUnknown.ts"
     },
     {
       "id": "229_awaitCallExpressionInSyncFunction",
@@ -3400,7 +3628,8 @@
       ],
       "options": {
         "target": "esnext"
-      }
+      },
+      "path": "corpus/229_awaitCallExpressionInSyncFunction/awaitCallExpressionInSyncFunction.ts"
     },
     {
       "id": "230_parameterPropertyInConstructor3",
@@ -3414,7 +3643,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/230_parameterPropertyInConstructor3/parameterPropertyInConstructor3.ts"
     },
     {
       "id": "231_circularReferenceInReturnType",
@@ -3430,7 +3660,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/231_circularReferenceInReturnType/circularReferenceInReturnType.ts"
     },
     {
       "id": "232_neverNullishThroughParentheses",
@@ -3445,7 +3676,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/232_neverNullishThroughParentheses/neverNullishThroughParentheses.ts"
     },
     {
       "id": "233_noImplicitAnyNamelessParameter",
@@ -3460,7 +3692,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/233_noImplicitAnyNamelessParameter/noImplicitAnyNamelessParameter.ts"
     },
     {
       "id": "234_superCallFromClassThatHasNoBaseType1",
@@ -3475,7 +3708,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/234_superCallFromClassThatHasNoBaseType1/superCallFromClassThatHasNoBaseType1.ts"
     },
     {
       "id": "235_reachabilityChecks3",
@@ -3490,7 +3724,8 @@
       "options": {
         "target": "es2015",
         "allowUnusedLabels": false
-      }
+      },
+      "path": "corpus/235_reachabilityChecks3/reachabilityChecks3.ts"
     },
     {
       "id": "236_returnValueInSetter",
@@ -3505,7 +3740,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/236_returnValueInSetter/returnValueInSetter.ts"
     },
     {
       "id": "237_gettersAndSettersAccessibility",
@@ -3519,7 +3755,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/237_gettersAndSettersAccessibility/gettersAndSettersAccessibility.ts"
     },
     {
       "id": "238_typeParameterAsBaseClass",
@@ -3534,7 +3771,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/238_typeParameterAsBaseClass/typeParameterAsBaseClass.ts"
     },
     {
       "id": "239_expressionWithJSDocTypeArguments",
@@ -3551,7 +3789,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/239_expressionWithJSDocTypeArguments/expressionWithJSDocTypeArguments.ts"
     },
     {
       "id": "240_indexedAccessPrivateMemberOfGenericConstraint",
@@ -3566,7 +3805,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/240_indexedAccessPrivateMemberOfGenericConstraint/indexedAccessPrivateMemberOfGenericConstraint.ts"
     },
     {
       "id": "241_implicitAnyGetAndSetAccessorWithAnyReturnType",
@@ -3582,7 +3822,8 @@
       "options": {
         "target": "es2015",
         "noImplicitAny": true
-      }
+      },
+      "path": "corpus/241_implicitAnyGetAndSetAccessorWithAnyReturnType/implicitAnyGetAndSetAccessorWithAnyReturnType.ts"
     },
     {
       "id": "242_constDeclarations-access2",
@@ -3597,7 +3838,8 @@
       "options": {
         "strict": false,
         "target": "ES6"
-      }
+      },
+      "path": "corpus/242_constDeclarations-access2/constDeclarations-access2.ts"
     },
     {
       "id": "243_classExtendsNull3",
@@ -3612,7 +3854,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/243_classExtendsNull3/classExtendsNull3.ts"
     },
     {
       "id": "244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib",
@@ -3633,7 +3876,8 @@
           "es5"
         ],
         "target": "es6"
-      }
+      },
+      "path": "corpus/244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib/modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib.ts"
     },
     {
       "id": "245_inheritanceMemberFuncOverridingAccessor",
@@ -3649,7 +3893,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/245_inheritanceMemberFuncOverridingAccessor/inheritanceMemberFuncOverridingAccessor.ts"
     },
     {
       "id": "246_noCrashOnMixin",
@@ -3663,7 +3908,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/246_noCrashOnMixin/noCrashOnMixin.ts"
     },
     {
       "id": "247_missingDomElements",
@@ -3681,7 +3927,8 @@
         "lib": [
           "esnext"
         ]
-      }
+      },
+      "path": "corpus/247_missingDomElements/missingDomElements.ts"
     },
     {
       "id": "248_relationComplexityError",
@@ -3696,7 +3943,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/248_relationComplexityError/relationComplexityError.ts"
     },
     {
       "id": "249_mergedClassNamespaceRecordCast",
@@ -3711,7 +3959,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/249_mergedClassNamespaceRecordCast/mergedClassNamespaceRecordCast.ts"
     },
     {
       "id": "250_parseInvalidNonNullableTypes",
@@ -3728,7 +3977,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/250_parseInvalidNonNullableTypes/parseInvalidNonNullableTypes.ts"
     },
     {
       "id": "251_decoratorMetadataGenericTypeVariable",
@@ -3745,7 +3995,8 @@
         "target": "es2015",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
-      }
+      },
+      "path": "corpus/251_decoratorMetadataGenericTypeVariable/decoratorMetadataGenericTypeVariable.ts"
     },
     {
       "id": "252_unusedFunctionsinNamespaces3",
@@ -3761,7 +4012,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/252_unusedFunctionsinNamespaces3/unusedFunctionsinNamespaces3.ts"
     },
     {
       "id": "253_correctOrderOfPromiseMethod",
@@ -3780,7 +4032,8 @@
           "dom",
           "es7"
         ]
-      }
+      },
+      "path": "corpus/253_correctOrderOfPromiseMethod/correctOrderOfPromiseMethod.ts"
     },
     {
       "id": "254_parseTypes",
@@ -3795,7 +4048,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/254_parseTypes/parseTypes.ts"
     },
     {
       "id": "255_keyRemappingKeyofResult",
@@ -3809,7 +4063,8 @@
       ],
       "options": {
         "target": "es6"
-      }
+      },
+      "path": "corpus/255_keyRemappingKeyofResult/keyRemappingKeyofResult.ts"
     },
     {
       "id": "256_namespaceDisambiguationInUnion",
@@ -3823,7 +4078,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/256_namespaceDisambiguationInUnion/namespaceDisambiguationInUnion.ts"
     },
     {
       "id": "257_generatorES6_5",
@@ -3837,7 +4093,8 @@
       ],
       "options": {
         "target": "es6"
-      }
+      },
+      "path": "corpus/257_generatorES6_5/generatorES6_5.ts"
     },
     {
       "id": "258_decoratorMetadataGenericTypeVariableInScope",
@@ -3855,7 +4112,8 @@
         "target": "es2015",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
-      }
+      },
+      "path": "corpus/258_decoratorMetadataGenericTypeVariableInScope/decoratorMetadataGenericTypeVariableInScope.ts"
     },
     {
       "id": "259_conditionalAnyCheckTypePicksBothBranches",
@@ -3869,7 +4127,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/259_conditionalAnyCheckTypePicksBothBranches/conditionalAnyCheckTypePicksBothBranches.ts"
     },
     {
       "id": "260_unusedFunctionsinNamespaces6",
@@ -3885,7 +4144,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/260_unusedFunctionsinNamespaces6/unusedFunctionsinNamespaces6.ts"
     },
     {
       "id": "261_promiseIdentity2",
@@ -3899,7 +4159,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/261_promiseIdentity2/promiseIdentity2.ts"
     },
     {
       "id": "262_decoratorMetadataConditionalType",
@@ -3915,7 +4176,8 @@
         "target": "es2015",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
-      }
+      },
+      "path": "corpus/262_decoratorMetadataConditionalType/decoratorMetadataConditionalType.ts"
     },
     {
       "id": "263_keyofIsLiteralContexualType",
@@ -3930,7 +4192,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/263_keyofIsLiteralContexualType/keyofIsLiteralContexualType.ts"
     },
     {
       "id": "264_unusedVariablesinNamespaces3",
@@ -3946,7 +4209,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/264_unusedVariablesinNamespaces3/unusedVariablesinNamespaces3.ts"
     },
     {
       "id": "265_promiseIdentity",
@@ -3960,7 +4224,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/265_promiseIdentity/promiseIdentity.ts"
     },
     {
       "id": "266_decoratorMetadataGenericTypeVariableDefault",
@@ -3977,7 +4242,8 @@
         "target": "es2015",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
-      }
+      },
+      "path": "corpus/266_decoratorMetadataGenericTypeVariableDefault/decoratorMetadataGenericTypeVariableDefault.ts"
     },
     {
       "id": "267_reverseMappedTypeContextualTypeNotCircular",
@@ -3991,7 +4257,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/267_reverseMappedTypeContextualTypeNotCircular/reverseMappedTypeContextualTypeNotCircular.ts"
     },
     {
       "id": "268_incorrectNumberOfTypeArgumentsDuringErrorReporting",
@@ -4005,7 +4272,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/268_incorrectNumberOfTypeArgumentsDuringErrorReporting/incorrectNumberOfTypeArgumentsDuringErrorReporting.ts"
     },
     {
       "id": "269_unusedFunctionsinNamespaces5",
@@ -4021,7 +4289,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/269_unusedFunctionsinNamespaces5/unusedFunctionsinNamespaces5.ts"
     },
     {
       "id": "270_promiseChaining1",
@@ -4035,7 +4304,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/270_promiseChaining1/promiseChaining1.ts"
     },
     {
       "id": "271_enumUsedBeforeDeclaration",
@@ -4049,7 +4319,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/271_enumUsedBeforeDeclaration/enumUsedBeforeDeclaration.ts"
     },
     {
       "id": "272_conditionalExpressionNewLine3",
@@ -4063,7 +4334,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/272_conditionalExpressionNewLine3/conditionalExpressionNewLine3.ts"
     },
     {
       "id": "273_stringMappingAssignability",
@@ -4078,7 +4350,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/273_stringMappingAssignability/stringMappingAssignability.ts"
     },
     {
       "id": "274_ipromise3",
@@ -4092,7 +4365,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/274_ipromise3/ipromise3.ts"
     },
     {
       "id": "275_unusedInterfaceinNamespace1",
@@ -4108,7 +4382,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/275_unusedInterfaceinNamespace1/unusedInterfaceinNamespace1.ts"
     },
     {
       "id": "276_intersectionsAndOptionalProperties",
@@ -4123,7 +4398,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/276_intersectionsAndOptionalProperties/intersectionsAndOptionalProperties.ts"
     },
     {
       "id": "277_useBeforeDeclaration_destructuring",
@@ -4138,7 +4414,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/277_useBeforeDeclaration_destructuring/useBeforeDeclaration_destructuring.ts"
     },
     {
       "id": "278_typeOfOperator1",
@@ -4152,7 +4429,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/278_typeOfOperator1/typeOfOperator1.ts"
     },
     {
       "id": "279_enumAssignmentCompat",
@@ -4166,7 +4444,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/279_enumAssignmentCompat/enumAssignmentCompat.ts"
     },
     {
       "id": "280_unusedClassesinNamespace2",
@@ -4182,7 +4461,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/280_unusedClassesinNamespace2/unusedClassesinNamespace2.ts"
     },
     {
       "id": "281_doubleUnderStringLiteralAssignability",
@@ -4196,7 +4476,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/281_doubleUnderStringLiteralAssignability/doubleUnderStringLiteralAssignability.ts"
     },
     {
       "id": "282_ipromise4",
@@ -4210,7 +4491,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/282_ipromise4/ipromise4.ts"
     },
     {
       "id": "283_errorsWithInvokablesInUnions01",
@@ -4224,7 +4506,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/283_errorsWithInvokablesInUnions01/errorsWithInvokablesInUnions01.ts"
     },
     {
       "id": "284_exhaustiveSwitchCheckCircularity",
@@ -4239,7 +4522,8 @@
       "options": {
         "target": "es2015",
         "strict": true
-      }
+      },
+      "path": "corpus/284_exhaustiveSwitchCheckCircularity/exhaustiveSwitchCheckCircularity.ts"
     },
     {
       "id": "285_numberAssignableToEnumInsideUnion",
@@ -4253,7 +4537,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/285_numberAssignableToEnumInsideUnion/numberAssignableToEnumInsideUnion.ts"
     },
     {
       "id": "286_conditionalExpressionNewLine9",
@@ -4267,7 +4552,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/286_conditionalExpressionNewLine9/conditionalExpressionNewLine9.ts"
     },
     {
       "id": "287_unusedFunctionsinNamespaces2",
@@ -4283,7 +4569,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/287_unusedFunctionsinNamespaces2/unusedFunctionsinNamespaces2.ts"
     },
     {
       "id": "288_numberOnLeftSideOfInExpression",
@@ -4297,7 +4584,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/288_numberOnLeftSideOfInExpression/numberOnLeftSideOfInExpression.ts"
     },
     {
       "id": "289_awaitedTypeStrictNull",
@@ -4313,7 +4601,8 @@
       "options": {
         "target": "esnext",
         "strictNullChecks": true
-      }
+      },
+      "path": "corpus/289_awaitedTypeStrictNull/awaitedTypeStrictNull.ts"
     },
     {
       "id": "290_contextuallyTypingOrOperator",
@@ -4328,7 +4617,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/290_contextuallyTypingOrOperator/contextuallyTypingOrOperator.ts"
     },
     {
       "id": "291_nonexistentPropertyOnUnion",
@@ -4342,7 +4632,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/291_nonexistentPropertyOnUnion/nonexistentPropertyOnUnion.ts"
     },
     {
       "id": "292_scopingInCatchBlocks",
@@ -4356,7 +4647,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/292_scopingInCatchBlocks/scopingInCatchBlocks.ts"
     },
     {
       "id": "293_augmentedTypesEnum2",
@@ -4370,7 +4662,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/293_augmentedTypesEnum2/augmentedTypesEnum2.ts"
     },
     {
       "id": "294_mappedTypeWithCombinedTypeMappers",
@@ -4384,7 +4677,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/294_mappedTypeWithCombinedTypeMappers/mappedTypeWithCombinedTypeMappers.ts"
     },
     {
       "id": "295_unusedFunctionsinNamespaces4",
@@ -4400,7 +4694,8 @@
         "target": "es2015",
         "noUnusedLocals": true,
         "noUnusedParameters": true
-      }
+      },
+      "path": "corpus/295_unusedFunctionsinNamespaces4/unusedFunctionsinNamespaces4.ts"
     },
     {
       "id": "296_numberToString",
@@ -4415,7 +4710,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/296_numberToString/numberToString.ts"
     },
     {
       "id": "297_promiseIdentityWithAny",
@@ -4429,7 +4725,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/297_promiseIdentityWithAny/promiseIdentityWithAny.ts"
     },
     {
       "id": "298_destructuringAssignmentWithDefault2",
@@ -4447,7 +4744,8 @@
           "es2015"
         ],
         "strictNullChecks": true
-      }
+      },
+      "path": "corpus/298_destructuringAssignmentWithDefault2/destructuringAssignmentWithDefault2.ts"
     },
     {
       "id": "299_contextualTypingOfArrayLiterals1",
@@ -4462,7 +4760,8 @@
       "options": {
         "target": "es2015",
         "strict": false
-      }
+      },
+      "path": "corpus/299_contextualTypingOfArrayLiterals1/contextualTypingOfArrayLiterals1.ts"
     },
     {
       "id": "300_errorMessageOnIntersectionsWithDiscriminants01",
@@ -4476,7 +4775,8 @@
       ],
       "options": {
         "target": "es2015"
-      }
+      },
+      "path": "corpus/300_errorMessageOnIntersectionsWithDiscriminants01/errorMessageOnIntersectionsWithDiscriminants01.ts"
     }
   ]
 }

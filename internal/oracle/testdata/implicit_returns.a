@@ -1,0 +1,31 @@
+class Reader {
+ readonly seed: number;
+ constructor(seed: number) { this.seed = seed; }
+ maybe(present: boolean) { if (present) { return this.seed * 2; } }
+ text(present: boolean): string | undefined { if (present) { return `text${this.seed}`; } }
+ effect(present: boolean): void { const held = { text: `effect${this.seed}` }; if (present) { console.log(held.text); } }
+}
+const reader = new Reader(3);
+console.log(`${reader.maybe(true)} ${reader.maybe(false)}`);
+console.log(`${reader.text(true) ?? 'none'} ${reader.text(false) ?? 'none'}`);
+reader.effect(true);
+reader.effect(false);
+const arrow = (x: number) => { const text = `arrow${x}`; if (x > 0) { console.log(text); return x * 3; } };
+console.log(`${arrow(2)} ${arrow(-1)}`);
+const reference = (present: boolean): { readonly text: string } | undefined => {
+ const held = { text: `reference${3}` };
+ if (present) { return held; }
+};
+console.log(`${reference(true)?.text ?? 'none'} ${reference(false)?.text ?? 'none'}`);
+function generic<T>(value: T, present: boolean): T | undefined { if (present) { return value; } }
+console.log(`${generic(4, true)} ${generic(4, false)}`);
+console.log(`${generic(`g${3}`, true) ?? 'none'} ${generic(`g${3}`, false) ?? 'none'}`);
+console.log(`${generic({ text: `object${3}` }, true)?.text ?? 'none'} ${generic({ text: `object${3}` }, false)?.text ?? 'none'}`);
+function bare(x: number): number | undefined { if (x < 0) { return; } if (x > 0) { return x; } }
+console.log(`${bare(-1)} ${bare(0)} ${bare(1)}`);
+function cleanup(x: number): string | undefined {
+ const held = { text: `cleanup${x}` };
+ try { if (x > 0) { return held.text; } }
+ finally { console.log(held.text); }
+}
+console.log(`${cleanup(1) ?? 'none'} ${cleanup(-1) ?? 'none'}`);

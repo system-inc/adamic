@@ -115,7 +115,7 @@ func validFixturePath(name string) bool {
 
 // The enum and namespace branches use Node's transform mode. Derive that runner
 // from the current source oracle, preserving its runtime and import hooks while
-// leaving the ordinary erasable runner untouched.
+// accepting either source mode without changing the original runner.
 func transformedNodeRunner(t *testing.T, repository string) string {
 	t.Helper()
 	path := filepath.Join(repository, "oracle/node.mjs")
@@ -124,10 +124,14 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 		t.Fatal(err)
 	}
 	text := string(source)
-	if strings.Count(text, "stripTypeScriptTypes(source)") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
+	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
+	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
+	if erasable+transformedCalls != 1 || strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
 		t.Fatal("source Node runner changed: review the transform-mode hook")
 	}
-	text = strings.Replace(text, "stripTypeScriptTypes(source)", "stripTypeScriptTypes(source, { mode: 'transform' })", 1)
+	if erasable == 1 {
+		text = strings.Replace(text, "stripTypeScriptTypes(source)", "stripTypeScriptTypes(source, { mode: 'transform' })", 1)
+	}
 	oracleURL := (&url.URL{Scheme: "file", Path: filepath.ToSlash(path)}).String()
 	text = strings.Replace(text, "new URL('./adamic.mjs', import.meta.url)", fmt.Sprintf("new URL('./adamic.mjs', %q)", oracleURL), 1)
 	transformed := filepath.Join(t.TempDir(), "node-transform.mjs")
@@ -247,7 +251,7 @@ func TestFixtures(t *testing.T) {
 					t.Fatalf("missing provenance for %s", entry.File)
 				}
 				switch entry.Stage0.Outcome {
-				case "Checker", "Refused", "NotYet", "Compiles":
+				case "Checker", "Refused", "NotYet", "Compiles", "CheckedStop":
 				default:
 					t.Fatalf("invalid outcome: %q", entry.Stage0.Outcome)
 				}
@@ -313,7 +317,18 @@ func TestFixtures(t *testing.T) {
 									t.Fatal(err)
 								}
 							}
-							equal(t, "native versus Node", behavior{string(stdout), string(stderr), exit}, node)
+							observed := behavior{string(stdout), string(stderr), exit}
+							if entry.Stage0.Outcome == "CheckedStop" {
+								// A ruled inserted check may stop source that Node accepts. Pin the
+								// entire stop separately; the source Node observation is still exact.
+								want := behavior{Stderr: entry.Stage0.What, Exit: 70}
+								equal(t, "pinned native check", observed, want)
+								if observed == want {
+									actual = stage0{Outcome: "CheckedStop", What: string(stderr)}
+								}
+							} else {
+								equal(t, "native versus Node", observed, node)
+							}
 						})
 					}
 					if *update && recordedNodeAgrees && nativeAgrees {

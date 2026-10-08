@@ -1,0 +1,34 @@
+| Top-level test | Own active time (s) | Active span including children (s) | Result |
+|---|---:|---:|---|
+| TestCheckerNoProgramCoverage | 4.79 | 4.79 | pass |
+| TestCheckerBridgeRefusalPending | 0.00 | 0.00 | skip |
+| TestCheckerReplayEntryControl | 8.24 | 8.24 | pass |
+| TestCheckerHashes | 0.65 | 0.65 | pass |
+| TestNestedConstructorGap | 0.15 | 0.15 | pass |
+| TestEmittedJavaScriptMismatch | 79.60 | 79.60 | pass |
+| TestDotARename | 21.90 | 21.89 | pass |
+| TestCompleteSuggestionSerialization | 83.73 | 83.73 | pass |
+| TestSuggestionAlongsideAutomaticFix | 16.84 | 16.84 | pass |
+| TestWitnessScriptKind | 9.55 | 9.56 | pass |
+| TestJsxLintReleaseAndThroughput | 0.00 | 0.00 | skip |
+| TestJsxLintTrees | 44.67 | 44.67 | pass |
+| TestRulesAgree | 116.08 | 116.08 | pass |
+| TestCompilerAndStage1Agree | 535.59 | 535.59 | pass |
+| TestLegacyMutants | 102.15 | 102.15 | pass |
+| TestThroughput | 0.00 | 0.00 | skip |
+| TestNodeTableIsLinkOnly | 79.10 | 79.10 | pass |
+| TestShardsAgree | 257.50 | 257.50 | pass |
+| TestMutants | 7.41 | 880.42 | pass |
+| TestProfileArtifacts | 76.36 | 76.36 | pass |
+| TestProfileCompilation | 59.57 | 59.57 | pass |
+| TestProfileSnapshotsAgree | 286.88 | 286.88 | pass |
+| TestOwnedWitnesses | 27.83 | 27.83 | pass |
+| TestRegistrationMutant | 29.27 | 29.27 | pass |
+| TestFactoryHooks | 213.73 | 213.73 | pass |
+| TestNestedOutsideModuleCopy | 0.73 | 0.73 | pass |
+| TestDecodedOptionsAndMutant | 19.18 | 19.18 | pass |
+| TestOptionAndComparatorGaps | 0.88 | 0.89 | pass |
+| TestDecorationOptionMutant | 21.49 | 22.09 | pass |
+| TestCommentFoldMutant | 22.97 | 23.79 | pass |
+| TestCountGuardMutant | 23.80 | 24.43 | pass |
+| TestPositionIndexMutant | 23.56 | 23.55 | pass |

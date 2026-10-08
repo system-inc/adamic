@@ -7,7 +7,9 @@
 #include "count.h"
 
 #include <errno.h>
+#ifndef ADAMIC_TARGET_WASI
 #include <signal.h>
+#endif
 #include <stdatomic.h>
 #include <stdlib.h>
 #include <string.h>
@@ -106,6 +108,7 @@ void adamic_output_flush(void) {
 // signal is raised again with its default action, so the program ends the way Node's does, killed by
 // it. write is async-signal-safe. A signal arriving inside flush finds the buffer already emptied, and
 // what that write hadn't finished is lost.
+#ifndef ADAMIC_TARGET_WASI
 static void stopped(int signal_number) {
 	size_t whole = output_whole;
 	if (whole > 0 && !broken[adamic_stdout]) {
@@ -115,11 +118,11 @@ static void stopped(int signal_number) {
 	raise(signal_number);
 }
 
-// stop_with installs stopped for a signal, unless whoever started the program ignored it (a
-// background job's SIGINT), which stays ignored, as it does for Node.
+// Node resets inherited ignored SIGINT, SIGHUP and SIGTERM at startup. Other ignored signals
+// stay ignored; they would not terminate the process with their inherited disposition.
 static void stop_with(int signal_number) {
 	struct sigaction current;
-	if (sigaction(signal_number, NULL, &current) != 0 || current.sa_handler == SIG_IGN) {
+	if (sigaction(signal_number, NULL, &current) != 0 || (current.sa_handler == SIG_IGN && signal_number != SIGINT && signal_number != SIGHUP && signal_number != SIGTERM)) {
 		return;
 	}
 	struct sigaction handler;
@@ -128,6 +131,8 @@ static void stop_with(int signal_number) {
 	sigemptyset(&handler.sa_mask);
 	sigaction(signal_number, &handler, NULL);
 }
+
+#endif
 
 // put writes bytes to stdout's buffer, or straight to stderr.
 static void put(enum adamic_stream stream, const char *bytes, size_t length) {
@@ -156,10 +161,12 @@ static void write_text(enum adamic_stream stream, const char *bytes, size_t leng
 void adamic_start(int count, char **values) {
 	adamic_arguments_save(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
+#ifndef ADAMIC_TARGET_WASI
 	signal(SIGPIPE, SIG_IGN);
 	stop_with(SIGTERM);
 	stop_with(SIGINT);
 	stop_with(SIGHUP);
+#endif
 }
 
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {

@@ -1,0 +1,42 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/self-comparison-equality-reversed
+    lint_test.go:759: self-comparison-equality-reversed caught on Node: case 20 line 354: port "/tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:1", Go "/tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:3"
+        Go context:
+        case 18
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 19
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:11
+    lint_test.go:759: self-comparison-equality-reversed caught on emitted JavaScript: case 20 line 354: port "/tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:1", Go "/tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:3"
+        Go context:
+        case 18
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 19
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:11
+    lint_test.go:759: self-comparison-equality-reversed caught on native: case 20 line 354: port "/tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:1", Go "/tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:3"
+        Go context:
+        case 18
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 19
+        fixed	if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}
+        case 20
+        /tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:3
+          eqeqeq  This compares with `==`, which coerces its operands to a common type before comparing. That makes the comparison non-transitive, which is the one property every reader assumes a comparison has: `0 == '0'` and `'0' == []` disagree while `0 == []` is true. Write `===`, which compares without coercing.
+        
+        range 2 4 unexpected suggestion	===	Use `===` instead of `==`. This changes what the comparison answers wherever the operands can differ in type, so it is offered rather than applied.	2 4
+        /tmp/adamic-gate/TestMutantsself-comparison-equality-reversed843195498/003/generated-2.ts:1:11
+--- PASS: TestMutants (31.29s)
+    --- PASS: TestMutants/self-comparison-equality-reversed (27.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	31.331s
