@@ -3,4 +3,4 @@ const options = (({ throwIfNoEntry: false }) as const);
 const present = statSync('.', options);
 if (present === undefined) console.log('missing');
 else console.log(present.isDirectory() ? 'directory' : 'other');
-console.log(`absent=${statSync('missing-node-options-widening-entry', { throwIfNoEntry: false }) === undefined}`);
+console.log(`absent=${statSync('missing-node-options-widening-entry', options) === undefined}`);

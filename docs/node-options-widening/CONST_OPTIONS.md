@@ -1,3 +1,106 @@
+Extended the const-literal proof to require every reference to be a consuming host options argument.
+Base 23ea5d92 on codex/host-stats-dirent-union; implementation and this report are committed together.
+Lower/IR/flow, vet, Linux counts and the whole oracle with WASI pass; six combined host fixtures remain green.
+The extra console.log(options) reference inside a capturing closure is caught by the predicate mutant.
+The compiler hook is unchanged; forwarded readdir options and dynamic encoding fields remain outside the exemption.
+
+The clarified rule supersedes the single-capture and prior-use assumptions in
+checkpoint 8563e6aa below. Both local and module const bindings may have multiple
+consuming references, including references in multiple closures. Every reference
+must occupy a scalar-consuming options position in the host lowerer. Any other
+reference refuses every consuming use, even when textually after a call. Scalar
+field reads, writes, exports, aliases, returns, casts, storage, spreads and
+arguments to other functions fail this rule.
+
+Consumption-position recognition is separate from exact-shape verification,
+so checking another reference does not recursively prove the same binding.
+Each reference also retains the scalar-field restriction. The walk covers every non-declaration source file in the checker program,
+including imported files and all closure bodies. An exported binding or export
+alias is still refused conservatively. A cross-file regression checks both an
+imported consuming closure and an object exported to another module. The loader
+forces module scope, so the attempted script-global witness stopped at TS2304
+(Cannot find name options); globals are not admitted by this base. Shorthand
+object properties resolve their value symbol rather than the property symbol,
+preventing {options} from hiding storage.
+
+The updated node_options_const_capture.a covers two module consuming functions,
+a local arrow closure and a direct consuming call using that same local binding.
+All agree with Node on native, JavaScript and WASI. Nested function declarations
+remain a language limitation on this base; the predicate test covers their shape,
+while the executable fixture uses the supported arrow closure form. No language
+rule was changed. node_options_widening.a now reuses its const for both calls;
+Node stdout and stderr remain byte-identical, with both runs exiting zero.
+It no longer needs an inline literal at its second call.
+
+The new production mutant treats every call-argument reference as consuming,
+including console.log(options) inside the capturing closure. Its direct predicate
+test must fail with consumes argument = true, want false, rather than being
+masked by a separate compiler check. Complete compiler tests additionally verify
+adamic/no-optional-widening for this extra reference and for an escape that makes
+both a direct call and a captured call unsafe. Existing let, prior-escape,
+returned-object, planted-force and hidden-initializer mutants are rerun.
+
+Validation logs for this clarification are /tmp/const-captures-*.log and
+/tmp/const-consuming-capture-mutants/*.log. All six compile-valid mutants exit 1
+with library_node_options_test.go:77: consumes argument = true, want false:
+captured_extra_reference_mutant, let_mutant, prior_escape_mutant,
+returned_object_mutant, cast_planted_field_mutant and cast_hidden_field_mutant.
+Compile failures and a mutation that did not reach the parenthesized initializer
+are not counted as kills. The corrected mutations exercise the intended checks.
+
+Observed completed gates:
+
+    go test ./internal/lower -run '^TestNodeHost' -count=1 -timeout=10m
+    ok internal/lower 18.405s
+
+    ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode/internal/oracle/testdata/node_options_(const_capture|widening)\.a$' -count=1 -parallel=2 -timeout=10m
+    ok internal/oracle 1.517s
+
+    go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -parallel=2 -timeout=30m -args -update-counts
+    ok internal/oracle 467.777s
+
+Linux counts change only node_options_const_capture.a, to 17/17/3/16/11/0.
+The first attempted executable local test used a nested function declaration:
+TestNodeHostOptionsConsumptionLowers at library_node_options_test.go:126 refused
+main.a:1:112: stage 0 can't lower a function inside a function (a closure) yet.
+Changing the test to an arrow closure resolves that existing language limitation.
+The production proof is not weakened to accommodate it.
+
+Final implementation package gate:
+
+    go test ./internal/lower ./internal/ir ./internal/flow -count=1 -timeout=30m
+    lower 210.674s; ir 42.257s; flow 246.707s; all ok
+
+    go vet ./internal/lower ./internal/ir ./internal/flow ./internal/oracle
+    exit 0
+
+The six unchanged combined host fixtures (06, 07, 08, 10, 13 and 24) remain green
+on native and JavaScript, comparing stdout, stderr and exit to status.json and
+stock Node. The final program-wide proof is applied to the combined scratch;
+its newer boxed-constant option handling is preserved. No fixture adaptation,
+status recording, declaration, runtime or compiler hook was edited.
+The existing compiler call is still optional_widening.go:135.
+
+The whole oracle runs in isolation with WASI_SYSROOT set and
+GOPROXY='https://proxy.golang.org|direct':
+
+    ADAMIC_ORACLE_WASI=1 go test -v ./internal/oracle -count=1 -parallel=2 -timeout=30m
+
+The complete final oracle passes in 601.498s with zero failing tests. Both
+options fixtures pass TestNativeAgreesWithNode, TestWASIAgreesWithNode,
+TestWASIEmission and TestCountsAreRecorded. The final counts verification takes
+93.55s and agrees with the Linux table. Worker oracle observation caches are
+permitted by CLAUDE.md; WASI comparisons execute in this configured leg. No
+recorded broad-gate failure remains.
+
+Only codex/host-stats-dirent-union is committed and pushed. Main is never pushed;
+no force push, rebase or PR is used. The report update after these gates changes
+no implementation, fixture or count, so it needs no further runtime test. No compiler-hook edit, main push, force push or rebase
+is part of this change.
+
+Historical checkpoint follows; its old single-capture and inline-second-call
+restrictions are superseded by the clarification above.
+
 Built a shared exact-shape proof for fresh const Node option objects, including parenthesized as const initializers.
 Implementation 8563e6aa on codex/host-stats-dirent-union, from 70a2a970; the final report follows in a documentation commit.
 Lower/IR/flow and Linux counts pass; six unchanged combined host fixtures agree with Node on native and JavaScript.
