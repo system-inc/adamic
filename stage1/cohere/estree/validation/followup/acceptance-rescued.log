@@ -1,0 +1,8 @@
+=== RUN   TestRepositoryAgreement
+    corpus_test.go:75: 81 Go-accepted/source-Node-identical repository snapshot files, 474925 bytes checked on uninstrumented source Node, sanitized native and emitted JS; refusals and mismatches remain excluded and separately reported
+--- PASS: TestRepositoryAgreement (23.06s)
+=== RUN   TestRecoveredGrammar
+    recovery_test.go:39: 16 recovered grammar cases, 23734 identical bytes in all three port builds
+--- PASS: TestRecoveredGrammar (23.15s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	46.223s
