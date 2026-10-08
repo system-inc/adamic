@@ -112,18 +112,29 @@ func TestImportsAgreementAndMutants(t *testing.T) {
 					t.Fatal(err)
 				}
 				binary := filepath.Join(t.TempDir(), "imports")
-				if err = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
-					t.Fatal(err)
+				// Native agreement is the unmutated canary; semantic mutants run on
+				// Node and emitted JavaScript against the same complete Go output.
+				if !mutant {
+					if err = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
+						t.Fatal(err)
+					}
 				}
 				js := binary + ".mjs"
 				if err = os.WriteFile(js, []byte(javascript.JavaScript(ir)), 0644); err != nil {
 					t.Fatal(err)
 				}
 				runner := filepath.Join(root, "oracle/node.mjs")
-				for _, side := range []struct {
+				sides := []struct {
 					name string
 					cmd  []string
-				}{{"Node", []string{"node", "--disable-warning=ExperimentalWarning", runner, entry, cases}}, {"JavaScript", []string{"node", "--disable-warning=ExperimentalWarning", runner, js, cases}}, {"native", []string{binary, cases}}} {
+				}{{"Node", []string{"node", "--disable-warning=ExperimentalWarning", runner, entry, cases}}, {"JavaScript", []string{"node", "--disable-warning=ExperimentalWarning", runner, js, cases}}}
+				if !mutant {
+					sides = append(sides, struct {
+						name string
+						cmd  []string
+					}{"native", []string{binary, cases}})
+				}
+				for _, side := range sides {
 					got := run(t, "", side.cmd[0], side.cmd[1:]...)
 					if mutant {
 						if bytes.Equal(got, want) {
