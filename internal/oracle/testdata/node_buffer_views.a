@@ -1,0 +1,28 @@
+import { Buffer } from 'node:buffer';
+function child(): Buffer {
+ const bytes = Buffer.from('0080ff616263', 'hex');
+ return bytes.subarray(1, -1).slice(1);
+}
+const held = child();
+console.log(held.toString('hex'));
+const parent = Buffer.from('001122334455', 'hex');
+const view = parent.subarray(1, 5);
+const nested = view.slice(1, -1);
+nested[0] = 258;
+console.log(parent.toString('hex'));
+parent[3] = 255;
+console.log(nested.toString('hex'));
+view[-1] = 99;
+view[99] = 99;
+view[0.5] = 99;
+console.log(`${view[-1] ?? -1},${view[99] ?? -1},${view[0.5] ?? -1}`);
+for (const offset of [-99, -1, 0, 1.5, 99, NaN, Infinity, -Infinity]) {
+ console.log(parent.subarray(offset).toString('hex'));
+ console.log(parent.slice(0, offset).toString('hex'));
+}
+console.log(Buffer.from('').subarray().toString('hex'));
+console.log(parent.subarray(4, 2).toString('hex'));
+const copy = Buffer.from(view);
+view[0] = 77;
+console.log(copy.toString('hex'));
+console.log(parent.toString('hex'));

@@ -21,6 +21,8 @@ func TestNodeBufferRefusals(t *testing.T) {
 		{"crypto random", "import { randomBytes } from 'node:crypto'; randomBytes(2);", "node:crypto.randomBytes"},
 		{"crypto constructor", "import { Hash } from 'node:crypto'; const ctor = Hash;", "node:crypto.Hash"},
 		{"buffer isUtf8", "import { isUtf8, Buffer } from 'node:buffer'; isUtf8(Buffer.from('abc'));", "node:buffer.isUtf8"},
+		{"unsupported encoding", "import { Buffer } from 'node:buffer'; Buffer.from('a', 'ascii');", "census literal"},
+		{"unsupported encoding alias", "import { Buffer } from 'node:buffer'; Buffer.from('a', 'utf-16le');", "census literal"},
 		{"encoding", "import { Buffer } from 'node:buffer'; function encode(encoding: 'hex' | 'utf8'): string { return Buffer.from('abc', encoding).toString(); } console.log(encode('hex'));", "census literal"},
 		{"algorithm", "import { createHash } from 'node:crypto'; createHash('sha1');", "sha256 algorithm"},
 		{"digest", "import { createHash } from 'node:crypto'; createHash('sha256').digest('base64');", "outside hex"},

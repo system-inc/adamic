@@ -171,6 +171,10 @@ adamic_array *adamic_node_buffer_from(const adamic_string *text, int encoding)
 			push_byte(buffer, unit);
 			push_byte(buffer, unit >> 8);
 		}
+	} else if (encoding == 4) {
+		for (size_t at = 0; at < units; at++) {
+			push_byte(buffer, (unsigned)adamic_string_char_code_at(text, (double)at));
+		}
 	} else if (encoding == 2) {
 		// Node's Base64DecodeGroupSlow narrows each UTF-16 unit to uint8_t,
 		// skips all invalid characters, stops at '=', and emits after sextets
@@ -254,6 +258,16 @@ adamic_string *adamic_node_buffer_string(const adamic_array *buffer,
 		text->length = written;
 		return text;
 	}
+	if (encoding == 4) {
+		adamic_string *text = adamic_string_allocate(length * 2);
+		size_t written = 0;
+		for (size_t at = start; at < end; at++) {
+			written += put_point((unsigned char *)text->bytes + written,
+				(unsigned)buffer->elements[at].number);
+		}
+		text->length = written;
+		return text;
+	}
 	if (encoding == 3) {
 		static const char hex[] = "0123456789abcdef";
 		adamic_string *text = adamic_string_allocate(length * 2);
@@ -297,4 +311,37 @@ adamic_string *adamic_node_buffer_string(const adamic_array *buffer,
 	adamic_string *text = decode_utf8(bytes, length);
 	free(bytes);
 	return text;
+}
+
+// Node Buffer slice/subarray offsets use ToInteger and permit negative offsets.
+static size_t view_offset(double offset, size_t length)
+{
+	if (isnan(offset)) {
+		return 0;
+	}
+	offset = trunc(offset);
+	if (offset < 0) {
+		offset += (double)length;
+	}
+	if (offset <= 0) {
+		return 0;
+	}
+	if (offset >= (double)length) {
+		return length;
+	}
+	return (size_t)offset;
+}
+adamic_array *adamic_node_buffer_view(adamic_array *buffer, double from, double to)
+{
+	size_t start = view_offset(from, buffer->length),
+		   end = view_offset(to, buffer->length);
+	if (end < start) {
+		end = start;
+	}
+	adamic_array *view = adamic_array_new(0, false);
+	view->length = end - start;
+	view->capacity = view->length;
+	view->elements = buffer->elements == NULL ? NULL : buffer->elements + start;
+	view->owner = adamic_retain(buffer->owner != NULL ? buffer->owner : buffer);
+	return view;
 }

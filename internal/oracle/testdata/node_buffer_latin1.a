@@ -1,0 +1,10 @@
+import { Buffer } from 'node:buffer';
+import { createHash } from 'node:crypto';
+for (const text of ['', 'abc', '\u0000\u007f\u0080\u00ff', 'héllo 🌍', '\u0100\u20ac\ud800\udfff']) {
+ const bytes = Buffer.from(text, 'latin1');
+ console.log(bytes.toString('hex'));
+ console.log(JSON.stringify(bytes.toString('latin1')));
+ console.log(JSON.stringify(bytes.toString('latin1', 1, 3)));
+ console.log(createHash('sha256').update(text, 'latin1').digest('hex'));
+}
+console.log(Buffer.from('héllo 🌍', 'ucs2').toString('utf16le'));

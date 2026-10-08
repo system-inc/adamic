@@ -87,6 +87,7 @@ void adamic_share(void *value) {
 				for (size_t i = 0; i < array->length; i++) { append(&pending, array->elements[i].reference); }
 			}
 			append(&pending, array->properties);
+			append(&pending, array->owner);
 			break;
 		}
 		case adamic_kind_map: {

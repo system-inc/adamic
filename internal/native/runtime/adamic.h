@@ -364,6 +364,8 @@ typedef struct adamic_array {
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
 	struct adamic_map *sparse;
+	// Buffer views retain the allocation that owns their numeric byte slots.
+	struct adamic_array *owner;
 } adamic_array;
 
 adamic_array *adamic_array_holes(double length, bool references);

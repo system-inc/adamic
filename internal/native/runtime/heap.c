@@ -347,7 +347,11 @@ static void free_one(void *value) {
 			}
 		}
 		let_go(array->properties);
-		free(array->elements);
+		if (array->owner != NULL) {
+			let_go(array->owner);
+		} else {
+			free(array->elements);
+		}
 		break;
 	}
 	case adamic_kind_map:

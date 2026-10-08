@@ -15,6 +15,8 @@ func init() {
 		"node:buffer.Buffer",
 		"node:buffer.BufferConstructor.from",
 		"node:buffer.Buffer.toString",
+		"node:buffer.Buffer.slice",
+		"node:buffer.Buffer.subarray",
 		"node:crypto.createHash",
 		"node:crypto.Hash.update",
 		"node:crypto.Hash.digest",
@@ -214,14 +216,16 @@ func (l *lowering) nodeBufferEncoding(node *ast.Node, fallback int) (int, error)
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindStringLiteral {
 		switch node.Text() {
-		case "utf8", "utf-8":
+		case "utf8":
 			return 0, nil
-		case "utf16le", "utf-16le", "ucs2", "ucs-2":
+		case "utf16le", "ucs2":
 			return 1, nil
 		case "base64":
 			return 2, nil
 		case "hex":
 			return 3, nil
+		case "latin1":
+			return 4, nil
 		}
 	}
 	return 0, l.notYet(node, "a Buffer encoding other than a census literal")
@@ -253,6 +257,33 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 		}
 		operation = "buffer_from"
 	case l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer"):
+		if name == "slice" || name == "subarray" {
+			if len(args) > 2 {
+				return nil, true, l.notYet(node, "Buffer view with more than two offsets")
+			}
+			buffer, err := l.expression(access.Expression)
+			if err != nil {
+				return nil, true, err
+			}
+			values := []ir.Expression{buffer}
+			for index := 0; index < 2; index++ {
+				value := ir.Expression(ir.NumberConstant{Value: 0})
+				if index == 1 {
+					value = ir.NumberConstant{Value: math.Inf(1)}
+				}
+				if len(args) > index {
+					value, err = l.expression(args[index])
+					if err != nil {
+						return nil, true, err
+					}
+					if value.Type() != ir.Number {
+						return nil, true, l.notYet(node, "Buffer view offset other than a number")
+					}
+				}
+				values = append(values, value)
+			}
+			return ir.NodeBufferCall{Function: "buffer_view", Arguments: values, Returns: ir.Array}, true, nil
+		}
 		if name != "toString" || len(args) > 3 {
 			return nil, true, l.notYet(node, "Buffer."+name+" outside the host census")
 		}
