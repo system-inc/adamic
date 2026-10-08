@@ -1,2 +1,3 @@
+// a-check: type error TS2554
 async function f(): Promise<void> { console.log('one', 'two'); }
 await f();
