@@ -18,6 +18,7 @@ import (
 // measure the same work on the same fixtures, rather than comparing different harnesses.
 func TestGCCAgreesWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_GCC_LANE") != "1" {
+		// census: opt-in-lane Dedicated GCC verification lane opts in with ADAMIC_GCC_LANE=1. ADAMIC_LANE_CC selects the compiler (default gcc); ADAMIC_LANE_SANITIZE=1 enables sanitizers. Missing compiler or failed builds fail the opted-in lane rather than skipping it.
 		t.Skip("opt in with ADAMIC_GCC_LANE=1")
 	}
 	t.Parallel()

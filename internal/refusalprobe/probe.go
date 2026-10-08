@@ -12,6 +12,7 @@ import (
 	"math/rand/v2"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -92,9 +93,66 @@ func executable() []Entry {
 	return entries
 }
 
-// ValidateCatalog fails when a syntax/operator map refusal has no catalog diagnostic. Parse Go,
+// ValidateCatalog fails when a syntax/operator map refusal has no catalog diagnostic, or when a
+// refusal helper's registration in internal/lower is missing or names no catalog entry. Parse Go,
 // rather than matching source formatting. Boundary entries count, but are never called successes.
 func ValidateCatalog(root string) error {
+	return validateCatalog(root, lower.RefusalHelpers())
+}
+
+// RefusalHelperCalls names the error-returning helpers the refusal pass in the file at path calls,
+// either as `if err := l.helper(...); ...` or as `found = l.helper(...)`, in source order.
+// internal/lower's tests use the same scan to require each one's registration beside its definition.
+func RefusalHelperCalls(path string) ([]string, error) {
+	file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
+	if err != nil {
+		return nil, err
+	}
+	conditions := map[ast.Stmt]bool{}
+	ast.Inspect(file, func(node ast.Node) bool {
+		if conditional, ok := node.(*ast.IfStmt); ok && conditional.Init != nil {
+			conditions[conditional.Init] = true
+		}
+		return true
+	})
+	var helpers []string
+	ast.Inspect(file, func(node ast.Node) bool {
+		assignment, ok := node.(*ast.AssignStmt)
+		if !ok {
+			return true
+		}
+		// found is the pass's refusal; a helper assigned straight to it is a refusal helper too.
+		refusal := conditions[assignment]
+		for _, target := range assignment.Lhs {
+			if name, ok := target.(*ast.Ident); ok && name.Name == "found" {
+				refusal = true
+			}
+		}
+		if !refusal {
+			return true
+		}
+		for _, expression := range assignment.Rhs {
+			call, ok := expression.(*ast.CallExpr)
+			if !ok {
+				continue
+			}
+			selector, ok := call.Fun.(*ast.SelectorExpr)
+			if !ok {
+				continue
+			}
+			receiver, ok := selector.X.(*ast.Ident)
+			if !ok || receiver.Name != "l" {
+				continue
+			}
+			helpers = append(helpers, selector.Sel.Name)
+		}
+		return true
+	})
+	return helpers, nil
+}
+
+// validateCatalog takes the registrations as an argument so a test can remove one.
+func validateCatalog(root string, helpers map[string]string) error {
 	path := filepath.Join(root, "internal/lower/refusals.go")
 	file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 	if err != nil {
@@ -123,37 +181,27 @@ func ValidateCatalog(root string) error {
 		}
 		return false
 	}
-	// Error-returning helpers called by the pass must have an explicit catalog owner too.
-	helpers := map[string]string{"checkOverrides": "method-override", "refuseStringWidening": "mutable-variance", "classViewRefusal": "nominal-class", "prototypeRead": "prototype-read", "provePredicate": "unproven-predicate"}
-	ast.Inspect(file, func(node ast.Node) bool {
-		conditional, ok := node.(*ast.IfStmt)
-		if !ok || conditional.Init == nil {
-			return true
+	// Error-returning helpers called by the pass must have an explicit catalog owner too. Each
+	// helper names its owner in a registration beside its definition in internal/lower.
+	calls, err := RefusalHelperCalls(path)
+	if err != nil {
+		return err
+	}
+	for _, helper := range calls {
+		if _, registered := helpers[helper]; !registered {
+			missing = append(missing, "helper "+helper+" (no registerRefusalHelper beside its definition in internal/lower)")
 		}
-		assignment, ok := conditional.Init.(*ast.AssignStmt)
-		if !ok {
-			return true
+	}
+	registered := make([]string, 0, len(helpers))
+	for helper := range helpers {
+		registered = append(registered, helper)
+	}
+	sort.Strings(registered)
+	for _, helper := range registered {
+		if !entryExists(helpers[helper]) {
+			missing = append(missing, "helper "+helper+" (registered to unknown entry "+helpers[helper]+")")
 		}
-		for _, expression := range assignment.Rhs {
-			call, ok := expression.(*ast.CallExpr)
-			if !ok {
-				continue
-			}
-			selector, ok := call.Fun.(*ast.SelectorExpr)
-			if !ok {
-				continue
-			}
-			receiver, ok := selector.X.(*ast.Ident)
-			if !ok || receiver.Name != "l" {
-				continue
-			}
-			name, known := helpers[selector.Sel.Name]
-			if !known || !entryExists(name) {
-				missing = append(missing, "helper "+selector.Sel.Name)
-			}
-		}
-		return true
-	})
+	}
 	ast.Inspect(file, func(node ast.Node) bool {
 		literal, ok := node.(*ast.CompositeLit)
 		if !ok {

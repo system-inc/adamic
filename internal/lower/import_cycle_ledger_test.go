@@ -28,6 +28,7 @@ func TestOriginalCycleLedger(t *testing.T) {
 	// Not parallel: the public rule caches one program process-wide.
 	root := os.Getenv("ADAMIC_CYCLE_LEDGER_ROOT")
 	if root == "" {
+		// census: required-input setup --gate-inputs provides a pristine TypeScript 6.0.3 checkout at 050880ce with upstream processDiagnosticMessages output as ADAMIC_CYCLE_LEDGER_ROOT, and a writable ADAMIC_CYCLE_LEDGER_OUTPUT.
 		t.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics")
 	}
 	pin, err := exec.Command("git", "-C", root, "rev-parse", "HEAD").Output()

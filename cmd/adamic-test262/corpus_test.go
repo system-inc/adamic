@@ -177,9 +177,11 @@ assert(true);
 // Counting that refusal as a pass fails this.
 func TestMiniRunner(t *testing.T) {
 	if _, err := exec.LookPath("clang"); err != nil {
+		// census: required-input cloud/setup.sh provides sanitizer-capable clang and Node 24 on PATH.
 		t.Skip("clang not on PATH")
 	}
 	if _, err := exec.LookPath("node"); err != nil {
+		// census: required-input cloud/setup.sh provides sanitizer-capable clang and Node 24 on PATH.
 		t.Skip("node not on PATH")
 	}
 	work := t.TempDir()

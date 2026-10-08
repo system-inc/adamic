@@ -13,6 +13,7 @@ import (
 func TestAdamicJSONAudit(t *testing.T) {
 	casesPath := os.Getenv("ADAMIC_JSON_CASES")
 	if casesPath == "" {
+		// census: required-input stage1/cohere/json/audit_test.go oracleAnswers writes ADAMIC_JSON_CASES (JSON array of name/text records) and ADAMIC_JSON_ANSWERS (writable answer path), then runs this overlay in pinned cohere.
 		t.Skip("run by stage1/cohere/json/audit_test.go")
 	}
 	encoded, err := os.ReadFile(casesPath)

@@ -1,0 +1,12 @@
+usage: skipcensus [-root directory] log.jsonl
+exit status 1
+Traceback (most recent call last):
+  File "/workspace/adamic/internal/skipcensus/testdata/table_proof.py", line 9, in <module>
+    output = subprocess.check_output(command)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'run', './internal/skipcensus/cmd', '-table']' returned non-zero exit status 1.

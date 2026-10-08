@@ -129,6 +129,7 @@ func TestFixturesAreTheOraclesList(t *testing.T) {
 func TestTheLeakCheckReadsTheCounts(t *testing.T) {
 	t.Parallel()
 	if runtime.GOOS != "darwin" {
+		// census: not-applicable macOS-only counted-build leak witness; Linux uses LeakSanitizer on the sanitized binary.
 		t.Skip("Not on macOS: Linux's leak check is LeakSanitizer's, run on the sanitized binary")
 	}
 	directory := t.TempDir()

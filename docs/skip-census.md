@@ -1,8 +1,9 @@
 # Skip census
 
-The checked-in table is JSON, inside the new package's testdata directory, so
-both the scanning test and log checker read exactly the same declarations.
-There is no independently maintained Markdown twin to drift. The AST scan
+The declaration is the one-line `// census:` comment immediately above each
+skip. The AST scan supplies classes directly to both TestCensus and CheckLog;
+there is no central declaration table. The normative grammar and migration
+proof are in [internal/skipcensus/README.md](../internal/skipcensus/README.md). The AST scan
 includes all Adamic-owned `_test.go` files, including overlay files in testdata,
 and ignores build tags. The pinned cohere submodule is a separate repository;
 its own tests are not enumerated by Adamic's gate census.
@@ -13,8 +14,7 @@ go run ./internal/skipcensus/cmd -scan > /tmp/skip-census-source.json
 go run ./internal/skipcensus/cmd gate-out/test.jsonl > /tmp/skip-census-log.txt 2>&1
 ```
 
-The command checks the current source against the declaration table before
-reading the log. The function `skipcensus.CheckLog` can also be called by a gate.
+The command audits every source annotation before reading the log. The function `skipcensus.CheckLog` can also be called by a gate.
 Unknown or ambiguous named skips fail closed. Package-level `[no test files]`
 events do not count as test skips. This checker judges skips, not test failures,
 coverage, or whether a complete gate finished; retain the ordinary gate verdict.
@@ -22,12 +22,12 @@ coverage, or whether a complete gate finished; retain the ordinary gate verdict.
 Each row records its source file, lexical enclosing function, diagnostic line,
 all enclosing if guards, read calls, reachable top-level test callers, skip
 message, class and provision. Helper sites list all callers. The identity is
-those test names followed by SHA-256 of go/printer's condition text; file scopes
-the identity. For helpers with no known test caller the lexical name is used.
+the lexical function name followed by SHA-256 of go/printer's condition text;
+file scopes it. Discovering a new helper caller does not change the identity.
 If initializers are present, their printed text is included so two `err != nil`
 guards for different tools remain distinct. Else guards are negated. An
 unguarded skip has condition `true`. Lines are ignored by validation; moving a
-site does not require an inventory update. Identical conditions in one test
+site does not require a declaration update. Identical conditions in one test
 produce an identity collision and fail closed rather than silently sharing a row.
 
 The scanner resolves direct helper calls in the same test package and testing
@@ -60,7 +60,8 @@ Provisioning details are in [gate-inputs.md](gate-inputs.md).
 No result cache is added: ADAMIC_GATE_UNCACHED=1 and ordinary mode compute the
 same answers directly from source and log.
 
-To update the table, scan and review changes, retaining explicit classifications
-and providers. Do not blindly classify new skips as measurement. Run the census
-test after editing. `ADAMIC_SKIP_CENSUS_ROOT` lets the scanning test inspect a
-scratch source copy for mutation proofs while retaining the checked-in table.
+Add or update the annotation beside the call when changing a skip. Missing or
+invalid annotations fail with the file and line. There is no remote table row
+to update when another caller is added or a test is moved.
+`ADAMIC_SKIP_CENSUS_ROOT` lets TestCensus inspect a scratch source copy for
+mutation proofs. `go run ./internal/skipcensus/cmd -audit` audits without a log.

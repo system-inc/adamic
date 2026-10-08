@@ -10,6 +10,7 @@ import (
 func TestTransformedNodeRunnerGuardHook(t *testing.T) {
 	repository := os.Getenv("ADAMIC_RUNNER_GUARD_REPOSITORY")
 	if repository == "" {
+		// census: not-applicable Subprocess hook: runs only when the runner guard test starts it with ADAMIC_RUNNER_GUARD_REPOSITORY set; that parent test is the check.
 		t.Skip("subprocess hook")
 	}
 	path := transformedNodeRunner(t, repository)

@@ -1,0 +1,62 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.111s)
+setup: submodules ready (0.163s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.409s)
+setup: node v24.19.0 skipped (validated version, checksum and installed bytes); step-duration=0.385s
+v24.19.0
+setup: node ready (0.543s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.006s
+setup: markdown dependencies ready (0.614s)
+setup: stage3 API dependencies skipped (validated API lock and installed bytes); step-duration=0.142s
+setup: stage3 API dependencies checked (0.820s)
+setup: downloading module dependencies in /workspace/adamic
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools/customlint/testdata
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tsc
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/ast
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/bundled
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/checker
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/compiler
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/core
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/format
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/incremental
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/locale
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/parser
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/scanner
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tsoptions
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tspath
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/cachedvfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/osvfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/mutation_aliasing
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/static_single_assignment
+all modules verified
+setup: module dependencies downloaded and verified (22 module directories); step-duration=13.979s
+setup: module dependencies ready (14.214s)
+# github.com/system-inc/adamic/internal/metamorphic
+internal/metamorphic/source.go:439:70: cannot use parseName(path) (value of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in struct literal
+internal/metamorphic/source.go:439:87: unknown field Path in struct literal of type "github.com/microsoft/TypeScript/tsc/shim/ast".SourceFileParseOptions
+internal/metamorphic/source.go:439:100: undefined: tspath.Path

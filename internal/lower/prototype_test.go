@@ -159,6 +159,7 @@ func nodePrototypeMembers(t *testing.T) []string {
 	t.Helper()
 	node, err := exec.LookPath("node")
 	if err != nil {
+		// census: required-input cloud/setup.sh provides Node 24 on PATH; test runs Node to enumerate Object.prototype.
 		t.Skip("Node is needed to enumerate Object.prototype")
 	}
 	output, err := exec.Command(node, "-e", "console.log(JSON.stringify(Object.getOwnPropertyNames(Object.prototype)))").Output()

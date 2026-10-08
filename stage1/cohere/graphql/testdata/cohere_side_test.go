@@ -730,6 +730,7 @@ func adamicAnswer(builder *strings.Builder, number int, text string) {
 func TestAdamicPortCases(t *testing.T) {
 	requestPath := os.Getenv("ADAMIC_PORT_REQUEST")
 	if requestPath == "" {
+		// census: required-input stage1/cohere/graphql/graphql_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.
 		t.Skip("run by stage1/cohere/graphql/graphql_test.go")
 	}
 	encoded, err := os.ReadFile(requestPath)

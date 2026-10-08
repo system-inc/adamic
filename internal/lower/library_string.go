@@ -348,6 +348,8 @@ func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool {
 	return callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "raw" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "String")
 }
 
+var _ = registerRefusalHelper("refuseStringWidening", "mutable-variance")
+
 func (l *lowering) refuseStringWidening(node *ast.Node) error {
 	if l.stringReadOnlyArgument(node) {
 		return nil

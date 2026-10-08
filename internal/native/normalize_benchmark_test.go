@@ -16,6 +16,7 @@ func TestNormalizeLongMeasurements(t *testing.T) {
 	// Not parallel: timing and peak RSS need an otherwise idle worker.
 	destination := os.Getenv("ADAMIC_NORMALIZE_BENCH_LOG")
 	if destination == "" {
+		// census: measurement ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations.
 		t.Skip("set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements")
 	}
 	destination, err := filepath.Abs(destination)

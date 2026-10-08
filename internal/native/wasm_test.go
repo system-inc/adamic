@@ -17,6 +17,7 @@ import (
 // benchmark, and it puts the WASI SDK's clang first on PATH for itself and every command it runs.
 func TestWASI(t *testing.T) {
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
+		// census: required-input Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 		t.Skip("WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with Node 24 on PATH")
 	}
 	sysroot := os.Getenv("WASI_SYSROOT")

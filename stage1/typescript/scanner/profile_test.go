@@ -16,6 +16,7 @@ import (
 func TestProfileArtifacts(t *testing.T) {
 	directory := os.Getenv("ADAMIC_SCANNER_PROFILE_DIR")
 	if directory == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_SCANNER_PROFILE_DIR to a scratch directory")
 	}
 	if err := os.MkdirAll(directory, 0755); err != nil {
@@ -96,6 +97,7 @@ func TestProfileArtifacts(t *testing.T) {
 func TestProfileSnapshotsAgree(t *testing.T) {
 	asked := os.Getenv("ADAMIC_SCANNER_PROFILE_SNAPSHOTS")
 	if asked == "" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_SCANNER_PROFILE_SNAPSHOTS to the artifact directories")
 	}
 	corpus := askedCorpus(t)

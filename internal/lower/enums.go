@@ -347,6 +347,8 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 	return ir.Call{Function: index, Arguments: []ir.Expression{object, key}, Returns: of}, true, nil
 }
 
+var _ = registerRefusalHelper("enumRefusal", "enum-object-write")
+
 func (l *lowering) enumRefusal(node *ast.Node) error {
 	if l.isExpression(node) {
 		if symbol := l.flagValueSymbol(node); symbol != nil {

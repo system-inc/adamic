@@ -1,0 +1,4 @@
+=== RUN   TestCensus
+    census_test.go:17: internal/skipcensus/new_skip_test.go:5 (TestAnnotationWitness): required-input annotation must name its variable or source field and provider
+--- FAIL: TestCensus (0.21s)
+FAIL

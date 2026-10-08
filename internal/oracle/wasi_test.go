@@ -15,6 +15,7 @@ import (
 // Opt in with ADAMIC_ORACLE_WASI=1; these observations always run uncached.
 func TestWASIAgreesWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		// census: required-input Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 		t.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
 	}
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
@@ -61,6 +62,7 @@ func onWASI(t *testing.T, source string) run {
 
 func TestWASIOracleCatchesMutants(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		// census: required-input Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	path, err := filepath.Abs(filepath.Join(repository, "dedication", "dedication.a"))
@@ -84,6 +86,7 @@ func TestWASIOracleCatchesMutants(t *testing.T) {
 // This probe holds the runner to real Wasm artifacts even before the runtime port is available.
 func TestWASIRunnerCatchesMutants(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		// census: required-input Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	sysroot := os.Getenv("WASI_SYSROOT")
@@ -115,6 +118,7 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 // Compile every emitted translation unit for the 32-bit ABI independently of runtime linking.
 func TestWASIEmission(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		// census: required-input Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	options := native.Options{Target: "wasm32-wasi"}

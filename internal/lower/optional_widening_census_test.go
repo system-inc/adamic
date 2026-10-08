@@ -25,6 +25,7 @@ import (
 func TestOptionalWideningCensus(t *testing.T) {
 	configPath := os.Getenv("OPTIONAL_WIDENING_CONFIG")
 	if configPath == "" {
+		// census: measurement Opt-in inventory of a project's optional-widening sites (OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT); measurement, never a required input of the gate.
 		t.Skip("set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project")
 	}
 	configPath, err := filepath.Abs(configPath)

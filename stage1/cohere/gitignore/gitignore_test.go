@@ -156,6 +156,7 @@ func TestThePortAnswersAsGoCohereAndGitDo(t *testing.T) {
 		t.Run("catches "+mutant.name, func(t *testing.T) {
 			t.Parallel()
 			if mutant.needsLargest && !largest() {
+				// census: required-input Set ADAMIC_GITIGNORE_LARGEST=1; test generates an ignore file of exactly 100 MiB itself.
 				t.Skip("only an ignore file of exactly 100 MiB shows this one, asked about when ADAMIC_GITIGNORE_LARGEST is set")
 			}
 			mutated := portDirectory(t, &mutant)

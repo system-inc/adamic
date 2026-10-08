@@ -18,6 +18,7 @@ func TestPerformance(t *testing.T)      { performance(t, false) }
 func TestWholePerformance(t *testing.T) { performance(t, true) }
 func performance(t *testing.T, whole bool) {
 	if os.Getenv("ADAMIC_PARSER_BENCH") != "1" {
+		// census: measurement Opt-in timing or profile artifact comparison; does not replace correctness verification.
 		t.Skip("set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing")
 	}
 	manifest, files := compilerManifest(t)

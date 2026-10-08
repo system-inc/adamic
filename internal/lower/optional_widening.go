@@ -183,6 +183,8 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 	return found
 }
 
+var _ = registerRefusalHelper("refuseOptionalWidening", "optional-widening")
+
 func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
 	found := l.optionalAtSite(node)
 	if found == nil {

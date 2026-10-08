@@ -1,0 +1,58 @@
+=== RUN   TestAnnotationMutants
+=== PAUSE TestAnnotationMutants
+=== RUN   TestStableHelperAndAliases
+=== PAUSE TestStableHelperAndAliases
+=== RUN   TestOptInAnnotations
+=== PAUSE TestOptInAnnotations
+=== RUN   TestCodemodLossless
+=== PAUSE TestCodemodLossless
+=== RUN   TestCensus
+--- PASS: TestCensus (0.22s)
+=== RUN   TestLogClassesAndMutants
+=== PAUSE TestLogClassesAndMutants
+=== RUN   TestLogUsesReasonForMultipleSites
+=== PAUSE TestLogUsesReasonForMultipleSites
+=== RUN   TestHistoricalPlainSkips
+=== PAUSE TestHistoricalPlainSkips
+=== RUN   TestFormattedSkipReason
+=== PAUSE TestFormattedSkipReason
+=== CONT  TestAnnotationMutants
+=== RUN   TestAnnotationMutants/unannotated
+=== CONT  TestLogClassesAndMutants
+=== CONT  TestOptInAnnotations
+=== CONT  TestHistoricalPlainSkips
+=== NAME  TestAnnotationMutants/unannotated
+    annotations_test.go:31: probe_test.go:4 (TestProbe): missing census annotation
+=== CONT  TestFormattedSkipReason
+=== RUN   TestAnnotationMutants/bad_class
+--- PASS: TestLogClassesAndMutants (0.00s)
+=== CONT  TestCodemodLossless
+--- PASS: TestFormattedSkipReason (0.00s)
+=== CONT  TestStableHelperAndAliases
+=== NAME  TestAnnotationMutants/bad_class
+    annotations_test.go:31: probe_test.go:5 (TestProbe): unknown census class optional
+=== RUN   TestAnnotationMutants/no_variable
+    annotations_test.go:31: probe_test.go:5 (TestProbe): required-input annotation must name its variable or source field and provider
+=== RUN   TestAnnotationMutants/blank_gap
+--- PASS: TestStableHelperAndAliases (0.00s)
+=== CONT  TestLogUsesReasonForMultipleSites
+--- PASS: TestLogUsesReasonForMultipleSites (0.00s)
+=== NAME  TestAnnotationMutants/blank_gap
+    annotations_test.go:31: probe_test.go:4: census annotation must immediately precede a skip call on its own line
+--- PASS: TestCodemodLossless (0.00s)
+=== RUN   TestAnnotationMutants/orphan
+    annotations_test.go:31: probe_test.go:4: census annotation must immediately precede a skip call on its own line
+--- PASS: TestOptInAnnotations (0.00s)
+--- PASS: TestAnnotationMutants (0.00s)
+    --- PASS: TestAnnotationMutants/unannotated (0.00s)
+    --- PASS: TestAnnotationMutants/bad_class (0.00s)
+    --- PASS: TestAnnotationMutants/no_variable (0.00s)
+    --- PASS: TestAnnotationMutants/blank_gap (0.00s)
+    --- PASS: TestAnnotationMutants/orphan (0.00s)
+=== NAME  TestHistoricalPlainSkips
+    census_test.go:117: skips=33 required-input=17 unknown=0; TestWholeCompilerAgrees included
+--- PASS: TestHistoricalPlainSkips (0.21s)
+PASS
+ok  	github.com/system-inc/adamic/internal/skipcensus	0.434s
+?   	github.com/system-inc/adamic/internal/skipcensus/cmd	[no test files]
+?   	github.com/system-inc/adamic/internal/skipcensus/cmd/annotate	[no test files]

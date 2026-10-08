@@ -258,6 +258,7 @@ func TestFixtures(t *testing.T) {
 				t.Run(entry.File, func(t *testing.T) {
 					t.Parallel()
 					if entry.Platform != "" && entry.Platform != runtime.GOOS {
+						// census: not-applicable Fixture manifest explicitly names a different runtime.GOOS platform.
 						t.Skipf("fixture records platform %s; current platform is %s", entry.Platform, runtime.GOOS)
 					}
 					path := filepath.Join(filepath.Dir(status), entry.File)

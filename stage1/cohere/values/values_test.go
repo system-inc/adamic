@@ -100,6 +100,7 @@ func TestThePortParsesAsGoCohereDoes(t *testing.T) {
 		t.Parallel()
 		library := os.Getenv("ADAMIC_VALUES_LIBRARY")
 		if library == "" {
+			// census: required-input ADAMIC_VALUES_LIBRARY: npm directory with postcss-values-parser@2.0.1; see docs/gate-inputs.md.
 			t.Skip("set ADAMIC_VALUES_LIBRARY to a directory where `npm install postcss-values-parser@2.0.1` ran, to compare with the library itself")
 		}
 		script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))

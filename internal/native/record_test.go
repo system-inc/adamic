@@ -268,6 +268,7 @@ func TestRecordReadMutants(t *testing.T) {
 // process pairs executes identical operations and consumes the result; best per operation is logged.
 func TestRecordBenchmark(t *testing.T) {
 	if os.Getenv("ADAMIC_RECORD_BENCH") != "1" {
+		// census: measurement Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness.
 		t.Skip("set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons")
 	}
 	binary := filepath.Join(t.TempDir(), "records")

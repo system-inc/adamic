@@ -285,6 +285,7 @@ func adamicGenerated(t *testing.T, random *rand.Rand, root string) []string {
 func TestAdamicPortCases(t *testing.T) {
 	requestPath := os.Getenv("ADAMIC_PORT_REQUEST")
 	if requestPath == "" {
+		// census: required-input stage1/cohere/formatfiles/formatfiles_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.
 		t.Skip("run by stage1/cohere/formatfiles/formatfiles_test.go in the adamic repository")
 	}
 	contents, err := os.ReadFile(requestPath)

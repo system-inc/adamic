@@ -37,6 +37,7 @@ func init() {
 func TestRegexCycleFixtureHasItsNativeDependency(t *testing.T) {
 	t.Parallel()
 	if !nativeRegexSlicePresent() {
+		// census: required-input Gate tree must include ir.Program.Regexps and the native regex lowering/emission dependency.
 		t.Skip("native regex lowering/emission is on codex/stage1-css; run this fixture on the scratch merge")
 	}
 }

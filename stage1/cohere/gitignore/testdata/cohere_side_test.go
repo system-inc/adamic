@@ -97,6 +97,7 @@ const adamicRoot = "/repository"
 func TestAdamicPortCases(t *testing.T) {
 	requestPath := os.Getenv("ADAMIC_PORT_REQUEST")
 	if requestPath == "" {
+		// census: required-input stage1/cohere/gitignore/gitignore_test.go cohereSide writes ADAMIC_PORT_REQUEST JSON in t.TempDir and runs this overlay in pinned cohere; see docs/gate-inputs.md.
 		t.Skip("ADAMIC_PORT_REQUEST names no request")
 	}
 	contents, err := os.ReadFile(requestPath)
