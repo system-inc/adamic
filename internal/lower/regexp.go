@@ -175,6 +175,9 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	if err != nil {
 		return nil, true, err
 	}
+	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
+		return nil, true, l.notYet(node, "an optional RegExp call")
+	}
 	var arguments []ir.Expression
 	for _, arg := range args {
 		v, e := l.expression(arg)
@@ -187,6 +190,62 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, l.notYet(node, "RegExp input other than a string")
 	}
 	if name == "replace" || name == "replaceAll" {
+		if len(arguments) == 2 && arguments[1].Type() == ir.Closure {
+			signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(args[1]), checker.SignatureKindCall)
+			if len(signatures) != 1 || len(signatures[0].Parameters()) > 1 {
+				return nil, true, l.notYet(node, "regex replacement callback taking captures, offset or input")
+			}
+			if returned := l.checker.GetReturnTypeOfSignature(signatures[0]); l.includesUndefined(returned) || returned.Flags()&checker.TypeFlagsNull != 0 {
+				return nil, true, l.notYet(node, "regex replacement callback with an optional result")
+			}
+			if returns, known := l.representation(l.checker.GetReturnTypeOfSignature(signatures[0])); !known || returns != ir.String {
+				return nil, true, l.notYet(node, "regex replacement callback with a non-string result")
+			}
+			if len(signatures[0].Parameters()) == 1 {
+				parameter := signatures[0].Parameters()[0]
+				if takes, known := l.representation(l.checker.GetTypeOfSymbol(parameter)); !known || takes != ir.String || !l.checker.IsTypeAssignableTo(l.checker.GetStringType(), l.checker.GetTypeOfSymbol(parameter)) {
+					return nil, true, l.notYet(node, "regex replacement callback with a non-string match parameter")
+				}
+			}
+			b := l.libraryArrayBuilder([]ir.Expression{value, arguments[0], arguments[1]})
+			input, regex, callback := b.read(b.parameters[0]), b.read(b.parameters[1]), b.read(b.parameters[2])
+			global := b.declare("global", ir.Property{Object: regex, Name: "global", Of: ir.Boolean})
+			if name == "replaceAll" {
+				// Reuse the existing intrinsic's non-global TypeError path.
+				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(global)}, Then: []ir.Statement{ir.Evaluate{Value: ir.RegExpCall{Value: input, Method: "replaceAll", Arguments: []ir.Expression{regex, ir.StringConstant{Index: l.constant("")}}, Returns: ir.String}}}})
+			}
+			b.body = append(b.body, ir.If{Condition: b.read(global), Then: []ir.Statement{ir.SetProperty{Object: regex, Name: "lastIndex", Value: ir.NumberConstant{Value: 0}, Site: l.writeSite(args[0])}}})
+			matches := b.declare("matches", ir.ArrayLiteral{Element: ir.Array})
+			match := b.local("match", ir.Array)
+			whole := ir.ArrayIndex{Array: b.read(match), Index: ir.NumberConstant{Value: 0}, Element: ir.String}
+			last := ir.Property{Object: regex, Name: "lastIndex", Of: ir.Number}
+			point := ir.Coalesce{Value: ir.StringCall{Value: input, Method: "codePointAt", Arguments: []ir.Expression{last}}, Fallback: ir.NumberConstant{Value: 0}, Of: ir.Number}
+			unicode := ir.Binary{Operator: ir.Or, Left: ir.Property{Object: regex, Name: "unicode", Of: ir.Boolean}, Right: ir.Property{Object: regex, Name: "unicodeSets", Of: ir.Boolean}}
+			step := ir.Conditional{Condition: ir.Binary{Operator: ir.And, Left: unicode, Right: ir.Binary{Operator: ir.GreaterOrEqual, Left: point, Right: ir.NumberConstant{Value: 65536}}}, WhenTrue: ir.NumberConstant{Value: 2}, WhenNot: ir.NumberConstant{Value: 1}}
+			// RegExp @@replace collects every match before calling user code.
+			b.body = append(b.body, ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: []ir.Statement{
+				ir.Declare{Local: match, Value: ir.RegExpCall{Value: regex, Method: "exec", Arguments: []ir.Expression{input}, Returns: ir.Array}},
+				ir.If{Condition: ir.IsNull{Value: b.read(match)}, Then: []ir.Statement{ir.Break{}}},
+				ir.Evaluate{Value: ir.ArrayPush{Array: b.read(matches), Value: b.read(match), Element: ir.Array, Site: l.writeSite(node)}},
+				ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(global)}, Then: []ir.Statement{ir.Break{}}},
+				ir.If{Condition: ir.Binary{Operator: ir.Equal, Left: ir.StringLength{Value: whole}, Right: ir.NumberConstant{Value: 0}}, Then: []ir.Statement{ir.SetProperty{Object: regex, Name: "lastIndex", Value: ir.Binary{Operator: ir.Add, Left: last, Right: step}, Site: l.writeSite(args[0])}}},
+			}})
+			text := b.declare("text", ir.StringConstant{Index: l.constant("")})
+			previous := b.declare("previous", ir.NumberConstant{Value: 0})
+			item := b.local("replacement_match", ir.Array)
+			matched := ir.ArrayIndex{Array: b.read(item), Index: ir.NumberConstant{Value: 0}, Element: ir.String}
+			position := ir.RegExpProperty{Array: b.read(item), Name: "index", Of: ir.Number}
+			call := ir.CallClosure{Closure: callback, Returns: ir.String}
+			if len(signatures[0].Parameters()) == 1 {
+				call.Arguments = []ir.Expression{matched}
+			}
+			b.body = append(b.body, ir.ForOf{Iterable: b.read(matches), Local: item, Element: ir.Array, Body: []ir.Statement{
+				ir.Assign{Local: text, Value: ir.Concat{Parts: []ir.Expression{b.read(text), ir.StringCall{Value: input, Method: "slice", Arguments: []ir.Expression{b.read(previous), position}}, call}}},
+				ir.Assign{Local: previous, Value: ir.Binary{Operator: ir.Add, Left: position, Right: ir.StringLength{Value: matched}}},
+			}})
+			result := ir.Concat{Parts: []ir.Expression{b.read(text), ir.StringCall{Value: input, Method: "slice", Arguments: []ir.Expression{b.read(previous)}}}}
+			return b.finish("regex_replace_callback", result), true, nil
+		}
 		if len(arguments) != 2 || arguments[1].Type() != ir.String {
 			return nil, true, l.notYet(node, "regex replacement other than a string")
 		}
@@ -206,9 +265,6 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		if len(arguments) != 2 || arguments[1].Type() != ir.Number {
 			return nil, true, l.notYet(node, "regex split limit other than a number")
 		}
-	}
-	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
-		return nil, true, l.notYet(node, "an optional RegExp call")
 	}
 	return ir.RegExpCall{Value: value, Arguments: arguments, Method: method, Returns: result}, true, nil
 }
