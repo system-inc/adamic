@@ -1,3 +1,5 @@
+This is the source-roots delivery record. The subsequent `types` ruling and current tsc-entry stop are recorded in [TYPES.md](TYPES.md).
+
 Built transitive project-reference source roots, compatibility refusals, and matching option audits.
 Base: codex/stage3-project-loader 16c2226828eec5f56e9a8bc8aec389cf4b881546; delivery SHA is in the final report.
 Focused loader tests, Node solution builds, both executable backends, sanitizer oracle, counts, and scoped vet pass.

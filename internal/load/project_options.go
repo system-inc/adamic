@@ -85,9 +85,10 @@ func auditProjectOptions(ctx context.Context, configName string, source vfs.FS, 
 	}
 	roots := append([]tspath.RootedFilePath{}, config.FileNames()...)
 	flatten := len(config.ProjectReferences()) != 0
+	types := config.CompilerOptions().Types
 	if flatten {
 		var referenceError error
-		roots, _, referenceError = projectSourceRoots(fs, config)
+		roots, _, types, referenceError = projectSourceRoots(fs, config)
 		if referenceError != nil {
 			return nil, referenceError
 		}
@@ -106,6 +107,12 @@ func auditProjectOptions(ctx context.Context, configName string, source vfs.FS, 
 	base := config.CompilerOptions().Clone()
 	if flatten {
 		base = sourceProgramOptions(base, roots)
+		base.Types = types
+		// The shared ambient scope must be checked even when separate projects
+		// skip their declaration files. Otherwise union conflicts disappear.
+		if len(types) != 0 {
+			base.SkipLibCheck = core.TSFalse
+		}
 	}
 	directory := tspath.RootedDirectoryPathFromAbsolute(filepath.Dir(absolute))
 	run := func(options *core.CompilerOptions) ([]*ast.Diagnostic, error) {

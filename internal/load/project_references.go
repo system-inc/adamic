@@ -15,9 +15,11 @@ import (
 // projectSourceRoots flattens compatible references for one checker. It includes
 // configured files even when imports never reach them, but does not add execution
 // entries. Every edge is checked, including a second edge to a diamond's leaf.
-func projectSourceRoots(fs vfs.FS, entry *tsoptions.ParsedCommandLine) ([]tspath.RootedFilePath, map[string]bool, error) {
+func projectSourceRoots(fs vfs.FS, entry *tsoptions.ParsedCommandLine) ([]tspath.RootedFilePath, map[string]bool, []string, error) {
 	roots := []tspath.RootedFilePath{}
 	owners := map[string]bool{}
+	types := []string{}
+	seenTypes := map[string]bool{}
 	seenFiles := map[tspath.PathKey]bool{}
 	active := map[string]bool{}
 	var visit func(*tsoptions.ParsedCommandLine) error
@@ -31,6 +33,14 @@ func projectSourceRoots(fs vfs.FS, entry *tsoptions.ParsedCommandLine) ([]tspath
 		}
 		owners[name] = true
 		active[name] = true
+		// Ambient package selection is shared by the program. Keep first-seen
+		// order and let the checker diagnose declarations from the whole union.
+		for _, packageName := range config.CompilerOptions().Types {
+			if !seenTypes[packageName] {
+				types = append(types, packageName)
+				seenTypes[packageName] = true
+			}
+		}
 		for _, file := range config.FileNames() {
 			key := fs.CaseSensitivity().PathKey(file.AsPath())
 			if !seenFiles[key] {
@@ -66,9 +76,9 @@ func projectSourceRoots(fs vfs.FS, entry *tsoptions.ParsedCommandLine) ([]tspath
 		return nil
 	}
 	if err := visit(entry); err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
-	return roots, owners, nil
+	return roots, owners, types, nil
 }
 
 // Source roots have no declaration-output boundary or per-project output tree.
@@ -110,8 +120,9 @@ func sourceProgramOptions(options *core.CompilerOptions, roots []tspath.RootedFi
 }
 
 // Compare every option by default so a new frontend option fails closed. Only
-// output layout, reporting and build bookkeeping can differ. Strict defaults
-// are compared before Adamic strengthens null and function checking.
+// output layout, reporting and build bookkeeping can differ, apart from types,
+// whose union is collected above. Strict defaults are compared before Adamic
+// strengthens null and function checking.
 func conflictingProjectOption(left, right *core.CompilerOptions) string {
 	a, b := reflect.ValueOf(left).Elem(), reflect.ValueOf(right).Elem()
 	for index := 0; index < a.NumField(); index++ {
@@ -121,7 +132,7 @@ func conflictingProjectOption(left, right *core.CompilerOptions) string {
 		}
 		name := strings.Split(field.Tag.Get("json"), ",")[0]
 		switch name {
-		case "composite", "incremental", "rootDir", "outDir", "outFile", "declarationDir", "tsBuildInfoFile", "configFilePath", "project",
+		case "types", "composite", "incremental", "rootDir", "outDir", "outFile", "declarationDir", "tsBuildInfoFile", "configFilePath", "project",
 			"sourceMap", "inlineSourceMap", "inlineSources", "sourceRoot", "mapRoot", "declarationMap", "emitBOM", "newLine", "removeComments",
 			"diagnostics", "extendedDiagnostics", "generateCpuProfile", "generateTrace", "traceResolution", "listFiles", "listFilesOnly", "listEmittedFiles", "explainFiles", "pretty", "locale",
 			"assumeChangesOnlyAffectDirectDependencies", "disableSourceOfProjectReferenceRedirect", "disableSolutionSearching", "disableReferencedProjectLoad", "strict":
