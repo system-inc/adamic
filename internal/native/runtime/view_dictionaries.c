@@ -116,6 +116,7 @@ adamic_view_dictionary_result adamic_view_dictionary_source_read(const adamic_ob
             adamic_maybe_boolean maybe = adamic_maybe_boolean_unpack(slot->maybe_boolean);
             if (maybe.present) value = (adamic_view_union_value){adamic_view_union_boolean, {.boolean = maybe.boolean}};
         } else if (actual == 12) value.kind = adamic_view_union_null;
+        else if (actual == 13) value.kind = adamic_view_union_undefined;
         else if ((actual >= 3 && actual <= 6) || actual == 8 || actual == 10 || actual == 14) value = dictionary_boxed_value(slot->reference);
         else value.kind = adamic_view_union_unknown;
         break;

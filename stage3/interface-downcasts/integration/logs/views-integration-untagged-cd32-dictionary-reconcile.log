@@ -1,0 +1,69 @@
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/good
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/missing
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalRequiredField/undefined
+--- PASS: TestCheckedViewDictionaryOptionalRequiredField (16.26s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/good (15.01s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/missing (0.47s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/receiver-missing (0.40s)
+    --- PASS: TestCheckedViewDictionaryOptionalRequiredField/undefined (0.39s)
+=== RUN   TestCheckedViewDictionaryOptionalAbsenceMutant
+    checked_view_dictionary_optional_test.go:92: optional absence mutant caught by required-field control: exit=0 stdout="undefined\n"
+    checked_view_dictionary_optional_test.go:92: optional absence mutant caught by required-field control: exit=0 stdout="undefined\n"
+--- PASS: TestCheckedViewDictionaryOptionalAbsenceMutant (0.14s)
+=== RUN   TestCheckedViewDictionaryCompilerPaths
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-good
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-missing
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-container-wrong
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: view.paths; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: view.paths; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: view.paths; expected MapLike<string[]> | undefined, found number
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-wrong
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-element-wrong
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:165: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-key-missing
+--- PASS: TestCheckedViewDictionaryCompilerPaths (2.48s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-good (0.40s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-missing (0.39s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-container-wrong (0.39s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-wrong (0.47s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-element-wrong (0.41s)
+    --- PASS: TestCheckedViewDictionaryCompilerPaths/compiler-paths-key-missing (0.41s)
+=== RUN   TestCheckedViewDictionaryOptionalPaths
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-once
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-receiver-missing
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-good
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-missing
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-container-wrong
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: view?.paths; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: view?.paths; expected MapLike<string[]> | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: view?.paths; expected MapLike<string[]> | undefined, found number
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-wrong
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: field read failed: table['item']; expected string[] | undefined, found number
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-element-wrong
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+    checked_view_dictionary_propagation_test.go:209: pinned exit 70: adamic: panic: element read failed: values[0] expected string, found number
+=== RUN   TestCheckedViewDictionaryOptionalPaths/optional-paths-key-missing
+--- PASS: TestCheckedViewDictionaryOptionalPaths (4.30s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-once (0.48s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-receiver-missing (0.50s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-good (0.41s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-missing (0.47s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-container-wrong (0.47s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-wrong (0.50s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-element-wrong (0.79s)
+    --- PASS: TestCheckedViewDictionaryOptionalPaths/optional-paths-key-missing (0.68s)
+PASS
+gate cache: native hits=0 misses=10
+gate cache: node hits=0 misses=37
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	23.209s

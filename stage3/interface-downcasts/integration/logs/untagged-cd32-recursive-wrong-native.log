@@ -1,0 +1,18 @@
+=== RUN   TestCheckedViewUntaggedRecursive
+=== RUN   TestCheckedViewUntaggedRecursive/wrong
+    checked_views_untagged_unions_test.go:402: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:404: native: exit codes differ
+    checked_views_untagged_unions_test.go:402: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedRecursive/cycle-wrong
+    checked_views_untagged_unions_test.go:402: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:404: native: exit codes differ
+    checked_views_untagged_unions_test.go:402: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- FAIL: TestCheckedViewUntaggedRecursive (0.51s)
+    --- FAIL: TestCheckedViewUntaggedRecursive/wrong (0.28s)
+    --- FAIL: TestCheckedViewUntaggedRecursive/cycle-wrong (0.22s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.518s
+FAIL

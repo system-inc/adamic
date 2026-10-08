@@ -1,0 +1,11 @@
+// Independent optional forEach-signature union projection; full intrinsic owner and any thisArg unverified.
+interface InfoA {readonly version:string;}
+interface WrongInfo {readonly version:number;}
+interface InfoB {readonly version:string;readonly affectsGlobalScope:boolean;}
+type ForEach=((callback:(value:InfoA)=>void,thisArg?:number)=>void)|((callback:(value:InfoB)=>void,thisArg?:number)=>void);
+interface ReadReceiver {readonly kind:'Receiver';readonly forEach:ForEach;}
+const raw0={kind:'Receiver' as const,forEach:(callback:(value:WrongInfo)=>void,thisArg?:number):void=>{}};
+const base0:{readonly kind:'Receiver'}=raw0;
+const view0=base0 as ReadReceiver;
+const value0=view0.forEach;
+console.log(`${value0!==undefined}`);
