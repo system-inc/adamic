@@ -156,8 +156,18 @@ VERDICT
 	gateMinutes=$(printf '%s\n' "$verdict" | sed -n 2p)
 	read -r pass fail skip <<<"$(printf '%s\n' "$verdict" | sed -n 3p)"
 	fastNote=$(printf '%s\n' "$verdict" | sed -n 4p)
-	if ! git merge-base --is-ancestor "$fastBase" "$sha"; then
-		echo "refused: the fast gate diffed against ${fastBase:0:8}, which ${sha:0:8} doesn't hold, so its touched packages aren't this landing's" >&2
+	# The fast gate chose its packages by the gated tree's difference from its base, a main. That
+	# choice is this landing's only if main has since moved by record commits at most; the landing
+	# itself may be a record-only merge over main (below), whose tree differs from the gated one only
+	# in record paths, which no package reads.
+	git fetch -q origin main
+	if ! git merge-base --is-ancestor "$fastBase" origin/main; then
+		echo "refused: the fast gate diffed against ${fastBase:0:8}, which isn't on main's line" >&2
+		exit 1
+	fi
+	movedSince=$(git diff --name-only "$fastBase" origin/main | grep -v -e '^documentation/velocity/landings\.csv$' -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' | grep . || true)
+	if [ -n "$movedSince" ]; then
+		echo "refused: main moved past the fast gate's base ${fastBase:0:8} beyond record commits ($(printf '%s' "$movedSince" | head -n 3 | paste -sd ' ' -)); merge main in and fast-gate again" >&2
 		exit 1
 	fi
 	# The fast gate reads its smoke list from the gated tree when the tree has one, so a landing could
