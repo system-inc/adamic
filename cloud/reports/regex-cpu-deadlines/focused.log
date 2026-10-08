@@ -1,0 +1,12 @@
+=== RUN   TestRegExpChildWallCap
+    regexp_cpu_test.go:54: nonreturning fixture caught: regexp child wall cap 250ms exceeded: context deadline exceeded
+--- PASS: TestRegExpChildWallCap (4.67s)
+=== RUN   TestRegExpChildCPUBudget
+    regexp_cpu_test.go:71: regexp child CPU=106.744ms budget=10ms wall-cap=5m0s
+    regexp_cpu_test.go:75: CPU overrun caught: regexp child CPU time 106.744ms exceeds budget 10ms
+--- PASS: TestRegExpChildCPUBudget (0.25s)
+=== RUN   TestRegExpNativeStepLimit
+    regexp_test.go:255: regexp child CPU=3.775ms budget=10s wall-cap=5m0s
+--- PASS: TestRegExpNativeStepLimit (0.15s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	5.078s
