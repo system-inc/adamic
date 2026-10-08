@@ -1,5 +1,5 @@
 {
-  "goPin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "goPin": "f5d1934a2d7bebe706210cb1cfd01aebff4f8ca7",
   "triage": "d7ab0bc4",
   "helpers": [
     {
@@ -81,5 +81,27 @@
     "SourceVisitors": 65,
     "SpecifierNode": 82
   },
-  "ruleUpstreamCases": 26
+  "ruleUpstreamCases": 26,
+  "captureAnswers": {
+    "bindings": {
+      "lines": 32689,
+      "sha256": "aa3a0186f1cd436f4d9f2554211febc86435d66a496bbdf35883cff877db0462"
+    },
+    "filename": {
+      "lines": 814,
+      "sha256": "860fd8bded6d88e23129107a4c589e9e70bb8bf51dd6cb1b7b7ae860a4fa6f85"
+    },
+    "imported": {
+      "lines": 4094,
+      "sha256": "02ecca2629630d575caa7c46f6abffb5fa2f7556d689b6d6c5ac7a26d0f06f28"
+    },
+    "call": {
+      "lines": 10572,
+      "sha256": "332672010711de339742e9376941ac9879a6769739b013134e677be4a1156c8b"
+    },
+    "segment": {
+      "lines": 5350,
+      "sha256": "6fe97032e49a448fc1c628dd4bc1130d503b1defe654e1a6757c5baa5d475605"
+    }
+  }
 }

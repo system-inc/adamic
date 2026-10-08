@@ -3,6 +3,10 @@ import json, os, re, subprocess, tempfile, pathlib, collections, gzip
 HERE=pathlib.Path(__file__).resolve().parent
 ROOT=HERE.parents[6]
 COHERE=ROOT/'cohere'
+import sys
+sys.path.insert(0, str(ROOT/'stage1/cohere/lint/helpers/testdata'))
+from pin import capture_pin
+PIN=capture_pin(ROOT)
 PKG=COHERE/'internal/lint/ecmascript/text'
 specs={
  'MinimumEditDistance':('a string, b string','a,b','int',{'s':'a','t':'b'}),
@@ -60,9 +64,11 @@ func TestAdamicTextControls(t *testing.T){
  logs=[]
  for family,pattern in groups:
   pkg='./internal/lint/rules/'+family if not family.startswith('..') else './internal/lint/ecmascript/text'
-  res=subprocess.run(['go','test','-overlay='+str(overlay),pkg,'-run','^Test('+pattern+')','-count=1','-timeout=10m','-v'],cwd=COHERE,env=env|{'ADAMIC_TEXT_INPUT_SET':family,'COHERE_DOCS_CAPTURE':str(td/'inputs')},stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
-  logs.append(res.stdout);print(family,res.returncode,flush=True)
-  if res.returncode: raise RuntimeError(res.stdout[-12000:])
+  log=td/(family.replace('/','_')+'.log')
+  with log.open('w') as output:
+   res=subprocess.run(['go','test','-overlay='+str(overlay),pkg,'-run','^Test('+pattern+')','-count=1','-timeout=10m','-v'],cwd=COHERE,env=env|{'ADAMIC_TEXT_INPUT_SET':family,'COHERE_DOCS_CAPTURE':str(td/'inputs')},stdout=output,stderr=subprocess.STDOUT,text=True)
+  logs.append(log.read_text());print(family,res.returncode,flush=True)
+  if res.returncode: raise RuntimeError(log.read_text()[-12000:])
  rows=[json.loads(line) for line in trace.read_text().split('\n') if line]
  rows.sort(key=lambda r:json.dumps(r,sort_keys=True))
  # Preserve duplicate calls: every recorded use is compared.
@@ -74,6 +80,6 @@ func TestAdamicTextControls(t *testing.T){
   fixtures.setdefault(r['rule'],set()).add(json.dumps(r,sort_keys=True))
  consumers=[r['rule'] for r in json.loads((ROOT/'stage1/cohere/lint/helpers/comments/readiness.json').read_text())['remaining'] if any('/ecmascript/text.' in h for h in r['remaining_helpers'])]
  assert set(consumers)<=set(fixtures),set(consumers)-set(fixtures)
- (HERE/'coverage.json').write_text(json.dumps({'pin':subprocess.check_output(['git','rev-parse','HEAD'],cwd=COHERE,text=True).strip(),'calls':dict(sorted(collections.Counter(r['symbol'] for r in rows).items())),'inputSets':{group:dict(sorted(collections.Counter(r['symbol'] for r in rows if r['inputSet']==group).items())) for group,_ in groups},'groups':groups,'consumerFixtures':{r:len(fixtures[r]) for r in sorted(consumers)}},indent=2)+'\n')
+ (HERE/'coverage.json').write_text(json.dumps({'pin':PIN,'calls':dict(sorted(collections.Counter(r['symbol'] for r in rows).items())),'inputSets':{group:dict(sorted(collections.Counter(r['symbol'] for r in rows if r['inputSet']==group).items())) for group,_ in groups},'groups':groups,'consumerFixtures':{r:len(fixtures[r]) for r in sorted(consumers)}},indent=2)+'\n')
  (HERE/'capture.log').write_text(''.join(logs))
  print('captured',len(rows),'calls',flush=True)

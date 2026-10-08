@@ -5,6 +5,7 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/coherepin"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -76,13 +77,25 @@ func corpus(t *testing.T, helper string) (string, []byte, int) {
 	if err = json.Unmarshal(b, &c); err != nil {
 		t.Fatal(err)
 	}
-	if c.Pin != "7945d102a6c18dd36adf9114a758ce646e8b2359" {
-		t.Fatal("capture pin differs")
+	root, err := filepath.Abs("../../../../..")
+	if err != nil {
+		t.Fatal(err)
 	}
-	pin := command(t, "git", "-C", "../../../../../cohere", "rev-parse", "HEAD")
-	if strings.TrimSpace(string(pin)) != c.Pin {
-		t.Fatal("Go pin differs")
+	if err = coherepin.Check(root, c.Pin); err != nil {
+		t.Fatal(err)
 	}
+	metadata, err := os.ReadFile("testdata/helpers.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var recorded struct{ Pin string }
+	if err = json.Unmarshal(metadata, &recorded); err != nil {
+		t.Fatal(err)
+	}
+	if err = coherepin.Check(root, recorded.Pin); err != nil {
+		t.Fatal(err)
+	}
+
 	keys := []string{}
 	for k := range c.Frames {
 		keys = append(keys, k)

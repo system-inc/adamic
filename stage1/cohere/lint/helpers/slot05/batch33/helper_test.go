@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/coherepin"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -35,9 +36,21 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 	dir, _ := filepath.Abs(".")
 	scratch := t.TempDir()
 	virtual := filepath.Join(cohere, "adamic_slot05_batch33.go")
-	if got := strings.TrimSpace(string(run(t, cohere, "git", "rev-parse", "HEAD"))); got != "7945d102a6c18dd36adf9114a758ce646e8b2359" {
-		t.Fatal("Go pin drift")
+	pin, err := coherepin.Pinned(root)
+	if err != nil {
+		t.Fatal(err)
 	}
+	if err = coherepin.Check(root, pin); err != nil {
+		t.Fatal(err)
+	}
+	capturePin, err := json.Marshal(map[string]string{"pin": pin})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = os.WriteFile(filepath.Join(scratch, "capture-pin.json"), capturePin, 0644); err != nil {
+		t.Fatal(err)
+	}
+
 	replacements := map[string]string{virtual: filepath.Join(dir, "testdata/oracle.go"), filepath.Join(cohere, "internal/lint/rules/structure/adamic_slot05_batch33.go"): filepath.Join(dir, "testdata/structure_export.go")}
 
 	data, _ := json.Marshal(map[string]any{"Replace": replacements})
@@ -54,7 +67,7 @@ func verify(t *testing.T, mode, target string, mutations ...mutation) {
 		t.Fatal(e)
 	}
 	if evidence := os.Getenv("ADAMIC_SLOT05_BATCH33_EVIDENCE"); evidence != "" {
-		for _, name := range []string{"coverage.json", "cases.json", "want.txt"} {
+		for _, name := range []string{"coverage.json", "cases.json", "want.txt", "capture-pin.json"} {
 			data, e := os.ReadFile(filepath.Join(scratch, name))
 			if e != nil {
 				t.Fatal(e)

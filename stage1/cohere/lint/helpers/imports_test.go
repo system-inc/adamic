@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/coherepin"
 	"os"
 	"path/filepath"
 	"strings"
@@ -19,9 +20,29 @@ import (
 func TestImportsAgreementAndMutants(t *testing.T) {
 	root, _ := filepath.Abs("../../../..")
 	cohere := filepath.Join(root, "cohere")
-	if got := strings.TrimSpace(string(run(t, cohere, "git", "rev-parse", "HEAD"))); got != "7945d102a6c18dd36adf9114a758ce646e8b2359" {
-		t.Fatal("Go pin drift", got)
+	pin, err := coherepin.Pinned(root)
+	if err != nil {
+		t.Fatal(err)
 	}
+	if err = coherepin.Check(root, pin); err != nil {
+		t.Fatal(err)
+	}
+	var provenance struct{ GoPin string }
+	data, err := os.ReadFile("imports/testdata/provenance.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = json.Unmarshal(data, &provenance); err != nil {
+		t.Fatal(err)
+	}
+	if err = coherepin.Check(root, provenance.GoPin); err != nil {
+		t.Fatal(err)
+	}
+	capturePin, err := json.Marshal(map[string]string{"pin": pin})
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	for _, c := range []struct{ name, file, from, to string }{
 		{"bindings", "bindings_of.a", "namespace: clause.namedBindings", "namespace: binding.name"},
 		{"filename", "normalized_file_name.a", "file.fileName.split('\\\\').join('/')", "file.fileName.replace('\\\\', '/')"},
@@ -32,6 +53,9 @@ func TestImportsAgreementAndMutants(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			dir, _ := filepath.Abs("imports/testdata/" + c.name)
 			scratch := t.TempDir()
+			if err := os.WriteFile(filepath.Join(scratch, "capture-pin.json"), capturePin, 0644); err != nil {
+				t.Fatal(err)
+			}
 			virtual := filepath.Join(cohere, "adamic_imports_oracle.go")
 			replacements := map[string]string{virtual: filepath.Join(dir, "oracle.go")}
 			if c.name == "bindings" {
