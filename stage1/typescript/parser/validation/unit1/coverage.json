@@ -1,0 +1,42 @@
+{
+  "refs": {
+    "area": "db2ecc00447f9ebe8adecb190f71ac222e5db860",
+    "before": "daf277b014a724b7ca1191b2bbb5efc1a10335ea",
+    "merge": "5e5b6cd6b3a5c086f696671fc7023cd2158a2c20",
+    "lint-contract": "df3b9b4a3f41abf50fd2d48b8c5593b0c8b24dae",
+    "unified-harness": "a46053af4d4a018c25bf34a5d4c0b7e035fdb8fc",
+    "fast-path": "595ea27d625a099214013ab6da30ef50e30d364b"
+  },
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "nproc": 5,
+  "node_count": 887803,
+  "tree_bytes": 44766682,
+  "tree_sha256": "8ae015600498b915cc25abab82730299451ae990b50478980d5a3bc465801bfe",
+  "native_flags": [
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O2"
+  ],
+  "callgrind_flags": [
+    "--tool=callgrind",
+    "--callgrind-out-file=<artifact>"
+  ],
+  "parser_flags": [
+    "--manifest",
+    "<77-file manifest>",
+    "--whole",
+    "--count"
+  ],
+  "typescript_go": "8d550c837c90bd1805b047b7eeccc2baac2d5e7a",
+  "cohere": "715ba94f3608a6500086b1076ce5cb7e51b836db"
+}

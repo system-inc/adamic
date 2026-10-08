@@ -1,0 +1,18 @@
+{
+    module = true;
+    module();
+    module.value;
+    module
+}
+{
+    module
+    class C {}
+}
+{
+    module
+    function f() {}
+}
+{
+    module
+    "m";
+}

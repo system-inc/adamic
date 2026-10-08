@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"context"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -12,9 +11,7 @@ import (
 
 func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	stdout, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)
@@ -23,7 +20,7 @@ func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
 	var stderr strings.Builder
 	command.Stdout = stdout
 	command.Stderr = &stderr
-	err = command.Run()
+	err = parserRunGuard(command, time.Minute)
 	exit, ok := err.(*exec.ExitError)
 	if !ok {
 		t.Fatalf("expected parser rejection from %s: %v %s", name, err, &stderr)
@@ -33,6 +30,7 @@ func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
 
 // Not parallel: compare both original refusals before compiling the permissive mutant.
 func TestJsxMemberNameRejection(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "dashed-member.tsx")
 	source := "const x = <Foo.custom-element/>;\n"
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
@@ -75,6 +73,7 @@ func TestJsxMemberNameRejection(t *testing.T) {
 
 // Not parallel: one control binary holds every name boundary before mutant builds.
 func TestJsxNameBoundaryRejections(t *testing.T) {
+	t.Parallel()
 	oracle := goOracle(t)
 	directory, _ := filepath.Abs(".")
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))

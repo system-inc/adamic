@@ -1,0 +1,188 @@
+=== RUN   TestStrongAstParentGap
+--- PASS: TestStrongAstParentGap (0.59s)
+=== RUN   TestPushSpreadGap
+--- PASS: TestPushSpreadGap (0.67s)
+=== RUN   TestTypeImportCycleGap
+--- PASS: TestTypeImportCycleGap (0.51s)
+=== RUN   TestClassMethodInterfaceGap
+--- PASS: TestClassMethodInterfaceGap (23.04s)
+=== RUN   TestOptionalFunctionValueGap
+--- PASS: TestOptionalFunctionValueGap (0.77s)
+=== RUN   TestConditionalEmptyArrayGap
+--- PASS: TestConditionalEmptyArrayGap (0.72s)
+=== RUN   TestGeneratedExpressionsAgree
+    generated_test.go:131: 1676 generated inputs, seed 720, 1432520 identical tree bytes
+--- PASS: TestGeneratedExpressionsAgree (49.02s)
+=== RUN   TestExpressionsAgree
+    parser_test.go:207: 58 inputs, 17463 identical canonical bytes
+    parser_test.go:216: native precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:216: Node precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:226: native optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:226: Node optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:237: native parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+    parser_test.go:237: Node parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+--- PASS: TestExpressionsAgree (48.60s)
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:290: 77 whole compiler files, 28836875 identical expression tree bytes
+--- PASS: TestCompilerExpressionsAgree (23.06s)
+=== RUN   TestPerformance
+    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing
+--- SKIP: TestPerformance (0.00s)
+=== RUN   TestWholePerformance
+    performance_test.go:21: set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing
+--- SKIP: TestWholePerformance (0.00s)
+=== RUN   TestNodeCountCheckCatchesMutant
+    performance_test.go:182: native count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+    performance_test.go:182: Node count mutant finished with identical AST bytes; count "0\n" differs from Go "18\n"
+--- PASS: TestNodeCountCheckCatchesMutant (24.43s)
+=== RUN   TestMethodRecoveryAgrees
+--- PASS: TestMethodRecoveryAgrees (12.41s)
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/diagnostic-code
+    recovery_test.go:154: Node:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:154: native:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/generic-child
+    recovery_test.go:154: Node:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+    recovery_test.go:154: native:  line 9: port "3 Parameter 18 22 0 0 -1 0 0\t\t\t\t", Go "4 Identifier 16 17 0 0 -1 0 0\t\tT\t\t"
+        Go context:
+        1 InterfaceDeclaration 0 29 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+        2 MethodSignature 13 27 0 0 -1 0 0				
+        3 Identifier 13 15 0 0 -1 0 0		m		
+        3 TypeParameter 16 17 0 0 -1 0 0				
+        4 Identifier 16 17 0 0 -1 0 0		T		
+        3 Parameter 18 22 0 0 -1 0 0				
+        4 Identifier 18 19 0 0 -1 0 0		a		
+        4 TypeReference 20 22 0 0 -1 0 0				
+        5 Identifier 20 22 0 0 -1 0 0		T		
+=== RUN   TestRecoveryMutants/eof-loop
+    recovery_test.go:146: Node: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+    recovery_test.go:146: native: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+--- PASS: TestRecoveryMutants (39.37s)
+    --- PASS: TestRecoveryMutants/diagnostic-code (11.99s)
+    --- PASS: TestRecoveryMutants/generic-child (11.03s)
+    --- PASS: TestRecoveryMutants/eof-loop (15.73s)
+=== RUN   TestRecoveredLintCasesAgree
+    recovery_test.go:226: all eight original source/style combinations match real cohere findings and proposed repairs
+--- PASS: TestRecoveredLintCasesAgree (20.52s)
+=== RUN   TestEveryTypeNodeKindAgrees
+    type_kinds_test.go:45: Go IsTypeNodeKind inventory: 42 kinds, each covered; 250 identical doc-type bytes
+--- PASS: TestEveryTypeNodeKindAgrees (11.92s)
+=== RUN   TestWholeGeneratedAgrees
+    whole_generated_test.go:71: 68 generated whole files, 93323 identical bytes
+--- PASS: TestWholeGeneratedAgrees (12.28s)
+=== RUN   TestObsoleteImportAttributesAgrees
+    whole_generated_test.go:90: obsolete assert forms: Go required to emit only diagnostic 2880; 1021 identical tree bytes
+--- PASS: TestObsoleteImportAttributesAgrees (11.24s)
+=== RUN   TestWholeMutants
+=== RUN   TestWholeMutants/for-of_becomes_for-in
+    whole_mutants_test.go:38: Node caught: case 0 line 4: port "1 ForInStatement 0 25 0 0 -1 0 0\t\t\t\t", Go "1 ForOfStatement 0 25 0 0 -1 0 0\t\t\t\t"
+    whole_mutants_test.go:38: native caught: case 0 line 4: port "1 ForInStatement 0 25 0 0 -1 0 0\t\t\t\t", Go "1 ForOfStatement 0 25 0 0 -1 0 0\t\t\t\t"
+=== RUN   TestWholeMutants/type-only_import_phase_lost
+    whole_mutants_test.go:38: Node caught: case 0 line 14: port "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tUnknown", Go "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tTypeKeyword"
+    whole_mutants_test.go:38: native caught: case 0 line 14: port "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tUnknown", Go "2 ImportClause 32 41 0 0 -1 0 0\t\t\t\tTypeKeyword"
+=== RUN   TestWholeMutants/keyof_becomes_readonly
+    whole_mutants_test.go:38: Node caught: case 0 line 21: port "2 TypeOperator 60 68 0 0 -1 0 0\tReadonlyKeyword\t\t\t", Go "2 TypeOperator 60 68 0 0 -1 0 0\tKeyOfKeyword\t\t\t"
+    whole_mutants_test.go:38: native caught: case 0 line 21: port "2 TypeOperator 60 68 0 0 -1 0 0\tReadonlyKeyword\t\t\t", Go "2 TypeOperator 60 68 0 0 -1 0 0\tKeyOfKeyword\t\t\t"
+--- PASS: TestWholeMutants (45.57s)
+    --- PASS: TestWholeMutants/for-of_becomes_for-in (10.80s)
+    --- PASS: TestWholeMutants/type-only_import_phase_lost (11.71s)
+    --- PASS: TestWholeMutants/keyof_becomes_readonly (11.16s)
+=== RUN   TestWholeCountCheckCatchesMutant
+    whole_mutants_test.go:65: Node: identical whole-tree bytes, mutant count "0\n" caught against Go "12\n"
+    whole_mutants_test.go:65: native: identical whole-tree bytes, mutant count "0\n" caught against Go "12\n"
+--- PASS: TestWholeCountCheckCatchesMutant (11.74s)
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestWholeCompilerAgrees (24.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	361.047s

@@ -1,0 +1,14 @@
+{
+    type = true;
+    type();
+    type.value;
+    type
+}
+{
+    type
+    class C {}
+}
+{
+    type
+    function f() {}
+}

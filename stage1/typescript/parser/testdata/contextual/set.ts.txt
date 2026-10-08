@@ -1,0 +1,14 @@
+{
+    set = true;
+    set();
+    set.value;
+    set
+}
+{
+    set
+    class C {}
+}
+{
+    set
+    function f() {}
+}

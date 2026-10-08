@@ -1,0 +1,12 @@
+=== RUN   TestParserChildGuard
+=== RUN   TestParserChildGuard/hang
+    child_guard_proof_test.go:48: hang killed: wall 1.024901987s, CPU 1.02494s; [/tmp/adamic-gate/TestParserChildGuard3432231464/001/guard-proof hang testdata/recovery/corePublic.ts-cut-37.ts.txt] stalled: CPU budget 1s exhausted (1.02494s CPU): signal: CPU time limit exceeded
+=== RUN   TestParserChildGuard/loaded
+    child_guard_proof_test.go:101: healthy survived 5 pinned CPU burners (NumCPU 5): wall 6.045575473s, CPU 2.412005s, budget 3s; case testdata/recovery/corePublic.ts-cut-37.ts.txt
+parser guard proofs complete
+--- PASS: TestParserChildGuard (7.15s)
+    --- PASS: TestParserChildGuard/hang (1.03s)
+    --- PASS: TestParserChildGuard/loaded (6.06s)
+PASS
+parser longest native build child: 0s; build CPU budget: 10m0s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	7.158s
