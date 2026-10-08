@@ -17,7 +17,7 @@ func (e *emitter) viewField(property ir.Property) string {
 	if !supported || property.Method {
 		panic("compiler bug: incomplete checked field contract")
 	}
-	if property.ViewType != "" && property.Of != ir.Closure {
+	if property.ViewType != "" && (property.Of != ir.Closure || property.ViewContract != 0 && e.program.ViewContracts[property.ViewContract-1].Result != 0) {
 		name = property.ViewType
 	}
 	if property.Absent || property.Optional || of == ir.MaybeNumber || of == ir.MaybeBoolean {
@@ -72,6 +72,11 @@ func (e *emitter) viewField(property ir.Property) string {
 		} else {
 			e.viewObjectUnion(property, value)
 		}
+	}
+	if of == ir.Closure && property.ViewContract != 0 && e.program.ViewContracts[property.ViewContract-1].Result != 0 {
+		callable := e.temporary()
+		e.line("adamic_closure *%s = (adamic_closure *)%s;", callable, value)
+		value = e.emitViewCallableCertificate(property, callable)
 	}
 	if of.IsReference() {
 		return e.own(of, fmt.Sprintf("adamic_retain((%s)%s)", cType(of), value))

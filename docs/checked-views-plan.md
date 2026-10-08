@@ -1010,3 +1010,37 @@ refuses Named & Counted at value, so zero pairs/reads are complete. Native and
 JavaScript package tests pass; lower retains the documented mixed-array adapter
 failure. The lane-owned component work, six executable mutants and exact blocker
 handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
+
+
+## Lane 5 source hooks on ba59427 (October 8)
+
+The user's hook rule supersedes the prior handoff-only restrictions. Lane 5
+merges integration only and owns these minimal named shared hooks:
+
+- lower/object.go: prepareViewCallableProperty attaches fixed scalar signature
+  descriptors at reads; casts remain lazy. lower/interface_cast.go recognizes
+  optional callable unions through callableViewContract.
+- native/view_fields.go: emitViewCallableCertificate runs after presence,
+  readiness and kind checks. native/emit_functions.go checks resolved viewed
+  method pointers through emitViewCallableMethodCertificate before calling.
+- Owned native and JavaScript view_callables files check dynamic method lookup
+  and ordinary closure fields. New native/view_callables_methods.go selects
+  independently recorded method signatures by actual thunk identity.
+- lower/invariance.go: viewCallableVoidMarker treats a discarded function result
+  as a value contract, while widenedProperties retains reverse writable-slot
+  checks. New lower/view_callables_marker.go validates immediate discarded,
+  zero-argument marker calls against their original scalar source signature.
+  lower/cast_proof.go and lower/expression.go use that narrowly named proof;
+  stored erased-marker calls retain their existing refusal.
+- oracle/checked_views_arrays_test.go updates callable signature diagnostic pins;
+  oracle/checked_views_lazy_test.go pins runtime refusal for now-supported scalar
+  helper reads. oracle/interface_cast_counts_test.go registers viewCallableCounts.
+  New callable source/count tests and lane5/group1 and lane5/marker fixtures are
+  lane 5 territory. counts.md records only the measured added fixture rows.
+
+Coverage ledger labels counts as candidates. Group1 covers the two Program
+string-directory contracts, 11 static candidate reads; 306 pairs / 1,492 static
+candidate reads remain. Actual corpus reachable-read certification is unmeasured.
+Higher-ranked intrinsic, optional/rest, overloaded and aggregate-return shapes
+remain unclaimed. Working family date: October 12, 2026, 18:00 UTC, subject to
+remeasurement after the checker-clean exact table and closure reconciliation.

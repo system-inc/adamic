@@ -225,6 +225,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
+			if property.View != "" && property.ViewContract != 0 && e.program.ViewContracts[property.ViewContract-1].Result != 0 {
+				e.emitViewCallableMethodCertificate(property, method)
+			}
 		} else {
 			method = e.temporary()
 			e.line("adamic_method %s = NULL;", method)

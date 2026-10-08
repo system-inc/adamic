@@ -1,0 +1,10 @@
+--- FAIL: TestCheckedViewCallableMarker (0.16s)
+    --- FAIL: TestCheckedViewCallableMarker/write-back (0.16s)
+        checked_views_callable_source_test.go:109: gate cache node miss
+        checked_views_callable_source_test.go:125: write-back refusal: <nil>
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.169s
+FAIL

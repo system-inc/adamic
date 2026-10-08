@@ -1,14 +1,6 @@
 package oracle
 
-import (
-	"context"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"os"
-	"path/filepath"
-	"strings"
-	"testing"
-)
+import "testing"
 
 func TestCheckedViewCallables(t *testing.T) {
 	t.Parallel()
@@ -32,20 +24,17 @@ func TestCheckedViewCallables(t *testing.T) {
 
 func TestCheckedViewOpaqueSignature(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs("../../stage3/interface-downcasts/lane2/opaque-signature.a")
-	if err != nil {
-		t.Fatal(err)
+	program, path := interfaceFixture(t, "lane2/opaque-signature")
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "wrong\n" {
+		t.Fatalf("Node %#v", truth)
 	}
-	if _, err := os.Stat(path); err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = lower.Lower(context.Background(), program)
-	if err == nil || !strings.Contains(err.Error(), "checked view read of field run with unsupported callable contract") {
-		t.Fatalf("want pinned signature refusal, got %v", err)
+	sanitized, _ := nativelyUncached(t, program)
+	expected := "adamic: panic: field read failed: (node as Runner).run expected (value: number) => number, found function with incompatible result representation\n"
+	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != expected {
+			t.Fatalf("got %#v want %q", got, expected)
+		}
 	}
 }
 
