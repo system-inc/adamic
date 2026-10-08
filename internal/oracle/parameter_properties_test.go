@@ -3,6 +3,7 @@ package oracle
 import (
 	"fmt"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -103,7 +104,11 @@ func TestParameterPropertyOwnershipMutant(t *testing.T) {
 	if retain == "" || !strings.Contains(code, retain) {
 		t.Fatal("no callback field retain")
 	}
-	code = strings.ReplaceAll(code, retain, strings.TrimSuffix(strings.TrimPrefix(retain, "adamic_retain("), ")"))
+	local := strings.TrimSuffix(strings.TrimPrefix(retain, "adamic_retain("), ")")
+	// Retains can be standalone statements after emitter changes. Erase their
+	// effect without letting -Werror count as an ownership mutant kill.
+	code = regexp.MustCompile(`(?m)^([ \t]*)`+regexp.QuoteMeta(retain)+`;[ \t]*$`).ReplaceAllString(code, "${1}(void)"+local+";")
+	code = strings.ReplaceAll(code, retain, local)
 	binary := filepath.Join(t.TempDir(), "mutant")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)

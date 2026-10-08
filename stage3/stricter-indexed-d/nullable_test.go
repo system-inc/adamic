@@ -76,7 +76,7 @@ func TestNullableStringRepresentation(t *testing.T) {
  console.log(String(value !== undefined));
  console.log(typeof value);
  console.log(String(value));
- console.log(value);
+ console.log(String(value));
  console.log(String(value === ""));
  console.log(String(value === "null"));
  console.log(String(value ?? "fallback"));
@@ -113,7 +113,7 @@ console.log(String(value === undefined));
 console.log(String(value == null));
 console.log(typeof value);
 console.log(String(value));
-console.log(value);
+console.log(String(value));
 `
 			program, path, node := nullableProgram(t, source, false)
 			checks := ir.InsertedChecks(program)

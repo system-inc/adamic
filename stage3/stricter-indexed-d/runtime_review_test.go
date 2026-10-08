@@ -15,8 +15,8 @@ func TestNullableRuntimeReview(t *testing.T) {
 		{"map-set", `function keys(): void {
  const map = new Map<string | null | undefined, string>();
  map.set("", "empty"); map.set(null, "nil"); map.set("nu" + "ll", "text"); map.set(undefined, "missing");
- console.log(String(map.size)); console.log(map.get(undefined)); console.log(map.get("")); console.log(map.get(null)); console.log(map.get("null"));
- map.set(null, "updated"); console.log(map.get("")); console.log(map.get(null));
+ console.log(String(map.size)); console.log(String(map.get(undefined))); console.log(String(map.get(""))); console.log(String(map.get(null))); console.log(String(map.get("null")));
+ map.set(null, "updated"); console.log(String(map.get(""))); console.log(String(map.get(null)));
  console.log(String(map.delete(null))); console.log(String(map.has(""))); console.log(String(map.has(null))); console.log(String(map.has("null")));
  const set = new Set<string | null | undefined>();
  set.add(""); set.add(null); set.add("nu" + "ll"); set.add(null); set.add(undefined);

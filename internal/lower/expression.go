@@ -261,7 +261,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if err == nil {
-		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && !l.indexedArrayBindingInitializer(node) {
 			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
 				return nil, err
 			}
@@ -283,7 +283,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// other keeps the target, so the same object, array or function can't be both. A tuple is held
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
-		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && !l.indexedArrayBindingInitializer(node) {
 			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
 				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
 			}

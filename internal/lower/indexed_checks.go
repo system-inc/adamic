@@ -57,3 +57,17 @@ func (l *lowering) indexedPresenceGuard(node *ast.Node, value ir.Expression, ele
 	message := "indexed read is absent: " + l.program.Where(node)
 	return ir.Coalesce{UndefinedOnly: true, Value: lookup, Panic: ir.StringConstant{Index: l.constant(message)}, Of: of}, nil
 }
+
+// The contextual tuple of an array binding describes its destinations, not an
+// alias of the array as fixed tuple storage. destructureArray checks each slot.
+func (l *lowering) indexedArrayBindingInitializer(node *ast.Node) bool {
+	if !l.program.RequiresIndexedPresenceChecks() || !l.checker.IsArrayType(l.checker.GetTypeAtLocation(node)) {
+		return false
+	}
+	use := node
+	for use.Parent != nil && use.Parent.Kind == ast.KindParenthesizedExpression {
+		use = use.Parent
+	}
+	parent := use.Parent
+	return parent != nil && parent.Kind == ast.KindVariableDeclaration && parent.Name().Kind == ast.KindArrayBindingPattern && parent.Initializer() == use
+}
