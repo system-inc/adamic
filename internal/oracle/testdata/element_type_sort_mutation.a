@@ -1,0 +1,85 @@
+// Comparator writes remain visible; collected values are written over the original range.
+
+const numberpush: (number | undefined)[] = [3, undefined, 1];
+let numberpushChanged = false;
+function numberpushCompare(left: number | undefined, right: number | undefined): number {
+    if (left === undefined || right === undefined) console.log('unexpected undefined');
+    if (!numberpushChanged) {
+        numberpushChanged = true;
+        numberpush.push(9);
+    }
+    return (left ?? 0) - (right ?? 0);
+}
+numberpush.sort(numberpushCompare);
+console.log(`numberpush ${numberpush.length} ${numberpush[0]} ${numberpush[1]} ${numberpush[2]} ${numberpush[3]}`);
+
+const numbershorten: (number | undefined)[] = [3, undefined, 1];
+let numbershortenChanged = false;
+function numbershortenCompare(left: number | undefined, right: number | undefined): number {
+    if (left === undefined || right === undefined) console.log('unexpected undefined');
+    if (!numbershortenChanged) {
+        numbershortenChanged = true;
+        numbershorten.pop();
+        numbershorten.pop();
+        numbershorten.pop();
+    }
+    return (left ?? 0) - (right ?? 0);
+}
+numbershorten.sort(numbershortenCompare);
+console.log(`numbershorten ${numbershorten.length} ${numbershorten[0]} ${numbershorten[1]} ${numbershorten[2]} ${numbershorten[3]}`);
+
+const booleanpush: (boolean | undefined)[] = [true, undefined, false];
+let booleanpushChanged = false;
+function booleanpushCompare(left: boolean | undefined, right: boolean | undefined): number {
+    if (left === undefined || right === undefined) console.log('unexpected undefined');
+    if (!booleanpushChanged) {
+        booleanpushChanged = true;
+        booleanpush.push(true);
+    }
+    return (left === true ? 1 : 0) - (right === true ? 1 : 0);
+}
+booleanpush.sort(booleanpushCompare);
+console.log(`booleanpush ${booleanpush.length} ${booleanpush[0]} ${booleanpush[1]} ${booleanpush[2]} ${booleanpush[3]}`);
+
+const booleanshorten: (boolean | undefined)[] = [true, undefined, false];
+let booleanshortenChanged = false;
+function booleanshortenCompare(left: boolean | undefined, right: boolean | undefined): number {
+    if (left === undefined || right === undefined) console.log('unexpected undefined');
+    if (!booleanshortenChanged) {
+        booleanshortenChanged = true;
+        booleanshorten.pop();
+        booleanshorten.pop();
+        booleanshorten.pop();
+    }
+    return (left === true ? 1 : 0) - (right === true ? 1 : 0);
+}
+booleanshorten.sort(booleanshortenCompare);
+console.log(`booleanshorten ${booleanshorten.length} ${booleanshorten[0]} ${booleanshorten[1]} ${booleanshorten[2]} ${booleanshorten[3]}`);
+
+const unionpush: (number | string | undefined)[] = ['c', undefined, 'a'];
+let unionpushChanged = false;
+function unionpushCompare(left: number | string | undefined, right: number | string | undefined): number {
+    if (left === undefined || right === undefined) console.log('unexpected undefined');
+    if (!unionpushChanged) {
+        unionpushChanged = true;
+        unionpush.push('tail');
+    }
+    return `${left}` < `${right}` ? -1 : `${left}` > `${right}` ? 1 : 0;
+}
+unionpush.sort(unionpushCompare);
+console.log(`unionpush ${unionpush.length} ${unionpush[0]} ${unionpush[1]} ${unionpush[2]} ${unionpush[3]}`);
+
+const unionshorten: (number | string | undefined)[] = ['c', undefined, 'a'];
+let unionshortenChanged = false;
+function unionshortenCompare(left: number | string | undefined, right: number | string | undefined): number {
+    if (left === undefined || right === undefined) console.log('unexpected undefined');
+    if (!unionshortenChanged) {
+        unionshortenChanged = true;
+        unionshorten.pop();
+        unionshorten.pop();
+        unionshorten.pop();
+    }
+    return `${left}` < `${right}` ? -1 : `${left}` > `${right}` ? 1 : 0;
+}
+unionshorten.sort(unionshortenCompare);
+console.log(`unionshorten ${unionshorten.length} ${unionshorten[0]} ${unionshorten[1]} ${unionshorten[2]} ${unionshorten[3]}`);

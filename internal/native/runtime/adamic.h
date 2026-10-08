@@ -549,6 +549,9 @@ bool adamic_timsort(adamic_value *work, size_t count, int (*compare)(adamic_valu
 // adamic_array_sort_undefined_last sorts an array of number | undefined as JavaScript does: every
 // undefined goes to the end, never passed to the comparator (sort_undefined.c).
 void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
+// The same undefined-last rule for packed booleans and owning union references.
+void adamic_array_sort_maybe_boolean(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
+void adamic_array_sort_union(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 
 // adamic_map_entries is [...map]: [key, value] pairs, each an object of the shape given.
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair);

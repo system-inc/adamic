@@ -48,3 +48,16 @@ Removing the minimal NonPrimitive hook in cycleFinder.reaches makes both object-
 New separate runtime helpers for runtime-owner review: internal/native/runtime/array_maybe_boolean.c and .h; internal/native/runtime/array_union.c and .h. They sort only present elements and write undefined at the end, retain reference elements, preserve comparator exceptions, and tolerate comparator changes to receiver length. Existing runtime files were not edited.
 
 Unresolved generic declarations were not erased or assigned guessed storage. The generic fixture demonstrates ordinary concrete specialization, which already works; those census stops remain pending a census/instantiation decision. No other worker's lowering function was changed except the named minimal cycleFinder.reaches safety hook.
+
+## Runtime review follow-up
+
+The optional-boolean and union variants now live beside the number variant in internal/native/runtime/sort_undefined.c, with declarations together in adamic.h. The four separate array_maybe_boolean / array_union .c and .h files and emitted includes were removed. This relocation changes no helper semantics.
+
+The separately registered element_type_sort_mutation.a fixture covers a comparator that pushes and a comparator that pops all original elements, for optional numbers, optional booleans and owning unions. Node, JavaScript and sanitized native agree on all six cases, including preserving appended tails and regrowing the original range. Two new native mutants discard the appended boolean tail or preserve the comparator's shortened boolean length; both build and exit normally with empty sanitizer stderr, and fail only Node stdout comparison.
+
+Follow-up commands (all output redirected to /tmp/element-type-consolidated-*.log):
+
+- go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/element_type_|TestElementType' -count=1 -v: pass, 20.872s.
+- go test ./internal/oracle -run 'TestElementTypeSortMutation' -count=1 -v: both new mutants caught, pass, 1.357s.
+- go test ./internal/native -run 'TestCEndsInNewline|TestMaybeNumbersPackIntoOneDouble|TestLoopArrayHoldC' -count=1: pass, .396s.
+- go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts: refreshed for the new fixture.
