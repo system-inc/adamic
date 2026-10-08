@@ -1,0 +1,3 @@
+stage3/drivers/tsc-entry/probes/12-present-undefined-argument.a:5:8: error TS2379: Argument of type '{ modifiers: undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'modifiers' are incompatible.
+    Type 'undefined' is not assignable to type 'readonly Modifier[]'.

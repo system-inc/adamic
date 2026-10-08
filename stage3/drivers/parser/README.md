@@ -86,3 +86,45 @@ The extended dump's rerun omission/end evidence is in
 the partial dump fail comparison. The end mutant finishes and changes exactly
 one record. Future native runs must match `reference.json`'s extended dump;
 the legacy SHA cannot pass the current acceptance check.
+
+# Error recovery acceptance corpus
+
+`cases-reference.json` is a second mandatory native reference beside the 81
+compiler files. It covers every tracked single-file case in the pinned compiler
+and conformance directories, in parser/JSX/salsa/remaining order. Zero or one
+`@filename` directive is single-file; two or more excludes the case and is recorded.
+Each source blob is checked against the pin. Source text is retained, including
+metadata comments, after upstream BOM decoding. A sole filename selects its
+extension; target is Latest. TSX/JSX use their corresponding modes, .js/.mjs/.cjs
+use JS, other inputs use TS. This is a parser oracle, not upstream's semantic
+checking/option matrix. The manifest stores per-case full-tree/slice SHA256 and
+counts, never dump contents. Exact groups and exclusions are in the manifest.
+
+The driver uses iterative preorder so deeply nested case trees cannot overflow
+its own call stack. It preserves the extended 81-file dump exactly.
+
+```sh
+PARSER_TYPESCRIPT=/path/to/typescript/lib/typescript.js python3 stage3/drivers/parser/case-reference.py /pinned/checkout /full/adapted/tree /validated/slice /new/output --reference stage3/drivers/parser/cases-reference.json
+```
+
+Add `--native /binary` for mandatory per-case native comparisons. Native-proof.py
+runs that acceptance after the 81-file comparison passes; `--case-checkout` and
+`--full-tree` specify those inputs when they differ from its corpus directory.
+Until native passes: syntax tree and parse diagnostics identical on Node,
+JSDoc unverified, error recovery unverified.
+
+Coverage correction: the legacy `diagnostic_rows: 0` coverage field counted JSDoc
+diagnostics. Its 81-file dump contains 10,671 parse diagnostics from three JSON
+files deliberately parsed in TS mode; all 78 TypeScript files have none. The
+reference now distinguishes parse and JSDoc rows. Its bytes and SHA are unchanged.
+A broad diagnostic-dropping mutant already fails that old oracle. The narrower
+real JSX attribute-recovery mutant leaves it unchanged and is caught by two new
+case hashes; both cases lose their one diagnostic. Run the permanent proof with:
+
+```sh
+PARSER_TYPESCRIPT=/path/to/typescript/lib/typescript.js python3 stage3/drivers/parser/recovery-mutant.py /validated/slice /compiler/corpus /81/file/run /case/reference/run /new/mutant/output
+```
+
+Both mutant executions must finish with empty stderr; the old comparison must
+pass and the case reference must fail. Evidence includes both changed case hashes
+and the unsuccessful broad-mutant attempt, without storing complete dumps.
