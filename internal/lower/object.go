@@ -1568,6 +1568,9 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 		return nil, true, err
 	}
 	written := node.AsCallExpression().Arguments.Nodes
+	if name == "slice" || name == "lastIndexOf" {
+		return l.libraryStringMethod(node, value, name, written)
+	}
 	if len(written) > len(shape.arguments) || len(written) < len(shape.arguments)-shape.optional {
 		return nil, true, l.notYet(node, name+" with these arguments")
 	}
