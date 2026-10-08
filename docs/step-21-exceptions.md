@@ -26,6 +26,7 @@ There cannot be three diagnostic witnesses for a reason with no observations.
 | Refused: `throwing a <type>` | 0 | 0 | none recorded |
 | NotYet: `throwing an Error that isn't made where it's thrown or caught by the catch around it` | 0 | 0 | none recorded |
 | NotYet: `a catch that destructures what it caught` | 0 | 0 | none recorded |
+| NotYet: `assigning to what a catch caught` | 0 | 0 | none recorded |
 | NotYet: `new Error with options` | 0 | 0 | none recorded |
 | NotYet: `new Error with a message that isn't a string` | 0 | 0 | none recorded |
 | NotYet: `a try around <operation>, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)` | 0 | 0 | none recorded |
@@ -184,10 +185,10 @@ failures remain at their current diagnostics pending review and implementation.
 7. **Liveness (#zm26nev):** exceptional edges preserve the pre-assignment value
    when evaluation throws. Reuse and moves must retain values read by catch or
    finally; globals cannot be nulled before a throw leaves them observable.
-   Fixed points must compare set contents, not just cardinality. The current
-   `LiveOut` updates a block only when its live-set size changes; a same-size
-   replacement can hide a later iteration's change. This is a compiler correctness
-   issue within the existing language, suitable for the implementation unit.
+   The current `LiveOut` starts from empty sets and grows them monotonically,
+   so cardinality is sufficient to detect a change. The earlier design commit
+   suspected a convergence bug; review of the transfer function disproved that
+   inference. No convergence change is justified by this observation.
 8. **Other analyses:** initialization, freshness, aliasing and region escape must
    see throws and finalizers too. SSA assignment definitions must not be mistaken
    for stores that happened on the exceptional edge.
@@ -195,8 +196,83 @@ failures remain at their current diagnostics pending review and implementation.
    must not execute after them. Resource failures and engine stack text cannot be
    claimed byte-identical without a defined contract and external oracle evidence.
 
-The highest source exposure is already-admitted try/catch. The first build will
-hold that shape to Node and repair liveness convergence without admitting a new
-throw kind. It cannot truthfully retire the eight TS18046 diagnostics, saved-Error
+The highest source exposure is already-admitted try/catch. The build unit will
+hold that existing shape to Node and prove throw-path liveness with a compiler
+mutant, without admitting a new throw kind. It cannot truthfully retire the eight TS18046 diagnostics, saved-Error
 NotYet or arbitrary-value refusal. Their measured exception-root retirement is
 zero until a reviewed admission change and a census replay establish otherwise.
+
+## Fixtures: reductions and observed outcomes
+
+All source references below are pinned original TypeScript, fetched from its own
+repository, not copied from cohere. The positive reductions replace host/compiler
+objects with small strings, arrays and callbacks while preserving the source's
+exception/control-flow structure. Additional finally-return/break and throw-path
+consumption cases are explicitly stress controls, not claimed original tsc sites.
+The source AST census is reproducible with `syntax.cjs` and TypeScript 6.0.3;
+`syntax.json` records every site. Error subclasses and arbitrary origin payloads
+are scope extensions because the executable tsc AST contains neither.
+
+| Acceptance fixture | Original source | Observed stdout (lines separated by /) |
+| --- | --- | --- |
+| `step21_catch_callback.a` | `program.ts:398`, `:2844`; `utilitiesPublic.ts:738` | text0 / read1 / text2 / fallback |
+| `step21_finally_callback.a` | `utilities.ts:787`, `checker.ts:1937`, `symbolWalker.ts:50` | inner2 / outer1 / failed3 / outer1 / 0 / visit4 |
+| `step21_rethrow.a` | `program.ts:2844`, `sys.ts:1549`; added identity control | ok0 / recovered / cancel2 / true / identity3 |
+| `step21_finally_completion.a` | return-through-finally from `utilities.ts:787`; added override/break controls | try0 / finally1 / finally2 / cleanup0 / after |
+| `step21_liveness.a` | callback assignment from `commandLineParser.ts:2297`; added consumed-array control | original1,added2 / original1 / failure3 / original1 |
+
+Every positive fixture exits zero with empty stderr. Each agrees with independent
+source Node, generated JavaScript, sanitized native and release native; each passes
+the separate leak check. Strings are built at runtime, so lifetime failures cannot
+hide behind immortal literals. The test registers these fixtures from
+`internal/oracle/step21_exceptions_test.go`, without editing the protected shared
+oracle file. They participate in the ordinary oracle and counts gate.
+
+| Proposal probe under `docs/step-21-exceptions/proposals` | Original reduction / scope extension | Observed compiler outcome | Source Node stdout |
+| --- | --- | --- | --- |
+| `any_value.a` | Generalizes `program.ts:2854` rethrow to undefined origin | Refused: throwing a undefined | undefined |
+| `saved_error.a` | `debug.ts:197-203`, removing stack capture/debugger | NotYet: throwing an Error that isn't made where it's thrown or caught by the catch around it | saved1 |
+| `error_subclass.a` | Generalizes `program.ts:2848` cancellation class to Error ancestry | NotYet: a computed class base; name the base class directly | true |
+| `unknown_read.a` | `commandLineParser.ts:2301` e.message | Checker TS18046: error is of type unknown | unknown |
+| `library_failure.a` | Recovery from `utilities.ts:7810`; known repeat failure replaces JSON parsing | NotYet: a try around repeat, whose failure is a panic natively but a throw a catch can take on Node | caught |
+
+All five source probes finish on Node with exit zero and empty stderr. Their
+negative outcomes are acceptance tests too: no proposal is admitted accidentally.
+These files are outside the repository's ordinary Adamic include paths. The
+unknown-read probe invokes Node directly because the cached source helper first
+loads source through Adamic and intentionally stops on this checker diagnostic.
+The first two test runs exposed that harness limitation; the corrected run passes.
+
+For each positive fixture, an IR mutant adds one line inside an executed catch or
+finally. Both generated backends and release native disagree with source stdout;
+all five mutants finish cleanly, with no sanitizer finding or leak. These prove
+the external comparison can fail; they are semantic IR mutants, not five claimed
+production compiler defects. `TestStep21FixtureMutants` returns success only when
+every mutated artifact is rejected by that comparison.
+
+Focused command, output in `/tmp/scout-fixtures-proof.log`:
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStep21|TestNativeAgreesWithNode/internal/oracle/testdata/step21_' -count=1 -v -timeout 10m
+```
+
+Result: exit zero, oracle 1.595s, five positive programs, five proposal probes,
+five killed semantic mutants, native cache hits 0/misses 30, Node hits 0/misses 20.
+The complete output is retained in `evidence/fixtures.log.txt`.
+
+The required counts refresh initially failed only because the cloud setup had not
+installed `@types/node` for existing Node host fixtures. The workaround is
+`npm ci --prefix stage3/api --ignore-scripts --no-audit --no-fund`, which installs
+the repository's pinned dependencies without changing its manifests. The setup
+itself succeeded; this was a separate counts prerequisite. The full counts
+refresh was rerun after that installation, rather than hiding unrelated rows.
+
+Counts command: `go test ./internal/oracle -run TestCountsAreRecorded -count=1
+-timeout 30m -args -update-counts`, output `/tmp/scout-counts-final.log`, exit zero,
+37.015s. New allocation/free totals are 17/17 (catch callback), 19/19 (finally
+callback), 13/13 (rethrow), 17/17 (completion), and 12/12 (liveness); none uses a
+region. All existing numeric rows are unchanged. Regeneration also moves the
+existing logical_and_reference_maybe row to its fixture-list position and removes
+a stale taste/17_binder_flow row which the base no longer counts. These are
+inherited registry/table reconciliation, not exception lifetime changes.

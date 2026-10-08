@@ -6,7 +6,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[2]
 PIN = '6c4fc1af'
-PREFIXES = ('throwing a ', 'throwing an Error ', 'a catch that ', 'new Error with ', 'a try around ')
+PREFIXES = ('throwing a ', 'throwing an Error ', 'a catch that ', 'new Error with ', 'a try around ', 'assigning to what a catch caught')
 
 
 def belongs(reason):
