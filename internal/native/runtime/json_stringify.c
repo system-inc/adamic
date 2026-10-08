@@ -5,6 +5,26 @@
 #include <stdlib.h>
 #include <string.h>
 
+static adamic_json_shape *shape_metadata;
+void adamic_json_shape_register(adamic_json_shape *metadata) {
+ if (!metadata->registered) {
+  metadata->next = shape_metadata;
+  shape_metadata = metadata;
+  metadata->registered = true;
+ }
+}
+static const adamic_json_shape *shape_description(const adamic_shape *shape) {
+ for (const adamic_json_shape *m = shape_metadata; m != NULL; m = m->next) {
+  if (m->shape == shape) return m;
+ }
+ return NULL;
+}
+
+static const adamic_json_schema *const *shape_fields(const adamic_shape *shape) {
+ const adamic_json_shape *m = shape_description(shape);
+ return m == NULL ? NULL : m->fields;
+}
+
 typedef struct json_writer {
 	char *bytes;
 	size_t length;
@@ -115,11 +135,18 @@ static json_scalar scalar(adamic_value value, const adamic_json_schema *schema) 
 		adamic_maybe_number number = adamic_maybe_number_unpack(value.number);
 		kind = number.present ? adamic_json_number : adamic_json_undefined;
 		value.number = number.number;
-	} else if (kind == adamic_json_union || kind == adamic_json_maybe_boolean) {
+	} else if (kind == adamic_json_union || kind == adamic_json_dynamic || kind == adamic_json_maybe_boolean) {
 		adamic_heap *reference = value.reference;
 		if (reference == NULL) { kind = adamic_json_undefined; }
 		else {
 			switch (reference->kind) {
+			case adamic_kind_array: kind = adamic_json_array; break;
+			case adamic_kind_object: {
+                const adamic_json_shape *m = shape_description(((const adamic_object *)reference)->shape);
+                kind = m != NULL && m->tuple ? adamic_json_tuple : adamic_json_object;
+                break;
+            }
+			case adamic_kind_null: kind = adamic_json_null; break;
 			case adamic_kind_number: kind = adamic_json_number; value.number = ((adamic_number_box *)reference)->number; break;
 			case adamic_kind_boolean: kind = adamic_json_boolean; value.boolean = ((adamic_boolean_box *)reference)->boolean; break;
 			case adamic_kind_string: kind = adamic_json_string; break;
@@ -164,6 +191,24 @@ static void release_json_return(adamic_value value, const adamic_json_schema *sc
     if (schema->kind == adamic_json_string || schema->kind == adamic_json_array) adamic_release(value.reference);
 }
 static bool write_value(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth);
+static void metadata_required(bool present) {
+    if (present) return;
+    static const char message[] = "NotYet: JSON.stringify allocation lacks complete runtime metadata";
+    adamic_panic(message, sizeof message - 1);
+}
+static void write_dynamic_field(json_writer *w, const adamic_object *object, size_t slot, size_t depth, size_t *written) {
+    const adamic_json_schema *schema = shape_fields(object->shape)[slot];
+    adamic_value value = object->slots[slot];
+    json_scalar s = scalar(value, schema);
+    if (s.kind == adamic_json_undefined || s.kind == adamic_json_function) return;
+    if ((*written)++ != 0) ascii(w, ",");
+    indent(w, depth + 1);
+    const char *key = object->shape->names[slot];
+    adamic_string name = {{0, adamic_kind_string, 0}, strlen(key), key, 0, NULL, NULL, 0};
+    quote(w, &name);
+    ascii(w, w->pretty ? ": " : ":");
+    (void)write_value(w, value, schema, depth + 1);
+}
 static void write_field(json_writer *w, const adamic_object *object, const adamic_json_field *field, size_t depth, size_t *written) {
 	// Undefined and function-valued object fields are omitted, rather than becoming null.
     if (adamic_thrown != NULL) return;
@@ -217,13 +262,14 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 		bool tuple = s.kind == adamic_json_tuple;
 		const adamic_array *array = value.reference;
 		const adamic_object *object = value.reference;
-		size_t count = tuple ? schema->count : array->length;
+		size_t count = tuple ? (schema->kind == adamic_json_dynamic ? object->shape->count : schema->count) : array->length;
 		ascii(w, "[");
 		for (size_t index = 0; index < count; index++) {
 			if (index != 0) { ascii(w, ","); }
 			indent(w, depth + 1);
-			const adamic_json_schema *element = tuple ? schema->fields[index].schema : schema->element;
-			adamic_value item = tuple ? object->slots[schema->fields[index].slot] : array->elements[index];
+			const adamic_json_schema *element = tuple ? (schema->kind == adamic_json_dynamic ? shape_fields(object->shape)[index] : schema->fields[index].schema) : schema->kind == adamic_json_dynamic ? array->json_element : schema->element;
+            metadata_required(element != NULL);
+			adamic_value item = tuple ? object->slots[schema->kind == adamic_json_dynamic ? index : schema->fields[index].slot] : array->elements[index];
 			if (!write_value(w, item, element, depth + 1)) { ascii(w, "null"); }
 		}
 		if (count != 0) { indent(w, depth); }
@@ -232,6 +278,32 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 	}
 	case adamic_json_object: {
 		const adamic_object *object = value.reference;
+        if (schema->kind == adamic_json_dynamic) {
+            metadata_required(object->class == NULL && (object->shape->count == 0 || shape_fields(object->shape) != NULL));
+            ascii(w, "{");
+            size_t written = 0;
+            if (w->key_list) {
+                for (size_t k = 0; k < w->key_count; k++) {
+                    for (size_t slot = 0; slot < object->shape->count; slot++) {
+                        const char *key = object->shape->names[slot];
+                        metadata_required(strcmp(key, "toJSON") != 0);
+                        if (w->keys[k]->length == strlen(key) && memcmp(w->keys[k]->bytes, key, strlen(key)) == 0) {
+                            write_dynamic_field(w, object, slot, depth, &written);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                for (size_t index = 0; index < object->shape->count; index++) {
+                    size_t slot = adamic_public_index(object->shape, index);
+                    metadata_required(strcmp(object->shape->names[slot], "toJSON") != 0);
+                    write_dynamic_field(w, object, slot, depth, &written);
+                }
+            }
+            if (written != 0) indent(w, depth);
+            ascii(w, "}");
+            return true;
+        }
 		ascii(w, "{");
 		size_t written = 0;
 		if (w->key_list) {

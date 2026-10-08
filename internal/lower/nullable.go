@@ -29,7 +29,7 @@ func (l *lowering) nullableUse(node *ast.Node) error {
 	// typeof retains a lookup's presence slot until classification. The typeof lowering
 	// rejects any operand that cannot carry that presence.
 	observedTypeOf := outer.Parent != nil && outer.Parent.Kind == ast.KindTypeOfExpression
-	if l.includesNull(own) && l.includesUndefined(own) && !observedTypeOf {
+	if l.includesNull(own) && l.includesUndefined(own) && !l.nullableScalarUnion(own) && !observedTypeOf {
 		return l.notYet(node, nullableTagReason)
 	}
 	// Console observes its argument immediately as text; it never stores the wider declared type.
@@ -50,7 +50,10 @@ func (l *lowering) nullableUse(node *ast.Node) error {
 		}
 	}
 	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-		if !l.nullableViewsMatch(own, contextual, map[[2]*checker.Type]bool{}) {
+		from, _ := l.representation(own)
+		to, _ := l.representation(l.concrete(contextual))
+		boxesEmpty := l.includesNull(own) && from.IsReference() && from != ir.Union && to == ir.Union
+		if !boxesEmpty && !l.nullableViewsMatch(own, contextual, map[[2]*checker.Type]bool{}) {
 			return l.notYet(node, "a nullable reference view from "+l.checker.TypeToString(own)+" to "+l.checker.TypeToString(l.concrete(contextual))+" changes its empty case or adds a second empty case (nullable reference needs an empty-case tag)")
 		}
 	}
@@ -65,7 +68,14 @@ func (l *lowering) nullableViewsMatch(from, to *checker.Type, visited map[[2]*ch
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
-	if (l.includesNull(from) && l.includesUndefined(to)) || (l.includesUndefined(from) && l.includesNull(to)) {
+	if l.includesNull(from) && from.Flags()&checker.TypeFlagsNull == 0 {
+		a, _ := l.representation(from)
+		b, _ := l.representation(to)
+		if a != ir.Union && b == ir.Union {
+			return false
+		}
+	}
+	if !l.nullableScalarUnion(to) && ((l.includesNull(from) && l.includesUndefined(to)) || (l.includesUndefined(from) && l.includesNull(to))) {
 		return false
 	}
 	from, to = l.present(from), l.present(to)

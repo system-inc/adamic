@@ -21,7 +21,7 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 		}
 		return ir.Number, nil
 	}
-	if proven := l.checker.GetTypeAtLocation(node); l.includesNull(proven) && l.includesUndefined(proven) {
+	if proven := l.checker.GetTypeAtLocation(node); l.includesNull(proven) && l.includesUndefined(proven) && !l.nullableScalarUnion(proven) {
 		return 0, l.notYet(node, nullableTagReason)
 	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
@@ -34,6 +34,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	parameter := proven.Flags()&checker.TypeFlagsTypeParameter != 0
 	proven = l.concrete(proven)
 	flags := proven.Flags()
+	if l.nullableScalarUnion(proven) {
+		return ir.Union, true
+	}
 	if l.nodeBufferType(proven, "Buffer") {
 		return ir.Array, true
 	}
@@ -186,6 +189,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil {
+		value = l.jsonLiteralStorage(node, value)
+		value = l.boxNullableUnion(node, value)
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -510,12 +517,18 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				b := l.libraryArrayBuilder([]ir.Expression{read})
 				held := b.read(b.parameters[0])
 				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+				null := l.includesNull(l.checker.GetTypeAtLocation(node))
+				if null {
+					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsNull{Value: held}}
+				} else if name == "object" {
+					matches = ir.Binary{Operator: ir.And, Left: matches, Right: ir.Unary{Operator: ir.Not, Operand: ir.IsNull{Value: held}}}
+				}
 				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
 					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 				}
 				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
 				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
-				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
+				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed, Null: null})
 			}
 		}
 		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
@@ -523,6 +536,11 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
 				read = ir.Unwrap{Value: read}
 			}
+		}
+		// Tagged-union narrowing already checks its actual tag above. A pointer
+		// check cannot classify its NULL (undefined) as the null tag.
+		if l.result.Locals[local].Type == ir.Union {
+			return read, nil
 		}
 		return l.defined(node, read), nil
 	case ast.KindPrefixUnaryExpression:
@@ -543,7 +561,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
-		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
+		if null && operand.Type() != ir.Union && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
 				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
@@ -651,6 +669,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 func fit(value ir.Expression, to ir.Type) ir.Expression {
 	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
 		return ir.WeakOf{Value: value}
+	}
+	if _, null := value.(ir.Null); null && to == ir.Union {
+		return ir.Null{Of: ir.Union}
 	}
 	if to == ir.Union && value != nil && value.Type() != ir.Union {
 		return ir.Box{Value: value}
@@ -808,7 +829,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if value.Type() != ir.Union && l.includesNull(l.checker.GetTypeAtLocation(operand)) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
@@ -982,7 +1003,7 @@ func (l *lowering) writable(proven *checker.Type) bool {
 		members = proven.Types()
 	}
 	for _, member := range members {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+		if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
 			continue
 		}
 		memberType, isKnown := l.representation(member)
@@ -1035,6 +1056,9 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 		lowered, err := l.expression(argument)
 		if err != nil {
 			return nil, err
+		}
+		if _, null := lowered.(ir.Null); null && len(arguments) < len(l.result.Functions[function].Parameters) {
+			lowered = fit(lowered, l.result.Locals[l.result.Functions[function].Parameters[len(arguments)]].Type)
 		}
 		arguments = append(arguments, lowered)
 	}

@@ -116,6 +116,9 @@ var cName = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]*$`)
 // objectLiteral makes an object. Its fields' values are evaluated in order first; making the object
 // itself can't be observed, so it may come after them.
 func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
+	if literal.Spread == nil {
+		e.line("adamic_json_shape_register(&%s_json_metadata);", e.literalShape(literal))
+	}
 	if reused, ok := e.reused(literal); ok {
 		return reused
 	}
@@ -198,15 +201,12 @@ func (e *emitter) shape(fields []ir.Field) string {
 // literalShape is the layout an object literal makes: a class's constructor's has the class's methods
 // too, so it's the class's own, never shared with a literal of the same fields.
 func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
-	if len(literal.Methods) == 0 {
-		return e.shape(literal.Fields)
-	}
 	names, types := []string{}, []ir.Type{}
 	for _, field := range literal.Fields {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
 	}
-	return e.shapeWith(names, types, literal.Methods)
+	return e.shapeWith(names, types, literal.Methods, jsonShapeOptions{Null: literal.JSONNull, Tuple: literal.Tuple})
 }
 
 // shapeOf declares a layout by its field names and types.
@@ -216,14 +216,24 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
-func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
+func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method, options ...jsonShapeOptions) string {
+	e.declarations = append(e.declarations, `#include "json_stringify.h"`)
 	names, references := []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
 	}
 	fields := fieldNames
-	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	nulls := make([]bool, len(fields))
+	tuple := false
+	if len(options) > 0 {
+		copy(nulls, options[0].Null)
+		tuple = options[0].Tuple
+	}
+	key := strings.Join(names, ",") + "|" + strings.Join(references, ",") + fmt.Sprintf("|tuple:%t", tuple)
+	for index, of := range fieldTypes {
+		key += fmt.Sprintf("|%d:%t", of, nulls[index])
+	}
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}
@@ -251,6 +261,15 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			fmt.Sprintf("static const adamic_methods %s_methods = {%d, %s_method_names, %s_method_code};", name, len(thunks), name, name))
 		table = "&" + name + "_methods"
 	}
+	jsonFields := "NULL"
+	if len(fields) > 0 {
+		descriptors := []string{}
+		for index, of := range fieldTypes {
+			descriptors = append(descriptors, e.jsonSchema(jsonStorageSchema(of, nulls[index])))
+		}
+		jsonFields = name + "_json_fields"
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_schema *const %s[] = {%s};", jsonFields, strings.Join(descriptors, ", ")))
+	}
 	if len(fields) == 0 {
 		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s};", name, table))
 	} else {
@@ -259,6 +278,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
 			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s};", name, len(fields), name, name, table))
 	}
+	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_json_shape %s_json_metadata = {&%s, %s, NULL, false, %t};", name, name, jsonFields, tuple))
 	return name
 }
 

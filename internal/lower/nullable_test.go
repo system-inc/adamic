@@ -9,8 +9,6 @@ import (
 func TestNullableReferencesNeedAnEmptyCaseTag(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		"function f(v: string | null | undefined): string { return typeof v; }",
-		"function f(v?: string | null): string { return typeof v; }",
 		"function f(v: string | null = 'default'): string { return typeof v; }",
 		"function f(v: readonly string[] | null | undefined): string { return typeof v; }",
 		"function f(v: { readonly a: string } | null | undefined): string { return typeof v; }",
@@ -29,15 +27,10 @@ func TestNullableReferencesNeedAnEmptyCaseTag(t *testing.T) {
 func TestNullableReferenceViewsCannotChangeTheEmptyCase(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		"function f(v: string | null): void { const wider: string | null | undefined = v; }",
-		"function f(v: string | undefined): void { const wider: string | null | undefined = v; }",
-		"function f(v: { readonly x: string | null }): void { const wider: { readonly x?: string | null } = v; }",
-		"function f(v: { readonly x: string | undefined }): void { const wider: { readonly x?: string | null | undefined } = v; }",
 		"function f(v: readonly (string | null)[]): void { const wider: readonly (string | null | undefined)[] = v; }",
+		"function f(v: { readonly x: string | null }): void { const wider: { readonly x?: string | null } = v; }",
 		"function f<T>(v: { readonly x: T }): void { const wider: { readonly x?: T } = v; } f<{readonly a:string}|null>({x:null});",
 		"function f<T>(v: readonly T[]): void { const wider: readonly (T | undefined)[] = v; } f<string|null>([null]);",
-		"function f<T>(v: T): void { const wider: T | undefined = v; } f<string|null>(null);",
-		"function f<T>(v: T): void { const wider: T | null = v; } f<string|undefined>(undefined);",
 	} {
 		_, err := lowerSource(t, source)
 		var gap *NotYet
@@ -99,6 +92,24 @@ func TestNullableReferenceTypeOfKeepsLookupPresence(t *testing.T) {
 		source := "const seen = new Map<string, RegExpExecArray | null>(); const found: (RegExpExecArray | null)[] = []; console.log(" + observed + ");"
 		if _, err := lowerSource(t, source); err != nil {
 			t.Errorf("%s: got %v, want acceptance with lookup presence", observed, err)
+		}
+	}
+}
+
+// Scalar empty cases now have distinct runtime tags, held to Node by json_stringify_unions.a.
+func TestNullableScalarTagsPermitWidening(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"function f(v: string | null | undefined): string { return typeof v; }",
+		"function f(v?: string | null): string { return typeof v; }",
+		"function f(v: string | null): void { const wider: string | null | undefined = v; }",
+		"function f(v: string | undefined): void { const wider: string | null | undefined = v; }",
+		"function f(v: { readonly x: string | undefined }): void { const wider: { readonly x?: string | null | undefined } = v; }",
+		"function f<T>(v: T): void { const wider: T | undefined = v; } f<string|null>(null);",
+		"function f<T>(v: T): void { const wider: T | null = v; } f<string|undefined>(undefined);",
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Errorf("%s: %v", source, err)
 		}
 	}
 }

@@ -1,0 +1,138 @@
+// The scanner callback at main.a:14 uses this exact coalescing expression.
+function scannerError(arg0: string | number | undefined): void {
+    console.log(`error\t${JSON.stringify(arg0 ?? null)}`);
+}
+scannerError('built'.repeat(2));
+scannerError(42);
+scannerError(undefined);
+
+function serialize(value: string | number | boolean | null | undefined): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+    console.log(JSON.stringify({ value: value, later: 1 }) ?? '<undefined>');
+    console.log(JSON.stringify([value, 1]) ?? '<undefined>');
+    console.log(`${typeof value}|${String(value)}|${value === null}|${value === undefined}`);
+}
+serialize('hé\n\ud800'.repeat(2));
+serialize('');
+serialize(42);
+serialize(-0);
+serialize(NaN);
+serialize(Infinity);
+serialize(-Infinity);
+serialize(true);
+serialize(false);
+serialize(null);
+serialize(undefined);
+
+function nullableNumber(value: number | null): void {
+    console.log(`${JSON.stringify(value)}|${Number(value)}|${value ?? 7}`);
+}
+nullableNumber(2.5);
+nullableNumber(null);
+
+function nullableString(value: string | null): void {
+    console.log(`${JSON.stringify(value)}|${String(value)}|${value ?? 'fallback'}`);
+}
+nullableString('runtime'.repeat(2));
+nullableString(null);
+
+type Box = { readonly value: number };
+type Value = string | number | boolean | null | undefined | Box | readonly number[] | readonly string[] | readonly boolean[] | readonly Box[] | (() => number);
+function general(value: Value): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+    console.log(JSON.stringify({ value: value, later: 1 }) ?? '<undefined>');
+    console.log(JSON.stringify([value, 1]) ?? '<undefined>');
+}
+general({value: 42});
+const hidden = {value: 5, extra: 'built'.repeat(2), absent: undefined, callback: () => 9};
+general(hidden);
+general([1, -0, NaN, Infinity]);
+general(['a'.repeat(2), 'b']);
+general([true, false]);
+general([{value: 1}, {value: 2}]);
+general(() => 7);
+general(null);
+general(undefined);
+general(42);
+
+type Nest = { readonly child: { readonly flag: boolean; readonly count: number }; readonly items: readonly number[] };
+function nested(value: number | Nest): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+nested({child: {flag: true, count: 5}, items: [1, 2, NaN]});
+nested(3);
+
+function ordered(value: number | {readonly value: number}): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+const order = {'10': 10, '2': 2, value: 8, '01': 1, '4294967295': 9, tail: 'end'};
+ordered(order);
+
+function sameName(value: number | {readonly item: number} | {readonly item: boolean}): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+sameName({item: true});
+sameName({item: 7});
+
+function nullableField(value: number | {readonly child: {readonly value: number} | null}): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+nullableField({child: null});
+nullableField({child: {value: 8}});
+const absentChild = {child: undefined, value: 2};
+general(absentChild);
+
+const mapped = [1,2,3].map(n => n * 2);
+general(mapped);
+general(mapped.slice(1));
+general(mapped.concat([8]));
+general(mapped.filter(n => n > 2));
+general(Array.from({length: 2}, (_, i) => i + 1));
+
+function objectArms(value: {readonly item: number} | {readonly item: boolean}): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+objectArms({item: false});
+objectArms({item: 9});
+function arrayArms(value: readonly number[] | readonly string[]): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+arrayArms([2, 3]);
+arrayArms(['two', 'three']);
+function optionalObject(value: {readonly value: number} | undefined): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+optionalObject({value: 1});
+optionalObject(undefined);
+function nullObject(value: {readonly value: number} | null): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+nullObject({value: 2});
+nullObject(null);
+function withKeys(value: number | {readonly value: number}): void {
+    console.log(JSON.stringify(value, ['tail','value','2','10'], 2) ?? '<undefined>');
+}
+withKeys(order);
+
+function widenNull(value: string | null): void {
+    const widened: string | null | undefined = value;
+    console.log(JSON.stringify(widened) ?? '<undefined>');
+}
+widenNull(null);
+widenNull('alive'.repeat(2));
+function widenUndefined(value: string | undefined): void {
+    const widened: string | null | undefined = value;
+    console.log(JSON.stringify(widened) ?? '<undefined>');
+}
+widenUndefined(undefined);
+widenUndefined('alive'.repeat(2));
+function optionalScalar(value?: string | null): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+optionalScalar(); optionalScalar(null); optionalScalar('present');
+
+function tupleArm(value: number | readonly [string, number]): void {
+    console.log(JSON.stringify(value) ?? '<undefined>');
+}
+tupleArm(['pair', 4]);
+tupleArm(5);

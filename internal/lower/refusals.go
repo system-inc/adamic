@@ -79,7 +79,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		}
 		if node.Kind == ast.KindUnionType {
 			proven := l.checker.GetTypeAtLocation(node)
-			if l.includesNull(proven) && l.includesUndefined(proven) {
+			if l.includesNull(proven) && l.includesUndefined(proven) && !l.nullableScalarUnion(proven) {
 				found = l.notYet(node, nullableTagReason)
 				return true
 			}

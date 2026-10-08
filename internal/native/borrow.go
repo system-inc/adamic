@@ -39,6 +39,7 @@ func (e *emitter) value(expression ir.Expression) string {
 	}
 	e.lent, e.self = false, false
 	result := e.evaluate(expression)
+	result = e.jsonCreatedArray(expression, result)
 	// self is whether this expression's own value is lent (a read that took no count), which its
 	// parent must hear; lent is whether one of its operands was.
 	self, lent := e.self, e.lent

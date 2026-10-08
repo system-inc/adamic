@@ -17,6 +17,12 @@ func converted(from ir.Type, to ir.Type, value string) (string, bool) {
 		return maybe(to, value), false
 	case to == ir.Weak:
 		return fmt.Sprintf("adamic_weak_of(%s)", value), true
+	case from == ir.Union && to == ir.Number:
+		return fmt.Sprintf("((const adamic_number_box *)%s)->number", value), false
+	case from == ir.Union && to == ir.Boolean:
+		return fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value), false
+	case from == ir.Union && to.IsReference():
+		return fmt.Sprintf("((%s)%s)", cType(to), value), false
 	case to != ir.Union:
 		panic(fmt.Sprintf("native: no conversion from %d to %d", from, to))
 	case from == ir.Number:
@@ -54,6 +60,9 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 	case ir.MaybeBoolean:
 		return e.snapshot(ir.MaybeBoolean, fmt.Sprintf("%s == NULL ? %s : %s", value, zero(ir.MaybeBoolean), maybe(ir.MaybeBoolean, fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value))))
 	}
+	if narrow.Null {
+		return fmt.Sprintf("((%s)(%s == &adamic_box_null ? NULL : %s))", cType(narrow.To), value, value)
+	}
 	return fmt.Sprintf("((%s)%s)", cType(narrow.To), value)
 }
 
@@ -62,6 +71,9 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 func (e *emitter) typeOf(observation ir.TypeOf) string {
 	value := observation.Value
 	operand, null := e.typeOfReference(observation)
+	if value.Type() == ir.Union {
+		null = "false"
+	}
 	named := func(name string) string { return "&adamic_typeof_" + name }
 	if _, intrinsic := value.(ir.LibraryGlobal); intrinsic {
 		// Built-in identities are opaque headers, so JSON has no class metadata to inspect.

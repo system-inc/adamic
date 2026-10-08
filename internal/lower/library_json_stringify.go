@@ -352,6 +352,21 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		return nil, l.notYet(node, "JSON.stringify a value of type "+l.checker.TypeToString(t))
 	}
 	kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Map: "map", ir.Closure: "function", ir.MaybeNumber: "maybe_number", ir.MaybeBoolean: "maybe_boolean", ir.Union: "union"}
+	if t.Flags()&checker.TypeFlagsUnion != 0 {
+		containers := false
+		for _, member := range t.Types() {
+			held, _ := l.representation(member)
+			if held == ir.Array || held == ir.Object {
+				containers = true
+			}
+		}
+		if containers {
+			if err := l.jsonUnionOrigins(node); err != nil {
+				return nil, err
+			}
+			return &ir.JSONSchema{Kind: "dynamic", Null: of != ir.Union && l.includesNull(t)}, nil
+		}
+	}
 	if of == ir.Array {
 		element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(t))
 		if element == nil {
@@ -378,7 +393,7 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	if !ok {
 		return nil, l.notYet(node, "JSON.stringify this representation")
 	}
-	return &ir.JSONSchema{Kind: kind, Null: l.includesNull(t)}, nil
+	return &ir.JSONSchema{Kind: kind, Null: of != ir.Union && l.includesNull(t)}, nil
 }
 
 // A JSON-local complete-origin proof, without adding a language reflection operation. Reject

@@ -28,6 +28,7 @@ enum adamic_kind {
 	adamic_kind_number,
 	adamic_kind_boolean,
 	adamic_kind_weak,
+	adamic_kind_null,
 };
 
 typedef struct adamic_heap {
@@ -141,6 +142,7 @@ extern char adamic_literal_mark;
 // methods are, for the objects a class makes, the class's methods by name, and NULL for any other
 // object: a call through an interface the class implements finds one there (adamic_object_callee).
 typedef struct adamic_methods adamic_methods;
+typedef struct adamic_json_schema adamic_json_schema;
 typedef struct adamic_shape {
 	size_t count;
 	const char *const *names;
@@ -288,6 +290,7 @@ typedef struct adamic_array {
 	size_t length;
 	size_t capacity;
 	bool references;
+	const adamic_json_schema *json_element;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
@@ -697,6 +700,8 @@ typedef struct adamic_boolean_box {
 
 extern adamic_boolean_box adamic_box_true;
 extern adamic_boolean_box adamic_box_false;
+// The immortal null member of a boxed union; NULL remains undefined.
+extern adamic_heap adamic_box_null;
 
 // adamic_box_number boxes a number, a reference the caller owns.
 adamic_heap *adamic_box_number(double number);

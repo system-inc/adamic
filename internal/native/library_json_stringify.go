@@ -10,6 +10,7 @@ func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
 	if schema == nil {
 		return "NULL"
 	}
+	e.declarations = append(e.declarations, `#include "json_stringify.h"`)
 	element := e.jsonSchema(schema.Element)
 	fields := []string{}
 	for _, f := range schema.Fields {

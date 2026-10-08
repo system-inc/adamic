@@ -275,7 +275,9 @@ type (
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
 		// Class is the nominal class ID, or zero for a plain object.
-		Class                int
+		Class int
+		// JSONNull records the empty case of physical reference fields.
+		JSONNull             []bool
 		Spread               Expression
 		Fields               []Field
 		NoReuse              bool
@@ -421,6 +423,7 @@ type (
 	// undefined).
 	Narrow struct {
 		Value Expression
+		Null  bool // Preserve the nullable pointer layout when leaving a tagged union.
 		To    Type
 	}
 
