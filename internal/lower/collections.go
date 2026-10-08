@@ -267,6 +267,9 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 	if err != nil {
 		return nil, err
 	}
+	if pattern.Kind == ast.KindArrayBindingPattern && value.Type() == ir.Array {
+		return l.destructureArray(pattern, initializer, value)
+	}
 	held := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: l.functionIndex})
 	declared, err := l.destructureFrom(pattern, l.checker.GetTypeAtLocation(initializer), value.Type(), held)
@@ -386,4 +389,47 @@ func (l *lowering) everyKnown(types []*checker.Type) bool {
 		}
 	}
 	return true
+}
+
+// destructureArray evaluates the receiver once and reads bindings in order.
+// Skipped positions do not read a value; defaults and rest remain explicit gaps.
+func (l *lowering) destructureArray(pattern, initializer *ast.Node, value ir.Expression) ([]ir.Statement, error) {
+	element, err := l.elementType(initializer)
+	if err != nil {
+		return nil, err
+	}
+	receiver := l.checker.GetTypeAtLocation(initializer)
+	elementType := l.checker.GetElementTypeOfArrayType(receiver)
+	held := l.iterationLocal("destructured", ir.Array, l.functionIndex)
+	statements := []ir.Statement{ir.Declare{Local: held, Value: value}}
+	for index, binding := range pattern.AsBindingPattern().Elements.Nodes {
+		if binding.Kind == ast.KindOmittedExpression || binding.Name() == nil {
+			continue
+		}
+		declared := binding.AsBindingElement()
+		if !ast.IsIdentifier(binding.Name()) || declared.Initializer != nil || declared.DotDotDotToken != nil {
+			return nil, l.notYet(binding, "an array destructured name that isn't plain")
+		}
+		local, err := l.declareLocal(binding.Name())
+		if err != nil {
+			return nil, err
+		}
+		of := l.result.Locals[local].Type
+		read := ir.Expression(ir.ArrayIndex{Array: ir.Read{Local: held, Of: ir.Array}, Index: ir.NumberConstant{Value: float64(index)}, Element: element})
+		if l.program.RequiresIndexedPresenceChecks() && !l.includesUndefined(elementType) {
+			read, err = l.indexedPresenceGuard(binding.Name(), read, elementType, receiver)
+			if err != nil {
+				return nil, err
+			}
+		}
+		if !l.program.RequiresIndexedPresenceChecks() && !l.includesUndefined(l.checker.GetTypeAtLocation(binding.Name())) {
+			return nil, l.notYet(binding, "an array binding whose type omits undefined on exhaustion")
+		}
+		read = fit(read, of)
+		if read.Type() != of {
+			return nil, l.notYet(binding, "an array binding with a different element representation")
+		}
+		statements = append(statements, ir.Declare{Local: local, Value: read})
+	}
+	return statements, nil
 }

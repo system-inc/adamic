@@ -19,6 +19,12 @@ func (l *lowering) checkedIndexedRead(node *ast.Node, value ir.Expression) (ir.E
 	if l.acceptsUndefined(node) && !l.program.RequiresIndexedSite(node) {
 		return value, nil
 	}
+	return l.indexedPresenceGuard(node, value, l.checker.GetTypeAtLocation(node), l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))
+}
+
+// indexedPresenceGuard is shared by explicit subscripts and implicit array
+// binding reads. Both keep the lookup's absence result until Coalesce checks it.
+func (l *lowering) indexedPresenceGuard(node *ast.Node, value ir.Expression, element, receiver *checker.Type) (ir.Expression, error) {
 	lookup := value
 	if defined, ok := lookup.(ir.Defined); ok {
 		lookup = defined.Value
@@ -26,8 +32,8 @@ func (l *lowering) checkedIndexedRead(node *ast.Node, value ir.Expression) (ir.E
 	var of ir.Type
 	switch index := lookup.(type) {
 	case ir.ArrayIndex:
-		arguments := l.typeArguments(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))
-		if l.includesNull(l.concrete(l.checker.GetTypeAtLocation(node))) || len(arguments) > 0 && l.includesNull(l.concrete(arguments[0])) {
+		arguments := l.typeArguments(receiver)
+		if l.includesNull(l.concrete(element)) || len(arguments) > 0 && l.includesNull(l.concrete(arguments[0])) {
 			return nil, l.notYet(node, "an indexed presence check on nullable array elements (the lookup needs to retain its presence slot)")
 		}
 		if index.Element == ir.Union || index.Element == ir.Weak {
@@ -43,7 +49,7 @@ func (l *lowering) checkedIndexedRead(node *ast.Node, value ir.Expression) (ir.E
 		of = ir.String
 	default:
 		// Tuple fields have static positions checked by TypeScript itself.
-		if checker.IsTupleType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))) {
+		if checker.IsTupleType(l.checker.GetNonNullableType(receiver)) {
 			return value, nil
 		}
 		return nil, l.notYet(node, "an indexed presence check for this representation")
