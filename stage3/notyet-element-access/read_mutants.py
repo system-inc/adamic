@@ -11,6 +11,7 @@ label = 'tuple' if tuple_mode else 'presence' if presence_mode else 'read'
 original = source.read_text()
 mutants = {
  'wrong-dispatch': ('Operator: ir.Equal', 'Operator: ir.NotEqual'),
+ 'unrelated-getter-name': ('l.accessorNames[name] && field.Flags&ast.SymbolFlagsOptional != 0', 'l.accessorNames[name]'),
  'missing-absence': ('Absent: fields[index].Flags&ast.SymbolFlagsOptional != 0', 'Absent: false'),
  'repeated-receiver': ('[]ir.Expression{object, key}', '[]ir.Expression{object, key, object}'),
 }

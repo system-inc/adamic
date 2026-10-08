@@ -45,7 +45,7 @@ func (l *lowering) finiteElementRead(node *ast.Node, object ir.Expression) (ir.E
 			return nil, l.notYet(node, describe(node))
 		}
 		field := l.checker.GetPropertyOfType(receiver, name)
-		if field == nil || accessorSymbol(field) || l.accessorNames[name] || name == "__proto__" {
+		if field == nil || accessorSymbol(field) || (l.accessorNames[name] && field.Flags&ast.SymbolFlagsOptional != 0) || name == "__proto__" {
 			return nil, l.notYet(node, "a computed key without an own data field")
 		}
 		for _, declaration := range field.Declarations {
