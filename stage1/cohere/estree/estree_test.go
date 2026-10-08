@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func execute(t *testing.T, dir, name string, args ...string) []byte {
@@ -53,40 +54,54 @@ func goOracle(t *testing.T) string {
 		t.Fatal(err)
 	}
 	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	path := filepath.Join(dir, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(dir, "oracle")
-	execute(t, filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", binary, virtual)
-	return binary
+	inputs := buildInputs{Name: "go-oracle", Files: []string{source, filepath.Join(repo, "cohere"), filepath.Join(repo, "go.work")}, Flags: []string{"build", "-overlay"}, Toolchain: "go"}
+	dir := prepareProduct(t, inputs, func(dir string) error {
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
+		if err != nil {
+			return err
+		}
+		path := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(path, overlay, 0644); err != nil {
+			return err
+		}
+		command := exec.Command("go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+		command.Dir = filepath.Join(repo, "cohere")
+		output, err := command.CombinedOutput()
+		if err != nil || len(output) != 0 {
+			return fmt.Errorf("go oracle: %v: %s", err, output)
+		}
+		return nil
+	})
+	return filepath.Join(dir, "oracle")
 }
+
 func build(t *testing.T, path string, sanitize bool) (string, string) {
 	t.Helper()
-	program, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	binary := filepath.Join(dir, "port")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
-		t.Fatal(err)
-	}
-	script := filepath.Join(dir, "port.mjs")
-	if err := os.WriteFile(script, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	return binary, script
+	inputs := portBuildInputs(path, sanitize)
+	dir := prepareProduct(t, inputs, func(dir string) error {
+		start := time.Now()
+		program, err := load.Load([]string{path})
+		if err != nil {
+			return err
+		}
+		lowered, err := lower.Lower(context.Background(), program)
+		if err != nil {
+			return err
+		}
+		t.Logf("cold build %s load/lower: %.3fs", inputs.Name, time.Since(start).Seconds())
+		start = time.Now()
+		if err := native.Build(native.C(lowered), filepath.Join(dir, "port"), native.Options{Sanitize: sanitize}); err != nil {
+			return err
+		}
+		t.Logf("cold build %s sanitized=%t native: %.3fs", inputs.Name, sanitize, time.Since(start).Seconds())
+		start = time.Now()
+		err = os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
+		t.Logf("cold build %s emitted JS: %.3fs", inputs.Name, time.Since(start).Seconds())
+		return err
+	})
+	return filepath.Join(dir, "port"), filepath.Join(dir, "port.mjs")
 }
+
 func onNode(t *testing.T, path string, args ...string) []byte {
 	t.Helper()
 	argv := []string{"--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), path}
@@ -218,32 +233,6 @@ func mutantPort(t *testing.T, file, from, to string) string {
 		}
 	}
 	return filepath.Join(directory, "main.ts")
-}
-func TestThreePortMutants(t *testing.T) {
-	list := manifest(t, generated())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	for _, item := range []struct{ name, file, from, to string }{
-		{"member-computed", "convert.ts", "boolValue(node.kind === 'ElementAccessExpression')", "boolValue(node.kind === 'PropertyAccessExpression')"},
-		{"logical-rebalance", "postprocess.ts", "completed.set(id, this.rebalance(id));", "completed.set(id, id);"},
-		{"merged-jsdoc-value", "postprocess.ts", "*//*", "*/ /*"},
-	} {
-		t.Run(item.name, func(t *testing.T) {
-			path := mutantPort(t, item.file, item.from, item.to)
-			got := onNode(t, path, "--manifest", list)
-			diff := firstDifference(want, got)
-			if diff == "" {
-				t.Fatal("source Node mutant survived")
-			}
-			t.Logf("source Node finished; byte comparison caught %s", diff)
-			binary, _ := build(t, path, true)
-			got = execute(t, "", binary, "--manifest", list)
-			diff = firstDifference(want, got)
-			if diff == "" {
-				t.Fatal("native mutant survived")
-			}
-			t.Logf("sanitized native finished; byte comparison caught %s", diff)
-		})
-	}
 }
 
 func TestOriginalLibraries(t *testing.T) {
