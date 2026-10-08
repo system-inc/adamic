@@ -24,10 +24,8 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_test_integrity(%s, false)", arguments[0]))
 	case "isExtensible":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is_extensible(%s)", arguments[0]))
-	case "seal", "preventExtensions":
-		return e.own(ir.Object, fmt.Sprintf("adamic_object_set_integrity(%s, %t)", arguments[0], call.Method == "seal"))
-	case "freeze":
-		return e.own(ir.Object, fmt.Sprintf("adamic_object_freeze(%s)", arguments[0]))
+	case "seal", "preventExtensions", "freeze":
+		return e.own(call.Returns, fmt.Sprintf("adamic_receiver_set_integrity((adamic_heap *)%s, %t, %t, %d)", arguments[0], call.Method != "preventExtensions", call.Method == "freeze", call.IntegrityShape))
 	case "hasOwn":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has_own(%s, %s)", arguments[0], arguments[1]))
 	case "keys", "getOwnPropertyNames":

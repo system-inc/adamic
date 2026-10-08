@@ -3,8 +3,8 @@
 //
 // Port of ObjectIsSealed/ObjectSeal in V8 13.6.233 src/builtins/builtins-object.cc and
 // GenericTestIntegrityLevel/SetIntegrityLevel in src/objects/js-objects.cc. The lowering proof
-// restricts mutations to complete plain shapes: all public slots are configurable, writable data
-// properties initially. No proxy, accessor or individually redefined descriptor reaches here.
+// restricts mutations to complete plain shapes or constructor-proven internal-slot receivers.
+// No proxy, accessor or individually redefined descriptor reaches here.
 #include "adamic.h"
 
 static bool primitive(const adamic_heap *value) {
@@ -14,6 +14,7 @@ static bool primitive(const adamic_heap *value) {
 
 bool adamic_object_is_extensible(const adamic_heap *value) {
 	if (primitive(value)) return false;
+	if (value->kind == adamic_kind_map) return !((const adamic_map *)value)->nonextensible;
 	if (value->kind != adamic_kind_object) return true;
 	const adamic_object *object = (const adamic_object *)value;
 	return !object->frozen && !object->nonextensible;
@@ -22,7 +23,8 @@ bool adamic_object_is_extensible(const adamic_heap *value) {
 bool adamic_object_test_integrity(const adamic_heap *value, bool frozen) {
 	// V8's builtin returns true for non-receivers, without boxing them.
 	if (primitive(value)) return true;
-	// Integrity mutation of arrays, maps and closures is refused by lowering.
+	if (value->kind == adamic_kind_map) return ((const adamic_map *)value)->nonextensible;
+	// Integrity mutation of arrays and closures is refused by lowering.
 	if (value->kind != adamic_kind_object) return false;
 	const adamic_object *object = (const adamic_object *)value;
 	// GenericTestIntegrityLevel first rejects an extensible receiver, even an empty one.
@@ -41,4 +43,18 @@ adamic_object *adamic_object_set_integrity(adamic_object *object, bool sealed) {
 	object->nonextensible = true;
 	if (sealed) object->sealed = true;
 	return adamic_retain(object);
+}
+
+// Proven collections and Date have internal slots but no own properties. RegExp has
+// one non-configurable writable own property, lastIndex; its hidden engine slots do not count.
+void *adamic_receiver_set_integrity(adamic_heap *value, bool sealed, bool frozen, int shape) {
+    if (value->kind == adamic_kind_map) {
+        ((adamic_map *)value)->nonextensible = true;
+    } else {
+        adamic_object *object = (adamic_object *)value;
+        object->nonextensible = true;
+        if (sealed || shape != 0) object->sealed = true;
+        if (frozen || shape == 1) object->frozen = true;
+    }
+    return adamic_retain(value);
 }

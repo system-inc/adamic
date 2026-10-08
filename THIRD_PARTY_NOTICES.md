@@ -59,7 +59,8 @@ IN THE SOFTWARE.
     JSReceiver::OrdinaryToPrimitive in src/objects/js-objects.cc, Node 24.19.0);
   - Object primitive own-name reflection (`runtime/object_names.c`, after
     src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
-  - Object sealing and extensibility (`runtime/object_integrity.c`, after
+  - Object sealing, freezing and extensibility, including constructor-proven internal-slot receivers
+    (`internal/native/runtime/object_integrity.c`, after
     src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);

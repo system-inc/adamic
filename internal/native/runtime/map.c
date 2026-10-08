@@ -35,6 +35,7 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->boolean_keys = false;
 	map->maybe_number_keys = false;
 	map->reference_values = reference_values;
+	map->nonextensible = false;
 	map->iterating = 0;
 	return map;
 }
