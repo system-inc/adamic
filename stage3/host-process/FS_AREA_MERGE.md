@@ -42,7 +42,7 @@ The supplied check.py collector was executed without editing its file. Its CLI d
 
 ## Verification
 
-All test output is retained under logs/fs-area-merge/. Linux nproc is 5. Counts differ from area's table in process_observations and node_fs_directory_system; the regenerated values are checked by the whole oracle. There was no rebase, force push, or push to main.
+Test output belongs with the unit task outside the repository. Linux nproc is 5. Counts differ from area's table in process_observations and node_fs_directory_system; the regenerated values are checked by the whole oracle. There was no rebase, force push, or push to main.
 
 ```sh
 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts

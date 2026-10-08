@@ -1,3 +1,0 @@
-async function f(): Promise<null> { return null; }
-const value = await f();
-console.log(`${value === null}`);

@@ -23,7 +23,7 @@ The method-result refusal belongs to the plain object wrapper's void return: low
 
 node_process.c now defines _DARWIN_C_SOURCE immediately after _POSIX_C_SOURCE. This keeps Darwin's malloc_zone_t declarations visible; Linux compilation is exercised by the namespace oracle. No new runtime translation unit was added, and no macOS outcome is claimed. Keep the identical macro from fs-file when the provided area commit is merged, without rebase or force push.
 
-Logs are in logs/next-unit/. The native/flow package gate and complete process subset passed, including the existing host/performance mutants. Affected-package vet exited 0. The exact commands and outcomes are retained in process.log, packages.log and vet.log. All 25 host fixtures will be rerun after the user supplies the area SHA containing fs-file.
+Run output belongs with the unit task outside the repository. The native/flow package gate and complete process subset passed, including the existing host/performance mutants. Affected-package vet exited 0. The exact commands and outcomes are retained in process.log, packages.log and vet.log. All 25 host fixtures will be rerun after the user supplies the area SHA containing fs-file.
 
 ```sh
 go test ./internal/native ./internal/flow -count=1 -timeout 30m > /tmp/process-next/packages.log 2>&1

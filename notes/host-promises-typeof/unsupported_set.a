@@ -1,3 +1,0 @@
-async function f(): Promise<Set<number>> { return new Set<number>([1]); }
-const value = await f();
-console.log(`${value.size}`);

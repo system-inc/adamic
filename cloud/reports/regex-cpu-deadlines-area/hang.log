@@ -1,6 +1,0 @@
-=== RUN   TestRegExpNativeStepLimit
-    regexp_test.go:265: native catastrophic backtracking: exit=regexp child wall cap 250ms exceeded: context deadline exceeded output=
---- FAIL: TestRegExpNativeStepLimit (0.40s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/native	0.409s
-FAIL

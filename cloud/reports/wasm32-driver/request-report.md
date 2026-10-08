@@ -4,8 +4,6 @@ Results: merged WASI oracle 295 pass, 5 fail out of 300; handler controls pass, 
 Mutants: 17 applicable mutants caught; two initial survivors investigated and resolved below.
 Not covered: complete repository gate, Workers deployment, arbitrary handler forms, Wasm sanitizers, and five runtime/platform failures.
 
-October 7 integration follow-up: [agreement/report.md](agreement/report.md) records the requested main/runtime merges, the emitted-C stack fix and precise runtime handoffs. The measurements below are the earlier handler unit run.
-
 This follows [report.md](report.md). Its blocked-runtime observation and 8 MiB stack are historical. No runtime C or header was edited or committed on the driver branch.
 
 The command stays adamic build --target wasm32-wasi <file> -o <out.wasm>. The entry module must declare export function handleRequest(request: string): string. Private and dependency-only handlers do not select reactor mode. Validation rejects generics, optional/default/rest parameters, narrow literal input types, extra parameters, non-string results and function values. Export aliases remain refused by existing lowering. Flat IR names cannot identify a source module: collisions with dependency functions are refused rather than selecting an arbitrary function. Rename the conflicting dependency function. No lowering file changed.

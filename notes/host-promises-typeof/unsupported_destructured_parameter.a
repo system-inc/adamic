@@ -1,2 +1,0 @@
-async function f({ value }: { readonly value: number }): Promise<number> { return value; }
-await f({ value: 1 });

@@ -79,8 +79,9 @@ refusals above, and assertions and loose equality remain refused.
 
 ## Mutation evidence
 
-`cloud/reports/nullable-references/run-mutants.py` restores each source mutation
-before proceeding. A compiler or C build failure is rejected as evidence.
+The unit's mutation runner restored each source mutation before proceeding.
+A compiler or C build failure was rejected as evidence. Raw run output belongs
+with the unit task, outside the repository.
 
 | Mutant | Catch |
 | --- | --- |

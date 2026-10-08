@@ -1,3 +1,0 @@
-async function f(): Promise<void> { await f(); }
-// Do not invoke: lowering must reject the recursive graph even when unused.
-console.log(typeof f);

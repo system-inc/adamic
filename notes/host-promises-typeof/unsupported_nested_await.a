@@ -1,2 +1,0 @@
-async function f(): Promise<void> { console.log(`${await Promise.resolve(1)}`); }
-await f();

@@ -1,7 +1,0 @@
-=== RUN   TestRegExpChildCPUBudget
-    regexp_cpu_test.go:71: regexp child CPU=106.174ms budget=10ms wall-cap=5m0s
-    regexp_cpu_test.go:73: CPU overrun escaped budget: <nil>
---- FAIL: TestRegExpChildCPUBudget (0.26s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/native	0.268s
-FAIL

@@ -1,4 +1,0 @@
-class Value { readonly value: number = 1; }
-async function f(): Promise<Value> { return new Value(); }
-const value = await f();
-console.log(`${value.value}`);
