@@ -3,7 +3,7 @@
 # own fast gate is green alone on main, at most three per slice, in this order. star-train.py stacks each slice on
 # the one above it and lands the bottom one when it's green (Kirk and @system_adamic, October 8).
 views-slice1	compiler/area-stack	system_adamic_compiler
-views-v1	compiler/views-rehearsal@views-v1	system_adamic_compiler	devtools/buildcache library/land-unicode-split compiler/test-split-flow compiler/test-split-bridge codex/step34-lane-shards codex/test-split-stage3-apply codex/test-split-stage3-packages
+views-v1	compiler/views-rehearsal@views-v1	system_adamic_compiler	devtools/buildcache library/land-unicode-split compiler/test-split-bridge codex/step34-lane-shards codex/test-split-stage3-apply codex/test-split-stage3-packages
 views-v2	compiler/views-v2	system_adamic_compiler
 views-v3	compiler/views-rehearsal@views-v3	system_adamic_compiler
 views-v4	compiler/views-rehearsal@views-v4	system_adamic_compiler
