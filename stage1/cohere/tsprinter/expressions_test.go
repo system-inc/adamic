@@ -14,33 +14,7 @@ func expressionCorpus(t *testing.T) (string, string, string) {
 	t.Helper()
 	directory := t.TempDir()
 	root, _ := filepath.Abs(repository)
-	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
-	if source == "" {
-		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
-	}
-	command := bounded(t, "git", "-C", source, "rev-parse", "HEAD")
-	if data, err := command.Output(); err != nil || strings.TrimSpace(string(data)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
-		t.Fatalf("TypeScript pin: %q %v", data, err)
-	}
-	files := []string{}
-	upstream := excludedUpstreamInputs(t, root)
-	for _, base := range []string{root, source + "/src/compiler"} {
-		err := filepath.WalkDir(base, func(path string, entry os.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if entry.IsDir() && (entry.Name() == ".git" || path == filepath.Join(root, "cohere") || path == upstream) {
-				return filepath.SkipDir
-			}
-			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-				files = append(files, path)
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-	}
+	files := printerCorpusFiles(t)
 	gaps, _ := filepath.Abs("testdata/notyet.json")
 	request, _ := json.Marshal(map[string]any{"Files": files, "Directory": directory, "Gaps": gaps})
 	if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
@@ -52,7 +26,7 @@ func expressionCorpus(t *testing.T) (string, string, string) {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	command = bounded(t, "go", "test", "-v", "-count=1", "-overlay="+path, "-run=^TestAdamicExpressionCorpus$", "./internal/format/javascript")
+	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+path, "-run=^TestAdamicExpressionCorpus$", "./internal/format/javascript")
 	command.Dir = root + "/cohere"
 	command.Env = append(os.Environ(), "ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json")
 	if output, err := command.CombinedOutput(); err != nil {
@@ -103,10 +77,10 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	script, _ := filepath.Abs("testdata/expressions.mjs")
-	compare("Prettier", execute(t, nil, "node", script, library, specs))
+	comparePrinterLibrary(t, "Prettier", execute(t, nil, "node", script, library, specs), specs, "expressions", false)
 	embeddedScript, _ := filepath.Abs("testdata/embedded.mjs")
 	bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
-	compare("embedded Prettier", execute(t, nil, "node", embeddedScript, bundles, specs))
+	comparePrinterLibrary(t, "embedded Prettier", execute(t, nil, "node", embeddedScript, bundles, specs), specs, "expressions", true)
 	gapDirectory := filepath.Dir(cases)
 	gapWant, err := os.ReadFile(gapDirectory + "/gap-answers.txt")
 	if err != nil {

@@ -7,8 +7,17 @@ if(prettier.version!=='3.9.6') throw Error('wrong embedded Prettier version');
 const plugins=[require('./plugins/typescript.js'),require('./plugins/estree.js')];
 const escape=text=>text.replaceAll('\\','\\\\').replaceAll('\n','\\n').replaceAll('\r','\\r').replaceAll('\t','\\t');
 const cases=JSON.parse(readFileSync(process.argv[3],'utf8'));
+const upstream=JSON.parse(readFileSync(new URL('./tsc-upstream-differences.json',import.meta.url),'utf8')).Records;
 for(const [index,item] of cases.entries()) {
- const formatted=await prettier.format(item.Source+';',{parser:'typescript',plugins,printWidth:process.argv[4]===undefined ? 80 : Number.parseInt(process.argv[4],10),tabWidth:4,singleQuote:true,semi:true});
- if(formatted!==item.Want) throw Error(`case ${index} ${item.Label}: source ${JSON.stringify(item.Source)}, Go ${JSON.stringify(item.Want)}, embedded Prettier ${JSON.stringify(formatted)}`);
+ const pinned=upstream.find(record=>(item.Label ?? '').endsWith(record.Label) && record.Source===item.Source && record.Go===item.Want);
+ let formatted;
+ try {
+  formatted=await prettier.format(item.Source+';',{parser:'typescript',plugins,printWidth:process.argv[4]===undefined ? 80 : Number.parseInt(process.argv[4],10),tabWidth:4,singleQuote:true,semi:true});
+ } catch(error) {
+  if(!pinned || pinned.EmbeddedError!==String(error)) throw Error(`case ${index} ${item.Label}: ${error}`);
+  process.stdout.write('error\t'+escape(String(error))+'\n');
+  continue;
+ }
+ if(formatted!==item.Want && (!pinned || pinned.Embedded!==formatted)) throw Error(`case ${index} ${item.Label}: source ${JSON.stringify(item.Source)}, Go ${JSON.stringify(item.Want)}, embedded Prettier ${JSON.stringify(formatted)}`);
  process.stdout.write('ok\t'+escape(formatted)+'\n');
 }
