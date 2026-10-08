@@ -1,3 +1,4 @@
+// a-check: refused Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores
 // From TypeScript 6.0.3, src/compiler/commandLineParser.ts:3032
 // Refused hatch: an existing options object receives a hidden readonly property.
 // Reduced dependencies retain only the fields observed by this driver.

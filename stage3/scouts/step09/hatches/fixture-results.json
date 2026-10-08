@@ -9,7 +9,7 @@
     "build": {
       "exit": 1,
       "stdout": "",
-      "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/hatches/fixtures/01_sorted_brand.a:8:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/hatches/fixtures/01_sorted_brand.a:9:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
     },
     "stage0": "Refused",
     "mutant": {
@@ -32,7 +32,7 @@
     "build": {
       "exit": 1,
       "stdout": "",
-      "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/hatches/fixtures/02_config_descriptor.a:8:9: Adamic 0.1 refuses Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores\n"
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/hatches/fixtures/02_config_descriptor.a:9:9: Adamic 0.1 refuses Object.defineProperty; property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores\n"
     },
     "stage0": "Refused",
     "mutant": {
@@ -55,7 +55,7 @@
     "build": {
       "exit": 1,
       "stdout": "",
-      "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/hatches/fixtures/03_empty_assertion.a:4:42: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step09/hatches/fixtures/03_empty_assertion.a:5:42: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
     },
     "stage0": "Refused",
     "mutant": {

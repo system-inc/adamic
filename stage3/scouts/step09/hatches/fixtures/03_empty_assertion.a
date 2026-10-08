@@ -1,3 +1,4 @@
+// a-check: refused a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
 // From TypeScript 6.0.3, src/compiler/debug.ts:365
 // Refused hatch: Debug.type's generic assertion overload has an empty implementation.
 // Namespace wrapper removed to isolate the claim from unrelated namespace refusal.
