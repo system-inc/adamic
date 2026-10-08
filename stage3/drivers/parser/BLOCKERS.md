@@ -1,3 +1,32 @@
+# Fresh isolated partial-record probe: green
+
+Fresh scratch starts from parser c109c06d, merges area/stage3 b61e7064 and
+records-lowering 456c981b, yielding unpushed 1b382081. Both merges are conflict-free.
+Ancestry checks prove arguments-length 9534e8ab and quarantined scratch 33bf53ac
+are absent. The existing compiler SDK pins are reused through scratch-only
+module paths; no compiler implementation change. The quarantined scratch is
+untouched, and no native parser acceptance was attempted.
+
+Unchanged native-partial-record-view.a now builds and runs natively. Node and
+native both print `0\n`, exit 0, and have empty stderr. stdout and stderr cmp
+each exit 0. A one-byte mutation of actual native stdout (`0` to `1`) is caught
+by cmp exit 1. Probe binary is 360,312 bytes. This clears the former finite
+Partial<Record> seen as MapLike storage refusal for this exact empty-record
+getOwnKeys witness; no broader dictionary semantic coverage is claimed.
+
+[Evidence](evidence/front26/report.json) records the fresh ancestry, commands,
+outputs and byte mutant. Only this probe was run, as requested. No arguments
+probe, full parser build, feature tests, full gate or corpus/native acceptance.
+Published slice and references remain unchanged. Disk-space checkout/link
+failures and the intervening wrong-directory build failure are retained; final
+correct-directory compiler build succeeds. Cleanup retained compressed case
+dumps and removed only completed disposable copies, a clean unused worktree and
+six obsolete rebuildable scratch compiler executables.
+
+Evidence only is pushed on the parser branch. Holding for the closure convention.
+
+---
+
 # Re-cut parser slice: Node green, scratch function-value count miscompile
 
 A silent miscompile is detected in the unpushed scratch integration. The minimal
