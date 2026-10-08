@@ -1,0 +1,9 @@
+== github.com/system-inc/adamic/internal/oracle TestJSONEncode/json_encode_objects.a
+=== RUN   TestJSONEncode/json_encode_objects.a
+    library_json_encode_test.go:36: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestJSONEncode/json_encode_objects.a (0.11s)
+
+== github.com/system-inc/adamic/internal/oracle TestJSONEncode
+=== RUN   TestJSONEncode
+--- FAIL: TestJSONEncode (5.79s)
+
