@@ -15,6 +15,7 @@ for log in logs:
     proven.update(re.findall(r'PROVEN (D\d+):', text))
     for site, reason in re.findall(r'BLOCKED (D\d+): ([^\n]+)', text):
         blocked[site] = re.sub(r'/tmp/[^ ]+/main.ts:', 'main.ts:', reason)
+blocked = {site: reason for site, reason in blocked.items() if site not in proven}
 remaining = {site['id'] for site in sites} - proven - blocked.keys()
 sha = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
 lines = [
@@ -34,6 +35,15 @@ lines = [
     'Statement and declaration arrays use small object elements; clause and CodeBlock',
     'arrays preserve discriminated object unions. readonly array receivers are preserved.',
     'Label is number; labelNumbers is number[][]; blockOffsets is number[].',
+    '',
+    'D212 and D220 originally retained the stock receiver non-null assertion !.',
+    'The first runs observed its exact pre-emission refusal: Adamic 0.1 refuses',
+    'the non-null assertion !; write ?? panic(why it cannot be missing), or narrow',
+    'and handle the missing case. This is syntax, not an unsupported array',
+    'representation. Final minimal witnesses use guaranteed-present array receivers',
+    'and omit the redundant assertion while retaining [j] and [blockIndex]. Node',
+    'erases !, so this reduction preserves the indexed read runtime shape. It does',
+    'not prove the complete original source, nor implement non-null assertions.',
     '',
     'D196/D197 share variables[i]. D200 uses one caseBlock.clauses[i] read;',
     'D201-D205 and D207/D208 share another such read. D213/D214 share blockStack[i].',

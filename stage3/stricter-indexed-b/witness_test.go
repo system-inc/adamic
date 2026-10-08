@@ -97,9 +97,7 @@ func TestGeneratorWitnesses(t *testing.T) {
 					}
 					program, err := lower.Lower(context.Background(), checked)
 					if err != nil {
-						if (site.ID == "D212" || site.ID == "D220") && strings.Contains(err.Error(), "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case") {
-							t.Skipf("BLOCKED %s: %v", site.ID, err)
-						}
+
 						t.Fatalf("unexpected lowering failure for %s: %v", site.ID, err)
 					}
 					checks := ir.InsertedChecks(program)
