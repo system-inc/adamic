@@ -18871,7 +18871,7 @@ Error: type edit shape changed: diagnostics: function convertConfigFileToObject(
     sourceFile: JsonSourceFile,
     errors: Diagnostic[],
     jsonConversionNotifier: JsonConversionNotifier | undefined,
-): any 
+): any
     at plans (/workspace/adamic/stage3/adapt/71-writable-views/type-plans.cjs:74:56)
     at Object.<anonymous> (/workspace/adamic/stage3/adapt/71-writable-views/adapt.cjs:79:45)
     at Module._compile (node:internal/modules/cjs/loader:1872:14)
