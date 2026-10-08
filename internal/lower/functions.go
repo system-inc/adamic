@@ -128,7 +128,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			// A function value is called with the arguments its caller has, and no more.
 			return l.notYet(parameter, "a function value with an optional parameter")
 		}
-		if function.Closure && slotless(l.result.Locals[local].Type) {
+		if function.Closure && !boxedSlot(l.result.Locals[local].Type) {
 			// Its arguments are each one adamic_value.
 			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}

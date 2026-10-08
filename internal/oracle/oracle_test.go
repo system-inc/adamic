@@ -37,6 +37,7 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/map_union_value_paths.a", true, false},
 	{"internal/oracle/testdata/map_union_value_string_false.a", true, false},
 	{"internal/oracle/testdata/map_union_value_string_number.a", true, false},
 	{"internal/oracle/testdata/map_union_value_source_file.a", true, false},

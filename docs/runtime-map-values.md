@@ -31,7 +31,7 @@ checker acceptance.
 | `ExportDeclaration & { readonly isTypeOnly: true; readonly moduleSpecifier: Expression; }` (2) | checker.ts:5239:46, 5297:21 | Physically an object reference fits. The existing intersection proof only accepts scalar fields; it needs proof for reference fields before `mapTypes` can accept this type. | Deferred |
 | `T` (2) | core.ts:1908:17; moduleNameResolver.ts:1120:24 | Depends on specialization. A proven concrete instantiation can fit; an unresolved parameter needs specialization/type-substitution evidence, not an invented slot type. | Deferred |
 | `VisitResult<ExportAssignment \| LateVisibilityPaintedStatement \| undefined>` (2) | transformers/declarations.ts:987:21, 1347:9 | Yes: this concrete alias is a Union of object references, an array reference and NULL. Unresolved generic VisitResult remains subject to specialization. | visit_result |
-| `CompilerOptionsValue` (1) | commandLineParser.ts:2785:20 | No complete representation today: it includes both null and undefined, which would collide as NULL. It needs distinct null/undefined tagging and proven storage for its heterogeneous array members. | Deferred |
+| `CompilerOptionsValue` (1) | commandLineParser.ts:2785:20 | No complete representation today: it includes both null and undefined, which would collide as NULL. It needs distinct null/undefined tagging; its array members can use the boxed slots described below. | Deferred |
 | `ResolvedConfigFilePath` (1) | tsbuildPublic.ts:663:5 | Physically a string reference fits. Branded primitive intersections need an erasure/representation proof; the existing object-intersection proof cannot supply it. | Deferred |
 | `string \| number` (1) | commandLineParser.ts:3869:17 | Yes: string reference or number box. | string_number |
 | Unknown key/value type arguments (1) | resolutionCache.ts:1478:9 | Cannot decide until the compiler recovers both arguments and proves their representations. | Deferred |
@@ -46,3 +46,31 @@ The oracle compares native sanitizer, release, slab allocator and JavaScript
 backend outputs against Node, and additionally checks leaks and balanced counts.
 Boundary tests keep unsupported value representations and mixed Map key kinds
 refused.
+
+## Entry and read path validation
+
+`map_union_value_paths.a` sends both a number and a dynamically allocated string
+through tuple-array construction, copying another Map, direct `set`, and `set`
+through a named function value. It also covers the constructor's direct written
+entries, which has its own IR path. Every resulting Map is read through `get`,
+`has` followed by `get`, `forEach`, `values()`, `entries()`, `keys()` followed by
+`get`, `[...map]`, and `Array.from(map.values())`. Spread entries and collected
+values are used after clearing the Map, and direct tuple reads are narrowed
+before arithmetic or string operations.
+
+The existing `fit` calls already box tuple literal values, direct constructor
+entries, `set` arguments, and function-value arguments. The blanket Union
+refusals have been lifted for those fitted tuple/array and callback argument
+slots and for iterators carrying boxed values. `Array.from` now consumes a
+library collection iterator without a mapper through the same iterator-to-array
+path as spread. General object fields and function-value Union results remain
+outside this change. A narrowed tuple element reads its declared reference slot
+before unboxing the value.
+
+`TestMapUnionConstructorBoxingMutant` verifies that the direct constructor has a
+boxed numeric entry, then replaces only that entry's generated boxing call with
+a raw double stored in the reference slot. The mutant must compile in both
+release and sanitized native; Node comparison rejects its runtime failure, and
+the sanitized build must report the invalid access. The ordinary oracle fixture
+separately checks release, sanitized malloc and slab builds, backend agreement,
+leaks and allocation counts.

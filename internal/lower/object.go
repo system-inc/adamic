@@ -273,7 +273,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
 		// kept weakly.
 		if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
-			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 || declared == ir.Weak {
+			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 || declared == ir.Weak || declared == ir.Union {
 				arrayType = contextual
 			}
 		}
@@ -287,8 +287,8 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	valueType, isKnown := l.kept(element)
-	if !isKnown || slotless(valueType) {
-		// An element is one adamic_value, and number | undefined needs two words.
+	if !isKnown || !boxedSlot(valueType) {
+		// Elements are fitted on writes; optional booleans still need two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}
 	return valueType, nil
@@ -916,7 +916,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-			if of := l.result.Locals[local].Type; slotless(of) {
+			if of := l.result.Locals[local].Type; !boxedSlot(of) {
 				return nil, l.notYet(binding, "a tuple element of type "+typeName(of))
 			}
 			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
@@ -1338,7 +1338,7 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	}
 	// number | undefined is packed; a Union holds its existing tagged heap reference.
 	// Keep the refusal for representations that still need more than one slot.
-	if !valueKnown || (slotless(value) && value != ir.Union) {
+	if !valueKnown || !boxedSlot(value) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
@@ -1686,21 +1686,26 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, describe(node))
 	}
 	of, err := l.typeOf(node)
+	stored := of
 	if elements := l.typeArguments(l.checker.GetTypeAtLocation(access.Expression)); err == nil {
-		// What the tuple keeps there, not what the checker narrowed the read to: a Weak keeps a handle.
 		if position, convertErr := strconv.Atoi(index.Text()); convertErr == nil && position < len(elements) {
-			if declared, isKnown := l.representation(elements[position]); isKnown && declared == ir.Weak {
-				of = declared
+			if declared, known := l.representation(elements[position]); known && (declared == ir.Weak || declared == ir.Union) {
+				stored = declared
 			}
 		}
 	}
 	if err != nil {
 		return nil, err
 	}
-	if slotless(of) {
-		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
+	if !boxedSlot(stored) {
+		return nil, l.notYet(node, "a tuple element of type "+typeName(stored))
 	}
-	return ir.Property{Object: object, Name: index.Text(), Of: of}, nil
+	read := ir.Property{Object: object, Name: index.Text(), Of: stored}
+	if stored == ir.Union && of != stored {
+		// A narrowing changes how the value is used, never how its tuple slot is read.
+		return ir.Narrow{Value: read, To: of}, nil
+	}
+	return read, nil
 }
 
 // setIndex lowers array[index] = value, as a statement.
@@ -1790,7 +1795,7 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 	missing := []ir.Field{}
 	for index := len(items); index < len(elements); index++ {
 		of, isKnown := l.representation(elements[index])
-		if !isKnown || slotless(of) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
+		if !isKnown || !boxedSlot(of) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
 			return nil, l.notYet(node, "a tuple literal leaving out an element of type "+l.checker.TypeToString(elements[index]))
 		}
 		missing = append(missing, ir.Field{Name: strconv.Itoa(index), Value: fit(ir.Undefined{}, of)})
@@ -1800,7 +1805,7 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 			return nil, l.notYet(item, describe(item)+" in a tuple literal")
 		}
 		of, isKnown := l.representation(elements[index])
-		if !isKnown || slotless(of) {
+		if !isKnown || !boxedSlot(of) {
 			return nil, l.notYet(item, "a tuple element of type "+l.checker.TypeToString(elements[index]))
 		}
 		value, err := l.expression(item)
