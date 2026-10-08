@@ -1,0 +1,6 @@
+{
+  "Name": "jsx-no-undef byte verdict",
+  "File": "core.a",
+  "From": "if(reference.resolved)",
+  "To": "if(!reference.resolved)"
+}

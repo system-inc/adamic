@@ -1,0 +1,52 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { FileQuestion } from '../../checker.a';
+import { Settings } from '../../settings.ts';
+import { SyntaxFacts, SyntaxNode } from './facts.a';
+import { NoAdjacentInlineElements } from './core.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly selected = new Map<string, SyntaxNode>();
+    facts: SyntaxFacts | undefined = undefined;
+    core: NoAdjacentInlineElements | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        const checker = this.context.checker;
+        if(checker === undefined) { return; }
+        const answer = checker.askFile(new FileQuestion('ReadsOtherFiles', 'jsx-syntax-facts'));
+        if(answer.value === undefined) { return; }
+        const facts = new SyntaxFacts(answer.value, checker.path);
+        this.facts = facts;
+        this.core = new NoAdjacentInlineElements(facts);
+        const names = new Map<number, string>([[285, 'JsxElement'], [214, 'CallExpression']]);
+        for(let at = 1; at < facts.sourceCount; at++) {
+            const subject = facts.require(at);
+            const name = names.get(subject.kind);
+            if(name !== undefined) { this.selected.set(`${subject.start}:${subject.end}:${name}`, subject); }
+        }
+    }
+    position(bytes: number): number {
+        const offsets = this.context.checker?.offsets ?? panic('missing checker offsets');
+        let low = 0; let high = offsets.length;
+        while(low < high) { const middle = Math.floor((low + high) / 2); if((offsets[middle] ?? 0) < bytes) { low = middle + 1; } else { high = middle; } }
+        if(offsets[low] !== bytes) { panic('finding is not a UTF-8 boundary'); }
+        return low;
+    }
+    visit(node: ParseNode, index: number): void {
+        const checker = this.context.checker;
+        const facts = this.facts;
+        if(checker === undefined || facts === undefined || this.core === undefined) { return; }
+        const start = checker.offsets[this.context.start(index)] ?? panic('missing start offset');
+        const end = checker.offsets[node.end] ?? panic('missing end offset');
+        const subject = this.selected.get(`${start}:${end}:${node.kind}`);
+        if(subject === undefined) { checker.refuse(start, end, 'native parser node has no raw checker syntax fact'); return; }
+        const before = facts.findings.length;
+        this.core.visit(subject);
+        for(let at = before; at < facts.findings.length; at++) {
+            const finding = facts.findings[at] ?? panic('missing finding');
+            this.context.reportRange(this.position(finding.start), this.position(finding.end), finding.rule, finding.id, finding.message);
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

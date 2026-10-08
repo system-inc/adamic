@@ -1,0 +1,19 @@
+{
+  "name": "react/style-prop-object",
+  "typed": true,
+  "programReads": [
+    "ReadsOtherFiles"
+  ],
+  "node": true,
+  "kinds": [
+    "JsxAttribute",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave18StylePropObject",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestStylePropObject"
+}

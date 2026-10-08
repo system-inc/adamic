@@ -1,0 +1,143 @@
+import { SyntaxFacts, SyntaxNode } from './facts.a';
+export class NoAdjacentInlineElements {
+    readonly syntaxKinds: readonly number[] = [285, 214];
+    readonly facts: SyntaxFacts;
+    readonly names: readonly string[] = [
+        'a',
+        'b',
+        'big',
+        'i',
+        'small',
+        'tt',
+        'abbr',
+        'acronym',
+        'cite',
+        'code',
+        'dfn',
+        'em',
+        'kbd',
+        'strong',
+        'samp',
+        'time',
+        'var',
+        'bdo',
+        'br',
+        'img',
+        'map',
+        'object',
+        'q',
+        'script',
+        'span',
+        'sub',
+        'sup',
+        'button',
+        'input',
+        'label',
+        'select',
+        'textarea',
+    ];
+    constructor(facts: SyntaxFacts) {
+        this.facts = facts;
+    }
+    visit(node: SyntaxNode): void {
+        if(node.kind === 285) {
+            this.validate(node, node.items, true);
+            return;
+        }
+        if(!this.createElement(this.facts.unwrap(this.facts.node(node.expression)))) {
+            return;
+        }
+        const third = this.facts.node(node.args[2] ?? 0);
+        if(third?.kind === 210) {
+            this.validate(node, third.items, false);
+        }
+    }
+    validate(node: SyntaxNode, items: readonly number[], jsx: boolean): void {
+        let previous = false;
+        for(const id of items) {
+            const child = this.facts.require(id);
+            const current = jsx ? this.inlineJsx(child) : this.inlineCall(child);
+            if(previous && current) {
+                this.facts.report(
+                    node,
+                    'no-adjacent-inline-elements',
+                    'inlineElement',
+                    'These two inline elements sit directly against each other with nothing between them, so the browser renders them as one run of text with no gap. What reads as two separate links or labels in the source arrives as a single unbroken word on the page, and the reader has no way to see where one ends. Put a space between them, or wrap them in block-level elements that separate themselves.',
+                );
+                return;
+            }
+            previous = current;
+        }
+    }
+    inlineJsx(node: SyntaxNode): boolean {
+        const opening = node.kind === 285 ? this.facts.node(node.opening) : node.kind === 286 ? node : undefined;
+        const tag = opening === undefined ? undefined : this.facts.node(opening.expression);
+        return tag?.kind === 79 && this.names.includes(tag.text);
+    }
+    space(code: number): boolean {
+        return (
+            (code >= 9 && code <= 13) ||
+            code === 32 ||
+            code === 133 ||
+            code === 160 ||
+            code === 5760 ||
+            (code >= 8192 && code <= 8202) ||
+            code === 8232 ||
+            code === 8233 ||
+            code === 8239 ||
+            code === 8287 ||
+            code === 12288
+        );
+    }
+    inlineCall(node: SyntaxNode): boolean {
+        if([10, 8, 9, 111, 96, 105, 13].includes(node.kind)) {
+            return !this.space(node.text.charCodeAt(0)) && !this.space(node.text.charCodeAt(node.text.length - 1));
+        }
+        if(node.kind !== 214) {
+            return false;
+        }
+        const first = this.facts.node(node.args[0] ?? 0);
+        return first?.kind === 10 && this.names.includes(first.text);
+    }
+    createElement(callee: SyntaxNode | undefined): boolean {
+        if(callee?.kind === 212) {
+            const name = this.facts.node(callee.name);
+            const object = this.facts.node(callee.expression);
+            return name?.kind === 79 && name.text === 'createElement' && object?.kind === 79 && object.text === 'React';
+        }
+        if(callee?.kind !== 79 || callee.text !== 'createElement') {
+            return false;
+        }
+        for(const id of callee.declarations) {
+            const d = this.facts.require(id);
+            if(d.kind === 277 && this.facts.importModule(d) === 'react') {
+                return true;
+            }
+            if(d.kind === 261 && this.source(this.facts.node(d.initializer))) {
+                return true;
+            }
+            if(d.kind === 209) {
+                const pattern = this.facts.parent(d);
+                const variable = pattern === undefined ? undefined : this.facts.parent(pattern);
+                if(
+                    pattern?.kind === 207 &&
+                    variable?.kind === 261 &&
+                    this.source(this.facts.node(variable.initializer))
+                ) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    source(n: SyntaxNode | undefined): boolean {
+        if(n?.kind === 79) {
+            return n.text === 'React';
+        }
+        if(n?.kind === 212) {
+            const object = this.facts.node(n.expression);
+            return (object?.kind === 79 && object.text === 'React') || this.facts.requireReact(object, false);
+        }
+        return this.facts.requireReact(n, false);
+    }
+}

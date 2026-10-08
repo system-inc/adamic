@@ -1,0 +1,83 @@
+import { ComponentFacts, ComponentNode } from './facts.a';
+export class StylePropObject {
+    readonly facts: ComponentFacts;
+    readonly allow: readonly string[];
+    constructor(facts: ComponentFacts, allow: readonly string[]) {
+        this.facts = facts;
+        this.allow = allow;
+    }
+    report(node: ComponentNode): void {
+        this.facts.report(node, 'style-prop-object', 'stylePropNotObject', 'Style prop value must be an object');
+    }
+    literal(node: ComponentNode | undefined): boolean {
+        return node !== undefined && [10, 8, 9, 13, 111, 96].includes(node.kind);
+    }
+    identifier(node: ComponentNode): void {
+        const d = this.facts.node(node.declarations[0] ?? 0);
+        if(d?.kind === 261 && this.literal(this.facts.unwrap(this.facts.node(d.initializer)))) {
+            this.report(node);
+        }
+    }
+    attribute(node: ComponentNode): void {
+        if(this.facts.node(node.name)?.text !== 'style') {
+            return;
+        }
+        const initializer = this.facts.node(node.initializer);
+        if(initializer === undefined) {
+            return;
+        }
+        const attributes = this.facts.parent(node);
+        const opening = attributes === undefined ? undefined : this.facts.parent(attributes);
+        const tag = opening === undefined ? undefined : this.facts.node(opening.expression);
+        if(tag?.kind === 79 && this.allow.includes(tag.text)) {
+            return;
+        }
+        if(initializer.kind !== 295) {
+            this.report(node);
+            return;
+        }
+        const expression = this.facts.unwrap(this.facts.node(initializer.expression));
+        if(expression === undefined || this.literal(expression)) {
+            this.report(node);
+            return;
+        }
+        if(expression.kind === 79) {
+            this.identifier(expression);
+        }
+    }
+    call(node: ComponentNode): void {
+        if(!this.facts.createElement(this.facts.unwrap(this.facts.node(node.expression))) || node.args.length < 2) {
+            return;
+        }
+        const first = this.facts.node(node.args[0] ?? 0);
+        if(first?.kind === 79 && this.allow.includes(first.text)) {
+            return;
+        }
+        const props = this.facts.node(node.args[1] ?? 0);
+        if(props?.kind !== 211) {
+            return;
+        }
+        for(const id of props.items) {
+            const prop = this.facts.require(id);
+            if(prop.kind !== 303 && prop.kind !== 304) {
+                continue;
+            }
+            const name = this.facts.node(prop.name);
+            if(name?.kind !== 79 || name.text !== 'style') {
+                continue;
+            }
+            const value = this.facts.unwrap(prop.kind === 304 ? name : this.facts.node(prop.initializer));
+            if(value === undefined) {
+                continue;
+            }
+            if(value.kind === 79) {
+                this.identifier(value);
+                return;
+            }
+            if(this.literal(value)) {
+                this.report(value);
+            }
+            return;
+        }
+    }
+}

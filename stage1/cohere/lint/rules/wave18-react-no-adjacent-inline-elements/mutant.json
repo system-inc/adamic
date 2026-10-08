@@ -1,0 +1,6 @@
+{
+  "Name": "no-adjacent-inline-elements byte verdict",
+  "File": "core.a",
+  "From": "if(previous && current)",
+  "To": "if(previous && !current)"
+}

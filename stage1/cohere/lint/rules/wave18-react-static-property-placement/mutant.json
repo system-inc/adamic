@@ -1,0 +1,6 @@
+{
+  "Name": "static-property-placement byte verdict",
+  "File": "core.a",
+  "From": "if(expected === arm && (isStatic || expected === 'property assignment'))",
+  "To": "if(expected !== arm && (isStatic || expected === 'property assignment'))"
+}

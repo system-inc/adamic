@@ -41,7 +41,7 @@ func (p *Program) componentPropertySyntaxFacts(out *fields, c *checker.Checker, 
 		records.number(uint64(n.Kind))
 		records.number(uint64(scanner.SkipTrivia(file.Text(), n.Pos())))
 		records.number(uint64(n.End()))
-		records.text(file.FileName())
+		records.text(string(file.FileName()))
 		records.number(add(n.Parent))
 		text := ""
 		switch n.Kind {

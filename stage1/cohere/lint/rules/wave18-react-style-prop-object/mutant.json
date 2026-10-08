@@ -1,0 +1,6 @@
+{
+  "Name": "style-prop-object byte verdict",
+  "File": "core.a",
+  "From": "if(expression.kind === 79)",
+  "To": "if(expression.kind !== 79)"
+}

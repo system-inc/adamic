@@ -1,0 +1,87 @@
+import { SyntaxFacts, SyntaxNode } from './facts.a';
+export class JsxFragments {
+    readonly syntaxKinds: readonly number[] = [289, 285, 286];
+    readonly facts: SyntaxFacts;
+    readonly element: boolean;
+    constructor(facts: SyntaxFacts, element: boolean) {
+        this.facts = facts;
+        this.element = element;
+    }
+    visit(node: SyntaxNode): void {
+        if(node.kind === 289) {
+            if(this.element) {
+                this.facts.report(
+                    node,
+                    'jsx-fragments',
+                    'preferPragma',
+                    'Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.',
+                );
+            }
+            return;
+        }
+        if(this.element) {
+            return;
+        }
+        const opening = node.kind === 285 ? this.facts.node(node.opening) : node;
+        if(opening === undefined) {
+            return;
+        }
+        const tag = this.facts.node(opening.expression);
+        const attributes = this.facts.node(opening.attributes);
+        if(!this.fragment(tag) || (attributes !== undefined && attributes.items.length > 0)) {
+            return;
+        }
+        this.facts.report(
+            node,
+            'jsx-fragments',
+            'preferFragment',
+            'Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.',
+        );
+    }
+    member(n: SyntaxNode): boolean {
+        const object = this.facts.node(n.expression);
+        const name = this.facts.node(n.name);
+        return object?.kind === 79 && object.text === 'React' && name?.kind === 79 && name.text === 'Fragment';
+    }
+    fragment(n: SyntaxNode | undefined): boolean {
+        if(n?.kind === 212) {
+            return this.member(n);
+        }
+        if(n?.kind !== 79) {
+            return false;
+        }
+        for(const id of n.declarations) {
+            const d = this.facts.require(id);
+            if(d.kind === 277) {
+                const imported = this.facts.node(d.property === 0 ? d.name : d.property);
+                if(imported?.kind === 79 && imported.text === 'Fragment' && this.facts.importModule(d) === 'react') {
+                    return true;
+                }
+            }
+            else if(d.kind === 209) {
+                const pattern = this.facts.parent(d);
+                const variable = pattern === undefined ? undefined : this.facts.parent(pattern);
+                if(
+                    pattern?.kind === 207 &&
+                    variable?.kind === 261 &&
+                    this.source(this.facts.node(variable.initializer))
+                ) {
+                    return true;
+                }
+            }
+            else if(d.kind === 261 && this.source(this.facts.node(d.initializer))) {
+                return true;
+            }
+        }
+        return false;
+    }
+    source(n: SyntaxNode | undefined): boolean {
+        if(n?.kind === 79) {
+            return n.text === 'React';
+        }
+        if(n?.kind === 212) {
+            return this.member(n);
+        }
+        return this.facts.requireReact(n, true);
+    }
+}

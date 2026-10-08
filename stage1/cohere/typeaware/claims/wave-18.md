@@ -322,3 +322,14 @@ evidence retained, not rerun. Four claims remain parked; full gate and
 17 external checks unrun. 593-head audit finds zero unclaimed rules.
 No new claim. See wave_18_component_props/LANDING_EDITS_PATHS_REPORT.md
 and validation-edits-paths for complete logs.
+
+## Unparked shared-checker landing attempt
+
+Merged current area c4bdc23f without rebasing at aaf95e640. Five React
+registry ports now use context.checker; descriptor validation passes, but
+all runtime parity and mutants are blocked by shared SourceFile API errors
+in declaration_facts.go:17,22 and facts.go:292. Full lint package with every
+input set fails before tests (0 pass, 0 test fail, 0 skip, one package build
+failure). Other twelve standalone migrations and four native analysis
+paths remain unfinished. See wave_18_component_props/UNPARK_CHECKER_REPORT.md
+for exact upstream symbols, inputs and logs. No new claims.

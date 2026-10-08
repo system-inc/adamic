@@ -1,0 +1,106 @@
+import { panic } from 'adamic';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+
+export class SyntaxNode {
+    readonly kind: number;
+    readonly start: number;
+    readonly end: number;
+    readonly path: string;
+    readonly parent: number;
+    readonly text: string;
+    readonly name: number;
+    readonly expression: number;
+    readonly initializer: number;
+    readonly opening: number;
+    readonly attributes: number;
+    readonly module: number;
+    readonly property: number;
+    readonly items: readonly number[];
+    readonly args: readonly number[];
+    readonly resolved: boolean;
+    readonly declarations: readonly number[];
+    constructor(f: Frames) {
+        this.kind = f.natural();
+        this.start = f.natural();
+        this.end = f.natural();
+        this.path = f.field();
+        this.parent = f.natural();
+        let text = '';
+        for(const unit of f.ids()) {
+            text += String.fromCharCode(unit);
+        }
+        this.text = text;
+        this.name = f.natural();
+        this.expression = f.natural();
+        this.initializer = f.natural();
+        this.opening = f.natural();
+        this.attributes = f.natural();
+        this.module = f.natural();
+        this.property = f.natural();
+        this.items = f.ids();
+        this.args = f.ids();
+        this.resolved = f.yes();
+        this.declarations = f.ids();
+    }
+}
+
+export class SyntaxFacts {
+    readonly path: string;
+    readonly sourceCount: number;
+    readonly nodes: SyntaxNode[] = [];
+    readonly findings: Diagnostic[] = [];
+    constructor(value: string, path: string) {
+        this.path = path;
+        const f = new Frames(value);
+        header(f, 'jsx-syntax-facts');
+        this.sourceCount = f.natural();
+        const count = f.natural();
+        for(let at = 1; at < count; at++) {
+            this.nodes.push(new SyntaxNode(f));
+        }
+        f.end();
+    }
+    node(id: number): SyntaxNode | undefined {
+        return id === 0 ? undefined : this.nodes[id - 1];
+    }
+    parent(n: SyntaxNode): SyntaxNode | undefined {
+        return this.node(n.parent);
+    }
+    unwrap(n: SyntaxNode | undefined): SyntaxNode | undefined {
+        let current = n;
+        while(current !== undefined && current.kind === 218) {
+            current = this.node(current.expression);
+        }
+        return current;
+    }
+    report(n: SyntaxNode, rule: string, id: string, message: string): void {
+        this.findings.push(new Diagnostic(rule, id, message, n.start, n.end, 'react/'));
+    }
+    require(id: number): SyntaxNode {
+        return this.node(id) ?? panic('missing JSX syntax fact');
+    }
+    importModule(d: SyntaxNode): string {
+        const names = this.parent(d);
+        const clause = names === undefined ? undefined : this.parent(names);
+        const declaration = clause === undefined ? undefined : this.parent(clause);
+        if(names?.kind !== 276 || clause?.kind !== 274 || declaration?.kind !== 273) {
+            return '';
+        }
+        const module = this.node(declaration.module);
+        return module?.kind === 10 || module?.kind === 14 ? module.text : '';
+    }
+    requireReact(n: SyntaxNode | undefined, template: boolean): boolean {
+        if(n?.kind !== 214) {
+            return false;
+        }
+        const callee = this.node(n.expression);
+        const first = this.node(n.args[0] ?? 0);
+        return (
+            callee?.kind === 79 &&
+            callee.text === 'require' &&
+            (first?.kind === 10 || (template && first?.kind === 14)) &&
+            first.text === 'react'
+        );
+    }
+}

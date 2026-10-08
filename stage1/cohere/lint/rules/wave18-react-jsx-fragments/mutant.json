@@ -1,0 +1,6 @@
+{
+  "Name": "jsx-fragments byte verdict",
+  "File": "core.a",
+  "From": "name.text === 'Fragment'",
+  "To": "name.text !== 'Fragment'"
+}

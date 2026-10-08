@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "exit": 1,
+    "wall_seconds": 0.12017447899995659,
+    "nproc": 5,
+    "inputs": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-18-typescript",
+      "ADAMIC_LINT_PROFILE_DIR": "/workspace/wave18-unpark-all-inputs-profiles",
+      "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/wave18-unpark-all-inputs-profiles",
+      "ADAMIC_LINT_BENCH": "1",
+      "GOMAXPROCS": "4",
+      "GOPROXY": "https://proxy.golang.org|direct"
+    },
+    "load": [
+      {
+        "elapsed": 0.0001568209999049941,
+        "load": [
+          "1.86",
+          "2.88",
+          "1.34"
+        ]
+      }
+    ]
+  },
+  "counts": {
+    "pass": 0,
+    "fail": 0,
+    "skip": 0,
+    "package_fail": 1
+  },
+  "tested_merge": "aaf95e6407ad56ca7d2aa15d86a36a2c31f59b03"
+}

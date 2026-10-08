@@ -1,0 +1,19 @@
+{
+  "name": "react/no-adjacent-inline-elements",
+  "typed": true,
+  "programReads": [
+    "ReadsOtherFiles"
+  ],
+  "node": true,
+  "kinds": [
+    "JsxElement",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave18NoAdjacentInlineElements",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoAdjacentInlineElements"
+}
