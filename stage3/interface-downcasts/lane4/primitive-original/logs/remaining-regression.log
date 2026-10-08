@@ -1,0 +1,142 @@
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/good
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/internal
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/undefined
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/wrong
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/null
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/missing
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+--- PASS: TestCheckedViewBrandsOriginalBlockedPairs (11.25s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/good (2.73s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/internal (1.76s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/undefined (1.93s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/wrong (1.65s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/null (1.38s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/missing (1.79s)
+=== RUN   TestCheckedViewCallableRetainsNeverWiderHelper
+--- PASS: TestCheckedViewCallableRetainsNeverWiderHelper (1.59s)
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/#00
+    checked_views_primitive_remaining_frontier_test.go:38: original tuple member selection remains uncredited; helper refuses before unchecked read
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/-empty
+    checked_views_primitive_remaining_frontier_test.go:38: original tuple member selection remains uncredited; helper refuses before unchecked read
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/-tuple
+    checked_views_primitive_remaining_frontier_test.go:38: original tuple member selection remains uncredited; helper refuses before unchecked read
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/-wrong
+    checked_views_primitive_remaining_frontier_test.go:38: original tuple member selection remains uncredited; helper refuses before unchecked read
+--- PASS: TestCheckedViewOriginalEmitTupleFrontier (6.42s)
+    --- PASS: TestCheckedViewOriginalEmitTupleFrontier/#00 (1.34s)
+    --- PASS: TestCheckedViewOriginalEmitTupleFrontier/-empty (2.54s)
+    --- PASS: TestCheckedViewOriginalEmitTupleFrontier/-tuple (1.28s)
+    --- PASS: TestCheckedViewOriginalEmitTupleFrontier/-wrong (1.26s)
+=== RUN   TestCheckedViewOriginalCommandDefault
+=== RUN   TestCheckedViewOriginalCommandDefault/string
+=== RUN   TestCheckedViewOriginalCommandDefault/number
+    checked_views_primitive_remaining_test.go:99: first-member substitution caught by Node control
+    checked_views_primitive_remaining_test.go:99: first-member substitution caught by Node control
+=== RUN   TestCheckedViewOriginalCommandDefault/boolean
+=== RUN   TestCheckedViewOriginalCommandDefault/undefined
+=== RUN   TestCheckedViewOriginalCommandDefault/message
+=== RUN   TestCheckedViewOriginalCommandDefault/wrong
+    checked_views_primitive_remaining_test.go:109: member-check omission caught by named refusal pin
+    checked_views_primitive_remaining_test.go:109: member-check omission caught by named refusal pin
+=== RUN   TestCheckedViewOriginalCommandDefault/nested
+    checked_views_primitive_remaining_test.go:120: transitive omission caught by refusal pin
+    checked_views_primitive_remaining_test.go:120: transitive omission caught by refusal pin
+--- PASS: TestCheckedViewOriginalCommandDefault (31.34s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/string (3.07s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/number (2.73s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/boolean (7.48s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/undefined (6.54s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/message (2.45s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/wrong (2.48s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/nested (6.58s)
+=== RUN   TestCheckedViewOriginalBuilderSignature
+=== RUN   TestCheckedViewOriginalBuilderSignature/string
+=== RUN   TestCheckedViewOriginalBuilderSignature/false
+=== RUN   TestCheckedViewOriginalBuilderSignature/undefined
+    checked_views_primitives_original_test.go:460: first-member substitution caught by Node control
+    checked_views_primitives_original_test.go:460: first-member substitution caught by Node control
+=== RUN   TestCheckedViewOriginalBuilderSignature/wrong
+    checked_views_primitives_original_test.go:470: member-check bypass caught by named refusal pin
+    checked_views_primitives_original_test.go:470: member-check bypass caught by named refusal pin
+=== RUN   TestCheckedViewOriginalBuilderSignature/wrong-number
+=== RUN   TestCheckedViewOriginalBuilderSignature/null
+=== RUN   TestCheckedViewOriginalBuilderSignature/missing
+--- PASS: TestCheckedViewOriginalBuilderSignature (12.38s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/string (1.85s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/false (2.31s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/undefined (2.18s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/wrong (2.02s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/wrong-number (1.36s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/null (1.35s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/missing (1.29s)
+=== RUN   TestCheckedViewOriginalUnionTargets
+=== RUN   TestCheckedViewOriginalUnionTargets/function/263
+=== RUN   TestCheckedViewOriginalUnionTargets/function/175
+=== RUN   TestCheckedViewOriginalUnionTargets/function/178
+=== RUN   TestCheckedViewOriginalUnionTargets/function/179
+=== RUN   TestCheckedViewOriginalUnionTargets/function/177
+=== RUN   TestCheckedViewOriginalUnionTargets/function/219
+=== RUN   TestCheckedViewOriginalUnionTargets/function/220
+=== RUN   TestCheckedViewOriginalUnionTargets/function/wrong-tag
+=== RUN   TestCheckedViewOriginalUnionTargets/function/wrong-array
+=== RUN   TestCheckedViewOriginalUnionTargets/class/264
+=== RUN   TestCheckedViewOriginalUnionTargets/class/232
+=== RUN   TestCheckedViewOriginalUnionTargets/class/wrong-tag
+=== RUN   TestCheckedViewOriginalUnionTargets/class/wrong-array
+--- PASS: TestCheckedViewOriginalUnionTargets (40.05s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/263 (3.03s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/175 (3.64s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/178 (3.25s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/179 (3.10s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/177 (5.31s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/219 (2.72s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/220 (3.00s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/wrong-tag (3.06s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/function/wrong-array (2.25s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/class/264 (2.65s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/class/232 (2.95s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/class/wrong-tag (2.85s)
+    --- PASS: TestCheckedViewOriginalUnionTargets/class/wrong-array (2.22s)
+=== RUN   TestCheckedViewOriginalUnionTargetTags
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/263
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/175
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/178
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/179
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/177
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/219
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/220
+=== RUN   TestCheckedViewOriginalUnionTargetTags/function/80
+    checked_views_union_targets_test.go:164: tag bypass mutant caught by exit-70 pin
+    checked_views_union_targets_test.go:164: tag bypass mutant caught by exit-70 pin
+=== RUN   TestCheckedViewOriginalUnionTargetTags/class/264
+=== RUN   TestCheckedViewOriginalUnionTargetTags/class/232
+=== RUN   TestCheckedViewOriginalUnionTargetTags/class/80
+    checked_views_union_targets_test.go:164: tag bypass mutant caught by exit-70 pin
+    checked_views_union_targets_test.go:164: tag bypass mutant caught by exit-70 pin
+--- PASS: TestCheckedViewOriginalUnionTargetTags (32.37s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/263 (2.75s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/175 (2.55s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/178 (2.65s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/179 (3.09s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/177 (3.11s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/219 (2.86s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/220 (3.58s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/function/80 (3.27s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/class/264 (2.63s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/class/232 (3.26s)
+    --- PASS: TestCheckedViewOriginalUnionTargetTags/class/80 (2.61s)
+=== RUN   TestCheckedViewScopedNeverWiderHelper
+    checked_views_union_targets_test.go:272: /tmp/adamic-gate/TestCheckedViewScopedNeverWiderHelper821646399/001/never-helper.a:4:21: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+--- PASS: TestCheckedViewScopedNeverWiderHelper (0.86s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=95
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	136.388s

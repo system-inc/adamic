@@ -1,8 +1,8 @@
-Certified the remaining four array pairs / nine reads and three original dictionary scalar/nullish components / fourteen reads.
-Commits: dca0b478 for arrays; this dictionary checkpoint on codex/views-mixed-unions-2.
-Checks: final original + component + array-safety oracle PASS 107.925s; lower/ir/JS PASS 1.502s / 0.083s / 2.233s; proof tests and vet PASS.
-Mutants: arrays eight member, eight first-member and one metadata kills; dictionaries eight member, eight first-member and eight null-erasure backend kills.
-Uncovered: original rich dictionary reference alternatives, other lanes' families and exact whole-tsc reachability; no full-gate claim.
+Certified four remaining original field pairs / seventeen candidate reads; corrected one scalar tuple false positive.
+Commits: 96c9132d, 48a7a934, fc253f97, e286a95d; pushed only codex/views-mixed-unions-2.
+Checks: uncached original field, union-target and never-helper regression PASS 136.388s; lower/IR selected gate and vet PASS.
+Mutants: twenty pair/backend kills cover member omission, wrong member/shape, first-member and transitive omission; four regression tag-bypass kills retained.
+Uncovered: one owned tuple union pair / three reads; lane 6 dictionary references three / fourteen; direct recursive intersection admission and whole-tsc remain unclaimed.
 
 | Original pair | Candidate reads | Status |
 | --- | ---: | --- |
@@ -341,3 +341,34 @@ __String field-read certification completed October 8, before October 9;
 mixed primitives completed earlier, with this additional tuple frontier
 still open and its October 13 target provisional pending sound tuple adapters.
 No whole-tsc or exact reachability claim.
+
+Final selected regression gate passed uncached in 136.388s, with no original
+suite skipped. Output is logs/remaining-regression.log; vet passed with output
+in logs/remaining-final-vet.log. Command:
+
+```
+ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-brand2-original-declarations ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedView(ScopedNeverWiderHelper|CallableRetainsNeverWiderHelper|OriginalUnionTargets|OriginalUnionTargetTags|OriginalBuilderSignature|OriginalCommandDefault|OriginalEmitTupleFrontier|BrandsOriginalBlockedPairs)$' -count=1 -v -timeout 10m
+go vet ./internal/lower ./internal/oracle
+```
+
+Both direct union-target families remain green. Function and class wrong-tag
+bypass mutants are caught in both backends. Wider helper reads retain the
+original named never refusal, and callable never-helper controls pass. The
+recursive intersection carrier continues to refuse while the separately
+certified intersected helper read checks a narrower Identifier view. These
+are representative original field-contract certifications, not compilation
+of the original enclosing functions or exact whole-program reachability.
+
+| Disposition of the nine starting candidates | Pairs | Candidate reads |
+| --- | ---: | ---: |
+| Newly reconciled or certified field pairs | 4 | 17 |
+| Branded-number tuple false positive corrected | 1 | 1 |
+| Owned tuple union frontier, blocked | 1 | 3 |
+| Dictionary reference arms, skipped for lane 6 | 3 | 14 |
+
+The owned frontier requires per-position tuple union extraction/boxing and
+checked tuple contracts, which the integrated adapters explicitly refuse.
+The three-member Node controls have a named compile refusal rather than an
+unchecked execution; no backend runtime certification is claimed for this
+pair. October 13 remains a provisional target for that additional frontier,
+not a certified completion promise. __String field reads completed October 8.
