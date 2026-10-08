@@ -1,0 +1,281 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 42945,
+      "body_end": 50827,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "bindContainer",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:984:47",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:984:47: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:984:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:984:47: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 45027,
+      "end": 45095
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:986:18",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:986:18: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:986:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:986:18: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 45157,
+      "end": 45229
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:987:37",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:987:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:987:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:987:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 45229,
+      "end": 45291
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:991:35",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:991:35: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:991:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:991:35: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 45393,
+      "end": 45460
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:993:18",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:993:18: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:993:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:993:18: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 45522,
+      "end": 45594
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1008:19",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1008:19: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1005:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1008:19: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 46163,
+      "end": 46555
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1013:18",
+      "reason": "reading isImmediatelyInvoked",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1013:18: stage 0 can't lower reading isImmediatelyInvoked yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1013:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1013:18: stage 0 can't lower reading isImmediatelyInvoked yet",
+      "start": 46555,
+      "end": 47261
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1021:35",
+      "reason": "reading isImmediatelyInvoked",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1021:35: stage 0 can't lower reading isImmediatelyInvoked yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1021:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1021:35: stage 0 can't lower reading isImmediatelyInvoked yet",
+      "start": 47261,
+      "end": 47705
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1031:130",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1031:130: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1031:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1031:130: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 48147,
+      "end": 48615
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1050:18",
+      "reason": "reading isImmediatelyInvoked",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1050:18: stage 0 can't lower reading isImmediatelyInvoked yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1050:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1050:18: stage 0 can't lower reading isImmediatelyInvoked yet",
+      "start": 49459,
+      "end": 49564
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:189:13",
+      "reason": "assigning an element of a value",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:189:13: stage 0 can't lower assigning an element of a value yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:189:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:189:13: stage 0 can't lower assigning an element of a value yet",
+      "start": 5243,
+      "end": 5314
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:190:14",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:190:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:190:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:190:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 5314,
+      "end": 5356
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28",
+      "reason": "a value of type unknown",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:953:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:311:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet",
+      "start": 12513,
+      "end": 12842
+    }
+  ]
+}

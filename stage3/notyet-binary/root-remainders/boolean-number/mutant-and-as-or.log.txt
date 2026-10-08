@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/binary_logical_boolean_number.a (0.41s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "and:false:boolean:0\nor:0:number:1\nand:0:number:2\nor:true:boolean:2\nand:false:boolean:2\nor:0:number:3\nand:0:number:4\nor:true:boolean:4\nand:false:boolean:4\nor:NaN:number:5\nand:NaN:number:6\nor:true:boolean:6\nand:false:boolean:6\nor:Infinity:number:7\nand:Infinity:number:8\nor:true:boolean:8\nand:false:boolean:8\nor:-3:number:9\nand:-3:number:10\nor:true:boolean:10\nand:false:boolean:10\nor:2:number:11\nand:2:number:12\nor:true:boolean:12\n", stderr ""
+            native: exit 0, stdout "and:0:number:1\nor:0:number:2\nand:true:boolean:2\nor:true:boolean:2\nand:0:number:3\nor:0:number:4\nand:true:boolean:4\nor:true:boolean:4\nand:NaN:number:5\nor:NaN:number:6\nand:true:boolean:6\nor:true:boolean:6\nand:Infinity:number:7\nor:Infinity:number:8\nand:true:boolean:8\nor:true:boolean:8\nand:-3:number:9\nor:-3:number:10\nand:true:boolean:10\nor:true:boolean:10\nand:2:number:11\nor:2:number:12\nand:true:boolean:12\nor:true:boolean:12\n", stderr ""
+        oracle_test.go:767: JavaScript backend: stdout differs
+            node:    exit 0, stdout "and:false:boolean:0\nor:0:number:1\nand:0:number:2\nor:true:boolean:2\nand:false:boolean:2\nor:0:number:3\nand:0:number:4\nor:true:boolean:4\nand:false:boolean:4\nor:NaN:number:5\nand:NaN:number:6\nor:true:boolean:6\nand:false:boolean:6\nor:Infinity:number:7\nand:Infinity:number:8\nor:true:boolean:8\nand:false:boolean:8\nor:-3:number:9\nand:-3:number:10\nor:true:boolean:10\nand:false:boolean:10\nor:2:number:11\nand:2:number:12\nor:true:boolean:12\n", stderr ""
+            backend: exit 0, stdout "and:0:number:1\nor:0:number:2\nand:true:boolean:2\nor:true:boolean:2\nand:0:number:3\nor:0:number:4\nand:true:boolean:4\nor:true:boolean:4\nand:NaN:number:5\nor:NaN:number:6\nand:true:boolean:6\nor:true:boolean:6\nand:Infinity:number:7\nor:Infinity:number:8\nand:true:boolean:8\nor:true:boolean:8\nand:-3:number:9\nor:-3:number:10\nand:true:boolean:10\nor:true:boolean:10\nand:2:number:11\nor:2:number:12\nand:true:boolean:12\nor:true:boolean:12\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.436s
+FAIL

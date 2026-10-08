@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/assignment_object.a (0.41s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "new/text:7:held:1\nrenamed:9\n11\n", stderr ""
+            native: exit 0, stdout "old:2:before:1\nold:2\n0\n", stderr ""
+        oracle_test.go:767: JavaScript backend: stdout differs
+            node:    exit 0, stdout "new/text:7:held:1\nrenamed:9\n11\n", stderr ""
+            backend: exit 0, stdout "old:2:before:1\nold:2\n0\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.426s
+FAIL

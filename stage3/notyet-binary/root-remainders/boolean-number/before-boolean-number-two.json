@@ -1,0 +1,61 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/binder.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1380:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 65091,
+      "body_end": 65911,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "createFlowCondition",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:509:1",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:509:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1380:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1388:14",
+      "reason": "a BinaryExpression with a boolean and a number",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1388:14: stage 0 can't lower a BinaryExpression with a boolean and a number yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1380:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1387:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1388:14: stage 0 can't lower a BinaryExpression with a boolean and a number yet",
+      "start": 65316,
+      "end": 65686
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1380:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1398:16",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1398:16: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1380:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1398:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/binder.ts:1398:16: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 65824,
+      "end": 65904
+    }
+  ]
+}
