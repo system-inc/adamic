@@ -80,22 +80,6 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 		}
 		files = kept
 	}
-	// These owner runtime modules are carried for ABI checking. Their broader
-	// host and shared-heap support is selected only by an admitted operation.
-	for _, module := range []struct{ name, feature string }{
-		{"node_process.c", "ADAMIC_NODE_PROCESS"},
-		{"parallel.c", "ADAMIC_PARALLEL"},
-	} {
-		if !slicesContain(extraFlags, "-D"+module.feature+"=1") {
-			kept := files[:0]
-			for _, file := range files {
-				if file.name != module.name {
-					kept = append(kept, file)
-				}
-			}
-			files = kept
-		}
-	}
 	compiler, err := exec.LookPath(compilerName(options))
 	if err != nil {
 		return "", fmt.Errorf("native: %w", err)
@@ -153,6 +137,22 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 }
 
 func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error) {
+	// These owner runtime modules are carried for ABI checking. Their broader
+	// host and shared-heap support is selected only by an admitted operation.
+	for _, module := range []struct{ name, feature string }{
+		{"node_process.c", "ADAMIC_NODE_PROCESS"},
+		{"parallel.c", "ADAMIC_PARALLEL"},
+	} {
+		if !slicesContain(flags, "-D"+module.feature+"=1") {
+			kept := files[:0]
+			for _, file := range files {
+				if file.name != module.name {
+					kept = append(kept, file)
+				}
+			}
+			files = kept
+		}
+	}
 	directory := filepath.Join(cache, runtimeKey(files, flags, compiler, version))
 	library := filepath.Join(directory, "runtime.a")
 	value, _ := runtimeBuilds.LoadOrStore(directory, &sync.Mutex{})
