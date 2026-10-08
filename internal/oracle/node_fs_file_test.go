@@ -214,6 +214,9 @@ func TestNodeFSFileMutants(t *testing.T) {
 				// helper and its Node-only behavioral comparison unchanged.
 				pattern := regexp.MustCompile(`adamic_node_fs_dirent_is\(([^,\n]+), "` + method + `"\)`)
 				code = pattern.ReplaceAllString(code, "fs_file_mutant(${1})")
+			} else if one.operation == "date_time" {
+				// The complete Date runtime now owns the same scalar timestamp slot.
+				code = strings.ReplaceAll(code, "adamic_date_value(", "fs_file_mutant(")
 			} else {
 				code = strings.ReplaceAll(code, "adamic_fs_file_"+one.operation+"(", "fs_file_mutant(")
 			}

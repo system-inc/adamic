@@ -1,12 +1,14 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 import { programArguments } from 'adamic';
 const root = programArguments()[0] ?? '';
 function failure(error: Error): void {
-    const errno: NodeJS.ErrnoException = error;
-    console.log(`${errno.code ?? ''}: ${error.message.replace(root, '<root>')}`);
+    console.log(`${errorCode(error) ?? ''}: ${error.message.replace(root, '<root>')}`);
 }
 import { statSync, utimesSync } from 'node:fs';
 utimesSync(root + '/file', 1000.125, 1700000000.123456);
-const options = {throwIfNoEntry:false};
+const options = (({throwIfNoEntry:false}) as const);
 const absent=statSync(root + '/missing',options); console.log(`shared=${absent === undefined}`);
 const file=statSync(root + '/file');
 console.log(`${file.isFile()} ${file.isDirectory()} ${file.isSymbolicLink()} ${file.size} ${file.mtimeMs} ${file.mtime.getTime()}`);

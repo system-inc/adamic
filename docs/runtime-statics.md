@@ -520,3 +520,26 @@ Their zero reference counts prevent retain/release writes, and the literal
 index marker prevents lazy string-cache writes. Error objects and messages
 are owned per call; adamic_thrown remains thread-local. The formatting header
 only declares functions and adds no storage.
+
+
+## Main and library merge storage
+
+Reviewed `runtime-file:census_small.c`, `runtime-file:node_host.c`,
+`runtime-file:regexp_replace.c` and `runtime-file:typed_array.c`.
+The census Boolean conversion has no storage. RegExp replacement owns all
+match and argument scratch per call. Typed-array storage is heap-owned per
+receiver; its width and conversion helpers use automatic state and const tables.
+
+- `map_set.c:collection_next:1` is a forward declaration of an
+  `adamic_code_function`, not a mutable function pointer or runtime storage.
+- `node_host.c:current_directory:1` and `node_host.c:cleanup_registered:1`
+  mirror the inherited host directory cache and one-time atexit registration.
+  Cwd/chdir mutate the cache; cleanup releases it at process exit. They are
+  inherited serial host state and are not certified for concurrent cwd/chdir.
+- `node_host.c:error_name:1` is an immortal Error literal initialized before
+  workers, with zero references and a literal index sentinel; no cache writes.
+- `string_slice_impl.h:bytes:1` is const ASCII byte storage, and
+  `string_slice_impl.h:characters:1` is its statically initialized immortal
+  header table. Lazy initialization was removed at this merge: headers have
+  known UTF-16 lengths, zero references and literal index sentinels, so readers
+  and retain/release never write them, including concurrent cold indexing.

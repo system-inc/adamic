@@ -203,7 +203,7 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 					return nil, true, l.notYet(node, "String.prototype."+method+" on a non-string receiver (requires a String internal slot)")
 				}
 			}
-			if of, _ := l.representation(proven); of == ir.Object || of == ir.Array || of == ir.Map {
+			if of, _ := l.representation(proven); of == ir.Object || of == ir.Array || of == ir.Map || of == ir.Union {
 				return l.stringObjectPrototypeCall(node, method, written)
 			}
 			value, err := l.stringConversion(written[0])
