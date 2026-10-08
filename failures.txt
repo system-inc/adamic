@@ -177,6 +177,12 @@ census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 
         clang: error: linker command failed with exit code 1 (use -v to see invocation)
 --- SKIP: TestWASI (0.40s)
 
+== github.com/system-inc/adamic/internal/lower TestOriginalCycleLedger (skipped; the census table classes it required-input)
+census: ADAMIC_CYCLE_LEDGER_ROOT must name pristine TypeScript v6.0.3 at 050880ce59e30b356b686bd3144efe24f875ebc8, including generated diagnostics needed by src/tsc/tsc.ts. ADAMIC_CYCLE_LEDGER_OUTPUT must name a writable JSON output. The gate must run the binding-initialization ledger verification on that source.
+=== RUN   TestOriginalCycleLedger
+    import_cycle_ledger_test.go:31: set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
+--- SKIP: TestOriginalCycleLedger (0.00s)
+
 == github.com/system-inc/adamic/internal/oracle TestWasmtimeAgreesWithNode (skipped; no census row matches its name)
 === RUN   TestWasmtimeAgreesWithNode
     wasi_engines_test.go:66: set ADAMIC_ORACLE_WASMTIME=1
