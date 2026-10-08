@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a:5:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)
