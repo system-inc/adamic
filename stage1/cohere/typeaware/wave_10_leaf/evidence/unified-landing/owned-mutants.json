@@ -1,0 +1,56 @@
+{
+  "init_declarations_always_span_includes_annotation": {
+    "rule_directory": "typescript-init-declarations",
+    "status": "pass",
+    "outputs": [
+      "lint_test.go:855: init_declarations_always_span_includes_annotation caught on Node: case 85 line 4795: port \"range 4 19 initialized \\t\\t\\t4 19\", Go \"range 4 11 initialized \\t\\t\\t4 11\"",
+      "lint_test.go:855: init_declarations_always_span_includes_annotation caught on emitted JavaScript: case 85 line 4795: port \"range 4 19 initialized \\t\\t\\t4 19\", Go \"range 4 11 initialized \\t\\t\\t4 11\"",
+      "lint_test.go:855: init_declarations_always_span_includes_annotation caught on native: case 85 line 4795: port \"range 4 19 initialized \\t\\t\\t4 19\", Go \"range 4 11 initialized \\t\\t\\t4 11\""
+    ]
+  },
+  "no-redundant-type-constituents-decision": {
+    "rule_directory": "no-redundant-type-constituents",
+    "status": "pass",
+    "outputs": [
+      "lint_test.go:855: no-redundant-type-constituents-decision caught on native: case 0 line 6: port \"fixed\\ttype T = string | any; type U = string | never;\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantsno-redundant-type-constituents-decision209633028/016/no-redundant-type-constituents-0.ts:1:42\"",
+      "lint_test.go:855: no-redundant-type-constituents-decision caught on Node: case 0 line 6: port \"fixed\\ttype T = string | any; type U = string | never;\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantsno-redundant-type-constituents-decision209633028/016/no-redundant-type-constituents-0.ts:1:42\"",
+      "lint_test.go:855: no-redundant-type-constituents-decision caught on emitted JavaScript: case 0 line 6: port \"fixed\\ttype T = string | any; type U = string | never;\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantsno-redundant-type-constituents-decision209633028/016/no-redundant-type-constituents-0.ts:1:42\""
+    ]
+  },
+  "prefer-includes-decision": {
+    "rule_directory": "prefer-includes",
+    "status": "pass",
+    "outputs": [
+      "lint_test.go:855: prefer-includes-decision caught on native: case 0 line 5: port \"range 28 52 preferIncludes fix\\t!\\t\\t28 28\", Go \"range 28 52 preferIncludes fix\\tincludes\\t\\t33 40\"",
+      "lint_test.go:855: prefer-includes-decision caught on Node: case 0 line 5: port \"range 28 52 preferIncludes fix\\t!\\t\\t28 28\", Go \"range 28 52 preferIncludes fix\\tincludes\\t\\t33 40\"",
+      "lint_test.go:855: prefer-includes-decision caught on emitted JavaScript: case 0 line 5: port \"range 28 52 preferIncludes fix\\t!\\t\\t28 28\", Go \"range 28 52 preferIncludes fix\\tincludes\\t\\t33 40\""
+    ]
+  },
+  "no-uncleared-race-timeout-decision": {
+    "rule_directory": "no-uncleared-race-timeout",
+    "status": "pass",
+    "outputs": [
+      "lint_test.go:855: no-uncleared-race-timeout-decision caught on native: case 0 line 2: port \"fixed\\tPromise.race([new Promise((resolve) => { setTimeout(resolve, 1000); })]);\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantsno-uncleared-race-timeout-decision2696650635/016/no-uncleared-race-timeout-0.ts:1:42\"",
+      "lint_test.go:855: no-uncleared-race-timeout-decision caught on Node: case 0 line 2: port \"fixed\\tPromise.race([new Promise((resolve) => { setTimeout(resolve, 1000); })]);\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantsno-uncleared-race-timeout-decision2696650635/016/no-uncleared-race-timeout-0.ts:1:42\"",
+      "lint_test.go:855: no-uncleared-race-timeout-decision caught on emitted JavaScript: case 0 line 2: port \"fixed\\tPromise.race([new Promise((resolve) => { setTimeout(resolve, 1000); })]);\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantsno-uncleared-race-timeout-decision2696650635/016/no-uncleared-race-timeout-0.ts:1:42\""
+    ]
+  },
+  "require-await-body-await": {
+    "rule_directory": "require-await",
+    "status": "pass",
+    "outputs": [
+      "lint_test.go:855: require-await-body-await caught on native: case 0 line 2: port \"/tmp/adamic-gate/TestMutantsrequire-await-body-await429787501/016/require-await-0.ts:2:1\", Go \"/tmp/adamic-gate/TestMutantsrequire-await-body-await429787501/016/require-await-0.ts:1:12\"",
+      "lint_test.go:855: require-await-body-await caught on Node: case 0 line 2: port \"/tmp/adamic-gate/TestMutantsrequire-await-body-await429787501/016/require-await-0.ts:2:1\", Go \"/tmp/adamic-gate/TestMutantsrequire-await-body-await429787501/016/require-await-0.ts:1:12\"",
+      "lint_test.go:855: require-await-body-await caught on emitted JavaScript: case 0 line 2: port \"/tmp/adamic-gate/TestMutantsrequire-await-body-await429787501/016/require-await-0.ts:2:1\", Go \"/tmp/adamic-gate/TestMutantsrequire-await-body-await429787501/016/require-await-0.ts:1:12\""
+    ]
+  },
+  "symbol-description-first-declaration": {
+    "rule_directory": "symbol-description",
+    "status": "pass",
+    "outputs": [
+      "lint_test.go:855: symbol-description-first-declaration caught on native: case 0 line 2: port \"fixed\\t/* \\\\ud83c\\\\udf0d */ Symbol(); Symbol(\\\"described\\\");\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantssymbol-description-first-declaration1050920703/016/symbol-description-0.ts:1:12\"",
+      "lint_test.go:855: symbol-description-first-declaration caught on Node: case 0 line 2: port \"fixed\\t/* \\\\ud83c\\\\udf0d */ Symbol(); Symbol(\\\"described\\\");\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantssymbol-description-first-declaration1050920703/016/symbol-description-0.ts:1:12\"",
+      "lint_test.go:855: symbol-description-first-declaration caught on emitted JavaScript: case 0 line 2: port \"fixed\\t/* \\\\ud83c\\\\udf0d */ Symbol(); Symbol(\\\"described\\\");\\\\u000a\", Go \"/tmp/adamic-gate/TestMutantssymbol-description-first-declaration1050920703/016/symbol-description-0.ts:1:12\""
+    ]
+  }
+}

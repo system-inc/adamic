@@ -1,0 +1,7 @@
+{
+  "typed_cases": 416,
+  "go_total_seconds": 21.029366418000002,
+  "native_recording_total_seconds": 29.468959103,
+  "note": "Native includes shared-checker recording; Go and native each open a fresh program for each captured case. Aggregate includes the existing pilot and five new typed rules.",
+  "native_recording_over_go": 1.4013241539115586
+}

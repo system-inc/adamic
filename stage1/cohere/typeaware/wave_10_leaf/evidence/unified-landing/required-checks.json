@@ -1,0 +1,43 @@
+{
+  "TestRulesAgree": {
+    "status": "pass",
+    "seconds": 201.9,
+    "event_wall_seconds": 201.900887
+  },
+  "TestCompilerAndStage1Agree": {
+    "status": "pass",
+    "seconds": 409.01,
+    "event_wall_seconds": 409.00789
+  },
+  "TestShardsAgree": {
+    "status": "pass",
+    "seconds": 148.19,
+    "event_wall_seconds": 148.19026
+  },
+  "TestMutants": {
+    "status": "pass",
+    "seconds": 0.02,
+    "event_wall_seconds": 543.475185,
+    "note": "Go Elapsed excludes parallel child durations; event wall includes the complete 80-mutant sweep."
+  },
+  "TestProfileArtifacts": {
+    "status": "pass",
+    "seconds": 52.01,
+    "event_wall_seconds": 52.006466
+  },
+  "TestProfileCompilation": {
+    "status": "pass",
+    "seconds": 32.87,
+    "event_wall_seconds": 32.87101
+  },
+  "TestProfileSnapshotsAgree": {
+    "status": "pass",
+    "seconds": 179.35,
+    "event_wall_seconds": 179.347452
+  },
+  "TestOwnedWitnesses": {
+    "status": "pass",
+    "seconds": 7.01,
+    "event_wall_seconds": 7.010394
+  }
+}

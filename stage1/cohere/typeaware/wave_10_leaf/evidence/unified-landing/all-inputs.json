@@ -1,0 +1,28 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=90m",
+    "./stage1/cohere/lint"
+  ],
+  "inputs": {
+    "GOMAXPROCS": "4",
+    "GOFLAGS": "-buildvcs=false",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/typescript-lint-landing",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/lint-wave10-profiles-cwto76e8",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/lint-wave10-profiles-cwto76e8"
+  },
+  "nproc": "5",
+  "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_status_before": "",
+  "branch_sha": "e203ee3b1a501a90d1cfc4b25efb7ab2ab44c7eb",
+  "tested_source_sha": "6868fb83608a7bb42964ed16d5b5f64e23ac7a00",
+  "note": "Runner launched after parking the loop descriptor; tested sources were committed during execution without further active-rule changes.",
+  "area_sha": "c8f6d74f5387df926ae12d8babd2780564b60097",
+  "initial_wave_sha": "bff8bc5d01178b7017f34f79f08a90d8ed119a4a",
+  "init_branch_sha_already_in_area": "12a7c6a1cc53f2e55eabcc1df449f3f7d31c7b64",
+  "bridge_command": "GOMAXPROCS=2 go test ./bridge/tsgo -run '^TestBridge$' -count=1 -timeout=30m -v"
+}
