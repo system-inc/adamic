@@ -1,0 +1,5 @@
+import {searchForJsxOrHook} from './search_for_jsx_or_hook.a';
+import type {SearchNode} from './search_for_jsx_or_hook.a';
+export function hasJsxOrReactHookCalls(id:number,nodeAt:(id:number)=>SearchNode,isHookCall:(id:number)=>boolean):boolean {
+ return searchForJsxOrHook(id,0,nodeAt,isHookCall);
+}

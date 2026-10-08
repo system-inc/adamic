@@ -1,0 +1,65 @@
+=== RUN   TestMethodRecoveryAgrees
+    recovery_test.go:101: Node /tmp/adamic-parser-recovery/method-4.ts:  line 1: port "diagnostic 1434 0 9 1\tUnexpected keyword or identifier.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 13 0 0 -1 0 0				
+        1 LabeledStatement 0 13 0 0 -1 0 0				
+        2 Identifier 0 9 0 0 -1 0 0		undefined		
+        2 ExpressionStatement 10 13 0 0 -1 0 0				
+    recovery_test.go:101: native /tmp/adamic-parser-recovery/method-4.ts:  line 1: port "diagnostic 1434 0 9 1\tUnexpected keyword or identifier.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 13 0 0 -1 0 0				
+        1 LabeledStatement 0 13 0 0 -1 0 0				
+        2 Identifier 0 9 0 0 -1 0 0		undefined		
+        2 ExpressionStatement 10 13 0 0 -1 0 0				
+    recovery_test.go:101: Node /tmp/adamic-parser-recovery/method-5.ts:  line 1: port "diagnostic 1434 0 4 1\tUnexpected keyword or identifier.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 8 0 0 -1 0 0				
+        1 LabeledStatement 0 8 0 0 -1 0 0				
+        2 Identifier 0 4 0 0 -1 0 0		type		
+        2 ExpressionStatement 5 8 0 0 -1 0 0				
+    recovery_test.go:101: native /tmp/adamic-parser-recovery/method-5.ts:  line 1: port "diagnostic 1434 0 4 1\tUnexpected keyword or identifier.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 8 0 0 -1 0 0				
+        1 LabeledStatement 0 8 0 0 -1 0 0				
+        2 Identifier 0 4 0 0 -1 0 0		type		
+        2 ExpressionStatement 5 8 0 0 -1 0 0				
+    recovery_test.go:101: Node /tmp/adamic-parser-recovery/method-6.ts:  line 1: port "diagnostic 1434 0 3 1\tUnexpected keyword or identifier.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 7 0 0 -1 0 0				
+        1 LabeledStatement 0 7 0 0 -1 0 0				
+        2 Identifier 0 3 0 0 -1 0 0		let		
+        2 ExpressionStatement 4 7 0 0 -1 0 0				
+    recovery_test.go:101: native /tmp/adamic-parser-recovery/method-6.ts:  line 1: port "diagnostic 1434 0 3 1\tUnexpected keyword or identifier.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 7 0 0 -1 0 0				
+        1 LabeledStatement 0 7 0 0 -1 0 0				
+        2 Identifier 0 3 0 0 -1 0 0		let		
+        2 ExpressionStatement 4 7 0 0 -1 0 0				
+    recovery_test.go:101: Node /tmp/adamic-parser-recovery/method-74.ts:  line 3: port "diagnostic 1434 31 4 1\tUnexpected keyword or identifier.", Go "diagnostic 1128 45 1 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1131 14 1 1	Property or signature expected.
+        diagnostic 1131 16 1 1	Property or signature expected.
+        diagnostic 1128 45 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 46 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 15 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:101: native /tmp/adamic-parser-recovery/method-74.ts:  line 3: port "diagnostic 1434 31 4 1\tUnexpected keyword or identifier.", Go "diagnostic 1128 45 1 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1131 14 1 1	Property or signature expected.
+        diagnostic 1131 16 1 1	Property or signature expected.
+        diagnostic 1128 45 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 46 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 15 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+--- FAIL: TestMethodRecoveryAgrees (29.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	29.134s
+FAIL

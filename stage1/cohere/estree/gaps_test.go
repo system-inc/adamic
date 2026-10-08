@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"os"
@@ -87,29 +88,39 @@ func TestRawInputGap(t *testing.T) {
 	t.Logf("Equal size, readTextFile text and utf8Length on Node/native/emitted JS: %q; Go distinguishes: %s", want, firstDifference(left, right))
 }
 
-func TestParserRecoveryGap(t *testing.T) {
+// The shared parser once looped forever on an unterminated type literal. The
+// parser's recovery port (88f4a83d) closed that gap, so the program now has to
+// finish and print the same bytes from source Node, sanitized native and
+// emitted JavaScript. The guard is a hang guard sized to a program that prints
+// one line, never a timing assertion.
+func TestParserRecoveryTerminates(t *testing.T) {
 	path, err := filepath.Abs("gaps/parserRecovery.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary, _ := build(t, path, true)
-	for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), path}, {binary}} {
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-		command := exec.CommandContext(ctx, argv[0], argv[1:]...)
-		output, err := os.CreateTemp(t.TempDir(), "recovery-log")
-		if err != nil {
-			t.Fatal(err)
-		}
-		command.Stdout, command.Stderr = output, output
-		err = command.Run()
-		output.Close()
-		timedOut := ctx.Err() == context.DeadlineExceeded
-		cancel()
-		if !timedOut {
-			t.Fatalf("expected bounded external timeout; got %v", err)
-		}
-		t.Logf("%s: unported parser recovery does not terminate within 1s", argv[0])
+	binary, script := build(t, path, true)
+	node := func(file string) []string {
+		return []string{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), file}
 	}
+	var want []byte
+	for _, argv := range [][]string{node(path), {binary}, node(script)} {
+		command := exec.Command(argv[0], argv[1:]...)
+		var stdout, stderr bytes.Buffer
+		command.Stdout, command.Stderr = &stdout, &stderr
+		err := childguard.Run(command, childguard.Options{FirstOutput: 2 * time.Minute, Ceiling: 5 * time.Minute})
+		if err != nil || stderr.Len() != 0 {
+			t.Fatalf("%s: %v\n%s", argv[0], err, &stderr)
+		}
+		if stdout.Len() == 0 {
+			t.Fatalf("%s printed nothing", argv[0])
+		}
+		if want == nil {
+			want = stdout.Bytes()
+		} else if !bytes.Equal(stdout.Bytes(), want) {
+			t.Fatalf("%v printed %q, source Node printed %q", argv, stdout.Bytes(), want)
+		}
+	}
+	t.Logf("source Node, native and emitted JavaScript all terminate and print %q", want)
 }
 
 func TestInterfaceDefaultGap(t *testing.T) {

@@ -132,3 +132,11 @@ export function fileStatus(path) {
 export function programArguments() {
 	return process.argv.slice(2);
 }
+
+// Checker facts are replayed by the lint harness on Node; accidental live calls return refusals.
+function checkerUnavailable() { return { kind: 'Error', message: 'tsgo requires a native recording for JavaScript replay' }; }
+export function tsgoProgram() { return checkerUnavailable(); }
+export function tsgoQuery() { return checkerUnavailable(); }
+export function tsgoInspect() { return checkerUnavailable(); }
+export function tsgoTypeParts() { return checkerUnavailable(); }
+export function tsgoRelease() { return checkerUnavailable(); }

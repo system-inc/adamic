@@ -1,0 +1,14 @@
+// Today's bridge returns raw values and panics on errors. Only this adapter knows that ABI.
+import { tsgoProgram, tsgoInspect, tsgoRelease } from 'adamic';
+import type { ProgramResult, InspectResult, ReleaseResult } from './checker.a';
+
+export function openBridge(config: string, files: readonly string[]): ProgramResult {
+    return { kind: 'Ok', value: tsgoProgram(config, files) };
+}
+export function inspectBridge(program: number, path: string, start: number, end: number, kind: string, question: string): InspectResult {
+    return { kind: 'Ok', value: tsgoInspect(program, path, start, end, kind, question) };
+}
+export function releaseBridge(program: number): ReleaseResult {
+    tsgoRelease(program);
+    return { kind: 'Ok' };
+}

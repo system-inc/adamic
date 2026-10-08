@@ -1,0 +1,6 @@
+=== RUN   TestIncompleteCompilerAgrees
+    incomplete_test.go:32: /workspace/adamic/stage1/typescript/parser/parser.ts:381:17: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet
+--- FAIL: TestIncompleteCompilerAgrees (0.60s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	0.607s
+FAIL

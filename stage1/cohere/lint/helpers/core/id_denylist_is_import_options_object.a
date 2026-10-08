@@ -1,0 +1,10 @@
+import type { CoreArena } from './nodes.a';
+export function idDenylistIsImportOptionsObject(arena: CoreArena, index: number): boolean {
+    const parent = arena.node(index).parent; if(parent < 0) { return false; } const node = arena.node(parent);
+    if(node.kind === 'CallExpression' && node.expression >= 0 && arena.node(node.expression).kind === 'ImportKeyword') { return node.args.length >= 2 && node.args[1] === index; }
+    if(node.kind === 'PropertyAssignment' && node.initializer === index) {
+        const grandparent = node.parent;
+        return grandparent >= 0 && arena.node(grandparent).kind === 'ObjectLiteralExpression' && idDenylistIsImportOptionsObject(arena, grandparent);
+    }
+    return false;
+}

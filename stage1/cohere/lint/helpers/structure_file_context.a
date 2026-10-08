@@ -1,0 +1,35 @@
+export interface FileContext {
+    readonly isReactFile: boolean;
+    readonly isSpecialNextJsFile: boolean;
+    readonly isNetworkServiceFile: boolean;
+    readonly isLinkComponentFile: boolean;
+    readonly isHorizontalRuleComponentFile: boolean;
+    readonly isInLibrariesStructure: boolean;
+    readonly isPageFile: boolean;
+    readonly isLayoutFile: boolean;
+    readonly isLocalStorageServiceFile: boolean;
+}
+
+// Match Go's lexical path tests. Do not clean dot segments, change case or require
+// a terminal extension for exemptions that Go intentionally matches by substring.
+export function structureFileContext(fileName: string): FileContext {
+    const path = fileName.split('\\').join('/');
+    let special = path.endsWith('/route.ts') || path.endsWith('/route.tsx');
+    for (const base of ['page', 'layout', 'error', 'global-error', 'not-found', 'loading']) {
+        if (path.endsWith(`/${base}.tsx`) || path.endsWith(`/${base}.jsx`)) {
+            special = true;
+            break;
+        }
+    }
+    return {
+        isReactFile: path.endsWith('.tsx') || path.endsWith('.jsx'),
+        isSpecialNextJsFile: special,
+        isNetworkServiceFile: path.includes('/source/services/network/'),
+        isLinkComponentFile: path.includes('/components/navigation/Link.tsx') || path.includes('/components/navigation/Link.jsx'),
+        isHorizontalRuleComponentFile: path.includes('/components/layout/HorizontalRule.tsx') || path.includes('/components/layout/HorizontalRule.jsx'),
+        isInLibrariesStructure: path.includes('/libraries/structure/'),
+        isPageFile: path.endsWith('/page.tsx') || path.endsWith('/page.jsx'),
+        isLayoutFile: path.endsWith('/layout.tsx') || path.endsWith('/layout.jsx'),
+        isLocalStorageServiceFile: path.includes('/services/local-storage/LocalStorageService.ts') || path.includes('/services/local-storage/internal/LocalStorageServiceUtilities.ts'),
+    };
+}

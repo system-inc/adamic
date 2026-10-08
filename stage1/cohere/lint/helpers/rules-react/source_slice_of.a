@@ -1,0 +1,2 @@
+import type {RuleContext} from '../../context.ts';
+export function sourceSliceOf(context:RuleContext,index:number):string {const start=context.start(index);const end=context.node(index).end;return start<0 || end>context.source.length || start>end ? '' : context.source.slice(start,end);}

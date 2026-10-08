@@ -1,0 +1,5 @@
+import type { CoreArena } from './nodes.a';
+export function noRestrictedExportsNameText(arena: CoreArena, index: number): string {
+    if(index < 0) { return ''; } const node = arena.node(index);
+    return node.kind === 'Identifier' || node.kind === 'StringLiteral' ? node.text : '';
+}

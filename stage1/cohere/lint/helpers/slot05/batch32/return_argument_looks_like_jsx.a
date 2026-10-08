@@ -1,0 +1,16 @@
+import { panic } from 'adamic';
+import type { JsxNode } from './model.a';
+import { isJsxValue } from './is_jsx_value.a';
+import { jsxAfterParentheses } from './jsx_after_parentheses.a';
+export function returnArgumentLooksLikeJsx(nodes: readonly JsxNode[], index: number): boolean {
+    if (index < 0) { return false; }
+    let expression = index;
+    while ((nodes[expression] ?? panic('missing AST node')).parenthesized) { expression = (nodes[expression] ?? panic('missing AST node')).expression; }
+    if (expression < 0) { return false; }
+    if (isJsxValue(nodes, expression)) { return true; }
+    const node = (nodes[expression] ?? panic('missing AST node'));
+    if (node.conditional) {
+        return jsxAfterParentheses(nodes, node.whenTrue) || jsxAfterParentheses(nodes, node.whenFalse);
+    }
+    return false;
+}

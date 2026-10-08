@@ -1,0 +1,16 @@
+{"Time":"2026-10-08T12:12:07.659130156Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-08T12:12:07.680200226Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileArtifacts"}
+{"Time":"2026-10-08T12:12:07.680321398Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileArtifacts","Output":"=== RUN   TestProfileArtifacts\n","OutputType":"frame"}
+{"Time":"2026-10-08T12:12:14.801047264Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileArtifacts","Output":"    profile_test.go:75: checker compilation phases: load=164.807933ms lower=3.486045459s C=511.791423ms JavaScript=26.251623ms\n"}
+{"Time":"2026-10-08T12:12:47.497423398Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileArtifacts","Output":"    profile_test.go:75: release, counted and -O2 -g profiling builds saved in /tmp/adamic-fixture-extensions-profile\n"}
+{"Time":"2026-10-08T12:12:47.497502166Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileArtifacts","Output":"--- PASS: TestProfileArtifacts (39.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T12:12:47.497586493Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileArtifacts","Elapsed":39.82}
+{"Time":"2026-10-08T12:12:47.497617349Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree"}
+{"Time":"2026-10-08T12:12:47.497620324Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree","Output":"=== RUN   TestProfileSnapshotsAgree\n","OutputType":"frame"}
+{"Time":"2026-10-08T12:13:04.245510853Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree","Output":"    lint_test.go:302: cohere cases: 3879 unique source/rule/options combinations\n"}
+{"Time":"2026-10-08T12:16:01.862908701Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree","Output":"    profile_test.go:228: /tmp/adamic-fixture-extensions-profile: release, profiled and Node identical to Go: 43568596 bytes\n"}
+{"Time":"2026-10-08T12:16:01.874449538Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree","Output":"--- PASS: TestProfileSnapshotsAgree (194.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T12:16:01.874484971Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileSnapshotsAgree","Elapsed":194.38}
+{"Time":"2026-10-08T12:16:01.874492833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-08T12:16:01.95839775Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t234.299s\n"}
+{"Time":"2026-10-08T12:16:01.958566464Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":234.299}

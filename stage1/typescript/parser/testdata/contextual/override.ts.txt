@@ -1,0 +1,14 @@
+{
+    override = true;
+    override();
+    override.value;
+    override
+}
+{
+    override
+    class C {}
+}
+{
+    override
+    function f() {}
+}

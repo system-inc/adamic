@@ -1,0 +1,62 @@
+{
+  "base": "59451e23eefc9d83102afd6d1a26050d6c447227",
+  "tested_source_commit": "f7a9e23d8b601a63e432d9b9a03fb0188c6fb6c5",
+  "checks": {
+    "TestRulesAgree": {
+      "exit": 1,
+      "blocker": "shared fixed() panics on empty no-op edit"
+    },
+    "TestOwnedWitnesses": {
+      "exit": 0,
+      "matched_protocol_bytes": 118922
+    },
+    "TestMutants": {
+      "exit": 0,
+      "seconds": 774.744,
+      "passed_subtests": 41
+    }
+  },
+  "reproducer": {
+    "go_exit": 0,
+    "node_exit": 70
+  },
+  "setup": {
+    "seconds": 40,
+    "nproc": 5
+  },
+  "sha256": {
+    "messages.a": "bbc7511c9165a651f038fdce56a63648619110090a680c4fa8c833b4f3045c80",
+    "oracle.go": "c2e56eb2bed8a3f164d4b993c76ce308330049bee90df55cb8faa0414158316a",
+    "mutant.json": "7aedd2017511b6ba8d317214550f69647a66a21e47aa5edd96197ad5afaed584",
+    "REPORT.md": "e53da1aa9d6d104a60a9dea7c230e46898d0b27ce341c5cd8078ea13383ecbfe",
+    "MULTIEDIT_REPORT.md": "70be1300038f7803ccee5ada40953f0db8d49d8b272eee122a737d7d30664c21",
+    "rule.json": "fa9cd6279a3090610730274171468fd20fb31b81d8ff2ef4b8aa555f59391935",
+    "rule.a": "69f6bf2e3df3ddc848a716041f5c72f1303cba1ccfaa2fd1f2d38fabb90242fe",
+    "testdata/decline.options.json": "f05e1cb901ae0bad57452f5f06c0f5e202faff4973a566b618a7e2f3b0c68364",
+    "testdata/witness.ts.txt": "c9a10f6111178dfc84c884fe8142a2b4231d2fb6683f82030900c59b38deb3b0",
+    "testdata/decline.ts.txt": "32b385af4dc49f234802526772496f9b52abc8af23bb3879c826950d1fbab9a1",
+    "testdata/default-export.options.json": "b571dca7ac5930e37558b47ec973b1b0822ac19ee1955324ca48d9745ddf8d60",
+    "testdata/default-export.ts.txt": "24ed70419d5ff2d2fa94f0c640a06d5c5308b52a94ddf90392406326221aceb8",
+    "testdata/interface.options.json": "b571dca7ac5930e37558b47ec973b1b0822ac19ee1955324ca48d9745ddf8d60",
+    "testdata/interface.ts.txt": "4c8325eace72d1887bff12b4318deb56d8cac011e3db8a8c448cce56cac8053a",
+    "evidence/multiedit/consistent-type-definitions-multiedit-setup.log": "cfef79c6c9cb98f0b47d280057077e78bf192ff99385909972ef007f390bcc76",
+    "evidence/multiedit/consistent-type-definitions-multiedit-agreement.log": "c64dd2790a2824ebdc635a08bc5922c428793a79cad969a4dfce410f3c0cc35c",
+    "evidence/multiedit/rebase.log": "56bc6dde0be1acbd397425ce00ba4584eee68d81d245c0c2e5c69b3d75570f61",
+    "evidence/multiedit/consistent-type-definitions-multiedit-owned.log": "fbd4ba49da674ac2f8a98d23dbeb0188091a83fdec2625c6fb1da2a67ae4753e",
+    "evidence/multiedit/consistent-type-definitions-multiedit-mutants.log": "e4919afd78e9ea807323aa4c2e968f3cf486a683571b7b0e4cb707aa3458d7a1",
+    "evidence/multiedit/consistent-type-definitions-multiedit-gofmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/multiedit/consistent-type-definitions-multiedit-fetch.log": "e87176ac82bebf1656bdc20d2408e15e124b1e9b73fc5d695d6b184ca46e42ef",
+    "evidence/multiedit/consistent-type-definitions-multiedit-registry.log": "b40354216b7d6c5c941512f50be3ab192c47dbe8acbad191e805b0add0d00145",
+    "evidence/multiedit/consistent-type-definitions-multiedit-vet.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/multiedit/reproducer/node.stdout": "56de109ba92b09b54a5fcf2c6663257c07822fe3fe9315f9304ef1549fa04735",
+    "evidence/multiedit/reproducer/manifest": "e1af4aa0f37161db0340323181f202108992815f493c771429615a128edeaa42",
+    "evidence/multiedit/reproducer/overlay.json": "75f69c6b653bae1dbcae9f61289179280968a16443ebae9eea2b08d7692289e2",
+    "evidence/multiedit/reproducer/node.stderr": "d6ac11e7af9cdab64fbed0e67a24a529afb435a04f2d879dc6d339b44eda231a",
+    "evidence/multiedit/reproducer/commands.json": "8406c2f6bd462922795d5d237c03e41620d79b62d8370266beda425dcacba63f",
+    "evidence/multiedit/reproducer/build.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/multiedit/reproducer/go.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/multiedit/reproducer/go.stdout": "9e82e812bfa7a53c86186d239f9cec6d790e0b249f8c51dae1271c0adbe29464",
+    "evidence/multiedit/reproducer/build.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/multiedit/reproducer/no-semicolon.ts": "b04d99c2d9d99e95759907a9276e8830146aa25bda87b1afc7e4d4a9bccf5fa2"
+  }
+}

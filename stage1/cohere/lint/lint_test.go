@@ -125,22 +125,40 @@ func goOracleFrom(t *testing.T, sourceRoot string) string {
 
 func buildPort(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
-	if isPackage(directory) {
-		value := shared(fmt.Sprintf("port sanitize=%t", sanitize), func(value *sharedValue) {
-			value.path, value.err = sharedPath("scanner")
-			if value.err == nil {
-				value.err = buildPortTo(directory, sanitize, value.path)
-			}
-		})
-		if value.err != nil {
-			t.Fatal(value.err)
-		}
-		return value.path
+	built := checkerCompile(t, directory)
+	archive := ""
+	if built.bridge {
+		archive = checkerArchive(t, sanitize)
 	}
-	binary := filepath.Join(t.TempDir(), "scanner")
-	if err := buildPortTo(directory, sanitize, binary); err != nil {
+	started := time.Now()
+	binary := checkerBinary(t, built.c, archive, sanitize)
+	t.Logf("checker native build: %s", time.Since(started))
+	return binary
+}
+
+// Each registered mutant is built once and owns its binary until its subtest
+// completes. Retaining all 75 checker-linked binaries adds no build reuse. Its slot
+// of nativeBuilds covers the lowering too, which for a copy of the whole port is the
+// larger part of its memory.
+func buildMutantPort(t *testing.T, directory string) string {
+	t.Helper()
+	var binary string
+	err := nativeBuild(func() error {
+		built := checkerCompile(t, directory)
+		archive := ""
+		if built.bridge {
+			archive = checkerArchive(t, true)
+		}
+		started := time.Now()
+		var err error
+		binary, err = compileCheckerBinary(built.c, archive, true)
+		t.Logf("checker native mutant build: %s", time.Since(started))
+		return err
+	})
+	if err != nil {
 		t.Fatal(err)
 	}
+	t.Cleanup(func() { os.RemoveAll(filepath.Dir(binary)) })
 	return binary
 }
 
@@ -212,27 +230,13 @@ func recoveryRows(t *testing.T, oracle string, rows []string) []string {
 		return rows
 	}
 	answer := execute(t, "", oracle, "--manifest", manifest(t, rows), "--diagnostics")
-	flags := strings.Fields(string(answer.output))
-	if len(flags) != len(rows) {
-		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
-	}
-	result := make([]string, len(rows))
-	for index, row := range rows {
-		result[index] = row
-		if flags[index] != "1" {
-			continue
-		}
-		fields := strings.Split(row, "\t")
-		for len(fields) < 7 {
-			fields = append(fields, "")
-		}
-		if fields[6] == "" {
-			fields[6] = "recovery"
-		}
-		result[index] = strings.Join(fields, "\t")
+	result, err := classifyRecoveryRows(rows, strings.Fields(string(answer.output)))
+	if err != nil {
+		t.Fatal(err)
 	}
 	return result
 }
+
 func generated(t *testing.T) []string {
 	sources := []string{
 		"debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}",
@@ -251,6 +255,18 @@ func generated(t *testing.T) []string {
 		"async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}",
 	}
 	var rows []string
+	// Keep parser recovery regressions in the ordinary lint gate as well as profiles.
+	for _, name := range []string{"wave13_top_level_await_new.ts.txt", "top_level_await_new_script.ts.txt", "top_level_await_new_module.ts.txt"} {
+		data, err := os.ReadFile(filepath.Join(repository, "stage1/typescript/parser/testdata/lint_cases", name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(t.TempDir(), strings.TrimSuffix(name, ".txt"))
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			t.Fatal(err)
+		}
+		rows = append(rows, path+"\tno-new", path+"\tall")
+	}
 	for i, source := range sources {
 		path := filepath.Join(t.TempDir(), fmt.Sprintf("generated-%d.ts", i))
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
@@ -309,6 +325,31 @@ func compare(t *testing.T, oracle, binary, directory, path string) []byte {
 func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module string) []byte {
 	t.Helper()
 	want := execute(t, "", oracle, "--manifest", path)
+	manifestText, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bytes.HasPrefix(manifestText, []byte("program ")) {
+		prefix := filepath.Join(t.TempDir(), "transcript")
+		native := execute(t, "", binary, "--manifest", path, "--record", prefix)
+		runner := filepath.Join(repository, "oracle/node.mjs")
+		t.Logf("typed runtime time: Go program and lint=%s native program, lint and recording=%s", want.duration, native.duration)
+		for _, side := range []struct {
+			name string
+			run  execution
+		}{
+			{"native", native},
+			{"Node", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--replay", prefix)},
+			{"emitted JavaScript", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, module, "--manifest", path, "--replay", prefix)},
+		} {
+			if diff := difference(side.run.output, want.output); diff != "" {
+				t.Fatalf("%s: %s", side.name, diff)
+			}
+			t.Logf("typed runtime time: %s=%s", side.name, side.run.duration)
+		}
+		t.Logf("live Go, native, Node and emitted JavaScript replay identical: %d bytes", len(want.output))
+		return want.output
+	}
 	for _, side := range []struct {
 		name string
 		run  execution
@@ -321,8 +362,8 @@ func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module
 	return want.output
 }
 
-// Not parallel: upstream capture uses t.Setenv and a process-wide fixture capture destination.
 func TestRulesAgree(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -330,8 +371,21 @@ func TestRulesAgree(t *testing.T) {
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
 	rows := generated(t)
+	module := emittedJavaScript(t, directory)
+	typed := map[string]bool{}
+	for _, descriptor := range prepareRegistry(t, directory) {
+		typed[descriptor.Name] = descriptor.Typed
+	}
 	for _, row := range upstream(t) {
-		if strings.HasSuffix(row, "\tunsupported-recovery") {
+		fields := strings.Split(row, "\t")
+		if len(fields) > 1 && typed[fields[1]] {
+			config := filepath.Join(t.TempDir(), "tsconfig.json")
+			options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, fields[0])
+			if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+				t.Fatal(err)
+			}
+			compareWithJavaScript(t, oracle, binary, directory, manifest(t, []string{"program " + config, row}), module)
+		} else if strings.HasSuffix(row, "\tunsupported-recovery") {
 			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
 			checkRecoveryRefusal(t, oracle, binary, directory, row)
 		} else {
@@ -379,8 +433,8 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 	}
 }
 
-// Not parallel: the large sanitized corpus runs before timing samples.
 func TestCompilerAndStage1Agree(t *testing.T) {
+	t.Parallel()
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
@@ -619,8 +673,8 @@ func copyPort(t *testing.T, directory, from, to string, targets ...string) strin
 	return directory
 }
 
-// Not parallel: this semantic overlap check precedes timing samples.
 func TestLegacyMutants(t *testing.T) {
+	t.Parallel()
 	path := manifest(t, generated(t))
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", path).output
@@ -632,7 +686,7 @@ func TestLegacyMutants(t *testing.T) {
 			for _, side := range []struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.name, side.name)
 				}
@@ -647,12 +701,14 @@ func TestDecorationOptionMutant(t *testing.T) {
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
 	directory := mutant(t, "foldedRange(character, first, last)", "foldedRange(character, first, first)", "comments.ts")
+	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if bytes.Equal(side.run.output, want) {
 			t.Fatalf("decoration range mutant survived on %s", side.name)
@@ -672,12 +728,14 @@ func TestCountGuardMutant(t *testing.T) {
 	answer := execute(t, "", oracle, "--manifest", path).output
 	count := execute(t, "", oracle, "--manifest", path, "--count").output
 	directory := mutant(t, "if(countOnly) {\n        return linter.findings.length;", "if(countOnly) {\n        return linter.findings.length + 1;", "main.ts")
+	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name            string
 		ordinary, count execution
 	}{
 		{"Node", node(t, directory, path, false), node(t, directory, path, true)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false), emittedNode(t, directory, path, true)},
+		{"native", execute(t, "", binary, "--manifest", path), execute(t, "", binary, "--manifest", path, "--count")},
 	} {
 		if !bytes.Equal(side.ordinary.output, answer) {
 			t.Fatalf("%s mutant was caught outside the count check", side.name)
@@ -689,7 +747,8 @@ func TestCountGuardMutant(t *testing.T) {
 	}
 }
 
-// Not parallel: interleaved timing samples must not compete with tests in this package.
+// Not parallel: interleaved timing samples must not compete with tests in this package. A serial test
+// finishes before any parallel one is released, so nothing else runs while it samples.
 func TestThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
 		t.Skip("set ADAMIC_LINT_BENCH=1")
@@ -773,6 +832,7 @@ func TestThroughput(t *testing.T) {
 // of typescript-go's tree (#k4fm1vf) depends on it: its tables hold rows no link reaches. A rule or
 // harness pass that walks the table by row reports on the copies and fails here.
 func TestNodeTableIsLinkOnly(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -798,6 +858,7 @@ func TestNodeTableIsLinkOnly(t *testing.T) {
 // manifest (#tj6d455): one, two, and the machine's cores. Equal counts cannot see a reordered or repeated
 // case, so the whole output is compared, and the count mode too.
 func TestShardsAgree(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -852,6 +913,7 @@ func TestShardsAgree(t *testing.T) {
 const nativeCanaryRule = "react/jsx-no-comment-textnodes"
 
 func TestMutants(t *testing.T) {
+	t.Parallel()
 	oracle := goOracle(t)
 	descriptors := prepareRegistry(t, ".")
 	hasCanary := false
@@ -886,27 +948,67 @@ func TestMutants(t *testing.T) {
 					rows = append(rows, row)
 				}
 			}
-			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
+			if descriptor.Typed {
+				// Typed witnesses need a real project; syntax-only rows would skip the mutant.
+				rows = ownedWitnessRows(t, ".", descriptor)
+				files := make([]string, 0, len(rows))
+				for _, row := range rows {
+					files = append(files, strings.SplitN(row, "\t", 2)[0])
+				}
+				config := filepath.Join(t.TempDir(), "tsconfig.json")
+				options, err := json.Marshal(map[string]any{"compilerOptions": map[string]bool{"strict": true}, "files": files})
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(config, options, 0644); err != nil {
+					t.Fatal(err)
+				}
+				rows = append([]string{"program " + config}, rows...)
+			} else {
+				rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
+			}
 			path := manifest(t, rows)
 			want := execute(t, "", oracle, "--manifest", path).output
 			if change.File == "" {
 				change.File = descriptor.Module
 			}
 			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
-			mutatedNode := node(t, directory, path, false)
-			for _, side := range []struct {
+			type runtimeSide struct {
 				name string
 				run  execution
-			}{{"Node", mutatedNode}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
+			}
+			var sides []runtimeSide
+			if descriptor.Typed {
+				// A typed mutant's checker answers come from a live native run, which records the
+				// transcript Node and emitted JavaScript replay, so it is the one kind built natively.
+				// Its build takes a slot of nativeBuilds, the cap every native build in the package shares.
+				binary := buildMutantPort(t, directory)
+				prefix := filepath.Join(t.TempDir(), "transcript")
+				live := execute(t, "", binary, "--manifest", path, "--record", prefix)
+				runner := filepath.Join(repository, "oracle/node.mjs")
+				sides = []runtimeSide{
+					{"native", live},
+					{"Node", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--replay", prefix)},
+					{"emitted JavaScript", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emittedJavaScript(t, directory), "--manifest", path, "--replay", prefix)},
+				}
+			} else {
+				// A semantic mutant is held to Go on Node and emitted JavaScript only. Native's own
+				// lowering, JSX parsing, spans and serialization are held by the canary below, so a
+				// native build per rule bought no catch the other two miss, and it was most of this
+				// test's time: 1,735s of 2,218s on the seat with 83 rules (#axg2xys). The harness merge
+				// 9de097476 restored the per-rule build as if git had dropped it; the canary ruling had.
+				sides = []runtimeSide{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}}
+			}
+			for _, side := range sides {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
 				}
 				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
 			}
 			if descriptor.Name == nativeCanaryRule {
-				binary := buildPort(t, directory, true)
+				binary := buildMutantPort(t, directory)
 				got := execute(t, "", binary, "--manifest", path)
-				if diff := difference(got.output, mutatedNode.output); diff != "" {
+				if diff := difference(got.output, sides[0].run.output); diff != "" {
 					t.Fatalf("native canary differs from mutated Node: %s", diff)
 				}
 				t.Logf("sanitized native canary %s equals mutated Node: %d bytes", descriptor.Name, len(got.output))
@@ -944,24 +1046,14 @@ func rewritePortImports(t *testing.T, file, source string) string {
 
 func emittedJavaScript(t *testing.T, directory string) string {
 	t.Helper()
-	if isPackage(directory) {
-		value := shared("emitted JavaScript", func(value *sharedValue) {
-			value.path, value.err = sharedPath("lint.mjs")
-			if value.err == nil {
-				value.err = emitJavaScriptTo(directory, value.path)
-			}
-		})
-		if value.err != nil {
-			t.Fatal(value.err)
-		}
-		return value.path
-	}
+	built := checkerCompile(t, directory)
 	path := filepath.Join(t.TempDir(), "lint.mjs")
-	if err := emitJavaScriptTo(directory, path); err != nil {
+	if err := os.WriteFile(path, []byte(built.javascript), 0644); err != nil {
 		t.Fatal(err)
 	}
 	return path
 }
+
 func emittedNode(t *testing.T, directory, manifest string, count bool) execution {
 	t.Helper()
 	return runJavaScript(t, emittedJavaScript(t, directory), manifest, count)

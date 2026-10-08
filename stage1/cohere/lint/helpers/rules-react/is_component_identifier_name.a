@@ -1,0 +1,5 @@
+export function isComponentIdentifierName(name: string): boolean {
+    if (name.length === 0) { return false; }
+    const first = name.charCodeAt(0);
+    return first >= 65 && first <= 90;
+}

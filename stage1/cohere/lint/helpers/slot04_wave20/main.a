@@ -1,0 +1,26 @@
+import {panic,programArguments,readTextFile} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+interface SearchNode {present:boolean;jsx:boolean;call:boolean;isSwitchStatement:boolean;children:readonly number[];}
+import {hasJsxOrReactHookCalls} from './has_jsx_or_react_hook_calls.a';
+import {searchForJsxOrHook} from './search_for_jsx_or_hook.a';
+import {isHookCall} from '../react/react_is_hook_call.a';
+import {isHookName} from '../react/react_is_hook_name.a';
+import {isNamespacedMember} from '../react/namespaced_member.a';
+import type {HelperNode} from '../react/nodes.a';
+import {descendsForJsxSearch} from './descends_for_jsx_search.a';
+function field(c:OptionsJson,id:number,key:string):number {const n=c.node(id);const i=n.keys.indexOf(key);return n.children[i] ?? panic('field');}
+function flag(c:OptionsJson,id:number,key:string):boolean {return c.node(field(c,id,key)).text==='true';}
+function ints(c:OptionsJson,id:number,key:string):number[]{const values:number[]=[];for(const n of c.node(field(c,id,key)).children){values.push(Number(c.node(n).text));}return values;}
+function searchNodes(c:OptionsJson,row:number):readonly SearchNode[]{const result:SearchNode[]=[];for(const n of c.node(field(c,row,'Nodes')).children){result.push({present:flag(c,n,'Present'),jsx:flag(c,n,'Jsx'),call:flag(c,n,'Call'),isSwitchStatement:flag(c,n,'Switch'),children:ints(c,n,'Children')});}return result;}
+function reactNodes(c:OptionsJson,row:number):readonly HelperNode[]{const result:HelperNode[]=[];for(const n of c.node(field(c,row,'Nodes')).children){result.push({kind:c.node(field(c,n,'Kind')).text,text:c.node(field(c,n,'Text')).text,expression:Number(c.node(field(c,n,'Expression')).text),name:Number(c.node(field(c,n,'Name')).text),heritage:[],types:[]});}return result;}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+for(const row of c.node(root).children){
+ const nodes=searchNodes(c,row); const projected=reactNodes(c,row);
+ const nodeAt=(id:number):SearchNode=>{if(id<0){return {present:false,jsx:false,call:false,isSwitchStatement:false,children:[]};}return nodes[id] ?? panic('node');};
+ const hook=(id:number):boolean=>{
+ const n=projected[id] ?? panic('hook call');
+ const call={expression:n.expression<0 ? undefined : n.expression};
+ return isHookCall(call,(i:number):boolean=>(projected[i] ?? panic('identifier')).kind==='Identifier',(i:number):boolean=>(projected[i] ?? panic('access')).kind==='PropertyAccessExpression',(i:number):string=>(projected[i] ?? panic('text')).text,isHookName,(i:number,predicate:(name:string)=>boolean):boolean=>isNamespacedMember(projected,i,predicate));
+ };
+ for(const id of ints(c,row,'Ids')){const n=nodeAt(id); console.log(`${hasJsxOrReactHookCalls(id,nodeAt,hook)}`); for(const depth of ints(c,row,'Depths')){console.log(`${searchForJsxOrHook(id,depth,nodeAt,hook)}`);} console.log(`${descendsForJsxSearch(n.present,n.isSwitchStatement)}`);}
+}

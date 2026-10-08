@@ -1,0 +1,12 @@
+// Message descriptions copied verbatim from Go cohere.
+export function message(id: string, container: string, name: string, literals: string, primitive: string): string {
+    return id === 'errorTypeOverrides'
+                ? `'${name}' is an 'error' type that acts as 'any' and overrides all other types in this ${container} type.`
+                : id === 'literalOverridden'
+                  ? `${literals} is overridden by ${primitive} in this union type.`
+                  : id === 'overridden'
+                    ? `'${name}' is overridden by other types in this ${container} type.`
+                    : id === 'primitiveOverridden'
+                      ? `${primitive} is overridden by the ${literals} in this intersection type.`
+                      : `'${name}' overrides all other types in this ${container} type.`;
+}

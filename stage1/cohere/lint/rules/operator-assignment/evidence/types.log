@@ -1,0 +1,81 @@
+stage1/cohere/lint/main.ts:11:7: variable junkRows: boolean
+stage1/cohere/lint/main.ts:13:10: function run: (row: string, countOnly: boolean, program?: number, replayPrefix?: string, recordPrefix?: string, caseNumber?: number) => number
+stage1/cohere/lint/main.ts:13:14: parameter row: string
+stage1/cohere/lint/main.ts:13:27: parameter countOnly: boolean
+stage1/cohere/lint/main.ts:13:47: parameter program: number
+stage1/cohere/lint/main.ts:13:60: parameter replayPrefix: string
+stage1/cohere/lint/main.ts:13:79: parameter recordPrefix: string
+stage1/cohere/lint/main.ts:13:98: parameter caseNumber: number
+stage1/cohere/lint/main.ts:14:11: variable fields: string[]
+stage1/cohere/lint/main.ts:15:11: variable path: string
+stage1/cohere/lint/main.ts:16:11: variable source: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/main.ts:20:11: variable parser: Parser
+stage1/cohere/lint/main.ts:21:11: variable scanner: Scanner
+stage1/cohere/lint/main.ts:22:9: variable replay: string | undefined
+stage1/cohere/lint/main.ts:23:9: variable replayError: string
+stage1/cohere/lint/main.ts:24:11: variable rowHeader: string
+stage1/cohere/lint/main.ts:26:15: variable transcript: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/main.ts:31:11: variable checker: Checker | undefined
+stage1/cohere/lint/main.ts:32:11: variable settings: Settings
+stage1/cohere/lint/main.ts:34:11: variable linter: Linter
+stage1/cohere/lint/main.ts:50:19: variable refusal: Refusal
+stage1/cohere/lint/main.ts:54:72: variable skipped: string
+stage1/cohere/lint/main.ts:58:11: variable offsets: number[]
+stage1/cohere/lint/main.ts:59:11: variable lines: number[]
+stage1/cohere/lint/main.ts:60:9: variable bytes: number
+stage1/cohere/lint/main.ts:61:13: variable index: number
+stage1/cohere/lint/main.ts:62:15: variable code: number
+stage1/cohere/lint/main.ts:73:15: variable finding: Finding
+stage1/cohere/lint/main.ts:74:15: variable start: number
+stage1/cohere/lint/main.ts:75:15: variable end: number
+stage1/cohere/lint/main.ts:76:13: variable left: number
+stage1/cohere/lint/main.ts:77:13: variable right: number
+stage1/cohere/lint/main.ts:79:19: variable middle: number
+stage1/cohere/lint/main.ts:87:15: variable line: number
+stage1/cohere/lint/main.ts:88:15: variable column: number
+stage1/cohere/lint/main.ts:90:13: variable repair: string
+stage1/cohere/lint/main.ts:91:13: variable replacement: string
+stage1/cohere/lint/main.ts:92:13: variable description: string
+stage1/cohere/lint/main.ts:93:13: variable editStart: number
+stage1/cohere/lint/main.ts:94:13: variable editEnd: number
+stage1/cohere/lint/main.ts:95:13: variable complete: boolean
+stage1/cohere/lint/main.ts:97:19: variable suggestion: Suggestion
+stage1/cohere/lint/main.ts:98:19: variable edit: SuggestionEdit | undefined
+stage1/cohere/lint/main.ts:115:41: parameter value: SuggestionEdit
+stage1/cohere/lint/main.ts:120:26: parameter value: SuggestionEdit
+stage1/cohere/lint/main.ts:136:19: variable extra: SuggestionEdit
+stage1/cohere/lint/main.ts:142:23: variable suggestion: Suggestion
+stage1/cohere/lint/main.ts:146:27: variable edit: SuggestionEdit
+stage1/cohere/lint/main.ts:158:15: variable fixed: string
+stage1/cohere/lint/main.ts:159:19: variable rejection: string
+stage1/cohere/lint/main.ts:170:10: function save: (path: string, text: string) => void
+stage1/cohere/lint/main.ts:170:15: parameter path: string
+stage1/cohere/lint/main.ts:170:29: parameter text: string
+stage1/cohere/lint/main.ts:171:11: variable result: { readonly kind: "Ok"; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/main.ts:174:7: variable args: readonly string[]
+stage1/cohere/lint/main.ts:175:7: variable first: string
+stage1/cohere/lint/main.ts:177:11: variable manifest: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/main.ts:181:11: variable countOnly: boolean
+stage1/cohere/lint/main.ts:186:9: variable shardIndex: number
+stage1/cohere/lint/main.ts:187:9: variable shardCount: number
+stage1/cohere/lint/main.ts:188:11: variable shardFlag: number
+stage1/cohere/lint/main.ts:190:15: variable shard: string[]
+stage1/cohere/lint/main.ts:197:11: variable rows: string[]
+stage1/cohere/lint/main.ts:197:52: parameter row: string
+stage1/cohere/lint/main.ts:198:11: variable declaration: string
+stage1/cohere/lint/main.ts:199:11: variable config: string
+stage1/cohere/lint/main.ts:200:28: parameter row: string
+stage1/cohere/lint/main.ts:201:11: variable recordAt: number
+stage1/cohere/lint/main.ts:202:11: variable replayAt: number
+stage1/cohere/lint/main.ts:203:11: variable recordPrefix: string
+stage1/cohere/lint/main.ts:204:11: variable replayPrefix: string
+stage1/cohere/lint/main.ts:207:9: variable header: string
+stage1/cohere/lint/main.ts:209:15: variable contents: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/main.ts:214:9: variable headerError: string
+stage1/cohere/lint/main.ts:216:15: variable recorded: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/main.ts:220:11: variable opened: ProgramResult
+stage1/cohere/lint/main.ts:221:11: variable program: number
+stage1/cohere/lint/main.ts:223:9: variable count: number
+stage1/cohere/lint/main.ts:224:9: variable caseNumber: number
+stage1/cohere/lint/main.ts:225:15: variable row: string
+stage1/cohere/lint/main.ts:239:15: variable released: ReleaseResult

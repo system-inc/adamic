@@ -1,0 +1,31 @@
+BUILD base
+BUILD landing
+COMMAND ['/workspace/scratch/parser-land-valgrind/usr/bin/valgrind', '--tool=callgrind', '--callgrind-out-file=/workspace/scratch/parser-land-counts/base.callgrind', '/workspace/scratch/parser-land-counts/base-native', '--manifest', '/workspace/scratch/parser-land-counts/compiler.manifest', '--whole', '--count']
+base {'instructions': 7403103936, 'nodes': 887803}
+COMMAND ['/workspace/scratch/parser-land-valgrind/usr/bin/valgrind', '--tool=callgrind', '--callgrind-out-file=/workspace/scratch/parser-land-counts/area.callgrind', '/workspace/scratch/parser-land-counts/area-native', '--manifest', '/workspace/scratch/parser-land-counts/compiler.manifest', '--whole', '--count']
+area {'instructions': 7412969065, 'nodes': 887803}
+COMMAND ['/workspace/scratch/parser-land-valgrind/usr/bin/valgrind', '--tool=callgrind', '--callgrind-out-file=/workspace/scratch/parser-land-counts/recovery.callgrind', '/workspace/scratch/parser-land-counts/recovery-native', '--manifest', '/workspace/scratch/parser-land-counts/compiler.manifest', '--whole', '--count']
+recovery {'instructions': 8916818105, 'nodes': 887803}
+COMMAND ['/workspace/scratch/parser-land-valgrind/usr/bin/valgrind', '--tool=callgrind', '--callgrind-out-file=/workspace/scratch/parser-land-counts/landing.callgrind', '/workspace/scratch/parser-land-counts/landing-native', '--manifest', '/workspace/scratch/parser-land-counts/compiler.manifest', '--whole', '--count']
+landing {'instructions': 8922990259, 'nodes': 887803}
+{
+  "base": {
+    "instructions": 7403103936,
+    "nodes": 887803
+  },
+  "area": {
+    "instructions": 7412969065,
+    "nodes": 887803
+  },
+  "recovery": {
+    "instructions": 8916818105,
+    "nodes": 887803
+  },
+  "landing": {
+    "instructions": 8922990259,
+    "nodes": 887803
+  },
+  "recovery_added": 1513714169,
+  "landing_added": 1510021194,
+  "beyond_recovery": -3692975
+}

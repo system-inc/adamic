@@ -1,0 +1,6 @@
+=== RUN   TestIncompleteCompilerAgrees
+    incomplete_test.go:32: /workspace/adamic/stage1/typescript/parser/statements.ts:116:21: error TS2339: Property 'next' does not exist on type 'Scanner'.
+--- FAIL: TestIncompleteCompilerAgrees (0.65s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	0.659s
+FAIL

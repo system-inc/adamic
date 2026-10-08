@@ -1,0 +1,20 @@
+Go count
+1
+exit=0
+Go wire
+case 0
+/tmp/no-inferrable-probe/multifix.ts:1:13
+  @typescript-eslint/no-inferrable-types  Type `number` is trivially inferred from a `number` literal, so the annotation restates what the initializer already says. Remove it and the declaration means exactly the same thing with one fewer place to keep in sync.
+
+panic: unexpected fix shape
+
+goroutine 1 [running]:
+main.run({0x2346ecf5b440?, 0x2346ed1e0880?}, 0x0, 0x2346ed1e0880)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:75 +0x1265
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:233 +0x374
+exit=2
+Node wire
+case 0
+adamic: panic: a finding carries at most one automatic edit
+exit=70

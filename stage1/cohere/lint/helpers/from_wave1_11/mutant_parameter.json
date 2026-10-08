@@ -1,0 +1,6 @@
+{
+  "name": "parameter_kind_guard_lost",
+  "file": "structure_parameter_type_node.a",
+  "from": "!present || kind !== 171",
+  "to": "!present"
+}

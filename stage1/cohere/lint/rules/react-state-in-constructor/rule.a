@@ -1,0 +1,39 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { messageInConstructor, messageClassProperty } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ nodes: HelperNode[] = [];
+ constructor(context: RuleContext) {this.context=context;}
+ prepare(root: number): void {this.nodes=project(this.context.parser.nodes);}
+ unwrap(index: number): number {let current=index;while(current>=0&&this.context.node(current).kind==='ParenthesizedExpression'){current=this.context.node(current).children[0] ?? -1;}return current;}
+ component(index: number): boolean {
+  if(index<0) {return false;}
+  if(reactEs6ComponentClass(this.nodes,index,(n: number): boolean => isComponentBase(this.nodes,n,isComponentBaseName))) {return true;}
+  const node=this.nodes[index] ?? panic('class projection');
+  for(const clause of node.heritage) {for(const type of (this.nodes[clause] ?? panic('clause')).types) {const target=this.nodes[type] ?? panic('type');if(target.kind==='ExpressionWithTypeArguments' && target.expression>=0 && this.context.node(target.expression).kind==='ParenthesizedExpression' && isComponentBase(this.nodes,this.unwrap(target.expression),isComponentBaseName)) {return true;}}}
+  return false; // no component heritage
+ }
+ enclosing(index: number): number {let parent=this.context.parents[index] ?? -1;while(parent>=0){const kind=this.context.node(parent).kind;if(kind==='ClassDeclaration'||kind==='ClassExpression'){return parent;}parent=this.context.parents[parent] ?? -1;}return -1;}
+ insideConstructor(index: number): boolean {let current=index;while(current>=0){if(this.context.node(current).kind==='Constructor'){return true;}current=this.context.parents[current] ?? -1;}return false;}
+ visit(index: number, parent: number): void {
+  const node=this.context.node(index);const never=this.context.settings.read('option','') === 'never' || this.context.settings.read('mode','') === 'Never';
+  if(!never) {
+   if(node.kind!=='PropertyDeclaration'){return;}
+   let state=false;for(const child of node.children){const name=this.context.node(child);if(name.kind==='StaticKeyword'){return;}if((name.kind==='Identifier'&&name.text==='state')||(name.kind==='PrivateIdentifier'&&name.text==='#state')){state=true;} // first non-modifier child is the property key
+    if(!name.kind.endsWith('Keyword')&&name.kind!=='Decorator'){break;}}
+   if(state&&this.component(this.enclosing(index))){this.context.report(index,'react/state-in-constructor','stateInitConstructor',messageInConstructor,'','','');}
+   return;
+  }
+  if(node.kind!=='BinaryExpression'||!['EqualsToken','PlusEqualsToken','MinusEqualsToken','AsteriskEqualsToken','AsteriskAsteriskEqualsToken','SlashEqualsToken','PercentEqualsToken','LessThanLessThanEqualsToken','GreaterThanGreaterThanEqualsToken','GreaterThanGreaterThanGreaterThanEqualsToken','AmpersandEqualsToken','BarEqualsToken','CaretEqualsToken','BarBarEqualsToken','AmpersandAmpersandEqualsToken','QuestionQuestionEqualsToken'].includes(this.context.node(node.children[1] ?? panic('assignment operator')).kind)){return;}
+  const left=this.unwrap(node.children[0] ?? -1);if(left<0||this.context.node(left).kind!=='PropertyAccessExpression'){return;}
+  const target=this.context.node(left);const receiver=this.unwrap(target.children[0] ?? -1);const name=target.children[1] ?? -1;
+  if(receiver>=0&&this.context.node(receiver).kind==='ThisKeyword'&&name>=0&&this.context.node(name).kind==='Identifier'&&this.context.node(name).text==='state'&&this.insideConstructor(index)&&this.component(this.enclosing(index))){this.context.report(index,'react/state-in-constructor','stateInitClassProp',messageClassProperty,'','','');}
+ }
+}
+export function create(context: RuleContext): Rule {return new Rule(context);}

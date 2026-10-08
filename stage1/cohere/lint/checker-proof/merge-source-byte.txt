@@ -1,0 +1,11 @@
+=== RUN   TestCheckerCacheSourceByte
+    checker_cache_test.go:34: checker compilation phases: load=208.922767ms lower=4.339156129s C=661.868295ms JavaScript=27.986725ms
+    checker_cache_test.go:34: checker native build: 4.656924112s
+    checker_cache_test.go:34: checker compilation phases: load=197.573562ms lower=4.135760132s C=601.164887ms JavaScript=30.365023ms
+    checker_cache_test.go:34: checker native build: 5.238989617s
+    checker_cache_test.go:62: runtime 0: source-byte mutant caught by findings comparison; before=eb012aee104c7b3053ee0ac10d0ed8053abf3c69890157ef07061db2ad4bce29 after=f68923abb2c08a900aa6a508223fc0dfbae2d17893ce6895dfa7d43cdbe0463f
+    checker_cache_test.go:62: runtime 1: source-byte mutant caught by findings comparison; before=eb012aee104c7b3053ee0ac10d0ed8053abf3c69890157ef07061db2ad4bce29 after=f68923abb2c08a900aa6a508223fc0dfbae2d17893ce6895dfa7d43cdbe0463f
+    checker_cache_test.go:62: runtime 2: source-byte mutant caught by findings comparison; before=eb012aee104c7b3053ee0ac10d0ed8053abf3c69890157ef07061db2ad4bce29 after=f68923abb2c08a900aa6a508223fc0dfbae2d17893ce6895dfa7d43cdbe0463f
+    checker_cache_test.go:68: generated C before=fd25fec865705ac6d82add5cf778980714e7e350102a93250118361073232cab after=980c7cb55ff6596b88efb00b38c8bb21c3199b2f7b25f65edfbc7c0583a3f1d1; emitted JavaScript before=013dfffb42effac5de31525abcffca7e597e17e738b1ea412a10909c87dfb94a after=3bcbe710fde2c1daec4b19db600e38e1391c00c4dabc3370729269a9a658ab43
+    checker_cache_test.go:34: checker native build: 9.49946ms
+--- PASS: TestCheckerCacheSourceByte (30.27s)
