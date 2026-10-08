@@ -73,16 +73,20 @@ func TestChildWallBackstop(t *testing.T) {
 
 // A silent child may wait longer than its entire CPU budget and still finish.
 // The full compiler comparison additionally exercises real shards under burners.
+// The budget sits well above the child's own CPU (two 200 ms spins plus Node's
+// startup, which a loaded gate box can push past a second), and the wait well
+// above the budget, so only a guard that counts wall time instead of CPU fails.
 func TestChildCPUWaitGuard(t *testing.T) {
-	command := exec.Command("node", "-e", `const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},1200);`)
+	const budget = 3 * time.Second
+	command := exec.Command("node", "-e", `const start=process.cpuUsage(); while(Object.values(process.cpuUsage(start)).reduce((a,b)=>a+b,0) < 200000) {} setTimeout(()=>{const again=process.cpuUsage(); while(Object.values(process.cpuUsage(again)).reduce((a,b)=>a+b,0) < 200000) {}},3500);`)
 	started := time.Now()
-	if err := testguard.Run(command, time.Second, testguard.Ceiling); err != nil {
+	if err := testguard.Run(command, budget, testguard.Ceiling); err != nil {
 		t.Fatal(err)
 	}
 	wall := time.Since(started)
 	cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
-	if wall <= time.Second || cpu >= time.Second {
-		t.Fatalf("silent child: wall %s CPU %s", wall, cpu)
+	if wall <= budget || cpu >= budget {
+		t.Fatalf("silent child: wall %s CPU %s, budget %s", wall, cpu, budget)
 	}
-	t.Logf("silent healthy child survived: wall %s CPU %s, budget 1s", wall, cpu)
+	t.Logf("silent healthy child survived: wall %s CPU %s, budget %s", wall, cpu, budget)
 }
