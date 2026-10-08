@@ -1687,6 +1687,11 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		}
 		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional}), nil
 	}
+	if object.Type() == ir.Object {
+		if value, handled, err := l.indexedTupleRead(node, object); handled {
+			return value, err
+		}
+	}
 	if object.Type() == ir.Object && !optional && !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
 		return l.finiteElementRead(node, object)
 	}
