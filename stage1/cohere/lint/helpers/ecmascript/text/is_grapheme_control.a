@@ -1,0 +1,6 @@
+import { category } from './unicode_tables.a';
+import { isGraphemeExtend } from './is_grapheme_extend.a';
+export function isGraphemeControl(c: number): boolean {
+ if(category(c, 'Cc') || category(c, 'Zl') || category(c, 'Zp')) { return true; }
+ return category(c, 'Cf') && !isGraphemeExtend(c);
+}

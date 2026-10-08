@@ -1,0 +1,2 @@
+import { hangulSyllable } from './hangul_syllable.a';
+export function hangulVowelSyllable(c: number): boolean { return hangulSyllable(c) && (c - 0xac00) % 28 === 0; }

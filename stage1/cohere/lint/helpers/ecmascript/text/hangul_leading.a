@@ -1,0 +1,1 @@
+export function hangulLeading(c: number): boolean { return c >= 4352 && c <= 4447; }
