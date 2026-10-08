@@ -331,12 +331,14 @@ func nativeMutant(t *testing.T, program *ir.Program, arguments ...string) run {
 	t.Helper()
 	directory := t.TempDir()
 	options := native.Options{Sanitize: true}
-	library, err := native.RuntimeLibrary("", options)
+	emitted := native.C(program)
+	// The runtime is compiled with the features the emitted C turns on, so their layouts agree.
+	library, err := native.RuntimeLibraryForSource("", emitted, options)
 	if err != nil {
 		t.Fatal(err)
 	}
 	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "mutant")
-	write(t, source, []byte(native.C(program)))
+	write(t, source, []byte(emitted))
 	flags := native.Flags(options)
 	for index, flag := range flags {
 		if flag == "-O1" {

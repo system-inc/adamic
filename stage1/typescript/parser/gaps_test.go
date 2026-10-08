@@ -92,7 +92,6 @@ func TestClassMethodInterfaceGap(t *testing.T) {
 }
 
 func TestClosedOptionalFunctionValueGap(t *testing.T) {
-	t.Parallel()
 	path, err := filepath.Abs("gaps/5_optional_function_value.ts")
 	if err != nil {
 		t.Fatal(err)
