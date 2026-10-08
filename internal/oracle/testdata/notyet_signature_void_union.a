@@ -1,0 +1,16 @@
+// Reduction of utilities.ts bindParentToChildIgnoringJSDoc: skip or fall through.
+let visited = 0;
+function visit(skip: boolean): void | 'skip' {
+    if (skip) {
+        return 'skip';
+    }
+    visited += 1;
+}
+function explicit(skip: boolean): void | number {
+    if (skip) { return 0; }
+    visited += 2;
+    return;
+}
+console.log(visit(true) ?? 'continued');
+console.log(visit(false) ?? 'continued');
+console.log(`${explicit(true) ?? -1} ${explicit(false) ?? -1} ${visited}`);

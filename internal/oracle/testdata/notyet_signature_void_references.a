@@ -1,0 +1,23 @@
+// Void is an undefined exit beside an owned reference or a differently held value.
+interface Builder { readonly name: string; }
+interface Watch { readonly count: number; }
+function builder(present: boolean): void | Builder {
+    if (present) { return { name: ['build', 'er'].join('') }; }
+}
+function watch(present: boolean): void | Watch {
+    if (present) { return { count: 7 }; }
+}
+function either(kind: number): void | Builder | Watch {
+    if (kind === 1) { return { name: ['either', 'builder'].join('-') }; }
+    if (kind === 2) { return { count: 11 }; }
+}
+function mixed(kind: number): void | number | Builder {
+    if (kind === 1) { return 13; }
+    if (kind === 2) { return { name: ['mixed', 'builder'].join('-') }; }
+}
+function absent(): void | undefined { return undefined; }
+console.log(`${typeof builder(true)} ${typeof builder(false)}`);
+console.log(`${typeof watch(true)} ${typeof watch(false)}`);
+console.log(`${typeof either(1)} ${typeof either(2)} ${typeof either(0)}`);
+console.log(`${typeof mixed(1)} ${typeof mixed(2)} ${typeof mixed(0)}`);
+console.log(`${typeof absent()}`);

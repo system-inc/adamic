@@ -236,8 +236,8 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 // The binder marks a syntactic end even for a switch the checker proved exhaustive. Only the
 // checker's result type can authorize returning undefined at that end.
 func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
-	result := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration))
-	return result.Flags()&checker.TypeFlagsVoid != 0 || l.includesUndefined(result)
+	result := l.concrete(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration)))
+	return signatureIncludesVoid(result) || l.includesUndefined(result)
 }
 
 // An undefined-only result still has a value: callers can observe it. Use the
@@ -248,5 +248,50 @@ func (l *lowering) signatureResult(proven *checker.Type) (ir.Type, bool) {
 	if concrete.Flags()&checker.TypeFlagsUndefined != 0 {
 		return ir.Object, true
 	}
+	if concrete.Flags()&checker.TypeFlagsUnion != 0 && signatureIncludesVoid(concrete) {
+		var shared ir.Type
+		mixed := false
+		for _, member := range concrete.Types() {
+			if member.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
+				continue
+			}
+			// Null needs a distinct sentinel when undefined is also possible.
+			// Do not collapse it into the absent reference used for void.
+			if l.includesNull(member) {
+				return 0, false
+			}
+			held, known := l.representation(member)
+			if !known {
+				return 0, false
+			}
+			if shared != 0 && held != shared {
+				mixed = true
+			}
+			shared = held
+		}
+		if shared == 0 {
+			return ir.Object, true
+		}
+		if mixed {
+			return ir.Union, true
+		}
+		return ir.Maybe(shared), true
+	}
 	return l.representation(proven)
+}
+
+// A void member permits an implicit undefined result just as an undefined member
+// does. The checker puts void on the member, not on the union itself.
+func signatureIncludesVoid(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsVoid != 0 {
+		return true
+	}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if member.Flags()&checker.TypeFlagsVoid != 0 {
+				return true
+			}
+		}
+	}
+	return false
 }
