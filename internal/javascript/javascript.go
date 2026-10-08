@@ -1026,6 +1026,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MaybeToString:
 		return "String(" + e.value(expression.Value) + ")"
 	case ir.Coalesce:
+		if expression.UndefinedOnly && expression.Panic != nil {
+			return "adamicDefined(" + e.value(expression.Value) + ", " + e.value(expression.Panic) + ")"
+		}
 		if expression.Panic != nil {
 			return "(" + e.value(expression.Value) + " ?? panic(" + e.value(expression.Panic) + "))"
 		}

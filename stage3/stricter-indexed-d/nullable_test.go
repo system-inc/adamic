@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -99,4 +100,52 @@ observe(values[3]);
 		t.Fatal("NULL sentinel mutant survived")
 	}
 	t.Logf("Node controls %q; release, sanitized and JS match; NULL sentinel mutant caught: exit=%d stdout=%q stderr=%q", node.stdout, got.code, got.stdout, got.stderr)
+}
+
+func TestNullableStringPresenceGuard(t *testing.T) {
+	for _, values := range []string{`[null]`, `["ma" + "de"]`, `[]`} {
+		t.Run(values, func(t *testing.T) {
+			source := `const values: (string | null)[] = ` + values + `; const index = 0;
+const value: string | null = values[index];
+console.log(String(value === null));
+console.log(String(value === undefined));
+console.log(String(value == null));
+console.log(typeof value);
+console.log(String(value));
+console.log(value);
+`
+			program, path, node := nullableProgram(t, source, false)
+			checks := ir.InsertedChecks(program)
+			where := path + ":2:30"
+			if len(checks) != 1 || checks[0].Kind != "indexed-presence" || checks[0].Where != where {
+				t.Fatalf("indexed guard: %+v", checks)
+			}
+			want := node
+			if values == "[]" {
+				want = result{stderr: "adamic: panic: indexed read is absent: " + where + "\n", code: 70}
+			}
+			c := nullableBackends(t, program, want)
+			if values == "[]" {
+				panicCall := regexp.MustCompile(`adamic_panic\([^;\n]*->bytes[^;\n]*\);`)
+				if len(panicCall.FindAllString(c, -1)) != 1 {
+					t.Fatal("must erase exactly one presence guard")
+				}
+				for _, sanitize := range []bool{false, true} {
+					binary := filepath.Join(t.TempDir(), fmt.Sprintf("no-guard-%t", sanitize))
+					if err := native.Build(panicCall.ReplaceAllString(c, "(void)0;"), binary, native.Options{Sanitize: sanitize}); err != nil {
+						t.Fatalf("mutant build is not a kill: %v", err)
+					}
+					got := run(binary)
+					if got != node {
+						t.Fatalf("guard mutant must expose Node's absent value: %+v, want %+v", got, node)
+					}
+					if got == want {
+						t.Fatal("presence guard mutant survived")
+					}
+					t.Logf("erase-guard mutant caught sanitize=%t: exit=%d stdout=%q stderr=%q", sanitize, got.code, got.stdout, got.stderr)
+				}
+			}
+			t.Logf("Node %q; JS, release and sanitized agree with expected exit=%d stderr=%q", node.stdout, want.code, want.stderr)
+		})
+	}
 }

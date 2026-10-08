@@ -1,0 +1,15 @@
+=== RUN   TestNullableStringPresenceGuard
+=== RUN   TestNullableStringPresenceGuard/[null]
+    nullable_test.go:148: Node "true\nfalse\ntrue\nobject\nnull\nnull\n"; JS, release and sanitized agree with expected exit=0 stderr=""
+=== RUN   TestNullableStringPresenceGuard/["ma"_+_"de"]
+    nullable_test.go:148: Node "false\nfalse\nfalse\nstring\nmade\nmade\n"; JS, release and sanitized agree with expected exit=0 stderr=""
+=== RUN   TestNullableStringPresenceGuard/[]
+    nullable_test.go:145: erase-guard mutant caught sanitize=false: exit=0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+    nullable_test.go:145: erase-guard mutant caught sanitize=true: exit=0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+    nullable_test.go:148: Node "false\ntrue\ntrue\nundefined\nundefined\nundefined\n"; JS, release and sanitized agree with expected exit=70 stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestNullableStringPresenceGuard3507027073/001/nullable.ts:2:30\n"
+--- PASS: TestNullableStringPresenceGuard (1.61s)
+    --- PASS: TestNullableStringPresenceGuard/[null] (0.47s)
+    --- PASS: TestNullableStringPresenceGuard/["ma"_+_"de"] (0.47s)
+    --- PASS: TestNullableStringPresenceGuard/[] (0.67s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	1.613s
