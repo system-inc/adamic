@@ -1656,3 +1656,14 @@ only these rows when the repository-wide counts refresh is blocked by unrelated
 fixtures. The required TestCountsAreRecorded command was also run and failed;
 three lowering failures reproduce with the starting production source. No full
 gate or successful complete counts refresh is claimed.
+
+Tuple numeric carrier hook: phantomBase consults tupleNumericCarrierField for
+required any-valued fields of imported numeric intersection declarations only.
+The existing primitive-name inventory proves the brand name absent from number
+own/prototype properties; that read yields undefined, an inhabitant of any.
+Numeric kind and literal constraints remain checked by the existing scalar
+contract, and demanded any-valued reads still refuse. Written Adamic brands
+retain the void-only refusal rule. Mixed-union classification recognizes the
+same proven scalar carrier; no numeric alias replaces an original declaration.
+TestPhantomPrimitiveNames checks the inventory against Node, and the original
+brand-read control pins Node's undefined and Adamic's any-read refusal.

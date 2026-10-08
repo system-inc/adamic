@@ -1,9 +1,22 @@
 package lower
 
 import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
+
+// Upstream numeric IDs have a required any brand. A number cannot carry an
+// own brand property; the existing prototype-name inventory proves this name
+// absent, so its value is undefined, which inhabits any. Keep the number kind
+// check. This does not make any usable: a demanded any-valued read still refuses.
+// Written Adamic declarations retain phantomRefusal's void-only rule.
+func (l *lowering) tupleNumericCarrierField(primitive *checker.Type, field *ast.Symbol) bool {
+	if primitive.Flags()&checker.TypeFlagsNumberLike == 0 || field.Flags&ast.SymbolFlagsOptional != 0 || l.checker.GetTypeOfSymbol(field).Flags()&checker.TypeFlagsAny == 0 || len(field.Declarations) == 0 {
+		return false
+	}
+	return ast.GetSourceFileOfNode(field.Declarations[0]).IsDeclarationFile && !primitiveMember(primitive.Flags(), field.Name)
+}
 
 func fixedViewTuple(target *checker.Type) bool {
 	return checker.IsTupleType(target) && checker.TupleType_combinedFlags(target.TargetTupleType())&checker.ElementFlagsNonRequired == 0

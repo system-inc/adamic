@@ -27,7 +27,7 @@ func (l *lowering) objectPrimitiveViewType(target *checker.Type) bool {
 			objects++
 		} else if of == ir.Object && member.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(member) && (len(l.checker.GetIndexInfosOfType(member)) == 0 || fixedViewTuple(member)) {
 			objects++
-		} else if interfaceScalar(member) && (of == ir.String || of == ir.Boolean || of == ir.Number) {
+		} else if (interfaceScalar(member) || l.phantomBase(member) != nil) && (of == ir.String || of == ir.Boolean || of == ir.Number) {
 			primitives++
 		} else {
 			return false
@@ -55,7 +55,7 @@ func (l *lowering) objectPrimitiveBoxedField(property *ast.Node) bool {
 			continue
 		}
 		of, known := l.representation(member)
-		if !known || !interfaceScalar(member) || (of != ir.Number && of != ir.String && of != ir.Boolean) {
+		if !known || !(interfaceScalar(member) || l.phantomBase(member) != nil) || (of != ir.Number && of != ir.String && of != ir.Boolean) {
 			return false
 		}
 	}

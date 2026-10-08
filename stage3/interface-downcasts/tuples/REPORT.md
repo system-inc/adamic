@@ -1,3 +1,40 @@
+Built: certified original referenced-map tuple consumers; total 3 pairs / 3 candidate reads.
+Commits: prior 49647618880c8953cbb0328044247a0d28f53345; referenced-map commit recorded in git history.
+Checks: referenced-map oracle PASS 2.630s; numeric controls PASS 0.216s/0.421s; tuple counts refreshed PASS 25.401s.
+Mutants: drop original FileIdListId position check fails the named refusal oracle, printing 7 then false and exiting 0.
+Remaining: 7 candidate pairs / 12 reads plus optional/rest Map forms; integrator failures below do not block this worker.
+
+Referenced-map certification imports IncrementalBuildInfoReferencedMap unchanged,
+including both required-any numeric brands. No number or void-brand alias is
+substituted. The imported numeric carrier hook proves the brand member name
+absent from the primitive using the existing inventory, retains number-kind
+checks, and leaves demanded any-valued reads refused. Original source hashes
+are checked by the existing 78-file manifest. Five fixtures cover valid IDs,
+wrong key/value types, tuple length and numeric-keyed records. Node, JavaScript,
+native release and sanitized native pass; the successful native fixture passes
+leak checks. The numeric position mutant is caught first in JavaScript.
+
+Commands, with output in logs:
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedViewTupleOriginalReferencedMap$' -count=1 -v -timeout 3m
+(/tmp/views-tuples-references.log).
+ADAMIC_TUPLE_NUMERIC_MUTANT=1 on the same oracle with
+'^TestCheckedViewTupleOriginalReferencedMap/references-value-wrong$'
+(/tmp/views-tuples-references-mutant.log), expected exit 1.
+go test ./internal/lower -run
+'^(TestPhantomRefusals|TestPhantomPrimitiveNames|TestPhantomLiteralCastsStayRefused)$'
+-count=1 -v -timeout 3m (/tmp/views-tuples-numeric-regression.log).
+go test ./internal/oracle -run
+'^TestCheckedViewTupleOriginalNumericBrandReadRefuses$' -count=1 -v -timeout 3m
+(/tmp/views-tuples-numeric-any-read.log).
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$' -count=1
+-timeout 3m -args -update-counts (/tmp/views-tuples-references-counts.log).
+
+The previous checkpoint and the named integrator failures follow.
+
+---
+
 Built: original TrackedSymbol optional forEach consumers through the existing tuple certificate; 2 pairs / 2 candidate reads now certified.
 Commits: starting f753567dd8837e90914e7c229df88d8536a3bf8b; pair 6b58eb3c02d57ea341985643ae9528b5597115ac.
 Checks: outSignature PASS 26.108s; TrackedSymbol PASS 12.566s; tuple counts update/check PASS 32.037s/37.821s; complete counts refresh blocked.
@@ -22,7 +59,7 @@ Twenty original tuple fixture count rows are now recorded, including the twelve
 previous outSignature fixtures. Original counts remeasurement remains opt-in
 with the same external declaration inputs as the existing semantic oracle.
 
-Blocking observations: the required TestCountsAreRecorded refresh fails on
+Integrator failures, not a worker blocker: the required TestCountsAreRecorded refresh fails on
 fixtures outside this unit: ctor_set.a aborts with free(): invalid pointer;
 census_overload_contracts.a refuses excess implementation arguments;
 census_small_boolean.a and nbody_field_values.a refuse template interpolation;
@@ -35,8 +72,8 @@ expectations for already-supported union operations; all three reproduce with
 the starting-source overlay. The relevant optional-call and tuple-storage
 regressions pass (0.136s and 0.319s). No prohibited file was edited, no complete
 package or full gate was run, and no successful complete counts refresh is claimed.
-The tuple-only counts update and check both pass. This report stops at that
-required-check blocker rather than marking the remaining unit complete.
+The tuple-only counts update and check both pass. The user confirms these
+unrelated failures belong to the integrator; work continues through the queue.
 
 Remaining production candidates: four original numeric-brand pairs / seven
 reads (97898, 97913, 97926, 97931), and four optional-position receiver pairs /

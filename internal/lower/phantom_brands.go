@@ -48,7 +48,7 @@ func (l *lowering) phantomBase(proven *checker.Type) *checker.Type {
 			return nil
 		}
 		for _, field := range l.checker.GetPropertiesOfType(object) {
-			if !phantomField(l.checker.GetTypeOfSymbol(field), field.Flags&ast.SymbolFlagsOptional != 0) || primitiveMember(primitive.Flags(), field.Name) {
+			if (!phantomField(l.checker.GetTypeOfSymbol(field), field.Flags&ast.SymbolFlagsOptional != 0) && !l.tupleNumericCarrierField(primitive, field)) || primitiveMember(primitive.Flags(), field.Name) {
 				return nil
 			}
 		}
