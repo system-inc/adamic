@@ -1,0 +1,5 @@
+// Reduced from core.ts:2404
+const candidate = 'prefixmiddlesuffix';
+const prefix = 'prefix';
+const suffix = 'suffix';
+console.log(candidate.substring(prefix.length, candidate.length - suffix.length));

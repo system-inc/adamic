@@ -10,7 +10,7 @@ import (
 )
 
 var libraryArrayMethods = map[string]bool{
-	"join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
+	"push": true, "join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
 	"with": true, "flatMap": true, "copyWithin": true, "toSpliced": true, "flat": true,
 	"findLast": true, "findLastIndex": true, "toReversed": true, "toSorted": true,
 }
@@ -20,6 +20,9 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	element, err := l.elementType(receiver)
 	if err != nil {
 		return nil, true, err
+	}
+	if name == "push" && len(node.AsCallExpression().Arguments.Nodes) == 1 && node.AsCallExpression().Arguments.Nodes[0].Kind != ast.KindSpreadElement {
+		return l.arrayMethod(node, receiver, name)
 	}
 	if name == "join" && element != ir.Array {
 		return l.arrayMethod(node, receiver, name)
@@ -35,6 +38,8 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	}
 	written := node.AsCallExpression().Arguments.Nodes
 	switch name {
+	case "push":
+		return l.libraryArrayPush(node, receiver, array, element)
 	case "join":
 		return l.libraryArrayJoin(node, receiver, array)
 	case "with":
