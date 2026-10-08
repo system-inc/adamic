@@ -15,7 +15,6 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
-	"time"
 )
 
 func run(t *testing.T, dir, name string, args ...string) []byte {
@@ -215,8 +214,8 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 		}
 		expected := "adamic: " + want + "\n"
 		for _, command := range [][]string{{binary, path, catalog}, {"node", "--disable-warning=ExperimentalWarning", runner, entry, path, catalog}} {
-			ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-			cmd := exec.CommandContext(ctx, command[0], command[1:]...)
+			// Refusals are silent until their final panic; protect startup with FirstOutput.
+			cmd := exec.Command(command[0], command[1:]...)
 			output, err := os.CreateTemp(t.TempDir(), "stdout-")
 			if err != nil {
 				t.Fatal(err)
@@ -224,8 +223,7 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 			cmd.Stdout = output
 			var stderr bytes.Buffer
 			cmd.Stderr = &stderr
-			err = cmd.Run()
-			cancel()
+			err = childguard.Run(cmd, childguard.Options{})
 			output.Close()
 			exit, ok := err.(*exec.ExitError)
 			if !ok || exit.ExitCode() != 70 || stderr.String() != expected {
