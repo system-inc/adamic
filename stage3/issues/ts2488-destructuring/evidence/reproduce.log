@@ -1,0 +1,16 @@
+{"name":"repeated","checker":"tsc","exit":0,"output":"","codes":[]}
+{"name":"repeated","checker":"typescript-go","exit":2,"output":"../../tmp/adamic-gate/ts2488-wtD5sQ/repeated.ts(5,20): error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n","codes":[2488]}
+{"name":"repeated","checker":"adamic","exit":1,"output":"/tmp/adamic-gate/ts2488-wtD5sQ/repeated.ts:5:20: error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n","codes":[2488]}
+{"name":"unsuppressed","checker":"tsc","exit":2,"output":"../../tmp/adamic-gate/ts2488-wtD5sQ/unsuppressed.ts(3,20): error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n","codes":[2488]}
+{"name":"unsuppressed","checker":"typescript-go","exit":2,"output":"../../tmp/adamic-gate/ts2488-wtD5sQ/unsuppressed.ts(3,20): error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n../../tmp/adamic-gate/ts2488-wtD5sQ/unsuppressed.ts(4,20): error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n","codes":[2488,2488]}
+{"name":"unsuppressed","checker":"adamic","exit":1,"output":"/tmp/adamic-gate/ts2488-wtD5sQ/unsuppressed.ts:3:20: error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n/tmp/adamic-gate/ts2488-wtD5sQ/unsuppressed.ts:4:20: error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n","codes":[2488,2488]}
+{"name":"single","checker":"tsc","exit":2,"output":"../../tmp/adamic-gate/ts2488-wtD5sQ/single.ts(3,20): error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n","codes":[2488]}
+{"name":"single","checker":"typescript-go","exit":2,"output":"../../tmp/adamic-gate/ts2488-wtD5sQ/single.ts(3,20): error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n","codes":[2488]}
+{"name":"single","checker":"adamic","exit":1,"output":"/tmp/adamic-gate/ts2488-wtD5sQ/single.ts:3:20: error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n","codes":[2488]}
+{"name":"iterable","checker":"tsc","exit":0,"output":"","codes":[]}
+{"name":"iterable","checker":"typescript-go","exit":0,"output":"","codes":[]}
+{"name":"iterable","checker":"adamic","exit":0,"output":"","codes":[]}
+{"name":"wrong-assignment","checker":"tsc","exit":2,"output":"../../tmp/adamic-gate/ts2488-wtD5sQ/wrong-assignment.ts(6,7): error TS2322: Type 'string' is not assignable to type 'number'.\n","codes":[2322]}
+{"name":"wrong-assignment","checker":"typescript-go","exit":2,"output":"../../tmp/adamic-gate/ts2488-wtD5sQ/wrong-assignment.ts(6,7): error TS2322: Type 'string' is not assignable to type 'number'.\n","codes":[2322]}
+{"name":"wrong-assignment","checker":"adamic","exit":1,"output":"/tmp/adamic-gate/ts2488-wtD5sQ/wrong-assignment.ts:6:7: error TS2322: Type 'string' is not assignable to type 'number'.\n","codes":[2322]}
+PASS: 15 checker observations; repeated, single, iterable and assignment controls
