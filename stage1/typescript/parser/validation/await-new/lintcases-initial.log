@@ -1,0 +1,187 @@
+=== RUN   TestLintCases
+=== PAUSE TestLintCases
+=== CONT  TestLintCases
+=== RUN   TestLintCases/constructor_public_object_binding.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=393
+=== RUN   TestLintCases/decorated_async_promise_executor.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=529
+=== RUN   TestLintCases/decorated_class_expression.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=338
+=== RUN   TestLintCases/decorated_parameter.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=454
+=== RUN   TestLintCases/interface_missing_body.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=185
+=== RUN   TestLintCases/interface_missing_close_brace.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=294
+=== RUN   TestLintCases/interface_unclosed_body.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=399
+=== RUN   TestLintCases/jsx_closing_tag_in_ts.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=551
+=== RUN   TestLintCases/jsx_self_closing_in_ts.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=428
+=== RUN   TestLintCases/method_missing_type_parameter_close.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=543
+=== RUN   TestLintCases/method_stray_type_parameter_angle.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=294
+=== RUN   TestLintCases/method_stray_type_parameter_angle_with_parameter.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=399
+=== RUN   TestLintCases/method_unclosed_type_parameters.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=543
+=== RUN   TestLintCases/nextjs_interface_constructor_body.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=356
+=== RUN   TestLintCases/nextjs_jsx_anchor_attribute.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=340
+=== RUN   TestLintCases/nextjs_jsx_boolean_attribute.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=304
+=== RUN   TestLintCases/nextjs_jsx_font_link.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=341
+=== RUN   TestLintCases/nextjs_jsx_nested_head.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=456
+=== RUN   TestLintCases/nextjs_jsx_paired_image.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=443
+=== RUN   TestLintCases/nextjs_jsx_script_attribute.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=342
+=== RUN   TestLintCases/nextjs_jsx_script_single_quote.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=346
+=== RUN   TestLintCases/nextjs_type_constructor_body.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=427
+=== RUN   TestLintCases/octal_escape.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=364
+=== RUN   TestLintCases/octal_literal.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=352
+=== RUN   TestLintCases/top_level_await_new_module.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=3813
+=== RUN   TestLintCases/top_level_await_new_script.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=3731
+=== RUN   TestLintCases/wave08_computed_key_colon_before_bracket.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=401
+=== RUN   TestLintCases/wave08_computed_key_missing_bracket.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=393
+=== RUN   TestLintCases/wave08_jsx_self_closing_attribute.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=349
+=== RUN   TestLintCases/wave08_jsx_text_child.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=377
+=== RUN   TestLintCases/wave08_legacy_octal_bigint.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=337
+=== RUN   TestLintCases/wave08_legacy_octal_decimal_long.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=343
+=== RUN   TestLintCases/wave08_legacy_octal_decimal_short.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=339
+=== RUN   TestLintCases/wave13_jsx_class_attribute.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=349
+=== RUN   TestLintCases/wave13_jsx_multiline_attribute.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=351
+=== RUN   TestLintCases/wave13_jsx_multiline_attribute_braces.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=375
+=== RUN   TestLintCases/wave13_jsx_multiline_element_braces.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=409
+=== RUN   TestLintCases/wave13_jsx_multiline_spread_object.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=432
+=== RUN   TestLintCases/wave13_jsx_multiline_spread_string.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=312
+=== RUN   TestLintCases/wave13_jsx_void_arrow_callback.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=534
+=== RUN   TestLintCases/wave13_octal_bigint.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=337
+=== RUN   TestLintCases/wave13_octal_long_fraction.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=343
+=== RUN   TestLintCases/wave13_octal_short_fraction.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=339
+=== RUN   TestLintCases/wave13_top_level_await_new.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=304
+=== RUN   TestLintCases/wave15_octal_literal_decimal_tail.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=469
+=== RUN   TestLintCases/wave16-interface-missing-body.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=185
+=== RUN   TestLintCases/wave16-interface-unclosed-body.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=399
+=== RUN   TestLintCases/wave16-jsx-fragment.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=341
+=== RUN   TestLintCases/wave16-jsx-provider-object-value.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=476
+=== RUN   TestLintCases/wave16-jsx-unresolved-tag.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=234
+=== RUN   TestLintCases/wave16-method-incomplete-generic.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=543
+=== RUN   TestLintCases/wave16-method-stray-generic-angle.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=399
+=== RUN   TestLintCases/wave21_jsx_component_return.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=347
+=== RUN   TestLintCases/wave21_jsx_element_then_call.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=453
+=== RUN   TestLintCases/wave21_jsx_provider_object_value.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=478
+=== RUN   TestLintCases/wave21_jsx_qualified_fragment.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=322
+=== RUN   TestLintCases/wave21_jsx_quoted_style.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=344
+=== RUN   TestLintCases/wave21_jsx_self_closing_then_call.tsx
+    lint_cases_test.go:207: listed=false, oracle bytes=345
+=== RUN   TestLintCases/wave21_yield_label.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=325
+=== RUN   TestLintCases/yield_keyword_label.ts
+    lint_cases_test.go:207: listed=false, oracle bytes=327
+--- PASS: TestLintCases (24.68s)
+    --- PASS: TestLintCases/constructor_public_object_binding.ts (0.18s)
+    --- PASS: TestLintCases/decorated_async_promise_executor.ts (0.17s)
+    --- PASS: TestLintCases/decorated_class_expression.ts (0.21s)
+    --- PASS: TestLintCases/decorated_parameter.ts (0.19s)
+    --- PASS: TestLintCases/interface_missing_body.ts (0.19s)
+    --- PASS: TestLintCases/interface_missing_close_brace.ts (0.17s)
+    --- PASS: TestLintCases/interface_unclosed_body.ts (0.20s)
+    --- PASS: TestLintCases/jsx_closing_tag_in_ts.ts (0.19s)
+    --- PASS: TestLintCases/jsx_self_closing_in_ts.ts (0.19s)
+    --- PASS: TestLintCases/method_missing_type_parameter_close.ts (0.20s)
+    --- PASS: TestLintCases/method_stray_type_parameter_angle.ts (0.20s)
+    --- PASS: TestLintCases/method_stray_type_parameter_angle_with_parameter.ts (0.19s)
+    --- PASS: TestLintCases/method_unclosed_type_parameters.ts (0.22s)
+    --- PASS: TestLintCases/nextjs_interface_constructor_body.ts (0.19s)
+    --- PASS: TestLintCases/nextjs_jsx_anchor_attribute.tsx (0.19s)
+    --- PASS: TestLintCases/nextjs_jsx_boolean_attribute.tsx (0.21s)
+    --- PASS: TestLintCases/nextjs_jsx_font_link.tsx (0.20s)
+    --- PASS: TestLintCases/nextjs_jsx_nested_head.tsx (0.20s)
+    --- PASS: TestLintCases/nextjs_jsx_paired_image.tsx (0.20s)
+    --- PASS: TestLintCases/nextjs_jsx_script_attribute.tsx (0.19s)
+    --- PASS: TestLintCases/nextjs_jsx_script_single_quote.tsx (0.21s)
+    --- PASS: TestLintCases/nextjs_type_constructor_body.ts (0.20s)
+    --- PASS: TestLintCases/octal_escape.ts (0.20s)
+    --- PASS: TestLintCases/octal_literal.ts (0.22s)
+    --- PASS: TestLintCases/top_level_await_new_module.ts (0.21s)
+    --- PASS: TestLintCases/top_level_await_new_script.ts (0.21s)
+    --- PASS: TestLintCases/wave08_computed_key_colon_before_bracket.ts (0.19s)
+    --- PASS: TestLintCases/wave08_computed_key_missing_bracket.ts (0.23s)
+    --- PASS: TestLintCases/wave08_jsx_self_closing_attribute.tsx (0.19s)
+    --- PASS: TestLintCases/wave08_jsx_text_child.tsx (0.19s)
+    --- PASS: TestLintCases/wave08_legacy_octal_bigint.ts (0.20s)
+    --- PASS: TestLintCases/wave08_legacy_octal_decimal_long.ts (0.20s)
+    --- PASS: TestLintCases/wave08_legacy_octal_decimal_short.ts (0.19s)
+    --- PASS: TestLintCases/wave13_jsx_class_attribute.tsx (0.20s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_attribute.tsx (0.20s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_attribute_braces.tsx (0.19s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_element_braces.tsx (0.18s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_spread_object.tsx (0.18s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_spread_string.tsx (0.19s)
+    --- PASS: TestLintCases/wave13_jsx_void_arrow_callback.tsx (0.17s)
+    --- PASS: TestLintCases/wave13_octal_bigint.ts (0.17s)
+    --- PASS: TestLintCases/wave13_octal_long_fraction.ts (0.17s)
+    --- PASS: TestLintCases/wave13_octal_short_fraction.ts (0.17s)
+    --- PASS: TestLintCases/wave13_top_level_await_new.ts (0.18s)
+    --- PASS: TestLintCases/wave15_octal_literal_decimal_tail.ts (0.19s)
+    --- PASS: TestLintCases/wave16-interface-missing-body.ts (0.18s)
+    --- PASS: TestLintCases/wave16-interface-unclosed-body.ts (0.17s)
+    --- PASS: TestLintCases/wave16-jsx-fragment.tsx (0.18s)
+    --- PASS: TestLintCases/wave16-jsx-provider-object-value.tsx (0.18s)
+    --- PASS: TestLintCases/wave16-jsx-unresolved-tag.tsx (0.19s)
+    --- PASS: TestLintCases/wave16-method-incomplete-generic.ts (0.19s)
+    --- PASS: TestLintCases/wave16-method-stray-generic-angle.ts (0.19s)
+    --- PASS: TestLintCases/wave21_jsx_component_return.tsx (0.17s)
+    --- PASS: TestLintCases/wave21_jsx_element_then_call.tsx (0.21s)
+    --- PASS: TestLintCases/wave21_jsx_provider_object_value.tsx (0.19s)
+    --- PASS: TestLintCases/wave21_jsx_qualified_fragment.tsx (0.17s)
+    --- PASS: TestLintCases/wave21_jsx_quoted_style.tsx (0.19s)
+    --- PASS: TestLintCases/wave21_jsx_self_closing_then_call.tsx (0.18s)
+    --- PASS: TestLintCases/wave21_yield_label.ts (0.17s)
+    --- PASS: TestLintCases/yield_keyword_label.ts (0.19s)
+PASS
+parser longest native build child: 11.466577066s; build CPU budget: 10m0s
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	24.689s

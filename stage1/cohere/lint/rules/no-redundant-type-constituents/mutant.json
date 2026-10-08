@@ -1,0 +1,6 @@
+{
+  "name": "no-redundant-type-constituents-decision",
+  "file": "no_redundant_type_constituents.a",
+  "from": "part.flags === 262144 && !this.returnType(index)",
+  "to": "part.flags === 262144 && this.returnType(index)"
+}

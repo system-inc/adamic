@@ -1,0 +1,14 @@
+import type { CoreArena } from './nodes.a';
+import { bodyDefinitelyExits } from './body_definitely_exits.a';
+export function switchStatementExits(arena: CoreArena, index: number): boolean {
+    const clauses = arena.node(index).clauses; let hasDefault = false;
+    for(const clause of clauses) { if(arena.node(clause).kind === 'DefaultClause') { hasDefault = true; } }
+    if(!hasDefault) { return false; }
+    for(let i = 0; i < clauses.length; i++) {
+        const statements = arena.node(clauses[i] ?? -1).statements;
+        if(statements.length === 0) { if(i === clauses.length - 1) { return false; } continue; }
+        let exits = false; for(const statement of statements) { if(bodyDefinitelyExits(arena, statement)) { exits = true; break; } }
+        if(!exits) { return false; }
+    }
+    return true;
+}

@@ -1,0 +1,3 @@
+package structure
+import "github.com/microsoft/TypeScript/tsc/shim/ast"
+func Wave11ParameterTypeNode(node *ast.Node) *ast.Node { return parameterTypeNode(node) }

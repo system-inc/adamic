@@ -9,6 +9,7 @@ import (
 
 // Not parallel: each compiled scanner mutant is checked after its positive control.
 func TestJsxScannerMutants(t *testing.T) {
+	t.Parallel()
 	manifest, _ := jsxManifest(t)
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", manifest, "--whole").output

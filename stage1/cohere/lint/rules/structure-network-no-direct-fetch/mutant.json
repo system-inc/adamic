@@ -1,0 +1,5 @@
+{
+  "name": "bare-fetch-omitted",
+  "from": "fetch=this.context.node(callee).text === 'fetch';",
+  "to": "fetch=false;"
+}

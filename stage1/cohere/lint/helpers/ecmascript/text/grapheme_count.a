@@ -1,0 +1,19 @@
+import { runes } from './runes.a';
+import { continuesCluster } from './continues_cluster.a';
+import { isPictograph } from './is_pictograph.a';
+import { isRegionalIndicator } from './is_regional_indicator.a';
+export function graphemeCount(value: string): number {
+ let count = 0; let previous = 0; let pictograph = false; let regional = 0;
+ const chars = runes(value);
+ for(let i = 0; i < chars.length; i++) {
+  const c = chars[i] ?? 65533;
+  if(i > 0 && continuesCluster(previous, c, pictograph, regional)) {
+   if(isRegionalIndicator(c)) { regional++; }
+   previous = c; continue;
+  }
+  count++; pictograph = isPictograph(c); regional = 0;
+  if(isRegionalIndicator(c)) { regional = 1; }
+  previous = c;
+ }
+ return count;
+}

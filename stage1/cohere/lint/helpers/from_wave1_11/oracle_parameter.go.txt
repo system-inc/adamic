@@ -1,0 +1,22 @@
+package main
+import (
+ "encoding/json"
+ "fmt"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ structure "github.com/system-inc/cohere/internal/lint/rules/structure"
+ "os"
+)
+type Row struct { Present bool; Kind int; TypeID int; TypeKind int }
+func main() {
+ raw,err:=os.ReadFile(os.Args[1]);if err!=nil {panic(err)}
+ var rows []Row;if err=json.Unmarshal(raw,&rows);err!=nil {panic(err)}
+ factory:=ast.NewNodeFactory(ast.NodeFactoryHooks{})
+ for i,row:=range rows {
+  var node,annotation *ast.Node
+  if row.TypeID>=0 { annotation=&ast.Node{Kind:ast.Kind(row.TypeKind)} }
+  if row.Present { if ast.Kind(row.Kind)==ast.KindParameter { node=factory.NewParameterDeclaration(nil,nil,nil,nil,annotation,nil) } else {node=&ast.Node{Kind:ast.Kind(row.Kind)}} }
+  result:=structure.Wave11ParameterTypeNode(node);resultID:=-1
+  if result!=nil {if result!=annotation {panic("annotation identity changed")};resultID=row.TypeID}
+  fmt.Printf("case %d\nresult\t%d\n",i,resultID)
+ }
+}

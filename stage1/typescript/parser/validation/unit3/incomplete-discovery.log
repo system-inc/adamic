@@ -1,0 +1,1548 @@
+=== RUN   TestIncompleteCompilerAgrees
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.moduleSpecifiers.ts: 5 tokens, cutoff stride 1, edit stride 1, 16 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.performance.ts: 5 tokens, cutoff stride 1, edit stride 1, 16 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.ts: 389 tokens, cutoff stride 2, edit stride 13, 255 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/binder.ts: 20833 tokens, cutoff stride 82, edit stride 652, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/builder.ts: 13258 tokens, cutoff stride 52, edit stride 415, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/builderPublic.ts: 897 tokens, cutoff stride 4, edit stride 29, 287 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/builderState.ts: 3027 tokens, cutoff stride 12, edit stride 95, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/builderStatePublic.ts: 54 tokens, cutoff stride 1, edit stride 2, 109 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/checker.ts: 348866 tokens, cutoff stride 1363, edit stride 10903, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/commandLineParser.ts: 21716 tokens, cutoff stride 85, edit stride 679, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/core.ts: 16280 tokens, cutoff stride 64, edit stride 509, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts: 152 tokens, cutoff stride 1, edit stride 5, 215 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/debug.ts: 8417 tokens, cutoff stride 33, edit stride 264, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts: 34258 tokens, cutoff stride 134, edit stride 1071, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/executeCommandLine.ts: 7535 tokens, cutoff stride 30, edit stride 236, 316 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/expressionToTypeNode.ts: 8846 tokens, cutoff stride 35, edit stride 277, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/baseNodeFactory.ts: 383 tokens, cutoff stride 2, edit stride 12, 256 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts: 4468 tokens, cutoff stride 18, edit stride 140, 313 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitNode.ts: 1739 tokens, cutoff stride 7, edit stride 55, 313 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeChildren.ts: 304 tokens, cutoff stride 2, edit stride 10, 215 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeConverters.ts: 875 tokens, cutoff stride 4, edit stride 28, 283 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts: 41990 tokens, cutoff stride 165, edit stride 1313, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeTests.ts: 5698 tokens, cutoff stride 23, edit stride 179, 312 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/parenthesizerRules.ts: 2612 tokens, cutoff stride 11, edit stride 82, 302 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilities.ts: 8619 tokens, cutoff stride 34, edit stride 270, 318 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilitiesPublic.ts: 295 tokens, cutoff stride 2, edit stride 10, 208 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/moduleNameResolver.ts: 21374 tokens, cutoff stride 84, edit stride 668, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/moduleSpecifiers.ts: 8795 tokens, cutoff stride 35, edit stride 275, 316 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/parser.ts: 62538 tokens, cutoff stride 245, edit stride 1955, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/path.ts: 4515 tokens, cutoff stride 18, edit stride 142, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/performance.ts: 794 tokens, cutoff stride 4, edit stride 25, 263 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/performanceCore.ts: 354 tokens, cutoff stride 2, edit stride 12, 238 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/program.ts: 29758 tokens, cutoff stride 117, edit stride 930, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/programDiagnostics.ts: 2272 tokens, cutoff stride 9, edit stride 71, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/resolutionCache.ts: 8686 tokens, cutoff stride 34, edit stride 272, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/scanner.ts: 30606 tokens, cutoff stride 120, edit stride 957, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts: 2488 tokens, cutoff stride 10, edit stride 78, 313 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/sourcemap.ts: 4186 tokens, cutoff stride 17, edit stride 131, 311 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/symbolWalker.ts: 1094 tokens, cutoff stride 5, edit stride 35, 283 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/sys.ts: 10285 tokens, cutoff stride 41, edit stride 322, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts: 2114 tokens, cutoff stride 9, edit stride 67, 299 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts: 3095 tokens, cutoff stride 13, edit stride 97, 303 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classFields.ts: 14941 tokens, cutoff stride 59, edit stride 467, 318 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts: 529 tokens, cutoff stride 3, edit stride 17, 241 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations/diagnostics.ts: 4022 tokens, cutoff stride 16, edit stride 126, 316 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations.ts: 10719 tokens, cutoff stride 42, edit stride 335, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/destructuring.ts: 3178 tokens, cutoff stride 13, edit stride 100, 309 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2015.ts: 21458 tokens, cutoff stride 84, edit stride 671, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2016.ts: 553 tokens, cutoff stride 3, edit stride 18, 247 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2017.ts: 5298 tokens, cutoff stride 21, edit stride 166, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2018.ts: 7191 tokens, cutoff stride 29, edit stride 225, 312 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2019.ts: 225 tokens, cutoff stride 1, edit stride 8, 284 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2020.ts: 1634 tokens, cutoff stride 7, edit stride 52, 298 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2021.ts: 439 tokens, cutoff stride 2, edit stride 14, 284 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esDecorators.ts: 12395 tokens, cutoff stride 49, edit stride 388, 317 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esnext.ts: 3172 tokens, cutoff stride 13, edit stride 100, 309 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/generators.ts: 11650 tokens, cutoff stride 46, edit stride 365, 318 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/jsx.ts: 4759 tokens, cutoff stride 19, edit stride 149, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/legacyDecorators.ts: 3160 tokens, cutoff stride 13, edit stride 99, 308 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/esnextAnd2015.ts: 2110 tokens, cutoff stride 9, edit stride 66, 299 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/impliedNodeFormatDependent.ts: 489 tokens, cutoff stride 2, edit stride 16, 307 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/module.ts: 10653 tokens, cutoff stride 42, edit stride 333, 318 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/system.ts: 7651 tokens, cutoff stride 30, edit stride 240, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/namedEvaluation.ts: 2001 tokens, cutoff stride 8, edit stride 63, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/taggedTemplate.ts: 581 tokens, cutoff stride 3, edit stride 19, 256 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/ts.ts: 11283 tokens, cutoff stride 45, edit stride 353, 315 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/typeSerializer.ts: 2806 tokens, cutoff stride 11, edit stride 88, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts: 4325 tokens, cutoff stride 17, edit stride 136, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts: 405 tokens, cutoff stride 2, edit stride 13, 267 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/tsbuildPublic.ts: 14511 tokens, cutoff stride 57, edit stride 454, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/types.ts: 47956 tokens, cutoff stride 188, edit stride 1499, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/utilities.ts: 63996 tokens, cutoff stride 250, edit stride 2000, 320 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/utilitiesPublic.ts: 12829 tokens, cutoff stride 51, edit stride 401, 316 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts: 12454 tokens, cutoff stride 49, edit stride 390, 319 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/watch.ts: 5744 tokens, cutoff stride 23, edit stride 180, 314 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/watchPublic.ts: 6248 tokens, cutoff stride 25, edit stride 196, 314 inputs
+    incomplete_test.go:86: planned /workspace/scratch/typescript-6.0.3/src/compiler/watchUtilities.ts: 4444 tokens, cutoff stride 18, edit stride 139, 311 inputs
+    incomplete_test.go:88: planned all 77 compiler files: 22497 inputs; each Go/Node/native parse and print has a 10s + 10s per started MiB deadline
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.moduleSpecifiers.ts: 5 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.performance.ts: 5 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.ts: 389 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/binder.ts: 20833 tokens, cutoff stride 82
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/builder.ts: 13258 tokens, cutoff stride 52
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/builderPublic.ts: 897 tokens, cutoff stride 4
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/builderState.ts: 3027 tokens, cutoff stride 12
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/builderStatePublic.ts: 54 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/checker.ts: 348866 tokens, cutoff stride 1363
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/commandLineParser.ts: 21716 tokens, cutoff stride 85
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/core.ts: 16280 tokens, cutoff stride 64
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts: 152 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/debug.ts: 8417 tokens, cutoff stride 33
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts: 34258 tokens, cutoff stride 134
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/executeCommandLine.ts: 7535 tokens, cutoff stride 30
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/expressionToTypeNode.ts: 8846 tokens, cutoff stride 35
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/baseNodeFactory.ts: 383 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts: 4468 tokens, cutoff stride 18
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitNode.ts: 1739 tokens, cutoff stride 7
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeChildren.ts: 304 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeConverters.ts: 875 tokens, cutoff stride 4
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts: 41990 tokens, cutoff stride 165
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeTests.ts: 5698 tokens, cutoff stride 23
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/parenthesizerRules.ts: 2612 tokens, cutoff stride 11
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilities.ts: 8619 tokens, cutoff stride 34
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilitiesPublic.ts: 295 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/moduleNameResolver.ts: 21374 tokens, cutoff stride 84
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/moduleSpecifiers.ts: 8795 tokens, cutoff stride 35
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/parser.ts: 62538 tokens, cutoff stride 245
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/path.ts: 4515 tokens, cutoff stride 18
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/performance.ts: 794 tokens, cutoff stride 4
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/performanceCore.ts: 354 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/program.ts: 29758 tokens, cutoff stride 117
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/programDiagnostics.ts: 2272 tokens, cutoff stride 9
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/resolutionCache.ts: 8686 tokens, cutoff stride 34
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/scanner.ts: 30606 tokens, cutoff stride 120
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts: 2488 tokens, cutoff stride 10
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/sourcemap.ts: 4186 tokens, cutoff stride 17
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/symbolWalker.ts: 1094 tokens, cutoff stride 5
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/sys.ts: 10285 tokens, cutoff stride 41
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts: 2114 tokens, cutoff stride 9
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts: 3095 tokens, cutoff stride 13
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classFields.ts: 14941 tokens, cutoff stride 59
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts: 529 tokens, cutoff stride 3
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations/diagnostics.ts: 4022 tokens, cutoff stride 16
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations.ts: 10719 tokens, cutoff stride 42
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/destructuring.ts: 3178 tokens, cutoff stride 13
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2015.ts: 21458 tokens, cutoff stride 84
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2016.ts: 553 tokens, cutoff stride 3
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2017.ts: 5298 tokens, cutoff stride 21
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2018.ts: 7191 tokens, cutoff stride 29
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2019.ts: 225 tokens, cutoff stride 1
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2020.ts: 1634 tokens, cutoff stride 7
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2021.ts: 439 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esDecorators.ts: 12395 tokens, cutoff stride 49
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esnext.ts: 3172 tokens, cutoff stride 13
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/generators.ts: 11650 tokens, cutoff stride 46
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/jsx.ts: 4759 tokens, cutoff stride 19
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/legacyDecorators.ts: 3160 tokens, cutoff stride 13
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/esnextAnd2015.ts: 2110 tokens, cutoff stride 9
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/impliedNodeFormatDependent.ts: 489 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/module.ts: 10653 tokens, cutoff stride 42
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/system.ts: 7651 tokens, cutoff stride 30
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/namedEvaluation.ts: 2001 tokens, cutoff stride 8
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/taggedTemplate.ts: 581 tokens, cutoff stride 3
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/ts.ts: 11283 tokens, cutoff stride 45
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/typeSerializer.ts: 2806 tokens, cutoff stride 11
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts: 4325 tokens, cutoff stride 17
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts: 405 tokens, cutoff stride 2
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/tsbuildPublic.ts: 14511 tokens, cutoff stride 57
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/types.ts: 47956 tokens, cutoff stride 188
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/utilities.ts: 63996 tokens, cutoff stride 250
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/utilitiesPublic.ts: 12829 tokens, cutoff stride 51
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts: 12454 tokens, cutoff stride 49
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/watch.ts: 5744 tokens, cutoff stride 23
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/watchPublic.ts: 6248 tokens, cutoff stride 25
+    incomplete_test.go:116: /workspace/scratch/typescript-6.0.3/src/compiler/watchUtilities.ts: 4444 tokens, cutoff stride 18
+    incomplete_test.go:211: checked 64 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 128 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 192 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 256 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 320 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 384 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 448 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 512 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 576 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 640 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 704 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 768 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 832 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 896 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 960 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1024 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1088 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1152 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1216 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1280 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1344 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1408 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1472 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1536 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1600 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1664 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1728 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1792 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1856 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1920 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 1984 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2048 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2112 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2176 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2240 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2304 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2368 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2432 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2496 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2560 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2624 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2688 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2752 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts remove token 26:  line 1: port "diagnostic 1005 637 1 1\t']' expected.", Go "diagnostic 1005 637 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 637 1 1	',' expected.
+        diagnostic 1005 640 1 1	',' expected.
+        diagnostic 1138 643 1 1	Parameter declaration expected.
+        file
+        0 SourceFile 0 1317 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02761-corePublic.ts-remove-26.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts remove token 26:  line 1: port "diagnostic 1005 637 1 1\t']' expected.", Go "diagnostic 1005 637 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 637 1 1	',' expected.
+        diagnostic 1005 640 1 1	',' expected.
+        diagnostic 1138 643 1 1	Parameter declaration expected.
+        file
+        0 SourceFile 0 1317 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02761-corePublic.ts-remove-26.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts duplicate token 41:  line 1: port "diagnostic 1005 714 1 1\t'{' expected.", Go "diagnostic 1005 714 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 714 1 1	',' expected.
+        diagnostic 1005 749 1 1	',' expected.
+        file
+        0 SourceFile 0 1320 0 0 -1 0 0				
+        1 VariableStatement 0 214 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02768-corePublic.ts-duplicate-41.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts duplicate token 41:  line 1: port "diagnostic 1005 714 1 1\t'{' expected.", Go "diagnostic 1005 714 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 714 1 1	',' expected.
+        diagnostic 1005 749 1 1	',' expected.
+        file
+        0 SourceFile 0 1320 0 0 -1 0 0				
+        1 VariableStatement 0 214 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02768-corePublic.ts-duplicate-41.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts remove token 56:  line 1: port "diagnostic 1005 801 1 1\t'{' expected.", Go "diagnostic 1005 801 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 801 1 1	',' expected.
+        diagnostic 1005 836 1 1	',' expected.
+        file
+        0 SourceFile 0 1317 0 0 -1 0 0				
+        1 VariableStatement 0 214 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02773-corePublic.ts-remove-56.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts remove token 56:  line 1: port "diagnostic 1005 801 1 1\t'{' expected.", Go "diagnostic 1005 801 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 801 1 1	',' expected.
+        diagnostic 1005 836 1 1	',' expected.
+        file
+        0 SourceFile 0 1317 0 0 -1 0 0				
+        1 VariableStatement 0 214 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02773-corePublic.ts-remove-56.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts duplicate token 66:  line 2: port "diagnostic 1005 979 4 1\t',' expected.", Go "diagnostic 1005 991 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 941 18 1	'{' expected.
+        diagnostic 1005 991 1 1	',' expected.
+        diagnostic 1005 1025 4 1	',' expected.
+        file
+        0 SourceFile 0 1328 0 0 -1 0 0				
+        1 VariableStatement 0 214 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02778-corePublic.ts-duplicate-66.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts remove token 66:  line 2: port "diagnostic 1005 960 4 1\t',' expected.", Go "diagnostic 1005 972 1 1\t',' expected."
+        Go context:
+        diagnostic 1128 914 6 1	Declaration or statement expected.
+        diagnostic 1005 972 1 1	',' expected.
+        diagnostic 1005 1006 4 1	',' expected.
+        file
+        0 SourceFile 0 1309 0 0 -1 0 0				
+        1 VariableStatement 0 214 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02777-corePublic.ts-remove-66.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts duplicate token 66:  line 2: port "diagnostic 1005 979 4 1\t',' expected.", Go "diagnostic 1005 991 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 941 18 1	'{' expected.
+        diagnostic 1005 991 1 1	',' expected.
+        diagnostic 1005 1025 4 1	',' expected.
+        file
+        0 SourceFile 0 1328 0 0 -1 0 0				
+        1 VariableStatement 0 214 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02778-corePublic.ts-duplicate-66.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts remove token 66:  line 2: port "diagnostic 1005 960 4 1\t',' expected.", Go "diagnostic 1005 972 1 1\t',' expected."
+        Go context:
+        diagnostic 1128 914 6 1	Declaration or statement expected.
+        diagnostic 1005 972 1 1	',' expected.
+        diagnostic 1005 1006 4 1	',' expected.
+        file
+        0 SourceFile 0 1309 0 0 -1 0 0				
+        1 VariableStatement 0 214 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02777-corePublic.ts-remove-66.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts duplicate token 101:  line 85: port "1 ExpressionStatement 1099 1128 0 0 -1 0 0\t\t\t\t", Go "1 ExpressionStatement 1099 1101 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        2 Identifier 1079 1096 0 0 -1 0 0		EqualityComparer		
+        2 TypeParameter 1097 1098 0 0 -1 0 0				
+        3 Identifier 1097 1098 0 0 -1 0 0		T		
+        2 TypeReference 1099 1099 0 0 -1 0 0				
+        3 Identifier 1099 1099 0 0 -1 0 0				
+        1 ExpressionStatement 1099 1101 0 0 -1 0 0				
+        2 BinaryExpression 1099 1101 0 0 -1 0 0				
+        3 Identifier 1099 1099 0 0 -1 0 0				
+        3 GreaterThanToken 1099 1101 0 0 -1 0 0				
+        3 Identifier 1101 1101 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02792-corePublic.ts-duplicate-101.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts duplicate token 101:  line 85: port "1 ExpressionStatement 1099 1128 0 0 -1 0 0\t\t\t\t", Go "1 ExpressionStatement 1099 1101 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        2 Identifier 1079 1096 0 0 -1 0 0		EqualityComparer		
+        2 TypeParameter 1097 1098 0 0 -1 0 0				
+        3 Identifier 1097 1098 0 0 -1 0 0		T		
+        2 TypeReference 1099 1099 0 0 -1 0 0				
+        3 Identifier 1099 1099 0 0 -1 0 0				
+        1 ExpressionStatement 1099 1101 0 0 -1 0 0				
+        2 BinaryExpression 1099 1101 0 0 -1 0 0				
+        3 Identifier 1099 1099 0 0 -1 0 0				
+        3 GreaterThanToken 1099 1101 0 0 -1 0 0				
+        3 Identifier 1101 1101 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02792-corePublic.ts-duplicate-101.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts remove token 111:  line 109: port "1 ExpressionStatement 1169 1200 0 0 -1 0 0\t\t\t\t", Go "1 ExpressionStatement 1169 1170 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        4 Identifier 1167 1167 0 0 -1 0 0				
+        3 Parameter 1168 1169 0 0 -1 0 0				
+        4 Identifier 1168 1169 0 0 -1 0 0		T		
+        3 TypeReference 1169 1169 0 0 -1 0 0				
+        4 Identifier 1169 1169 0 0 -1 0 0				
+        1 ExpressionStatement 1169 1170 0 0 -1 0 0				
+        2 BinaryExpression 1169 1170 0 0 -1 0 0				
+        3 Identifier 1169 1169 0 0 -1 0 0				
+        3 GreaterThanToken 1169 1170 0 0 -1 0 0				
+        3 Identifier 1170 1170 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02795-corePublic.ts-remove-111.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts remove token 111:  line 109: port "1 ExpressionStatement 1169 1200 0 0 -1 0 0\t\t\t\t", Go "1 ExpressionStatement 1169 1170 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        4 Identifier 1167 1167 0 0 -1 0 0				
+        3 Parameter 1168 1169 0 0 -1 0 0				
+        4 Identifier 1168 1169 0 0 -1 0 0		T		
+        3 TypeReference 1169 1169 0 0 -1 0 0				
+        4 Identifier 1169 1169 0 0 -1 0 0				
+        1 ExpressionStatement 1169 1170 0 0 -1 0 0				
+        2 BinaryExpression 1169 1170 0 0 -1 0 0				
+        3 Identifier 1169 1169 0 0 -1 0 0				
+        3 GreaterThanToken 1169 1170 0 0 -1 0 0				
+        3 Identifier 1170 1170 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/02795-corePublic.ts-remove-111.ts
+    incomplete_test.go:211: checked 2816 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2880 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 2944 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3008 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3072 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3136 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3200 of 22497 scheduled inputs
+    incomplete_test.go:194: Node /workspace/scratch/typescript-6.0.3/src/compiler/debug.ts duplicate token 5809: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/03114-debug.ts-duplicate-5809.ts
+    incomplete_test.go:211: checked 3264 of 22497 scheduled inputs
+    incomplete_test.go:194: native /workspace/scratch/typescript-6.0.3/src/compiler/debug.ts duplicate token 5809: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/03114-debug.ts-duplicate-5809.ts
+    incomplete_test.go:211: checked 3328 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3392 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts remove token 21421:  line 1: port "diagnostic 1005 172052 1 1\t';' expected.", Go "diagnostic 1005 172052 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 172052 1 1	'=>' expected.
+        diagnostic 1128 172259 4 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 273336 0 0 -1 0 0				
+        1 ImportDeclaration 0 42 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/03429-emitter.ts-remove-21421.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts remove token 21421:  line 1: port "diagnostic 1005 172052 1 1\t';' expected.", Go "diagnostic 1005 172052 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 172052 1 1	'=>' expected.
+        diagnostic 1128 172259 4 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 273336 0 0 -1 0 0				
+        1 ImportDeclaration 0 42 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/03429-emitter.ts-remove-21421.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts duplicate token 25705:  line 1: port "diagnostic 1005 204454 1 1\t')' expected.", Go "diagnostic 1005 204454 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 204454 1 1	'=>' expected.
+        diagnostic 1005 204577 15 1	')' expected.
+        file
+        0 SourceFile 0 273340 0 0 -1 0 0				
+        1 ImportDeclaration 0 42 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/03438-emitter.ts-duplicate-25705.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts duplicate token 25705:  line 1: port "diagnostic 1005 204454 1 1\t')' expected.", Go "diagnostic 1005 204454 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 204454 1 1	'=>' expected.
+        diagnostic 1005 204577 15 1	')' expected.
+        file
+        0 SourceFile 0 273340 0 0 -1 0 0				
+        1 ImportDeclaration 0 42 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/03438-emitter.ts-duplicate-25705.ts
+    incomplete_test.go:211: checked 3456 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3520 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3584 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3648 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3712 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3776 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3840 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3904 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 3968 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4032 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4096 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4160 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4224 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4288 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts cut token 162:  line 1: port "diagnostic 1003 1921 0 1\tIdentifier expected.", Go "diagnostic 1005 1921 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 1921 0 1	'}' expected.
+        file
+        0 SourceFile 0 1921 0 0 -1 0 0				
+        1 ImportDeclaration 0 875 0 0 -1 0 0				
+        2 ImportClause 6 846 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/04351-emitHelpers.ts-cut-162.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts cut token 162:  line 1: port "diagnostic 1003 1921 0 1\tIdentifier expected.", Go "diagnostic 1005 1921 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 1921 0 1	'}' expected.
+        file
+        0 SourceFile 0 1921 0 0 -1 0 0				
+        1 ImportDeclaration 0 875 0 0 -1 0 0				
+        2 ImportClause 6 846 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/04351-emitHelpers.ts-cut-162.ts
+    incomplete_test.go:211: checked 4352 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4416 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4480 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4544 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts remove token 141:  line 1: port "diagnostic 1005 1741 7 1\t';' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 69093 0 0 -1 0 0				
+        1 ImportDeclaration 0 875 0 0 -1 0 0				
+        2 ImportClause 6 846 0 0 -1 0 0				Unknown
+        3 NamedImports 6 846 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/04593-emitHelpers.ts-remove-141.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts remove token 141:  line 1: port "diagnostic 1005 1741 7 1\t';' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 69093 0 0 -1 0 0				
+        1 ImportDeclaration 0 875 0 0 -1 0 0				
+        2 ImportClause 6 846 0 0 -1 0 0				Unknown
+        3 NamedImports 6 846 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/04593-emitHelpers.ts-remove-141.ts
+    incomplete_test.go:211: checked 4608 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4672 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4736 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4800 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4864 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 4928 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitNode.ts remove token 1211:  line 1: port "diagnostic 1005 9205 1 1\t';' expected.", Go "diagnostic 1005 9205 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 9205 1 1	'=>' expected.
+        file
+        0 SourceFile 0 12717 0 0 -1 0 0				
+        1 ImportDeclaration 0 563 0 0 -1 0 0				
+        2 ImportClause 6 534 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/04948-emitNode.ts-remove-1211.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitNode.ts remove token 1211:  line 1: port "diagnostic 1005 9205 1 1\t';' expected.", Go "diagnostic 1005 9205 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 9205 1 1	'=>' expected.
+        file
+        0 SourceFile 0 12717 0 0 -1 0 0				
+        1 ImportDeclaration 0 563 0 0 -1 0 0				
+        2 ImportClause 6 534 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/04948-emitNode.ts-remove-1211.ts
+    incomplete_test.go:211: checked 4992 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5056 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5120 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeChildren.ts duplicate token 31:  line 1: port "diagnostic 1005 230 4 1\t'>' expected.", Go "diagnostic 1005 224 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 224 1 1	',' expected.
+        diagnostic 1005 230 4 1	'>' expected.
+        diagnostic 1005 245 4 1	';' expected.
+        diagnostic 1011 250 0 1	An element access expression should take an argument.
+        diagnostic 1109 266 1 1	Expression expected.; saved input /workspace/scratch/parser-unit3/incomplete/05128-nodeChildren.ts-duplicate-31.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeChildren.ts duplicate token 31:  line 1: port "diagnostic 1005 230 4 1\t'>' expected.", Go "diagnostic 1005 224 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 224 1 1	',' expected.
+        diagnostic 1005 230 4 1	'>' expected.
+        diagnostic 1005 245 4 1	';' expected.
+        diagnostic 1011 250 0 1	An element access expression should take an argument.
+        diagnostic 1109 266 1 1	Expression expected.; saved input /workspace/scratch/parser-unit3/incomplete/05128-nodeChildren.ts-duplicate-31.ts
+    incomplete_test.go:211: checked 5184 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5248 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5312 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5376 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5440 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts cut token 2970:  line 1: port "diagnostic 1005 31500 0 1\t'}' expected.", Go "diagnostic 1005 31500 0 1\t'(' expected."
+        Go context:
+        diagnostic 1005 31500 0 1	'(' expected.
+        file
+        0 SourceFile 0 31500 0 0 -1 0 0				
+        1 ImportDeclaration 0 10644 0 0 -1 0 0				
+        2 ImportClause 6 10615 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/05484-nodeFactory.ts-cut-2970.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts cut token 2970:  line 1: port "diagnostic 1005 31500 0 1\t'}' expected.", Go "diagnostic 1005 31500 0 1\t'(' expected."
+        Go context:
+        diagnostic 1005 31500 0 1	'(' expected.
+        file
+        0 SourceFile 0 31500 0 0 -1 0 0				
+        1 ImportDeclaration 0 10644 0 0 -1 0 0				
+        2 ImportClause 6 10615 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/05484-nodeFactory.ts-cut-2970.ts
+    incomplete_test.go:211: checked 5504 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5568 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5632 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5696 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts duplicate token 1314:  line 1263: port "7 ArrowFunction 13434 13522 0 0 -1 0 0\t\t\t\t", Go "7 TypeAssertionExpression 13434 13522 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        4 VariableDeclarationList 13367 13522 0 0 -1 0 0				2
+        5 VariableDeclaration 13378 13522 0 0 -1 0 0				
+        6 Identifier 13378 13420 0 0 -1 0 0		getJSDocPrePostfixUnaryTypeCreateFunction		
+        6 CallExpression 13422 13522 0 0 1 0 0				
+        7 Identifier 13422 13433 0 0 -1 0 0		memoizeOne		
+        7 TypeAssertionExpression 13434 13522 0 0 -1 0 0				
+        8 ConditionalType 13435 13522 0 0 -1 0 0				
+        9 TypeReference 13435 13436 0 0 -1 0 0				
+        10 Identifier 13435 13436 0 0 -1 0 0		T		
+        9 IntersectionType 13444 13522 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/05724-nodeFactory.ts-duplicate-1314.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts duplicate token 1314:  line 1263: port "7 ArrowFunction 13434 13522 0 0 -1 0 0\t\t\t\t", Go "7 TypeAssertionExpression 13434 13522 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        4 VariableDeclarationList 13367 13522 0 0 -1 0 0				2
+        5 VariableDeclaration 13378 13522 0 0 -1 0 0				
+        6 Identifier 13378 13420 0 0 -1 0 0		getJSDocPrePostfixUnaryTypeCreateFunction		
+        6 CallExpression 13422 13522 0 0 1 0 0				
+        7 Identifier 13422 13433 0 0 -1 0 0		memoizeOne		
+        7 TypeAssertionExpression 13434 13522 0 0 -1 0 0				
+        8 ConditionalType 13435 13522 0 0 -1 0 0				
+        9 TypeReference 13435 13436 0 0 -1 0 0				
+        10 Identifier 13435 13436 0 0 -1 0 0		T		
+        9 IntersectionType 13444 13522 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/05724-nodeFactory.ts-duplicate-1314.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts duplicate token 2627:  line 1: port "diagnostic 1005 28650 20 1\t',' expected.", Go "diagnostic 1005 28650 20 1\t'(' expected."
+        Go context:
+        diagnostic 1005 28650 20 1	'(' expected.
+        file
+        0 SourceFile 0 334934 0 0 -1 0 0				
+        1 ImportDeclaration 0 10644 0 0 -1 0 0				
+        2 ImportClause 6 10615 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/05726-nodeFactory.ts-duplicate-2627.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts duplicate token 2627:  line 1: port "diagnostic 1005 28650 20 1\t',' expected.", Go "diagnostic 1005 28650 20 1\t'(' expected."
+        Go context:
+        diagnostic 1005 28650 20 1	'(' expected.
+        file
+        0 SourceFile 0 334934 0 0 -1 0 0				
+        1 ImportDeclaration 0 10644 0 0 -1 0 0				
+        2 ImportClause 6 10615 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/05726-nodeFactory.ts-duplicate-2627.ts
+    incomplete_test.go:211: checked 5760 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5824 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5888 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 5952 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6016 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6080 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6144 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6208 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6272 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6336 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6400 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6464 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6528 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6592 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6656 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6720 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6784 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6848 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6912 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 6976 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7040 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7104 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7168 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7232 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7296 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7360 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7424 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7488 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/moduleSpecifiers.ts remove token 276:  line 1: port "diagnostic 1109 3352 3 1\tExpression expected.", Go "diagnostic 1005 3352 3 1\t'{' expected."
+        Go context:
+        diagnostic 1005 3352 3 1	'{' expected.
+        file
+        0 SourceFile 0 79618 0 0 -1 0 0				
+        1 ImportDeclaration 0 3288 0 0 -1 0 0				
+        2 ImportClause 6 3260 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/07498-moduleSpecifiers.ts-remove-276.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/moduleSpecifiers.ts remove token 276:  line 1: port "diagnostic 1109 3352 3 1\tExpression expected.", Go "diagnostic 1005 3352 3 1\t'{' expected."
+        Go context:
+        diagnostic 1005 3352 3 1	'{' expected.
+        file
+        0 SourceFile 0 79618 0 0 -1 0 0				
+        1 ImportDeclaration 0 3288 0 0 -1 0 0				
+        2 ImportClause 6 3260 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/07498-moduleSpecifiers.ts-remove-276.ts
+    incomplete_test.go:211: checked 7552 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7616 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7680 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7744 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7808 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/parser.ts duplicate token 19551:  line 2: port "diagnostic 1005 132105 1 1\t'?' expected.", Go "diagnostic 1005 132191 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1139 132090 1 1	Type parameter declaration expected.
+        diagnostic 1005 132191 1 1	'=>' expected.
+        file
+        0 SourceFile 0 539687 0 0 -1 0 0				
+        1 ImportDeclaration 0 9309 0 0 -1 0 0				
+        2 ImportClause 6 9281 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/07837-parser.ts-duplicate-19551.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/parser.ts duplicate token 19551:  line 2: port "diagnostic 1005 132105 1 1\t'?' expected.", Go "diagnostic 1005 132191 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1139 132090 1 1	Type parameter declaration expected.
+        diagnostic 1005 132191 1 1	'=>' expected.
+        file
+        0 SourceFile 0 539687 0 0 -1 0 0				
+        1 ImportDeclaration 0 9309 0 0 -1 0 0				
+        2 ImportClause 6 9281 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/07837-parser.ts-duplicate-19551.ts
+    incomplete_test.go:211: checked 7872 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 7936 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8000 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8064 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8128 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8192 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8256 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8320 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8384 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8448 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8512 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8576 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8640 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8704 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8768 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8832 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8896 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 8960 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9024 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9088 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9152 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9216 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9280 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9344 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9408 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9472 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9536 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9600 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/resolutionCache.ts duplicate token 5713:  line 1: port "diagnostic 1005 54148 1 1\t')' expected.", Go "diagnostic 1005 54148 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 54148 1 1	'=>' expected.
+        diagnostic 1005 54347 35 1	')' expected.
+        file
+        0 SourceFile 0 82038 0 0 -1 0 0				
+        1 ImportDeclaration 0 2134 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/09631-resolutionCache.ts-duplicate-5713.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/resolutionCache.ts duplicate token 5713:  line 1: port "diagnostic 1005 54148 1 1\t')' expected.", Go "diagnostic 1005 54148 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 54148 1 1	'=>' expected.
+        diagnostic 1005 54347 35 1	')' expected.
+        file
+        0 SourceFile 0 82038 0 0 -1 0 0				
+        1 ImportDeclaration 0 2134 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/09631-resolutionCache.ts-duplicate-5713.ts
+    incomplete_test.go:211: checked 9664 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9728 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9792 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9856 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 9920 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/scanner.ts remove token 20098:  line 1: port "diagnostic 1128 120185 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 120185 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 120185 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        file
+        0 SourceFile 0 219152 0 0 -1 0 0				
+        1 ImportDeclaration 0 795 0 0 -1 0 0				
+        2 ImportClause 6 767 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/09950-scanner.ts-remove-20098.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/scanner.ts remove token 20098:  line 1: port "diagnostic 1128 120185 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 120185 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 120185 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        file
+        0 SourceFile 0 219152 0 0 -1 0 0				
+        1 ImportDeclaration 0 795 0 0 -1 0 0				
+        2 ImportClause 6 767 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/09950-scanner.ts-remove-20098.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts cut token 60:  line 1: port "diagnostic 1003 1962 0 1\tIdentifier expected.", Go "diagnostic 1005 1962 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 1962 0 1	'}' expected.
+        file
+        0 SourceFile 0 1962 0 0 -1 0 0				
+        1 ImportDeclaration 0 186 0 0 -1 0 0				
+        2 ImportClause 6 158 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/09978-semver.ts-cut-60.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts cut token 60:  line 1: port "diagnostic 1003 1962 0 1\tIdentifier expected.", Go "diagnostic 1005 1962 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 1962 0 1	'}' expected.
+        file
+        0 SourceFile 0 1962 0 0 -1 0 0				
+        1 ImportDeclaration 0 186 0 0 -1 0 0				
+        2 ImportClause 6 158 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/09978-semver.ts-cut-60.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts cut token 110:  line 1: port "diagnostic 1005 2200 0 1\t'}' expected.", Go "diagnostic 1005 2200 0 1\t'(' expected."
+        Go context:
+        diagnostic 1005 2200 0 1	'(' expected.
+        file
+        0 SourceFile 0 2200 0 0 -1 0 0				
+        1 ImportDeclaration 0 186 0 0 -1 0 0				
+        2 ImportClause 6 158 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/09983-semver.ts-cut-110.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts cut token 110:  line 1: port "diagnostic 1005 2200 0 1\t'}' expected.", Go "diagnostic 1005 2200 0 1\t'(' expected."
+        Go context:
+        diagnostic 1005 2200 0 1	'(' expected.
+        file
+        0 SourceFile 0 2200 0 0 -1 0 0				
+        1 ImportDeclaration 0 186 0 0 -1 0 0				
+        2 ImportClause 6 158 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/09983-semver.ts-cut-110.ts
+    incomplete_test.go:211: checked 9984 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10048 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts cut token 1160:  line 1: port "diagnostic 1003 9300 0 1\tIdentifier expected.", Go "diagnostic 1005 9300 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 9300 0 1	'}' expected.
+        file
+        0 SourceFile 0 9300 0 0 -1 0 0				
+        1 ImportDeclaration 0 186 0 0 -1 0 0				
+        2 ImportClause 6 158 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/10088-semver.ts-cut-1160.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts cut token 1160:  line 1: port "diagnostic 1003 9300 0 1\tIdentifier expected.", Go "diagnostic 1005 9300 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 9300 0 1	'}' expected.
+        file
+        0 SourceFile 0 9300 0 0 -1 0 0				
+        1 ImportDeclaration 0 186 0 0 -1 0 0				
+        2 ImportClause 6 158 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/10088-semver.ts-cut-1160.ts
+    incomplete_test.go:211: checked 10112 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10176 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10240 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts remove token 1171:  line 1: port "diagnostic 1005 9366 4 1\t';' expected.", Go "diagnostic 1068 9549 6 1\tUnexpected token. A constructor, method, accessor, or property was expected."
+        Go context:
+        diagnostic 1068 9549 6 1	Unexpected token. A constructor, method, accessor, or property was expected.
+        diagnostic 1128 9572 1 1	Declaration or statement expected.
+        diagnostic 1005 9768 1 1	',' expected.
+        diagnostic 1005 9787 1 1	';' expected.
+        diagnostic 1434 9789 7 1	Unexpected keyword or identifier.; saved input /workspace/scratch/parser-unit3/incomplete/10251-semver.ts-remove-1171.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts remove token 1171:  line 1: port "diagnostic 1005 9366 4 1\t';' expected.", Go "diagnostic 1068 9549 6 1\tUnexpected token. A constructor, method, accessor, or property was expected."
+        Go context:
+        diagnostic 1068 9549 6 1	Unexpected token. A constructor, method, accessor, or property was expected.
+        diagnostic 1128 9572 1 1	Declaration or statement expected.
+        diagnostic 1005 9768 1 1	',' expected.
+        diagnostic 1005 9787 1 1	';' expected.
+        diagnostic 1434 9789 7 1	Unexpected keyword or identifier.; saved input /workspace/scratch/parser-unit3/incomplete/10251-semver.ts-remove-1171.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts remove token 1249:  line 2: port "diagnostic 1005 9981 17 1\t';' expected.", Go "diagnostic 1128 10025 1 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1131 9974 6 1	Property or signature expected.
+        diagnostic 1128 10025 1 1	Declaration or statement expected.
+        diagnostic 1128 10028 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 17927 0 0 -1 0 0				
+        1 ImportDeclaration 0 186 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/10253-semver.ts-remove-1249.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts remove token 1249:  line 2: port "diagnostic 1005 9981 17 1\t';' expected.", Go "diagnostic 1128 10025 1 1\tDeclaration or statement expected."
+        Go context:
+        diagnostic 1131 9974 6 1	Property or signature expected.
+        diagnostic 1128 10025 1 1	Declaration or statement expected.
+        diagnostic 1128 10028 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 17927 0 0 -1 0 0				
+        1 ImportDeclaration 0 186 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/10253-semver.ts-remove-1249.ts
+    incomplete_test.go:194: Node /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts remove token 391: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/10231-semver.ts-remove-391.ts
+    incomplete_test.go:194: Node /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts duplicate token 391: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/10232-semver.ts-duplicate-391.ts
+    incomplete_test.go:194: Node /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts duplicate token 1171: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/10252-semver.ts-duplicate-1171.ts
+    incomplete_test.go:194: Node /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts duplicate token 1249: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/10254-semver.ts-duplicate-1249.ts
+    incomplete_test.go:194: native /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts duplicate token 391: signal: killed; saved input /workspace/scratch/parser-unit3/incomplete/10232-semver.ts-duplicate-391.ts
+    incomplete_test.go:194: native /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts remove token 391: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/10231-semver.ts-remove-391.ts
+    incomplete_test.go:194: native /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts duplicate token 1171: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/10252-semver.ts-duplicate-1171.ts
+    incomplete_test.go:194: native /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts duplicate token 1249: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/10254-semver.ts-duplicate-1249.ts
+    incomplete_test.go:211: checked 10304 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10368 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10432 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10496 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10560 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10624 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10688 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10752 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10816 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10880 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 10944 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11008 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11072 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/sys.ts cut token 9143:  line 1: port "diagnostic 1003 77304 0 1\tIdentifier expected.", Go "diagnostic 1110 77304 0 1\tType expected."
+        Go context:
+        diagnostic 1110 77304 0 1	Type expected.
+        file
+        0 SourceFile 0 77304 0 0 -1 0 0				
+        1 ImportDeclaration 0 1033 0 0 -1 0 0				
+        2 ImportClause 6 1005 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11102-sys.ts-cut-9143.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/sys.ts cut token 9143:  line 1: port "diagnostic 1003 77304 0 1\tIdentifier expected.", Go "diagnostic 1110 77304 0 1\tType expected."
+        Go context:
+        diagnostic 1110 77304 0 1	Type expected.
+        file
+        0 SourceFile 0 77304 0 0 -1 0 0				
+        1 ImportDeclaration 0 1033 0 0 -1 0 0				
+        2 ImportClause 6 1005 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11102-sys.ts-cut-9143.ts
+    incomplete_test.go:211: checked 11136 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/sys.ts remove token 7407:  line 3: port "diagnostic 1005 63259 2 1\t';' expected.", Go "diagnostic 1005 63259 2 1\t':' expected."
+        Go context:
+        diagnostic 1138 63254 1 1	Parameter declaration expected.
+        diagnostic 1138 63256 1 1	Parameter declaration expected.
+        diagnostic 1005 63259 2 1	':' expected.
+        diagnostic 1005 63266 1 1	';' expected.
+        diagnostic 1131 63267 1 1	Property or signature expected.
+        file
+        0 SourceFile 0 86130 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/11176-sys.ts-remove-7407.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/sys.ts remove token 7407:  line 3: port "diagnostic 1005 63259 2 1\t';' expected.", Go "diagnostic 1005 63259 2 1\t':' expected."
+        Go context:
+        diagnostic 1138 63254 1 1	Parameter declaration expected.
+        diagnostic 1138 63256 1 1	Parameter declaration expected.
+        diagnostic 1005 63259 2 1	':' expected.
+        diagnostic 1005 63266 1 1	';' expected.
+        diagnostic 1131 63267 1 1	Property or signature expected.
+        file
+        0 SourceFile 0 86130 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/11176-sys.ts-remove-7407.ts
+    incomplete_test.go:211: checked 11200 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts cut token 81:  line 1: port "diagnostic 1110 909 0 1\tType expected.", Go "diagnostic 1003 909 0 1\tIdentifier expected."
+        Go context:
+        diagnostic 1003 909 0 1	Identifier expected.
+        file
+        0 SourceFile 0 909 0 0 -1 0 0				
+        1 ImportDeclaration 0 463 0 0 -1 0 0				
+        2 ImportClause 6 435 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11203-tracing.ts-cut-81.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts cut token 81:  line 1: port "diagnostic 1110 909 0 1\tType expected.", Go "diagnostic 1003 909 0 1\tIdentifier expected."
+        Go context:
+        diagnostic 1003 909 0 1	Identifier expected.
+        file
+        0 SourceFile 0 909 0 0 -1 0 0				
+        1 ImportDeclaration 0 463 0 0 -1 0 0				
+        2 ImportClause 6 435 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11203-tracing.ts-cut-81.ts
+    incomplete_test.go:211: checked 11264 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11328 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11392 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts duplicate token 135:  line 1: port "diagnostic 1005 1281 6 1\t']' expected.", Go "diagnostic 1005 1281 6 1\t',' expected."
+        Go context:
+        diagnostic 1005 1281 6 1	',' expected.
+        file
+        0 SourceFile 0 15035 0 0 -1 0 0				
+        1 ImportDeclaration 0 463 0 0 -1 0 0				
+        2 ImportClause 6 435 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11434-tracing.ts-duplicate-135.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts duplicate token 135:  line 1: port "diagnostic 1005 1281 6 1\t']' expected.", Go "diagnostic 1005 1281 6 1\t',' expected."
+        Go context:
+        diagnostic 1005 1281 6 1	',' expected.
+        file
+        0 SourceFile 0 15035 0 0 -1 0 0				
+        1 ImportDeclaration 0 463 0 0 -1 0 0				
+        2 ImportClause 6 435 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11434-tracing.ts-duplicate-135.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts remove token 872:  line 1: port "diagnostic 1128 6189 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 6189 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 6189 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        file
+        0 SourceFile 0 15023 0 0 -1 0 0				
+        1 ImportDeclaration 0 463 0 0 -1 0 0				
+        2 ImportClause 6 435 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11455-tracing.ts-remove-872.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts remove token 872:  line 1: port "diagnostic 1128 6189 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 6189 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 6189 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        file
+        0 SourceFile 0 15023 0 0 -1 0 0				
+        1 ImportDeclaration 0 463 0 0 -1 0 0				
+        2 ImportClause 6 435 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11455-tracing.ts-remove-872.ts
+    incomplete_test.go:211: checked 11520 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11584 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts cut token 1313:  line 1: port "diagnostic 1003 11191 0 1\tIdentifier expected.", Go "diagnostic 1005 11191 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 11191 0 1	'}' expected.
+        file
+        0 SourceFile 0 11191 0 0 -1 0 0				
+        1 ImportDeclaration 0 1601 0 0 -1 0 0				
+        2 ImportClause 6 1573 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11594-transformer.ts-cut-1313.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts cut token 1313:  line 1: port "diagnostic 1003 11191 0 1\tIdentifier expected.", Go "diagnostic 1005 11191 0 1\t'}' expected."
+        Go context:
+        diagnostic 1005 11191 0 1	'}' expected.
+        file
+        0 SourceFile 0 11191 0 0 -1 0 0				
+        1 ImportDeclaration 0 1601 0 0 -1 0 0				
+        2 ImportClause 6 1573 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11594-transformer.ts-cut-1313.ts
+    incomplete_test.go:211: checked 11648 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11712 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts remove token 680:  line 3: port "file", Go "diagnostic 1005 5727 1 1\t';' expected."
+        Go context:
+        diagnostic 1134 5683 1 1	Variable declaration expected.
+        diagnostic 1005 5703 1 1	',' expected.
+        diagnostic 1005 5727 1 1	';' expected.
+        file
+        0 SourceFile 0 29743 0 0 -1 0 0				
+        1 ImportDeclaration 0 1601 0 0 -1 0 0				
+        2 ImportClause 6 1573 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11746-transformer.ts-remove-680.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts remove token 680:  line 3: port "file", Go "diagnostic 1005 5727 1 1\t';' expected."
+        Go context:
+        diagnostic 1134 5683 1 1	Variable declaration expected.
+        diagnostic 1005 5703 1 1	',' expected.
+        diagnostic 1005 5727 1 1	';' expected.
+        file
+        0 SourceFile 0 29743 0 0 -1 0 0				
+        1 ImportDeclaration 0 1601 0 0 -1 0 0				
+        2 ImportClause 6 1573 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11746-transformer.ts-remove-680.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts remove token 1844:  line 1: port "diagnostic 1005 15846 1 1\t';' expected.", Go "diagnostic 1005 15846 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 15846 1 1	'=>' expected.
+        file
+        0 SourceFile 0 29753 0 0 -1 0 0				
+        1 ImportDeclaration 0 1601 0 0 -1 0 0				
+        2 ImportClause 6 1573 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11770-transformer.ts-remove-1844.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts remove token 1844:  line 1: port "diagnostic 1005 15846 1 1\t';' expected.", Go "diagnostic 1005 15846 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 15846 1 1	'=>' expected.
+        file
+        0 SourceFile 0 29753 0 0 -1 0 0				
+        1 ImportDeclaration 0 1601 0 0 -1 0 0				
+        2 ImportClause 6 1573 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/11770-transformer.ts-remove-1844.ts
+    incomplete_test.go:211: checked 11776 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11840 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11904 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 11968 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12032 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12096 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classFields.ts remove token 14478:  line 1: port "diagnostic 1128 152282 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 152282 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 152282 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        file
+        0 SourceFile 0 156321 0 0 -1 0 0				
+        1 ImportDeclaration 0 5934 0 0 -1 0 0				
+        2 ImportClause 6 5905 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/12112-classFields.ts-remove-14478.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classFields.ts remove token 14478:  line 1: port "diagnostic 1128 152282 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 152282 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 152282 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        file
+        0 SourceFile 0 156321 0 0 -1 0 0				
+        1 ImportDeclaration 0 5934 0 0 -1 0 0				
+        2 ImportClause 6 5905 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/12112-classFields.ts-remove-14478.ts
+    incomplete_test.go:211: checked 12160 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12224 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12288 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts duplicate token 137:  line 2: port "diagnostic 1005 1880 4 1\t',' expected.", Go "diagnostic 1109 1939 1 1\tExpression expected."
+        Go context:
+        diagnostic 1110 1832 1 1	Type expected.
+        diagnostic 1109 1939 1 1	Expression expected.
+        diagnostic 1005 2159 1 1	',' expected.
+        diagnostic 1005 2216 1 1	',' expected.
+        diagnostic 1005 2240 1 1	',' expected.
+        diagnostic 1109 2275 1 1	Expression expected.; saved input /workspace/scratch/parser-unit3/incomplete/12308-classThis.ts-duplicate-137.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts duplicate token 137:  line 2: port "diagnostic 1005 1880 4 1\t',' expected.", Go "diagnostic 1109 1939 1 1\tExpression expected."
+        Go context:
+        diagnostic 1110 1832 1 1	Type expected.
+        diagnostic 1109 1939 1 1	Expression expected.
+        diagnostic 1005 2159 1 1	',' expected.
+        diagnostic 1005 2216 1 1	',' expected.
+        diagnostic 1005 2240 1 1	',' expected.
+        diagnostic 1109 2275 1 1	Expression expected.; saved input /workspace/scratch/parser-unit3/incomplete/12308-classThis.ts-duplicate-137.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts duplicate token 154:  line 3: port "diagnostic 1005 2059 10 1\t',' expected.", Go "diagnostic 1005 2159 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 1960 1 1	';' expected.
+        diagnostic 1109 1975 1 1	Expression expected.
+        diagnostic 1005 2159 1 1	',' expected.
+        diagnostic 1005 2216 1 1	',' expected.
+        diagnostic 1005 2240 1 1	',' expected.
+        diagnostic 1109 2275 1 1	Expression expected.
+        diagnostic 1128 2283 1 1	Declaration or statement expected.; saved input /workspace/scratch/parser-unit3/incomplete/12310-classThis.ts-duplicate-154.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts duplicate token 154:  line 3: port "diagnostic 1005 2059 10 1\t',' expected.", Go "diagnostic 1005 2159 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 1960 1 1	';' expected.
+        diagnostic 1109 1975 1 1	Expression expected.
+        diagnostic 1005 2159 1 1	',' expected.
+        diagnostic 1005 2216 1 1	',' expected.
+        diagnostic 1005 2240 1 1	',' expected.
+        diagnostic 1109 2275 1 1	Expression expected.
+        diagnostic 1128 2283 1 1	Declaration or statement expected.; saved input /workspace/scratch/parser-unit3/incomplete/12310-classThis.ts-duplicate-154.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts duplicate token 171:  line 2: port "diagnostic 1131 2141 4 1\tProperty or signature expected.", Go "diagnostic 1005 2146 4 1\t',' expected."
+        Go context:
+        diagnostic 1131 2132 8 1	Property or signature expected.
+        diagnostic 1005 2146 4 1	',' expected.
+        diagnostic 1005 2162 1 1	',' expected.
+        diagnostic 1005 2203 1 1	',' expected.
+        diagnostic 1005 2219 1 1	',' expected.
+        diagnostic 1110 2242 1 1	Type expected.; saved input /workspace/scratch/parser-unit3/incomplete/12312-classThis.ts-duplicate-171.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts duplicate token 171:  line 2: port "diagnostic 1131 2141 4 1\tProperty or signature expected.", Go "diagnostic 1005 2146 4 1\t',' expected."
+        Go context:
+        diagnostic 1131 2132 8 1	Property or signature expected.
+        diagnostic 1005 2146 4 1	',' expected.
+        diagnostic 1005 2162 1 1	',' expected.
+        diagnostic 1005 2203 1 1	',' expected.
+        diagnostic 1005 2219 1 1	',' expected.
+        diagnostic 1110 2242 1 1	Type expected.; saved input /workspace/scratch/parser-unit3/incomplete/12312-classThis.ts-duplicate-171.ts
+    incomplete_test.go:211: checked 12352 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12416 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12480 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12544 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12608 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12672 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12736 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12800 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12864 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12928 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 12992 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13056 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13120 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13184 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/destructuring.ts remove token 201:  line 2: port "diagnostic 1005 2347 2 1\t';' expected.", Go "diagnostic 1005 2347 2 1\t':' expected."
+        Go context:
+        diagnostic 1131 2304 1 1	Property or signature expected.
+        diagnostic 1005 2347 2 1	':' expected.
+        file
+        0 SourceFile 0 30717 0 0 -1 0 0				
+        1 ImportDeclaration 0 1714 0 0 -1 0 0				
+        2 ImportClause 6 1685 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/13240-destructuring.ts-remove-201.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/destructuring.ts remove token 201:  line 2: port "diagnostic 1005 2347 2 1\t';' expected.", Go "diagnostic 1005 2347 2 1\t':' expected."
+        Go context:
+        diagnostic 1131 2304 1 1	Property or signature expected.
+        diagnostic 1005 2347 2 1	':' expected.
+        file
+        0 SourceFile 0 30717 0 0 -1 0 0				
+        1 ImportDeclaration 0 1714 0 0 -1 0 0				
+        2 ImportClause 6 1685 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/13240-destructuring.ts-remove-201.ts
+    incomplete_test.go:211: checked 13248 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13312 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13376 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13440 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13504 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13568 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13632 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13696 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13760 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13824 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13888 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 13952 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14016 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14080 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2017.ts remove token 1329:  line 1: port "diagnostic 1005 11738 11 1\t',' expected.", Go "diagnostic 1005 11738 11 1\t')' expected."
+        Go context:
+        diagnostic 1005 11738 11 1	')' expected.
+        diagnostic 1005 11751 2 1	';' expected.
+        diagnostic 1128 12078 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 49965 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/14136-es2017.ts-remove-1329.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2017.ts remove token 1329:  line 1: port "diagnostic 1005 11738 11 1\t',' expected.", Go "diagnostic 1005 11738 11 1\t')' expected."
+        Go context:
+        diagnostic 1005 11738 11 1	')' expected.
+        diagnostic 1005 11751 2 1	';' expected.
+        diagnostic 1128 12078 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 49965 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/14136-es2017.ts-remove-1329.ts
+    incomplete_test.go:211: checked 14144 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14208 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14272 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14336 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14400 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14464 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14528 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14592 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14656 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14720 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14784 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14848 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14912 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 14976 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15040 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15104 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15168 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15232 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15296 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15360 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15424 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15488 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15552 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15616 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15680 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15744 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15808 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15872 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 15936 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16000 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16064 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16128 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16192 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16256 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16320 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16384 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16448 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16512 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16576 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16640 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16704 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16768 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16832 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16896 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 16960 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17024 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17088 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17152 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17216 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17280 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17344 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17408 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/impliedNodeFormatDependent.ts cut token 362:  line 1: port "diagnostic 1110 2920 0 1\tType expected.", Go "diagnostic 1003 2920 0 1\tIdentifier expected."
+        Go context:
+        diagnostic 1003 2920 0 1	Identifier expected.
+        file
+        0 SourceFile 0 2920 0 0 -1 0 0				
+        1 ImportDeclaration 0 274 0 0 -1 0 0				
+        2 ImportClause 6 242 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/17409-impliedNodeFormatDependent.ts-cut-362.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/impliedNodeFormatDependent.ts cut token 362:  line 1: port "diagnostic 1110 2920 0 1\tType expected.", Go "diagnostic 1003 2920 0 1\tIdentifier expected."
+        Go context:
+        diagnostic 1003 2920 0 1	Identifier expected.
+        file
+        0 SourceFile 0 2920 0 0 -1 0 0				
+        1 ImportDeclaration 0 274 0 0 -1 0 0				
+        2 ImportClause 6 242 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/17409-impliedNodeFormatDependent.ts-cut-362.ts
+    incomplete_test.go:211: checked 17472 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17536 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17600 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17664 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17728 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17792 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/module.ts remove token 8992:  line 1: port "diagnostic 1005 94569 1 1\t';' expected.", Go "diagnostic 1005 94569 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 94569 1 1	'=>' expected.
+        file
+        0 SourceFile 0 111458 0 0 -1 0 0				
+        1 ImportDeclaration 0 4099 0 0 -1 0 0				
+        2 ImportClause 6 4067 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/17843-module.ts-remove-8992.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/module.ts remove token 8992:  line 1: port "diagnostic 1005 94569 1 1\t';' expected.", Go "diagnostic 1005 94569 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 94569 1 1	'=>' expected.
+        file
+        0 SourceFile 0 111458 0 0 -1 0 0				
+        1 ImportDeclaration 0 4099 0 0 -1 0 0				
+        2 ImportClause 6 4067 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/17843-module.ts-remove-8992.ts
+    incomplete_test.go:211: checked 17856 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17920 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 17984 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18048 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18112 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18176 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18240 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18304 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18368 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18432 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18496 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18560 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18624 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18688 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/taggedTemplate.ts remove token 191:  line 1: port "diagnostic 1128 1745 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 1745 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 1745 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        diagnostic 1128 3547 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 5423 0 0 -1 0 0				
+        1 ImportDeclaration 0 573 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/18702-taggedTemplate.ts-remove-191.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/taggedTemplate.ts remove token 191:  line 1: port "diagnostic 1128 1745 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 1745 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 1745 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        diagnostic 1128 3547 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 5423 0 0 -1 0 0				
+        1 ImportDeclaration 0 573 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/18702-taggedTemplate.ts-remove-191.ts
+    incomplete_test.go:211: checked 18752 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18816 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18880 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 18944 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19008 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19072 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19136 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19200 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19264 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19328 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19392 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19456 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19520 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19584 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19648 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts duplicate token 2177:  line 5: port "diagnostic 1005 17812 1 1\t',' expected.", Go "diagnostic 1109 17812 0 1\tExpression expected."
+        Go context:
+        diagnostic 1005 17570 9 1	'}' expected.
+        diagnostic 1005 17579 1 1	',' expected.
+        diagnostic 1128 17586 1 1	Declaration or statement expected.
+        diagnostic 1005 17810 1 1	',' expected.
+        diagnostic 1109 17812 0 1	Expression expected.
+        diagnostic 1005 17825 1 1	',' expected.
+        diagnostic 1443 17830 4885 1	Module declaration names may only use ' or " quoted strings.
+        diagnostic 1443 22722 33 1	Module declaration names may only use ' or " quoted strings.
+        diagnostic 1005 22758 74 1	'{' expected.; saved input /workspace/scratch/parser-unit3/incomplete/19667-utilities.ts-duplicate-2177.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts duplicate token 2177:  line 5: port "diagnostic 1005 17812 1 1\t',' expected.", Go "diagnostic 1109 17812 0 1\tExpression expected."
+        Go context:
+        diagnostic 1005 17570 9 1	'}' expected.
+        diagnostic 1005 17579 1 1	',' expected.
+        diagnostic 1128 17586 1 1	Declaration or statement expected.
+        diagnostic 1005 17810 1 1	',' expected.
+        diagnostic 1109 17812 0 1	Expression expected.
+        diagnostic 1005 17825 1 1	',' expected.
+        diagnostic 1443 17830 4885 1	Module declaration names may only use ' or " quoted strings.
+        diagnostic 1443 22722 33 1	Module declaration names may only use ' or " quoted strings.
+        diagnostic 1005 22758 74 1	'{' expected.; saved input /workspace/scratch/parser-unit3/incomplete/19667-utilities.ts-duplicate-2177.ts
+    incomplete_test.go:211: checked 19712 of 22497 scheduled inputs
+    incomplete_test.go:194: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts remove token 2041: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/19664-utilities.ts-remove-2041.ts
+    incomplete_test.go:194: Node /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts duplicate token 2041: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/19665-utilities.ts-duplicate-2041.ts
+    incomplete_test.go:211: checked 19776 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19840 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 19904 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts remove token 79:  line 57: port "1 TypeAliasDeclaration 1045 1210 0 0 -1 0 0\t\t\t\t", Go "1 TypeAliasDeclaration 1045 1508 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        3 Identifier 896 927 0 0 -1 0 0		UpToDateWithInputFileText		
+        2 EnumMember 928 1024 0 0 -1 0 0				
+        3 Identifier 928 1024 0 0 -1 0 0		ContainerOnly		
+        2 EnumMember 1025 1041 0 0 -1 0 0				
+        3 Identifier 1025 1041 0 0 -1 0 0		ForceBuild		
+        1 TypeAliasDeclaration 1045 1508 0 0 -1 0 0				
+        2 ExportKeyword 1045 1073 0 0 -1 0 0				
+        2 Identifier 1078 1093 0 0 -1 0 0		UpToDateStatus		
+        2 UnionType 1095 1507 0 0 -1 0 0				
+        3 TypeReference 1102 1121 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/19913-tsbuild.ts-remove-79.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts remove token 79:  line 57: port "1 TypeAliasDeclaration 1045 1210 0 0 -1 0 0\t\t\t\t", Go "1 TypeAliasDeclaration 1045 1508 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        3 Identifier 896 927 0 0 -1 0 0		UpToDateWithInputFileText		
+        2 EnumMember 928 1024 0 0 -1 0 0				
+        3 Identifier 928 1024 0 0 -1 0 0		ContainerOnly		
+        2 EnumMember 1025 1041 0 0 -1 0 0				
+        3 Identifier 1025 1041 0 0 -1 0 0		ForceBuild		
+        1 TypeAliasDeclaration 1045 1508 0 0 -1 0 0				
+        2 ExportKeyword 1045 1073 0 0 -1 0 0				
+        2 Identifier 1078 1093 0 0 -1 0 0		UpToDateStatus		
+        2 UnionType 1095 1507 0 0 -1 0 0				
+        3 TypeReference 1102 1121 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/19913-tsbuild.ts-remove-79.ts
+    incomplete_test.go:194: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts duplicate token 2041: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/19665-utilities.ts-duplicate-2041.ts
+    incomplete_test.go:194: native /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts remove token 2041: timeout after 20s: context deadline exceeded; saved input /workspace/scratch/parser-unit3/incomplete/19664-utilities.ts-remove-2041.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts remove token 144:  line 136: port "4 PropertySignature 2008 2023 0 0 -1 0 0\t\t\t\t", Go "4 PropertySignature 2008 2039 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        5 Identifier 1822 1838 0 0 -1 0 0		reason		
+        5 StringKeyword 1839 1846 0 0 -1 0 0				
+        3 InterfaceDeclaration 1854 2046 0 0 -1 0 0				
+        4 ExportKeyword 1854 1982 0 0 -1 0 0				
+        4 Identifier 1992 2006 0 0 -1 0 0		ContainerOnly		
+        4 PropertySignature 2008 2039 0 0 -1 0 0				
+        5 Identifier 2008 2022 0 0 -1 0 0		type		
+        5 TypeReference 2023 2038 0 0 -1 0 0				
+        6 QualifiedName 2023 2038 0 0 -1 0 0				
+        7 Identifier 2023 2023 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/19923-tsbuild.ts-remove-144.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts remove token 144:  line 136: port "4 PropertySignature 2008 2023 0 0 -1 0 0\t\t\t\t", Go "4 PropertySignature 2008 2039 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        5 Identifier 1822 1838 0 0 -1 0 0		reason		
+        5 StringKeyword 1839 1846 0 0 -1 0 0				
+        3 InterfaceDeclaration 1854 2046 0 0 -1 0 0				
+        4 ExportKeyword 1854 1982 0 0 -1 0 0				
+        4 Identifier 1992 2006 0 0 -1 0 0		ContainerOnly		
+        4 PropertySignature 2008 2039 0 0 -1 0 0				
+        5 Identifier 2008 2022 0 0 -1 0 0		type		
+        5 TypeReference 2023 2038 0 0 -1 0 0				
+        6 QualifiedName 2023 2038 0 0 -1 0 0				
+        7 Identifier 2023 2023 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/19923-tsbuild.ts-remove-144.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts remove token 261:  line 237: port "3 TypeAliasDeclaration 3671 3704 0 0 -1 0 0\t\t\t\t", Go "3 TypeAliasDeclaration 3671 3720 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        5 Identifier 3591 3614 0 0 -1 0 0		buildInfoFile		
+        5 StringKeyword 3615 3622 0 0 -1 0 0				
+        3 InterfaceDeclaration 3630 3671 0 0 -1 0 0				
+        4 ExportKeyword 3630 3644 0 0 -1 0 0				
+        4 Identifier 3654 3669 0 0 -1 0 0		OutOfDateRoots		
+        3 TypeAliasDeclaration 3671 3720 0 0 -1 0 0				
+        4 Identifier 3685 3704 0 0 -1 0 0		UpToDateStatusType		
+        4 TypeReference 3704 3719 0 0 -1 0 0				
+        5 QualifiedName 3704 3719 0 0 -1 0 0				
+        6 Identifier 3704 3704 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/19941-tsbuild.ts-remove-261.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts remove token 261:  line 237: port "3 TypeAliasDeclaration 3671 3704 0 0 -1 0 0\t\t\t\t", Go "3 TypeAliasDeclaration 3671 3720 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        5 Identifier 3591 3614 0 0 -1 0 0		buildInfoFile		
+        5 StringKeyword 3615 3622 0 0 -1 0 0				
+        3 InterfaceDeclaration 3630 3671 0 0 -1 0 0				
+        4 ExportKeyword 3630 3644 0 0 -1 0 0				
+        4 Identifier 3654 3669 0 0 -1 0 0		OutOfDateRoots		
+        3 TypeAliasDeclaration 3671 3720 0 0 -1 0 0				
+        4 Identifier 3685 3704 0 0 -1 0 0		UpToDateStatusType		
+        4 TypeReference 3704 3719 0 0 -1 0 0				
+        5 QualifiedName 3704 3719 0 0 -1 0 0				
+        6 Identifier 3704 3704 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/19941-tsbuild.ts-remove-261.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts remove token 326:  line 287: port "4 PropertySignature 4518 4533 0 0 -1 0 0\t\t\t\t", Go "4 PropertySignature 4518 4557 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        7 Identifier 4428 4447 0 0 -1 0 0		UpToDateStatusType		
+        7 Identifier 4448 4465 0 0 -1 0 0		ComputingUpstream		
+        3 InterfaceDeclaration 4473 4590 0 0 -1 0 0				
+        4 ExportKeyword 4473 4487 0 0 -1 0 0				
+        4 Identifier 4497 4516 0 0 -1 0 0		TsVersionOutOfDate		
+        4 PropertySignature 4518 4557 0 0 -1 0 0				
+        5 Identifier 4518 4532 0 0 -1 0 0		type		
+        5 TypeReference 4533 4556 0 0 -1 0 0				
+        6 QualifiedName 4533 4556 0 0 -1 0 0				
+        7 Identifier 4533 4533 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/19951-tsbuild.ts-remove-326.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts remove token 326:  line 287: port "4 PropertySignature 4518 4533 0 0 -1 0 0\t\t\t\t", Go "4 PropertySignature 4518 4557 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        7 Identifier 4428 4447 0 0 -1 0 0		UpToDateStatusType		
+        7 Identifier 4448 4465 0 0 -1 0 0		ComputingUpstream		
+        3 InterfaceDeclaration 4473 4590 0 0 -1 0 0				
+        4 ExportKeyword 4473 4487 0 0 -1 0 0				
+        4 Identifier 4497 4516 0 0 -1 0 0		TsVersionOutOfDate		
+        4 PropertySignature 4518 4557 0 0 -1 0 0				
+        5 Identifier 4518 4532 0 0 -1 0 0		type		
+        5 TypeReference 4533 4556 0 0 -1 0 0				
+        6 QualifiedName 4533 4556 0 0 -1 0 0				
+        7 Identifier 4533 4533 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/19951-tsbuild.ts-remove-326.ts
+    incomplete_test.go:211: checked 19968 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20032 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20096 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20160 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20224 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/tsbuildPublic.ts duplicate token 5903:  line 1: port "diagnostic 1128 46968 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 46968 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 46968 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        diagnostic 1128 52087 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 114411 0 0 -1 0 0				
+        1 ImportDeclaration 0 3495 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20247-tsbuildPublic.ts-duplicate-5903.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/tsbuildPublic.ts duplicate token 5903:  line 1: port "diagnostic 1128 46968 1 1\tDeclaration or statement expected.", Go "diagnostic 2809 46968 1 1\tDeclaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses."
+        Go context:
+        diagnostic 2809 46968 1 1	Declaration or statement expected. This '=' follows a block of statements, so if you intended to write a destructuring assignment, you might need to wrap the whole assignment in parentheses.
+        diagnostic 1128 52087 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 114411 0 0 -1 0 0				
+        1 ImportDeclaration 0 3495 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20247-tsbuildPublic.ts-duplicate-5903.ts
+    incomplete_test.go:211: checked 20288 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20352 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20416 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20480 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20544 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/types.ts remove token 4498:  line 1: port "diagnostic 1110 51826 1 1\tType expected.", Go "diagnostic 1005 51826 1 1\t'>' expected."
+        Go context:
+        diagnostic 1005 51826 1 1	'>' expected.
+        diagnostic 1109 51841 1 1	Expression expected.
+        file
+        0 SourceFile 0 487836 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20546-types.ts-remove-4498.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/types.ts remove token 5997:  line 1: port "diagnostic 1003 69316 1 1\tIdentifier expected.", Go "diagnostic 1109 69316 1 1\tExpression expected."
+        Go context:
+        diagnostic 1109 69316 1 1	Expression expected.
+        file
+        0 SourceFile 0 487819 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/20548-types.ts-remove-5997.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/types.ts remove token 4498:  line 1: port "diagnostic 1110 51826 1 1\tType expected.", Go "diagnostic 1005 51826 1 1\t'>' expected."
+        Go context:
+        diagnostic 1005 51826 1 1	'>' expected.
+        diagnostic 1109 51841 1 1	Expression expected.
+        file
+        0 SourceFile 0 487836 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20546-types.ts-remove-4498.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/types.ts remove token 5997:  line 1: port "diagnostic 1003 69316 1 1\tIdentifier expected.", Go "diagnostic 1109 69316 1 1\tExpression expected."
+        Go context:
+        diagnostic 1109 69316 1 1	Expression expected.
+        file
+        0 SourceFile 0 487819 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/20548-types.ts-remove-5997.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 5997:  line 1: port "diagnostic 1005 69344 27 1\t'{' expected.", Go "diagnostic 1005 69344 27 1\t',' expected."
+        Go context:
+        diagnostic 1005 69344 27 1	',' expected.
+        file
+        0 SourceFile 0 487874 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/20549-types.ts-duplicate-5997.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 7496:  line 1: port "diagnostic 1005 84389 4 1\t';' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 487855 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown
+        3 NamedImports 6 387 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20551-types.ts-duplicate-7496.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 5997:  line 1: port "diagnostic 1005 69344 27 1\t'{' expected.", Go "diagnostic 1005 69344 27 1\t',' expected."
+        Go context:
+        diagnostic 1005 69344 27 1	',' expected.
+        file
+        0 SourceFile 0 487874 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/20549-types.ts-duplicate-5997.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 7496:  line 1: port "diagnostic 1005 84389 4 1\t';' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 487855 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown
+        3 NamedImports 6 387 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20551-types.ts-duplicate-7496.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 10494:  line 1: port "diagnostic 1005 116368 22 1\t'{' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 487854 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown
+        3 NamedImports 6 387 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20555-types.ts-duplicate-10494.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 10494:  line 1: port "diagnostic 1005 116368 22 1\t'{' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 487854 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown
+        3 NamedImports 6 387 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20555-types.ts-duplicate-10494.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 13492:  line 1: port "diagnostic 1005 141281 4 1\t';' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 487855 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown
+        3 NamedImports 6 387 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20559-types.ts-duplicate-13492.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 13492:  line 1: port "diagnostic 1005 141281 4 1\t';' expected.", Go "file"
+        Go context:
+        file
+        0 SourceFile 0 487855 0 0 -1 0 0				
+        1 ImportDeclaration 0 415 0 0 -1 0 0				
+        2 ImportClause 6 387 0 0 -1 0 0				Unknown
+        3 NamedImports 6 387 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20559-types.ts-duplicate-13492.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/types.ts remove token 23985:  line 1: port "diagnostic 1005 262858 5 1\t'{' expected.", Go "diagnostic 1005 262858 5 1\t',' expected."
+        Go context:
+        diagnostic 1005 262858 5 1	',' expected.
+        diagnostic 1005 262863 1 1	',' expected.
+        diagnostic 1005 262871 1 1	',' expected.
+        diagnostic 1109 262874 1 1	Expression expected.
+        file; saved input /workspace/scratch/parser-unit3/incomplete/20572-types.ts-remove-23985.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/types.ts remove token 23985:  line 1: port "diagnostic 1005 262858 5 1\t'{' expected.", Go "diagnostic 1005 262858 5 1\t',' expected."
+        Go context:
+        diagnostic 1005 262858 5 1	',' expected.
+        diagnostic 1005 262863 1 1	',' expected.
+        diagnostic 1005 262871 1 1	',' expected.
+        diagnostic 1109 262874 1 1	Expression expected.
+        file; saved input /workspace/scratch/parser-unit3/incomplete/20572-types.ts-remove-23985.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/types.ts remove token 46470:  line 41980: port "4 PropertySignature 471814 471838 0 0 -1 0 0\t\t\t\t", Go "4 PropertySignature 471814 471855 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        8 PropertySignature 471765 471801 0 0 -1 0 0				
+        9 ReadonlyKeyword 471765 471787 0 0 -1 0 0				
+        9 Identifier 471787 471792 0 0 -1 0 0		name		
+        9 LiteralType 471793 471800 0 0 -1 0 0				
+        10 StringLiteral 471793 471800 0 0 -1 0 0		name		
+        4 PropertySignature 471814 471855 0 0 -1 0 0				
+        5 ReadonlyKeyword 471814 471832 0 0 -1 0 0				
+        5 Identifier 471832 471837 0 0 -1 0 0		kind		
+        5 TypeReference 471838 471854 0 0 -1 0 0				
+        6 QualifiedName 471838 471854 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20602-types.ts-remove-46470.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 46470:  line 12: port "diagnostic 1005 472154 4 1\t',' expected.", Go "diagnostic 1005 472169 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 472009 1 1	';' expected.
+        diagnostic 1128 472022 8 1	Declaration or statement expected.
+        diagnostic 1434 472078 8 1	Unexpected keyword or identifier.
+        diagnostic 1005 472092 1 1	';' expected.
+        diagnostic 1128 472105 8 1	Declaration or statement expected.
+        diagnostic 1005 472169 1 1	',' expected.
+        diagnostic 1128 472193 8 1	Declaration or statement expected.
+        diagnostic 1434 472248 8 1	Unexpected keyword or identifier.
+        diagnostic 1005 472266 1 1	';' expected.
+        diagnostic 1128 472279 8 1	Declaration or statement expected.; saved input /workspace/scratch/parser-unit3/incomplete/20603-types.ts-duplicate-46470.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/types.ts remove token 46470:  line 41980: port "4 PropertySignature 471814 471838 0 0 -1 0 0\t\t\t\t", Go "4 PropertySignature 471814 471855 0 0 -1 0 0\t\t\t\t"
+        Go context:
+        8 PropertySignature 471765 471801 0 0 -1 0 0				
+        9 ReadonlyKeyword 471765 471787 0 0 -1 0 0				
+        9 Identifier 471787 471792 0 0 -1 0 0		name		
+        9 LiteralType 471793 471800 0 0 -1 0 0				
+        10 StringLiteral 471793 471800 0 0 -1 0 0		name		
+        4 PropertySignature 471814 471855 0 0 -1 0 0				
+        5 ReadonlyKeyword 471814 471832 0 0 -1 0 0				
+        5 Identifier 471832 471837 0 0 -1 0 0		kind		
+        5 TypeReference 471838 471854 0 0 -1 0 0				
+        6 QualifiedName 471838 471854 0 0 -1 0 0				; saved input /workspace/scratch/parser-unit3/incomplete/20602-types.ts-remove-46470.ts
+    incomplete_test.go:211: checked 20608 of 22497 scheduled inputs
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/types.ts duplicate token 46470:  line 12: port "diagnostic 1005 472154 4 1\t',' expected.", Go "diagnostic 1005 472169 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 472009 1 1	';' expected.
+        diagnostic 1128 472022 8 1	Declaration or statement expected.
+        diagnostic 1434 472078 8 1	Unexpected keyword or identifier.
+        diagnostic 1005 472092 1 1	';' expected.
+        diagnostic 1128 472105 8 1	Declaration or statement expected.
+        diagnostic 1005 472169 1 1	',' expected.
+        diagnostic 1128 472193 8 1	Declaration or statement expected.
+        diagnostic 1434 472248 8 1	Unexpected keyword or identifier.
+        diagnostic 1005 472266 1 1	';' expected.
+        diagnostic 1128 472279 8 1	Declaration or statement expected.; saved input /workspace/scratch/parser-unit3/incomplete/20603-types.ts-duplicate-46470.ts
+    incomplete_test.go:211: checked 20672 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20736 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20800 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20864 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20928 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 20992 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21056 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21120 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21184 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21248 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21312 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21376 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21440 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21504 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts duplicate token 6241:  line 4: port "diagnostic 1005 47847 1 1\t';' expected.", Go "diagnostic 1005 47847 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 47704 1 1	',' expected.
+        diagnostic 1005 47740 39 1	',' expected.
+        diagnostic 1005 47779 1 1	',' expected.
+        diagnostic 1005 47847 1 1	'=>' expected.
+        diagnostic 1005 48076 1 1	';' expected.
+        diagnostic 1128 48918 1 1	Declaration or statement expected.
+        diagnostic 1005 48963 1 1	';' expected.
+        diagnostic 1128 49829 1 1	Declaration or statement expected.; saved input /workspace/scratch/parser-unit3/incomplete/21528-visitorPublic.ts-duplicate-6241.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts duplicate token 6241:  line 4: port "diagnostic 1005 47847 1 1\t';' expected.", Go "diagnostic 1005 47847 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 47704 1 1	',' expected.
+        diagnostic 1005 47740 39 1	',' expected.
+        diagnostic 1005 47779 1 1	',' expected.
+        diagnostic 1005 47847 1 1	'=>' expected.
+        diagnostic 1005 48076 1 1	';' expected.
+        diagnostic 1128 48918 1 1	Declaration or statement expected.
+        diagnostic 1005 48963 1 1	';' expected.
+        diagnostic 1128 49829 1 1	Declaration or statement expected.; saved input /workspace/scratch/parser-unit3/incomplete/21528-visitorPublic.ts-duplicate-6241.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts duplicate token 7411:  line 1: port "diagnostic 1005 55421 37 1\t'(' expected.", Go "diagnostic 1005 55412 8 1\t'(' expected."
+        Go context:
+        diagnostic 1005 55412 8 1	'(' expected.
+        diagnostic 1005 55421 37 1	':' expected.
+        diagnostic 1005 55526 1 1	',' expected.
+        diagnostic 1005 55544 7 1	':' expected.
+        diagnostic 1005 55551 1 1	',' expected.; saved input /workspace/scratch/parser-unit3/incomplete/21534-visitorPublic.ts-duplicate-7411.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts duplicate token 7411:  line 1: port "diagnostic 1005 55421 37 1\t'(' expected.", Go "diagnostic 1005 55412 8 1\t'(' expected."
+        Go context:
+        diagnostic 1005 55412 8 1	'(' expected.
+        diagnostic 1005 55421 37 1	':' expected.
+        diagnostic 1005 55526 1 1	',' expected.
+        diagnostic 1005 55544 7 1	':' expected.
+        diagnostic 1005 55551 1 1	',' expected.; saved input /workspace/scratch/parser-unit3/incomplete/21534-visitorPublic.ts-duplicate-7411.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts duplicate token 8191:  line 1: port "diagnostic 1005 60397 33 1\t'(' expected.", Go "diagnostic 1005 60388 8 1\t'(' expected."
+        Go context:
+        diagnostic 1005 60388 8 1	'(' expected.
+        diagnostic 1005 60397 33 1	':' expected.
+        diagnostic 1005 60498 1 1	',' expected.
+        diagnostic 1005 60516 15 1	':' expected.
+        diagnostic 1005 60531 1 1	',' expected.; saved input /workspace/scratch/parser-unit3/incomplete/21538-visitorPublic.ts-duplicate-8191.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts duplicate token 8191:  line 1: port "diagnostic 1005 60397 33 1\t'(' expected.", Go "diagnostic 1005 60388 8 1\t'(' expected."
+        Go context:
+        diagnostic 1005 60388 8 1	'(' expected.
+        diagnostic 1005 60397 33 1	':' expected.
+        diagnostic 1005 60498 1 1	',' expected.
+        diagnostic 1005 60516 15 1	':' expected.
+        diagnostic 1005 60531 1 1	',' expected.; saved input /workspace/scratch/parser-unit3/incomplete/21538-visitorPublic.ts-duplicate-8191.ts
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts duplicate token 9751:  line 4: port "diagnostic 1005 70460 1 1\t';' expected.", Go "diagnostic 1005 70460 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 70332 1 1	',' expected.
+        diagnostic 1005 70361 32 1	',' expected.
+        diagnostic 1005 70393 1 1	',' expected.
+        diagnostic 1005 70460 1 1	'=>' expected.
+        diagnostic 1005 70952 1 1	';' expected.
+        diagnostic 1128 71539 1 1	Declaration or statement expected.
+        diagnostic 1005 71581 1 1	';' expected.
+        diagnostic 1128 72105 1 1	Declaration or statement expected.; saved input /workspace/scratch/parser-unit3/incomplete/21546-visitorPublic.ts-duplicate-9751.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts duplicate token 9751:  line 4: port "diagnostic 1005 70460 1 1\t';' expected.", Go "diagnostic 1005 70460 1 1\t'=>' expected."
+        Go context:
+        diagnostic 1005 70332 1 1	',' expected.
+        diagnostic 1005 70361 32 1	',' expected.
+        diagnostic 1005 70393 1 1	',' expected.
+        diagnostic 1005 70460 1 1	'=>' expected.
+        diagnostic 1005 70952 1 1	';' expected.
+        diagnostic 1128 71539 1 1	Declaration or statement expected.
+        diagnostic 1005 71581 1 1	';' expected.
+        diagnostic 1128 72105 1 1	Declaration or statement expected.; saved input /workspace/scratch/parser-unit3/incomplete/21546-visitorPublic.ts-duplicate-9751.ts
+    incomplete_test.go:211: checked 21568 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21632 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21696 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21760 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21824 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21888 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 21952 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22016 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22080 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/watchPublic.ts remove token 785:  line 2: port "diagnostic 1005 7187 1 1\t'{' expected.", Go "diagnostic 1005 7187 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 7165 7 1	'>' expected.
+        diagnostic 1005 7187 1 1	',' expected.
+        diagnostic 1005 7334 1 1	',' expected.
+        diagnostic 1005 7460 10 1	',' expected.
+        diagnostic 1005 7487 19 1	',' expected.
+        diagnostic 1005 7523 21 1	',' expected.; saved input /workspace/scratch/parser-unit3/incomplete/22131-watchPublic.ts-remove-785.ts
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/watchPublic.ts remove token 785:  line 2: port "diagnostic 1005 7187 1 1\t'{' expected.", Go "diagnostic 1005 7187 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 7165 7 1	'>' expected.
+        diagnostic 1005 7187 1 1	',' expected.
+        diagnostic 1005 7334 1 1	',' expected.
+        diagnostic 1005 7460 10 1	',' expected.
+        diagnostic 1005 7487 19 1	',' expected.
+        diagnostic 1005 7523 21 1	',' expected.; saved input /workspace/scratch/parser-unit3/incomplete/22131-watchPublic.ts-remove-785.ts
+    incomplete_test.go:211: checked 22144 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22208 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22272 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22336 of 22497 scheduled inputs
+    incomplete_test.go:211: checked 22400 of 22497 scheduled inputs
+    incomplete_test.go:197: Node /workspace/scratch/typescript-6.0.3/src/compiler/watchUtilities.ts remove token 2225:  line 1: port "diagnostic 1110 18230 1 1\tType expected.", Go "diagnostic 1005 18230 1 1\t'>' expected."
+        Go context:
+        diagnostic 1005 18230 1 1	'>' expected.
+        file
+        0 SourceFile 0 34757 0 0 -1 0 0				
+        1 ImportDeclaration 0 1342 0 0 -1 0 0				
+        2 ImportClause 6 1314 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/22466-watchUtilities.ts-remove-2225.ts
+    incomplete_test.go:211: checked 22464 of 22497 scheduled inputs
+    incomplete_test.go:197: native /workspace/scratch/typescript-6.0.3/src/compiler/watchUtilities.ts remove token 2225:  line 1: port "diagnostic 1110 18230 1 1\tType expected.", Go "diagnostic 1005 18230 1 1\t'>' expected."
+        Go context:
+        diagnostic 1005 18230 1 1	'>' expected.
+        file
+        0 SourceFile 0 34757 0 0 -1 0 0				
+        1 ImportDeclaration 0 1342 0 0 -1 0 0				
+        2 ImportClause 6 1314 0 0 -1 0 0				Unknown; saved input /workspace/scratch/parser-unit3/incomplete/22466-watchUtilities.ts-remove-2225.ts
+    incomplete_test.go:220: slowest go parse and print: 680.352212ms; input /workspace/scratch/parser-unit3/incomplete/01883-checker.ts-cut-332572.ts
+    incomplete_test.go:220: slowest Node parse and print: 20.338864879s; input /workspace/scratch/parser-unit3/incomplete/10232-semver.ts-duplicate-391.ts
+    incomplete_test.go:220: slowest native parse and print: 20.43368821s; input /workspace/scratch/parser-unit3/incomplete/19664-utilities.ts-remove-2041.ts
+    incomplete_test.go:223: comparison completed after checking 22497 inputs; failures retained
+--- FAIL: TestIncompleteCompilerAgrees (3102.76s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	3102.873s
+FAIL

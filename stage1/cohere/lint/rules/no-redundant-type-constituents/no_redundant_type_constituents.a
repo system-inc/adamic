@@ -1,0 +1,260 @@
+import { message } from './messages.a';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from './context.a';
+import { types } from '../../../typeaware/facts.ts';
+import { unionFlag } from '../../../typeaware/flags.ts';
+
+interface PartInterface {
+    readonly flags: number;
+    readonly name: string;
+}
+interface SightingInterface {
+    readonly node: number;
+    readonly primitive: number;
+    readonly name: string;
+}
+export class RedundantTypes {
+    readonly rules: Rules;
+    readonly cache = new Map<number, readonly PartInterface[]>();
+    constructor(rules: Rules) {
+        this.rules = rules;
+    }
+    primitive(flag: number): number {
+        return flag === 4096
+            ? 128
+            : flag === 8192
+              ? 256
+              : flag === 2048
+                ? 64
+                : flag === 1024 || flag === 4194304
+                  ? 32
+                  : 0;
+    }
+    primitiveName(flag: number): string {
+        return flag === 128 ? 'bigint' : flag === 256 ? 'boolean' : flag === 64 ? 'number' : 'string';
+    }
+    parts(index: number): readonly PartInterface[] {
+        const inner = this.rules.skip(index, 'ParenthesizedType');
+        const cached = this.cache.get(inner);
+        if(cached !== undefined) {
+            return cached;
+        }
+        const node = this.rules.parser.node(inner);
+        const keyword = [
+            'AnyKeyword',
+            'UnknownKeyword',
+            'NeverKeyword',
+            'BigIntKeyword',
+            'BooleanKeyword',
+            'NumberKeyword',
+            'StringKeyword',
+        ].indexOf(node.kind);
+        let result: PartInterface[] = [];
+        if(keyword >= 0) {
+            result.push({
+                flags: [1, 2, 262144, 128, 256, 64, 32][keyword] ?? 0,
+                name: ['any', 'unknown', 'never', 'literal type', 'boolean', 'number', 'string'][keyword] ?? '',
+            });
+        }
+        else if(node.kind === 'UnionType') {
+            for(const child of node.children) {
+                result = result.concat(this.parts(child));
+            }
+        }
+        else {
+            const literal = node.kind === 'LiteralType' ? this.rules.parser.node(node.children[0] ?? -1) : node;
+            if(
+                node.kind === 'LiteralType' &&
+                ['StringLiteral', 'NumericLiteral', 'BigIntLiteral', 'TrueKeyword', 'FalseKeyword'].includes(
+                    literal.kind,
+                )
+            ) {
+                const flags =
+                    literal.kind === 'StringLiteral'
+                        ? 1024
+                        : literal.kind === 'NumericLiteral'
+                          ? 2048
+                          : literal.kind === 'BigIntLiteral'
+                            ? 4096
+                            : 8192;
+                let name = this.rules.text(literal);
+                if(flags === 1024) {
+                    name = '"';
+                    for(const character of literal.text) {
+                        name +=
+                            character === '"'
+                                ? '\\"'
+                                : character === '\\'
+                                  ? '\\\\'
+                                  : character === '\n'
+                                    ? '\\n'
+                                    : character;
+                    }
+                    name += '"';
+                }
+                result.push({ flags, name });
+            }
+            else {
+                const facts = types(this.rules.ask(inner, 'raw-type'), 'raw-type');
+                const root = facts.root();
+                const boolean =
+                    root.parts.length === 2 && root.parts.every((id) => (facts.type(id).flags & 8192) !== 0);
+                for(const id of (root.flags & unionFlag) !== 0 && !boolean ? root.parts : [root.id]) {
+                    const part = facts.type(id);
+                    const name = part.error
+                        ? part.name
+                        : part.flags === 1
+                          ? 'any'
+                          : part.flags === 262144
+                            ? 'never'
+                            : part.flags === 2
+                              ? 'unknown'
+                              : (part.flags & 4194304) !== 0
+                                ? 'template literal type'
+                                : (part.flags & (1024 | 2048 | 4096 | 8192)) !== 0
+                                  ? part.name
+                                  : 'literal type';
+                    result.push({ flags: part.flags, name });
+                }
+            }
+        }
+        this.cache.set(inner, result);
+        return result;
+    }
+    report(index: number, id: string, container: string, name: string, literals = '', primitive = ''): void {
+        const description = message(id, container, name, literals, primitive);
+        this.rules.add('no-redundant-type-constituents', id, description, index);
+    }
+    returnType(index: number): boolean {
+        const parent = this.rules.parents[index] ?? -1;
+        if(parent < 0) {
+            return false;
+        }
+        const node = this.rules.parser.node(parent);
+        const body = node.kind === 'ArrowFunction' ? (node.children[node.children.length - 1] ?? -1) : -1;
+        return (
+            [
+                'FunctionDeclaration',
+                'FunctionExpression',
+                'ArrowFunction',
+                'MethodDeclaration',
+                'MethodSignature',
+                'CallSignature',
+                'ConstructSignature',
+                'GetAccessor',
+                'SetAccessor',
+                'FunctionType',
+                'ConstructorType',
+            ].includes(node.kind) &&
+            node.children
+                .filter(
+                    (child) =>
+                        child !== body &&
+                        !['Block', 'EqualsGreaterThanToken'].includes(this.rules.parser.node(child).kind),
+                )
+                .slice(-1)[0] === index
+        );
+    }
+    visit(index: number, supplied: ParseNode | undefined = undefined): void {
+        const node = supplied ?? this.rules.parser.node(index);
+        const union = node.kind === 'UnionType';
+        const container = union ? 'union' : 'intersection';
+        const literals: SightingInterface[] = [];
+        const primitives: SightingInterface[] = [];
+        const unions: number[] = [];
+        for(const raw of node.children) {
+            const member = this.rules.skip(raw, 'ParenthesizedType');
+            const parts = this.parts(member);
+            for(const part of parts) {
+                if(
+                    part.flags === 1 ||
+                    (union
+                        ? part.flags === 2 || (part.flags === 262144 && !this.returnType(index))
+                        : part.flags === 262144 || part.flags === 2)
+                ) {
+                    const id =
+                        part.flags === 1 && part.name !== 'any'
+                            ? 'errorTypeOverrides'
+                            : (union ? part.flags === 262144 : part.flags === 2)
+                              ? 'overridden'
+                              : 'overrides';
+                    this.report(member, id, container, part.name);
+                    continue;
+                }
+                const primitive = this.primitive(part.flags);
+                if(primitive !== 0) {
+                    literals.push({ node: member, primitive, name: part.name });
+                }
+                for(const flag of [128, 256, 64, 32]) {
+                    if(union ? (part.flags & flag) !== 0 : part.flags === flag) {
+                        primitives.push({ node: member, primitive: flag, name: '' });
+                    }
+                }
+            }
+            if(!union && parts.length >= 2) {
+                unions.push(member);
+            }
+        }
+        if(!union && unions.length > 0) {
+            for(const member of unions) {
+                const parts = this.parts(member);
+                if(
+                    parts.every(
+                        (part) =>
+                            this.primitive(part.flags) !== 0 &&
+                            primitives.some((seen) => seen.primitive === this.primitive(part.flags)),
+                    )
+                ) {
+                    this.report(
+                        member,
+                        'primitiveOverridden',
+                        container,
+                        '',
+                        parts.map((part) => part.name).join(' | '),
+                        this.primitiveName(this.primitive(parts[parts.length - 1]?.flags ?? 0)),
+                    );
+                }
+            }
+            return;
+        }
+        for(const flag of [128, 256, 64, 32]) {
+            const seen = literals.filter((sighting) => sighting.primitive === flag);
+            const wider = primitives.filter((sighting) => sighting.primitive === flag);
+            if(union) {
+                if(wider.length === 0) {
+                    continue;
+                }
+                const reported: number[] = [];
+                for(const sighting of seen) {
+                    if(reported.includes(sighting.node)) {
+                        continue;
+                    }
+                    reported.push(sighting.node);
+                    this.report(
+                        sighting.node,
+                        'literalOverridden',
+                        container,
+                        '',
+                        seen
+                            .filter((other) => other.node === sighting.node)
+                            .map((other) => other.name)
+                            .join(' | '),
+                        this.primitiveName(flag),
+                    );
+                }
+            }
+            else if(seen.length > 0) {
+                for(const sighting of wider) {
+                    this.report(
+                        sighting.node,
+                        'primitiveOverridden',
+                        container,
+                        '',
+                        seen.map((other) => other.name).join(' | '),
+                        this.primitiveName(flag),
+                    );
+                }
+            }
+        }
+    }
+}

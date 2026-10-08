@@ -1,0 +1,6 @@
+// An immutable projection of actual parser nodes, not a parser or kind-number registry.
+export interface JsxNode {
+    element: boolean; fragment: boolean; selfClosing: boolean;
+    parenthesized: boolean; conditional: boolean;
+    expression: number; whenTrue: number; whenFalse: number;
+}

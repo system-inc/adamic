@@ -1,0 +1,4 @@
+recovery-*.log -whitespace
+recovery-export.* -whitespace
+parser-recovery-rebase-*.log -whitespace
+rebase-incomplete/* -whitespace

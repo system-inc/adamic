@@ -1,0 +1,7 @@
+import type { CoreArena } from './nodes.a';
+import { isEmptyBracketLiteral } from './is_empty_bracket_literal.a';
+import { tokenSignature } from './token_signature.a';
+export function hasSameTokens(arena: CoreArena, left: number, right: number): boolean {
+    if(isEmptyBracketLiteral(arena, left) && isEmptyBracketLiteral(arena, right)) { return arena.node(left).kind === arena.node(right).kind; }
+    return tokenSignature(arena, left) === tokenSignature(arena, right);
+}

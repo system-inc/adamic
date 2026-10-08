@@ -1,0 +1,2 @@
+import type {RuleContext} from '../../context.ts';
+export function stylePropObjectUnwrapParentheses(context:RuleContext,index:number):number {while(index>=0 && context.kind(index)==='ParenthesizedExpression'){index=context.node(index).children[0] ?? -1;}return index;}

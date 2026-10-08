@@ -1,0 +1,28 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import type { HelperNode } from './nodes.a';
+import { reactEs6ComponentClass } from './react_es6_component_class.a';
+import { reactLikelyComponentName } from './react_likely_component_name.a';
+import { isNamespacedMember } from './namespaced_member.a';
+import { isEs5ComponentCall } from './es5_component_call.a';
+import { isCreateClassName } from './create_class_name.a';
+import { isComponentBaseName } from './component_base_name.a';
+import { isComponentBase } from './react_component_base.a';
+import { isIdentifierNamed } from './react_identifier_named.a';
+import { isHookName } from './react_is_hook_name.a';
+import { isHookCall } from './react_is_hook_call.a';
+const input = readTextFile(programArguments()[0] ?? panic('input path'));
+if(input.kind === 'Error') {panic(input.message);}
+const json = new OptionsJson(input.text); const root = json.parse();
+if(root < 0) {panic(json.error);}
+function text(index: number, field: string): string {return json.node(json.field(index,field)).text;}
+function number(index: number, field: string): number {return Number(text(index,field));}
+function list(index: number, field: string): number[] {const out: number[]=[]; for(const child of json.node(json.field(index,field)).children) {out.push(Number(json.node(child).text));} return out;}
+const nodes: HelperNode[] = [];
+for(const index of json.node(json.field(root,'nodes')).children) {nodes.push({kind:text(index,'kind'),text:text(index,'text'),expression:number(index,'expression'),name:number(index,'name'),heritage:list(index,'heritage'),types:list(index,'types')});}
+for(let i=0;i<nodes.length;i++) {
+ const node=nodes[i] ?? panic('node');
+ const hook = node.kind === 'CallExpression' ? {expression: node.expression < 0 ? undefined : node.expression} : undefined;
+ console.log([reactEs6ComponentClass(nodes,i,(n: number): boolean => isComponentBase(nodes,n,isComponentBaseName)),isEs5ComponentCall(nodes,i,(n: number,name: string): boolean => isIdentifierNamed(nodes,n,name)),isComponentBase(nodes,i,isComponentBaseName),isIdentifierNamed(nodes,i,'React'),isNamespacedMember(nodes,i,isHookName),isNamespacedMember(nodes,i,(name: string): boolean => true),isNamespacedMember(nodes,i,(name: string): boolean => false),isHookCall(hook,(n: number): boolean => (nodes[n] ?? panic('hook node')).kind === 'Identifier',(n: number): boolean => (nodes[n] ?? panic('hook node')).kind === 'PropertyAccessExpression',(n: number): string => (nodes[n] ?? panic('hook node')).text,isHookName,(n: number,predicate: (name: string) => boolean): boolean => isNamespacedMember(nodes,n,predicate))].join(' '));
+}
+for(const index of json.node(json.field(root,'names')).children) {const name=json.node(index).text;console.log([reactLikelyComponentName(name),isHookName(name),isComponentBaseName(name),isCreateClassName(name)].join(' '));}
