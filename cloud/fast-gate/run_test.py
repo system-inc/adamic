@@ -135,6 +135,9 @@ class FailClosed(unittest.TestCase):
             self.assertTrue(status.startswith("green:"), status)
             self.assertIsNone(gate.failure)
             self.assertEqual(set(result["stages_exit"]), set(result["planned_stages"]))
+            # Every verdict carries its long-test ledger, empty or not.
+            self.assertEqual((result["long_tests"], result["long_test_threshold_seconds"]), (0, run.longTestSeconds))
+            self.assertIn("0 tests over 10 s", status)
 
     def test_every_stage_raising_is_red(self):
         for full, stages in ((False, ["build", "vet", "tests", "smoke", "census"]), (True, ["build", "vet", "tests", "wasi", "census"])):
@@ -614,6 +617,27 @@ class ScopedEnvironment(unittest.TestCase):
             gate = self.gate()
             gate.run()
         self.assertEqual(gate.result["scoped_env"], ["ADAMIC_LINT_RULES"])
+
+
+class LongTests(unittest.TestCase):
+    def test_the_ledger_holds_top_level_tests_over_the_line_longest_first(self):
+        events = [
+            {"Action": "pass", "Package": "p", "Test": "TestShort", "Elapsed": 9.9},
+            {"Action": "pass", "Package": "p", "Test": "TestAtTheLine", "Elapsed": 10},
+            {"Action": "pass", "Package": "p", "Test": "TestLong", "Elapsed": 12.5},
+            {"Action": "fail", "Package": "q", "Test": "TestLonger", "Elapsed": 400},
+            {"Action": "pass", "Package": "q", "Test": "TestLonger/case", "Elapsed": 390},
+            {"Action": "skip", "Package": "q", "Test": "TestSkipped", "Elapsed": 50},
+            {"Action": "pass", "Package": "q", "Elapsed": 600},
+            {"Action": "output", "Package": "p", "Test": "TestLong", "Output": "x"},
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = os.path.join(directory, "test.jsonl")
+            with open(path, "w") as handle:
+                handle.write("not json\n[1]\n")
+                handle.writelines(json.dumps(event) + "\n" for event in events)
+            self.assertEqual(run.longTests(path), [("q", "TestLonger", 400, "fail"), ("p", "TestLong", 12.5, "pass")])
+            self.assertEqual(run.longTests(os.path.join(directory, "absent.jsonl")), [])
 
 
 @unittest.skipUnless(sys.platform == "linux", "requires Linux /proc sessions")

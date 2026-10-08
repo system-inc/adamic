@@ -42,6 +42,9 @@ module = "github.com/system-inc/adamic"
 gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1"}
 fullPackageTimeout = "3h"
 slowPackageSeconds = 3600
+# Kirk's target for the remote executor (Oct 8): no test runs longer than this, so every unit can go to any
+# worker. Each gate publishes its ledger of tests over it (long-tests.tsv); the count burns down to zero.
+longTestSeconds = 10
 smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
 # A command run by literal name: exec.Command("x", exec.CommandContext(ctx, "x", exec.LookPath("x").
@@ -1318,6 +1321,12 @@ class Gate:
         })
         if getattr(self, "stopped", None):
             self.result["stopped"] = self.stopped
+        ledger = longTests(os.path.join(self.arguments.out, "test.jsonl"))
+        with open(os.path.join(self.arguments.out, "long-tests.tsv"), "w") as handle:
+            for package, name, seconds, action in ledger:
+                handle.write("%s\t%s\t%.2f\t%s\n" % (package, name, seconds, action))
+        self.result.update({"long_test_threshold_seconds": longTestSeconds, "long_tests": len(ledger),
+                            "long_test_seconds": round(sum(row[2] for row in ledger), 1)})
         outcomes = self.result.get("test_outcomes", [])
         self.result["planned_test_counts"] = {status: sum(row["status"] == status for row in outcomes)
                                                for status in ("passed", "failed", "not run")}
@@ -1327,6 +1336,7 @@ class Gate:
         steps = " ".join("%s=%.1fs" % item for item in self.steps.items())
         if self.result.get("slow_packages"):
             steps += "; slow packages, over %d min: %s" % (slowPackageSeconds // 60, ", ".join("%s %.0fs" % (name.rsplit("/", 2)[-2] + "/" + name.rsplit("/", 1)[-1], seconds) for name, seconds in sorted(self.result["slow_packages"].items(), key=lambda item: -item[1])))
+        steps += "; %d tests over %d s (%.0f s)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"])
         deferred = self.result.get("deferred_to_full_gate", [])
         if not self.arguments.full:
             steps += "; deferred to full gate: %d tests%s" % (len(deferred), (" (" + ", ".join(name.split()[-1] for name in deferred) + ")") if deferred else "")
@@ -1348,6 +1358,31 @@ class Gate:
                 handle.write("stopped: " + self.stopped["reason"] + "\n")
         with open(os.path.join(self.arguments.out, "status.txt")) as handle:
             print(handle.read(), end="", flush=True)
+
+
+def longTests(path):
+    """Top-level tests in a go test -json log that passed or failed in over longTestSeconds, longest first:
+    (package, test, seconds, action). Subtests are the test's own business; a missing log is an empty ledger."""
+    rows = {}
+    try:
+        with open(path) as handle:
+            for line in handle:
+                try:
+                    event = json.loads(line)
+                except ValueError:
+                    continue
+                if not isinstance(event, dict):
+                    continue
+                name = event.get("Test")
+                if not isinstance(name, str) or not name or "/" in name or event.get("Action") not in ("pass", "fail"):
+                    continue
+                seconds = event.get("Elapsed")
+                if isinstance(seconds, (int, float)) and seconds > longTestSeconds:
+                    rows[event.get("Package", ""), name] = (seconds, event["Action"])
+    except OSError:
+        return []
+    return sorted(((package, name, seconds, action) for (package, name), (seconds, action) in rows.items()),
+                  key=lambda row: (-row[2], row[0], row[1]))
 
 
 def fixturePattern(prefix, fixtures):
