@@ -421,6 +421,9 @@ func (e *emitter) cache() string {
 func (e *emitter) dynamicProperties() bool {
 	found := false
 	walkExpressions(e.program, func(expression ir.Expression) {
+		if call, ok := expression.(ir.ObjectCall); ok && call.Checked {
+			found = true
+		}
 		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
 			found = true
 		}
