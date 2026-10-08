@@ -18,7 +18,10 @@ func runRegExpChild(t *testing.T, binary string, arguments []string, environment
 	ctx, cancel := context.WithTimeout(context.Background(), wallCap)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary, arguments...)
-	command.Env = append(os.Environ(), environment)
+	command.Env = os.Environ()
+	if environment != "" {
+		command.Env = append(command.Env, environment)
+	}
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
 		return output, fmt.Errorf("regexp child wall cap %s exceeded: %w", wallCap, ctx.Err())
