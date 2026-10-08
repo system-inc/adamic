@@ -20,6 +20,7 @@ import argparse
 import base64
 import hashlib
 import json
+import re
 import os
 import signal
 import socket
@@ -33,6 +34,11 @@ module = "github.com/system-inc/adamic"
 # What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
 gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1"}
 smokeTest = "TestNativeAgreesWithNode"
+oracle = module + "/internal/oracle"
+# The oracle's lanes: every test that runs each registered fixture as a subtest named by its path.
+# A test found ranging over the fixtures that isn't listed here makes any oracle change whole.
+oracleLanes = {"TestNativeAgreesWithNode": [], "TestWASIAgreesWithNode": [], "TestWASIEmission": [], "TestCountsAreRecorded": ["fixtures"]}
+fixtureEntry = re.compile(r'^\s*\}?\{?"(internal/oracle/testdata/[^"]+)", (true|false), (true|false)\}?\)?,?\s*$')
 
 
 def main():
@@ -300,7 +306,61 @@ class Gate:
                 unowned.append(path)
             else:
                 packages.add(owner)
+        if oracle in packages:
+            self.oracleSelection = self.selectOracle()
+            self.result["oracle_selection"] = self.oracleSelection
         return sorted(packages), unowned
+
+    def selectOracle(self):
+        """What a change to internal/oracle has to run, when it only adds or edits fixtures: each changed
+        fixture in every lane, the Test functions of test files it adds (their init registers the
+        fixture), TestCountsAreRecorded whole when counts.md changed, and the smoke set as always. The
+        same coverage as the whole package for such a change, since nothing else in the package moved.
+        Anything it can't classify (a changed helper, a deleted file, any other file) runs it whole."""
+        tree, base, sha = self.arguments.tree, self.arguments.base, self.arguments.sha
+        whole = lambda reason: {"whole": True, "reason": reason}
+        statuses = [line.split("\t") for line in git(tree, "diff", "--name-status", "%s...%s" % (base, sha), "--", "internal/oracle").splitlines() if line]
+        fixtures, tests = set(), set()
+        directory = os.path.join(tree, "internal/oracle")
+        for status, *paths in statuses:
+            path = paths[-1]
+            name = path[len("internal/oracle/"):]
+            if status[0] not in "AM":
+                return whole("%s %s" % (status, path))
+            if name.startswith("testdata/") and path.endswith(".a"):
+                fixtures.add(path)
+            elif name == "counts.md":
+                tests.add("TestCountsAreRecorded")
+            elif name.endswith("_test.go") and "/" not in name and status[0] == "A":
+                with open(os.path.join(tree, path)) as handle:
+                    source = handle.read()
+                tests.update(re.findall(r"^func (Test\w+)\(t \*testing\.T\)", source, re.M))
+                fixtures.update(re.findall(r'"(internal/oracle/testdata/[^"]+\.a)"', source))
+            elif name.endswith("_test.go") and "/" not in name:
+                for line in git(tree, "diff", "-U0", "%s...%s" % (base, sha), "--", path).splitlines():
+                    if line.startswith(("+++", "---", "@@")) or not line.startswith(("+", "-")):
+                        continue
+                    entry = fixtureEntry.match(line[1:])
+                    if not entry:
+                        return whole("%s changes more than fixture entries" % path)
+                    fixtures.add(entry.group(1))
+            else:
+                return whole("%s is not a fixture, a fixture registration or counts.md" % path)
+        registered = set()
+        for name in os.listdir(directory):
+            if name.endswith("_test.go"):
+                with open(os.path.join(directory, name)) as handle:
+                    source = handle.read()
+                registered.update(re.findall(r'"(internal/oracle/testdata/[^"]+\.a)"', source))
+                for function in re.split(r"\nfunc ", source)[1:]:
+                    lane = re.match(r"(Test\w+)\(", function)
+                    if lane and "range fixtures" in function and lane.group(1) not in oracleLanes:
+                        return whole("%s ranges over the fixtures and isn't a known lane" % lane.group(1))
+        unregistered = sorted(fixtures - registered)
+        if unregistered:
+            # A changed .a no table names (a module a fixture imports, say): which fixture reads it isn't known here.
+            return whole("not a registered fixture: %s" % ", ".join(unregistered))
+        return {"whole": False, "fixtures": sorted(fixtures), "tests": sorted(tests - set(oracleLanes) | (tests & {"TestCountsAreRecorded"})), "lanes": sorted(oracleLanes)}
 
     def step(self, name, command):
         started = time.monotonic()
@@ -346,6 +406,17 @@ class Gate:
             with self.lock:
                 tally["packages"] += 1
             names = [line for line in listing.splitlines() if line.startswith(("Test", "Example", "Fuzz"))]
+            selection = getattr(self, "oracleSelection", {"whole": True}) if importPath == oracle else {"whole": True}
+            patterns = {}
+            if not selection["whole"]:
+                # The lanes run only the changed fixtures; the selected tests run whole.
+                for lane in oracleLanes:
+                    if lane in names and selection["fixtures"] and lane not in selection["tests"]:
+                        patterns[lane] = fixturePattern([lane] + oracleLanes[lane], selection["fixtures"])
+                for test in selection["tests"]:
+                    if test in names:
+                        patterns[test] = "^%s$" % test
+                names = sorted(patterns)
             deferred = sorted(set(names) & self.deferred.get(importPath, set()))
             if deferred:
                 with self.lock:
@@ -357,7 +428,7 @@ class Gate:
             tests = []
             for name in names:
                 command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
-                           "-test.count=1", "-test.failfast", "-test.timeout=30m", "-test.run", "^%s$" % name]
+                           "-test.count=1", "-test.failfast", "-test.timeout=30m", "-test.run", patterns.get(name, "^%s$" % name)]
                 thread = self.guarded("tests", self.slotted, slots, command, log, importPath, name, tally)
                 thread.start()
                 tests.append(thread)
@@ -520,6 +591,19 @@ class Gate:
             self.status("red: %s %s gate, first failure at %s after %.1f s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], self.failure["after_seconds"], steps, self.counts["fail"], self.counts["pass"]))
         with open(os.path.join(self.arguments.out, "status.txt")) as handle:
             print(handle.read(), end="", flush=True)
+
+
+def fixturePattern(prefix, fixtures):
+    """A -run pattern for these fixtures' subtests under the test and parent subtests in prefix,
+    level by level, as smokePattern builds it."""
+    levels = [[part] for part in prefix]
+    for fixture in fixtures:
+        for depth, part in enumerate(fixture.split("/"), start=len(prefix)):
+            if len(levels) <= depth:
+                levels.append([])
+            if part not in levels[depth]:
+                levels[depth].append(part)
+    return "/".join("^(%s)$" % "|".join(re.escape(part) for part in level) for level in levels)
 
 
 def smokePattern(fixtures):
