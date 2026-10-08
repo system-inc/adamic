@@ -69,3 +69,9 @@ func (e *emitter) localReady(local int) string {
 	}
 	return readyName(local)
 }
+
+const mapCertificateRuntime = `
+const adamicMapCertificates = new WeakMap();
+function adamicMapProducer(map,key,value,name){adamicMapCertificates.set(map,[key,value,name || "uncertified Map"]);return map;}
+function adamicMapView(map,pairs,where,expected){if(map==null)return map;const c=adamicMapCertificates.get(map);if(c&&c[0]&&c[1]&&pairs.some(p=>p[0]===c[0]&&p[1]===c[1]))return map;panic('Map contract failed: '+where+'; expected '+expected+', found '+(c?c[2]:'uncertified Map'));}
+`

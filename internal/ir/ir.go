@@ -11,7 +11,8 @@ import "fmt"
 // Program is one compiled Adamic program.
 type Program struct {
 	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
-	ViewOrigins []Expression
+	ViewOrigins     []Expression
+	MapCertificates [][2]ViewContractID
 
 	// PredicateChecks counts overload-result directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
@@ -717,9 +718,11 @@ type (
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
-		GraphTypes []int
-		Key, Value Type
-		Entries    [][2]Expression
+		KeyContract, ValueContract ViewContractID
+		ContractName               string
+		GraphTypes                 []int
+		Key, Value                 Type
+		Entries                    [][2]Expression
 
 		// Pairs, when it's set, is an array of [key, value] tuples the map is made from instead, each
 		// set in order: new Map(pairs), or new Map(otherMap) through its entries.

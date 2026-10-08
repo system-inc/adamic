@@ -15,8 +15,11 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
-	if target.Flags()&checker.TypeFlagsUnion != 0 && l.includesNull(target) {
+	if target.Flags()&checker.TypeFlagsUnion != 0 && (l.includesNull(target) || l.includesUndefined(target) && l.isLibraryType(l.checker.GetNonNullableType(target), "Map", "ReadonlyMap")) {
 		return l.nullishViewContract(node, target)
+	}
+	if l.isLibraryType(target, "Map", "ReadonlyMap") {
+		return l.mapViewContract(node, target)
 	}
 	family := l.unsupportedViewFamily(target)
 	if family == "" {

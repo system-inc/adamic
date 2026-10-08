@@ -79,7 +79,7 @@ func supportedSlotContract(program *ir.Program, id ir.ViewContractID, seen map[i
 	}
 	seen[id] = true
 	contract := program.ViewContracts[id-1]
-	if contract.Kind == ir.ViewUnknown || contract.Kind == ir.ViewNullable || contract.Unsupported != "" {
+	if contract.Kind == ir.ViewUnknown || contract.Kind == ir.ViewNullable || contract.Kind == ir.ViewMap || contract.Unsupported != "" {
 		return false
 	}
 	for _, field := range contract.Fields {

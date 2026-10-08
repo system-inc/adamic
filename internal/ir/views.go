@@ -15,6 +15,7 @@ const (
 	ViewNull
 	ViewUndefined
 	ViewNullable
+	ViewMap
 )
 
 // Contracts describe declared logical types, independently of physical layout ids.
@@ -33,6 +34,8 @@ type ViewContract struct {
 	Allowed      []ViewLiteral
 	Fields       []ViewFieldContract
 	Members      []ViewContractID
+	Key          ViewContractID
+	MapReadonly  bool
 	Element      ViewContractID
 	Tuple        []ViewContractID
 	Functions    []int

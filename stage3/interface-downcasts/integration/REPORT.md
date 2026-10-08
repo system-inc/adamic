@@ -1,7 +1,7 @@
 Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-103 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+106 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -496,3 +496,32 @@ Final nullable-selection gates: lower 18.751s, native 26.510s, JavaScript
 3.720s, full IR 31.124s, uncached filtered oracle 185.782s; vet exit 0.
 Original declarations were enabled and all earlier original-pair controls ran.
 The sole documented array-callback baseline exclusion is unchanged.
+
+Priority lazy owner Map certificates, f7a784c4e094e0c97dae9dc8309a900e4cd3d666
+
+Clean merge, no conflict hunks. Constructor schema ids are kept independently
+of the target view. MapCertificatePairs permits scalar readonly covariance but
+requires reverse compatibility for mutable maps and identical physical types.
+Native headers and JavaScript's private WeakMap carry original evidence; nullish
+selection checks a Map alternative's certificate after kind/presence/readiness.
+Unsupported branded and aggregate schemas remain named demanded refusals.
+The view_writes.go addition excludes ViewMap as a writable-slot certificate; it
+does not settle the optional-boolean storage investigation or lift the hold.
+
+Three actual implementation mutants were executed and restored. Native omission
+of the zero-compatible-schema refusal and JavaScript certificate omission each
+run scalar-both-value-schema past the expected field trap. Removing the mutable
+reverse relation runs mutable-invariant past that trap. All are semantic failures
+of executed witnesses, with valid compilation and no sanitizer error. The first
+native mutant draft was rejected by clang's tautological-comparison warning; its
+log is preserved as a build failure and is not credited as a mutant kill.
+
+Evidence uses map-cert-* logs. Production inventory is still unmeasured; the
+owner's static 2,018 pairs / 9,101 reads are not reduced by fixture success.
+Optional-boolean hold remains active until explicitly lifted by the user.
+
+Final Map gates: lower 22.851s, native 69.684s, JavaScript 4.904s,
+full IR 50.966s, uncached filtered oracle 231.796s, vet exit 0.
+Supplemental existing Map/Set/record regressions: native 71.781s and oracle
+49.497s, both pass. Original declaration suite was enabled. No new failure or
+additional exclusion; sole recorded array-callback baseline exclusion remains.

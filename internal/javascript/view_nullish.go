@@ -8,7 +8,7 @@ import (
 
 func (e *emitter) nullishViewField(property ir.Property) string {
 	value := fmt.Sprintf("adamicViewNullish(%s, %s, %s, %s, %d, %t, %t, [%s], %t, %t)", e.value(property.Object), quote(property.Name), quote(property.View), quote(property.ViewType), property.NullishKinds, property.NullAllowed, property.UndefinedAllowed, e.values(property.ViewAllowed), property.Absent, property.Optional)
-	return e.nullishMemberSelection(property, value)
+	return e.mapViewCertificate(property, e.nullishMemberSelection(property, value))
 }
 
 func (e *emitter) nullishMemberSelection(property ir.Property, value string) string {
@@ -55,5 +55,13 @@ func (e *emitter) nullishMemberSelection(property ir.Property, value string) str
 		}
 		tests = append(tests, "("+test+")")
 	}
-	return fmt.Sprintf("((v) => {if(v != null && !(%s)) panic('field read failed: '+%s+'; expected '+%s+', found '+typeof v);return v;})(%s)", strings.Join(tests, " || "), quote(property.View), quote(property.ViewType), value)
+	checks := ""
+	for _, id := range contract.Members {
+		if e.program.ViewContracts[id-1].Kind == ir.ViewMap {
+			mapped := property
+			mapped.ViewContract = id
+			checks += "if(v != null && adamicLogicalKind(v)===6){" + e.mapViewCertificate(mapped, "v") + ";}"
+		}
+	}
+	return fmt.Sprintf("((v) => {if(v != null && !(%s)) panic('field read failed: '+%s+'; expected '+%s+', found '+typeof v);%s return v;})(%s)", strings.Join(tests, " || "), quote(property.View), quote(property.ViewType), checks, value)
 }

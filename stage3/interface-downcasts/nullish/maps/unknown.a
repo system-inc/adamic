@@ -1,0 +1,6 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<number,number>}
+const produced=Map.groupBy(['entry'],():number=>1);
+const raw={kind:'box',value:produced};const base:Base=raw;
+function read(node:Target):void{console.log(String(node.value.get(1)));}
+read(base as Target);

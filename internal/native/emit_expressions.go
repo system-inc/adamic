@@ -503,6 +503,12 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			pairs = e.value(expression.Pairs)
 		}
 		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
+		e.line("%s->key_contract = %d; %s->value_contract = %d; %s->contract_name = %s;", created, expression.KeyContract, created, expression.ValueContract, created, cString(func() string {
+			if expression.ContractName == "" {
+				return "uncertified Map"
+			}
+			return expression.ContractName
+		}()))
 		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		for _, entry := range entries {
 			e.line("adamic_map_set(%s, %s, %s);", created, e.heldIn(created, expression.Key, entry[0]), e.heldIn(created, expression.Value, entry[1]))

@@ -383,6 +383,8 @@ typedef struct adamic_map_entry {
 
 typedef struct adamic_map {
 	adamic_heap heap;
+	unsigned int key_contract, value_contract;
+	const char *contract_name;
 	size_t count;
 	size_t used;
 	size_t capacity;

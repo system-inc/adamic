@@ -67,7 +67,7 @@ func nullableUnionUnsupported(program *ir.Program, contract ir.ViewContract) str
 			return member.Unsupported
 		}
 		switch member.Kind {
-		case ir.ViewScalar, ir.ViewObject, ir.ViewArray:
+		case ir.ViewScalar, ir.ViewObject, ir.ViewArray, ir.ViewMap:
 		default:
 			return "nullable union member selection"
 		}

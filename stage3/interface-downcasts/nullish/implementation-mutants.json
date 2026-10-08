@@ -54,5 +54,19 @@
     ],
     "exit": 1,
     "log": "evidence/nullish-mutant-callable-signature.log.gz"
+  },
+  {
+    "mutant": "disable-native-Map-certificate-guard",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-cert-disabled-guard.log.gz"
   }
 ]
