@@ -1,0 +1,13 @@
+declare const console: { readonly log: (value: string) => void };
+interface Node {
+    readonly pos: number;
+    readonly flags: number;
+}
+type Mutable<T> = { -readonly [P in keyof T]: T[P] };
+function bindChildren(node: Node): void {
+    (node as Mutable<Node>).flags |= 1;
+}
+const node = { pos: 0, flags: 0 } as const;
+bindChildren(node);
+const promised: 0 = node.flags;
+console.log(`${promised}`);

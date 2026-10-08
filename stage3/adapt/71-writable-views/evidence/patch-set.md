@@ -25,6 +25,6 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 63-temporary-tracing-legend | 1 | 1 | 1 |
 | 64-temporary-parser-range-read | 1 | 1 | 1 |
 | 70-readonly-views | 7 | 22 | 22 |
-| 71-writable-views | 20 | 88 | 88 |
+| 71-writable-views | 15 | 50 | 50 |
 | 75-optional-widening | 1 | 17 | 6 |
-| **Total** | 79 | 5215 | 5189 |
+| **Total** | 79 | 5178 | 5152 |
