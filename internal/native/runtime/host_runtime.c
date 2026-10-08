@@ -182,10 +182,10 @@ bool adamic_host_memory_usage(adamic_host_memory *result) {
 	if (fields != 2 || page <= 0) { errno = EIO; return false; }
 	result->rss = (double)resident * (double)page;
 #elif defined(__APPLE__)
-	mach_task_basic_info_data_t info;
+	mach_task_basic_info_data_t task;
 	mach_msg_type_number_t count = MACH_TASK_BASIC_INFO_COUNT;
-	if (task_info(mach_task_self(), MACH_TASK_BASIC_INFO, (task_info_t)&info, &count) != KERN_SUCCESS) { errno = EIO; return false; }
-	result->rss = (double)info.resident_size;
+	if (task_info(mach_task_self(), MACH_TASK_BASIC_INFO, (task_info_t)&task, &count) != KERN_SUCCESS) { errno = EIO; return false; }
+	result->rss = (double)task.resident_size;
 #else
 	errno = ENOSYS; return false;
 #endif
@@ -197,10 +197,10 @@ bool adamic_host_memory_usage(adamic_host_memory *result) {
 	result->heapTotal = (double)info.arena + (double)info.hblkhd;
 	result->heapUsed = (double)info.uordblks + (double)info.hblkhd;
 #elif defined(__APPLE__)
-	malloc_statistics_t info;
-	malloc_zone_statistics(NULL, &info);
-	result->heapTotal = (double)info.size_allocated;
-	result->heapUsed = (double)info.size_in_use;
+	malloc_statistics_t heap;
+	malloc_zone_statistics(NULL, &heap);
+	result->heapTotal = (double)heap.size_allocated;
+	result->heapUsed = (double)heap.size_in_use;
 #else
 	errno = ENOSYS; return false;
 #endif
