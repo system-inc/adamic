@@ -21,3 +21,4 @@ for (const file of [...new Set(rules.map(r => r.file))]) {
 for (const p of plans) if (fs.readFileSync(p.name, 'utf8') !== p.before) throw Error('concurrent source edit');
 for (const p of plans) if (p.text !== p.before) fs.writeFileSync(p.name, p.text);
 console.log(JSON.stringify({adaptation: 41, sites: plans.reduce((n,p) => n + p.removed, 0)}));
+require('./void.cjs').apply(tree);
