@@ -1,0 +1,2 @@
+function Foo(props) { return <div>{this.props.a}{props.a[this]}</div>; }
+const Bar = props => <span ref={ref => { this.item = ref; }} {...this.props} />;

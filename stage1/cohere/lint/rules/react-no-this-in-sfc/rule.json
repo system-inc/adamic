@@ -1,0 +1,14 @@
+{
+  "name": "react/no-this-in-sfc",
+  "kinds": [
+    "ThisKeyword"
+  ],
+  "parent": true,
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactNoThisInSfc",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoThisInSfc"
+}

@@ -1,0 +1,6 @@
+class Plain { m() { const Foo = props => this.props.a; } }
+class ReactClass extends React.Component { m() { const Foo = props => this.props.b; } }
+const Strict = createReactClass({ m() { const Foo = props => this.props.c; } });
+const Loose = React.createClass({ m() { const Foo = props => this.props.d; } });
+function Accessor() { class Inner { accessor [this.props.e] = 0; accessor h = () => this.props.f; [this.props.g] = 0; } }
+function Boundary() { function cb() { return this.props.h; } class Inner { static { this.props.i; } } }

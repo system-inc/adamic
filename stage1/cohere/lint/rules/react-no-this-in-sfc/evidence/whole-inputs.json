@@ -1,0 +1,25 @@
+{
+  "started": 1791483360.6749935,
+  "nproc": 5,
+  "load_before": [
+    1.06005859375,
+    1.5205078125,
+    1.89111328125
+  ],
+  "inputs": {
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/borrow-chains-typescript",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/s13-react-no-this-in-sfc-profile-final.UvGlDk",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/s13-react-no-this-in-sfc-profile-final.UvGlDk",
+    "ADAMIC_LINT_BENCH": "1"
+  },
+  "finished": 1791484448.3159444,
+  "load_after": [
+    5.390625,
+    5.3935546875,
+    4.1171875
+  ],
+  "exit": 0,
+  "wall_seconds": 1087.6409509181976
+}

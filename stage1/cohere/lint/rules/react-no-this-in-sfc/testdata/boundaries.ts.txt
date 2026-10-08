@@ -1,0 +1,8 @@
+function Foo(props) { return this.props.a + props.a[this]; }
+const Bar = props => this.props.b;
+const Anonymous = function () { return this.props.c; };
+const Lower = function lower() { return this.props.d; };
+const Memo = React.memo(props => this.props.e);
+function Éoo(props) { return this.props.f; }
+function Parenthesized() { return (this).props.g; }
+function Nested() { const cb = () => this.props.h; return cb; }

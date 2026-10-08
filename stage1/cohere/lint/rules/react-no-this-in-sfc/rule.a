@@ -1,0 +1,85 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { isComponentIdentifierName } from '../../helpers/rules-react/is_component_identifier_name.a';
+import { isEs5ComponentCallStrict } from '../../helpers/rules-react/is_es5_component_call_strict.a';
+import { messageNoThisInSfc } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    nodes: HelperNode[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void { this.nodes = project(this.context.parser.nodes); }
+    potentialComponent(index: number): boolean {
+        let declaration = index;
+        if(this.context.kind(index) === 'ArrowFunction') {
+            declaration = this.context.parent(index);
+            if(this.context.kind(declaration) !== 'VariableDeclaration') { return false; }
+        }
+        const name = this.context.name(declaration);
+        if(this.context.kind(name) !== 'Identifier') { return false; }
+        // Use the shared ASCII predicate, not the Unicode-wide React name helper.
+        return isComponentIdentifierName(this.context.node(name).text);
+    }
+    parentComponent(index: number): number {
+        let current = this.context.parent(index);
+        while(current >= 0) {
+            const kind = this.context.kind(current);
+            if(kind === 'ArrowFunction') {
+                if(this.potentialComponent(current)) { return current; }
+            }
+            else if(kind === 'ClassStaticBlockDeclaration') { return -1; }
+            else if(kind === 'FunctionDeclaration' || kind === 'FunctionExpression') {
+                return this.potentialComponent(current) ? current : -1;
+            }
+            current = this.context.parent(current);
+        }
+        return -1;
+    }
+    reactAncestor(component: number): boolean {
+        let current = this.context.parent(component);
+        while(current >= 0) {
+            const kind = this.context.kind(current);
+            if((kind === 'ClassDeclaration' || kind === 'ClassExpression') &&
+                reactEs6ComponentClass(this.nodes, current, (expression: number): boolean =>
+                    isComponentBase(this.nodes, expression, isComponentBaseName))) { return true; }
+            if(kind === 'CallExpression' && isEs5ComponentCallStrict(this.context, current)) { return true; }
+            current = this.context.parent(current);
+        }
+        return false;
+    }
+    nestedThis(index: number, component: number): boolean {
+        let current = this.context.parent(index);
+        while(current >= 0 && current !== component) {
+            const kind = this.context.kind(current);
+            if(kind === 'FunctionDeclaration' || kind === 'FunctionExpression' ||
+                kind === 'MethodDeclaration' || kind === 'GetAccessor' ||
+                kind === 'SetAccessor' || kind === 'Constructor') { return true; }
+            if(kind === 'PropertyDeclaration') {
+                if(!this.context.has(current, 'AccessorKeyword')) { return true; }
+                const initializer = this.context.initializer(current);
+                if(initializer >= 0) {
+                    let ancestor = index;
+                    while(ancestor >= 0) {
+                        if(ancestor === initializer) { return true; }
+                        ancestor = this.context.parent(ancestor);
+                    }
+                }
+            }
+            current = this.context.parent(current);
+        }
+        return false;
+    }
+    visit(index: number, parent: number): void {
+        // The immediate parent alone decides: (this).props is silent, a[this] reports.
+        const kind = this.context.kind(parent);
+        if(kind !== 'PropertyAccessExpression' && kind !== 'ElementAccessExpression') { return; }
+        const component = this.parentComponent(index);
+        if(component < 0 || this.reactAncestor(component) || this.nestedThis(index, component)) { return; }
+        this.context.report(index, 'react/no-this-in-sfc', 'noThisInSfc', messageNoThisInSfc, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

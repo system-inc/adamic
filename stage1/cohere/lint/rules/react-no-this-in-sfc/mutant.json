@@ -1,0 +1,5 @@
+{
+  "name": "react-no-this-in-sfc-component-name-inverted",
+  "from": "return isComponentIdentifierName(this.context.node(name).text);",
+  "to": "return !isComponentIdentifierName(this.context.node(name).text);"
+}
