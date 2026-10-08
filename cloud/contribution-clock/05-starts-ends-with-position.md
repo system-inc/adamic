@@ -58,7 +58,6 @@ true true false false
 - `go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/library_string_starts_ends_position.a' -count=1` passes.
 - Mutant "unclamped start": pass the raw position to slice. The -5 row then prints `true` for `startsWith('wö', -5)`, which disagrees with Node.
 - Mutant "position dropped": ignore the second argument. The 1, 2, 7 and 2.9 rows then disagree.
-- `go test ./internal/lower` passes.
 
 **Size.** About 20 lines plus the fixture. Confidence medium-high. It is the largest brief here, but it copies an existing helper's shape.
 
@@ -70,3 +69,4 @@ Shared notes:
 - Host failures. On macOS, `go test ./internal/native` already fails on main (AddressSanitizer reports that detect_leaks is not supported on the platform, plus parseInt and cos bit mismatches against Node). Judge "the packages touched pass" on Linux, or by comparing against the same failures on main.
 - Briefs 3, 4 and 5 all edit the `stringMethods` table and the `stringCall` switch in internal/lower/object.go. Land them one at a time and rebase. If brief 4 lands before brief 5, brief 5 should reuse the helper brief 4 adds.
 - Counts. A new oracle fixture also needs its row in internal/oracle/counts.md, or TestCountsAreRecorded fails: run `go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts` and commit only that fixture's row.
+- Whole packages. Don't run a whole package (`go test ./internal/lower`, `./internal/native` and the like): the fast gate runs every touched package in about 20 s after your push and sends any red back to you with its first failure. Run your fixture, your tests and each mutant, refresh counts.md, then push.
