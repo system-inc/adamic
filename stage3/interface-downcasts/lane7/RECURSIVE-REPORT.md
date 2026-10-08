@@ -57,3 +57,20 @@ Logs are retained in recursive-evidence. The prior guard-only recursive evidence
 is historical; runtime checking now replaces that plain-object refusal. The
 untagged compound refusal stays active. The two nullable root tests were added
 after the broad gate and passed both separately and in the final focused suite.
+
+Latest central merge and final handoff:
+
+- Central d50c1d370e7de2a052e182cd0fe698d137e1cfcf merged at 4bfdc738a2777b885224e326ff04779f0e2f661c.
+- Two conflict hunks resolved individually: preserve both plan appends; preserve structuralViewIntersection and viewArrayBase recognition in viewDataType.
+- ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedView' -count=1: PASS 102.834s.
+- Touched package filter: lower 3.226s, native 4.027s, JavaScript 0.692s. Full internal/ir: PASS 15.274s. Vet: PASS.
+- run-arm-mutants.py and run-recursive-mutants.py both reran after integration: all 12 mutants caught, 36 independent valid-execution refusal failures.
+- Final logs are in latest-integration-evidence. Foreign opt-in original declaration suites and whole-program tsc are not claimed by this gate.
+
+Candidate accounting remains unchanged after this push: 17 object pairs / 66
+reads, zero full upstream pair certifications, 28 delegated pairs / 703 reads,
+zero unclassified overlaps. Next original-contract work remains the leading
+Bindable expression and JSDoc parent families, including recursive union and
+array/callback composition. Original witness spans and reduced shape evidence
+must not be presented as completed full declaration witnesses. The working
+whole-family target remains October 11, 2026, 23:00 UTC.
