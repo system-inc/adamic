@@ -230,3 +230,12 @@ carried lane evidence, not reruns in this integration session.
 Setup cache ready 1177.301s and done 1177.419s; nproc 5, quota 4.
 The compiler census and complete repository gate remain outside this run.
 The branch is ready to receive subsequent lane tips through this integrator.
+
+## Lazy owner presence evidence follow-up
+
+Priority tip a0cc0afd merges cleanly before dictionary e9a06829. It adds
+optional-presence source probes and measured refusals only, without compiler
+changes or replacement of prior reconciliation. Presence operators and broader
+nullish source dispatch remain explicitly incomplete. No new production check
+is added, and no additional mutant claim is made for this evidence-only merge.
+The usual focused package, full IR, filtered Node oracle and vet gates follow.
