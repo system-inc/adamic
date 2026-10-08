@@ -1,5 +1,9 @@
 # Native tsc entry measurement
 
+The project-options composition and remaining-site adaptation audit are in
+[MODE-AND-ADAPTATIONS.md](MODE-AND-ADAPTATIONS.md). Its scratch compiler has
+explicit uncommitted reconciliation choices; admission is separate from emission.
+
 The two compiler-tip comparison is recorded in [COMPILER-TIPS.md](COMPILER-TIPS.md),
 with exact pins, all fifteen saved-stop classifications and reproducible commands.
 
