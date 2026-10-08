@@ -1,12 +1,20 @@
 // a-check: type error TS2591
-// From TypeScript 6.0.3, src/compiler/sys.ts:901
-// From TypeScript 6.0.3, src/compiler/sys.ts:1487
-// From TypeScript 6.0.3, src/compiler/sys.ts:1489
-// From TypeScript 6.0.3, src/compiler/sys.ts:1629
-// From TypeScript 6.0.3, src/compiler/sys.ts:1886
-// From TypeScript 6.0.3, src/compiler/sys.ts:1901
-// From TypeScript 6.0.3, src/compiler/sys.ts:1732
-// From TypeScript 6.0.3, src/compiler/sys.ts:1722
+// From TypeScript 6.0.3, src/compiler/sys.ts:1487; adapted line 1488
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1629; adapted line 1630
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1886; adapted line 1887
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1901; adapted line 1902
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1732; adapted line 1733
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1722; adapted line 1723
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:901; adapted line 902
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1489; adapted line 1490
+// Adaptations: none
 // Census reason: TS2591
 
 import * as _fs from "node:fs";

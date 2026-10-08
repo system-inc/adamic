@@ -1,10 +1,18 @@
 // a-check: type error TS2591
-// From TypeScript 6.0.3, src/compiler/sys.ts:901
-// From TypeScript 6.0.3, src/compiler/sys.ts:1487
-// From TypeScript 6.0.3, src/compiler/sys.ts:1629
-// From TypeScript 6.0.3, src/compiler/sys.ts:1886
-// From TypeScript 6.0.3, src/compiler/sys.ts:1905
-// From TypeScript 6.0.3, src/compiler/sys.ts:1545
+// From TypeScript 6.0.3, src/compiler/sys.ts:1487; adapted line 1488
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1629; adapted line 1630
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1886; adapted line 1887
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1905; adapted line 1906
+// Adaptations: none
+// From TypeScript 6.0.3, src/compiler/sys.ts:1545; adapted line 1546
+// Adaptations: 47-host-errors
+// From TypeScript 6.0.3, src/compiler/hostErrors.ts:2 (added by adaptation 47); adapted line 2
+// Adaptations: 47-host-errors
+// From TypeScript 6.0.3, src/compiler/sys.ts:901; adapted line 902
+// Adaptations: none
 // Census reason: TS2591
 
 import * as _fs from "node:fs";
@@ -52,7 +60,7 @@ createDirectory(directoryName: string) {
             _fs.mkdirSync(directoryName);
         }
         catch (e) {
-            if (e.code !== "EEXIST") {
+            if (errorCode(e) !== "EEXIST") {
                 // Failed for some other reason (access denied?); still throw
                 throw e;
             }
@@ -60,6 +68,10 @@ createDirectory(directoryName: string) {
     }
 }
 };
+
+export function errorCode(error: unknown): string | undefined {
+    return typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
+}
 
 try {
     const dir=_path.join(scratch,"dir");
@@ -71,7 +83,7 @@ try {
     nodeSystem.createDirectory(file);
     console.log(String(_fs.statSync(file).isFile()));
     try { nodeSystem.createDirectory(_path.join(scratch,"missing","child")); }
-    catch (e) { console.log((e as NodeJS.ErrnoException).code); }
+    catch (e) { console.log(errorCode(e)); }
 }
 finally {
     _fs.rmSync(scratch, { recursive: true, force: true });
