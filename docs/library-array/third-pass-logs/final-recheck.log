@@ -1,0 +1,10 @@
+compiled 5 refused 381
+built-ins/Array/isArray/15.4.3.2-0-1.js 0
+built-ins/Array/prototype/every/15.4.4.16-0-1.js 0
+built-ins/Array/prototype/includes/this-is-not-object.js 0
+built-ins/Array/prototype/join/S15.4.4.5_A6.6.js 1 adamic: /tmp/library-array-sources/built-ins/Array/prototype/join/S15.4.4.5_A6.6.js.ts:99:19: stage 0 can't lower a BinaryExpression with a string and a value yet
+
+built-ins/Array/prototype/map/create-non-array-invalid-len.js 0
+built-ins/Array/prototype/shift/throws-when-this-value-length-is-writable-false.js 1 adamic: /tmp/library-array-sources/built-ins/Array/prototype/shift/throws-when-this-value-length-is-writable-false.js.ts:110:3: stage 0 can't lower shift.call requiring an array-like or boxed receiver representation yet
+
+built-ins/Array/prototype/sort/S15.4.4.11_A5_T1.js 0

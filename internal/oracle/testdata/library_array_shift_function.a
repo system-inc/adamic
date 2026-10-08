@@ -1,0 +1,21 @@
+try {
+	Array.prototype.shift.call(function() {});
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+try {
+	Array.prototype.shift.call(() => {});
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+const shift = Array.prototype.shift;
+try {
+	shift.call(function named() {});
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+try {
+	Array.prototype.shift.call(function /* 😀 */() {});
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}

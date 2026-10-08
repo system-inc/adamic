@@ -70,6 +70,12 @@ IN THE SOFTWARE.
   - optional elements at removed indexes in Array find methods (`internal/native/emit_arrays.go`
     and `internal/javascript/javascript.go`, after src/builtins/array-find.tq,
     array-findindex.tq, array-findlast.tq and array-findlastindex.tq, V8 13.6.233.17);
+  - oversized non-array map allocation and fresh-function shift failures
+    (`internal/lower/library_array_call_map.go` and `library_array_call_function.go`,
+    after src/builtins/array-map.tq and src/builtins/array-shift.tq, V8 13.6.233.17);
+  - never-returning Array comparators (`internal/lower/library_array_sort.go` and
+    `runtime/array.c`, after SortCompareUserFn in
+    third_party/v8/builtins/array-sort.tq, V8 13.6.233.17);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);

@@ -629,6 +629,10 @@ type (
 		Comparator int
 		Callback   Expression
 		Element    Type
+
+		// CallbackNever proves the callback cannot produce a result. Native
+		// comparison propagates its throw without inspecting a numeric slot.
+		CallbackNever bool
 	}
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.

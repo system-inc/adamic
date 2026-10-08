@@ -1,0 +1,5 @@
+=== RUN   TestArraySortGuardMutantNodeOnly
+    library_array_manual_mutant_test.go:30: caught only by stdout comparison with Node: native "compare\nError stop\n|aa\n"; Node "aa|\n"; both exit 0, no sanitizer or leak report
+--- PASS: TestArraySortGuardMutantNodeOnly (0.24s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.248s

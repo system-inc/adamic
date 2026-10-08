@@ -401,7 +401,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does
 		// (sort.c), and the throw goes on from here.
 		if expression.Callback != nil {
-			e.line("%s(%s, adamic_compare_closure, %s);", sort, array, e.value(expression.Callback))
+			comparator := "adamic_compare_closure"
+			if expression.CallbackNever {
+				comparator = "adamic_compare_never"
+			}
+			e.line("%s(%s, %s, %s);", sort, array, comparator, e.value(expression.Callback))
 			e.closureThrown()
 			return array
 		}

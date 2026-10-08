@@ -1,0 +1,9 @@
+const receiver = {length: 4294967296};
+const holder = {receiver};
+holder.receiver.length = 0;
+try {
+	Array.prototype.map.call(receiver, (): number => 1);
+	console.log('mapped');
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}

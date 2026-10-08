@@ -1,0 +1,114 @@
+=== RUN   TestLibraryArrayThirdPassRefusals
+=== PAUSE TestLibraryArrayThirdPassRefusals
+=== RUN   TestLibraryArrayNewFamilyMutants
+=== PAUSE TestLibraryArrayNewFamilyMutants
+=== CONT  TestLibraryArrayThirdPassRefusals
+=== CONT  TestLibraryArrayNewFamilyMutants
+=== RUN   TestLibraryArrayThirdPassRefusals/reassigned_intrinsic
+=== PAUSE TestLibraryArrayThirdPassRefusals/reassigned_intrinsic
+=== RUN   TestLibraryArrayNewFamilyMutants/sort_never_callback_skipped
+=== PAUSE TestLibraryArrayNewFamilyMutants/sort_never_callback_skipped
+=== RUN   TestLibraryArrayNewFamilyMutants/toSorted_never_callback_skipped
+=== PAUSE TestLibraryArrayNewFamilyMutants/toSorted_never_callback_skipped
+=== CONT  TestLibraryArrayNewFamilyMutants/sort_never_callback_skipped
+=== RUN   TestLibraryArrayThirdPassRefusals/escaped_intrinsic
+=== PAUSE TestLibraryArrayThirdPassRefusals/escaped_intrinsic
+=== RUN   TestLibraryArrayThirdPassRefusals/intrinsic_identity
+=== PAUSE TestLibraryArrayThirdPassRefusals/intrinsic_identity
+=== RUN   TestLibraryArrayThirdPassRefusals/intrinsic_prototype_write
+=== PAUSE TestLibraryArrayThirdPassRefusals/intrinsic_prototype_write
+=== RUN   TestLibraryArrayThirdPassRefusals/intrinsic_property_compound_write
+=== PAUSE TestLibraryArrayThirdPassRefusals/intrinsic_property_compound_write
+=== RUN   TestLibraryArrayThirdPassRefusals/hoisted_reader
+=== PAUSE TestLibraryArrayThirdPassRefusals/hoisted_reader
+=== CONT  TestLibraryArrayNewFamilyMutants/toSorted_never_callback_skipped
+=== RUN   TestLibraryArrayThirdPassRefusals/exported_intrinsic
+=== PAUSE TestLibraryArrayThirdPassRefusals/exported_intrinsic
+=== RUN   TestLibraryArrayThirdPassRefusals/chained_alias
+=== PAUSE TestLibraryArrayThirdPassRefusals/chained_alias
+=== RUN   TestLibraryArrayThirdPassRefusals/shadowed_intrinsic
+=== PAUSE TestLibraryArrayThirdPassRefusals/shadowed_intrinsic
+=== RUN   TestLibraryArrayThirdPassRefusals/valid_sparse_map_length
+=== PAUSE TestLibraryArrayThirdPassRefusals/valid_sparse_map_length
+=== RUN   TestLibraryArrayThirdPassRefusals/fraction_below_invalid_bound
+=== PAUSE TestLibraryArrayThirdPassRefusals/fraction_below_invalid_bound
+=== RUN   TestLibraryArrayThirdPassRefusals/mutable_map_length
+=== PAUSE TestLibraryArrayThirdPassRefusals/mutable_map_length
+=== RUN   TestLibraryArrayThirdPassRefusals/shorthand_map_escape
+=== PAUSE TestLibraryArrayThirdPassRefusals/shorthand_map_escape
+=== RUN   TestLibraryArrayThirdPassRefusals/escaped_map_receiver
+=== PAUSE TestLibraryArrayThirdPassRefusals/escaped_map_receiver
+=== RUN   TestLibraryArrayThirdPassRefusals/callback_factory_mutates_length
+=== PAUSE TestLibraryArrayThirdPassRefusals/callback_factory_mutates_length
+=== RUN   TestLibraryArrayThirdPassRefusals/reassigned_map_receiver
+=== PAUSE TestLibraryArrayThirdPassRefusals/reassigned_map_receiver
+=== RUN   TestLibraryArrayThirdPassRefusals/nonexact_pow_proof
+=== PAUSE TestLibraryArrayThirdPassRefusals/nonexact_pow_proof
+=== RUN   TestLibraryArrayThirdPassRefusals/optional_reference_never_sort
+=== PAUSE TestLibraryArrayThirdPassRefusals/optional_reference_never_sort
+=== RUN   TestLibraryArrayThirdPassRefusals/optional_reference_numeric_sort
+=== PAUSE TestLibraryArrayThirdPassRefusals/optional_reference_numeric_sort
+=== RUN   TestLibraryArrayThirdPassRefusals/optional_reference_copy_sort
+=== PAUSE TestLibraryArrayThirdPassRefusals/optional_reference_copy_sort
+=== RUN   TestLibraryArrayThirdPassRefusals/function_source_with_erased_type
+=== PAUSE TestLibraryArrayThirdPassRefusals/function_source_with_erased_type
+=== RUN   TestLibraryArrayThirdPassRefusals/nonzero_function_length
+=== PAUSE TestLibraryArrayThirdPassRefusals/nonzero_function_length
+=== RUN   TestLibraryArrayThirdPassRefusals/escaping_function_receiver
+=== PAUSE TestLibraryArrayThirdPassRefusals/escaping_function_receiver
+=== CONT  TestLibraryArrayThirdPassRefusals/reassigned_intrinsic
+=== CONT  TestLibraryArrayThirdPassRefusals/shorthand_map_escape
+=== CONT  TestLibraryArrayThirdPassRefusals/optional_reference_numeric_sort
+=== CONT  TestLibraryArrayThirdPassRefusals/escaping_function_receiver
+=== CONT  TestLibraryArrayThirdPassRefusals/nonzero_function_length
+=== CONT  TestLibraryArrayThirdPassRefusals/function_source_with_erased_type
+=== CONT  TestLibraryArrayThirdPassRefusals/optional_reference_copy_sort
+=== CONT  TestLibraryArrayThirdPassRefusals/exported_intrinsic
+=== CONT  TestLibraryArrayThirdPassRefusals/mutable_map_length
+=== CONT  TestLibraryArrayThirdPassRefusals/fraction_below_invalid_bound
+=== CONT  TestLibraryArrayThirdPassRefusals/valid_sparse_map_length
+=== CONT  TestLibraryArrayThirdPassRefusals/shadowed_intrinsic
+=== CONT  TestLibraryArrayThirdPassRefusals/chained_alias
+=== CONT  TestLibraryArrayThirdPassRefusals/intrinsic_prototype_write
+=== CONT  TestLibraryArrayThirdPassRefusals/hoisted_reader
+=== CONT  TestLibraryArrayThirdPassRefusals/intrinsic_property_compound_write
+=== CONT  TestLibraryArrayThirdPassRefusals/reassigned_map_receiver
+=== CONT  TestLibraryArrayThirdPassRefusals/optional_reference_never_sort
+=== CONT  TestLibraryArrayThirdPassRefusals/nonexact_pow_proof
+=== CONT  TestLibraryArrayThirdPassRefusals/intrinsic_identity
+=== CONT  TestLibraryArrayThirdPassRefusals/callback_factory_mutates_length
+=== NAME  TestLibraryArrayNewFamilyMutants/sort_never_callback_skipped
+    library_array_mutants_test.go:377: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayThirdPassRefusals/escaped_map_receiver
+=== CONT  TestLibraryArrayThirdPassRefusals/escaped_intrinsic
+=== NAME  TestLibraryArrayNewFamilyMutants/toSorted_never_callback_skipped
+    library_array_mutants_test.go:377: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+--- PASS: TestLibraryArrayNewFamilyMutants (0.00s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/sort_never_callback_skipped (0.40s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/toSorted_never_callback_skipped (0.42s)
+--- PASS: TestLibraryArrayThirdPassRefusals (0.00s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/shorthand_map_escape (0.08s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/reassigned_intrinsic (0.09s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/optional_reference_numeric_sort (0.10s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/escaping_function_receiver (0.07s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/function_source_with_erased_type (0.06s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/nonzero_function_length (0.07s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/mutable_map_length (0.04s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/exported_intrinsic (0.04s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/optional_reference_copy_sort (0.06s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/fraction_below_invalid_bound (0.07s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/valid_sparse_map_length (0.07s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/shadowed_intrinsic (0.07s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/intrinsic_prototype_write (0.04s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/chained_alias (0.05s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/hoisted_reader (0.04s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/intrinsic_property_compound_write (0.05s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/reassigned_map_receiver (0.06s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/optional_reference_never_sort (0.06s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/nonexact_pow_proof (0.05s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/intrinsic_identity (0.04s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/callback_factory_mutates_length (0.04s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/escaped_map_receiver (0.03s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/escaped_intrinsic (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.450s

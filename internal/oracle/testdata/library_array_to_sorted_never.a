@@ -1,0 +1,18 @@
+const words = ['z'.repeat(2), 'y'.repeat(2)];
+let calls = 0;
+const compare = (left: string, right: string): never => {
+	calls += 1;
+	words.pop();
+	throw new Error(`${left}:${right}`);
+};
+try {
+	words.toSorted(compare);
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
+console.log(`${words.join(',')} ${calls}`);
+const singleton = ['q'.repeat(2)];
+const copy = singleton.toSorted((): never => { throw new Error('unused'); });
+console.log(`${copy.join(',')} ${copy === singleton}`);
+const empty: string[] = [];
+console.log(`${empty.toSorted(compare).length}`);

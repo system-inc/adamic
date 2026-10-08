@@ -1,0 +1,14 @@
+=== RUN   TestLibraryArrayThirdPassRefusals
+=== PAUSE TestLibraryArrayThirdPassRefusals
+=== CONT  TestLibraryArrayThirdPassRefusals
+=== RUN   TestLibraryArrayThirdPassRefusals/escaped_intrinsic
+=== PAUSE TestLibraryArrayThirdPassRefusals/escaped_intrinsic
+=== RUN   TestLibraryArrayThirdPassRefusals/shorthand_map_escape
+=== PAUSE TestLibraryArrayThirdPassRefusals/shorthand_map_escape
+=== CONT  TestLibraryArrayThirdPassRefusals/escaped_intrinsic
+=== CONT  TestLibraryArrayThirdPassRefusals/shorthand_map_escape
+--- PASS: TestLibraryArrayThirdPassRefusals (0.00s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/shorthand_map_escape (0.06s)
+    --- PASS: TestLibraryArrayThirdPassRefusals/escaped_intrinsic (0.06s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.067s

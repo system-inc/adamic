@@ -7,7 +7,7 @@ import (
 
 func (l *lowering) libraryArrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "isArray" || !l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Array") {
+	if l.libraryArrayMethodName(callee) != "isArray" {
 		return nil, false, nil
 	}
 	written := node.AsCallExpression().Arguments.Nodes

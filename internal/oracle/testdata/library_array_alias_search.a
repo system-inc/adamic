@@ -1,0 +1,10 @@
+const first = Array.prototype.indexOf;
+const last = Array.prototype.lastIndexOf;
+console.log(`${first.name} ${last.name} ${first.length} ${last.length}`);
+const text = 'abc'.repeat(2);
+console.log(`${first.call(text, 'b', 1)} ${last.call(text, 'b', -1)}`);
+const receiver = {0: 7, 2: 9, 3: 4, length: 3};
+console.log(`${first.call(receiver, 9)} ${last.call(receiver, 7)}`);
+const values = [7, 9, 7];
+console.log(`${first.call(values, 7, 1)} ${last.call(values, 7, undefined)}`);
+console.log(`${first.call(receiver, 4)} ${last.call(receiver, 9, -2)}`);

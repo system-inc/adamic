@@ -1,0 +1,7 @@
+enum Marker { No, Yes }
+console.log(`${Marker.Yes}`);
+try {
+	Array.prototype.shift.call(() => {});
+} catch (error) {
+	if (error instanceof Error) { console.log(`${error.name} ${error.message}`); }
+}
