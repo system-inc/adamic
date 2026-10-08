@@ -28,7 +28,7 @@ func statementCorpus(t *testing.T) (string, string, string) {
 	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+directory+"/overlay.json", "-run=^TestAdamicStatementCorpus$", "./internal/format/javascript")
 	command.Dir = root + "/cohere"
 	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go statement corpus: %v\n%s", err, output)
 	} else {
 		t.Log(string(output))
