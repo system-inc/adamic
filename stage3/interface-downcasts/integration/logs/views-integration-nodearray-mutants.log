@@ -1,0 +1,6 @@
+native-element-kind: caught by node-array-wrong-reference; /tmp/views-integration-nodearray-mutants/native-element-kind.log
+javascript-element-kind: caught by node-array-wrong-reference; /tmp/views-integration-nodearray-mutants/javascript-element-kind.log
+native-own-kind: caught by node-array-wrong-own; /tmp/views-integration-nodearray-mutants/native-own-kind.log
+native-property-copy: caught by node-array-properties-copy; /tmp/views-integration-nodearray-mutants/native-property-copy.log
+javascript-own-kind: caught by node-array-wrong-own; /tmp/views-integration-nodearray-mutants/javascript-own-kind.log
+source-slot-certificate: caught by node-array-write-literal; /tmp/views-integration-nodearray-mutants/source-slot-certificate.log

@@ -1,0 +1,156 @@
+[
+  {
+    "mutant": "collapse-null",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewNullish$/^number-both$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/nullish-mutant-collapse-null.log.gz"
+  },
+  {
+    "mutant": "allow-forbidden-undefined",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewNullishMutants$/^number-null-opposite$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/nullish-mutant-allow-forbidden-undefined.log.gz"
+  },
+  {
+    "mutant": "skip-kind",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewNullishMutants$/^string-both-wrong$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/nullish-mutant-skip-kind.log.gz"
+  },
+  {
+    "mutant": "skip-callable-implementation-proof",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewNullishCallableSignatureMutant$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/nullish-mutant-callable-signature.log.gz"
+  },
+  {
+    "mutant": "disable-native-Map-certificate-guard",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-cert-disabled-guard.log.gz"
+  },
+  {
+    "mutant": "trust-physical-object-kind-as-Map-entry-schema",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^structural-schema-unused-payload$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-structural-mutant.log.gz"
+  },
+  {
+    "mutant": "trust-physical-array-kind-as-Map-entry-schema",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^array-schema-unused-payload$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-array-mutant.log.gz"
+  },
+  {
+    "mutant": "skip-Map-array-own-schema",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^node-array-own-schema-unused-payload$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-nodearray-mutant-skip-own-schema.log.gz"
+  },
+  {
+    "mutant": "skip-Map-readonly-array-source",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^node-array-readonly-schema$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-nodearray-mutant-skip-readonly-source.log.gz"
+  },
+  {
+    "mutant": "allow-undefined-Map-array-schema",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapCertificates$/^optional-array-schema$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-optional-mutant.log.gz"
+  },
+  {
+    "mutant": "omit-nested-Map-phantom-exclusion",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCheckedViewMapEntryFamilyBoundaries$/^nested.*-read$",
+      "-v",
+      "-count=1"
+    ],
+    "exit": 1,
+    "log": "evidence/map-nested-brand-mutant.log.gz"
+  }
+]

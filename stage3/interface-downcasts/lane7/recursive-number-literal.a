@@ -1,0 +1,9 @@
+interface Named { readonly text: string }
+interface Link { readonly count: number; readonly next?: Link; readonly mode: "a\0b" | "c"; readonly enabled?: true; readonly code?: 1 }
+interface Box { readonly value: object }
+interface Target extends Box { readonly value: Named & Link }
+const actual = { text: "name", count: 42, mode: "a\0b", next: { count: 7, mode: "c", code: 2 } };
+const box: Box = { value: actual };
+const view = box as Target;
+const root = view.value;
+console.log(`${root === root}`);

@@ -1,0 +1,10 @@
+interface Node {readonly kind:'container'|'other';}
+interface Left {readonly tag:'left';readonly ready:boolean;}
+interface Right {readonly tag:'right';readonly label:string;}
+type Child=Left|Right;
+interface Container extends Node {readonly kind:'container';readonly child:Child;}
+function getChild(box:Container):Child{return box.child;}
+function narrow(node:Node):Container{return node as Container;}
+function visit(child:Child):string {if(child.tag==='left')return `${child.ready}`;return child.label;}
+const raw={kind:'container' as const,child:{tag:'wrong' as const,ready:true}};
+const held:Node=raw;const view=narrow(held);const child=getChild(view);console.log(typeof child);

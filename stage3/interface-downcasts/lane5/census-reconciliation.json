@@ -1,0 +1,312 @@
+{
+  "lane2_reads": 1503,
+  "lane4_reads": 11063,
+  "shared_spans": 918,
+  "lane2_only_spans": 585,
+  "lane4_only_spans": 10145,
+  "union_spans": 11648,
+  "lane2_only_examples": [
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1445,
+      "column": 51,
+      "start": 65781,
+      "end": 65797,
+      "text": "name.toLowerCase"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1617,
+      "column": 50,
+      "start": 73460,
+      "end": 73474,
+      "text": "text.substring"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5576,
+      "column": 16,
+      "start": 281291,
+      "end": 281318,
+      "text": "(name as string).charCodeAt"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5577,
+      "column": 13,
+      "start": 281359,
+      "end": 281386,
+      "text": "(name as string).charCodeAt"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5578,
+      "column": 13,
+      "start": 281427,
+      "end": 281454,
+      "text": "(name as string).charCodeAt"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5579,
+      "column": 13,
+      "start": 281495,
+      "end": 281522,
+      "text": "(name as string).charCodeAt"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5580,
+      "column": 13,
+      "start": 281564,
+      "end": 281591,
+      "text": "(name as string).charCodeAt"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6271,
+      "column": 20,
+      "start": 322166,
+      "end": 322179,
+      "text": "result.substr"
+    }
+  ],
+  "lane4_only_examples": [
+    {
+      "file": "src/compiler/binder.ts",
+      "start": 9099,
+      "end": 9110,
+      "line": 341,
+      "column": 9,
+      "kind": "property",
+      "receiver_type_id": 103522,
+      "receiver_type": "Map<number, ModuleInstanceState | undefined>",
+      "field": "has",
+      "declared_type": "(key: number) => boolean",
+      "families": [
+        "callable contracts"
+      ],
+      "flow": "Unknown",
+      "flow_reason": "Shared graph queried; Unknown cast frontier retains tag/read check even for known receiver allocations",
+      "text": "visited.has",
+      "shared_graph": {
+        "allocation_sites": null,
+        "graph_reasons": [
+          "no reaching allocation established",
+          "parameter may receive untracked or omitted arguments",
+          "untracked source lower.latentShapeUnknown"
+        ],
+        "graph_unknown": true,
+        "retain_check": true,
+        "unknown_cast_frontier": true,
+        "viewed_allocation_overlap": []
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "start": 9138,
+      "end": 9149,
+      "line": 342,
+      "column": 16,
+      "kind": "property",
+      "receiver_type_id": 103522,
+      "receiver_type": "Map<number, ModuleInstanceState | undefined>",
+      "field": "get",
+      "declared_type": "(key: number) => ModuleInstanceState | undefined",
+      "families": [
+        "callable contracts"
+      ],
+      "flow": "Unknown",
+      "flow_reason": "Shared graph queried; Unknown cast frontier retains tag/read check even for known receiver allocations",
+      "text": "visited.get",
+      "shared_graph": {
+        "allocation_sites": null,
+        "graph_reasons": [
+          "no reaching allocation established",
+          "parameter may receive untracked or omitted arguments",
+          "untracked source lower.latentShapeUnknown"
+        ],
+        "graph_unknown": true,
+        "retain_check": true,
+        "unknown_cast_frontier": true,
+        "viewed_allocation_overlap": []
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "start": 9210,
+      "end": 9221,
+      "line": 344,
+      "column": 5,
+      "kind": "property",
+      "receiver_type_id": 103522,
+      "receiver_type": "Map<number, ModuleInstanceState | undefined>",
+      "field": "set",
+      "declared_type": "(key: number, value: ModuleInstanceState | undefined) => Map<number, ModuleInstanceState | undefined>",
+      "families": [
+        "callable contracts"
+      ],
+      "flow": "Unknown",
+      "flow_reason": "Shared graph queried; Unknown cast frontier retains tag/read check even for known receiver allocations",
+      "text": "visited.set",
+      "shared_graph": {
+        "allocation_sites": null,
+        "graph_reasons": [
+          "no reaching allocation established",
+          "parameter may receive untracked or omitted arguments",
+          "untracked source lower.latentShapeUnknown"
+        ],
+        "graph_unknown": true,
+        "retain_check": true,
+        "unknown_cast_frontier": true,
+        "viewed_allocation_overlap": []
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "start": 9312,
+      "end": 9323,
+      "line": 346,
+      "column": 5,
+      "kind": "property",
+      "receiver_type_id": 103522,
+      "receiver_type": "Map<number, ModuleInstanceState | undefined>",
+      "field": "set",
+      "declared_type": "(key: number, value: ModuleInstanceState | undefined) => Map<number, ModuleInstanceState | undefined>",
+      "families": [
+        "callable contracts"
+      ],
+      "flow": "Unknown",
+      "flow_reason": "Shared graph queried; Unknown cast frontier retains tag/read check even for known receiver allocations",
+      "text": "visited.set",
+      "shared_graph": {
+        "allocation_sites": null,
+        "graph_reasons": [
+          "no reaching allocation established",
+          "parameter may receive untracked or omitted arguments",
+          "untracked source lower.latentShapeUnknown"
+        ],
+        "graph_unknown": true,
+        "retain_check": true,
+        "unknown_cast_frontier": true,
+        "viewed_allocation_overlap": []
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "start": 12346,
+      "end": 12363,
+      "line": 405,
+      "column": 25,
+      "kind": "property",
+      "receiver_type_id": 420,
+      "receiver_type": "typeof Debug",
+      "field": "assertNever",
+      "declared_type": "(member: never, message?: string, stackCrawlMark?: AnyFunction | undefined) => never",
+      "families": [
+        "callable contracts"
+      ],
+      "flow": "Unknown",
+      "flow_reason": "Shared graph queried; Unknown cast frontier retains tag/read check even for known receiver allocations",
+      "text": "Debug.assertNever",
+      "shared_graph": {
+        "allocation_sites": null,
+        "graph_reasons": [
+          "local or result has no tracked producer",
+          "no reaching allocation established"
+        ],
+        "graph_unknown": true,
+        "retain_check": true,
+        "unknown_cast_frontier": true,
+        "viewed_allocation_overlap": []
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "start": 16353,
+      "end": 16382,
+      "line": 496,
+      "column": 12,
+      "kind": "property",
+      "receiver_type_id": 420,
+      "receiver_type": "typeof Debug",
+      "field": "attachFlowNodeDebugInfo",
+      "declared_type": "(flowNode: FlowNode) => FlowNode",
+      "families": [
+        "callable contracts"
+      ],
+      "flow": "Unknown",
+      "flow_reason": "Shared graph queried; Unknown cast frontier retains tag/read check even for known receiver allocations",
+      "text": "Debug.attachFlowNodeDebugInfo",
+      "shared_graph": {
+        "allocation_sites": null,
+        "graph_reasons": [
+          "local or result has no tracked producer",
+          "no reaching allocation established"
+        ],
+        "graph_unknown": true,
+        "retain_check": true,
+        "unknown_cast_frontier": true,
+        "viewed_allocation_overlap": []
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "start": 16594,
+      "end": 16610,
+      "line": 503,
+      "column": 5,
+      "kind": "property",
+      "receiver_type_id": 4163,
+      "receiver_type": "typeof import(\"/tmp/views-mixed-typescript/src/compiler/_namespaces/ts.performance\")",
+      "field": "mark",
+      "declared_type": "(markName: string) => void",
+      "families": [
+        "callable contracts"
+      ],
+      "flow": "Unknown",
+      "flow_reason": "Shared graph queried; Unknown cast frontier retains tag/read check even for known receiver allocations",
+      "text": "performance.mark",
+      "shared_graph": {
+        "allocation_sites": null,
+        "graph_reasons": [
+          "local or result has no tracked producer",
+          "no reaching allocation established"
+        ],
+        "graph_unknown": true,
+        "retain_check": true,
+        "unknown_cast_frontier": true,
+        "viewed_allocation_overlap": []
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "start": 16659,
+      "end": 16675,
+      "line": 505,
+      "column": 5,
+      "kind": "property",
+      "receiver_type_id": 4163,
+      "receiver_type": "typeof import(\"/tmp/views-mixed-typescript/src/compiler/_namespaces/ts.performance\")",
+      "field": "mark",
+      "declared_type": "(markName: string) => void",
+      "families": [
+        "callable contracts"
+      ],
+      "flow": "Unknown",
+      "flow_reason": "Shared graph queried; Unknown cast frontier retains tag/read check even for known receiver allocations",
+      "text": "performance.mark",
+      "shared_graph": {
+        "allocation_sites": null,
+        "graph_reasons": [
+          "local or result has no tracked producer",
+          "no reaching allocation established"
+        ],
+        "graph_unknown": true,
+        "retain_check": true,
+        "unknown_cast_frontier": true,
+        "viewed_allocation_overlap": []
+      }
+    }
+  ]
+}

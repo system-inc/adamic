@@ -1,0 +1,16 @@
+=== RUN   TestCheckedViewLazyHelperMutant
+=== RUN   TestCheckedViewLazyHelperMutant/helper
+    checked_views_lazy_test.go:46: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/helper-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/generic
+    checked_views_lazy_test.go:46: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/generic-mutant.a:9:85: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/callback
+    checked_views_lazy_test.go:46: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/callback-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/field
+    checked_views_lazy_test.go:46: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/field-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+--- PASS: TestCheckedViewLazyHelperMutant (0.11s)
+    --- PASS: TestCheckedViewLazyHelperMutant/helper (0.04s)
+    --- PASS: TestCheckedViewLazyHelperMutant/generic (0.03s)
+    --- PASS: TestCheckedViewLazyHelperMutant/callback (0.03s)
+    --- PASS: TestCheckedViewLazyHelperMutant/field (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.127s

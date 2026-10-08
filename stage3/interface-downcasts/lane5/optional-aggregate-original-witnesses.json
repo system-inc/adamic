@@ -1,0 +1,44 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "original declarations and read spans; reduced adjacent helpers and data carriers",
+  "members": [
+    {
+      "rank": 17,
+      "type": "NodeFactory",
+      "field": "createVariableDeclaration",
+      "candidateReads": 73,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 1497,
+        "column": 9
+      },
+      "read": "createVariableDeclaration: factoryCreateVariableDeclaration",
+      "readKind": "binding",
+      "call": "createVariableDeclaration: factoryCreateVariableDeclaration",
+      "utf16Start": 83023,
+      "utf16End": 83082,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createVariableDeclaration(name: string | BindingName, exclamationToken?: ExclamationToken, type?: TypeNode, initializer?: Expression): VariableDeclaration;",
+      "declarationLine": 9067
+    },
+    {
+      "rank": 18,
+      "type": "NodeFactory",
+      "field": "createVariableDeclarationList",
+      "candidateReads": 63,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 1498,
+        "column": 9
+      },
+      "read": "createVariableDeclarationList: factoryCreateVariableDeclarationList",
+      "readKind": "binding",
+      "call": "createVariableDeclarationList: factoryCreateVariableDeclarationList",
+      "utf16Start": 83093,
+      "utf16End": 83160,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createVariableDeclarationList(declarations: readonly VariableDeclaration[], flags?: NodeFlags): VariableDeclarationList;",
+      "declarationLine": 9069
+    }
+  ]
+}

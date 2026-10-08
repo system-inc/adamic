@@ -1,0 +1,11 @@
+--- FAIL: TestCheckedViewCallableRankedFamilies (0.39s)
+    --- FAIL: TestCheckedViewCallableRankedFamilies/return-statement/wrong-members (0.39s)
+        checked_views_callable_ranked_test.go:15: gate cache node hit
+        checked_views_callable_ranked_test.go:35: gate cache node miss
+        checked_views_callable_ranked_test.go:55: backend2 exit 0 stdout "3\n" stderr "" want "createReturnStatement" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createReturnStatement expected (expression?: Expression | undefined) => ReturnStatement, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.399s
+FAIL

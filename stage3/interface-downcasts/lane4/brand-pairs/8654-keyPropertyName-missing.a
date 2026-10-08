@@ -1,0 +1,9 @@
+export {};
+type InternalSymbolName = '__call' | '__new';
+type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | InternalSymbolName;
+interface Base { readonly kind: 'box' | 'other' }
+interface UnionType extends Base { readonly kind: 'box'; readonly keyPropertyName?: __String | undefined }
+function helper(value: UnionType): void { console.log(String(value.keyPropertyName)); }
+const raw = {kind: 'box' as const};
+const base: Base = raw;
+helper(base as UnionType);

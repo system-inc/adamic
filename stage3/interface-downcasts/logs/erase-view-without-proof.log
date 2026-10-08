@@ -1,0 +1,11 @@
+=== RUN   TestDefaultTaggedSourceViews
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-boolean
+    view_fields_test.go:269: exit codes differ; got oracle.run{stdout:[]uint8{0x66, 0x61, 0x6c, 0x73, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestDefaultTaggedSourceViews (0.30s)
+    --- FAIL: TestDefaultTaggedSourceViews/default-wrong-boolean (0.30s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.308s
+FAIL

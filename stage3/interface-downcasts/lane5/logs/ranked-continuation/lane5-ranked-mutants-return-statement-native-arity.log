@@ -1,0 +1,11 @@
+--- FAIL: TestCheckedViewCallableRankedFamilies (0.44s)
+    --- FAIL: TestCheckedViewCallableRankedFamilies/return-statement/wrong-arity (0.44s)
+        checked_views_callable_ranked_test.go:15: gate cache node miss
+        checked_views_callable_ranked_test.go:35: gate cache node miss
+        checked_views_callable_ranked_test.go:55: backend0 exit 0 stdout "9\n" stderr "" want "createReturnStatement" and "found function with arity 2"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.453s
+FAIL

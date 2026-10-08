@@ -1,0 +1,86 @@
+[
+  {
+    "mutant": "erase-without-proof",
+    "test": "^TestOptionalCheckedWrites/sentinel$",
+    "caught": "differs",
+    "seconds": 13.484,
+    "log": "/tmp/optional-write-mutant-erase-without-proof.log"
+  },
+  {
+    "mutant": "skip-shape-check",
+    "test": "^TestOptionalCheckedWrites/stored$",
+    "caught": "differs",
+    "seconds": 9.952,
+    "log": "/tmp/optional-write-mutant-skip-shape-check.log"
+  },
+  {
+    "mutant": "stored-is-fresh",
+    "test": "^TestOptionalWriteErasure/stored$",
+    "caught": "stored literal was counted unaliased",
+    "seconds": 10.716,
+    "log": "/tmp/optional-write-mutant-stored-is-fresh.log"
+  },
+  {
+    "mutant": "judge-unreduced-source",
+    "test": "^TestOptionalWideningReducedSource$",
+    "caught": "reduced inhabited source needs no optional view",
+    "seconds": 9.721,
+    "log": "/tmp/optional-write-mutant-judge-unreduced-source.log"
+  },
+  {
+    "mutant": "object-covariance",
+    "test": "^TestOptionalCheckedWrites/object-invariant$",
+    "caught": "differs",
+    "seconds": 15.625,
+    "log": "/tmp/optional-write-mutant-object-covariance.log"
+  },
+  {
+    "mutant": "ignore-nominal-slot",
+    "test": "^TestOptionalCheckedWrites/nominal-slot$",
+    "caught": "exit codes differ",
+    "seconds": 17.629,
+    "log": "/tmp/optional-write-mutant-ignore-nominal-slot.log"
+  },
+  {
+    "mutant": "forget-call-kills-tag",
+    "test": "^TestOptionalWriteErasure/tag-call$",
+    "caught": "erasure=true, want false",
+    "seconds": 10.274,
+    "log": "/tmp/optional-write-mutant-forget-call-kills-tag.log"
+  },
+  {
+    "mutant": "direct-subclasses-only",
+    "test": "^TestOptionalClassReads/class_transitive.a$",
+    "caught": "differs",
+    "seconds": 19.134,
+    "log": "/tmp/optional-write-mutant-direct-subclasses-only.log"
+  },
+  {
+    "mutant": "never-is-no-op",
+    "test": "^TestNeverReached$",
+    "caught": "exit codes differ",
+    "seconds": 15.924,
+    "log": "/tmp/optional-write-mutant-never-is-no-op.log"
+  },
+  {
+    "mutant": "omit-compound-contract",
+    "test": "^TestOptionalCheckedWrites/compound-literal$",
+    "caught": "differs",
+    "seconds": 16.069,
+    "log": "/tmp/optional-write-mutant-omit-compound-contract.log"
+  },
+  {
+    "mutant": "virtual-base-only",
+    "test": "^TestOptionalVirtualReceiverIsNotUnreachable$",
+    "caught": "a returning override was treated as unreachable",
+    "seconds": 10.954,
+    "log": "/tmp/optional-write-mutant-virtual-base-only.log"
+  },
+  {
+    "mutant": "close-numeric-enum-slot",
+    "test": "^TestOptionalCheckedWrites/enum-slot$",
+    "caught": "exit codes differ",
+    "seconds": 16.571,
+    "log": "/tmp/optional-write-mutant-close-numeric-enum-slot.log"
+  }
+]

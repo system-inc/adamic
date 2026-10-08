@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.86s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/source-file-path/wrong-result (0.44s)
+        checked_views_callable_later_ranked_test.go:43: gate cache node miss
+        checked_views_callable_later_ranked_test.go:63: gate cache node miss
+        checked_views_callable_later_ranked_test.go:83: backend0 exit 0 stdout "0\n" stderr "" want "getSourceFileByPath" and "found function with incompatible result representation"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/emit-resolver/wrong-result (0.42s)
+        checked_views_callable_later_ranked_test.go:43: gate cache node miss
+        checked_views_callable_later_ranked_test.go:63: gate cache node miss
+        checked_views_callable_later_ranked_test.go:83: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: context.getEmitResolver().value is not initialized; expected number, found missing\n" want "getEmitResolver" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.getEmitResolver().value is not initialized; expected number, found missing\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.872s
+FAIL

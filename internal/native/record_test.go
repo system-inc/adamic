@@ -224,14 +224,14 @@ func TestRecordMutants(t *testing.T) {
 
 func TestRecordReadMutants(t *testing.T) {
 	t.Parallel()
-	const guardedMiss = "if (value == NULL) {\n\t\tcheck_missing_member(key);\n\t}"
+	const guardedMiss = "if (value == NULL) {\n\t\tadamic_record_check_missing_member(key);\n\t}"
 	for _, mutant := range []struct {
 		name, before, after, operation string
 	}{
 		// Restore JavaScript's inherited in result, which this own-only contract forbids.
 		{"prototype-membership-restored", "return adamic_record_get(record, key) != NULL;", "return adamic_record_get_own(record, key) != NULL || prototype_member(key);", "missing-has"},
 		{"missing-read-silent", guardedMiss, "(void)key;", "missing-get"},
-		{"own-read-checked-as-missing", guardedMiss, "check_missing_member(key);", "reads"},
+		{"own-read-checked-as-missing", guardedMiss, "adamic_record_check_missing_member(key);", "reads"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			binary := recordMutant(t, "record.c", mutant.before, mutant.after)

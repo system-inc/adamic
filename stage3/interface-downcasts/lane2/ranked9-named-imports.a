@@ -1,0 +1,50 @@
+interface Base { readonly kind: 'arrow' | 'get' | 'index' | 'function' | 'method' | 'property' | 'parameter' | 'import' | 'named-imports' | 'import-specifier' | 'identifier' | 'string' | 'export' | 'abstract' | 'async' | 'decorator' | 'module-block' | 'variable' | 'new' | 'template-expression' | 'template-span' | 'template-middle' | 'template-tail' | 'context' | 'resolved' | 'keyword'; }
+interface Range { readonly pos: number; readonly end: number; }
+interface NodeArray<T> extends ReadonlyArray<T>, Range { readonly hasTrailingComma: boolean; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly text: string; }
+interface StringLiteral extends Base { readonly kind: 'string'; readonly text: string; }
+interface TypeNode extends Base { readonly kind: 'keyword'; readonly text: string; }
+interface ModifierToken extends Base { readonly kind: 'export' | 'abstract' | 'async'; }
+interface Decorator extends Base { readonly kind: 'decorator'; readonly expression: Identifier; }
+type ModifierLike = ModifierToken | Decorator;
+interface ParameterDeclaration extends Base { readonly kind: 'parameter'; readonly name: Identifier; }
+interface ArrowFunction extends Base { readonly kind: 'arrow'; readonly modifiers?: NodeArray<ModifierLike>; readonly parameters: NodeArray<ParameterDeclaration>; }
+interface GetAccessorDeclaration extends Base { readonly kind: 'get'; readonly modifiers?: NodeArray<ModifierLike>; readonly name: Identifier; readonly parameters: NodeArray<ParameterDeclaration>; }
+interface IndexSignatureDeclaration extends Base { readonly kind: 'index'; readonly modifiers?: NodeArray<ModifierLike>; readonly parameters: NodeArray<ParameterDeclaration>; readonly type: TypeNode; }
+interface FunctionDeclaration extends Base { readonly kind: 'function'; readonly modifiers?: NodeArray<ModifierLike>; readonly name?: Identifier; readonly parameters: NodeArray<ParameterDeclaration>; }
+interface MethodDeclaration extends Base { readonly kind: 'method'; readonly modifiers?: NodeArray<ModifierLike>; readonly name: Identifier; readonly parameters: NodeArray<ParameterDeclaration>; }
+interface PropertyDeclaration extends Base { readonly kind: 'property'; readonly modifiers?: NodeArray<ModifierLike>; readonly name: Identifier; }
+type HasType = ArrowFunction | GetAccessorDeclaration | IndexSignatureDeclaration | FunctionDeclaration | MethodDeclaration | PropertyDeclaration;
+interface ImportSpecifier extends Base { readonly kind: 'import-specifier'; readonly propertyName?: Identifier | StringLiteral; readonly name: Identifier; readonly isTypeOnly: boolean; }
+interface NamedImports extends Base { readonly kind: 'named-imports'; readonly elements: NodeArray<ImportSpecifier>; }
+interface ImportDeclaration extends Base { readonly kind: 'import'; readonly modifiers?: NodeArray<ModifierLike>; readonly namedBindings?: NamedImports; readonly moduleSpecifier: StringLiteral; }
+interface VariableStatement extends Base { readonly kind: 'variable'; readonly name: Identifier; }
+type Statement = ImportDeclaration | VariableStatement;
+interface ModuleBlock extends Base { readonly kind: 'module-block'; readonly statements: NodeArray<Statement>; }
+interface NewExpression extends Base { readonly kind: 'new'; readonly expression: Identifier; readonly typeArguments?: NodeArray<TypeNode>; readonly arguments?: NodeArray<Identifier>; }
+interface TemplateMiddle extends Base { readonly kind: 'template-middle'; readonly text: string; }
+interface TemplateTail extends Base { readonly kind: 'template-tail'; readonly text: string; }
+interface TemplateSpan extends Base { readonly kind: 'template-span'; readonly expression: Identifier; readonly literal: TemplateMiddle | TemplateTail; }
+interface TemplateExpression extends Base { readonly kind: 'template-expression'; readonly head: string; readonly templateSpans: NodeArray<TemplateSpan>; }
+interface NodeBuilderContext extends Base { readonly kind: 'context'; flags: number; typeStack: number[]; approximateLength: number; }
+interface Type { flags: number; }
+interface Symbol { escapedName: string; flags: number; }
+interface IndexInfo { keyType: Type; type: Type; isReadonly: boolean; declaration?: IndexSignatureDeclaration; }
+interface ResolvedType extends Base { readonly kind: 'resolved'; properties: Symbol[]; indexInfos: readonly IndexInfo[]; }
+function arrow(node: Base): ArrowFunction { return node as ArrowFunction; }
+function getAccessor(node: Base): GetAccessorDeclaration { return node as GetAccessorDeclaration; }
+function indexSignature(node: Base): IndexSignatureDeclaration { return node as IndexSignatureDeclaration; }
+function functionDeclaration(node: Base): FunctionDeclaration { return node as FunctionDeclaration; }
+function method(node: Base): MethodDeclaration { return node as MethodDeclaration; }
+function property(node: Base): PropertyDeclaration { return node as PropertyDeclaration; }
+function importDeclaration(node: Base): ImportDeclaration { return node as ImportDeclaration; }
+function moduleBlock(node: Base): ModuleBlock { return node as ModuleBlock; }
+function newExpression(node: Base): NewExpression { return node as NewExpression; }
+function templateExpression(node: Base): TemplateExpression { return node as TemplateExpression; }
+function context(value: Base): NodeBuilderContext { return value as NodeBuilderContext; }
+function resolved(type: Base): ResolvedType { return type as ResolvedType; }
+function parameterNames(node: HasType): string { return node.kind === 'property' ? '-' : node.parameters.map(parameter => parameter.name.text).join(','); }
+function modifierText(node: HasType | ImportDeclaration): string { return node.modifiers === undefined ? 'none' : node.modifiers.map(modifier => modifier.kind === 'decorator' ? `@${modifier.expression.text}` : modifier.kind).join(' '); }
+const raw = {kind: 'import' as const, namedBindings: {kind: 'named-imports' as const, elements: Object.assign([{kind: 'import-specifier' as const, name: {kind: 'identifier' as const, text: 'a'}, isTypeOnly: false}, {kind: 'import-specifier' as const, name: {kind: 'identifier' as const, text: 'b'}, isTypeOnly: true, propertyName: {kind: 'string' as const, text: 'default'}}], {pos: 0, end: 2, hasTrailingComma: false})}, moduleSpecifier: {kind: 'string' as const, text: './a'}};
+const bindings = importDeclaration(raw).namedBindings;
+console.log(bindings === undefined ? 'none' : bindings.elements.map(element => `${element.propertyName === undefined ? '' : element.propertyName.text + ' as '}${element.name.text}${element.isTypeOnly ? '!' : ''}`).join(','));

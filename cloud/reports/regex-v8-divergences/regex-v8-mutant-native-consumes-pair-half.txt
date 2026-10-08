@@ -1,0 +1,22 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_v8_surrogates.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_v8_surrogates.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_v8_surrogates.a
+    oracle_test.go:559: gate cache node hit
+    oracle_test.go:559: gate cache node hit
+    oracle_test.go:448: gate cache native hit
+    oracle_test.go:441: gate cache native hit
+    oracle_test.go:580: stdout differs
+        node:   exit 0, stdout "2 2\n2 2\n1 1\n1 1\ntrue\n0 2\n", stderr ""
+        native: exit 0, stdout "2 2\n2 2\n2 2\n-1 0\ntrue\n0 2\n", stderr ""
+    oracle_test.go:455: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_v8_surrogates.a (0.12s)
+FAIL
+gate cache: native hits=3 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.139s
+FAIL

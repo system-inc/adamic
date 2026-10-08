@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewRanked5ArrayContracts (0.00s)
+    --- FAIL: TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-tag (0.57s)
+        checked_views_ranked5_arrays_test.go:72: exit codes differ; stderr ""; stdout "1\n"; exit 0
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.587s
+FAIL

@@ -1,0 +1,14 @@
+ok  	github.com/system-inc/adamic/internal/lower	0.292s
+ok  	github.com/system-inc/adamic/internal/native	14.546s
+ok  	github.com/system-inc/adamic/internal/javascript	0.002s [no tests to run]
+--- FAIL: TestCheckedViewLazyUnread (1.32s)
+    --- FAIL: TestCheckedViewLazyUnread/optional-error (0.01s)
+        checked_views_lazy_test.go:12: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+    --- FAIL: TestCheckedViewLazyUnread/optional-error-fields (0.01s)
+        checked_views_lazy_test.go:12: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=25
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.526s
+FAIL

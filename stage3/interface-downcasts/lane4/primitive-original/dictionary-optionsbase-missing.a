@@ -1,0 +1,8 @@
+import type { OptionsBase } from 'original-tsc-commandLineParser';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: OptionsBase; }
+function helper(value: OptionsBase, key: string): void { console.log(String(value[key])); }
+const raw = {kind: 'box' as const, child: {}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child, 'item');

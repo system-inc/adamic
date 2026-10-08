@@ -1,0 +1,5 @@
+interface Base { readonly kind: 'box' | 'other' }
+interface Box extends Base { readonly kind: 'box'; readonly payload: string | false | undefined }
+function read(node: Base): void { const view = node as Box; const value = view.payload; console.log(String(value)); }
+const sample0 = {kind:'box' as const, payload:42};
+read(sample0);

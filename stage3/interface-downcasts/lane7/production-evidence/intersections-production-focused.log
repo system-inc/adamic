@@ -1,0 +1,131 @@
+=== RUN   TestViewIntersectionContracts
+=== PAUSE TestViewIntersectionContracts
+=== CONT  TestViewIntersectionContracts
+=== RUN   TestViewIntersectionContracts/interfaces
+=== RUN   TestViewIntersectionContracts/nested
+=== RUN   TestViewIntersectionContracts/brand
+=== RUN   TestViewIntersectionContracts/runtime_member
+=== RUN   TestViewIntersectionContracts/optional_brand
+=== RUN   TestViewIntersectionContracts/primitive_brand_lane
+--- PASS: TestViewIntersectionContracts (0.19s)
+    --- PASS: TestViewIntersectionContracts/interfaces (0.04s)
+    --- PASS: TestViewIntersectionContracts/nested (0.03s)
+    --- PASS: TestViewIntersectionContracts/brand (0.03s)
+    --- PASS: TestViewIntersectionContracts/runtime_member (0.04s)
+    --- PASS: TestViewIntersectionContracts/optional_brand (0.03s)
+    --- PASS: TestViewIntersectionContracts/primitive_brand_lane (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.203s
+=== RUN   TestCheckedViewIntersectionConjunction
+=== RUN   TestCheckedViewIntersectionConjunction/good
+    checked_views_intersections_test.go:38: gate cache node miss
+    checked_views_intersections_test.go:46: gate cache node miss
+=== RUN   TestCheckedViewIntersectionConjunction/wrong
+    checked_views_intersections_test.go:38: gate cache node miss
+    checked_views_intersections_test.go:46: gate cache node miss
+=== RUN   TestCheckedViewIntersectionConjunction/nested
+    checked_views_intersections_test.go:38: gate cache node miss
+    checked_views_intersections_test.go:46: gate cache node miss
+=== RUN   TestCheckedViewIntersectionConjunction/absent
+    checked_views_intersections_test.go:38: gate cache node miss
+    checked_views_intersections_test.go:46: gate cache node miss
+--- PASS: TestCheckedViewIntersectionConjunction (0.67s)
+    --- PASS: TestCheckedViewIntersectionConjunction/good (0.19s)
+    --- PASS: TestCheckedViewIntersectionConjunction/wrong (0.13s)
+    --- PASS: TestCheckedViewIntersectionConjunction/nested (0.14s)
+    --- PASS: TestCheckedViewIntersectionConjunction/absent (0.13s)
+=== RUN   TestCheckedViewIntersectionComponentMutants
+=== RUN   TestCheckedViewIntersectionComponentMutants/skip_check
+    checked_views_intersections_test.go:76: gate cache node miss
+    checked_views_intersections_test.go:80: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+    checked_views_intersections_test.go:80: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+=== RUN   TestCheckedViewIntersectionComponentMutants/accept_wrong_shape
+    checked_views_intersections_test.go:76: gate cache node miss
+    checked_views_intersections_test.go:80: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+    checked_views_intersections_test.go:80: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+=== RUN   TestCheckedViewIntersectionComponentMutants/drop_nested_adapter
+    checked_views_intersections_test.go:76: gate cache node miss
+    checked_views_intersections_test.go:80: component refusal pin catches mutant: exit 0, stdout "name:bad\n"
+    checked_views_intersections_test.go:80: component refusal pin catches mutant: exit 0, stdout "name:bad\n"
+--- PASS: TestCheckedViewIntersectionComponentMutants (0.34s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/skip_check (0.10s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/accept_wrong_shape (0.10s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/drop_nested_adapter (0.14s)
+=== RUN   TestCheckedViewIntersectionSource
+=== RUN   TestCheckedViewIntersectionSource/emit-good
+    checked_views_intersections_test.go:134: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-absent
+    checked_views_intersections_test.go:134: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-wrong
+    checked_views_intersections_test.go:134: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-nested
+    checked_views_intersections_test.go:134: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-root-wrong
+    checked_views_intersections_test.go:134: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-root-nested
+    checked_views_intersections_test.go:134: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/good
+    checked_views_intersections_test.go:134: gate cache node hit
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/absent
+    checked_views_intersections_test.go:134: gate cache node hit
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/wrong
+    checked_views_intersections_test.go:134: gate cache node hit
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/nested
+    checked_views_intersections_test.go:134: gate cache node hit
+    oracle_test.go:651: gate cache native miss
+    checked_views_intersections_test.go:147: gate cache node miss
+--- PASS: TestCheckedViewIntersectionSource (5.53s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-good (0.59s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-absent (0.59s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-wrong (0.58s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-nested (0.56s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-root-wrong (0.59s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-root-nested (0.59s)
+    --- PASS: TestCheckedViewIntersectionSource/good (0.49s)
+    --- PASS: TestCheckedViewIntersectionSource/absent (0.54s)
+    --- PASS: TestCheckedViewIntersectionSource/wrong (0.50s)
+    --- PASS: TestCheckedViewIntersectionSource/nested (0.49s)
+=== RUN   TestCheckedViewIntersectionProductionMutants
+=== RUN   TestCheckedViewIntersectionProductionMutants/skip
+    checked_views_intersections_test.go:199: gate cache node miss
+    checked_views_intersections_test.go:203: production refusal pin catches skip mutant: exit=0 stdout="true\n"
+    checked_views_intersections_test.go:203: production refusal pin catches skip mutant: exit=0 stdout="true\n"
+=== RUN   TestCheckedViewIntersectionProductionMutants/shape
+    checked_views_intersections_test.go:199: gate cache node miss
+    checked_views_intersections_test.go:203: production refusal pin catches shape mutant: exit=0 stdout="true\n"
+    checked_views_intersections_test.go:203: production refusal pin catches shape mutant: exit=0 stdout="true\n"
+=== RUN   TestCheckedViewIntersectionProductionMutants/nested
+    checked_views_intersections_test.go:199: gate cache node miss
+    checked_views_intersections_test.go:203: production refusal pin catches nested mutant: exit=0 stdout="true\n"
+    checked_views_intersections_test.go:203: production refusal pin catches nested mutant: exit=0 stdout="true\n"
+--- PASS: TestCheckedViewIntersectionProductionMutants (0.41s)
+    --- PASS: TestCheckedViewIntersectionProductionMutants/skip (0.14s)
+    --- PASS: TestCheckedViewIntersectionProductionMutants/shape (0.14s)
+    --- PASS: TestCheckedViewIntersectionProductionMutants/nested (0.13s)
+=== RUN   TestCheckedViewIntersectionRootConjunctionProbe
+    checked_views_intersections_test.go:212: gate cache node miss
+    checked_views_intersections_test.go:216: gate cache node miss
+--- PASS: TestCheckedViewIntersectionRootConjunctionProbe (0.19s)
+PASS
+gate cache: native hits=0 misses=10
+gate cache: node hits=4 misses=32
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.145s

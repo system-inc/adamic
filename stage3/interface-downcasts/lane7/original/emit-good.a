@@ -1,0 +1,7 @@
+import type { GeneratedIdentifier } from 'original-tsc-types';
+interface Base { readonly kind: number }
+const actual = { kind: 80, emitNode: { flags: 0, internalFlags: 0, autoGenerate: { flags: 0, id: 42 } } };
+const base: Base = actual;
+const view = base as GeneratedIdentifier;
+const value = view.emitNode;
+console.log(`${value === value}`);

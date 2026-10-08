@@ -1,0 +1,393 @@
+=== RUN   TestCheckedViewCallableCanonicalWitness
+=== RUN   TestCheckedViewCallableCanonicalWitness/good
+=== RUN   TestCheckedViewCallableCanonicalWitness/wrong-value
+=== RUN   TestCheckedViewCallableCanonicalWitness/wrong-arity
+=== RUN   TestCheckedViewCallableCanonicalWitness/wrong-result
+--- PASS: TestCheckedViewCallableCanonicalWitness (1.80s)
+    --- PASS: TestCheckedViewCallableCanonicalWitness/good (0.51s)
+    --- PASS: TestCheckedViewCallableCanonicalWitness/wrong-value (0.40s)
+    --- PASS: TestCheckedViewCallableCanonicalWitness/wrong-arity (0.45s)
+    --- PASS: TestCheckedViewCallableCanonicalWitness/wrong-result (0.44s)
+=== RUN   TestCheckedViewCallableWatcherWitness
+=== RUN   TestCheckedViewCallableWatcherWitness/good
+=== RUN   TestCheckedViewCallableWatcherWitness/wrong-value
+=== RUN   TestCheckedViewCallableWatcherWitness/wrong-arity
+=== RUN   TestCheckedViewCallableWatcherWitness/wrong-result
+--- PASS: TestCheckedViewCallableWatcherWitness (1.76s)
+    --- PASS: TestCheckedViewCallableWatcherWitness/good (0.46s)
+    --- PASS: TestCheckedViewCallableWatcherWitness/wrong-value (0.42s)
+    --- PASS: TestCheckedViewCallableWatcherWitness/wrong-arity (0.42s)
+    --- PASS: TestCheckedViewCallableWatcherWitness/wrong-result (0.46s)
+=== RUN   TestCheckedViewCallablePendingBoundaries
+=== RUN   TestCheckedViewCallablePendingBoundaries/debug-assert-contract
+=== RUN   TestCheckedViewCallablePendingBoundaries/intrinsic-member-read
+--- PASS: TestCheckedViewCallablePendingBoundaries (0.25s)
+    --- PASS: TestCheckedViewCallablePendingBoundaries/debug-assert-contract (0.13s)
+    --- PASS: TestCheckedViewCallablePendingBoundaries/intrinsic-member-read (0.12s)
+=== RUN   TestCheckedViewCallableNullableArity
+--- PASS: TestCheckedViewCallableNullableArity (0.41s)
+=== RUN   TestCheckedViewCallableContractControl
+=== PAUSE TestCheckedViewCallableContractControl
+=== RUN   TestCheckedViewCallableCounts
+--- PASS: TestCheckedViewCallableCounts (4.87s)
+=== RUN   TestCheckedViewCallableSourceContracts
+=== RUN   TestCheckedViewCallableSourceContracts/number-good
+=== RUN   TestCheckedViewCallableSourceContracts/number-wrong-value
+=== RUN   TestCheckedViewCallableSourceContracts/number-wrong-arity
+=== RUN   TestCheckedViewCallableSourceContracts/optional-absent
+--- PASS: TestCheckedViewCallableSourceContracts (1.65s)
+    --- PASS: TestCheckedViewCallableSourceContracts/number-good (0.43s)
+    --- PASS: TestCheckedViewCallableSourceContracts/number-wrong-value (0.41s)
+    --- PASS: TestCheckedViewCallableSourceContracts/number-wrong-arity (0.41s)
+    --- PASS: TestCheckedViewCallableSourceContracts/optional-absent (0.41s)
+=== RUN   TestCheckedViewCallableDirectoryPairs
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/good
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/wrong-value
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/wrong-arity
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/wrong-result
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/generic
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/callback
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/stored
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/direct-good
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/direct-arity
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/good
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/wrong-value
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/wrong-arity
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/wrong-result
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/generic
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/callback
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/stored
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/direct-good
+=== RUN   TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/direct-arity
+--- PASS: TestCheckedViewCallableDirectoryPairs (7.86s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/good (0.42s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/wrong-value (0.40s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/wrong-arity (0.42s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/wrong-result (0.41s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/generic (0.42s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/callback (0.41s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/stored (0.43s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/direct-good (0.42s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCurrentDirectory/direct-arity (0.43s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/good (0.43s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/wrong-value (0.48s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/wrong-arity (0.41s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/wrong-result (0.42s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/generic (0.42s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/callback (0.47s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/stored (0.49s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/direct-good (0.53s)
+    --- PASS: TestCheckedViewCallableDirectoryPairs/getCommonSourceDirectory/direct-arity (0.47s)
+=== RUN   TestCheckedViewCallableMarker
+=== RUN   TestCheckedViewCallableMarker/parser-cache
+=== RUN   TestCheckedViewCallableMarker/discarded
+=== RUN   TestCheckedViewCallableMarker/discarded-wrong-arity
+=== RUN   TestCheckedViewCallableMarker/write-back
+=== RUN   TestCheckedViewCallableMarker/discarded-required
+=== RUN   TestCheckedViewCallableMarker/stored-call
+--- PASS: TestCheckedViewCallableMarker (3.01s)
+    --- PASS: TestCheckedViewCallableMarker/parser-cache (0.56s)
+    --- PASS: TestCheckedViewCallableMarker/discarded (0.57s)
+    --- PASS: TestCheckedViewCallableMarker/discarded-wrong-arity (0.74s)
+    --- PASS: TestCheckedViewCallableMarker/write-back (0.14s)
+    --- PASS: TestCheckedViewCallableMarker/discarded-required (0.44s)
+    --- PASS: TestCheckedViewCallableMarker/stored-call (0.57s)
+=== RUN   TestCheckedViewCallableMethods
+=== RUN   TestCheckedViewCallableMethods/method-good
+=== RUN   TestCheckedViewCallableMethods/method-wrong-arity
+=== RUN   TestCheckedViewCallableMethods/method-wrong-result
+--- PASS: TestCheckedViewCallableMethods (1.85s)
+    --- PASS: TestCheckedViewCallableMethods/method-good (0.66s)
+    --- PASS: TestCheckedViewCallableMethods/method-wrong-arity (0.55s)
+    --- PASS: TestCheckedViewCallableMethods/method-wrong-result (0.63s)
+=== RUN   TestCheckedViewCallables
+=== PAUSE TestCheckedViewCallables
+=== RUN   TestCheckedViewMapCertificates
+=== RUN   TestCheckedViewMapCertificates/key-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n0\nobject:true:false\nundefined:false:true\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/readonly-covariant
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n2\nobject:true:false\nundefined:false:true\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/mutable-invariant
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n2\nobject:true:false\nundefined:false:true\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/clone
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n8\nobject:true:false\nundefined:false:true\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/boolean
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\nfalse\nobject:true:false\nundefined:false:true\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/structural
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/structural-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="seven\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/structural-covariant
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/structural-payload-wrong
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="1\nwrong\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/structural-mutable-invariant
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="7\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/object-key
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="8\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/object-key-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="0\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/structural-schema-unused-payload
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/optional-number
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="true\n9\n7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/array
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/array-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="seven\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/array-payload-wrong
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="1\nwrong\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/array-covariant
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/array-mutable-invariant
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="7\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/array-mutable
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/array-schema-unused-payload
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/array-recursive
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="0\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/node-array
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="3\n7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/node-array-own-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="three\n7\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/node-array-readonly-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/node-array-covariant
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="3\n7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/node-array-own-schema-unused-payload
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/optional-array
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="true\nundefined\n7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/optional-array-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/optional-object
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="true\nundefined\n7\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/scalar-null
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n8\nobject:true:false\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/scalar-null-wrong
+    checked_views_map_certificates_test.go:42: Node exit=70 stdout="number:false:false\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/scalar-null-value-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\nfalse\nobject:true:false\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/scalar-null-opposite
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n8\nundefined:false:true\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/scalar-undefined
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n8\nundefined:false:true\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/scalar-undefined-wrong
+    checked_views_map_certificates_test.go:42: Node exit=70 stdout="number:false:false\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/scalar-undefined-value-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\nfalse\nundefined:false:true\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/scalar-undefined-opposite
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n8\nobject:true:false\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/scalar-both
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n8\nobject:true:false\nundefined:false:true\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/scalar-both-wrong
+    checked_views_map_certificates_test.go:42: Node exit=70 stdout="number:false:false\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/scalar-both-value-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\nfalse\nobject:true:false\nundefined:false:true\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/mixed-null
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n8\nobject:true:false\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/mixed-null-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\nfalse\nobject:true:false\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/mixed-undefined
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n8\nundefined:false:true\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/mixed-undefined-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\nfalse\nundefined:false:true\n"; mutant=true
+=== RUN   TestCheckedViewMapCertificates/mixed-both
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\n8\nobject:true:false\nundefined:false:true\n"; mutant=false
+=== RUN   TestCheckedViewMapCertificates/mixed-both-schema
+    checked_views_map_certificates_test.go:42: Node exit=0 stdout="object:false:false\nfalse\nobject:true:false\nundefined:false:true\n"; mutant=true
+--- PASS: TestCheckedViewMapCertificates (25.38s)
+    --- PASS: TestCheckedViewMapCertificates/key-schema (0.65s)
+    --- PASS: TestCheckedViewMapCertificates/readonly-covariant (0.60s)
+    --- PASS: TestCheckedViewMapCertificates/mutable-invariant (0.54s)
+    --- PASS: TestCheckedViewMapCertificates/clone (0.66s)
+    --- PASS: TestCheckedViewMapCertificates/boolean (0.59s)
+    --- PASS: TestCheckedViewMapCertificates/structural (0.59s)
+    --- PASS: TestCheckedViewMapCertificates/structural-schema (0.61s)
+    --- PASS: TestCheckedViewMapCertificates/structural-covariant (0.67s)
+    --- PASS: TestCheckedViewMapCertificates/structural-payload-wrong (0.53s)
+    --- PASS: TestCheckedViewMapCertificates/structural-mutable-invariant (0.46s)
+    --- PASS: TestCheckedViewMapCertificates/object-key (0.69s)
+    --- PASS: TestCheckedViewMapCertificates/object-key-schema (0.47s)
+    --- PASS: TestCheckedViewMapCertificates/structural-schema-unused-payload (0.47s)
+    --- PASS: TestCheckedViewMapCertificates/optional-number (0.47s)
+    --- PASS: TestCheckedViewMapCertificates/array (0.42s)
+    --- PASS: TestCheckedViewMapCertificates/array-schema (0.39s)
+    --- PASS: TestCheckedViewMapCertificates/array-payload-wrong (0.40s)
+    --- PASS: TestCheckedViewMapCertificates/array-covariant (0.41s)
+    --- PASS: TestCheckedViewMapCertificates/array-mutable-invariant (0.40s)
+    --- PASS: TestCheckedViewMapCertificates/array-mutable (0.42s)
+    --- PASS: TestCheckedViewMapCertificates/array-schema-unused-payload (0.55s)
+    --- PASS: TestCheckedViewMapCertificates/array-recursive (0.51s)
+    --- PASS: TestCheckedViewMapCertificates/node-array (0.64s)
+    --- PASS: TestCheckedViewMapCertificates/node-array-own-schema (0.60s)
+    --- PASS: TestCheckedViewMapCertificates/node-array-readonly-schema (0.52s)
+    --- PASS: TestCheckedViewMapCertificates/node-array-covariant (0.64s)
+    --- PASS: TestCheckedViewMapCertificates/node-array-own-schema-unused-payload (0.67s)
+    --- PASS: TestCheckedViewMapCertificates/optional-array (0.48s)
+    --- PASS: TestCheckedViewMapCertificates/optional-array-schema (0.45s)
+    --- PASS: TestCheckedViewMapCertificates/optional-object (0.61s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-null (0.61s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-null-wrong (0.72s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-null-value-schema (0.63s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-null-opposite (0.58s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-undefined (0.56s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-undefined-wrong (0.48s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-undefined-value-schema (0.42s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-undefined-opposite (0.41s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-both (0.44s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-both-wrong (0.41s)
+    --- PASS: TestCheckedViewMapCertificates/scalar-both-value-schema (0.43s)
+    --- PASS: TestCheckedViewMapCertificates/mixed-null (0.45s)
+    --- PASS: TestCheckedViewMapCertificates/mixed-null-schema (0.50s)
+    --- PASS: TestCheckedViewMapCertificates/mixed-undefined (0.73s)
+    --- PASS: TestCheckedViewMapCertificates/mixed-undefined-schema (0.57s)
+    --- PASS: TestCheckedViewMapCertificates/mixed-both (0.74s)
+    --- PASS: TestCheckedViewMapCertificates/mixed-both-schema (0.55s)
+=== RUN   TestCheckedViewMapCertificateWrites
+=== RUN   TestCheckedViewMapCertificateWrites/write-good
+    checked_views_map_certificates_test.go:80: Node exit=0 stdout="2\n"
+=== RUN   TestCheckedViewMapCertificateWrites/write-wrong
+    checked_views_map_certificates_test.go:60: Node stdout="3\n"; caught existing invariant check: /workspace/adamic/stage3/interface-downcasts/nullish/maps/write-wrong.a:2:31: Adamic 0.1 refuses a value of type Map<string, 1 | 2> seen as Map<string, number>, which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewMapCertificateWrites/unknown
+    checked_views_map_certificates_test.go:80: Node exit=0 stdout="entry\n"
+--- PASS: TestCheckedViewMapCertificateWrites (1.41s)
+    --- PASS: TestCheckedViewMapCertificateWrites/write-good (0.61s)
+    --- PASS: TestCheckedViewMapCertificateWrites/write-wrong (0.15s)
+    --- PASS: TestCheckedViewMapCertificateWrites/unknown (0.65s)
+=== RUN   TestCheckedViewMapPhantomRefusal
+    checked_views_map_certificates_test.go:95: Node stdout="object\n"; caught unsupported brand at read: /workspace/adamic/stage3/interface-downcasts/nullish/maps/phantom-refused.a:5:52: Adamic 0.1 refuses checked view read of field value with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field
+--- PASS: TestCheckedViewMapPhantomRefusal (0.14s)
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/nullable-entry-read
+    checked_views_map_certificates_test.go:122: Node stdout="object\n"; named read refusal: /workspace/adamic/stage3/interface-downcasts/nullish/maps/nullable-entry-read.a:4:52: Adamic 0.1 refuses checked view read of field value with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/nullable-entry-unread
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/mixed-entry-read
+    checked_views_map_certificates_test.go:122: Node stdout="object\n"; named read refusal: /workspace/adamic/stage3/interface-downcasts/nullish/maps/mixed-entry-read.a:4:52: Adamic 0.1 refuses checked view read of field value with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/mixed-entry-unread
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/callable-entry-read
+    checked_views_map_certificates_test.go:122: Node stdout="object\n"; named read refusal: /workspace/adamic/stage3/interface-downcasts/nullish/maps/callable-entry-read.a:4:52: Adamic 0.1 refuses checked view read of field value with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/callable-entry-unread
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/tuple-entry-read
+    checked_views_map_certificates_test.go:122: Node stdout="object\n"; named read refusal: /workspace/adamic/stage3/interface-downcasts/nullish/maps/tuple-entry-read.a:4:52: Adamic 0.1 refuses checked view read of field value with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/tuple-entry-unread
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/nested-array-brand-read
+    checked_views_map_certificates_test.go:122: Node stdout="object\n"; named read refusal: /workspace/adamic/stage3/interface-downcasts/nullish/maps/nested-array-brand-read.a:5:52: Adamic 0.1 refuses checked view read of field value with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/nested-array-brand-unread
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/nested-object-brand-read
+    checked_views_map_certificates_test.go:122: Node stdout="object\n"; named read refusal: /workspace/adamic/stage3/interface-downcasts/nullish/maps/nested-object-brand-read.a:5:52: Adamic 0.1 refuses checked view read of field value with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field
+=== RUN   TestCheckedViewMapEntryFamilyBoundaries/nested-object-brand-unread
+--- PASS: TestCheckedViewMapEntryFamilyBoundaries (4.92s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/nullable-entry-read (0.19s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/nullable-entry-unread (0.64s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/mixed-entry-read (0.22s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/mixed-entry-unread (0.64s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/callable-entry-read (0.20s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/callable-entry-unread (0.58s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/tuple-entry-read (0.18s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/tuple-entry-unread (0.60s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/nested-array-brand-read (0.19s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/nested-array-brand-unread (0.72s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/nested-object-brand-read (0.16s)
+    --- PASS: TestCheckedViewMapEntryFamilyBoundaries/nested-object-brand-unread (0.61s)
+=== RUN   TestCheckedViewCompleteBrand
+=== RUN   TestCheckedViewCompleteBrand/good
+=== RUN   TestCheckedViewCompleteBrand/undefined
+    checked_views_mixed_unions_test.go:368: first-member substitution caught: exit 0 stdout "wordword\n"
+    checked_views_mixed_unions_test.go:368: first-member substitution caught: exit 0 stdout "wordword\n"
+=== RUN   TestCheckedViewCompleteBrand/wrong
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/null
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/missing
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/internal
+=== RUN   TestCheckedViewCompleteBrand/object
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/symbol-good
+=== RUN   TestCheckedViewCompleteBrand/symbol-undefined
+    checked_views_mixed_unions_test.go:368: first-member substitution caught: exit 0 stdout "wordword\n"
+    checked_views_mixed_unions_test.go:368: first-member substitution caught: exit 0 stdout "wordword\n"
+=== RUN   TestCheckedViewCompleteBrand/symbol-wrong
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewCompleteBrand/symbol-null
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_mixed_unions_test.go:352: member-check removal caught: exit 0 stdout "uncheckedunchecked\n"
+--- PASS: TestCheckedViewCompleteBrand (4.70s)
+    --- PASS: TestCheckedViewCompleteBrand/good (0.37s)
+    --- PASS: TestCheckedViewCompleteBrand/undefined (0.46s)
+    --- PASS: TestCheckedViewCompleteBrand/wrong (0.32s)
+    --- PASS: TestCheckedViewCompleteBrand/null (0.32s)
+    --- PASS: TestCheckedViewCompleteBrand/missing (0.32s)
+    --- PASS: TestCheckedViewCompleteBrand/internal (0.38s)
+    --- PASS: TestCheckedViewCompleteBrand/object (0.33s)
+    --- PASS: TestCheckedViewCompleteBrand/symbol-good (0.55s)
+    --- PASS: TestCheckedViewCompleteBrand/symbol-undefined (0.86s)
+    --- PASS: TestCheckedViewCompleteBrand/symbol-wrong (0.38s)
+    --- PASS: TestCheckedViewCompleteBrand/symbol-null (0.41s)
+=== RUN   TestCheckedViewNullishCallableArity
+    checked_views_nullish_callable_integration_test.go:31: optional callable certificate omission caught by refusal pin: exit=0 stdout="present\n"
+    checked_views_nullish_callable_integration_test.go:31: optional callable certificate omission caught by refusal pin: exit=0 stdout="present\n"
+--- PASS: TestCheckedViewNullishCallableArity (0.70s)
+=== RUN   TestCheckedViewNullishCallableSignatureMutant
+--- PASS: TestCheckedViewNullishCallableSignatureMutant (0.63s)
+=== RUN   TestCheckedViewNullishMapUnread
+=== RUN   TestCheckedViewNullishMapUnread/null
+    checked_views_nullish_test.go:130: unread map admitted, Node and both backends: "box\nbox\n"
+=== RUN   TestCheckedViewNullishMapUnread/undefined
+    checked_views_nullish_test.go:130: unread map admitted, Node and both backends: "box\nbox\n"
+=== RUN   TestCheckedViewNullishMapUnread/both
+    checked_views_nullish_test.go:130: unread map admitted, Node and both backends: "box\nbox\nbox\n"
+--- PASS: TestCheckedViewNullishMapUnread (1.68s)
+    --- PASS: TestCheckedViewNullishMapUnread/null (0.54s)
+    --- PASS: TestCheckedViewNullishMapUnread/undefined (0.60s)
+    --- PASS: TestCheckedViewNullishMapUnread/both (0.54s)
+=== RUN   TestCheckedViewNullishMapReads
+=== RUN   TestCheckedViewNullishMapReads/null
+    checked_views_nullish_test.go:158: Node exit=0 stdout="object:false:false\nempty\nobject:true:false\n", mutation=""
+=== RUN   TestCheckedViewNullishMapReads/null-wrong
+    checked_views_nullish_test.go:158: Node exit=70 stdout="string:false:false\n", mutation="-wrong"
+=== RUN   TestCheckedViewNullishMapReads/null-opposite
+    checked_views_nullish_test.go:158: Node exit=0 stdout="undefined:false:true\nobject:true:false\n", mutation="-opposite"
+=== RUN   TestCheckedViewNullishMapReads/undefined
+    checked_views_nullish_test.go:158: Node exit=0 stdout="object:false:false\nempty\nundefined:false:true\n", mutation=""
+=== RUN   TestCheckedViewNullishMapReads/undefined-wrong
+    checked_views_nullish_test.go:158: Node exit=70 stdout="string:false:false\n", mutation="-wrong"
+=== RUN   TestCheckedViewNullishMapReads/undefined-opposite
+    checked_views_nullish_test.go:158: Node exit=0 stdout="object:true:false\nundefined:false:true\n", mutation="-opposite"
+=== RUN   TestCheckedViewNullishMapReads/both
+    checked_views_nullish_test.go:158: Node exit=0 stdout="object:false:false\nempty\nobject:true:false\nundefined:false:true\n", mutation=""
+=== RUN   TestCheckedViewNullishMapReads/both-wrong
+    checked_views_nullish_test.go:158: Node exit=70 stdout="string:false:false\n", mutation="-wrong"
+--- PASS: TestCheckedViewNullishMapReads (4.70s)
+    --- PASS: TestCheckedViewNullishMapReads/null (0.69s)
+    --- PASS: TestCheckedViewNullishMapReads/null-wrong (0.56s)
+    --- PASS: TestCheckedViewNullishMapReads/null-opposite (0.60s)
+    --- PASS: TestCheckedViewNullishMapReads/undefined (0.70s)
+    --- PASS: TestCheckedViewNullishMapReads/undefined-wrong (0.44s)
+    --- PASS: TestCheckedViewNullishMapReads/undefined-opposite (0.71s)
+    --- PASS: TestCheckedViewNullishMapReads/both (0.56s)
+    --- PASS: TestCheckedViewNullishMapReads/both-wrong (0.43s)
+=== CONT  TestCheckedViewCallableContractControl
+=== CONT  TestCheckedViewCallables
+=== RUN   TestCheckedViewCallables/function-field
+=== PAUSE TestCheckedViewCallables/function-field
+=== RUN   TestCheckedViewCallables/class-method
+=== PAUSE TestCheckedViewCallables/class-method
+=== CONT  TestCheckedViewCallables/function-field
+=== CONT  TestCheckedViewCallables/class-method
+--- PASS: TestCheckedViewCallableContractControl (0.49s)
+--- PASS: TestCheckedViewCallables (0.00s)
+    --- PASS: TestCheckedViewCallables/function-field (0.54s)
+    --- PASS: TestCheckedViewCallables/class-method (0.58s)
+PASS
+gate cache: native hits=0 misses=81
+gate cache: node hits=0 misses=262
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	68.322s

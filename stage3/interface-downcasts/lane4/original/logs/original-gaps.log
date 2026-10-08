@@ -1,0 +1,61 @@
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/good
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/internal
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/undefined
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/wrong
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/null
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/missing
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/good
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/internal
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/undefined
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/wrong
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/null
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/missing
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: never
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/good
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/internal
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/undefined
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/wrong
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/null
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/missing
+    checked_views_brands_original_gaps_test.go:40: original pair remains uncredited: recursive intersection payload
+--- PASS: TestCheckedViewBrandsOriginalBlockedPairs (10.54s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/good (0.63s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/internal (0.60s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/undefined (0.54s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/wrong (0.60s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/null (0.57s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/ActiveLabel/missing (0.53s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/good (0.54s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/internal (0.53s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/undefined (0.64s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/wrong (0.61s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/null (0.54s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/RenamedBinding/missing (0.75s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/good (0.55s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/internal (0.66s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/undefined (0.57s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/wrong (0.54s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/null (0.54s)
+    --- PASS: TestCheckedViewBrandsOriginalBlockedPairs/LeftHandSideExpression_&_Identifier/missing (0.59s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=18
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	10.564s

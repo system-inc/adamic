@@ -1,0 +1,25 @@
+--- FAIL: TestCountsAreRecorded (1.56s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.02s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_06.a (0.20s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 346 reachable 2 bytes 346 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_07.a (0.21s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 356 reachable 2 bytes 356 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_literals.a (0.16s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 3 bytes 444 reachable 2 bytes 366 unreachable 1 bytes 78 metadata 112\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_symbols.a (0.17s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 4 bytes 520 reachable 4 bytes 520 unreachable 0 bytes 0 metadata 128\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_cache.a (0.14s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 356 reachable 1 bytes 68 unreachable 1 bytes 288 metadata 96\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_entries.a (0.12s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 5 bytes 560 reachable 3 bytes 208 unreachable 2 bytes 352 metadata 144\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_09.a (0.10s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 3 bytes 644 reachable 2 bytes 576 unreachable 1 bytes 68 metadata 112\nfree(): invalid pointer\n"
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/graph_regions_regression_08.a (0.11s)
+            counts_test.go:169: no counts at the end of stderr (exit -1): "adamic: graph region: live 2 bytes 356 reachable 2 bytes 356 unreachable 0 bytes 0 metadata 96\nfree(): invalid pointer\n"
+FAIL
+gate cache: native hits=0 misses=43
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.573s
+FAIL
+exit=1

@@ -1,0 +1,8 @@
+// Rank 50 original member/read witness; adjacent carriers reduced.
+interface Expression {readonly kind:"expression";readonly value:number;}
+interface ElementAccessExpression {readonly kind:"element";readonly expression:Expression;readonly value:number;}
+interface Base {readonly createElementAccessExpression:unknown;readonly createIdentifier:(text:string)=>Expression;}
+interface Target {createElementAccessExpression(expression: Expression, index: number | Expression): ElementAccessExpression;createIdentifier(text:string):Expression;}
+function inspect(node:ElementAccessExpression):void {console.log(`${node.expression.value}:${node.value}`);}
+function probe(value:Base):void {const factory=value as Target;const elementName:{readonly name:number|Expression}={name:3};inspect(factory.createElementAccessExpression(factory.createIdentifier("obj"), elementName.name));}
+probe({createElementAccessExpression:(expression:Expression,index:number|Expression):ElementAccessExpression=>({kind:"element",expression,value:typeof index==="number"?index:index.value}),createIdentifier:(text:string):Expression=>({kind:"expression",value:5})});

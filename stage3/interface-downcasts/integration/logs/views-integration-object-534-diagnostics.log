@@ -1,0 +1,34 @@
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/generated-prefix-wrong
+    checked_views_object_primitive_unions_test.go:325: gate cache node miss
+    checked_views_object_primitive_unions_test.go:361: gate cache node miss
+    checked_views_object_primitive_unions_test.go:367: gate cache node miss
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-frontier
+    checked_views_object_primitive_unions_test.go:492: gate cache node miss
+    checked_views_object_primitive_unions_test.go:505: uncertified original pair: checked view read of field kind with unsupported union intersection contract
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-parent-probe
+    checked_views_object_primitive_unions_test.go:492: gate cache node miss
+    checked_views_object_primitive_unions_test.go:505: uncertified original pair: checked view read of field kind with unsupported union intersection contract
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-static-left-probe
+    checked_views_object_primitive_unions_test.go:492: gate cache node miss
+    checked_views_object_primitive_unions_test.go:505: uncertified original pair: checked view read of field kind with unsupported union intersection contract
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-left-probe
+    checked_views_object_primitive_unions_test.go:492: gate cache node miss
+    checked_views_object_primitive_unions_test.go:505: uncertified original pair: checked view read of field kind with unsupported union intersection contract
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-comment-probe
+    checked_views_object_primitive_unions_test.go:492: gate cache node miss
+    checked_views_object_primitive_unions_test.go:513: uncertified original pair: a template interpolating a union with an object, an array, a map or a function in it
+--- PASS: TestCheckedViewObjectPrimitiveOriginalPairs (3.32s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/generated-prefix-wrong (1.43s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-frontier (0.39s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-parent-probe (0.41s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-static-left-probe (0.43s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-left-probe (0.34s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-comment-probe (0.31s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.332s

@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Block {readonly value:number;}
+interface ClassStaticBlockDeclaration {readonly value:number;}
+interface Base {readonly createClassStaticBlockDeclaration:unknown;}
+interface Target {createClassStaticBlockDeclaration(body: Block): ClassStaticBlockDeclaration;}
+function probe(value:Base):void {const factory=value as Target;const body:Block={value:3};console.log(`${factory.createClassStaticBlockDeclaration(body).value}`);}
+probe({createClassStaticBlockDeclaration:(body:{readonly value:string})=>({value:body.value})});

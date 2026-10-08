@@ -1,0 +1,8 @@
+lower-skip-descriptor: caught by TestViewCallableShapeContract/
+lower-accept-generic: caught by TestViewCallableShapeContract/
+lower-accept-rest: caught by TestViewCallableShapeContract/.*values.*
+lower-accept-overload: caught by TestViewCallableShapeContract/
+lower-accept-optional: caught by TestViewCallableShapeContract/
+lower-accept-unknown-parameter: caught by TestViewCallableShapeContract/
+lower-accept-unknown-result: caught by TestViewCallableShapeContract/
+7 helper mutants caught; compiler dispatch mutants remain pending

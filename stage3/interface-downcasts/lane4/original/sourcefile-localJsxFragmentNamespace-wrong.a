@@ -1,0 +1,8 @@
+import type { SourceFile } from 'original-tsc-types';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: SourceFile; }
+function helper(value: SourceFile): void { console.log(String(value.localJsxFragmentNamespace)); }
+const raw = {kind: 'box' as const, child: {kind: 308, localJsxFragmentNamespace: 42}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

@@ -1,0 +1,10 @@
+export {};
+type InternalSymbolName = '__call' | '__new';
+type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | InternalSymbolName;
+interface Base { readonly kind: 'box' | 'other' }
+interface Identifier extends Base { readonly kind: 'box'; readonly escapedText: __String }
+interface LeftHandSideExpression { readonly kind: 'box' }
+function helper(value: LeftHandSideExpression & Identifier): void { console.log(String(value.escapedText)); }
+const raw = {kind: 'box' as const, escapedText: 42};
+const base: Base = raw;
+helper(base as Identifier);
