@@ -1,0 +1,175 @@
+{
+  "compiler_sha": "0d3f2715ba06b422720750483f1e901921fb583b",
+  "run": "enum-tags-logical-non-null",
+  "total": 1712,
+  "baseline_total": 6730,
+  "delta": -5018,
+  "reasons": 522,
+  "fewer_than_5": 470,
+  "coverage": {
+    "5": {
+      "count": 706,
+      "share": 0.41238317757009346
+    },
+    "10": {
+      "count": 798,
+      "share": 0.4661214953271028
+    },
+    "20": {
+      "count": 905,
+      "share": 0.5286214953271028
+    }
+  },
+  "bodies": [
+    {
+      "file": "checker.ts",
+      "function": "createTypeChecker",
+      "where": "/tmp/refusal-table-adapted/src/compiler/checker.ts:1486:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/checker.ts:1486:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 46466,
+        "body_end": 3144000,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
+      "refusals": 1067,
+      "raw_observations": 1067
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "function": "createNodeFactory",
+      "where": "/tmp/refusal-table-adapted/src/compiler/factory/nodeFactory.ts:492:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/factory/nodeFactory.ts:492:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 13349,
+        "body_end": 322874,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
+      "refusals": 122,
+      "raw_observations": 122
+    },
+    {
+      "file": "emitter.ts",
+      "function": "createPrinter",
+      "where": "/tmp/refusal-table-adapted/src/compiler/emitter.ts:1211:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/emitter.ts:1211:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 48931,
+        "body_end": 272222,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19",
+      "refusals": 109,
+      "raw_observations": 109
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "function": "transformES2015",
+      "where": "/tmp/refusal-table-adapted/src/compiler/transformers/es2015.ts:488:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/transformers/es2015.ts:488:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 16600,
+        "body_end": 231787,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4",
+      "refusals": 138,
+      "raw_observations": 138
+    },
+    {
+      "file": "program.ts",
+      "function": "createProgram",
+      "where": "/tmp/refusal-table-adapted/src/compiler/program.ts:1515:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/program.ts:1515:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 68631,
+        "body_end": 253523,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "7aaf5804093401db924e8278b142db40fcb2b14cef0566081cfaf870477b5284",
+      "refusals": 89,
+      "raw_observations": 89
+    },
+    {
+      "file": "binder.ts",
+      "function": "createBinder",
+      "where": "/tmp/refusal-table-adapted/src/compiler/binder.ts:509:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/binder.ts:509:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 17474,
+        "body_end": 188866,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39",
+      "refusals": 91,
+      "raw_observations": 91
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "function": "transformClassFields",
+      "where": "/tmp/refusal-table-adapted/src/compiler/transformers/classFields.ts:354:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/transformers/classFields.ts:354:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10532,
+        "body_end": 154733,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c",
+      "refusals": 97,
+      "raw_observations": 97
+    },
+    {
+      "file": "scanner.ts",
+      "function": "createScanner",
+      "where": "/tmp/refusal-table-adapted/src/compiler/scanner.ts:1023:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/scanner.ts:1023:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 70970,
+        "body_end": 211074,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750",
+      "refusals": 3,
+      "raw_observations": 3
+    }
+  ],
+  "ruled_reasons": {
+    "the non-null assertion !": 0,
+    "||=": 0,
+    "&&=": 0,
+    "??=": 0,
+    "the comma operator": 0
+  },
+  "feature_pins": {
+    "enum_tag": "649522529a22d44023a2a3c13ed82f2d03cbbfab",
+    "logical_assignment_comma": "fc608350e41bbb6007d75a1422494328a74327af",
+    "non_null": "c17bf216e0385e9573681c95f8484692c9d1a76e"
+  },
+  "previous_total": 1730,
+  "delta_from_previous": -18
+}

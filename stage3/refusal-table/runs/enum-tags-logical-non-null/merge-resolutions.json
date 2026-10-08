@@ -1,0 +1,192 @@
+[
+  {
+    "file": "docs/0.1.md",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "docs/escape-hatches.md",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/flow/flow_test.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/fresh/library_language.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/ir/ir.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "conflicts": 3,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/javascript/readiness.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/assignments.go",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/cast.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/cast_proof.go",
+    "conflicts": 4,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/census_panics_test.go",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/census_small.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/class.go",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/class_inheritance.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/cycles.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "conflicts": 13,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/functions.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/invariance.go",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/locals.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/nested_functions.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/object.go",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/optional_widening.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/phantom_overload_results.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/predicates.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/proven_relations.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/refusals.go",
+    "conflicts": 4,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/lower/statements.go",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/native/emit_expressions.go",
+    "conflicts": 3,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/native/emit_functions.go",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/native/emit_statements.go",
+    "conflicts": 3,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/oracle/counts.md",
+    "conflicts": 11,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/oracle/nested_functions_test.go",
+    "conflicts": 1,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "internal/oracle/oracle_test.go",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "stage3/fixtures/assertions/status.json",
+    "conflicts": 6,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "stage3/fixtures/nested-functions/status.json",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  },
+  {
+    "file": "stage3/fixtures/objects/status.json",
+    "conflicts": 2,
+    "choice": "current measured base in conflicting hunks; retain nonconflicting incoming changes"
+  }
+]
