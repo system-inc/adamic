@@ -45,4 +45,4 @@ go build -o /workspace/stage3-diagnosis-library-census ./stage3/census/tool > li
 # Run both unchanged adapted roots with the new library census.
 ```
 
-Setup succeeded in 1088.051s, nproc=5, CPU quota=4, Node 24.19.0; timing lines are in setup.log.
+Setup succeeded in 1088.051s, nproc=5, CPU quota=4, Node 24.19.0; timing lines are in setup.txt.
