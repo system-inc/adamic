@@ -71,7 +71,13 @@ func (l *lowering) genericFunctionValue(node, declaration *ast.Node) (ir.Express
 			return nil, l.notYet(node, "a generic function value whose instantiated parameters differ from its context")
 		}
 	}
-	if !identicalTypes(l.checker, l.concrete(l.checker.GetReturnTypeOfSignature(target)), l.checker.GetReturnTypeOfSignature(given)) {
+	result, givenResult := l.concrete(l.checker.GetReturnTypeOfSignature(target)), l.checker.GetReturnTypeOfSignature(given)
+	// A literal string result already has the ordinary string ABI. Widening it
+	// to string or string | undefined changes neither its pointer ABI nor its
+	// ownership. This does not admit object views or optional numeric results.
+	resultKind, resultKnown := l.representation(result)
+	stringResult := l.withoutUndefined(givenResult).Flags()&checker.TypeFlagsString != 0 && resultKnown && resultKind == ir.String
+	if !identicalTypes(l.checker, result, givenResult) && !stringResult {
 		return nil, l.notYet(node, "a generic function value whose instantiated result differs from its context")
 	}
 	if existing, known := l.genericInstances[key]; known {

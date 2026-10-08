@@ -1,0 +1,19 @@
+function identity<T>(value: T): T { return value; }
+type Keyword = 'if' | 'else';
+const name: (value: Keyword) => string | undefined = identity;
+const plain: (value: Keyword) => string = identity;
+function keyword(value: string): Keyword | undefined {
+ if (value === 'if' || value === 'else') { return value; }
+ return undefined;
+}
+function suggestion<T extends string>(values: readonly T[], getName: (value: T) => string | undefined): string {
+ const first = values[0];
+ return first === undefined ? 'empty' : getName(first) ?? 'missing';
+}
+const word = keyword(['el', 'se'].join(''));
+if (word !== undefined) { console.log(name(word) ?? 'missing'); console.log(plain(word)); }
+const words: readonly Keyword[] = ['if', 'else'];
+console.log(suggestion(words, identity));
+console.log(suggestion([], name));
+const again: (value: Keyword) => string | undefined = identity;
+console.log(`${name === again}`);
