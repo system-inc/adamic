@@ -1,0 +1,44 @@
+// A formatter building bounded documents: short appends and interpolated fields, then a joined
+// index and sliced previews. Hash every UTF-16 unit, including both halves of supplementary text.
+let seed = 19;
+function next(limit: number): number {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return (seed >>> 8) % limit;
+}
+
+function checksum(text: string, initial: number): number {
+    let total = initial;
+    for(let index = 0; index < text.length; index += 1) {
+        total = (total * 33 + text.charCodeAt(index)) % 2147483647;
+    }
+    return total;
+}
+
+function document(sequence: number): string {
+    let text = `module ${sequence} {\n`;
+    const pieces: string[] = [];
+    for(let field = 0; field < 64; field += 1) {
+        const identifier = `${next(100000)}`.padStart(5, '0');
+        const label = next(16) === 0 ? 'é🌍' : 'item';
+        text += '  ';
+        text += label;
+        text += '_';
+        text += identifier;
+        text += `: ${next(1000)};\n`;
+        pieces.push(`${label}_${identifier}`);
+    }
+    text += '}\n';
+    const index = pieces.join(', ');
+    const preview = text.slice(0, 96) + text.slice(-96);
+    const divider = '-='.repeat(24);
+    return `${text}${divider}\n${index}\n${preview}\n`;
+}
+
+let total = 0;
+let units = 0;
+for(let sequence = 0; sequence < 6000; sequence += 1) {
+    const text = document(sequence);
+    units += text.length;
+    total = checksum(text, total);
+}
+console.log(`${units} units ${total}`);

@@ -1,0 +1,21 @@
+// Destructuring a map's entries gives its keys and values themselves.
+interface Node {
+	readonly kind: string;
+	readonly nodes: Node[];
+}
+function run(n: number): number {
+	const node: Node = { kind: `n${n}`, nodes: [] };
+	const pairs = new Map<string, Node>();
+	pairs.set(`k${n}`, node);
+	for (const [key, value] of pairs) {
+		if (key.length > 0) {
+			value.nodes.push(node); // closes the cycle
+		}
+	}
+	return node.nodes.length;
+}
+let total = 0;
+for (let i = 0; i < 100; i++) {
+	total += run(i);
+}
+console.log(`${total}`);

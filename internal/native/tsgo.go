@@ -123,9 +123,9 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	return nil
 }
 
-// tsgoFlags compiles the checker-archive build. tsgo_runtime.h, included first, brings adamic.h in
-// before main.c's own #defines, so the program's features come as flags, as they do for the runtime
-// library.
+// tsgoFlags compiles and links the checker-archive build in one command, so it starts from LinkFlags
+// (lld for a shipped release's ThinLTO). tsgo_runtime.h, included first, brings adamic.h in before
+// main.c's own #defines, so the program's features come as flags, as they do for the runtime library.
 func tsgoFlags(source string, options Options) []string {
-	return append(append(Flags(options), featureFlags(source)...), "-DADAMIC_TSGO")
+	return append(append(LinkFlags(options), featureFlags(source)...), "-DADAMIC_TSGO")
 }

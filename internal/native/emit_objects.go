@@ -170,7 +170,12 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	}
 	object := ""
 	if region {
-		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.literalShape(literal)))
+		allocator := "adamic_object_new_filled_in"
+		if literal.Class != 0 {
+			// Constructor writes can call or throw after allocation, so its untouched slots need zero.
+			allocator = "adamic_object_new_in"
+		}
+		object = e.regionValue(fmt.Sprintf("%s(region, &%s)", allocator, e.literalShape(literal)))
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 	}
@@ -209,6 +214,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			continue
 		}
 		if field.Value.Type().IsReference() {
+			if region && !constantUndefined.MatchString(value) {
+				// Report both retained and moved heap references. Constants pass over at runtime.
+				e.line("adamic_region_hold(region, %s);", value)
+			}
 			value = e.kept(value)
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
