@@ -133,9 +133,16 @@ dispatch() {
 # tools (${state}/tools-good, checked out in their own worktree); the first real tip gated green on the
 # canary box with the new tools promotes them everywhere. No canary-box file: one tools version, as before.
 goodTree=${ADAMIC_FAST_GATE_GOOD_TREE:-${state}/tools-good-tree}
+# The box side of the tools, everything a gate runs, as one fingerprint per commit. Staging keys on it, not on the
+# commit: keyed on the commit, every watcher or alarm change restarted promotion, and staged tools never promoted
+# (Oct 8). The list over-includes on purpose; a path missing from it would skip the canary.
+boxSide="cloud/fast-gate.sh cloud/fast-gate cloud/darwin-leg.sh cloud/fast-gate-classify.sh cloud/idle-preempt.sh internal/skipcensus go.mod go.sum"
+boxTools() {
+  git -C "${here}" ls-tree "$1" -- ${boxSide} | shasum | cut -c1-40
+}
 staging() {
-  [ -s "${state}/canary-box" ] && [ -s "${state}/tools-good" ] && [ "$(cat "${state}/tools-good")" != "${toolsHead}" ] &&
-    [ -f "${goodTree}/cloud/fast-gate.sh" ]
+  [ -s "${state}/canary-box" ] && [ -s "${state}/tools-good" ] && [ -f "${goodTree}/cloud/fast-gate.sh" ] &&
+    [ "$(boxTools "$(cat "${state}/tools-good")")" != "$(boxTools "${toolsHead}")" ]
 }
 placeGoodTree() {
   local good
@@ -588,8 +595,11 @@ canaryToken=${toolsHead}:$$
 canaryRequired=1
 [ -s "${state}/tools-good" ] || echo "${toolsHead}" > "${state}/tools-good"
 [ -s "${state}/canary-box" ] && placeGoodTree
-# Staged, the other boxes keep gating on the good tools: no fleet-wide deploy barrier to wait out.
-staging && canaryRequired=0
+# Staged, the other boxes keep gating on the good tools: no fleet-wide deploy barrier to wait out. Nor when the
+# box side is the good tools' own, already proven by a real green.
+if staging || { [ -s "${state}/canary-box" ] && [ "$(boxTools "$(cat "${state}/tools-good")")" = "$(boxTools "${toolsHead}")" ]; }; then
+  canaryRequired=0
+fi
 while true; do
   now=$(date -u +%s)
   if { [ -z "${firstStepRefresh:-}" ] || [ "$((now - firstStepRefresh))" -ge 300 ]; } &&
@@ -610,7 +620,12 @@ while true; do
   fi
   cat "${state}/step-globs" > "${state}/step-globs.poll" 2>/dev/null || true
   currentHead=$(git -C "${here}" rev-parse HEAD)
-  if [ "${currentHead}" != "${toolsHead}" ]; then
+  if [ "${currentHead}" != "${toolsHead}" ] && [ "$(boxTools "${currentHead}")" = "$(boxTools "${toolsHead}")" ]; then
+    # Only the Mac side moved: nothing a box runs changed, so no canary and no restart of staging.
+    echo "$(date -u +%H:%M:%S) tools ${currentHead:0:9} change only the Mac side; boxes keep running what they ran"
+    toolsHead=${currentHead}
+    canaryToken=${toolsHead}:$$
+  elif [ "${currentHead}" != "${toolsHead}" ]; then
     toolsHead=${currentHead}
     canaryToken=${toolsHead}:$$
     canaryRequired=1
@@ -675,7 +690,8 @@ while true; do
       verdict=$(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)
       echo "$(date -u +%H:%M:%S) done ${branch}: ${verdict}"
       # A real tip green on the canary box with the staged tools promotes them to every box.
-      if staging && [[ ${testedHead} == "${toolsHead}:"* && ${verdict} == "green: ${sha} "* ]]; then
+      if staging && [[ ${testedHead} != *:good && ${verdict} == "green: ${sha} "* ]] &&
+         [ "$(boxTools "${testedHead%%:*}")" = "$(boxTools "${toolsHead}")" ]; then
         echo "${toolsHead}" > "${state}/tools-good"
         placeGoodTree
         echo "$(date -u +%H:%M:%S) promoted tools ${toolsHead:0:9} to every box after ${branch} ${sha} green on ${box}"

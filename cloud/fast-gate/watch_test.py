@@ -14,7 +14,7 @@ MAIN = 'a' * 40
 
 
 class Watcher:
-    def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void', slots=None):
+    def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void', slots=None, boxSides=None):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.repo = self.root / 'repo'
@@ -36,6 +36,9 @@ class Watcher:
         self.put('mode', mode)
         self.put('initial', 'hold')
         self.put('canary', 'hold')
+        # A tools commit's box-side fingerprint (git ls-tree), its own name unless given.
+        for commit, side in (boxSides or {}).items():
+            self.put('box-' + commit, side)
         self.tips = [(f'codex/test{i}', f'{i+1:012x}' + '0' * 28) for i in range(count)]
         self.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in self.tips))
         (self.state / 'seen').write_text(''.join(f'{b} {sha}\n' for b, sha in self.tips))
@@ -43,6 +46,7 @@ class Watcher:
         (self.state / 'slots').write_text(slots if slots is not None else ''.join(f'box{i % 2} S\n' for i in range(max(count, 1))))
         self.script(self.bin / 'git', '''case "$*" in
 *rev-parse*) cat "$TEST_ROOT/head" ;;
+*ls-tree*) echo "$(cat "$TEST_ROOT/box-$4" 2>/dev/null || echo "$4")" ;;
 *'branch -r --contains'*) echo origin/devtools/fast-gate ;;
 *'ls-remote'*refs/heads/main*) printf '%s\\trefs/heads/main\\n' aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ;;
 *'ls-remote'*refs/heads/codex*) cat "$TEST_ROOT/tips" ;;
@@ -628,6 +632,23 @@ class WatchTests(unittest.TestCase):
         w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
         w.wait(lambda: 'codex/c ' in w.read('starts'))
         self.assertNotIn('codex/c ', w.read('good-starts'))
+
+    def test_a_tools_commit_that_leaves_the_box_side_alone_neither_stages_nor_waits_on_a_canary(self):
+        # Staged tools: good is tools-zero, head tools-one, but tools-one changes only the Mac side.
+        w = Watcher(2, canaryBox='box1', mode='hold', boxSides={'tools-one': 'tools-zero'})
+        self.addCleanup(w.close)
+        w.wait(lambda: len(w.read('starts').splitlines()) + len(w.read('good-starts').splitlines()) >= 1)
+        w.put('mode', 'pass')
+        w.wait(lambda: w.read('output').count('done codex/') == 2)
+        self.assertEqual(w.read('good-starts'), '', 'no staging: every box runs the head tools')
+        # A Mac-only commit while running: no deploy canary, and the queue keeps flowing.
+        w.put('head', 'tools-two')
+        w.put('box-tools-two', 'tools-zero')
+        w.wait(lambda: 'tools tools-two change only the Mac side' in w.read('output'))
+        w.tips.append(('codex/c', 'c' * 40))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        w.wait(lambda: 'done codex/c' in w.read('output'))
+        self.assertNotIn('canary/main', w.read('starts'))
 
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
