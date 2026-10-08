@@ -1,0 +1,82 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.463s)
+setup: submodules ready (0.658s)
+setup: node v24.19.0 skipped (validated version, checksum and installed bytes); step-duration=0.551s
+v24.19.0
+setup: node ready (1.260s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.371s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (1.437s)
+setup: stage3 API dependencies skipped (validated API lock and installed bytes); step-duration=0.109s
+setup: stage3 API dependencies checked (1.687s)
+setup: gate input css-printer skipped (validated lock and installed bytes); no network work; step-duration=0.421s
+setup: gate input css skipped (validated lock and installed bytes); no network work; step-duration=0.023s
+setup: gate input graphql skipped (validated lock and installed bytes); no network work; step-duration=0.269s
+setup: gate input media-query skipped (validated lock and installed bytes); no network work; step-duration=0.010s
+setup: gate input selector skipped (validated lock and installed bytes); no network work; step-duration=0.065s
+setup: gate input values skipped (validated lock and installed bytes); no network work; step-duration=0.028s
+setup: gate input json-prettier skipped (validated lock and installed bytes); no network work; step-duration=0.056s
+setup: gate input shared Prettier paths shared prettier 3.9.6: CSS numbers, CSS strings and Markdown inline paths verified; step-duration=0.305s
+setup: gate input cycle ledger skipped (validated pristine commit, generator, Node and diagnostic bytes); no network work; step-duration=0.533s
+setup: gate npm inputs ready (3.562s)
+setup: gate input CSS fixtures skipped (validated exact commit, sparse set, counts and checkout bytes); no network work; step-duration=0.521s
+setup: gate input TypeScript source skipped (validated exact commit and checkout bytes); no network work; step-duration=9.266s
+setup: gate input 100 MiB gitignore skipped (validated deterministic 100 MiB bytes); no network work; step-duration=0.270s
+setup: gate corpora ready (10.642s)
+setup: downloading module dependencies in /workspace/adamic
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools/customlint/testdata
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tsc
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/ast
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/bundled
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/checker
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/compiler
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/core
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/format
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/incremental
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/locale
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/parser
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/scanner
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tsoptions
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tspath
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/cachedvfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/osvfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/mutation_aliasing
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/static_single_assignment
+all modules verified
+setup: module dependencies downloaded and verified (22 module directories); step-duration=38.836s
+setup: module dependencies ready (39.731s)
+setup: gate input checker archive skipped (validated Go actions and archive bytes); no network work; step-duration=0.458s
+setup: go build ready (63.117s)
+setup: test binaries deferred (use --warm-tests) (63.342s)
+setup: build cache warm (63.351s)
+setup: workspace sums restored to the commit (63.522s)
+setup: build-flags commit=a2f2edfce70b8d357a10e6d67b3c7942b4580ab6 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=true load-before=10.34 21.48 15.34 8/303 16722 load-after=9.61 18.94 14.87 3/280 19388
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (63.634s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.hkx4wf
+setup: node v24.19.0

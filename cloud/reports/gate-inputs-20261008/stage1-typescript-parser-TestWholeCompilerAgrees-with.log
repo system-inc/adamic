@@ -1,0 +1,5 @@
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestWholeCompilerAgrees (59.70s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	59.752s

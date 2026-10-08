@@ -1,0 +1,31 @@
+mutant logs: /tmp/adamic-gate/gate-input-mutants-fsjrooxw
+drop-kind caught by intended input/byte assertion
+drop-head caught by intended input/byte assertion
+drop-packages caught by intended input/byte assertion
+drop-packages also caught by real dirty-source archive rebuild assertion
+drop-environment caught by intended input/byte assertion
+drop-version caught by intended input/byte assertion
+drop-cc_version caught by intended input/byte assertion
+drop-flags caught by intended input/byte assertion
+drop-validation_flags caught by intended input/byte assertion
+drop-helper caught by intended input/byte assertion
+drop-commit caught by intended input/byte assertion
+drop-url caught by intended input/byte assertion
+drop-size caught by intended input/byte assertion
+drop-content caught by intended input/byte assertion
+drop-artifact-root-mode caught by intended input/byte assertion
+drop-artifact-entries caught by intended input/byte assertion
+drop-artifact-bytes caught by intended input/byte assertion
+drop-artifact-modes caught by intended input/byte assertion
+drop-artifact-names caught by intended input/byte assertion
+npm-drop-lock caught by npm key assertion
+npm-drop-manifest caught by npm key assertion
+npm-drop-bootstrap caught by npm key assertion
+npm-drop-helper caught by npm key assertion
+npm-drop-node caught by npm key assertion
+npm-drop-bytes caught by npm key assertion
+npm-drop-modes caught by npm key assertion
+npm-drop-names caught by npm key assertion
+npm-drop-root-mode caught by npm key assertion
+npm-drop-integrity caught by npm key assertion
+list-emits-header caught by clean-checkout assertion

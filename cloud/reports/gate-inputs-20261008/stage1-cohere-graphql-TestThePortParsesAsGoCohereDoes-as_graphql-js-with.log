@@ -1,0 +1,11 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+=== PAUSE TestThePortParsesAsGoCohereDoes
+=== CONT  TestThePortParsesAsGoCohereDoes
+    graphql_test.go:56: seed 20261005, 3000 generated documents
+=== RUN   TestThePortParsesAsGoCohereDoes/as_graphql-js
+=== PAUSE TestThePortParsesAsGoCohereDoes/as_graphql-js
+=== CONT  TestThePortParsesAsGoCohereDoes/as_graphql-js
+--- PASS: TestThePortParsesAsGoCohereDoes (4.06s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/as_graphql-js (0.80s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/graphql	4.893s

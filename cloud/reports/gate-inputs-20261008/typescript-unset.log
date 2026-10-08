@@ -1,0 +1,5 @@
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:24: set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout
+--- SKIP: TestWholeCompilerAgrees (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	0.093s

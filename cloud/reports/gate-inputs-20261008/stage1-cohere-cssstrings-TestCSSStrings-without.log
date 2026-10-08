@@ -1,0 +1,24 @@
+=== RUN   TestCSSStrings
+=== PAUSE TestCSSStrings
+=== CONT  TestCSSStrings
+    port_test.go:227: external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY
+=== RUN   TestCSSStrings/quote_tie
+    port_test.go:293: caught by output case 4, byte 1212: got "t\\ninput[\\ntype\\n=\\n'radio'\\n]\\n{\\ncolor\\n:\\nred\\n;\\n}\\n}\\n@" want "t\\ninput[\\ntype\\n=\\n\"radio\"\\n]\\n{\\ncolor\\n:\\nred\\n;\\n}\\n}\\n@"
+    port_test.go:293: caught by output case 4, byte 1212: got "t\\ninput[\\ntype\\n=\\n'radio'\\n]\\n{\\ncolor\\n:\\nred\\n;\\n}\\n}\\n@" want "t\\ninput[\\ntype\\n=\\n\"radio\"\\n]\\n{\\ncolor\\n:\\nred\\n;\\n}\\n}\\n@"
+=== RUN   TestCSSStrings/escaped_closing_quote
+    port_test.go:293: caught by output case 72, byte 866: got "n#f\\\\!o\\\\!o {}\\n#f\\\\\"o\\\\\"o {}\\n#f\\\\~o\\\\~o {}\\n#f\\\\+o\\\\+o {}\\" want "n#f\\\\!o\\\\!o {}\\n#f\\\\'o\\\\'o {}\\n#f\\\\~o\\\\~o {}\\n#f\\\\+o\\\\+o {}\\"
+    port_test.go:293: caught by output case 72, byte 866: got "n#f\\\\!o\\\\!o {}\\n#f\\\\\"o\\\\\"o {}\\n#f\\\\~o\\\\~o {}\\n#f\\\\+o\\\\+o {}\\" want "n#f\\\\!o\\\\!o {}\\n#f\\\\'o\\\\'o {}\\n#f\\\\~o\\\\~o {}\\n#f\\\\+o\\\\+o {}\\"
+=== RUN   TestCSSStrings/preserve_original_escape
+    port_test.go:293: caught by output case 196, byte 961: got "/\\n    content: \"\\\\\"'\";\\n    content: \"\\\\\"'\";\\n\\n    /* More" want "/\\n    content: \"\\\\\"\\\\'\";\\n    content: \"\\\\\"'\";\\n\\n    /* Mo"
+    port_test.go:293: caught by output case 196, byte 961: got "/\\n    content: \"\\\\\"'\";\\n    content: \"\\\\\"'\";\\n\\n    /* More" want "/\\n    content: \"\\\\\"\\\\'\";\\n    content: \"\\\\\"'\";\\n\\n    /* Mo"
+=== NAME  TestCSSStrings
+    port_test.go:327: throughput Go 318767.7 texts/s, 3 process runs 0.180526s (startup, input, escaping, output included; build excluded)
+    port_test.go:327: throughput native 159349.1 texts/s, 3 process runs 0.361132s (startup, input, escaping, output included; build excluded)
+    port_test.go:327: throughput Node 68890.8 texts/s, 3 process runs 0.835322s (startup, input, escaping, output included; build excluded)
+    port_test.go:329: corpus: 255 repository/submodule files, 9336 generated texts, 19182 preference cases; all byte-identical
+--- PASS: TestCSSStrings (108.21s)
+    --- PASS: TestCSSStrings/quote_tie (1.46s)
+    --- PASS: TestCSSStrings/escaped_closing_quote (1.35s)
+    --- PASS: TestCSSStrings/preserve_original_escape (1.72s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	108.231s

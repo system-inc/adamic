@@ -1,0 +1,12 @@
+=== RUN   TestStatementUpstreamDifferences
+    upstream_test.go:29: === RUN   TestAdamicStatementUpstreamDifferences
+            adamic_statements_test.go:165: 5 exact Go fork differences pinned
+        --- PASS: TestAdamicStatementUpstreamDifferences (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.010s
+        
+    upstream_test.go:65: 5 exact npm differences pinned
+        
+--- PASS: TestStatementUpstreamDifferences (1.98s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	1.991s

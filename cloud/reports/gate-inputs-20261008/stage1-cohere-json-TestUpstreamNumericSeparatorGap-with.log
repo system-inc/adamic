@@ -1,0 +1,18 @@
+=== RUN   TestUpstreamNumericSeparatorGap
+=== PAUSE TestUpstreamNumericSeparatorGap
+=== CONT  TestUpstreamNumericSeparatorGap
+    audit_test.go:176: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 6 texts in 0.000s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.010s
+    audit_test.go:176: Prettier: 6 texts in 0.054s
+    audit_test.go:61: probe.json [1__0]: Go formats "[1__0]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: package.json [1__0]: Go formats "[\n  1__0\n]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: probe.json [1_]: Go formats "[1_]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: package.json [1_]: Go formats "[\n  1_\n]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:3)
+    audit_test.go:61: probe.json [0x_1]: Go formats "[0x_1]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:4)
+    audit_test.go:61: package.json [0x_1]: Go formats "[\n  0x_1\n]\n"; Prettier refuses: A numeric separator is only allowed between two digits. (1:4)
+--- PASS: TestUpstreamNumericSeparatorGap (13.60s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	13.662s

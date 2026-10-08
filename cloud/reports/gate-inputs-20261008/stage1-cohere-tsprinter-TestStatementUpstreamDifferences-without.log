@@ -1,0 +1,11 @@
+=== RUN   TestStatementUpstreamDifferences
+    upstream_test.go:29: === RUN   TestAdamicStatementUpstreamDifferences
+            adamic_statements_test.go:165: 5 exact Go fork differences pinned
+        --- PASS: TestAdamicStatementUpstreamDifferences (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.010s
+        
+    upstream_test.go:58: set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it
+--- SKIP: TestStatementUpstreamDifferences (14.24s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/tsprinter	14.250s

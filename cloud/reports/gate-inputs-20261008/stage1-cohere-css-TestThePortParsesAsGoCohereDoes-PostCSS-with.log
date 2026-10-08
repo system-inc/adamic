@@ -1,0 +1,14 @@
+=== RUN   TestThePortParsesAsGoCohereDoes
+    css_test.go:122: Go oracle: === RUN   TestAdamicPortCases
+            adamic_port_side_test.go:148: corpus files: map[.css:322 .less:43 .scss:180]
+            adamic_port_side_test.go:216: 24594 cases, 5479 parsed
+            adamic_port_side_test.go:234: Go: 245940 stylesheets in 7.294428038s, 33716 stylesheets/s; 54790 parsed, 129910 children
+        --- PASS: TestAdamicPortCases (8.96s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/css/postcss	8.976s
+=== RUN   TestThePortParsesAsGoCohereDoes/PostCSS
+    css_test.go:184: PostCSS: 24592 exact agreements, 2 occurrences of the proved surrogate gap
+--- PASS: TestThePortParsesAsGoCohereDoes (13.03s)
+    --- PASS: TestThePortParsesAsGoCohereDoes/PostCSS (2.73s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	13.053s

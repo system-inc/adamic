@@ -1,0 +1,25 @@
+=== RUN   TestMarkdownInline
+=== PAUSE TestMarkdownInline
+=== CONT  TestMarkdownInline
+    port_test.go:248: Go/native/Node/JavaScript backend/Prettier batch byte parity passed (113468 cases)
+=== RUN   TestMarkdownInline/escaped_delimiter_parity
+    port_test.go:312: caught by output case 1007, byte 3352: got "    | <pre><code>/\\\\\\\\** @enum {number} \\\\*/</code><br/><cod" want "    | <pre><code>/\\\\** @enum {number} \\\\*/</code><br/><code>"
+    port_test.go:312: caught by output case 1007, byte 3352: got "    | <pre><code>/\\\\\\\\** @enum {number} \\\\*/</code><br/><cod" want "    | <pre><code>/\\\\** @enum {number} \\\\*/</code><br/><code>"
+=== RUN   TestMarkdownInline/table_pipe_escaping
+    port_test.go:312: caught by output case 6, byte 658: got "mic`: `adamic types \\\\| c \\\\| build \\\\| js <file>`.\\n- `inte" want "mic`: `adamic types | c | build | js <file>`.\\n- `internal/l"
+    port_test.go:312: caught by output case 6, byte 658: got "mic`: `adamic types \\\\| c \\\\| build \\\\| js <file>`.\\n- `inte" want "mic`: `adamic types | c | build | js <file>`.\\n- `internal/l"
+=== RUN   TestMarkdownInline/minimum_absent_fence
+    port_test.go:312: caught by output case 6, byte 1: got "`# Adamic\\n\\n> In dedication, with gratit" want "``# Adamic\\n\\n> In dedication, with grati"
+    port_test.go:312: caught by output case 6, byte 1: got "`# Adamic\\n\\n> In dedication, with gratit" want "``# Adamic\\n\\n> In dedication, with grati"
+=== NAME  TestMarkdownInline
+    port_test.go:346: throughput Go 2531.0 texts/s, 3 process runs 134.494780s (startup, input, escaping, output included; build excluded)
+    port_test.go:346: throughput native 9424.7 texts/s, 3 process runs 36.118238s (startup, input, escaping, output included; build excluded)
+    port_test.go:346: throughput Node 12445.5 texts/s, 3 process runs 27.351497s (startup, input, escaping, output included; build excluded)
+    port_test.go:346: throughput Prettier 11028.3 texts/s, 3 process runs 30.866445s (startup, input, escaping, output included; build excluded)
+    port_test.go:348: corpus: 1270 repository/submodule files, 4702 generated texts, 113468 leaf/context cases; all byte-identical
+--- PASS: TestMarkdownInline (651.80s)
+    --- PASS: TestMarkdownInline/escaped_delimiter_parity (66.53s)
+    --- PASS: TestMarkdownInline/table_pipe_escaping (63.44s)
+    --- PASS: TestMarkdownInline/minimum_absent_fence (64.94s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdowninline	651.914s

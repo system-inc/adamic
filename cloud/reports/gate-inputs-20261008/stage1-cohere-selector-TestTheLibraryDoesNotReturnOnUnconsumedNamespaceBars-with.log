@@ -1,0 +1,29 @@
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== RUN   TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== PAUSE TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+=== CONT  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)
+    selector_test.go:558: entered parser, no return within 1s of entering, killed
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b
+    selector_test.go:558: entered parser, no return within 1s of entering, killed
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x
+    selector_test.go:558: entered parser, no return within 1s of entering, killed
+=== NAME  TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)
+    selector_test.go:558: entered parser, no return within 1s of entering, killed
+--- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars (0.00s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|) (1.05s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b (1.08s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x (1.11s)
+    --- PASS: TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|) (1.11s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/selector	1.124s
