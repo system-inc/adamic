@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+    oracle_test.go:747: Lower: /workspace/adamic/internal/oracle/testdata/scout_nullable_objects.a:4:10: stage 0 can't lower a function returning Item | null | undefined yet
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.054s
+FAIL

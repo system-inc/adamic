@@ -383,6 +383,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if object.Type() == ir.Union && access.QuestionDotToken != nil && l.nullableObjectUnion(l.checker.GetTypeAtLocation(access.Expression)) {
+		object = l.optionalNullableObject(object)
+	}
 	if object.Type() == ir.Union {
 		return l.dynamicProperty(node, object, name)
 	}
@@ -493,6 +496,10 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		}
 		optional := access.QuestionDotToken != nil
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
+			if l.nullableObjectUnion(l.checker.GetTypeOfSymbol(field)) && of == ir.Object {
+				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Union, Optional: optional, Class: l.classOf(node)})
+				return l.checkedNullableObject(node, read), nil
+			}
 			if declared := l.concrete(l.checker.GetTypeOfSymbol(field)); nullableStringUnion(declared) && of == ir.String {
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Union, Optional: optional, Class: l.classOf(node)})
 				return l.checkedNullableString(node, read), nil

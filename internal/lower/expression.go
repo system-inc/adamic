@@ -24,7 +24,7 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
 		return ir.Object, nil
 	}
-	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
 		// A field narrowed to undefined still occupies its declared slot, which may hold a packed
 		// optional number or a different reference kind. Read that representation, not an object.
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
@@ -95,7 +95,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
-		if nullableStringUnion(proven) {
+		if nullableStringUnion(proven) || l.nullableObjectUnion(proven) {
 			return ir.Union, true
 		}
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
@@ -250,6 +250,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
+		if err == nil {
+			value = l.nullableObjectBoundary(node, value)
+		}
 		return value, err
 	}
 	read := l.checker.GetTypeAtLocation(node)
@@ -525,6 +528,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
 		if l.result.Locals[local].Type == ir.Union {
+			if l.nullableObjectUnion(l.checker.GetTypeOfSymbol(l.symbol(node))) {
+				return l.checkedNullableObject(node, read), nil
+			}
 			// Where the checker has narrowed it to fewer members held one way, it's read as that.
 			parent := node.Parent
 			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {

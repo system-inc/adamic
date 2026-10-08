@@ -1,0 +1,49 @@
+interface Item { readonly text: string; }
+interface Holder { value: Item | null | undefined; }
+function nullable(flag: boolean): Item | null { return flag ? {text: 'legacy'} : null; }
+function identity(value: Item | null | undefined): Item | null | undefined { return value; }
+function consume(value: Item | null): string { return value === null ? 'null' : value.text; }
+function describe(value: Item | null | undefined): string {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    return value.text;
+}
+function exercise(): void {
+    const item: Item = {text: `item${7}`};
+    const holder: Holder = {value: item};
+    console.log(`${describe(holder.value)}|${holder.value === item}`);
+    holder.value = null;
+    console.log(`${describe(holder.value)}|${typeof holder.value}|${holder.value === undefined}`);
+    holder.value = undefined;
+    console.log(`${describe(holder.value)}|${typeof holder.value}|${holder.value === null}`);
+    holder.value = nullable(false);
+    console.log(`${describe(identity(holder.value))}|${typeof holder.value}`);
+    holder.value = nullable(true);
+    console.log(describe(holder.value));
+    console.log(describe(identity(nullable(false))));
+    console.log(describe(identity(nullable(true))));
+    console.log(describe(identity(undefined)));
+    const fallback = identity(null) ?? item;
+    console.log(`${fallback === item}|${fallback.text}`);
+    const copy = {...holder};
+    console.log(describe(copy.value));
+    let local: Item | null | undefined = identity(null);
+    console.log(describe(local));
+    local = item;
+    console.log(describe(local));
+    local = identity(undefined);
+    console.log(describe(local));
+    const narrowed = identity(null);
+    if (narrowed !== undefined) console.log(consume(narrowed));
+}
+exercise();
+exercise();
+function orDefault<T>(value: T | null | undefined, fallback: T): T {
+    return value === null || value === undefined ? fallback : value;
+}
+const defaultItem: Item = {text: 'generic'};
+console.log(orDefault<Item>(undefined, defaultItem).text);
+console.log(orDefault<Item>(null, defaultItem).text);
+console.log(orDefault<Item>({text: 'present'}, defaultItem).text);
+function optionalText(value: Item | null | undefined): string { return value?.text ?? 'missing'; }
+console.log(`${optionalText(null)}|${optionalText(undefined)}|${optionalText({text: 'optional'})}`);
