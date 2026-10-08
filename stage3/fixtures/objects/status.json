@@ -26,10 +26,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/02_polling_levels.a:10:17: stage 0 can't lower a BinaryExpression with a boolean and a value yet"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/02_polling_levels.a:11:81: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"}
   },
   {
     "file": "03_resolution_cache_spreads.a",
@@ -92,7 +89,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/06_watch_close.a:14:15: Adamic 0.1 refuses 'file', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function file() {}), which captures nothing, or declare the variable Weak\u003c...\u003e and keep the function somewhere strong (adamic/cycle-capable)"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower writing a possibly absent optional own field yet"}
   },
   {
     "file": "07_synthetic_reference.a",
@@ -123,7 +120,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/08_loop_state.a:32:57: stage 0 can't lower a call through ?. (an optional call) yet"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/08_loop_state.a:16:17: stage 0 can't lower writing a possibly absent optional own field yet"}
   },
   {
     "file": "10_build_options.a",
@@ -156,10 +153,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/12_decorator_descriptor.a:13:55: stage 0 can't lower a BinaryExpression with a string and a string yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/12_decorator_descriptor.a:13:21: stage 0 can't lower writing a possibly absent optional own field yet"}
   },
   {
     "file": "14_comment_pending.a",
@@ -172,10 +166,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/14_comment_pending.a:10:19: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "15_accessor_absence.a",
@@ -188,10 +179,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/15_accessor_absence.a:17:22: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/15_accessor_absence.a:70:72: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"}
   },
   {
     "file": "16_version_defaults.a",
@@ -240,7 +228,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/19_identifier_multimap.a:24:27: stage 0 can't lower a BinaryExpression with a value and a value yet"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/19_identifier_multimap.a:79:82: stage 0 can't lower a value of type (ModuleSpecifierResolutionHost \u0026 { getCommonSourceDirectory(): string; }) | undefined yet"}
   },
   {
     "file": "20_queue_optional_call.a",
@@ -334,10 +322,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/26_diagnostic_in.a:21:53: Adamic 0.1 refuses in; an object's shape is known; use a discriminant, or a Map"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/26_diagnostic_in.a:21:43: Adamic 0.1 refuses in that narrows a union of object types (any object with the key passes); use a discriminant, or a Map"}
   },
   {
     "file": "27_delete_substitution.a",

@@ -29,7 +29,7 @@ func expressionCorpus(t *testing.T) (string, string, string) {
 	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+path, "-run=^TestAdamicExpressionCorpus$", "./internal/format/javascript")
 	command.Dir = root + "/cohere"
 	command.Env = append(os.Environ(), "ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json")
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go expression corpus %v\n%s", err, output)
 	} else {
 		t.Log(string(output))
@@ -52,6 +52,7 @@ func expressionCorpus(t *testing.T) (string, string, string) {
 			}
 		}
 	}
+	planCorpus(t, directory+"/cases.txt")
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
 }
 
@@ -61,7 +62,7 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	port, _ := filepath.Abs("main.ts")
 	compare := func(name string, result run) {
 		if result.exitCode != 0 || len(result.stderr) > 0 || string(result.stdout) != want {
-			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, firstDifference(string(result.stdout), want))
+			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, corpusDifference(t, cases, string(result.stdout), want))
 		}
 	}
 	compare("Node", onNode(t, port, "--cases", cases, "80"))

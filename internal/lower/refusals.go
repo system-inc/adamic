@@ -27,6 +27,7 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
+	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
@@ -90,7 +91,8 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused {
+		// FileName restores the loader's .a alias; real .ts sources keep checked !.
+		if refused, isRefused := refusals[node.Kind]; isRefused && (node.Kind != ast.KindNonNullExpression || l.program.FileName(module) != module.FileName().AsString()) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}

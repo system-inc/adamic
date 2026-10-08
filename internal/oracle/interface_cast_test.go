@@ -12,7 +12,7 @@ import (
 
 func interfaceFixture(t *testing.T, name string) (*ir.Program, string) {
 	t.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts", name+".a"))
+	path, err := filepath.Abs(filepath.Join(repository, interfaceSource(name)))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -236,4 +236,14 @@ func TestInterfaceCastScalarTags(t *testing.T) {
 			}
 		})
 	}
+}
+
+// Readiness controls using ! run as TypeScript; their .a twins pin refusal.
+func interfaceSource(name string) string {
+	extension := ".a"
+	switch name {
+	case "default-staged", "default-boxed-write", "default-read-before-set", "readiness-identifier", "readiness-identifier-uninitialized", "readiness-number", "readiness-number-uninitialized":
+		extension = ".ts"
+	}
+	return "stage3/interface-downcasts/" + name + extension
 }

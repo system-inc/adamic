@@ -18,8 +18,8 @@ import (
 	"strings"
 	"syscall"
 	"testing"
-	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -288,10 +288,10 @@ func cohereSide(t *testing.T, request map[string]any) {
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/mediaquery")
+	command := bounded(t, "go", "test", "-timeout=0", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/mediaquery")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
 		t.Fatalf("cohere's side: %v\n%s", err, output)
 	}
 }
@@ -354,18 +354,17 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
-// its own, and when the deadline passes or the test ends, the whole group is killed.
+// bounded configures a child command; Run and CombinedOutput below guard its output progress.
+// Silent builds and buffered children use childguard's 30-minute FirstOutput window;
+// after output starts, the default two-minute Stall allows over 3x the measured loaded gaps.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	command.WaitDelay = 5 * time.Second
+	command := exec.Command(name, arguments...)
+	t.Cleanup(func() {
+		if command.Process != nil && command.ProcessState == nil {
+			_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		}
+	})
 	return command
 }
 
@@ -378,7 +377,7 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)

@@ -23,10 +23,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/runner/02_is_string.a:3:26: stage 0 can't lower a value of type unknown yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "03_return_true.a",

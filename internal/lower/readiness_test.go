@@ -26,7 +26,7 @@ func TestReadinessElisionRequiresDominatingAssignment(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program, err := lowerSource(t, probe.source)
+			program, err := lowerTypeScriptSource(t, probe.source)
 			if err != nil {
 				t.Fatal(err)
 			}

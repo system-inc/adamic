@@ -40,8 +40,9 @@ the final speed comparison is reported in SPEED.md. Native clears the original
 Node target but still takes 20.1% longer than the optimized Node port. The six
 new qualifying speed mutants and three cost programs are documented there.
 [negativeCase.ts](gaps/negativeCase.ts) adds an eleventh compiler-refusal proof:
-Node prints `1`; Adamic refuses `case -1` as a nonconstant case; the lexer uses
-an explicit numeric predicate instead.
+Node prints `1`; Adamic refused `case -1` as a nonconstant case until
+compiler/area-next, which lowers it; the lexer still uses an explicit numeric
+predicate instead.
 
 ## Original formatter throughput
 
@@ -246,10 +247,10 @@ Only the byte comparisons catch them:
 | Anchor and tag separation unchecked | 309370 |
 | Tab indentation accepted | 318861 |
 
-[dynamicCase.ts](gaps/dynamicCase.ts) prints `1` on Node and refuses before
-clang with `lower.NotYet: a case that isn't a constant`. The port compares
-the token type to the contextual indicator before switching over constant types.
-`TestLexerGaps` holds this observation along with the other eight refusals.
+[dynamicCase.ts](gaps/dynamicCase.ts) prints `1` on Node. It refused before
+clang with `lower.NotYet: a case that isn't a constant` until compiler/area-next,
+which lowers it. The port still compares the token type to the contextual
+indicator before switching over constant types.
 
 ```sh
 ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run 'TestProps|TestLexerGaps' > /tmp/stage1-yaml-props-final.log 2>&1
@@ -293,9 +294,9 @@ Additional compiler gap programs, held by `TestLexerGaps`:
 
 | Program | Node stdout | Observed `lower.NotYet` | Workaround |
 | --- | --- | --- | --- |
-| [stringFallback.ts](gaps/stringFallback.ts) | one space | `a BinaryExpression with a string and a string` | Explicit empty-string comparison |
+| [stringFallback.ts](gaps/stringFallback.ts) | one space | Closed by compiler/area-next | Explicit empty-string comparison |
 | [valuePresence.ts](gaps/valuePresence.ts) | `false` | Closed by `cdddfee346e70a5cba3e982f808b9ebe426a6dfb` | Direct optional-object truthiness restored in scalar block-line iteration |
-| [valueConjunction.ts](gaps/valueConjunction.ts) | `true` | `a BinaryExpression with a value and a boolean` | Separate presence and value branches |
+| [valueConjunction.ts](gaps/valueConjunction.ts) | `true` | Lowers on compiler/area-next, but emitting its C panics (`native: no conversion from 4 to 9`) | Separate presence and value branches |
 | [multiplePush.ts](gaps/multiplePush.ts) | `2` | `push with other than one value` | Push one value per call |
 
 ### Closed native runtime gap
@@ -418,8 +419,19 @@ closed gap requires updating the workaround.
 | Program | Node stdout | Observed refusal | Port workaround |
 | --- | --- | --- | --- |
 | [prefixIncrement.ts](gaps/prefixIncrement.ts) | `1` | `a PrefixUnaryExpression on a number` | Increment in a separate statement |
-| [assignmentValue.ts](gaps/assignmentValue.ts) | `1` | `a BinaryExpression with a number and a number` | Assign before reading the result |
+| [assignmentValue.ts](gaps/assignmentValue.ts) | `1` | Closed by compiler/area-next | Assign before reading the result |
 | [stringPresence.ts](gaps/stringPresence.ts) | `false` | Closed by `cdddfee346e70a5cba3e982f808b9ebe426a6dfb` | Lexer sentinel tests use native string truthiness and negation |
+
+## Lexer gaps compiler/area-next closed
+
+Area-next lowers five of `TestLexerGaps`' programs: assignmentValue, dynamicCase,
+negativeCase, stringFallback and valueConjunction. `TestClosedLexerGaps` keeps each
+proving program and requires Node's output from native under ASan, UBSan and
+LeakSanitizer and from emitted JavaScript, as the presence gaps do. valueConjunction
+lowers but its C emission panics, `native: no conversion from 4 to 9`; the test names
+that as its failure rather than letting the panic end the package, and it is the
+compiler's to fix or refuse. The port's workarounds still stand; retiring each is
+its own change against the corpus. `TestLexerGaps` keeps the three that still refuse.
 
 Labels and logical assignment operators are explicit 0.1 refusals, not newly
 observed language gaps. The port uses ordinary loop control and assignments.

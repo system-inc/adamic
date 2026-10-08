@@ -12,9 +12,9 @@ import (
 	"sort"
 	"strings"
 	"testing"
-	"time"
 	"unicode/utf8"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -26,14 +26,15 @@ const repository = "../../.."
 
 func run(t *testing.T, directory string, environment []string, name string, args ...string) []byte {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	// Silent builds and buffered children use the shared first-output window.
+	// With ten CPU burners, the longest output gap was 3.93s; the default
+	// two-minute Stall leaves more than three times that gap as headroom.
+	command := exec.Command(name, args...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
 	var out, errOut bytes.Buffer
 	command.Stdout, command.Stderr = &out, &errOut
-	if err := command.Run(); err != nil {
+	if err := childguard.Run(command, childguard.Options{}); err != nil {
 		t.Fatalf("%s: %v\n%s", name, err, errOut.Bytes())
 	}
 	if errOut.Len() != 0 {
