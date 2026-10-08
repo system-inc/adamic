@@ -1,0 +1,13 @@
+FIRST FAILURE (tests, at 1482.6 s):
+github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier
+=== RUN   TestExpressionsAgainstGoAndPrettier
+    expressions_test.go:85: === RUN   TestAdamicExpressionCorpus
+            adamic_expressions_test.go:505: 1123 files, 1 full-file parse refusals, 175172 supported maximal expression fragments
+        --- PASS: TestAdamicExpressionCorpus (7.09s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	7.171s
+        
+    expressions_test.go:89: Node exit 0 stderr  diff line 36833: "notyet\texpression-file", Go cohere "ok\tyield 0;\\n"
+--- FAIL: TestExpressionsAgainstGoAndPrettier (15.95s)
+
+red: 5348895b4f1e4430a8ae1990f7d48dfd173bac75 full gate, first failure at tests after 1482.6 s (coverage=0.0s build=15.9s vet=1.3s wasi=172.7s catalog=191.0s stage3=1128.6s tests=2775.1s census=1.5s), 3 fail, 6341 pass

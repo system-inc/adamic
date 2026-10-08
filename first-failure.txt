@@ -1,0 +1,11 @@
+github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier
+=== RUN   TestExpressionsAgainstGoAndPrettier
+    expressions_test.go:85: === RUN   TestAdamicExpressionCorpus
+            adamic_expressions_test.go:505: 1123 files, 1 full-file parse refusals, 175172 supported maximal expression fragments
+        --- PASS: TestAdamicExpressionCorpus (7.09s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	7.171s
+        
+    expressions_test.go:89: Node exit 0 stderr  diff line 36833: "notyet\texpression-file", Go cohere "ok\tyield 0;\\n"
+--- FAIL: TestExpressionsAgainstGoAndPrettier (15.95s)
+
