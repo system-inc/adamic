@@ -1,0 +1,106 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { messageObject, messageUndef } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    root = -1;
+    aliases: readonly number[] | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void { this.root = root; }
+    aliasShadowed(index: number): boolean {
+        const checker = this.context.checker ?? panic('typed rule without checker');
+        if(checker.path.endsWith('.d.ts') || checker.path.endsWith('.d.mts') || checker.path.endsWith('.d.cts')) { return false; }
+        if(this.aliases === undefined) {
+            const scopes: number[] = [];
+            const answer = checker.ask(this.root, 'scope-locals');
+            const frames = new Frames(answer.value ?? panic(answer.reason));
+            header(frames, 'scope-locals');
+            const count = frames.natural();
+            for(let table = 0; table < count; table++) {
+                const tableKind = frames.field(); frames.field();
+                const start = frames.natural(); const end = frames.natural();
+                const names = frames.natural();
+                for(let at = 0; at < names; at++) {
+                    const name = frames.field(); const flags = frames.natural();
+                    const declarations = frames.natural();
+                    // GetSymbolAtLocation leaves imported aliases without a value
+                    // declaration. The checker's own binder table retains the alias.
+                    if(tableKind === 'locals' && name === 'undefined' && (flags & 2097152) !== 0 && declarations > 0) {
+                        scopes.push(start); scopes.push(end);
+                    }
+                    for(let declaration = 0; declaration < declarations; declaration++) {
+                        frames.field(); frames.natural(); frames.natural();
+                    }
+                }
+            }
+            frames.end(); this.aliases = scopes;
+        }
+        const node = this.context.node(index);
+        const start = checker.offsets[node.pos] ?? panic('alias outside source');
+        const end = checker.offsets[node.end] ?? panic('alias end outside source');
+        const scopes = this.aliases ?? panic('missing alias facts');
+        for(let at = 0; at < scopes.length; at += 2) {
+            if((scopes[at] ?? -1) <= start && (scopes[at + 1] ?? -1) >= end) { return true; }
+        }
+        return false;
+    }
+    possible(index: number): boolean {
+        if(index < 0) {
+            return false;
+        }
+        const node = this.context.node(index);
+        if(
+            [
+                'Identifier',
+                'CallExpression',
+                'NewExpression',
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'TaggedTemplateExpression',
+                'YieldExpression',
+                'AwaitExpression',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'ConditionalExpression') {
+            return this.possible(node.children[2] ?? -1) || this.possible(node.children[4] ?? -1);
+        }
+        if(node.kind === 'BinaryExpression') {
+            const op = this.context.node(node.children[1] ?? -1).kind;
+            if(['EqualsToken', 'AmpersandAmpersandEqualsToken', 'AmpersandAmpersandToken', 'CommaToken'].includes(op)) {
+                return this.possible(node.children[2] ?? -1);
+            }
+            if(
+                ['BarBarEqualsToken', 'QuestionQuestionEqualsToken', 'BarBarToken', 'QuestionQuestionToken'].includes(
+                    op,
+                )
+            ) {
+                return this.possible(node.children[0] ?? -1) || this.possible(node.children[2] ?? -1);
+            }
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+        const argument = node.children[0] ?? -1;
+        if(argument < 0) { return; }
+        if(!this.possible(argument)) {
+            this.context.report(index, 'no-throw-literal', 'object', messageObject, '', '', '');
+            return;
+        }
+        const value = this.context.node(argument);
+        if(value.kind === 'Identifier' && value.text === 'undefined') {
+            const checker = this.context.checker ?? panic('typed rule without checker');
+            const answer = checker.ask(argument, 'symbol-origin');
+            const frames = new Frames(answer.value ?? panic(answer.reason));
+            header(frames, 'symbol-origin');
+            const path = frames.field(); frames.end();
+            if((path === '' && !this.aliasShadowed(argument)) || path.endsWith('.d.ts') || path.endsWith('.d.mts') || path.endsWith('.d.cts')) {
+                this.context.report(index, 'no-throw-literal', 'undef', messageUndef, '', '', '');
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
