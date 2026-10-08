@@ -12,6 +12,10 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "errorCaptureStack":
+		return fmt.Sprintf("adamic_error_capture_stack(%s)", arguments[0])
+	case "errorReadStack":
+		return e.own(ir.String, fmt.Sprintf("adamic_error_read_stack(%s)", arguments[0]))
 	case "is":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is(%s, %s)", arguments[0], arguments[1]))
 	case "isFrozen":

@@ -1,6 +1,9 @@
 import { panic } from 'adamic';
 import { readFileSync, openSync, writeSync, closeSync, statSync, mkdirSync, unlinkSync, utimesSync } from 'node:fs';
 
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 export function writeFile(path: string, data: string, writeByteOrderMark?: boolean): void {
     let fd: number | undefined = undefined;
     try {
@@ -34,7 +37,7 @@ export function createDirectory(path: string): void {
         if (stat !== undefined && stat.isDirectory()) { return; }
     } catch { /* getNodeSystem's directoryExists treats every failure as missing. */ }
     try { mkdirSync(path); }
-    catch (error) { if (error instanceof Error) { const errno: NodeJS.ErrnoException = error; if (errno.code !== 'EEXIST') { throw error; } } }
+    catch (error) { if (error instanceof Error) { if (errorCode(error) !== 'EEXIST') { throw error; } } }
 }
 
 export function readFile(fileName: string, _encoding?: string): string | undefined {

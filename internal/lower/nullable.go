@@ -32,6 +32,14 @@ func (l *lowering) nullableUse(node *ast.Node) error {
 	if l.includesNull(own) && l.includesUndefined(own) && !observedTypeOf {
 		return l.notYet(node, nullableTagReason)
 	}
+	// symlinkSync consumes a literal null or intrinsic undefined type argument as its default; no
+	// nullable reference is stored through the Node declaration's wider view.
+	if parent := outer.Parent; (ast.SkipParentheses(node).Kind == ast.KindNullKeyword || l.intrinsicUndefined(node)) && parent != nil && parent.Kind == ast.KindCallExpression && l.nodeLibraryMember(parent) == "node:fs.symlinkSync" {
+		arguments := parent.AsCallExpression().Arguments.Nodes
+		if len(arguments) == 3 && ast.SkipParentheses(arguments[2]) == ast.SkipParentheses(node) {
+			return nil
+		}
+	}
 	// Console observes its argument immediately as text; it never stores the wider declared type.
 	if parent := outer.Parent; parent != nil && parent.Kind == ast.KindCallExpression && l.isConsole(parent.AsCallExpression().Expression) {
 		return nil

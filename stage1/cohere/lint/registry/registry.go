@@ -63,15 +63,31 @@ func RuleModule(directory string) (string, error) {
 	return module, nil
 }
 
-// Witnesses are raw source files outside the module graph. Keep their script kind.
+// Witnesses are raw source files outside the module graph. Keep their script kind. A witness may sit in a
+// directory under testdata, as testdata/src/utils/format.ts.txt, when its rule judges the path: the
+// harness lints it at that relative path.
 func Witnesses(directory string) ([]string, error) {
 	var paths []string
-	for _, extension := range []string{"ts", "tsx", "js", "jsx"} {
-		found, err := filepath.Glob(filepath.Join(directory, "testdata", "*."+extension+".txt"))
+	root := filepath.Join(directory, "testdata")
+	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
-			return nil, err
+			if os.IsNotExist(err) && path == root {
+				return filepath.SkipDir
+			}
+			return err
 		}
-		paths = append(paths, found...)
+		if entry.IsDir() {
+			return nil
+		}
+		for _, extension := range []string{"ts", "tsx", "js", "jsx"} {
+			if strings.HasSuffix(path, "."+extension+".txt") {
+				paths = append(paths, path)
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
 	}
 	sort.Strings(paths)
 	return paths, nil

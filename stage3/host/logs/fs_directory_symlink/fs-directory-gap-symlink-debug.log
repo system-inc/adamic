@@ -1,0 +1,12 @@
+=== RUN   TestNodeFSDirectorySymlinkMutants
+=== PAUSE TestNodeFSDirectorySymlinkMutants
+=== CONT  TestNodeFSDirectorySymlinkMutants
+=== RUN   TestNodeFSDirectorySymlinkMutants/target
+=== PAUSE TestNodeFSDirectorySymlinkMutants/target
+=== CONT  TestNodeFSDirectorySymlinkMutants/target
+    node_fs_directory_symlink_test.go:50: native: exit codes differ Node="default true false\nfile true false\ndir false true\njunction true false\nnull true false\nundefined true false\nbroken false false\nbroken|default|dir|file|junction|null|undefined\nEEXIST: EEXIST: file already exists, symlink 'target' -> '<dir>/default'\nENOENT: ENOENT: no such file or directory, symlink 'target' -> '<dir>/missing/link'\nENOENT: ENOENT: no such file or directory, symlink '' -> '<dir>/empty'\nERR_INVALID_ARG_VALUE: The argument 'target' must be a string, Uint8Array, or URL without null bytes. Received 'a\\x00b'\nERR_INVALID_ARG_VALUE: The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received 'a\\x00b'\nERR_INVALID_ARG_VALUE: The argument 'target' must be a string, Uint8Array, or URL without null bytes. Received 'a\\x00b'\nEACCES: EACCES: permission denied, symlink 'target' -> '<dir>/locked/link'\n: permission denied\n" got="default true false\nfile true false\ndir false true\njunction true false\nnull true false\nundefined true false\n" stderr="/home/agent/.cache/adamic/runtime/.build-4112549054/adamic.h:227:14: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-4112549054/adamic.h:227:14 \n"
+--- FAIL: TestNodeFSDirectorySymlinkMutants (0.00s)
+    --- FAIL: TestNodeFSDirectorySymlinkMutants/target (1.01s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	1.024s
+FAIL

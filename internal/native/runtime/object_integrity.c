@@ -8,7 +8,7 @@
 #include "adamic.h"
 
 static bool primitive(const adamic_heap *value) {
-	return value == NULL || value->kind == adamic_kind_string ||
+	return value == NULL || value == &adamic_null || value->kind == adamic_kind_string ||
 		value->kind == adamic_kind_number || value->kind == adamic_kind_boolean;
 }
 

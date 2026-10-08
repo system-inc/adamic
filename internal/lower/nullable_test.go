@@ -102,3 +102,11 @@ func TestNullableReferenceTypeOfKeepsLookupPresence(t *testing.T) {
 		}
 	}
 }
+
+func TestNullableSymlinkTypeLiteral(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `import { symlinkSync } from 'node:fs'; symlinkSync('target', 'link', (null)); symlinkSync('target', 'link2', (undefined));`)
+	if err != nil {
+		t.Fatal(err)
+	}
+}

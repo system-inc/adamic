@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <string.h>
 
 #include <math.h>
 
@@ -179,8 +180,14 @@ typedef struct adamic_object {
 	bool frozen;
 	bool sealed;
 	bool nonextensible;
+	// captureStackTrace owns one non-enumerable string outside the fixed shape.
+	bool has_captured_stack;
+	adamic_value captured_stack;
 	adamic_value slots[];
 } adamic_object;
+
+void adamic_error_capture_stack(adamic_object *target);
+adamic_string *adamic_error_read_stack(const adamic_object *target);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot);
@@ -230,6 +237,17 @@ adamic_object *adamic_object_copy(const adamic_object *source);
 // adamic_object_has is object.hasOwnProperty(name).
 bool adamic_object_has(const adamic_object *object, const adamic_string *name);
 
+// Runtime scalar tags for fixed program shapes. Host reference slots already carry heap tags.
+typedef struct adamic_shape_types {
+	const adamic_shape *shape;
+	const int *types;
+	struct adamic_shape_types *next;
+} adamic_shape_types;
+extern adamic_heap adamic_null;
+void adamic_register_shape_types(adamic_shape_types *metadata);
+bool adamic_has_property(const adamic_heap *object, const char *name);
+adamic_heap *adamic_dynamic_property(adamic_heap *object, const char *name);
+
 // adamic_object_field finds a field by name. The checker proved the field is there. Where this place in
 // the program last saw the same shape, the field is where it was then, which is inline, since it's
 // what nearly every read is; anything else is adamic_object_find, which searches the shape's names.
@@ -241,6 +259,7 @@ adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, cons
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->has_captured_stack && strcmp(name, "stack") == 0) { return &((adamic_object *)object)->captured_stack; }
 	if (cache->shape != object->shape) {
 		return adamic_object_optional_find(object, name, cache);
 	}
@@ -253,6 +272,7 @@ static inline adamic_value *adamic_object_optional_field(const adamic_object *ob
 // layout. That whole-program proof excludes inherited constructor storage, so the cache
 // hit needs only the shape comparison, without loading a class descriptor.
 static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->has_captured_stack && strcmp(name, "stack") == 0) { return &((adamic_object *)object)->captured_stack; }
 	if (cache->shape == object->shape) {
 		return &((adamic_object *)object)->slots[cache->index];
 	}
@@ -260,6 +280,7 @@ static inline adamic_value *adamic_object_data_field(const adamic_object *object
 }
 
 static inline adamic_value *adamic_object_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	if (object->has_captured_stack && strcmp(name, "stack") == 0) { return &((adamic_object *)object)->captured_stack; }
 	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
 	return adamic_object_data_field(object, name, cache);
 }
@@ -737,6 +758,8 @@ bool adamic_weak_held(const void *target);
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
 extern adamic_object *adamic_thrown;
 adamic_object *adamic_error_new(adamic_string *message);
+// Host errors have three owning slots (name, message, code) and built-in nominal identity.
+void adamic_error_tag(adamic_object *error);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail

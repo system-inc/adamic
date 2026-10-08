@@ -11,6 +11,8 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->frozen = false;
 	object->sealed = false;
 	object->nonextensible = false;
+	object->has_captured_stack = false;
+	object->captured_stack.reference = NULL;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	return object;
 }
@@ -20,6 +22,8 @@ adamic_object *adamic_object_copy(const adamic_object *source) {
 	adamic_object *object = adamic_object_new(shape);
 	for (size_t position = 0; position < shape->count; position++) {
 		size_t index = adamic_public_index(shape, position);
+		// Captured stack is non-enumerable, even when it replaced an own field.
+		if (source->has_captured_stack && strcmp(shape->names[index], "stack") == 0) { continue; }
 		adamic_slot_cache cache = {NULL, 0};
 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
 		object->slots[index] = accessor == NULL ? *adamic_object_field(source, shape->names[index], &cache) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
@@ -33,6 +37,7 @@ adamic_object *adamic_object_copy(const adamic_object *source) {
 // adamic_object_has is object.hasOwnProperty(name): one of the shape's own names, not a method on a
 // prototype. A shape's names are C strings, so the lengths have to agree before the bytes do.
 bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
+	if (object->has_captured_stack && name->length == 5 && memcmp(name->bytes, "stack", 5) == 0) { return true; }
 	for (size_t index = 0; index < object->shape->count; index++) {
 		const char *field = object->shape->names[index];
 		size_t length = strlen(field);
@@ -114,4 +119,20 @@ adamic_value *adamic_object_optional_find(const adamic_object *object, const cha
 		return NULL;
 	}
 	return &((adamic_object *)object)->slots[cache->index];
+}
+
+// Frame text is intentionally unspecified. Capturing still creates a real own,
+// writable, non-enumerable string property; no V8 frame text enters the oracle.
+void adamic_error_capture_stack(adamic_object *target) {
+	adamic_object_check_data_write(target, "stack");
+	adamic_retain(&adamic_string_empty);
+	if (target->has_captured_stack) { adamic_release(target->captured_stack.reference); }
+	target->captured_stack.reference = &adamic_string_empty;
+	target->has_captured_stack = true;
+}
+
+adamic_string *adamic_error_read_stack(const adamic_object *target) {
+	adamic_slot_cache cache = {NULL, 0};
+	adamic_value *slot = adamic_object_optional_field(target, "stack", &cache);
+	return slot == NULL ? NULL : adamic_retain(slot->reference);
 }

@@ -1,0 +1,6 @@
+{
+  "name": "constructor-property-name-ignored",
+  "file": "rule.a",
+  "from": "this.context.node(innerName).text === 'constructor'",
+  "to": "true"
+}

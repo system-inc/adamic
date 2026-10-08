@@ -1,0 +1,26 @@
+import 'node:process';
+import { readTextFile, programArguments, panic } from 'adamic';
+/** @internal */
+export function errorCode(error: unknown): string | undefined {
+    return typeof error === "object" && error !== null && "code" in error && typeof error.code === "string" ? error.code : undefined;
+}
+
+/** @internal */
+export function errorMessage(error: unknown): string | undefined {
+    return typeof error === "object" && error !== null && "message" in error && typeof error.message === "string" ? error.message : undefined;
+}
+
+process.chdir('.'); // Invalidate the Node runner's bootstrap cwd cache.
+process.stdout.write('ready\n');
+const signal = readTextFile(programArguments()[0] ?? '');
+if (signal.kind !== 'Ok') { panic(signal.message); }
+if (signal.text !== 'continue') { panic('invalid cwd barrier'); }
+try { process.cwd(); }
+catch (error: unknown) {
+    const code = errorCode(error), message = errorMessage(error);
+    if (code !== undefined && message !== undefined) {
+        console.log(code);
+        console.log(message);
+        console.log(String(Object.prototype.hasOwnProperty.call(error, 'code') && Object.prototype.hasOwnProperty.call(error, 'message')));
+    }
+}

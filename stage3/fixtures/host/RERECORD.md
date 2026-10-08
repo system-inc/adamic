@@ -235,3 +235,24 @@ A separate byte check replaces each stage0 JSON span with the same placeholder
 in the old and new files and asserts that the remaining complete file bytes
 are identical. It also compares every parsed field other than stage0 and proves
 exactly 25 stage0 values changed. No Node observation is rerecorded or weakened.
+
+## Refresh on library/merge-p2b, October 7, 2026
+
+Baseline `047e857207be`, cohere `7945d102`, Linux, Node v24.19.0. The same
+scratch typed collector workflow above calls load.Load and lower.Lower, then
+replaces only stage0 JSON spans. Twenty stage0 values change. A byte comparison
+masks just those spans and proves that every remaining byte, including each
+Node field, is unchanged. No fixture source is edited.
+
+The current outcomes are six Checker, fifteen NotYet, three Refused and one
+Compiles. 05_writeFile.a now refuses adamic/no-unchecked-cast at 37:30;
+14_getCurrentDirectory.a and 21_createHash.a refuse non-null assertions.
+The remaining gaps name the next actual unsupported member, not mkdtempSync.
+11_setModifiedTime.a now compiles and its Node/native/sanitizer/leak comparison
+passes. 25_readDirectory.a's current complete checker diagnostics are recorded.
+
+`go test ./stage3/... -count=1 -v -timeout 30m` passes, including all 25 exact
+host Node observations and current stage0 outcomes (fixtures package 301.361s).
+Log: `/tmp/p2b-stage3.log`. An inaccurate 05_writeFile.a diagnostic in a scratch
+status file fails only stage0; its Node comparison passes, proving that the
+rerecorded compiler contract remains strict (`/tmp/p2b-status-mutant.log`).
