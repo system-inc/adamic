@@ -1,0 +1,7 @@
+function holdMixed(value: string | object | undefined): string | object | undefined { return value; }
+function observeMixed(value: string | object | undefined): string { return typeof value; }
+const text = 'mixed'.repeat(2);
+const object = { value: 7 };
+console.log(`${holdMixed(text) === text} ${observeMixed(holdMixed(text))}`);
+console.log(`${holdMixed(object) === object} ${observeMixed(holdMixed(object))}`);
+console.log(`${holdMixed(undefined) === undefined} ${observeMixed(holdMixed(undefined))}`);
