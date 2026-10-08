@@ -1,0 +1,13 @@
+{
+  "name": "no-extra-bind",
+  "kinds": [
+    "FunctionExpression",
+    "ArrowFunction"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoExtraBind",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoExtraBind"
+}

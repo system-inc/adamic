@@ -1,0 +1,5 @@
+{
+  "name": "arrow-binding-is-observable",
+  "from": "kind === 'ArrowFunction' || !this.mentionsOwnThis(index, index)",
+  "to": "kind !== 'ArrowFunction' && !this.mentionsOwnThis(index, index)"
+}

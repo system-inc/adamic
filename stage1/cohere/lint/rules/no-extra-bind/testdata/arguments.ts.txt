@@ -1,0 +1,3 @@
+const x = function() {}.bind(`x`);
+const y = function() {}.bind(-1);
+const z = function() {}.bind(1);

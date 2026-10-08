@@ -1,0 +1,82 @@
+import { utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { forFile } from '../../helpers/comments/for_file.ts';
+import { messageUnnecessaryBind } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    mentionsOwnThis(index: number, root: number): boolean {
+        const kind = this.context.kind(index);
+        if(index !== root && (this.context.functionLike(index) && kind !== 'ArrowFunction' ||
+            kind === 'ClassDeclaration' || kind === 'ClassExpression')) {
+            return false;
+        }
+        if(kind === 'ThisKeyword') { return true; }
+        for(const child of this.context.node(index).children) {
+            if(this.mentionsOwnThis(child, root)) { return true; }
+        }
+        return false;
+    }
+    outer(index: number): number {
+        let current = index;
+        while(this.context.kind(this.context.parent(current)) === 'ParenthesizedExpression') {
+            current = this.context.parent(current);
+        }
+        return current;
+    }
+    sideEffectFree(index: number): boolean {
+        const kind = this.context.kind(index);
+        return kind === 'Identifier' || kind === 'ThisKeyword' || kind === 'FunctionExpression' ||
+            kind === 'StringLiteral' || kind === 'NumericLiteral' || kind === 'BigIntLiteral' ||
+            kind === 'RegularExpressionLiteral' || kind === 'TrueKeyword' || kind === 'FalseKeyword' ||
+            kind === 'NullKeyword';
+    }
+    visit(index: number): void {
+        const kind = this.context.kind(index);
+        if(!(kind === 'ArrowFunction' || !this.mentionsOwnThis(index, index))) { return; }
+        const receiver = this.outer(index);
+        const access = this.context.parent(receiver);
+        const accessKind = this.context.kind(access);
+        if(accessKind !== 'PropertyAccessExpression' && accessKind !== 'ElementAccessExpression') { return; }
+        if(this.context.child(access, 0) !== receiver) { return; }
+        const property = this.context.property(access);
+        const propertyKind = this.context.kind(property);
+        if(accessKind === 'PropertyAccessExpression') {
+            if(propertyKind !== 'Identifier' || this.context.node(property).text !== 'bind') { return; }
+        }
+        else if((propertyKind !== 'StringLiteral' && propertyKind !== 'NoSubstitutionTemplateLiteral') ||
+            this.context.node(property).text !== 'bind') { return; }
+        const callee = this.outer(access);
+        const call = this.context.parent(callee);
+        if(this.context.kind(call) !== 'CallExpression' || this.context.child(call, 0) !== callee) { return; }
+        const args = this.context.arguments(call);
+        if(args.length !== 1) { return; }
+        const argument = args[0] ?? -1;
+        if(this.context.kind(argument) === 'SpreadElement') { return; }
+        const edits: SuggestionEdit[] = [];
+        if(this.sideEffectFree(argument)) {
+            // The shared scanner advances past trivia to the first removed token.
+            this.context.scanAt(this.context.node(receiver).end);
+            const firstStart = this.context.scanStart();
+            this.context.scanAt(this.context.node(callee).end);
+            const secondStart = this.context.scanStart();
+            const end = this.context.node(call).end;
+            const byteStart = utf8Length(this.context.source.slice(0, firstStart));
+            const byteEnd = utf8Length(this.context.source.slice(0, end));
+            let hasComment = false;
+            // An undefined cache selects the shared helper's uncached contract.
+            for(const comment of forFile(this.context.parser, this.context.root, undefined)) {
+                if(comment.start >= byteStart && comment.start < byteEnd) { hasComment = true; }
+            }
+            if(!hasComment) {
+                edits.push(new SuggestionEdit(firstStart, this.context.node(access).end, ''));
+                edits.push(new SuggestionEdit(secondStart, end, ''));
+            }
+        }
+        this.context.reportNode(property, 'no-extra-bind', 'unexpected', messageUnnecessaryBind, edits);
+    }
+}
+
+export function create(context: RuleContext): Rule { return new Rule(context); }
