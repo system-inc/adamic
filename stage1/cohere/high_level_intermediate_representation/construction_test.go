@@ -194,6 +194,13 @@ func compareConstructionCensus(t *testing.T, output []byte, manifest string, mut
 type constructionMutant struct{ name, file, from, to string }
 
 var constructionMutants = []constructionMutant{
+	{"cast changes type span", "lower.ts", "nodePos: this.byte(type.pos)", "nodePos: this.byte(type.pos) + 1"},
+	{"property delete changes key", "lower.ts", "kind: 'PropertyDelete', object: this.expression(target.children[0] ?? -1), property: this.parser.node(target.children[target.children.length - 1] ?? -1).text", "kind: 'PropertyDelete', object: this.expression(target.children[0] ?? -1), property: 'other'"},
+	{"computed delete loses key", "lower.ts", "kind: 'ComputedDelete', object: this.expression(target.children[0] ?? -1), property: this.expression(target.children[target.children.length - 1] ?? -1)", "kind: 'ComputedDelete', object: this.expression(target.children[0] ?? -1), property: this.fn.returns"},
+	{"regex flags disappear", "lower.ts", "flags: node.text.slice(slash + 1)", "flags: ''"},
+	{"template operand disappears", "lower.ts", "subexprs.push(this.expression(span.children[0] ?? -1))", "this.expression(span.children[0] ?? -1)"},
+	{"tagged template changes tag", "lower.ts", "kind: 'TaggedTemplateExpression', tag, quasis, subexprs", "kind: 'TaggedTemplateExpression', tag: this.fn.returns, quasis, subexprs"},
+	{"this changes global name", "lower.ts", "name: 'this', bindingKind: 0", "name: 'that', bindingKind: 0"},
 	{"array hole disappears", "lower.ts", "spread: false, hole: true", "spread: false, hole: false"},
 	{"array spread disappears", "lower.ts", "spread: element.kind === 'SpreadElement', hole: false", "spread: false, hole: false"},
 	{"object spread disappears", "lower.ts", "value: this.expression(member.children[0] ?? -1), spread: true", "value: this.expression(member.children[0] ?? -1), spread: false"},

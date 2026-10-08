@@ -35,6 +35,12 @@ function supportedTarget(parser: Parser, id: number): boolean {
 }
 function supportedExpression(parser: Parser, id: number): boolean {
     const node = parser.node(id);
+    if(node.kind === 'ThisKeyword' || node.kind === 'RegularExpressionLiteral') { return true; }
+    if(node.kind === 'TemplateExpression') { return node.children.slice(1).every((child) => supportedExpression(parser, parser.node(child).children[0] ?? -1)); }
+    if(node.kind === 'TaggedTemplateExpression') { return supportedExpression(parser, node.children[0] ?? -1) && supportedExpression(parser, node.children[node.children.length - 1] ?? -1); }
+    if(node.kind === 'AsExpression' || node.kind === 'SatisfiesExpression' || node.kind === 'TypeAssertionExpression') { return supportedExpression(parser, node.children[node.kind === 'TypeAssertionExpression' ? 1 : 0] ?? -1); }
+    if(node.kind === 'AwaitExpression' || node.kind === 'DeleteExpression') { return supportedExpression(parser, node.children[0] ?? -1); }
+    if(node.kind === 'NonNullExpression') { return supportedExpression(parser, node.children[0] ?? -1); }
     if(node.kind === 'ArrayLiteralExpression') { return node.children.every((child) => { const element = parser.node(child); return element.kind === 'OmittedExpression' || supportedExpression(parser, element.kind === 'SpreadElement' ? element.children[0] ?? -1 : child); }); }
     if(node.kind === 'ObjectLiteralExpression') {
         return node.children.every((child) => {
@@ -590,8 +596,27 @@ class StraightLineBuilder {
         }
         return this.emit({ kind: 'JsxExpression', tag, props, children: this.jsxChildren(children) }, id, undefined);
     }
+    template(id: number): PlaceInterface {
+        const node = this.parser.node(id);
+        const tag = node.kind === 'TaggedTemplateExpression' ? this.expression(node.children[0] ?? -1) : undefined;
+        const template = tag === undefined ? node : this.parser.node(node.children[node.children.length - 1] ?? -1);
+        const quasis: string[] = [];
+        const subexprs: PlaceInterface[] = [];
+        if(template.kind === 'TemplateExpression') {
+            quasis.push(this.parser.node(template.children[0] ?? -1).text);
+            for(const child of template.children.slice(1)) { const span = this.parser.node(child); subexprs.push(this.expression(span.children[0] ?? -1)); quasis.push(this.parser.node(span.children[1] ?? -1).text); }
+        } else { quasis.push(template.text); }
+        return tag === undefined ? this.emit({ kind: 'TemplateLiteral', quasis, subexprs }, id, undefined) : this.emit({ kind: 'TaggedTemplateExpression', tag, quasis, subexprs }, id, undefined);
+    }
     expression(id: number): PlaceInterface {
         const node = this.parser.node(id);
+        if(node.kind === 'AsExpression' || node.kind === 'SatisfiesExpression' || node.kind === 'TypeAssertionExpression') { const type = this.parser.node(node.children[node.kind === 'TypeAssertionExpression' ? 0 : 1] ?? -1); return this.emit({ kind: 'TypeCastExpression', value: this.expression(node.children[node.kind === 'TypeAssertionExpression' ? 1 : 0] ?? -1), nodeKind: type.kind, nodePos: this.byte(type.pos), nodeEnd: this.byte(type.end) }, id, undefined); }
+        if(node.kind === 'AwaitExpression') { return this.emit({ kind: 'Await', value: this.expression(node.children[0] ?? -1) }, id, undefined); }
+        if(node.kind === 'DeleteExpression') { const targetId = node.children[0] ?? -1; const target = this.parser.node(targetId); if(target.kind === 'PropertyAccessExpression') { return this.emit({ kind: 'PropertyDelete', object: this.expression(target.children[0] ?? -1), property: this.parser.node(target.children[target.children.length - 1] ?? -1).text }, id, undefined); } if(target.kind === 'ElementAccessExpression') { return this.emit({ kind: 'ComputedDelete', object: this.expression(target.children[0] ?? -1), property: this.expression(target.children[target.children.length - 1] ?? -1) }, id, undefined); } this.expression(targetId); return this.emit({ kind: 'Primitive', literal: 'bool:true' }, id, undefined); }
+        if(node.kind === 'ThisKeyword') { return this.emit({ kind: 'LoadGlobal', name: 'this', bindingKind: 0, source: '', imported: '' }, id, undefined); }
+        if(node.kind === 'RegularExpressionLiteral') { const slash = node.text.lastIndexOf('/'); return this.emit({ kind: 'RegExpLiteral', pattern: node.text.slice(1, slash), flags: node.text.slice(slash + 1) }, id, undefined); }
+        if(node.kind === 'TemplateExpression' || node.kind === 'TaggedTemplateExpression') { return this.template(id); }
+        if(node.kind === 'NonNullExpression') { return this.expression(node.children[0] ?? -1); }
         if(node.kind === 'ArrayLiteralExpression' || node.kind === 'ObjectLiteralExpression') { return this.aggregate(id); }
         if(node.kind === 'JsxElement' || node.kind === 'JsxSelfClosingElement' || node.kind === 'JsxFragment') { return this.jsx(id); }
         if(node.kind === 'JsxExpression') { const inner = node.children.find((child) => this.parser.node(child).kind !== 'DotDotDotToken'); return inner === undefined ? this.emit({ kind: 'Primitive', literal: 'nil' }, id, undefined) : this.expression(inner); }
@@ -683,8 +708,8 @@ export function lowerParsedFunction(parser: Parser, root: number, source: string
     return new ConstructedHIR(arena, builder.functionIndex);
 }
 // Corpus positions are UTF-8 offsets; path selects a nested graph constructed with its parent.
-export function lowerSourceAt(source: string, start: number, end: number, symbols: SymbolSnapshot | undefined = undefined, path: string = ''): ConstructedHIR | undefined {
-    const parser = new Parser(source, '/test.tsx'); parser.file();
+export function lowerSourceAt(source: string, start: number, end: number, symbols: SymbolSnapshot | undefined = undefined, path: string = '', filePath: string = '/test.tsx'): ConstructedHIR | undefined {
+    const parser = new Parser(source, filePath); parser.file();
     let root = -1;
     for(let index = 0; index < parser.nodes.length; index++) {
         const candidate = parser.node(index);

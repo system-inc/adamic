@@ -24,7 +24,14 @@ export interface ObjectPropertyInterface { readonly key: string; computedKey: Pl
 export interface JsxTagInterface { readonly name: string; place: PlaceInterface | undefined; }
 export interface JsxAttributeInterface { readonly name: string; value: PlaceInterface; readonly spread: boolean; }
 export interface ModuleExportOriginInterface { readonly module: string; readonly exported: string; }
-export type ValueType = { readonly kind: 'Primitive'; readonly literal: string } | { readonly kind: 'LoadLocal' | 'LoadContext'; place: PlaceInterface }
+export type ValueType = { readonly kind: 'TypeCastExpression'; value: PlaceInterface; readonly nodeKind: string; readonly nodePos: number; readonly nodeEnd: number }
+    | { readonly kind: 'Await'; value: PlaceInterface }
+    | { readonly kind: 'PropertyDelete'; object: PlaceInterface; readonly property: string }
+    | { readonly kind: 'ComputedDelete'; object: PlaceInterface; property: PlaceInterface }
+    | { readonly kind: 'RegExpLiteral'; readonly pattern: string; readonly flags: string }
+    | { readonly kind: 'TemplateLiteral'; readonly quasis: string[]; readonly subexprs: PlaceInterface[] }
+    | { readonly kind: 'TaggedTemplateExpression'; tag: PlaceInterface; readonly quasis: string[]; readonly subexprs: PlaceInterface[] }
+    | { readonly kind: 'Primitive'; readonly literal: string } | { readonly kind: 'LoadLocal' | 'LoadContext'; place: PlaceInterface }
     | { readonly kind: 'UnaryExpression'; readonly operator: string; value: PlaceInterface }
     | { readonly kind: 'BinaryExpression'; left: PlaceInterface; readonly operator: string; right: PlaceInterface }
     | { readonly kind: 'LoadGlobal'; readonly name: string; readonly bindingKind: number; readonly source: string; readonly imported: string }

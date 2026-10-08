@@ -27,7 +27,7 @@ export function constructionCoverage(path: string, cached: boolean = false): voi
         const nestedPath = fields[12] ?? '';
         let fn: ConstructedHIR;
         if(cached && symbols !== undefined) {
-            const file = new HIRFile(source.text, symbols); const node = file.at(start, end);
+            const file = new HIRFile(source.text, symbols, fields[1] ?? '/test.tsx'); const node = file.at(start, end);
             const first = ForFunction(file, node) ?? panic(`eligible cache construction declined: ${key}`);
             if(first !== ForFunction(file, node) || first !== ForFunction(file, node)) { panic('ForFunction cache identity changed'); }
             let index = first.root;
@@ -35,8 +35,8 @@ export function constructionCoverage(path: string, cached: boolean = false): voi
             fn = new ConstructedHIR(first.arena, index);
         }
         else {
-            if(cached) { const file = new HIRFile(source.text, undefined); if(ForFunction(file, file.at(start, end)) !== undefined) { panic('checker-less cache constructed'); } }
-            fn = lowerSourceAt(source.text, start, end, symbols, nestedPath) ?? panic(`eligible construction declined: ${key}`);
+            if(cached) { const file = new HIRFile(source.text, undefined, fields[1] ?? '/test.tsx'); if(ForFunction(file, file.at(start, end)) !== undefined) { panic('checker-less cache constructed'); } }
+            fn = lowerSourceAt(source.text, start, end, symbols, nestedPath, fields[1] ?? '/test.tsx') ?? panic(`eligible construction declined: ${key}`);
         }
         console.log(dump(fn).trimEnd());
     }

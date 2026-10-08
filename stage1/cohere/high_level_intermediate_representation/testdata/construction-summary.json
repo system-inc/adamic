@@ -1,9 +1,9 @@
 {
   "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
   "constructionCorpusFunctions": 1465,
-  "constructionCorpusFunctionsMatched": 748,
-  "pathProbes": 56,
-  "pathProbesMatched": 56,
+  "constructionCorpusFunctionsMatched": 752,
+  "pathProbes": 57,
+  "pathProbesMatched": 57,
   "upstreamFixtures": 395,
   "flowExcludedFixtures": [
     "error.bug-context-variable-catch-in-lambda.js",
@@ -1138,6 +1138,15 @@
       ]
     },
     {
+      "key": "2b53a0d80e854ac1712b0d829af0c49bd7a2cdf37d4dac9039de7ba4fdd5d670",
+      "start": 63,
+      "end": 871,
+      "checker": true,
+      "calls": [
+        "upstream:fbt/error.todo-fbt-as-local.js"
+      ]
+    },
+    {
       "key": "2b54e3d1c11fd2fb733ee0ac711542bf90b30c9d75f53f7c88ea3076ef6c91ec",
       "start": 0,
       "end": 372,
@@ -1738,6 +1747,15 @@
       "checker": false,
       "calls": [
         "lower_test.go:53/nested"
+      ]
+    },
+    {
+      "key": "4209ec7154a885512a5539ddf8295f7ed0b5fa0eecc027fa55cf9d20ac794233",
+      "start": 524,
+      "end": 643,
+      "checker": true,
+      "calls": [
+        "upstream:fbt/error.todo-fbt-as-local.js/nested"
       ]
     },
     {
@@ -3107,6 +3125,15 @@
         "preserve_manual_memoization_score_test.go:552/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:new-mutability/error.invalid-useCallback-captures-reassigned-context.js/nested"
+      ]
+    },
+    {
+      "key": "7489c7aaa967ac1faafae8ee8fb11cb25d07cfe3d0fc5b25bf244f852252e6be",
+      "start": 0,
+      "end": 72,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -5462,6 +5489,15 @@
       "checker": true,
       "calls": [
         "upstream:error.propertyload-hook.js"
+      ]
+    },
+    {
+      "key": "c5c70620ce23e8b8d7cc4f559687b0063666ccaa957924a37bd35f0fffc664ab",
+      "start": 664,
+      "end": 786,
+      "checker": true,
+      "calls": [
+        "upstream:fbt/error.todo-fbt-as-local.js/nested"
       ]
     },
     {

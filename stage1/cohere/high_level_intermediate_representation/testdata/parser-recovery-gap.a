@@ -1,0 +1,2 @@
+import { Parser } from '../../../typescript/parser/parser.ts';
+new Parser('function F(){return <x>{a}{b}</x>}', 'input.ts').file();

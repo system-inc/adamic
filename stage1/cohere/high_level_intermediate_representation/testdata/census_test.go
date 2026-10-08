@@ -18,12 +18,14 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/system-inc/cohere/internal/lint/rule"
 	react_conformance "github.com/system-inc/cohere/internal/lint/rules/react/conformance"
 	rule_testing "github.com/system-inc/cohere/internal/lint/testing"
 )
 
 type constructionRecord struct {
+	Extension  string   `json:"extension"`
 	Key        string   `json:"key"`
 	Source     string   `json:"source"`
 	Start      int      `json:"start"`
@@ -130,6 +132,30 @@ func constructionExpression(n *ast.Node) bool {
 		return true
 	case ast.KindFunctionExpression, ast.KindArrowFunction:
 		return constructionEligible(n)
+	case ast.KindAsExpression:
+		return constructionExpression(n.AsAsExpression().Expression)
+	case ast.KindSatisfiesExpression:
+		return constructionExpression(n.AsSatisfiesExpression().Expression)
+	case ast.KindTypeAssertionExpression:
+		return constructionExpression(n.AsTypeAssertion().Expression)
+	case ast.KindAwaitExpression:
+		return constructionExpression(n.AsAwaitExpression().Expression)
+	case ast.KindDeleteExpression:
+		return constructionExpression(n.AsDeleteExpression().Expression)
+	case ast.KindNonNullExpression:
+		return constructionExpression(n.AsNonNullExpression().Expression)
+	case ast.KindTemplateExpression:
+		for _, span := range n.AsTemplateExpression().TemplateSpans.Nodes {
+			if !constructionExpression(span.AsTemplateSpan().Expression) {
+				return false
+			}
+		}
+		return true
+	case ast.KindTaggedTemplateExpression:
+		x := n.AsTaggedTemplateExpression()
+		return constructionExpression(x.Tag) && constructionExpression(x.Template)
+	case ast.KindThisKeyword, ast.KindRegularExpressionLiteral:
+		return true
 	case ast.KindIdentifier, ast.KindNumericLiteral, ast.KindStringLiteral, ast.KindBigIntLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindTrueKeyword, ast.KindFalseKeyword, ast.KindNullKeyword:
 		return true
 	case ast.KindParenthesizedExpression:
@@ -338,6 +364,15 @@ func constructionStore(clone *Function, checked bool, symbols string, caller str
 		return
 	}
 	f := clone
+	extension := ".ts"
+	switch source.ScriptKind {
+	case core.ScriptKindTSX:
+		extension = ".tsx"
+	case core.ScriptKindJSX:
+		extension = ".jsx"
+	case core.ScriptKindJS:
+		extension = ".js"
+	}
 	excluded := ""
 	if (react_conformance.Fixture{Source: source.Text()}).RequiresFlow() {
 		excluded = "Flow"
@@ -363,7 +398,7 @@ func constructionStore(clone *Function, checked bool, symbols string, caller str
 			old.NestedPath = nestedPath
 		}
 	} else {
-		constructionRecords[key] = &constructionRecord{Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: eligible, RootStart: rootStart, RootEnd: rootEnd, NestedPath: nestedPath, Calls: []string{caller}, Symbols: symbols, Excluded: excluded}
+		constructionRecords[key] = &constructionRecord{Extension: extension, Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: eligible, RootStart: rootStart, RootEnd: rootEnd, NestedPath: nestedPath, Calls: []string{caller}, Symbols: symbols, Excluded: excluded}
 	}
 	constructionMutex.Unlock()
 	for index, nested := range clone.Functions {
@@ -446,7 +481,7 @@ func TestMain(m *testing.M) {
 			r := constructionRecords[key]
 			sort.Strings(r.Calls)
 			r.Calls = uniqueConstructionCalls(r.Calls)
-			sourcePath := filepath.Join(destination, key+".tsx")
+			sourcePath := filepath.Join(destination, key+r.Extension)
 			dumpPath := filepath.Join(destination, key+".dump")
 			symbolsPath := filepath.Join(destination, key+".symbols")
 			if err := os.WriteFile(symbolsPath, []byte(r.Symbols), 0600); err != nil {
@@ -497,6 +532,9 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function Casts(value) { return [value as number, value satisfies unknown]; }",
+		"function Deletes(value, key) { return [delete value.x, delete value[key], delete value]; }",
+		"function Templates(value, tag) { const rx = /a\\/b/gi; const plain = `a${value}b${this}c`; return [rx, plain, tag`x${value}y`, tag`empty`, value!]; }",
 		"function Arrays(value, values) { return [value, , ...values, [value],]; }",
 		"function Objects(value, key, props) { return {value, literal: value, 'quoted': value, 3: value, [key()]: value(), ...props}; }",
 		"function ComputedOrder(flag, value, key) { return {[flag ? key() : 1]: flag ? value() : 2}; }",

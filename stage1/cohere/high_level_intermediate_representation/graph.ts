@@ -53,6 +53,11 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
             instruction.value.right = visit(instruction.value.right, 'Use');
         }
         const value = instruction.value;
+        if(value.kind === 'TypeCastExpression' || value.kind === 'Await') { value.value = visit(value.value, 'Use'); }
+        if(value.kind === 'PropertyDelete' || value.kind === 'ComputedDelete') { value.object = visit(value.object, 'Use'); }
+        if(value.kind === 'ComputedDelete') { value.property = visit(value.property, 'Use'); }
+        if(value.kind === 'TaggedTemplateExpression') { value.tag = visit(value.tag, 'Use'); }
+        if(value.kind === 'TemplateLiteral' || value.kind === 'TaggedTemplateExpression') { for(let index = 0; index < value.subexprs.length; index++) { value.subexprs[index] = visit(value.subexprs[index] ?? panic('missing template operand'), 'Use'); } }
         if(value.kind === 'StoreGlobal' || value.kind === 'StoreLocal' || value.kind === 'StoreContext' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate' || value.kind === 'PropertyStore' || value.kind === 'ComputedStore') { value.value = visit(value.value, 'Use'); }
         if(value.kind === 'PropertyLoad' || value.kind === 'ComputedLoad' || value.kind === 'PropertyStore' || value.kind === 'ComputedStore') { value.object = visit(value.object, 'Use'); }
         if(value.kind === 'ComputedLoad' || value.kind === 'ComputedStore') { value.property = visit(value.property, 'Use'); }

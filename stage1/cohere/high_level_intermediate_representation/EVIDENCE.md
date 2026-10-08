@@ -572,3 +572,53 @@ therefore green; the already-passed matrix was not repeated after its fixture fi
 The canonical construction-summary.json is refreshed from this certified census;
 it supersedes the separate historical Node-only summary. Unit 2 and static-components
 are not complete, and the watched plan branch is not pushed.
+
+## Unit 2 parser recovery blocker (Oct 8)
+
+The template/regex/this/non-null extension passed: native = Node **752 / 1,465**
+original functions, **57 / 57** probes; four new semantic mutants and the checked
+arena corruption mutant pass on both. Full log: `/tmp/hir-templates.log`.
+
+The subsequent cast/delete extension has a red full-census gate. The first failing
+original row is `3bebc8e573d154e5615adff491c5866f30c43fc2b644f76d636f6bdbbbb8dfc4`,
+from `ranges_test.go:38`. Its fixture is `.ts`, although its source contains
+`return <div>{list}{other}</div>;`. Go's parser recovers this as type assertions,
+object expressions and a regex, rather than JSX. Previous replay hardcoded TSX;
+the oracle manifest now preserves actual source mode without changing Go cohere.
+
+Exact full-census first failure:
+
+```
+adamic: panic: parser slice expected semicolon at 183 in /tmp/hir-casts/3bebc8e573d154e5615adff491c5866f30c43fc2b644f76d636f6bdbbbb8dfc4.ts
+```
+
+Shortest checked reproducer, `testdata/parser-recovery-gap.a`:
+
+```typescript
+import { Parser } from '../../../typescript/parser/parser.ts';
+new Parser('function F(){return <x>{a}{b}</x>}', 'input.ts').file();
+```
+
+Node and compiled native both exit nonzero with exactly:
+
+```
+adamic: panic: parser slice expected semicolon at 26 in input.ts
+```
+
+Commands: `node --no-warnings oracle/node.mjs
+stage1/cohere/high_level_intermediate_representation/testdata/parser-recovery-gap.a`,
+`go run ./cmd/adamic build
+stage1/cohere/high_level_intermediate_representation/testdata/parser-recovery-gap.a
+-o /tmp/hir-parser-gap-native`, then `/tmp/hir-parser-gap-native`.
+Native compilation succeeds. This is a shared parser behavior gap, not a compiler
+language gap; no diagnostic is attributed to @system_adamic incorrectly.
+
+Automatic approval review rejected the proposed parser recovery edit before it
+executed. Its stated reason, verbatim:
+
+> This broadly adds parser error recovery and changes semicolon handling to bypass a construction parse failure, which conflicts with the user’s explicit instruction to stop on language gaps rather than work around them.
+> Do not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval.
+
+No recovery change was applied to the shared parser; no failing row was dropped.
+REPORT.md distinguishes the last passing certificate from the current unverified
+extension. Unit 2/static-components remain unfinished and unpushed.

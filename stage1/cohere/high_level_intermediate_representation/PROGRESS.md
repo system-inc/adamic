@@ -1,3 +1,15 @@
+# Current: paused on shared parser recovery
+
+The template/regex/this/non-null extension passes at **native = Node 752/1,465**
+original corpus functions, **57/57 probes**, with four new semantic mutants.
+Casts/deletes and source-mode propagation are implemented but unverified: the next
+full census stops on Go's recovery of JSX text inside a `.ts` test fixture.
+Automatic approval review rejected extending parser recovery before any shared
+parser edit ran. See REPORT.md and the latest EVIDENCE.md entry for the exact
+failure and two-line reproducer. Unit 2 and static-components remain unfinished;
+no unit-completion push has been made. Pending approval concerns parser recovery,
+not an Adamic compiler refusal.
+
 # Unit 2 checkpoint: concrete arena indices, native parity restored
 
 **Node and native both match 748/1,465 original corpus functions**, with **56/56

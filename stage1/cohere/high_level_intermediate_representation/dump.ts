@@ -54,7 +54,12 @@ export function quote(text: string): string {
 function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunction): string {
     let payload = '';
     const value = instruction.value;
-    if(value.kind === 'Primitive') { payload = value.literal; }
+    if(value.kind === 'TypeCastExpression') { payload = `{"Node":{"end":${value.nodeEnd},"kind":${quote('Kind' + value.nodeKind)},"pos":${value.nodePos}},"Value":${quote(placeText(value.value))}}`; }
+    else if(value.kind === 'Await') { payload = `{"Value":${quote(placeText(value.value))}}`; }
+    else if(value.kind === 'PropertyDelete' || value.kind === 'ComputedDelete') { payload = `{"Object":${quote(placeText(value.object))},"Property":${quote(value.kind === 'PropertyDelete' ? value.property : placeText(value.property))}}`; }
+    else if(value.kind === 'RegExpLiteral') { payload = `{"Flags":${quote(value.flags)},"Pattern":${quote(value.pattern)}}`; }
+    else if(value.kind === 'TemplateLiteral' || value.kind === 'TaggedTemplateExpression') { const quasis = '[' + value.quasis.map((text) => quote(text)).join(',') + ']'; const subexprs = '[' + value.subexprs.map((place) => quote(placeText(place))).join(',') + ']'; payload = `{"Quasis":${quasis},"Subexprs":${subexprs}${value.kind === 'TaggedTemplateExpression' ? ',"Tag":' + quote(placeText(value.tag)) : ''}}`; }
+    else if(value.kind === 'Primitive') { payload = value.literal; }
     else if(value.kind === 'LoadLocal') { payload = placeText(value.place); }
     else if(value.kind === 'UnaryExpression') { payload = `${value.operator} ${placeText(value.value)}`; }
     else if(value.kind === 'BinaryExpression') { payload = `${placeText(value.left)} ${value.operator} ${placeText(value.right)}`; }
