@@ -109,7 +109,7 @@ func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) 
 	}
 	binary := node.AsBinaryExpression()
 	switch binary.OperatorToken.Kind {
-	case ast.KindQuestionQuestionToken:
+	case ast.KindQuestionQuestionToken, ast.KindBarBarToken:
 		left, err := l.classConstructorValue(binary.Left)
 		if err != nil {
 			return nil, err
@@ -121,6 +121,7 @@ func (l *lowering) classConstructorValue(node *ast.Node) (ir.Expression, error) 
 		if left.Type() != ir.Object || right.Type() != ir.Object {
 			return nil, l.notYet(node, "a constructor cache without class storage")
 		}
+		// A constructor object is truthy; its only falsy stored values are nullish.
 		return ir.Coalesce{Value: left, Fallback: right, Of: ir.Object}, nil
 	case ast.KindEqualsToken:
 		target := ast.SkipParentheses(binary.Left)
