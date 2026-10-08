@@ -85,7 +85,7 @@ func generate(seed uint64, index int, entry Entry) Program {
 func executable() []Entry {
 	var entries []Entry
 	for _, entry := range Catalog() {
-		if entry.Boundary == "" {
+		if entry.Boundary == "" && !entry.Accepted {
 			entries = append(entries, entry)
 		}
 	}

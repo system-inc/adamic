@@ -27,7 +27,7 @@ func TestCatalogCoverage(t *testing.T) {
 		}
 	}
 	for _, entry := range Catalog() {
-		if entry.Boundary == "" && !seen[entry.Name] {
+		if entry.Boundary == "" && !entry.Accepted && !seen[entry.Name] {
 			t.Errorf("missing %s", entry.Name)
 		}
 	}
@@ -179,5 +179,37 @@ func TestAcceptedProgramIsAFindingWithRealLowering(t *testing.T) {
 	finding := Check(context.Background(), program)
 	if finding == nil || finding.Kind != "accepted" {
 		t.Fatalf("accepted forbidden input escaped: %v", finding)
+	}
+}
+
+// Accepted pairs pin rulings that main already implements. Keep them out of the
+// forbidden generator so an accepted input never becomes a false finding.
+func TestAcceptedCatalogPairs(t *testing.T) {
+	seen := map[string]bool{}
+	for _, entry := range Catalog() {
+		if !entry.Accepted {
+			continue
+		}
+		seen[entry.Name] = true
+		t.Run(entry.Name, func(t *testing.T) {
+			if entry.Boundary != "" {
+				t.Fatal("accepted ruling is still a boundary")
+			}
+			for index := 0; index < 14; index++ {
+				program := generate(1, index, entry)
+				for _, source := range []string{program.Source, program.Neighbor} {
+					if err := Compile(context.Background(), source); err != nil {
+						t.Fatal(err)
+					}
+				}
+			}
+			if _, err := GenerateEntries(1, 0, []string{entry.Name}); err == nil {
+				t.Fatal("accepted pair entered forbidden generator")
+			}
+			t.Log("empty Record and Map neighbor: compiled")
+		})
+	}
+	if !seen["record"] {
+		t.Fatal("missing accepted Record pair")
 	}
 }

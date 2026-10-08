@@ -1,21 +1,22 @@
-# Questions awaiting a language ruling
+# Refusal rulings
 
-These seven questions have been sent to @system_adamic. They remain unresolved.
-Observed against main `45487a809f89885a3fc651cd590e7dabf31362dc` through the
-probe loader, lowerer and C generator. Every neighbor compiled. These are
-observations, not decisions about which constructs the language should refuse.
+Rulings from @system_adamic, received October 8, 2026. Refused means a permanent
+language refusal with a message saying what to write instead; NotYet means intended support.
 
-The complete programs below reproduce `generate(1, 0, entry)`, including its
-surroundings. The entries remain non-executable catalog boundaries; they do
-not create test skips.
+Observations below are from main `45487a809f89885a3fc651cd590e7dabf31362dc`
+through the probe loader, lowerer and C generator. Every neighbor compiled.
+The complete programs retain the surroundings of `generate(1, 0, entry)`.
+No skipped subtests are used.
 
 ## any
 
-Question: should explicit any get Refused rather than main's observed NotYet for a value of type any?
+Ruling: Explicit any is permanently Refused in `.a`. In tsc's `.ts`, roadmap step 09 must rewrite every site or use a checked unknown.
+
+Matches: no. Compiler work remains; keep this bad program and neighbor ready to become a refusal pair when main implements the ruling.
 
 Main observed: NotYet: a value of type any
 
-Probe (`main.a`):
+Bad program for the ruled refusal (`main.a`):
 
 ```typescript
 import { panic } from 'adamic';
@@ -45,11 +46,13 @@ run(1);
 
 ## expando
 
-Question: should a function expando get Refused rather than main's observed NotYet assigning a field of a value?
+Ruling: A function expando is permanently Refused. Write an object with a call method or a namespace.
+
+Matches: no. Compiler work remains; keep this bad program and neighbor ready to become a refusal pair when main implements the ruling.
 
 Main observed: NotYet: assigning a field of a value
 
-Probe (`main.a`):
+Bad program for the ruled refusal (`main.a`):
 
 ```typescript
 import { panic } from 'adamic';
@@ -64,16 +67,18 @@ Neighbor (`main.a`), accepted:
 import { panic } from 'adamic';
 const padding = 891;
 console.log(`${padding}`);
-function value() {}
+const value = {call: (): void => {}, extra: 1};
 ```
 
 ## eval
 
-Question: should eval get Refused rather than main's observed NotYet reading eval?
+Ruling: eval is permanently Refused. Write the computation directly.
+
+Matches: no. Compiler work remains; keep this bad program and neighbor ready to become a refusal pair when main implements the ruling.
 
 Main observed: NotYet: reading eval
 
-Probe (`main.a`):
+Bad program for the ruled refusal (`main.a`):
 
 ```typescript
 import { panic } from 'adamic';
@@ -103,11 +108,13 @@ run(1);
 
 ## function-type
 
-Question: should an unused Function-typed parameter be refused? Main accepts this program.
+Ruling: The Function type is Refused as an annotation in `.a`, including an unused parameter. Write a call signature. In `.ts`, holding a Function value is accepted; calling through it is refused.
+
+Matches: no. Compiler work remains; keep this bad program and neighbor ready to become a refusal pair when main implements the ruling.
 
 Main observed: Accepted; lowering and C generation completed.
 
-Probe (`main.a`):
+Bad program for the ruled refusal (`main.a`):
 
 ```typescript
 import { panic } from 'adamic';
@@ -127,11 +134,13 @@ function take(value: () => void): void {}
 
 ## new-function
 
-Question: should new Function get Refused rather than main's observed NotYet new an Identifier?
+Ruling: new Function is permanently Refused. Write a function or closure.
+
+Matches: no. Compiler work remains; keep this bad program and neighbor ready to become a refusal pair when main implements the ruling.
 
 Main observed: NotYet: new an Identifier
 
-Probe (`main.a`):
+Bad program for the ruled refusal (`main.a`):
 
 ```typescript
 import { panic } from 'adamic';
@@ -161,11 +170,13 @@ run(1);
 
 ## record
 
-Question: should an empty Record<string, number> be refused? Main accepts this program.
+Ruling: An empty Record<string, number> is accepted and stays accepted.
+
+Matches: yes. Both the empty Record and its Map neighbor are active accepted probes.
 
 Main observed: Accepted; lowering and C generation completed.
 
-Probe (`main.a`):
+Accepted program (`main.a`):
 
 ```typescript
 import { panic } from 'adamic';
@@ -195,11 +206,13 @@ run(1);
 
 ## merging
 
-Question: should class/interface merging with an unused claimed field be refused? Main accepts this program.
+Ruling: Class/interface merging that claims a field the class never initializes is Refused in `.a` at the declaration, even unused. In `.ts`, a read of that field is a checked read.
+
+Matches: no. Compiler work remains; keep this bad program and neighbor ready to become a refusal pair when main implements the ruling.
 
 Main observed: Accepted; lowering and C generation completed.
 
-Probe (`main.a`):
+Bad program for the ruled refusal (`main.a`):
 
 ```typescript
 import { panic } from 'adamic';

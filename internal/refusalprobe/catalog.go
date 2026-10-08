@@ -1,18 +1,20 @@
 // Package refusalprobe writes programs which must be refused, and checks their sound neighbors.
 package refusalprobe
 
-// Entry names one construct, the diagnostic text it owns, and a single replacement which repairs it.
+// Entry names a construct and its neighbor. Accepted pairs require both inputs to compile;
+// other executable pairs require Bad to have Diagnostic and Good to compile.
 // Boundary records constructs whose refusal cannot be reached through load.Load, or which opened
-// after 0.1, and unresolved language questions. They remain visible rather than becoming successes.
+// after 0.1, and ruled refusals still awaiting compiler work. They remain visible rather than becoming successes.
 type Entry struct {
 	Name, Diagnostic, Bad, Good, Placement, Boundary string
+	Accepted                                         bool
 }
 
 // Catalog is derived from refusals.go and the soundness/refusal tables in docs/0.1.md.
 // Diagnostic is specific text, not the common "Adamic 0.1 refuses" prefix.
 func Catalog() []Entry {
 	return []Entry{
-		{Name: "any", Diagnostic: "any", Bad: "let value: any = 1;", Good: "let value: number = 1;", Boundary: "Question: should explicit any get Refused rather than main's observed NotYet for a value of type any?"},
+		{Name: "any", Diagnostic: "any", Bad: "let value: any = 1;", Good: "let value: number = 1;", Boundary: "Compiler work: explicit any is permanently Refused in .a; main returns NotYet. See RULINGS.md."},
 		{Name: "cast", Diagnostic: "a cast the runtime can't check", Bad: "const value = 1; const cast = value as unknown as {readonly n: number};", Good: "const value = 1; const cast = {n: 1};"},
 		{Name: "non-null", Diagnostic: "the non-null assertion !", Bad: "const value = new Map<string, number>().get('x')!;", Good: "const value = new Map<string, number>().get('x') ?? 0;"},
 		{Name: "type-guard", Diagnostic: "a type predicate whose return is not proven (true return narrows to number, not number)", Bad: "function guard(x: number): x is number { return true; }", Good: "function guard(x: number): boolean { return typeof x === 'number'; }", Placement: "module"},
@@ -58,7 +60,7 @@ func Catalog() []Entry {
 		{Name: "mutable-variance", Diagnostic: "adamic/invariant-mutable", Bad: "const narrow: {n: number; s: string}[] = []; const wide: {n: number}[] = narrow;", Good: "const narrow: {n: number; s: string}[] = []; const wide: readonly {n: number}[] = narrow;"},
 		{Name: "bivariant-method", Diagnostic: "method-signature-style", Bad: "interface A { n: number; } interface D extends A { s: string; } interface Narrow { handle(x: D): void; } interface Wide { handle(x: A): void; } function widen(x: Narrow): Wide { return x; }", Good: "interface A { n: number; } interface D extends A { s: string; } interface Narrow { handle(x: A): void; } interface Wide { handle(x: A): void; } function widen(x: Narrow): Wide { return x; }", Placement: "module"},
 		{Name: "nominal-class", Diagnostic: "adamic/nominal-class", Bad: "class Box { n = 1; } const box: Box = {n: 1};", Good: "class Box { n = 1; } const box: Box = new Box();", Placement: "module"},
-		{Name: "expando", Diagnostic: "properties added after creation", Bad: "function value() {} value.extra = 1;", Good: "function value() {}", Placement: "module", Boundary: "Question: should a function expando get Refused rather than main's observed NotYet assigning a field of a value?"},
+		{Name: "expando", Diagnostic: "properties added after creation", Bad: "function value() {} value.extra = 1;", Good: "const value = {call: (): void => {}, extra: 1};", Placement: "module", Boundary: "Compiler work: function expandos are permanently Refused; main returns NotYet. See RULINGS.md."},
 		{Name: "spread", Diagnostic: "a spread after the first field", Bad: "const source = {n: 1}; const view: {} = source; const value = {n: 2, ...view};", Good: "const source = {n: 1}; const view: {} = source; const value = {...source, n: 2};"},
 		{Name: "prototype-literal", Diagnostic: "__proto__ in an object literal", Bad: "const value = {__proto__: {n: 1}};", Good: "const value = {n: 1};"},
 		{Name: "define-property", Diagnostic: "Object.defineProperty", Bad: "Object.defineProperty({n: 1}, 'n', {value: 'wrong'});", Good: "const value = {n: 1};"},
@@ -66,12 +68,12 @@ func Catalog() []Entry {
 		{Name: "var", Diagnostic: "var", Bad: "var value = 1;", Good: "let value = 1;"},
 		{Name: "truthiness", Diagnostic: "a number as a condition", Bad: "if (1) { console.log('ok'); }", Good: "if (1 === 1) { console.log('ok'); }"},
 		{Name: "random", Diagnostic: "Math.random", Bad: "const value = Math.random();", Good: "const value = 0.5;"},
-		{Name: "eval", Diagnostic: "eval", Bad: "eval('1');", Good: "const value = 1;", Boundary: "Question: should eval get Refused rather than main's observed NotYet reading eval?"},
-		{Name: "function-type", Diagnostic: "Function", Bad: "function take(value: Function): void {}", Good: "function take(value: () => void): void {}", Placement: "module", Boundary: "Question: should an unused Function-typed parameter be refused? Main accepts this program."},
-		{Name: "new-function", Diagnostic: "Function", Bad: "const value = new Function('return 1');", Good: "const value = (): number => 1;", Boundary: "Question: should new Function get Refused rather than main's observed NotYet new an Identifier?"},
-		{Name: "record", Diagnostic: "index signature", Bad: "const value: Record<string, number> = {};", Good: "const value = new Map<string, number>();", Boundary: "Question: should an empty Record<string, number> be refused? Main accepts this program."},
+		{Name: "eval", Diagnostic: "eval", Bad: "eval('1');", Good: "const value = 1;", Boundary: "Compiler work: eval is permanently Refused; main returns NotYet. See RULINGS.md."},
+		{Name: "function-type", Diagnostic: "Function", Bad: "function take(value: Function): void {}", Good: "function take(value: () => void): void {}", Placement: "module", Boundary: "Compiler work: Function annotations are Refused in .a, including unused parameters; main accepts. See RULINGS.md."},
+		{Name: "new-function", Diagnostic: "Function", Bad: "const value = new Function('return 1');", Good: "const value = (): number => 1;", Boundary: "Compiler work: new Function is permanently Refused; main returns NotYet. See RULINGS.md."},
+		{Name: "record", Bad: "const value: Record<string, number> = {};", Good: "const value = new Map<string, number>();", Accepted: true},
 		{Name: "optional-widening", Diagnostic: "adamic/no-optional-widening", Bad: "const original = {x: 1, y: 'wrong'}; const view: {x: number} = original; const wider: {x: number; y?: number} = view;", Good: "const original = {x: 1, y: 'wrong'}; const view: {x: number} = original; const wider: {x: number; y?: number} = {x: view.x, y: 2};"},
-		{Name: "merging", Diagnostic: "declaration merging", Bad: "class Box { n = 1; } interface Box { extra: number; } const box = new Box();", Good: "class Box { n = 1; } const box = new Box();", Placement: "module", Boundary: "Question: should class/interface merging with an unused claimed field be refused? Main accepts this program."},
+		{Name: "merging", Diagnostic: "declaration merging", Bad: "class Box { n = 1; } interface Box { extra: number; } const box = new Box();", Good: "class Box { n = 1; } const box = new Box();", Placement: "module", Boundary: "Compiler work: uninitialized fields claimed by class/interface merging are Refused at the declaration in .a; main accepts. See RULINGS.md."},
 		{Name: "constructor-escape", Diagnostic: "this escaping a constructor before every field is set", Bad: "class Box { n: number; constructor() { this.read(); this.n = 1; } read(): number { return this.n; } } const box = new Box();", Good: "class Box { n: number; constructor() { this.n = 1; this.read(); } read(): number { return this.n; } } const box = new Box();", Placement: "module"},
 		{Name: "prototype-read", Diagnostic: "isPrototypeOf", Bad: "const value = {}.isPrototypeOf;", Good: "const value = (n: number): boolean => n === 1;"},
 		// provePredicate refuses a type predicate whose body does not prove it. An arrow predicate is an
