@@ -1,11 +1,14 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
 import { realpathSync } from 'node:fs';
 function walk(path: string): string {
     try { return realpathSync(path); }
-    catch (error) { if (error instanceof Error) { const failure: NodeJS.ErrnoException = error; return `${failure.code ?? ''} ${error.message}`; } return ''; }
+    catch (error) { if (error instanceof Error) { return `${errorCode(error) ?? ''} ${error.message}`; } return ''; }
 }
 function native(path: string): string {
     try { return realpathSync.native(path); }
-    catch (error) { if (error instanceof Error) { const failure: NodeJS.ErrnoException = error; return `${failure.code ?? ''} ${error.message}`; } return ''; }
+    catch (error) { if (error instanceof Error) { return `${errorCode(error) ?? ''} ${error.message}`; } return ''; }
 }
 for (const path of ['node_fs_directory_inputs/link-deep/..', '', '.', 'walking/link-to-inner', 'walking/link-to-file', 'walking/dangling', 'walking/dangling/..', 'reading/hello.txt/child', 'walking/missing', 'node_fs_directory_inputs/loop-a', 'node_fs_directory_inputs/link-directory', '\0']) {
     console.log(`walk ${walk(path)}`);
@@ -14,4 +17,4 @@ for (const path of ['node_fs_directory_inputs/link-deep/..', '', '.', 'walking/l
 
 const selected = realpathSync.native;
 try { console.log(selected('walking/link-to-inner')); }
-catch (error) { if (error instanceof Error) { const failure: NodeJS.ErrnoException = error; console.log(error.message); } }
+catch (error) { if (error instanceof Error) { console.log(error.message); } }
