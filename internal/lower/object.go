@@ -1525,7 +1525,7 @@ var stringMethods = map[string]struct {
 	"includes":    {[]ir.Type{ir.String, ir.Number}, 1},
 	"startsWith":  {[]ir.Type{ir.String}, 0},
 	"endsWith":    {[]ir.Type{ir.String}, 0},
-	"split":       {[]ir.Type{ir.String}, 0},
+	"split":       {[]ir.Type{ir.String, ir.Number}, 1},
 	"lastIndexOf": {[]ir.Type{ir.String}, 0},
 	"trimStart":   {nil, 0},
 	"trimEnd":     {nil, 0},
@@ -1566,6 +1566,12 @@ func (l *lowering) stringCall(node *ast.Node, receiver *ast.Node, name string) (
 	// JavaScript's defaults: codePointAt() is position 0, and padStart's fill is a space. slice's end
 	// stays missing, which is different from any number, so the emitter is told how many were given.
 	switch {
+	case name == "split" && len(arguments) == 2:
+		return ir.ArraySlice{
+			Array: ir.StringCall{Method: name, Value: value, Arguments: arguments[:1]},
+			Arguments: []ir.Expression{ir.NumberConstant{Value: 0},
+				ir.Binary{Operator: ir.ShiftRightUnsigned, Left: arguments[1], Right: ir.NumberConstant{Value: 0}}},
+		}, true, nil
 	case name == "codePointAt" && len(arguments) == 0:
 		arguments = append(arguments, ir.NumberConstant{Value: 0})
 	case (name == "padStart" || name == "padEnd") && len(arguments) == 1:

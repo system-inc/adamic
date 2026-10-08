@@ -1,0 +1,11 @@
+const text = 'a,b,c,d';
+const limits = [0, 1, 2, 3, 10, -1, 2.7, NaN, Infinity, 4294967297];
+for (const limit of limits) {
+	const parts = text.split(',', limit);
+	console.log(String(limit) + ' ' + String(parts.length) + ' [' + parts.join('|') + ']');
+}
+console.log('héllo wörld'.split('', 3).join('/'));
+console.log(String(''.split(',', 5).length) + ' ' + String(''.split('', 5).length));
+const kept = 'x-y-z'.split('-', 2);
+kept.push('w');
+console.log(kept.join('+'));
