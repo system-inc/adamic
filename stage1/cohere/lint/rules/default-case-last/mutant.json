@@ -1,0 +1,6 @@
+{
+  "name": "default-case-last-semantic-mutant",
+  "file": "rule.a",
+  "from": "position !== clauses.length - 1",
+  "to": "position === clauses.length - 1"
+}

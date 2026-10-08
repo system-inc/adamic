@@ -1,0 +1,13 @@
+{
+  "name": "no-delete-var",
+  "kinds": [
+    "DeleteExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoDeleteVar",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoDeleteVar",
+  "node": true
+}

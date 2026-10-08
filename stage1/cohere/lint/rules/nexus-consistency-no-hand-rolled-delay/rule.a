@@ -1,0 +1,111 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    identifier(index: number, name: string): boolean {
+        return index >= 0 && this.context.node(index).kind === 'Identifier' && this.context.node(index).text === name;
+    }
+    functionExpression(index: number): boolean {
+        return index >= 0 && ['ArrowFunction', 'FunctionExpression'].includes(this.context.node(index).kind);
+    }
+    parameters(index: number): number[] {
+        const result: number[] = [];
+        for(const child of this.context.node(index).children) {
+            if(this.context.node(child).kind === 'Parameter') result.push(child);
+        }
+        return result;
+    }
+    body(index: number): number {
+        const children = this.context.node(index).children;
+        return children[children.length - 1] ?? -1;
+    }
+    parameterName(index: number): string {
+        if(this.context.has(index, 'DotDotDotToken')) return '';
+        const first = this.context.name(index);
+        return first >= 0 && this.context.node(first).kind === 'Identifier' ? this.context.node(first).text : '';
+    }
+    soleExpression(index: number): number {
+        if(index < 0) return -1;
+        const context = this.context;
+        if(context.node(index).kind !== 'Block') return context.unwrap(index);
+        const statements = context.node(index).children;
+        if(statements.length !== 1) return -1;
+        const statement = statements[0] ?? -1;
+        if(statement < 0 || !['ExpressionStatement', 'ReturnStatement'].includes(context.node(statement).kind)) return -1;
+        const expression = context.node(statement).children[0] ?? -1;
+        return expression < 0 ? -1 : context.unwrap(expression);
+    }
+    mentions(index: number, name: string): boolean {
+        if(index < 0) return false;
+        if(this.identifier(index, name)) return true;
+        for(const child of this.context.node(index).children) {
+            if(this.mentions(child, name)) return true;
+        }
+        return false;
+    }
+    timer(index: number): boolean {
+        const context = this.context;
+        const callee = context.unwrap(index);
+        if(this.identifier(callee, 'setTimeout')) return true;
+        const node = context.node(callee);
+        if(node.kind !== 'PropertyAccessExpression' || node.optional) return false;
+        const base = node.children[0] ?? -1;
+        const name = node.children[node.children.length - 1] ?? -1;
+        return this.identifier(name, 'setTimeout') && (this.identifier(base, 'globalThis') || this.identifier(base, 'window'));
+    }
+    resolves(index: number, name: string): boolean {
+        const context = this.context;
+        const callback = context.unwrap(index);
+        if(this.identifier(callback, name)) return true;
+        if(!this.functionExpression(callback) || this.parameters(callback).length !== 0) return false;
+        const call = this.soleExpression(this.body(callback));
+        if(call < 0 || context.node(call).kind !== 'CallExpression' || context.node(call).list !== 0) return false;
+        return this.identifier(context.node(call).children[0] ?? -1, name);
+    }
+    definition(index: number, duration: number, parent: number): boolean {
+        const context = this.context;
+        if(context.node(duration).kind !== 'Identifier' || parent < 0) return false;
+        let fn = -1;
+        if(context.node(parent).kind === 'ArrowFunction' && this.body(parent) === index) fn = parent;
+        else if(context.node(parent).kind === 'ReturnStatement') {
+            const block = context.parents[parent] ?? -1;
+            if(block >= 0 && context.node(block).kind === 'Block' && context.node(block).children.length === 1) {
+                const owner = context.parents[block] ?? -1;
+                if(owner >= 0 && ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration',
+                    'Constructor', 'GetAccessor', 'SetAccessor'].includes(context.node(owner).kind)) fn = owner;
+            }
+        }
+        if(fn < 0) return false;
+        for(const parameter of this.parameters(fn)) {
+            if(this.parameterName(parameter) === context.node(duration).text) return true;
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number, parent: number): void {
+        const context = this.context;
+        if(!this.identifier(node.children[0] ?? -1, 'Promise') || node.list !== 1) return;
+        const executor = node.children[node.children.length - 1] ?? -1;
+        if(!this.functionExpression(executor)) return;
+        const parameters = this.parameters(executor);
+        if(parameters.length < 1 || parameters.length > 2) return;
+        const resolve = this.parameterName(parameters[0] ?? -1);
+        const body = this.body(executor);
+        const call = this.soleExpression(body);
+        if(call < 0 || context.node(call).kind !== 'CallExpression') return;
+        const timer = context.node(call);
+        if(timer.list !== 2 || !this.timer(timer.children[0] ?? -1)) return;
+        const callback = timer.children[timer.children.length - 2] ?? -1;
+        const duration = timer.children[timer.children.length - 1] ?? -1;
+        if(callback < 0 || duration < 0 || !this.resolves(callback, resolve)) return;
+        if(parameters.length === 2) {
+            const reject = this.parameterName(parameters[1] ?? -1);
+            if(reject === '' || this.mentions(body, reject)) return;
+        }
+        if(this.definition(index, duration, parent)) return;
+        context.report(index, 'nexus/consistency-no-hand-rolled-delay', 'handRolledDelay', message, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

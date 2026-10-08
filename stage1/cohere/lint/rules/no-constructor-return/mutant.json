@@ -1,0 +1,6 @@
+{
+  "name": "no-constructor-return-semantic-mutant",
+  "file": "rule.a",
+  "from": "if(functionKinds.includes(ancestor.kind)) return false;",
+  "to": "if(functionKinds.includes(ancestor.kind)) return true;"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "for-direction-semantic-mutant",
+  "file": "rule.a",
+  "from": "return -1; // Decrement.",
+  "to": "return 1; // Decrement."
+}

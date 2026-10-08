@@ -1,0 +1,6 @@
+{
+  "name": "no-eq-null-semantic-mutant",
+  "file": "rule.a",
+  "from": "this.nullOperand(left) || this.nullOperand(right)",
+  "to": "this.nullOperand(left) && this.nullOperand(right)"
+}
