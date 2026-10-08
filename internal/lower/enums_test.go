@@ -100,10 +100,7 @@ func TestEnumLimitsStayLoud(t *testing.T) {
 		"[1].map(() => E.A); enum E { A }",
 		"function run(): void { enum E { A } }",
 		"function read(): number { return E.A; } const alias = read; alias(); enum E { A }",
-		"const box = { read: (): number => E.A }; box.read(); enum E { A }",
 		"function read(e: E = E.A): void {} read(); enum E { A }",
-		"function read(): number { return E.A; } let alias = (): number => 1; alias = read; alias(); enum E { A }",
-		"function read(): number { return E.A; } let alias = (): number => 1; alias = read; [1].map(alias); enum E { A }",
 		"function read(): number { return E.A; } class C { static readonly value = read(); } enum E { A }",
 	} {
 		_, err := lowerSource(t, source)

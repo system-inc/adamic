@@ -38,8 +38,6 @@ func TestObjectRefusalsExplainSoundness(t *testing.T) {
 func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.values(view);`,
-		`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.entries(view);`,
 		`Object.assign({value:1}, {extra:2});`,
 		`function keys(source:{value:number}|undefined):string[] { return Object.keys({...source}); }`,
 		`function own(object:{value?:number}):boolean { return Object.hasOwn(object,'value'); }`,

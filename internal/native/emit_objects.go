@@ -116,6 +116,9 @@ var cName = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]*$`)
 // objectLiteral makes an object. Its fields' values are evaluated in order first; making the object
 // itself can't be observed, so it may come after them.
 func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
+	if literal.Record {
+		return e.recordLiteral(literal)
+	}
 	if reused, ok := e.reused(literal); ok {
 		return reused
 	}
@@ -421,6 +424,9 @@ func (e *emitter) cache() string {
 func (e *emitter) dynamicProperties() bool {
 	found := false
 	walkExpressions(e.program, func(expression ir.Expression) {
+		if call, ok := expression.(ir.ObjectCall); ok && call.Checked {
+			found = true
+		}
 		if _, dynamic := expression.(ir.DynamicProperty); dynamic {
 			found = true
 		}

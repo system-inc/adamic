@@ -1,0 +1,4 @@
+function read(): boolean { return Debug.isDebugging; }
+function helper(): boolean { return read(); }
+console.log(`${helper()}`);
+namespace Debug { export let isDebugging = false; }

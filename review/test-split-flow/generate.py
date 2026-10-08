@@ -10,17 +10,26 @@ import re
 root = Path(__file__).resolve().parents[2]
 patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts',
             'internal/load/testdata/0.1/compile/07_modules/main.ts', 'internal/oracle/testdata/*.a',
-            'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
+            'internal/oracle/testdata/non_null*.ts', 'internal/oracle/testdata/modules/main.a', 'internal/flow/testdata/*.a']
 excluded = {'killed_after_output.a', 'size_class_churn.a', 'bitwise_sweep.a',
             'typed_arrays_primes_large.a', 'normalize_coverage_long.a'}
+# Mirrors flow_test.go's programs(): its deliberate .a refusal controls are excluded too.
+def refused(name):
+    if name.endswith('.a') and (name.startswith('non_null_refuse_') or name.startswith('non_null_possible_')):
+        return True
+    return name in {'new_expression_uint16.a', 'new_expression_uint16_notyet.a', 'new_expression_class_cache_capture_notyet.a'}
+
 families = [('SingleAssignment', 'checkSingleAssignmentProgram'), ('MutationRanges', 'checkMutationRangesProgram'), ('GraphPaths', 'checkGraphPathsProgram'), ('Liveness', 'checkLivenessProgram')]
 manifest = []
 for package in ['flow', 'fresh']:
     paths = []
     for pattern in patterns:
+        # flow's programs() globs the non-null .ts controls too; fresh's doesn't.
+        if package == 'fresh' and pattern.endswith('non_null*.ts'):
+            continue
         for path in sorted(glob.glob(str(root / pattern))):
             source = Path(path)
-            if package == 'flow' and source.name in excluded:
+            if package == 'flow' and (source.name in excluded or refused(source.name)):
                 continue
             relative = Path(os.path.relpath(source, root / 'internal' / package)).as_posix()
             paths.append(relative)
