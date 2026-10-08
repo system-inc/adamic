@@ -1,0 +1,10 @@
+{
+  "ids": [
+    "D071"
+  ],
+  "read": "getTypeArguments(type)",
+  "receiver": "returned readonly object array, three-element destructuring",
+  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nfunction getTypeArguments(type: Type): readonly Type[] { return absent ? [] : [type, type, type]; }\nconst type: Type = { flags: 7 };\nconst [yieldType, returnType, nextType] = getTypeArguments(type);\nconst value: Type = yieldType;\nconsole.log(value === undefined ? \"undefined\" : `${value.flags}`);\n",
+  "block_stage": "lower",
+  "block": "destructuring anything but a tuple into [names]"
+}
