@@ -247,7 +247,8 @@ f4efdd2369311d1420aa53fdf5c1a55bdda811d4 and is already an ancestor of this bran
 No additional main merge or format-patch is needed. Final logs are
 `evidence/followup-push-final.log` and `evidence/followup-fetch-final.log`.
 The staged whitespace check detected trailing spaces in ASan's register dump;
-those spaces were stripped from the evidence log without changing its contents.
+those spaces and Go test indentation on empty lines were stripped from the
+evidence logs without changing their diagnostic text.
 
 Final follow-up validation (after restoring production ABI refusal):
 

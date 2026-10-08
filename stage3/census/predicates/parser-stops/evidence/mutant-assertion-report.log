@@ -2,7 +2,7 @@
     --- FAIL: TestExplainChecksOutput/assert_defined_read (0.05s)
         checks_test.go:38: c explanation:
             adamic: predicate checks: proven 0 checked 0 unobservable 0
-            
+
             want:
             internal/lower/testdata/predicates/assert_defined_read.a:16:5: predicate assertIsDefined
               true: proven; implementation body proves this direction
