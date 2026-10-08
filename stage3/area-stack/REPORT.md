@@ -1,10 +1,12 @@
 # Group 4 generic-return clock follow-up
 
+Catalog on a472d0fe1e0c6a61baf2a6adf787dd6bcc889917: exit 0, 225.115s; all 11 applicable undo patches were caught, the same five historical entries stayed nonapplicable, and no undo patch drifted. Per-entry controls and mutant catches are retained in evidence/clock-generic/catalog.
+
 Built the finite optional generic plain-object intersection result proof from clock-15-20-generic-returns-t-01.
 Commits: 1cdc3439c replays the topic's sole own commit 210f6ead2; 78fad25de and 8fc662bb6 strengthen null and index proof tests without changing production lowering.
 Checks: lower 50.957s, IR 25.109s, flow 171.055s; JavaScript has no tests. Delivery Node oracle and output mutant pass (0.763s); counts refresh passes (82.073s); strengthened proof tests pass (0.282s).
 Mutants: present-as-undefined is caught by clean Node stdout disagreement in both backends; finite-shape bypass is caught by kind and direct index proof assertions; null erasure is caught by the direct checked-signature assertion; removing dispatch is caught by the positive readonly shape's NotYet.
-Not covered: the real AST root remains NotYet at its void brand field; zero census roots are claimed cleared. The earlier whole generic-returns-t topic and checked-view lanes remain out.
+Not covered: the incoming topic records the real AST root as NotYet at its void brand field. Its original census archive was not replayed here; zero census roots are claimed cleared. The earlier whole generic-returns-t topic and checked-view lanes remain out.
 
 The only production insertion calls clockGenericReturnsT01 after the stack's normal representation, undefined-result and regex callback result handling have failed. Its proof retains every checked constituent and field. It accepts only the owned generic object/refinement pair plus undefined, with finite primitive/nested object fields and string arrays. Callable, constructable, indexed, container intersection, nested callable and distinct null shapes remain refused. No views implementation, worker merge or ABI replacement was imported. Counts were the only conflict: existing rows were retained, one disjoint row was added, then the table was regenerated.
 

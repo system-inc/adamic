@@ -15,3 +15,5 @@ Required packages, own Node fixtures in both backends, own mutants and regenerat
 Pending namespace rulings are in PARSER-REVIEW.md. METHOD-VALUES-PROPOSAL.md, REPORT.md and REMAINING-PROPOSALS.md contain the other pending implementation proposals. No pending proposal was silently admitted.
 
 The additional generic-return clock follow-up replays only 210f6ead2. Its finite optional object/refinement proof and four mutants pass; reports distinguish its narrow admission from the earlier held generic-returns-t topic.
+
+The additional clock follow-up passed its full catalog at a472d0fe1e0c6a61baf2a6adf787dd6bcc889917; the final report-only commit is its push SHA.
