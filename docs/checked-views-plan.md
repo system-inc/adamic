@@ -1452,6 +1452,16 @@ read through its members, and a flat record push is checked against the original
 element contract. Fixtures are `lane2/ranked8-*.a`, held by
 TestCheckedViewRanked8ArrayContracts; the report is `lane2/RANKED8_ARRAYS_REPORT.md`.
 
+### Lane 2 ninth ranked arrays
+
+The ninth ranked group (fourteen pairs: HasType member parameters and modifiers,
+ImportDeclaration.modifiers, NamedImports.elements, ModuleBlock.statements,
+NewExpression.arguments, TemplateExpression.templateSpans,
+NodeBuilderContext.typeStack, ResolvedType.indexInfos and ResolvedType.properties)
+needed no new hook. Push, pop and searches on a mutable `number[]` go through the
+view's element contract. Fixtures are `lane2/ranked9-*.a`, held by
+TestCheckedViewRanked9ArrayContracts; the report is `lane2/RANKED9_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
