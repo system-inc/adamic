@@ -25,7 +25,22 @@
 # way, in this landing's velocity commit: the row whose new_main starts with <new_main> gets <minutes>
 # and "; <note>" on its branches field. Exactly one row must match.
 #
-# usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] [--correct-minutes <new_main> <minutes> "<note>"] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
+# The fast gate (Kirk, October 7: "we need tests to run in <1 minute"): --fast-gate <gate-logs ref>
+# lands on the fast gate developer tools runs on the Threadripper (build and vet everywhere, the
+# touched packages' tests, a pinned oracle smoke set, the census), read from its own fast.json on that
+# gate-logs branch rather than from numbers passed here. The script refuses unless that log gated this
+# exact sha, from a base this sha holds, green, with no failure, no build or vet error and no
+# unclassified or required-input skip. The landing note names what it ran: the packages, the smoke
+# list's blob, the wall time and the machine. The whole uncached gate runs after landing, on every
+# new main.
+#
+# The pause rule: if the newest finished whole gate on main (gate-logs/<sha12>/<stamp>/full-main) is
+# red, every landing is refused until a later main's whole gate is green or that red is explained in
+# main-reds.tsv beside this script, except a revert (--revert) or a fix-forward naming that red log
+# (--fix-forward <gate-logs ref>). Main never carries two unexplained reds.
+#
+# usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] [--correct-minutes <new_main> <minutes> "<note>"] [--revert | --fix-forward <red log ref>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
+#        cloud/integration/push-main.sh [same options] --fast-gate <gate-logs ref> <full sha> "<branches landed>"
 set -euo pipefail
 
 defer=no
@@ -33,11 +48,16 @@ meterRun=""
 correctMain=""
 correctMinutes=""
 correctNote=""
+fastGate=""
+pauseException=""
 while [ "$#" -gt 0 ]; do
 	case "$1" in
 	--defer-velocity) defer=yes; shift ;;
 	--meter-run) meterRun=$2; shift 2 ;;
 	--correct-minutes) correctMain=$2; correctMinutes=$3; correctNote=$4; shift 4 ;;
+	--fast-gate) fastGate=${2#origin/}; shift 2 ;;
+	--revert) pauseException=revert; shift ;;
+	--fix-forward) pauseException="fix-forward ${2#origin/}"; shift 2 ;;
 	*) break ;;
 	esac
 done
@@ -55,16 +75,25 @@ if [ -n "$correctMain" ]; then
 		exit 2
 	fi
 fi
-if [ "$#" -ne 6 ]; then
-	echo "usage: $0 <full sha> <gate minutes> <pass> <fail> <skip> \"<branches landed>\"" >&2
-	exit 2
+if [ -n "$fastGate" ]; then
+	if [ "$#" -ne 2 ]; then
+		echo "usage: $0 [options] --fast-gate <gate-logs ref> <full sha> \"<branches landed>\"" >&2
+		exit 2
+	fi
+	sha=$1
+	branches=$2
+else
+	if [ "$#" -ne 6 ]; then
+		echo "usage: $0 <full sha> <gate minutes> <pass> <fail> <skip> \"<branches landed>\"" >&2
+		exit 2
+	fi
+	sha=$1
+	gateMinutes=$2
+	pass=$3
+	fail=$4
+	skip=$5
+	branches=$6
 fi
-sha=$1
-gateMinutes=$2
-pass=$3
-fail=$4
-skip=$5
-branches=$6
 velocityFile=documentation/velocity/landings.csv
 velocityHeader=pushed_at_utc,old_main,new_main,commits_landed,branches_landed,gate_minutes,pass,fail,skip,backlog_commits
 directory=$(cd "$(dirname "$0")" && pwd)
@@ -74,6 +103,112 @@ if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
 	echo "refused: pass the full 40-character sha, not $sha" >&2
 	exit 1
 fi
+
+if [ -n "$fastGate" ]; then
+	# The fast gate's verdict, read from its own log: what it gated, from which base, and what it ran.
+	if ! git fetch -q origin "+refs/heads/${fastGate}:refs/remotes/origin/${fastGate}" 2>/dev/null; then
+		echo "refused: no gate log ${fastGate} on origin" >&2
+		exit 1
+	fi
+	statusLine=$(git show "origin/${fastGate}:status.txt" 2>/dev/null | head -n 1)
+	if ! fastJSON=$(git show "origin/${fastGate}:fast.json" 2>/dev/null); then
+		echo "refused: ${fastGate} has no fast.json" >&2
+		exit 1
+	fi
+	if ! verdict=$(python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
+import json, sys
+sha, status, log = sys.argv[1], sys.argv[2], sys.argv[3]
+fast = json.loads(sys.argv[4])
+problems = []
+if fast.get("sha") != sha:
+    problems.append("it gated %s, not %s" % (fast.get("sha"), sha))
+if not status.startswith("green"):
+    problems.append("its status is %r" % status)
+if fast.get("fail") != 0:
+    problems.append("%s failures" % fast.get("fail"))
+if not fast.get("build_ok") or not fast.get("vet_ok"):
+    problems.append("go build or go vet failed")
+for kind in ("unclassified_skips", "required_input_skips"):
+    if fast.get(kind):
+        problems.append("%s: %s" % (kind.replace("_", " "), " ".join(fast[kind])))
+if fast.get("uncached_tests") is not True:
+    problems.append("its tests weren't run uncached")
+if problems:
+    print("; ".join(problems))
+    sys.exit(1)
+seconds = float(fast["wall_seconds"])
+packages = fast.get("packages") or []
+machine = fast.get("machine") or {}
+print(fast["base"])
+print("%.2f" % (seconds / 60))
+print(fast["pass"], fast["fail"], fast["skip"])
+print("fast gate %s: %.0f s on %s (%s threads), base %s, %d packages (%s), smoke list %s blob %s" % (
+    log, seconds, machine.get("hostname", "?"), machine.get("nproc", "?"), fast["base"][:8], len(packages),
+    " ".join(packages), fast.get("smoke_list", "?"), str(fast.get("smoke_list_blob", "?"))[:8]))
+VERDICT
+	); then
+		echo "refused: the fast gate ${fastGate} doesn't pass ${sha:0:8}: ${verdict}" >&2
+		exit 1
+	fi
+	fastBase=$(printf '%s\n' "$verdict" | sed -n 1p)
+	gateMinutes=$(printf '%s\n' "$verdict" | sed -n 2p)
+	read -r pass fail skip <<<"$(printf '%s\n' "$verdict" | sed -n 3p)"
+	fastNote=$(printf '%s\n' "$verdict" | sed -n 4p)
+	if ! git merge-base --is-ancestor "$fastBase" "$sha"; then
+		echo "refused: the fast gate diffed against ${fastBase:0:8}, which ${sha:0:8} doesn't hold, so its touched packages aren't this landing's" >&2
+		exit 1
+	fi
+	branches="${branches}; ${fastNote}"
+fi
+
+# The pause rule, read from the whole gates on main.
+pause=$(python3 - "$directory/main-reds.tsv" <<'PAUSE'
+import os, subprocess, sys
+explained = set()
+if os.path.exists(sys.argv[1]):
+    for line in open(sys.argv[1]):
+        if line.strip() and not line.startswith("#"):
+            explained.add(line.split("\t", 1)[0].removeprefix("origin/"))
+references = subprocess.run(["git", "ls-remote", "origin", "refs/heads/gate-logs/*"], capture_output=True, text=True, check=True).stdout.split("\n")
+logs = {}
+for line in references:
+    if line.endswith("/full-main"):
+        name = line.split("\t")[1].removeprefix("refs/heads/")
+        logs.setdefault(name.split("/")[1], []).append(name)
+mains = subprocess.run(["git", "rev-list", "--first-parent", "-n", "200", "origin/main"], capture_output=True, text=True, check=True).stdout.split()
+for main in mains:
+    for name in sorted(logs.get(main[:12], []), reverse=True):
+        subprocess.run(["git", "fetch", "-q", "origin", f"+refs/heads/{name}:refs/remotes/origin/{name}"], check=True)
+        status = subprocess.run(["git", "show", f"origin/{name}:status.txt"], capture_output=True, text=True).stdout.split("\n")[0]
+        if status.startswith("running") or not status:
+            continue
+        if status.startswith("green"):
+            print(f"green {name}")
+        elif name in explained:
+            print(f"explained {name}")
+        else:
+            print(f"red {name} {status}")
+        sys.exit(0)
+print("none")
+PAUSE
+)
+case "$pause" in
+red\ *)
+	redLog=$(printf '%s' "$pause" | awk '{print $2}')
+	if [ "$pauseException" = revert ]; then
+		echo "Landing a revert while main's whole gate is red (${redLog})."
+		branches="${branches}; revert while main is red (${redLog})"
+	elif [ "$pauseException" = "fix-forward ${redLog}" ]; then
+		echo "Landing a fix-forward for main's red whole gate (${redLog})."
+		branches="${branches}; fix-forward for ${redLog}"
+	else
+		echo "refused: landings are paused, main's newest finished whole gate is red: ${pause#red }. Land a revert (--revert) or a fix-forward (--fix-forward ${redLog}), or explain the red in cloud/integration/main-reds.tsv" >&2
+		exit 1
+	fi
+	;;
+none) echo "No finished whole gate on main yet (gate-logs/*/full-main); the pause rule has nothing to read." ;;
+*) echo "Main's newest finished whole gate: ${pause}." ;;
+esac
 if [ "$fail" != "0" ]; then
 	echo "refused: the gate has $fail failures" >&2
 	exit 1
