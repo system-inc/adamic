@@ -826,13 +826,13 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				}
 				return
 			}
-			if difference := disagreement(oracle, native); difference != "" && !contractionExplains(t, program, oracle) {
+			if difference := disagreement(oracle, native); difference != "" && !knownErrorStackFrames(t, path, oracle, native, "native") && !contractionExplains(t, program, oracle) {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
 			}
 			// The JavaScript backend runs the same IR the native one compiled, with nothing of C, so
 			// where it differs from the source the fault is in lowering.
-			if difference := disagreement(oracle, backend); difference != "" {
+			if difference := disagreement(oracle, backend); difference != "" && !knownErrorStackFrames(t, path, oracle, backend, "JavaScript") {
 				t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
 			}

@@ -13,7 +13,7 @@ func (a *analysis) objectCall(call ir.ObjectCall) value {
 		}
 	}
 	switch call.Method {
-	case "freeze", "assign", "seal", "preventExtensions":
+	case "errorCause", "errorErrors", "errorGetPrototype", "freeze", "assign", "seal", "preventExtensions":
 		return target
 	case "keys", "getOwnPropertyNames", "values", "entries":
 		return a.fresh(elementKey, value{})

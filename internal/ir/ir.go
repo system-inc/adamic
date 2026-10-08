@@ -432,7 +432,14 @@ type (
 	}
 
 	// MakeError is an Error with Message and an optional Name (nil means "Error").
-	MakeError struct{ Message, Name Expression }
+	MakeError struct {
+		Message, Name Expression
+		// Family is empty for existing internal/host errors, otherwise a built-in name.
+		Family                       string
+		MessageAbsent                bool
+		Cause, Errors, Frames, Limit Expression
+		ErrorElement                 Type
+	}
 
 	// WeakOf is Value, a reference, kept weakly: the handle to it, made if it has none yet, or
 	// undefined when Value is.

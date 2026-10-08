@@ -68,6 +68,8 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 	object->nonextensible = false;
 	object->has_captured_stack = false;
 	object->captured_stack.reference = NULL;
+    object->error_kind = 0; object->error_own = 0; object->error_enumerable = 0; object->error_order = 0;
+    object->error_cause = NULL; object->error_errors = NULL; object->error_frames = NULL;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	region->count++;
 	ADAMIC_COUNT_ALLOCATION();

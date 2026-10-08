@@ -1,0 +1,24 @@
+import type {Stats} from 'node:fs';
+// tsc core.ts:1583,1887; utilitiesPublic.ts:448,451,471; debug.ts:1093.
+const queue = new Error('Queue is empty');
+const empty = new Error();
+const explicit = Error(undefined);
+console.log(queue.name + ':' + queue.message);
+console.log(`${Object.hasOwn(empty, 'message')}:${Object.hasOwn(explicit, 'message')}`);
+console.log(new Error('Not implemented').toString());
+console.log(new Error('start < 0').message);
+console.log(new Error('length < 0').message);
+console.log(new Error('newLength < 0').message);
+// The remaining families have no construction witness in tsc; ECMA 20.5.
+console.log(TypeError('type').toString());
+console.log(new RangeError('range').toString());
+console.log(new SyntaxError('syntax').toString());
+console.log(new ReferenceError('reference').toString());
+console.log(new EvalError('eval').toString());
+console.log(new URIError('uri').toString());
+console.log(`${Error.length}:${AggregateError.length}:${TypeError.name}`);
+console.log(`${Error.hasOwnProperty('prepareStackTrace')}:${Error.hasOwnProperty('isError')}`);
+// Exact constructor expression from tsc program.ts:1526.
+const option = {name: 'module'};
+const misuse = new Error(`${option.name} is a string value; tsconfig JSON must be parsed with parseJsonSourceFileConfigFileContent or getParsedCommandLineOfConfigFile before passing to createProgram`);
+console.log(misuse.message);

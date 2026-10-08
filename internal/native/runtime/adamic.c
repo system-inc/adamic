@@ -212,6 +212,8 @@ static void write_text(enum adamic_stream stream, const char *bytes, size_t leng
 }
 
 void adamic_start(int count, char **values) {
+    adamic_error_init_prototypes();
+    if (atexit(adamic_error_reset_prototypes) != 0) adamic_panic("Error prototype cleanup registration failed", sizeof("Error prototype cleanup registration failed") - 1);
 	adamic_arguments_save(count, values);
 	adamic_node_process_start(count, values);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.

@@ -1,0 +1,19 @@
+// tsc debug.ts:199,201: captureStackTrace observes own stack, never parses frames.
+import type {Stats} from 'node:fs';
+Error.stackTraceLimit = 0;
+const e = new Error('Debug Failure.');
+console.log(e.stack ?? 'missing');
+console.log(`${Object.hasOwn(e, 'stack')}:${typeof e.stack}`);
+const target: {name:string; message:string; stack?:string} = {name: 'Custom', message: 'captured'};
+Error.captureStackTrace(target);
+console.log(target.stack ?? 'missing');
+const lazy = new TypeError('before');
+lazy.name = '';
+lazy.message = 'after';
+console.log(lazy.stack ?? 'missing');
+const cached = new Error('cached');
+console.log(cached.stack ?? 'missing');
+cached.message = 'changed';
+console.log(cached.stack ?? 'missing');
+Error.stackTraceLimit = 10;
+console.log(Error.stackTraceLimit.toString());

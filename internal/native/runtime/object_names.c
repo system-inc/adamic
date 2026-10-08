@@ -18,7 +18,9 @@ static adamic_string *name_string(const char *bytes, size_t length) {
 
 adamic_array *adamic_object_names(const adamic_heap *value, bool all) {
 	if (value->kind == adamic_kind_object) {
-		return adamic_object_keys((const adamic_object *)value);
+		const adamic_object *object = (const adamic_object *)value;
+        if (object->error_kind != 0) return adamic_error_names(object, all);
+        return adamic_object_keys(object);
 	}
 	size_t length = value->kind == adamic_kind_string ? adamic_string_length((const adamic_string *)value) : 0;
 	bool has_length = all && value->kind == adamic_kind_string;

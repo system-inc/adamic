@@ -43,6 +43,9 @@ IN THE SOFTWARE.
 - Source: https://github.com/v8/v8
 - License: `BSD-3-Clause`
 - In Adamic, ported so Adamic's answers match Node's to the bit:
+  - Error construction, InstallErrorCause and Error.prototype.toString
+    (`runtime/exceptions.c`, after src/builtins/builtins-error.cc,
+    src/execution/messages.cc and src/builtins/aggregate-error.tq, V8 13.6.233.17);
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);

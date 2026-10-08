@@ -1,0 +1,17 @@
+import type {Stats} from 'node:fs';
+// ErrorData / ECMA 20.5 prototypes; tsc debug.ts:199 constructs Error.
+const error = new TypeError('Debug Failure.');
+console.log(`${error instanceof Error}:${error instanceof TypeError}:${error instanceof RangeError}:${error instanceof Object}`);
+console.log(`${TypeError.prototype instanceof Error}:${Error.prototype instanceof Error}`);
+console.log(`${Object.getPrototypeOf(error) === TypeError.prototype}`);
+console.log(`${Object.getPrototypeOf(TypeError.prototype) === Error.prototype}`);
+console.log(`${Object.getPrototypeOf(Error.prototype) === Object.prototype}`);
+console.log(`${Object.getPrototypeOf(Object.getPrototypeOf(Error.prototype)) === null}`);
+console.log(`${new SyntaxError() instanceof SyntaxError}`);
+console.log(`${new ReferenceError() instanceof ReferenceError}`);
+console.log(`${new EvalError() instanceof EvalError}`);
+console.log(`${new URIError() instanceof URIError}`);
+console.log(`${new AggregateError(['x']) instanceof Error}`);
+console.log(`${Error.prototype.isPrototypeOf(error)}:${TypeError.prototype.isPrototypeOf(error)}:${RangeError.prototype.isPrototypeOf(error)}`);
+console.log(`${Object.prototype.isPrototypeOf(Error.prototype)}:${Error.prototype.isPrototypeOf(TypeError.prototype)}`);
+console.log(`${Error.hasOwnProperty('prototype')}:${TypeError.hasOwnProperty('message')}`);

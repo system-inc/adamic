@@ -1,0 +1,15 @@
+import type {Stats} from 'node:fs';
+// ECMA 20.5.7; tsc does not construct AggregateError.
+const cause = new Error('cause');
+const input = [cause, new TypeError('second')];
+const error = new AggregateError(input, 'many', {cause});
+console.log(error.toString());
+console.log(`${error instanceof AggregateError}:${error instanceof Error}`);
+console.log(`${error.errors.length}:${Object.is(error.errors[0], cause)}:${Object.is(error.cause, cause)}`);
+input[0] = new Error('replacement');
+console.log(`${Object.is(error.errors[0], cause)}`);
+console.log(typeof error.errors[5]);
+console.log(Object.getOwnPropertyNames(error).join(','));
+console.log(`${error.propertyIsEnumerable('errors')}:${Object.keys(error).length}`);
+const numbers = new AggregateError([3, 4], 'numbers');
+console.log(`${typeof numbers.errors[0]}:${numbers.errors.length}`);

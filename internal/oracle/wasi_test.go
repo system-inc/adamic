@@ -43,7 +43,7 @@ func TestWASIAgreesWithNode(t *testing.T) {
 				expected = onJavaScriptBackend(t, program)
 			}
 			actual := onWASI(t, native.C(program))
-			if difference := disagreement(expected, actual); difference != "" {
+			if difference := disagreement(expected, actual); difference != "" && !knownErrorStackFrames(t, path, expected, actual, "WASI") {
 				t.Errorf("%s\nnode: exit %d, stdout %q, stderr %q\nwasi: exit %d, stdout %q, stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
 			}
 		})

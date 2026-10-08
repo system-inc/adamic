@@ -230,10 +230,36 @@ typedef struct adamic_object {
 	// captureStackTrace owns one non-enumerable string outside the fixed shape.
 	bool has_captured_stack;
 	adamic_value captured_stack;
+    // Built-in Error internal data, distinct from enumerable plain fields.
+    int error_kind;
+    unsigned error_own;
+    unsigned error_enumerable;
+    unsigned error_order;
+    adamic_heap *error_cause;
+    struct adamic_array *error_errors;
+    adamic_string *error_frames;
 	adamic_value slots[];
 } adamic_object;
 
+void adamic_error_init_prototypes(void);
+void adamic_error_reset_prototypes(void);
 void adamic_error_capture_stack(adamic_object *target);
+void adamic_error_capture_at(adamic_object *target, const adamic_string *frames, double limit);
+adamic_string *adamic_error_to_string(const adamic_object *error);
+adamic_string *adamic_error_member(const adamic_object *error, int member);
+adamic_string *adamic_error_set_member(adamic_object *error, int member, adamic_string *value);
+adamic_heap *adamic_error_cause(const adamic_object *error);
+struct adamic_array *adamic_error_errors(const adamic_object *error);
+adamic_object *adamic_error_prototype(int kind);
+adamic_heap *adamic_error_get_prototype(const adamic_heap *value);
+bool adamic_error_is_prototype_of(const adamic_object *prototype, const adamic_heap *value);
+bool adamic_error_instanceof(const adamic_heap *value, int kind);
+bool adamic_error_enumerable(const adamic_object *error, const adamic_string *key);
+bool adamic_error_has_own(const adamic_object *error, const adamic_string *key);
+struct adamic_array *adamic_error_names(const adamic_object *error, bool all);
+adamic_object *adamic_error_builtin_new(int kind, adamic_string *message, bool message_own,
+    adamic_heap *cause, bool cause_own, struct adamic_array *errors, int element,
+    const adamic_string *frames, double limit);
 adamic_string *adamic_error_read_stack(const adamic_object *target);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);

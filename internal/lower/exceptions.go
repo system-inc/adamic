@@ -40,20 +40,7 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 // newError lowers new Error(message), and new Error().
 func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 	created := node.AsNewExpression()
-	message := ir.Expression(ir.StringConstant{Index: l.constant("")})
-	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
-		if len(created.Arguments.Nodes) > 1 {
-			return nil, l.notYet(node, "new Error with options")
-		}
-		var err error
-		if message, err = l.expression(created.Arguments.Nodes[0]); err != nil {
-			return nil, err
-		}
-		if message.Type() != ir.String {
-			return nil, l.notYet(node, "new Error with a message that isn't a string")
-		}
-	}
-	return ir.MakeError{Message: message}, nil
+	return l.errorConstruct(node, created.Expression, nodesOf(created.Arguments))
 }
 
 // tryStatement lowers try, with catch, finally or both.

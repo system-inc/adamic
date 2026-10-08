@@ -34,6 +34,9 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	}
 	written := node.AsCallExpression().Arguments.Nodes
 	if name == "assign" {
+		if len(written) > 0 && l.errorObjectType(written[0]) {
+			return nil, true, l.notYet(node, "Object.assign to Error requires compiler own-property metadata lowering")
+		}
 		if len(written) < 1 {
 			return nil, true, l.notYet(node, "Object.assign without a target")
 		}

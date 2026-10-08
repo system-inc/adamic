@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -78,16 +80,16 @@ func (l *lowering) errorLimitLocal() int {
 	return held
 }
 
-func (l *lowering) errorCaptureValue() ir.Expression {
+func (l *lowering) errorCaptureValue(node *ast.Node) ir.Expression {
 	if held, found := l.forwarders[-1]; found {
 		return ir.Read{Local: held, Of: ir.Closure}
 	}
 	index := len(l.result.Functions)
 	target := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "target", Type: ir.Object, Function: index})
-	// constructorOpt affects only omitted frame text. Its expression is still
+	// constructorOpt affects only frame text, which carries no parsing contract. Its expression is still
 	// evaluated by the caller, including when this intrinsic is detached.
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "library_Error_captureStackTrace", Closure: true, Parameters: []int{target}, Body: []ir.Statement{ir.Evaluate{Value: ir.ObjectCall{Method: "errorCaptureStack", Arguments: []ir.Expression{ir.Read{Local: target, Of: ir.Object}}}}}})
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "library_Error_captureStackTrace", Closure: true, Parameters: []int{target}, Body: []ir.Statement{ir.Evaluate{Value: ir.ObjectCall{Method: "errorCaptureStack", Arguments: []ir.Expression{ir.Read{Local: target, Of: ir.Object}, ir.StringConstant{Index: l.constant(fmt.Sprintf("\nAdamic frame: adamic_function_%d_library_Error_captureStackTrace (%v)", index, l.program.Where(node)))}, ir.Read{Local: l.errorLimitLocal(), Of: ir.Number}}}}}})
 	held := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "Error_captureStackTrace", Type: ir.Closure, Global: true, Function: -1})
 	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
@@ -99,6 +101,9 @@ func (l *lowering) errorCaptureValue() ir.Expression {
 }
 
 func (l *lowering) libraryErrorValue(node *ast.Node) (ir.Expression, bool, error) {
+	if value, known, err := l.errorObjectsValue(node); known {
+		return value, known, err
+	}
 	if l.errorMember(node, "stackTraceLimit") {
 		return ir.Read{Local: l.errorLimitLocal(), Of: ir.Number}, true, nil
 	}
@@ -126,7 +131,7 @@ func (l *lowering) libraryErrorValue(node *ast.Node) (ir.Expression, bool, error
 		return ir.StringConstant{Index: l.constant("function")}, true, nil
 	}
 	if l.errorCaptureRead(node) {
-		return l.errorCaptureValue(), true, nil
+		return l.errorCaptureValue(node), true, nil
 	}
 	if l.isLibraryGlobal(node, "Error") {
 		return nil, true, l.notYet(node, "Error constructor aliases outside typeof and captureStackTrace are not lowered")
@@ -196,6 +201,14 @@ func (l *lowering) libraryErrorValue(node *ast.Node) (ir.Expression, bool, error
 				of, known := l.representation(l.checker.GetTypeOfSymbol(stack))
 				if !known || of != ir.String {
 					return nil, true, l.notYet(argument, "captureStackTrace would overwrite a non-string stack field")
+				}
+			}
+			for _, name := range []string{"name", "message"} {
+				if property := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(argument), name); property != nil {
+					of, known := l.representation(l.checker.GetTypeOfSymbol(property))
+					if !known || of != ir.String || l.includesUndefined(l.checker.GetTypeOfSymbol(property)) || l.includesNull(l.checker.GetTypeOfSymbol(property)) {
+						return nil, true, l.notYet(argument, "captureStackTrace name/message coercion needs compiler ToPrimitive lowering")
+					}
 				}
 			}
 			if !l.errorPlainTarget(argument) && !l.errorNativeTarget(argument) {
@@ -411,6 +424,12 @@ func (l *lowering) errorCaptureFrozenProgram() bool {
 // Destructuring bypasses ordinary property lowering; keep it refused until its
 // source and capture dominance are proven by that path as well.
 func (l *lowering) errorStackSyntaxRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindVariableDeclaration && !ast.IsIdentifier(node.Name()) {
+		initializer := node.AsVariableDeclaration().Initializer
+		if initializer != nil && l.errorObjectType(initializer) {
+			return l.notYet(node, "Error destructuring requires compiler own-property metadata lowering")
+		}
+	}
 	if node.Kind == ast.KindBindingElement {
 		binding := node.AsBindingElement()
 		key := binding.PropertyName
@@ -435,7 +454,12 @@ func (l *lowering) errorNativeTarget(node *ast.Node) bool {
 	for depth := 0; depth < 16; depth++ {
 		node = ast.SkipParentheses(node)
 		if node.Kind == ast.KindNewExpression {
-			return l.isLibraryGlobal(node.AsNewExpression().Expression, "Error")
+			_, ok := l.errorConstructor(node.AsNewExpression().Expression)
+			return ok
+		}
+		if node.Kind == ast.KindCallExpression {
+			_, ok := l.errorConstructor(node.AsCallExpression().Expression)
+			return ok
 		}
 		if !ast.IsIdentifier(node) {
 			return false

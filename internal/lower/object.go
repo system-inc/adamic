@@ -21,6 +21,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
 		case ast.KindSpreadAssignment:
+			if l.errorObjectType(property.AsSpreadAssignment().Expression) {
+				return nil, l.notYet(property, "spreading Error requires compiler enumerable-descriptor lowering")
+			}
 			if index != 0 {
 				return nil, &Refused{Where: l.program.Where(property), What: "a spread after the first field", Fix: "spread once, first: { ...source, field: value } (adamic/single-spread)"}
 			}
@@ -1374,8 +1377,8 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if l.isLibraryGlobal(created.Expression, "Set") {
 		return l.newSet(node)
 	}
-	if l.isLibraryGlobal(created.Expression, "Error") {
-		return l.newError(node)
+	if _, known := l.errorConstructor(created.Expression); known {
+		return l.errorConstruct(node, created.Expression, nodesOf(created.Arguments))
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {
 		return nil, l.notYet(node, "new "+describe(created.Expression))

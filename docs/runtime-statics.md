@@ -471,3 +471,14 @@ Additional storage inherited from area/library, audited during the runtime compi
 - `from_codes.c:name_cache:1`: name slot cache. The merged packed cache publishes and reads with atomic operations, including concurrent error construction.
 - `node_fs_directory.c:target_before:1`, `node_fs_directory.c:arrow:1`, and `node_fs_directory.c:quote:2`: immortal error-message strings initialized statically. No literal cache writes or registration.
 - `union.c:shape_types:1`: area/library's process-wide shape-type metadata registry, written by adamic_register_shape_types during generated object construction and read by dynamic_slot. Preserved from the area, not added by the regex compiler. Unsafe today for concurrent registration/dynamic reads: neither this head nor metadata next links are protected. Requires the area's registry owner to arrange registration before the pool or synchronized publication; this merge does not certify that inherited concurrency behavior.
+
+### Step 21 Error prototypes
+
+| Storage | Ownership and concurrency audit |
+| --- | --- |
+| `exceptions.c:builtin_error_names:1` | Immortal constructor-name strings, initialized statically. The string runtime does not mutate immortal units/index caches. |
+| `exceptions.c:error_prototypes:1` | Aligned immortal prototype identities; initialized by adamic_start before workers exist. Counted name/message replacements are retained and released on replacement, then reset after parallel shutdown. Prototype writes are rejected inside parallel callbacks by the compiler's existing fresh-task-object proof; accepted writes occur on main between completed tasks. Workers only read these slots; counted strings are published through adamic_share before installation, so worker retains/releases and lazy string caches use the shared paths. |
+| `exceptions.c:separator:1` | Immortal toString separator; initialized statically. Immortal string caches are not mutated. |
+
+The old name_cache/message_cache entries above describe the base. Step 21 removes
+those caches from uncaught reporting and uses the shared Error toString algorithm.

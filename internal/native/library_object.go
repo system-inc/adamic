@@ -12,7 +12,30 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "errorToString":
+		return e.own(ir.String, fmt.Sprintf("adamic_error_to_string(%s)", arguments[0]))
+	case "errorMember":
+		return e.own(ir.String, fmt.Sprintf("adamic_error_member(%s, (int)%s)", arguments[0], arguments[1]))
+	case "errorSetMember":
+		return e.own(ir.String, fmt.Sprintf("adamic_error_set_member(%s, (int)%s, %s)", arguments[0], arguments[1], arguments[2]))
+	case "errorCause":
+		return e.own(ir.Union, fmt.Sprintf("adamic_error_cause(%s)", arguments[0]))
+	case "errorErrors":
+		return e.own(ir.Array, fmt.Sprintf("adamic_error_errors(%s)", arguments[0]))
+	case "errorPrototype":
+		return e.own(ir.Object, fmt.Sprintf("adamic_retain(adamic_error_prototype((int)%s))", arguments[0]))
+	case "errorGetPrototype":
+		return e.own(ir.Union, fmt.Sprintf("adamic_retain(adamic_error_get_prototype(%s))", arguments[0]))
+	case "errorIsPrototypeOf":
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_error_is_prototype_of(%s, %s)", arguments[0], arguments[1]))
+	case "errorInstanceOf":
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_error_instanceof(%s, (int)%s)", arguments[0], arguments[1]))
+	case "errorEnumerable":
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_error_enumerable(%s, %s)", arguments[0], arguments[1]))
 	case "errorCaptureStack":
+		if len(arguments) == 3 {
+			return fmt.Sprintf("adamic_error_capture_at(%s, %s, %s)", arguments[0], arguments[1], arguments[2])
+		}
 		return fmt.Sprintf("adamic_error_capture_stack(%s)", arguments[0])
 	case "errorReadStack":
 		return e.own(ir.String, fmt.Sprintf("adamic_error_read_stack(%s)", arguments[0]))

@@ -1220,11 +1220,24 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Text)
 		return a.fresh(anyField, value{})
 	case ir.MakeError:
+		var captured value
+		if expression.Errors != nil {
+			captured = a.value(expression.Errors)
+		}
 		a.value(expression.Message)
+		if expression.Cause != nil {
+			captured.merge(a.value(expression.Cause))
+		}
+		if expression.Frames != nil {
+			a.value(expression.Frames)
+		}
+		if expression.Limit != nil {
+			a.value(expression.Limit)
+		}
 		if expression.Name != nil {
 			a.value(expression.Name)
 		}
-		return a.fresh(anyField, value{})
+		return a.fresh(anyField, captured)
 	case ir.ObjectLiteral:
 		var copied value
 		if expression.Spread != nil {

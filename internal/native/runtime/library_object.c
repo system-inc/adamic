@@ -41,6 +41,7 @@ void adamic_object_check_write(const adamic_object *object, const char *name) {
 }
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
+ if (object->error_kind != 0) return adamic_error_has_own(object, key);
  if (object->has_captured_stack && key->length == 5 && memcmp(key->bytes, "stack", 5) == 0) return true;
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
@@ -95,6 +96,7 @@ static adamic_string *key_string(const char *name) {
 }
 
 adamic_array *adamic_object_keys(const adamic_object *object) {
+ if (object->error_kind != 0) return adamic_error_names(object, false);
  // Class descriptors hide private storage and track static own-property presence.
  if (object->class != NULL) return adamic_class_object_keys(object);
  size_t *indices = ordered(object);

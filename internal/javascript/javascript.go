@@ -750,7 +750,39 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
 		if expression.Method == "errorCaptureStack" {
-			return "(Object.defineProperty(" + e.value(expression.Arguments[0]) + ", 'stack', {value: '', writable: true, configurable: true, enumerable: false}), undefined)"
+			if len(expression.Arguments) == 3 {
+				return "(()=>{const target=" + e.value(expression.Arguments[0]) + ";Error.stackTraceLimit=" + e.value(expression.Arguments[2]) + ";return Error.captureStackTrace(target)})()"
+			}
+			return "Error.captureStackTrace(" + e.value(expression.Arguments[0]) + ")"
+		}
+		if strings.HasPrefix(expression.Method, "error") && expression.Method != "errorReadStack" {
+			args := make([]string, len(expression.Arguments))
+			for index, arg := range expression.Arguments {
+				args[index] = e.value(arg)
+			}
+			families := "[Object,Error,TypeError,RangeError,SyntaxError,ReferenceError,EvalError,URIError,AggregateError]"
+			switch expression.Method {
+			case "errorToString":
+				return "(" + args[0] + ").toString()"
+			case "errorMember":
+				return "(" + args[0] + ")[" + args[1] + " === 0 ? 'name' : 'message']"
+			case "errorSetMember":
+				return "(" + args[0] + "[" + args[1] + " === 0 ? 'name' : 'message'] = " + args[2] + ")"
+			case "errorCause":
+				return "(" + args[0] + ").cause"
+			case "errorErrors":
+				return "(" + args[0] + ").errors"
+			case "errorPrototype":
+				return families + "[" + args[0] + "].prototype"
+			case "errorGetPrototype":
+				return "Object.getPrototypeOf(" + args[0] + ")"
+			case "errorIsPrototypeOf":
+				return "(" + args[0] + ").isPrototypeOf(" + args[1] + ")"
+			case "errorInstanceOf":
+				return "(" + args[0] + " instanceof " + families + "[" + args[1] + "] )"
+			case "errorEnumerable":
+				return "(" + args[0] + ").propertyIsEnumerable(" + args[1] + ")"
+			}
 		}
 		if expression.Method == "errorReadStack" {
 			return "(" + e.value(expression.Arguments[0]) + ")['stack']"
@@ -792,6 +824,28 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Box:
 		return e.value(expression.Value)
 	case ir.MakeError:
+		if expression.Family != "" {
+			bindings := []string{}
+			args := []string{}
+			if expression.Errors != nil {
+				bindings = append(bindings, "const errors="+e.value(expression.Errors)+";")
+				args = append(args, "errors")
+			}
+			message := "undefined"
+			if !expression.MessageAbsent {
+				bindings = append(bindings, "const message="+e.value(expression.Message)+";")
+				message = "message"
+			}
+			if !expression.MessageAbsent || expression.Cause != nil {
+				args = append(args, message)
+			}
+			if expression.Cause != nil {
+				bindings = append(bindings, "const cause="+e.value(expression.Cause)+";")
+				args = append(args, "{cause}")
+			}
+			bindings = append(bindings, "Error.stackTraceLimit="+e.value(expression.Limit)+";")
+			return "(()=>{" + strings.Join(bindings, "") + "return new " + expression.Family + "(" + strings.Join(args, ", ") + ")})()"
+		}
 		if expression.Name != nil {
 			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"
 		}

@@ -91,6 +91,12 @@ func pure(expression ir.Expression) bool {
 
 // pureKind reports whether an expression's own operation is on pure's list, whatever its operands.
 func pureKind(expression ir.Expression) bool {
+	if call, ok := expression.(ir.ObjectCall); ok {
+		switch call.Method {
+		case "errorMember", "errorCause", "errorErrors", "errorToString", "errorPrototype", "errorGetPrototype", "errorInstanceOf", "errorIsPrototypeOf", "errorEnumerable":
+			return true
+		}
+	}
 	switch expression.(type) {
 	case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Read, ir.Undefined,
 		ir.Unary, ir.Binary, ir.NumberToString, ir.BooleanToString, ir.Concat, ir.Length, ir.StringLength,

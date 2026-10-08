@@ -1,0 +1,29 @@
+import type {Stats} from 'node:fs';
+// Error.prototype.toString ECMA 20.5.3.4; the full tsc debug.ts truthy conditional remains refused.
+const e = new Error('Debug Failure. assertion');
+console.log(e.toString());
+e.name = '';
+console.log(e.toString());
+e.message = '';
+console.log(e.toString());
+e.name = 'Custom';
+console.log(e.toString());
+e.message = 'message';
+console.log(e.toString());
+console.log(`${e.hasOwnProperty('name')}:${e.propertyIsEnumerable('name')}:${e.propertyIsEnumerable('message')}`);
+const absent = new Error();
+absent.name = 'First';
+absent.message = 'Second';
+console.log(Object.keys(absent).join(','));
+console.log(Object.getOwnPropertyNames(absent).join(','));
+Error.prototype.name = 'Renamed';
+Error.prototype.message = 'inherited';
+const inherited = new Error();
+console.log(inherited.toString());
+console.log(`${Object.hasOwn(inherited, 'message')}:${Object.hasOwn(inherited, 'name')}`);
+console.log(new TypeError().toString());
+Error.prototype.name = 'Error';
+Error.prototype.message = '';
+Error.prototype.name = 'dynamic'.repeat(3);
+console.log(new Error().toString());
+// Leave a counted prototype value live: runtime cleanup must release it.

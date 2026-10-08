@@ -24,13 +24,16 @@ adamic_virtual_method adamic_virtual(const adamic_object *object, size_t slot) {
 static void release_field(adamic_object *object, size_t index, void (*release)(void *)) {
 	if (!object->shape->references[index]) { return; }
 	adamic_heap *child = object->slots[index].reference;
-	if (child != NULL && child->references != 0) { release(child); }
+	if (child != NULL && adamic_reference_count(child) != 0) { release(child); }
 }
 
 void adamic_object_free_children(adamic_object *object, void (*release)(void *)) {
+    if (object->error_cause != NULL && adamic_reference_count(object->error_cause) != 0) { release(object->error_cause); }
+    if (object->error_errors != NULL && adamic_reference_count(&object->error_errors->heap) != 0) { release(object->error_errors); }
+    if (object->error_frames != NULL && adamic_reference_count(&object->error_frames->heap) != 0) { release(object->error_frames); }
 	if (object->has_captured_stack) {
 		adamic_heap *stack = object->captured_stack.reference;
-		if (stack != NULL && stack->references != 0) { release(stack); }
+		if (stack != NULL && adamic_reference_count(stack) != 0) { release(stack); }
 	}
 	if (object->class == NULL) {
 		for (size_t index = 0; index < object->shape->count; index++) {

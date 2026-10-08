@@ -1,0 +1,9 @@
+// oracle-known-difference: stack frames
+// Full stdout and exit code are compared. Adamic frames differ from V8 frames.
+import type {Stats} from 'node:fs';
+Error.stackTraceLimit = 1;
+function fail(): void {
+    const error = new Error('Debug Failure.');
+    console.log(error.stack ?? 'missing');
+}
+fail();

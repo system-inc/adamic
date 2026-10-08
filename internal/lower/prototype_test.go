@@ -182,7 +182,6 @@ func TestUnrepresentedPrototypeCallsAreNotYet(t *testing.T) {
 		"const value = [[1]]; value.toString();",
 		"function test(value: () => number): boolean { return value.hasOwnProperty('prototype'); } console.log(`${test(() => 1)}`);",
 		"const value = [1, 'x'] as const; value.propertyIsEnumerable('0');",
-		"const value = new Error('message'); value.toString();",
 	} {
 		_, err := lowerSource(t, source)
 		var notYet *NotYet

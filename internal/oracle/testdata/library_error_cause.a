@@ -1,0 +1,14 @@
+import type {Stats} from 'node:fs';
+// InstallErrorCause; cause is own and non-enumerable, including undefined.
+const absent = new Error('absent');
+const missing = new TypeError('missing', {});
+const undef = new RangeError('undef', {cause: undefined});
+const nil = new SyntaxError('nil', {cause: null});
+const cause = {value: 7};
+const object = new ReferenceError('object', {cause});
+const number = new EvalError('number', {cause: 3});
+const boolean = new URIError('boolean', {cause: false});
+console.log(`${Object.hasOwn(absent, 'cause')}:${Object.hasOwn(missing, 'cause')}:${Object.hasOwn(undef, 'cause')}`);
+console.log(`${typeof absent.cause}:${typeof undef.cause}:${nil.cause === null}`);
+console.log(`${Object.is(object.cause, cause)}:${typeof number.cause}:${typeof boolean.cause}`);
+console.log(`${object.propertyIsEnumerable('cause')}:${Object.keys(object).join(',')}`);
