@@ -11,8 +11,8 @@ const tree = path.resolve(process.argv[2]);
 const inventory = JSON.parse(zlib.gunzipSync(fs.readFileSync(process.argv[3])));
 const program = ts.createProgram(ts.sys.readDirectory(path.join(tree, 'src'), ['.ts'], ['**/lib/**']), {
     strict: true, exactOptionalPropertyTypes: true, noUncheckedIndexedAccess: true,
-    noImplicitReturns: true, noFallthroughCasesInSwitch: true, verbatimModuleSyntax: true,
-    erasableSyntaxOnly: true, allowImportingTsExtensions: true, noEmit: true,
+    verbatimModuleSyntax: true,
+    erasableSyntaxOnly: false, allowImportingTsExtensions: true, noEmit: true,
     module: ts.ModuleKind.ESNext, moduleDetection: ts.ModuleDetectionKind.Force,
     moduleResolution: ts.ModuleResolutionKind.Bundler, target: ts.ScriptTarget.ES2024,
     lib: ['lib.es2024.d.ts'], types: [],

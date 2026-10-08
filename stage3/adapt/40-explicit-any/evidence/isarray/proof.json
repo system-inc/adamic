@@ -1,0 +1,350 @@
+{
+  "site": 58,
+  "class": "Generic array predicate input",
+  "replacement": "unknown",
+  "callerSites": 64,
+  "beforeDiagnostics": 0,
+  "afterDiagnostics": 0,
+  "newDiagnostics": 0,
+  "jsFiles": 10,
+  "publicAPIIdentical": true,
+  "bodyMutantCaught": true,
+  "stringMutantErrors": [
+    {
+      "file": "src/compiler/builder.ts",
+      "start": 64332,
+      "code": 2345,
+      "message": "Argument of type 'IncrementalBuildInfoRoot' is not assignable to parameter of type 'string'.\n  Type 'IncrementalBuildInfoFileId' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "start": 72684,
+      "code": 2345,
+      "message": "Argument of type 'readonly string[] | Program' is not assignable to parameter of type 'string'.\n  Type 'readonly string[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "start": 114089,
+      "code": 2345,
+      "message": "Argument of type 'IncrementalBuildInfoRoot' is not assignable to parameter of type 'string'.\n  Type 'IncrementalBuildInfoFileId' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 99524,
+      "code": 2345,
+      "message": "Argument of type '{ arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; }[]' is not assignable to parameter of type 'string'.\n  Type '{ arguments: { factory: string; }; range: CommentRange; }' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 101828,
+      "code": 2345,
+      "message": "Argument of type '{ arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; }[]' is not assignable to parameter of type 'string'.\n  Type '{ arguments: { factory: string; }; range: CommentRange; }' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 572765,
+      "code": 2345,
+      "message": "Argument of type 'ClassElement | TypeElement | TypeElement[] | (ClassElement | AccessorDeclaration)[]' is not assignable to parameter of type 'string'.\n  Type 'ClassElement' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 573335,
+      "code": 2345,
+      "message": "Argument of type 'ClassElement | TypeElement | TypeElement[] | (ClassElement | AccessorDeclaration)[]' is not assignable to parameter of type 'string'.\n  Type 'ClassElement' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 2209937,
+      "code": 2345,
+      "message": "Argument of type 'Signature | readonly Signature[]' is not assignable to parameter of type 'string'.\n  Type 'Signature' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 2881317,
+      "code": 2345,
+      "message": "Argument of type 'string | readonly JSDocComment[] | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "start": 2984720,
+      "code": 2345,
+      "message": "Argument of type '{ arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; }[]' is not assignable to parameter of type 'string'.\n  Type '{ arguments: { factory: string; }; range: CommentRange; }' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "start": 118860,
+      "code": 2345,
+      "message": "Argument of type 'PresetValue' is not assignable to parameter of type 'string'.\n  Type 'number' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "start": 127181,
+      "code": 2345,
+      "message": "Argument of type 'readonly ProjectReference[] | \"not-array\"' is not assignable to parameter of type 'string'.\n  Type 'readonly ProjectReference[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "start": 131657,
+      "code": 2345,
+      "message": "Argument of type 'PropOfRaw<ProjectReference>' is not assignable to parameter of type 'string'.\n  Type 'readonly ProjectReference[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "start": 132525,
+      "code": 2345,
+      "message": "Argument of type 'PropOfRaw<T>' is not assignable to parameter of type 'string'.\n  Type 'readonly T[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "start": 136895,
+      "code": 2345,
+      "message": "Argument of type 'string[]' is not assignable to parameter of type 'string'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "start": 146631,
+      "code": 2345,
+      "message": "Argument of type 'number | boolean | string[] | (string | number)[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | null | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "start": 160216,
+      "code": 2345,
+      "message": "Argument of type 'CompilerOptionsValue' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "start": 160480,
+      "code": 2345,
+      "message": "Argument of type 'CompilerOptionsValue' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 13103,
+      "code": 2345,
+      "message": "Argument of type 'readonly T[] | T[] | NonNullable<T>' is not assignable to parameter of type 'string'.\n  Type 'readonly T[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 13860,
+      "code": 2345,
+      "message": "Argument of type 'U | readonly U[]' is not assignable to parameter of type 'string'.\n  Type 'U' is not assignable to type 'string'.\n    Type '{}' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 14462,
+      "code": 2345,
+      "message": "Argument of type 'readonly U[] | NonNullable<U>' is not assignable to parameter of type 'string'.\n  Type 'readonly U[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 15852,
+      "code": 2345,
+      "message": "Argument of type 'T | readonly T[]' is not assignable to parameter of type 'string'.\n  Type 'T' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 15992,
+      "code": 2345,
+      "message": "Argument of type 'T | readonly T[]' is not assignable to parameter of type 'string'.\n  Type 'T' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 34016,
+      "code": 2345,
+      "message": "Argument of type 'T | T[]' is not assignable to parameter of type 'string'.\n  Type 'T' is not assignable to type 'string'.\n    Type '{}' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 34036,
+      "code": 2345,
+      "message": "Argument of type 'T | T[]' is not assignable to parameter of type 'string'.\n  Type 'T' is not assignable to type 'string'.\n    Type '{}' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 34097,
+      "code": 2345,
+      "message": "Argument of type 'T | T[]' is not assignable to parameter of type 'string'.\n  Type 'T' is not assignable to type 'string'.\n    Type '{}' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 57283,
+      "code": 2345,
+      "message": "Argument of type 'TElement | TElement[]' is not assignable to parameter of type 'string'.\n  Type 'TElement' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 57679,
+      "code": 2345,
+      "message": "Argument of type 'TElement[] | NonNullable<TElement>' is not assignable to parameter of type 'string'.\n  Type 'TElement[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 58019,
+      "code": 2345,
+      "message": "Argument of type 'TElement[] | NonNullable<TElement>' is not assignable to parameter of type 'string'.\n  Type 'TElement[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 58857,
+      "code": 2345,
+      "message": "Argument of type 'TElement[] | NonNullable<TElement>' is not assignable to parameter of type 'string'.\n  Type 'TElement[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 60363,
+      "code": 2345,
+      "message": "Argument of type 'TElement | TElement[]' is not assignable to parameter of type 'string'.\n  Type 'TElement' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "start": 61739,
+      "code": 2345,
+      "message": "Argument of type 'T | T[]' is not assignable to parameter of type 'string'.\n  Type 'T' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "start": 12248,
+      "code": 2345,
+      "message": "Argument of type 'SourceFile | readonly SourceFile[] | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "start": 167487,
+      "code": 2345,
+      "message": "Argument of type 'VariableDeclarationList | readonly VariableDeclaration[]' is not assignable to parameter of type 'string'.\n  Type 'VariableDeclarationList' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "start": 43161,
+      "code": 2345,
+      "message": "Argument of type 'object' is not assignable to parameter of type 'string'."
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "start": 113898,
+      "code": 2345,
+      "message": "Argument of type 'object' is not assignable to parameter of type 'string'."
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "start": 73684,
+      "code": 2345,
+      "message": "Argument of type 'Node | NodeArray<Node>' is not assignable to parameter of type 'string'.\n  Type 'Node' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "start": 95226,
+      "code": 2345,
+      "message": "Argument of type 'Expression | Expression[]' is not assignable to parameter of type 'string'.\n  Type 'Expression' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "start": 95751,
+      "code": 2345,
+      "message": "Argument of type 'Expression | Expression[] | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "start": 68675,
+      "code": 2345,
+      "message": "Argument of type 'readonly string[] | CreateProgramOptions' is not assignable to parameter of type 'string'.\n  Type 'readonly string[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "start": 211806,
+      "code": 2345,
+      "message": "Argument of type 'string[]' is not assignable to parameter of type 'string'."
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "start": 2967,
+      "code": 2345,
+      "message": "Argument of type 'string | readonly string[]' is not assignable to parameter of type 'string'.\n  Type 'readonly string[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "start": 3074,
+      "code": 2345,
+      "message": "Argument of type 'string | readonly string[]' is not assignable to parameter of type 'string'.\n  Type 'readonly string[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "start": 31991,
+      "code": 2345,
+      "message": "Argument of type 'string[]' is not assignable to parameter of type 'string'."
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "start": 46805,
+      "code": 2345,
+      "message": "Argument of type 'Statement | readonly Statement[]' is not assignable to parameter of type 'string'.\n  Type 'Statement' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "start": 47206,
+      "code": 2345,
+      "message": "Argument of type 'Statement | readonly Statement[]' is not assignable to parameter of type 'string'.\n  Type 'Statement' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "start": 15475,
+      "code": 2345,
+      "message": "Argument of type 'VisitResult<Node>' is not assignable to parameter of type 'string'.\n  Type 'Node' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "start": 92840,
+      "code": 2345,
+      "message": "Argument of type 'VisitResult<Statement>' is not assignable to parameter of type 'string'.\n  Type 'readonly Node[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "start": 38311,
+      "code": 2345,
+      "message": "Argument of type 'Node | NodeArray<Node>' is not assignable to parameter of type 'string'.\n  Type 'Node' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "start": 372662,
+      "code": 2345,
+      "message": "Argument of type '{ arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; }[] | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "start": 372874,
+      "code": 2345,
+      "message": "Argument of type '{ arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; }[] | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "start": 5299,
+      "code": 2345,
+      "message": "Argument of type 'Node | readonly Node[]' is not assignable to parameter of type 'string'.\n  Type 'Node' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "start": 12440,
+      "code": 2345,
+      "message": "Argument of type 'Node | readonly Node[]' is not assignable to parameter of type 'string'.\n  Type 'Node' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "start": 16958,
+      "code": 2345,
+      "message": "Argument of type 'string | string[]' is not assignable to parameter of type 'string'.\n  Type 'string[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "start": 25357,
+      "code": 2345,
+      "message": "Argument of type 'readonly string[] | Program | BuilderProgram' is not assignable to parameter of type 'string'.\n  Type 'readonly string[]' is not assignable to type 'string'."
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "start": 25504,
+      "code": 2345,
+      "message": "Argument of type 'readonly string[] | Program | BuilderProgram' is not assignable to parameter of type 'string'.\n  Type 'readonly string[]' is not assignable to type 'string'."
+    }
+  ]
+}

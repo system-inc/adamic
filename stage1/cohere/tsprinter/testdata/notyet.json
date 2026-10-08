@@ -1,0 +1,62 @@
+[
+  {
+    "Source": "(function () {return 1;})",
+    "Reason": "FunctionExpression"
+  },
+  {
+    "Source": "f<T>(x)",
+    "Reason": "type-arguments"
+  },
+  {
+    "Source": "a as T",
+    "Reason": "AsExpression"
+  },
+  {
+    "Source": "a /* comment */ + b",
+    "Reason": "comment-attachment"
+  },
+  {
+    "Source": "a +\n\n b",
+    "Reason": "source-trivia"
+  },
+  {
+    "Source": "a; b",
+    "Reason": "expression-file"
+  },
+  {
+    "Source": "'a\\\nb'",
+    "Reason": "string-literal-layout"
+  },
+  {
+    "Source": "async x=>await (x as T)",
+    "Reason": "AsExpression"
+  },
+  {
+    "Source": "[1,\n    \n2]",
+    "Reason": "source-trivia"
+  },
+  {
+    "Source": "[a,b]=items",
+    "Reason": "assignment-pattern"
+  },
+  {
+    "Source": "({method(x:number){return x;}})",
+    "Reason": "function-types"
+  },
+  {
+    "Source": "test.each`a|b\n${1}|${2}`",
+    "Reason": "jest-template-table"
+  },
+  {
+    "Source": "(x: number) => x",
+    "Reason": "function-types"
+  },
+  {
+    "Source": "#!/usr/bin/env node\nf()",
+    "Reason": "comment-attachment"
+  },
+  {
+    "Source": "tag<T>`a${b}`",
+    "Reason": "tag-type-arguments"
+  }
+]
