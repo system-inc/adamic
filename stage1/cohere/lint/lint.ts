@@ -155,7 +155,10 @@ export class Linter {
             }
             lastProposals = proposals;
             proposals.sort(compareEdits);
-            const applied: Finding[] = [];
+            // Resolve overlaps before validating the survivors, as Go's edit engine does.
+            // Even a no-progress survivor reserves its span, and overlap refusals precede
+            // validation refusals in the result.
+            const resolved: Finding[] = [];
             let previous = -1;
             let winner = '';
             for(const finding of proposals) {
@@ -168,18 +171,22 @@ export class Linter {
                     );
                     continue;
                 }
+                resolved.push(finding);
+                previous = finding.editEnd;
+                winner = finding.rule;
+            }
+            const applied: Finding[] = [];
+            for(const finding of resolved) {
                 if(finding.editStart < 0 || finding.editEnd < finding.editStart || finding.editEnd > current.length) {
                     panic('invalid fix range');
                 }
                 if(current.slice(finding.editStart, finding.editEnd) === finding.replacement) {
-                    this.rejected.push(`rejected ${finding.rule} ${utf8Length(current.slice(0, finding.editStart))} ${utf8Length(current.slice(0, finding.editEnd))}  the fix replaces text with itself`);
-                    previous = finding.editEnd;
-                    winner = finding.rule;
+                    this.rejected.push(
+                        `rejected ${finding.rule} ${utf8Length(current.slice(0, finding.editStart))} ${utf8Length(current.slice(0, finding.editEnd))}  the fix replaces text with itself`,
+                    );
                     continue;
                 }
                 applied.push(finding);
-                previous = finding.editEnd;
-                winner = finding.rule;
             }
             if(applied.length === 0) {
                 return current;

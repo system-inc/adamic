@@ -1,0 +1,12 @@
+=== RUN   TestPromiseCapturedRecoveryProbe
+    capture_probe_test.go:13: cohere cases: 4003 unique source/rule/options combinations
+    capture_probe_test.go:22: 9a24f732 covers the exact input.tsx row: recovery metadata present, typed Go exits 0, finding retained:
+        case 0
+        /tmp/adamic-gate/TestPromiseCapturedRecoveryProbe2010136134/003/case-3555/input.tsx:1:1
+          prefer-promise-reject-errors  Expected the Promise rejection reason to be an Error. A rejection carrying a string or a plain object arrives at the catch with no stack, so the line that failed is lost and the handler cannot tell one failure from another.
+        
+        range 0 29 rejectAnError 			0 29
+        recovery findings only
+--- PASS: TestPromiseCapturedRecoveryProbe (30.01s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	30.041s
