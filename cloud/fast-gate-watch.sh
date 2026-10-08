@@ -225,8 +225,10 @@ usableSlots() {
       [ "${runningBox:-threadripper}" = "${box}" ] || continue
       slotReserved "${runningBranch}" "${box}" "${runningSlot}" && blocked=yes
     done < "${state}/running.tmp"
-    # A box a queued reservation waits on drains: only that tip, in its reserved slot, starts there.
-    if echo "${draining:-}" | grep -qxF "${box}" && ! slotReserved "${branch}" "${box}" "${slot}"; then
+    # A box a queued reservation waits on drains: only that tip, in its reserved slot, starts there. The
+    # deploy canary is exempt: nothing dispatches until it has a verdict, so a canary kept off the only
+    # free box (the draining one) froze everything, the reserved tip included (Oct 8 17:30Z, 67 queued).
+    if [ "${branch}" != canary/main ] && echo "${draining:-}" | grep -qxF "${box}" && ! slotReserved "${branch}" "${box}" "${slot}"; then
       blocked=yes
     fi
     [ "${blocked}" = no ] || continue

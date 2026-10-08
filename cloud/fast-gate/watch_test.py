@@ -313,6 +313,19 @@ class WatchTests(unittest.TestCase):
                 time.sleep(.3)
                 self.assertFalse(any(x.startswith('codex/young ') for x in w.read('starts').splitlines()), w.read('starts'))
 
+    def test_the_deploy_canary_may_use_a_draining_box(self):
+        # The only free box drains for a queued reservation: the canary still runs there, then the reserved tip.
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        (w.state / 'slots').write_text('server B cloud/land-area-next*\nserver S\n')
+        w.put('tips', '')
+        (w.state / 'queue').write_text('B 900 cloud/land-area-next-auto-1 %s\n' % ('d' * 40))
+        (w.state / 'seen').write_text('cloud/land-area-next-auto-1 %s\n' % ('d' * 40))
+        w.wait(lambda: 'canary/main' in w.read('starts'))
+        self.assertTrue(w.read('starts').splitlines()[0].endswith(' S server'), w.read('starts'))
+        w.put('initial', 'pass')
+        w.wait(lambda: 'cloud/land-area-next-auto-1' in w.read('starts'))
+
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
                              [('cloud/land-other', 'B'), ('codex/small', 'S')])
