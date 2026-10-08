@@ -1,0 +1,11 @@
+export class Thing {
+    static label = '/* not a comment */';
+    static {}
+    static {
+        /* deliberately empty */
+    }
+    static {
+        // deliberately empty
+    }
+    static { Thing.label = 'initialized'; }
+}

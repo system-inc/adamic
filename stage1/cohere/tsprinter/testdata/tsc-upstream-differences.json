@@ -1,0 +1,237 @@
+{
+  "Version": "3.9.6",
+  "Records": [
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/114_truthinessPromiseCoercion/truthinessPromiseCoercion.ts:594:KindPrefixUnaryExpression",
+      "Source": "!!await (((((((p)))))))",
+      "Go": "!!await(p);\n",
+      "Prettier": "!!(await p);\n",
+      "Embedded": "!!(await p);\n"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:64:KindPostfixUnaryExpression",
+      "Source": "1 ++",
+      "Go": "1++;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | 1 ++;\n    | ^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | 1 ++;\n    | ^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:73:KindPostfixUnaryExpression",
+      "Source": "(1)++",
+      "Go": "1++;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1)++;\n    | ^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1)++;\n    | ^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:81:KindPostfixUnaryExpression",
+      "Source": "(1)--",
+      "Go": "1--;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1)--;\n    | ^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1)--;\n    | ^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:91:KindPrefixUnaryExpression",
+      "Source": "++(1)",
+      "Go": "++1;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(1);\n    |   ^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(1);\n    |   ^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:99:KindPrefixUnaryExpression",
+      "Source": "--(1)",
+      "Go": "--1;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(1);\n    |   ^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(1);\n    |   ^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:109:KindPostfixUnaryExpression",
+      "Source": "(1 + 2)++",
+      "Go": "(1 + 2)++;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1 + 2)++;\n    | ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1 + 2)++;\n    | ^^^^^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:121:KindPostfixUnaryExpression",
+      "Source": "(1 + 2)--",
+      "Go": "(1 + 2)--;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1 + 2)--;\n    | ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1 + 2)--;\n    | ^^^^^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:135:KindPrefixUnaryExpression",
+      "Source": "++(1 + 2)",
+      "Go": "++(1 + 2);\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(1 + 2);\n    |   ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(1 + 2);\n    |   ^^^^^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:147:KindPrefixUnaryExpression",
+      "Source": "--(1 + 2)",
+      "Go": "--(1 + 2);\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(1 + 2);\n    |   ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(1 + 2);\n    |   ^^^^^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:161:KindPostfixUnaryExpression",
+      "Source": "(x + x)++",
+      "Go": "(x + x)++;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (x + x)++;\n    | ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (x + x)++;\n    | ^^^^^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:173:KindPostfixUnaryExpression",
+      "Source": "(x + x)--",
+      "Go": "(x + x)--;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (x + x)--;\n    | ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (x + x)--;\n    | ^^^^^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:187:KindPrefixUnaryExpression",
+      "Source": "++(x + x)",
+      "Go": "++(x + x);\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(x + x);\n    |   ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(x + x);\n    |   ^^^^^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:199:KindPrefixUnaryExpression",
+      "Source": "--(x + x)",
+      "Go": "--(x + x);\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(x + x);\n    |   ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(x + x);\n    |   ^^^^^^^"
+    },
+    {
+      "Family": "expressions",
+      "Label": "stage3/drivers/tsc/corpus/229_awaitCallExpressionInSyncFunction/awaitCallExpressionInSyncFunction.ts:52:KindCallExpression",
+      "Source": "await(Promise.resolve(1))",
+      "Go": "await(Promise.resolve(1));\n",
+      "Prettier": "await Promise.resolve(1);\n",
+      "Embedded": "await Promise.resolve(1);\n"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/114_truthinessPromiseCoercion/truthinessPromiseCoercion.ts:594:KindExpressionStatement",
+      "Source": "!!await (((((((p)))))));",
+      "Go": "!!await(p);\n",
+      "Prettier": "!!(await p);\n",
+      "Embedded": "!!(await p);\n"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:64:KindExpressionStatement",
+      "Source": "1 ++;",
+      "Go": "1++;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | 1 ++;;\n    | ^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | 1 ++;;\n    | ^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:73:KindExpressionStatement",
+      "Source": "(1)++;",
+      "Go": "1++;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1)++;;\n    | ^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1)++;;\n    | ^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:81:KindExpressionStatement",
+      "Source": "(1)--;",
+      "Go": "1--;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1)--;;\n    | ^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1)--;;\n    | ^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:91:KindExpressionStatement",
+      "Source": "++(1);",
+      "Go": "++1;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(1);;\n    |   ^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(1);;\n    |   ^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:99:KindExpressionStatement",
+      "Source": "--(1);",
+      "Go": "--1;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(1);;\n    |   ^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(1);;\n    |   ^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:109:KindExpressionStatement",
+      "Source": "(1 + 2)++;",
+      "Go": "(1 + 2)++;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1 + 2)++;;\n    | ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1 + 2)++;;\n    | ^^^^^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:121:KindExpressionStatement",
+      "Source": "(1 + 2)--;",
+      "Go": "(1 + 2)--;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1 + 2)--;;\n    | ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (1 + 2)--;;\n    | ^^^^^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:135:KindExpressionStatement",
+      "Source": "++(1 + 2);",
+      "Go": "++(1 + 2);\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(1 + 2);;\n    |   ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(1 + 2);;\n    |   ^^^^^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:147:KindExpressionStatement",
+      "Source": "--(1 + 2);",
+      "Go": "--(1 + 2);\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(1 + 2);;\n    |   ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(1 + 2);;\n    |   ^^^^^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:161:KindExpressionStatement",
+      "Source": "(x + x)++;",
+      "Go": "(x + x)++;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (x + x)++;;\n    | ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (x + x)++;;\n    | ^^^^^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:173:KindExpressionStatement",
+      "Source": "(x + x)--;",
+      "Go": "(x + x)--;\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (x + x)--;;\n    | ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:1)\n> 1 | (x + x)--;;\n    | ^^^^^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:187:KindExpressionStatement",
+      "Source": "++(x + x);",
+      "Go": "++(x + x);\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(x + x);;\n    |   ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | ++(x + x);;\n    |   ^^^^^^^"
+    },
+    {
+      "Family": "statements",
+      "Label": "stage3/drivers/tsc/corpus/170_decrementAndIncrementOperators/decrementAndIncrementOperators.ts:199:KindExpressionStatement",
+      "Source": "--(x + x);",
+      "Go": "--(x + x);\n",
+      "PrettierError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(x + x);;\n    |   ^^^^^^^",
+      "EmbeddedError": "SyntaxError: Invalid left-hand side expression in unary operation (1:3)\n> 1 | --(x + x);;\n    |   ^^^^^^^"
+    }
+  ]
+}

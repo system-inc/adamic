@@ -1,0 +1,5 @@
+{
+  "name": "max-depth-keyword-span",
+  "from": "const end = this.context.scanEnd();",
+  "to": "const end = node.end;"
+}

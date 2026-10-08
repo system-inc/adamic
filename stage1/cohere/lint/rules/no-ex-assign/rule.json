@@ -1,0 +1,13 @@
+{
+  "name": "no-ex-assign",
+  "kinds": [
+    "CatchClause"
+  ],
+  "visit": "visit",
+  "node": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoExAssign",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoExAssign"
+}

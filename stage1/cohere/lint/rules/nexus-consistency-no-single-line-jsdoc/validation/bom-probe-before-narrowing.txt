@@ -1,0 +1,10 @@
+case 0
+/workspace/jsdoc-validation/bom-leading.ts:1:4
+  nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+
+range 3 24 useSimpleComment fix	// Leading prose.		3 24
+/workspace/jsdoc-validation/bom-leading.ts:3:1
+  nexus/consistency-no-single-line-jsdoc  A JSDoc comment carrying one line of description should be a line comment. JSDoc's delimiters exist to hold structure, so spending three lines of them on a sentence tells a reader to look for tags that are not there.
+
+range 42 64 useSimpleComment fix	// Trailing prose.		42 64
+fixed	\ufeff// Leading prose.\u000aconst value = 1;\u000a// Trailing prose.\u000a

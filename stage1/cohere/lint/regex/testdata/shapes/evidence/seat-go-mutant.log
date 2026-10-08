@@ -1,0 +1,7 @@
+=== RUN   TestShapeFixtures
+    shapes_test.go:45: per-shape fixture comparison failed: exit status 1
+        base/consistency_require_pagination_argument_name.go:27: source Node fixture mismatch: expected "4:0:15:80,97,103,105,110,97,116,105,111,110,73,110,112,117,116,\n5:1:16:80,97,103,105,110,97,116,105,111,110,73,110,112,117,116,\n" got ""
+--- FAIL: TestShapeFixtures (10.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint/regex	10.041s
+FAIL

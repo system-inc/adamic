@@ -1,1 +1,2 @@
+// a-check: type error TS1484
 import { Item } from "../support.a"; const value: Item = {count: 1}; console.log(String(value.count));

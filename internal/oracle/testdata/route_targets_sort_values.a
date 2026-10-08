@@ -1,0 +1,29 @@
+// Comparator parameters belong to the array, even when a spread makes them look consumable.
+interface Item { readonly label: string; }
+type Compare = (left: Item, right: Item) => number;
+function compare(left: Item, right: Item): number {
+    const copy = { ...left, label: `${left.label}!` };
+    return copy.label.length - right.label.length;
+}
+function returned(): Compare { return (left, right) => compare(left, right); }
+function run(action: Compare, index: number): void {
+    const items: Item[] = [{ label: `long${index}` }, { label: `x${index}` }];
+    items.sort(action);
+    console.log(items.map((item) => item.label).join(','));
+}
+run((left, right) => compare(left, right), 0);
+const fixed = (left: Item, right: Item): number => {
+    const copy = { ...left, label: `${left.label}!` };
+    return copy.label.length - right.label.length;
+};
+run(fixed, 1);
+const values: Item[] = [{ label: `long${2}` }, { label: `x${2}` }];
+values.sort(fixed);
+console.log(values.map((item) => item.label).join(','));
+let changing: Compare = fixed;
+changing = returned();
+run(changing, 3);
+const holder = { compare: returned() };
+run(holder.compare, 4);
+run(returned(), 5);
+run(values.length > 0 ? fixed : returned(), 6);

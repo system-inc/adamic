@@ -60,7 +60,7 @@ See `docs/lint-registration.md` for the descriptor and adapter contracts.
 
 Send test output to a log and read the log. Never pipe a test run into `head` or `tail`: it kills the run mid-way and can orphan the fixtures' processes. Tests are parallel by default; a test that can't be says why in a "Not parallel:" comment.
 
-On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that job.
+On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that job. On macOS the leak check is the counted build, whose allocations must be its frees and its values in regions, then `leaks --atExit` on the same binary for malloc memory outside the counts; `leaks` alone can't see a leaked value, since the size-class allocator's chunks stay reachable.
 
 ## Adamic's own code passes Adamic's own gate
 

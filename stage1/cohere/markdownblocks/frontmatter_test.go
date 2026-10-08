@@ -14,12 +14,18 @@ import (
 )
 
 func TestFrontMatterStage(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputs, files := auditCorpus(t, root)
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	original := len(inputs)
 	for _, start := range []string{"---", "+++"} {
 		for _, language := range []string{"", "yaml", "toml", "json", "YAML", " yaml ", "\t yaml\t", "\ufeffyaml\ufeff", "\u0085yaml\u0085", "😀", "\u2000\u3000", "\r"} {
@@ -150,15 +156,14 @@ func TestFrontMatterStage(t *testing.T) {
 			}
 			mutantMain := filepath.Join(scratch, "testdata/frontmatter_probe.ts")
 			write(t, mutantMain, source)
-			mutant := lowered(t, mutantMain)
-			answer := nativelyRun(t, mutant, cases)
-			clean(t, "native output-only mutant", answer)
+			answer := onNode(t, mutantMain, cases)
+			clean(t, "source Node output-only mutant", answer)
 			if bytes.Equal(answer.stdout, want.stdout) {
 				t.Fatal("mutant survived")
 			}
 			offset := firstDifference(string(answer.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Logf("native output-only mutant caught at output byte %d by %s", offset, inputs[index].Name)
+			t.Logf("source Node output-only mutant caught at output byte %d by %s", offset, inputs[index].Name)
 		})
 	}
 	fast := filepath.Join(dir, "native-fast")

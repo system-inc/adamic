@@ -1,0 +1,131 @@
+{
+  "test262": "/tmp/adamic-test262-corpus",
+  "commit": "5992dc3b60faf62a48fd6be8a40ae9d9a8c84d81",
+  "adapt": true,
+  "filters": [
+    {
+      "path": "built-ins/Array/prototype/sort",
+      "pass": 6,
+      "fail": 0,
+      "refused": 37,
+      "crashed": 0,
+      "skipped": 11,
+      "total": 54,
+      "directories": [
+        {
+          "path": "built-ins/Array/prototype/sort",
+          "pass": 6,
+          "fail": 0,
+          "refused": 37,
+          "crashed": 0,
+          "skipped": 11,
+          "total": 54
+        }
+      ],
+      "refusalReasons": [
+        {
+          "reason": "error TS2339: Property '…' does not exist on type '…'.",
+          "count": 18
+        },
+        {
+          "reason": "error TS7006: Parameter '…' implicitly has an '…' type.",
+          "count": 3
+        },
+        {
+          "reason": "refuses sort without a comparator",
+          "count": 3
+        },
+        {
+          "reason": "refuses var",
+          "count": 3
+        },
+        {
+          "reason": "not yet: new an Identifier",
+          "count": 2
+        },
+        {
+          "reason": "error TS18048: '…' is possibly '…'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2345: Argument of type '…' is not assignable to parameter of type '…'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS2367: This comparison appears to be unintentional because the types '…' and '…' have no overlap.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7005: Variable '…' implicitly has an '…' type.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '…' type because expression of type '…' can'…'Object'.",
+          "count": 1
+        },
+        {
+          "reason": "error TS7053: Element implicitly has an '…' type because expression of type '…' can'…'{}'.",
+          "count": 1
+        },
+        {
+          "reason": "not yet: a comparator that doesn't return a number",
+          "count": 1
+        },
+        {
+          "reason": "refuses the void operator",
+          "count": 1
+        }
+      ],
+      "skipReasons": [
+        {
+          "reason": "harness include resizableArrayBufferUtils.js",
+          "count": 4
+        },
+        {
+          "reason": "harness include propertyHelper.js",
+          "count": 3
+        },
+        {
+          "reason": "feature Symbol",
+          "count": 1
+        },
+        {
+          "reason": "features BigInt, Symbol",
+          "count": 1
+        },
+        {
+          "reason": "harness include isConstructor.js",
+          "count": 1
+        },
+        {
+          "reason": "noStrict (sloppy mode only; Adamic modules are always strict)",
+          "count": 1
+        }
+      ],
+      "crashReasons": [],
+      "failReasons": [],
+      "passes": [
+        "built-ins/Array/prototype/sort/S15.4.4.11_A2.2_T1.js",
+        "built-ins/Array/prototype/sort/S15.4.4.11_A2.2_T2.js",
+        "built-ins/Array/prototype/sort/stability-11-elements.js",
+        "built-ins/Array/prototype/sort/stability-2048-elements.js",
+        "built-ins/Array/prototype/sort/stability-5-elements.js",
+        "built-ins/Array/prototype/sort/stability-513-elements.js"
+      ],
+      "adaptations": [
+        {
+          "reason": "throw-error",
+          "count": 69
+        },
+        {
+          "reason": "var-to-let",
+          "count": 59
+        },
+        {
+          "reason": "callback-param",
+          "count": 6
+        }
+      ]
+    }
+  ]
+}

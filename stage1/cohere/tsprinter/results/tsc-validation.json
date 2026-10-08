@@ -1,0 +1,34 @@
+{
+  "test_results_including_subtests": {
+    "pass": 45
+  },
+  "top_level_tests": {
+    "pass": 12
+  },
+  "skip_names": [],
+  "go_package_seconds": 883.834,
+  "command_wall_seconds": 885.906,
+  "nproc": 5,
+  "cpu_quota": 4,
+  "load_before": [
+    1.38,
+    1.6,
+    1.68
+  ],
+  "load_after": [
+    3.01,
+    3.42,
+    2.57
+  ],
+  "repository_files": 806,
+  "typescript_compiler_files": 77,
+  "expressions": 169887,
+  "statements": 57799,
+  "tsc_expressions": 1729,
+  "tsc_statements": 874,
+  "tsc_port_disagreements": 0,
+  "existing_mutants_caught": 29,
+  "new_fix_mutants_caught": 4,
+  "additional_controls_caught": 4,
+  "upstream_family_outcomes": 29
+}
