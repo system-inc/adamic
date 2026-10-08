@@ -3,7 +3,6 @@ package oracle
 import (
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 	"syscall"
 	"testing"
@@ -31,8 +30,7 @@ process.exitCode = wasi.start(instance);`, binary, "root", filepath.Dir(binary)}
 	return executeInput(t, how, nil, "node", append(arguments, how.arguments...)...)
 }
 
-// Exact named observations, never a blanket permission to disagree. Walk's two
-// empty-path errors are a runtime bug pending codex/wasi-empty-path.
+// Exact named observations, never a blanket permission to disagree.
 func expectedEngineBehavior(t *testing.T, path string, expected run, how inputRun, wasmtime bool) (run, bool) {
 	t.Helper()
 	name := filepath.Base(path)
@@ -45,20 +43,8 @@ func expectedEngineBehavior(t *testing.T, path string, expected run, how inputRu
 		expected.stdout = []byte(strings.Replace(string(expected.stdout), old, changed, 1))
 	}
 	if name == "walk.a" {
-		entries, err := os.ReadDir(how.directory)
-		if err != nil {
-			t.Fatal(err)
-		}
-		names := make([]string, len(entries))
-		for i, entry := range entries {
-			names[i] = entry.Name()
-		}
-		sort.Strings(names)
-		replace("cannot read directory : no such directory\n", "listed "+strings.Join(names, ",")+"\n")
-		replace("cannot read status of : no such file\n", "directory false\n")
-		t.Log("KNOWN RUNTIME BUG walk.a: empty directory/status paths resolve to cwd; pending codex/wasi-empty-path")
-		limited = true
 		if wasmtime {
+			limited = true
 			replace("<dir>: 4 names, bad� name closed locked unlisted\n  bad� name: not looked up\n  closed: directory, true\n    cannot read directory <dir>/closed: permission denied\n  locked: directory, true\n    <dir>/locked: 0 names, \n  unlisted: directory, true\n    cannot read directory <dir>/unlisted: permission denied\n", "cannot read directory <dir>: failed\n")
 			t.Log("HOST LIMIT walk.a: wasmtime rejects directory entries with non-UTF-8 filenames")
 		}
@@ -282,15 +268,18 @@ func TestWASIWalkBehaviorCatchesMutants(t *testing.T) {
 	source := onNodeWith(t, how, path)
 	for _, engine := range []bool{false, true} {
 		expected, limited := expectedEngineBehavior(t, path, source, how, engine)
-		if !limited {
-			t.Fatal("missing walk assertion")
+		if limited != engine {
+			t.Fatal("walk: V8 compares to Node unchanged and wasmtime pins its host limit")
 		}
-		// Fixing either pending runtime bug must change the pinned result and be noticed.
-		for _, pair := range [][2]string{{"directory false\n", "cannot read status of : no such file\n"}, {"listed ", "fixed listing "}} {
+		// Node's empty-path errors are held as Node prints them: losing either must be noticed.
+		for _, line := range []string{"cannot read directory : no such directory\n", "cannot read status of : no such file\n"} {
+			if strings.Count(string(expected.stdout), line) != 1 {
+				t.Fatalf("walk witness lost Node's line %q", line)
+			}
 			changed := expected
-			changed.stdout = []byte(strings.Replace(string(expected.stdout), pair[0], pair[1], 1))
+			changed.stdout = []byte(strings.Replace(string(expected.stdout), line, "", 1))
 			if disagreement(expected, changed) != "stdout differs" {
-				t.Fatal("walk runtime mutant escaped")
+				t.Fatal("walk empty-path mutant escaped")
 			}
 		}
 		if engine {
@@ -301,5 +290,5 @@ func TestWASIWalkBehaviorCatchesMutants(t *testing.T) {
 			}
 		}
 	}
-	t.Log("walk empty-listing, empty-status and invalid-UTF-8 host assertion mutants caught")
+	t.Log("walk empty-path and invalid-UTF-8 host assertion mutants caught")
 }
