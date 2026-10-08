@@ -1,0 +1,31 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../../options_json.ts';
+import { Parser } from '../../../../../../typescript/parser/parser.ts';
+import { ParseNode, written } from '../../../../../../typescript/parser/nodes.ts';
+import { Comment } from '../../comment.ts';
+import { FileCommentCache } from '../../for_file.ts';
+import { isAdjacentGap } from '../../is_adjacent_gap.a';
+import { leadingRunFor } from '../../leading_run_for.a';
+function read(path: string): string {const result=readTextFile(path);if(result.kind==='Error'){panic(result.message);}return result.text;}
+const json = new OptionsJson(read(programArguments()[0] ?? panic('capture path')));
+const root = json.parse();
+function text(row: number,key: string): string {return json.node(json.field(row,key)).text;}
+function number(row: number,key: string): number {return Number(text(row,key));}
+for(const row of json.node(root).children) {
+    const source=text(row,'source');
+    if(text(row,'mode')==='gap') {console.log(`gap ${isAdjacentGap(source,number(row,'from'),number(row,'to'))?1:0}`);continue;}
+    const parser=new Parser(source,'source.tsx');
+    // Captures project only the already-landed ForFile dependency's input values.
+    // LeadingRunFor and isAdjacentGap run their own bodies; the rule gate below
+    // separately exercises the real parser and shared comment scan together.
+    let position=0;let bytes=0;const start=number(row,'start');
+    while(bytes<start && position<source.length) {const point=source.codePointAt(position)??0;bytes+=point<128?1:point<2048?2:point<65536?3:4;position+=point>65535?2:1;}
+    parser.nodes.push(new ParseNode('ExpressionStatement',position,source.length,[]));
+    const cache=new FileCommentCache(parser,0);cache.ready=true;
+    const all=json.field(row,'comments');
+    for(const raw of json.node(all).children) {
+        cache.result.push(new Comment(number(raw,'start'),number(raw,'end'),text(raw,'block')==='true',text(raw,'text'),number(raw,'line'),number(raw,'column'),number(raw,'endLine')));
+    }
+    const value=leadingRunFor(text(row,'file')==='true'?parser:undefined,0,start<0?-1:0,cache);
+    console.log(`leading ${value.map((comment)=>`${comment.start}:${comment.end}:${comment.isBlock?1:0}:${comment.startLine}:${comment.startColumn}:${comment.endLine}:${written(comment.text)}`).join(',')}`);
+}

@@ -41,3 +41,53 @@ go test -count=1 -timeout 15m -v ./stage1/cohere/lint/helpers/comments > /tmp/co
 ```
 
 Read the logs after completion. Generation needs Go cohere's original rule tests; normal helper tests use the committed consumer corpus. No throughput improvement is claimed from these comparisons.
+
+## Remaining package helpers completed
+
+Claim: `017bc6c1b`, branch `lint-helpers/ecmascript-comments`, based on lint area
+`334509ee`. Full triage `d7ab0bc4` and all origin helper claims were inspected
+before code; no competing package claim or port of the two missing symbols was
+found. Both bodies are fresh; the five scanner/cache helpers above remain the
+landed implementations.
+
+- `leading_run_for.a`: `LeadingRunFor`, including nil guards, token start rather
+  than trivia start, the last eligible comment, blank/code gaps and block boundaries.
+- `is_adjacent_gap.a`: `isAdjacentGap`, with UTF-8 byte positions, Go Unicode
+  White_Space (NEL included, BOM excluded), exact LF counting and byte boundaries.
+
+`leading_capture_test.go` overlays only instrumentation into unchanged Go helper
+bodies and runs every upstream `ReactHookRequireEffectComment` case plus the Go
+comment package's leading-run tests and explicit Unicode/boundary controls. It
+replays 39 actual consumer invocations and 132 package/control invocations:
+36 `LeadingRunFor` calls and 135 `isAdjacentGap` calls, 171 total. The replay
+supplies the already-landed `ForFile` dependency's full immutable comment values;
+it compares every returned field and exact text. The consuming-rule gate
+independently runs the actual stage-1 parser and shared comment scanner together.
+These are distinct proofs, rather than Go answers in production helper callbacks.
+
+The complete comment package compares 390 boundary output rows, 32,770 retained
+consumer output rows from 4,513 sources, and those 171 new observations: 33,331
+matching rows on source Node, emitted JavaScript and ASan/UBSan native. All seven
+helper mutants compile, execute successfully and disagree on all three backends.
+The older five native-only mutant checks now include Node and emitted JavaScript.
+
+The proof rule lives in `../../rules/structure-react-hook-require-effect-comment/`.
+It covers all 22 upstream source/options cases and two owned witnesses, including
+Unicode, block/JSDoc, parenthesized callees and assigned effects; its output mutant
+is caught on all three backends. Its existing prerequisite files are extracted
+without whole-branch history: `../structure_file_context.a` from
+`origin/lint-helpers/structure` (`2079ada9`), and `../react/namespaced_member.a`,
+`react_identifier_named.a`, `nodes.a` and `projection.a` from
+`origin/lint-helpers/react` (`ee4069f5`). No new ownership or complete-package
+claim is made for those packages. This completes the sole remaining frozen-ledger
+consumer, `structure/react-hook-require-effect-comment`.
+
+Final checks use `go test ./stage1/cohere/lint/helpers/... -count=1 -v -timeout=30m`
+and the complete lint package with `ADAMIC_TYPESCRIPT_SOURCE`,
+`ADAMIC_LINT_BENCH=1`, `ADAMIC_LINT_PROFILE_DIR` and
+`ADAMIC_LINT_PROFILE_SNAPSHOTS` supplied. The lint area's JSX inventory is already
+discovered; no frozen JSX map is edited. The existing
+`TestCheckerBridgeRefusalPending` remains an explicit dependency skip because the
+compiler prelude lacks `TSGoError` (`codex/tsgo-errors-as-values`); this unit does
+not change the compiler API or conceal that skip. No comment helper or rule
+implementation is stopped on a dependency or language gap.

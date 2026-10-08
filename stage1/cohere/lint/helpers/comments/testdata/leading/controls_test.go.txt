@@ -1,0 +1,11 @@
+package comments
+import("testing";"strings")
+func TestAdamicAdjacentControls(t *testing.T) {
+ for _,s:=range []string{"", " ", "\n", "\r", "\r\n", "\n\n", " \t\n\v\f ", "code\n", "\ncode", "\u0085\n", "\ufeff\n", "\u2028", "\u2028\n", "\u2029\n", "\u00a0\n", "\u1680\n", "\u202f\n", "\u205f\n", "\u3000\n", "\u180e\n", "\u200b\n"} {
+  isAdjacentGap("🌍"+s+"x",4,4+len(s));isAdjacentGap(s,0,len(s));isAdjacentGap(s,len(s)+1,len(s));isAdjacentGap(s,0,len(s)+1)
+ }
+ for n:=0x2000;n<=0x200a;n++ {s:=string(rune(n))+"\n";isAdjacentGap(s,0,len(s))}
+ isAdjacentGap("\u0085\n",1,3);isAdjacentGap("\n\u0085",0,2)
+ // Repeated multiline/comment controls are actual Go package tests, not expected guesses.
+ for _,s:=range []string{"// top\n// bottom\nx();", "/* top */\n// bottom\nx();", "// top\n/* bottom */\nx();", "// top\n\n// bottom\nx();", "// top\ncode();\nx();", "// 🌍\n// top\n\tx();", "// claim\n\u0085x();", "// claim\n\ufeffx();", "const 🌍 = 0;\n// top\n\tx();"} {if !strings.Contains(s,"🌍") {leadingRunTextsFor(t,s)}}
+}

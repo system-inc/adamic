@@ -88,12 +88,12 @@ func oracle(t *testing.T) string {
 }
 func TestCommentsMatchCohere(t *testing.T) {
 	path, _ := filepath.Abs("testdata/witnesses.json")
-	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
-	entry, _ := filepath.Abs("main.ts")
 	want := run(t, "", oracle(t), path)
-	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
-	compare(t, run(t, "", build(t, "."), path), want)
-	t.Logf("Go, Node and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
+	for _, side := range leadingOutputs(t, "main.ts", path) {
+		compare(t, side.output, want)
+		t.Logf("%s identical", side.name)
+	}
+	t.Logf("Go, Node, emitted JavaScript and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
 }
 
 // Not parallel: compile each mutant separately to bound clang and parser memory.
@@ -129,9 +129,13 @@ func TestCommentMutants(t *testing.T) {
 					t.Fatal(err)
 				}
 			}
-			got := run(t, "", build(t, directory), path)
-			if bytes.Equal(got, want) {
-				t.Fatal("compiled semantic mutant survived")
+			var got []byte
+			for _, side := range leadingOutputs(t, filepath.Join(directory, "main.ts"), path) {
+				if bytes.Equal(side.output, want) {
+					t.Fatalf("running semantic mutant survived on %s", side.name)
+				}
+				t.Logf("running semantic mutant caught on %s", side.name)
+				got = side.output
 			}
 			a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
 			for i := 0; i < len(a) && i < len(b); i++ {
@@ -155,11 +159,12 @@ func TestConsumerCommentHelpers(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := run(t, "", goOracle, original)
-	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
-	entry, _ := filepath.Abs("main.ts")
-	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
-	compare(t, run(t, "", build(t, "."), path), want)
-	t.Logf("Go, Node and sanitized native agree on %d consumer output lines with the stated AST adapter", bytes.Count(want, []byte("\n")))
+
+	for _, side := range leadingOutputs(t, "main.ts", path) {
+		compare(t, side.output, want)
+		t.Logf("%s identical", side.name)
+	}
+	t.Logf("Go, Node, emitted JavaScript and sanitized native agree on %d consumer output lines with the stated AST adapter", bytes.Count(want, []byte("\n")))
 }
 
 func TestJsxParserGapIsExplicit(t *testing.T) {

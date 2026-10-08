@@ -1,0 +1,1 @@
+Ports Go structure.ReactHookRequireEffectComment using the shared comment cache, LeadingRunFor, React namespace predicate and file classification. Checks the first comment in a contiguous run, recognizes block/JSDoc claims, and reports the callee with no fix. Upstream count: 22.

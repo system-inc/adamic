@@ -1,0 +1,31 @@
+package comments
+import (
+ "encoding/json"
+ "os"
+ "sync"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/system-inc/cohere/internal/lint/rule"
+)
+var adamicCaptureLock sync.Mutex
+func adamicRecord(value any) {
+ if os.Getenv("ADAMIC_LEADING_CAPTURE")=="" {return}
+ adamicCaptureLock.Lock();defer adamicCaptureLock.Unlock()
+ file,err:=os.OpenFile(os.Getenv("ADAMIC_LEADING_CAPTURE"),os.O_APPEND|os.O_CREATE|os.O_WRONLY,0600);if err!=nil {panic(err)}
+ defer file.Close();if err=json.NewEncoder(file).Encode(value);err!=nil {panic(err)}
+}
+func adamicComments(values []Comment) []map[string]any {
+ result:=[]map[string]any{};for _,c:=range values {result=append(result,map[string]any{"start":c.Range.Pos(),"end":c.Range.End(),"block":c.IsBlock,"text":c.Text,"line":c.StartLine,"column":c.StartColumn,"endLine":c.EndLine})};return result
+}
+func LeadingRunFor(ctx rule.Context,node *ast.Node) []Comment {
+ result:=adamicOriginalLeadingRunFor(ctx,node)
+ source:="";start:=-1;all:=[]Comment{}
+ if ctx.SourceFile!=nil {source=ctx.SourceFile.Text();all=ForFile(ctx)}
+ if node!=nil && ctx.SourceFile!=nil {start=rule.TokenRange(ctx.SourceFile,node).Pos()}
+ adamicRecord(map[string]any{"mode":"leading","source":source,"start":start,"file":ctx.SourceFile!=nil,"comments":adamicComments(all),"want":adamicComments(result)})
+ return result
+}
+func isAdjacentGap(text string,from,to int) bool {
+ result:=adamicOriginalIsAdjacentGap(text,from,to)
+ adamicRecord(map[string]any{"mode":"gap","source":text,"from":from,"to":to,"want":result})
+ return result
+}

@@ -1,0 +1,58 @@
+import type { RuleContext } from '../../context.ts';
+import { structureFileContext } from '../../helpers/structure_file_context.a';
+import { project } from '../../helpers/react/projection.a';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { isNamespacedMember } from '../../helpers/react/namespaced_member.a';
+import { FileCommentCache } from '../../helpers/comments/for_file.ts';
+import { leadingRunFor } from '../../helpers/comments/leading_run_for.a';
+import type { Comment } from '../../helpers/comments/comment.ts';
+import { missingEffectComment } from './messages.a';
+
+function startsWithEffectPrefix(comment: Comment): boolean {
+    let body=comment.text;
+    if(body.startsWith('//')) {return body.slice(2).trim().startsWith('Effect to');}
+    if(body.startsWith('/*')) {
+        body=body.slice(2);if(body.endsWith('*/')){body=body.slice(0,-2);}
+        for(const raw of body.split('\n')) {
+            let line=raw.trim();let start=0;
+            while(line[start]==='*'){start++;}
+            line=line.slice(start).trim();
+            if(line!==''){return line.startsWith('Effect to');}
+        }
+    }
+    return false;
+}
+export class Rule {
+    readonly context: RuleContext;
+    readonly nodes: readonly HelperNode[];
+    readonly cache: FileCommentCache;
+    readonly active: boolean;
+    constructor(context: RuleContext) {
+        this.context=context;
+        this.active=structureFileContext(context.parser.path).isReactFile;
+        let nodes: HelperNode[] = [];
+        if(this.active){nodes=project(context.parser.nodes);}
+        this.nodes=nodes;
+        this.cache=new FileCommentCache(context.parser,context.root);
+    }
+    visit(index: number): void {
+        if(!this.active){return;}
+        let callee=this.context.node(index).children[0]??-1;
+        while(callee>=0 && this.context.node(callee).kind==='ParenthesizedExpression'){callee=this.context.node(callee).children[0]??-1;}
+        if(callee<0 || !isNamespacedMember(this.nodes,callee,(name)=>name==='useEffect')){return;}
+        let statement=index;
+        for(;;) {
+            const parent=this.context.parents[statement]??-1;
+            if(parent<0){break;}
+            const kind=this.context.node(parent).kind;
+            if(kind==='Block' || kind==='SourceFile' || kind==='ModuleBlock' || kind==='CaseClause' || kind==='DefaultClause'){break;}
+            statement=parent;
+        }
+        const run=leadingRunFor(this.context.parser,this.context.root,statement,this.cache);
+        const first=run[0];
+        if(first===undefined || !startsWithEffectPrefix(first)) {
+            this.context.report(callee,'structure/react-hook-require-effect-comment','missingEffectComment',missingEffectComment,'','','');
+        }
+    }
+}
+export function create(context: RuleContext): Rule {return new Rule(context);}

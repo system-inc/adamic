@@ -1,0 +1,27 @@
+import { utf8Length } from 'adamic';
+
+// Cohere's positions are UTF-8 bytes. Its strings.TrimSpace deliberately uses
+// Go Unicode White_Space (NEL included, BOM excluded), followed by an LF count.
+export function isAdjacentGap(text: string, from: number, to: number): boolean {
+    if(from > to || to > utf8Length(text)) { return false; }
+    let byte = 0;
+    let newlines = 0;
+    for(let index = 0; index < text.length;) {
+        const point = text.codePointAt(index) ?? 0;
+        const width = point > 65535 ? 2 : 1;
+        const end = byte + utf8Length(text.slice(index, index + width));
+        if((from > byte && from < end) || (to > byte && to < end)) { return false; }
+        if(byte >= from && byte < to) {
+            if(!((point >= 9 && point <= 13) || point === 32 || point === 133 ||
+                point === 160 || point === 5760 || (point >= 8192 && point <= 8202) ||
+                point === 8232 || point === 8233 || point === 8239 || point === 8287 || point === 12288)) {
+                return false;
+            }
+            if(point === 10) { newlines++; }
+        }
+        if(end >= to) { break; }
+        byte = end;
+        index += width;
+    }
+    return newlines === 1;
+}
