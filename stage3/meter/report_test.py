@@ -249,7 +249,7 @@ class LatentCensusTests(unittest.TestCase):
             compiler.mkdir(parents=True)
             (compiler / 'main.a').write_text('function target(): number { return 1; }\n'
                                              'function existing(value: any): number { return value; }\n'
-                                             'function asserted(value: number | undefined): number { return value!; }\n'
+                                             'function asserted(value: number | undefined): number { debugger; return value!; }\n'
                                              'function bad(): number { return "wrong"; }\n')
             observations = []
             for label in ['before', 'planted']:

@@ -2,6 +2,7 @@
 import json
 import pathlib
 import sys
+import subprocess
 
 repository = pathlib.Path(sys.argv[1]).resolve()
 scratch = pathlib.Path(sys.argv[2]).resolve()
@@ -21,18 +22,12 @@ original = original[:start] + '\treturn nil, fmt.Errorf("latent census: measurem
 original = original.replace('\n\t"path/filepath"', '')
 original = original.replace('type lowering struct {', 'type lowering struct {\n latentDeclarations map[int]*ast.Node\n latentReady map[int]bool')
 overlay('internal/lower/lower.go', original)
-refuse = (repository / 'internal/lower/refusals.go').read_text()
-start = refuse.index('func (l *lowering) refuse(')
-end = refuse.index('\n// called ', start)
-body = refuse[start:end].replace('func (l *lowering) refuse(', 'func (l *lowering) latentRefuse(')
-body = body.replace('\t\tif found != nil {\n\t\t\treturn true\n\t\t}\n', '')
-body = body.replace('visit = func(node *ast.Node) bool {', 'visit = func(node *ast.Node) bool {\n if node.Parent != nil && node.Parent.Kind == ast.KindSourceFile { latentFindingOwner = l.program.Where(node) }\n if node.Kind == ast.KindFunctionDeclaration && node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && len(l.program.LatentDiagnosticsIn(node.Body())) > 0 { return false }')
-body = body.replace('return true', 'latentRecord(found)\n\t\t\tfound = nil\n\t\t\tnode.ForEachChild(visit)\n\t\t\treturn false')
-# Directives are module metadata rather than visitor nodes; visit every directive.
-body = body.replace('if len(module.CommentDirectives) > 0 {\n\t\tdirective := module.CommentDirectives[0]', 'for _, directive := range module.CommentDirectives {')
-body = body.replace('return &Refused{Where:', 'latentRecord(&Refused{Where:', 1)
-body = body.replace('Fix: "remove it and fix the type error"}', 'Fix: "remove it and fix the type error"})', 1)
-overlay('internal/lower/refusals.go', refuse[:end] + '\n' + body + refuse[end:])
+# Parse the exact refusal function and its visitor scopes; fail on unsupported shapes.
+refusal_output = scratch / 'internal_lower_refusals.go'
+subprocess.run(['go', 'run', str(territory / 'refusalrewrite/cmd'),
+                '-input', str(repository / 'internal/lower/refusals.go'),
+                '-output', str(refusal_output)], check=True, cwd=territory)
+replace[str(repository / 'internal/lower/refusals.go')] = str(refusal_output)
 # Keep all checker diagnostics and populated roots, but expose them only to measurement.
 loader = (repository / 'internal/load/load.go').read_text()
 loader = loader.replace('type Program struct {', 'type Program struct {\n latentSites []*ast.Diagnostic\n latentDiagnostics []string')
