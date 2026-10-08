@@ -1,0 +1,21 @@
+function countdown(depth: number | undefined): string {
+    if (depth === undefined) return "missing";
+    depth--;
+    console.log(depth.toString());
+    ++depth;
+    console.log(depth.toString());
+    --depth;
+    console.log(depth.toString());
+    depth++;
+    return depth.toString();
+}
+console.log(countdown(4));
+console.log(countdown(undefined));
+function boxed(value: number | string): string {
+    if (typeof value !== "number") return value;
+    value--;
+    ++value;
+    return value.toString();
+}
+console.log(boxed(9));
+console.log(boxed("owned" + "!"));
