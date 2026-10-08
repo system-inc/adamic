@@ -442,3 +442,16 @@ Every executed mutant and its catcher:
 | Custom Set replaced with built-in Set | Original Node equality, membership, size, representative and string-tag observations |
 
 No backend compile-warning kill is counted. Compiler panic, source-drift and refusal tests are distinct from successful-runtime semantic mutants. Remaining native implementation dependencies are listed above; the branch advances step 19 but does not complete it.
+
+
+### Union keys
+
+Union keys now use a dedicated tagged-key Map mode in both Map and Set lowering. Numeric boxes hash and compare by SameValueZero, strings by content, booleans by their constant values, and references by identity. Kind discrimination keeps 1 separate from '1'. Ordinary union strict equality retains its existing NaN behavior. The Map owns the keys strongly; replacement consumes the incoming key, deletion and clear release the stored key, and copied entries retain their keys. Inserting zero creates a new positive-zero box rather than changing a shared input box.
+
+scout_union_keys.a reduces core.ts mapEntries's generic key parameter and the Set deduplication path. It exercises primitive unions, allocated string equality, separate equal-looking objects, arrays, closures, copying a Map, overwrite order, delete and reinsert, clear, NaNs and signed zero. A negative-zero parameter remains negative outside the collection. mixed_map.a now lowers and is registered as an acceptance fixture rather than a gap.
+
+The source Node oracle, generated JavaScript, sanitized native, release native and successful-program leak checks pass for both fixtures. TestScoutUnionKeyMutants runs three clean native semantic mutants: numeric 1 converted to its string spelling, NaN insertion omitted with owned arguments released, and stored zero changed back to negative zero. Each disagrees with Node stdout, without sanitizer, leak or compile-warning failure. Counts are refreshed. Exact commands and output are preserved in stage3/map-keys/evidence/union-keys; no whole package test or full gate was run.
+
+The frozen 159-probe replay decreases reproduced diagnostics from 34 to 33. One additional signature retires at tracing.ts:224:38, the Map<object, number> key representation. The original merged-baseline total is now 104 retired signatures. Complete tsc entry roots compiling remains zero; hidden-byte recovery is not measured. The other dependencies exposed by that selected unit remain recorded in after.jsonl.gz. Nullish keys are the next piece. createSet, full MultiMap and MapLike remain assigned to steps 20, 06 and 22.
+
+Commands: go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/^scout_union_keys.a$' -v -count=1 -timeout 30m; the same test with /stage3/map-keys/^mixed_map.a$; go test ./internal/oracle -run '^TestScoutUnionKeyMutants$' -v -count=1; go test ./internal/lower -run '^TestScoutMapKeyOutcomes$' -count=1; go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts; go vet ./internal/lower ./internal/native ./internal/oracle; python3 stage3/map-keys/replay.py /tmp/scout-map-keys-adapted /tmp/step19-union-replay.jsonl. Oracle fixture runs use ADAMIC_GATE_UNCACHED=1; all outputs go to logs.

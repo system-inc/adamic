@@ -480,6 +480,8 @@ typedef struct adamic_map {
 	// maybe_number_keys are packed number | undefined keys. The reserved undefined NaN is distinct
 	// from the canonical present NaN, while present numbers use SameValueZero (map.c).
 	bool maybe_number_keys;
+	// Tagged keys compare by runtime kind and SameValueZero, with strong ownership.
+	bool union_keys;
 	bool reference_values;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
@@ -507,6 +509,7 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values);
 // adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
 // key, found by identity (map.c).
 adamic_map *adamic_map_new_identity(bool reference_values);
+adamic_map *adamic_map_new_unions(bool reference_values);
 
 // adamic_map_new_booleans is a map whose keys are booleans: true and false, two keys at most.
 adamic_map *adamic_map_new_booleans(bool reference_values);

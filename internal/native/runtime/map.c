@@ -33,6 +33,7 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->reference_keys = string_keys;
 	map->boolean_keys = false;
 	map->maybe_number_keys = false;
+	map->union_keys = false;
 	map->reference_values = reference_values;
 	map->iterating = 0;
 	return map;
@@ -56,7 +57,29 @@ adamic_map *adamic_map_new_identity(bool reference_values) {
 	return map;
 }
 
+adamic_map *adamic_map_new_unions(bool reference_values) {
+	adamic_map *map = adamic_map_new_identity(reference_values);
+	map->union_keys = true;
+	return map;
+}
+
 static uint64_t hash_key(const adamic_map *map, adamic_value key) {
+	if (map->union_keys) {
+		const adamic_heap *boxed = key.reference;
+		if (boxed != NULL && boxed->kind == adamic_kind_number) {
+			return adamic_map_number_hash(((const adamic_number_box *)boxed)->number);
+		}
+		if (boxed != NULL && boxed->kind == adamic_kind_string) {
+			const adamic_string *string = (const adamic_string *)boxed;
+			uint64_t hash = 14695981039346656037ull;
+			for (size_t index = 0; index < string->length; index++) {
+				hash = (hash ^ (unsigned char)string->bytes[index]) * 1099511628211ull;
+			}
+			return hash;
+		}
+		uint64_t bits = (uint64_t)(uintptr_t)boxed;
+		return (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;
+	}
 	if (map->maybe_number_keys) {
 		return adamic_map_maybe_key_hash(key.number);
 	}
@@ -86,6 +109,15 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 }
 
 static bool same_key(const adamic_map *map, adamic_value left, adamic_value right) {
+	if (map->union_keys) {
+		const adamic_heap *a = left.reference, *b = right.reference;
+		if (a != NULL && b != NULL && a->kind == adamic_kind_number && b->kind == adamic_kind_number) {
+			double x = ((const adamic_number_box *)a)->number;
+			double y = ((const adamic_number_box *)b)->number;
+			return x == y || (isnan(x) && isnan(y));
+		}
+		return adamic_union_equal(a, b);
+	}
 	if (map->maybe_number_keys) {
 		return adamic_map_maybe_key_equal(left.number, right.number);
 	}
@@ -192,6 +224,15 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 	if (!map->reference_keys && !map->boolean_keys && key.number == 0) {
 		// Map.prototype.set stores -0 as +0 (ECMA-262), so iterating gives back +0: 1 / key is Infinity.
 		key.number = 0;
+	}
+	if (map->union_keys && key.reference != NULL) {
+		const adamic_heap *boxed = key.reference;
+		if (boxed->kind == adamic_kind_number && ((const adamic_number_box *)boxed)->number == 0) {
+			// Never change a shared input box while canonicalizing the stored key.
+			adamic_heap *zero = adamic_box_number(0);
+			adamic_release(key.reference);
+			key.reference = zero;
+		}
 	}
 	entry->key = key;
 	entry->value = value;

@@ -1,0 +1,13 @@
+=== RUN   TestScoutUnionKeyMutants
+=== RUN   TestScoutUnionKeyMutants/number_string
+=== RUN   TestScoutUnionKeyMutants/NaN
+=== RUN   TestScoutUnionKeyMutants/negative_zero
+--- PASS: TestScoutUnionKeyMutants (1.25s)
+    --- PASS: TestScoutUnionKeyMutants/number_string (0.47s)
+    --- PASS: TestScoutUnionKeyMutants/NaN (0.39s)
+    --- PASS: TestScoutUnionKeyMutants/negative_zero (0.39s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.258s

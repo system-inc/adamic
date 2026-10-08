@@ -1,0 +1,15 @@
+{
+  "compiler_before": "91fe5542",
+  "probes": 159,
+  "before_reproduced": 34,
+  "after_reproduced": 33,
+  "retired_diagnostic_signatures": [
+    {
+      "Where": "/tmp/scout-map-keys-adapted/src/compiler/tracing.ts:224:38",
+      "Kind": "NotYet",
+      "Reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+    }
+  ],
+  "whole_tsc_entry_roots_compiling": 0,
+  "hidden_byte_recovery_measured": false
+}

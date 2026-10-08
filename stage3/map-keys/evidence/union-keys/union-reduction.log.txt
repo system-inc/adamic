@@ -1,0 +1,13 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/stage3/map-keys/mixed_map.a
+=== PAUSE TestNativeAgreesWithNode/stage3/map-keys/mixed_map.a
+=== CONT  TestNativeAgreesWithNode/stage3/map-keys/mixed_map.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/stage3/map-keys/mixed_map.a (0.43s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.471s

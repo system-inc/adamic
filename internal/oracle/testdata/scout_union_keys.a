@@ -1,0 +1,59 @@
+// Reduced from core.ts mapEntries (K2 = string | number | boolean),
+// and deduplicate's Set path. Driver exposes SameValueZero and insertion order.
+const map = new Map<string | number | boolean, string>();
+map.set(1, `number-${1}`);
+map.set(`${1}`, `string-${1}`);
+map.set(NaN, 'nan');
+map.set(0 / 0, 'nan-update');
+map.set(-0, 'zero');
+map.set(0, 'zero-update');
+map.set(false, 'false');
+console.log(`${map.size}:${map.get(1)}:${map.get('1')}:${map.get(NaN)}:${map.get(-0)}`);
+for (const key of map.keys()) {
+    if (typeof key === 'number') console.log(`number:${key}:${1 / key}`);
+    else console.log(`${typeof key}:${key}`);
+}
+const set = new Set<string | number | boolean>([1, `${1}`, NaN, 0 / 0, -0, 0, false]);
+console.log(`${set.size}:${set.has(1)}:${set.has('1')}:${set.has(NaN)}:${set.has(0)}`);
+for (const key of set) {
+    if (typeof key === 'number') console.log(`set:${key}:${1 / key}`);
+    else console.log(`set:${typeof key}:${key}`);
+}
+map.delete('1');
+map.set('1', 'reinsert');
+for (const [key, value] of map) console.log(`${typeof key}:${value}`);
+set.delete(NaN);
+set.add(NaN);
+console.log(`${set.size}:${set.has(NaN)}`);
+map.clear();
+set.clear();
+console.log(`${map.size}:${set.size}`);
+
+// mapEntries's generic K2 also admits references without coercing them.
+const object = {name: `key-${1}`};
+const other = {name: `key-${1}`};
+const array = [1];
+const callback = (value: number): number => value + 1;
+type Key = string | number | boolean | {readonly name: string} | number[] | ((value: number) => number);
+const references = new Map<Key, number>();
+references.set(object, 1);
+references.set(other, 2);
+references.set(array, 3);
+references.set(callback, 4);
+references.set(`key-${1}`, 5);
+references.set(1, 6);
+console.log(`${references.size}:${references.get(object)}:${references.get(other)}:${references.get(array)}:${references.get(callback)}:${references.has({name: 'key-1'})}`);
+const referenceSet = new Set<Key>([object, other, array, callback, 'key-1', 1, object]);
+console.log(`${referenceSet.size}:${referenceSet.has(object)}:${referenceSet.has({name: 'key-1'})}`);
+const copy = new Map(references);
+references.clear();
+console.log(`${copy.size}:${copy.get(object)}:${copy.get(callback)}`);
+function keepInput(key: string | number): void {
+    const zeros = new Map<string | number, number>();
+    zeros.set(key, 1);
+    if (typeof key === 'number') console.log(`input:${1 / key}`);
+    for (const stored of zeros.keys()) {
+        if (typeof stored === 'number') console.log(`stored:${1 / stored}`);
+    }
+}
+keepInput(-0);
