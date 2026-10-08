@@ -22,7 +22,7 @@
     "-fno-sanitize-recover=all",
     "-I",
     "/home/agent/.cache/adamic/runtime/ba946f7ff2626c5ad6da2b5b463951a80f79bbf59bce52e65eb6f0bc3aa1ff20",
-    "/tmp/step09-observations/02_name_subunion_fails.a.skip-check.c",
+    "/tmp/step09-casts-73352e87-observations/02_name_subunion_fails.a.skip-check.c",
     "-Xlinker",
     "--whole-archive",
     "/home/agent/.cache/adamic/runtime/ba946f7ff2626c5ad6da2b5b463951a80f79bbf59bce52e65eb6f0bc3aa1ff20/runtime.a",
@@ -30,7 +30,7 @@
     "--no-whole-archive",
     "-lm",
     "-o",
-    "/tmp/step09-observations/02_name_subunion_fails.a.skip-check.native"
+    "/tmp/step09-casts-73352e87-observations/02_name_subunion_fails.a.skip-check.native"
   ],
   "build_exit": 0,
   "actual": {

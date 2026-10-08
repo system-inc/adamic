@@ -195,3 +195,9 @@ passed. No module or compiler file was edited to work around that mismatch.
 Source expressions and reduced support declarations derive from Microsoft
 TypeScript, copyright Microsoft Corporation, licensed under Apache-2.0. Complete
 upstream source remains an external scratch input, not vendored into Adamic.
+
+## Latest-main lane follow-up
+
+Merged origin/main 73352e874ddbda5a78c95c5c670860d43275e4d0. The default `stage3/lane/run.sh` and independent `stage3/lane/check.py` both pass: 106,366 passing, exactly one sanctioned Public APIs failure, zero pending; lane wall time 687.275 seconds. The sole baseline diff is api/typescript.d.ts. All ten emitted JavaScript artifacts and the public API bytes match the main reference. The instrumentation audit finds zero hooks. See [lane-verification.json](lane-verification.json) and evidence/latest-*.log.
+
+The historical red lane did not reproduce; no source cause is claimed and no compiler behavior was changed. Refreshed focused observations confirm 20 Node goldens, two supported runtime contracts, 18 unchanged refusals and 21 controls. Ledger mutants and a real native check-omission mutant are caught. The compiler was built from production sources identical to this merged main. No whole package/full gate confirmation was run.

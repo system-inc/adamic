@@ -1,0 +1,163 @@
+{
+  "main": "73352e874ddbda5a78c95c5c670860d43275e4d0",
+  "lane": {
+    "status": "pass",
+    "errors": [],
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "api": {
+      "reference_declarations": 28,
+      "composed_declarations": 222,
+      "sanctioned_declarations": 222,
+      "added_lines": 194,
+      "removed_lines": 193
+    },
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "execution": {
+      "commit": "e6afe330a220b645b26cfe993d8d1f25996a64a4",
+      "apply_exit": 0,
+      "oracle_exit": 1,
+      "platform": {
+        "os": "linux",
+        "arch": "x64",
+        "node": "v24.19.0"
+      },
+      "wall_seconds": 687.275
+    },
+    "results": "/tmp/step09-casts-73352e87-lane",
+    "verdict": "PASS stage3 landing lane"
+  },
+  "commands": [
+    "bash stage3/lane/run.sh /tmp/step09-casts-73352e87-lane",
+    "python3 stage3/lane/check.py /tmp/step09-casts-73352e87-lane"
+  ],
+  "reported_gate_failure": {
+    "check": "test counts",
+    "expected_failing": 1,
+    "observed_failing": 4,
+    "extra_prefix": "tests/cases/compiler/unusedTypeParamet",
+    "reproduced_after_merge": false,
+    "root_cause": "Not established; no instrumentation found in adapted tree"
+  },
+  "fresh_fixtures": {
+    "Node_goldens": 20,
+    "runtime_contracts": 2,
+    "unchanged_compiler_refusals": 18,
+    "controls": 21,
+    "ledger_mutants": 2,
+    "native_check_omission": "caught"
+  },
+  "artifact_proof": {
+    "javascript": [
+      {
+        "file": "_tsc.js",
+        "bytes": 6239746,
+        "sha256": "dab59db4053464359a4461e8111591f15a1d0d737abe752ff4261c8c87ddf95f"
+      },
+      {
+        "file": "_tsserver.js",
+        "bytes": 27889,
+        "sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+      },
+      {
+        "file": "_typingsInstaller.js",
+        "bytes": 10364,
+        "sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+      },
+      {
+        "file": "run.js",
+        "bytes": 13174852,
+        "sha256": "bfa89ce905ad036e9338450b9001ec57bc89dee6611faef2974678c3a7b38412"
+      },
+      {
+        "file": "tsc.js",
+        "bytes": 267,
+        "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+      },
+      {
+        "file": "tsserver.js",
+        "bytes": 272,
+        "sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+      },
+      {
+        "file": "tsserverlibrary.js",
+        "bytes": 1013,
+        "sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+      },
+      {
+        "file": "typescript.js",
+        "bytes": 9145099,
+        "sha256": "c608261af17bf4b95fc1527c62ba34eb2c44e3f8f0c6944d045ec61b23fc156c"
+      },
+      {
+        "file": "typingsInstaller.js",
+        "bytes": 280,
+        "sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+      },
+      {
+        "file": "watchGuard.js",
+        "bytes": 2314,
+        "sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+      }
+    ],
+    "api": [
+      {
+        "file": "typescript.d.ts",
+        "bytes": 590847,
+        "sha256": "edd733bf256465ddcbbd753a76cfe14cf4ef0a872ce5da7aa53072e1c9f93a9d"
+      }
+    ],
+    "baseline_files": 1,
+    "baseline_manifest_sha256": "cb56dbaa58ca873b6de369e91f1d470a6118ccd3b4dbaabc763709a266901649",
+    "oracle_counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "mutants": [
+      {
+        "name": "javascript-byte",
+        "file": "built/local/_tsc.js",
+        "caught": "emitted JavaScript"
+      },
+      {
+        "name": "api-byte",
+        "file": "built/local/typescript.d.ts",
+        "caught": "public API"
+      },
+      {
+        "name": "baseline-byte",
+        "file": "tests/baselines/local/api/typescript.d.ts",
+        "caught": "baseline bytes"
+      }
+    ]
+  },
+  "audit": {
+    "files_checked": 756,
+    "instrumentation_matches": 0,
+    "tokens": [
+      "__adamic_nonnull_probe",
+      "__adamic_slots",
+      "__49read",
+      "ADAMIC_NONNULL_LOG",
+      "ADAMIC_SLOT_LOG",
+      "ADAMIC_49_LOG"
+    ]
+  }
+}
