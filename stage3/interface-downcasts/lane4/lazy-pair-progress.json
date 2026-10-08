@@ -2,19 +2,19 @@
   "baseline": "ba59427ccc7afecae29a305c41e6e9c7867e5610",
   "inventory": "stage3/interface-downcasts/lazy/census/read-demand-pairs.json.gz",
   "inventory_sha256": "ff738cfeabeecad1dbf481ee7f2a8b0c68d34eee10ecec573d4daece72d2451c",
-  "limits": "Exact supplied static candidate inventory; lazy REPORT explicitly leaves production allocation-flow reachability unmeasured. Family columns overlap. No whole-tsc compilation claim.",
+  "limits": "Exact supplied static candidate inventory; lazy REPORT explicitly leaves production allocation-flow reachability unmeasured. Family columns overlap. No whole-tsc compilation claim. Original full-declaration intersection refusal supersedes its reduced fixture completion; requested original 30 / 543 counters live in original/certification.json.",
   "families": {
     "__String": {
       "total_pairs": 14,
       "total_reads": 511,
-      "remaining_pairs": 0,
-      "remaining_reads": 0
+      "remaining_pairs": 1,
+      "remaining_reads": 1
     },
     "mixed primitive union": {
       "total_pairs": 23,
       "total_reads": 538,
-      "remaining_pairs": 9,
-      "remaining_reads": 27
+      "remaining_pairs": 10,
+      "remaining_reads": 28
     }
   },
   "pairs": [
@@ -5189,10 +5189,9 @@
         }
       ],
       "pair_id": "9477:escapedText",
-      "state": "complete source fixture group",
+      "state": "pending original declaration certification",
       "evidence": [
-        "TestCheckedViewBrandCandidatePairs",
-        "brand-pairs/9477-escapedText-*.a"
+        "Original full LeftHandSideExpression & Identifier refuses recursive intersection payload at the carrier child read; earlier reduced fixture is component coverage only."
       ]
     },
     {

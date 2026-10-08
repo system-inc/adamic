@@ -382,6 +382,69 @@
     ],
     "typeof ReactNames": [
       "Fragment"
+    ],
+    "ActiveLabel": [
+      "breakTarget",
+      "continueTarget",
+      "name",
+      "next",
+      "referenced"
+    ],
+    "RenamedBinding": [
+      "name",
+      "oldSymbol"
+    ],
+    "Mutable<Identifier>": [
+      "_declarationBrand",
+      "_expressionBrand",
+      "_flowContainerBrand",
+      "_jsdocContainerBrand",
+      "_leftHandSideExpressionBrand",
+      "_memberExpressionBrand",
+      "_primaryExpressionBrand",
+      "_unaryExpressionBrand",
+      "_updateExpressionBrand",
+      "emitNode",
+      "end",
+      "escapedText",
+      "flags",
+      "flowNode",
+      "id",
+      "jsDoc",
+      "kind",
+      "localSymbol",
+      "modifierFlagsCache",
+      "original",
+      "parent",
+      "pos",
+      "symbol",
+      "transformFlags"
+    ],
+    "LeftHandSideExpression & Identifier": [
+      "_declarationBrand",
+      "_expressionBrand",
+      "_flowContainerBrand",
+      "_jsdocContainerBrand",
+      "_leftHandSideExpressionBrand",
+      "_memberExpressionBrand",
+      "_primaryExpressionBrand",
+      "_unaryExpressionBrand",
+      "_updateExpressionBrand",
+      "emitNode",
+      "end",
+      "escapedText",
+      "flags",
+      "flowNode",
+      "id",
+      "jsDoc",
+      "kind",
+      "localSymbol",
+      "modifierFlagsCache",
+      "original",
+      "parent",
+      "pos",
+      "symbol",
+      "transformFlags"
     ]
   },
   "pairs": [
@@ -1001,5 +1064,7 @@
     }
   ],
   "names_sha256": "4e3c5d92c4c0dc1ae9c1562bbec69a1180594c28c4a13b3bbc78aff1ff26cbf8",
+  "private_sha256": "5344e95476bd2bcdcbb248cc0cf99e9f33212b61e3067371e47d241282ef704f",
+  "private_source_sha256": "b2a0d4d09bfdd389297e346776d12297e4add7e0b62ba2015862e6b50dcb2aa3",
   "namespace_source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
 }

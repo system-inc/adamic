@@ -1614,3 +1614,17 @@ requires every original receiver field in the view contract, compares Node with
 release native, sanitized native and JavaScript, and runs a member-check bypass
 for each certified pair. Unread unsupported fields remain lazy obligations.
 This checkpoint adds no shared compiler hook and no separate flow analysis.
+
+Lane 4 original certification now also owns
+internal/oracle/checked_views_brand_arrays_original_test.go and
+internal/oracle/checked_views_brands_original_gaps_test.go. The array oracle
+verifies the complete original primitive-member descriptor and dynamic index
+read, including a release-mode check-removal mutant. The gap suite retains
+original full declarations and named compile refusals for the three remaining
+shared blockers. Private namespace declarations are generated from original
+checker.ts AST, and private ActiveLabel from original binder.ts AST; the inferred
+anonymous renamed-binding type is emitted by the stock checker. Every original
+field and source hash is retained. No source admission hook or flow solver is
+added by these tests. Field-name fallback currently blocks two supported name
+reads with an unrelated never descriptor; recursive intersection admission
+blocks the third. Scoped admission must preserve checks through wider helpers.

@@ -288,3 +288,13 @@ The lane-local .gitattributes excludes only logs/*.log and *.patch from whitespa
 lint; source and documentation remain checked. The initial staged diff check
 reported raw ASan whitespace and unified-diff context, so it was corrected with
 artifact attributes rather than changing evidence bytes.
+
+Original-declaration certification supersedes reduced receiver completions.
+On codex/views-mixed-unions-2, original/certification.json records 27 of the
+requested 30 __String pairs / 540 of 543 reads certified, plus all five optional
+brand field pairs / nine reads. The full intersection receiver remains blocked;
+its earlier reduced fixture does not certify it. Original/REPORT.md lists the
+three named blockers and all source/backend/mutant evidence. The older lazy
+subset now has one branded intersection pair / one read pending, mixed primitive
+ten / twenty-eight pending, and the dictionary shared selection two / eleven
+pending. Do not sum these inventories with the requested original table.

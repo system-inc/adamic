@@ -88,3 +88,44 @@ The adapter also verifies three repeated receiver ids at their exact upstream
 AST read positions: the full field sets match the original named interfaces and
 the declared field type is __String. They are not credited until their own
 source fixtures and mutants run in the next group.
+
+Seventh group: four original repeated/mapped receiver pairs / six reads certified.
+Plain __String table: 27 pairs / 540 reads certified, 3 pairs / 3 reads remaining.
+Optional __String | undefined table: 5 pairs / 9 reads certified, none remaining.
+Combined: 32 / 549 certified of 35 / 552 candidates. Focused green oracle
+passed in 53.955s; four bypass mutants were caught in both backends. Each repeated
+receiver id has its own source fixture group, checked against the exact original
+AST receiver's full field set and declared __String type. Mutable<Identifier>
+imports the complete original utilities.d.ts mapped type, with all fields intact.
+
+Observed blockers, retained as eighteen Node controls with named compile refusals
+(TestCheckedViewBrandsOriginalBlockedPairs, PASS 10.564s):
+
+| Original pair | Reads | Refusal |
+| --- | ---: | --- |
+| ActiveLabel.name, id 103520 | 1 | field name with unsupported never contract |
+| { name: __String; oldSymbol: Symbol; }.name, id 70885 | 1 | field name with unsupported never contract |
+| (LeftHandSideExpression & Identifier).escapedText, id 9477 | 1 | field child with unsupported recursive intersection payload contract |
+
+The private ActiveLabel declaration preserves every original binder.ts member;
+the anonymous type is emitted from the stock checker's exact original read
+receiver. Node prints word-built for the valid fixtures, but lowering refuses
+before either backend executes. None of these three is credited complete.
+Code inspection indicates name's supported descriptor is contaminated by the
+field-name-only fallback over unrelated reachable descriptors. This is an
+inference about the cause; the observed evidence is the named refusal. A fix
+must scope obligations using the existing shared allocation flow and retain
+refusals through broader interfaces, helpers and Unknown flow. Disabling the
+fallback would discard its soundness guard and is not a valid fix.
+The recursive intersection adapter is a separate blocker. Newest integration
+322bd65d was inspected and retains both behaviors; no individual lane was merged.
+The old reduced intersection fixture completion is explicitly superseded in the
+lazy ledger: that table now has one brand pair / one read pending.
+
+Dates: 27 original brand pairs and all five optional fields are delivered now.
+October 9, 2026, 17:00 MDT remains the full __String working target, conditional
+on resolving these three shared admission blockers. October 13, 2026, 17:00 MDT
+remains the mixed primitive working target. In the original mixed column, the
+32 certified brand pairs cover 549 of 690 candidate reads; 31 pairs / 141 reads
+remain, including the three blocked brands. These are candidate counts, not
+checker-clean whole-program reachability or whole-tsc compilation.
