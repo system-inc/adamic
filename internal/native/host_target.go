@@ -18,6 +18,8 @@ var wasiHostRefusals = map[string]TargetRefused{
 	"adamic_node_argv":         {"process.argv", "WASI has no executable paths"},
 	"adamic_fs_file_mkdtemp":   {"fs.mkdtempSync", "WASI has no temporary directory creation"},
 	"adamic_node_pid":          {"process.pid", "WASI has no process identifiers"},
+	"adamic_node_os_platform":  {"os.platform", "WASI has no Node host platform"},
+	"adamic_node_homedir":      {"os.homedir", "WASI has no effective-user account database for the HOME-unset fallback"},
 	"adamic_node_platform":     {"process.platform", "WASI has no Node host platform"},
 	"adamic_node_columns":      {"process.stdout.columns", "WASI has no terminal size"},
 	"adamic_node_memory_usage": {"process.memoryUsage", "WASI has no allocator observations"},

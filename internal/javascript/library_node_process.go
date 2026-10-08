@@ -3,6 +3,12 @@ package javascript
 import "github.com/system-inc/adamic/internal/ir"
 
 func (e *emitter) nodeProcessCall(call ir.ProcessCall) (string, bool) {
+	if call.Operation == "osPlatform" {
+		return "adamicNodeOSPlatform()", true
+	}
+	if call.Operation == "homedir" {
+		return "adamicNodeHomedir()", true
+	}
 	if call.Operation == "tmpdir" {
 		return "adamicNodeTmpdir()", true
 	}

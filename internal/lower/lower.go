@@ -143,6 +143,7 @@ type lowering struct {
 	// forwarders are the globals holding the function values made for module functions read as values,
 	// by the function each forwards to, and forwarderValues the declarations that make them, which run
 	// before anything else (functionValue).
+	nodeOSFunctions map[string]int
 	forwarders      map[int]int
 	forwarderValues []ir.Statement
 

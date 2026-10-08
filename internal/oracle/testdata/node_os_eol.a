@@ -1,0 +1,4 @@
+import * as os from 'node:os';
+import { EOL as newline } from 'os';
+console.log(JSON.stringify(os.EOL));
+console.log(`${newline.length} ${newline.charCodeAt(0)}`);

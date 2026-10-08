@@ -1,0 +1,5 @@
+import os from 'node:os';
+import { tmpdir as alias } from 'os';
+console.log(JSON.stringify(os.tmpdir()));
+console.log(JSON.stringify(alias()));
+console.log(`${os.tmpdir === os.tmpdir}`);

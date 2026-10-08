@@ -14,10 +14,40 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
 - Version: Node.js v24.14.1, lib/fs.js, realpathSync (POSIX component walk).
 - In Adamic: `internal/native/runtime/directory.c`, `real_path_input` and `adamic_real_path`.
 - Also ported: Node.js v24.19.0, `lib/path.js` POSIX `basename`, in `internal/native/runtime/node_path.c`.
+- Also ported: Node.js v24.19.0 `src/node_os.cc` GetHomeDirectory and `lib/internal/errors.js` SystemError observations in `internal/native/runtime/node_os.c`; `lib/os.js` POSIX platform/EOL/tmpdir behavior in `node_process.c`.
 - License: `MIT`
 
 ```text
 Copyright Node.js contributors. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to
+deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.
+```
+
+### libuv POSIX home-directory lookup
+
+- Source: https://github.com/nodejs/node/blob/v24.19.0/deps/uv/src/unix/core.c
+- Version: libuv bundled with Node.js v24.19.0.
+- In Adamic: `internal/native/runtime/node_os.c`, the HOME-first lookup and effective-user passwd fallback with 2000-byte initial storage, EINTR retry and ERANGE growth.
+- License: `MIT`
+
+```text
+Copyright (c) 2015-present libuv project contributors.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to

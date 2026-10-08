@@ -1,0 +1,102 @@
+{
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "members": [
+    "EOL",
+    "platform",
+    "homedir",
+    "tmpdir"
+  ],
+  "sites": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1489,
+      "member": "platform",
+      "kind": "call",
+      "source": "const platform: string = _os.platform();"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1525,
+      "member": "EOL",
+      "kind": "read",
+      "source": "newLine: _os.EOL,"
+    },
+    {
+      "file": "src/tsserver/server.ts",
+      "line": 57,
+      "member": "platform",
+      "kind": "call",
+      "source": "start(initializeNodeSystem(), os.platform());"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 629,
+      "member": "homedir",
+      "kind": "probe and call",
+      "source": "(os.homedir && os.homedir()) ||"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 632,
+      "member": "tmpdir",
+      "kind": "call",
+      "source": "os.tmpdir();"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 654,
+      "member": "homedir",
+      "kind": "probe and call",
+      "source": "const homePath = (os.homedir && os.homedir()) ||"
+    },
+    {
+      "file": "src/tsserver/nodeServer.ts",
+      "line": 657,
+      "member": "tmpdir",
+      "kind": "call",
+      "source": "os.tmpdir();"
+    },
+    {
+      "file": "src/testRunner/parallel/host.ts",
+      "line": 130,
+      "member": "EOL",
+      "kind": "read",
+      "source": "process.stdout.write(os.EOL);"
+    },
+    {
+      "file": "src/testRunner/parallel/host.ts",
+      "line": 136,
+      "member": "EOL",
+      "kind": "read",
+      "source": "process.stdout.write(os.EOL);"
+    },
+    {
+      "file": "src/testRunner/parallel/host.ts",
+      "line": 182,
+      "member": "EOL",
+      "kind": "read",
+      "source": "process.stdout.write(this._progressBars[i].text + os.EOL);"
+    }
+  ],
+  "absent": [
+    "cpus",
+    "availableParallelism"
+  ],
+  "excluded": [
+    {
+      "file": "src/services/completions.ts",
+      "line": 6159,
+      "reason": "documentation example imports type, not an executed os binding"
+    },
+    {
+      "file": "src/testRunner/unittests/tsserver/codeFix.ts",
+      "line": 14,
+      "reason": "test input string imports os; no os member call"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 12119,
+      "reason": "os in built-in module name list"
+    }
+  ]
+}

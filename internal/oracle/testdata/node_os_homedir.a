@@ -1,0 +1,17 @@
+import os from 'os';
+import { homedir as alias } from 'node:os';
+import { programArguments } from 'adamic';
+if (programArguments()[0] === 'uncaught-home') { console.log(os.homedir()); }
+if (programArguments()[0] === 'unset-home') { delete process.env.HOME; }
+function code(error: unknown): string {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : 'missing';
+}
+function home(): void {
+    try { console.log(JSON.stringify(os.homedir && os.homedir())); }
+    catch (error) { if (error instanceof Error) { console.log(`${error.name}: ${error.message}`); console.log(code(error)); } }
+}
+home();
+try { console.log(JSON.stringify(alias())); }
+catch (error) { if (error instanceof Error) { console.log(`${error.name}: ${error.message}`); console.log(code(error)); } }
+console.log(typeof os.homedir);
+console.log(`${os.homedir === os.homedir}`);

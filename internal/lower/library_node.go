@@ -35,7 +35,7 @@ func (l *lowering) nodeLibraryMember(node *ast.Node) string {
 		if !load.IsNodeLibrary(file) {
 			continue
 		}
-		if declaration.Kind == ast.KindModuleDeclaration {
+		if declaration.Kind == ast.KindModuleDeclaration && declaration.Name().Kind == ast.KindStringLiteral {
 			return ""
 		}
 		module := ""
@@ -85,6 +85,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 		}
 	}
 	if name != "" && !implementedNodeMembers[name] {
+		if strings.HasPrefix(name, "node:os.") {
+			return l.notYet(node, name+": outside the pinned TypeScript src inventory; only EOL, platform, homedir and tmpdir are implemented")
+		}
 		return l.notYet(node, name)
 	}
 	return nil

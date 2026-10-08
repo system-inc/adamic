@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	RegisterNodeLibraryMembers("node:os.tmpdir", "node:os.platform", "node:os.EOL", "node:process.process", "node:globals.process")
+	RegisterNodeLibraryMembers("node:os.tmpdir", "node:os.platform", "node:os.homedir", "node:os.EOL", "node:process.process", "node:globals.process")
 	for _, name := range []string{"cwd", "chdir", "argv", "execArgv", "env", "platform", "pid", "stdout", "stderr", "exitCode", "exit", "memoryUsage", "nextTick"} {
 		RegisterNodeLibraryMembers("node:process.Process."+name, "node:process."+name)
 	}
@@ -39,7 +39,7 @@ func (l *lowering) nodeProcessPath(node *ast.Node) string {
 				switch declaration.Name().Text() {
 				case "node:perf_hooks":
 					return "performanceModule"
-				case "node:os":
+				case "node:os", "os":
 					return "os"
 				case "node:process":
 					return "process"
@@ -74,6 +74,9 @@ func (l *lowering) nodeProcessPath(node *ast.Node) string {
 		access := node.AsPropertyAccessExpression()
 		if access.QuestionDotToken == nil {
 			if path := l.nodeProcessPath(access.Expression); path != "" {
+				if path == "os.EOL" {
+					return ""
+				}
 				if path == "performanceModule" && node.Name().Text() == "performance" {
 					return "performance"
 				}
@@ -139,6 +142,18 @@ func (l *lowering) nodeProcessEnvironmentMutation(node *ast.Node) (ir.Expression
 }
 
 func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error) {
+	// These implemented imported functions are stable and always present.
+	// Reading their binding has no effects, so tsc's feature guard reaches
+	// exactly its right-hand expression. Other heterogeneous guards stay refused.
+	if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken {
+		binary := node.AsBinaryExpression()
+		switch l.nodeProcessPath(binary.Left) {
+		case "os.homedir", "os.platform", "os.tmpdir":
+			value, err := l.expression(binary.Right)
+			return value, true, err
+		}
+	}
+
 	// Node types call stdout a TTY WriteStream even when a pipe lacks these fields.
 	// Preserve the runtime absence in guarded reads instead of unwrapping the declared number.
 	if node.Kind == ast.KindBinaryExpression && node.AsBinaryExpression().OperatorToken.Kind == ast.KindQuestionQuestionToken {
@@ -202,12 +217,14 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		}
 		count, minimum := 0, 0
 		switch path {
-		case "process.cwd", "os.platform", "os.tmpdir":
+		case "process.cwd", "os.platform", "os.tmpdir", "os.homedir":
 			call.Operation, call.Of = "cwd", ir.String
 			if path == "os.platform" {
-				call.Operation = "platform"
+				call.Operation = "osPlatform"
 			} else if path == "os.tmpdir" {
 				call.Operation = "tmpdir"
+			} else if path == "os.homedir" {
+				call.Operation = "homedir"
 			}
 		case "process.chdir":
 			call.Operation, call.Of, count, minimum = "chdir", ir.Object, 1, 1
@@ -256,6 +273,8 @@ func (l *lowering) nodeProcessValue(node *ast.Node) (ir.Expression, bool, error)
 		return call, true, nil
 	}
 	switch path {
+	case "os.platform", "os.homedir", "os.tmpdir":
+		return l.nodeOSFunction(path), true, nil
 	case "os":
 		return nil, true, l.notYet(node, "node:os namespace as a first-class value")
 	case "performanceModule":

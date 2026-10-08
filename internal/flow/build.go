@@ -458,7 +458,7 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				// Invalid exit codes and host failures throw before a valid exit
 				// can terminate the process; retain their catch/finally edges.
 				operation := value.Interface().(ir.ProcessCall).Operation
-				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
+				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "homedir" || operation == "cwd" || operation == "chdir" || operation == "measure"
 			case reflect.TypeOf(ir.NodeHostCall{}):
 				throws = throws || value.Interface().(ir.NodeHostCall).Throws
 			case callType:

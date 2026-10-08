@@ -1,0 +1,6 @@
+import os from 'node:os';
+import { platform as alias } from 'os';
+console.log(os.platform());
+console.log(alias());
+console.log(typeof os.platform);
+console.log(`${os.platform === os.platform}`);

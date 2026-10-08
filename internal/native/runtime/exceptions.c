@@ -39,16 +39,27 @@ _Noreturn void adamic_uncaught(void) {
 	static adamic_slot_cache name_cache, message_cache;
 	const adamic_string *name = adamic_object_field(adamic_thrown, "name", &name_cache)->reference;
 	const adamic_string *message = adamic_object_field(adamic_thrown, "message", &message_cache)->reference;
-	size_t length = name->length + (message->length > 0 ? 2 + message->length : 0);
+	const adamic_string *code = NULL;
+    if (adamic_node_os_system_error(adamic_thrown)) {
+        static adamic_slot_cache code_cache;
+        code = adamic_object_field(adamic_thrown, "code", &code_cache)->reference;
+    }
+    size_t prefix = name->length + (code == NULL ? 0 : code->length + 3);
+    size_t length = prefix + (message->length > 0 ? 2 + message->length : 0);
 	char *text = malloc(length + 1);
 	if (text == NULL) {
 		static const char out_of_memory[] = "out of memory";
 		adamic_panic(out_of_memory, sizeof out_of_memory - 1);
 	}
 	memcpy(text, name->bytes, name->length);
-	if (message->length > 0) {
-		memcpy(text + name->length, ": ", 2);
-		memcpy(text + name->length + 2, message->bytes, message->length);
+	if (code != NULL) {
+        memcpy(text + name->length, " [", 2);
+        memcpy(text + name->length + 2, code->bytes, code->length);
+        text[prefix - 1] = ']';
+    }
+    if (message->length > 0) {
+        memcpy(text + prefix, ": ", 2);
+        memcpy(text + prefix + 2, message->bytes, message->length);
 	}
 	adamic_panic(text, length);
 }
