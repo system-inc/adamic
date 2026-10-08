@@ -10,7 +10,8 @@
 #
 # The gate's own code comes from this script's checkout (its HEAD, which must be on origin), never
 # from the candidate, so a candidate can't edit the gate that judges it. The base is origin/main at
-# the moment it starts. The box keeps one tree and one tools checkout at fixed paths, so Go's build
+# the moment it starts, or for a worker's branch cut from an area, that area's tip (gateBase in
+# cloud/fast-gate-classify.sh), so it tests its own change rather than the area's. The box keeps one tree and one tools checkout at fixed paths, so Go's build
 # cache stays warm; tests always run -count=1. The result is published to
 # gate-logs/<sha12>/<UTC stamp>/fast: status.txt (green: or red: on its first line), fast.json,
 # test.jsonl and each step's log.
@@ -37,7 +38,6 @@ if [ -z "${ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN:-}" ]; then
   git -C "${here}" fetch -q origin
   git -C "${here}" branch -r --contains "${tools}" | grep -q . || { echo "the gate's own commit ${tools} is not on origin; push it first" >&2; exit 2; }
 fi
-base=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
 if [ -z "${branch}" ]; then
   branch=$(git -C "${here}" ls-remote origin 'refs/heads/*' | awk -v sha="${sha}" '$1 == sha && $2 !~ /^refs\/heads\/gate-logs\// && !found {sub("refs/heads/", "", $2); print $2; found = 1}')
   branchSource="origin branch tip"
@@ -48,15 +48,14 @@ if [ -z "${session}" ] && [ -n "${branch}" ] && [ -f "${database}" ]; then
   sessionSource="ai.db reply naming the branch"
 fi
 [ -n "${session}" ] || sessionSource=none
+. "${here}/cloud/fast-gate-classify.sh"
+read -r baseName base <<< "$(gateBase "${branch:-}" "${sha}")"
 # The watcher passes the class it queued with; a direct gate (integration's landings) gets the same judgment.
-if [ -z "${class}" ]; then
-  . "${here}/cloud/fast-gate-classify.sh"
-  class=$(classify "${branch:-}" "${sha}")
-fi
+[ -n "${class}" ] || class=$(classify "${branch:-}" "${sha}")
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
 out=fast-gate/out/${sha:0:12}-${stamp}
 
-echo "fast gate: ${sha} against main ${base}, tools ${tools}, on ${box}, class ${class}"
+echo "fast gate: ${sha} against ${baseName} ${base}, tools ${tools}, on ${box}, class ${class}"
 # Landings and areas also compile on macOS (cloud/darwin-leg.sh), beside the box's gate: a Darwin-only
 # compile break (area-next 517cb633, st_atimespec) got through when nothing on macOS gated (Oct 8).
 darwinLog=""
@@ -67,9 +66,9 @@ if [[ ${branch} == cloud/land-* || ${branch} == area/* ]]; then
 fi
 set +e
 # ssh joins its arguments into one remote command line, so each is quoted for the remote shell.
-ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}" "${class}")" <<'BOX'
+ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}" "${class}" "${baseName}")" <<'BOX'
 set -euo pipefail
-sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8 width=${9:-} class=${10:-B}
+sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8 width=${9:-} class=${10:-B} baseName=${11:-main}
 mkdir -p ~/fast-gate
 # Two slots, each with its own tree and tools checkout, so a small change doesn't wait behind a
 # stack's long gate; the second slot's tree starts as a copy of the first (submodules included).
@@ -264,7 +263,7 @@ echo "cpus=${range}" >> ~/"${out}"/box.txt
 # --complete): one pass shows all a candidate's moved outcomes, not one per gate.
 complete=""
 case ${branch} in cloud/land-*|area/*) complete=--complete ;; esac
-taskset -c "${range}" python3 ~/fast-gate/tools${suffix}/cloud/fast-gate/run.py --tree ~/fast-gate/tree${suffix} --sha "${sha}" --base "${base}" --tools ~/fast-gate/tools${suffix} --out ~/"${out}" --branch "${branch}" --branch-source "${branchSource}" --session "${session}" --session-source "${sessionSource}" ${complete}
+taskset -c "${range}" python3 ~/fast-gate/tools${suffix}/cloud/fast-gate/run.py --tree ~/fast-gate/tree${suffix} --sha "${sha}" --base "${base}" --base-name "${baseName}" --tools ~/fast-gate/tools${suffix} --out ~/"${out}" --branch "${branch}" --branch-source "${branchSource}" --session "${session}" --session-source "${sessionSource}" ${complete}
 BOX
 code=$?
 set -e
@@ -306,7 +305,7 @@ logBranch=gate-logs/${sha:0:12}/${stamp}/fast
 index=$(mktemp -u)
 gitDirectory=$(git -C "${here}" rev-parse --absolute-git-dir)
 tree=$(cd "${local}/fast" && GIT_INDEX_FILE=${index} git --git-dir="${gitDirectory}" --work-tree=. add -A -f . && GIT_INDEX_FILE=${index} git --git-dir="${gitDirectory}" write-tree)
-commit=$(git -C "${here}" commit-tree "${tree}" -m "Fast gate of ${sha} against main ${base} (tools ${tools}): $(head -1 "${local}/fast/status.txt")")
+commit=$(git -C "${here}" commit-tree "${tree}" -m "Fast gate of ${sha} against ${baseName} ${base} (tools ${tools}): $(head -1 "${local}/fast/status.txt")")
 git -C "${here}" push -q origin "${commit}:refs/heads/${logBranch}"
 rm -f "${index}"
 echo "published ${logBranch} (${commit})"

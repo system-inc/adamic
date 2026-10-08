@@ -54,6 +54,8 @@ def main():
     parser.add_argument("--tree", required=True)
     parser.add_argument("--sha", required=True)
     parser.add_argument("--base", required=True)
+    # What the base sha is: main, or the area a worker's branch was cut from (gateBase in fast-gate-classify.sh).
+    parser.add_argument("--base-name", default="main")
     parser.add_argument("--tools", required=True)
     parser.add_argument("--out", required=True)
     # The gate's CPUs come from its affinity (cloud/fast-gate.sh pins a slot, full-gate-main.sh the full
@@ -106,6 +108,7 @@ class Gate:
             "session": arguments.session,
             "session_source": arguments.session_source,
             "base": arguments.base,
+            "base_name": vars(arguments).get("base_name") or "main",
             "tools_sha": self.git(arguments.tools, "rev-parse", "HEAD"),
             "machine": {"hostname": socket.gethostname(), "nproc": os.cpu_count()},
             "uncached_tests": True,
