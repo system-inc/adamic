@@ -18,3 +18,12 @@ internal/native       TestRegExpBytecodeTest262         24.2     external-suite
 internal/native       TestMapHashProbeCatchesMutants    23.9     mutant
 internal/native       TestRecordReadMutants             22.3     mutant
 internal/native       TestNormalizeRandomMatchesNode    18.6     randomized-sweep
+# stage1/cohere/lint's corpus-wide tests, until the rule-scoped lint gate (#60hxabf) is on main
+# (@system_adamic via @system_cohere_adamic, Oct 8 11:42 MDT): the five the scoped gate skips by name,
+# about 1,190 s of their own time. The lint seat runs them unscoped on every area head before it moves,
+# so a landing never carries an unrun result. Seconds: the largest of four big gates, Cloud, Oct 8.
+stage1/cohere/lint    TestJsxLintTrees                  415.8    differential-sweep
+stage1/cohere/lint    TestCompilerAndStage1Agree        557.0    differential-sweep
+stage1/cohere/lint    TestNodeTableIsLinkOnly           153.0    differential-sweep
+stage1/cohere/lint    TestShardsAgree                   392.0    differential-sweep
+stage1/cohere/lint    TestProfileSnapshotsAgree         0.0      differential-sweep
