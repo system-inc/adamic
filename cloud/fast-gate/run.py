@@ -36,6 +36,8 @@ import traceback
 module = "github.com/system-inc/adamic"
 # What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
 gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1"}
+fullPackageTimeout = "3h"
+slowPackageSeconds = 3600
 smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
 # The oracle's lanes: every test that runs each registered fixture as a subtest named by its path.
@@ -204,8 +206,12 @@ class Gate:
         if os.environ.get("WASI_SYSROOT"):
             wasi = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
         threads = [self.guarded("vet", self.vet),
-                   self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-p", str(self.arguments.parallel), "-skip", "^TestWASI$"] + packages, log),
-                   self.guarded("wasi", self.test, "wasi", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-run", "^TestWASI$", "./internal/native"], log, wasi),
+                   # Three hours a package (@system_adamic, Oct 8 00:08): the whole gate's 16 CPUs are slower
+                   # on purpose, and a wall-clock package timeout there is the per-test fragility at a larger
+                   # size. Hangs belong to stall guards that count from output; a package over an hour is
+                   # named in the status line as slow, so it never reads as a quiet pass.
+                   self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-p", str(self.arguments.parallel), "-skip", "^TestWASI$"] + packages, log),
+                   self.guarded("wasi", self.test, "wasi", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-run", "^TestWASI$", "./internal/native"], log, wasi),
                    self.guarded("stage3", self.stage3),
                    # The bug catalog: each catalogued bug reintroduced and caught, on every main that has it.
                    self.guarded("catalog", self.catalogFull)]
@@ -885,6 +891,9 @@ class Gate:
             if event.get("Action") == "output":
                 output.setdefault(key, []).append(event.get("Output", ""))
                 continue
+            if event.get("Test") is None and event.get("Action") in ("pass", "fail") and event.get("Elapsed", 0) > slowPackageSeconds:
+                with self.lock:
+                    self.result.setdefault("slow_packages", {})[event.get("Package")] = event["Elapsed"]
             if event.get("Test") is not None and event.get("Action") in self.counts:
                 with self.lock:
                     self.counts[event["Action"]] += 1
@@ -982,6 +991,8 @@ class Gate:
             json.dump(self.result, handle, indent=2)
             handle.write("\n")
         steps = " ".join("%s=%.1fs" % item for item in self.steps.items())
+        if self.result.get("slow_packages"):
+            steps += "; slow packages, over %d min: %s" % (slowPackageSeconds // 60, ", ".join("%s %.0fs" % (name.rsplit("/", 2)[-2] + "/" + name.rsplit("/", 1)[-1], seconds) for name, seconds in sorted(self.result["slow_packages"].items(), key=lambda item: -item[1])))
         deferred = self.result.get("deferred_to_full_gate", [])
         if not self.arguments.full:
             steps += "; deferred to full gate: %d tests%s" % (len(deferred), (" (" + ", ".join(name.split()[-1] for name in deferred) + ")") if deferred else "")
