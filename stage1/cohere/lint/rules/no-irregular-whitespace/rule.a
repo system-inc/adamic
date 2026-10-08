@@ -1,0 +1,129 @@
+import { utf8Length } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { forFile } from '../../helpers/comments/for_file.ts';
+import { isLineBreak } from '../../../../typescript/scanner/characters.ts';
+import { messageIrregularWhitespace } from './messages.a';
+
+// This is the rule's exact set, not the scanner's whitespace predicate:
+// ordinary whitespace is allowed, while U+180E and U+200B are reported.
+function irregular(code: number): boolean {
+    return code === 11 || code === 12 || code === 133 || code === 160 ||
+        code === 5760 || code === 6158 || (code >= 8192 && code <= 8203) ||
+        code === 8232 || code === 8233 || code === 8239 || code === 8287 ||
+        code === 12288 || code === 65279;
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    // Literal regions use the source's UTF-16 positions; only comments use bytes.
+    readonly starts: number[] = [];
+    readonly ends: number[] = [];
+    readonly commentStarts: number[] = [];
+    readonly commentEnds: number[] = [];
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    excuse(start: number, end: number): void {
+        this.starts.push(start);
+        this.ends.push(end);
+    }
+    collect(index: number): void {
+        const node = this.context.node(index);
+        let skip = false;
+        switch(node.kind) {
+            case 'StringLiteral':
+                skip = this.context.settings.read('skipstrings', 'true') === 'true';
+                break;
+            case 'RegularExpressionLiteral':
+                skip = this.context.settings.read('skipregexps', 'false') === 'true';
+                break;
+            case 'NoSubstitutionTemplateLiteral':
+            case 'TemplateHead':
+            case 'TemplateMiddle':
+            case 'TemplateTail':
+                skip = this.context.settings.read('skiptemplates', 'false') === 'true';
+                break;
+            case 'JsxText':
+                if(this.context.settings.read('skipjsxtext', 'false') === 'true') {
+                    // JSX whitespace is content, so token trivia skipping is wrong here.
+                    this.excuse(node.pos, node.end);
+                }
+                break;
+        }
+        if(skip) {
+            this.excuse(this.context.start(index), node.end);
+        }
+        for(const child of node.children) {
+            this.collect(child);
+        }
+    }
+    report(start: number, end: number): void {
+        if(start < 0) {
+            return;
+        }
+        for(let index = 0; index < this.starts.length; index++) {
+            if(start >= (this.starts[index] ?? 0) && start < (this.ends[index] ?? 0)) {
+                return;
+            }
+        }
+        if(this.commentStarts.length > 0) {
+            const byte = utf8Length(this.context.source.slice(0, start));
+            for(let index = 0; index < this.commentStarts.length; index++) {
+                if(byte >= (this.commentStarts[index] ?? 0) && byte < (this.commentEnds[index] ?? 0)) {
+                    return;
+                }
+            }
+        }
+        this.context.reportRange(start, end, 'no-irregular-whitespace',
+            'noIrregularWhitespace', messageIrregularWhitespace);
+    }
+    visit(index: number): void {
+        const source = this.context.source;
+        let found = false;
+        for(let position = 0; position < source.length; position++) {
+            if(irregular(source.charCodeAt(position)) && !(position === 0 && source.charCodeAt(position) === 65279)) {
+                found = true;
+                break;
+            }
+        }
+        if(!found) {
+            return;
+        }
+        if(this.context.settings.read('skipcomments', 'false') === 'true') {
+            // The uncached path is the shared shelf's explicit nil-cache contract.
+            for(const comment of forFile(this.context.parser, index, undefined)) {
+                this.commentStarts.push(comment.start);
+                this.commentEnds.push(comment.end);
+            }
+            if(source.startsWith('#!')) {
+                let end = 2;
+                while(end < source.length && !isLineBreak(source.charCodeAt(end))) {
+                    end++;
+                }
+                this.excuse(0, end);
+            }
+        }
+        this.collect(index);
+        let start = -1;
+        for(let position = 0; position < source.length; position++) {
+            const code = source.charCodeAt(position);
+            if(!irregular(code) || (position === 0 && code === 65279)) {
+                this.report(start, position);
+                start = -1;
+            }
+            else if(code === 8232 || code === 8233) {
+                this.report(start, position);
+                this.report(position, position + 1);
+                start = -1;
+            }
+            else if(start < 0) {
+                start = position;
+            }
+        }
+        this.report(start, source.length);
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}
