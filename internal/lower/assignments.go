@@ -167,6 +167,13 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 	if operator == ast.KindMinusMinusToken {
 		step = ir.Subtract
 	}
-	current := ir.Read{Local: local, Of: ir.Number, Checked: l.checked(local)}
-	return []ir.Statement{ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}}, nil
+	current, err := l.expression(operand)
+	if err != nil {
+		return nil, err
+	}
+	if current.Type() != ir.Number {
+		return nil, l.notYet(operand, "incrementing a value not narrowed to number")
+	}
+	updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}
+	return []ir.Statement{ir.Assign{Local: local, Value: fit(updated, l.result.Locals[local].Type), Checked: l.checked(local)}}, nil
 }
