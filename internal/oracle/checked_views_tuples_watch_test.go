@@ -94,3 +94,11 @@ func TestCheckedViewTupleWatchNarrowingMutant(t *testing.T) {
 	}
 	t.Fatal("mutant escaped")
 }
+
+func TestCheckedViewTupleOriginalWatchFilename(t *testing.T) {
+	verifyOriginalTupleCases(t, []originalTupleCase{
+		{"watch-filename-short", "file9\n", "", ""},
+		{"watch-filename-long", "file9\n", "", ""},
+		{"watch-filename-wrong", "7\n", "", "field read failed: args[0] is not a string; expected string, found number"},
+	})
+}

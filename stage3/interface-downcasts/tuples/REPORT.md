@@ -1,3 +1,20 @@
+Built: original watcher filename position pair 95604/0, one candidate read; total 8 pairs / 12 reads.
+Commits: filename certification is separate from watcher event patch 21fd3587, with no production changes.
+Checks: three Node/JS/native release/sanitized witnesses PASS 2.308s, completing cases leak checked; 68 owned counts refreshed PASS 45.359s.
+Mutants: unchecked position zero returns 7 and exit zero instead of the string refusal (FAIL 0.351s).
+Remaining: original module kind and specifier positions, two pairs / three reads; two overlapping lane 4b checks.
+
+Commands: TestCheckedViewTupleOriginalWatchFilename -count=1 -v
+(/tmp/views-tuples-watch-filename.log); ADAMIC_TUPLE_NUMERIC_MUTANT=0
+on watch-filename-wrong (/tmp/views-tuples-watch-filename-mutant.log);
+TestCheckedViewTupleOriginalCounts -args -update-counts
+(/tmp/views-tuples-watch-filename-counts.log). Both original callback parameter
+alternatives read the required filename through the same positional path.
+The mutant is killed semantically in JavaScript before unsafe native use.
+The separately prepared private module declaration is not part of this commit.
+
+---
+
 Built: original watcher tuple event position pair 95604/1, two candidate reads; unified positional path; total 7 pairs / 11 reads.
 Commits: watcher event patch follows original forEach pair 19418766cc313c0dc2d4fcb4fe26a7da248609e1.
 Checks: eight Node/JS/release/sanitized witnesses PASS 4.131s with finishing leak checks; tuple regressions PASS 25.050s; 65 owned counts PASS 35.404s; lane 2/lane 4 regressions PASS 25.898s.
