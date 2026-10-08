@@ -1,1 +1,2 @@
+// a-check: type error TS2379
 function take(value: {count?: number}): void { console.log(String(value.count)); } take({count: undefined});

@@ -1,0 +1,99 @@
+{
+  "area": "e3431122bfb88967c05244770be6279a075c1811",
+  "area_apply_fix": "abdcf3d",
+  "publication_merge": "0a925036e4bc47a88bde1a85250363fbfbbbe3d3",
+  "refusal_scratch_merge": "f2a58e2e2efcc360e676ee04c4980d9724f1e3f7",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "adaptation75_sha256": "222bbf35327ccd13b020f4fff215f27dc39d57ef6117bd1bdc9125048c6f39d3",
+  "control": "same full runner with only directory 75 temporarily omitted in scratch; restored afterward",
+  "sanctioned_api_reference": "exact verified wave-2 snapshot: 189 optional lines, 28 adaptation-40 lines, one readonly line, one JsonSourceFile optional addition",
+  "inventory_counts": {
+    "before": 415,
+    "after": 391,
+    "cleared": 24
+  },
+  "full_apply": "pass",
+  "oracle": {
+    "tree": "/tmp/optional-widening-composed",
+    "nproc": 5,
+    "workers": 4,
+    "runners": "all",
+    "tests": null,
+    "node": "v24.19.0",
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 5.399
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 3.326
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=4",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 457.214
+      }
+    },
+    "status": "fail",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "wall_seconds": 466.047
+  },
+  "latent": {
+    "before": {
+      "optional_widening_lowering_sites": 82,
+      "measurement": "checker-rejected program",
+      "phases": {
+        "refusal_scan": 82
+      }
+    },
+    "after": {
+      "optional_widening_lowering_sites": 76,
+      "measurement": "checker-rejected program",
+      "phases": {
+        "refusal_scan": 76
+      }
+    }
+  },
+  "strict": {
+    "before": 7686,
+    "after": 7685,
+    "introduced": 0,
+    "removed": 1,
+    "comparison": "diagnostic code/message multiset, independent of shifted locations",
+    "options": {
+      "strict": true,
+      "exactOptionalPropertyTypes": true,
+      "noUncheckedIndexedAccess": true,
+      "verbatimModuleSyntax": true,
+      "erasableSyntaxOnly": true
+    }
+  },
+  "sanctioned_api_reference_sha256": "24dc0d3ccf28bf2119fea796420dfb22fed0abd4c3d4c6044c72250111120a4e",
+  "adaptation_source_unchanged_since_wave2": true
+}

@@ -1,0 +1,5 @@
+{
+  "name": "declared BaseError constructor ignored",
+  "from": "callee.text !== 'BaseError'",
+  "to": "callee.text !== 'OtherError'"
+}

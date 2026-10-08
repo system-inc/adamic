@@ -1,0 +1,19 @@
+=== RUN   TestGeneratedAgreement
+    estree_test.go:162: 47 generated files: 46768 identical bytes on Go, source Node, sanitized native, emitted JS
+--- PASS: TestGeneratedAgreement (14.76s)
+=== RUN   TestThreePortMutants
+=== RUN   TestThreePortMutants/member-computed
+    estree_test.go:206: source Node finished; byte comparison caught line 701: Go "3 .computed bool 0", port "3 .computed bool 1"
+    estree_test.go:213: sanitized native finished; byte comparison caught line 701: Go "3 .computed bool 0", port "3 .computed bool 1"
+=== RUN   TestThreePortMutants/logical-rebalance
+    estree_test.go:206: source Node finished; byte comparison caught line 434: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+    estree_test.go:213: sanitized native finished; byte comparison caught line 434: Go "3 LogicalExpression 0 13 0 0 0 0 13 0", port "3 Identifier 0 1 0 0 0 0 1 0"
+=== RUN   TestThreePortMutants/merged-jsdoc-value
+    estree_test.go:206: source Node finished; byte comparison caught line 1552: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+    estree_test.go:213: sanitized native finished; byte comparison caught line 1552: Go "0 .value string *\\u000a * one\\u000a *//**\\u000a * two\\u000a ", port "0 .value string *\\u000a * one\\u000a */ /**\\u000a * two\\u000a "
+--- PASS: TestThreePortMutants (41.89s)
+    --- PASS: TestThreePortMutants/member-computed (13.85s)
+    --- PASS: TestThreePortMutants/logical-rebalance (13.64s)
+    --- PASS: TestThreePortMutants/merged-jsdoc-value (13.68s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/estree	56.648s
