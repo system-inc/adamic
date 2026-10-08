@@ -1,0 +1,4 @@
+const regex = /a/g;
+regex.lastIndex = 2;
+const copy = { ...regex };
+console.log(Object.keys(copy).join(','));

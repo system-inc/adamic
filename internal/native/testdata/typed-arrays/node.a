@@ -1,10 +1,10 @@
-const edges = [300, -1, 255, 256, NaN, Infinity, -Infinity, -0,
+const edges = [0, 65535, 65536, 1.5, 4294967297, 300, -1, 255, 256, NaN, Infinity, -Infinity, -0,
 	2 ** 31, 2 ** 32, -(2 ** 31) - 1, 1.9, -1.9, 255.9, -256.9,
 	4294967295.9, -4294967296.9, 1e100, -1e100, 2 ** 53, Number.MIN_VALUE];
 function number(value) { console.log(Object.is(value, -0) ? '-0' : String(value)); }
 function show(array) { number(array.length); for (const value of array) { number(value); } }
 function sequence(Type) { return new Type([1, 2, 3, 4, 5, 6]); }
-for (const Type of [Uint8Array, Int32Array, Float64Array]) {
+for (const Type of [Uint8Array, Int32Array, Float64Array, Uint16Array]) {
 	let array = new Type(edges); show(array);
 	for (let index = 0; index < edges.length; index++) { array[index] = edges[index]; } show(array);
 	const copied = new Type(array.length); copied.set(array); show(copied);

@@ -1,0 +1,446 @@
+{
+  "parse": {
+    "baseline": {
+      "total": 6503615880,
+      "top_self": [
+        {
+          "function": "adamic_function_22_Scanner_code",
+          "instructions": 710089228,
+          "percent": 10.918375886615246,
+          "self": 710089228,
+          "inclusive": 893734671
+        },
+        {
+          "function": "adamic_function_222_collect",
+          "instructions": 547850245,
+          "percent": 8.423779250013148,
+          "self": 547850245,
+          "inclusive": 5911705342
+        },
+        {
+          "function": "adamic_function_33_Scanner_scan",
+          "instructions": 502679473,
+          "percent": 7.729230666064491,
+          "self": 502679473,
+          "inclusive": 2530176767
+        },
+        {
+          "function": "adamic_string_equal",
+          "instructions": 339705054,
+          "percent": 5.223325920041883,
+          "self": 339705054,
+          "inclusive": 380351122
+        },
+        {
+          "function": "adamic_retain",
+          "instructions": 331007874,
+          "percent": 5.0895975424674065,
+          "self": 331007874,
+          "inclusive": 331007874
+        },
+        {
+          "function": "adamic_release",
+          "instructions": 290976243,
+          "percent": 4.474068708375194,
+          "self": 290976243,
+          "inclusive": 777185565
+        },
+        {
+          "function": "adamic_function_23_Scanner_advance",
+          "instructions": 274991904,
+          "percent": 4.2282925233278075,
+          "self": 274991904,
+          "inclusive": 274991904
+        },
+        {
+          "function": "decode",
+          "instructions": 225749142,
+          "percent": 3.471132769298792,
+          "self": 225749142,
+          "inclusive": 225830443
+        },
+        {
+          "function": "adamic_function_130_ParseNode_new",
+          "instructions": 200057859,
+          "percent": 3.076102012962057,
+          "self": 200057859,
+          "inclusive": 328170103
+        },
+        {
+          "function": "release_last",
+          "instructions": 182800912,
+          "percent": 2.810758128599686,
+          "self": 182800912,
+          "inclusive": 486209322
+        },
+        {
+          "function": "adamic_object_free_children",
+          "instructions": 158854761,
+          "percent": 2.4425606298261267,
+          "self": 158854761,
+          "inclusive": 198180103
+        },
+        {
+          "function": "adamic_function_2_isIdentifierPart",
+          "instructions": 144076088,
+          "percent": 2.2153228397615634,
+          "self": 144076088,
+          "inclusive": 144076088
+        },
+        {
+          "function": "adamic_allocate",
+          "instructions": 135951493,
+          "percent": 2.090398564559751,
+          "self": 135951493,
+          "inclusive": 136515345
+        },
+        {
+          "function": "adamic_function_28_Scanner_identifier",
+          "instructions": 130417794,
+          "percent": 2.005312066493078,
+          "self": 130417794,
+          "inclusive": 1072540181
+        },
+        {
+          "function": "adamic_function_75_Parser_node",
+          "instructions": 112764825,
+          "percent": 1.7338789233659353,
+          "self": 112764825,
+          "inclusive": 132664500
+        }
+      ]
+    },
+    "thin": {
+      "total": 5908993714,
+      "top_self": [
+        {
+          "function": "adamic_function_22_Scanner_code",
+          "instructions": 743359870,
+          "percent": 12.580143184765621,
+          "self": 743359870,
+          "inclusive": 927004667
+        },
+        {
+          "function": "adamic_function_33_Scanner_scan",
+          "instructions": 505757210,
+          "percent": 8.55910895287847,
+          "self": 505757210,
+          "inclusive": 2483383950
+        },
+        {
+          "function": "adamic_function_222_collect",
+          "instructions": 484463394,
+          "percent": 8.198746139332922,
+          "self": 484463394,
+          "inclusive": 5331501874
+        },
+        {
+          "function": "release_last.llvm.15951258955592325973",
+          "instructions": 377341429,
+          "percent": 6.385883066789805,
+          "self": 377341429,
+          "inclusive": 462812977
+        },
+        {
+          "function": "adamic_function_23_Scanner_advance",
+          "instructions": 305546560,
+          "percent": 5.170872991048844,
+          "self": 305546560,
+          "inclusive": 305546560
+        },
+        {
+          "function": "decode.llvm.8654227267594475386",
+          "instructions": 225749142,
+          "percent": 3.82043293539371,
+          "self": 225749142,
+          "inclusive": 225830443
+        },
+        {
+          "function": "adamic_function_130_ParseNode_new",
+          "instructions": 210727721,
+          "percent": 3.566220090922236,
+          "self": 210727721,
+          "inclusive": 247257682
+        },
+        {
+          "function": "adamic_string_equal",
+          "instructions": 178400878,
+          "percent": 3.0191414415845492,
+          "self": 178400878,
+          "inclusive": 202142301
+        },
+        {
+          "function": "adamic_function_75_Parser_node",
+          "instructions": 143719875,
+          "percent": 2.4322225061686704,
+          "self": 143719875,
+          "inclusive": 143719875
+        },
+        {
+          "function": "adamic_function_2_isIdentifierPart",
+          "instructions": 138906205,
+          "percent": 2.3507590585329905,
+          "self": 138906205,
+          "inclusive": 138906205
+        },
+        {
+          "function": "adamic_function_28_Scanner_identifier",
+          "instructions": 138605805,
+          "percent": 2.345675282605318,
+          "self": 138605805,
+          "inclusive": 1090030997
+        },
+        {
+          "function": "adamic_allocate",
+          "instructions": 135951493,
+          "percent": 2.3007554175915645,
+          "self": 135951493,
+          "inclusive": 136515304
+        },
+        {
+          "function": "find.llvm.13904419526528384273",
+          "instructions": 117373689,
+          "percent": 1.9863566400808663,
+          "self": 117373689,
+          "inclusive": 120156274
+        },
+        {
+          "function": "adamic_function_155_closure",
+          "instructions": 112482184,
+          "percent": 1.9035759630865636,
+          "self": 112482184,
+          "inclusive": 112482184
+        },
+        {
+          "function": "usable.llvm.4863793214778352797",
+          "instructions": 99202109,
+          "percent": 1.6788325356475409,
+          "self": 99202109,
+          "inclusive": 99206839
+        }
+      ]
+    }
+  },
+  "service": {
+    "baseline": {
+      "total": 135285492290,
+      "top_self": [
+        {
+          "function": "adamic_string_locate",
+          "instructions": 15298089177,
+          "percent": 11.308004219851444,
+          "self": 15298089177,
+          "inclusive": 17698497357
+        },
+        {
+          "function": "adamic_string_slice",
+          "instructions": 14890483014,
+          "percent": 11.006710891128325,
+          "self": 14890483014,
+          "inclusive": 46565192659
+        },
+        {
+          "function": "decode",
+          "instructions": 10988165004,
+          "percent": 8.122204988873165,
+          "self": 10988165004,
+          "inclusive": 10988165976
+        },
+        {
+          "function": "release_last",
+          "instructions": 10445383413,
+          "percent": 7.720993017203294,
+          "self": 10445383413,
+          "inclusive": 13495719977
+        },
+        {
+          "function": "adamic_string_split",
+          "instructions": 8739364228,
+          "percent": 6.459941919911241,
+          "self": 8739364228,
+          "inclusive": 14493170577
+        },
+        {
+          "function": "adamic_allocate",
+          "instructions": 5733340031,
+          "percent": 4.237956290767621,
+          "self": 5733340031,
+          "inclusive": 5747933333
+        },
+        {
+          "function": "adamic_string_units",
+          "instructions": 5542767962,
+          "percent": 4.097089693932916,
+          "self": 5542767962,
+          "inclusive": 5542767962
+        },
+        {
+          "function": "adamic_string_append",
+          "instructions": 5438890201,
+          "percent": 4.020305584091097,
+          "self": 5438890201,
+          "inclusive": 9917202861
+        },
+        {
+          "function": "adamic_string_equal",
+          "instructions": 4979269224,
+          "percent": 3.680564072107868,
+          "self": 4979269224,
+          "inclusive": 6778212800
+        },
+        {
+          "function": "adamic_string_share",
+          "instructions": 4865664537,
+          "percent": 3.5965900368458494,
+          "self": 4865664537,
+          "inclusive": 14082099379
+        },
+        {
+          "function": "adamic_string_at",
+          "instructions": 4502157156,
+          "percent": 3.3278935381697163,
+          "self": 4502157156,
+          "inclusive": 50105211503
+        },
+        {
+          "function": "adamic_function_13_Parser_string",
+          "instructions": 4192083738,
+          "percent": 3.0986942258477996,
+          "self": 4192083738,
+          "inclusive": 54142290868
+        },
+        {
+          "function": "usable",
+          "instructions": 3009479431,
+          "percent": 2.22453966057856,
+          "self": 3009479431,
+          "inclusive": 3028957312
+        },
+        {
+          "function": "adamic_function_11_Parser_peek",
+          "instructions": 2800765188,
+          "percent": 2.0702627758460883,
+          "self": 2800765188,
+          "inclusive": 52908575189
+        },
+        {
+          "function": "adamic_string_char_code",
+          "instructions": 2518687757,
+          "percent": 1.8617574688651044,
+          "self": 2518687757,
+          "inclusive": 6462723656
+        }
+      ]
+    },
+    "thin": {
+      "total": 127147493270,
+      "top_self": [
+        {
+          "function": "adamic_string_locate",
+          "instructions": 15298089177,
+          "percent": 12.031766245296108,
+          "self": 15298089177,
+          "inclusive": 17698497357
+        },
+        {
+          "function": "adamic_string_slice",
+          "instructions": 14641230198,
+          "percent": 11.515154425348427,
+          "self": 14641230198,
+          "inclusive": 45474406673
+        },
+        {
+          "function": "release_last.llvm.15951258955592325973",
+          "instructions": 12527968331,
+          "percent": 9.853098955239828,
+          "self": 12527968331,
+          "inclusive": 12968044711
+        },
+        {
+          "function": "decode.llvm.8654227267594475386",
+          "instructions": 10988165004,
+          "percent": 8.642061845974764,
+          "self": 10988165004,
+          "inclusive": 10988165976
+        },
+        {
+          "function": "adamic_string_split",
+          "instructions": 8431617294,
+          "percent": 6.631367301984718,
+          "self": 8431617294,
+          "inclusive": 13916220982
+        },
+        {
+          "function": "adamic_string_append",
+          "instructions": 7026259858,
+          "percent": 5.52607029623432,
+          "self": 7026259858,
+          "inclusive": 9113657153
+        },
+        {
+          "function": "adamic_function_11_Parser_peek",
+          "instructions": 6937701984,
+          "percent": 5.4564205754868205,
+          "self": 6937701984,
+          "inclusive": 51479283495
+        },
+        {
+          "function": "adamic_string_share",
+          "instructions": 6154313896,
+          "percent": 4.840295107455405,
+          "self": 6154313896,
+          "inclusive": 13177879983
+        },
+        {
+          "function": "adamic_allocate",
+          "instructions": 5733340031,
+          "percent": 4.509204140442745,
+          "self": 5733340031,
+          "inclusive": 5747933241
+        },
+        {
+          "function": "adamic_function_13_Parser_string",
+          "instructions": 5214202913,
+          "percent": 4.100908935677989,
+          "self": 5214202913,
+          "inclusive": 50020475818
+        },
+        {
+          "function": "adamic_function_19_serveBatch",
+          "instructions": 4390405337,
+          "percent": 3.4530018831569844,
+          "self": 4390405337,
+          "inclusive": 104695486862
+        },
+        {
+          "function": "adamic_string_char_code",
+          "instructions": 3442808040,
+          "percent": 2.7077278139405667,
+          "self": 3442808040,
+          "inclusive": 6033488787
+        },
+        {
+          "function": "find.llvm.13904419526528384273",
+          "instructions": 3376039185,
+          "percent": 2.655214898992086,
+          "self": 3376039185,
+          "inclusive": 3857795409
+        },
+        {
+          "function": "usable.llvm.4863793214778352797",
+          "instructions": 3009479431,
+          "percent": 2.3669199868607054,
+          "self": 3009479431,
+          "inclusive": 3028957312
+        },
+        {
+          "function": "adamic_function_12_Parser_space",
+          "instructions": 1543197108,
+          "percent": 1.2137062778917656,
+          "self": 1543197108,
+          "inclusive": 22926771636
+        }
+      ]
+    }
+  }
+}

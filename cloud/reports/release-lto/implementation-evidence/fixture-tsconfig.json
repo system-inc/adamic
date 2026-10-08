@@ -1,0 +1,11 @@
+{
+  "extends": "/workspace/adamic/tsconfig.json",
+  "files": [
+    "/workspace/adamic/internal/load/prelude.d.ts",
+    "/workspace/adamic/internal/oracle/testdata/release_fma.a"
+  ],
+  "include": [],
+  "sourceExtensions": [
+    ".a"
+  ]
+}

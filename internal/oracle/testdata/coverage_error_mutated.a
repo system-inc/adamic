@@ -1,0 +1,5 @@
+const error = new Error('');
+error.name = 'Custom';
+error.message = 'changed';
+const copy = { ...error, message: 'replacement' };
+console.log(`${copy.name} ${copy.message}`);

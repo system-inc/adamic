@@ -1,0 +1,966 @@
+{
+  "head": "f40970920539189c9180e5b3e4561c831aa922d8",
+  "graph_flow_sha256": "34642d0d5ecdc2f1c43339b4867062c7388b40490c18f452df38e0d0056eda72",
+  "cpu_max": "400000 100000",
+  "nproc": "5",
+  "baseline": "skip allocation-site copy/IDs and ID selection only, using Go overlay",
+  "samples": [
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": false,
+      "round": 0,
+      "mode": "with",
+      "ns": 655223209,
+      "bytes": 5635965,
+      "allocations": 302183,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle0-0-with.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": false,
+      "round": 0,
+      "mode": "without",
+      "ns": 742641914,
+      "bytes": 5635816,
+      "allocations": 302181,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle0-0-without.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": false,
+      "round": 1,
+      "mode": "without",
+      "ns": 647616194,
+      "bytes": 5636138,
+      "allocations": 302183,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle0-1-without.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": false,
+      "round": 1,
+      "mode": "with",
+      "ns": 749840858,
+      "bytes": 5635928,
+      "allocations": 302182,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle0-1-with.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": false,
+      "round": 2,
+      "mode": "with",
+      "ns": 604126320,
+      "bytes": 5636586,
+      "allocations": 302186,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle0-2-with.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": false,
+      "round": 2,
+      "mode": "without",
+      "ns": 720983118,
+      "bytes": 5636093,
+      "allocations": 302184,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle0-2-without.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": true,
+      "round": 0,
+      "mode": "with",
+      "ns": 1165445232,
+      "bytes": 192778605,
+      "allocations": 2438870,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle1-0-with.log",
+      "graph_ids": 6
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": true,
+      "round": 0,
+      "mode": "without",
+      "ns": 1759319051,
+      "bytes": 190964160,
+      "allocations": 2374265,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle1-0-without.log",
+      "graph_ids": 5
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": true,
+      "round": 1,
+      "mode": "without",
+      "ns": 1121179090,
+      "bytes": 190964349,
+      "allocations": 2374271,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle1-1-without.log",
+      "graph_ids": 5
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": true,
+      "round": 1,
+      "mode": "with",
+      "ns": 948670141,
+      "bytes": 192778880,
+      "allocations": 2438877,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle1-1-with.log",
+      "graph_ids": 6
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": true,
+      "round": 2,
+      "mode": "with",
+      "ns": 865513901,
+      "bytes": 192781165,
+      "allocations": 2438875,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle1-2-with.log",
+      "graph_ids": 6
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": true,
+      "round": 2,
+      "mode": "without",
+      "ns": 810604342,
+      "bytes": 190965592,
+      "allocations": 2374274,
+      "log": "/tmp/graph-walk-final-bench/parser-cycle1-2-without.log",
+      "graph_ids": 5
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": false,
+      "round": 0,
+      "mode": "with",
+      "ns": 762646683,
+      "bytes": 11090749,
+      "allocations": 590644,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle0-0-with.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": false,
+      "round": 0,
+      "mode": "without",
+      "ns": 813868563,
+      "bytes": 11091184,
+      "allocations": 590646,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle0-0-without.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": false,
+      "round": 1,
+      "mode": "without",
+      "ns": 817277420,
+      "bytes": 11091146,
+      "allocations": 590646,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle0-1-without.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": false,
+      "round": 1,
+      "mode": "with",
+      "ns": 836039181,
+      "bytes": 11091146,
+      "allocations": 590646,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle0-1-with.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": false,
+      "round": 2,
+      "mode": "with",
+      "ns": 711150757,
+      "bytes": 11091237,
+      "allocations": 590647,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle0-2-with.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": false,
+      "round": 2,
+      "mode": "without",
+      "ns": 717599221,
+      "bytes": 11091440,
+      "allocations": 590649,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle0-2-without.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": true,
+      "round": 0,
+      "mode": "with",
+      "ns": 1370069975,
+      "bytes": 250732992,
+      "allocations": 3392758,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle1-0-with.log",
+      "graph_ids": 6
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": true,
+      "round": 0,
+      "mode": "without",
+      "ns": 1672304693,
+      "bytes": 247939394,
+      "allocations": 3295286,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle1-0-without.log",
+      "graph_ids": 5
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": true,
+      "round": 1,
+      "mode": "without",
+      "ns": 2010312668,
+      "bytes": 247997976,
+      "allocations": 3295267,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle1-1-without.log",
+      "graph_ids": 5
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": true,
+      "round": 1,
+      "mode": "with",
+      "ns": 1372612267,
+      "bytes": 250564728,
+      "allocations": 3392735,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle1-1-with.log",
+      "graph_ids": 6
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": true,
+      "round": 2,
+      "mode": "with",
+      "ns": 1510722159,
+      "bytes": 250581402,
+      "allocations": 3392748,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle1-2-with.log",
+      "graph_ids": 6
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": true,
+      "round": 2,
+      "mode": "without",
+      "ns": 1358067945,
+      "bytes": 247957741,
+      "allocations": 3295281,
+      "log": "/tmp/graph-walk-final-bench/lint-cycle1-2-without.log",
+      "graph_ids": 5
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": false,
+      "round": 0,
+      "mode": "with",
+      "ns": 1180202685,
+      "bytes": 33798546,
+      "allocations": 401238,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle0-0-with.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": false,
+      "round": 0,
+      "mode": "without",
+      "ns": 957384488,
+      "bytes": 33798504,
+      "allocations": 401238,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle0-0-without.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": false,
+      "round": 1,
+      "mode": "without",
+      "ns": 1137318013,
+      "bytes": 33823288,
+      "allocations": 401243,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle0-1-without.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": false,
+      "round": 1,
+      "mode": "with",
+      "ns": 1026906801,
+      "bytes": 33823458,
+      "allocations": 401244,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle0-1-with.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": false,
+      "round": 2,
+      "mode": "with",
+      "ns": 972501727,
+      "bytes": 33823112,
+      "allocations": 401240,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle0-2-with.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": false,
+      "round": 2,
+      "mode": "without",
+      "ns": 984504612,
+      "bytes": 33798685,
+      "allocations": 401240,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle0-2-without.log",
+      "graph_ids": 0
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": true,
+      "round": 0,
+      "mode": "with",
+      "ns": 2600160453,
+      "bytes": 431264616,
+      "allocations": 4394906,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle1-0-with.log",
+      "graph_ids": 6
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": true,
+      "round": 0,
+      "mode": "without",
+      "ns": 2901798182,
+      "bytes": 428056458,
+      "allocations": 4283253,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle1-0-without.log",
+      "graph_ids": 5
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": true,
+      "round": 1,
+      "mode": "without",
+      "ns": 2600668878,
+      "bytes": 428083237,
+      "allocations": 4283248,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle1-1-without.log",
+      "graph_ids": 5
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": true,
+      "round": 1,
+      "mode": "with",
+      "ns": 2734400391,
+      "bytes": 431300432,
+      "allocations": 4394900,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle1-1-with.log",
+      "graph_ids": 6
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": true,
+      "round": 2,
+      "mode": "with",
+      "ns": 2390361465,
+      "bytes": 431295677,
+      "allocations": 4394905,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle1-2-with.log",
+      "graph_ids": 6
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": true,
+      "round": 2,
+      "mode": "without",
+      "ns": 2599352787,
+      "bytes": 428078984,
+      "allocations": 4283270,
+      "log": "/tmp/graph-walk-final-bench/typeaware-cycle1-2-without.log",
+      "graph_ids": 5
+    }
+  ],
+  "inputs": {
+    "stage1/typescript/parser/main.ts": [
+      {
+        "path": "stage1/typescript/parser/grammar.ts",
+        "lines": 85,
+        "bytes": 2145,
+        "sha256": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a"
+      },
+      {
+        "path": "stage1/typescript/parser/lookahead.ts",
+        "lines": 282,
+        "bytes": 9235,
+        "sha256": "f5bb68f68eee08b706d50f7fd5aabeffa5942e36d42929f057f7a0ad1ac8f6ef"
+      },
+      {
+        "path": "stage1/typescript/parser/main.ts",
+        "lines": 66,
+        "bytes": 2307,
+        "sha256": "4783899a25d9b15d4ec454bfaf87fdafedb49b5f4372569c04701e69a9448535"
+      },
+      {
+        "path": "stage1/typescript/parser/nodes.ts",
+        "lines": 63,
+        "bytes": 2002,
+        "sha256": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6"
+      },
+      {
+        "path": "stage1/typescript/parser/parser.ts",
+        "lines": 1597,
+        "bytes": 62379,
+        "sha256": "fff4c44f5a1e00161b8ac9e7b302e5ec90c92a78e6ec72aa8303f64b4160cc80"
+      },
+      {
+        "path": "stage1/typescript/parser/statements.ts",
+        "lines": 980,
+        "bytes": 41794,
+        "sha256": "97ee7d84a0602c939ddeee613ec2286f6ef1fbf780efdb43e3b6972845b43f55"
+      },
+      {
+        "path": "stage1/typescript/scanner/characters.ts",
+        "lines": 298,
+        "bytes": 29452,
+        "sha256": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671"
+      },
+      {
+        "path": "stage1/typescript/scanner/scanner.ts",
+        "lines": 970,
+        "bytes": 33300,
+        "sha256": "69d8f0413f5f192a6fa9e573cfc907a23535b4c33f5b5e95745fb037166144db"
+      },
+      {
+        "path": "stage1/typescript/scanner/tokens.ts",
+        "lines": 151,
+        "bytes": 4952,
+        "sha256": "32f3e51645ebe265a1833bf19e1ddbf03e0e137b3c66cce61ea41ad48fba5ec9"
+      }
+    ],
+    "stage1/cohere/lint/main.ts": [
+      {
+        "path": "stage1/cohere/lint/comments.ts",
+        "lines": 205,
+        "bytes": 6729,
+        "sha256": "fc873c011937c2cdce30f6ea51045f7fe386199b654c99441675c0929a1336fd"
+      },
+      {
+        "path": "stage1/cohere/lint/finding.ts",
+        "lines": 33,
+        "bytes": 824,
+        "sha256": "64c78826aa253c6ebf0ae6c10ffa0cb273453ef21fd084cc4312480e75a26ad2"
+      },
+      {
+        "path": "stage1/cohere/lint/lint.ts",
+        "lines": 1386,
+        "bytes": 55158,
+        "sha256": "af26718ea3d0c7819bde5f72e8cccfca8d2a337270bcc472501240ca8e157c13"
+      },
+      {
+        "path": "stage1/cohere/lint/main.ts",
+        "lines": 108,
+        "bytes": 3555,
+        "sha256": "d29220ee81e715c7c4a28b12f68629f67432b76d83c221980811443c9fdaeb33"
+      },
+      {
+        "path": "stage1/cohere/lint/messages.ts",
+        "lines": 44,
+        "bytes": 7141,
+        "sha256": "5a59df587f966a96e80eb06d70ce5459898fb8f6dd6952f3e57d082a0110b5a4"
+      },
+      {
+        "path": "stage1/cohere/lint/settings.ts",
+        "lines": 48,
+        "bytes": 2139,
+        "sha256": "05ba63e77a404371a4b0cc4b9b5465e4e53f36298156ef515f1642356933e947"
+      },
+      {
+        "path": "stage1/cohere/lint/unicode.ts",
+        "lines": 1652,
+        "bytes": 39993,
+        "sha256": "cf6030169d753796d4840e60375cb16c6f4abb1b8399c1e3aa13c6319959cb6c"
+      },
+      {
+        "path": "stage1/cohere/lint/volume.ts",
+        "lines": 675,
+        "bytes": 27777,
+        "sha256": "42295bb5e9d701ff661b5e9e7924c2c81421c588f830d245b207e0af734969f9"
+      },
+      {
+        "path": "stage1/cohere/lint/volume_messages.ts",
+        "lines": 141,
+        "bytes": 14766,
+        "sha256": "f7d06710ae594b9e1578216c955e5cbd61f225fc6caa3871291711726af8a806"
+      },
+      {
+        "path": "stage1/typescript/parser/grammar.ts",
+        "lines": 85,
+        "bytes": 2145,
+        "sha256": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a"
+      },
+      {
+        "path": "stage1/typescript/parser/lookahead.ts",
+        "lines": 282,
+        "bytes": 9235,
+        "sha256": "f5bb68f68eee08b706d50f7fd5aabeffa5942e36d42929f057f7a0ad1ac8f6ef"
+      },
+      {
+        "path": "stage1/typescript/parser/nodes.ts",
+        "lines": 63,
+        "bytes": 2002,
+        "sha256": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6"
+      },
+      {
+        "path": "stage1/typescript/parser/parser.ts",
+        "lines": 1597,
+        "bytes": 62379,
+        "sha256": "fff4c44f5a1e00161b8ac9e7b302e5ec90c92a78e6ec72aa8303f64b4160cc80"
+      },
+      {
+        "path": "stage1/typescript/parser/statements.ts",
+        "lines": 980,
+        "bytes": 41794,
+        "sha256": "97ee7d84a0602c939ddeee613ec2286f6ef1fbf780efdb43e3b6972845b43f55"
+      },
+      {
+        "path": "stage1/typescript/scanner/characters.ts",
+        "lines": 298,
+        "bytes": 29452,
+        "sha256": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671"
+      },
+      {
+        "path": "stage1/typescript/scanner/scanner.ts",
+        "lines": 970,
+        "bytes": 33300,
+        "sha256": "69d8f0413f5f192a6fa9e573cfc907a23535b4c33f5b5e95745fb037166144db"
+      },
+      {
+        "path": "stage1/typescript/scanner/tokens.ts",
+        "lines": 151,
+        "bytes": 4952,
+        "sha256": "32f3e51645ebe265a1833bf19e1ddbf03e0e137b3c66cce61ea41ad48fba5ec9"
+      }
+    ],
+    "stage1/cohere/typeaware/volume_suite.ts": [
+      {
+        "path": "stage1/cohere/lint/finding.ts",
+        "lines": 33,
+        "bytes": 824,
+        "sha256": "64c78826aa253c6ebf0ae6c10ffa0cb273453ef21fd084cc4312480e75a26ad2"
+      },
+      {
+        "path": "stage1/cohere/typeaware/assignment.ts",
+        "lines": 267,
+        "bytes": 11228,
+        "sha256": "8f448fd87028d4638e7fe344493f169398f6d6ba6feb2b74e351685aeed29e1e"
+      },
+      {
+        "path": "stage1/cohere/typeaware/binding.ts",
+        "lines": 12,
+        "bytes": 399,
+        "sha256": "31b12e7b7121a9dd9ed89521554b231d3426b9ffabe8c95925c46d827661df33"
+      },
+      {
+        "path": "stage1/cohere/typeaware/bound.ts",
+        "lines": 150,
+        "bytes": 3352,
+        "sha256": "f988626d6dd0d54c2963301a4aed2919983c8fa991aa9d204c9be7110cefa90a"
+      },
+      {
+        "path": "stage1/cohere/typeaware/completion.ts",
+        "lines": 43,
+        "bytes": 1278,
+        "sha256": "66532c3d3791ed6308dc0fa486c31d02ff57f4b483fedb704b5131282783bda0"
+      },
+      {
+        "path": "stage1/cohere/typeaware/diagnostic.ts",
+        "lines": 36,
+        "bytes": 1485,
+        "sha256": "ba44d0c3f601add63281ac4b3ea602caa7342c412bcef8734c4da6e2f4b6c0d4"
+      },
+      {
+        "path": "stage1/cohere/typeaware/facts.ts",
+        "lines": 68,
+        "bytes": 2197,
+        "sha256": "b97e5be01a54270f53b66130b5d0a0833254a37f653390e72056f64c450b5c0b"
+      },
+      {
+        "path": "stage1/cohere/typeaware/flags.ts",
+        "lines": 8,
+        "bytes": 365,
+        "sha256": "7ea8236abde7f42b09d46b38c7647f2d817820651d12faf4b04944cc4717e478"
+      },
+      {
+        "path": "stage1/cohere/typeaware/frames.ts",
+        "lines": 81,
+        "bytes": 2455,
+        "sha256": "6489fd8bdd811f066a43f25132bac10c5730b21353940b1a35ff9352f584b30b"
+      },
+      {
+        "path": "stage1/cohere/typeaware/parameters.ts",
+        "lines": 36,
+        "bytes": 1178,
+        "sha256": "b00901d35f0c41debebf34be3040e06eb24230d18858f5c47b13d975ab6fc8de"
+      },
+      {
+        "path": "stage1/cohere/typeaware/repair.ts",
+        "lines": 10,
+        "bytes": 249,
+        "sha256": "17df5033248e6d94394a5ea253edb8a4d21f66df6aa44de03fa56a4edd2eb8b9"
+      },
+      {
+        "path": "stage1/cohere/typeaware/returns.ts",
+        "lines": 540,
+        "bytes": 22293,
+        "sha256": "78bfe3369b9fae5ef1b05a2a816086de538952a42b68e7c3a41a8c72a49c1752"
+      },
+      {
+        "path": "stage1/cohere/typeaware/rules.ts",
+        "lines": 637,
+        "bytes": 26991,
+        "sha256": "f296505dae8a0888ad44515a2c3bedc04515fa1926badbe342104b90cea0f605"
+      },
+      {
+        "path": "stage1/cohere/typeaware/scope.ts",
+        "lines": 9,
+        "bytes": 268,
+        "sha256": "445c24409b13ec15813b539a7ee9770d217bdf452d28ce552bdeda0ab8ff5f9f"
+      },
+      {
+        "path": "stage1/cohere/typeaware/shadow.ts",
+        "lines": 419,
+        "bytes": 18684,
+        "sha256": "f1e19942910678d8efd05d8de01264d33aa7d74997c06858bffb105f16de4e20"
+      },
+      {
+        "path": "stage1/cohere/typeaware/suggestion.ts",
+        "lines": 12,
+        "bytes": 369,
+        "sha256": "c6ebf51cd0f93f8de07d91dc42e8a3fcc5c1124ebd3daf31370f95abd755ee72"
+      },
+      {
+        "path": "stage1/cohere/typeaware/type_fact.ts",
+        "lines": 39,
+        "bytes": 1085,
+        "sha256": "9a6f79ad76a0575a8ebd0607f62e61ab85e611784f7eee097472ac2ca452c34d"
+      },
+      {
+        "path": "stage1/cohere/typeaware/types.ts",
+        "lines": 41,
+        "bytes": 1282,
+        "sha256": "f53f6fd8a755950515bee083b306e77b10caf495314052ed089095d2a49390ba"
+      },
+      {
+        "path": "stage1/cohere/typeaware/unary_minus.ts",
+        "lines": 110,
+        "bytes": 4383,
+        "sha256": "c493f28e51e6a48fc18e9456afbb9035bba423d589ab5ee3036ae925d0f5a82f"
+      },
+      {
+        "path": "stage1/cohere/typeaware/unbound.ts",
+        "lines": 358,
+        "bytes": 14047,
+        "sha256": "9bb552e01b46c802ffb7e1c20a7c64efd4369e0e0ee5fd963b0260e07854ffb7"
+      },
+      {
+        "path": "stage1/cohere/typeaware/void.ts",
+        "lines": 170,
+        "bytes": 8456,
+        "sha256": "593ce4d84c5d385775b7d69ae5a5031074a5158a7907464786aab5d2671a7896"
+      },
+      {
+        "path": "stage1/cohere/typeaware/volume.ts",
+        "lines": 695,
+        "bytes": 31470,
+        "sha256": "102648b2d59350b48ceafaec2f99f823c155ef556154f46e5aa4c676e6f65dca"
+      },
+      {
+        "path": "stage1/cohere/typeaware/volume_suite.ts",
+        "lines": 67,
+        "bytes": 2611,
+        "sha256": "a50c650ec8c4d9bd5c0ed8e92f1b1c816c3d5e758a250f744a2d77a89e7d683e"
+      },
+      {
+        "path": "stage1/typescript/parser/grammar.ts",
+        "lines": 85,
+        "bytes": 2145,
+        "sha256": "12e1a80281e1a0406d2cb890cc31bce44c013029a8bc5db74fc78f104f27292a"
+      },
+      {
+        "path": "stage1/typescript/parser/lookahead.ts",
+        "lines": 282,
+        "bytes": 9235,
+        "sha256": "f5bb68f68eee08b706d50f7fd5aabeffa5942e36d42929f057f7a0ad1ac8f6ef"
+      },
+      {
+        "path": "stage1/typescript/parser/nodes.ts",
+        "lines": 63,
+        "bytes": 2002,
+        "sha256": "f96c7514273ef211538681183b01c44e9f7b2dd9a047fcf89dcc669f84b8c7b6"
+      },
+      {
+        "path": "stage1/typescript/parser/parser.ts",
+        "lines": 1597,
+        "bytes": 62379,
+        "sha256": "fff4c44f5a1e00161b8ac9e7b302e5ec90c92a78e6ec72aa8303f64b4160cc80"
+      },
+      {
+        "path": "stage1/typescript/parser/statements.ts",
+        "lines": 980,
+        "bytes": 41794,
+        "sha256": "97ee7d84a0602c939ddeee613ec2286f6ef1fbf780efdb43e3b6972845b43f55"
+      },
+      {
+        "path": "stage1/typescript/scanner/characters.ts",
+        "lines": 298,
+        "bytes": 29452,
+        "sha256": "58a228be5e31048f68831542d9cb9ec77874a6cf4ffe150b9c829f403e1dd671"
+      },
+      {
+        "path": "stage1/typescript/scanner/scanner.ts",
+        "lines": 970,
+        "bytes": 33300,
+        "sha256": "69d8f0413f5f192a6fa9e573cfc907a23535b4c33f5b5e95745fb037166144db"
+      },
+      {
+        "path": "stage1/typescript/scanner/tokens.ts",
+        "lines": 151,
+        "bytes": 4952,
+        "sha256": "32f3e51645ebe265a1833bf19e1ddbf03e0e137b3c66cce61ea41ad48fba5ec9"
+      }
+    ]
+  },
+  "rounds": 3,
+  "iterations": 3,
+  "isolated": [
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "samples": [
+        {
+          "ns": 8486475,
+          "bytes": 1814891,
+          "allocations": 64678
+        },
+        {
+          "ns": 10260439,
+          "bytes": 1814893,
+          "allocations": 64678
+        },
+        {
+          "ns": 12762923,
+          "bytes": 1814888,
+          "allocations": 64678
+        },
+        {
+          "ns": 9288528,
+          "bytes": 1814889,
+          "allocations": 64678
+        },
+        {
+          "ns": 8608681,
+          "bytes": 1814890,
+          "allocations": 64678
+        }
+      ],
+      "log": "/tmp/graph-walk-final-bench/parser-isolated.log",
+      "median": {
+        "ns": 9288528,
+        "bytes": 1814890,
+        "allocations": 64678
+      }
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "samples": [
+        {
+          "ns": 15077587,
+          "bytes": 2750927,
+          "allocations": 97650
+        },
+        {
+          "ns": 13575217,
+          "bytes": 2750860,
+          "allocations": 97650
+        },
+        {
+          "ns": 17834056,
+          "bytes": 2750873,
+          "allocations": 97650
+        },
+        {
+          "ns": 13612555,
+          "bytes": 2750870,
+          "allocations": 97650
+        },
+        {
+          "ns": 16745717,
+          "bytes": 2750861,
+          "allocations": 97650
+        }
+      ],
+      "log": "/tmp/graph-walk-final-bench/lint-isolated.log",
+      "median": {
+        "ns": 15077587,
+        "bytes": 2750870,
+        "allocations": 97650
+      }
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "samples": [
+        {
+          "ns": 16542891,
+          "bytes": 3235939,
+          "allocations": 111916
+        },
+        {
+          "ns": 19538874,
+          "bytes": 3235877,
+          "allocations": 111916
+        },
+        {
+          "ns": 16071939,
+          "bytes": 3235883,
+          "allocations": 111916
+        },
+        {
+          "ns": 14462483,
+          "bytes": 3235882,
+          "allocations": 111916
+        },
+        {
+          "ns": 16987435,
+          "bytes": 3235881,
+          "allocations": 111916
+        }
+      ],
+      "log": "/tmp/graph-walk-final-bench/typeaware-isolated.log",
+      "median": {
+        "ns": 16542891,
+        "bytes": 3235882,
+        "allocations": 111916
+      }
+    }
+  ],
+  "summary": [
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": false,
+      "with": {
+        "ns": 655223209,
+        "bytes": 5635965,
+        "allocations": 302183
+      },
+      "without": {
+        "ns": 720983118,
+        "bytes": 5636093,
+        "allocations": 302183
+      },
+      "delta_ns": -65759909,
+      "delta_percent": -9.12086668303931
+    },
+    {
+      "entry": "stage1/typescript/parser/main.ts",
+      "cycle_overlay": true,
+      "with": {
+        "ns": 948670141,
+        "bytes": 192778880,
+        "allocations": 2438875
+      },
+      "without": {
+        "ns": 1121179090,
+        "bytes": 190964349,
+        "allocations": 2374271
+      },
+      "delta_ns": -172508949,
+      "delta_percent": -15.386386576296209
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": false,
+      "with": {
+        "ns": 762646683,
+        "bytes": 11091146,
+        "allocations": 590646
+      },
+      "without": {
+        "ns": 813868563,
+        "bytes": 11091184,
+        "allocations": 590646
+      },
+      "delta_ns": -51221880,
+      "delta_percent": -6.293630486376213
+    },
+    {
+      "entry": "stage1/cohere/lint/main.ts",
+      "cycle_overlay": true,
+      "with": {
+        "ns": 1372612267,
+        "bytes": 250581402,
+        "allocations": 3392748
+      },
+      "without": {
+        "ns": 1672304693,
+        "bytes": 247957741,
+        "allocations": 3295281
+      },
+      "delta_ns": -299692426,
+      "delta_percent": -17.920922380620265
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": false,
+      "with": {
+        "ns": 1026906801,
+        "bytes": 33823112,
+        "allocations": 401240
+      },
+      "without": {
+        "ns": 984504612,
+        "bytes": 33798685,
+        "allocations": 401240
+      },
+      "delta_ns": 42402189,
+      "delta_percent": 4.306956867765288
+    },
+    {
+      "entry": "stage1/cohere/typeaware/volume_suite.ts",
+      "cycle_overlay": true,
+      "with": {
+        "ns": 2600160453,
+        "bytes": 431295677,
+        "allocations": 4394905
+      },
+      "without": {
+        "ns": 2600668878,
+        "bytes": 428078984,
+        "allocations": 4283253
+      },
+      "delta_ns": -508425,
+      "delta_percent": -0.019549778301303607
+    }
+  ],
+  "benchmark_sha256": "a24228986ac883f91010ecf69cc4d929fc027fc6452b2466e614504292a0645f"
+}

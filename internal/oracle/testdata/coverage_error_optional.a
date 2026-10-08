@@ -1,0 +1,6 @@
+function copy(error: Error | undefined): void {
+ const result = { ...error };
+ console.log(result.name ?? 'absent');
+}
+copy(undefined);
+copy(new Error('bad'));

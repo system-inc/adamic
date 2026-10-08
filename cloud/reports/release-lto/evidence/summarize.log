@@ -1,0 +1,5 @@
+parse baseline self reconciliation PASS 6503615880
+parse thin self reconciliation PASS 5908993714
+service baseline self reconciliation PASS 135285492290
+service thin self reconciliation PASS 127147493270
+accounting mutant caught: callgrind self costs do not sum to summary

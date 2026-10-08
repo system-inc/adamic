@@ -30,19 +30,33 @@ func TestNestedFunctionGapsAreLoud(t *testing.T) {
 	}
 }
 
-func TestNestedFunctionCycleIsRefused(t *testing.T) {
+func TestNestedFunctionCycleUsesRegions(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `function make(): () => number {
+	program, err := lowerSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  function read(): number { return saved === undefined ? 0 : saved(); }
  saved = read;
  return read;
 }
 console.log(String(make()()));`)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-		t.Fatalf("want cycle refusal, got %v", err)
+	if err != nil {
+		t.Fatal(err)
 	}
+	cells, closures := 0, 0
+	for _, local := range program.Locals {
+		if local.GraphCell {
+			cells++
+		}
+	}
+	for _, function := range program.Functions {
+		if function.GraphClosure {
+			closures++
+		}
+	}
+	if cells == 0 || closures == 0 {
+		t.Fatal("cyclic environment has no graph cells or closures")
+	}
+
 }
 
 func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
@@ -81,7 +95,7 @@ func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
 
 func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `function make(): () => number {
+	program, err := lowerSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  let count = 1;
  function read(): number { return count; }
@@ -90,10 +104,24 @@ func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
  console.log(observe());
  return read;
 } const held = make(); console.log(String(held()));`)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-		t.Fatalf("want complete environment cycle refusal, got %v", err)
+	if err != nil {
+		t.Fatal(err)
 	}
+	cells, closures := 0, 0
+	for _, local := range program.Locals {
+		if local.GraphCell {
+			cells++
+		}
+	}
+	for _, function := range program.Functions {
+		if function.GraphClosure {
+			closures++
+		}
+	}
+	if cells == 0 || closures == 0 {
+		t.Fatal("cyclic environment has no graph cells or closures")
+	}
+
 }
 
 func TestNestedCapturedParametersAreOwned(t *testing.T) {
@@ -176,17 +204,26 @@ func TestNestedRebindingNotYet(t *testing.T) {
 	}
 }
 
-func TestNestedCallbackCycleIsRefused(t *testing.T) {
-	_, err := lowerSource(t, `function make(): () => number {
+// A callback environment cycle the finder can't prove acyclic lives in a graph region (ruled
+// October 6, docs/memory.md), freed when its last outside reference goes: it lowers, never refused.
+// internal/oracle/testdata/nested_callback_cycle_region.a holds it to Node with every allocation freed.
+func TestNestedCallbackCycleJoinsGraphRegion(t *testing.T) {
+	program, err := lowerSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  function read(): number { return saved === undefined ? 1 : saved(); }
  function factory(): () => number { return () => read(); }
  saved = factory();
  return saved;
 } console.log(String(make()()));`)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-		t.Fatalf("want callback environment cycle refusal, got %v", err)
+	if err != nil {
+		t.Fatalf("callback environment cycle: want a graph region, got %v", err)
+	}
+	graph := false
+	for _, local := range program.Locals {
+		graph = graph || local.GraphCell
+	}
+	if !graph {
+		t.Fatal("callback environment cycle lowered without a graph cell")
 	}
 }
 
