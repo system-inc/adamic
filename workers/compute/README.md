@@ -101,7 +101,8 @@ Not covered: workerd, the phase-two handler, decodeJson descriptor loading again
 `decodeJson` for the three POST schemas, applies endpoint constraints after decoding,
 and uses `encodeJson` with declared response field order. Stats retains the literal
 arithmetic order above; array reads use a checked helper because non-null assertions
-are refused. The sieve uses a number array supported by Stage 0. ASCII token scanning
+are refused. The sieve uses a zero-filled Uint8Array, matching the TypeScript twin.
+ASCII token scanning
 implements the twin's maximal letter/digit runs without changing Unicode boundaries.
 
 Build from the repository root with the configured toolchain:

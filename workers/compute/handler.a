@@ -58,8 +58,7 @@ function skuValid(sku: string): boolean {
 	return true;
 }
 function primes(limit: number): PrimesBody {
-	const composite: number[] = [];
-	for (let index = 0; index <= limit; index += 1) composite.push(0);
+	const composite = new Uint8Array(limit + 1);
 	for (let prime = 2; prime * prime <= limit; prime += 1) {
 		if (composite[prime] === 0) {
 			for (let multiple = prime * prime; multiple <= limit; multiple += prime) composite[multiple] = 1;
