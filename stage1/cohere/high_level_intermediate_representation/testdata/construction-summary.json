@@ -1,9 +1,9 @@
 {
   "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
   "constructionCorpusFunctions": 1465,
-  "constructionCorpusFunctionsMatched": 380,
-  "pathProbes": 50,
-  "pathProbesMatched": 50,
+  "constructionCorpusFunctionsMatched": 748,
+  "pathProbes": 56,
+  "pathProbesMatched": 56,
   "upstreamFixtures": 395,
   "flowExcludedFixtures": [
     "error.bug-context-variable-catch-in-lambda.js",
@@ -105,6 +105,15 @@
       ]
     },
     {
+      "key": "01a2bb62caf7f3588eeb0f7d54565d0c8bfc0f0aae3f1efdadefc8332c9cf34f",
+      "start": 30,
+      "end": 137,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
       "key": "0243ffd256eee57f5e80af6f56e2f962cf11264887a9fa34d125f1f4f982a729",
       "start": 0,
       "end": 75,
@@ -120,6 +129,15 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-valid-functiondecl-hoisting.tsx"
+      ]
+    },
+    {
+      "key": "03cfe22eace6a4510179bb0a16f003caa031b8f543d2954567940c2a3a6f3b01",
+      "start": 43,
+      "end": 57,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29/nested"
       ]
     },
     {
@@ -141,6 +159,15 @@
       ]
     },
     {
+      "key": "04f428b08573d55db727245786508f0a1dac1a91e0ec24e7121e45bb8b0d0b3a",
+      "start": 61,
+      "end": 116,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
       "key": "052156bdbb7fbe05cc5300270b0e9457e5da3be54de6478ab6a1fe159ac78ace",
       "start": 0,
       "end": 61,
@@ -150,12 +177,112 @@
       ]
     },
     {
+      "key": "0579ec296adefff2e743f4e225ed21a84804f2581fe755bc74b88c4b8f851df1",
+      "start": 193,
+      "end": 219,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "057ba7ccc727b73485b492b6009580bb29c513952cbd2b5e3c207acbfafa065c",
+      "start": 244,
+      "end": 319,
+      "checker": true,
+      "calls": [
+        "inline_iife_test.go:43/nested"
+      ]
+    },
+    {
+      "key": "061ddb0c5169f5b1af343cae436f4beb1286ee3550a98832368a894e0e19b1d7",
+      "start": 178,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "067f3740c201d14e3b99339802c78cd2a9b8809c7a3a1b22baac38c995687d61",
+      "start": 324,
+      "end": 333,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.todo-useCallback-captures-invalidating-value.ts/nested"
+      ]
+    },
+    {
+      "key": "070042096cd2c9f1f84a6c9d4f3b32efb96b8cbde2f13e7ffa241dcbaadd4161",
+      "start": 189,
+      "end": 224,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/useCallback-infer-read-dep.ts/nested"
+      ]
+    },
+    {
+      "key": "07233563f483e9f69aa183d6206ccb0335656220eefd2e423fffaa1b3cb0ad63",
+      "start": 32,
+      "end": 131,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29"
+      ]
+    },
+    {
+      "key": "072eec1e2d3b049c7740e0cb647acd065b358301210da8b06303043b7fd821e1",
+      "start": 67,
+      "end": 321,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
       "key": "07e0d3caed783bf7418f0115e45da8a73678c4fdb2d534166a1030844fee2f45",
       "start": 62,
       "end": 83,
       "checker": true,
       "calls": [
         "upstream:error.mutate-function-property.js/nested"
+      ]
+    },
+    {
+      "key": "081ef199fb9a61487559c6d0ed4ab4fc4cb3a0fbd5817434e17c025f29feac7a",
+      "start": 81,
+      "end": 351,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useMemo-infer-more-specific.ts"
+      ]
+    },
+    {
+      "key": "0919faec8ee2f7c664262f7374fb73bea027288c5b00eabe227080f469349eb4",
+      "start": 93,
+      "end": 160,
+      "checker": true,
+      "calls": [
+        "upstream:error.context-variable-only-chained-assign.js/nested"
+      ]
+    },
+    {
+      "key": "092692fabaf4f7665e4bc43b68c541c0798a27197f45e5e54dda436575675ebc",
+      "start": 38,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
       ]
     },
     {
@@ -177,6 +304,33 @@
       ]
     },
     {
+      "key": "0acee54976515db0e9ffde9078df947db7f1fae91b9ac8ea8bf5eb025374d28a",
+      "start": 162,
+      "end": 188,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "0b09d4ffc97758cc8e4bcc87268269a9dacef85357878c52c90983dfacf1f83e",
+      "start": 0,
+      "end": 280,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "0b0dd2c0d6efa62c422b6b67d1ef2cef9b460def696efade35bd84f9ed4cd884",
+      "start": 32,
+      "end": 315,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-props-in-effect-fixpoint.js"
+      ]
+    },
+    {
       "key": "0b7d57224daa4cc051c97d07bc2184fc44d2a8e60dd02dbae1d5528528298618",
       "start": 20,
       "end": 79,
@@ -186,12 +340,30 @@
       ]
     },
     {
+      "key": "0c36630af82f31ee907a3e83346792910578f03f196d05d03b636ed897164612",
+      "start": 96,
+      "end": 468,
+      "checker": true,
+      "calls": [
+        "upstream:error.useCallback-set-ref-nested-property-dont-preserve-memoization.js"
+      ]
+    },
+    {
       "key": "0c9a7a38603f926ed047ee27fb5e277aeec307047565b26cc1e79034ee36b6fe",
       "start": 215,
       "end": 224,
       "checker": true,
       "calls": [
         "upstream:error.todo-kitchensink.js/nested"
+      ]
+    },
+    {
+      "key": "0d05d736312fa40b5690e18983197c523e89cc865a1a048c4b17436728ecd120",
+      "start": 151,
+      "end": 162,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
       ]
     },
     {
@@ -222,6 +394,15 @@
       ]
     },
     {
+      "key": "0ea67c96c11aae264f91c3b2295678e589862506cdb602064f3b5929209f8f4a",
+      "start": 144,
+      "end": 155,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "0f21fe3bede429c5aff77ee649f2a246353d33bdaa7e90a96d0051e0563f2596",
       "start": 180,
       "end": 189,
@@ -233,6 +414,26 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:ref-like-name-in-useCallback-2.js/nested"
+      ]
+    },
+    {
+      "key": "0f836a08c215baf42cfb24f57d5a301cfa5681b6b1745a321df921268a6785ce",
+      "start": 32,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "0f93e5d3a1bf9b7657d5bbf0f47692ada71ff3f15e3ff7b8c8b4626416d5236f",
+      "start": 409,
+      "end": 418,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.false-positive-useMemo-dropped-infer-always-invalidating.ts/nested"
       ]
     },
     {
@@ -275,12 +476,81 @@
       ]
     },
     {
+      "key": "127b36f6df6ad15575f8fb9bd96e446ad60d071f619e471489ba697ea8fab3b3",
+      "start": 141,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "128b905969008a5af69498eb93c0f6ecaa99c93f9b190586af1012e0ead7e9c1",
       "start": 395,
       "end": 511,
       "checker": false,
       "calls": [
         "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
+      "key": "12a7186f592006b18f0519e6f2cf8b4248e0718a0de71b0ffb833679f3026b69",
+      "start": 170,
+      "end": 491,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useCallback-dep-scope-pruned.ts"
+      ]
+    },
+    {
+      "key": "1328b5e32bf6c4703891248b849000817fe25af3ea1827263b2925713cf5a7e2",
+      "start": 429,
+      "end": 501,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:memoize-primitive-function-calls.js"
+      ]
+    },
+    {
+      "key": "1379d34fe91bfb526cc10390cbf263d72d4a5daff1c22295274b94716c320b2b",
+      "start": 30,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29"
+      ]
+    },
+    {
+      "key": "14032e4538ecb63b5a415d7fe365cd3970b19a6a3e428844eb2dce6aabd8077d",
+      "start": 225,
+      "end": 429,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:memoize-primitive-function-calls.js"
+      ]
+    },
+    {
+      "key": "146d0ecbbe26264cb608b7daac6d13d10b0fc10b955aaf166349fe3c82fdfe58",
+      "start": 26,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
       ]
     },
     {
@@ -320,12 +590,42 @@
       ]
     },
     {
+      "key": "156a8c06e26fddb2731624a7bc12b242a6b7c9566d347d2591b0d4eebac55fb3",
+      "start": 178,
+      "end": 208,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "15e70e1a8d70a5f3efe219f139d44c2c8dafda76cce4af254f90b08b3a588c4a",
+      "start": 158,
+      "end": 246,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/prune-nonescaping-useMemo-mult-returns-primitive.ts/nested"
+      ]
+    },
+    {
       "key": "15ee633eb245b651d90e6cb1e294d5b110679ea579e4cdb21c0fca3663c94195",
       "start": 0,
       "end": 635,
       "checker": true,
       "calls": [
         "upstream:error.invalid-mutate-global-in-render-helper-phi-return-prop.js"
+      ]
+    },
+    {
+      "key": "16e494ec2848f23875db9e08c5e4f803a5311414e544f039a97eaf7d165f2a6a",
+      "start": 0,
+      "end": 545,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-transitive-freeze-nested-function-captures.js"
       ]
     },
     {
@@ -338,12 +638,85 @@
       ]
     },
     {
+      "key": "17ab8f1187b38c2bac48707297b3af61bc79438aa5366e0b0dfe1efa343b9b32",
+      "start": 117,
+      "end": 135,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-access-ref-in-render-mutate-object-with-ref-function.js/nested"
+      ]
+    },
+    {
+      "key": "17ccf0a684d05e0ccb6238a4abac9e281920710f4aa0df7c75e28a237fd1f7d9",
+      "start": 297,
+      "end": 356,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested/nested",
+        "memo_block_scope_oracle_test.go:272/nested/nested",
+        "preserve_manual_memoization_score_test.go:552/nested/nested",
+        "prune_non_escaping_scopes_test.go:445/nested/nested",
+        "scope_oracle_test.go:200/nested/nested",
+        "upstream:object-keys.js/nested/nested"
+      ]
+    },
+    {
+      "key": "185f0818308c4987b011dcee2f68d93e568626b6002bfb6d6a5bf712261e9389",
+      "start": 141,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "1865a699b2d6c67780354a0d22dcdafbb09ef0ddfc797eed863ebd0e68cee994",
+      "start": 0,
+      "end": 541,
+      "checker": true,
+      "calls": [
+        "upstream:fault-tolerance/error.var-declaration-and-ref-access.js"
+      ]
+    },
+    {
+      "key": "18a7d50dc0db7a29345d6f3c6c65de368aac0cf9541803376f883584ecca2961",
+      "start": 407,
+      "end": 427,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-for-of-loop-with-context-variable-iterator.js/nested"
+      ]
+    },
+    {
       "key": "18cda18affeb87c6351061ed7d55a02df2e591d24f8fb6c0f0b0f5069f174f7c",
       "start": 82,
       "end": 90,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "19422680cc32f88d705797cb997bf93a37efb7fc9513ecffebb39f68d587cdb5",
+      "start": 77,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "flatten_scopes_with_hooks_test.go:30/nested"
+      ]
+    },
+    {
+      "key": "19ae97d1ce34466d075c8eb75815b48cb7e59f34046f082eb3848d60fd2a1256",
+      "start": 549,
+      "end": 561,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useMemo-dep-array-literal-access.ts/nested"
       ]
     },
     {
@@ -358,6 +731,33 @@
         "cache_test.go:221/nested/nested",
         "cache_test.go:79/nested/nested",
         "cache_test.go:83/nested/nested"
+      ]
+    },
+    {
+      "key": "1a4cf25fec83cf0f93c567a045e455b65d5fea5d1c63e182e7ed03285b8b49d2",
+      "start": 0,
+      "end": 45,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29"
+      ]
+    },
+    {
+      "key": "1a815a86e26fa127b46e8d3efc9e2d7979f27daf12642380e472fd7045eee3ce",
+      "start": 77,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "drop_manual_memoization_deps_test.go:202/nested"
+      ]
+    },
+    {
+      "key": "1ae1bc815705fb17c1bf7bbfd35df7262952a6c9d868869c83445bdb3217fd64",
+      "start": 34,
+      "end": 248,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
       ]
     },
     {
@@ -376,6 +776,24 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-allow-assigning-to-inferred-ref-prop-in-callback.js"
+      ]
+    },
+    {
+      "key": "1c45fb0506c22b7f5e061dd08fff1673e141cbe571aae990c96388d15f910eb3",
+      "start": 178,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "1cb9bc1324bb4cd62ccee1ec3a12f0743133757dc77ea89ccd5221a243d8e948",
+      "start": 0,
+      "end": 107,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -415,6 +833,18 @@
       ]
     },
     {
+      "key": "1ddf8f41ff5b7a0e9da7839f8e3f92c89a6be098ea4fbf9a580e96079e0bcb5e",
+      "start": 81,
+      "end": 277,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/useMemo-infer-nonallocating.ts"
+      ]
+    },
+    {
       "key": "1fed3bbb46405f7ff4e736ce2900f1fad4e006e9a02fbcf18c410a8a22739ef9",
       "start": 0,
       "end": 51,
@@ -439,6 +869,39 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "20c459494fbb508a9c3fa16aa6f507f57858fff86cf437e3eabd380498639078",
+      "start": 113,
+      "end": 145,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-transitive-freeze-nested-function-captures.js/nested"
+      ]
+    },
+    {
+      "key": "20f274beb78090f66668fc0222f195c91aabdec8c20d9cedef6fa1227ada9236",
+      "start": 141,
+      "end": 206,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:error.ref-like-name-not-Ref.js"
+      ]
+    },
+    {
+      "key": "225628ada99584c233d75ac77459935ecb68f8f30aa0d8fc9c9ecd7f503609fe",
+      "start": 225,
+      "end": 388,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:dont-memoize-primitive-function-call-non-escaping-useMemo.js"
       ]
     },
     {
@@ -469,12 +932,66 @@
       ]
     },
     {
+      "key": "22d98457de7016240245429d6cd242536bffe88df76977e8de8377eaffe35e26",
+      "start": 26,
+      "end": 86,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "233f2f6546c5fa67fd419e06c2a9d1807da664c486c7f663aeb0fb446a5b9eae",
+      "start": 0,
+      "end": 79,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29"
+      ]
+    },
+    {
       "key": "236cda9f45c98a34a5bf544b17782221fa0a5eb21b033474a204717fcd5db227",
       "start": 93,
       "end": 101,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "23b8c79efc54cb6e97c01b95d7e5b429862ecbaebed74a0c62aa38c33c77f0ad",
+      "start": 67,
+      "end": 237,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "2432f5062d536b970712469230708348d5f1815d9bcec863893b704d08444b63",
+      "start": 31,
+      "end": 85,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "24492a61c33c1d472eecb6b25851fa083bdb844cc7de2fab2072d6f678fd281c",
+      "start": 347,
+      "end": 1244,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-nested-function-reassign-local-variable-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "246cc99bb19dbb92b22ac7ed67d54f70472b94ccfd1cad6dbb1469704dec6896",
+      "start": 26,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
       ]
     },
     {
@@ -496,12 +1013,56 @@
       ]
     },
     {
+      "key": "2528686c1cd9a0be5ed53117a2b9cc8f3b4a5c83eae2527465a4d14acd229343",
+      "start": 0,
+      "end": 89,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "255e5a4bbee4ff80c57b36b7c8a41791e5121d9e73383a3d94fb1bca4eb41e86",
+      "start": 130,
+      "end": 490,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/todo-ensure-constant-prop-decls-get-removed.ts"
+      ]
+    },
+    {
       "key": "25936d83c9d84508972ba916dd193c07e5d107604458cff83f5fdf6d8193582e",
       "start": 83,
       "end": 91,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "260fbb9ebf5208305353061f7fda2f209f2ffdbb2f1d557842dc7c768e441d33",
+      "start": 129,
+      "end": 194,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:ref-like-name-in-useCallback-2.js"
+      ]
+    },
+    {
+      "key": "269e6dad14a3e1264fb4acf8e3fabcc7c56d3bb981aacb063ff24fac85ba1b2f",
+      "start": 48,
+      "end": 102,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -520,6 +1081,24 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "271fd3e3f171d60989f933bac9b5a0cbc60704a716e245b611d23475c27cb7d5",
+      "start": 34,
+      "end": 267,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "2808358e8532b7f955df3c7d329794a88cd65a170609ed4bc3763888552df185",
+      "start": 163,
+      "end": 208,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutation-of-possible-props-phi-indirect.js/nested"
       ]
     },
     {
@@ -550,6 +1129,27 @@
       ]
     },
     {
+      "key": "2a9991519bfed1429502920f570b1322b1334802921f37a8ba44e4b2e3a13b1e",
+      "start": 34,
+      "end": 257,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "2b54e3d1c11fd2fb733ee0ac711542bf90b30c9d75f53f7c88ea3076ef6c91ec",
+      "start": 0,
+      "end": 372,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.useMemo-aliased-var.ts"
+      ]
+    },
+    {
       "key": "2b6044fce6a2c99d94b491844d7a40bc94a42712ea8ed3e1236ea3d0fcbf585d",
       "start": 39,
       "end": 77,
@@ -577,6 +1177,73 @@
       ]
     },
     {
+      "key": "2ca16561dd29aa63c7117e9eca7c68297b787733a412185d3881f9bd35eee5ef",
+      "start": 344,
+      "end": 387,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useMemo-constant-prop.ts/nested"
+      ]
+    },
+    {
+      "key": "2cd07db288368f9cb128e050e688f95391b2620f47dbe3f38bc6e117442f1908",
+      "start": 329,
+      "end": 342,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useMemo-infer-more-specific.ts/nested"
+      ]
+    },
+    {
+      "key": "2cdb491f68cbe67f5a8a0f10a77e9992777246fcf0df5fbdccc4480659787873",
+      "start": 92,
+      "end": 145,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested"
+      ]
+    },
+    {
+      "key": "2cff3279182dec2be31107f6bfebcbf4d5bcd0c83664c57b1760d26a027e78fc",
+      "start": 178,
+      "end": 439,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.invalid-useCallback-captures-reassigned-context.ts"
+      ]
+    },
+    {
+      "key": "2d2784938cce21b43a401676bef92644e8b0b47feaba95794dced11b01bf4bff",
+      "start": 29,
+      "end": 203,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-access-ref-in-render-mutate-object-with-ref-function.js"
+      ]
+    },
+    {
+      "key": "2d877c04e2cae5e690f2c3ef6a2129cba9a2ff182e72efe4826c0156cb530635",
+      "start": 178,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "2dade829c4d6f8a39166297fa52b3267a92b5ff927ba35dccc8eab64d1139d73",
       "start": 162,
       "end": 197,
@@ -589,6 +1256,15 @@
       "key": "2dae3beeb7bd0a54a2366fc176fabcffdedffa32c926c341f1f590c227503d61",
       "start": 0,
       "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "2df4cb40f70f35ed03b1a27d55dce647de73a1abc477454485271e12c9c5562c",
+      "start": 0,
+      "end": 69,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
@@ -622,6 +1298,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:174/nested"
+      ]
+    },
+    {
+      "key": "2ed15e792caeefc9fbd8226d4e4002ece49fb93fa98b3b3a54b4dadea154ea9d",
+      "start": 61,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
       ]
     },
     {
@@ -672,6 +1357,15 @@
       ]
     },
     {
+      "key": "30caa84a0117ba4de01dcc9f66081b6f91ee3c7e03dcf03285755b829b4cb3eb",
+      "start": 0,
+      "end": 96,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
       "key": "30e0612baed599d061f6874c4f6fa7bb010637bc1a34a06b6c4977f95c639f6f",
       "start": 0,
       "end": 96,
@@ -690,6 +1384,15 @@
       ]
     },
     {
+      "key": "3148aaa782ff85e309c9c042987554ea977ee6a9f9d26cd96b7f90dcb9ef1fbd",
+      "start": 170,
+      "end": 190,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "3155fdd166dd21020cc9b839cb51bd10dc4b2bd1b9bb140ed96798c931f979a7",
       "start": 812,
       "end": 850,
@@ -699,12 +1402,98 @@
       ]
     },
     {
+      "key": "3171786b2233f30eb6c682cbcb5860fff500c1947929e0f718f41099d9648587",
+      "start": 248,
+      "end": 257,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useCallback-infer-fewer-deps.ts/nested"
+      ]
+    },
+    {
+      "key": "3199a4726eddb98316452c5cc14219472ff22d07577a7b9b4828b368f78da32e",
+      "start": 104,
+      "end": 132,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutation-of-possible-props-phi-indirect.js/nested"
+      ]
+    },
+    {
+      "key": "31d38fdf97d4fa47fb5d1910a318cf0a6d0aaae16c2d4822178d89b3f5cf2877",
+      "start": 178,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "31e857fc2e08f6a0a0aac55273403e81b62dbe0d6aa06c049b2c739487db8695",
+      "start": 39,
+      "end": 191,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-phi-which-could-be-frozen.js"
+      ]
+    },
+    {
+      "key": "3202235212325323b7b87f3b1a83b8a97fce9a9f6ee5dd42c7cc03dcf9dbdd33",
+      "start": 178,
+      "end": 206,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "34522bbf578cf8735bc42f45564097de80aa3905e6480cd59773ce79f7c849ad",
+      "start": 34,
+      "end": 213,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "34c958e81c25db6dabd97a5648f3117c27a07cbb5b81ed9162c0dcdeaea19675",
+      "start": 52,
+      "end": 112,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "3606f01154b6b8a5de54dd3cc8ad97fe3a13064809cb07e6f595ac3e02948f0d",
+      "start": 0,
+      "end": 98,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
       "key": "3631e40de6d2e606a26c3eb3e3abbbae6fcc31f0b5a691eae92382ce6d1cc8b5",
       "start": 0,
       "end": 67,
       "checker": true,
       "calls": [
         "capture_test.go:35"
+      ]
+    },
+    {
+      "key": "36851b315d0f5b19aa7f86565bed1a611b74d94b9281cceaf9234d3204130e15",
+      "start": 170,
+      "end": 190,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
       ]
     },
     {
@@ -762,12 +1551,30 @@
       ]
     },
     {
+      "key": "39760632534cac3d229135c67db71a0ab7de78934e572dc5894076470adab28f",
+      "start": 0,
+      "end": 119,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
       "key": "39a4a70522fb4be0a90c0e7fdac003fc6133469f721b6e2df7e09dea8a582036",
       "start": 35,
       "end": 72,
       "checker": true,
       "calls": [
         "lower_global_test.go:39"
+      ]
+    },
+    {
+      "key": "39ccfc58524ba52bc4e590500226eeb89dc2356621dbf4bd6e58365ea81759cf",
+      "start": 0,
+      "end": 163,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-set-and-read-ref-nested-property-during-render.js"
       ]
     },
     {
@@ -789,12 +1596,44 @@
       ]
     },
     {
+      "key": "3bca794cd30ae43acec0728ed9f2492d8b8be13e9d956fc8cf52e380bd963170",
+      "start": 176,
+      "end": 327,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/useMemo-infer-scope-global.ts"
+      ]
+    },
+    {
       "key": "3c61877c046c180a83823ce2699089a75aaa6d549b908d4d912e896551fc021c",
       "start": 98,
       "end": 116,
       "checker": true,
       "calls": [
         "prune_non_escaping_scopes_test.go:207/nested"
+      ]
+    },
+    {
+      "key": "3d3f6f73710031a5f67a74ab01284a61796ac22c795f85ed8196c7346e491418",
+      "start": 0,
+      "end": 53,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "3d8c9923c1ad5a189f1c4c9579cd5e0ac7dde2c90c5b3d13836c7e2b931e7d55",
+      "start": 85,
+      "end": 342,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.todo-useCallback-captures-invalidating-value.ts"
       ]
     },
     {
@@ -816,12 +1655,62 @@
       ]
     },
     {
+      "key": "3f7aa878594cb4c68941e8cac38457a71d4c487b80696549c12ea417d4be1373",
+      "start": 141,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "3f960a3534e48697685e785b953ace3600aa9c0f55ea6f1889cf825ce259fc80",
+      "start": 32,
+      "end": 1124,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-effect.js"
+      ]
+    },
+    {
       "key": "3fd5c5fee55fccdefc97d28525a9904442ed8681f153f45e3038468232617d1e",
       "start": 110,
       "end": 207,
       "checker": true,
       "calls": [
         "upstream:error.invalid-ref-in-callback-invoked-during-render.js/nested"
+      ]
+    },
+    {
+      "key": "3ff771a9ff94edb492924cfce791e5cc75dcdb847d95ae6c6363a3061ff71f69",
+      "start": 26,
+      "end": 89,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "408b26bc5631ed74fe1505c94405a89e056bdbc1d48fe42e1db1b025a4dfd691",
+      "start": 32,
+      "end": 86,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "40bc64d4508f47e9b90efd455b53cbc28b24b11e26ec3d06dfc2560d7cd6cc10",
+      "start": 337,
+      "end": 350,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useCallback-infer-more-specific.ts/nested"
       ]
     },
     {
@@ -863,6 +1752,27 @@
       ]
     },
     {
+      "key": "42f866cd444535a3f7ed496871d300cac8e5e58374957f2b82534e6218c96020",
+      "start": 141,
+      "end": 206,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:error.ref-like-name-not-a-ref.js"
+      ]
+    },
+    {
+      "key": "4332773d085abef1c988f183fa067c1a166e34739511997f620e8a5d3ae21203",
+      "start": 220,
+      "end": 419,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-useCallback-set-ref-nested-property-ref-modified-later-preserve-memoization.js/nested"
+      ]
+    },
+    {
       "key": "437009a3c204c1846ea29417934a8c115ccf51400d3bfc61a8902ad6ba9ad29b",
       "start": 180,
       "end": 189,
@@ -874,6 +1784,15 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:ref-like-name-in-useCallback.js/nested"
+      ]
+    },
+    {
+      "key": "43ed379ae92a78e1959f6594b6246c1391ad4d2cc7cfae6f7a62925108f881eb",
+      "start": 153,
+      "end": 345,
+      "checker": true,
+      "calls": [
+        "upstream:error.capture-ref-for-mutation.tsx/nested"
       ]
     },
     {
@@ -892,6 +1811,18 @@
       "checker": true,
       "calls": [
         "upstream:error.validate-blocklisted-imports.ts"
+      ]
+    },
+    {
+      "key": "468ee02bdfc0e8c985ad9444a087ae5ea920736182e6d99e6c8d27c79107d038",
+      "start": 120,
+      "end": 235,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/useCallback-infer-read-dep.ts"
       ]
     },
     {
@@ -940,12 +1871,48 @@
       ]
     },
     {
+      "key": "482713571bd269c7a8574bf98133f7cdbb0cc8283cade2bff430f82bc9b82a9a",
+      "start": 32,
+      "end": 107,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
+      "key": "48488aefcb4c7f012a819aeb297e19134b9e78ef3c839e5ff018948aaaa9c7e8",
+      "start": 95,
+      "end": 140,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "48ae92258345586995a2b101c4dcd358129db8fe035d593b8a275564f2e09aed",
+      "start": 0,
+      "end": 278,
+      "checker": true,
+      "calls": [
+        "upstream:error.bailout-on-suppression-of-custom-rule.js"
+      ]
+    },
+    {
       "key": "48e10ff447d83f42488d7d26d5097b3ec6fab5c61ec5c9376ff0488c62ab1b86",
       "start": 86,
       "end": 94,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "48fb82a1ace59cacb0ddb7a40a83bd86df5c5587804e36d1445a73ff55c4b438",
+      "start": 0,
+      "end": 528,
+      "checker": true,
+      "calls": [
+        "upstream:error.fault-tolerance-reports-multiple-errors.js"
       ]
     },
     {
@@ -967,12 +1934,37 @@
       ]
     },
     {
+      "key": "4943321110d181c8761435700cdebdb1e602df69b67d41123afce3c6479c0177",
+      "start": 81,
+      "end": 709,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.useMemo-unrelated-mutation-in-depslist.ts"
+      ]
+    },
+    {
       "key": "498ecff4932ad38e5d756d3309ff28305ef016f408bd0789fffe8945e77a5ed8",
       "start": 0,
       "end": 70,
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "4a0a027a697fb73d7237b009ea36d5b6a20a458ed2a699ff27e5f24b7f7336b8",
+      "start": 197,
+      "end": 240,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useMemo-constant-prop.ts/nested"
       ]
     },
     {
@@ -994,6 +1986,106 @@
       ]
     },
     {
+      "key": "4b0f5226b3b82de1faaf64348744c6c6ee99200881a9a492173d81b65a4cdc62",
+      "start": 0,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "4b20dc4bf4589910bed0eddc922e8545bade6688ff0017fb16b13fa1b94ece1f",
+      "start": 95,
+      "end": 284,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-nested-function-reassign-local-variable-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "4bf57c08bb0fa9dabe9023958b22918566d497f0ba7b8df8fcdc9008ba57ed16",
+      "start": 172,
+      "end": 573,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useMemo-dep-array-literal-access.ts"
+      ]
+    },
+    {
+      "key": "4c0d5e18196a47ecc89d27081ee6f90d82768535a8a1ba87359af5236c0e45e8",
+      "start": 34,
+      "end": 208,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "4c361ffefa9733f1cdd4346911a5a7e271083d9713798c225355a42b77da2317",
+      "start": 34,
+      "end": 278,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "4c412e193b91909faebe8aa8e8df7feeacf2167ae6b5c165f4450062dfc00985",
+      "start": 97,
+      "end": 151,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "4c611b65096576ac05254800b206e20ac2a24a26cd6ff6834122443469456eb1",
+      "start": 39,
+      "end": 498,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-for-in-loop-with-context-variable-iterator.js"
+      ]
+    },
+    {
+      "key": "4c645ffdd1adc76b5f3c552866828759fe6fbb9fbafafe49b233d1a180f8fda3",
+      "start": 61,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
+      "key": "4d364630ccd7cec92fe0d8b4dd42f018e774fc321ab9730e17b421a500c43a97",
+      "start": 41,
+      "end": 304,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.sketchy-code-exhaustive-deps.js"
+      ]
+    },
+    {
+      "key": "4d98d04600fde3ab2fed66649a122ed037e101db07ff06339422e9e4cc9eab09",
+      "start": 240,
+      "end": 249,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useMemo-infer-fewer-deps.ts/nested"
+      ]
+    },
+    {
       "key": "4db21ed17f6e7528e553f9caa4f9b4f8cc81dc6669cff30c7b0ca442d4b06d3e",
       "start": 0,
       "end": 112,
@@ -1003,12 +2095,50 @@
       ]
     },
     {
+      "key": "4dcf70ba799fbc24de080135656b9d5492a61e8e3073b1de0a081e41d4020027",
+      "start": 33,
+      "end": 90,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
+      "key": "4e139ca1493096db1810f4f6fac8cf710070ab57264d8ee72c2564a3f7596c92",
+      "start": 242,
+      "end": 279,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-missing-nonreactive-dep-inner-function.js/nested/nested"
+      ]
+    },
+    {
+      "key": "4ee5100e7f20e1bf92d367294d933fda4a5094138f253a7d98c7875f3ce0d9fb",
+      "start": 580,
+      "end": 590,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:error.todo-repro-unmemoized-callback-captured-in-context-variable.tsx/nested"
+      ]
+    },
+    {
       "key": "4f2953acc8e61d3d2f43aa9657097b102fdb29f5afc9da92e116f597308866ab",
       "start": 560,
       "end": 587,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:174/nested"
+      ]
+    },
+    {
+      "key": "51155fd7d0903121109135252bba4b4f62cbc155c06a3821649c0e353b1729a7",
+      "start": 0,
+      "end": 153,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-after-freeze.js"
       ]
     },
     {
@@ -1030,6 +2160,51 @@
       ]
     },
     {
+      "key": "5243d81ad25b17391e4b583971612b8228073cefea8b75988773896387e25a7b",
+      "start": 67,
+      "end": 247,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "525e9678a3edd1a88f32035d41b747b73d46773ebff69f4d1970d3efba2f7d8b",
+      "start": 0,
+      "end": 139,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-variable-in-usememo.js"
+      ]
+    },
+    {
+      "key": "52a7ee6c158bacc0d5dd03c5983957138f227e992adb70298e4e7a074b6556f5",
+      "start": 0,
+      "end": 208,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "534fa94e699db58ed57d5e48b8c9f5f83613b2970cb10302c0e220aa4ce3e3b1",
+      "start": 34,
+      "end": 262,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "539ca432e0a49643a583f6909afad223e3d182d2c1372741d47e4612eb1c957a",
+      "start": 34,
+      "end": 159,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455"
+      ]
+    },
+    {
       "key": "53e8d845a3b92d9bd2aedc6ac19fd5cf17f445bfe29066abc708ac7ca52e4f31",
       "start": 235,
       "end": 275,
@@ -1041,6 +2216,47 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:allow-global-mutation-in-effect-indirect-usecallback.js/nested"
+      ]
+    },
+    {
+      "key": "5516820f3d6e5656280562708f129404ff38661cd11fc3e3e5b09ff2d1c61d53",
+      "start": 0,
+      "end": 112,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310"
+      ]
+    },
+    {
+      "key": "551efaa4afab8e6d184bd1bccc3a5cdcfd02a5a5b973ab0eead88e018f7b0b5d",
+      "start": 141,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "558e87b3226d98174bbd5f94baa2fd86900cd461209743f9e005d541fc4b76d8",
+      "start": 220,
+      "end": 419,
+      "checker": true,
+      "calls": [
+        "upstream:error.useCallback-accesses-ref-mutated-later-via-function-preserve-memoization.js/nested"
+      ]
+    },
+    {
+      "key": "5598121ad63f4b007c4915a011d57b23bb21945511aff1564b1dd2e5c87589dc",
+      "start": 129,
+      "end": 194,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:ref-like-name-in-useCallback.js"
       ]
     },
     {
@@ -1062,6 +2278,15 @@
       ]
     },
     {
+      "key": "5682e157c4d5174975e87011b36e7623f015e5e53a4dbaec583adbbd2eba3589",
+      "start": 0,
+      "end": 110,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "57903a5f0f0e04c623a38fe44e41d6cb945619c62dc9b8b11b75697eca07f87e",
       "start": 0,
       "end": 165,
@@ -1080,12 +2305,42 @@
       ]
     },
     {
+      "key": "58a5d674504e4c5189d1e689cdcdefc398c71ef86e73d8b217da947f9afef18b",
+      "start": 127,
+      "end": 762,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.false-positive-useMemo-overlap-scopes.ts"
+      ]
+    },
+    {
+      "key": "5939a9387be12fb1768034518cb5b54e845665f093c2c1e7a58fbf9d113f06f6",
+      "start": 0,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "59bc58c4a1f5c72c0a0768524c039d174d555055635803ecabadbe5db5bd0b81",
       "start": 193,
       "end": 213,
       "checker": true,
       "calls": [
         "flatten_scopes_with_hooks_test.go:30/nested"
+      ]
+    },
+    {
+      "key": "5ac857d06b3d79eaa658693a32410a1ae13e85f7a023a49bc5bc9d46b4a3ee14",
+      "start": 0,
+      "end": 66,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -1098,6 +2353,24 @@
       ]
     },
     {
+      "key": "5af776b9f5fb86a419234fc26d368064260cfdd72f03c188693ec1bf48035d21",
+      "start": 0,
+      "end": 174,
+      "checker": true,
+      "calls": [
+        "upstream:error.sketchy-code-rules-of-hooks.js"
+      ]
+    },
+    {
+      "key": "5b27aaaa27a827bbdac1fc829ba051582629352784062af4232ebed81136a53f",
+      "start": 170,
+      "end": 190,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "5b518a67b26fa4a06770d91a21b7acb3f53454d947fdaaf8b5019456702c9464",
       "start": 645,
       "end": 718,
@@ -1107,12 +2380,48 @@
       ]
     },
     {
+      "key": "5c2571bee26fdffd6ad8a6b671cf4630e3caa8aa29c6fde740e922ef5ce90d0a",
+      "start": 41,
+      "end": 107,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "5d55d4f2b0b4ecb4c4a15c0e8d999c2a9a10a117fe2ecc62d56d08be353b94bc",
+      "start": 32,
+      "end": 1314,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-nested-function-reassign-local-variable-in-effect.js"
+      ]
+    },
+    {
+      "key": "5dad47057196c9a0ed27a862077ddb21f4e8f4443dd8266b2fe9e04bd75cda00",
+      "start": 92,
+      "end": 139,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested"
+      ]
+    },
+    {
       "key": "5dd1d62ac14b217eb06b23a774f14dd2ea9905a2b29b74c351d2eee9afd70693",
       "start": 91,
       "end": 99,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "5e4a72ad5549d77dada1223982d6eec5e43c6dc48f8a908782c7ed89b26b63c1",
+      "start": 57,
+      "end": 111,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -1152,6 +2461,51 @@
       ]
     },
     {
+      "key": "6042f56d9dcec68148256d7c78d65629b7031efd153e79c262c813c098ae32a7",
+      "start": 67,
+      "end": 251,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "608eb81cf61e3eba71d8ae722ebb4fe8d3fce3e3409b5737cd9415f779b661cd",
+      "start": 163,
+      "end": 185,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "60c69410fc4f344db6fae8fb3cae69456e2607f95a80725f2791aba1b7309187",
+      "start": 204,
+      "end": 236,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "610b6ea6b0c0fb2676c8af4a1654916b22c9b41065cfc9f83b7a9ed4a6d5bb31",
+      "start": 26,
+      "end": 206,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "613149d6d4e4546caa27b52b099779b2d8b1180224727756b173623bf73b1bae",
+      "start": 159,
+      "end": 304,
+      "checker": true,
+      "calls": [
+        "upstream:error.mutable-range-shared-inner-outer-function.js/nested"
+      ]
+    },
+    {
       "key": "615f6e7cf3b383f7e73b204748cd1e21d33ba41fdc9c7e1a75138fe0920d4b1f",
       "start": 0,
       "end": 69,
@@ -1170,12 +2524,32 @@
       ]
     },
     {
+      "key": "6223a3bb4bb32c9cf5124306373175be2c4a735a83e226e5ede892727d994fc3",
+      "start": 0,
+      "end": 392,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.validate-useMemo-named-function.js"
+      ]
+    },
+    {
       "key": "6238e5de7341bc12d349a916756e64ec140c9918f43bf498efbebb073ea89da5",
       "start": 16,
       "end": 95,
       "checker": true,
       "calls": [
         "upstream:error.not-useEffect-external-mutate.js"
+      ]
+    },
+    {
+      "key": "62807e930448f9cf5516d14ede74472d2d1d6076002289d02c7d333c310dc55f",
+      "start": 175,
+      "end": 264,
+      "checker": true,
+      "calls": [
+        "upstream:error.context-variable-only-chained-assign.js/nested"
       ]
     },
     {
@@ -1224,6 +2598,15 @@
       ]
     },
     {
+      "key": "6455b069c2d12394898b5a79b9be9ec94add516fbe1047404554eb93aa7faf10",
+      "start": 31,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
       "key": "64d7c4a814bfbcc10e6c5053bf43e674cd2af786964551acb3e37ed9bd7b231f",
       "start": 0,
       "end": 427,
@@ -1239,6 +2622,40 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "6543c7226fd2888da6d7b17b76c58c4662c9ca87f142db9b011943eaee9b6109",
+      "start": 258,
+      "end": 325,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useMemo-invoke-prop.ts"
+      ]
+    },
+    {
+      "key": "65660c6fa0496ceac30df8fbabc8ea89f6c414316de8cf6b16a9f5918eb40286",
+      "start": 141,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "6580b9d9708ee7cadc035d6cb4c246f5c0f553df790312c3d67e54cee3bef59b",
+      "start": 121,
+      "end": 427,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.false-positive-useMemo-dropped-infer-always-invalidating.ts"
       ]
     },
     {
@@ -1269,12 +2686,32 @@
       ]
     },
     {
+      "key": "663f566afffc9b1e18b71ea70963c40f175b1b549ab2349fb9a543eeabff92ec",
+      "start": 635,
+      "end": 662,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.useMemo-unrelated-mutation-in-depslist.ts/nested"
+      ]
+    },
+    {
       "key": "66b833e825bc961257f64dcb5a2f4d9a05e8a4b4b290eb92054072e7713912a0",
       "start": 209,
       "end": 325,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.bail.rules-of-hooks-3d692676194b.js"
+      ]
+    },
+    {
+      "key": "67408fbd3131ffce55f97b4d6fcd391d6a30eecb4912404bb14a5591b93ad1e4",
+      "start": 157,
+      "end": 187,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-props-in-effect-fixpoint.js/nested"
       ]
     },
     {
@@ -1328,12 +2765,33 @@
       ]
     },
     {
+      "key": "6824160c1fdffd8e773b4f8a8052f0592631c74edc1e366f0088a4732ac8bbcb",
+      "start": 666,
+      "end": 709,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.false-positive-useMemo-overlap-scopes.ts/nested"
+      ]
+    },
+    {
       "key": "6825f2f867747ed845bc2d67787cd43ab60f6ee96365971857176587b3fe3ee6",
       "start": 760,
       "end": 777,
       "checker": true,
       "calls": [
         "upstream:error.invalid-hoisting-setstate.js/nested"
+      ]
+    },
+    {
+      "key": "684ba0f63ab151ca93b96ee45d40e3dd4548df6f423c13c14732fe9e60871400",
+      "start": 55,
+      "end": 106,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
       ]
     },
     {
@@ -1391,6 +2849,18 @@
       ]
     },
     {
+      "key": "6acdc2999856ff29d4ff94c0a502190b38d214394433fe218dc351c89da224b0",
+      "start": 388,
+      "end": 460,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:dont-memoize-primitive-function-call-non-escaping-useMemo.js"
+      ]
+    },
+    {
       "key": "6b1fb091ef16b3d06a3cf8ab046e1681ec528e8713492ea27315aa48642ffa4d",
       "start": 0,
       "end": 51,
@@ -1406,6 +2876,15 @@
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "6e271fb2c610bab32e51d8a3123970c16c636c8e797d2b022615de7b16c71dae",
+      "start": 43,
+      "end": 57,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29/nested"
       ]
     },
     {
@@ -1427,12 +2906,39 @@
       ]
     },
     {
+      "key": "6f17e931016f76c4e6f8924d8af76df026b9bc16b8d6eca1adbb327d412c0f96",
+      "start": 0,
+      "end": 98,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-array-push-frozen.js"
+      ]
+    },
+    {
       "key": "6f2c8e1bcee25b1b10e1ed804ac6ae8791512c81b8706e424a73f2aeeccf0b43",
       "start": 0,
       "end": 103,
       "checker": true,
       "calls": [
         "upstream:error.capitalized-method-call.js"
+      ]
+    },
+    {
+      "key": "6fb10dd459a468bd232064df1cbae14c71cd16992daa9db2ea5605db6276f733",
+      "start": 61,
+      "end": 118,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
+      "key": "6fc4b02c66ae7e4733e363a81d3c25e8d1e2309589dbab4e0c1da38298d54c97",
+      "start": 72,
+      "end": 85,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29/nested"
       ]
     },
     {
@@ -1454,12 +2960,42 @@
       ]
     },
     {
+      "key": "70450cb8b5c4e0b785d4d4a6bf404dc9cea24b0ec4b8b542f7f919913bb12586",
+      "start": 297,
+      "end": 318,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/useCallback-infer-scope-global.ts/nested"
+      ]
+    },
+    {
       "key": "70685b245f608afab600d4a3cc06fced8afd54758de4abb123fc3ca2dfb301be",
       "start": 0,
       "end": 165,
       "checker": true,
       "calls": [
         "upstream:error.invalid-mutation-in-closure.js"
+      ]
+    },
+    {
+      "key": "7070a06e2c5f5b6ebbb5c40ef848997147b563b986df54d8368ddca26eb3dc47",
+      "start": 95,
+      "end": 140,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "70d8d935f3ddcec3e861d220e9debade5ecb3245148e2ea947f58874dd45ca4e",
+      "start": 26,
+      "end": 99,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -1478,6 +3014,15 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-handle-update-context-identifiers.js"
+      ]
+    },
+    {
+      "key": "71b8a613459bb800f8c1cd0cde5fed9a38553b2a85bcda39dd43d9843e8ba6df",
+      "start": 129,
+      "end": 170,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-dep-on-ref-current-value.js/nested"
       ]
     },
     {
@@ -1526,6 +3071,15 @@
       ]
     },
     {
+      "key": "72acf282e2fa04cb9b741005bc2020e298d7e62f9e9a0859d40ffc815c6f6f66",
+      "start": 218,
+      "end": 250,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "7385f62c2bbf8cb4dfc802262a385fcb3566ec14072a820f11194275438aa4c6",
       "start": 0,
       "end": 367,
@@ -1544,6 +3098,36 @@
       ]
     },
     {
+      "key": "748344f0470a1a3945992f524c42e4805b94a335c406b9611acff3cdec21f3da",
+      "start": 418,
+      "end": 427,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:new-mutability/error.invalid-useCallback-captures-reassigned-context.js/nested"
+      ]
+    },
+    {
+      "key": "754c54fb0c8b15e04241ee6a68a36d5877940885ad648391711c6f74538a17b7",
+      "start": 34,
+      "end": 213,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "754ff2f5f598f67ff6832a40fde2d073332742c3b0e24eefad77053f4b84a9b8",
+      "start": 34,
+      "end": 270,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
       "key": "7591ed967066966f825b41efcad3a03eb53fb889dbab2244f49d722c86c1a58c",
       "start": 53,
       "end": 190,
@@ -1553,12 +3137,71 @@
       ]
     },
     {
+      "key": "75c6fc04546f9569fa54be06401fac32fa73a1bc9d94c7ba869806feda59276d",
+      "start": 31,
+      "end": 91,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "763a00d44401734d10f2aad929fee898c0ae0d0ae48c10e247654857dca41c23",
+      "start": 136,
+      "end": 178,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/repro-maybe-invalid-useCallback-read-maybeRef.ts/nested"
+      ]
+    },
+    {
+      "key": "7662e7cb0f627fc3d875cb9cf5a95fd0d1e60e534272fdba98d87336782baf77",
+      "start": 75,
+      "end": 260,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:126"
+      ]
+    },
+    {
+      "key": "76ae32548612160e2d906181d0f94bca98af6fa51769090224da49f7e15ce011",
+      "start": 150,
+      "end": 161,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "77e49ef297207a14f181e10e182cde24dbf2486462b99c2bdf6453479b8fa1f2",
+      "start": 53,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
       "key": "7827798f358fed596c1687c123164c46b1c9072741ee4524964b6f8c862cfcf8",
       "start": 0,
       "end": 94,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "7880601f8a10e720141c5ab53a35d8719afea7037a2ff337d136a804cf781a97",
+      "start": 0,
+      "end": 59,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
       ]
     },
     {
@@ -1577,6 +3220,15 @@
       "checker": true,
       "calls": [
         "always_invalidating_test.go:176/nested"
+      ]
+    },
+    {
+      "key": "78cd8fd9292208c7a9d66216f28ff12a7dd745b6dc2a47c2ee3b4104d24dd83e",
+      "start": 141,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
       ]
     },
     {
@@ -1616,6 +3268,27 @@
       ]
     },
     {
+      "key": "7a7835c84ede406d198e11109ac7f2da064754084739385eece71302252d18d1",
+      "start": 285,
+      "end": 306,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/useMemo-infer-scope-global.ts/nested"
+      ]
+    },
+    {
+      "key": "7b1e40a47185eb92a2ac76c3df5782cfb533472ae8e8729c8536dd48dc392ab5",
+      "start": 157,
+      "end": 201,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.sketchy-code-exhaustive-deps.js/nested"
+      ]
+    },
+    {
       "key": "7b50897762e441358b5e24dcbd74e7845404c641eaef825c5cc5b0704dc6008f",
       "start": 0,
       "end": 61,
@@ -1625,12 +3298,62 @@
       ]
     },
     {
+      "key": "7b602996c25e21424e97b5d925543fb1064819982e104b607c52edd156f71253",
+      "start": 136,
+      "end": 223,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.maybe-mutable-ref-not-preserved.ts"
+      ]
+    },
+    {
       "key": "7b6bf968ba190dae65b5130aa0a901541f3566f16c2221771ec00cdf466ebcc6",
       "start": 149,
       "end": 157,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "7bc2dd3f2e78e08fb1e8874778c964d60283423c5ba783947fdb3ca846067fd9",
+      "start": 158,
+      "end": 257,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/prune-nonescaping-useMemo-mult-returns.ts/nested"
+      ]
+    },
+    {
+      "key": "7c14b99cf4b4b093a609d58f321e62ddfa9ec252214287e4eb0aa7dae2942861",
+      "start": 0,
+      "end": 97,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "7c7094d0a29eff765cbe2c8492bd75498cc4fae861da9aaea0a27cfe3d105530",
+      "start": 52,
+      "end": 106,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "7cb209e24de66df0feca9ccb65be968e0991dd9cc10046b15b73a8029bd27cc0",
+      "start": 54,
+      "end": 874,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-for-loop-with-context-variable-iterator.js"
       ]
     },
     {
@@ -1661,12 +3384,30 @@
       ]
     },
     {
+      "key": "7d9bbb5173e8fc5e705521b72471100ad85f121abec4fc8db2827bd580ee5d00",
+      "start": 30,
+      "end": 81,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
       "key": "7de5dfa8d2e5c5e30c910dcf1387d75cdf26ee30af1c9f525a32e9b0b3b7144d",
       "start": 43,
       "end": 585,
       "checker": true,
       "calls": [
         "upstream:error.invalid-mutate-global-in-render-helper-phi-return-prop.js/nested"
+      ]
+    },
+    {
+      "key": "7e329df4afec6fe41ee7fafbba72b272cb1196c2ff0d1e1941379081a165a0ce",
+      "start": 116,
+      "end": 147,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-props-mutation-in-effect-indirect.js/nested"
       ]
     },
     {
@@ -1685,6 +3426,15 @@
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "7e6ca4123cf5cc6fb541c4e6895b23fb617ed1622e9fe1297c28de6190406a3b",
+      "start": 101,
+      "end": 337,
+      "checker": true,
+      "calls": [
+        "upstream:error.mutable-range-shared-inner-outer-function.js"
       ]
     },
     {
@@ -1724,6 +3474,24 @@
       ]
     },
     {
+      "key": "7fa4baf643450743f5282f935e2af4111a7f60970390807be3a8a6196025db7a",
+      "start": 0,
+      "end": 107,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo.try-catch-with-throw.js"
+      ]
+    },
+    {
+      "key": "7fc79250e14b4fccda1b82a8fa6d838061c8074cd14f58d4a23cc3e1fc206de0",
+      "start": 0,
+      "end": 98,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
       "key": "7fcdb4e76bb4b6c9a92bab8c73a6c7c1523a537361442c5eb1c3f701e69ac1bc",
       "start": 248,
       "end": 287,
@@ -1751,6 +3519,20 @@
       ]
     },
     {
+      "key": "80bc0258f35f2d22f601058566169ee14a7b3e9a4b33f6d82a4a922282af5d21",
+      "start": 189,
+      "end": 237,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/repro-maybe-invalid-useMemo-read-maybeRef.ts/nested"
+      ]
+    },
+    {
       "key": "810c973a693134db34b087b9098e5cf40c8cc92bd775de21f2be7616067c02c8",
       "start": 83,
       "end": 91,
@@ -1769,12 +3551,53 @@
       ]
     },
     {
+      "key": "8164114527617d5acd96f1dd73be1afa2b4cae322a78928e074656105d03310d",
+      "start": 43,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
       "key": "816d5b2880a68a6c141e3377a80eeaca1bb4ca3ead0f403421d87fb8379189a2",
       "start": 82,
       "end": 100,
       "checker": true,
       "calls": [
         "prune_non_escaping_scopes_test.go:207/nested"
+      ]
+    },
+    {
+      "key": "8175579a9c927507464ba0c66aafb151e2dfb5325c4261903af32ddc16bd1107",
+      "start": 68,
+      "end": 502,
+      "checker": true,
+      "calls": [
+        "upstream:error.capture-ref-for-mutation.tsx"
+      ]
+    },
+    {
+      "key": "818ee2382f56b65c7c7739725baa41cde14991e95c6d8475ebc7e68b7e98d37a",
+      "start": 0,
+      "end": 111,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "81c8fc49129bf40be2a359e4214ff2f2d9048f005a68844481d5fe0c1fb9d6f2",
+      "start": 129,
+      "end": 265,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/repro-maybe-invalid-useMemo-read-maybeRef.ts"
       ]
     },
     {
@@ -1799,6 +3622,15 @@
       "key": "82ee0e5486087eb2846d99e0bf955c224fc776df36d34f287bd325f86518eeb2",
       "start": 0,
       "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "834a9990168591981bacd0bcf6e6dc95099322d72e4f3bad8b0e9fab966c8a7f",
+      "start": 26,
+      "end": 324,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
@@ -1832,6 +3664,18 @@
       ]
     },
     {
+      "key": "85289d04e8ff68013a3343e04f5c963898953140e44d50c6e0298fd41c897e32",
+      "start": 122,
+      "end": 269,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/prune-nonescaping-useMemo-mult-returns.ts"
+      ]
+    },
+    {
       "key": "852a5855fc11922aa22fed6628d308a0fb900b657df2bd7a0d3a4842fad585e2",
       "start": 152,
       "end": 160,
@@ -1841,12 +3685,48 @@
       ]
     },
     {
+      "key": "8547633f71066f3aa6247eee6b5c51c595fce699cb1b7615593048ad778e56f1",
+      "start": 0,
+      "end": 145,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "8565053ba5b41ce19c3fb87cdb3dc266d2caceee3b4b1d1a39c82db2083e630f",
+      "start": 61,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
       "key": "85a0254a35c27b6a1f517ecc19ffc34371d43d493ed3ac9782c3adbef3da4f0c",
       "start": 0,
       "end": 56,
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "86405f1308072533782f06e4ede9ec000d432abd95fc1e56ac8e2edaa94e74a1",
+      "start": 42,
+      "end": 96,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "8640e9578803e8102134dd9290708b7930c05767d0152ce99349d6e1b9808aa9",
+      "start": 45,
+      "end": 51,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-useMemo-callback-args.js/nested"
       ]
     },
     {
@@ -1865,6 +3745,39 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38/nested"
+      ]
+    },
+    {
+      "key": "867fa72ca082d4809f327d6d530376e946763548f613b44c216f38c13faa80b6",
+      "start": 327,
+      "end": 343,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.useMemo-aliased-var.ts/nested"
+      ]
+    },
+    {
+      "key": "8693f9a1a047021ff01e45f782bab2b90bc01a1a2816b8b1b68d46be0ebd1a16",
+      "start": 219,
+      "end": 249,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested/nested"
+      ]
+    },
+    {
+      "key": "86c85fe0818d05655f93575c911c0d969aad49622752bb106fea7457c8f081db",
+      "start": 122,
+      "end": 317,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/prune-nonescaping-useMemo.ts"
       ]
     },
     {
@@ -1904,6 +3817,15 @@
       ]
     },
     {
+      "key": "87d9985de2b7bc9be403a11c76b274a0370d331714171cd16852508585fdb1a0",
+      "start": 131,
+      "end": 315,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-missing-nonreactive-dep-inner-function.js"
+      ]
+    },
+    {
       "key": "883e9d56ae504611e5216b07935f3416846384366fdea70140cbdf0976d13554",
       "start": 226,
       "end": 266,
@@ -1940,12 +3862,50 @@
       ]
     },
     {
+      "key": "8a2538a1281456581d576457637abf22ddd72b12f99a72fa20a8721d2fb64ce1",
+      "start": 184,
+      "end": 405,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.hoist-useCallback-infer-conditional-value-block.ts"
+      ]
+    },
+    {
+      "key": "8a6dbc6740f8aecf76c2e47241f4f14ff891e006fe3d6439089ff9688ad121dd",
+      "start": 331,
+      "end": 354,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.useCallback-aliased-var.ts/nested"
+      ]
+    },
+    {
       "key": "8acc64e65dbddda2593bd4faa94f7a0be8c4c0c3cd6b8c6903442d6841236a50",
       "start": 93,
       "end": 101,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "8b132bbf0cc60d6d489d1d73e5f23993ba5cfa6757a3858e3ea3ce4cd5dd072a",
+      "start": 469,
+      "end": 482,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useCallback-dep-scope-pruned.ts/nested"
       ]
     },
     {
@@ -1964,6 +3924,33 @@
       "checker": true,
       "calls": [
         "upstream:error.conditional-hooks-as-method-call.js"
+      ]
+    },
+    {
+      "key": "8c40926f15aeff5b682d42f102c9ddbc0452a651c397824d6d3cbc19f2916c2b",
+      "start": 45,
+      "end": 99,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "8c526efdd1b708822aca8ce9128bcd1c8aee8c16d29f61ceeadc0a00a57f8cb6",
+      "start": 196,
+      "end": 228,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "8cbb62bf10a26e33add093a58ff3d329f33a5ed0efcf4ab204ab79cd5fdb577f",
+      "start": 34,
+      "end": 150,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455"
       ]
     },
     {
@@ -1994,6 +3981,15 @@
       ]
     },
     {
+      "key": "8fb30f513c7cd356482af83df6a33e42d1b3321da5b651180615e70ba537728e",
+      "start": 220,
+      "end": 234,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-missing-nonreactive-dep.js/nested"
+      ]
+    },
+    {
       "key": "8fdf8465e0c2d4968cfa2d60891fdb2303c227719c33135d7c6649656471994c",
       "start": 51,
       "end": 85,
@@ -2009,6 +4005,15 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-hook-if-alternate.js"
+      ]
+    },
+    {
+      "key": "90506f7c31b8a495b71a0d7964a29590bb56bfa30624a8610db95ae851070bf8",
+      "start": 163,
+      "end": 185,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
       ]
     },
     {
@@ -2030,12 +4035,66 @@
       ]
     },
     {
+      "key": "919e269f4d6f160c72d63fd1e945a59aa9a1275f0230656dd87817dcc96001ab",
+      "start": 165,
+      "end": 398,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:error.validate-object-values-mutation.js"
+      ]
+    },
+    {
+      "key": "91d54838cf63a875b20359be7167360ac5fc87acb370ca9667d380f4671c5b50",
+      "start": 280,
+      "end": 324,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:dont-memoize-primitive-function-call-non-escaping-useMemo.js/nested"
+      ]
+    },
+    {
       "key": "92add50e7dc920a4e25f8f2c6037ac7d664b285895eccb7931e7f7288f4e1cdc",
       "start": 218,
       "end": 262,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-0de1224ce64b.js/nested/nested"
+      ]
+    },
+    {
+      "key": "93ea546c61275f720b29c72be2b6b897069b363c2b858b12840040c0ae5769f1",
+      "start": 0,
+      "end": 116,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "93ee63090952945f50f592cdd7e976a5b8622bb6465b22f884e5768325a07e4a",
+      "start": 0,
+      "end": 144,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-props-via-for-of-iterator.js"
+      ]
+    },
+    {
+      "key": "940277881243d907c974c0cac591d740718e19d7013a53334def4d36d532fa38",
+      "start": 461,
+      "end": 498,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.false-positive-useMemo-infer-mutate-deps.ts/nested"
       ]
     },
     {
@@ -2048,12 +4107,53 @@
       ]
     },
     {
+      "key": "9442c98fbbcb2534bdf2ff78e35b9fcf9323891c667c9069744dcdf2701eb33c",
+      "start": 0,
+      "end": 42,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "94a2c994b6f0c38342900fb26e6afa1abf2ba26e58f5dcd61be97202bf641ce6",
+      "start": 0,
+      "end": 456,
+      "checker": true,
+      "calls": [
+        "upstream:fault-tolerance/error.var-declaration-and-mutation-of-props.js"
+      ]
+    },
+    {
+      "key": "94eaaf171427beb68c305682f562a898a9adfb07e185742e2335ff65aa0d9300",
+      "start": 130,
+      "end": 261,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useMemo-infer-fewer-deps.ts"
+      ]
+    },
+    {
       "key": "95426642306f2e3c3d7413a9d229161a19f37b9af28d47f5607d601eadc73fc4",
       "start": 0,
       "end": 92,
       "checker": true,
       "calls": [
         "upstream:error.assign-global-in-component-tag-function.js"
+      ]
+    },
+    {
+      "key": "958529c6e59e0393ee629d7e9cf2b447a46cbe5e0b3c3aa5b1c98d64e483f548",
+      "start": 42,
+      "end": 109,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -2084,6 +4184,15 @@
       ]
     },
     {
+      "key": "96eabcce67d750a5fd215eb5251d2f8eafca783a618d993e87d14531e3f2020b",
+      "start": 147,
+      "end": 169,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "96f754dc179f99ae8c2d7b4e29e73057332dc12059b3290012a8c7854d41f43c",
       "start": 162,
       "end": 272,
@@ -2102,12 +4211,30 @@
       ]
     },
     {
+      "key": "976cabb6c677026188a2b01bef919de2b20c386b21e343988b0d76de907edafc",
+      "start": 34,
+      "end": 238,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
       "key": "977b300a4584c7997859542cda000193d4e0748c05abeca27da57af5bbac36c3",
       "start": 0,
       "end": 169,
       "checker": true,
       "calls": [
         "upstream:error.todo-hoisted-function-in-unreachable-code.js"
+      ]
+    },
+    {
+      "key": "979747ad6c07c8f43b5473c79ec6bf0dc3c62667f5b1e2712ec521d435696cb5",
+      "start": 34,
+      "end": 257,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
       ]
     },
     {
@@ -2129,6 +4256,38 @@
       ]
     },
     {
+      "key": "988722cf3c3c7301a9bbf300b710e6b3a598840d923256759101eadeede85ba4",
+      "start": 121,
+      "end": 243,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useMemo-inner-decl.ts"
+      ]
+    },
+    {
+      "key": "9912135d4282b454b02109a6c476e0226883a8835097f76eb78dd6889a013765",
+      "start": 0,
+      "end": 257,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutation-of-possible-props-phi-indirect.js"
+      ]
+    },
+    {
+      "key": "993164a2ac02fa0673efd7ee3a51adc9b385748ad2309ea67452a3a341ebfe6c",
+      "start": 38,
+      "end": 101,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
       "key": "994d4163587d1eee1c5d36aad951fc160f28b0e50fe27790db5ebfb8c69ff730",
       "start": 29,
       "end": 101,
@@ -2147,12 +4306,42 @@
       ]
     },
     {
+      "key": "9a6e2d58f056b83e83a72251ac5ac5683e9925ac2cdeeb532ce7855df645b567",
+      "start": 0,
+      "end": 376,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.useCallback-aliased-var.ts"
+      ]
+    },
+    {
       "key": "9a9916cc1e4d35415df9d469d0010df1b46ab414aa510bc87ae96e84beeab232",
       "start": 0,
       "end": 92,
       "checker": true,
       "calls": [
         "upstream:error.capitalized-function-call.js"
+      ]
+    },
+    {
+      "key": "9ac97923b0130598ffde7865a9ccec446d6dd30a5f85e783d802c732d8d41cd9",
+      "start": 121,
+      "end": 584,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-useCallback-set-ref-nested-property-ref-modified-later-preserve-memoization.js"
+      ]
+    },
+    {
+      "key": "9b2efec7564cf12e9a62b66717809fb54c344dbd6a501dbd2a248dba9d3e0c71",
+      "start": 52,
+      "end": 114,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-variable-in-usememo.js/nested"
       ]
     },
     {
@@ -2174,6 +4363,32 @@
       ]
     },
     {
+      "key": "9b79502438cd3426ca71b8ea6058511eebcfcbd5b85a3f5cf1970d23fb7eb0c6",
+      "start": 233,
+      "end": 259,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/useMemo-infer-nonallocating.ts/nested"
+      ]
+    },
+    {
+      "key": "9baaedbf15bf81edbce82a03842edd5955cad5794f9a637459c1eb4e9aff493c",
+      "start": 126,
+      "end": 902,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useCallback-captures-reassigned-context-property.tsx"
+      ]
+    },
+    {
       "key": "9c8a4085810a9c77779abca43c73333bf4e27686b0bc9ca2aab1b72fca89af3e",
       "start": 895,
       "end": 1032,
@@ -2189,6 +4404,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "9d5f36f7f50eb85f5d66ab1cbf173a26cf5976dd5189fe8f02a6730b4c08ebb7",
+      "start": 34,
+      "end": 216,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
       ]
     },
     {
@@ -2228,6 +4452,29 @@
       ]
     },
     {
+      "key": "9feeaab4ec43decc68b67aafc6df8260b540981660e51f10741fde71636ffc09",
+      "start": 802,
+      "end": 824,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useCallback-captures-reassigned-context-property.tsx/nested"
+      ]
+    },
+    {
+      "key": "a023da142132880dfd973bbf864c9ad893859621879059959bce378731ea4057",
+      "start": 166,
+      "end": 345,
+      "checker": true,
+      "calls": [
+        "upstream:error.capture-ref-for-mutation.tsx/nested/nested"
+      ]
+    },
+    {
       "key": "a124a494fc924745298be7ad0698b618e8e8874519273e421df8075b9e15c603",
       "start": 78,
       "end": 91,
@@ -2264,6 +4511,18 @@
       ]
     },
     {
+      "key": "a203fce1b03d6383c0aaad0302419a7b815213bca6f04199b18c4e68ae67ec48",
+      "start": 458,
+      "end": 474,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/todo-ensure-constant-prop-decls-get-removed.ts/nested"
+      ]
+    },
+    {
       "key": "a21e3c12c554779ee5c78a9e6cc4ddfe521c7c0db4b9a79762811edb024b5cbe",
       "start": 0,
       "end": 136,
@@ -2279,6 +4538,15 @@
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "a2b3ee185c35505c12244c556f9a74ebdf3cae12612f681d3d0497b764ad900a",
+      "start": 54,
+      "end": 108,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -2309,12 +4577,30 @@
       ]
     },
     {
+      "key": "a49fa8c10e3c7ae637ad8ab6e224ef55174d424f983742f08edca434d980075a",
+      "start": 0,
+      "end": 50,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
       "key": "a4b0c5812178a97c952533fa994bbcd35840eab3fd99fac0d93f2bc46b8b9b6b",
       "start": 0,
       "end": 92,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "a4d3522d68d864e496098b2a93331fa254e663412b20b769ec56b842b11b29d8",
+      "start": 48,
+      "end": 289,
+      "checker": true,
+      "calls": [
+        "upstream:error.context-variable-only-chained-assign.js"
       ]
     },
     {
@@ -2327,12 +4613,30 @@
       ]
     },
     {
+      "key": "a58d20885f4fa377333132f802a2075b065e6698d25183a8118a134f49858116",
+      "start": 1067,
+      "end": 1093,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-effect.js/nested"
+      ]
+    },
+    {
       "key": "a5f846d6ed230ee31d3400761365ae0b4ab67ed162391e643e65864f9f6b8382",
       "start": 68,
       "end": 167,
       "checker": true,
       "calls": [
         "upstream:error.todo-hoisted-function-in-unreachable-code.js/nested"
+      ]
+    },
+    {
+      "key": "a62bd5baee62f72c9ec13715da593b55f20b3959a19eee64dbaf696105cdedf4",
+      "start": 34,
+      "end": 256,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
       ]
     },
     {
@@ -2363,6 +4667,15 @@
       ]
     },
     {
+      "key": "a761da30223c850c7d70004bb6e92a7e20330a6fbce1185bd8bce857b0b329d6",
+      "start": 31,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
       "key": "a78f9d4a5b6053ce2efb7d008faea7b63d2cad5e6a197f10c10453de4f612e3c",
       "start": 239,
       "end": 279,
@@ -2390,6 +4703,24 @@
       ]
     },
     {
+      "key": "a86834d6d5f3744551f76c1e5144dd6b2c5de6c4c6f866550ccd342d79b3df03",
+      "start": 61,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
+      "key": "a87ba049eb362d2513c90c95bc787d9917cb20e5ad74d21ed1372c0226512832",
+      "start": 26,
+      "end": 232,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
       "key": "a925c17ba6001636bfdf82ceaf2beae075a2524417c82b2a193814f6d9cc6257",
       "start": 0,
       "end": 36,
@@ -2408,12 +4739,53 @@
       ]
     },
     {
+      "key": "aa342f0dfab14a4cf9c9ee2090977af0f031185c0329cca78550af89efa9e4d8",
+      "start": 61,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
+      "key": "aaa3c3cc288172d50862c69c1f03dda4dfdd9e668711a831706cb2045434c0ac",
+      "start": 32,
+      "end": 90,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
+      "key": "aadafe89d27483cdd1fcccbc384bedcd70a8c268fe344cedc8bfd67263b8d33c",
+      "start": 67,
+      "end": 315,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
       "key": "ab90c56d830d16052f129b6e6ee1984a9b847f4e40804405535ed0d0bbf644a4",
       "start": 87,
       "end": 141,
       "checker": true,
       "calls": [
         "ranges_test.go:38/nested"
+      ]
+    },
+    {
+      "key": "ac3cc5e62ed893669993c51cfc85df3545d87adbec132c315f5a1f1a96b3e963",
+      "start": 300,
+      "end": 309,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useCallback-captures-reassigned-context.ts/nested"
       ]
     },
     {
@@ -2453,6 +4825,33 @@
       ]
     },
     {
+      "key": "addfe3dd07a4c80f5b53e31d2b866a1e086c4347525eb53129c5d96a1f22c76c",
+      "start": 1258,
+      "end": 1284,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-nested-function-reassign-local-variable-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "ae16f5c447fe02f3d95602a392dc1e4fe373484deec675a162287d4d902e68cb",
+      "start": 34,
+      "end": 165,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455"
+      ]
+    },
+    {
+      "key": "ae2fa0bae8b0ed5c957020a68a2941001d4e58cbf7adee2ac60b77fa9ab32251",
+      "start": 0,
+      "end": 212,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "af2c718a7350f42dc777d2d41bf0c3ccf51a6a3692c187fc267175f385a56eb6",
       "start": 0,
       "end": 108,
@@ -2471,12 +4870,44 @@
       ]
     },
     {
+      "key": "af9aab9b12834fd69f88c38fe80124b6d0ff0c02bdbe724e98e0e685fab55ae3",
+      "start": 34,
+      "end": 282,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
       "key": "af9af02470452710a41d685f811650c6f9237e36480b3d5ad284799ccd0e3422",
       "start": 178,
       "end": 212,
       "checker": true,
       "calls": [
         "effects_react_state_test.go:176/nested"
+      ]
+    },
+    {
+      "key": "af9cb064f2127f47c0446a1449376bae303bee97e41d06c451d58acefc7e539a",
+      "start": 0,
+      "end": 71,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-useMemo-callback-args.js"
+      ]
+    },
+    {
+      "key": "afbcecd4696340c0eec07d8f1b19409d09c7a7e79f4d3b0e03207815011c5ead",
+      "start": 297,
+      "end": 356,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested/nested",
+        "memo_block_scope_oracle_test.go:272/nested/nested",
+        "preserve_manual_memoization_score_test.go:552/nested/nested",
+        "prune_non_escaping_scopes_test.go:445/nested/nested",
+        "scope_oracle_test.go:200/nested/nested",
+        "upstream:repro-object-fromEntries-entries.js/nested/nested"
       ]
     },
     {
@@ -2537,6 +4968,33 @@
       ]
     },
     {
+      "key": "b2806a16c0309ec0ef5375a81ea8b234a3389ce874765976b3975fda0361b0c9",
+      "start": 65,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "inline_remap_test.go:310/nested"
+      ]
+    },
+    {
+      "key": "b311967263a4e74436f7c4b6ab3790702ab564e815a16fd060fd735a3090538c",
+      "start": 145,
+      "end": 273,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "b32993f4237e2ab44e7e80fc378ac38b3f55da8630a7fa0c2198396351089045",
+      "start": 685,
+      "end": 737,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-exhaustive-deps.js/nested"
+      ]
+    },
+    {
       "key": "b38a97b95df4346da4b7432db0a1eaf0e56983b8be08e766c31785af17a123d3",
       "start": 288,
       "end": 317,
@@ -2551,12 +5009,39 @@
       ]
     },
     {
+      "key": "b4a2c0907d50562d0cb8304774f756252d0d18ce4bae26c54dd3b076e0c7accd",
+      "start": 28,
+      "end": 42,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29/nested"
+      ]
+    },
+    {
+      "key": "b4d418125777fbdbaad299f246804bcfa2ff4c3ab76c6db6e56d85a42201e9cb",
+      "start": 261,
+      "end": 288,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-props-in-effect-fixpoint.js/nested"
+      ]
+    },
+    {
       "key": "b52050990df19546b61b3eb821643f8521a836db912d0570a876ff39c659aaec",
       "start": 511,
       "end": 645,
       "checker": false,
       "calls": [
         "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
+      "key": "b58925c93b06a7a30d9b009c57287c5a252d7e0cf8aa60c1e76794781b79ed3c",
+      "start": 141,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
       ]
     },
     {
@@ -2569,12 +5054,48 @@
       ]
     },
     {
+      "key": "b6c65a63383623932ae5736a4909c585f7c3085c1c251cd438e805936be558ae",
+      "start": 170,
+      "end": 190,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "b75cfea8e23e577a3c58c679ee7d136ceb2076907bea7682d3ee0daf7a92fb5d",
       "start": 0,
       "end": 48,
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "b77752d1f72ad88e3cbeeece5d591b3f28ab67dd67df847f0f1ec053f3858ecf",
+      "start": 67,
+      "end": 251,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "b7cda1382ba45711907650af4a00ffdd18f889b3db3e8dcab39069e93d3e9f9d",
+      "start": 408,
+      "end": 427,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-for-in-loop-with-context-variable-iterator.js/nested"
+      ]
+    },
+    {
+      "key": "b7d23b15f362a991a32a3518f12e735db70b85d728a435361a99a3f8dba96632",
+      "start": 82,
+      "end": 101,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
       ]
     },
     {
@@ -2587,12 +5108,71 @@
       ]
     },
     {
+      "key": "b8500d8c8289739503653ca0fa04a8bcab22ffa3efe678a7f18c432a9c5d920a",
+      "start": 0,
+      "end": 100,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
       "key": "b90030d628cc692ee932fb35b7a21e7adf30bb30a0bbc10b66cc633544d226bb",
       "start": 36,
       "end": 71,
       "checker": true,
       "calls": [
         "upstream:error.assign-global-in-component-tag-function.js/nested"
+      ]
+    },
+    {
+      "key": "b90829fff30bf15a514204ae18a5078e612164b2867db4edc386e69a6f01b3ef",
+      "start": 78,
+      "end": 129,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
+      "key": "b9145bbe9ae028f76b38b9f043e2198e460cd4e7d2a21789080498eec3f35246",
+      "start": 195,
+      "end": 394,
+      "checker": true,
+      "calls": [
+        "upstream:error.useCallback-set-ref-nested-property-dont-preserve-memoization.js/nested"
+      ]
+    },
+    {
+      "key": "b91c2c392ace9e35e4f12a5147c9555a4787586ff5c0d422c92eb1acf8a1f07f",
+      "start": 84,
+      "end": 194,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/repro-maybe-invalid-useCallback-read-maybeRef.ts"
+      ]
+    },
+    {
+      "key": "ba79a8257449e3a60e110884d5f726b6f86cabdce092f71dbaf3dcb0b481bd21",
+      "start": 529,
+      "end": 571,
+      "checker": true,
+      "calls": [
+        "upstream:error.useCallback-accesses-ref-mutated-later-via-function-preserve-memoization.js/nested"
+      ]
+    },
+    {
+      "key": "ba83ccf024a62372af709efff6fc024c1abbc4a146b63bbb93d62835efa7646e",
+      "start": 39,
+      "end": 502,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-for-of-loop-with-context-variable-iterator.js"
       ]
     },
     {
@@ -2605,6 +5185,18 @@
       ]
     },
     {
+      "key": "bae8a5014af6d0f59d996c164d97cea35984e795a9123a213113e13cecef62c8",
+      "start": 191,
+      "end": 252,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/preserve-use-memo-ref-missing-ok.ts/nested"
+      ]
+    },
+    {
       "key": "bb0c2fda812b926b4b328203595cd6288cab05d94215e1ff8d50a88431ecf5df",
       "start": 92,
       "end": 100,
@@ -2614,12 +5206,95 @@
       ]
     },
     {
+      "key": "bb1962d47cff5a2a48ab50f7a05c075d105ab24ac5376d9a323c6d3b0b2cf961",
+      "start": 34,
+      "end": 239,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "bb57903d6a26535c47a02326a9c8ef3f9618ad349728ad153bf412eb4ca2c626",
+      "start": 387,
+      "end": 396,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.invalid-useCallback-captures-reassigned-context.ts/nested"
+      ]
+    },
+    {
+      "key": "be5e90cf6b646e3272243c3331fa5794efb3857afe957e424b9b314ea8474b29",
+      "start": 34,
+      "end": 278,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "bf3eede3997dbaffe104903af15f1d8ee9fa5af2903f0981dca5256b0ac1f07e",
+      "start": 121,
+      "end": 626,
+      "checker": true,
+      "calls": [
+        "upstream:error.useCallback-accesses-ref-mutated-later-via-function-preserve-memoization.js"
+      ]
+    },
+    {
       "key": "bf50e6b864f1ce68d00853353a9cf70c2ebf5e34b689afd446d2f97ef90006d0",
       "start": 0,
       "end": 93,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "bf5bd757d88ce609fc1577fa67f4ad23c3e482f8a387c2a51324d80232d87aed",
+      "start": 34,
+      "end": 255,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "bf6e682c42eb63581f316aa565c69b3776cb332ef040c02e417c08663ff2f3bd",
+      "start": 34,
+      "end": 280,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "bf7e43959bdebaeea17b39058a1d7cadf16fbfd89a7a2c31c0955d65917d7f61",
+      "start": 1000,
+      "end": 1091,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:error.repro-preserve-memoization-inner-destructured-value-mistaken-as-dependency-mutated-dep.js"
+      ]
+    },
+    {
+      "key": "bfe1ffe0cde20bed107546016b010fda6ba3d377e345eb10a248e86eecc0fe8e",
+      "start": 127,
+      "end": 192,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:ref-like-name-in-effect.js"
       ]
     },
     {
@@ -2650,12 +5325,30 @@
       ]
     },
     {
+      "key": "c148ee3ae11ce84dc07bbffead613f15cfd8c37f2e0e0c84f6bb82e22375fbf3",
+      "start": 41,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
       "key": "c18c5e447a987b0b39a46ae9c03768999fdcaac41a85a92983097eb011e51fe0",
       "start": 138,
       "end": 225,
       "checker": true,
       "calls": [
         "capture_test.go:35/nested"
+      ]
+    },
+    {
+      "key": "c1ef5b17f829a2e6b765a146dc88757a94ec69fbd8ba25df136dbf04a2e5b43d",
+      "start": 101,
+      "end": 113,
+      "checker": true,
+      "calls": [
+        "drop_manual_memoization_deps_test.go:202/nested"
       ]
     },
     {
@@ -2695,6 +5388,65 @@
       ]
     },
     {
+      "key": "c330a297aa2b82f9e6cd897488a07a2ead6fefa518b5229031676ef13557a288",
+      "start": 33,
+      "end": 87,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "c362695236f53b44929e304d63c95ec661bd0b9609a2798bb56fd6194de8dc3c",
+      "start": 0,
+      "end": 281,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-after-aliased-freeze.js"
+      ]
+    },
+    {
+      "key": "c3b572c531d03a720428c0a673a9ac33ce013342c8bdd5c019caa89c1173730a",
+      "start": 207,
+      "end": 232,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested/nested",
+        "memo_block_scope_oracle_test.go:272/nested/nested",
+        "preserve_manual_memoization_score_test.go:552/nested/nested",
+        "prune_non_escaping_scopes_test.go:445/nested/nested",
+        "scope_oracle_test.go:200/nested/nested",
+        "upstream:preserve-memo-validation/repro-maybe-invalid-useMemo-read-maybeRef.ts/nested/nested"
+      ]
+    },
+    {
+      "key": "c3baf5c5608e8c5d26eb59cff5da89f072d752b719454e713c0629d3e410da63",
+      "start": 0,
+      "end": 246,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-dep-on-ref-current-value.js"
+      ]
+    },
+    {
+      "key": "c3c0faf25838ead7ba003fcb3d01b7ed8f756c539b201df3342e1cf8d005ab52",
+      "start": 137,
+      "end": 148,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "c3e7f05fdeb2e1b0e4b6812daa39e3a01225e8a9362fdf389487b76f88a17565",
+      "start": 32,
+      "end": 83,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
       "key": "c47587d154997d98ff0cad91168cefae7fa2b8fa54ca693fc4f0309b6e4f1408",
       "start": 87,
       "end": 126,
@@ -2713,6 +5465,24 @@
       ]
     },
     {
+      "key": "c5ee20643e3458a5d6f2edf8f865fae94e652a708ad425f09674a3755ce74bc6",
+      "start": 0,
+      "end": 75,
+      "checker": true,
+      "calls": [
+        "merge_invalidating_test.go:528"
+      ]
+    },
+    {
+      "key": "c6063bbd3835f50deb08a84fcd11384dd1fcdef529a633d413a5382ace340bbc",
+      "start": 144,
+      "end": 382,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-missing-nonreactive-dep-unmemoized.js"
+      ]
+    },
+    {
       "key": "c62418d6e4cca7772482755497c9a587c6b638d68b2a62a5a2103ce92c8a81ac",
       "start": 0,
       "end": 48,
@@ -2722,12 +5492,48 @@
       ]
     },
     {
+      "key": "c64b1e218c70d808ed251bf659607c3c9b1650d7c552b15fc1827cd22a06cd9c",
+      "start": 43,
+      "end": 57,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29/nested"
+      ]
+    },
+    {
+      "key": "c6665cb7424112d096749820aa1f847e109355053459a50b03313bd3a832509f",
+      "start": 34,
+      "end": 199,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
       "key": "c6957e86ee8aecabc0b1fb90a2b0cf6b1b34e858903639fc096922785f474f9b",
       "start": 0,
       "end": 178,
       "checker": true,
       "calls": [
         "upstream:error.invalid-pass-mutable-function-as-prop.js"
+      ]
+    },
+    {
+      "key": "c70f85612a238c5126946dff19d4c84224178608d6b7b95e9235ece68798a720",
+      "start": 221,
+      "end": 298,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-missing-nonreactive-dep-inner-function.js/nested"
+      ]
+    },
+    {
+      "key": "c737231ba23e130b2b04579cd6a3fcc1f699a298599565294b53fbcf8a3b10ab",
+      "start": 225,
+      "end": 255,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested/nested"
       ]
     },
     {
@@ -2749,6 +5555,24 @@
       ]
     },
     {
+      "key": "c7eeda1fcc9215f0b184471a7dea4c8c832febc54f84131cbeecbf3462b82279",
+      "start": 95,
+      "end": 140,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "c818740c1ad9806b8d7955b7904bd7c6ed4d8212c77c6f0f0c55a56939efb48b",
+      "start": 48,
+      "end": 102,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
       "key": "c8f61ae314da1c12bf4df076ba446c07f93ee01bc72aff98f96a0c8fcc3e1010",
       "start": 73,
       "end": 81,
@@ -2758,12 +5582,62 @@
       ]
     },
     {
+      "key": "c9477c34763440193aefdf52bde3c56c28d256661c9e4dc889235a452f7ebc7b",
+      "start": 0,
+      "end": 247,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-sketchy-code-use-forget.js"
+      ]
+    },
+    {
+      "key": "c961e278197809d59f0c6cc852ced8f2540147e831161415895199d7b63695f5",
+      "start": 34,
+      "end": 223,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
       "key": "c97c4b3648e2db73fb5ec6899335a042a7b9032a533f0481d6164e90bff20f83",
       "start": 0,
       "end": 217,
       "checker": true,
       "calls": [
         "upstream:error.invalid-disallow-mutating-refs-in-render-transitive.js"
+      ]
+    },
+    {
+      "key": "c97daf2dc82e749b51b1209d3eced0a60db284c1427751b118467f37f30aedb2",
+      "start": 297,
+      "end": 410,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested/nested",
+        "memo_block_scope_oracle_test.go:272/nested/nested",
+        "preserve_manual_memoization_score_test.go:552/nested/nested",
+        "prune_non_escaping_scopes_test.go:445/nested/nested",
+        "scope_oracle_test.go:200/nested/nested",
+        "upstream:object-values.js/nested/nested"
+      ]
+    },
+    {
+      "key": "ca1630330a2e8cfbf1de4591a54acdef7b17eecf0a17ebc9039aa0e841c3a1c9",
+      "start": 209,
+      "end": 241,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "cb31f6eade7ce1551e200fc77494cf89a266b760475e648fa946b71d9b5a2c30",
+      "start": 0,
+      "end": 88,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29"
       ]
     },
     {
@@ -2815,6 +5689,47 @@
       ]
     },
     {
+      "key": "cd9b27325e61fe8c46cb8c00193c9123945ca0b92a644fe612d4a79a46a37550",
+      "start": 67,
+      "end": 215,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "ce5d9b629a3d4d176ffb1c0aa200861859746d90e83413b639679f18b801c8b2",
+      "start": 85,
+      "end": 359,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useCallback-infer-more-specific.ts"
+      ]
+    },
+    {
+      "key": "ce71e94af88e9c3a7297838f423b5b817d4567b34d809eabe1b71676b7d1ae2a",
+      "start": 216,
+      "end": 247,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-props-in-effect-fixpoint.js/nested"
+      ]
+    },
+    {
+      "key": "ceb37cf3ed4fdf93363dca98415bd4e529402ee4cd1db7783222aaaf058ca314",
+      "start": 0,
+      "end": 274,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "cee1a3aaf09bf4a52f8c6ee7b130786c4f8c4c8100fa9bcb807a7c0a9405d345",
       "start": 0,
       "end": 88,
@@ -2824,12 +5739,39 @@
       ]
     },
     {
+      "key": "cf007b385d712e91511582ca06d6bbfbf905bb5ccbaa044d3f78b07b29785560",
+      "start": 34,
+      "end": 241,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "cf0116483117cf49bebeab0cf91c1ab08d61db590c26da56bff0f1af1e998988",
+      "start": 49,
+      "end": 85,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-props-mutation-in-effect-indirect.js/nested"
+      ]
+    },
+    {
       "key": "cf134f93783fc3852ef7149403f36705c46e0f01a0ab02ca03b5e78dae89d39e",
       "start": 0,
       "end": 314,
       "checker": true,
       "calls": [
         "upstream:error.invalid-aliased-ref-in-callback-invoked-during-render-.js"
+      ]
+    },
+    {
+      "key": "cf89c6c777fbce6c2848ae5f6baadfb3d370532888fa50d40201a79e299f52d9",
+      "start": 188,
+      "end": 204,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
       ]
     },
     {
@@ -2887,6 +5829,18 @@
       ]
     },
     {
+      "key": "d2b16355ada2d096b1d85ae6225b3ece4a8275033053645576cdf69a71e6bd23",
+      "start": 180,
+      "end": 339,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/useCallback-infer-scope-global.ts"
+      ]
+    },
+    {
       "key": "d2c3b74581299800b3f0406a9ffb317367dff7b5f0dc52cdaf60fca393a0804a",
       "start": 462,
       "end": 470,
@@ -2896,6 +5850,33 @@
         "preserve_manual_memoization_score_test.go:552/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:preserve-memo-validation/preserve-use-callback-stable-built-ins.ts/nested"
+      ]
+    },
+    {
+      "key": "d2d8c80ecb8cde75347dfb113434c1b82c238695e18ad375796cc4994bd2a8ea",
+      "start": 51,
+      "end": 105,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "d2fa6cd25f96f7d58b20312875e6fc78ddfd5518fbeae7ebbaa095b5c8010ab6",
+      "start": 61,
+      "end": 97,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
+      "key": "d399d58f978ef89ff8456d3107a1e0b677c0aede994e38d1b1f6bd2e4e398528",
+      "start": 0,
+      "end": 88,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -2926,6 +5907,36 @@
       ]
     },
     {
+      "key": "d67961abc1355068dcca2f833a072586e1db81b8b051bb9806637427f6b0f543",
+      "start": 33,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
+      "key": "d6ec78d162ab3b056156c1033e57b43efa7c239c6b8f3ad78bf6bf9e140e7ee4",
+      "start": 172,
+      "end": 509,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/error.false-positive-useMemo-infer-mutate-deps.ts"
+      ]
+    },
+    {
+      "key": "d745b59a4fcf30a8813d3b8dd6d40183efa2606a4b73dd2c8f5d46bcc94b5e0e",
+      "start": 205,
+      "end": 237,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "d75c65e55981bb0720b82527a3f49fb2774da5f2c99dbdef2f8a99a874e5ac1e",
       "start": 0,
       "end": 38,
@@ -2950,6 +5961,27 @@
       "checker": true,
       "calls": [
         "upstream:error.invalid-type-provider-nonhook-name-typed-as-hook.js"
+      ]
+    },
+    {
+      "key": "d7bec7734e62d53fdcdf23dd28b1986216cb7b387e84ae4477e2fb50570f7451",
+      "start": 344,
+      "end": 358,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-missing-nonreactive-dep-unmemoized.js/nested"
+      ]
+    },
+    {
+      "key": "d80be1d4e00e68f5f747776d7b0ffce11b3d2f8949500b6bbf7b19473e673a3c",
+      "start": 209,
+      "end": 470,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:new-mutability/error.invalid-useCallback-captures-reassigned-context.js"
       ]
     },
     {
@@ -2980,12 +6012,118 @@
       ]
     },
     {
+      "key": "d892dd9bad174431e4d3b2a5f1ac7ec5584bc1bd2d38b66ddee7f6bd7cce553f",
+      "start": 127,
+      "end": 332,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useCallback-captures-reassigned-context.ts"
+      ]
+    },
+    {
       "key": "d934b7e6633db6d6539d552c57de3cfd96cb16c5c844f3d89697af15d9d8c9b0",
       "start": 0,
       "end": 97,
       "checker": true,
       "calls": [
         "capture_test.go:35"
+      ]
+    },
+    {
+      "key": "d9f97cf4d8975d8c65ee7467195aa6cd78d7c5b36c5d9c2622cb7aaef4036a19",
+      "start": 0,
+      "end": 55,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "da666adfee55ac424f2b2af67625ba788682b1fa85bc3919b1da69017692838a",
+      "start": 31,
+      "end": 100,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "da6d802ed126c89e39c654007e9b5f7da2400bc256a7a99b0f322fd9c19d75e0",
+      "start": 0,
+      "end": 107,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "da8218df2cce52319ce2d8f99046efaa1f3242a93ed62ed1d565a35c4c076178",
+      "start": 0,
+      "end": 628,
+      "checker": true,
+      "calls": [
+        "upstream:fault-tolerance/error.try-finally-ref-access-and-mutation.js"
+      ]
+    },
+    {
+      "key": "dab63e5e378e3134fcdc31505450a05a96de57331c8bba58580f422b4c56b24b",
+      "start": 0,
+      "end": 41,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "db0052c396bec044bfb331fa71b4dcc6b5666f2de3fd2c0f54f8b07c42a812c1",
+      "start": 291,
+      "end": 308,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/prune-nonescaping-useMemo.ts/nested"
+      ]
+    },
+    {
+      "key": "db318ad3a2d8a011933d0c6285cf6e8c06d7ab44f029c0f6525afd95ff0c345b",
+      "start": 58,
+      "end": 112,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "dbf99a2b2855cce57c5e0a71a0462604e934d70a7891af9580e02e85b90c8ebe",
+      "start": 92,
+      "end": 260,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/preserve-use-memo-ref-missing-ok.ts"
+      ]
+    },
+    {
+      "key": "dc1ebaf06cd2c3fd9d78dd881f26446badcc715cf84e49d8f22754b4bf3e78f9",
+      "start": 121,
+      "end": 517,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useMemo-constant-prop.ts"
       ]
     },
     {
@@ -3007,6 +6145,15 @@
       ]
     },
     {
+      "key": "dd5dafd87aeeff91bc2dab45a48cf29f733f987ecb783223e92495f05a8fe3f2",
+      "start": 0,
+      "end": 139,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "ddc3c3efe17e36bd0280ed0769ad7ca4a603540f5fd8366f43c04d0bba6e9ec7",
       "start": 0,
       "end": 504,
@@ -3025,12 +6172,51 @@
       ]
     },
     {
+      "key": "dde6b1c9a8c3e87bf74f480cbb4709e575c5f11269ad435765dc486d4106d42d",
+      "start": 26,
+      "end": 98,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "de4016175ccd8a2d3881e7b759f85c4398bea86059562e3577d3b076c62f3178",
+      "start": 61,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40/nested"
+      ]
+    },
+    {
+      "key": "de5f66da45f833dd90d88b49e2814399b365e3b67b650caef5825c08e0872b3b",
+      "start": 54,
+      "end": 108,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
       "key": "def89c9d590d239ff01c39fa04b5a21163b17feeff5ee612da277a0a2aaaf3ac",
       "start": 69,
       "end": 132,
       "checker": true,
       "calls": [
         "upstream:error.hook-property-load-local-hook.js"
+      ]
+    },
+    {
+      "key": "dfe2487463b51d99b93d7db66eb14c432813419fb4d59f38dd20cf02a1aefd60",
+      "start": 122,
+      "end": 258,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:preserve-memo-validation/prune-nonescaping-useMemo-mult-returns-primitive.ts"
       ]
     },
     {
@@ -3061,12 +6247,30 @@
       ]
     },
     {
+      "key": "e05347ef51f6ed1aba4927baeacd503dea5a83bc8aa89f6e49e133dc278bac09",
+      "start": 0,
+      "end": 196,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-props-mutation-in-effect-indirect.js"
+      ]
+    },
+    {
       "key": "e09de8be71c5b79977315910fe11d05d69a02a1b16cf0b7a49ad601ed38676d7",
       "start": 83,
       "end": 95,
       "checker": true,
       "calls": [
         "ranges_test.go:38/nested/nested"
+      ]
+    },
+    {
+      "key": "e0a255eddeab9081f90b26c3eac8cd80e400cc20b61e8c3c60e12c5e0960c819",
+      "start": 0,
+      "end": 169,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -3106,6 +6310,24 @@
       ]
     },
     {
+      "key": "e2b60663f5cc19e36257efc2745e24671dc34bcb25781691f9be85b984b1bf26",
+      "start": 55,
+      "end": 109,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "e35e06081d405d4384c6f608a129844a590d8be5a701908abbc1b09d59a3e837",
+      "start": 89,
+      "end": 129,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested"
+      ]
+    },
+    {
       "key": "e364741c2bd4cdcc2302ba2a67602aceb3d616b22ddaf016c4e2340bd8d1053f",
       "start": 248,
       "end": 369,
@@ -3141,6 +6363,18 @@
       ]
     },
     {
+      "key": "e4076fb988cbe427ed444cb28e2cf3524e4d64e6ff41ca2822769d7d35a08a7c",
+      "start": 261,
+      "end": 288,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:error.validate-object-values-mutation.js/nested"
+      ]
+    },
+    {
       "key": "e46ba17079eb0815fe50079089afbc4cbc958d9ce309e50a35be89172eb63a20",
       "start": 0,
       "end": 1109,
@@ -3159,12 +6393,48 @@
       ]
     },
     {
+      "key": "e4f7d4908a874803123ebf7d159891948c7e918fb852f9a65c7189bab9ef696b",
+      "start": 30,
+      "end": 129,
+      "checker": true,
+      "calls": [
+        "drop_manual_memoization_deps_test.go:202"
+      ]
+    },
+    {
       "key": "e518e4b036c338c981165a8c43b61f78161708d5874aca5101e0a611a739544d",
       "start": 0,
       "end": 227,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-d842d36db450.js"
+      ]
+    },
+    {
+      "key": "e51938912681c6306a58a10ddc1413285ebbeca758f385fcbc5bf9bd83ab1223",
+      "start": 30,
+      "end": 81,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
+      "key": "e5f0cd64355664b0069071492f13916a946153223a0ffacca78bb43164ebbe4e",
+      "start": 794,
+      "end": 811,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-for-loop-with-context-variable-iterator.js/nested"
+      ]
+    },
+    {
+      "key": "e5f95cffd1b324f24d12207586a83105fbd1809c83a067b6cd96704626d27110",
+      "start": 40,
+      "end": 91,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
       ]
     },
     {
@@ -3204,12 +6474,51 @@
       ]
     },
     {
+      "key": "e7d919db0052bdfe748970dd74a8315740f3bc6569f6f6467f9da21c35d28450",
+      "start": 0,
+      "end": 103,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "e7ea68b4ba02b65024a1d6eaca946b2a146787b175f97ad6daafe47c41c3c2fc",
+      "start": 240,
+      "end": 379,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.hoist-useCallback-infer-conditional-value-block.ts/nested"
+      ]
+    },
+    {
       "key": "e7fe8b561161c8b104d0f3e34e002278cdfb78a6098f13859e2b97056994b019",
       "start": 0,
       "end": 220,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-0a1dbff27ba0.js"
+      ]
+    },
+    {
+      "key": "e82d11298974a11600f3ea5891be29a7fd0ac939e1665fa5697dc2464f0862ed",
+      "start": 94,
+      "end": 134,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "e8636cf0447874324de39e50e028383798737ab9e2dfbbf179f5c77874bb76ed",
+      "start": 34,
+      "end": 293,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
       ]
     },
     {
@@ -3249,6 +6558,15 @@
       ]
     },
     {
+      "key": "e9aff3e5353b4b71a65db76b8f2dba3ac07136a572ea4d644fdf01656fd86ecf",
+      "start": 43,
+      "end": 64,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-invariant-local-or-context-references.js"
+      ]
+    },
+    {
       "key": "e9f786f51a2de79d6afa3e8973a784790d2de09886b55d117c6c81e47d78fa86",
       "start": 59,
       "end": 168,
@@ -3264,6 +6582,33 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-allow-assigning-to-inferred-ref-prop-in-callback.js/nested"
+      ]
+    },
+    {
+      "key": "ea7b53d78bfe8e5c64b10371e087943948068190728b9eff1459fe87698f1465",
+      "start": 0,
+      "end": 229,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-unclosed-eslint-suppression.js"
+      ]
+    },
+    {
+      "key": "ead1922e546ee4d4d1ca3641bf5f41312d05febd39b1d5d4c417cd4ca4b7d829",
+      "start": 0,
+      "end": 88,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29"
+      ]
+    },
+    {
+      "key": "ebaf458e023cbd304e51f94dbfa0d731114032feb4ea057d9c4d2b804a20c8b4",
+      "start": 31,
+      "end": 103,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -3285,6 +6630,33 @@
       ]
     },
     {
+      "key": "ec45a10569be816430e429844eda8a718d770995980f8d5a2b50dc93fd4a10e7",
+      "start": 162,
+      "end": 194,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-transitive-freeze-nested-function-captures.js/nested"
+      ]
+    },
+    {
+      "key": "ec7c0697a5d04f5a91161ec4d159188ca9e2f91b0876e2ce91e0ae8cc7f6a787",
+      "start": 30,
+      "end": 111,
+      "checker": true,
+      "calls": [
+        "drop_manual_memoization_deps_test.go:202"
+      ]
+    },
+    {
+      "key": "ecd6ce819bf966bdb66e76bd310441ff6b1bde170fbff4b02f1a4f124a243e21",
+      "start": 145,
+      "end": 267,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "ecff2891b353e214270c587b987f9542112f023990f8bd8abb20b082cbf8f4f1",
       "start": 0,
       "end": 57,
@@ -3294,12 +6666,44 @@
       ]
     },
     {
+      "key": "ed6fd7016083fc92eeb727bbb4745a1bae3a0c630d3a99cbd8533deb5a4ba448",
+      "start": 134,
+      "end": 269,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:preserve-memo-validation/useCallback-infer-fewer-deps.ts"
+      ]
+    },
+    {
       "key": "ed9777e82579f8d0a5b02815e088543113f86a7f3e33cd9fe24629987ab23034",
       "start": 84,
       "end": 92,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "edf6de8dd0ce190eae85046bf159d364ec8d5f56ce8d9d518b629d2cb76f2954",
+      "start": 32,
+      "end": 83,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
+      ]
+    },
+    {
+      "key": "ee304fb3baf4308b57e3992a5f6da7211c54a2db236ba84ff7e72489033c00f7",
+      "start": 222,
+      "end": 249,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutation-of-possible-props-phi-indirect.js/nested"
       ]
     },
     {
@@ -3321,6 +6725,38 @@
       ]
     },
     {
+      "key": "ef851243d328e09d752dcd11b0b0b8b1649aec220296bba4dd62b4adafea510b",
+      "start": 0,
+      "end": 121,
+      "checker": true,
+      "calls": [
+        "effects_test.go:40"
+      ]
+    },
+    {
+      "key": "efd3345146675839cd35028751b004d34f6d4371ae38e4fd07fccac4823a97cb",
+      "start": 31,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "effects_react_state_test.go:55"
+      ]
+    },
+    {
+      "key": "efdb514630a9b9b73a8fe4d445db5f6bb68b56a2695392123b9fbeee5b5fdf12",
+      "start": 280,
+      "end": 337,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:memoize-primitive-function-calls.js/nested"
+      ]
+    },
+    {
       "key": "f07c7f5290bbfc7c19fcdf6c4b9208c96de92aabf6405d8eda54bdb5baec8a7d",
       "start": 0,
       "end": 92,
@@ -3336,6 +6772,15 @@
       "checker": true,
       "calls": [
         "upstream:error.invalid-mutate-context.js"
+      ]
+    },
+    {
+      "key": "f1069001e02b8b2d724601d56fd573a56cc4cff3ae9378a29ed23d960b9b0f8f",
+      "start": 0,
+      "end": 111,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -3366,6 +6811,33 @@
       ]
     },
     {
+      "key": "f271e6dfc53645b99814364b7131d9b34e6c599989b2957cde8063fc9d502ce5",
+      "start": 95,
+      "end": 138,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
+      "key": "f2870142b04fd3c3648dd5b206ccf90d9e4ba257eaf95dde06ee8c34a4c3124f",
+      "start": 34,
+      "end": 261,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552"
+      ]
+    },
+    {
+      "key": "f2edb42549f396df77271dcaf30df1f44506c6d6b97bfd8c3991a207a58d9b8b",
+      "start": 144,
+      "end": 168,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "f375f665a6c0827f966fde854021c2e046d9c43cdea5d8f0e5357fab596ecb52",
       "start": 102,
       "end": 144,
@@ -3390,6 +6862,15 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-rules-of-hooks-9bf17c174134.js"
+      ]
+    },
+    {
+      "key": "f467cdfef5ccc19263593dec6ab51613cd9aa841eaeed6e12837fb0ddc944ce9",
+      "start": 43,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
       ]
     },
     {
@@ -3429,12 +6910,33 @@
       ]
     },
     {
+      "key": "f68229f88925f7865eb192c371ef4eb8bcd635df5cb52611902509bb67ba8063",
+      "start": 154,
+      "end": 1052,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-effect.js/nested"
+      ]
+    },
+    {
       "key": "f730ab83004be648bc2231fafebc8e2d9f2059e575e5de856a2b77b3f4aca183",
       "start": 915,
       "end": 940,
       "checker": false,
       "calls": [
         "postdominator_frontier_test.go:91/nested"
+      ]
+    },
+    {
+      "key": "f795a38176382f8bf486f326cfc56e188f189ee76c1dbc7371b74e2add33c154",
+      "start": 369,
+      "end": 441,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:dont-memoize-primitive-function-call-non-escaping.js"
       ]
     },
     {
@@ -3468,6 +6970,15 @@
       ]
     },
     {
+      "key": "f8fb42b919a00a68a026127b7b6694f09baaefc43196a96352b5730309138f07",
+      "start": 141,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested"
+      ]
+    },
+    {
       "key": "f9b978378869dc597ac98735710f306ece7669c516fa349564e14acf3995b8c9",
       "start": 244,
       "end": 254,
@@ -3489,6 +7000,17 @@
       ]
     },
     {
+      "key": "fa7ab58b871de48ad10aa2ce76bc7a3af2e0c87c6617b51ccb64826056530969",
+      "start": 197,
+      "end": 215,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "upstream:preserve-memo-validation/error.maybe-mutable-ref-not-preserved.ts/nested"
+      ]
+    },
+    {
       "key": "fafa0746261b09e16a2403e9ed1e04fb089341b2784c046714af03d822a78d9e",
       "start": 0,
       "end": 88,
@@ -3498,12 +7020,48 @@
       ]
     },
     {
+      "key": "fb86d038ea8b7536902aa7f6aad7493e51ba130f2d144acc1df6473d4cf9b353",
+      "start": 131,
+      "end": 258,
+      "checker": true,
+      "calls": [
+        "upstream:exhaustive-deps/error.invalid-missing-nonreactive-dep.js"
+      ]
+    },
+    {
+      "key": "fb985a0f31571014bca781144ceb1457f53dec44af94a9e352d2185a02b48225",
+      "start": 161,
+      "end": 188,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-props-mutation-in-effect-indirect.js/nested"
+      ]
+    },
+    {
+      "key": "fbb8949859e92d15b4cfeedf219b025d5fac7814e190054bd98653ee51087c93",
+      "start": 32,
+      "end": 89,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
       "key": "fccae44348258a1170e0aff79c166b3a49093fa0b3a84fd80ffb50761d629b22",
       "start": 0,
       "end": 242,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-rules-of-hooks-9718e30b856c.js"
+      ]
+    },
+    {
+      "key": "fcdfef7927d2184eccde88104592516ef13132cd43413a8264cc23c9d6b97581",
+      "start": 33,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "effects_custom_hooks_test.go:47"
       ]
     },
     {
@@ -3522,6 +7080,15 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-rules-of-hooks-d85c144bdf40.js"
+      ]
+    },
+    {
+      "key": "fd993df083a159a51778762a089f9e3446101165e20e21cdf6009dcce067bde0",
+      "start": 51,
+      "end": 105,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
       ]
     },
     {
@@ -3561,6 +7128,20 @@
       ]
     },
     {
+      "key": "fdf6e2f2762e942f946ce0e23d3257f4145f3ebb03a0d68e314a97dbb3d9e399",
+      "start": 795,
+      "end": 886,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455",
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "scope_oracle_test.go:200",
+        "upstream:repro-preserve-memoization-inner-destructured-value-mistaken-as-dependency.js"
+      ]
+    },
+    {
       "key": "fe0473bc5577f2bca2722f12870b3243feb7472c747963cf936325efc934ecb8",
       "start": 192,
       "end": 201,
@@ -3573,12 +7154,71 @@
       ]
     },
     {
+      "key": "fe3cb68a4609d2691125ee9d2e93e5ba5d5a5ad265062f8af1d609d78b12777c",
+      "start": 185,
+      "end": 208,
+      "checker": true,
+      "calls": [
+        "preserve_manual_memoization_score_test.go:552/nested/nested"
+      ]
+    },
+    {
+      "key": "fe469977981015963b727a43f47eeb7208e1b0c7a98b624e17c8510c6f3addda",
+      "start": 26,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:52"
+      ]
+    },
+    {
+      "key": "fe53894e7ab5e5806669bf1a7abbf8d90a2b7b058cbbdff7c6f0b8cd0e72fa7e",
+      "start": 209,
+      "end": 253,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-nested-function-reassign-local-variable-in-effect.js/nested/nested"
+      ]
+    },
+    {
+      "key": "fe594d05ba8956987439716e4c85771d4fcf5e3da08406f868675a28768d6850",
+      "start": 40,
+      "end": 133,
+      "checker": true,
+      "calls": [
+        "upstream:error.hook-ref-value.js"
+      ]
+    },
+    {
       "key": "fe9406266e7499254b9187451f673cc70d2f01be50317a71a02723a7a5571cf2",
       "start": 0,
       "end": 225,
       "checker": true,
       "calls": [
         "upstream:new-mutability/error.todo-repro-named-function-with-shadowed-local-same-name.js"
+      ]
+    },
+    {
+      "key": "feefd984e5e141304b9583271633dd1b54bb704e8c03062d031f7447398592cc",
+      "start": 74,
+      "end": 103,
+      "checker": true,
+      "calls": [
+        "invoked_functions_test.go:29/nested"
+      ]
+    },
+    {
+      "key": "ff04c3047bef550a1963ac9cb3ba05474d6c2a79c606eec8314a86da29b84fa2",
+      "start": 164,
+      "end": 229,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:preserve-memo-validation/useMemo-inner-decl.ts/nested"
       ]
     }
   ],

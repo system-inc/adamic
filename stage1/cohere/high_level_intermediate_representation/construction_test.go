@@ -222,7 +222,7 @@ var constructionMutants = []constructionMutant{
 	{"capture read becomes local", "lower.ts", "kind: 'LoadContext', place:", "kind: 'LoadLocal', place:"},
 	{"capture pairing loses outer value", "lower.ts", "const place = this.locals.get(symbol) ?? this.captureOf(symbol);", "const place = this.fn.returns;"},
 	{"contextual outer writes become local", "lower.ts", "kind: this.contextual.has(symbol) ? 'StoreContext' : 'StoreLocal'", "kind: 'StoreLocal'"},
-	{"context declaration registration disappears", "lower.ts", "this.fn.contextDeclarations.add((this.fn.identifiers[place.identifier] ?? panic('missing context identifier')).declaration);", "this.fn.contextDeclarations.has((this.fn.identifiers[place.identifier] ?? panic('missing context identifier')).declaration);"},
+	{"context declaration registration disappears", "lower.ts", "this.fn.contextDeclarations.add(this.fn.identifier(place.identifier).declaration);", "this.fn.contextDeclarations.has(this.fn.identifier(place.identifier).declaration);"},
 	{"hoisted function becomes ordinary let", "lower.ts", "value, declarationKind: 6 }, id, undefined);", "value, declarationKind: 1 }, id, undefined);"},
 
 	{"optional call becomes unconditional", "lower.ts", "const optional = node.children.some((child) => this.parser.node(child).kind === 'QuestionDotToken');", "const optional = false;"},
@@ -362,16 +362,23 @@ func checkArenaIndexMutant(t *testing.T, root, lane, manifest string) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if filepath.Base(file) == "lower.ts" {
-			from := "this.fn.functions.push(builder.functionIndex);"
-			if strings.Count(string(data), from) != 1 {
-				t.Fatal("arena mutant anchor moved")
-			}
-			data = []byte(strings.Replace(string(data), from, "this.fn.functions.push(builder.functionIndex + 1);", 1))
-		}
+		// Every copied module imports the same mutated home, preserving nominal identity.
+		data = []byte(strings.ReplaceAll(string(data), "../arena/arena_index.a", "./arena_index.a"))
 		if err := os.WriteFile(filepath.Join(directory, filepath.Base(file)), data, 0600); err != nil {
 			t.Fatal(err)
 		}
+	}
+	indices, err := os.ReadFile(filepath.Join(root, "stage1/cohere/arena/arena_index.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	from := "new FunctionIndex(arena.length)"
+	if strings.Count(string(indices), from) != 1 {
+		t.Fatal("arena minting mutant anchor moved")
+	}
+	indices = []byte(strings.Replace(string(indices), from, "new FunctionIndex(arena.length + 1)", 1))
+	if err := os.WriteFile(filepath.Join(directory, "arena_index.a"), indices, 0600); err != nil {
+		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "arena-mutant")
 	command(t, root, nil, "go", "run", "./cmd/adamic", "build", filepath.Join(directory, "main.ts"), "-o", binary)
@@ -382,7 +389,7 @@ func checkArenaIndexMutant(t *testing.T, root, lane, manifest string) {
 		if err == nil {
 			t.Fatal("off-by-one arena index did not stop")
 		}
-		if !strings.Contains(string(output), "function index") || !strings.Contains(string(output), "out of range") {
+		if !strings.Contains(string(output), "FunctionIndex") || !strings.Contains(string(output), "out of range") {
 			t.Fatalf("index mutant stopped for the wrong reason: %s", output)
 		}
 	}
@@ -401,7 +408,7 @@ func TestArenaIndexBrands(t *testing.T) {
 	}
 	defer os.RemoveAll(directory)
 	// Import the production index types: they must be incompatible at the checker boundary.
-	source := "import type { FunctionIndex, BlockIndex } from '../high_level_intermediate_representation/core.ts';\nconst fn: FunctionIndex = 0;\nconst wrong: BlockIndex = fn;\nconsole.log(`${wrong}`);\n"
+	source := "import { FunctionIndex, BlockIndex } from '../arena/arena_index.a';\nconst functions: FunctionIndex[] = [];\nconst fn = FunctionIndex.push(functions);\nconst wrong: BlockIndex = fn;\nconsole.log(`${wrong.slot}`);\n"
 	entry := filepath.Join(directory, "main.ts")
 	if err := os.WriteFile(entry, []byte(source), 0600); err != nil {
 		t.Fatal(err)
@@ -409,8 +416,37 @@ func TestArenaIndexBrands(t *testing.T) {
 	c := exec.Command("go", "run", "./cmd/adamic", "build", entry, "-o", filepath.Join(t.TempDir(), "wrong-brand"))
 	c.Dir = root
 	output, err := c.CombinedOutput()
-	if err == nil || !strings.Contains(string(output), "not assignable to type 'BlockIndex'") {
+	if err == nil || !strings.Contains(string(output), "nominal ancestry") {
 		t.Fatalf("FunctionIndex accepted as BlockIndex or wrong refusal: %v\n%s", err, output)
 	}
 	_ = lane
+}
+
+func TestArenaOwnerIdentity(t *testing.T) {
+	root, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	lane := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation")
+	directory, err := os.MkdirTemp(filepath.Dir(lane), "hir-foreign-index-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(directory)
+	source := "import { HIRArena } from '../high_level_intermediate_representation/core.ts';\nconst first = new HIRArena(); first.create('First');\nconst second = new HIRArena(); const foreign = second.create('Second');\nconsole.log(first.read(foreign).name);\n"
+	entry := filepath.Join(directory, "main.ts")
+	if err := os.WriteFile(entry, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "foreign-index")
+	command(t, root, nil, "go", "run", "./cmd/adamic", "build", entry, "-o", binary)
+	for _, args := range [][]string{{"node", "--no-warnings", "oracle/node.mjs", entry}, {binary}} {
+		c := exec.Command(args[0], args[1:]...)
+		c.Dir = root
+		output, err := c.CombinedOutput()
+		if err == nil || !strings.Contains(string(output), "FunctionIndex belongs to another arena") {
+			t.Fatalf("same-slot foreign index was accepted: %v\n%s", err, output)
+		}
+	}
+	t.Log("same-slot index from another HIRArena is rejected on Node and native")
 }

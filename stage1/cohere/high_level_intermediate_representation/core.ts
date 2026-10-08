@@ -1,12 +1,8 @@
 import { panic } from 'adamic';
 // Go high_level_intermediate_representation.go: owned tables and function-local IDs.
 import type { BlockIdType, IdentifierIdType, DeclarationIdType, EvaluationOrderType, PhiInterface } from '../static_single_assignment/static_single_assignment.ts';
-export enum FunctionIndex { First = 0 }
-export enum BlockIndex { Entry = 1 }
-export enum InstructionIndex { First = 0 }
-export enum IdentifierIndex { First = 0 }
-export enum DeclarationIndex { First = 1 }
-export function blockIndex(value: number): BlockIndex { if(!Number.isInteger(value) || value < 1) { panic(`invalid block index ${value}`); } const index: BlockIndex = value; return index; }
+import { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex } from '../arena/arena_index.a';
+export { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex } from '../arena/arena_index.a';
 export type EffectType = '<unknown>' | 'freeze' | 'read' | 'capture' | 'mutate-iterator?' | 'mutate?' | 'mutate' | 'store';
 export interface PlaceInterface {
     readonly identifier: IdentifierIndex;
@@ -84,6 +80,7 @@ export interface TerminalType {
 export function testPlace(terminal: TerminalType): PlaceInterface { return terminal.testPlace ?? panic('terminal requires a test place'); }
 export function testBlock(terminal: TerminalType): BlockIndex { return terminal.testBlock ?? panic('terminal requires a test block'); }
 export class BasicBlock {
+    readonly arenaIndices: readonly BlockIndex[];
     readonly id: BlockIndex;
     readonly instructions: InstructionIndex[] = [];
     predecessors: readonly BlockIndex[] = [];
@@ -91,64 +88,87 @@ export class BasicBlock {
     terminal: TerminalType;
     readonly kind: string;
     terminalOrder: EvaluationOrderType = 0;
-    constructor(id: BlockIndex, terminal: TerminalType, kind: string = 'block') { this.id = id; this.terminal = terminal; this.kind = kind; }
+    constructor(arenaIndices: readonly BlockIndex[], id: BlockIndex, terminal: TerminalType, kind: string = 'block') { this.arenaIndices = arenaIndices; this.id = id; this.terminal = terminal; this.kind = kind; }
 }
 export class HIRFunction {
     readonly name: string;
     readonly kind: string;
-    readonly entry: BlockIndex = blockIndex(1);
+    readonly blockIndices: BlockIndex[] = [];
+    readonly instructionIndices: InstructionIndex[] = [];
+    readonly identifierIndices: IdentifierIndex[] = [];
+    readonly declarationIndices: DeclarationIndex[] = [];
+    readonly entry: BlockIndex;
     readonly blockTable: BasicBlock[] = [];
     blockOrder: BlockIndex[] = [];
     readonly retained: Set<number> = new Set<number>();
-    nextBlock = 2;
     readonly instructions: Instruction[] = [];
     readonly identifiers: IdentifierInterface[] = [];
+    get nextBlock(): number { return this.blockIndices.length + 1; }
     readonly params: PlaceInterface[] = [];
     readonly context: PlaceInterface[] = [];
     readonly functions: FunctionIndex[] = [];
-    readonly contextDeclarations: Set<number> = new Set<number>();
+    readonly contextDeclarations: Set<DeclarationIndex> = new Set<DeclarationIndex>();
     returns: PlaceInterface;
     constructor(name: string) {
         this.name = name;
         const first = name.charCodeAt(0);
         const next = name.charCodeAt(3);
         this.kind = first >= 65 && first <= 90 ? 'component' : name.startsWith('use') && ((next >= 65 && next <= 90) || (next >= 48 && next <= 57)) ? 'hook' : 'other';
-        this.returns = { identifier: 0, effect: '<unknown>', reactive: false, start: 0, end: 0 };
-        this.blockTable.push(new BasicBlock(blockIndex(1), { kind: 'Return', value: this.returns }));
-        this.blockOrder.push(blockIndex(1)); this.retained.add(1);
-        this.identifiers.push({ id: 0, declaration: 1, name: '' });
-
+        const identifier = IdentifierIndex.push(this.identifierIndices);
+        const declaration = DeclarationIndex.push(this.declarationIndices);
+        this.identifiers.push({ id: identifier, declaration, name: '' });
+        this.returns = { identifier, effect: '<unknown>', reactive: false, start: 0, end: 0 };
+        this.entry = BlockIndex.push(this.blockIndices);
+        this.blockTable.push(new BasicBlock(this.blockIndices, this.entry, { kind: 'Return', value: this.returns }));
+        this.blockOrder.push(this.entry); this.retained.add(1);
     }
-    named(name: string, start: number, end: number, declaration: number = 0): PlaceInterface {
-        const id = this.identifiers.length;
-        this.identifiers.push({ id, declaration: declaration === 0 ? id + 1 : declaration, name });
+    named(name: string, start: number, end: number, declaration: DeclarationIndex | undefined = undefined): PlaceInterface {
+        const id = IdentifierIndex.push(this.identifierIndices);
+        const fresh = DeclarationIndex.push(this.declarationIndices);
+        const declared = declaration ?? fresh;
+        DeclarationIndex.read(this.declarationIndices, declared);
+        this.identifiers.push({ id, declaration: declared, name });
         return { identifier: id, effect: '<unknown>', reactive: false, start, end };
     }
     newBlock(kind: string): BasicBlock {
-        const block = new BasicBlock(blockIndex(this.nextBlock), { kind: 'Unreachable' }, kind);
-        this.nextBlock++;
-        this.blockTable.push(block); this.blockOrder.push(block.id); this.retained.add(block.id);
-        return block;
+        const id = BlockIndex.push(this.blockIndices);
+        const block = new BasicBlock(this.blockIndices, id, { kind: 'Unreachable' }, kind);
+        this.blockTable.push(block); this.blockOrder.push(id); this.retained.add(id.slot + 1); return block;
     }
-    block(id: BlockIndex): BasicBlock {
-        if(!Number.isInteger(id) || id < 1 || id > this.blockTable.length) { panic(`block index ${id} out of range`); }
-        return this.blockTable[id - 1] ?? panic('missing arena block');
+    blockAt(value: number): BlockIndex {
+        if(!Number.isInteger(value) || value < 1) { panic('invalid SSA block id'); }
+        const index = this.blockIndices[value - 1] ?? panic('SSA block id out of range'); BlockIndex.read(this.blockIndices, index); return index;
     }
-    temporary(start: number, end: number, declaration: number = 0): PlaceInterface {
-        const id = this.identifiers.length;
-        this.identifiers.push({ id, declaration: declaration === 0 ? id + 1 : declaration, name: '' });
-        return { identifier: id, effect: '<unknown>', reactive: false, start, end };
+    identifierAt(value: number): IdentifierIndex {
+        if(!Number.isInteger(value) || value < 0) { panic('invalid SSA identifier id'); }
+        const index = this.identifierIndices[value] ?? panic('SSA identifier id out of range'); IdentifierIndex.read(this.identifierIndices, index); return index;
     }
+    declarationAt(value: number): DeclarationIndex {
+        if(!Number.isInteger(value) || value < 1) { panic('invalid SSA declaration id'); }
+        const index = this.declarationIndices[value - 1] ?? panic('SSA declaration id out of range'); DeclarationIndex.read(this.declarationIndices, index); return index;
+    }
+    block(id: BlockIndex): BasicBlock { return this.blockTable[BlockIndex.read(this.blockIndices, id)] ?? panic('missing arena block'); }
+    identifier(id: IdentifierIndex): IdentifierInterface { return this.identifiers[IdentifierIndex.read(this.identifierIndices, id)] ?? panic('missing arena identifier'); }
+    instruction(id: InstructionIndex): Instruction { return this.instructions[InstructionIndex.read(this.instructionIndices, id)] ?? panic('missing arena instruction'); }
+    temporary(start: number, end: number, declaration: DeclarationIndex | undefined = undefined): PlaceInterface { return this.named('', start, end, declaration); }
+    mint(original: IdentifierIndex): IdentifierIndex {
+        const old = this.identifier(original); const id = IdentifierIndex.push(this.identifierIndices);
+        this.identifiers.push({ id, declaration: old.declaration, name: old.name }); return id;
+    }
+    emit(place: PlaceInterface, value: ValueType, start: number, end: number): InstructionIndex {
+        const id = InstructionIndex.push(this.instructionIndices);
+        this.instructions.push(new Instruction(id, place, value, start, end)); return id;
+    }
+
 }
 
 // The graph owner is the only escaping result. Nodes contain indices, never arena links.
 export class HIRArena {
     private readonly nodes: HIRFunction[] = [];
-    create(name: string): FunctionIndex { const index: FunctionIndex = this.nodes.length; this.nodes.push(new HIRFunction(name)); return index; }
-    read(index: FunctionIndex): HIRFunction {
-        if(!Number.isInteger(index) || index < 0 || index >= this.nodes.length) { panic(`function index ${index} out of range`); }
-        return this.nodes[index] ?? panic('missing arena function');
-    }
+    private readonly indices: FunctionIndex[] = [];
+    create(name: string): FunctionIndex { const index = FunctionIndex.push(this.indices); this.nodes.push(new HIRFunction(name)); return index; }
+    read(index: FunctionIndex): HIRFunction { return this.nodes[FunctionIndex.read(this.indices, index)] ?? panic('missing arena function'); }
+
 }
 export class ConstructedHIR {
     readonly arena: HIRArena;

@@ -2,32 +2,32 @@ import { testPlace } from './core.ts';
 import { panic } from 'adamic';
 import type { ConstructedHIR, HIRArena, FunctionIndex, HIRFunction, PlaceInterface, Instruction, TerminalType } from './core.ts';
 export function placeText(place: PlaceInterface): string {
-    return `${place.identifier}:${place.effect}:${place.reactive ? 1 : 0}:${place.start}:${place.end}`;
+    return `${place.identifier.slot}:${place.effect}:${place.reactive ? 1 : 0}:${place.start}:${place.end}`;
 }
 export function dump(graph: ConstructedHIR): string { return dumpFunction(graph.arena, graph.root); }
 function dumpFunction(arena: HIRArena, index: FunctionIndex): string {
     const fn = arena.read(index);
-    let out = `hir-v1\nfunction ${fn.name} ${fn.kind} entry=${fn.entry} async=0 generator=0\n`;
+    let out = `hir-v1\nfunction ${fn.name} ${fn.kind} entry=${fn.entry.slot + 1} async=0 generator=0\n`;
     out += `params ${fn.params.map((place) => placeText(place)).join(',')}\ncontext ${fn.context.map((place) => placeText(place)).join(',')}\nreturns ${placeText(fn.returns)}\n`;
-    for(const identifier of fn.identifiers) { out += `identifier ${identifier.id} ${identifier.declaration} ${identifier.name}\n`; }
+    for(const identifier of fn.identifiers) { out += `identifier ${identifier.id.slot} ${identifier.declaration.slot + 1} ${identifier.name}\n`; }
     const seen = new Map<number, boolean>();
     for(const blockId of fn.blockOrder) {
         const block = fn.block(blockId);
-        out += `block ${block.id} ${block.kind} predecessors=${block.predecessors.join(',')}\n`;
+        out += `block ${block.id.slot + 1} ${block.kind} predecessors=${block.predecessors.map((index) => index.slot + 1).join(',')}\n`;
         for(const phi of block.phis) {
             out += `phi ${placeText(phi.place)}`;
             for(const operand of phi.operands) { out += ` ${operand.predecessor}=${placeText(operand.place)}`; }
             out += '\n';
         }
         for(const id of block.instructions) {
-            const instruction = fn.instructions[id] ?? panic('missing instruction');
-            seen.set(id, true);
+            const instruction = fn.instruction(id);
+            seen.set(id.slot, true);
             out += instructionText(instruction, arena, fn);
         }
         out += `terminal ${block.terminalOrder} ${block.terminal.kind} ${terminalText(block.terminal)}\n`;
     }
-    for(const instruction of fn.instructions) { if(!seen.has(instruction.id)) { out += 'orphan ' + instructionText(instruction, arena, fn); } }
-    if(fn.contextDeclarations.size > 0) { out += `context-declarations [${[...fn.contextDeclarations].sort((a, b) => a - b).join(' ')}]\n`; }
+    for(const instruction of fn.instructions) { if(!seen.has(instruction.id.slot)) { out += 'orphan ' + instructionText(instruction, arena, fn); } }
+    if(fn.contextDeclarations.size > 0) { out += `context-declarations [${[...fn.contextDeclarations].map((index) => index.slot + 1).sort((a, b) => a - b).join(' ')}]\n`; }
     for(let index = 0; index < fn.functions.length; index++) { out += `nested ${index}\n${dumpFunction(arena, fn.functions[index] ?? panic('missing nested'))}`; }
     out += 'scopes -\nend\n';
     return out;
@@ -92,22 +92,22 @@ function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunct
             else { payload = `{"Args":${args},"CalleeOrigin":${origin},"Optional":${value.optional ? 'true' : 'false'},"Property":${quote(placeText(value.property))},"Receiver":${quote(placeText(value.receiver))}}`; }
         }
     }
-    return `instruction ${instruction.id} ${instruction.order} ${placeText(instruction.lvalue)} ${instruction.start}:${instruction.end} ${instruction.value.kind} ${payload}\n`;
+    return `instruction ${instruction.id.slot} ${instruction.order} ${placeText(instruction.lvalue)} ${instruction.start}:${instruction.end} ${instruction.value.kind} ${payload}\n`;
 }
 
 function terminalText(terminal: TerminalType): string {
     if(terminal.kind === 'Return') { return placeText(terminal.value ?? panic('missing terminal value')); }
     if(terminal.kind === 'Throw') { return `{"Value":${quote(placeText(terminal.value ?? panic('missing terminal value')))}}`; }
-    if(terminal.kind === 'Goto') { return `{"Block":${terminal.block},"Variant":${terminal.variant}}`; }
-    if(terminal.kind === 'If' || terminal.kind === 'Branch') { return `{"Alternate":${terminal.alternate},"Consequent":${terminal.consequent},"Fallthrough":${terminal.fallthrough},"Test":${quote(placeText(testPlace(terminal)))}}`; }
-    if(terminal.kind === 'Logical') { return `{"Fallthrough":${terminal.fallthrough},"Operator":${quote(terminal.operator ?? panic('missing logical operator'))},"Test":${terminal.testBlock}}`; }
-    if(terminal.kind === 'Ternary') { return `{"Fallthrough":${terminal.fallthrough},"Test":${terminal.testBlock}}`; }
-    if(terminal.kind === 'While' || terminal.kind === 'DoWhile') { return `{"Fallthrough":${terminal.fallthrough},"Loop":${terminal.loop},"Test":${terminal.testBlock}}`; }
-    if(terminal.kind === 'For') { return `{"Fallthrough":${terminal.fallthrough},"Init":${terminal.init},"Loop":${terminal.loop},"Test":${terminal.testBlock},"Update":${terminal.update ?? 0}}`; }
-    if(terminal.kind === 'ForOf') { return `{"Fallthrough":${terminal.fallthrough},"Init":${terminal.init},"Loop":${terminal.loop},"Test":${terminal.testBlock}}`; }
-    if(terminal.kind === 'ForIn') { return `{"Fallthrough":${terminal.fallthrough},"Init":${terminal.init},"Loop":${terminal.loop}}`; }
-    if(terminal.kind === 'Label') { return `{"Block":${terminal.block},"Fallthrough":${terminal.fallthrough}}`; }
-    if(terminal.kind === 'Try') { return `{"Block":${terminal.block},"Fallthrough":${terminal.fallthrough},"Handler":${terminal.handler},"HandlerBinding":${terminal.handlerBinding === undefined ? 'null' : quote(placeText(terminal.handlerBinding))}}`; }
-    if(terminal.kind === 'Switch') { const cases = (terminal.cases ?? panic('missing cases')).map((clause) => `{"Block":${clause.block},"Test":${clause.test === undefined ? 'null' : quote(placeText(clause.test))}}`).join(','); return `{"Cases":[${cases}],"Fallthrough":${terminal.fallthrough},"Test":${quote(placeText(testPlace(terminal)))}}`; }
+    if(terminal.kind === 'Goto') { return `{"Block":${(terminal.block ?? panic('missing terminal index')).slot + 1},"Variant":${terminal.variant}}`; }
+    if(terminal.kind === 'If' || terminal.kind === 'Branch') { return `{"Alternate":${(terminal.alternate ?? panic('missing terminal index')).slot + 1},"Consequent":${(terminal.consequent ?? panic('missing terminal index')).slot + 1},"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Test":${quote(placeText(testPlace(terminal)))}}`; }
+    if(terminal.kind === 'Logical') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Operator":${quote(terminal.operator ?? panic('missing logical operator'))},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
+    if(terminal.kind === 'Ternary') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
+    if(terminal.kind === 'While' || terminal.kind === 'DoWhile') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Loop":${(terminal.loop ?? panic('missing terminal index')).slot + 1},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
+    if(terminal.kind === 'For') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Init":${(terminal.init ?? panic('missing terminal index')).slot + 1},"Loop":${(terminal.loop ?? panic('missing terminal index')).slot + 1},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1},"Update":${terminal.update === undefined ? 0 : terminal.update.slot + 1}}`; }
+    if(terminal.kind === 'ForOf') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Init":${(terminal.init ?? panic('missing terminal index')).slot + 1},"Loop":${(terminal.loop ?? panic('missing terminal index')).slot + 1},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
+    if(terminal.kind === 'ForIn') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Init":${(terminal.init ?? panic('missing terminal index')).slot + 1},"Loop":${(terminal.loop ?? panic('missing terminal index')).slot + 1}}`; }
+    if(terminal.kind === 'Label') { return `{"Block":${(terminal.block ?? panic('missing terminal index')).slot + 1},"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1}}`; }
+    if(terminal.kind === 'Try') { return `{"Block":${(terminal.block ?? panic('missing terminal index')).slot + 1},"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Handler":${(terminal.handler ?? panic('missing terminal index')).slot + 1},"HandlerBinding":${terminal.handlerBinding === undefined ? 'null' : quote(placeText(terminal.handlerBinding))}}`; }
+    if(terminal.kind === 'Switch') { const cases = (terminal.cases ?? panic('missing cases')).map((clause) => `{"Block":${clause.block.slot + 1},"Test":${clause.test === undefined ? 'null' : quote(placeText(clause.test))}}`).join(','); return `{"Cases":[${cases}],"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Test":${quote(placeText(testPlace(terminal)))}}`; }
     return '{}';
 }

@@ -1,6 +1,6 @@
 // Construction slice of lower.go / lower_expression.go. Other paths are explicit declines.
 import { panic, utf8Length } from 'adamic';
-import { HIRFunction, Instruction, BasicBlock, HIRArena, ConstructedHIR, blockIndex } from './core.ts';
+import { HIRFunction, Instruction, BasicBlock, HIRArena, ConstructedHIR } from './core.ts';
 import { SymbolSnapshot } from './symbol.ts';
 import { ExportResolver, emptyOrigin } from './export_origin.ts';
 import type { OriginInterface } from './export_origin.ts';
@@ -204,7 +204,7 @@ class StraightLineBuilder {
         const captures: PlaceInterface[] = [];
         for(const symbol of builder.captureSymbols) {
             const place = this.locals.get(symbol) ?? this.captureOf(symbol);
-            captures.push(place === undefined ? { identifier: 0, effect: '<unknown>', reactive: false, start: 0, end: 0 } : { identifier: place.identifier, effect: '<unknown>', reactive: false, start: 0, end: 0 });
+            captures.push(place === undefined ? { identifier: this.fn.returns.identifier, effect: '<unknown>', reactive: false, start: 0, end: 0 } : { identifier: place.identifier, effect: '<unknown>', reactive: false, start: 0, end: 0 });
         }
         const functionId = this.fn.functions.length;
         this.fn.functions.push(builder.functionIndex);
@@ -214,7 +214,7 @@ class StraightLineBuilder {
         const node = this.parser.node(id);
         const symbol = this.identity(id);
         const old = this.locals.get(symbol);
-        const declaration = old === undefined || symbol === 0 ? 0 : (this.fn.identifiers[old.identifier] ?? panic('missing local')).declaration;
+        const declaration = old === undefined || symbol === 0 ? undefined : this.fn.identifier(old.identifier).declaration;
         const place = this.fn.named(node.text, this.byte(node.pos), this.byte(node.end), declaration);
         if(symbol !== 0) { this.locals.set(symbol, place); }
         return place;
@@ -254,7 +254,7 @@ class StraightLineBuilder {
             const symbol = this.identity(id);
             if(this.locals.has(symbol)) {
                 const place = this.bind(id);
-                if(this.contextual.has(symbol)) { this.fn.contextDeclarations.add((this.fn.identifiers[place.identifier] ?? panic('missing context identifier')).declaration); }
+                if(this.contextual.has(symbol)) { this.fn.contextDeclarations.add(this.fn.identifier(place.identifier).declaration); }
                 this.emit({ kind: this.contextual.has(symbol) ? 'StoreContext' : 'StoreLocal', lvalue: place, value, declarationKind: 2 }, id, undefined);
             }
             else {
@@ -432,7 +432,7 @@ class StraightLineBuilder {
         const consequent = logical === undefined || swapped ? first : second;
         const alternate = logical === undefined || swapped ? second : first;
         this.close({ kind: 'Branch', testPlace: left, consequent: consequent.id, alternate: alternate.id, fallthrough: fallthrough.id });
-        const shared = (this.fn.identifiers[result.identifier] ?? panic('missing result')).declaration;
+        const shared = this.fn.identifier(result.identifier).declaration;
         this.current = first;
         const firstNode = node.children[logical === undefined ? 2 : 0] ?? -1;
         const firstValue = logical === undefined ? this.expression(firstNode) : left;
@@ -453,17 +453,16 @@ class StraightLineBuilder {
         const end = this.byte(node.end);
         const place = target ?? this.fn.temporary(start, end);
         const block = this.ensureBlock();
-        block.instructions.push(this.fn.instructions.length);
-        this.fn.instructions.push(new Instruction(this.fn.instructions.length, place, value, start, end));
+        block.instructions.push(this.fn.emit(place, value, start, end));
         return place;
     }
     resolvedOrigin(id: number, resolver: ExportResolver): OriginInterface {
         const node = this.parser.node(id);
         if(['ParenthesizedExpression', 'AsExpression', 'TypeAssertionExpression', 'NonNullExpression', 'SatisfiesExpression'].includes(node.kind)) { return this.resolvedOrigin(node.children[0] ?? -1, resolver); }
-        if(node.kind === 'Identifier') { if(this.symbols === undefined) { return emptyOrigin; } const index = this.symbols.read(this.byte(node.pos), this.byte(node.end)).identity; return resolver.symbol(index); }
+        if(node.kind === 'Identifier') { if(this.symbols === undefined) { return emptyOrigin; } const index = this.symbols.read(this.byte(node.pos), this.byte(node.end)).identity; return resolver.symbol(resolver.graph.symbolReference(index)); }
         if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
             const receiver = this.resolvedOrigin(node.children[0] ?? -1, resolver); const property = this.parser.node(node.children[1] ?? -1);
-            if(receiver.module !== 0 && (receiver.name === '*' || receiver.name === 'default') && property.text !== '' && (node.kind === 'PropertyAccessExpression' || property.kind === 'StringLiteral' || property.kind === 'NoSubstitutionTemplateLiteral')) { return resolver.export(receiver.module, property.text); }
+            if(receiver.module !== undefined && (receiver.name === '*' || receiver.name === 'default') && property.text !== '' && (node.kind === 'PropertyAccessExpression' || property.kind === 'StringLiteral' || property.kind === 'NoSubstitutionTemplateLiteral')) { return resolver.export(receiver.module, property.text); }
         }
         return emptyOrigin;
     }
@@ -472,7 +471,7 @@ class StraightLineBuilder {
     exportOrigin(id: number, active: Set<number>): ModuleExportOriginInterface {
         if(this.symbols?.graph !== undefined) {
             const resolver = new ExportResolver(this.symbols.graph, 'react'); const origin = this.resolvedOrigin(id, resolver);
-            return origin.module !== 0 && resolver.graph.module(origin.module).name === 'react' ? { module: 'react', exported: origin.name } : { module: '', exported: '' };
+            return origin.module !== undefined && resolver.graph.module(origin.module).name === 'react' ? { module: 'react', exported: origin.name } : { module: '', exported: '' };
         }
         const empty: ModuleExportOriginInterface = { module: '', exported: '' };
         if(this.symbols === undefined) { return empty; }
@@ -544,7 +543,7 @@ class StraightLineBuilder {
             const elements: ArrayElementInterface[] = [];
             for(const child of node.children) {
                 const element = this.parser.node(child);
-                if(element.kind === 'OmittedExpression') { elements.push({ place: { identifier: 0, effect: '<unknown>', reactive: false, start: 0, end: 0 }, spread: false, hole: true }); }
+                if(element.kind === 'OmittedExpression') { elements.push({ place: { identifier: this.fn.returns.identifier, effect: '<unknown>', reactive: false, start: 0, end: 0 }, spread: false, hole: true }); }
                 else { elements.push({ place: this.expression(element.kind === 'SpreadElement' ? element.children[0] ?? -1 : child), spread: element.kind === 'SpreadElement', hole: false }); }
             }
             return this.emit({ kind: 'ArrayExpression', elements }, id, undefined);

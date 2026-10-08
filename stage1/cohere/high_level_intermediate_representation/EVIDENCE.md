@@ -490,3 +490,85 @@ free `push` let callers mint handles outside a concrete arena, still violating t
 ruling that only an arena’s own allocator may construct indices."
 A compiler fix for static generic specialization, or an explicitly authorized
 minting interface, is needed before the shared-home and HIR replacement can land.
+
+## Concrete shared arena ruling and native certificate (Oct 8)
+
+@system_adamic's 07:57 amendment closes the enum blocker by representation:
+one concrete index class per graph/domain, each with a readonly slot and a private
+constructor. Minting is its own static push into the arena's handle table. Absence
+is undefined. All classes live side by side in stage1/cohere/arena/arena_index.a;
+its header reserves the CFG helper's slot and names the later all-call-sites
+collapse to ArenaIndex<Tag>, without shims, once enclosing-type-parameter generic
+instantiation lands. Neither rejected public-constructor alternative was applied.
+
+The independent module branch stage1-arena/index starts at
+origin/area/stage1-lint (1f9e223d). Commit ed236663 was pushed once after
+`go test -v -count=1 ./stage1/cohere/arena` passed on that base in 291 seconds.
+The small driver agrees on Node/native for slots 0, 1 and 2 and an undefined
+absence. A private-mint +1 mutant compiles and stops at the checked read on both.
+The checker rejects direct construction with TS2673; Adamic rejects BlockIndex
+as FunctionIndex with `adamic/nominal-class`. This commit is merged into HIR at
+5d7f3077. The branch contains only the shared source, its small Go test and driver.
+
+HIR now imports all eight classes: FunctionIndex, BlockIndex, InstructionIndex,
+IdentifierIndex, DeclarationIndex, SymbolIndex, ModuleIndex and ExpressionIndex.
+There are no production enum-branded HIR indices or unchecked casts. Node arrays
+retain canonical handle tables. Every node read validates bounds and ownership;
+SSA projections validate the same ownership before exposing numeric IDs to the
+imported SSA module. That module's numeric records and checker wire IDs are external
+protocol boundaries, not constructors for new handles. Wire zero decodes to
+undefined; Go's valid entry block 1 projects from canonical slot 0. Identifier 0 is
+a real allocated return identifier, not an absence sentinel. Declaration allocation
+preserves gaps caused by reused source declarations; SSA minting reuses declaration
+handles. The per-function SSA adapter closes over its owner for withIdentifier,
+whose imported interface has no function argument. No SSA algorithm was copied.
+
+Complete direct native output and counted native output match Node and the unchanged
+Go census byte for byte: 748/1,465 original functions and 56/56 probes (804/1,521
+raw). Node coverage adds zero here because the grammar did not change; native
+increases by 368 to meet Node. Flow exclusions remain 23 corpus graphs and 40 of
+395 upstream fixtures. `TestArenaOwnerIdentity` additionally proves that a valid
+same-slot FunctionIndex from a different HIRArena stops on both backends instead
+of selecting an unrelated function. Generic static allocation is still a compiler
+lesson for the later collapse; it is no longer a production blocker.
+
+Counted comparison uses exactly the existing 12-function testdata/corpus.txt on
+both implementations; stdout is byte-identical. Before conversion at a421b0ec:
+allocations/frees 3,212, retains 12,895, releases 12,073, peak live 175, regions 0.
+After concrete wrappers and ownership checks: allocations/frees 3,869 (+657),
+retains 15,063 (+2,168), releases 13,978 (+1,905), peak live 199 (+24), regions 0.
+This is the conversion's total cost, including wrappers, handle tables and
+per-function adapter closures, not an isolated per-box benchmark. The brand is
+retained. The complete counted admitted census reports allocations/frees
+1,573,598, retains 6,361,715, releases 6,283,915, peak live 7,694, regions 0.
+Both counted runs free every allocation. Commands: `go run ./cmd/adamic build
+stage1/cohere/high_level_intermediate_representation/main.ts -o <binary> --count`,
+then `<binary> testdata/corpus.txt` or `<binary> --coverage <Go census>/manifest.tsv`.
+
+Informational porting feedback: the invented generic `predecessors.map` callback
+with a block-local return of a concrete index was refused with
+`Adamic 0.1 refuses a value without nominal ancestry seen as BlockIndex; construct
+that class or a subclass; use an interface for structural values (adamic/nominal-class)`.
+Go graph.go:170–171 stores a predecessor slice; it does not require that generic
+callback. The adapter now performs its handle conversion with an explicit typed
+loop and checks each handle, ordinary supported porting. No Go lowering path is
+removed, no brand weakened, and no compiler source changed.
+
+Final verification sequence: `HIR_CENSUS_EXPORT=/tmp/hir-concrete-final go test
+-v -count=1 -timeout=25m ./stage1/cohere/high_level_intermediate_representation`
+passed TestWholeConstructionCensus in 796.52 seconds, including all 56 retained
+semantic lowering mutants and the privately minted FunctionIndex +1 mutant.
+Direct/cached Go/Node/native census, cache/live native/identity mutant, brand
+rejection and 12 small-oracle functions also passed. The package footer was red
+only because the symbol-reader mutant's file list omitted export_origin.ts,
+now imported by symbol.ts and symbol_live.ts. Adding that dependency is a test
+fixture fix; production code is unchanged. `go test -v -count=1 -timeout=10m
+./stage1/cohere/high_level_intermediate_representation -run '^TestResidentSymbolFacts$'`
+then passed in 36.03 seconds: all 22 selectors agree across Go, native live and
+Node/native replay, and the successful-but-wrong identity-collapse mutant is caught.
+`go test -v -count=1 ./stage1/cohere/high_level_intermediate_representation
+-run '^TestArenaOwnerIdentity$'` passed in 0.78 seconds. Every required test is
+therefore green; the already-passed matrix was not repeated after its fixture fix.
+The canonical construction-summary.json is refreshed from this certified census;
+it supersedes the separate historical Node-only summary. Unit 2 and static-components
+are not complete, and the watched plan branch is not pushed.

@@ -1,4 +1,45 @@
-# Unit 2 checkpoint: aggregates and export provenance; native narrowing gap
+# Unit 2 checkpoint: concrete arena indices, native parity restored
+
+**Node and native both match 748/1,465 original corpus functions**, with **56/56
+probes** (804/1,521 raw total; 748/1,442 active non-Flow). This representation
+seam adds **zero** Node functions and raises native by **368** to meet Node.
+All 56 semantic lowering mutants compile, execute and differ on both backends.
+Direct and repeated ForFunction construction, the cache identity mutant, checked
+private-mint off-by-one mutant, cross-brand rejection, same-slot foreign-arena
+rejection, 12 small-oracle functions and 22 symbol selectors with identity-collapse
+mutant pass. Flow exclusions and the 45 Go skip classifications stay unchanged.
+
+The independent shared module is pushed at ed236663 on stage1-arena/index, based
+on origin/area/stage1-lint; its only files are arena_index.a, a small test and driver.
+It was merged into HIR at 5d7f3077. All eight HIR index kinds import the same home,
+with private constructors, static arena push, checked canonical reads and undefined
+absence. Go numbers exist at dump, checker-wire and imported SSA boundaries;
+callbacks resolve them to existing handles, never mint from a bare number.
+The shared header reserves the CFG helper's slot and records the later single-commit
+collapse to ArenaIndex<Tag>. No rejected public constructor was applied. The generic
+instantiation gap remains filed as future work; it no longer blocks this port.
+
+The full verification run passed the census and all 56 mutants, cache/live native,
+brand and small oracle checks. Its final symbol-mutant fixture initially failed
+because it did not copy export_origin.ts. After fixing that fixture, the retained
+symbol test passed independently in 36 seconds. The added foreign-owner test passed
+on both backends. EVIDENCE.md records the exact commands and this test sequence.
+
+The counted 12-function probe's allocations/frees rise **3,212 -> 3,869 (+657)**;
+retains 12,895 -> 15,063, releases 12,073 -> 13,978 and peak live 175 -> 199.
+This includes wrapper boxes, handle tables and per-function SSA adapter closures.
+The full admitted native census frees all 1,573,598 allocations. The costs are a
+compiler lesson, not a reason to weaken the brand; docs/memory.md records both
+graphs and the amended ruling beside its arena section.
+
+**Unit 2 and static-components remain unfinished.** Next: remaining patterns,
+optional chains, templates, type/function/method forms; rule-owned ForFunction,
+compilation-unit/clone/visitor interfaces and static-components registration.
+The watched plan branch stays unpushed until unit 2 finishes. WIP is the safety
+checkpoint for this completed representation seam.
+
+# Previous checkpoint: aggregates and export provenance; native narrowing gap
+
 
 Node matches **748/1,465 corpus functions**, up **368**, and **56/56 probes**
 (804/1,521 raw total), through both direct construction and ForFunction cache calls.
