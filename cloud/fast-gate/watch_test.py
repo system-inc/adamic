@@ -196,6 +196,32 @@ class WatchTests(unittest.TestCase):
         w.put('mode', 'pass')
         w.wait(lambda: 'done codex/small' in w.read('output'))
 
+    def test_waiting_reservation_drains_its_box(self):
+        # Server's small slots must not refill under a reserved tip waiting for the whole box,
+        # and the reserved big tip must not borrow one of them either.
+        w = self.reservation('server B cloud/land-area-next*\nserver S\nserver S\nother S\n',
+                             [('codex/first', 'S')])
+        w.wait(lambda: len(w.read('starts').splitlines()) == 2)
+        self.assertTrue(w.read('starts').splitlines()[1].endswith(' S server'))
+        late = [('cloud/land-area-next1', 'B'), ('codex/second', 'S'), ('codex/third', 'S')]
+        shas = [f'{i+10:040x}' for i in range(len(late))]
+        # The landing candidate touches stage3/, so the classifier queues it big.
+        git = (w.bin / 'git').read_text().replace('*merge-base*', f"*diff*{shas[0]}*) echo stage3/x.go ;;\n*merge-base*")
+        w.script(w.bin / 'git', git.split('\n', 1)[1])
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips + [(b, s) for (b, _), s in zip(late, shas)]))
+        w.wait(lambda: w.read('output').count('queued ') == 3)
+        w.wait(lambda: len(w.read('starts').splitlines()) == 3)
+        time.sleep(.2)
+        starts = w.read('starts').splitlines()
+        self.assertEqual(len(starts), 3, starts)
+        self.assertTrue(starts[2].endswith(' other'), starts)
+        # Other's slot frees first: the third tip takes it, and the reserved tip still waits for Server.
+        w.put('mode', 'pass')
+        w.wait(lambda: any(x.startswith('cloud/land-area-next1 ') for x in w.read('starts').splitlines()))
+        reserved = [x for x in w.read('starts').splitlines() if x.startswith('cloud/land-area-next1 ')][0]
+        self.assertTrue(reserved.endswith(' B server'), reserved)
+        w.wait(lambda: any(x.startswith('codex/third ') and x.endswith(' other') for x in w.read('starts').splitlines()))
+
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
                              [('cloud/land-other', 'B'), ('codex/small', 'S')])

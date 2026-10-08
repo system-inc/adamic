@@ -168,6 +168,10 @@ usableSlots() {
       [ "${runningBox:-threadripper}" = "${box}" ] || continue
       slotReserved "${runningBranch}" "${box}" "${runningSlot}" && blocked=yes
     done < "${state}/running.tmp"
+    # A box a queued reservation waits on drains: only that tip, in its reserved slot, starts there.
+    if echo "${draining:-}" | grep -qxF "${box}" && ! slotReserved "${branch}" "${box}" "${slot}"; then
+      blocked=yes
+    fi
     [ "${blocked}" = no ] || continue
     total=0
     while read -r b c glob; do
@@ -190,6 +194,22 @@ usableSlots() {
     fi
     echo "${box} ${slot}"
   done <<< "${free}"
+}
+# Boxes holding a slot reserved for a queued tip's class. Without the drain, a reserved tip waiting
+# for its box to empty never gets it: each small gate that ends there hands its slot to the next.
+drainingBoxes() {
+  local class queued branch sha
+  while read -r class queued branch sha; do
+    reservedBranch "${branch}" && reservedBoxes "${branch}" "${class}"
+  done < "${state}/queue" | sort -u
+}
+# The boxes with a slot of this class reserved for this branch. A tip that has one runs only there: it
+# waits out the drain for the whole box rather than borrowing a share of another.
+reservedBoxes() {
+  local branch=$1 class=$2 b c glob
+  while read -r b c glob; do
+    [ "${c}" = "${class}" ] && slotReserved "${branch}" "${b}" "${c}" && echo "${b}"
+  done < "${state}/slots"
 }
 
 tips() {
@@ -302,7 +322,7 @@ while true; do
     last=$(cat "${state}/canary-started" 2>/dev/null || echo 0)
     if ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null &&
        { [ ! -f "${state}/storm" ] || [ "$((now - last))" -ge 600 ]; }; then
-      free=$(freeSlots)
+      free=$(freeSlots) draining=$(drainingBoxes)
       box=$(usableSlots canary/main | awk '$2 == "S" {print $1; exit}')
       sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
       if [ -n "${box}" ] && [ -n "${sha}" ]; then
@@ -317,7 +337,7 @@ while true; do
     touch "${state}/priority"
     # Free slots per box and class: the table's count less the gates running there (an entry from
     # before the table names no box: it was Cloud's).
-    free=$(freeSlots)
+    free=$(freeSlots) draining=$(drainingBoxes)
     [ -n "${free}" ] || break
     # Boxes where a big tip may borrow a small slot: a free small slot, and fewer than two big gates there
     # already (its area slot and one borrowed). Three big gates borrowing on one box stacked hundreds of
@@ -330,6 +350,10 @@ while true; do
     # slots sat idle (Oct 8 10:56Z). It then runs on the small slot's CPUs (12; Chonchon's 16).
     next=$(while read -r class queued branch sha; do
       eligible=$(usableSlots "${branch}")
+      if reservedBranch "${branch}"; then
+        own=$(reservedBoxes "${branch}" "${class}")
+        [ -n "${own}" ] && eligible=$(echo "${eligible}" | grep -xF "$(echo "${own}" | sed "s/\$/ ${class}/")")
+      fi
       classes=$(echo "${eligible}" | awk '{print $2}' | sort -u | tr '\n' ' ')
       borrowable=$(echo "${eligible}" | awk '$2 == "S" {print $1}' | while read -r b; do
         limit=$(awk -v b="${b}" 'NF == 1 && $1 ~ /^[0-9]+$/ { fallback = $1 } NF == 2 && $1 == b { own = $2 } END { print (own != "" ? own : (fallback != "" ? fallback : 2)) }' "${state}/big-per-box" 2>/dev/null || echo 2)
