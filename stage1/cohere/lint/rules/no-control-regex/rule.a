@@ -1,0 +1,32 @@
+import { RuleContext } from '../../context.ts';
+import { Bytes } from '../../helpers/regexsyntax/utf8.a';
+import { patternAndFlags } from '../../helpers/regexsyntax/pattern_and_flags.a';
+import { parseRegexFlags } from '../../helpers/regexsyntax/parse_regex_flags.a';
+import { Walk } from '../../helpers/ecmascript/regexpattern/walk.a';
+import { Character } from '../../helpers/ecmascript/regexpattern/state.a';
+import { message } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context = context; }
+ visit(index: number): void {
+  const ctx = this.context; const node = ctx.node(index);
+  const start = ctx.start(index); const raw = ctx.source.slice(start,node.end);
+  const projection = new Bytes(raw); const parts = patternAndFlags(projection.values);
+  if(parts.pattern.length === 0) { return; }
+  const spelled: string[] = [];
+  Walk(parts.pattern,parseRegexFlags(parts.flags),(character: Character): boolean => {
+   if(character.value > 31) { return true; }
+   let first = character.start;
+   while(first < character.end && parts.pattern[first] === 92) { first++; }
+   if(parts.pattern[first] === 120 || parts.pattern[first] === 117) {
+    const begin = projection.positions[character.start+1] ?? 0;
+    const end = projection.positions[character.end+1] ?? raw.length;
+    spelled.push(raw.slice(begin,end));
+   }
+   return true;
+  });
+  if(spelled.length === 0) { return; }
+  ctx.reportRange(start,node.end,'no-control-regex','noControlRegex',message(spelled.join(', ')));
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

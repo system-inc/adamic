@@ -92,8 +92,8 @@ func corpus(t *testing.T) (string, []byte) {
 		seen[r.Symbol]++
 		want.WriteString(r.Want + "\n")
 	}
-	if len(seen) != 12 {
-		t.Fatalf("captured %d/12 helpers", len(seen))
+	if len(seen) != 18 {
+		t.Fatalf("captured %d/18 helpers", len(seen))
 	}
 	t.Logf("Go agreement calls: %d; by helper %v", len(rows), seen)
 	return path, []byte(want.String())
@@ -138,7 +138,7 @@ func TestPatternMutants(t *testing.T) {
 	if e != nil {
 		t.Fatal(e)
 	}
-	if len(mutants) != 12 {
+	if len(mutants) != 18 {
 		t.Fatal("one mutant per helper required")
 	}
 	for _, m := range mutants {
@@ -158,6 +158,8 @@ func TestPatternMutants(t *testing.T) {
 				}
 				options, _ := filepath.Abs("../../options_json.ts")
 				s = strings.ReplaceAll(s, "../../options_json.ts", filepath.ToSlash(options))
+				syntax, _ := filepath.Abs("../../regexsyntax")
+				s = strings.ReplaceAll(s, "../../regexsyntax/", filepath.ToSlash(syntax)+"/")
 				if e = os.WriteFile(filepath.Join(dir, file), []byte(s), 0644); e != nil {
 					t.Fatal(e)
 				}

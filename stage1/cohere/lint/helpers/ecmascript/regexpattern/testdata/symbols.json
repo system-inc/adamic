@@ -58,5 +58,35 @@
     "symbol": "ecmascript/regexpattern.*walker.emitAndQuantify",
     "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/emit_and_quantify.a",
     "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:111"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.Walk",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/walk.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/pattern.go:108"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.*walker.run",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/run.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:25"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.*walker.walkClass",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/walk_class.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:243"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.*walker.readEscape",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/read_escape.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/walk.go:325"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.escapeValue",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/escape_value.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/escape.go:27"
+  },
+  {
+    "symbol": "ecmascript/regexpattern.unicodeEscapeValue",
+    "file": "stage1/cohere/lint/helpers/ecmascript/regexpattern/unicode_escape_value.a",
+    "go": "cohere/internal/lint/ecmascript/regexpattern/escape.go:85"
   }
 ]

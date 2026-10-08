@@ -70,5 +70,41 @@
     "File": "emit_and_quantify.a",
     "From": "w.quantifierDepth++",
     "To": "w.quantifierDepth += 2"
+  },
+  {
+    "Symbol": "Walk",
+    "File": "walk.a",
+    "From": "return run(",
+    "To": "return !run("
+  },
+  {
+    "Symbol": "run",
+    "File": "run.a",
+    "From": "return !w.stopped;",
+    "To": "return w.stopped;"
+  },
+  {
+    "Symbol": "walkClass",
+    "File": "walk_class.a",
+    "From": "element.Kind === 0 || element.Kind === 1",
+    "To": "element.Kind === 0"
+  },
+  {
+    "Symbol": "readEscape",
+    "File": "read_escape.a",
+    "From": "case 100:",
+    "To": "case 101:"
+  },
+  {
+    "Symbol": "escapeValue",
+    "File": "escape_value.a",
+    "From": "case 2: return new OctalValue(0, true);",
+    "To": "case 2: return new OctalValue(1, true);"
+  },
+  {
+    "Symbol": "unicodeEscapeValue",
+    "File": "unicode_escape_value.a",
+    "From": "text.length !== 6",
+    "To": "text.length !== 5"
   }
 ]

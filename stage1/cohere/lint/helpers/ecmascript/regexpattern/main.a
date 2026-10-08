@@ -1,3 +1,9 @@
+import { Walk } from './walk.a';
+import { run } from './run.a';
+import { walkClass } from './walk_class.a';
+import { readEscape } from './read_escape.a';
+import { escapeValue } from './escape_value.a';
+import { unicodeEscapeValue } from './unicode_escape_value.a';
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from '../../options_json.ts';
 import { consumeDigits } from './consume_digits.a';
@@ -15,6 +21,7 @@ import { emitAndQuantify } from './emit_and_quantify.a';
 import { WalkerState, Character } from './state.a';
 function numberField(json: OptionsJson, row: number, key: string): number { const f = json.field(row, key); return f < 0 ? 0 : Number(json.node(f).text); }
 function boolField(json: OptionsJson, row: number, key: string): boolean { const f = json.field(row, key); return f >= 0 && json.node(f).text === 'true'; }
+function render(c: Character): string { return String(c.value) + ':' + String(c.kind) + ':' + String(c.start) + ':' + String(c.end) + ':' + String(c.quantifierDepth) + ':' + String(c.classDepth); }
 const args = programArguments(); const input = readTextFile(args[0] ?? panic('capture path'));
 if(input.kind === 'Error') { panic(input.message); }
 const json = new OptionsJson(input.text); const root = json.parse(); if(root < 0) { panic(json.error); }
@@ -22,8 +29,31 @@ for(const row of json.node(root).children) {
  const symbol = json.node(json.field(row, 'symbol')).text;
  const bytes: number[] = []; const af = json.field(row, 'arr'); if(af >= 0) { for(const a of json.node(af).children) { bytes.push(Number(json.node(a).text)); } }
  const n = numberField(json, row, 'n'); const m = numberField(json, row, 'm');
+ const flags = { unicode: boolField(json,row,'u'), unicodeSets: boolField(json,row,'v') };
  let result = '';
  switch(symbol) {
+ case 'escapeValue': case 'unicodeEscapeValue': {
+  const value = symbol === 'escapeValue' ? escapeValue(bytes,n) : unicodeEscapeValue(bytes);
+  result = String(value.value) + '|' + String(value.ok); break;
+ }
+ case 'readEscape': {
+  const value = readEscape(new WalkerState(bytes,0,0,()=>true,flags),n);
+  result = String(value.present) + '|' + String(value.next) + '|' + String(value.ok) + '|' + (value.present ? render(value.character) : ''); break;
+ }
+ case 'Walk': case 'run': case 'walkClass': {
+  const calls: string[] = []; const responses: boolean[] = []; const rf = json.field(row,'responses');
+  if(rf >= 0) { for(const item of json.node(rf).children) { responses.push(json.node(item).text === 'true'); } }
+  const cursor: number[] = [0];
+  const callback = (c: Character): boolean => { calls.push(render(c)); const index = cursor[0] ?? 0; cursor[0] = index+1; return responses[index] ?? true; };
+  if(symbol === 'Walk') { result = String(Walk(bytes,flags,callback)) + '|' + calls.join(';'); }
+  else {
+   const state = new WalkerState(bytes,symbol === 'run' ? n : numberField(json,row,'stateqd'),symbol === 'run' ? m : numberField(json,row,'statecd'),callback,flags);
+   state.stopped = boolField(json,row,'b');
+   const value = symbol === 'run' ? run(state) : walkClass(state,n,m);
+   result = String(value) + '|' + String(state.stopped) + '|' + String(state.quantifierDepth) + '|' + String(state.classDepth) + '|' + calls.join(';');
+  }
+  break;
+ }
  case 'consumeDigits': result = String(consumeDigits(bytes, n)); break;
  case 'braceQuantifierEnd': { const v = braceQuantifierEnd(bytes, n); result = String(v.end) + '|' + String(v.ok); break; }
  case 'isAsciiLetter': result = String(isAsciiLetter(n)); break;

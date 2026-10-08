@@ -1,0 +1,3 @@
+export function message(spelled: string): string {
+ return 'This regular expression spells out the control character ' + spelled + '. A control code written by number is almost always a typo for the text that spells it, and matching one on purpose is rare enough to be worth saying explicitly.';
+}

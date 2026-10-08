@@ -1,3 +1,4 @@
+import type { RegexFlags } from '../../regexsyntax/flags.a';
 export class Character {
 
  readonly value: number;
@@ -11,9 +12,10 @@ export class Character {
 export class WalkerState {
  stopped = false;
 
+ readonly flags: RegexFlags;
  readonly pattern: number[];
  quantifierDepth: number;
  classDepth: number;
  readonly callback: (character: Character) => boolean;
- constructor(pattern: number[], quantifierDepth: number, classDepth: number, callback: (character: Character) => boolean) { this.pattern = pattern; this.quantifierDepth = quantifierDepth; this.classDepth = classDepth; this.callback = callback; }
+ constructor(pattern: number[], quantifierDepth: number, classDepth: number, callback: (character: Character) => boolean, flags: RegexFlags = { unicode: false, unicodeSets: false }) { this.flags = flags; this.pattern = pattern; this.quantifierDepth = quantifierDepth; this.classDepth = classDepth; this.callback = callback; }
 }
