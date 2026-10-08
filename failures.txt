@@ -223,3 +223,8 @@ census: ADAMIC_CYCLE_LEDGER_ROOT must name pristine TypeScript v6.0.3 at 050880c
     wasi_input_test.go:176: set ADAMIC_ORACLE_WASMTIME=1
 --- SKIP: TestWasmtimeCheckedWitness (0.00s)
 
+== github.com/system-inc/adamic/internal/lower TestOptionalWideningCensus (skipped; no census row matches its name)
+=== RUN   TestOptionalWideningCensus
+    optional_widening_census_test.go:28: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project
+--- SKIP: TestOptionalWideningCensus (0.00s)
+
