@@ -13,7 +13,7 @@ typedef adamic_regex_parse_node regex_node;
 typedef struct {
     adamic_regex_parse_result *result;
     size_t position, capture_count;
-    bool named_capture;
+    bool named_capture, native_bounds;
     regex_node *pending;
 } regex_parser;
 
@@ -596,6 +596,12 @@ static regex_node *regex_parse_quantifier(regex_parser *p, regex_node *atom) {
         if (regex_parse_take(p, ',')) node->maximum = regex_parse_decimal(p);
         if (p->result->status != 0) return NULL;
         if (!regex_parse_take(p, '}')) return regex_parse_fail(p, start, "incomplete quantifier", "Incomplete quantifier");
+        if (p->native_bounds) {
+            /* V8 ParseIntervalQuantifier saturates before checking order.
+             * RegExpTree::kInfinity is also the unbounded maximum sentinel. */
+            if (regex_parse_decimal_compare(node->minimum, "2147483647") > 0) node->minimum = "2147483647";
+            if (node->maximum != NULL && regex_parse_decimal_compare(node->maximum, "2147483647") >= 0) node->maximum = NULL;
+        }
         if (node->maximum != NULL && regex_parse_decimal_compare(node->minimum, node->maximum) > 0) {
             if (regex_parse_decimal_compare(node->maximum, "2147483647") >= 0) {
                 p->result->status = 3;
@@ -723,9 +729,9 @@ static bool regex_parse_flags(regex_parser *p, const unsigned char *flags, size_
     return true;
 }
 static void regex_parse_pattern(const unsigned char *pattern, size_t length,
-    const unsigned char *flags, size_t flag_length, adamic_regex_parse_result *result) {
+    const unsigned char *flags, size_t flag_length, adamic_regex_parse_result *result, bool native_bounds) {
     memset(result, 0, sizeof(*result));
-    regex_parser parser = {.result = result};
+    regex_parser parser = {.result = result, .native_bounds = native_bounds};
     if (!regex_parse_flags(&parser, flags, flag_length)) return;
     if (length == SIZE_MAX) { result->status = 2; return; }
     unsigned char *copy = regex_parse_allocate(&parser, length + 1);
@@ -752,9 +758,9 @@ static void regex_parse_pattern(const unsigned char *pattern, size_t length,
     if (!regex_parse_references(&parser, result->body)) return;
     regex_parse_duplicate_visit(&parser, result->body, result->body, NULL);
 }
-void adamic_regex_parse(const unsigned char *pattern, size_t length,
-    const unsigned char *flags, size_t flag_length, adamic_regex_parse_result *result) {
-    regex_parse_pattern(pattern, length, flags, flag_length, result);
+static void regex_parse_with_bounds(const unsigned char *pattern, size_t length,
+    const unsigned char *flags, size_t flag_length, adamic_regex_parse_result *result, bool native_bounds) {
+    regex_parse_pattern(pattern, length, flags, flag_length, result, native_bounds);
     if (result->status != 1) return;
     bool flag_error = strcmp(result->node_reason, "Invalid flags supplied to RegExp constructor") == 0;
     const char *prefix = flag_error ? "Invalid flags supplied to RegExp constructor '" : "Invalid regular expression: /";
@@ -783,5 +789,13 @@ void adamic_regex_parse(const unsigned char *pattern, size_t length,
     }
     message[position] = 0;
     result->message = message; result->message_length = position;
+}
+void adamic_regex_parse(const unsigned char *pattern, size_t length,
+    const unsigned char *flags, size_t flag_length, adamic_regex_parse_result *result) {
+    regex_parse_with_bounds(pattern, length, flags, flag_length, result, false);
+}
+void adamic_regex_parse_native(const unsigned char *pattern, size_t length,
+    const unsigned char *flags, size_t flag_length, adamic_regex_parse_result *result) {
+    regex_parse_with_bounds(pattern, length, flags, flag_length, result, true);
 }
 #endif

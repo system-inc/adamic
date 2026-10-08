@@ -24,7 +24,7 @@ static adamic_string *regex_runtime_source(adamic_string *pattern,unsigned flags
 }
 adamic_object *adamic_regex_compile_new(adamic_string *pattern,adamic_string *flags) {
     if(pattern==NULL)pattern=&adamic_string_empty;if(flags==NULL)flags=&adamic_string_empty;
-    adamic_regex_parse_result result;adamic_regex_parse((const unsigned char *)pattern->bytes,pattern->length,(const unsigned char *)flags->bytes,flags->length,&result);
+    adamic_regex_parse_result result;adamic_regex_parse_native((const unsigned char *)pattern->bytes,pattern->length,(const unsigned char *)flags->bytes,flags->length,&result);
     adamic_regex_program *program=result.status==0?adamic_regex_compile_checked(&result):NULL;
     if(program==NULL){
         const char *message=result.message;if(message==NULL)message=result.reference_reason;if(message==NULL)message="RegExp runtime compiler: out of memory";

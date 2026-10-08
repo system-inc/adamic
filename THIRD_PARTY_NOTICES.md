@@ -59,6 +59,11 @@ IN THE SOFTWARE.
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
     GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
+  - RegExp interval bound saturation (`internal/regexp/parser.go` and
+    `internal/native/runtime/regexp_compile_parser.c`, after
+    RegExpParserImpl::ParseIntervalQuantifier in Node v24.19.0's
+    deps/v8/src/regexp/regexp-parser.cc and RegExpTree::kInfinity in
+    deps/v8/src/regexp/regexp-ast.h);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);

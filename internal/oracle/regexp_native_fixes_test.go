@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"class_octal", "class_escapes", "class_string_duplicates", "quadratic_exec", "quadratic_matchall", "quadratic_test", "input_cache"} {
+	for _, name := range []string{"class_octal", "class_escapes", "class_string_duplicates", "quadratic_exec", "quadratic_matchall", "quadratic_test", "input_cache", "quantifier_bounds"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -20,10 +20,6 @@ func init() {
 			"internal/oracle/testdata/regexp_native_" + name + ".a", true, false,
 		})
 	}
-	fixtures = append(fixtures, struct {
-		path            string
-		lowers, checked bool
-	}{"internal/oracle/testdata/regexp_native_refused/quantifier_bounds.a", false, false})
 	// A refusal lives in a directory below testdata, which internal/flow (it walks only programs that
 	// lower) doesn't glob.
 	fixtures = append(fixtures, struct {
