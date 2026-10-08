@@ -6,13 +6,13 @@
 #
 # It polls origin every 15 s. Branch tips it sees on its first poll are the backlog and are left
 # alone; every tip that appears or moves after that is gated once (a sha already gated under another
-# branch isn't gated again), two at a time, one per slot on the box. The queue is by priority, decided
+# branch isn't gated again), three at a time, one per slot on the box. The queue is by priority, decided
 # when a gate starts: what integration is landing first (area/*, and any branch named in the state
 # directory's priority file, one per line, such as a fix-forward), then devtools/*, then workers'
 # codex/*, newest first within each, and only a branch's newest tip. Each tip is classed when queued:
 # big (an area, a stage3/ change, which runs the stage 3 lane, or more than two touched packages) or
-# small. At most one big gate runs at a time, so one slot is always small-only and a worker's tip
-# waits at most one small gate. The gating line names how long a tip waited. Each gate publishes
+# small. A big gate runs in the area slot (24 CPUs), a small one in either small slot (12 each), so a
+# worker's tip never waits behind an area. The gating line names how long a tip waited. Each gate publishes
 # gate-logs/<sha12>/<UTC stamp>/fast like any other, with the branch and, when an ai.db reply names
 # the branch, the worker's session.
 set -uo pipefail
@@ -20,7 +20,7 @@ set -uo pipefail
 here=$(cd "$(dirname "$0")/.." && pwd)
 state=${ADAMIC_FAST_GATE_WATCH_STATE:-${HOME}/.adamic-fast-gate-watch}
 mkdir -p "${state}"
-slots=2
+slots=3
 git -C "${here}" fetch -q origin
 git -C "${here}" branch -r --contains "$(git -C "${here}" rev-parse HEAD)" | grep -q . || { echo "the gate's own commit is not on origin; push it first" >&2; exit 2; }
 export ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN=1
@@ -117,10 +117,12 @@ while true; do
   while [ "$(ls "${state}/running" | wc -l)" -lt "${slots}" ] && [ -s "${state}/queue" ]; do
     touch "${state}/priority"
     big=$(cat "${state}"/running/* 2>/dev/null | awk '$3 == "B"' | wc -l)
-    # At most one big gate at a time, always: the other slot is small-only, so a worker's tip never
-    # waits behind areas (@system_adamic, 21:42; with no small change waiting it stays free).
+    small=$(cat "${state}"/running/* 2>/dev/null | awk '$3 == "S"' | wc -l)
+    # One area slot (big) and two small-change slots (@system_adamic, Oct 8 00:10): a worker's tip
+    # never waits behind areas, and areas keep their 24 CPUs.
     only=""
     if [ "${big}" -ge 1 ]; then only=S; fi
+    if [ "${small}" -ge 2 ]; then only=B; fi
     next=$(while read -r class queued branch sha; do
       [ -n "${only}" ] && [ "${class}" != "${only}" ] && continue
       if [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=1
@@ -136,7 +138,7 @@ while true; do
     grep -qx "${branch} ${sha}" "${state}/seen" || { echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue; }
     echo "${sha}" >> "${state}/gated"
     log=${state}/logs/${sha:0:12}.log
-    bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" > "${log}" 2>&1 &
+    bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${class}" > "${log}" 2>&1 &
     echo "${branch} ${sha} ${class}" > "${state}/running/$!"
     now=$(date -u +%s)
     echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}, waited $(( now - queued )) s, log ${log})"
