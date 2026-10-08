@@ -230,7 +230,7 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 			return nil, &Refused{Where: l.program.Where(call.AsNode()), What: fmt.Sprintf("overload %d of %s parameter %d cannot be served by implementation parameter %s", ordinal, implementation.Name().Text(), position+1, l.checker.TypeToString(takes)), Fix: "call with an argument contract the implementation accepts, without mutable widening or bivariance"}
 		}
 	}
-	if !l.overloadCheckableResult(implementation, produced, promised) && !l.censusRelated(produced, promised) {
+	if !l.overloadCheckableResult(implementation, produced, promised) && !l.censusRelated(produced, promised) && !l.overloadStructuralProof(implementation, overload) {
 		return nil, &Refused{Where: l.program.Where(call.AsNode()), What: fmt.Sprintf("overload %d of %s result %s cannot be served by implementation result %s", ordinal, implementation.Name().Text(), l.checker.TypeToString(promised), l.checker.TypeToString(produced)), Fix: "return a proven member, or a fresh scalar record with a reifiable result contract"}
 	}
 	of, known := l.representation(promised)
