@@ -248,6 +248,28 @@ class Coverage(FailClosed):
         self.assertEqual(result["executors"], {"stage3": 2})
 
 
+class DeletedAFiles(unittest.TestCase):
+    def test_a_deleted_a_file_is_not_checked_and_does_not_crash_the_gate(self):
+        with tempfile.TemporaryDirectory() as tree:
+            with open(os.path.join(tree, "kept.a"), "w") as handle:
+                handle.write("const x = 1\n")
+            gate = run.Gate.__new__(run.Gate)
+            gate.arguments = types.SimpleNamespace(tree=tree, out=tree)
+            gate.result, gate.steps, gate.exits, gate.failure = {}, {}, {}, None
+            ran = []
+
+            def spawn(command, stdout, stderr=None, directory=None, environment=None):
+                ran.append(command[-1])
+                return types.SimpleNamespace(communicate=lambda: ("", ""), returncode=0)
+
+            with mock.patch.object(gate, "step", lambda *arguments: True), mock.patch.object(gate, "spawn", spawn):
+                gate.aCheck(["kept.a", "stage3/interface-downcasts/default-boxed-write.a"])
+            self.assertIsNone(gate.failure)
+            self.assertEqual(ran, ["kept.a"])
+            self.assertEqual(gate.result["a_check"]["stage3/interface-downcasts/default-boxed-write.a"]["outcome"], "deleted")
+            self.assertEqual(gate.exits["a-check"], 0)
+
+
 class CompleteMode(unittest.TestCase):
     """Landing and area gates run on after a failure (run.py --complete): every test and fixture still
     runs and the verdict names them all; an ordinary fast gate still stops everything at the first."""

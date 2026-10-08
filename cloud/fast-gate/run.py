@@ -563,6 +563,10 @@ class Gate:
             return
         results, failed = {}, []
         for path in paths:
+            # A change that deletes a .a has nothing left to check there (views slice 1, Oct 8, deleted five).
+            if not os.path.isfile(os.path.join(self.arguments.tree, path)):
+                results[path] = {"outcome": "deleted", "expected": "deleted", "first": ""}
+                continue
             with open(os.path.join(self.arguments.tree, path), errors="replace") as handle:
                 header = handle.readline().strip()
             expect = header[len("// a-check:"):].strip() if header.startswith("// a-check:") else ""
