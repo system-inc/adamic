@@ -253,7 +253,7 @@ earn no reference certification credit.
 
 Final command: ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-brand2-original-declarations
 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
-''^TestCheckedView(OriginalDictionaryPrimitiveComponents|PrimitiveDictionarySelector|DictionaryComponents|DictionaryComponentMutants|PrimitiveArraySafety)$''
+'^TestCheckedView(OriginalDictionaryPrimitiveComponents|PrimitiveDictionarySelector|DictionaryComponents|DictionaryComponentMutants|PrimitiveArraySafety)$'
 -count=1 -v -timeout 10m. PASS 107.925s; native misses 31, Node misses 115,
 zero hits. Proof tests PASS lower 0.687s / ir 0.016s. Final focused lower/ir/JS
 PASS 1.502s / 0.083s / 2.233s; vet PASS. Earlier diagnostic and conversion seams
