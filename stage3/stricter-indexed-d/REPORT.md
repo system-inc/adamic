@@ -301,3 +301,29 @@ Validation: reran `go test ./stage3/stricter-indexed-d -run
 `evidence/D151-investigation.log`. This checks Node string/null/absent controls
 and pins the current lower refusal; it does not prove native nullable support.
 Only this report and the focused evidence log change in this investigation.
+
+
+## Nullable strings, step 1
+
+The representation decision is implemented: string | null and string | null |
+undefined remain ir.String / adamic_string *, with no conversion between the
+two. NULL stays undefined. The single immortal `adamic_null_string` sentinel is
+static storage in `internal/native/runtime/nullable.c`; this is its only
+declaration/definition site for runtime review. Shared declarations in adamic.h
+expose adamic_reference_null, adamic_reference_is_null and sentinel observation
+helpers. `internal/native/nullable.go` centralizes native null emission/testing,
+and `ir.Type.UsesNullSentinel` identifies migrated kinds. Other reference kinds
+retain their existing representation for z00sxvc to generalize.
+
+Node-held project .ts controls cover null, a runtime-built string, undefined,
+empty string and the real string "null". They exercise === null, === undefined,
+== null, typeof, String(), direct console output, string equality, nullish
+coalescing and movement through a string | null function into a string | null |
+undefined parameter. Native release, ASan/UBSan and JS match stdout/stderr/exit.
+The compiled sentinel-to-NULL mutant exits 0 but prints undefined for null;
+the Node comparison catches it. This is a real runtime mutant, not a build kill.
+
+Project .ts nullish ==/!= with a null operand is lowered explicitly; .a keeps
+its existing loose-equality refusal. Indexed-presence remains the next step:
+D151 now reaches the later nullable indexed-check refusal, pinned in sites.json.
+The guard implementation and D151 proof are not claimed by this step.

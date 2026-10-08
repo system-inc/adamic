@@ -93,7 +93,7 @@ func comparedWithUndefined(node *ast.Node) bool {
 		return false
 	}
 	binary := parent.AsBinaryExpression()
-	if operator := binary.OperatorToken.Kind; operator != ast.KindEqualsEqualsEqualsToken && operator != ast.KindExclamationEqualsEqualsToken {
+	if operator := binary.OperatorToken.Kind; operator != ast.KindEqualsEqualsEqualsToken && operator != ast.KindExclamationEqualsEqualsToken && !isNullishComparison(parent) {
 		return false
 	}
 	other := binary.Right

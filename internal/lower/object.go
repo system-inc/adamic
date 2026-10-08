@@ -288,7 +288,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
 		// kept weakly.
 		if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
-			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
+			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && (!slotless(declared) || l.nullSentinelType(l.checker.GetElementTypeOfArrayType(contextual))) {
 				arrayType = contextual
 			}
 		}

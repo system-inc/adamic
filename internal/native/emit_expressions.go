@@ -38,7 +38,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.RegExpProperty:
 		return e.regexProperty(expression)
 	case ir.Null:
-		return "NULL"
+		return nullReference(expression.Type())
 	case ir.IsNull:
 		if expression.AlwaysFalse {
 			e.value(expression.Value)
@@ -47,7 +47,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Value.Type() == ir.Union {
 			return fmt.Sprintf("(%s == &adamic_null)", e.value(expression.Value))
 		}
-		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
+		return nullTest(expression.Value.Type(), e.value(expression.Value), expression.IncludeUndefined)
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
 	case ir.BooleanConstant:
@@ -237,7 +237,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
 	case ir.Defined:
 		value := e.value(expression.Value)
-		e.checkDefined(value, expression.Message)
+		if expression.Null && expression.Value.Type().UsesNullSentinel() {
+			e.line("if (%s) {", nullTest(expression.Value.Type(), value, true))
+			e.line("\tstatic const char message[] = %s;", cString(expression.Message))
+			e.line("\tadamic_panic(message, sizeof message - 1);")
+			e.line("}")
+		} else {
+			e.checkDefined(value, expression.Message)
+		}
 		return value
 	case ir.MaybeOf:
 		if expression.Value == nil {
