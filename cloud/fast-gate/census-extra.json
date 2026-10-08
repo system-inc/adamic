@@ -54,5 +54,249 @@
     "message": "\"completed frozen corpus required\"",
     "class": "opt-in-lane",
     "provides": "The estree corpus audit lane: needs the completed frozen corpus that audit produces, not provisioned by the gate."
+  },
+  {
+    "file": "internal/flow/trace_test.go",
+    "test": "traced",
+    "id": "TestEveryMutationIsInItsRange,TestEveryPathNodeTakesIsInTheGraph,TestLivenessHoldsOnEveryPath:0fab93ebdc409e2c882854da7ee4876174932de554e8a4034caf08f918745b89",
+    "line": 142,
+    "condition": "program.Async != nil",
+    "reads": [
+      "os.ReadFile(trace)"
+    ],
+    "callers": [
+      "TestEveryMutationIsInItsRange",
+      "TestEveryPathNodeTakesIsInTheGraph",
+      "TestLivenessHoldsOnEveryPath"
+    ],
+    "message": "\"suspension-state tracing is NotYet; these programs use no synchronous lifetime proofs and have a separate async Node oracle\"",
+    "class": "not-applicable",
+    "provides": "Async programs have no synchronous suspension-state tracing proof; their execution is held against Node by the separate async oracle."
+  },
+  {
+    "file": "internal/oracle/node_types_test.go",
+    "test": "TestEmbeddedNodeTypesPortableWorker",
+    "id": "TestEmbeddedNodeTypesPortableWorker:bacb6d4d4897fc2156094e7bcd41575fa1e4bdf7e4c55188681580ce5c631c54",
+    "line": 110,
+    "condition": "os.Getenv(\"ADAMIC_NODE_PORTABLE_WORKER\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_NODE_PORTABLE_RUNNER\")",
+      "os.Getenv(\"ADAMIC_NODE_PORTABLE_WORKER\")"
+    ],
+    "callers": [
+      "TestEmbeddedNodeTypesPortableWorker"
+    ],
+    "message": "\"executed by the foreign-directory portability test\"",
+    "class": "not-applicable",
+    "provides": "TestEmbeddedNodeTypesPortable provisions the foreign directory and invokes this worker in a separate process with ADAMIC_NODE_PORTABLE_WORKER=1. The standalone worker is not an independent gate check.",
+    "opt_in_off": [
+      "ADAMIC_NODE_PORTABLE_WORKER"
+    ]
+  },
+  {
+    "file": "internal/oracle/realpath_test.go",
+    "test": "TestRealPathPreservesCase",
+    "id": "TestRealPathPreservesCase:42361881f12137a588409b30858e63643539c77e6ae1a66dec8d26e8f8e08153",
+    "line": 118,
+    "condition": "_, err := os.Stat(filepath.Join(directory, \"PROBE\")); os.IsNotExist(err)",
+    "reads": [
+      "os.ReadFile(filepath.Join(repository, \"internal/oracle/testdata/realpath.a\"))",
+      "os.Stat(filepath.Join(directory, \"PROBE\"))"
+    ],
+    "callers": [
+      "TestRealPathPreservesCase"
+    ],
+    "message": "\"case-sensitive file system: stat PROBE cannot find Probe; libc case mutant cannot be distinguished here\"",
+    "class": "not-applicable",
+    "provides": "The case-folding mutant is distinguishable only on a case-insensitive filesystem. Ordinary realpath oracle tests still run on the Linux gate."
+  },
+  {
+    "file": "internal/oracle/wasi_host_test.go",
+    "test": "buildWASI",
+    "id": "TestDynamicRegExpRuntimeRefusals,TestErrorCaptureMutants,TestNodeFSDirectoryUnionSpecialKinds,TestNodeProcessMethodPresence,TestProjectIteratorBackends,TestWASIAgreesWithNode,TestWASIEmptySymlinkAgreesWithNode,TestWASIFileAgreesWithNode,TestWASIHostErrorIdentity,TestWASIHostRuntimeRefusals,TestWASIInputAgreesWithNode,TestWASIOracleCatchesMutants:bfdac89b20052303b8cfd846d26e45416e4b430e42cee6ecafe4cae8a359ab42",
+    "line": 19,
+    "condition": "err := native.Build(source, binary, native.Options{Target: \"wasm32-wasi\"}); err != nil && errors.As(err, &refused)",
+    "reads": [],
+    "callers": [
+      "TestDynamicRegExpRuntimeRefusals",
+      "TestErrorCaptureMutants",
+      "TestNodeFSDirectoryUnionSpecialKinds",
+      "TestNodeProcessMethodPresence",
+      "TestProjectIteratorBackends",
+      "TestWASIEmptySymlinkAgreesWithNode",
+      "TestWASIFileAgreesWithNode",
+      "TestWASIHostErrorIdentity",
+      "TestWASIHostRuntimeRefusals",
+      "TestWASIInputAgreesWithNode",
+      "TestWASIOracleCatchesMutants"
+    ],
+    "message": "\"target refusal: wasm32-wasi refuses\"",
+    "class": "not-applicable",
+    "provides": "A typed native.TargetRefused is an explicit WASI target gap. The literal log prefix distinguishes this site from missing gate inputs and runtime refusals; other build errors fail. TestWASIAgreesWithNode retains required-input enforcement.",
+    "opt_in_on": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_host_test.go",
+    "test": "wasiRuntimeRefusal",
+    "id": "TestDynamicRegExpRuntimeRefusals,TestErrorCaptureMutants,TestNodeProcessMethodPresence,TestProjectIteratorBackends,TestWASIAgreesWithNode,TestWASIEmptySymlinkAgreesWithNode,TestWASIFileAgreesWithNode,TestWASIHostErrorIdentity,TestWASIInputAgreesWithNode,TestWASIOracleCatchesMutants:b7b883eade7a2cb08363868ec59ff9de38c4cb15fe9893138041ff9a8296fb35:file-permissions",
+    "line": 38,
+    "condition": "string(actual.stderr) == \"adamic: panic: wasm32-wasi: \"+reason+\"\\n\" && reason == \"file creation permission bits are not supported\"",
+    "reads": [],
+    "callers": [
+      "TestDynamicRegExpRuntimeRefusals",
+      "TestErrorCaptureMutants",
+      "TestNodeProcessMethodPresence",
+      "TestProjectIteratorBackends",
+      "TestWASIAgreesWithNode",
+      "TestWASIEmptySymlinkAgreesWithNode",
+      "TestWASIFileAgreesWithNode",
+      "TestWASIHostErrorIdentity",
+      "TestWASIInputAgreesWithNode",
+      "TestWASIOracleCatchesMutants"
+    ],
+    "message": "\"target refusal: file creation permission bits are not supported\"",
+    "class": "not-applicable",
+    "provides": "Only this exact owned WASI runtime refusal is a target gap, checked with exit 70 and exact stderr. Other panics, traps and mismatches fail. Reason-specific entries disambiguate the helper from the build refusal and opt-in guards.",
+    "opt_in_on": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_host_test.go",
+    "test": "wasiRuntimeRefusal",
+    "id": "TestDynamicRegExpRuntimeRefusals,TestErrorCaptureMutants,TestNodeProcessMethodPresence,TestProjectIteratorBackends,TestWASIAgreesWithNode,TestWASIEmptySymlinkAgreesWithNode,TestWASIFileAgreesWithNode,TestWASIHostErrorIdentity,TestWASIInputAgreesWithNode,TestWASIOracleCatchesMutants:b7b883eade7a2cb08363868ec59ff9de38c4cb15fe9893138041ff9a8296fb35:directory-permissions",
+    "line": 38,
+    "condition": "string(actual.stderr) == \"adamic: panic: wasm32-wasi: \"+reason+\"\\n\" && reason == \"directory creation permission bits are not supported\"",
+    "reads": [],
+    "callers": [
+      "TestDynamicRegExpRuntimeRefusals",
+      "TestErrorCaptureMutants",
+      "TestNodeProcessMethodPresence",
+      "TestProjectIteratorBackends",
+      "TestWASIAgreesWithNode",
+      "TestWASIEmptySymlinkAgreesWithNode",
+      "TestWASIFileAgreesWithNode",
+      "TestWASIHostErrorIdentity",
+      "TestWASIInputAgreesWithNode",
+      "TestWASIOracleCatchesMutants"
+    ],
+    "message": "\"target refusal: directory creation permission bits are not supported\"",
+    "class": "not-applicable",
+    "provides": "Only this exact owned WASI runtime refusal is a target gap, checked with exit 70 and exact stderr. Other panics, traps and mismatches fail. Reason-specific entries disambiguate the helper from the build refusal and opt-in guards.",
+    "opt_in_on": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_host_test.go",
+    "test": "wasiRuntimeRefusal",
+    "id": "TestDynamicRegExpRuntimeRefusals,TestErrorCaptureMutants,TestNodeProcessMethodPresence,TestProjectIteratorBackends,TestWASIAgreesWithNode,TestWASIEmptySymlinkAgreesWithNode,TestWASIFileAgreesWithNode,TestWASIHostErrorIdentity,TestWASIInputAgreesWithNode,TestWASIOracleCatchesMutants:b7b883eade7a2cb08363868ec59ff9de38c4cb15fe9893138041ff9a8296fb35:timestamp-range",
+    "line": 38,
+    "condition": "string(actual.stderr) == \"adamic: panic: wasm32-wasi: \"+reason+\"\\n\" && reason == \"fs.utimesSync timestamp precision or range is unavailable\"",
+    "reads": [],
+    "callers": [
+      "TestDynamicRegExpRuntimeRefusals",
+      "TestErrorCaptureMutants",
+      "TestNodeProcessMethodPresence",
+      "TestProjectIteratorBackends",
+      "TestWASIAgreesWithNode",
+      "TestWASIEmptySymlinkAgreesWithNode",
+      "TestWASIFileAgreesWithNode",
+      "TestWASIHostErrorIdentity",
+      "TestWASIInputAgreesWithNode",
+      "TestWASIOracleCatchesMutants"
+    ],
+    "message": "\"target refusal: fs.utimesSync timestamp precision or range is unavailable\"",
+    "class": "not-applicable",
+    "provides": "Only this exact owned WASI runtime refusal is a target gap, checked with exit 70 and exact stderr. Other panics, traps and mismatches fail. Reason-specific entries disambiguate the helper from the build refusal and opt-in guards.",
+    "opt_in_on": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_host_test.go",
+    "test": "TestWASIInputAgreesWithNode",
+    "id": "TestWASIInputAgreesWithNode:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 47,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\n\t\tif entry != nil && entry.IsDir() {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn err\n\t}\n\trelative, err := filepath.Rel(directory, path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tinformation, err := entry.Info()\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.IsDir() {\n\t\tfound[relative] = fmt.Sprintf(\"directory %v\", information.Mode().Perm())\n\t\treturn nil\n\t}\n\tcontents, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tfound[relative] = fmt.Sprintf(\"file %v %q\", information.Mode().Perm(), contents)\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIInputAgreesWithNode"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "bash cloud/setup.sh --wasi-sdk provisions WASI SDK 27.0 and Node v24.19.0; source its env.sh and set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing gate switches or tools must fail verification.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_host_test.go",
+    "test": "TestWASIHostRuntimeRefusals",
+    "id": "TestWASIHostRuntimeRefusals:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 103,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")"
+    ],
+    "callers": [
+      "TestWASIHostRuntimeRefusals"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "bash cloud/setup.sh --wasi-sdk provisions WASI SDK 27.0 and Node v24.19.0; source its env.sh and set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing gate switches or tools must fail verification.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_host_test.go",
+    "test": "TestWASIFileAgreesWithNode",
+    "id": "TestWASIFileAgreesWithNode:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9",
+    "line": 130,
+    "condition": "os.Getenv(\"ADAMIC_ORACLE_WASI\") != \"1\"",
+    "reads": [
+      "filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {\n\tif err != nil {\n\t\tif entry != nil && entry.IsDir() {\n\t\t\treturn filepath.SkipDir\n\t\t}\n\t\treturn err\n\t}\n\trelative, err := filepath.Rel(root, path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tinfo, err := entry.Info()\n\tif err != nil {\n\t\treturn err\n\t}\n\tif entry.Type()&os.ModeSymlink != 0 {\n\t\ttarget, err := os.Readlink(path)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tresult[relative] = \"link \" + target\n\t\treturn nil\n\t}\n\tif entry.IsDir() {\n\t\tresult[relative] = fmt.Sprintf(\"directory %v\", info.Mode().Perm())\n\t\treturn nil\n\t}\n\tdata, err := os.ReadFile(path)\n\tif err != nil {\n\t\treturn err\n\t}\n\tresult[relative] = fmt.Sprintf(\"file %v %q\", info.Mode().Perm(), data)\n\treturn nil\n})",
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIFileAgreesWithNode"
+    ],
+    "message": "\"set ADAMIC_ORACLE_WASI=1\"",
+    "class": "required-input",
+    "provides": "bash cloud/setup.sh --wasi-sdk provisions WASI SDK 27.0 and Node v24.19.0; source its env.sh and set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing gate switches or tools must fail verification.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
+  },
+  {
+    "file": "internal/oracle/wasi_test.go",
+    "test": "TestWASIAgreesWithNode",
+    "id": "TestWASIAgreesWithNode:60edfd5dfdae8c56ca8b1865e065faf4ec3bed49b1a7c2b1969971912171d0e9:node-buffer-fs-decode-mkdtemp",
+    "line": 18,
+    "condition": "typed target refusal of fs.mkdtempSync in internal/oracle/testdata/node_buffer_fs_decode.a",
+    "reads": [
+      "os.Getenv(\"ADAMIC_GATE_UNCACHED\")",
+      "os.Getenv(\"ADAMIC_ORACLE_WASI\")",
+      "os.ReadFile(absolute)",
+      "os.ReadFile(file)",
+      "os.ReadFile(path)"
+    ],
+    "callers": [
+      "TestWASIAgreesWithNode"
+    ],
+    "message": "\"target refusal: wasm32-wasi refuses fs.mkdtempSync\"",
+    "class": "required-input",
+    "provides": "Required WASI fixture: TestWASIAgreesWithNode/internal/oracle/testdata/node_buffer_fs_decode.a. cloud/setup.sh --wasi-sdk provisions SDK 27.0 and Node; ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1 enable the lane. Its typed fs.mkdtempSync target refusal remains required-input as directed by developer tools; target support is still needed to execute this fixture.",
+    "opt_in_off": [
+      "ADAMIC_ORACLE_WASI"
+    ]
   }
 ]
