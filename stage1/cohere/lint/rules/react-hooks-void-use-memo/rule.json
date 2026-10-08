@@ -1,0 +1,13 @@
+{
+  "name": "react-hooks/void-use-memo",
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactHooksVoidUseMemo",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestVoidUseMemo"
+}

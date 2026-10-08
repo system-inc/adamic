@@ -1,0 +1,37 @@
+import type {RuleContext} from '../../context.ts';
+import {enclosingFunctionOf} from '../../helpers/rules-react/enclosing_function_of.a';
+import {isFunctionLike} from '../../helpers/rules-react/is_function_like.a';
+import {isReactCompiledFunction} from '../../helpers/rules-react/is_react_compiled_function.a';
+import {reactFunctionNameOf} from '../../helpers/rules-react/react_function_name_of.a';
+import {parametersOf} from '../../helpers/rules-react/parameters_of.a';
+import {functionBodyBlock} from '../../helpers/rules-react/function_body_block.a';
+import {skipParenthesesOptional} from '../../helpers/rules-react/skip_parentheses_optional.a';
+import {callbackMessage,unusedMessage} from './messages.a';
+export class Rule {
+ readonly context:RuleContext;
+ constructor(context:RuleContext){this.context=context;}
+ kind(index:number):string{return this.context.kind(index);}
+ child(index:number,pos:number):number{return index<0?-1:this.context.node(index).children[pos] ?? -1;}
+ last(index:number):number{if(index<0){return -1;}const c=this.context.node(index).children;return c[c.length-1] ?? -1;}
+ skip(index:number):number{return skipParenthesesOptional(this.context,index);}
+ name(index:number):number {for(const child of this.context.node(index).children){const k=this.kind(child);if(k==='DotDotDotToken'||k==='Decorator'||k.endsWith('Keyword')){continue;}return child;}return -1;}
+ bindingName(index:number):number{const a=this.name(index);const children=this.context.node(index).children.filter((n)=>this.kind(n)!=='DotDotDotToken');const b=children[1] ?? -1;return a>=0&&b>=0&&this.context.source.slice(this.context.node(a).end,this.context.node(b).pos).includes(':')?b:a;}
+ binds(index:number,wanted:string):boolean {if(index<0){return false;}if(this.kind(index)==='Identifier'){return this.context.node(index).text===wanted;}if(this.kind(index)==='ObjectBindingPattern'||this.kind(index)==='ArrayBindingPattern'){for(const child of this.context.children(index,'BindingElement')){if(this.binds(this.bindingName(child),wanted)){return true;}}}return false;}
+ declares(scope:number,wanted:string):boolean {
+  if(isFunctionLike(this.context,scope)){for(const parameter of parametersOf(this.context,scope)){if(this.binds(this.name(parameter),wanted)){return true;}}}
+  const body=this.kind(scope)==='Block'?scope:functionBodyBlock(this.context,scope);if(body<0){return false;}
+  for(const statement of this.context.node(body).children){const kind=this.kind(statement);
+   if(kind==='VariableStatement'){const list=this.context.children(statement,'VariableDeclarationList')[0] ?? -1;if(list>=0){for(const d of this.context.children(list,'VariableDeclaration')){if(this.binds(this.name(d),wanted)){return true;}}}}
+   else if(kind==='VariableDeclaration'){if(this.binds(this.name(statement),wanted)){return true;}}
+   else if(kind==='FunctionDeclaration'||kind==='ClassDeclaration'){const name=this.context.name(statement);if(this.kind(name)==='Identifier'&&this.context.node(name).text===wanted){return true;}}
+  }return false;
+ }
+ shadowed(wanted:string,callee:number,enclosing:number):boolean {for(let scope=callee;scope>=0;scope=this.context.parent(scope)){if((this.kind(scope)==='Block'||isFunctionLike(this.context,scope))&&this.declares(scope,wanted)){return true;}if(scope===enclosing){break;}}return false;}
+ callee(index:number,enclosing:number):boolean {index=this.skip(index);if(this.kind(index)==='Identifier'){return this.context.node(index).text==='useMemo'&&!this.shadowed('useMemo',index,enclosing);}if(this.kind(index)!=='PropertyAccessExpression'||this.context.has(index,'QuestionDotToken')){return false;}const name=this.last(index);if(this.kind(name)!=='Identifier'||this.context.node(name).text!=='useMemo'){return false;}const object=this.skip(this.child(index,0));return this.kind(object)==='Identifier'&&this.context.node(object).text==='React'&&!this.shadowed('React',object,enclosing);}
+ callback(index:number):number {const first=this.context.arguments(index)[0] ?? -1;if(first<0||this.kind(first)==='SpreadElement'){return -1;}const callback=this.skip(first);return this.kind(callback)==='ArrowFunction'||this.kind(callback)==='FunctionExpression'?callback:-1;}
+ returnIn(index:number):boolean {if(index<0||isFunctionLike(this.context,index)){return false;}if(this.kind(index)==='ReturnStatement'){return true;}for(const child of this.context.node(index).children){if(this.returnIn(child)){return true;}}return false;}
+ nonVoid(callback:number):boolean {const body=this.last(callback);if(body<0){return false;}if(this.kind(callback)==='ArrowFunction'&&this.kind(body)!=='Block'){return true;}for(const child of this.context.node(body).children){if(this.returnIn(child)){return true;}}return false;}
+ discarded(index:number):boolean {let current=index;for(let parent=this.context.parent(current);parent>=0;parent=this.context.parent(parent)){const k=this.kind(parent);if(k==='ParenthesizedExpression'){current=parent;}else if(k==='ExpressionStatement'){return true;}else if(k==='BinaryExpression'){if(this.kind(this.child(parent,1))!=='CommaToken'||this.child(parent,0)!==current){return false;}current=parent;}else{return false;}}return false;}
+ visit(index:number,parent:number):void {const enclosing=enclosingFunctionOf(this.context,index);if(enclosing<0||!this.callee(this.child(index,0),enclosing)||!isReactCompiledFunction(this.context,enclosing)){return;}const name=reactFunctionNameOf(this.context,enclosing);if(name.found&&name.name==='use'){return;}const callback=this.callback(index);if(callback<0){return;}if(!this.nonVoid(callback)){this.context.report(callback,'react-hooks/void-use-memo','useMemoCallbackReturnsNothing',callbackMessage,'','','');return;}if(this.discarded(index)){const callee=this.skip(this.child(index,0));this.context.report(callee,'react-hooks/void-use-memo','useMemoResultUnused',unusedMessage,'','','');}}
+}
+export function create(context:RuleContext):Rule{return new Rule(context);}
