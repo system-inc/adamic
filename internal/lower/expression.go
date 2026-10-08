@@ -1289,7 +1289,10 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		// not retain a source signature to prove its required arguments or ABI.
 		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
 	}
-	closure, err := l.expression(node.AsCallExpression().Expression)
+	closure, handled, err := l.libraryIteratorNextClosure(node)
+	if !handled {
+		closure, err = l.expression(node.AsCallExpression().Expression)
+	}
 	if err != nil {
 		return nil, err
 	}

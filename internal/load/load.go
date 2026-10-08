@@ -54,8 +54,7 @@ func (e *CheckError) Error() string {
 	return strings.Join(e.Diagnostics, "\n")
 }
 
-// compilerOptions is the one configuration every Adamic 0.1 program is checked under, set here
-// rather than read from a tsconfig.json, which could leave any of them out (docs/0.1.md).
+// compilerOptions supplies standalone Adamic defaults, including unconfigured inputs.
 func compilerOptions() *core.CompilerOptions {
 	return &core.CompilerOptions{
 		Strict:                     core.TSTrue,
@@ -113,23 +112,32 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		}
 		roots = append(roots, root)
 	}
-	roots = append(roots, preludePath)
+	userRoots := roots
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
 	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-	options, project, err := projectOptionsForRoots(fs, roots[:len(roots)-1])
+	options, project, err := projectOptionsForRoots(fs, userRoots)
 	if err != nil {
 		return nil, err
 	}
-	checkRoots := roots
+	fs.projectConsole = project != ""
+	checkRoots := append(append([]tspath.RootedFilePath{}, userRoots...), preludePath, setPreludePath)
 	var projectConfig *tsoptions.ParsedCommandLine
 	if project != "" {
 		// Composite projects must retain their complete root list. Checking only
 		// command-line entry files manufactures TS6307 errors on their imports.
 		projectConfig, _ = tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(project), &core.CompilerOptions{}, nil, fs, nil)
+		for _, name := range projectConfig.FileNames() {
+			if name.IsDeclarationFile() {
+				text, _ := fs.ReadFile(name)
+				if text != prelude && text != setPrelude {
+					checkRoots = append(checkRoots, name)
+				}
+			}
+		}
 		if options.Composite == core.TSTrue {
-			checkRoots = append(append([]tspath.RootedFilePath{}, projectConfig.FileNames()...), preludePath)
+			checkRoots = append(append([]tspath.RootedFilePath{}, projectConfig.FileNames()...), preludePath, setPreludePath)
 		}
 	}
 	config := tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
@@ -153,7 +161,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			return nil, err
 		}
 		fs.nodeTypes = true
-		roots = append(roots, currentDirectory.ResolveFile(index))
+		checkRoots = append(checkRoots, currentDirectory.ResolveFile(index))
 		fileSystem = cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
 		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
 		host = compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
@@ -221,7 +229,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	for _, sourceFile := range program.GetSourceFiles() {
 		byPath[sourceFile.PathKey()] = sourceFile
 	}
-	for _, root := range roots[:len(paths)] {
+	for _, root := range userRoots {
 		sourceFile, isLoaded := byPath[fileSystem.CaseSensitivity().PathKey(root.AsPath())]
 		if !isLoaded {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
@@ -257,7 +265,7 @@ func (p *Program) Where(node *ast.Node) string {
 // IsPrelude reports whether a declaration comes from Adamic's prelude rather than from the program,
 // so a local named console is never mistaken for the real one.
 func IsPrelude(sourceFile *ast.SourceFile) bool {
-	return sourceFile != nil && sourceFile.FileName() == preludePath
+	return sourceFile != nil && (sourceFile.FileName() == preludePath || sourceFile.FileName() == setPreludePath)
 }
 
 // IsLibrary reports whether a declaration comes from TypeScript's bundled library (lib.es2024.d.ts and

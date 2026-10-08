@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"os"
 	"path/filepath"
 	"regexp"
 	"testing"
@@ -48,4 +49,50 @@ func TestLibraryIteratorDoneMutant(t *testing.T) {
 		t.Fatalf("Node did not catch mutant: %q", difference)
 	}
 	t.Log("omitted done treated as true: clean exit 0, no sanitizer finding, caught only by Node stdout comparison")
+}
+
+// Project roots are generated .ts copies of the authored .a fixtures. The ledger's
+// ambient witnesses themselves are checked by internal/load, not executed.
+func TestProjectIteratorBackends(t *testing.T) {
+	for _, name := range []string{"iterable", "callback", "entries", "set_copy", "nested_entries", "done"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/library_overlay_"+name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			directory := t.TempDir()
+			path := filepath.Join(directory, "main.ts")
+			if err := os.WriteFile(path, source, 0644); err != nil {
+				t.Fatal(err)
+			}
+			config := `{"compilerOptions":{"strict":true,"target":"es2024","lib":["es2024"],"types":[],"noEmit":true},"files":["main.ts"]}`
+			if err := os.WriteFile(filepath.Join(directory, "tsconfig.json"), []byte(config), 0644); err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			expected := onNode(t, path)
+			actual, binary := natively(t, program)
+			if difference := disagreement(expected, actual); difference != "" {
+				t.Fatalf("native: %s", difference)
+			}
+			if difference := disagreement(expected, onJavaScriptBackend(t, program)); difference != "" {
+				t.Fatalf("JavaScript: %s", difference)
+			}
+			if difference := disagreement(expected, released(t, program)); difference != "" {
+				t.Fatalf("release: %s", difference)
+			}
+			if leaked := leaks(t, program, binary); leaked != "" {
+				t.Fatalf("leaks: %s", leaked)
+			}
+			if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+				if difference := disagreement(expected, onWASI(t, native.C(program))); difference != "" {
+					t.Fatalf("WASI: %s", difference)
+				}
+			}
+		})
+	}
 }
