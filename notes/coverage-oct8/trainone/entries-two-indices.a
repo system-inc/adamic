@@ -1,0 +1,6 @@
+const source: { label: string; [key: string]: number | string } = { label: 'seed'.repeat(2) };
+source['10'] = 'ten'.repeat(2);
+source['2'] = 'two'.repeat(2);
+const view: { readonly label: string } = source;
+const entries: [string, string][] = Object.entries(view);
+entries.forEach(entry => console.log(`${entry[0]}:${entry[1]}`));

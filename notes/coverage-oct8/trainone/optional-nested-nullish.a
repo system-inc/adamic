@@ -1,0 +1,17 @@
+let effects = '';
+function index(label: string, value: number): number { effects += label; return value; }
+function pick(values: readonly (readonly string[] | undefined)[] | null | undefined): void {
+    effects = '';
+    const result = values?.[index('i', 0)]?.[index('j', 1)];
+    console.log(`${result ?? 'missing'}:${effects}`);
+}
+pick(undefined);
+pick(null);
+pick([]);
+pick([undefined]);
+pick([[]]);
+pick([['a', ['b', 'c'].join('')]]);
+let selected: readonly (readonly string[])[] | undefined = [['old'.repeat(2)]];
+function replace(): number { selected = undefined; effects += 'x'; return 0; }
+effects = '';
+console.log(`${selected?.[replace()]?.[index('y', 0)] ?? 'missing'}:${effects}`);

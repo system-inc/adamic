@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "/workspace/adamic/notes/coverage-oct8/trainone/entries-presence.a"
+  ],
+  "exit": 0,
+  "stdout": "present:1\nexplicit:undefined\n",
+  "stderr": ""
+}

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/tmp/trainone-adamic",
+    "js",
+    "/workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a:4:15: stage 0 can't lower a value of type ReadonlyMap<string, readonly string[]> | null | undefined yet\n"
+}

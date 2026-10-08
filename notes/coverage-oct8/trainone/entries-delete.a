@@ -1,0 +1,15 @@
+const source: { visible: number; [key: string]: number | string } = { visible: 1 };
+source['10'] = 10;
+source['2'] = 2;
+source['4294967294'] = 94;
+source['4294967295'] = 95;
+source['01'] = 1;
+source['-0'] = 0;
+source['1e0'] = 100;
+source['gone'] = 8;
+delete source['gone'];
+delete source['2'];
+source['2'] = 22;
+const view: { readonly visible: number } = source;
+const entries: [string, number][] = Object.entries(view);
+entries.forEach(entry => console.log(`${entry[0]}:${entry[1]}`));

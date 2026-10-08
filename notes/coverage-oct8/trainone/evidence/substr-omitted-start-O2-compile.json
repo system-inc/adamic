@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/tmp/trainone-adamic",
+    "build",
+    "/workspace/adamic/notes/coverage-oct8/trainone/substr-omitted-start.a",
+    "-o",
+    "/tmp/adamic-gate/trainone-lushpa9a/substr-omitted-start-O2"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "notes/coverage-oct8/trainone/substr-omitted-start.a:1:19: error TS2554: Expected 1-2 arguments, but got 0.\nnotes/coverage-oct8/trainone/substr-omitted-start.a:2:26: error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'number'.\n"
+}

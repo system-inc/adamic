@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "/tmp/adamic-gate/trainone-lushpa9a/optional-nested-javascript.mjs"
+  ],
+  "exit": 0,
+  "stdout": "missing:\nmissing:i\nmissing:i\nmissing:ij\nbc:ij\noldold:xy\n",
+  "stderr": ""
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "/workspace/adamic/notes/coverage-oct8/trainone/optional-null.a"
+  ],
+  "exit": 0,
+  "stdout": "missing:\nlivelive:i\nmissing:\nlivelive:k\n",
+  "stderr": ""
+}

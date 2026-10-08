@@ -1,0 +1,26 @@
+[
+  {
+    "name": "record-two-index-sort",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-count=1",
+      "-timeout",
+      "30m"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "record-allocation-size-guard",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-count=1",
+      "-timeout",
+      "30m"
+    ],
+    "exit": 0
+  }
+]

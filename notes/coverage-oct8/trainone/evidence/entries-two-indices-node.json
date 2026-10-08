@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "/workspace/adamic/notes/coverage-oct8/trainone/entries-two-indices.a"
+  ],
+  "exit": 0,
+  "stdout": "2:twotwo\n10:tenten\nlabel:seedseed\n",
+  "stderr": ""
+}

@@ -1,0 +1,13 @@
+let effects = '';
+function key(): string { effects += 'k'; return ['ro', 'w'].join(''); }
+function index(): number { effects += 'i'; return 1; }
+function pick(map: ReadonlyMap<string, readonly string[]> | null | undefined): void {
+    effects = '';
+    const result = map?.get(key())?.[index()];
+    console.log(`${result ?? 'missing'}:${effects}`);
+}
+pick(undefined);
+pick(null);
+pick(new Map<string, readonly string[]>());
+pick(new Map<string, readonly string[]>([['row', []]]));
+pick(new Map<string, readonly string[]>([['row', ['a', 'b'.repeat(2)]]]));

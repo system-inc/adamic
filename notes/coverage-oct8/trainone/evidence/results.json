@@ -1,0 +1,660 @@
+{
+  "entries-absent": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-absent.a"
+      ],
+      "exit": 0,
+      "stdout": "present:1\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-absent.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-absent-sanitize",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-absent.a:3:37: Adamic 0.1 refuses Object.entries; every present field must have tsc's result element representation; optional or heterogeneous fields cannot be read soundly\n",
+      "phase": "compile"
+    },
+    "O2": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-absent.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-absent-O2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-absent.a:3:37: Adamic 0.1 refuses Object.entries; every present field must have tsc's result element representation; optional or heterogeneous fields cannot be read soundly\n",
+      "phase": "compile"
+    },
+    "javascript": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-absent.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-absent.a:3:37: Adamic 0.1 refuses Object.entries; every present field must have tsc's result element representation; optional or heterogeneous fields cannot be read soundly\n",
+      "phase": "compile"
+    },
+    "agree": false
+  },
+  "entries-delete": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a"
+      ],
+      "exit": 0,
+      "stdout": "2:22\n10:10\n4294967294:94\nvisible:1\n4294967295:95\n01:1\n-0:0\n1e0:100\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-delete-sanitize",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a:10:1: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go\n",
+      "phase": "compile"
+    },
+    "O2": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-delete-O2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a:10:1: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go\n",
+      "phase": "compile"
+    },
+    "javascript": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a:10:1: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go\n",
+      "phase": "compile"
+    },
+    "agree": false
+  },
+  "entries-order": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-order.a"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\n4294967294:last-index\nlabel:seedseed\n4294967295:ordinary\n01:leading\n-0:negative\n1e0:exponent\n:empty\n999999999999999999999999999999:huge\n2,10,4294967294,label,4294967295,01,-0,1e0,,999999999999999999999999999999\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-order-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\n4294967294:last-index\nlabel:seedseed\n4294967295:ordinary\n01:leading\n-0:negative\n1e0:exponent\n:empty\n999999999999999999999999999999:huge\n2,10,4294967294,label,4294967295,01,-0,1e0,,999999999999999999999999999999\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-order-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\n4294967294:last-index\nlabel:seedseed\n4294967295:ordinary\n01:leading\n-0:negative\n1e0:exponent\n:empty\n999999999999999999999999999999:huge\n2,10,4294967294,label,4294967295,01,-0,1e0,,999999999999999999999999999999\n",
+      "stderr": ""
+    },
+    "O2": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-order-O2"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\n4294967294:last-index\nlabel:seedseed\n4294967295:ordinary\n01:leading\n-0:negative\n1e0:exponent\n:empty\n999999999999999999999999999999:huge\n2,10,4294967294,label,4294967295,01,-0,1e0,,999999999999999999999999999999\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-order-javascript.mjs"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\n4294967294:last-index\nlabel:seedseed\n4294967295:ordinary\n01:leading\n-0:negative\n1e0:exponent\n:empty\n999999999999999999999999999999:huge\n2,10,4294967294,label,4294967295,01,-0,1e0,,999999999999999999999999999999\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "entries-presence": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-presence.a"
+      ],
+      "exit": 0,
+      "stdout": "present:1\nexplicit:undefined\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-presence.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-presence-sanitize",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-presence.a:3:17: Adamic 0.1 refuses Object.entries; tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound\n",
+      "phase": "compile"
+    },
+    "O2": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-presence.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-presence-O2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-presence.a:3:17: Adamic 0.1 refuses Object.entries; tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound\n",
+      "phase": "compile"
+    },
+    "javascript": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-presence.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-presence.a:3:17: Adamic 0.1 refuses Object.entries; tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound\n",
+      "phase": "compile"
+    },
+    "agree": false
+  },
+  "entries-two-indices": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/entries-two-indices.a"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\nlabel:seedseed\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-two-indices-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\nlabel:seedseed\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-two-indices-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\nlabel:seedseed\n",
+      "stderr": ""
+    },
+    "O2": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-two-indices-O2"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\nlabel:seedseed\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-gate/trainone-lushpa9a/entries-two-indices-javascript.mjs"
+      ],
+      "exit": 0,
+      "stdout": "2:twotwo\n10:tenten\nlabel:seedseed\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "optional-map-nullish": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:\nmissing:k\nmissing:ki\nbb:ki\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-map-nullish-sanitize",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a:4:15: stage 0 can't lower a value of type ReadonlyMap<string, readonly string[]> | null | undefined yet\n",
+      "phase": "compile"
+    },
+    "O2": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-map-nullish-O2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a:4:15: stage 0 can't lower a value of type ReadonlyMap<string, readonly string[]> | null | undefined yet\n",
+      "phase": "compile"
+    },
+    "javascript": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a:4:15: stage 0 can't lower a value of type ReadonlyMap<string, readonly string[]> | null | undefined yet\n",
+      "phase": "compile"
+    },
+    "agree": false
+  },
+  "optional-map": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-map.a"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:k\nmissing:ki\nbb:ki\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-map-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:k\nmissing:ki\nbb:ki\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-map-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:k\nmissing:ki\nbb:ki\n",
+      "stderr": ""
+    },
+    "O2": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-map-O2"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:k\nmissing:ki\nbb:ki\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-map-javascript.mjs"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:k\nmissing:ki\nbb:ki\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "optional-nested-nullish": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-nested-nullish.a"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:\nmissing:i\nmissing:i\nmissing:ij\nbc:ij\noldold:xy\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-nested-nullish.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-nested-nullish-sanitize",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-nested-nullish.a:3:15: stage 0 can't lower a value of type readonly (readonly string[] | undefined)[] | null | undefined yet\n",
+      "phase": "compile"
+    },
+    "O2": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-nested-nullish.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-nested-nullish-O2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-nested-nullish.a:3:15: stage 0 can't lower a value of type readonly (readonly string[] | undefined)[] | null | undefined yet\n",
+      "phase": "compile"
+    },
+    "javascript": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-nested-nullish.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-nested-nullish.a:3:15: stage 0 can't lower a value of type readonly (readonly string[] | undefined)[] | null | undefined yet\n",
+      "phase": "compile"
+    },
+    "agree": false
+  },
+  "optional-nested": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-nested.a"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:i\nmissing:i\nmissing:ij\nbc:ij\noldold:xy\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-nested-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:i\nmissing:i\nmissing:ij\nbc:ij\noldold:xy\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-nested-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:i\nmissing:i\nmissing:ij\nbc:ij\noldold:xy\n",
+      "stderr": ""
+    },
+    "O2": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-nested-O2"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:i\nmissing:i\nmissing:ij\nbc:ij\noldold:xy\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-nested-javascript.mjs"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nmissing:i\nmissing:i\nmissing:ij\nbc:ij\noldold:xy\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "optional-null": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-null.a"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nlivelive:i\nmissing:\nlivelive:k\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-null-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nlivelive:i\nmissing:\nlivelive:k\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-null-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nlivelive:i\nmissing:\nlivelive:k\n",
+      "stderr": ""
+    },
+    "O2": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-null-O2"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nlivelive:i\nmissing:\nlivelive:k\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-null-javascript.mjs"
+      ],
+      "exit": 0,
+      "stdout": "missing:\nlivelive:i\nmissing:\nlivelive:k\n",
+      "stderr": ""
+    },
+    "agree": true
+  },
+  "optional-record": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-record.a"
+      ],
+      "exit": 0,
+      "stdout": "missing:0\npresent:1\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-record.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-record-sanitize",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-record.a:4:20: stage 0 can't lower ?.[] on anything but a tuple, at a position written out yet\n",
+      "phase": "compile"
+    },
+    "O2": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-record.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/optional-record-O2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-record.a:4:20: stage 0 can't lower ?.[] on anything but a tuple, at a position written out yet\n",
+      "phase": "compile"
+    },
+    "javascript": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/trainone/optional-record.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-record.a:4:20: stage 0 can't lower ?.[] on anything but a tuple, at a position written out yet\n",
+      "phase": "compile"
+    },
+    "agree": false
+  },
+  "substr-omitted-start": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/substr-omitted-start.a"
+      ],
+      "exit": 0,
+      "stdout": "abc\nabc\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/substr-omitted-start.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/substr-omitted-start-sanitize",
+        "--sanitize"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "notes/coverage-oct8/trainone/substr-omitted-start.a:1:19: error TS2554: Expected 1-2 arguments, but got 0.\nnotes/coverage-oct8/trainone/substr-omitted-start.a:2:26: error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'number'.\n",
+      "phase": "compile"
+    },
+    "O2": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "build",
+        "/workspace/adamic/notes/coverage-oct8/trainone/substr-omitted-start.a",
+        "-o",
+        "/tmp/adamic-gate/trainone-lushpa9a/substr-omitted-start-O2"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "notes/coverage-oct8/trainone/substr-omitted-start.a:1:19: error TS2554: Expected 1-2 arguments, but got 0.\nnotes/coverage-oct8/trainone/substr-omitted-start.a:2:26: error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'number'.\n",
+      "phase": "compile"
+    },
+    "javascript": {
+      "command": [
+        "/tmp/trainone-adamic",
+        "js",
+        "/workspace/adamic/notes/coverage-oct8/trainone/substr-omitted-start.a"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "notes/coverage-oct8/trainone/substr-omitted-start.a:1:19: error TS2554: Expected 1-2 arguments, but got 0.\nnotes/coverage-oct8/trainone/substr-omitted-start.a:2:26: error TS2345: Argument of type 'undefined' is not assignable to parameter of type 'number'.\n",
+      "phase": "compile"
+    },
+    "agree": false
+  },
+  "substr": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/workspace/adamic/notes/coverage-oct8/trainone/substr.a"
+      ],
+      "exit": 0,
+      "stdout": "\ud83c\udf0dB\ufffd:4:55356:55357:sl\n-1e+300/-1e+300:[]:0:NaN:NaN\n-1e+300/-0.9:[]:0:NaN:NaN\n-1e+300/NaN:[]:0:NaN:NaN\n-1e+300/1.9:[A]:1:65:65\n-1e+300/2.9:[A\ufffd]:2:65:55356\n-1e+300/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-1e+300/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-8.9/-1e+300:[]:0:NaN:NaN\n-8.9/-0.9:[]:0:NaN:NaN\n-8.9/NaN:[]:0:NaN:NaN\n-8.9/1.9:[\ufffd]:1:55356:55356\n-8.9/2.9:[\ud83c\udf0d]:2:55356:57101\n-8.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-8.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-7.9/-1e+300:[]:0:NaN:NaN\n-7.9/-0.9:[]:0:NaN:NaN\n-7.9/NaN:[]:0:NaN:NaN\n-7.9/1.9:[\ufffd]:1:57101:57101\n-7.9/2.9:[\ufffdB]:2:57101:66\n-7.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-7.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-0.9/-1e+300:[]:0:NaN:NaN\n-0.9/-0.9:[]:0:NaN:NaN\n-0.9/NaN:[]:0:NaN:NaN\n-0.9/1.9:[A]:1:65:65\n-0.9/2.9:[A\ufffd]:2:65:55356\n-0.9/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-0.9/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/-1e+300:[]:0:NaN:NaN\n0/-0.9:[]:0:NaN:NaN\n0/NaN:[]:0:NaN:NaN\n0/1.9:[A]:1:65:65\n0/2.9:[A\ufffd]:2:65:55356\n0/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/-1e+300:[]:0:NaN:NaN\nNaN/-0.9:[]:0:NaN:NaN\nNaN/NaN:[]:0:NaN:NaN\nNaN/1.9:[A]:1:65:65\nNaN/2.9:[A\ufffd]:2:65:55356\nNaN/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n1.9/-1e+300:[]:0:NaN:NaN\n1.9/-0.9:[]:0:NaN:NaN\n1.9/NaN:[]:0:NaN:NaN\n1.9/1.9:[\ufffd]:1:55356:55356\n1.9/2.9:[\ud83c\udf0d]:2:55356:57101\n1.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n1.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n2.9/-1e+300:[]:0:NaN:NaN\n2.9/-0.9:[]:0:NaN:NaN\n2.9/NaN:[]:0:NaN:NaN\n2.9/1.9:[\ufffd]:1:57101:57101\n2.9/2.9:[\ufffdB]:2:57101:66\n2.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n2.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n4.9/-1e+300:[]:0:NaN:NaN\n4.9/-0.9:[]:0:NaN:NaN\n4.9/NaN:[]:0:NaN:NaN\n4.9/1.9:[\ufffd]:1:55357:55357\n4.9/2.9:[\ud83d\ude80]:2:55357:56960\n4.9/1e+300:[\ud83d\ude80C\ufffdZ]:5:55357:90\n4.9/undefined:[\ud83d\ude80C\ufffdZ]:5:55357:90\n5.9/-1e+300:[]:0:NaN:NaN\n5.9/-0.9:[]:0:NaN:NaN\n5.9/NaN:[]:0:NaN:NaN\n5.9/1.9:[\ufffd]:1:56960:56960\n5.9/2.9:[\ufffdC]:2:56960:67\n5.9/1e+300:[\ufffdC\ufffdZ]:4:56960:90\n5.9/undefined:[\ufffdC\ufffdZ]:4:56960:90\n1e+300/-1e+300:[]:0:NaN:NaN\n1e+300/-0.9:[]:0:NaN:NaN\n1e+300/NaN:[]:0:NaN:NaN\n1e+300/1.9:[]:0:NaN:NaN\n1e+300/2.9:[]:0:NaN:NaN\n1e+300/1e+300:[]:0:NaN:NaN\n1e+300/undefined:[]:0:NaN:NaN\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\n",
+      "stderr": ""
+    },
+    "sanitize": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/substr-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "\ud83c\udf0dB\ufffd:4:55356:55357:sl\n-1e+300/-1e+300:[]:0:NaN:NaN\n-1e+300/-0.9:[]:0:NaN:NaN\n-1e+300/NaN:[]:0:NaN:NaN\n-1e+300/1.9:[A]:1:65:65\n-1e+300/2.9:[A\ufffd]:2:65:55356\n-1e+300/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-1e+300/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-8.9/-1e+300:[]:0:NaN:NaN\n-8.9/-0.9:[]:0:NaN:NaN\n-8.9/NaN:[]:0:NaN:NaN\n-8.9/1.9:[\ufffd]:1:55356:55356\n-8.9/2.9:[\ud83c\udf0d]:2:55356:57101\n-8.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-8.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-7.9/-1e+300:[]:0:NaN:NaN\n-7.9/-0.9:[]:0:NaN:NaN\n-7.9/NaN:[]:0:NaN:NaN\n-7.9/1.9:[\ufffd]:1:57101:57101\n-7.9/2.9:[\ufffdB]:2:57101:66\n-7.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-7.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-0.9/-1e+300:[]:0:NaN:NaN\n-0.9/-0.9:[]:0:NaN:NaN\n-0.9/NaN:[]:0:NaN:NaN\n-0.9/1.9:[A]:1:65:65\n-0.9/2.9:[A\ufffd]:2:65:55356\n-0.9/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-0.9/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/-1e+300:[]:0:NaN:NaN\n0/-0.9:[]:0:NaN:NaN\n0/NaN:[]:0:NaN:NaN\n0/1.9:[A]:1:65:65\n0/2.9:[A\ufffd]:2:65:55356\n0/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/-1e+300:[]:0:NaN:NaN\nNaN/-0.9:[]:0:NaN:NaN\nNaN/NaN:[]:0:NaN:NaN\nNaN/1.9:[A]:1:65:65\nNaN/2.9:[A\ufffd]:2:65:55356\nNaN/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n1.9/-1e+300:[]:0:NaN:NaN\n1.9/-0.9:[]:0:NaN:NaN\n1.9/NaN:[]:0:NaN:NaN\n1.9/1.9:[\ufffd]:1:55356:55356\n1.9/2.9:[\ud83c\udf0d]:2:55356:57101\n1.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n1.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n2.9/-1e+300:[]:0:NaN:NaN\n2.9/-0.9:[]:0:NaN:NaN\n2.9/NaN:[]:0:NaN:NaN\n2.9/1.9:[\ufffd]:1:57101:57101\n2.9/2.9:[\ufffdB]:2:57101:66\n2.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n2.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n4.9/-1e+300:[]:0:NaN:NaN\n4.9/-0.9:[]:0:NaN:NaN\n4.9/NaN:[]:0:NaN:NaN\n4.9/1.9:[\ufffd]:1:55357:55357\n4.9/2.9:[\ud83d\ude80]:2:55357:56960\n4.9/1e+300:[\ud83d\ude80C\ufffdZ]:5:55357:90\n4.9/undefined:[\ud83d\ude80C\ufffdZ]:5:55357:90\n5.9/-1e+300:[]:0:NaN:NaN\n5.9/-0.9:[]:0:NaN:NaN\n5.9/NaN:[]:0:NaN:NaN\n5.9/1.9:[\ufffd]:1:56960:56960\n5.9/2.9:[\ufffdC]:2:56960:67\n5.9/1e+300:[\ufffdC\ufffdZ]:4:56960:90\n5.9/undefined:[\ufffdC\ufffdZ]:4:56960:90\n1e+300/-1e+300:[]:0:NaN:NaN\n1e+300/-0.9:[]:0:NaN:NaN\n1e+300/NaN:[]:0:NaN:NaN\n1e+300/1.9:[]:0:NaN:NaN\n1e+300/2.9:[]:0:NaN:NaN\n1e+300/1e+300:[]:0:NaN:NaN\n1e+300/undefined:[]:0:NaN:NaN\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\n",
+      "stderr": ""
+    },
+    "leaks": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/substr-sanitize"
+      ],
+      "exit": 0,
+      "stdout": "\ud83c\udf0dB\ufffd:4:55356:55357:sl\n-1e+300/-1e+300:[]:0:NaN:NaN\n-1e+300/-0.9:[]:0:NaN:NaN\n-1e+300/NaN:[]:0:NaN:NaN\n-1e+300/1.9:[A]:1:65:65\n-1e+300/2.9:[A\ufffd]:2:65:55356\n-1e+300/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-1e+300/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-8.9/-1e+300:[]:0:NaN:NaN\n-8.9/-0.9:[]:0:NaN:NaN\n-8.9/NaN:[]:0:NaN:NaN\n-8.9/1.9:[\ufffd]:1:55356:55356\n-8.9/2.9:[\ud83c\udf0d]:2:55356:57101\n-8.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-8.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-7.9/-1e+300:[]:0:NaN:NaN\n-7.9/-0.9:[]:0:NaN:NaN\n-7.9/NaN:[]:0:NaN:NaN\n-7.9/1.9:[\ufffd]:1:57101:57101\n-7.9/2.9:[\ufffdB]:2:57101:66\n-7.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-7.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-0.9/-1e+300:[]:0:NaN:NaN\n-0.9/-0.9:[]:0:NaN:NaN\n-0.9/NaN:[]:0:NaN:NaN\n-0.9/1.9:[A]:1:65:65\n-0.9/2.9:[A\ufffd]:2:65:55356\n-0.9/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-0.9/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/-1e+300:[]:0:NaN:NaN\n0/-0.9:[]:0:NaN:NaN\n0/NaN:[]:0:NaN:NaN\n0/1.9:[A]:1:65:65\n0/2.9:[A\ufffd]:2:65:55356\n0/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/-1e+300:[]:0:NaN:NaN\nNaN/-0.9:[]:0:NaN:NaN\nNaN/NaN:[]:0:NaN:NaN\nNaN/1.9:[A]:1:65:65\nNaN/2.9:[A\ufffd]:2:65:55356\nNaN/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n1.9/-1e+300:[]:0:NaN:NaN\n1.9/-0.9:[]:0:NaN:NaN\n1.9/NaN:[]:0:NaN:NaN\n1.9/1.9:[\ufffd]:1:55356:55356\n1.9/2.9:[\ud83c\udf0d]:2:55356:57101\n1.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n1.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n2.9/-1e+300:[]:0:NaN:NaN\n2.9/-0.9:[]:0:NaN:NaN\n2.9/NaN:[]:0:NaN:NaN\n2.9/1.9:[\ufffd]:1:57101:57101\n2.9/2.9:[\ufffdB]:2:57101:66\n2.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n2.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n4.9/-1e+300:[]:0:NaN:NaN\n4.9/-0.9:[]:0:NaN:NaN\n4.9/NaN:[]:0:NaN:NaN\n4.9/1.9:[\ufffd]:1:55357:55357\n4.9/2.9:[\ud83d\ude80]:2:55357:56960\n4.9/1e+300:[\ud83d\ude80C\ufffdZ]:5:55357:90\n4.9/undefined:[\ud83d\ude80C\ufffdZ]:5:55357:90\n5.9/-1e+300:[]:0:NaN:NaN\n5.9/-0.9:[]:0:NaN:NaN\n5.9/NaN:[]:0:NaN:NaN\n5.9/1.9:[\ufffd]:1:56960:56960\n5.9/2.9:[\ufffdC]:2:56960:67\n5.9/1e+300:[\ufffdC\ufffdZ]:4:56960:90\n5.9/undefined:[\ufffdC\ufffdZ]:4:56960:90\n1e+300/-1e+300:[]:0:NaN:NaN\n1e+300/-0.9:[]:0:NaN:NaN\n1e+300/NaN:[]:0:NaN:NaN\n1e+300/1.9:[]:0:NaN:NaN\n1e+300/2.9:[]:0:NaN:NaN\n1e+300/1e+300:[]:0:NaN:NaN\n1e+300/undefined:[]:0:NaN:NaN\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\n",
+      "stderr": ""
+    },
+    "O2": {
+      "command": [
+        "/tmp/adamic-gate/trainone-lushpa9a/substr-O2"
+      ],
+      "exit": 0,
+      "stdout": "\ud83c\udf0dB\ufffd:4:55356:55357:sl\n-1e+300/-1e+300:[]:0:NaN:NaN\n-1e+300/-0.9:[]:0:NaN:NaN\n-1e+300/NaN:[]:0:NaN:NaN\n-1e+300/1.9:[A]:1:65:65\n-1e+300/2.9:[A\ufffd]:2:65:55356\n-1e+300/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-1e+300/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-8.9/-1e+300:[]:0:NaN:NaN\n-8.9/-0.9:[]:0:NaN:NaN\n-8.9/NaN:[]:0:NaN:NaN\n-8.9/1.9:[\ufffd]:1:55356:55356\n-8.9/2.9:[\ud83c\udf0d]:2:55356:57101\n-8.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-8.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-7.9/-1e+300:[]:0:NaN:NaN\n-7.9/-0.9:[]:0:NaN:NaN\n-7.9/NaN:[]:0:NaN:NaN\n-7.9/1.9:[\ufffd]:1:57101:57101\n-7.9/2.9:[\ufffdB]:2:57101:66\n-7.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-7.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-0.9/-1e+300:[]:0:NaN:NaN\n-0.9/-0.9:[]:0:NaN:NaN\n-0.9/NaN:[]:0:NaN:NaN\n-0.9/1.9:[A]:1:65:65\n-0.9/2.9:[A\ufffd]:2:65:55356\n-0.9/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-0.9/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/-1e+300:[]:0:NaN:NaN\n0/-0.9:[]:0:NaN:NaN\n0/NaN:[]:0:NaN:NaN\n0/1.9:[A]:1:65:65\n0/2.9:[A\ufffd]:2:65:55356\n0/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/-1e+300:[]:0:NaN:NaN\nNaN/-0.9:[]:0:NaN:NaN\nNaN/NaN:[]:0:NaN:NaN\nNaN/1.9:[A]:1:65:65\nNaN/2.9:[A\ufffd]:2:65:55356\nNaN/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n1.9/-1e+300:[]:0:NaN:NaN\n1.9/-0.9:[]:0:NaN:NaN\n1.9/NaN:[]:0:NaN:NaN\n1.9/1.9:[\ufffd]:1:55356:55356\n1.9/2.9:[\ud83c\udf0d]:2:55356:57101\n1.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n1.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n2.9/-1e+300:[]:0:NaN:NaN\n2.9/-0.9:[]:0:NaN:NaN\n2.9/NaN:[]:0:NaN:NaN\n2.9/1.9:[\ufffd]:1:57101:57101\n2.9/2.9:[\ufffdB]:2:57101:66\n2.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n2.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n4.9/-1e+300:[]:0:NaN:NaN\n4.9/-0.9:[]:0:NaN:NaN\n4.9/NaN:[]:0:NaN:NaN\n4.9/1.9:[\ufffd]:1:55357:55357\n4.9/2.9:[\ud83d\ude80]:2:55357:56960\n4.9/1e+300:[\ud83d\ude80C\ufffdZ]:5:55357:90\n4.9/undefined:[\ud83d\ude80C\ufffdZ]:5:55357:90\n5.9/-1e+300:[]:0:NaN:NaN\n5.9/-0.9:[]:0:NaN:NaN\n5.9/NaN:[]:0:NaN:NaN\n5.9/1.9:[\ufffd]:1:56960:56960\n5.9/2.9:[\ufffdC]:2:56960:67\n5.9/1e+300:[\ufffdC\ufffdZ]:4:56960:90\n5.9/undefined:[\ufffdC\ufffdZ]:4:56960:90\n1e+300/-1e+300:[]:0:NaN:NaN\n1e+300/-0.9:[]:0:NaN:NaN\n1e+300/NaN:[]:0:NaN:NaN\n1e+300/1.9:[]:0:NaN:NaN\n1e+300/2.9:[]:0:NaN:NaN\n1e+300/1e+300:[]:0:NaN:NaN\n1e+300/undefined:[]:0:NaN:NaN\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\n",
+      "stderr": ""
+    },
+    "javascript": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/adamic-gate/trainone-lushpa9a/substr-javascript.mjs"
+      ],
+      "exit": 0,
+      "stdout": "\ud83c\udf0dB\ufffd:4:55356:55357:sl\n-1e+300/-1e+300:[]:0:NaN:NaN\n-1e+300/-0.9:[]:0:NaN:NaN\n-1e+300/NaN:[]:0:NaN:NaN\n-1e+300/1.9:[A]:1:65:65\n-1e+300/2.9:[A\ufffd]:2:65:55356\n-1e+300/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-1e+300/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-8.9/-1e+300:[]:0:NaN:NaN\n-8.9/-0.9:[]:0:NaN:NaN\n-8.9/NaN:[]:0:NaN:NaN\n-8.9/1.9:[\ufffd]:1:55356:55356\n-8.9/2.9:[\ud83c\udf0d]:2:55356:57101\n-8.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-8.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n-7.9/-1e+300:[]:0:NaN:NaN\n-7.9/-0.9:[]:0:NaN:NaN\n-7.9/NaN:[]:0:NaN:NaN\n-7.9/1.9:[\ufffd]:1:57101:57101\n-7.9/2.9:[\ufffdB]:2:57101:66\n-7.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-7.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n-0.9/-1e+300:[]:0:NaN:NaN\n-0.9/-0.9:[]:0:NaN:NaN\n-0.9/NaN:[]:0:NaN:NaN\n-0.9/1.9:[A]:1:65:65\n-0.9/2.9:[A\ufffd]:2:65:55356\n-0.9/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n-0.9/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/-1e+300:[]:0:NaN:NaN\n0/-0.9:[]:0:NaN:NaN\n0/NaN:[]:0:NaN:NaN\n0/1.9:[A]:1:65:65\n0/2.9:[A\ufffd]:2:65:55356\n0/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n0/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/-1e+300:[]:0:NaN:NaN\nNaN/-0.9:[]:0:NaN:NaN\nNaN/NaN:[]:0:NaN:NaN\nNaN/1.9:[A]:1:65:65\nNaN/2.9:[A\ufffd]:2:65:55356\nNaN/1e+300:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\nNaN/undefined:[A\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:9:65:90\n1.9/-1e+300:[]:0:NaN:NaN\n1.9/-0.9:[]:0:NaN:NaN\n1.9/NaN:[]:0:NaN:NaN\n1.9/1.9:[\ufffd]:1:55356:55356\n1.9/2.9:[\ud83c\udf0d]:2:55356:57101\n1.9/1e+300:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n1.9/undefined:[\ud83c\udf0dB\ud83d\ude80C\ufffdZ]:8:55356:90\n2.9/-1e+300:[]:0:NaN:NaN\n2.9/-0.9:[]:0:NaN:NaN\n2.9/NaN:[]:0:NaN:NaN\n2.9/1.9:[\ufffd]:1:57101:57101\n2.9/2.9:[\ufffdB]:2:57101:66\n2.9/1e+300:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n2.9/undefined:[\ufffdB\ud83d\ude80C\ufffdZ]:7:57101:90\n4.9/-1e+300:[]:0:NaN:NaN\n4.9/-0.9:[]:0:NaN:NaN\n4.9/NaN:[]:0:NaN:NaN\n4.9/1.9:[\ufffd]:1:55357:55357\n4.9/2.9:[\ud83d\ude80]:2:55357:56960\n4.9/1e+300:[\ud83d\ude80C\ufffdZ]:5:55357:90\n4.9/undefined:[\ud83d\ude80C\ufffdZ]:5:55357:90\n5.9/-1e+300:[]:0:NaN:NaN\n5.9/-0.9:[]:0:NaN:NaN\n5.9/NaN:[]:0:NaN:NaN\n5.9/1.9:[\ufffd]:1:56960:56960\n5.9/2.9:[\ufffdC]:2:56960:67\n5.9/1e+300:[\ufffdC\ufffdZ]:4:56960:90\n5.9/undefined:[\ufffdC\ufffdZ]:4:56960:90\n1e+300/-1e+300:[]:0:NaN:NaN\n1e+300/-0.9:[]:0:NaN:NaN\n1e+300/NaN:[]:0:NaN:NaN\n1e+300/1.9:[]:0:NaN:NaN\n1e+300/2.9:[]:0:NaN:NaN\n1e+300/1e+300:[]:0:NaN:NaN\n1e+300/undefined:[]:0:NaN:NaN\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\nA\ud83c\udf0dB\ud83d\ude80C\ufffdZ\n",
+      "stderr": ""
+    },
+    "agree": true
+  }
+}

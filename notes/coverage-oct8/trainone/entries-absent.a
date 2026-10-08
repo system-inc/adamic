@@ -1,0 +1,4 @@
+interface Fields { present: number; absent?: number; }
+const source: Fields = { present: 1 };
+const entries: [string, number][] = Object.entries(source);
+entries.forEach(entry => console.log(`${entry[0]}:${entry[1]}`));

@@ -1,0 +1,16 @@
+let text = ['A', '🌍', 'B', '🚀', 'C', '\ud800', 'Z'].join('');
+let effects = '';
+function start(): number { effects += 's'; text = 'changed'.repeat(2); return -8.9; }
+function count(): number { effects += 'l'; return 4.9; }
+const saved = text.substr(start(), count());
+console.log(`${saved}:${saved.length}:${saved.charCodeAt(0)}:${saved.charCodeAt(3)}:${effects}`);
+const source = ['A', '🌍', 'B', '🚀', 'C', '\ud800', 'Z'].join('');
+function show(start: number, count: number | undefined): void {
+    const result = source.substr(start, count);
+    console.log(`${start}/${count}:[${result}]:${result.length}:${result.charCodeAt(0)}:${result.charCodeAt(result.length - 1)}`);
+}
+for (const start of [-1e300, -8.9, -7.9, -0.9, -0, 0 / 0, 1.9, 2.9, 4.9, 5.9, 1e300]) {
+    for (const count of [-1e300, -0.9, 0 / 0, 1.9, 2.9, 1e300, undefined]) { show(start, count); }
+}
+console.log(source.substr(0));
+console.log(source.substr(0, undefined));

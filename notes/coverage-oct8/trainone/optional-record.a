@@ -1,0 +1,7 @@
+let calls = 0;
+function key(): string { calls++; return 'name'; }
+function pick(record: Record<string, string> | undefined): void {
+    console.log(`${record?.[key()] ?? 'missing'}:${calls}`);
+}
+pick(undefined);
+pick({ name: 'present' });

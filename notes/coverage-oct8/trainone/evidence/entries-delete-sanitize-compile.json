@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/tmp/trainone-adamic",
+    "build",
+    "/workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a",
+    "-o",
+    "/tmp/adamic-gate/trainone-lushpa9a/entries-delete-sanitize",
+    "--sanitize"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a:10:1: Adamic 0.1 refuses delete; an object's shape is fixed; use a Map for keys that come and go\n"
+}

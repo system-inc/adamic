@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/tmp/trainone-adamic",
+    "js",
+    "/workspace/adamic/notes/coverage-oct8/trainone/optional-nested-nullish.a"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/optional-nested-nullish.a:3:15: stage 0 can't lower a value of type readonly (readonly string[] | undefined)[] | null | undefined yet\n"
+}

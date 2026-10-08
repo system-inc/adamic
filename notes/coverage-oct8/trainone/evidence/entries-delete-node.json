@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "/workspace/adamic/notes/coverage-oct8/trainone/entries-delete.a"
+  ],
+  "exit": 0,
+  "stdout": "2:22\n10:10\n4294967294:94\nvisible:1\n4294967295:95\n01:1\n-0:0\n1e0:100\n",
+  "stderr": ""
+}

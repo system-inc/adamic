@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "/workspace/adamic/notes/coverage-oct8/trainone/substr-omitted-start.a"
+  ],
+  "exit": 0,
+  "stdout": "abc\nabc\n",
+  "stderr": ""
+}

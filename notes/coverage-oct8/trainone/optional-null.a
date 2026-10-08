@@ -1,0 +1,15 @@
+let effects = '';
+function index(): number { effects += 'i'; return 0; }
+function array(values: readonly string[] | null): void {
+    effects = '';
+    console.log(`${values?.[index()] ?? 'missing'}:${effects}`);
+}
+function map(values: ReadonlyMap<string, string> | null): void {
+    effects = '';
+    function key(): string { effects += 'k'; return 'row'; }
+    console.log(`${values?.get(key()) ?? 'missing'}:${effects}`);
+}
+array(null);
+array(['live'.repeat(2)]);
+map(null);
+map(new Map([['row', 'live'.repeat(2)]]));

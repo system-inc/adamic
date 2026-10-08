@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "/tmp/adamic-gate/trainone-lushpa9a/entries-two-indices-javascript.mjs"
+  ],
+  "exit": 0,
+  "stdout": "2:twotwo\n10:tenten\nlabel:seedseed\n",
+  "stderr": ""
+}

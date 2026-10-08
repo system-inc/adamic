@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "/workspace/adamic/notes/coverage-oct8/trainone/optional-map-nullish.a"
+  ],
+  "exit": 0,
+  "stdout": "missing:\nmissing:\nmissing:k\nmissing:ki\nbb:ki\n",
+  "stderr": ""
+}

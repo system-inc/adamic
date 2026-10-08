@@ -1,0 +1,110 @@
+[
+  {
+    "name": "numeric-index-guard",
+    "file": "internal/lower/optional_indexing.go",
+    "before": "if index.Type() != ir.Number {",
+    "after": "if false {",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "TestOptionalIndexing",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-v"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "structural-map-guard",
+    "file": "internal/lower/optional_indexing_map.go",
+    "before": "if l.optionalMapStructuralReceiver(access.Expression) {",
+    "after": "if false {",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "TestOptionalIndexing",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-v"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "substr-missing-argument-guard",
+    "file": "internal/lower/string_substr.go",
+    "before": "if index >= len(reads) {",
+    "after": "if false {",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/syntax_substr",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-v"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "record-two-index-sort",
+    "file": "internal/native/runtime/record.c",
+    "before": "if (count > 1) {",
+    "after": "if (count > 2) {",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "TestRecordsAgainstNode",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-v"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "record-allocation-size-guard",
+    "file": "internal/native/runtime/record.c",
+    "before": "if (count > SIZE_MAX / sizeof *indices) {\n\t\t\tadamic_panic(\"out of memory\", sizeof \"out of memory\" - 1);\n\t\t}",
+    "after": "",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "TestRecordsAgainstNode",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-v"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "record-deleted-key-filter",
+    "file": "internal/native/runtime/record.c",
+    "before": "if (!entry->deleted && !array_index(entry->key.reference, &number)) {",
+    "after": "if (!array_index(entry->key.reference, &number)) {",
+    "command": [
+      "go",
+      "test",
+      "./internal/native",
+      "-run",
+      "TestRecordsAgainstNode",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "-v"
+    ],
+    "exit": 1
+  }
+]

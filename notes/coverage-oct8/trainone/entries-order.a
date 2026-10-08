@@ -1,0 +1,15 @@
+const source: { label: string; [key: string]: number | string } = { label: 'seed'.repeat(2) };
+source['10'] = 'ten'.repeat(2);
+source['2'] = 'two'.repeat(2);
+source['4294967294'] = 'last-index';
+source['4294967295'] = 'ordinary';
+source['01'] = 'leading';
+source['-0'] = 'negative';
+source['1e0'] = 'exponent';
+source[''] = 'empty';
+source['999999999999999999999999999999'] = 'huge';
+const view: { readonly label: string } = source;
+const entries: [string, string][] = Object.entries(view);
+source['2'] = 'changed';
+entries.forEach(entry => console.log(`${entry[0]}:${entry[1]}`));
+console.log(Object.keys(view).join(','));

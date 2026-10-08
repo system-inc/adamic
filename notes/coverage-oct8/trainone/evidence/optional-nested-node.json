@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "/workspace/adamic/notes/coverage-oct8/trainone/optional-nested.a"
+  ],
+  "exit": 0,
+  "stdout": "missing:\nmissing:i\nmissing:i\nmissing:ij\nbc:ij\noldold:xy\n",
+  "stderr": ""
+}

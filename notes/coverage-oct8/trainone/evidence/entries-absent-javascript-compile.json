@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/tmp/trainone-adamic",
+    "js",
+    "/workspace/adamic/notes/coverage-oct8/trainone/entries-absent.a"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/trainone/entries-absent.a:3:37: Adamic 0.1 refuses Object.entries; every present field must have tsc's result element representation; optional or heterogeneous fields cannot be read soundly\n"
+}
