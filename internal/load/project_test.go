@@ -64,6 +64,8 @@ func TestProjectLibAndOptions(t *testing.T) {
 		{"DOM retains console", `{"strict":true,"lib":["es2024","dom"],"types":[]}`, `const body = document.body; console.log(42, 'value');`, ""},
 		{"default lib follows target", `{"strict":true,"target":"es2024","types":[]}`, `const body = document.body;`, ""},
 		{"unchecked reads disabled", `{"strict":true,"noUncheckedIndexedAccess":false,"lib":["es2024"],"types":[]}`, `const values: number[] = [1]; const first: number = values[0];`, ""},
+		{"Node reload retains unchecked reads disabled", `{"strict":true,"noUncheckedIndexedAccess":false,"target":"es2024","lib":["es2024"],"types":[],"module":"nodenext","moduleResolution":"nodenext"}`, `import type {Stats} from 'node:fs'; const values: number[] = [1]; const first: number = values[0]; console.log(true, first);`, ""},
+		{"Node reload retains unchecked reads enabled", `{"strict":true,"noUncheckedIndexedAccess":true,"target":"es2024","lib":["es2024"],"types":[],"module":"nodenext","moduleResolution":"nodenext"}`, `import type {Stats} from 'node:fs'; const values: number[] = [1]; const first: number = values[0];`, "TS2322"},
 		{"unchecked reads enabled", `{"strict":true,"noUncheckedIndexedAccess":true,"lib":["es2024"],"types":[]}`, `const values: number[] = [1]; const first: number = values[0];`, "TS2322"},
 		{"optional exactness disabled", `{"strict":true,"exactOptionalPropertyTypes":false,"lib":["es2024"],"types":[]}`, `const value: { x?: number } = { x: undefined };`, ""},
 		{"implicit any allowed", `{"strict":false,"lib":["es2024"],"types":[]}`, `function identity(value) { return value; }`, ""},
