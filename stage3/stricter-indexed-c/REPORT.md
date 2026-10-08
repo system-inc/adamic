@@ -1,8 +1,8 @@
-Built an isolated 18-row witness manifest and harness from stricter-options baseline 390af985; four array-stack rows proven; two hole rows refused.
-Commits: this first-group checkpoint on codex/stricter-indexed-c, based on 390af985.
-Commands and outputs: setup passed in 598.141s; first group passed in 13.214s; source Node passed 34 cases.
-Mutants: D157-D160 erase-panic mutants built and were caught in release and sanitized builds, each exit 0 printing undefined.
-Not covered yet: 12 rows remain pending; D155/D156 holes refuse and belong to the stricter-checks worker.
+Built an isolated 18-row manifest and runtime harness; nine rows proven and two hole rows refused.
+Commits: first checkpoint 5716a4ce; this second-group checkpoint follows it on codex/stricter-indexed-c.
+Commands and outputs: group 1 passed in 13.214s; group 2 passed in 7.637s; setup passed in 598.141s.
+Mutants: D157-D165 erase-panic mutants built and were caught in release and sanitized builds, 18 runs.
+Not covered yet: seven rows remain pending; D155/D156 hole construction refuses.
 
 ## Scope and provenance
 
@@ -62,10 +62,10 @@ cannot count as a caught mutant.
 |---|---|---|
 | D155, D156 | new Array<number>(2), numeric kind index, hole | blocked: stage 0 can't lower new an Identifier yet |
 | D157-D160 | array stacks, numeric offset index, array element | proven |
-| D161 | object array, literal 0 | pending |
-| D162 | readonly numeric superPath read used as an object-array index | pending |
-| D163, D164 | readonly number array, superPathDepth | pending |
-| D165 | object array, statementOffset | pending |
+| D161 | object array, literal 0 | proven |
+| D162 | readonly numeric superPath read used as an object-array index | proven |
+| D163, D164 | readonly number array, superPathDepth | proven |
+| D165 | object array, statementOffset | proven |
 | D166 | constructor.body.statements array, statementOffset | pending |
 | D178 | node.declarations array, literal 0 | pending |
 | D179, D182, D183 | object array outerParameters, i | pending |
@@ -99,3 +99,20 @@ object-array observation. Exactly one guard and two lookups are required.
 The D163/D164 minimal witnesses also require the path result as number; this
 explicit sink prevents their Node observation from removing the stricter-option
 diagnostic. The original downstream operations remain subtraction and addition.
+
+## Half-site checkpoint
+
+Eleven of 18 diagnostic rows assessed: nine proven, D155/D156 blocked by
+hole-construction lowering, seven remaining (D166 and D178-D183). Group 2
+passed all five rows, present and absent, in both backends and release/sanitized
+native. Log: /tmp/stricter-indexed-c-group2.log.
+
+All ten group-2 erase-check runs built and exited 0 with empty stderr.
+D161 and D165 printed undefined; D162 printed present; D163 printed 0;
+D164 printed 1. Every result lost the required named exit-70 stop, caught
+by the exact output/exit assertion. Numeric missing results becoming zero
+after erasure are an observation of the mutant, not correct JavaScript behavior.
+
+```sh
+ADAMIC_WITNESS_CLI=/tmp/stricter-indexed-c-adamic go test ./stage3/stricter-indexed-c -run 'TestLedgerWitnesses/D16[1-5]' -count=1 -timeout 10m -v > /tmp/stricter-indexed-c-group2.log 2>&1
+```
