@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly now:unknown;}
+interface Target {now(): number;}
+function probe(value:Base):void {const nativePerformanceTime=value as Target;const result=nativePerformanceTime.now();console.log("completed");}
+probe({now:(extra:number): number=>(3)});

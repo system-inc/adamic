@@ -1,0 +1,8 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Bundle {readonly value:number;readonly kind:309;}
+interface EmitTextWriter {readonly value:number;}
+interface SourceMapGenerator {readonly value:number;}
+interface Base {readonly writeBundle:unknown;}
+interface Target {writeBundle(bundle: Bundle, writer: EmitTextWriter, sourceMapGenerator: SourceMapGenerator | undefined): void;}
+function probe(value:Base):void {const printer=value as Target;printer.writeBundle({value:3,kind:309},{value:3},{value:3});console.log("completed");}
+probe({writeBundle:(): void=>{}});

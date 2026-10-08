@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly hasChangedAutomaticTypeDirectiveNames:unknown;}
+interface Target {hasChangedAutomaticTypeDirectiveNames(): boolean;}
+function probe(value:Base):void {const resolutionCache=value as Target;const result=resolutionCache.hasChangedAutomaticTypeDirectiveNames();console.log("completed");}
+probe({hasChangedAutomaticTypeDirectiveNames:():boolean=>(true)});

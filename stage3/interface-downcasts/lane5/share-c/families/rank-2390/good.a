@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly writeLog:unknown;}
+interface Target {writeLog: (s: string) => void;}
+function probe(value:Base):void {const state=value as Target;state.writeLog("abc");console.log("completed");}
+probe({writeLog:(s: string):void=>{}});

@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Diagnostic {readonly value:number;}
+type DiagnosticReporter = (diagnostic: Diagnostic) => void;
+interface Base {readonly reportDiagnostic:unknown;}
+interface Target {reportDiagnostic: DiagnosticReporter;}
+function probe(value:Base):void {const host=value as Target;host.reportDiagnostic({value:3});console.log("completed");}
+probe({reportDiagnostic:(): void=>{}});

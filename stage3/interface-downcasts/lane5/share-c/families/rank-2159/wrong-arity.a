@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly isEmittedFile:unknown;}
+interface Target {isEmittedFile(file: string): boolean;}
+function probe(value:Base):void {const program=value as Target;const result=program.isEmittedFile("abc");console.log("completed");}
+probe({isEmittedFile:(): boolean=>(true)});

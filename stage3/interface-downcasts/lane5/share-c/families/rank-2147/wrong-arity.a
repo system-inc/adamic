@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ModuleResolutionCache {readonly value:number;}
+interface Base {readonly getModuleResolutionCache:unknown;}
+interface Target {getModuleResolutionCache(): ModuleResolutionCache | undefined;}
+function probe(value:Base):void {const program=value as Target;const result=program.getModuleResolutionCache();console.log("completed");}
+probe({getModuleResolutionCache:(extra:number): ModuleResolutionCache | undefined=>({value:3})});

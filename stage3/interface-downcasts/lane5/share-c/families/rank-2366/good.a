@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly getNewLine:unknown;}
+interface Target {getNewLine(): string;}
+function probe(value:Base):void {const state={host:value as Target};const result=state.host.getNewLine();console.log("completed");}
+probe({getNewLine:():string=>("abc")});

@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly isEmpty:unknown;}
+interface Target {isEmpty(): boolean;}
+function probe(value:Base):void {const q=value as Target;const result=q.isEmpty();console.log("completed");}
+probe({isEmpty:(extra:number): boolean=>(true)});

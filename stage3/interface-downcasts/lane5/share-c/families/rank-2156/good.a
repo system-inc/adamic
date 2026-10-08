@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface FileReference {readonly value:number;}
+interface Base {readonly getSourceFileFromReference:unknown;}
+interface Target {getSourceFileFromReference(referencingFile: SourceFile, ref: FileReference): SourceFile | undefined;}
+function probe(value:Base):void {const program=value as Target;const result=program.getSourceFileFromReference({value:3,kind:308},{value:3});console.log("completed");}
+probe({getSourceFileFromReference:(referencingFile: SourceFile,ref: FileReference):SourceFile | undefined=>({value:3,kind:308})});

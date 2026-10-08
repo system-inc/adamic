@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly readFileWithCache:unknown;}
+interface Target {readFileWithCache: (f: string) => string | undefined;}
+function probe(value:Base):void {const state=value as Target;const result=state.readFileWithCache("abc");console.log("completed");}
+probe({readFileWithCache:(f: string):string | undefined=>("abc")});

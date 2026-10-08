@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface ProgramDiagnostics {readonly value:number;}
+interface Base {readonly reuseStateFromOldProgram:unknown;}
+interface Target {reuseStateFromOldProgram(oldProgramDiagnostics: ProgramDiagnostics, isConfigIdentical: boolean): void;}
+function probe(value:Base):void {const programDiagnostics=value as Target;programDiagnostics.reuseStateFromOldProgram({value:3},true);console.log("completed");}
+probe({reuseStateFromOldProgram:(oldProgramDiagnostics: ProgramDiagnostics,isConfigIdentical: boolean):void=>{}});

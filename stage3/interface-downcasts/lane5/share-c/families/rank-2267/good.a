@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface CachedDirectoryStructureHost {readonly value:number;}
+interface Base {readonly getCachedDirectoryStructureHost:unknown;}
+interface Target {getCachedDirectoryStructureHost(): CachedDirectoryStructureHost | undefined;}
+function probe(value:Base):void {const resolutionHost=value as Target;const result=resolutionHost.getCachedDirectoryStructureHost();console.log("completed");}
+probe({getCachedDirectoryStructureHost:():CachedDirectoryStructureHost | undefined=>({value:3})});
