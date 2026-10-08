@@ -1,0 +1,13 @@
+interface Leaf { readonly text: string; }
+interface Root { branch: Leaf | undefined; }
+function clear(value: Root): void {
+    value.branch = undefined;
+}
+function inspect(value: Root | undefined): void {
+    if (value !== undefined && value.branch !== undefined) {
+        clear(value);
+        console.log(value?.branch.text ?? 'skipped');
+    }
+}
+const value: Root = { branch: { text: 'built'.repeat(2) } };
+inspect(value);

@@ -1,0 +1,23 @@
+interface Leaf { readonly text: string; readonly number: number; }
+interface Branch { readonly leaf: Leaf; readonly words: readonly string[]; readonly counts: ReadonlyMap<string, number>; }
+interface Root { readonly branch: Branch; }
+let calls = 0;
+function make(present: boolean): Root | undefined {
+    calls += 1;
+    return present ? { branch: { leaf: { text: 'x'.repeat(calls), number: 7 }, words: ['a', 'b'], counts: new Map<string, number>([['x', 1]]) } } : undefined;
+}
+function show(value: Root | undefined): void {
+    console.log(value?.branch.leaf.text ?? 'missing');
+    console.log(`${value?.branch.leaf.number ?? -1}/${value?.branch.words.length ?? -1}/${value?.branch.counts.size ?? -1}`);
+}
+show(make(true));
+show(make(false));
+console.log(make(true)?.branch.leaf.text ?? 'missing');
+console.log(`${calls}`);
+interface MaybeRoot { readonly branch?: Branch; }
+function nested(value: MaybeRoot | undefined): void {
+    console.log(value?.branch?.leaf.text ?? 'missing');
+}
+nested({});
+nested(undefined);
+nested({ branch: { leaf: { text: 'yes', number: 9 }, words: [], counts: new Map<string, number>() } });
