@@ -200,7 +200,7 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
 		switch name {
-		case "charAt", "substring", "concat", "toString", "valueOf", "startsWith", "endsWith", "isWellFormed", "toWellFormed":
+		case "charAt", "substring", "concat", "toString", "valueOf", "startsWith", "endsWith", "lastIndexOf", "isWellFormed", "toWellFormed":
 			value, err := l.expression(receiver)
 			if err != nil {
 				return nil, true, err
@@ -257,7 +257,7 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 		shape.optional = 0
 		known = true
 	}
-	if name == "startsWith" || name == "endsWith" {
+	if name == "startsWith" || name == "endsWith" || name == "lastIndexOf" {
 		shape.arguments = []ir.Type{ir.String, ir.Number}
 		shape.optional = 1
 		known = true
@@ -295,9 +295,9 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 		if err != nil {
 			return nil, true, err
 		}
-		if (name == "startsWith" || name == "endsWith") && index == 1 {
+		if (name == "startsWith" || name == "endsWith" || name == "lastIndexOf") && index == 1 {
 			fallback := ir.Expression(ir.NumberConstant{Value: 0})
-			if name == "endsWith" {
+			if name == "endsWith" || name == "lastIndexOf" {
 				fallback = ir.NumberConstant{Value: math.Inf(1)}
 			}
 			if _, missing := lowered.(ir.Undefined); missing {

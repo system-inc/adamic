@@ -1,0 +1,25 @@
+const positions = [NaN, -Infinity, Infinity, -10, -0.5, -0, 0, 0.9, 1.9, 3.9, 99];
+const texts = ['ababa', 'éabéab', 'a😀a😀', '\ud800x\udc00', ''];
+const searches = ['a', 'ab', 'é', '😀', '\ud83d', '\ude00', '', 'absent'];
+for (const text of texts) {
+ for (const search of searches) {
+  for (const position of positions) {
+   console.log(`${text.lastIndexOf(search, position)}`);
+  }
+ }
+}
+function optional(position: number | undefined): number {
+ return 'ababa'.lastIndexOf('a', position);
+}
+console.log(`${optional(undefined)} ${optional(NaN)} ${optional(1.9)}`);
+console.log(`${'ababa'.lastIndexOf('a')} ${'ababa'.lastIndexOf('a', undefined)}`);
+console.log(`${String.prototype.lastIndexOf.call('ababa', 'a', 1.9)}`);
+let observations = '';
+function needle(): string { observations = observations + 'needle '; return 'a'; }
+function position(): number { observations = observations + 'position '; return 1.9; }
+console.log(`${'ababa'.lastIndexOf(needle(), position())} ${observations}`);
+
+const heapText = 'a😀é'.repeat(40);
+for (const bound of [NaN, Infinity, 99, 127.9, 159, 160, 999]) {
+ console.log(`${heapText.lastIndexOf('é', bound)} ${heapText.lastIndexOf('😀', bound)} ${heapText.lastIndexOf('a', bound)}`);
+}

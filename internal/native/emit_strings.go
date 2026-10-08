@@ -73,6 +73,9 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		}
 		return fmt.Sprintf("adamic_string_index_of(%s, %s)", value, arguments[0])
 	case "lastIndexOf":
+		if len(arguments) == 2 {
+			return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_last_index_of_from(%s, %s, %s)", value, arguments[0], arguments[1]))
+		}
 		return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_last_index_of(%s, %s)", value, arguments[0]))
 	case "trimStart", "trimEnd":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_trim_sides(%s, %t, %t)", value, call.Method == "trimStart", call.Method == "trimEnd"))
