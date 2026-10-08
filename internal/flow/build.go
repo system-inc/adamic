@@ -450,6 +450,9 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.RegExpNew{}):
+				// A runtime constructor can throw SyntaxError into the enclosing catch.
+				throws = throws || value.Interface().(ir.RegExpNew).Index < 0
 			case reflect.TypeOf(ir.StringFromCodes{}):
 				if value.Interface().(ir.StringFromCodes).CodePoints {
 					throws = true
