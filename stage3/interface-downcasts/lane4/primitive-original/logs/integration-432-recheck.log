@@ -1,0 +1,23 @@
+=== RUN   TestCheckedViewBrandsOriginalBlockedPairs
+    checked_views_brands_original_gaps_test.go:7: former brand gaps are covered by TestCheckedViewBrandsOriginalPairs and TestCheckedViewIntersectionOriginalIdentifier, with exact runtime refusals and executable mutants
+--- SKIP: TestCheckedViewBrandsOriginalBlockedPairs (0.00s)
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/#00
+    checked_views_primitive_remaining_frontier_test.go:36: original tuple frontier: <nil>
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/-empty
+    checked_views_primitive_remaining_frontier_test.go:36: original tuple frontier: <nil>
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/-tuple
+    checked_views_primitive_remaining_frontier_test.go:36: original tuple frontier: <nil>
+=== RUN   TestCheckedViewOriginalEmitTupleFrontier/-wrong
+    checked_views_primitive_remaining_frontier_test.go:36: original tuple frontier: <nil>
+--- FAIL: TestCheckedViewOriginalEmitTupleFrontier (209.38s)
+    --- FAIL: TestCheckedViewOriginalEmitTupleFrontier/#00 (201.93s)
+    --- FAIL: TestCheckedViewOriginalEmitTupleFrontier/-empty (2.02s)
+    --- FAIL: TestCheckedViewOriginalEmitTupleFrontier/-tuple (2.29s)
+    --- FAIL: TestCheckedViewOriginalEmitTupleFrontier/-wrong (3.09s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	209.626s
+FAIL

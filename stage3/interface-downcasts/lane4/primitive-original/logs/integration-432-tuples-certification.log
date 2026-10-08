@@ -1,0 +1,35 @@
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/#00
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/-empty
+    checked_views_primitive_remaining_frontier_test.go:95: untested first member caught by Node empty-tuple control
+    checked_views_primitive_remaining_frontier_test.go:95: untested first member caught by Node empty-tuple control
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/-tuple
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/-wrong
+    checked_views_primitive_remaining_frontier_test.go:81: wrong-member selection caught by named refusal pin
+    checked_views_primitive_remaining_frontier_test.go:81: wrong-member selection caught by named refusal pin
+--- PASS: TestCheckedViewOriginalEmitTupleHelpers (15.83s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/#00 (3.24s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/-empty (4.56s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/-tuple (4.48s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/-wrong (3.52s)
+=== RUN   TestCheckedViewOriginalEmitTupleValues
+=== RUN   TestCheckedViewOriginalEmitTupleValues/string
+=== RUN   TestCheckedViewOriginalEmitTupleValues/empty
+    checked_views_primitive_remaining_frontier_test.go:136: exit codes differ stdout "" stderr "adamic: panic: a union value does not match its narrowed type\n" exit 70
+=== RUN   TestCheckedViewOriginalEmitTupleValues/single
+    checked_views_primitive_remaining_frontier_test.go:136: exit codes differ stdout "" stderr "adamic: panic: a union value does not match its narrowed type\n" exit 70
+=== RUN   TestCheckedViewOriginalEmitTupleValues/nested
+    checked_views_primitive_remaining_frontier_test.go:136: stderr differs stdout "" stderr "adamic: panic: a union value does not match its narrowed type\n" exit 70
+=== RUN   TestCheckedViewOriginalEmitTupleValues/arity
+--- FAIL: TestCheckedViewOriginalEmitTupleValues (11.10s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/string (2.44s)
+    --- FAIL: TestCheckedViewOriginalEmitTupleValues/empty (1.78s)
+    --- FAIL: TestCheckedViewOriginalEmitTupleValues/single (1.98s)
+    --- FAIL: TestCheckedViewOriginalEmitTupleValues/nested (1.95s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/arity (2.94s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=20
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	27.028s
+FAIL

@@ -2697,3 +2697,12 @@ constructor and complete source descriptor proof while preserving integration's
 physical storage veto and unrelated callable/phantom refusals. Final commands,
 green logs and 12 real mutant-mode kills are recorded in
 [the tuple merge report](../stage3/interface-downcasts/tuples/INTEGRATION-MERGE.md).
+
+### Lane 4 tuple-union narrowing hook
+
+Lane 4 owns `internal/lower/view_union_tuple_narrowing.go` and the minimal
+identifier-read hook in `expression.go`: `tupleReadNarrowingType` marks a
+narrowed tuple-only union using the tuple lane's existing disjoint-arity proof.
+This preserves JavaScript array identity after a primitive branch. Ordinary
+object unions and the global never/unknown refusal are unchanged. Original
+97898 position 1 fixtures exercise all members, arity refusal and nested checks.

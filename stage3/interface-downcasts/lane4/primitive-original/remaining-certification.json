@@ -1,14 +1,14 @@
 {
   "basis": "Static candidates; original full declarations, not whole-tsc execution",
-  "integration": "267fd75b",
-  "certified_pairs": 56,
-  "certified_candidate_reads": 668,
-  "remaining_pairs": 4,
-  "remaining_candidate_reads": 17,
+  "integration": "432d4913d31daaa49d8ca4eb46f30f21f90da5ee",
+  "certified_pairs": 57,
+  "certified_candidate_reads": 671,
+  "remaining_pairs": 3,
+  "remaining_candidate_reads": 14,
   "lane6_dictionary_reference_pairs": 3,
   "lane6_dictionary_reference_reads": 14,
-  "owned_remaining_pairs": 1,
-  "owned_remaining_reads": 3,
+  "owned_remaining_pairs": 0,
+  "owned_remaining_reads": 0,
   "groups": [
     {
       "pair": "7536:value",
@@ -33,6 +33,12 @@
       "reads": 1,
       "evidence": "logs/intersection-identifier-certification.log; remaining-candidates.json",
       "result": "original intersected helper fed checked Identifier; six original cases and two branded-string backend mutant kills; direct recursive intersection carrier remains refused"
+    },
+    {
+      "pair": "97898:1",
+      "reads": 3,
+      "evidence": "logs/integration-432-tuples-fixed.log; logs/integration-432-final-oracle.log; emit-tuple-candidates.json",
+      "result": "Original full tuple union, all three members, wrong member and arity, lazy nested read; Node, native release/sanitizers/leaks, JavaScript"
     }
   ],
   "corrections": [
@@ -43,13 +49,5 @@
       "evidence": "emit-tuple-candidates.json"
     }
   ],
-  "blocked": [
-    {
-      "pair": "97898:1",
-      "reads": 3,
-      "declared_type": "EmitSignature | []",
-      "reason": "Tuple element union storage and per-position checked tuple admission unavailable",
-      "evidence": "logs/remaining-frontiers.log"
-    }
-  ]
+  "blocked": []
 }

@@ -1,0 +1,91 @@
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/#00
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/-empty
+    checked_views_primitive_remaining_frontier_test.go:95: untested first member caught by Node empty-tuple control
+    checked_views_primitive_remaining_frontier_test.go:95: untested first member caught by Node empty-tuple control
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/-tuple
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/-wrong
+    checked_views_primitive_remaining_frontier_test.go:81: wrong-member selection caught by named refusal pin
+    checked_views_primitive_remaining_frontier_test.go:81: wrong-member selection caught by named refusal pin
+--- PASS: TestCheckedViewOriginalEmitTupleHelpers (92.28s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/#00 (35.84s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/-empty (29.00s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/-tuple (9.86s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/-wrong (17.24s)
+=== RUN   TestCheckedViewOriginalEmitTupleValues
+=== RUN   TestCheckedViewOriginalEmitTupleValues/string
+=== RUN   TestCheckedViewOriginalEmitTupleValues/empty
+    checked_views_primitive_remaining_frontier_test.go:169: tuple-union marker omission caught by Node empty-tuple control (JavaScript)
+=== RUN   TestCheckedViewOriginalEmitTupleValues/single
+=== RUN   TestCheckedViewOriginalEmitTupleValues/nested
+    checked_views_primitive_remaining_frontier_test.go:179: transitive tuple-member omission caught by refusal pin
+    checked_views_primitive_remaining_frontier_test.go:179: transitive tuple-member omission caught by refusal pin
+=== RUN   TestCheckedViewOriginalEmitTupleValues/arity
+--- PASS: TestCheckedViewOriginalEmitTupleValues (32.42s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/string (13.32s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/empty (5.18s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/single (3.04s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/nested (6.53s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/arity (4.31s)
+=== RUN   TestCheckedViewOriginalCommandDefault
+=== RUN   TestCheckedViewOriginalCommandDefault/string
+=== RUN   TestCheckedViewOriginalCommandDefault/number
+    checked_views_primitive_remaining_test.go:99: first-member substitution caught by Node control
+    checked_views_primitive_remaining_test.go:99: first-member substitution caught by Node control
+=== RUN   TestCheckedViewOriginalCommandDefault/boolean
+=== RUN   TestCheckedViewOriginalCommandDefault/undefined
+=== RUN   TestCheckedViewOriginalCommandDefault/message
+=== RUN   TestCheckedViewOriginalCommandDefault/wrong
+    checked_views_primitive_remaining_test.go:109: member-check omission caught by named refusal pin
+    checked_views_primitive_remaining_test.go:109: member-check omission caught by named refusal pin
+=== RUN   TestCheckedViewOriginalCommandDefault/nested
+    checked_views_primitive_remaining_test.go:120: transitive omission caught by refusal pin
+    checked_views_primitive_remaining_test.go:120: transitive omission caught by refusal pin
+--- PASS: TestCheckedViewOriginalCommandDefault (51.08s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/string (4.01s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/number (6.23s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/boolean (5.23s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/undefined (22.94s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/message (4.49s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/wrong (3.53s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/nested (4.60s)
+=== RUN   TestCheckedViewOriginalBuilderSignature
+=== RUN   TestCheckedViewOriginalBuilderSignature/string
+=== RUN   TestCheckedViewOriginalBuilderSignature/false
+=== RUN   TestCheckedViewOriginalBuilderSignature/undefined
+    checked_views_primitives_original_test.go:460: first-member substitution caught by Node control
+    checked_views_primitives_original_test.go:460: first-member substitution caught by Node control
+=== RUN   TestCheckedViewOriginalBuilderSignature/wrong
+    checked_views_primitives_original_test.go:470: member-check bypass caught by named refusal pin
+    checked_views_primitives_original_test.go:470: member-check bypass caught by named refusal pin
+=== RUN   TestCheckedViewOriginalBuilderSignature/wrong-number
+=== RUN   TestCheckedViewOriginalBuilderSignature/null
+=== RUN   TestCheckedViewOriginalBuilderSignature/missing
+--- PASS: TestCheckedViewOriginalBuilderSignature (44.19s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/string (5.63s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/false (7.53s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/undefined (6.93s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/wrong (8.19s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/wrong-number (7.45s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/null (4.37s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/missing (4.06s)
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-good
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-empty
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-single
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-id-wrong
+=== RUN   TestCheckedViewTupleOriginalSignaturePositions/signature-position-value-wrong
+--- PASS: TestCheckedViewTupleOriginalSignaturePositions (23.01s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-good (4.14s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-empty (4.07s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-single (7.01s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-id-wrong (4.44s)
+    --- PASS: TestCheckedViewTupleOriginalSignaturePositions/signature-position-value-wrong (3.30s)
+=== RUN   TestCheckedViewScopedNeverWiderHelper
+    checked_views_union_targets_test.go:272: /tmp/adamic-gate/TestCheckedViewScopedNeverWiderHelper3888376731/001/never-helper.a:4:21: Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field
+--- PASS: TestCheckedViewScopedNeverWiderHelper (3.44s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=66
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	246.847s

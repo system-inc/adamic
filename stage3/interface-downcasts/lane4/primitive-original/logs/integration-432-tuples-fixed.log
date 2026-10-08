@@ -1,0 +1,33 @@
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/#00
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/-empty
+    checked_views_primitive_remaining_frontier_test.go:95: untested first member caught by Node empty-tuple control
+    checked_views_primitive_remaining_frontier_test.go:95: untested first member caught by Node empty-tuple control
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/-tuple
+=== RUN   TestCheckedViewOriginalEmitTupleHelpers/-wrong
+    checked_views_primitive_remaining_frontier_test.go:81: wrong-member selection caught by named refusal pin
+    checked_views_primitive_remaining_frontier_test.go:81: wrong-member selection caught by named refusal pin
+--- PASS: TestCheckedViewOriginalEmitTupleHelpers (34.05s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/#00 (3.43s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/-empty (3.09s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/-tuple (8.80s)
+    --- PASS: TestCheckedViewOriginalEmitTupleHelpers/-wrong (18.67s)
+=== RUN   TestCheckedViewOriginalEmitTupleValues
+=== RUN   TestCheckedViewOriginalEmitTupleValues/string
+=== RUN   TestCheckedViewOriginalEmitTupleValues/empty
+=== RUN   TestCheckedViewOriginalEmitTupleValues/single
+=== RUN   TestCheckedViewOriginalEmitTupleValues/nested
+    checked_views_primitive_remaining_frontier_test.go:156: transitive tuple-member omission caught by refusal pin
+    checked_views_primitive_remaining_frontier_test.go:156: transitive tuple-member omission caught by refusal pin
+=== RUN   TestCheckedViewOriginalEmitTupleValues/arity
+--- PASS: TestCheckedViewOriginalEmitTupleValues (192.68s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/string (28.86s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/empty (26.20s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/single (113.30s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/nested (16.11s)
+    --- PASS: TestCheckedViewOriginalEmitTupleValues/arity (8.14s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=21
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	226.843s

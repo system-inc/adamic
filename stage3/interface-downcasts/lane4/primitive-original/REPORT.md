@@ -1,8 +1,8 @@
-Certified four remaining original field pairs / seventeen candidate reads; corrected one scalar tuple false positive.
-Commits: 96c9132d, 48a7a934, fc253f97, e286a95d; pushed only codex/views-mixed-unions-2.
-Checks: uncached original field, union-target and never-helper regression PASS 136.388s; lower/IR selected gate and vet PASS.
-Mutants: twenty pair/backend kills cover member omission, wrong member/shape, first-member and transitive omission; four regression tag-bypass kills retained.
-Uncovered: one owned tuple union pair / three reads; lane 6 dictionary references three / fourteen; direct recursive intersection admission and whole-tsc remain unclaimed.
+Completed the final owned mixed-union pair, original 97898:1, with three candidate reads; total 57 pairs / 671 reads certified.
+Commits: integration merge ff6b5309 plus this final tuple group; pushed only codex/views-mixed-unions-2.
+Checks: uncached original Node/C/JavaScript regression PASS 246.847s; sanitizer/leak proofs and vet PASS; broad native graph-size assertion fails.
+Mutants: seven final-pair catches, covering member selection, first member, transitive read (both backends), and tuple marker (JavaScript); ten prior-pair catches retained.
+Uncovered: lane 6 dictionary reference arms three pairs / fourteen reads; whole-tsc exact reachability waits on checker diagnostics.
 
 | Original pair | Candidate reads | Status |
 | --- | ---: | --- |
@@ -372,3 +372,80 @@ The three-member Node controls have a named compile refusal rather than an
 unchecked execution; no backend runtime certification is claimed for this
 pair. October 13 remains a provisional target for that additional frontier,
 not a certified completion promise. __String field reads completed October 8.
+
+## Integration 432d4913 and final owned pair
+
+Merged integration 432d4913d31daaa49d8ca4eb46f30f21f90da5ee as ff6b5309.
+The two conflicts retained our original helper fixtures and integration's fixture
+extension resolver, and retained both lanes' documented hooks.
+
+| Candidate inventory | Pairs | Read sites |
+| --- | ---: | ---: |
+| Certified | 57 | 671 |
+| Owned remaining | 0 | 0 |
+| Lane 6 dictionary reference arms, excluded from full-union credit | 3 | 14 |
+| Corrected complete inventory | 60 | 685 |
+
+The final pair is original tuple 97898 position 1, declared `[] | EmitSignature`
+with `EmitSignature = string | [signature: string]`. Its three member values
+match Node in both backends. Wrong boolean and wrong tuple arity stop with exit
+70 naming `value[1]` and the original union. A malformed one-element tuple is
+accepted by the outer selector, then stops at `member[0]`, preserving lazy
+transitive checking. Helpers receive the viewed tuple through a parameter.
+Fixtures read values as well as typeof; the nested optional index handles the
+empty member. This certifies these reads, not every operation on a tuple union.
+
+Minimal hook `tupleReadNarrowingType` in lower/view_union_tuple_narrowing.go and
+expression.go reuses the tuple lane's existing closed, disjoint-arity proof to
+preserve JavaScript tuple array identity after the string branch. It does not
+mark ordinary object unions or change unknown/never guards. The hook is listed
+in docs/checked-views-plan.md.
+
+Original declarations are the complete 78 hashed files from TypeScript
+050880ce59e30b356b686bd3144efe24f875ebc8. Re-measurement in
+logs/integration-432-candidate-measurement.log reproduces emit-tuple-candidates.json.
+Tuple preparation is logs/integration-432-tuple-prepare.log. Counts are static
+candidates, not executions or the pending checker-clean exact flow table.
+
+The old frontier recheck intentionally fails because the previously refused
+fixtures now compile; logs/integration-432-recheck.log records this observation.
+The first value-fixture run exposed JavaScript tuple-union narrowing failure;
+logs/integration-432-tuples-certification.log records it. A first helper mutant
+assertion expected concatenated text despite a typeof helper; this was corrected
+to Node's observed string kind. No failed run earns certification credit.
+
+All owned __String and mixed-primitive work is complete on October 8, earlier
+than the October 9 and October 13 dates. Dictionary reference arms remain lane
+6's work and receive no completion credit here. Full repository and whole-tsc
+compilation are not claimed.
+
+Final commands (all output saved to files):
+
+```
+ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-brand2-original-declarations \
+ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/lane4-tuples-432-declarations \
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle \
+-run '^TestCheckedView(OriginalEmitTuple(Helpers|Values)|OriginalCommandDefault|OriginalBuilderSignature|ScopedNeverWiderHelper|TupleOriginalSignaturePositions)$' -count=1 -v
+go test ./internal/lower ./internal/ir ./internal/native ./internal/javascript -run 'Tuple|Narrow|Lazy' -count=1
+go vet ./internal/lower ./internal/oracle
+```
+
+Oracle PASS 246.847s is logs/integration-432-final-oracle.log. The original
+never-helper still compile-refuses its demanded unsupported field, naming it;
+no global fallback was removed. The seven new mutant catches are the original
+boolean member changed into an allowed member (2), choosing string before
+testing the empty tuple (2), dropping nested member[0] check (2), and removing
+Tuple from the tuple-only narrowing (1 JS). All mutants execute the changed
+semantics; no build failure or crash counts as a mutant catch. Ten prior pair
+mutant catches are default-value six and builder-signature four.
+
+The broad package command passes lower (9.263s), IR (0.130s) and JavaScript
+(6.443s), but native TestGraphLazyRegions fails its allocator-size assertion:
+expected live one / 64 bytes, observed live one / 78 bytes. This test directly
+compiles its C graph harness, never the lowerer, and the native files match
+432d4913. logs/integration-432-packages.log preserves the failure. Earlier
+lane4/LAZY-REPORT.md also records graph allocator test failures. This is not
+reported as a green full gate. Vet PASS is logs/integration-432-vet.log.
+
+Focused native check: `go test ./internal/native -run 'Tuple|Narrow' -count=1`
+PASS 1.621s, logs/integration-432-native-focused.log.

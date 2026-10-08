@@ -1,0 +1,12 @@
+ok  	github.com/system-inc/adamic/internal/lower	9.263s
+ok  	github.com/system-inc/adamic/internal/ir	0.130s
+--- FAIL: TestGraphLazyRegions (85.57s)
+    graph_regions_test.go:371: adamic: graph region: live 4 bytes 312 reachable 4 bytes 312 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 1 bytes 78 reachable 1 bytes 78 unreachable 0 bytes 0 metadata 16
+        adamic: graph counts: regions 2 merges 3
+        adamic: counts: allocations 5 frees 5 retains 1 releases 6 peak 4 regions 0
+        
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	91.585s
+ok  	github.com/system-inc/adamic/internal/javascript	6.443s
+FAIL
