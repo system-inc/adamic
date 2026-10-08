@@ -42,7 +42,7 @@ func NormalizeAsync(program *ir.Program) error {
 				if declared.Type == ir.MaybeBoolean {
 					return fmt.Errorf("async slots holding boolean or undefined are not yet proven")
 				}
-				if declared.Captured {
+				if declared.Captured && !declared.IterationCell {
 					program.Locals[local].Preallocated = true
 					program.Locals[local].EnvironmentCell = true
 				}
@@ -271,25 +271,31 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 		case ir.Loop:
 			// Body declarations (including nested blocks and catch bindings) are
 			// new bindings on each execution, just like for-header bindings.
-			var captured bool
+			mark := func(local int) {
+				if n.program.Locals[local].Captured {
+					n.program.Locals[local].IterationCell = true
+					n.program.Locals[local].EnvironmentCell = false
+				}
+			}
 			inspectAsyncIR(reflect.ValueOf([][]ir.Statement{value.Test, value.Body, value.Update}), func(node any) {
 				switch binding := node.(type) {
 				case ir.Declare:
-					captured = captured || n.program.Locals[binding.Local].Captured
+					mark(binding.Local)
 				case ir.Try:
 					if binding.HasCatch && binding.CatchLocal >= 0 {
-						captured = captured || n.program.Locals[binding.CatchLocal].Captured
+						mark(binding.CatchLocal)
 					}
 				}
 			})
-			if captured {
-				return nil, fmt.Errorf("async per-iteration captured cells in a repeatedly executed body are not yet represented")
-			}
+			var copies []ir.Statement
 			for _, local := range value.PerIteration {
+				mark(local)
 				if n.program.Locals[local].Captured {
-					return nil, fmt.Errorf("async per-iteration captured cells are not yet represented")
+					copies = append(copies, ir.Declare{Local: local, CopyCell: true, Value: ir.Read{Local: local, Of: n.program.Locals[local].Type}})
 				}
 			}
+			value.Update = append(copies, value.Update...)
+			value.PerIteration = nil
 			value.Condition = n.expression(value.Condition, &value.Test, true)
 			value.Body, err = n.statements(value.Body)
 			if err == nil {

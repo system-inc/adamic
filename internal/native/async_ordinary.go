@@ -30,7 +30,7 @@ func (e *emitter) asyncFunction(index int) string {
 	fmt.Fprintf(&out, "static void adamic_async_children_%d(adamic_async_frame *base, void (*drop)(void *)) {\n adamic_generated_frame_%d *frame = (void *)base; drop(frame->self); drop(frame->error); adamic_environment_drop_cells(frame->cells, frame->count, drop);\n}\n", index, index)
 	fmt.Fprintf(&out, "static void adamic_async_finish_%d(adamic_generated_frame_%d *frame) {\n adamic_async_forget_cleanup(&frame->base);\n", index, index)
 	for position, local := range cells {
-		if e.program.Locals[local].Type.IsReference() && !e.program.Locals[local].Captured {
+		if e.program.Locals[local].IterationCell || (e.program.Locals[local].Type.IsReference() && !e.program.Locals[local].Captured) {
 			fmt.Fprintf(&out, " void *adamic_slot_%d = frame->cells[%d].value.reference; frame->cells[%d].value.reference = NULL; adamic_release(adamic_slot_%d);\n", position, position, position, position)
 		}
 	}
@@ -150,7 +150,7 @@ func (e *emitter) asyncFunction(index int) string {
 		out.WriteString(" frame->self = adamic_retain(self); (void)arguments;\n")
 	}
 	for position, local := range cells {
-		fmt.Fprintf(&out, " frame->cells[%d].references = %t;\n", position, e.program.Locals[local].Type.IsReference())
+		fmt.Fprintf(&out, " frame->cells[%d].references = %t;\n", position, e.program.Locals[local].Type.IsReference() || e.program.Locals[local].IterationCell)
 	}
 	for position, local := range function.Parameters {
 		value := e.localName(local)

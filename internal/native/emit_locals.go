@@ -133,7 +133,11 @@ func (e *emitter) read(read ir.Read) string {
 // value is already the local's. A captured local is declared straight into a cell.
 func (e *emitter) declareLocal(local int, value string, owned bool) {
 	declared := e.program.Locals[local]
-	if _, ok := e.asyncSlots[local]; ok {
+	if position, ok := e.asyncSlots[local]; ok {
+		if declared.IterationCell && !declared.Preallocated {
+			e.replaceIterationCell(local, position, value, owned)
+			return
+		}
 		e.store(local, value, owned)
 		e.line("%s->ready = true;", e.cellReference(local))
 		return
@@ -203,6 +207,9 @@ func (e *emitter) cellSlot(local int) string {
 // cellReference is the cell a captured local lives in, from the current function, or "".
 func (e *emitter) cellReference(local int) string {
 	if position, ok := e.asyncSlots[local]; ok {
+		if e.program.Locals[local].IterationCell {
+			return fmt.Sprintf("((adamic_cell *)frame->cells[%d].value.reference)", position)
+		}
 		return fmt.Sprintf("(&frame->cells[%d])", position)
 	}
 	declared := e.program.Locals[local]
@@ -236,4 +243,16 @@ func (e *emitter) allocateEnvironment(cells []int) {
 		e.line("adamic_cell *%s = &%s->cells[%d];", e.cellName(local), environment, position)
 		e.line("%s->references = %t;", e.cellName(local), e.program.Locals[local].Type.IsReference())
 	}
+}
+
+// The frame owns the current binding; escaped closures own older bindings independently.
+func (e *emitter) replaceIterationCell(local, position int, value string, owned bool) {
+	declared := e.program.Locals[local]
+	if declared.Type.IsReference() && !owned {
+		value = retained(value)
+	}
+	fresh := e.temporary()
+	e.line("adamic_cell *%s = adamic_cell_new((adamic_value){.%s = %s}, %t);", fresh, member(declared.Type), slotted(declared.Type, value), declared.Type.IsReference())
+	e.line("adamic_release(frame->cells[%d].value.reference);", position)
+	e.line("frame->cells[%d].value.reference = %s;", position, fresh)
 }
