@@ -1,0 +1,800 @@
+{
+  "sha": "5368710372deb51fcda7470438cdf614f5771936",
+  "branch": "cloud/land-train-3-views-v2-1bf89669-eacea4b8",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "base_name": "main",
+  "tools_sha": "f6a7a52b2f7b0c4a3bd7218dc119deea95872f79",
+  "machine": {
+    "hostname": "Server",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "deferred_all_requested": true,
+  "deferred_run_by_request": [
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees",
+    "github.com/system-inc/adamic/internal/native TestWASI",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree"
+  ],
+  "oracle_selection": {
+    "whole": true,
+    "reason": "TestMigratedNonNullFixturesRemainCovered ranges over the fixtures and isn't a known lane"
+  },
+  "reads": [
+    {
+      "line": 104,
+      "package": "cmd/adamic-test262",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/view_unions_mixed.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 117,
+      "package": "cmd/adamic-test262",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [
+        "internal/native/runtime/view_unions_mixed.h"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 160,
+      "package": "internal/fuzz",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/view_unions_mixed.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 163,
+      "package": "internal/fuzz",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [
+        "internal/native/runtime/view_unions_mixed.h"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 175,
+      "package": "internal/ir",
+      "glob": "internal/lower/*.go",
+      "paths": [
+        "internal/lower/cast.go",
+        "internal/lower/cast_proof.go",
+        "internal/lower/cycles.go",
+        "internal/lower/interface_cast.go",
+        "internal/lower/object.go",
+        "internal/lower/readiness.go",
+        "internal/lower/shape_flow.go",
+        "internal/lower/view_adapters.go",
+        "internal/lower/view_contracts.go",
+        "internal/lower/view_flow.go",
+        "internal/lower/view_interfaces.go",
+        "internal/lower/view_lazy.go",
+        "internal/lower/view_objects.go",
+        "internal/lower/view_objects_test.go",
+        "internal/lower/view_unions_mixed.go",
+        "internal/lower/view_unions_mixed_test.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 177,
+      "package": "internal/ir",
+      "glob": "internal/native/*.go",
+      "paths": [
+        "internal/native/view_unions_mixed.go",
+        "internal/native/view_unions_mixed_test.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 392,
+      "package": "stage1/cohere/css",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/view_unions_mixed.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 394,
+      "package": "stage1/cohere/css",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [
+        "internal/native/runtime/view_unions_mixed.h"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "docs/checked-views-v1b.md",
+        "docs/views-v2-progress.md",
+        "internal/ir/shape_conformance.go",
+        "internal/ir/view_primitives.go",
+        "internal/ir/view_primitives_test.go",
+        "internal/ir/views.go",
+        "internal/javascript/view_test_runtime_test.go",
+        "internal/javascript/view_unions_mixed.go",
+        "internal/javascript/view_unions_mixed_test.go",
+        "internal/lower/shape_flow.go",
+        "internal/lower/view_adapters.go",
+        "internal/lower/view_contracts.go",
+        "internal/lower/view_flow.go",
+        "internal/lower/view_interfaces.go",
+        "internal/lower/view_lazy.go",
+        "internal/lower/view_objects.go",
+        "internal/lower/view_objects_test.go",
+        "internal/lower/view_unions_mixed.go",
+        "internal/lower/view_unions_mixed_test.go",
+        "internal/native/runtime/view_unions_mixed.c",
+        "internal/native/runtime/view_unions_mixed.h",
+        "internal/native/view_unions_mixed.go",
+        "internal/native/view_unions_mixed_test.go",
+        "internal/oracle/checked_views_interfaces_test.go",
+        "internal/oracle/checked_views_objects_test.go",
+        "stage3/interface-downcasts/lane1/interfaces-good.a",
+        "stage3/interface-downcasts/lane1/interfaces-missing-inherited.a",
+        "stage3/interface-downcasts/lane1/interfaces-uninitialized-object.a",
+        "stage3/interface-downcasts/lane1/interfaces-wrong-inherited.a",
+        "stage3/interface-downcasts/lane1/objects-good.a",
+        "stage3/interface-downcasts/lane1/objects-missing-nested.a",
+        "stage3/interface-downcasts/lane1/objects-uninitialized-nested.a",
+        "stage3/interface-downcasts/lane1/objects-untagged-good.a",
+        "stage3/interface-downcasts/lane1/objects-untagged-wrong.a",
+        "stage3/interface-downcasts/lane1/objects-wrong-nested.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "docs/checked-views-v1b.md",
+        "docs/views-v2-progress.md"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1455,
+      "package": "stage1/typescript/scanner",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/view_unions_mixed.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1457,
+      "package": "stage1/typescript/scanner",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [
+        "internal/native/runtime/view_unions_mixed.h"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [
+    "stage3/interface-downcasts/lane1/interfaces-good.a",
+    "stage3/interface-downcasts/lane1/interfaces-missing-inherited.a",
+    "stage3/interface-downcasts/lane1/interfaces-uninitialized-object.a",
+    "stage3/interface-downcasts/lane1/interfaces-wrong-inherited.a",
+    "stage3/interface-downcasts/lane1/objects-good.a",
+    "stage3/interface-downcasts/lane1/objects-missing-nested.a",
+    "stage3/interface-downcasts/lane1/objects-uninitialized-nested.a",
+    "stage3/interface-downcasts/lane1/objects-untagged-good.a",
+    "stage3/interface-downcasts/lane1/objects-untagged-wrong.a",
+    "stage3/interface-downcasts/lane1/objects-wrong-nested.a"
+  ],
+  "a_check_exempt": [],
+  "executors": {
+    "inert": 2,
+    "stage3": 10
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "docs/checked-views-v1b.md",
+    "docs/views-v2-progress.md",
+    "internal/ir/ir.go",
+    "internal/ir/shape_conformance.go",
+    "internal/ir/view_primitives.go",
+    "internal/ir/view_primitives_test.go",
+    "internal/ir/views.go",
+    "internal/javascript/view_test_runtime_test.go",
+    "internal/javascript/view_unions_mixed.go",
+    "internal/javascript/view_unions_mixed_test.go",
+    "internal/lower/cast.go",
+    "internal/lower/cast_proof.go",
+    "internal/lower/cycles.go",
+    "internal/lower/interface_cast.go",
+    "internal/lower/object.go",
+    "internal/lower/readiness.go",
+    "internal/lower/shape_flow.go",
+    "internal/lower/view_adapters.go",
+    "internal/lower/view_contracts.go",
+    "internal/lower/view_flow.go",
+    "internal/lower/view_interfaces.go",
+    "internal/lower/view_lazy.go",
+    "internal/lower/view_objects.go",
+    "internal/lower/view_objects_test.go",
+    "internal/lower/view_unions_mixed.go",
+    "internal/lower/view_unions_mixed_test.go",
+    "internal/native/runtime/view_unions_mixed.c",
+    "internal/native/runtime/view_unions_mixed.h",
+    "internal/native/view_unions_mixed.go",
+    "internal/native/view_unions_mixed_test.go",
+    "internal/oracle/checked_views_interfaces_test.go",
+    "internal/oracle/checked_views_objects_test.go",
+    "stage3/interface-downcasts/lane1/interfaces-good.a",
+    "stage3/interface-downcasts/lane1/interfaces-missing-inherited.a",
+    "stage3/interface-downcasts/lane1/interfaces-uninitialized-object.a",
+    "stage3/interface-downcasts/lane1/interfaces-wrong-inherited.a",
+    "stage3/interface-downcasts/lane1/objects-good.a",
+    "stage3/interface-downcasts/lane1/objects-missing-nested.a",
+    "stage3/interface-downcasts/lane1/objects-uninitialized-nested.a",
+    "stage3/interface-downcasts/lane1/objects-untagged-good.a",
+    "stage3/interface-downcasts/lane1/objects-untagged-wrong.a",
+    "stage3/interface-downcasts/lane1/objects-wrong-nested.a"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/cmd/adamic-test262",
+    "github.com/system-inc/adamic/internal/fuzz",
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/internal/javascript",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/native",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/stage1/cohere/css",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/lint",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/replay",
+    "github.com/system-inc/adamic/stage3/census/latent/replay/worker",
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "github.com/system-inc/adamic/stage3/census/predicates/tools/tool",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "unowned_files": [
+    "docs/checked-views-v1b.md",
+    "docs/views-v2-progress.md",
+    "stage3/interface-downcasts/lane1/interfaces-good.a",
+    "stage3/interface-downcasts/lane1/interfaces-missing-inherited.a",
+    "stage3/interface-downcasts/lane1/interfaces-uninitialized-object.a",
+    "stage3/interface-downcasts/lane1/interfaces-wrong-inherited.a",
+    "stage3/interface-downcasts/lane1/objects-good.a",
+    "stage3/interface-downcasts/lane1/objects-missing-nested.a",
+    "stage3/interface-downcasts/lane1/objects-uninitialized-nested.a",
+    "stage3/interface-downcasts/lane1/objects-untagged-good.a",
+    "stage3/interface-downcasts/lane1/objects-untagged-wrong.a",
+    "stage3/interface-downcasts/lane1/objects-wrong-nested.a"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestThePortParsesAsGoCohereDoes",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCompositionMatchesGo",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSThroughput",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestTheCanonicalRangeChecksCanFail",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestClosedEmptyArrayUnionGap",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestClosedParserRegexGap",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestClosedOptionalBooleanConditionGap",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestComposedMemoryChecksCanFail",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSPrinterOptimizedMatchesGo",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSParserOptimizedMatchesNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSPrinterAgreesWithGo",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestClosedPrinterRegexGap",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSPrinterThroughput",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSPrinterBoundaryProofs",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestOptionalBooleanPrinterMatchesGo",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSProfileArtifacts",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSProfileSnapshotsAgree",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestSharedSliceAppendAgreesWithNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestJsxLintTrees",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCompilerAndStage1Agree",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNodeTableIsLinkOnly",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestShardsAgree",
+      "status": "not run"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSPrinterAgreesWithGo",
+      "expected_seconds": 863.64672,
+      "slots": 4,
+      "after_seconds": 4.832
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCompositionMatchesGo",
+      "expected_seconds": 276.8,
+      "slots": 1,
+      "after_seconds": 4.834
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestThePortParsesAsGoCohereDoes",
+      "expected_seconds": 133.57,
+      "slots": 1,
+      "after_seconds": 4.835
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestComposedMemoryChecksCanFail",
+      "expected_seconds": 130.74,
+      "slots": 1,
+      "after_seconds": 4.837
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSPrinterOptimizedMatchesGo",
+      "expected_seconds": 87.4,
+      "slots": 1,
+      "after_seconds": 4.84
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestOptionalBooleanPrinterMatchesGo",
+      "expected_seconds": 68.01,
+      "slots": 1,
+      "after_seconds": 4.842
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestTheCanonicalRangeChecksCanFail",
+      "expected_seconds": 57.9,
+      "slots": 1,
+      "after_seconds": 4.844
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSParserOptimizedMatchesNode",
+      "expected_seconds": 55.75,
+      "slots": 1,
+      "after_seconds": 4.847
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestClosedParserRegexGap",
+      "expected_seconds": 24.66,
+      "slots": 1,
+      "after_seconds": 4.855
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestClosedPrinterRegexGap",
+      "expected_seconds": 17.45,
+      "slots": 1,
+      "after_seconds": 4.857
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestClosedEmptyArrayUnionGap",
+      "expected_seconds": 15.69,
+      "slots": 1,
+      "after_seconds": 4.86
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestSharedSliceAppendAgreesWithNode",
+      "expected_seconds": 15.67,
+      "slots": 1,
+      "after_seconds": 4.866
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestClosedOptionalBooleanConditionGap",
+      "expected_seconds": 15.6,
+      "slots": 1,
+      "after_seconds": 4.877
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSPrinterBoundaryProofs",
+      "expected_seconds": 4.89,
+      "slots": 1,
+      "after_seconds": 4.883
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "expected_seconds": 0.93,
+      "slots": 1,
+      "after_seconds": 4.886
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSPrinterThroughput",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 4.895
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSProfileArtifacts",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 4.897
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSProfileSnapshotsAgree",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 4.905
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestCSSThroughput",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 4.907
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestCompilerAndStage1Agree",
+      "expected_seconds": 557.05,
+      "slots": 4,
+      "after_seconds": 5.052
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestShardsAgree",
+      "expected_seconds": 531.6,
+      "slots": 1,
+      "after_seconds": 5.055
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestJsxLintTrees",
+      "expected_seconds": 170.328064,
+      "slots": 1,
+      "after_seconds": 5.059
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestNodeTableIsLinkOnly",
+      "expected_seconds": 153.02,
+      "slots": 1,
+      "after_seconds": 5.062
+    }
+  ],
+  "undeclared_tools": [],
+  "catalog_apply": {
+    "checked": [
+      "08-narrowed-number-field.patch",
+      "09-literal-undefined-field.patch",
+      "11-refuse-definite-assignment.patch"
+    ],
+    "staled_by_this_change": [],
+    "already_stale": []
+  },
+  "a_check": {
+    "stage3/interface-downcasts/lane1/interfaces-good.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/interface-downcasts/lane1/interfaces-missing-inherited.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/interface-downcasts/lane1/interfaces-uninitialized-object.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/interface-downcasts/lane1/interfaces-wrong-inherited.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/interface-downcasts/lane1/objects-good.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/interface-downcasts/lane1/objects-missing-nested.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/interface-downcasts/lane1/objects-uninitialized-nested.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/interface-downcasts/lane1/objects-untagged-good.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/interface-downcasts/lane1/objects-untagged-wrong.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/interface-downcasts/lane1/objects-wrong-nested.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/css": 19,
+    "github.com/system-inc/adamic/stage1/cohere/lint": 4
+  },
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "stage3_exits": {
+    "stage3-lane": -9,
+    "stage3-apply-tests": -9,
+    "stage3-lane-tests": -9
+  },
+  "split_tally": {
+    "packages": 2,
+    "planned": 23,
+    "passed": 10,
+    "touched": 26
+  },
+  "deferred_run_results": {
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262": "missing",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees": "missing",
+    "github.com/system-inc/adamic/internal/native TestWASI": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree": "missing"
+  },
+  "wall_seconds": 13.4,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "catalog-apply": 0.2,
+    "a-check-build": 0.5,
+    "vet": 1.2,
+    "a-check": 1.9,
+    "build": 7.5,
+    "smoke": 9.4,
+    "stage3": 12.3,
+    "tests": 12.4
+  },
+  "pass": 54,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": true,
+  "skip": 4,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "stage3",
+    "a-check",
+    "catalog-apply"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "catalog-apply": 0,
+    "a-check-build": 0,
+    "vet": 0,
+    "a-check": 0,
+    "build": 0,
+    "smoke": 0,
+    "stage3": 1,
+    "tests": 1,
+    "darwin-compile": 1
+  },
+  "finished": true,
+  "stopped": {
+    "reason": "superseded by cloud/land-train-2-views-v1-with-efd05812-4bb01786-031a1259 b1d058d87e89543dfb0e23a883f993a1bc8bc676",
+    "at_seconds": 13.2
+  },
+  "planned_test_counts": {
+    "passed": 10,
+    "failed": 0,
+    "not run": 13
+  },
+  "darwin_compile": "red: 5368710372deb51fcda7470438cdf614f5771936 darwin leg: 251 results that pass on main 9f16421c7910 are absent with no Moved-result declaring them: TestFixtures/assertions/01_map_call.a TestFixtures/assertions/01_map_call.a/node TestFixtures/assertions/01_map_call.a/stage0 TestFixtures/assertions/02_code_point_call.a TestFixtures/assertions/02_code_point_call.a/node (darwin-feedback: gate-logs/5368710372de/20261008T224903Z/darwin-feedback)"
+}
