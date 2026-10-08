@@ -1,0 +1,33 @@
+EE
+======================================================================
+ERROR: test_check (unittest.loader._FailedTest.test_check)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_check
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cloud/fast-gate/tree-2/stage3/lane/test_check.py", line 14, in <module>
+    import check
+ModuleNotFoundError: No module named 'check'
+
+
+======================================================================
+ERROR: test_table (unittest.loader._FailedTest.test_table)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_table
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cloud/fast-gate/tree-2/stage3/lane/test_table.py", line 18, in <module>
+    spec.loader.exec_module(runner)
+  File "/home/cloud/fast-gate/tree-2/stage3/lane/run.py", line 11, in <module>
+    from check import check_results, write_verdict
+ModuleNotFoundError: No module named 'check'
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.013s
+
+FAILED (errors=2)
