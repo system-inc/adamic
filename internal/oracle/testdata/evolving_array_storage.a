@@ -1,0 +1,11 @@
+function collect<T>(values: readonly T[]): T[] {
+    const result = [];
+    for (const value of values) result.push(value);
+    return result;
+}
+const strings = collect(["owned" + "!", "tail" + "!"]);
+console.log(strings.join(","));
+const numbers = collect([3, 7]);
+console.log(numbers.join(","));
+const objects = collect([{name: "item" + "!"}]);
+console.log((objects[0] || {name: "missing"}).name);

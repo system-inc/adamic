@@ -251,6 +251,20 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
+	if element, proven := l.evolvingArrayElement(node); proven {
+		return element, nil
+	}
+	if literal := ast.SkipParentheses(node); literal.Kind == ast.KindArrayLiteralExpression && len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+		parent := literal.Parent
+		for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+			parent = parent.Parent
+		}
+		if parent != nil && parent.Kind == ast.KindVariableDeclaration {
+			if element, proven := l.evolvingArrayElement(parent.Name()); proven {
+				return element, nil
+			}
+		}
+	}
 	arrayType := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))
 	if l.isLibraryType(arrayType, "RegExpExecArray", "RegExpMatchArray") {
 		return ir.String, nil
