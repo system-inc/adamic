@@ -1,0 +1,8 @@
+{
+  "before_only": [
+    "src/compiler/transformers/module/esnextAnd2015.ts:163:91: error TS2345: Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'TextRange'.\n  Type 'undefined' is not assignable to type 'TextRange'."
+  ],
+  "after_only": [
+    "src/compiler/transformers/module/esnextAnd2015.ts:163:91: error TS2345: Argument of type 'CallExpression | undefined' is not assignable to parameter of type 'Readonly<TextRange>'.\n  Type 'undefined' is not assignable to type 'Readonly<TextRange>'."
+  ]
+}

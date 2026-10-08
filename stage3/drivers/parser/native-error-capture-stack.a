@@ -1,0 +1,8 @@
+// a-check: type error TS2339
+// From TypeScript 6.0.3, src/compiler/debug.ts:200-201
+function fail(): never {
+    const error = new Error('probe');
+    if (Error.captureStackTrace) { Error.captureStackTrace(error, fail); }
+    throw error;
+}
+console.log('error declaration loaded');

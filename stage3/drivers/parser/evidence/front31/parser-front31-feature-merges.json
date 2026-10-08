@@ -1,0 +1,66 @@
+[
+  {
+    "name": "predicates",
+    "sha": "c191f97b65a8b00db3305117e037cde2f6a6a65a",
+    "branch": "codex/notyet-predicates",
+    "merge_exit": 1,
+    "aborted": true,
+    "conflicts": [
+      "cmd/adamic/main.go",
+      "internal/flow/flow_test.go",
+      "internal/ir/ir.go",
+      "internal/ir/typed_arrays.go",
+      "internal/javascript/javascript.go",
+      "internal/javascript/records.go",
+      "internal/load/load.go",
+      "internal/load/source_fs.go",
+      "internal/lower/cast.go",
+      "internal/lower/control.go",
+      "internal/lower/expression.go",
+      "internal/lower/functions.go",
+      "internal/lower/invariance.go",
+      "internal/lower/library_string.go",
+      "internal/lower/object.go",
+      "internal/lower/prelude.go",
+      "internal/lower/records.go",
+      "internal/lower/refusals.go",
+      "internal/lower/typed_arrays.go",
+      "internal/native/emit_branches.go",
+      "internal/native/emit_expressions.go",
+      "internal/native/emit_functions.go",
+      "internal/native/runtime/array.c",
+      "internal/oracle/counts.md"
+    ]
+  },
+  {
+    "name": "generic-function-value",
+    "sha": "5d1b45e1876e688012518370c8de2609e7a1f7ab",
+    "already_ancestor": false,
+    "merge_exit": 0
+  },
+  {
+    "name": "closure-convention",
+    "sha": "22fd701a3a4dee5c11cffec3d6b750cfe28ce399",
+    "already_ancestor": false,
+    "merge_exit": 1,
+    "conflicts": [
+      "cmd/adamic/main.go",
+      "internal/javascript/javascript.go",
+      "internal/load/load.go",
+      "internal/load/source_fs.go",
+      "internal/lower/control.go",
+      "internal/lower/expression.go",
+      "internal/lower/functions.go",
+      "internal/lower/invariance.go",
+      "internal/lower/object.go",
+      "internal/lower/prelude.go",
+      "internal/lower/refusals.go",
+      "internal/native/emit_branches.go",
+      "internal/native/emit_expressions.go",
+      "internal/native/emit_functions.go",
+      "internal/native/runtime/union.c",
+      "internal/oracle/counts.md"
+    ],
+    "aborted": true
+  }
+]

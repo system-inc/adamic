@@ -1,4 +1,4 @@
-#include "adamic.h"
+#include "regexp_compile_runtime.h"
 #include "regexp_compile_v8.h"
 #ifdef ADAMIC_REGEXP_RUNTIME_COMPILER
 #include <string.h>
