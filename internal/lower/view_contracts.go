@@ -29,7 +29,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		return id, nil
 	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
-	if target.Flags()&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(target) || checker.IsTupleType(target)) {
+	if l.viewArrayBase(target) != nil || checker.IsTupleType(target) {
 		if viewArrayContractHook == nil {
 			return 0, l.notYet(node, "an array checked-view contract")
 		}

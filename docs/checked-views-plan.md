@@ -1010,3 +1010,40 @@ refuses Named & Counted at value, so zero pairs/reads are complete. Native and
 JavaScript package tests pass; lower retains the documented mixed-array adapter
 failure. The lane-owned component work, six executable mutants and exact blocker
 handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
+
+## Lane 2 native array hooks, October 8
+
+Under the lead's October 8 rule, lane 2 adds minimal shared hooks directly;
+`codex/views-integration` reconciles overlapping hunks. Callables belong to lane
+5 and are unchanged. The native array family estimate is October 10, 12:00 MDT.
+Use the frozen candidate inventory until checker-clean exact reachability exists.
+
+- `viewOptionalArrayContract` in `view_array_adapter.go`, dispatched from
+  `strictViewContract`, preserves the array/element descriptor through undefined
+  alternatives. Published in 5ca21a57.
+- `viewArrayBase`, `viewArrayOwnProperties`, and `viewArrayElementType` in
+  `view_array_types.go` recognize instantiated array ancestry and array/record
+  intersections. Representation, `elementType`, collection iteration,
+  `viewDataType`, `unsupportedViewFamily`, `strictViewContract`, and existing
+  array read metadata call these hooks. Tuple/class ancestry and overridden
+  intrinsics are excluded.
+- `internArrayViewContract` adds own-field child descriptors without scanning
+  elements. Unsupported children remain lazy read obligations.
+- `viewArrayRecordProduction` is called from `objectCall`: Object.assign of a
+  fresh array literal and one exact scalar record produces a fixed own-field
+  shape. Other array assignments refuse explicitly.
+- `viewArrayOwnReceiver` is called from `property`; `viewArrayOwnWriteReceiver`
+  from `setProperty` and `updateProperty`. Own writes register the shared original
+  slot certificate, including finite literal constraints.
+- New IR `ArrayRecord` and `ArrayProperties` carry production and selected own
+  storage through the existing walkers. Native `emitViewArrayRecord` and
+  `emitViewArrayProperties`, and JavaScript counterparts, are dispatched from
+  native `evaluate` and JavaScript `value`. Native reuses the existing owned
+  `adamic_array.properties`; no header layout or destructor change is needed.
+- `checkLazyViewReads` dispatches `ArraySearch` through its existing named
+  `arrayRead` hook, as it already does for map/join/other selected consumers.
+
+Fixtures live under stage3/interface-downcasts/lane2/node-array-*.a; their oracle
+is TestCheckedViewNodeArrayRecords. This checkpoint covers scalar own-field
+reads/writes and lazy object element reads. It does not certify reference element
+writes, arbitrary array shape mutation, all consumers, or whole-tsc compilation.

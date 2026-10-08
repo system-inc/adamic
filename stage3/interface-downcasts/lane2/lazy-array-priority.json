@@ -9,6 +9,38 @@
       "read_count": 364,
       "test": "TestCheckedViewOptionalDeclarations",
       "scope": "standalone representative optional array contract; not production lowering"
+    },
+    {
+      "type_id": 7645,
+      "type": "Block",
+      "field": "statements",
+      "read_count": 110,
+      "test": "TestCheckedViewNodeArrayRecords",
+      "scope": "standalone representative NodeArray ancestry and scalar own-field contracts, instantiated with Statement; not production lowering"
+    },
+    {
+      "type_id": 6039,
+      "type": "NodeArray<Node>",
+      "field": "end",
+      "read_count": 11,
+      "test": "TestCheckedViewNodeArrayRecords",
+      "scope": "standalone representative NodeArray ancestry and scalar own-field contracts, instantiated with Statement; not production lowering"
+    },
+    {
+      "type_id": 6039,
+      "type": "NodeArray<Node>",
+      "field": "pos",
+      "read_count": 10,
+      "test": "TestCheckedViewNodeArrayRecords",
+      "scope": "standalone representative NodeArray ancestry and scalar own-field contracts, instantiated with Statement; not production lowering"
+    },
+    {
+      "type_id": 6039,
+      "type": "NodeArray<Node>",
+      "field": "hasTrailingComma",
+      "read_count": 5,
+      "test": "TestCheckedViewNodeArrayRecords",
+      "scope": "standalone representative NodeArray ancestry and scalar own-field contracts, instantiated with Statement; not production lowering"
     }
   ],
   "candidate_queue": [

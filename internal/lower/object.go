@@ -308,6 +308,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		arrayType = target
 	}
 	arrayType = l.phantomArrayView(arrayType)
+	if base := l.viewArrayBase(arrayType); base != nil {
+		arrayType = base
+	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
@@ -461,6 +464,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	if access.QuestionDotToken != nil && object.Type() != ir.Object {
 		return nil, l.notYet(node, "optional chaining to ."+name+" on a "+typeName(object.Type()))
 	}
+	object = l.viewArrayOwnReceiver(node, object)
 	switch {
 	case object.Type() == ir.Array && name == "length":
 		return ir.Length{Array: object}, nil

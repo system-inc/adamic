@@ -32,6 +32,14 @@ func internArrayViewContract(l *lowering, node *ast.Node, target *checker.Type, 
 	if !handled {
 		return 0, l.notYet(node, "an array checked view without an element contract")
 	}
+	base := l.viewArrayBase(target)
+	for _, property := range l.viewArrayOwnProperties(target, base) {
+		child, err := build(l.checker.GetTypeOfSymbol(property))
+		if err != nil {
+			return 0, err
+		}
+		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
+	}
 	l.result.ViewContracts[int(id)-1] = contract
 	return id, nil
 }
@@ -39,7 +47,7 @@ func internArrayViewContract(l *lowering, node *ast.Node, target *checker.Type, 
 // Optional arrays keep the array descriptor and its element edge. Undefined is
 // a field-presence alternative, not an object union requiring a discriminant.
 func (l *lowering) viewOptionalArrayContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, bool, error) {
-	if !l.includesUndefined(target) || !l.checker.IsArrayType(l.checker.GetNonNullableType(target)) {
+	if !l.includesUndefined(target) || l.viewArrayBase(l.checker.GetNonNullableType(target)) == nil {
 		return 0, false, nil
 	}
 	present, err := l.viewContract(node, l.checker.GetNonNullableType(target))
