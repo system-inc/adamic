@@ -1,6 +1,9 @@
 package oracle
 
 import (
+	"errors"
+
+	"github.com/system-inc/adamic/internal/lower"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -9,7 +12,10 @@ import (
 func TestCheckedViewLazyUnread(t *testing.T) {
 	for _, name := range []string{"unread", "unread-untagged", "unread-mixed", "optional-error", "optional-error-fields"} {
 		t.Run(name, func(t *testing.T) {
-			program, path := interfaceFixture(t, "lazy/"+name)
+			path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/lazy", name+".a")))
+			if err != nil {
+				t.Fatal(err)
+			}
 			truth := onNode(t, path)
 			expected := "okok\n"
 			if name == "optional-error-fields" {
@@ -23,6 +29,17 @@ func TestCheckedViewLazyUnread(t *testing.T) {
 			}
 			if truth.exitCode != 0 || string(truth.stdout) != expected {
 				t.Fatalf("source Node: %#v", truth)
+			}
+			program, err := lowered(t, path)
+			if name == "optional-error" || name == "optional-error-fields" {
+				var refused *lower.Refused
+				if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") || !strings.Contains(err.Error(), "Error to ErrnoException") {
+					t.Fatalf("want the ruled plain Error relation refusal, got %v", err)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
 			}
 			sanitized, binary := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
