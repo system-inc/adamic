@@ -9,11 +9,11 @@ import (
 
 // parallelMap keeps both operands alive through the runtime's join. The result is owned.
 func (e *emitter) parallelMap(expression ir.ParallelMap) string {
-	name := "adamic_parallel_map"
+	name := "adamic_parallel_map_typed"
 	if expression.Moved {
-		name = "adamic_parallel_map_move"
+		name = "adamic_parallel_map_move_typed"
 	}
-	declaration := fmt.Sprintf("adamic_array *%s(adamic_array *items, adamic_closure *work, bool references);\n", name)
+	declaration := fmt.Sprintf("adamic_array *%s(adamic_array *items, adamic_closure *work, bool references, const adamic_json_schema *schema);\n", name)
 	if !slices.Contains(e.declarations, declaration) {
 		e.declarations = append(e.declarations, declaration)
 	}
@@ -39,7 +39,7 @@ func (e *emitter) parallelMap(expression ir.ParallelMap) string {
 		value := e.value(global)
 		e.line("%s->cells[%d] = adamic_cell_new((adamic_value){.reference = %s}, true);", work, index+1, retained(value))
 	}
-	result := e.own(ir.Array, fmt.Sprintf("%s(%s, %s, %t)", name, items, work, expression.Result.IsReference()))
+	result := e.own(ir.Array, fmt.Sprintf("%s(%s, %s, %t, %s)", name, items, work, expression.Result.IsReference(), jsonStorage(expression.Result)))
 	e.closureThrown()
 	return result
 }

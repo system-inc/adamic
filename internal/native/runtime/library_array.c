@@ -38,7 +38,7 @@ adamic_string *adamic_array_join_nested(const adamic_array *array, const adamic_
     }
     if (depth == 0) return adamic_array_join(array, separator, kind);
     static const adamic_string comma = ADAMIC_STRING(",");
-    adamic_array *strings = adamic_array_new(array->length, true);
+    adamic_array *strings = adamic_array_new_typed(array->length, true, &adamic_json_string_schema);
     for (size_t index = 0; index < array->length; index++) {
         adamic_string *inner = adamic_array_join_nested(array->elements[index].reference, &comma, kind, depth - 1);
         adamic_array_push(strings, (adamic_value){.reference = inner});

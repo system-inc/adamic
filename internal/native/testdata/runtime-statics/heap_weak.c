@@ -1,5 +1,5 @@
 #include "harness.h"
-static const adamic_shape shape = {0, NULL, NULL, NULL, NULL};
+static const adamic_shape shape = {0, NULL, NULL, NULL, NULL, NULL, NULL};
 static void prepare(void) {}
 static void cleanup(void) {}
 static double exercise(size_t index) {

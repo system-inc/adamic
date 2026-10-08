@@ -10,12 +10,21 @@
 #include <string.h>
 
 adamic_array *adamic_array_new(size_t capacity, bool references) {
+	return adamic_array_new_typed(capacity, references, NULL);
+}
+
+adamic_array *adamic_array_new_typed(size_t capacity, bool references, const adamic_json_schema *element) {
+#ifdef ADAMIC_COUNT
+	adamic_json_array_check(references, element);
+#endif
 	adamic_array *array = adamic_allocate(sizeof *array, adamic_kind_array);
 	array->length = 0;
 	array->capacity = capacity;
 	array->references = references;
 	array->elements = NULL;
 	array->properties = NULL;
+	array->json_element = element;
+	array->json_elements = NULL;
 	if (capacity > 0) {
 		array->elements = malloc(capacity * sizeof *array->elements);
 		if (array->elements == NULL) {
@@ -35,9 +44,48 @@ void adamic_array_push(adamic_array *array, adamic_value value) {
 			adamic_panic(message, sizeof message - 1);
 		}
 		array->elements = grown;
+		if (array->json_elements != NULL) {
+			const adamic_json_schema **tags = realloc(array->json_elements, capacity * sizeof *tags);
+			if (tags == NULL)
+				adamic_panic("out of memory", 13);
+			array->json_elements = tags;
+		}
 		array->capacity = capacity;
 	}
+	if (array->json_elements != NULL)
+		array->json_elements[array->length] = array->json_element;
 	array->elements[array->length++] = value;
+}
+
+void adamic_array_tag(adamic_array *array, size_t index, const adamic_json_schema *schema) {
+#ifdef ADAMIC_COUNT
+	adamic_json_array_check(array->references, schema);
+#endif
+	if (array->json_elements == NULL && schema != array->json_element) {
+		size_t capacity = array->capacity == 0 ? 4 : array->capacity;
+		array->json_elements = malloc(capacity * sizeof *array->json_elements);
+		if (array->json_elements == NULL)
+			adamic_panic("out of memory", 13);
+		for (size_t i = 0; i < array->length; i++)
+			array->json_elements[i] = array->json_element;
+	}
+	if (array->json_elements != NULL)
+		array->json_elements[index] = schema;
+}
+
+void adamic_array_push_typed(adamic_array *array, adamic_value value, const adamic_json_schema *schema) {
+	adamic_array_push(array, value);
+	adamic_array_tag(array, array->length - 1, schema);
+}
+
+void adamic_array_json_reset(adamic_array *array, const adamic_json_schema *schema) {
+	free(array->json_elements);
+	array->json_elements = NULL;
+	array->json_element = schema;
+}
+
+static const adamic_json_schema *element_schema(const adamic_array *array, size_t index) {
+	return array->json_elements == NULL ? array->json_element : array->json_elements[index];
 }
 
 // adamic_array_join builds the string in one buffer, growing it as it goes.
@@ -119,13 +167,13 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 		end = length;
 	}
 	size_t from = (size_t)start, to = end > start ? (size_t)end : from;
-	adamic_array *sliced = adamic_array_new(to - from, array->references);
+	adamic_array *sliced = adamic_array_new_typed(to - from, array->references, array->json_element);
 	for (size_t index = from; index < to; index++) {
 		adamic_value value = array->elements[index];
 		if (array->references) {
 			adamic_retain(value.reference);
 		}
-		adamic_array_push(sliced, value);
+		adamic_array_push_typed(sliced, value, element_schema(array, index));
 	}
 	return sliced;
 }
@@ -136,6 +184,19 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 // passed through. Like V8, it sorts a copy of the elements (each reference held) and writes the
 // result back by index, so a comparator that changes the array can't pull memory out from under the
 // sort.
+typedef struct json_sort_entry {
+	adamic_value value;
+	const adamic_json_schema *schema;
+} json_sort_entry;
+typedef struct json_sort_context {
+	int (*compare)(adamic_value, adamic_value, void *);
+	void *context;
+} json_sort_context;
+static int compare_json_entries(adamic_value left, adamic_value right, void *opaque) {
+	json_sort_context *context = opaque;
+	return context->compare(((json_sort_entry *)left.reference)->value, ((json_sort_entry *)right.reference)->value, context->context);
+}
+
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context) {
 	size_t length = array->length;
 	if (length < 2) {
@@ -165,7 +226,18 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 		}
 		memcpy(taken, work, length * sizeof *taken);
 	}
-	if (!adamic_timsort(work, length, compare, context)) {
+	json_sort_entry *entries = NULL;
+	json_sort_context tagged_context = {compare, context};
+	if (array->json_elements != NULL) {
+		entries = malloc(length * sizeof *entries);
+		if (entries == NULL)
+			adamic_panic("out of memory", 13);
+		for (size_t i = 0; i < length; i++) {
+			entries[i] = (json_sort_entry){work[i], element_schema(array, i)};
+			work[i].reference = &entries[i];
+		}
+	}
+	if (!adamic_timsort(work, length, entries == NULL ? compare : compare_json_entries, entries == NULL ? context : &tagged_context)) {
 		// A comparator threw: the array stays as it was, as V8 leaves it, and the throw goes on.
 		if (references) {
 			for (size_t index = 0; index < length; index++) {
@@ -173,6 +245,7 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 			}
 		}
 		free(taken);
+		free(entries);
 		free(work);
 		return;
 	}
@@ -180,18 +253,34 @@ void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_
 	// Written back as V8 does, index by index: each held reference becomes the array's, and what it
 	// held there is let go. Past a length the comparator shrank, the array grows again.
 	for (size_t index = 0; index < length; index++) {
+		const adamic_json_schema *schema = array->json_element;
+		if (entries != NULL) {
+			json_sort_entry *entry = work[index].reference;
+			work[index] = entry->value;
+			schema = entry->schema;
+		}
 		if (index < array->length) {
 			adamic_value old = array->elements[index];
 			array->elements[index] = work[index];
-			if (references) { adamic_graph_take(array, work[index].reference); }
 			if (references) {
-				if (adamic_graph_is(array)) { adamic_graph_drop(array, old.reference); } else { adamic_release(old.reference); }
+				adamic_graph_take(array, work[index].reference);
+			}
+			if (references) {
+				if (adamic_graph_is(array)) {
+					adamic_graph_drop(array, old.reference);
+				} else {
+					adamic_release(old.reference);
+				}
 			}
 		} else {
-			if (references) { adamic_graph_take(array, work[index].reference); }
+			if (references) {
+				adamic_graph_take(array, work[index].reference);
+			}
 			adamic_array_push(array, work[index]);
 		}
+		adamic_array_tag(array, index, schema);
 	}
+	free(entries);
 	free(work);
 }
 
@@ -199,7 +288,8 @@ int adamic_compare_closure(adamic_value left, adamic_value right, void *context)
 	// JavaScript reads the comparator's result by its sign, and NaN as 0.
 	adamic_closure *compare = context;
 	double result = compare->code(compare, (adamic_value[]){left, right}).number;
-	return result < 0 ? -1 : result > 0 ? 1 : 0;
+	return result < 0 ? -1 : result > 0 ? 1
+										: 0;
 }
 
 adamic_value *adamic_array_at_relative(const adamic_array *array, double index) {
@@ -253,17 +343,25 @@ adamic_array *adamic_array_reverse(adamic_array *array) {
 		adamic_value swapped = array->elements[left];
 		array->elements[left] = array->elements[right - 1];
 		array->elements[right - 1] = swapped;
+		if (array->json_elements != NULL) {
+			const adamic_json_schema *tag = array->json_elements[left];
+			array->json_elements[left] = array->json_elements[right - 1];
+			array->json_elements[right - 1] = tag;
+		}
 	}
 	return array;
 }
 
 adamic_array *adamic_array_filled(double length, adamic_value value, bool references) {
+	return adamic_array_filled_typed(length, value, references, NULL);
+}
+adamic_array *adamic_array_filled_typed(double length, adamic_value value, bool references, const adamic_json_schema *schema) {
 	// new Array(length): an integer from 0 to 2^32 - 1, or JavaScript throws.
 	if (!(length >= 0) || length > 4294967295.0 || length != trunc(length)) {
 		static const char message[] = "RangeError: Invalid array length";
 		adamic_panic(message, sizeof message - 1);
 	}
-	adamic_array *array = adamic_array_new((size_t)length, references);
+	adamic_array *array = adamic_array_new_typed((size_t)length, references, schema);
 	for (size_t index = 0; index < (size_t)length; index++) {
 		if (references) {
 			adamic_retain(value.reference);
@@ -274,6 +372,9 @@ adamic_array *adamic_array_filled(double length, adamic_value value, bool refere
 }
 
 adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end) {
+	return adamic_array_fill_typed(array, value, start, end, has_start, has_end, array->json_elements == NULL ? array->json_element : NULL);
+}
+adamic_array *adamic_array_fill_typed(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end, const adamic_json_schema *schema) {
 	// ECMAScript's relative indexes, as slice reads them.
 	double length = (double)array->length;
 	start = has_start ? (isnan(start) ? 0 : trunc(start)) : 0;
@@ -292,13 +393,14 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 			}
 		}
 		array->elements[index] = value;
+		adamic_array_tag(array, index, schema);
 	}
 	return array;
 }
 
 // splice_into is splice, the removed elements moving to removed, or let go when removed is NULL:
 // a splice whose result nothing uses (adamic_array_remove) allocates no array to hold them.
-static void splice_into(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, adamic_array **removed) {
+static void splice_into(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, adamic_array **removed, const adamic_json_schema *schema) {
 	// ECMAScript's relative start, clamped to the array; a count left out is everything after it, and
 	// a count given is clamped to what's there.
 	double length = (double)array->length;
@@ -312,11 +414,13 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 	size_t from = (size_t)start, removed_count = (size_t)removing;
 	// The removed elements move to the result, their references with them, or are let go.
 	if (removed != NULL) {
-		*removed = adamic_array_new(removed_count, array->references);
+		*removed = adamic_array_new_typed(removed_count, array->references, array->json_element);
 		for (size_t index = 0; index < removed_count; index++) {
 			adamic_value value = array->elements[from + index];
-			if (array->references) { adamic_graph_escape(array, value.reference); }
-			adamic_array_push(*removed, value);
+			if (array->references) {
+				adamic_graph_escape(array, value.reference);
+			}
+			adamic_array_push_typed(*removed, value, element_schema(array, from + index));
 		}
 	}
 	// Let go of after the array is whole again, below: releasing one may free what releases another.
@@ -340,6 +444,14 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 		array->elements = grown;
 		array->capacity = new_length;
 	}
+	if (array->json_elements != NULL) {
+		const adamic_json_schema **tags = realloc(array->json_elements, array->capacity * sizeof *tags);
+		if (tags == NULL && array->capacity != 0)
+			adamic_panic("out of memory", 13);
+		array->json_elements = tags;
+		if (after > 0)
+			memmove(tags + from + item_count, tags + from + removed_count, after * sizeof *tags);
+	}
 	// The tail moves to make room (or close the gap), then the items, which the array takes, go in.
 	// An array that never held anything has no storage, and arithmetic on its null pointer is undefined
 	// even to move nothing, so nothing is moved unless there's a tail.
@@ -350,9 +462,15 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 		memcpy(array->elements + from, items, item_count * sizeof *items);
 	}
 	array->length = new_length;
+	for (size_t i = 0; i < item_count; i++)
+		adamic_array_tag(array, from + i, schema);
 	if (dropped != NULL) {
 		for (size_t index = 0; index < removed_count; index++) {
-			if (adamic_graph_is(array)) { adamic_graph_drop(array, dropped[index].reference); } else { adamic_release(dropped[index].reference); }
+			if (adamic_graph_is(array)) {
+				adamic_graph_drop(array, dropped[index].reference);
+			} else {
+				adamic_release(dropped[index].reference);
+			}
 		}
 		free(dropped);
 	}
@@ -360,12 +478,12 @@ static void splice_into(adamic_array *array, double start, double count, bool ha
 
 adamic_array *adamic_array_splice(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
 	adamic_array *removed;
-	splice_into(array, start, count, has_count, item_count, items, &removed);
+	splice_into(array, start, count, has_count, item_count, items, &removed, array->json_elements == NULL ? array->json_element : NULL);
 	return removed;
 }
 
 void adamic_array_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
-	splice_into(array, start, count, has_count, item_count, items, NULL);
+	splice_into(array, start, count, has_count, item_count, items, NULL, array->json_elements == NULL ? array->json_element : NULL);
 }
 
 void adamic_array_append(adamic_array *array, const adamic_array *source) {
@@ -376,7 +494,7 @@ void adamic_array_append(adamic_array *array, const adamic_array *source) {
 		if (array->references) {
 			adamic_graph_hold(array, value.reference);
 		}
-		adamic_array_push(array, value);
+		adamic_array_push_typed(array, value, element_schema(source, index));
 	}
 }
 
@@ -385,14 +503,14 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
 	for (size_t which = 0; which < count; which++) {
 		length += arrays[which]->length;
 	}
-	adamic_array *joined = adamic_array_new(length, arrays[0]->references);
+	adamic_array *joined = adamic_array_new_typed(length, arrays[0]->references, arrays[0]->json_element);
 	for (size_t which = 0; which < count; which++) {
 		for (size_t index = 0; index < arrays[which]->length; index++) {
 			adamic_value value = arrays[which]->elements[index];
 			if (joined->references) {
 				adamic_retain(value.reference);
 			}
-			adamic_array_push(joined, value);
+			adamic_array_push_typed(joined, value, element_schema(arrays[which], index));
 		}
 	}
 	return joined;
@@ -412,8 +530,25 @@ void adamic_array_set(adamic_array *array, double index, adamic_value value) {
 	if (array->references) {
 		void *old = slot->reference;
 		slot->reference = value.reference;
-		if (adamic_graph_is(array)) { adamic_graph_drop(array, old); } else { adamic_release(old); }
+		if (adamic_graph_is(array)) {
+			adamic_graph_drop(array, old);
+		} else {
+			adamic_release(old);
+		}
 		return;
 	}
 	*slot = value;
+}
+
+adamic_array *adamic_array_splice_typed(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, const adamic_json_schema *schema) {
+	adamic_array *removed;
+	splice_into(array, start, count, has_count, item_count, items, &removed, schema);
+	return removed;
+}
+void adamic_array_remove_typed(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, const adamic_json_schema *schema) {
+	splice_into(array, start, count, has_count, item_count, items, NULL, schema);
+}
+void adamic_array_set_typed(adamic_array *array, double index, adamic_value value, const adamic_json_schema *schema) {
+	adamic_array_set(array, index, value);
+	adamic_array_tag(array, (size_t)index, schema);
 }

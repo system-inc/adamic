@@ -1,5 +1,5 @@
 // Compile-time bytecode, executed over UTF-16 with ordered backtracking.
-#include "adamic.h"
+#include "json_metadata.h"
 #include "regexp_fold.h"
 #include <math.h>
 #include <stdlib.h>
@@ -407,7 +407,7 @@ static const char *const regex_names[] = {"__program", "lastIndex",	 "source",		
 static const bool regex_references[] = {false, false, true,	 true,	false, false,
 										false, false, false, false, false, false};
 static const adamic_field_kind regex_kinds[] = {adamic_field_number, adamic_field_number, adamic_field_reference, adamic_field_reference, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean};
-static const adamic_shape regex_shape = {12, regex_names, regex_references, NULL, regex_kinds};
+static const adamic_shape regex_shape = {12, regex_names, regex_references, NULL, regex_kinds, NULL, NULL};
 adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_string *source,
 								adamic_string *flags) {
 	adamic_object *result = adamic_object_new(&regex_shape);
@@ -526,7 +526,7 @@ static ptrdiff_t *regex_execute(adamic_object *regex, const uint16_t *input, siz
 static const char *const match_names[] = {"index", "input", "groups", "indices"};
 static const bool match_references[] = {false, true, true, true};
 static const adamic_field_kind match_kinds[] = {adamic_field_number, adamic_field_reference, adamic_field_reference, adamic_field_reference};
-static const adamic_shape match_shape = {4, match_names, match_references, NULL, match_kinds};
+static const adamic_shape match_shape = {4, match_names, match_references, NULL, match_kinds, NULL, NULL};
 static adamic_object *regex_groups(const adamic_regex_program *p, adamic_array *captures) {
 	if (p->group_count == 0)
 		return NULL;
@@ -545,10 +545,14 @@ static adamic_object *regex_groups(const adamic_regex_program *p, adamic_array *
 static const char *const pair_names[] = {"0", "1"};
 static const bool pair_references[] = {false, false};
 static const adamic_field_kind pair_kinds[] = {adamic_field_number, adamic_field_number};
-static const adamic_shape pair_shape = {2, pair_names, pair_references, NULL, pair_kinds};
+static adamic_string pair_shape_json_name_0 = ADAMIC_STRING("0");
+static adamic_string pair_shape_json_name_1 = ADAMIC_STRING("1");
+static const adamic_json_field pair_shape_json_fields[] = {{&pair_shape_json_name_0, 0, &adamic_json_number_schema}, {&pair_shape_json_name_1, 1, &adamic_json_number_schema}};
+static const adamic_json_schema pair_shape_json = {.kind = adamic_json_tuple, .count = 2, .fields = pair_shape_json_fields};
+static const adamic_shape pair_shape = {2, pair_names, pair_references, NULL, pair_kinds, &pair_shape_json, NULL};
 static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *input,
 								  const ptrdiff_t *spans) {
-	adamic_array *result = adamic_array_new(p->captures + 1, true);
+	adamic_array *result = adamic_array_new_typed(p->captures + 1, true, &adamic_json_string_schema);
 	for (size_t k = 0; k <= p->captures; k++) {
 		adamic_string *value =
 			spans[2 * k] < 0
@@ -561,7 +565,7 @@ static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *
 	result->properties->slots[1].reference = adamic_retain(input);
 	result->properties->slots[2].reference = regex_groups(p, result);
 	if (p->flags & 32) {
-		adamic_array *indices = adamic_array_new(p->captures + 1, true);
+		adamic_array *indices = adamic_array_new_typed(p->captures + 1, true, &adamic_json_union_schema);
 		for (size_t k = 0; k <= p->captures; k++) {
 			adamic_object *pair = NULL;
 			if (spans[2 * k] >= 0) {
@@ -680,7 +684,7 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 	if (!(p->flags & 8))
 		return adamic_regex_exec(regex, input);
 	regex->slots[1].number = 0;
-	adamic_array *result = adamic_array_new(0, true);
+	adamic_array *result = adamic_array_new_typed(0, true, &adamic_json_string_schema);
 	size_t length;
 	uint16_t *units = regex_input(input, &length);
 	uint64_t steps = 0;
@@ -706,7 +710,7 @@ adamic_array *adamic_regex_match(adamic_string *input, adamic_object *regex) {
 static const char *const iterator_names[] = {"regex", "input", "done"};
 static const bool iterator_references[] = {true, true, false};
 static const adamic_field_kind iterator_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_boolean};
-static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, NULL, iterator_kinds};
+static const adamic_shape iterator_shape = {3, iterator_names, iterator_references, NULL, iterator_kinds, NULL, NULL};
 static void regex_require_global(const adamic_regex_program *p, const char *message) {
 	if (!(p->flags & 8))
 		adamic_panic(message, strlen(message));
@@ -746,7 +750,7 @@ adamic_array *adamic_regex_iterator_step(adamic_object *iterator) {
 static const char *const next_names[] = {"done", "value"};
 static const bool next_references[] = {false, true};
 static const adamic_field_kind next_kinds[] = {adamic_field_boolean, adamic_field_reference};
-static const adamic_shape next_shape = {2, next_names, next_references, NULL, next_kinds};
+static const adamic_shape next_shape = {2, next_names, next_references, NULL, next_kinds, NULL, NULL};
 adamic_object *adamic_regex_next(adamic_object *iterator) {
 	adamic_array *value = adamic_regex_iterator_step(iterator);
 	adamic_object *result = adamic_object_new(&next_shape);
@@ -768,7 +772,7 @@ double adamic_regex_search(adamic_string *input, adamic_object *regex) {
 	return result;
 }
 adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit_value) {
-	adamic_array *result = adamic_array_new(0, true);
+	adamic_array *result = adamic_array_new_typed(0, true, &adamic_json_string_schema);
 	uint32_t limit = (uint32_t)adamic_shift_right_unsigned(limit_value, 0);
 	if (limit == 0)
 		return result;
@@ -935,7 +939,7 @@ adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 	uint16_t *units = regex_input(input, &length),
 			 *text = regex_input(replacement, &replacement_length);
 	uint64_t steps = 0;
-	adamic_array *pieces = adamic_array_new(0, true);
+	adamic_array *pieces = adamic_array_new_typed(0, true, &adamic_json_string_schema);
 	size_t previous = 0;
 	for (;;) {
 		ptrdiff_t *spans = regex_execute(regex, units, length, false, &steps);

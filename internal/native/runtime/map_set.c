@@ -48,20 +48,20 @@ uint64_t adamic_map_number_hash(double number) {
 static const char *const iterator_names[] = {"next"};
 static const bool iterator_references[] = {true};
 static const adamic_field_kind iterator_kinds[] = {adamic_field_reference};
-static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL, iterator_kinds};
+static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL, iterator_kinds, NULL, NULL};
 static const char *const state_names[] = {"iterator", "part", "key", "value", "set"};
 static const bool state_references[] = {true, false, false, false, false};
 static const adamic_field_kind state_kinds[] = {adamic_field_reference, adamic_field_number, adamic_field_number, adamic_field_number, adamic_field_boolean};
-static const adamic_shape state_shape = {5, state_names, state_references, NULL, state_kinds};
+static const adamic_shape state_shape = {5, state_names, state_references, NULL, state_kinds, NULL, NULL};
 static const char *const result_names[] = {"done", "value"};
 static const bool result_reference[] = {false, true};
 static const bool result_scalar[] = {false, false};
 static const adamic_field_kind result_kinds[][2] = {{adamic_field_boolean, adamic_field_number}, {adamic_field_boolean, adamic_field_boolean}, {adamic_field_boolean, adamic_field_reference}};
-static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL, result_kinds[0]}, {2, result_names, result_scalar, NULL, result_kinds[1]}, {2, result_names, result_reference, NULL, result_kinds[2]}};
+static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL, result_kinds[0], NULL, NULL}, {2, result_names, result_scalar, NULL, result_kinds[1], NULL, NULL}, {2, result_names, result_reference, NULL, result_kinds[2], NULL, NULL}};
 static const char *const pair_names[] = {"0", "1"};
 static const bool pair_references[][2] = {{false, false}, {false, true}, {true, false}, {true, true}};
 static const adamic_field_kind pair_kinds[][2] = {{adamic_field_number, adamic_field_number}, {adamic_field_number, adamic_field_boolean}, {adamic_field_number, adamic_field_reference}, {adamic_field_boolean, adamic_field_number}, {adamic_field_boolean, adamic_field_boolean}, {adamic_field_boolean, adamic_field_reference}, {adamic_field_reference, adamic_field_number}, {adamic_field_reference, adamic_field_boolean}, {adamic_field_reference, adamic_field_reference}};
-static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL, pair_kinds[0]}, {2, pair_names, pair_references[0], NULL, pair_kinds[1]}, {2, pair_names, pair_references[1], NULL, pair_kinds[2]}, {2, pair_names, pair_references[0], NULL, pair_kinds[3]}, {2, pair_names, pair_references[0], NULL, pair_kinds[4]}, {2, pair_names, pair_references[1], NULL, pair_kinds[5]}, {2, pair_names, pair_references[2], NULL, pair_kinds[6]}, {2, pair_names, pair_references[2], NULL, pair_kinds[7]}, {2, pair_names, pair_references[3], NULL, pair_kinds[8]}};
+static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL, pair_kinds[0], NULL, NULL}, {2, pair_names, pair_references[0], NULL, pair_kinds[1], NULL, NULL}, {2, pair_names, pair_references[1], NULL, pair_kinds[2], NULL, NULL}, {2, pair_names, pair_references[0], NULL, pair_kinds[3], NULL, NULL}, {2, pair_names, pair_references[0], NULL, pair_kinds[4], NULL, NULL}, {2, pair_names, pair_references[1], NULL, pair_kinds[5], NULL, NULL}, {2, pair_names, pair_references[2], NULL, pair_kinds[6], NULL, NULL}, {2, pair_names, pair_references[2], NULL, pair_kinds[7], NULL, NULL}, {2, pair_names, pair_references[3], NULL, pair_kinds[8], NULL, NULL}};
 
 // These are ir.Type's scalar representations; all other accepted collection elements are counted.
 static bool collection_reference(int type) {

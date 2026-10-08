@@ -34,7 +34,7 @@ func TestConcurrencyAgreesWithNode(t *testing.T) {
 			if filepath.Base(path) == "recursive_tree.a" && time.Since(started) > 10*time.Second {
 				t.Fatal("recursive readonly tree inference did not finish promptly")
 			}
-			if !strings.Contains(native.C(program), "adamic_parallel_map(") {
+			if !strings.Contains(native.C(program), "adamic_parallel_map_typed(") {
 				t.Fatal("native output did not call the runtime ABI")
 			}
 			oracle, backend := onNode(t, absolute), onJavaScriptBackend(t, program)

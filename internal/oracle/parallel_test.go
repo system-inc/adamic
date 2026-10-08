@@ -40,7 +40,7 @@ func init() {
 func usesParallelMap(program *ir.Program) bool {
 	// The native emitter declares this ABI only when it emits a parallelMap expression.
 	source := native.C(program)
-	return strings.Contains(source, "adamic_parallel_map(") || strings.Contains(source, "adamic_parallel_map_move(")
+	return strings.Contains(source, "adamic_parallel_map_typed(") || strings.Contains(source, "adamic_parallel_map_move_typed(")
 }
 
 // Each variant runs sequentially and with the pool's default size. Do not cache race proofs.
@@ -173,13 +173,13 @@ func TestParallelOracleCatchesResultOrder(t *testing.T) {
 		t.Fatal(err)
 	}
 	source := native.C(program)
-	if !strings.Contains(source, "adamic_parallel_map(") {
+	if !strings.Contains(source, "adamic_parallel_map_typed(") {
 		t.Fatal("mutant changed no call")
 	}
-	source = strings.ReplaceAll(source, "adamic_parallel_map(", "oracle_reordered_map(")
+	source = strings.ReplaceAll(source, "adamic_parallel_map_typed(", "oracle_reordered_map(")
 	source = `#include "adamic.h"
-adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, bool references) {
- adamic_array *results = adamic_parallel_map(items, work, references);
+adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, bool references, const adamic_json_schema *schema) {
+ adamic_array *results = adamic_parallel_map_typed(items, work, references, schema);
  if (results != NULL) { adamic_array_reverse(results); }
  return results;
 }

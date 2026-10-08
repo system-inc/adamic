@@ -22,7 +22,7 @@ func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
 		list = name + "_fields"
 		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_field %s[] = {%s};", list, strings.Join(fields, ", ")))
 	}
-	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_schema %s = {adamic_json_%s, %s, %d, %s};", name, schema.Kind, element, len(fields), list))
+	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_schema %s = {adamic_json_%s, %s, %d, %s, false};", name, schema.Kind, element, len(fields), list))
 	return "&" + name
 }
 func (e *emitter) jsonSlot(expression ir.Expression) string {

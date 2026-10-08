@@ -288,7 +288,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
 		callback := e.value(expression.Callback)
-		mapped := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s->length, %t)", source, expression.Result.IsReference()))
+		mapped := e.own(ir.Array, fmt.Sprintf("adamic_array_new_typed(%s->length, %t, %s)", source, expression.Result.IsReference(), jsonStorage(expression.Result)))
 		e.adoptGraph(mapped, "sizeof *"+mapped, e.graphTypes(expression.GraphTypes))
 		count, index := e.temporary(), e.temporary()
 		// The length is read once, as JavaScript's map does; an array the callback shrinks is a
@@ -307,7 +307,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if e.graphTypes(expression.GraphTypes) && expression.Result.IsReference() {
 			e.line("%s.reference = adamic_graph_take(%s, %s.reference);", element, mapped, element)
 		}
-		e.line("adamic_array_push(%s, %s);", mapped, element)
+		e.line("adamic_array_push_typed(%s, %s, %s);", mapped, element, jsonStorage(expression.Result))
 		e.indent--
 		e.line("}")
 		return mapped
@@ -321,7 +321,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Array == nil {
 			length := e.value(expression.Length)
 			value := e.value(expression.Value)
-			return e.graphArray(fmt.Sprintf("adamic_array_filled(%s, %s, %t)", length, borrowed(expression.Element, value), expression.Element.IsReference()), expression.GraphTypes)
+			return e.graphArray(fmt.Sprintf("adamic_array_filled_typed(%s, %s, %t, %s)", length, borrowed(expression.Element, value), expression.Element.IsReference(), jsonStorage(expression.Element)), expression.GraphTypes)
 		}
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
@@ -332,10 +332,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.End != nil {
 			end = e.value(expression.End)
 		}
-		e.line("adamic_array_fill(%s, %s, %s, %s, %t, %t);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil)
+		e.line("adamic_array_fill_typed(%s, %s, %s, %s, %t, %t, %s);", array, borrowed(expression.Element, value), start, end, expression.Start != nil, expression.End != nil, jsonStorage(expression.Element))
 		return array
 	case ir.ArraySplice:
-		return e.graphArray(fmt.Sprintf("adamic_array_splice(%s)", e.spliceArguments(expression)), expression.GraphTypes)
+		return e.graphArray(fmt.Sprintf("adamic_array_splice_typed(%s, %s)", e.spliceArguments(expression), jsonStorage(expression.Element)), expression.GraphTypes)
 	case ir.ArrayFrom:
 		return e.arrayFrom(expression)
 	case ir.ArrayReverse:
@@ -395,7 +395,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s", array, popped))
 	case ir.MapEntries:
-		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
+		pair := e.shapeWith([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType}, nil, true)
 		return e.graphArray(fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair), expression.GraphTypes)
 	case ir.ArraySlice:
 		array := e.value(expression.Array)
@@ -444,6 +444,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			pairs = e.value(expression.Pairs)
 		}
 		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
+		e.line("%s->json_key = %s; %s->json_value = %s;", created, jsonStorage(expression.Key), created, jsonStorage(expression.Value))
 		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		for _, entry := range entries {
 			e.line("adamic_map_set(%s, %s, %s);", created, e.heldIn(created, expression.Key, entry[0]), e.heldIn(created, expression.Value, entry[1]))
@@ -467,6 +468,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			values = e.value(expression.Values)
 		}
 		created := e.own(ir.Map, newMap(expression.Element, false))
+		e.line("%s->json_key = %s;", created, jsonStorage(expression.Element))
 		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		if expression.Values != nil {
 			e.line("adamic_set_add_all(%s, %s);", created, values)
@@ -532,7 +534,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			value = e.heldReferenceIn(array, value)
 		}
 		// The append happens here, in JavaScript's order, and the new length is the value.
-		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
+		e.line("adamic_array_push_typed(%s, (adamic_value){.%s = %s}, %s);", array, member(expression.Element), slotted(expression.Element, value), jsonStorage(expression.Element))
 		length := e.temporary()
 		e.line("double %s = (double)%s->length;", length, array)
 		return length
@@ -550,7 +552,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Spread != nil {
 			// A spread is iterated where it stands, before the elements after it are evaluated, so the
 			// array is made first (which nothing can see) and each element appended as it comes.
-			array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", expression.Element.IsReference()))
+			array := e.own(ir.Array, fmt.Sprintf("adamic_array_new_typed(0, %t, %s)", expression.Element.IsReference(), jsonStorage(expression.Element)))
 			e.adoptGraph(array, "sizeof *"+array, e.graphTypes(expression.GraphTypes))
 			for index, element := range expression.Elements {
 				value := e.value(element)
@@ -558,9 +560,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				case expression.Spread[index]:
 					e.line("adamic_array_append(%s, %s);", array, value)
 				case expression.Element.IsReference():
-					e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, e.heldReferenceIn(array, value))
+					e.line("adamic_array_push_typed(%s, (adamic_value){.reference = %s}, %s);", array, e.heldReferenceIn(array, value), jsonStorage(expression.Element))
 				default:
-					e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
+					e.line("adamic_array_push_typed(%s, (adamic_value){.%s = %s}, %s);", array, member(expression.Element), slotted(expression.Element, value), jsonStorage(expression.Element))
 				}
 			}
 			return array
@@ -569,13 +571,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		for _, element := range expression.Elements {
 			elements = append(elements, e.value(element))
 		}
-		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%d, %t)", len(elements), expression.Element.IsReference()))
+		array := e.own(ir.Array, fmt.Sprintf("adamic_array_new_typed(%d, %t, %s)", len(elements), expression.Element.IsReference(), jsonStorage(expression.Element)))
 		e.adoptGraph(array, "sizeof *"+array, e.graphTypes(expression.GraphTypes))
 		for _, element := range elements {
 			if expression.Element.IsReference() {
 				element = e.heldReferenceIn(array, element)
 			}
-			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, element))
+			e.line("adamic_array_push_typed(%s, (adamic_value){.%s = %s}, %s);", array, member(expression.Element), slotted(expression.Element, element), jsonStorage(expression.Element))
 		}
 		return array
 	case ir.Length:

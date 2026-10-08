@@ -20,7 +20,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	result := "0"
 	switch visit.Method {
 	case "filter":
-		result = e.graphArray(fmt.Sprintf("adamic_array_new(0, %t)", references), visit.GraphTypes)
+		result = e.graphArray(fmt.Sprintf("adamic_array_new_typed(0, %t, %s)", references, jsonStorage(visit.Element)), visit.GraphTypes)
 	case "some", "every":
 		result = e.snapshot(ir.Boolean, strconv.FormatBool(visit.Method == "every"))
 	case "findIndex", "findLastIndex":
@@ -84,7 +84,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		if references && e.graphTypes(visit.GraphTypes) {
 			e.line("\t%s.reference = adamic_graph_take(%s, %s.reference);", element, result, element)
 		}
-		e.line("\tadamic_array_push(%s, %s);", result, element)
+		e.line("\tadamic_array_push_typed(%s, %s, %s);", result, element, jsonStorage(visit.Element))
 		if references {
 			e.line("} else {")
 			e.line("\tadamic_release(%s.reference);", element)

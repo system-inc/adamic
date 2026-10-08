@@ -8,11 +8,11 @@
 static const char *const names[] = {"text", "padding"};
 static const bool references[] = {true, true};
 static const adamic_field_kind shape_kinds_0[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape shape = {2, names, references, NULL, shape_kinds_0};
+static const adamic_shape shape = {2, names, references, NULL, shape_kinds_0, NULL, NULL};
 static const char *const reversed_names[] = {"padding", "text"};
 static const bool reversed_references[] = {true, true};
 static const adamic_field_kind reversed_shape_kinds_0[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape reversed_shape = {2, reversed_names, reversed_references, NULL, reversed_shape_kinds_0};
+static const adamic_shape reversed_shape = {2, reversed_names, reversed_references, NULL, reversed_shape_kinds_0, NULL, NULL};
 static adamic_string literal = ADAMIC_STRING("é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀é😀");
 static adamic_object *objects[2];
 static adamic_map *map;

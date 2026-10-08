@@ -36,24 +36,29 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->maybe_number_keys = false;
 	map->reference_values = reference_values;
 	map->iterating = 0;
+	map->json_key = string_keys ? &adamic_json_string_schema : &adamic_json_number_schema;
+	map->json_value = NULL;
 	return map;
 }
 
 adamic_map *adamic_map_new_booleans(bool reference_values) {
 	adamic_map *map = adamic_map_new(false, reference_values);
 	map->boolean_keys = true;
+	map->json_key = &adamic_json_boolean_schema;
 	return map;
 }
 
 adamic_map *adamic_map_new_maybe_numbers(bool reference_values) {
 	adamic_map *map = adamic_map_new(false, reference_values);
 	map->maybe_number_keys = true;
+	map->json_key = &adamic_json_maybe_number_schema;
 	return map;
 }
 
 adamic_map *adamic_map_new_identity(bool reference_values) {
 	adamic_map *map = adamic_map_new(false, reference_values);
 	map->reference_keys = true;
+	map->json_key = &adamic_json_union_schema;
 	return map;
 }
 
@@ -271,7 +276,7 @@ bool adamic_map_iterator_next(adamic_map_iterator *iterator, adamic_value *key, 
 }
 
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair) {
-	adamic_array *entries = adamic_array_new(map->count, true);
+	adamic_array *entries = adamic_array_new_typed(map->count, true, &adamic_json_union_schema);
 	for (size_t index = 0; index < map->used; index++) {
 		const adamic_map_entry *entry = &map->entries[index];
 		if (entry->deleted) {
@@ -321,7 +326,7 @@ void adamic_map_clear(adamic_map *map) {
 // retained for the array.
 static adamic_array *listed(const adamic_map *map, bool keys) {
 	bool references = keys ? map->reference_keys : map->reference_values;
-	adamic_array *array = adamic_array_new(map->count, references);
+	adamic_array *array = adamic_array_new_typed(map->count, references, keys ? map->json_key : map->json_value);
 	for (size_t index = 0; index < map->used; index++) {
 		const adamic_map_entry *entry = &map->entries[index];
 		if (entry->deleted) {

@@ -14,7 +14,7 @@ void adamic_set_add_all(adamic_map *set, const adamic_array *values) {
 }
 
 adamic_array *adamic_set_values(const adamic_map *set) {
-	adamic_array *values = adamic_array_new(set->count, set->reference_keys);
+	adamic_array *values = adamic_array_new_typed(set->count, set->reference_keys, set->json_key);
 	for (size_t index = 0; index < set->used; index++) {
 		if (set->entries[index].deleted) {
 			continue;

@@ -23,11 +23,11 @@ static const char *const error_names[] = {"kind", "message"};
 static const bool two_references[] = {true, true};
 static const bool status_references[] = {true, true, false, false};
 static const adamic_field_kind ok_listing_kinds[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape listing_shape = {2, ok_listing_names, two_references, NULL, ok_listing_kinds};
+static const adamic_shape listing_shape = {2, ok_listing_names, two_references, NULL, ok_listing_kinds, NULL, NULL};
 static const adamic_field_kind ok_status_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number, adamic_field_boolean};
-static const adamic_shape status_shape = {4, ok_status_names, status_references, NULL, ok_status_kinds};
+static const adamic_shape status_shape = {4, ok_status_names, status_references, NULL, ok_status_kinds, NULL, NULL};
 static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape error_shape = {2, error_names, two_references, NULL, error_kinds};
+static const adamic_shape error_shape = {2, error_names, two_references, NULL, error_kinds, NULL, NULL};
 static adamic_string ok_kind = ADAMIC_STRING("Ok");
 static adamic_string error_kind = ADAMIC_STRING("Error");
 static adamic_string file_type = ADAMIC_STRING("file");
@@ -126,7 +126,7 @@ adamic_object *adamic_read_directory(const adamic_string *path) {
 	if (count > 1) {
 		qsort(names, count, sizeof *names, compare_names);
 	}
-	adamic_array *listed = adamic_array_new(count, true);
+	adamic_array *listed = adamic_array_new_typed(count, true, &adamic_json_string_schema);
 	for (size_t index = 0; index < count; index++) {
 		adamic_array_push(listed, (adamic_value){.reference = adamic_decode_utf8((const unsigned char *)names[index], strlen(names[index]))});
 		free(names[index]);

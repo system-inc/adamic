@@ -6,7 +6,7 @@
 
 void adamic_array_sort_undefined_last(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context) {
 	size_t length = array->length;
-	adamic_array *defined = adamic_array_new(length, false);
+	adamic_array *defined = adamic_array_new_typed(length, false, &adamic_json_maybe_number_schema);
 	for (size_t index = 0; index < length; index++) {
 		if (adamic_maybe_number_unpack(array->elements[index].number).present) {
 			adamic_array_push(defined, array->elements[index]);

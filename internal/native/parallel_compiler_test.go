@@ -23,14 +23,14 @@ func TestParallelMapCompilerABI(t *testing.T) {
 		if result.IsReference() {
 			flag = "true"
 		}
-		if !regexp.MustCompile(`adamic_parallel_map\([^,;\n]+, [^,;\n]+, ` + flag + `\)`).MatchString(code) {
+		if !regexp.MustCompile(`adamic_parallel_map_typed\([^,;\n]+, [^,;\n]+, ` + flag + `, &adamic_json_\w+_schema\)`).MatchString(code) {
 			t.Fatalf("runtime call missing static result reference flag %s", flag)
 		}
 		if strings.Contains(code, "->result_references") {
 			t.Fatal("result ownership must be conveyed by the ABI argument")
 		}
-		declaration := "adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references);"
-		if strings.Count(code, declaration) != 1 || strings.Count(code, "adamic_parallel_map(") != 2 {
+		declaration := "adamic_array *adamic_parallel_map_typed(adamic_array *items, adamic_closure *work, bool references, const adamic_json_schema *schema);"
+		if strings.Count(code, declaration) != 1 || strings.Count(code, "adamic_parallel_map_typed(") != 2 {
 			t.Fatal("want one ABI declaration and one runtime call, without a stand-in definition")
 		}
 	}

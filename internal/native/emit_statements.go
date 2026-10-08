@@ -133,7 +133,7 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.Evaluate:
 		if splice, isSplice := statement.Value.(ir.ArraySplice); isSplice {
 			// What a splice removes, nothing here uses: it's let go of, and no array is made for it.
-			e.line("adamic_array_remove(%s);", e.spliceArguments(splice))
+			e.line("adamic_array_remove_typed(%s, %s);", e.spliceArguments(splice), jsonStorage(splice.Element))
 			e.end()
 			break
 		}
@@ -165,7 +165,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		if statement.Element.IsReference() {
 			value = e.heldReferenceIn(array, value)
 		}
-		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
+		e.line("adamic_array_set_typed(%s, %s, (adamic_value){.%s = %s}, %s);", array, index, member(statement.Element), slotted(statement.Element, value), jsonStorage(statement.Element))
 		e.end()
 	case ir.SetProperty:
 		object := e.value(statement.Object)

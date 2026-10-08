@@ -286,12 +286,12 @@ static void start(void) {
 size_t adamic_parallel_threads(void) { pthread_once(&started, start); return thread_count; }
 size_t adamic_parallel_workers(void) { pthread_once(&started, start); return created; }
 
-static adamic_array *parallel_map(adamic_array *items, adamic_closure *work, bool references, bool moved) {
+static adamic_array *parallel_map(adamic_array *items, adamic_closure *work, bool references, bool moved, const adamic_json_schema *schema) {
 	pthread_once(&started, start);
 	if (!moved) { adamic_share(items); }
 	adamic_share(work);
 	ADAMIC_TSAN_PAUSE(adamic_tsan_publication);
-	adamic_array *results = adamic_array_new(items->length, references);
+	adamic_array *results = adamic_array_new_typed(items->length, references, schema);
 	results->length = items->length;
 	if (items->length != 0) { memset(results->elements, 0, items->length * sizeof *results->elements); }
 	if (thread_count == 1) {
@@ -335,9 +335,16 @@ static adamic_array *parallel_map(adamic_array *items, adamic_closure *work, boo
 // Lowering alone selects this path after proving disjoint exclusive item graphs.
 // The caller cannot access them until join; callback and result counts stay plain.
 adamic_array *adamic_parallel_map_move(adamic_array *items, adamic_closure *work, bool references) {
-	return parallel_map(items, work, references, true);
+	return parallel_map(items, work, references, true, NULL);
 }
 
 adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references) {
-	return parallel_map(items, work, references, false);
+	return parallel_map(items, work, references, false, NULL);
+}
+
+adamic_array *adamic_parallel_map_typed(adamic_array *items, adamic_closure *work, bool references, const adamic_json_schema *schema) {
+ return parallel_map(items, work, references, false, schema);
+}
+adamic_array *adamic_parallel_map_move_typed(adamic_array *items, adamic_closure *work, bool references, const adamic_json_schema *schema) {
+ return parallel_map(items, work, references, true, schema);
 }

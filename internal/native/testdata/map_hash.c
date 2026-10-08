@@ -30,7 +30,7 @@ static void distribution(size_t pattern, size_t count, bool optional) {
 	adamic_map *map = pattern == 9 ? adamic_map_new(true, false) :
 		pattern == 10 ? adamic_map_new_identity(false) :
 		optional ? adamic_map_new_maybe_numbers(false) : adamic_map_new(false, false);
-	static const adamic_shape shape = {0, NULL, NULL, NULL, NULL};
+	static const adamic_shape shape = {0, NULL, NULL, NULL, NULL, NULL, NULL};
 	for (size_t index = 0; index < count; index++) {
 		adamic_value key;
 		if (pattern == 9) {

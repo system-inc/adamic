@@ -401,6 +401,7 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 		}
 		let_go(array->properties);
 		free(array->elements);
+		free(array->json_elements);
 		break;
 	}
 	case adamic_kind_typed_array: {

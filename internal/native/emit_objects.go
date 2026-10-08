@@ -198,26 +198,23 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 
 // shape declares an object literal's layout once, at file scope, and names it.
 func (e *emitter) shape(fields []ir.Field) string {
-	names, types := []string{}, []ir.Type{}
+	names, types, private := []string{}, []ir.Type{}, []bool{}
 	for _, field := range fields {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
+		private = append(private, field.Private)
 	}
-	return e.shapeOf(names, types)
+	return e.shapeWithPrivate(names, types, nil, private, false)
 }
 
-// literalShape is the layout an object literal makes: a class's constructor's has the class's methods
-// too, so it's the class's own, never shared with a literal of the same fields.
 func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
-	if len(literal.Methods) == 0 {
-		return e.shape(literal.Fields)
-	}
-	names, types := []string{}, []ir.Type{}
+	names, types, private := []string{}, []ir.Type{}, []bool{}
 	for _, field := range literal.Fields {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
+		private = append(private, field.Private)
 	}
-	return e.shapeWith(names, types, literal.Methods)
+	return e.shapeWithPrivate(names, types, literal.Methods, private, literal.Tuple)
 }
 
 // shapeOf declares a layout by its field names and types.
@@ -227,8 +224,12 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
-func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
-	names, references, kinds := []string{}, []string{}, []string{}
+func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method, tupleFlag ...bool) string {
+	return e.shapeWithPrivate(fieldNames, fieldTypes, methods, nil, len(tupleFlag) > 0 && tupleFlag[0])
+}
+
+func (e *emitter) shapeWithPrivate(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method, private []bool, tuple bool) string {
+	names, references, kinds, jsonKinds := []string{}, []string{}, []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
@@ -239,9 +240,10 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 			kind = "adamic_field_boolean"
 		}
 		kinds = append(kinds, kind)
+		jsonKinds = append(jsonKinds, jsonStorage(fieldTypes[index])+":"+strconv.FormatBool(index < len(private) && private[index]))
 	}
 	fields := fieldNames
-	key := strings.Join(names, ",") + "|" + strings.Join(kinds, ",")
+	key := strings.Join(names, ",") + "|" + strings.Join(kinds, ",") + "|" + strings.Join(jsonKinds, ",") + fmt.Sprint(tuple)
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}
@@ -253,6 +255,18 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	}
 	name := fmt.Sprintf("adamic_shape_%d", len(e.shapes))
 	e.shapes[key] = name
+	hook := "NULL"
+	hasHook := false
+	for _, method := range methods {
+		if method.Name == "toJSON" {
+			hasHook = true
+			hook = e.jsonHook(method.Function)
+		}
+	}
+	json := e.shapeJSON(name, fieldNames, fieldTypes, private, tuple, hasHook)
+	if hasHook && hook == "NULL" {
+		json = "NULL"
+	}
 	table := "NULL"
 	methodNames, thunks := []string{}, []string{}
 	for _, method := range methods {
@@ -270,13 +284,13 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		table = "&" + name + "_methods"
 	}
 	if len(fields) == 0 {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, NULL};", name, table))
+		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, NULL, %s, %s};", name, table, json, hook))
 	} else {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
 			fmt.Sprintf("static const adamic_field_kind %s_kinds[] = {%s};", name, strings.Join(kinds, ", ")),
-			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s, %s_kinds};", name, len(fields), name, name, table, name))
+			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s, %s_kinds, %s, %s};", name, len(fields), name, name, table, name, json, hook))
 	}
 	return name
 }

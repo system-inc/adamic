@@ -226,6 +226,14 @@ extern char adamic_literal_mark;
 // methods are, for the objects a class makes, the class's methods by name, and NULL for any other
 // object: a call through an interface the class implements finds one there (adamic_object_callee).
 typedef struct adamic_methods adamic_methods;
+typedef struct adamic_json_schema adamic_json_schema;
+typedef struct adamic_json_result adamic_json_result;
+typedef struct adamic_object adamic_object;
+typedef adamic_json_result (*adamic_json_hook)(adamic_object *, const adamic_string *);
+extern const adamic_json_schema adamic_json_number_schema, adamic_json_boolean_schema,
+ adamic_json_string_schema, adamic_json_union_schema, adamic_json_maybe_number_schema,
+ adamic_json_undefined_schema, adamic_json_null_schema;
+
 // One byte per field. References are counted heap values; number also covers packed
 // optional scalars and opaque, unowned implementation words (RegExp's __program).
 enum adamic_field_kind {
@@ -238,10 +246,16 @@ typedef struct adamic_shape {
 	const bool *references;
 	const adamic_methods *methods;
 	const adamic_field_kind *kinds;
+	const adamic_json_schema *json;
+	adamic_json_hook to_json;
 } adamic_shape;
+
+void adamic_json_shape_check(const adamic_shape *shape);
+void adamic_json_array_check(bool references, const adamic_json_schema *schema);
 
 static inline void adamic_shape_check(const adamic_shape *shape) {
 #ifdef ADAMIC_COUNT
+	adamic_json_shape_check(shape);
 	for (size_t i = 0; i < shape->count; i++) {
 		if (shape->kinds == NULL || shape->kinds[i] > adamic_field_reference ||
 			shape->references[i] != (shape->kinds[i] == adamic_field_reference)) {
@@ -301,6 +315,8 @@ _Static_assert(__atomic_always_lock_free(sizeof(uint64_t), 0), "slot cache requi
 // One relaxed word contains both the immutable shape identity and its slot. Large
 // slot indices are simply not cached; shape addresses outside 48 bits are refused.
 void adamic_slot_cache_store(adamic_slot_cache *cache, const adamic_shape *shape, size_t index);
+
+extern adamic_heap adamic_null;
 
 // adamic_method is a class's method as a call through an interface calls it: the object as this, and
 // the arguments and the result as adamic_value, as a closure's are (the result owned).
@@ -409,6 +425,8 @@ typedef struct adamic_array {
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
+	const adamic_json_schema *json_element;
+	const adamic_json_schema **json_elements;
 } adamic_array;
 
 // Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
@@ -451,6 +469,15 @@ adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *arra
 bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value);
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
+adamic_array *adamic_array_new_typed(size_t capacity, bool references, const adamic_json_schema *element);
+void adamic_array_tag(adamic_array *, size_t, const adamic_json_schema *);
+void adamic_array_push_typed(adamic_array *, adamic_value, const adamic_json_schema *);
+void adamic_array_json_reset(adamic_array *, const adamic_json_schema *);
+
+adamic_array *adamic_array_fill_typed(adamic_array *, adamic_value, double, double, bool, bool, const adamic_json_schema *);
+adamic_array *adamic_array_splice_typed(adamic_array *, double, double, bool, size_t, const adamic_value *, const adamic_json_schema *);
+void adamic_array_remove_typed(adamic_array *, double, double, bool, size_t, const adamic_value *, const adamic_json_schema *);
+void adamic_array_set_typed(adamic_array *, double, adamic_value, const adamic_json_schema *);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);
 adamic_array *adamic_class_object_keys(const adamic_object *object);
 const adamic_accessor *adamic_accessor_find(const adamic_object *object, const char *name);
@@ -459,6 +486,8 @@ void adamic_accessor_set(adamic_object *object, const char *name, adamic_value v
 
 // Structured fork-join. Arguments are borrowed until the join; the result is owned.
 adamic_array *adamic_parallel_map(adamic_array *items, adamic_closure *work, bool references);
+adamic_array *adamic_parallel_map_typed(adamic_array *, adamic_closure *, bool, const adamic_json_schema *);
+adamic_array *adamic_parallel_map_move_typed(adamic_array *, adamic_closure *, bool, const adamic_json_schema *);
 
 // adamic_array_push appends; a reference pushed belongs to the array.
 void adamic_array_push(adamic_array *array, adamic_value value);
@@ -489,6 +518,7 @@ typedef struct adamic_map {
 	// from the canonical present NaN, while present numbers use SameValueZero (map.c).
 	bool maybe_number_keys;
 	bool reference_values;
+	const adamic_json_schema *json_key, *json_value;
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
 	_Atomic size_t iterating;
@@ -642,6 +672,7 @@ adamic_array *adamic_array_reverse(adamic_array *array);
 // adamic_array_fill is array.fill(value, start, end), in place, and is the array. Both hold the value
 // once per element; the caller keeps its own.
 adamic_array *adamic_array_filled(double length, adamic_value value, bool references);
+adamic_array *adamic_array_filled_typed(double length, adamic_value value, bool references, const adamic_json_schema *schema);
 adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end);
 
 // adamic_array_splice is array.splice(start, count, ...items): what's removed, in a new array the

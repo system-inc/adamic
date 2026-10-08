@@ -22,7 +22,7 @@ const graphHarness = `#include "adamic.h"
 static const char *const names[] = {"next", "other", "label"};
 static const bool references[] = {true, true, true};
 static const adamic_field_kind shape_kinds_0[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
-static const adamic_shape shape = {3, names, references, NULL, shape_kinds_0};
+static const adamic_shape shape = {3, names, references, NULL, shape_kinds_0, NULL, NULL};
 static adamic_object *node(void) {
  adamic_object *object = adamic_object_new(&shape);
  return adamic_graph_adopt(object, sizeof *object + 3 * sizeof(adamic_value));
@@ -342,7 +342,7 @@ func TestGraphContainerBoundary(t *testing.T) {
 	if !strings.Contains(string(output), "graph counts: regions 1 merges 3") {
 		t.Fatal(string(output))
 	}
-	if !strings.Contains(string(output), "live 4 bytes 592 reachable 3 bytes 192 unreachable 1 bytes 400") {
+	if !strings.Contains(string(output), "live 4 bytes 624 reachable 3 bytes 208 unreachable 1 bytes 416") {
 		t.Fatal(string(output))
 	}
 	if !strings.Contains(string(output), "allocations 6 frees 6 retains 1 releases 5 peak 6 regions 0") {

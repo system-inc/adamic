@@ -27,7 +27,7 @@ static bool array_index(const char *name, uint32_t *value) {
 
 adamic_array *adamic_plain_object_keys(const adamic_object *object) {
 	const adamic_shape *shape = object->shape;
-	adamic_array *keys = adamic_array_new(shape->count, true);
+	adamic_array *keys = adamic_array_new_typed(shape->count, true, &adamic_json_string_schema);
 	// Insertion-sort just the integer keys, then append ordinary strings in shape order. Runtime
 	// shapes retain insertion order even through a narrower static type and a spread.
 	for (size_t position = 0; position < shape->count; position++) {

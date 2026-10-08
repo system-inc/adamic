@@ -126,7 +126,17 @@ func (p *Program) NativeDeclarations(name string) (string, error) {
 				out.WriteString("adamic_field_reference,")
 			}
 			out.WriteString("};\n")
-			fmt.Fprintf(&out, "static const adamic_shape %s_group_shape = {%d,%s_group_names,%s_group_references,NULL,%s_group_kinds};\n", name, len(names), name, name, name)
+			out.WriteString("#include \"json_metadata.h\"\n")
+			for index, field := range names {
+				fmt.Fprintf(&out, "static adamic_string %s_group_json_name_%d = ADAMIC_STRING(%q);\n", name, index, field)
+			}
+			fmt.Fprintf(&out, "static const adamic_json_field %s_group_json_fields[] = {", name)
+			for index := range names {
+				fmt.Fprintf(&out, "{&%s_group_json_name_%d,%d,&adamic_json_union_schema},", name, index, index)
+			}
+			out.WriteString("};\n")
+			fmt.Fprintf(&out, "static const adamic_json_schema %s_group_json = {.kind=adamic_json_object,.count=%d,.fields=%s_group_json_fields};\n", name, len(names), name)
+			fmt.Fprintf(&out, "static const adamic_shape %s_group_shape = {%d,%s_group_names,%s_group_references,NULL,%s_group_kinds,&%s_group_json,NULL};\n", name, len(names), name, name, name, name)
 		}
 		bits, filter := p.nativeFirstASCII()
 		prefix := p.nativePrefix()

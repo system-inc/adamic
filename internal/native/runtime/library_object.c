@@ -1,5 +1,5 @@
 // library_object.c: static Object methods over proven, fixed shapes.
-#include "adamic.h"
+#include "json_metadata.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,7 +97,7 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  // Class descriptors hide private storage and track static own-property presence.
  if (object->class != NULL) return adamic_class_object_keys(object);
  size_t *indices = ordered(object);
- adamic_array *keys = adamic_array_new(object->shape->count, true);
+ adamic_array *keys = adamic_array_new_typed(object->shape->count, true, &adamic_json_union_schema);
  for (size_t at = 0; at < object->shape->count; at++) {
   const char *name = object->shape->names[indices[at]];
   if (name[0] == '#') continue;
@@ -109,16 +109,29 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
 
 adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries) {
  size_t *indices = ordered(object);
- adamic_array *values = adamic_array_new(object->shape->count, entries || references);
+ const adamic_json_schema *first = object->shape->json == NULL ? NULL : object->shape->json->count == 0 ? &adamic_json_undefined_schema : object->shape->json->fields[0].schema;
+ adamic_array *values = adamic_array_new_typed(object->shape->count, entries || references, entries ? &adamic_json_union_schema : first);
  static const char *const names[] = {"0", "1"};
  static const bool number_references[] = {true, false};
  static const bool string_references[] = {true, true};
  static const adamic_field_kind number_kinds[] = {adamic_field_reference, adamic_field_number};
- static const adamic_shape number_pair = {2, names, number_references, NULL, number_kinds};
+ static adamic_string number_pair_json_name_0 = ADAMIC_STRING("0");
+static adamic_string number_pair_json_name_1 = ADAMIC_STRING("1");
+static const adamic_json_field number_pair_json_fields[] = {{&number_pair_json_name_0, 0, &adamic_json_string_schema}, {&number_pair_json_name_1, 1, &adamic_json_number_schema}};
+static const adamic_json_schema number_pair_json = {.kind = adamic_json_tuple, .count = 2, .fields = number_pair_json_fields};
+static const adamic_shape number_pair = {2, names, number_references, NULL, number_kinds, &number_pair_json, NULL};
  static const adamic_field_kind reference_kinds[] = {adamic_field_reference, adamic_field_reference};
- static const adamic_shape string_pair = {2, names, string_references, NULL, reference_kinds};
+ static adamic_string string_pair_json_name_0 = ADAMIC_STRING("0");
+static adamic_string string_pair_json_name_1 = ADAMIC_STRING("1");
+static const adamic_json_field string_pair_json_fields[] = {{&string_pair_json_name_0, 0, &adamic_json_string_schema}, {&string_pair_json_name_1, 1, &adamic_json_union_schema}};
+static const adamic_json_schema string_pair_json = {.kind = adamic_json_tuple, .count = 2, .fields = string_pair_json_fields};
+static const adamic_shape string_pair = {2, names, string_references, NULL, reference_kinds, &string_pair_json, NULL};
  static const adamic_field_kind boolean_kinds[] = {adamic_field_reference, adamic_field_boolean};
- static const adamic_shape boolean_pair = {2, names, number_references, NULL, boolean_kinds};
+ static adamic_string boolean_pair_json_name_0 = ADAMIC_STRING("0");
+static adamic_string boolean_pair_json_name_1 = ADAMIC_STRING("1");
+static const adamic_json_field boolean_pair_json_fields[] = {{&boolean_pair_json_name_0, 0, &adamic_json_string_schema}, {&boolean_pair_json_name_1, 1, &adamic_json_boolean_schema}};
+static const adamic_json_schema boolean_pair_json = {.kind = adamic_json_tuple, .count = 2, .fields = boolean_pair_json_fields};
+static const adamic_shape boolean_pair = {2, names, number_references, NULL, boolean_kinds, &boolean_pair_json, NULL};
  for (size_t at = 0; at < object->shape->count; at++) {
   size_t index = indices[at];
   const char *name = object->shape->names[index];
@@ -131,7 +144,13 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
    pair->slots[1] = value;
    value.reference = pair;
   }
-  adamic_array_push(values, value);
+  const adamic_json_schema *schema = NULL;
+  if (entries) schema = &adamic_json_union_schema;
+  else if (object->shape->json != NULL) {
+   for (size_t j = 0; j < object->shape->json->count; j++)
+    if (object->shape->json->fields[j].slot == index) schema = object->shape->json->fields[j].schema;
+  }
+  adamic_array_push_typed(values, value, schema);
  }
  free(indices);
  return values;

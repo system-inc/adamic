@@ -42,7 +42,7 @@ size_t adamic_public_index(const adamic_shape *shape, size_t position) {
 adamic_array *adamic_class_object_keys(const adamic_object *object) {
     const adamic_shape *shape = object->class == NULL ? object->shape : object->class->public_shape;
     if (object->class != NULL && object->class->is_static) {
-        adamic_array *keys = adamic_array_new(shape->count, true);
+        adamic_array *keys = adamic_array_new_typed(shape->count, true, &adamic_json_string_schema);
         for (size_t order = 1; order <= object->shape->count; order++) {
             for (size_t i = 0; i < object->shape->count; i++) {
                 size_t flag = object->class->static_flags[i];
@@ -55,7 +55,7 @@ adamic_array *adamic_class_object_keys(const adamic_object *object) {
         }
         return keys;
     }
-    adamic_array *keys = adamic_array_new(shape->count, true);
+    adamic_array *keys = adamic_array_new_typed(shape->count, true, &adamic_json_string_schema);
     for (size_t index = 0; index < shape->count; index++) {
         const char *name = shape->names[adamic_public_index(shape, index)];
         if (object->class != NULL && object->class->is_static) {

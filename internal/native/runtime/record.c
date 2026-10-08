@@ -11,11 +11,11 @@
 static const char *const record_names[] = {"0"};
 static const bool record_references[] = {true};
 static const adamic_field_kind record_kinds[] = {adamic_field_reference};
-static const adamic_shape record_shape = {1, record_names, record_references, NULL, record_kinds};
+static const adamic_shape record_shape = {1, record_names, record_references, NULL, record_kinds, NULL, NULL};
 static const char *const iteration_names[] = {"0", "1", "key"};
 static const bool iteration_references[] = {true, true, false};
 static const adamic_field_kind iteration_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number};
-static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL, iteration_kinds};
+static const adamic_shape iteration_shape = {3, iteration_names, iteration_references, NULL, iteration_kinds, NULL, NULL};
 
 static adamic_map *table(const adamic_record *record) {
 	return record->slots[0].reference;
@@ -150,7 +150,7 @@ static int compare_indices(const void *left, const void *right) {
 
 adamic_array *adamic_record_keys(const adamic_record *record) {
 	const adamic_map *map = table(record);
-	adamic_array *keys = adamic_array_new(map->count, true);
+	adamic_array *keys = adamic_array_new_typed(map->count, true, &adamic_json_string_schema);
 	size_t count = 0;
 	for (size_t index = 0; index < map->used; index++) {
 		uint32_t number;

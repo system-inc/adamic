@@ -27,19 +27,19 @@ func TestArrayFamilyMutants(t *testing.T) {
 			return strings.ReplaceAll(source, "ADAMIC_STRING(\"indexOf\")", "ADAMIC_STRING(\"wrong\")")
 		}},
 		{"with replacement", "library_array_with.a", func(source string) string {
-			return strings.ReplaceAll(source, "adamic_array_set(", "array_mutant_set(")
+			return strings.ReplaceAll(source, "adamic_array_set_typed(", "array_mutant_set(")
 		}},
 		{"flatMap order", "library_array_flat_map.a", func(source string) string {
-			return strings.ReplaceAll(source, "adamic_array_push(", "array_mutant_push(")
+			return strings.ReplaceAll(source, "adamic_array_push_typed(", "array_mutant_push(")
 		}},
 		{"spliced copy", "library_array_spliced.a", func(source string) string {
-			return strings.ReplaceAll(source, "adamic_array_remove(", "array_mutant_remove(")
+			return strings.ReplaceAll(source, "adamic_array_remove_typed(", "array_mutant_remove(")
 		}},
 		{"flat order", "library_array_flat.a", func(source string) string {
-			return strings.ReplaceAll(source, "adamic_array_push(", "array_mutant_push(")
+			return strings.ReplaceAll(source, "adamic_array_push_typed(", "array_mutant_push(")
 		}},
 		{"copyWithin write", "library_array_copy_within.a", func(source string) string {
-			return strings.ReplaceAll(source, "adamic_array_set(", "array_mutant_set(")
+			return strings.ReplaceAll(source, "adamic_array_set_typed(", "array_mutant_set(")
 		}},
 		{"search direction", "library_array_search.a", func(source string) string {
 			return strings.ReplaceAll(source, "adamic_array_search_from(", "array_mutant_search(")
@@ -82,17 +82,18 @@ static adamic_string *array_mutant_join_nested(const adamic_array *array, const 
 ` + mutant
 			case "spliced copy":
 				mutant = `#include "adamic.h"
-static void array_mutant_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items) {
- adamic_array_remove(array, start, 0, has_count, item_count, items);
+static void array_mutant_remove(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, const adamic_json_schema *schema) {
+ adamic_array_remove_typed(array, start, 0, has_count, item_count, items, schema);
 }
 ` + mutant
 			case "flat order", "flatMap order":
 				mutant = `#include "adamic.h"
-static void array_mutant_push(adamic_array *array, adamic_value value) { adamic_array_push(array, value); adamic_array_reverse(array); }
+static void array_mutant_push(adamic_array *array, adamic_value value, const adamic_json_schema *schema) { adamic_array_push_typed(array, value, schema); adamic_array_reverse(array); }
 ` + mutant
 			case "copyWithin write", "with replacement":
 				mutant = `#include "adamic.h"
-static void array_mutant_set(adamic_array *array, double index, adamic_value value) {
+static void array_mutant_set(adamic_array *array, double index, adamic_value value, const adamic_json_schema *schema) {
+ (void)schema;
  if (array->references) adamic_release(value.reference);
  (void)index;
 }

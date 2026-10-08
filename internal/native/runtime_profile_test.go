@@ -29,7 +29,7 @@ int main(void) {
  static const char *const names[] = {"next", "label"};
  static const bool references[] = {true, true};
  static const adamic_field_kind shape_kinds_0[] = {adamic_field_reference, adamic_field_reference};
-static const adamic_shape shape = {2, names, references, NULL, shape_kinds_0};
+static const adamic_shape shape = {2, names, references, NULL, shape_kinds_0, NULL, NULL};
  adamic_object *chain = NULL;
  for (size_t i = 0; i < 100000; i++) {
   adamic_object *next = adamic_object_new(&shape);

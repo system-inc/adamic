@@ -442,3 +442,24 @@ introduced. This entry records this extension, not an inventory of earlier units
 | Audit key | Holds / writers and timing | Classification |
 |---|---|---|
 | `async.c:cleanups:1` | Borrowed frame cleanup records; generated wrappers register, settlement/destruction forget, cancel and exit take records before releasing reactions | Loop confined under the host bridge loop-affinity contract. No foreign publisher accesses this list; source pool callbacks capturing async frames are rejected. Records own no Adamic reference |
+
+## JSON metadata storage
+
+`runtime-file:json_metadata.c` and `runtime-file:json_metadata.h` contain immutable
+schemas and a const provider table; they introduce no mutable caches or registries.
+Shapes and descriptors are immutable after publication. Per-array descriptor pointers
+and optional tag vectors belong to that array and follow its existing exclusive-write
+proof and ownership; they are freed with its element storage.
+
+| Storage key | Audit |
+| --- | --- |
+| `adamic.h:adamic_null:1` | Declaration of the immortal tagged-null sentinel below. |
+| `union.c:adamic_null:1` | Constant initializer; never mutated; zero reference count, distinguished by address before object layout is read. Same sentinel as library cf2cb58b. |
+| `library_object.c:number_pair_json_name_0:1` | Immortal key string, initialized before workers; existing string cache publication rules. |
+| `library_object.c:number_pair_json_name_1:1` | Immortal key string, initialized before workers; existing string cache publication rules. |
+| `library_object.c:string_pair_json_name_0:1` | Immortal key string, initialized before workers; existing string cache publication rules. |
+| `library_object.c:string_pair_json_name_1:1` | Immortal key string, initialized before workers; existing string cache publication rules. |
+| `library_object.c:boolean_pair_json_name_0:1` | Immortal key string, initialized before workers; existing string cache publication rules. |
+| `library_object.c:boolean_pair_json_name_1:1` | Immortal key string, initialized before workers; existing string cache publication rules. |
+| `regexp.c:pair_shape_json_name_0:1` | Immortal key string, initialized before workers; existing string cache publication rules. |
+| `regexp.c:pair_shape_json_name_1:1` | Immortal key string, initialized before workers; existing string cache publication rules. |

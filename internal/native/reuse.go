@@ -696,7 +696,7 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 	unique := e.temporary()
 	e.line("bool %s = %s;", unique, e.graphUnique(source))
 	callback := e.value(expression.Callback)
-	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(%s->length, %t))", unique, source, source, expression.Result.IsReference()))
+	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new_typed(%s->length, %t, %s))", unique, source, source, expression.Result.IsReference(), jsonStorage(expression.Result)))
 	count, index, result := e.temporary(), e.temporary(), e.temporary()
 	e.line("size_t %s = %s->length;", count, source)
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
@@ -711,10 +711,12 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 		e.line("\t\tadamic_release(%s->elements[%s].reference);", source, index)
 	}
 	e.line("\t\t%s->elements[%s] = %s;", source, index, result)
+	e.line("\t\tadamic_array_tag(%s, %s, %s);", source, index, jsonStorage(expression.Result))
 	e.line("\t} else {")
-	e.line("\t\tadamic_array_push(%s, %s);", mapped, result)
+	e.line("\t\tadamic_array_push_typed(%s, %s, %s);", mapped, result, jsonStorage(expression.Result))
 	e.line("\t}")
 	e.line("}")
+	e.line("adamic_array_json_reset(%s, %s);", mapped, jsonStorage(expression.Result))
 	return mapped, true
 }
 
@@ -735,7 +737,7 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 	source := e.variable(literal.Elements[0], read)
 	unique := e.temporary()
 	e.line("bool %s = %s;", unique, e.graphUnique(source))
-	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new(0, %t))", unique, source, literal.Element.IsReference()))
+	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_new_typed(0, %t, %s))", unique, source, literal.Element.IsReference(), jsonStorage(literal.Element)))
 	e.line("if (!%s) {", unique)
 	e.line("\tadamic_array_append(%s, %s);", array, source)
 	e.line("}")
@@ -745,11 +747,12 @@ func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
 		case literal.Spread[index+1]:
 			e.line("adamic_array_append(%s, %s);", array, value)
 		case literal.Element.IsReference():
-			e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, retained(value))
+			e.line("adamic_array_push_typed(%s, (adamic_value){.reference = %s}, %s);", array, retained(value), jsonStorage(literal.Element))
 		default:
-			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(literal.Element), slotted(literal.Element, value))
+			e.line("adamic_array_push_typed(%s, (adamic_value){.%s = %s}, %s);", array, member(literal.Element), slotted(literal.Element, value), jsonStorage(literal.Element))
 		}
 	}
+	e.line("adamic_array_json_reset(%s, %s);", array, jsonStorage(literal.Element))
 	return array, true
 }
 

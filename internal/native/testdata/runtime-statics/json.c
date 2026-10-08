@@ -4,7 +4,7 @@ static adamic_string name = ADAMIC_STRING("value");
 static const char *const names[] = {"value"};
 static const bool references[] = {false};
 static const adamic_field_kind shape_kinds_0[] = {adamic_field_number};
-static const adamic_shape shape = {1, names, references, NULL, shape_kinds_0};
+static const adamic_shape shape = {1, names, references, NULL, shape_kinds_0, NULL, NULL};
 static const adamic_json_schema number = {.kind = adamic_json_number};
 static const adamic_json_field fields[] = {{&name, 0, &number}};
 static const adamic_json_schema schema = {.kind = adamic_json_object, .count = 1, .fields = fields};
