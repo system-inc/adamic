@@ -1,0 +1,46 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/slot02_ast.a';
+import { propertyName, Static } from '../../helpers/property_name.a';
+import type { NameAnswer } from '../../helpers/wave15/accessed_property/accessed_name.a';
+import { accessedName, SettledName } from '../../helpers/wave15/accessed_property/accessed_name.a';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly nodes: HelperNode[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        for(const node of this.context.parser.nodes) {
+            this.nodes.push({ kind: node.kind, text: node.text, expression: node.children[0] ?? -1, name: -1 });
+        }
+    }
+    skip(index: number): number {
+        let current = index;
+        while(current >= 0 && this.context.node(current).kind === 'ParenthesizedExpression') {
+            current = this.context.node(current).children[0] ?? -1;
+        }
+        return current;
+    }
+    visit(index: number): void {
+        const callee = this.skip(this.context.node(index).children[0] ?? -1);
+        if(callee < 0) { return; }
+        const node = this.context.node(callee);
+        let kind = 0;
+        let key = -1;
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
+            kind = node.kind === 'PropertyAccessExpression' ? 213 : 214;
+            key = node.children[node.children.length - 1] ?? -1;
+            if(kind === 214) { key = this.skip(key); }
+        }
+        const keyKind = key < 0 ? '' : this.context.node(key).kind;
+        const answer = accessedName(true, kind, key, keyKind === 'Identifier' ? 79 : (keyKind === 'PrivateIdentifier' ? 80 : 0), Static, (handle: number, accept: number): NameAnswer => {
+            const value = propertyName(this.nodes, handle, accept);
+            const result = new SettledName(); result.text = value.name; result.ok = value.named; return result;
+        });
+        if(!answer.ok) { return; }
+        const name = answer.text;
+        if(name !== 'hasOwnProperty' && name !== 'isPrototypeOf' && name !== 'propertyIsEnumerable') { return; }
+        if(kind === 213 && (key < 0 || keyKind === 'PrivateIdentifier')) { return; }
+        this.context.report(callee, 'no-prototype-builtins', 'noPrototypeBuiltins', message, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
