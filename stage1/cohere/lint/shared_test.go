@@ -2,7 +2,6 @@ package lint
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/testguard"
