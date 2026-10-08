@@ -14,7 +14,7 @@ MAIN = 'a' * 40
 
 
 class Watcher:
-    def __init__(self, count=6, staleLock=False, canaryBox=None):
+    def __init__(self, count=6, staleLock=False, canaryBox=None, mode='void'):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         self.repo = self.root / 'repo'
@@ -33,7 +33,7 @@ class Watcher:
         self.bin.mkdir()
         self.put('clock', '1000')
         self.put('head', 'tools-one')
-        self.put('mode', 'void')
+        self.put('mode', mode)
         self.put('initial', 'hold')
         self.put('canary', 'hold')
         self.tips = [(f'codex/test{i}', f'{i+1:012x}' + '0' * 28) for i in range(count)]
@@ -151,6 +151,13 @@ fi
         os.killpg(self.proc.pid, signal.SIGTERM)
         self.proc.wait(timeout=5)
         self.output.close()
+        # A gate child the signal reached mid-write can add a file while the tree is removed; retry briefly.
+        for attempt in range(20):
+            try:
+                self.tmp.cleanup()
+                return
+            except OSError:
+                time.sleep(.05)
         self.tmp.cleanup()
 
 
@@ -478,15 +485,10 @@ class WatchTests(unittest.TestCase):
                          ['codex/step-a-x', 'codex/step-b-x', 'codex/other'])
 
     def test_staged_tools_run_on_the_canary_box_until_a_real_green_promotes_them(self):
-        w = Watcher(0, canaryBox='box1')
+        # Tips, queue and slots are in place before the watcher starts: with no deploy barrier to hold it,
+        # a write after its first poll races the watcher's own rewrite of the queue.
+        w = Watcher(2, canaryBox='box1', mode='hold')
         self.addCleanup(w.close)
-        w.wait(lambda: 'watching' in w.read('output'))
-        w.put('mode', 'hold')
-        (w.state / 'slots').write_text('box0 S\nbox1 S\n')
-        tips = [('codex/a', 'a' * 40), ('codex/b', 'b' * 40)]
-        (w.state / 'seen').write_text(''.join('%s %s\n' % t for t in tips))
-        w.put('tips', ''.join('%s\trefs/heads/%s\n' % (sha, b) for b, sha in tips))
-        (w.state / 'queue').write_text('S 900 codex/a %s\nS 901 codex/b %s\n' % (tips[0][1], tips[1][1]))
         # No fleet-wide deploy barrier while staged: both start at once, one per box and version.
         w.wait(lambda: w.read('starts').strip() and w.read('good-starts').strip())
         self.assertNotIn('canary/main', w.read('starts') + w.read('good-starts'))
@@ -495,9 +497,10 @@ class WatchTests(unittest.TestCase):
         w.put('mode', 'pass')
         w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
         self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-one')
-        # Promoted, every box runs the new tools.
-        (w.state / 'seen').write_text((w.state / 'seen').read_text() + 'codex/c %s\n' % ('c' * 40))
-        (w.state / 'queue').write_text('S 950 codex/c %s\n' % ('c' * 40))
+        # Promoted, every box runs the new tools. The new tip arrives as a pushed branch, which the watcher
+        # queues itself, never as a write to the queue it owns.
+        w.tips.append(('codex/c', 'c' * 40))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
         w.wait(lambda: 'codex/c ' in w.read('starts'))
         self.assertNotIn('codex/c ', w.read('good-starts'))
 
