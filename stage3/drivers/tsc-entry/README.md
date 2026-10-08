@@ -1,5 +1,8 @@
 # Native tsc entry measurement
 
+The two compiler-tip comparison is recorded in [COMPILER-TIPS.md](COMPILER-TIPS.md),
+with exact pins, all fifteen saved-stop classifications and reproducible commands.
+
 The current-main rerun is recorded in [REFRESH.md](REFRESH.md), with evidence
 under `evidence/main-efe9f404/` and exact-message comparison against
 `stage3/census/latent/REPORT.md`. The original unit remains in `REPORT.md`.
