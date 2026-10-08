@@ -69,7 +69,9 @@ function byteCompare(first: string, second: string): number {
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) { this.context = context; }
-    visit(index: number): void {
+    visit(index: number): void {}
+    // File-wide verdicts follow earlier registered finish hooks, preserving Go ties.
+    finish(index: number): void {
         const context = this.context;
         const source = context.source;
         const statements = context.node(index).children;
