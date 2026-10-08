@@ -25,8 +25,15 @@ func runtimeLibraryForSource(source string, options Options) (string, error) {
 // RuntimeLibraryForSource selects the same opt-in archive for callers that link
 // generated C themselves, including the test262 runner using another checkout.
 func RuntimeLibraryForSource(directory, source string, options Options) (string, error) {
+	flags := []string{}
 	if strings.Contains(source, "\n#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n") {
-		return runtimeLibrary(directory, options, []string{"-DADAMIC_REGEXP_RUNTIME_OWNER=1"})
+		flags = append(flags, "-DADAMIC_REGEXP_RUNTIME_OWNER=1")
+	}
+	if strings.Contains(source, "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n") {
+		flags = append(flags, "-DADAMIC_REGEXP_REPLACE_CALLBACK=1")
+	}
+	if len(flags) != 0 {
+		return runtimeLibrary(directory, options, flags)
 	}
 	return RuntimeLibrary(directory, options)
 }

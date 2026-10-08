@@ -16,6 +16,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		}
 		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	}
+	if statements, known, err := l.arrayLengthWrite(node); known {
+		return statements, err
+	}
 	if value, known, err := l.processValue(node); known {
 		if err != nil {
 			return nil, err

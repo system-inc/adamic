@@ -33,6 +33,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	parameter := proven.Flags()&checker.TypeFlagsTypeParameter != 0
 	proven = l.concrete(proven)
+	if of, known := l.dateStringRepresentation(proven); known {
+		return of, true
+	}
 	flags := proven.Flags()
 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
 		return ir.Union, true
@@ -596,6 +599,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
+			if text, known, err := l.dateStringAddition(node, left, right); known {
+				return text, err
+			}
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
 		return l.combine(node, binary.OperatorToken.Kind, left, right)
@@ -896,6 +902,12 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
+		if text, known, err := l.dateStringConversion(span.AsTemplateSpan().Expression, value); known {
+			if err != nil {
+				return nil, err
+			}
+			value = text
+		}
 		switch value.Type() {
 		case ir.Number:
 			value = ir.NumberToString{Value: value}
@@ -1026,6 +1038,9 @@ func slotless(valueType ir.Type) bool {
 
 // call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.arrayLengthConstructor(node); found {
+		return value, err
+	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
