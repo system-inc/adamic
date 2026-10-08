@@ -368,7 +368,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Array.Type().IsTypedArray() {
 			array := e.value(expression.Array)
 			index := e.value(expression.Index)
-			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("adamic_typed_array_get(%s, %s)", array, index))
+			lookup := "adamic_typed_array_get"
+			if read, isRead := expression.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
+				lookup, index = "adamic_typed_array_get_integer", e.localName(read.Local)
+			}
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("%s(%s, %s)", lookup, array, index))
 		}
 		slot := e.arrayIndexSlot(expression)
 		if expression.Type().IsMaybe() {

@@ -158,7 +158,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
 		if statement.Array.Type().IsTypedArray() {
-			e.line("adamic_typed_array_set(%s, %s, %s);", array, index, value)
+			store := "adamic_typed_array_set"
+			if read, isRead := statement.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
+				store, index = "adamic_typed_array_set_integer", e.localName(read.Local)
+			}
+			e.line("%s(%s, %s, %s);", store, array, index, value)
 			e.end()
 			break
 		}
