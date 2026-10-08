@@ -1,0 +1,12 @@
+import type { RuleContext } from '../../context.ts';
+import type { CoreArena } from '../../helpers/core/nodes.a';
+import { signaturesFromParser } from '../../helpers/core/from_parser.a';
+// Add semantic AST fields required by memberAccessObject and isNullOrUndefined.
+export function project(context: RuleContext): CoreArena {
+    const arena = signaturesFromParser(context.parser, context.source);
+    for(let i = 0; i < arena.nodes.length; i++) {
+        const parsed = context.node(i); const node = arena.node(i); node.text = parsed.text;
+        if(parsed.kind === 'PropertyAccessExpression' || parsed.kind === 'ElementAccessExpression' || parsed.kind === 'VoidExpression') { node.expression = parsed.children[0] ?? -1; }
+    }
+    return arena;
+}

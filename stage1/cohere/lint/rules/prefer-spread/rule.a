@@ -1,0 +1,39 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { CoreArena } from '../../helpers/core/nodes.a';
+import { memberAccessObject } from '../../helpers/core/member_access_object.a';
+import { isNullOrUndefined } from '../../helpers/core/is_null_or_undefined.a';
+import { hasSameTokens } from '../../helpers/core/has_same_tokens.a';
+import { project } from './projection.a';
+import { message } from './messages.a';
+export class Rule {
+    readonly context: RuleContext; arena: CoreArena | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void { this.arena = undefined; }
+    applyMember(index: number): boolean {
+        const node = this.context.node(index); const name = node.children[node.children.length - 1] ?? -1;
+        if(name < 0) { return false; }
+        if(node.kind === 'PropertyAccessExpression') { return this.context.kind(name) !== 'PrivateIdentifier' && this.context.node(name).text === 'apply'; }
+        if(node.kind === 'ElementAccessExpression') {
+            const argument = this.context.unwrap(name); const kind = this.context.kind(argument);
+            return (kind === 'StringLiteral' || kind === 'NoSubstitutionTemplateLiteral') && this.context.node(argument).text === 'apply';
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(node.list !== 2) { return; }
+        const callee = this.context.unwrap(node.children[0] ?? -1);
+        if(callee < 0 || !this.applyMember(callee)) { return; }
+        const arguments_ = node.children.slice(node.children.length - node.list);
+        const second = this.context.unwrap(arguments_[1] ?? -1); const secondKind = this.context.kind(second);
+        if(second < 0 || secondKind === 'ArrayLiteralExpression' || secondKind === 'SpreadElement') { return; }
+        const arena = this.arena ?? project(this.context); this.arena = arena;
+        const appliedFunction = arena.unwrap(memberAccessObject(arena, callee)); if(appliedFunction < 0) { return; }
+        const thisArgument = arena.unwrap(arguments_[0] ?? -1); if(thisArgument < 0) { return; }
+        const receiver = memberAccessObject(arena, appliedFunction);
+        if(receiver < 0) { if(!isNullOrUndefined(arena, thisArgument)) { return; } }
+        else if(!hasSameTokens(arena, receiver, thisArgument)) { return; }
+        this.context.report(index, 'prefer-spread', 'preferSpread', message, '', '', '');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

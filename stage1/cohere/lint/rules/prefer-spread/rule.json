@@ -1,0 +1,14 @@
+{
+  "name": "prefer-spread",
+  "kinds": [
+    "CallExpression"
+  ],
+  "node": true,
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oraclePreferSpread",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestPreferSpread"
+}
