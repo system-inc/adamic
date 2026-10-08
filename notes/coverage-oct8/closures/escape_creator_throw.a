@@ -1,0 +1,15 @@
+let saved: (() => string) | undefined = undefined;
+function creator(text: string): void {
+    function read(): string { return text; }
+    saved = read;
+    text = `${text}:after`;
+    throw new Error(`leave:${text}`);
+}
+try { creator(`local${1}`); }
+catch (error) { console.log(error instanceof Error ? error.message : 'unexpected'); }
+function invokeSaved(): void {
+    if (saved !== undefined) { console.log(saved()); }
+}
+invokeSaved();
+saved = undefined;
+console.log('released');

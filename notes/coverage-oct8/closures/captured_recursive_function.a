@@ -1,0 +1,10 @@
+function sum(n: number): number { return n === 0 ? 0 : n + sum(n - 1); }
+function product(n: number): number { return n === 0 ? 1 : n * product(n - 1); }
+function make(compute: (n: number) => number): () => string {
+    function read(): string { return `computed:${compute(5)}`; }
+    compute = product;
+    return read;
+}
+const held = make(sum);
+console.log(held());
+console.log(held());

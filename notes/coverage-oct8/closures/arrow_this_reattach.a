@@ -1,0 +1,12 @@
+class Counter {
+    value: string;
+    constructor(seed: number) { this.value = `counter${seed}`; }
+    make(): () => string { return () => this.value; }
+}
+function create(seed: number): () => string { return new Counter(seed).make(); }
+const first = create(1);
+const owner = new Counter(2);
+const second = owner.make();
+owner.value = `changed${3}`;
+const other = { value: 'other', callback: second };
+console.log(`${first()}|${second()}|${other.callback()}`);

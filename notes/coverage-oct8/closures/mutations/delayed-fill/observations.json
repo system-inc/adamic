@@ -1,0 +1,71 @@
+{
+  "delayed_fill_guard": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/delayed_fill_guard.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "7|7\n",
+      "stderr": "",
+      "stdout_hex": "377c370a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/delayed-fill/adamic",
+          "build",
+          "notes/coverage-oct8/closures/delayed_fill_guard.a",
+          "-o",
+          "/tmp/coverage-closures/8609a1519edd/delayed_fill_guard.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/delayed_fill_guard.a:3:26: stage 0 can't lower an array of any yet\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f64656c617965645f66696c6c5f67756172642e613a333a32363a20737461676520302063616e2774206c6f77657220616e206172726179206f6620616e79207965740a"
+      }
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/delayed-fill/adamic",
+          "build",
+          "notes/coverage-oct8/closures/delayed_fill_guard.a",
+          "-o",
+          "/tmp/coverage-closures/8609a1519edd/delayed_fill_guard.release"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/delayed_fill_guard.a:3:26: stage 0 can't lower an array of any yet\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f64656c617965645f66696c6c5f67756172642e613a333a32363a20737461676520302063616e2774206c6f77657220616e206172726179206f6620616e79207965740a"
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/delayed-fill/adamic",
+          "js",
+          "notes/coverage-oct8/closures/delayed_fill_guard.a"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/delayed_fill_guard.a:3:26: stage 0 can't lower an array of any yet\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f64656c617965645f66696c6c5f67756172642e613a333a32363a20737461676520302063616e2774206c6f77657220616e206172726179206f6620616e79207965740a"
+      }
+    },
+    "agree": false,
+    "clean": false,
+    "check_passed": false
+  }
+}

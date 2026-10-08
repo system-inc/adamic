@@ -1,0 +1,11 @@
+--- internal/native/arguments_length.go
++++ internal/native/arguments_length.go
+@@ -24,7 +24,7 @@
+ 	for _, argument := range call.Arguments {
+ 		slots = append(slots, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
+ 	}
+-	return e.closureSlots(call, slots, "", fmt.Sprint(len(call.Arguments))), fmt.Sprint(len(call.Arguments))
++	return e.closureSlots(call, slots, "", fmt.Sprint(len(call.Arguments))), "0"
+ }
+ 
+ func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, count string) string {

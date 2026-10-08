@@ -1,0 +1,12 @@
+--- internal/lower/nested_functions.go
++++ internal/lower/nested_functions.go
+@@ -24,9 +24,6 @@
+ 		}
+ 		if node.Parent == nil || node.Parent.Kind != ast.KindBlock || !ast.IsFunctionLike(node.Parent.Parent) {
+ 			return nil, l.notYet(node, "a block-scoped nested function declaration")
+-		}
+-		if node.Name() == nil {
+-			return nil, l.notYet(node, "a generic or unnamed nested function declaration")
+ 		}
+ 		if node.Body() == nil {
+ 			// Overloads describe the implementation, not additional runtime functions.

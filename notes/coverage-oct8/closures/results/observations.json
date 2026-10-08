@@ -1,0 +1,2154 @@
+{
+  "arrow_this_reattach": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/arrow_this_reattach.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "counter1|changed3|changed3\n",
+      "stderr": "",
+      "stdout_hex": "636f756e746572317c6368616e676564337c6368616e676564330a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/arrow_this_reattach.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/arrow_this_reattach.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/arrow_this_reattach.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "counter1|changed3|changed3\n",
+        "stderr": "",
+        "stdout_hex": "636f756e746572317c6368616e676564337c6368616e676564330a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/arrow_this_reattach.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "counter1|changed3|changed3\n",
+      "stderr": "",
+      "stdout_hex": "636f756e746572317c6368616e676564337c6368616e676564330a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/arrow_this_reattach.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/arrow_this_reattach.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/arrow_this_reattach.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "counter1|changed3|changed3\n",
+        "stderr": "",
+        "stdout_hex": "636f756e746572317c6368616e676564337c6368616e676564330a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/arrow_this_reattach.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/arrow_this_reattach.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/arrow_this_reattach.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "counter1|changed3|changed3\n",
+        "stderr": "",
+        "stdout_hex": "636f756e746572317c6368616e676564337c6368616e676564330a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "bound_creator_throw": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/bound_creator_throw.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "creator3\nkept3\n",
+      "stderr": "",
+      "stdout_hex": "63726561746f72330a6b657074330a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/bound_creator_throw.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/bound_creator_throw.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/bound_creator_throw.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "creator3\nkept3\n",
+        "stderr": "",
+        "stdout_hex": "63726561746f72330a6b657074330a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/bound_creator_throw.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "creator3\nkept3\n",
+      "stderr": "",
+      "stdout_hex": "63726561746f72330a6b657074330a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/bound_creator_throw.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/bound_creator_throw.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/bound_creator_throw.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "creator3\nkept3\n",
+        "stderr": "",
+        "stdout_hex": "63726561746f72330a6b657074330a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/bound_creator_throw.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/bound_creator_throw.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/bound_creator_throw.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "creator3\nkept3\n",
+        "stderr": "",
+        "stdout_hex": "63726561746f72330a6b657074330a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "bound_receiver_escape": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/bound_receiver_escape.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+      "stderr": "",
+      "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/bound_receiver_escape.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/bound_receiver_escape.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/bound_receiver_escape.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+        "stderr": "",
+        "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/bound_receiver_escape.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+      "stderr": "",
+      "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/bound_receiver_escape.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/bound_receiver_escape.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/bound_receiver_escape.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+        "stderr": "",
+        "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/bound_receiver_escape.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/bound_receiver_escape.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/bound_receiver_escape.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+        "stderr": "",
+        "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "captured_recursive_function": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/captured_recursive_function.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "computed:120\ncomputed:120\n",
+      "stderr": "",
+      "stdout_hex": "636f6d70757465643a3132300a636f6d70757465643a3132300a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/captured_recursive_function.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/captured_recursive_function.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/captured_recursive_function.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "computed:120\ncomputed:120\n",
+        "stderr": "",
+        "stdout_hex": "636f6d70757465643a3132300a636f6d70757465643a3132300a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/captured_recursive_function.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "computed:120\ncomputed:120\n",
+      "stderr": "",
+      "stdout_hex": "636f6d70757465643a3132300a636f6d70757465643a3132300a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/captured_recursive_function.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/captured_recursive_function.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/captured_recursive_function.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "computed:120\ncomputed:120\n",
+        "stderr": "",
+        "stdout_hex": "636f6d70757465643a3132300a636f6d70757465643a3132300a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/captured_recursive_function.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/captured_recursive_function.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/captured_recursive_function.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "computed:120\ncomputed:120\n",
+        "stderr": "",
+        "stdout_hex": "636f6d70757465643a3132300a636f6d70757465643a3132300a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "count_default_evaluation": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/count_default_evaluation.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n3:3:4|5\n0:0:\n",
+      "stderr": "",
+      "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a333a333a347c350a303a303a0a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/count_default_evaluation.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/count_default_evaluation.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/count_default_evaluation.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n3:3:4|5\n0:0:\n",
+        "stderr": "",
+        "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a333a333a347c350a303a303a0a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/count_default_evaluation.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n3:3:4|5\n0:0:\n",
+      "stderr": "",
+      "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a333a333a347c350a303a303a0a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/count_default_evaluation.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/count_default_evaluation.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/count_default_evaluation.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n3:3:4|5\n0:0:\n",
+        "stderr": "",
+        "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a333a333a347c350a303a303a0a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/count_default_evaluation.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/count_default_evaluation.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/count_default_evaluation.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n3:3:4|5\n0:0:\n",
+        "stderr": "",
+        "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a333a333a347c350a303a303a0a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "delayed_fill_guard": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/delayed_fill_guard.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "7|7\n",
+      "stderr": "",
+      "stdout_hex": "377c370a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/delayed_fill_guard.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/delayed_fill_guard.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/delayed_fill_guard.a:3:26: stage 0 can't lower delayed fill of an array with holes; write the direct filled construction yet\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f64656c617965645f66696c6c5f67756172642e613a333a32363a20737461676520302063616e2774206c6f7765722064656c617965642066696c6c206f6620616e206172726179207769746820686f6c65733b20777269746520746865206469726563742066696c6c656420636f6e737472756374696f6e207965740a"
+      }
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/delayed_fill_guard.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/delayed_fill_guard.release"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/delayed_fill_guard.a:3:26: stage 0 can't lower delayed fill of an array with holes; write the direct filled construction yet\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f64656c617965645f66696c6c5f67756172642e613a333a32363a20737461676520302063616e2774206c6f7765722064656c617965642066696c6c206f6620616e206172726179207769746820686f6c65733b20777269746520746865206469726563742066696c6c656420636f6e737472756374696f6e207965740a"
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/delayed_fill_guard.a"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/delayed_fill_guard.a:3:26: stage 0 can't lower delayed fill of an array with holes; write the direct filled construction yet\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f64656c617965645f66696c6c5f67756172642e613a333a32363a20737461676520302063616e2774206c6f7765722064656c617965642066696c6c206f6620616e206172726179207769746820686f6c65733b20777269746520746865206469726563742066696c6c656420636f6e737472756374696f6e207965740a"
+      }
+    },
+    "agree": false,
+    "clean": false,
+    "check_passed": true
+  },
+  "detached_method_reattach": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/detached_method_reattach.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "other2\n",
+      "stderr": "",
+      "stdout_hex": "6f74686572320a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/detached_method_reattach.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/detached_method_reattach.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/detached_method_reattach.a:7:18: Adamic 0.1 refuses a method read as a value (read would lose its object, and this with it); call it in an arrow that keeps the object: () => owner.read() (unbound-method)\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f64657461636865645f6d6574686f645f72656174746163682e613a373a31383a204164616d696320302e3120726566757365732061206d6574686f64207265616420617320612076616c756520287265616420776f756c64206c6f736520697473206f626a6563742c20616e6420746869732077697468206974293b2063616c6c20697420696e20616e206172726f772074686174206b6565707320746865206f626a6563743a202829203d3e206f776e65722e7265616428292028756e626f756e642d6d6574686f64290a"
+      }
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/detached_method_reattach.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/detached_method_reattach.release"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/detached_method_reattach.a:7:18: Adamic 0.1 refuses a method read as a value (read would lose its object, and this with it); call it in an arrow that keeps the object: () => owner.read() (unbound-method)\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f64657461636865645f6d6574686f645f72656174746163682e613a373a31383a204164616d696320302e3120726566757365732061206d6574686f64207265616420617320612076616c756520287265616420776f756c64206c6f736520697473206f626a6563742c20616e6420746869732077697468206974293b2063616c6c20697420696e20616e206172726f772074686174206b6565707320746865206f626a6563743a202829203d3e206f776e65722e7265616428292028756e626f756e642d6d6574686f64290a"
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/detached_method_reattach.a"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/detached_method_reattach.a:7:18: Adamic 0.1 refuses a method read as a value (read would lose its object, and this with it); call it in an arrow that keeps the object: () => owner.read() (unbound-method)\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f64657461636865645f6d6574686f645f72656174746163682e613a373a31383a204164616d696320302e3120726566757365732061206d6574686f64207265616420617320612076616c756520287265616420776f756c64206c6f736520697473206f626a6563742c20616e6420746869732077697468206974293b2063616c6c20697420696e20616e206172726f772074686174206b6565707320746865206f626a6563743a202829203d3e206f776e65722e7265616428292028756e626f756e642d6d6574686f64290a"
+      }
+    },
+    "agree": false,
+    "clean": false,
+    "check_passed": true
+  },
+  "escape_creator_throw": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/escape_creator_throw.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "leave:local1:after\nlocal1:after\nreleased\n",
+      "stderr": "",
+      "stdout_hex": "6c656176653a6c6f63616c313a61667465720a6c6f63616c313a61667465720a72656c65617365640a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/escape_creator_throw.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/escape_creator_throw.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/escape_creator_throw.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "leave:local1:after\nlocal1:after\nreleased\n",
+        "stderr": "",
+        "stdout_hex": "6c656176653a6c6f63616c313a61667465720a6c6f63616c313a61667465720a72656c65617365640a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/escape_creator_throw.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "leave:local1:after\nlocal1:after\nreleased\n",
+      "stderr": "",
+      "stdout_hex": "6c656176653a6c6f63616c313a61667465720a6c6f63616c313a61667465720a72656c65617365640a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/escape_creator_throw.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/escape_creator_throw.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/escape_creator_throw.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "leave:local1:after\nlocal1:after\nreleased\n",
+        "stderr": "",
+        "stdout_hex": "6c656176653a6c6f63616c313a61667465720a6c6f63616c313a61667465720a72656c65617365640a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/escape_creator_throw.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/escape_creator_throw.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/escape_creator_throw.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "leave:local1:after\nlocal1:after\nreleased\n",
+        "stderr": "",
+        "stdout_hex": "6c656176653a6c6f63616c313a61667465720a6c6f63616c313a61667465720a72656c65617365640a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "exits_finally": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/exits_finally.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "local0:finally\nresult:local0\nlocal1:finally\ncaught:local1\nlocal2:0\nlocal2:1\nlocal2:finally\nresult:local2\nlocal3:0\nlocal3:1\nlocal3:finally\nresult:local3:finally\nlocal4:0\nlocal4:1\nlocal4:finally\ncaught:local4:finally\n",
+      "stderr": "",
+      "stdout_hex": "6c6f63616c303a66696e616c6c790a726573756c743a6c6f63616c300a6c6f63616c313a66696e616c6c790a6361756768743a6c6f63616c310a6c6f63616c323a300a6c6f63616c323a310a6c6f63616c323a66696e616c6c790a726573756c743a6c6f63616c320a6c6f63616c333a300a6c6f63616c333a310a6c6f63616c333a66696e616c6c790a726573756c743a6c6f63616c333a66696e616c6c790a6c6f63616c343a300a6c6f63616c343a310a6c6f63616c343a66696e616c6c790a6361756768743a6c6f63616c343a66696e616c6c790a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/exits_finally.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/exits_finally.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/exits_finally.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "local0:finally\nresult:local0\nlocal1:finally\ncaught:local1\nlocal2:0\nlocal2:1\nlocal2:finally\nresult:local2\nlocal3:0\nlocal3:1\nlocal3:finally\nresult:local3:finally\nlocal4:0\nlocal4:1\nlocal4:finally\ncaught:local4:finally\n",
+        "stderr": "",
+        "stdout_hex": "6c6f63616c303a66696e616c6c790a726573756c743a6c6f63616c300a6c6f63616c313a66696e616c6c790a6361756768743a6c6f63616c310a6c6f63616c323a300a6c6f63616c323a310a6c6f63616c323a66696e616c6c790a726573756c743a6c6f63616c320a6c6f63616c333a300a6c6f63616c333a310a6c6f63616c333a66696e616c6c790a726573756c743a6c6f63616c333a66696e616c6c790a6c6f63616c343a300a6c6f63616c343a310a6c6f63616c343a66696e616c6c790a6361756768743a6c6f63616c343a66696e616c6c790a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/exits_finally.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "local0:finally\nresult:local0\nlocal1:finally\ncaught:local1\nlocal2:0\nlocal2:1\nlocal2:finally\nresult:local2\nlocal3:0\nlocal3:1\nlocal3:finally\nresult:local3:finally\nlocal4:0\nlocal4:1\nlocal4:finally\ncaught:local4:finally\n",
+      "stderr": "",
+      "stdout_hex": "6c6f63616c303a66696e616c6c790a726573756c743a6c6f63616c300a6c6f63616c313a66696e616c6c790a6361756768743a6c6f63616c310a6c6f63616c323a300a6c6f63616c323a310a6c6f63616c323a66696e616c6c790a726573756c743a6c6f63616c320a6c6f63616c333a300a6c6f63616c333a310a6c6f63616c333a66696e616c6c790a726573756c743a6c6f63616c333a66696e616c6c790a6c6f63616c343a300a6c6f63616c343a310a6c6f63616c343a66696e616c6c790a6361756768743a6c6f63616c343a66696e616c6c790a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/exits_finally.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/exits_finally.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/exits_finally.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "local0:finally\nresult:local0\nlocal1:finally\ncaught:local1\nlocal2:0\nlocal2:1\nlocal2:finally\nresult:local2\nlocal3:0\nlocal3:1\nlocal3:finally\nresult:local3:finally\nlocal4:0\nlocal4:1\nlocal4:finally\ncaught:local4:finally\n",
+        "stderr": "",
+        "stdout_hex": "6c6f63616c303a66696e616c6c790a726573756c743a6c6f63616c300a6c6f63616c313a66696e616c6c790a6361756768743a6c6f63616c310a6c6f63616c323a300a6c6f63616c323a310a6c6f63616c323a66696e616c6c790a726573756c743a6c6f63616c320a6c6f63616c333a300a6c6f63616c333a310a6c6f63616c333a66696e616c6c790a726573756c743a6c6f63616c333a66696e616c6c790a6c6f63616c343a300a6c6f63616c343a310a6c6f63616c343a66696e616c6c790a6361756768743a6c6f63616c343a66696e616c6c790a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/exits_finally.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/exits_finally.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/exits_finally.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "local0:finally\nresult:local0\nlocal1:finally\ncaught:local1\nlocal2:0\nlocal2:1\nlocal2:finally\nresult:local2\nlocal3:0\nlocal3:1\nlocal3:finally\nresult:local3:finally\nlocal4:0\nlocal4:1\nlocal4:finally\ncaught:local4:finally\n",
+        "stderr": "",
+        "stdout_hex": "6c6f63616c303a66696e616c6c790a726573756c743a6c6f63616c300a6c6f63616c313a66696e616c6c790a6361756768743a6c6f63616c310a6c6f63616c323a300a6c6f63616c323a310a6c6f63616c323a66696e616c6c790a726573756c743a6c6f63616c320a6c6f63616c333a300a6c6f63616c333a310a6c6f63616c333a66696e616c6c790a726573756c743a6c6f63616c333a66696e616c6c790a6c6f63616c343a300a6c6f63616c343a310a6c6f63616c343a66696e616c6c790a6361756768743a6c6f63616c343a66696e616c6c790a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "loop_updates": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/loop_updates.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "0:item0!|1:item1!|2:item2!\n3|3|3\n",
+      "stderr": "",
+      "stdout_hex": "303a6974656d30217c313a6974656d31217c323a6974656d32210a337c337c330a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/loop_updates.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/loop_updates.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/loop_updates.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:item0!|1:item1!|2:item2!\n3|3|3\n",
+        "stderr": "",
+        "stdout_hex": "303a6974656d30217c313a6974656d31217c323a6974656d32210a337c337c330a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/loop_updates.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "0:item0!|1:item1!|2:item2!\n3|3|3\n",
+      "stderr": "",
+      "stdout_hex": "303a6974656d30217c313a6974656d31217c323a6974656d32210a337c337c330a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/loop_updates.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/loop_updates.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/loop_updates.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:item0!|1:item1!|2:item2!\n3|3|3\n",
+        "stderr": "",
+        "stdout_hex": "303a6974656d30217c313a6974656d31217c323a6974656d32210a337c337c330a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/loop_updates.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/loop_updates.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/loop_updates.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "0:item0!|1:item1!|2:item2!\n3|3|3\n",
+        "stderr": "",
+        "stdout_hex": "303a6974656d30217c313a6974656d31217c323a6974656d32210a337c337c330a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "mixed_tuple_spread_guard": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/mixed_tuple_spread_guard.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "2:7:word8\n",
+      "stderr": "",
+      "stdout_hex": "323a373a776f7264380a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/mixed_tuple_spread_guard.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/mixed_tuple_spread_guard.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/mixed_tuple_spread_guard.a:4:18: stage 0 can't lower a call spreading a tuple with differently represented elements yet\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f6d697865645f7475706c655f7370726561645f67756172642e613a343a31383a20737461676520302063616e2774206c6f77657220612063616c6c20737072656164696e672061207475706c65207769746820646966666572656e746c7920726570726573656e74656420656c656d656e7473207965740a"
+      }
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/mixed_tuple_spread_guard.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/mixed_tuple_spread_guard.release"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/mixed_tuple_spread_guard.a:4:18: stage 0 can't lower a call spreading a tuple with differently represented elements yet\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f6d697865645f7475706c655f7370726561645f67756172642e613a343a31383a20737461676520302063616e2774206c6f77657220612063616c6c20737072656164696e672061207475706c65207769746820646966666572656e746c7920726570726573656e74656420656c656d656e7473207965740a"
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/mixed_tuple_spread_guard.a"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/notes/coverage-oct8/closures/mixed_tuple_spread_guard.a:4:18: stage 0 can't lower a call spreading a tuple with differently represented elements yet\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a202f776f726b73706163652f6164616d69632f6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f6d697865645f7475706c655f7370726561645f67756172642e613a343a31383a20737461676520302063616e2774206c6f77657220612063616c6c20737072656164696e672061207475706c65207769746820646966666572656e746c7920726570726573656e74656420656c656d656e7473207965740a"
+      }
+    },
+    "agree": false,
+    "clean": false,
+    "check_passed": true
+  },
+  "namespace_nested_counts": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/namespace_nested_counts.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "changed3:11:0:0:\nchanged3:11:0:2:1|2\nchanged3:21:1:3:3|4|5\n",
+      "stderr": "",
+      "stdout_hex": "6368616e676564333a31313a303a303a0a6368616e676564333a31313a303a323a317c320a6368616e676564333a32313a313a333a337c347c350a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/namespace_nested_counts.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/namespace_nested_counts.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/namespace_nested_counts.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "changed3:11:0:0:\nchanged3:11:0:2:1|2\nchanged3:21:1:3:3|4|5\n",
+        "stderr": "",
+        "stdout_hex": "6368616e676564333a31313a303a303a0a6368616e676564333a31313a303a323a317c320a6368616e676564333a32313a313a333a337c347c350a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/namespace_nested_counts.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "changed3:11:0:0:\nchanged3:11:0:2:1|2\nchanged3:21:1:3:3|4|5\n",
+      "stderr": "",
+      "stdout_hex": "6368616e676564333a31313a303a303a0a6368616e676564333a31313a303a323a317c320a6368616e676564333a32313a313a333a337c347c350a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/namespace_nested_counts.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/namespace_nested_counts.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/namespace_nested_counts.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "changed3:11:0:0:\nchanged3:11:0:2:1|2\nchanged3:21:1:3:3|4|5\n",
+        "stderr": "",
+        "stdout_hex": "6368616e676564333a31313a303a303a0a6368616e676564333a31313a303a323a317c320a6368616e676564333a32313a313a333a337c347c350a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/namespace_nested_counts.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/namespace_nested_counts.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/namespace_nested_counts.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "changed3:11:0:0:\nchanged3:11:0:2:1|2\nchanged3:21:1:3:3|4|5\n",
+        "stderr": "",
+        "stdout_hex": "6368616e676564333a31313a303a303a0a6368616e676564333a31313a303a323a317c320a6368616e676564333a32313a313a333a337c347c350a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "nested_argument_counts": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/nested_argument_counts.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+      "stderr": "",
+      "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/nested_argument_counts.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/nested_argument_counts.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/nested_argument_counts.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/nested_argument_counts.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+      "stderr": "",
+      "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/nested_argument_counts.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/nested_argument_counts.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/nested_argument_counts.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/nested_argument_counts.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/nested_argument_counts.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/nested_argument_counts.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "nested_recursive_escape": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/nested_recursive_escape.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "seed7!:5\nseed7!:9\nseed8!:3\n",
+      "stderr": "",
+      "stdout_hex": "7365656437213a350a7365656437213a390a7365656438213a330a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/nested_recursive_escape.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/nested_recursive_escape.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/nested_recursive_escape.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "seed7!:5\nseed7!:9\nseed8!:3\n",
+        "stderr": "",
+        "stdout_hex": "7365656437213a350a7365656437213a390a7365656438213a330a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/nested_recursive_escape.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "seed7!:5\nseed7!:9\nseed8!:3\n",
+      "stderr": "",
+      "stdout_hex": "7365656437213a350a7365656437213a390a7365656438213a330a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/nested_recursive_escape.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/nested_recursive_escape.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/nested_recursive_escape.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "seed7!:5\nseed7!:9\nseed8!:3\n",
+        "stderr": "",
+        "stdout_hex": "7365656437213a350a7365656437213a390a7365656438213a330a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/nested_recursive_escape.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/nested_recursive_escape.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/nested_recursive_escape.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "seed7!:5\nseed7!:9\nseed8!:3\n",
+        "stderr": "",
+        "stdout_hex": "7365656437213a350a7365656437213a390a7365656438213a330a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "number_extra_arguments_guard": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/number_extra_arguments_guard.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "extra evaluated\n1.3\n",
+      "stderr": "",
+      "stdout_hex": "6578747261206576616c75617465640a312e330a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/number_extra_arguments_guard.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/number_extra_arguments_guard.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "notes/coverage-oct8/closures/number_extra_arguments_guard.a:4:32: error TS2345: Argument of type '[number, number]' is not assignable to parameter of type '[fractionDigits?: number | undefined]'.\n  Source has 2 element(s) but target allows only 1.\n",
+        "stdout_hex": "",
+        "stderr_hex": "6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f6e756d6265725f65787472615f617267756d656e74735f67756172642e613a343a33323a206572726f72205453323334353a20417267756d656e74206f66207479706520275b6e756d6265722c206e756d6265725d27206973206e6f742061737369676e61626c6520746f20706172616d65746572206f66207479706520275b6672616374696f6e4469676974733f3a206e756d626572207c20756e646566696e65645d272e0a2020536f7572636520686173203220656c656d656e74287329206275742074617267657420616c6c6f7773206f6e6c7920312e0a"
+      }
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/number_extra_arguments_guard.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/number_extra_arguments_guard.release"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "notes/coverage-oct8/closures/number_extra_arguments_guard.a:4:32: error TS2345: Argument of type '[number, number]' is not assignable to parameter of type '[fractionDigits?: number | undefined]'.\n  Source has 2 element(s) but target allows only 1.\n",
+        "stdout_hex": "",
+        "stderr_hex": "6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f6e756d6265725f65787472615f617267756d656e74735f67756172642e613a343a33323a206572726f72205453323334353a20417267756d656e74206f66207479706520275b6e756d6265722c206e756d6265725d27206973206e6f742061737369676e61626c6520746f20706172616d65746572206f66207479706520275b6672616374696f6e4469676974733f3a206e756d626572207c20756e646566696e65645d272e0a2020536f7572636520686173203220656c656d656e74287329206275742074617267657420616c6c6f7773206f6e6c7920312e0a"
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/number_extra_arguments_guard.a"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "notes/coverage-oct8/closures/number_extra_arguments_guard.a:4:32: error TS2345: Argument of type '[number, number]' is not assignable to parameter of type '[fractionDigits?: number | undefined]'.\n  Source has 2 element(s) but target allows only 1.\n",
+        "stdout_hex": "",
+        "stderr_hex": "6e6f7465732f636f7665726167652d6f6374382f636c6f73757265732f6e756d6265725f65787472615f617267756d656e74735f67756172642e613a343a33323a206572726f72205453323334353a20417267756d656e74206f66207479706520275b6e756d6265722c206e756d6265725d27206973206e6f742061737369676e61626c6520746f20706172616d65746572206f66207479706520275b6672616374696f6e4469676974733f3a206e756d626572207c20756e646566696e65645d272e0a2020536f7572636520686173203220656c656d656e74287329206275742074617267657420616c6c6f7773206f6e6c7920312e0a"
+      }
+    },
+    "agree": false,
+    "clean": false,
+    "check_passed": true
+  },
+  "optional_intrinsic_comment": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/optional_intrinsic_comment.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "missing\npresent2\n",
+      "stderr": "",
+      "stdout_hex": "6d697373696e670a70726573656e74320a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/optional_intrinsic_comment.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/optional_intrinsic_comment.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/optional_intrinsic_comment.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "missing\npresent2\n",
+        "stderr": "",
+        "stdout_hex": "6d697373696e670a70726573656e74320a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/optional_intrinsic_comment.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "missing\npresent2\n",
+      "stderr": "",
+      "stdout_hex": "6d697373696e670a70726573656e74320a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/optional_intrinsic_comment.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/optional_intrinsic_comment.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/optional_intrinsic_comment.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "missing\npresent2\n",
+        "stderr": "",
+        "stdout_hex": "6d697373696e670a70726573656e74320a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/optional_intrinsic_comment.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/optional_intrinsic_comment.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/optional_intrinsic_comment.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "missing\npresent2\n",
+        "stderr": "",
+        "stdout_hex": "6d697373696e670a70726573656e74320a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "parameter_lifetime": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/parameter_lifetime.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "owned1:changed|owned2:changed|owned1:changed\n",
+      "stderr": "",
+      "stdout_hex": "6f776e6564313a6368616e6765647c6f776e6564323a6368616e6765647c6f776e6564313a6368616e6765640a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/parameter_lifetime.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/parameter_lifetime.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/parameter_lifetime.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "owned1:changed|owned2:changed|owned1:changed\n",
+        "stderr": "",
+        "stdout_hex": "6f776e6564313a6368616e6765647c6f776e6564323a6368616e6765647c6f776e6564313a6368616e6765640a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/parameter_lifetime.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "owned1:changed|owned2:changed|owned1:changed\n",
+      "stderr": "",
+      "stdout_hex": "6f776e6564313a6368616e6765647c6f776e6564323a6368616e6765647c6f776e6564313a6368616e6765640a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/parameter_lifetime.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/parameter_lifetime.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/parameter_lifetime.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "owned1:changed|owned2:changed|owned1:changed\n",
+        "stderr": "",
+        "stdout_hex": "6f776e6564313a6368616e6765647c6f776e6564323a6368616e6765647c6f776e6564313a6368616e6765640a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/parameter_lifetime.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/parameter_lifetime.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/parameter_lifetime.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "owned1:changed|owned2:changed|owned1:changed\n",
+        "stderr": "",
+        "stdout_hex": "6f776e6564313a6368616e6765647c6f776e6564323a6368616e6765647c6f776e6564313a6368616e6765640a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "rest_capture_lifetime": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/rest_capture_lifetime.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+      "stderr": "",
+      "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/rest_capture_lifetime.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/rest_capture_lifetime.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/rest_capture_lifetime.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/0060bd4c8c41/rest_capture_lifetime.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+      "stderr": "",
+      "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/rest_capture_lifetime.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/rest_capture_lifetime.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/rest_capture_lifetime.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/rest_capture_lifetime.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/rest_capture_lifetime.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/rest_capture_lifetime.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  },
+  "uncaught_nested_throw": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/uncaught_nested_throw.a"
+      ],
+      "environment": {},
+      "exit": 70,
+      "stdout": "finally ran\n",
+      "stderr": "adamic: panic: Error: local4!:throw\n",
+      "stdout_hex": "66696e616c6c792072616e0a",
+      "stderr_hex": "6164616d69633a2070616e69633a204572726f723a206c6f63616c34213a7468726f770a"
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/uncaught_nested_throw.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/uncaught_nested_throw.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/uncaught_nested_throw.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 70,
+        "stdout": "finally ran\n",
+        "stderr": "adamic: panic: Error: local4!:throw\n",
+        "stdout_hex": "66696e616c6c792072616e0a",
+        "stderr_hex": "6164616d69633a2070616e69633a204572726f723a206c6f63616c34213a7468726f770a"
+      }
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "build",
+          "notes/coverage-oct8/closures/uncaught_nested_throw.a",
+          "-o",
+          "/tmp/coverage-closures/0060bd4c8c41/uncaught_nested_throw.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/0060bd4c8c41/uncaught_nested_throw.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 70,
+        "stdout": "finally ran\n",
+        "stderr": "adamic: panic: Error: local4!:throw\n",
+        "stdout_hex": "66696e616c6c792072616e0a",
+        "stderr_hex": "6164616d69633a2070616e69633a204572726f723a206c6f63616c34213a7468726f770a"
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-adamic",
+          "js",
+          "notes/coverage-oct8/closures/uncaught_nested_throw.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/0060bd4c8c41/uncaught_nested_throw.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/0060bd4c8c41/uncaught_nested_throw.mjs"
+        ],
+        "environment": {},
+        "exit": 70,
+        "stdout": "finally ran\n",
+        "stderr": "adamic: panic: Error: local4!:throw\n",
+        "stdout_hex": "66696e616c6c792072616e0a",
+        "stderr_hex": "6164616d69633a2070616e69633a204572726f723a206c6f63616c34213a7468726f770a"
+      }
+    },
+    "agree": true,
+    "clean": false,
+    "check_passed": true
+  }
+}

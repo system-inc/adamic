@@ -1,0 +1,128 @@
+{
+  "bound_receiver_escape": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/bound_receiver_escape.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+      "stderr": "",
+      "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/bind-presence/adamic",
+          "build",
+          "notes/coverage-oct8/closures/bound_receiver_escape.a",
+          "-o",
+          "/tmp/coverage-closures/c5cebf234c81/bound_receiver_escape.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/c5cebf234c81/bound_receiver_escape.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+        "stderr": "",
+        "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/c5cebf234c81/bound_receiver_escape.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+      "stderr": "",
+      "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/bind-presence/adamic",
+          "build",
+          "notes/coverage-oct8/closures/bound_receiver_escape.a",
+          "-o",
+          "/tmp/coverage-closures/c5cebf234c81/bound_receiver_escape.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/c5cebf234c81/bound_receiver_escape.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+        "stderr": "",
+        "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/bind-presence/adamic",
+          "js",
+          "notes/coverage-oct8/closures/bound_receiver_escape.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/c5cebf234c81/bound_receiver_escape.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/c5cebf234c81/bound_receiver_escape.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "replaced1\nreplaced2\nbound1|bound1|bound2\n",
+        "stderr": "",
+        "stdout_hex": "7265706c61636564310a7265706c61636564320a626f756e64317c626f756e64317c626f756e64320a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "mixed_tuple_spread_guard": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/mixed_tuple_spread_guard.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "2:7:word8\n",
+      "stderr": "",
+      "stdout_hex": "323a373a776f7264380a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/mixed-tuple/adamic",
+          "build",
+          "notes/coverage-oct8/closures/mixed_tuple_spread_guard.a",
+          "-o",
+          "/tmp/coverage-closures/10f2e20b714b/mixed_tuple_spread_guard.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-1360962882/main.c:33:82: error: passing 'double' to parameter of incompatible type 'void *'\n   33 |         adamic_array_push(adamic_temporary_8, (adamic_value){.reference = adamic_retain((0x1.cp+02))});\n      |                                                                                         ^~~~~~~~~~~\n/home/agent/.cache/adamic/runtime/b9a72cc2b2a30b6cfb931643a543124cfa7c9f9ad81d9b2529292fd7856d17f4/adamic.h:48:27: note: passing argument to parameter 'value' here\n   48 | void *adamic_retain(void *value);\n      |                           ^\n1 error generated.\n\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a206e61746976653a20636c616e67206661696c65643a20657869742073746174757320310a2f746d702f6164616d69632d676174652f6164616d69632d6275696c642d313336303936323838322f6d61696e2e633a33333a38323a206572726f723a2070617373696e672027646f75626c652720746f20706172616d65746572206f6620696e636f6d70617469626c6520747970652027766f6964202a270a2020203333207c2020202020202020206164616d69635f61727261795f70757368286164616d69635f74656d706f726172795f382c20286164616d69635f76616c7565297b2e7265666572656e6365203d206164616d69635f72657461696e28283078312e63702b303229297d293b0a2020202020207c20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020205e7e7e7e7e7e7e7e7e7e7e0a2f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f623961373263633262326133306236636662393331363433613534333132346366613763396639616438316439623235323932393266643738353664313766342f6164616d69632e683a34383a32373a206e6f74653a2070617373696e6720617267756d656e7420746f20706172616d65746572202776616c75652720686572650a2020203438207c20766f6964202a6164616d69635f72657461696e28766f6964202a76616c7565293b0a2020202020207c2020202020202020202020202020202020202020202020202020205e0a31206572726f722067656e6572617465642e0a0a"
+      }
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/mixed-tuple/adamic",
+          "build",
+          "notes/coverage-oct8/closures/mixed_tuple_spread_guard.a",
+          "-o",
+          "/tmp/coverage-closures/10f2e20b714b/mixed_tuple_spread_guard.release"
+        ],
+        "environment": {},
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-452493640/main.c:33:82: error: passing 'double' to parameter of incompatible type 'void *'\n   33 |         adamic_array_push(adamic_temporary_8, (adamic_value){.reference = adamic_retain((0x1.cp+02))});\n      |                                                                                         ^~~~~~~~~~~\n/home/agent/.cache/adamic/runtime/9d21974a1fa526de12c8839b47ec1842c6e86b5c7f057464a8998252416960c8/adamic.h:48:27: note: passing argument to parameter 'value' here\n   48 | void *adamic_retain(void *value);\n      |                           ^\n1 error generated.\n\n",
+        "stdout_hex": "",
+        "stderr_hex": "6164616d69633a206e61746976653a20636c616e67206661696c65643a20657869742073746174757320310a2f746d702f6164616d69632d676174652f6164616d69632d6275696c642d3435323439333634302f6d61696e2e633a33333a38323a206572726f723a2070617373696e672027646f75626c652720746f20706172616d65746572206f6620696e636f6d70617469626c6520747970652027766f6964202a270a2020203333207c2020202020202020206164616d69635f61727261795f70757368286164616d69635f74656d706f726172795f382c20286164616d69635f76616c7565297b2e7265666572656e6365203d206164616d69635f72657461696e28283078312e63702b303229297d293b0a2020202020207c20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020205e7e7e7e7e7e7e7e7e7e7e0a2f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f396432313937346131666135323664653132633838333962343765633138343263366538366235633766303537343634613839393832353234313639363063382f6164616d69632e683a34383a32373a206e6f74653a2070617373696e6720617267756d656e7420746f20706172616d65746572202776616c75652720686572650a2020203438207c20766f6964202a6164616d69635f72657461696e28766f6964202a76616c7565293b0a2020202020207c2020202020202020202020202020202020202020202020202020205e0a31206572726f722067656e6572617465642e0a0a"
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/mixed-tuple/adamic",
+          "js",
+          "notes/coverage-oct8/closures/mixed_tuple_spread_guard.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/10f2e20b714b/mixed_tuple_spread_guard.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/10f2e20b714b/mixed_tuple_spread_guard.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "2:7:word8\n",
+        "stderr": "",
+        "stdout_hex": "323a373a776f7264380a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": false,
+    "clean": false,
+    "check_passed": false
+  }
+}

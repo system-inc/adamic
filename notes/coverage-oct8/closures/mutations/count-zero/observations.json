@@ -1,0 +1,128 @@
+{
+  "count_default_evaluation": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/count_default_evaluation.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n3:3:4|5\n0:0:\n",
+      "stderr": "",
+      "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a333a333a347c350a303a303a0a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/count-zero/adamic",
+          "build",
+          "notes/coverage-oct8/closures/count_default_evaluation.a",
+          "-o",
+          "/tmp/coverage-closures/010de61d6659/count_default_evaluation.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/010de61d6659/count_default_evaluation.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n0:0:4|5\n0:0:\n",
+        "stderr": "",
+        "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a303a303a347c350a303a303a0a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/010de61d6659/count_default_evaluation.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n0:0:4|5\n0:0:\n",
+      "stderr": "",
+      "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a303a303a347c350a303a303a0a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/count-zero/adamic",
+          "build",
+          "notes/coverage-oct8/closures/count_default_evaluation.a",
+          "-o",
+          "/tmp/coverage-closures/010de61d6659/count_default_evaluation.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/010de61d6659/count_default_evaluation.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n0:0:4|5\n0:0:\n",
+        "stderr": "",
+        "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a303a303a347c350a303a303a0a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/count-zero/adamic",
+          "js",
+          "notes/coverage-oct8/closures/count_default_evaluation.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/010de61d6659/count_default_evaluation.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/010de61d6659/count_default_evaluation.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "0:0:\n1:1:\n3:3:2|3\n0:0:\n3:3:4|5\n0:0:\n",
+        "stderr": "",
+        "stdout_hex": "303a303a0a313a313a0a333a333a327c330a303a303a0a333a333a347c350a303a303a0a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": false,
+    "clean": false,
+    "check_passed": false
+  }
+}

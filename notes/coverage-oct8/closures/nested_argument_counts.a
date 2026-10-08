@@ -1,0 +1,17 @@
+function make(label: string): (head?: string, ...tail: string[]) => string {
+    function read(head: string = `default:${label}`, ...tail: string[]): string {
+        const count = arguments.length;
+        const captured = () => `${count}:${head}:${tail.join('|')}:${label}`;
+        return captured();
+    }
+    label = `${label}!`;
+    return read;
+}
+const run = make(`label${1}`);
+console.log(run());
+console.log(run(undefined));
+console.log(run(`head${2}`, `tail${3}`, `tail${4}`));
+const items = [`x${5}`, `y${6}`];
+function replace(): string { items[0] = `z${7}`; items.push(`q${8}`); return `last${9}`; }
+console.log(run(...items, replace()));
+console.log(run(...items));

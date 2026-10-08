@@ -1,0 +1,19 @@
+namespace Store {
+    let label = 'initial';
+    export function set(value: string): void { label = value; }
+    export function make(base: number = 10): (...values: number[]) => string {
+        const outerCount = arguments.length;
+        function read(...values: number[]): string {
+            return `${label}:${base}:${outerCount}:${arguments.length}:${values.join('|')}`;
+        }
+        base += 1;
+        return read;
+    }
+}
+const factory = Store.make;
+const first = factory();
+const second = Store.make(20);
+Store.set(`changed${3}`);
+console.log(first());
+console.log(first(...[1, 2]));
+console.log(second(3, ...[4, 5]));

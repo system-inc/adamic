@@ -1,0 +1,11 @@
+--- internal/native/arguments_length.go
++++ internal/native/arguments_length.go
+@@ -125,7 +125,7 @@
+ 	index := e.temporary()
+ 	e.line("for (size_t %s = %d; %s < %s; %s++) {", index, start, index, count, index)
+ 	if element.IsReference() {
+-		e.line("\tadamic_array_push(%s, (adamic_value){.reference = adamic_retain(%s[%s].reference)});", result, packed, index)
++		e.line("\tadamic_array_push(%s, (adamic_value){.reference = %s[%s].reference});", result, packed, index)
+ 	} else {
+ 		e.line("\tadamic_array_push(%s, %s[%s]);", result, packed, index)
+ 	}

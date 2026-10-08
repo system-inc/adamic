@@ -1,0 +1,240 @@
+{
+  "nested_argument_counts": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/nested_argument_counts.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+      "stderr": "",
+      "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/rest-retain/adamic",
+          "build",
+          "notes/coverage-oct8/closures/nested_argument_counts.a",
+          "-o",
+          "/tmp/coverage-closures/74e55a7600d2/nested_argument_counts.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/74e55a7600d2/nested_argument_counts.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 1,
+        "stdout": "",
+        "stderr": "=================================================================\n==14300==ERROR: AddressSanitizer: heap-use-after-free on address 0x7bd677fe0640 at pc 0x558e2c84ffd0 bp 0x7ffe361841c0 sp 0x7ffe361841b8\nREAD of size 8 at 0x7bd677fe0640 thread T0\n    #0 0x558e2c84ffcf in adamic_release /home/agent/.cache/adamic/runtime/.build-3904243615/heap.c:372:28\n    #1 0x558e2c83b115 in main /tmp/adamic-gate/adamic-build-3589264455/main.c:210:2\n    #2 0x7f6678f89ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f6678f89d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x558e2c754460 in _start (/tmp/coverage-closures/74e55a7600d2/nested_argument_counts.sanitized+0x58460)\n\n0x7bd677fe0640 is located 0 bytes inside of 69-byte region [0x7bd677fe0640,0x7bd677fe0685)\nfreed by thread T0 here:\n    #0 0x558e2c7f6fd6 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3\n    #1 0x558e2c850ba3 in deallocate /home/agent/.cache/adamic/runtime/.build-3904243615/heap.c:212:3\n    #2 0x558e2c850ba3 in free_one /home/agent/.cache/adamic/runtime/.build-3904243615/heap.c:351:2\n    #3 0x558e2c850ba3 in release_last /home/agent/.cache/adamic/runtime/.build-3904243615/heap.c:364:3\n\npreviously allocated by thread T0 here:\n    #0 0x558e2c7f7274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x558e2c84fdbf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3904243615/heap.c:196:10\n\nSUMMARY: AddressSanitizer: heap-use-after-free /home/agent/.cache/adamic/runtime/.build-3904243615/heap.c:372:28 in adamic_release\nShadow bytes around the buggy address:\n  0x7bd677fe0380: fa fa fa fa fd fd fd fd fd fd fd fd fd fa fa fa\n  0x7bd677fe0400: fa fa 00 00 00 00 00 00 00 00 01 fa fa fa fa fa\n  0x7bd677fe0480: 00 00 00 00 00 00 00 00 05 fa fa fa fa fa 00 00\n  0x7bd677fe0500: 00 00 00 00 00 00 01 fa fa fa fa fa fd fd fd fd\n  0x7bd677fe0580: fd fd fd fd fd fa fa fa fa fa 00 00 00 00 00 00\n=>0x7bd677fe0600: 00 00 01 fa fa fa fa fa[fd]fd fd fd fd fd fd fd\n  0x7bd677fe0680: fd fa fa fa fa fa fd fd fd fd fd fd fd fd fd fa\n  0x7bd677fe0700: fa fa fa fa fd fd fd fd fd fd fd fd fd fd fa fa\n  0x7bd677fe0780: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bd677fe0800: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bd677fe0880: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==14300==ABORTING\n",
+        "stdout_hex": "",
+        "stderr_hex": "3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d0a3d3d31343330303d3d4552524f523a204164647265737353616e6974697a65723a20686561702d7573652d61667465722d66726565206f6e20616464726573732030783762643637376665303634302061742070632030783535386532633834666664302062702030783766666533363138343163302073702030783766666533363138343162380a52454144206f662073697a652038206174203078376264363737666530363430207468726561642054300a20202020233020307835353865326338346666636620696e206164616d69635f72656c65617365202f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f2e6275696c642d333930343234333631352f686561702e633a3337323a32380a20202020233120307835353865326338336231313520696e206d61696e202f746d702f6164616d69632d676174652f6164616d69632d6275696c642d333538393236343435352f6d61696e2e633a3231303a320a2020202023322030783766363637386638396361372020282f6c69622f7838365f36342d6c696e75782d676e752f6c6962632e736f2e362b307832396361372920284275696c6449643a2063343935623632656461646436633335363236353934326563313238326439383035386137623431290a20202020233320307837663636373866383964363420696e205f5f6c6962635f73746172745f6d61696e20282f6c69622f7838365f36342d6c696e75782d676e752f6c6962632e736f2e362b307832396436342920284275696c6449643a2063343935623632656461646436633335363236353934326563313238326439383035386137623431290a20202020233420307835353865326337353434363020696e205f737461727420282f746d702f636f7665726167652d636c6f73757265732f3734653535613736303064322f6e65737465645f617267756d656e745f636f756e74732e73616e6974697a65642b30783538343630290a0a3078376264363737666530363430206973206c6f6361746564203020627974657320696e73696465206f662036392d6279746520726567696f6e205b30783762643637376665303634302c3078376264363737666530363835290a66726565642062792074687265616420543020686572653a0a20202020233020307835353865326337663666643620696e2066726565202f686f6d652f72756e6e65722f776f726b2f6c6c766d2d70726f6a6563742f6c6c766d2d70726f6a6563742f636f6d70696c65722d72742f6c69622f6173616e2f6173616e5f6d616c6c6f635f6c696e75782e6370703a35313a330a20202020233120307835353865326338353062613320696e206465616c6c6f63617465202f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f2e6275696c642d333930343234333631352f686561702e633a3231323a330a20202020233220307835353865326338353062613320696e20667265655f6f6e65202f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f2e6275696c642d333930343234333631352f686561702e633a3335313a320a20202020233320307835353865326338353062613320696e2072656c656173655f6c617374202f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f2e6275696c642d333930343234333631352f686561702e633a3336343a330a0a70726576696f75736c7920616c6c6f63617465642062792074687265616420543020686572653a0a20202020233020307835353865326337663732373420696e206d616c6c6f63202f686f6d652f72756e6e65722f776f726b2f6c6c766d2d70726f6a6563742f6c6c766d2d70726f6a6563742f636f6d70696c65722d72742f6c69622f6173616e2f6173616e5f6d616c6c6f635f6c696e75782e6370703a36373a330a20202020233120307835353865326338346664626620696e206164616d69635f616c6c6f63617465202f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f2e6275696c642d333930343234333631352f686561702e633a3139363a31300a0a53554d4d4152593a204164647265737353616e6974697a65723a20686561702d7573652d61667465722d66726565202f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f2e6275696c642d333930343234333631352f686561702e633a3337323a323820696e206164616d69635f72656c656173650a536861646f772062797465732061726f756e642074686520627567677920616464726573733a0a202030783762643637376665303338303a2066612066612066612066612066642066642066642066642066642066642066642066642066642066612066612066610a202030783762643637376665303430303a2066612066612030302030302030302030302030302030302030302030302030312066612066612066612066612066610a202030783762643637376665303438303a2030302030302030302030302030302030302030302030302030352066612066612066612066612066612030302030300a202030783762643637376665303530303a2030302030302030302030302030302030302030312066612066612066612066612066612066642066642066642066640a202030783762643637376665303538303a2066642066642066642066642066642066612066612066612066612066612030302030302030302030302030302030300a3d3e30783762643637376665303630303a2030302030302030312066612066612066612066612066615b66645d66642066642066642066642066642066642066640a202030783762643637376665303638303a2066642066612066612066612066612066612066642066642066642066642066642066642066642066642066642066610a202030783762643637376665303730303a2066612066612066612066612066642066642066642066642066642066642066642066642066642066642066612066610a202030783762643637376665303738303a2066612066612066612066612066612066612066612066612066612066612066612066612066612066612066612066610a202030783762643637376665303830303a2066612066612066612066612066612066612066612066612066612066612066612066612066612066612066612066610a202030783762643637376665303838303a2066612066612066612066612066612066612066612066612066612066612066612066612066612066612066612066610a536861646f772062797465206c6567656e6420286f6e6520736861646f77206279746520726570726573656e74732038206170706c69636174696f6e206279746573293a0a20204164647265737361626c653a202020202020202020202030300a20205061727469616c6c79206164647265737361626c653a203031203032203033203034203035203036203037200a202048656170206c656674207265647a6f6e653a2020202020202066610a20204672656564206865617020726567696f6e3a2020202020202066640a2020537461636b206c656674207265647a6f6e653a20202020202066310a2020537461636b206d6964207265647a6f6e653a2020202020202066320a2020537461636b207269676874207265647a6f6e653a202020202066330a2020537461636b2061667465722072657475726e3a20202020202066350a2020537461636b207573652061667465722073636f70653a20202066380a2020476c6f62616c207265647a6f6e653a2020202020202020202066390a2020476c6f62616c20696e6974206f726465723a2020202020202066360a2020506f69736f6e656420627920757365723a202020202020202066370a2020436f6e7461696e6572206f766572666c6f773a20202020202066630a2020417272617920636f6f6b69653a20202020202020202020202061630a2020496e747261206f626a656374207265647a6f6e653a2020202062620a20204153616e20696e7465726e616c3a202020202020202020202066650a20204c65667420616c6c6f6361207265647a6f6e653a202020202063610a2020526967687420616c6c6f6361207265647a6f6e653a2020202063620a3d3d31343330303d3d41424f5254494e470a"
+      }
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/rest-retain/adamic",
+          "build",
+          "notes/coverage-oct8/closures/nested_argument_counts.a",
+          "-o",
+          "/tmp/coverage-closures/74e55a7600d2/nested_argument_counts.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/74e55a7600d2/nested_argument_counts.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": -11,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/rest-retain/adamic",
+          "js",
+          "notes/coverage-oct8/closures/nested_argument_counts.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/74e55a7600d2/nested_argument_counts.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/74e55a7600d2/nested_argument_counts.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": false,
+    "clean": false,
+    "check_passed": false
+  },
+  "rest_capture_lifetime": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/rest_capture_lifetime.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+      "stderr": "",
+      "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/rest-retain/adamic",
+          "build",
+          "notes/coverage-oct8/closures/rest_capture_lifetime.a",
+          "-o",
+          "/tmp/coverage-closures/74e55a7600d2/rest_capture_lifetime.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/74e55a7600d2/rest_capture_lifetime.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/74e55a7600d2/rest_capture_lifetime.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 0,
+      "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+      "stderr": "",
+      "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+      "stderr_hex": ""
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/rest-retain/adamic",
+          "build",
+          "notes/coverage-oct8/closures/rest_capture_lifetime.a",
+          "-o",
+          "/tmp/coverage-closures/74e55a7600d2/rest_capture_lifetime.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/74e55a7600d2/rest_capture_lifetime.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/rest-retain/adamic",
+          "js",
+          "notes/coverage-oct8/closures/rest_capture_lifetime.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/74e55a7600d2/rest_capture_lifetime.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/74e55a7600d2/rest_capture_lifetime.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "0:default1!:default1!:0\n3:default1!:tail2|tail3|default1!:2\n0:default1!:default1!:0|default1!:1\n3:default1!:tail2|tail3|default1!:2|default1!:3\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c7431213a64656661756c7431213a300a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a320a303a64656661756c7431213a64656661756c7431213a307c64656661756c7431213a310a333a64656661756c7431213a7461696c327c7461696c337c64656661756c7431213a327c64656661756c7431213a330a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": true,
+    "check_passed": true
+  }
+}

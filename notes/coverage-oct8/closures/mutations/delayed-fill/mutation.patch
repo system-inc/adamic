@@ -1,0 +1,12 @@
+--- internal/lower/library_method_values.go
++++ internal/lower/library_method_values.go
+@@ -248,9 +248,6 @@
+ 		case "indexOf", "includes", "lastIndexOf":
+ 			value, handled, err = l.libraryArrayMethodArguments(node, receiver, method.name, written)
+ 		case "slice", "join", "at", "push", "reverse", "concat", "fill", "splice":
+-			if ast.SkipParentheses(receiver).Kind == ast.KindNewExpression && method.name == "fill" {
+-				return nil, true, l.notYet(node, "delayed fill of an array with holes; write the direct filled construction")
+-			}
+ 			value, handled, err = l.arrayMethodArguments(node, receiver, method.name, written)
+ 		}
+ 	case "String.prototype":

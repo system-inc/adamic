@@ -1,0 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method -- call supplies the receiver. */
+const fill = Array.prototype.fill;
+const result: number[] = fill.call(new Array<number>(2), 7);
+console.log(result.join('|'));

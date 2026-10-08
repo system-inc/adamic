@@ -1,0 +1,14 @@
+--- internal/lower/arguments_length.go
++++ internal/lower/arguments_length.go
+@@ -76,9 +76,9 @@
+ 			if checker.IsTupleType(proven) && ast.SkipParentheses(value).Kind == ast.KindArrayLiteralExpression {
+ 				elements := l.checker.GetTypeArguments(proven)
+ 				element := ir.Number
+-				for position, provenElement := range elements {
++				for _, provenElement := range elements {
+ 					of, known := l.representation(provenElement)
+-					if !known || slotless(of) || position > 0 && of != element {
++					if !known || slotless(of) {
+ 						return nil, nil, l.notYet(node, "a call spreading a tuple with differently represented elements")
+ 					}
+ 					element = of

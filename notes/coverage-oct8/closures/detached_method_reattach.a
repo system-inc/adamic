@@ -1,0 +1,9 @@
+class Counter {
+    value: string;
+    constructor(seed: number) { this.value = `counter${seed}`; }
+    read(): string { return this.value; }
+}
+const owner = new Counter(1);
+const detached = owner.read;
+const other = { value: `other${2}`, read: detached };
+console.log(other.read());

@@ -1,0 +1,12 @@
+function make(text: string): () => string {
+    function read(): string { return text; }
+    text = `${text}:changed`;
+    return read;
+}
+function outer(seed: number): () => string {
+    const built = `owned${seed}`;
+    return make(built);
+}
+const first = outer(1);
+const second = outer(2);
+console.log(`${first()}|${second()}|${first()}`);

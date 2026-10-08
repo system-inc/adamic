@@ -1,0 +1,4 @@
+function read(number: number, text: string): string {
+    return `${arguments.length}:${number}:${text}`;
+}
+console.log(read(...[7, `word${8}`]));

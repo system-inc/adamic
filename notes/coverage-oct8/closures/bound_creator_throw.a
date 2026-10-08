@@ -1,0 +1,14 @@
+/* eslint-disable @typescript-eslint/unbound-method -- bind supplies a primitive receiver. */
+let saved: (() => string) | undefined = undefined;
+function create(seed: number): void {
+    const trim = String.prototype.trim;
+    saved = trim.bind(`  kept${seed}  `);
+    throw new Error(`creator${seed}`);
+}
+try { create(3); }
+catch (error) { console.log(error instanceof Error ? error.message : 'unexpected'); }
+function invokeSaved(): void {
+    if (saved !== undefined) { console.log(saved()); }
+}
+invokeSaved();
+saved = undefined;

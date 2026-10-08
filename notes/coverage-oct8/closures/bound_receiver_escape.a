@@ -1,0 +1,13 @@
+/* eslint-disable @typescript-eslint/unbound-method -- Intrinsic receivers are supplied explicitly. */
+const trim = String.prototype.trim;
+function make(seed: number): () => string {
+    let text = `  bound${seed}  `;
+    const bound = trim.bind(text);
+    text = `  replaced${seed}  `;
+    console.log(trim.call(text));
+    return bound;
+}
+const first = make(1);
+const second = make(2);
+const holder = { callback: first };
+console.log(`${first()}|${holder.callback()}|${second()}`);

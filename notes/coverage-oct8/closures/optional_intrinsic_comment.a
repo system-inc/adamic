@@ -1,0 +1,3 @@
+function read(text?: string): string { return text?.trim() ?? 'missing'; }
+console.log(read());
+console.log(read(`  present${2}  `));

@@ -1,0 +1,12 @@
+--- internal/native/arguments_length.go
++++ internal/native/arguments_length.go
+@@ -90,7 +90,8 @@
+ // elements until the statement ends, including across mutations in later arguments.
+ // The heterogeneous packed array itself borrows those snapshots and scalar temporaries.
+ func (e *emitter) packCallArguments(arguments []ir.Expression, spread []bool) string {
+-	packed := e.own(ir.Array, "adamic_array_new(0, false)")
++	packed := e.temporary()
++	e.line("adamic_array *%s = adamic_array_new(0, false);", packed)
+ 	for index, argument := range arguments {
+ 		if len(spread) > index && spread[index] {
+ 			source := e.value(argument)

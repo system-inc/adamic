@@ -1,0 +1,128 @@
+{
+  "nested_argument_counts": {
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "notes/coverage-oct8/closures/nested_argument_counts.a"
+      ],
+      "environment": {},
+      "exit": 0,
+      "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+      "stderr": "",
+      "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+      "stderr_hex": ""
+    },
+    "sanitized": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/packed-leak/adamic",
+          "build",
+          "notes/coverage-oct8/closures/nested_argument_counts.a",
+          "-o",
+          "/tmp/coverage-closures/5697acfa1fc2/nested_argument_counts.sanitized",
+          "--sanitize"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/5697acfa1fc2/nested_argument_counts.sanitized"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+        "stderr_hex": ""
+      }
+    },
+    "leaks": {
+      "command": [
+        "/tmp/coverage-closures/5697acfa1fc2/nested_argument_counts.sanitized"
+      ],
+      "environment": {
+        "ASAN_OPTIONS": "detect_leaks=1:exitcode=23",
+        "LSAN_OPTIONS": "exitcode=23"
+      },
+      "exit": 23,
+      "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+      "stderr": "\n=================================================================\n==17292==ERROR: LeakSanitizer: detected memory leaks\n\nDirect leak of 112 byte(s) in 2 object(s) allocated from:\n    #0 0x55fa4a249274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55fa4a2a1dbf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3904243615/heap.c:196:10\n\nIndirect leak of 64 byte(s) in 2 object(s) allocated from:\n    #0 0x55fa4a24966c in realloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:81:3\n    #1 0x55fa4a28faa5 in adamic_array_push /home/agent/.cache/adamic/runtime/.build-3904243615/array.c:31:25\n\nSUMMARY: AddressSanitizer: 176 byte(s) leaked in 4 allocation(s).\n",
+      "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+      "stderr_hex": "0a3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d0a3d3d31373239323d3d4552524f523a204c65616b53616e6974697a65723a206465746563746564206d656d6f7279206c65616b730a0a446972656374206c65616b206f6620313132206279746528732920696e2032206f626a65637428732920616c6c6f63617465642066726f6d3a0a20202020233020307835356661346132343932373420696e206d616c6c6f63202f686f6d652f72756e6e65722f776f726b2f6c6c766d2d70726f6a6563742f6c6c766d2d70726f6a6563742f636f6d70696c65722d72742f6c69622f6173616e2f6173616e5f6d616c6c6f635f6c696e75782e6370703a36373a330a20202020233120307835356661346132613164626620696e206164616d69635f616c6c6f63617465202f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f2e6275696c642d333930343234333631352f686561702e633a3139363a31300a0a496e646972656374206c65616b206f66203634206279746528732920696e2032206f626a65637428732920616c6c6f63617465642066726f6d3a0a20202020233020307835356661346132343936366320696e207265616c6c6f63202f686f6d652f72756e6e65722f776f726b2f6c6c766d2d70726f6a6563742f6c6c766d2d70726f6a6563742f636f6d70696c65722d72742f6c69622f6173616e2f6173616e5f6d616c6c6f635f6c696e75782e6370703a38313a330a20202020233120307835356661346132386661613520696e206164616d69635f61727261795f70757368202f686f6d652f6167656e742f2e63616368652f6164616d69632f72756e74696d652f2e6275696c642d333930343234333631352f61727261792e633a33313a32350a0a53554d4d4152593a204164647265737353616e6974697a65723a203137362062797465287329206c65616b656420696e203420616c6c6f636174696f6e2873292e0a"
+    },
+    "release": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/packed-leak/adamic",
+          "build",
+          "notes/coverage-oct8/closures/nested_argument_counts.a",
+          "-o",
+          "/tmp/coverage-closures/5697acfa1fc2/nested_argument_counts.release"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": ""
+      },
+      "run": {
+        "command": [
+          "/tmp/coverage-closures/5697acfa1fc2/nested_argument_counts.release"
+        ],
+        "environment": {
+          "ASAN_OPTIONS": "detect_leaks=0",
+          "UBSAN_OPTIONS": "halt_on_error=1"
+        },
+        "exit": 0,
+        "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+        "stderr_hex": ""
+      }
+    },
+    "javascript": {
+      "compile": {
+        "command": [
+          "/tmp/coverage-closure-mutants/packed-leak/adamic",
+          "js",
+          "notes/coverage-oct8/closures/nested_argument_counts.a"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "",
+        "stderr": "",
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "generated_artifact": "/tmp/coverage-closures/5697acfa1fc2/nested_argument_counts.mjs"
+      },
+      "run": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/tmp/coverage-closures/5697acfa1fc2/nested_argument_counts.mjs"
+        ],
+        "environment": {},
+        "exit": 0,
+        "stdout": "0:default:label1!::label1!\n1:default:label1!::label1!\n3:head2:tail3|tail4:label1!\n3:x5:y6|last9:label1!\n3:z7:y6|q8:label1!\n",
+        "stderr": "",
+        "stdout_hex": "303a64656661756c743a6c6162656c31213a3a6c6162656c31210a313a64656661756c743a6c6162656c31213a3a6c6162656c31210a333a68656164323a7461696c337c7461696c343a6c6162656c31210a333a78353a79367c6c617374393a6c6162656c31210a333a7a373a79367c71383a6c6162656c31210a",
+        "stderr_hex": ""
+      }
+    },
+    "agree": true,
+    "clean": false,
+    "check_passed": false
+  }
+}

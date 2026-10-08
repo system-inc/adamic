@@ -1,0 +1,18 @@
+function make(prefix: string): (n: number) => string {
+    let calls = 0;
+    function left(n: number): string {
+        calls += 1;
+        return n === 0 ? `${prefix}:${calls}` : right(n - 1);
+    }
+    function right(n: number): string {
+        calls += 1;
+        const forward = (value: number): string => left(value);
+        return n === 0 ? `${prefix}:${calls}` : forward(n - 1);
+    }
+    prefix = `${prefix}!`;
+    return right;
+}
+const first = make(`seed${7}`);
+console.log(first(4));
+console.log(first(3));
+console.log(make(`seed${8}`)(2));

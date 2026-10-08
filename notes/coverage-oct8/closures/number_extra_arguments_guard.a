@@ -1,0 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method -- call supplies a number. */
+const format = Number.prototype.toFixed;
+function extra(): number { console.log('extra evaluated'); return 99; }
+console.log(format.apply(1.25, [1, extra()]));

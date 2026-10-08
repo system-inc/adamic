@@ -1,0 +1,11 @@
+--- internal/native/arguments_length.go
++++ internal/native/arguments_length.go
+@@ -94,7 +94,7 @@
+ 	for index, argument := range arguments {
+ 		if len(spread) > index && spread[index] {
+ 			source := e.value(argument)
+-			snapshot := e.own(ir.Array, fmt.Sprintf("adamic_array_slice(%s, 0, 0, false)", source))
++			snapshot := source
+ 			position := e.temporary()
+ 			e.line("for (size_t %s = 0; %s < %s->length; %s++) {", position, position, snapshot, position)
+ 			e.line("\tadamic_array_push(%s, %s->elements[%s]);", packed, snapshot, position)

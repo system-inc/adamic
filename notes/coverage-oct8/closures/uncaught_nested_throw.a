@@ -1,0 +1,8 @@
+function make(text: string): () => string {
+    function read(): string { throw new Error(`${text}:throw`); }
+    text = `${text}!`;
+    return read;
+}
+const fail = make(`local${4}`);
+try { console.log(fail()); }
+finally { console.log('finally ran'); }

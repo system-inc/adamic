@@ -1,0 +1,13 @@
+const saved: (() => string)[] = [];
+for (let index = 0; index < 4; index += 1) {
+    let label = `item${index}`;
+    saved.push(() => `${index}:${label}`);
+    label = `${label}!`;
+    if (index === 1) { continue; }
+    if (index === 2) { break; }
+}
+console.log(saved.map((read) => read()).join('|'));
+const outer: (() => number)[] = [];
+let shared = 0;
+for (; shared < 3; shared += 1) { outer.push(() => shared); }
+console.log(outer.map((read) => read()).join('|'));

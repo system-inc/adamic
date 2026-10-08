@@ -1,0 +1,15 @@
+function make(head: string = `default${1}`, ...tail: string[]): () => string {
+    const count = arguments.length;
+    function read(): string {
+        tail.push(`${head}:${tail.length}`);
+        return `${count}:${head}:${tail.join('|')}`;
+    }
+    head = `${head}!`;
+    return read;
+}
+const first = make();
+const second = make(undefined, `tail${2}`, `tail${3}`);
+console.log(first());
+console.log(second());
+console.log(first());
+console.log(second());

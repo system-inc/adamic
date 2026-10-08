@@ -1,0 +1,11 @@
+function measure(first: number = arguments.length, ...rest: number[]): string {
+    return `${arguments.length}:${first}:${rest.join('|')}`;
+}
+const run: (first?: number, ...rest: number[]) => string = measure;
+console.log(measure());
+console.log(measure(undefined));
+console.log(measure(undefined, 2, 3));
+console.log(run());
+console.log(run(undefined, 4, 5));
+const empty: number[] = [];
+console.log(run(...empty));

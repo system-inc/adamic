@@ -1,0 +1,19 @@
+{
+  "file": "internal/lower/library_method_values.go",
+  "package_command": [
+    "go",
+    "test",
+    "-overlay",
+    "/tmp/coverage-closure-mutants/bind-presence/overlay.json",
+    "-count=1",
+    "-timeout",
+    "30m",
+    "./internal/lower"
+  ],
+  "package_exit": 1,
+  "build_exit": 0,
+  "probes": [
+    "bound_receiver_escape"
+  ],
+  "probe_runner_exit": 0
+}

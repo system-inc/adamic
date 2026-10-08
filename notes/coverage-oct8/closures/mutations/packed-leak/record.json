@@ -1,0 +1,21 @@
+{
+  "file": "internal/native/arguments_length.go",
+  "package_command": [
+    "go",
+    "test",
+    "-overlay",
+    "/tmp/coverage-closure-mutants/packed-leak/overlay.json",
+    "-count=1",
+    "-timeout",
+    "30m",
+    "./internal/native",
+    "-run",
+    "TestNoReaderCallingConvention"
+  ],
+  "package_exit": 0,
+  "build_exit": 0,
+  "probes": [
+    "nested_argument_counts"
+  ],
+  "probe_runner_exit": 1
+}
