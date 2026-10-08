@@ -54,9 +54,9 @@ func (p *Program) declarationLineage(out *fields, c *checker.Checker, node *ast.
 				name = n.Text()
 			}
 			out.text(name)
-			out.text(source.FileName())
+			out.text(source.FileName().AsString())
 			out.yes(source.IsDeclarationFile)
-			out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.Path()))
+			out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.PathKey()))
 			var children []*ast.Node
 			parent.ForEachChild(func(child *ast.Node) bool { children = append(children, child); return false })
 			out.number(uint64(len(children)))

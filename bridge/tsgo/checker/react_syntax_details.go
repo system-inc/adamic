@@ -190,7 +190,7 @@ func (p *Program) reactSyntaxDetails(out *fields, c *checker.Checker, root *ast.
 			declaration := entry.node
 			source := ast.GetSourceFileOfNode(declaration)
 			out.number(uint64(declaration.Kind))
-			out.text(source.FileName())
+			out.text(source.FileName().AsString())
 			out.number(ids[entry.initializer])
 			imported := declaration.Name()
 			if declaration.Kind == ast.KindImportSpecifier && declaration.AsImportSpecifier().PropertyName != nil {

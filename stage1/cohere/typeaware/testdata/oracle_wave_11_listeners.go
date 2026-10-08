@@ -14,6 +14,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/cohere/internal/lint/registry"
 	"github.com/system-inc/cohere/internal/lint/rule"
@@ -55,7 +56,7 @@ func main() {
 		panic("invalid tsconfig")
 	}
 	program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames([]string{filepath.ToSlash(sourcePath)}), Host: host, SingleThreaded: core.TSTrue})
-	source := program.GetSourceFile(filepath.ToSlash(sourcePath))
+	source := program.GetSourceFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(sourcePath)))
 	if source == nil {
 		panic("source not loaded")
 	}

@@ -28,7 +28,7 @@ func (p *Program) symbolDeclarationProvenance(out *fields, question string) (str
 		if source == nil {
 			panic("symbol declaration has no source")
 		}
-		out.text(source.FileName())
+		out.text(source.FileName().AsString())
 		out.yes(source.IsDeclarationFile)
 	}
 	return out.String(), nil

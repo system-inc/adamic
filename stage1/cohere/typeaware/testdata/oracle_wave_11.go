@@ -19,6 +19,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/cohere/internal/lint/registry"
 	"github.com/system-inc/cohere/internal/lint/rule"
@@ -82,7 +83,7 @@ func main() {
 	program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(roots), Host: host, SingleThreaded: core.TSTrue})
 	// Force checker pool initialization into load, just as the native bridge does.
 	if len(roots) > 0 {
-		_, release := program.GetTypeCheckerForFile(context.Background(), program.GetSourceFile(roots[0]))
+		_, release := program.GetTypeCheckerForFile(context.Background(), program.GetSourceFile(tspath.RootedFilePathFromAbsolute(roots[0])))
 		release()
 	}
 	loadTime := time.Since(started)
@@ -90,7 +91,7 @@ func main() {
 
 	if len(args) > 2 && args[2] == "--valid-sources" {
 		for i, path := range paths {
-			file := program.GetSourceFile(roots[i])
+			file := program.GetSourceFile(tspath.RootedFilePathFromAbsolute(roots[i]))
 			if file != nil && len(file.Diagnostics()) == 0 {
 				fmt.Println(path)
 			}
@@ -103,7 +104,7 @@ func main() {
 	findings := 0
 	var ruleTime time.Duration
 	for i, path := range paths {
-		file := program.GetSourceFile(roots[i])
+		file := program.GetSourceFile(tspath.RootedFilePathFromAbsolute(roots[i]))
 		if file == nil {
 			panic("source not loaded")
 		}

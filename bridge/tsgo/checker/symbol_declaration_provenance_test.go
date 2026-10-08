@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 )
 
 func TestSymbolDeclarationProvenance(t *testing.T) {
@@ -22,7 +23,7 @@ func TestSymbolDeclarationProvenance(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	sf := p.Compiler.GetSourceFile(file)
+	sf := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), sf)
 	defer release()
 	selected := map[string]*ast.Node{}
@@ -66,7 +67,7 @@ func TestSymbolDeclarationProvenance(t *testing.T) {
 			if source.IsDeclarationFile {
 				expected = "1"
 			}
-			if got[3+2*at] != source.FileName() || got[4+2*at] != expected {
+			if got[3+2*at] != source.FileName().AsString() || got[4+2*at] != expected {
 				t.Fatalf("checker provenance differs: %v", got)
 			}
 		}
