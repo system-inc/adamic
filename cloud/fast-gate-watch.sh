@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Every push to codex/*, area/* and devtools/* gets a fast gate on the gate box, with nobody between
+# Every push to codex/*, area/*, devtools/* and integration's cloud/land-* gets a fast gate on the gate box, with nobody between
 # the push and the gate. Run it from a checkout with a push credential (the box has none yet):
 #
 #   cloud/fast-gate-watch.sh
@@ -7,7 +7,7 @@
 # It polls origin every 15 s. Branch tips it sees on its first poll are the backlog and are left
 # alone; every tip that appears or moves after that is gated once (a sha already gated under another
 # branch isn't gated again), three at a time, one per slot on the box. The queue is by priority, decided
-# when a gate starts: what integration is landing first (area/*, and any branch named in the state
+# when a gate starts: what integration is landing first (cloud/land-*, then area/* and any branch named in the state
 # directory's priority file, one per line, such as a fix-forward), then devtools/*, then workers'
 # codex/*, newest first within each, and only a branch's newest tip. Each tip is classed when queued:
 # big (an area, a stage3/ change, which runs the stage 3 lane, or more than two touched packages) or
@@ -25,18 +25,7 @@ git -C "${here}" fetch -q origin
 git -C "${here}" branch -r --contains "$(git -C "${here}" rev-parse HEAD)" | grep -q . || { echo "the gate's own commit is not on origin; push it first" >&2; exit 2; }
 export ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN=1
 
-# A tip's class for scheduling only (coverage is the gate's business): big for an area or more than two
-# touched packages (directories of changed Go files, a testdata path counting as its package).
-classify() {
-  local branch=$1 sha=$2 count
-  [[ ${branch} == area/* ]] && { echo B; return; }
-  git -C "${here}" fetch -q origin "${sha}" 2>/dev/null || { echo B; return; }
-  changed=$(git -C "${here}" diff --name-only "$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)...${sha}" 2>/dev/null)
-  # A stage3/ change runs the stage 3 lane (about 10 minutes): big, whatever else it touches.
-  echo "${changed}" | grep -q '^stage3/' && { echo B; return; }
-  count=$(echo "${changed}" | awk '/\/testdata\// {sub("/testdata/.*", ""); print; next} /\.go$/ {sub("/[^/]*$", ""); print}' | sort -u | wc -l)
-  [ "${count}" -gt 2 ] && echo B || echo S
-}
+. "${here}/cloud/fast-gate-classify.sh"
 
 # Every gate start, appended to documentation/velocity/fast-gate-waits.csv on records/fast-gate-waits
 # (sha, branch, class, queued, started, waited seconds), so slot wait is charted from an artifact.
@@ -70,7 +59,7 @@ voidCause() {
 }
 
 tips() {
-  git -C "${here}" ls-remote origin 'refs/heads/codex/*' 'refs/heads/area/*' 'refs/heads/devtools/*' |
+  git -C "${here}" ls-remote origin 'refs/heads/codex/*' 'refs/heads/area/*' 'refs/heads/devtools/*' 'refs/heads/cloud/land-*' |
     awk '{sub("refs/heads/", "", $2); print $2, $1}' | sort
 }
 
@@ -78,7 +67,7 @@ tips() {
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
 mkdir -p "${state}/running" "${state}/logs"
-echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/* (tools $(git -C "${here}" rev-parse --short HEAD))"
+echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
 while true; do
   if tips > "${state}/now.tmp" && [ -s "${state}/now.tmp" ]; then
     # New or moved tips, queued by kind: workers' branches first.
@@ -125,7 +114,8 @@ while true; do
     if [ "${small}" -ge 2 ]; then only=B; fi
     next=$(while read -r class queued branch sha; do
       [ -n "${only}" ] && [ "${class}" != "${only}" ] && continue
-      if [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=1
+      if [[ ${branch} == cloud/land-* ]]; then rank=0
+      elif [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=1
       elif [[ ${branch} == devtools/* ]]; then rank=2
       else rank=3; fi
       echo "${rank} ${queued} ${branch} ${sha} ${class}"

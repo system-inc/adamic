@@ -18,7 +18,7 @@ set -euo pipefail
 
 sha=${1:?usage: cloud/fast-gate.sh <full sha> [--branch <name>] [--session <id>]}
 shift
-branch="" branchSource=given session="" sessionSource=given cpus="" class=B
+branch="" branchSource=given session="" sessionSource=given cpus="" class=""
 while [ $# -gt 0 ]; do
   case $1 in
     --branch) branch=$2; shift 2 ;;
@@ -48,10 +48,15 @@ if [ -z "${session}" ] && [ -n "${branch}" ] && [ -f "${database}" ]; then
   sessionSource="ai.db reply naming the branch"
 fi
 [ -n "${session}" ] || sessionSource=none
+# The watcher passes the class it queued with; a direct gate (integration's landings) gets the same judgment.
+if [ -z "${class}" ]; then
+  . "${here}/cloud/fast-gate-classify.sh"
+  class=$(classify "${branch:-}" "${sha}")
+fi
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
 out=fast-gate/out/${sha:0:12}-${stamp}
 
-echo "fast gate: ${sha} against main ${base}, tools ${tools}, on ${box}"
+echo "fast gate: ${sha} against main ${base}, tools ${tools}, on ${box}, class ${class}"
 set +e
 # ssh joins its arguments into one remote command line, so each is quoted for the remote shell.
 ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}" "${class}")" <<'BOX'
