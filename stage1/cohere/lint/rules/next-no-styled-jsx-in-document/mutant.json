@@ -1,0 +1,5 @@
+{
+  "name": "no-styled-jsx-in-document-gate-inverted",
+  "from": "if (!hasAttributeNamed(this.nodes,parts.attributes,'jsx',matchExactly))",
+  "to": "if (hasAttributeNamed(this.nodes,parts.attributes,'jsx',matchExactly))"
+}
