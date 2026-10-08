@@ -262,6 +262,14 @@ func generated(t *testing.T) []string {
 		"async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}",
 	}
 	var rows []string
+	// Keep parser recovery regressions in the ordinary lint gate as well as profiles.
+	for _, name := range []string{"wave13_top_level_await_new.ts", "top_level_await_new_script.ts", "top_level_await_new_module.ts"} {
+		path, err := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/lint_cases", name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		rows = append(rows, path+"\tno-new", path+"\tall")
+	}
 	for i, source := range sources {
 		path := filepath.Join(t.TempDir(), fmt.Sprintf("generated-%d.ts", i))
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {

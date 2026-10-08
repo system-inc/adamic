@@ -451,9 +451,9 @@ export class Parser {
     nextIdentifierSameLine(): boolean {
         return nextIdentifierSameLine(this.scanner);
     }
-    // TypeScript recognizes an unmistakable yield operand outside generators,
-    // but keeps yield(x) as an ordinary call and never crosses a line break.
-    yieldOperandAhead(): boolean {
+    // Outside await/yield contexts, TypeScript recognizes an identifier, keyword
+    // or numeric, bigint or string literal on the same line as an operand.
+    unaryOperandAhead(): boolean {
         const state = this.mark();
         this.next();
         const result =
@@ -1789,12 +1789,12 @@ export class Parser {
             const expression = this.unary();
             return this.make('TypeAssertionExpression', pos, [type, expression]);
         }
-        if(operator === 'AwaitKeyword' && (this.awaitContext || this.peek() === 'Identifier')) {
+        if(operator === 'AwaitKeyword' && (this.awaitContext || this.unaryOperandAhead())) {
             this.next();
             const expression = this.unary();
             return this.make('AwaitExpression', pos, [expression]);
         }
-        if(operator === 'YieldKeyword' && (this.yieldContext || this.yieldOperandAhead())) {
+        if(operator === 'YieldKeyword' && (this.yieldContext || this.unaryOperandAhead())) {
             this.next();
             const children: number[] = [];
             if(

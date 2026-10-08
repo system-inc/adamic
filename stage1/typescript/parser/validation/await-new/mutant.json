@@ -1,0 +1,19 @@
+{
+  "file": "stage1/typescript/parser/parser.ts",
+  "from": "this.awaitContext || this.unaryOperandAhead()",
+  "to": "this.awaitContext || this.peek() === 'Identifier'",
+  "cases": [
+    "stage1/typescript/parser/testdata/lint_cases/wave13_top_level_await_new.ts",
+    "stage1/typescript/parser/testdata/lint_cases/top_level_await_new_script.ts",
+    "stage1/typescript/parser/testdata/lint_cases/top_level_await_new_module.ts"
+  ],
+  "sides": [
+    "Node",
+    "sanitized native"
+  ],
+  "check": "lintCaseCheck with no expected sidecar must reject each old-lookahead output",
+  "scratch_source": "Never committed; temporary probe uses copyPort and buildPort.",
+  "exit": 0,
+  "wall_seconds": 18.406110133997572,
+  "caught_checks": 6
+}
