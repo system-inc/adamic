@@ -223,6 +223,11 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			}
 		}
 	}
+	l.result.Functions[initializer].Receiver = true
+	if constructor == nil && instance.base != nil {
+		l.result.Functions[initializer].RestElement = l.result.Functions[instance.base.initializer].RestElement
+		l.result.Functions[initializer].ForwardsArguments = instance.base.initializer + 1
+	}
 	// The layout contains inherited fields first, but only this class's initializers run here.
 	fields := append([]ir.Field{}, l.result.Classes[instance.class-1].Fields...)
 	for _, member := range classMembersWithParameters(declaration) {
@@ -245,7 +250,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if slotless(of) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
-		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier}
+		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || (member.Kind == ast.KindPropertyDeclaration && assertionInitializer(member.AsPropertyDeclaration().Initializer))}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
 			field.Value = ir.Undefined{Of: of}
@@ -313,7 +318,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		for _, parameter := range l.result.Functions[initializer].Parameters {
 			arguments = append(arguments, ir.Read{Local: parameter, Of: l.result.Locals[parameter].Type})
 		}
-		l.result.Functions[initializer].Body = []ir.Statement{ir.Evaluate{Value: ir.Call{Function: instance.base.initializer, Arguments: arguments}}}
+		l.result.Functions[initializer].Body = []ir.Statement{ir.Evaluate{Value: ir.Call{Function: instance.base.initializer, Arguments: arguments, ForwardCount: true, RestPacked: true}}}
 		initialized, err := l.fieldInitializers(declaration, this)
 		if err != nil {
 			return err
@@ -331,6 +336,9 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		}
 		wrapper := l.result.Functions[index]
 		wrapper.Parameters = append([]int{}, body.Parameters[1:]...)
+		wrapper.ArgumentsCount = body.ArgumentsCount
+		wrapper.ForwardsArguments = body.ForwardsArguments
+		wrapper.RestElement = body.RestElement
 		wrapper.Body = append([]ir.Statement{ir.Declare{Local: this, Value: ir.ObjectLiteral{Fields: fields, Class: instance.class, Methods: instance.methodList()}}}, body.Body...)
 		wrapper.Body = append(wrapper.Body, ir.Return{Value: ir.Read{Local: this, Of: ir.Object}})
 		l.result.Functions[index] = wrapper
@@ -339,6 +347,8 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 	}
 	// The public constructor owns its object, including when an initializer throws.
 	wrapper := l.result.Functions[index]
+	wrapper.ForwardsArguments = initializer + 1
+	wrapper.RestElement = l.result.Functions[initializer].RestElement
 	arguments := []ir.Expression{}
 	object := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "this", Type: ir.Object, Function: index})
@@ -354,7 +364,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 	}
 	wrapper.Body = []ir.Statement{
 		ir.Declare{Local: object, Value: ir.ObjectLiteral{Fields: fields, Class: instance.class, Methods: instance.methodList()}},
-		ir.Evaluate{Value: ir.Call{Function: initializer, Arguments: arguments}},
+		ir.Evaluate{Value: ir.Call{Function: initializer, Arguments: arguments, ForwardCount: true, RestPacked: true}},
 		ir.Return{Value: ir.Read{Local: object, Of: ir.Object}},
 	}
 	l.result.Functions[index] = wrapper
@@ -381,6 +391,33 @@ func (l *lowering) fieldInitializers(declaration *ast.Node, this int) ([]ir.Stat
 		of, err := l.typeOf(member.Name())
 		if err != nil {
 			return nil, err
+		}
+		if l.uninitializedDeclaration(member) {
+			value := zeroValue(of)
+			if of.IsReference() {
+				value = ir.Undefined{Of: of}
+			}
+			statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Uninitialized: true, Site: l.writeSite(declaration.Name())})
+			available[l.fieldName(member.Name())] = true
+			continue
+		}
+
+		if initializer := member.AsPropertyDeclaration().Initializer; assertionInitializer(initializer) {
+			if err := l.initializerReads(initializer, available); err != nil {
+				return nil, err
+			}
+			prefix, present, value, err := l.lazyAssertion(initializer, of)
+			if err != nil {
+				return nil, err
+			}
+			empty := ir.Expression(zeroValue(of))
+			if of.IsReference() {
+				empty = ir.Undefined{Of: of}
+			}
+			statements = append(statements, prefix...)
+			statements = append(statements, ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: empty, Uninitialized: true, Site: l.writeSite(declaration.Name())}, ir.If{Condition: present, Then: []ir.Statement{ir.SetProperty{Object: ir.Read{Local: this, Of: ir.Object}, Name: l.fieldName(member.Name()), Value: value, Site: l.writeSite(declaration.Name())}}})
+			available[l.fieldName(member.Name())] = true
+			continue
 		}
 		value := zeroValue(of)
 		if member.AsPropertyDeclaration().Initializer != nil {

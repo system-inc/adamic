@@ -329,6 +329,16 @@ func (n *inference) value(expression ir.Expression) shape {
 			return shape{}
 		}
 		return shape{same: []Place{{Identifier: value}}}
+	case ir.Void:
+		n.value(expression.Value)
+		return shape{}
+	case ir.Comma:
+		n.value(expression.Left)
+		return n.value(expression.Right)
+	case ir.Logical:
+		result := n.value(expression.Left)
+		result.merge(n.value(expression.Right))
+		return result
 	case ir.Conditional:
 		n.value(expression.Condition)
 		result := n.value(expression.WhenTrue)
@@ -443,7 +453,9 @@ func (n *inference) operands(expression ir.Expression) []shape {
 
 // writes reports whether an IR node writes into a container it's handed.
 func writes(expression ir.Expression) bool {
-	switch expression.(type) {
+	switch call := expression.(type) {
+	case ir.NodeBufferCall:
+		return call.Function == "buffer_set" || call.Function == "hash_update" || call.Function == "hash_digest"
 	case ir.ArraySplice, ir.ArrayFill, ir.ArraySort, ir.MapSet, ir.MapDelete:
 		return true
 	}
@@ -452,6 +464,9 @@ func writes(expression ir.Expression) bool {
 
 // callsBack reports whether an IR node calls a function value it's handed.
 func callsBack(expression ir.Expression) bool {
+	if call, ok := expression.(ir.RegExpCall); ok {
+		return call.Replacement != nil
+	}
 	switch expression.(type) {
 	case ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.ArraySort, ir.MapForEach:
 		return true

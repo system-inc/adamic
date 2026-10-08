@@ -11,6 +11,8 @@ import "github.com/system-inc/adamic/internal/ir"
 // callback may overwrite that element. Everything else is borrowed: a named function's or a
 // method's reference parameters, this included, that no ir.Assign anywhere in the program writes.
 //
+// Parameters in a shared frame environment need owned treatment, even when read-only:
+// initializing that owned slot is a store, and an escaping closure keeps it after the call.
 // ir.Assign is the only statement that writes a local that already exists, and locals are numbered
 // across the whole program, so a closure writing a parameter through its cell is found too.
 func borrow(program *ir.Program) {
@@ -25,7 +27,7 @@ func borrow(program *ir.Program) {
 		}
 		for _, parameter := range function.Parameters {
 			local := &program.Locals[parameter]
-			local.Borrowed = local.Type.IsReference() && !assigned[parameter]
+			local.Borrowed = local.Type.IsReference() && !local.EnvironmentCell && !assigned[parameter]
 		}
 	}
 }
