@@ -1,0 +1,54 @@
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (skipped; the census table classes it required-input)
+census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
+=== RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+    wasi_test.go:132: fixture does not lower
+--- SKIP: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.07s)
+
+== github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees (skipped; the census table classes it required-input)
+census: ADAMIC_CLANG_TSGO_ARCHIVE: bridge/tsgo built c-archive for the pinned cohere TypeScript checker, using go build -buildmode=c-archive -o /path/tsgo.a ./bridge/tsgo/archive; see docs/gate-inputs.md.
+=== RUN   TestSplitTSGoAgrees
+    units_tsgo_test.go:19: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive
+--- SKIP: TestSplitTSGoAgrees (0.00s)
+
+== github.com/system-inc/adamic/internal/native TestWASI (skipped; the census table classes it required-input)
+census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
+=== RUN   TestWASI
+    wasm_test.go:41: WASI toolchain missing or unusable (sysroot, linker, builtins): exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- SKIP: TestWASI (0.06s)
+
+== github.com/system-inc/adamic/internal/lower TestOriginalCycleLedger (skipped; the census table classes it required-input)
+census: ADAMIC_CYCLE_LEDGER_ROOT must name pristine TypeScript v6.0.3 at 050880ce59e30b356b686bd3144efe24f875ebc8, including generated diagnostics needed by src/tsc/tsc.ts. ADAMIC_CYCLE_LEDGER_OUTPUT must name a writable JSON output. The gate must run the binding-initialization ledger verification on that source.
+=== RUN   TestOriginalCycleLedger
+    import_cycle_ledger_test.go:31: set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
+--- SKIP: TestOriginalCycleLedger (0.00s)
+
+== github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (skipped; the census table classes it required-input)
+census: Set ADAMIC_GITIGNORE_LARGEST=1; test generates an ignore file of exactly 100 MiB itself.
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+    gitignore_test.go:158: only an ignore file of exactly 100 MiB shows this one, asked about when ADAMIC_GITIGNORE_LARGEST is set
+--- SKIP: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (0.00s)
+
+== github.com/system-inc/adamic/internal/lower TestOptionalWideningCensus (skipped; no census row matches its name)
+=== RUN   TestOptionalWideningCensus
+    optional_widening_census_test.go:28: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project
+--- SKIP: TestOptionalWideningCensus (0.00s)
+
+== github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterThroughput (skipped; no census row matches its name)
+=== RUN   TestPrinterThroughput
+    performance_test.go:17: set ADAMIC_GRAPHQL_PRINTER_BENCH=1 to measure verified throughput
+--- SKIP: TestPrinterThroughput (0.00s)
+
+== github.com/system-inc/adamic/stage1/cohere/estree TestRepositoryAgreement (skipped; no census row matches its name)
+=== RUN   TestRepositoryAgreement
+    corpus_test.go:18: set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory
+--- SKIP: TestRepositoryAgreement (0.00s)
+
+== github.com/system-inc/adamic/stage1/cohere/estree TestCorpusNativeRefusals (skipped; no census row matches its name)
+=== RUN   TestCorpusNativeRefusals
+    corpus_test.go:84: completed frozen corpus required
+--- SKIP: TestCorpusNativeRefusals (0.00s)
+

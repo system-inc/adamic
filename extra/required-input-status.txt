@@ -1,0 +1,6 @@
+archive exit=0 wall_seconds=2
+TestSplitTSGoAgrees exit=0 wall_seconds=35
+TestWASI exit=0 wall_seconds=27
+TestOriginalCycleLedger exit=0 wall_seconds=4
+catches_R2_the_size_limit_one_byte_lower exit=0 wall_seconds=14
+finished
