@@ -1,0 +1,11 @@
+import { hangulLeading } from './hangul_leading.a';
+import { hangulVowel } from './hangul_vowel.a';
+import { hangulTrailing } from './hangul_trailing.a';
+import { hangulSyllable } from './hangul_syllable.a';
+import { hangulVowelSyllable } from './hangul_vowel_syllable.a';
+export function hangulJoins(previous: number, c: number): boolean {
+ if(hangulLeading(previous)) { return hangulLeading(c) || hangulVowel(c) || hangulSyllable(c); }
+ if(hangulVowel(previous) || hangulVowelSyllable(previous)) { return hangulVowel(c) || hangulTrailing(c); }
+ if(hangulTrailing(previous) || hangulSyllable(previous)) { return hangulTrailing(c); }
+ return false;
+}

@@ -1,0 +1,37 @@
+{
+  "area_base": "c8f6d74f5387df926ae12d8babd2780564b60097",
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "rows": 3879,
+  "before_panics": 93,
+  "before_by_rule": {
+    "@typescript-eslint/method-signature-style": 8,
+    "no-octal-escape": 79,
+    "prefer-template": 5,
+    "react/jsx-no-comment-textnodes": 1
+  },
+  "before_by_mode": {
+    "unsupported-recovery": 8,
+    "": 85
+  },
+  "after_panics": 0,
+  "after_skipped_rules": 0,
+  "cohere_rule_tests": {
+    "pass": 117,
+    "fail": 0,
+    "skip": 0
+  },
+  "adapter_regressions": {
+    "pass": 3,
+    "fail": 0,
+    "skip": 0,
+    "seconds": 24.036
+  },
+  "rules_agreement": {
+    "pass": 1,
+    "fail": 0,
+    "skip": 0,
+    "seconds": 274.833,
+    "identical_bytes": 13773852
+  },
+  "mutants_caught": 4
+}

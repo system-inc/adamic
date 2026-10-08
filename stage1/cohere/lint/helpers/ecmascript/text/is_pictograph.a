@@ -1,0 +1,7 @@
+import { category } from './unicode_tables.a';
+import { isRegionalIndicator } from './is_regional_indicator.a';
+export function isPictograph(c: number): boolean {
+ if(c >= 0x1f000 && c <= 0x1faff && !isRegionalIndicator(c) && !(c >= 0x1f3fb && c <= 0x1f3ff)) { return true; }
+ if(c >= 0x2600 && c <= 0x27bf) { return true; }
+ return category(c, 'So');
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "symbol": "ecmascript/text.MinimumEditDistance",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/minimum_edit_distance.a",
+    "go": "cohere/internal/lint/ecmascript/text/distance.go:34"
+  },
+  {
+    "symbol": "ecmascript/text.BestMatch",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/best_match.a",
+    "go": "cohere/internal/lint/ecmascript/text/distance.go:109"
+  },
+  {
+    "symbol": "ecmascript/text.GraphemeCount",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/grapheme_count.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:29"
+  },
+  {
+    "symbol": "ecmascript/text.UnescapeStringLiteralText",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/unescape_string_literal_text.a",
+    "go": "cohere/internal/lint/ecmascript/text/jsx_entities.go:12"
+  },
+  {
+    "symbol": "ecmascript/text.decodeEntity",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/decode_entity.a",
+    "go": "cohere/internal/lint/ecmascript/text/jsx_entities.go:43"
+  },
+  {
+    "symbol": "ecmascript/text.hexValue",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/hex_value.a",
+    "go": "cohere/internal/lint/ecmascript/text/jsx_entities.go:91"
+  },
+  {
+    "symbol": "ecmascript/text.continuesCluster",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/continues_cluster.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:54"
+  },
+  {
+    "symbol": "ecmascript/text.hangulJoins",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/hangul_joins.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:141"
+  },
+  {
+    "symbol": "ecmascript/text.hangulLeading",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/hangul_leading.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:131"
+  },
+  {
+    "symbol": "ecmascript/text.hangulVowel",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/hangul_vowel.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:132"
+  },
+  {
+    "symbol": "ecmascript/text.hangulTrailing",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/hangul_trailing.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:133"
+  },
+  {
+    "symbol": "ecmascript/text.hangulSyllable",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/hangul_syllable.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:136"
+  },
+  {
+    "symbol": "ecmascript/text.hangulVowelSyllable",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/hangul_vowel_syllable.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:137"
+  },
+  {
+    "symbol": "ecmascript/text.isGraphemeControl",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/is_grapheme_control.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:95"
+  },
+  {
+    "symbol": "ecmascript/text.isGraphemeExtend",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/is_grapheme_extend.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:75"
+  },
+  {
+    "symbol": "ecmascript/text.isIndicLinker",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/is_indic_linker.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:105"
+  },
+  {
+    "symbol": "ecmascript/text.isPictograph",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/is_pictograph.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:118"
+  },
+  {
+    "symbol": "ecmascript/text.isRegionalIndicator",
+    "file": "stage1/cohere/lint/helpers/ecmascript/text/is_regional_indicator.a",
+    "go": "cohere/internal/lint/ecmascript/text/grapheme.go:113"
+  }
+]

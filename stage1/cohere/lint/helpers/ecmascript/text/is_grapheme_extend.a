@@ -1,0 +1,4 @@
+import { category } from './unicode_tables.a';
+export function isGraphemeExtend(c: number): boolean {
+ return category(c, 'Mn') || category(c, 'Me') || category(c, 'Mc') || c === 0x200c || c === 0x200d || (c >= 0x1f3fb && c <= 0x1f3ff) || (c >= 0xe0020 && c <= 0xe007f) || c === 0xe33 || c === 0xeb3;
+}

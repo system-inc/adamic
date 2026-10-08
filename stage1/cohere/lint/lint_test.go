@@ -223,27 +223,13 @@ func recoveryRows(t *testing.T, oracle string, rows []string) []string {
 		return rows
 	}
 	answer := execute(t, "", oracle, "--manifest", manifest(t, rows), "--diagnostics")
-	flags := strings.Fields(string(answer.output))
-	if len(flags) != len(rows) {
-		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
-	}
-	result := make([]string, len(rows))
-	for index, row := range rows {
-		result[index] = row
-		if flags[index] != "1" {
-			continue
-		}
-		fields := strings.Split(row, "\t")
-		for len(fields) < 7 {
-			fields = append(fields, "")
-		}
-		if fields[6] == "" {
-			fields[6] = "recovery"
-		}
-		result[index] = strings.Join(fields, "\t")
+	result, err := classifyRecoveryRows(rows, strings.Fields(string(answer.output)))
+	if err != nil {
+		t.Fatal(err)
 	}
 	return result
 }
+
 func generated(t *testing.T) []string {
 	sources := []string{
 		"debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}",
