@@ -43,5 +43,6 @@ Object fixtures also keep a retrieved value alive across replacement. The
 source-file fixture distinguishes a present undefined entry from a missing key
 with `has`. The string/number fixture preserves NaN and negative zero as values.
 The oracle compares native sanitizer, release, slab allocator and JavaScript
-backend outputs against Node, and additionally checks leaks and balanced counts. Boundary tests keep unsupported value
-representations and mixed Map key kinds refused.
+backend outputs against Node, and additionally checks leaks and balanced counts.
+Boundary tests keep unsupported value representations and mixed Map key kinds
+refused.
