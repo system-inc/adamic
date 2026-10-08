@@ -1,0 +1,40 @@
+let order = "";
+let calls = 0;
+function left(): number { order += "L"; calls += 1; return 10; }
+function right(): number { order += "R"; calls += 1; return 20; }
+console.log(`${(left(), right())} ${order} ${calls}`);
+console.log(`${(left(), (left(), right()))} ${order} ${calls}`);
+let local = 0;
+console.log(`${(local += 1, local)} ${local}`);
+const field = {value: 0};
+function object(): {value: number} { order += "O"; return field; }
+console.log(`${(object().value += 2, field.value)} ${field.value} ${order}`);
+const elements: number[] = [0];
+function array(): number[] { order += "A"; return elements; }
+function index(): number { order += "I"; return 0; }
+console.log(`${(array()[index()] = 3, elements[0])} ${order}`);
+let i = 0;
+let j = 0;
+for (i = 0, j = 5; (left(), i < 3); i += 1, j += 2) {
+ console.log(`${i} ${j}`);
+}
+console.log(`${i} ${j} ${order} ${calls}`);
+for (let k = 0; k < 3; k++, local++) { console.log(`${k} ${local}`); }
+console.log(`${(left(), "text")} ${(left(), false)} ${(left(), 0)} ${(left(), "")}`);
+function optional(value: number | undefined): number | undefined { return (left(), value); }
+console.log(`${optional(undefined)} ${optional(0)} ${optional(7)}`);
+function optionalBoolean(value: boolean | undefined): boolean | undefined { return (left(), value); }
+console.log(`${optionalBoolean(undefined)} ${optionalBoolean(false)} ${optionalBoolean(true)}`);
+function item(value: number): {value: number} { order += "N"; return {value: value}; }
+const ref = (item(1), item(2));
+console.log(`${ref.value} ${order}`);
+const list = (item(3), [item(4)]);
+console.log(`${list[0]?.value} ${order}`);
+const map = (left(), new Map<string, number>());
+map.set("key", 8);
+console.log(`${map.get("key")}`);
+const closure = (left(), (value: number): number => value + 1);
+console.log(`${closure(9)}`);
+function effect(): void { order += "V"; }
+console.log(`${typeof (left(), effect())} ${order}`);
+(left(), right());

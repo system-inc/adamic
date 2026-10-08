@@ -37,7 +37,6 @@ var refusedOperators = map[ast.Kind]refusal{
 	ast.KindEqualsEqualsToken:      {"==", "use ===, which doesn't coerce"},
 	ast.KindExclamationEqualsToken: {"!=", "use !==, which doesn't coerce"},
 	ast.KindInKeyword:              {"in", "an object's shape is known; use a discriminant, or a Map"},
-	ast.KindCommaToken:             {"the comma operator", "write each expression as its own statement"},
 }
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.

@@ -508,6 +508,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return ir.TypeOf{Value: operand, Null: null}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindCommaToken {
+			return l.commaExpression(node)
+		}
 		if logicalAssignment(binary.OperatorToken.Kind) {
 			return l.logicalAssignment(node)
 		}

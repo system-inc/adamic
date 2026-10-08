@@ -144,6 +144,14 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
+		if expression.AsBinaryExpression().OperatorToken.Kind == ast.KindCommaToken {
+			left, err := l.discardExpression(expression.AsBinaryExpression().Left)
+			if err != nil {
+				return nil, err
+			}
+			right, err := l.discardExpression(expression.AsBinaryExpression().Right)
+			return append(left, right...), err
+		}
 		return l.assignment(expression)
 	case ast.KindPrefixUnaryExpression, ast.KindPostfixUnaryExpression:
 		return l.increment(expression)

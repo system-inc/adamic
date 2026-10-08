@@ -10,6 +10,10 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{"internal/oracle/testdata/comma_operator.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{"internal/oracle/testdata/logical_nullish_assignment.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string
@@ -119,5 +123,65 @@ func TestLogicalAssignmentMutants(t *testing.T) {
 				t.Logf("%d mutations caught by Node stdout in native and JavaScript", changed)
 			})
 		}
+	}
+}
+
+func TestCommaMutants(t *testing.T) {
+	for _, mutation := range []string{"drop_left", "reverse_order", "return_left"} {
+		t.Run(mutation, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/comma_operator.a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			changed := 0
+			for i := range program.Functions {
+				f := &program.Functions[i]
+				if f.Name != "comma_expression" || len(f.Body) != 2 {
+					continue
+				}
+				left, ok := f.Body[0].(ir.Evaluate)
+				ret, returns := f.Body[1].(ir.Return)
+				if !ok || !returns || left.Value.Type() != ir.Number || ret.Value.Type() != ir.Number {
+					continue
+				}
+				switch mutation {
+				case "drop_left":
+					f.Body = f.Body[1:]
+				case "return_left":
+					f.Body = []ir.Statement{ir.Evaluate{Value: ret.Value}, ir.Return{Value: left.Value}}
+				case "reverse_order":
+					local := len(program.Locals)
+					program.Locals = append(program.Locals, ir.Local{Name: "comma_mutant_right", Type: ir.Number, Function: i})
+					f.Body = []ir.Statement{ir.Declare{Local: local, Value: ret.Value}, left, ir.Return{Value: ir.Read{Local: local, Of: ir.Number}}}
+				}
+				changed++
+			}
+			if changed == 0 {
+				t.Fatal("mutant changed nothing")
+			}
+			truth := onNode(t, path)
+			got, binary := natively(t, program)
+			if got.exitCode != 0 || len(got.stderr) != 0 {
+				t.Fatalf("mutant failed execution: %+v", got)
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			if diff := disagreement(truth, got); diff != "stdout differs" {
+				t.Fatalf("native mutant caught by %q", diff)
+			}
+			js := onJavaScriptBackend(t, program)
+			if js.exitCode != 0 || len(js.stderr) != 0 {
+				t.Fatalf("JavaScript mutant failed execution: %+v", js)
+			}
+			if diff := disagreement(truth, js); diff != "stdout differs" {
+				t.Fatalf("JavaScript mutant caught by %q", diff)
+			}
+			t.Logf("%d mutations caught by Node stdout in both backends", changed)
+		})
 	}
 }
