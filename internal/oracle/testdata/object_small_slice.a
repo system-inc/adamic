@@ -1,0 +1,26 @@
+let values = [10, 20, 30, 40];
+function copy(start?: number, end?: number): number[] {
+    return values.slice(start, end);
+}
+console.log(`none ${copy().join(',')}`);
+console.log(`start ${copy(1).join(',')}`);
+console.log(`end ${copy(undefined, 2).join(',')}`);
+console.log(`negative ${copy(-2, -1).join(',')}`);
+console.log(`nan ${copy(NaN, NaN).join(',')}`);
+console.log(`literal ${values.slice(undefined, undefined).join(',')}`);
+let calls = 0;
+function receiver(): number[] {
+    calls += 1;
+    return values;
+}
+function end(): number | undefined {
+    values.push(50);
+    return undefined;
+}
+console.log(`grown ${receiver().slice(1, end()).join(',')}: ${calls}`);
+function replace(): number | undefined {
+    values = [99];
+    return undefined;
+}
+console.log(`old ${receiver().slice(undefined, replace()).join(',')}: ${calls}`);
+console.log(`new ${values.join(',')}`);

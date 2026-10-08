@@ -1137,13 +1137,38 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		arguments = append(arguments, lowered)
 	}
 	if name == "slice" {
-		for _, argument := range arguments {
-			if argument.Type() != ir.Number {
+		if len(arguments) > 2 {
+			return nil, true, l.notYet(node, "slice with more than two arguments")
+		}
+		for index, argument := range arguments {
+			if _, missing := argument.(ir.Undefined); missing {
+				if index == 0 {
+					arguments[index] = ir.NumberConstant{Value: math.NaN()}
+				} else {
+					// An explicit undefined end uses the length, exactly like omission.
+					arguments = arguments[:1]
+				}
+				continue
+			}
+			if argument.Type() != ir.Number && argument.Type() != ir.MaybeNumber {
 				return nil, true, l.notYet(node, "slice with an index that isn't a number")
 			}
 		}
-		if len(arguments) > 2 {
-			return nil, true, l.notYet(node, "slice with more than two arguments")
+		if len(arguments) == 2 && arguments[1].Type() == ir.MaybeNumber {
+			// Read the default length after both bounds have run, from the receiver
+			// already captured before them. A bound may mutate or replace its source.
+			builder := l.libraryArrayBuilder(append([]ir.Expression{array}, arguments...))
+			held := builder.read(builder.parameters[0])
+			start := builder.read(builder.parameters[1])
+			end := builder.read(builder.parameters[2])
+			start = ir.NumberCall{Function: "convert", Arguments: []ir.Expression{start}}
+			bound := ir.Conditional{Condition: ir.IsUndefined{Value: end}, WhenTrue: ir.Length{Array: held}, WhenNot: ir.NumberCall{Function: "convert", Arguments: []ir.Expression{end}}}
+			return builder.finish("array_slice_optional_end", ir.ArraySlice{Array: held, Arguments: []ir.Expression{start, bound}}), true, nil
+		}
+		for index, argument := range arguments {
+			if argument.Type() == ir.MaybeNumber {
+				arguments[index] = ir.NumberCall{Function: "convert", Arguments: []ir.Expression{argument}}
+			}
 		}
 		return ir.ArraySlice{Array: array, Arguments: arguments}, true, nil
 	}
