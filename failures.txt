@@ -24,6 +24,14 @@ census: ADAMIC_CYCLE_LEDGER_ROOT must name pristine TypeScript v6.0.3 at 050880c
     import_cycle_ledger_test.go:31: set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
 --- SKIP: TestOriginalCycleLedger (0.00s)
 
+== github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (skipped; the census table classes it required-input)
+census: Set ADAMIC_GITIGNORE_LARGEST=1; test generates an ignore file of exactly 100 MiB itself.
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+    gitignore_test.go:158: only an ignore file of exactly 100 MiB shows this one, asked about when ADAMIC_GITIGNORE_LARGEST is set
+--- SKIP: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (0.00s)
+
 == github.com/system-inc/adamic/internal/lower TestOptionalWideningCensus (skipped; no census row matches its name)
 === RUN   TestOptionalWideningCensus
     optional_widening_census_test.go:28: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project
