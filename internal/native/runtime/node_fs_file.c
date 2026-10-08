@@ -1,6 +1,7 @@
 // Linux is the gate of record. The filesystem owns descriptor offsets and paths;
 // the host owns only temporary buffers and returned counted values.
 #define _POSIX_C_SOURCE 200809L
+#define _DARWIN_C_SOURCE
 #include "adamic.h"
 #include <errno.h>
 #include <dirent.h>
