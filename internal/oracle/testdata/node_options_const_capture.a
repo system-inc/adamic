@@ -1,0 +1,9 @@
+import { statSync, Stats } from 'node:fs';
+const options = (({ throwIfNoEntry: false }) as const);
+function status(path: string): Stats | undefined {
+    return statSync(path, options);
+}
+const present = status('.');
+if (present === undefined) console.log('missing');
+else console.log(present.isDirectory() ? 'directory' : 'other');
+console.log(`absent=${status('missing-node-options-widening-entry') === undefined}`);

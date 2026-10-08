@@ -77,6 +77,9 @@ func IsNodeLibrary(file *ast.SourceFile) bool {
 // the pinned Node global Console interface merge. The package itself is untouched.
 func nodePrelude() string {
 	source := strings.Replace(prelude, "declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};", "declare var console: Console;", 1)
+	// The project overlay names Console; its standalone methods must not
+	// shadow the official Node interface inherited by the global declaration.
+	source = strings.Replace(source, "interface Console {\n\tlog(message: string): void;\n\terror(message: string): void;\n}\n", "", 1)
 	start := strings.Index(source, "declare const process: {")
 	if start >= 0 {
 		end := strings.Index(source[start:], "\n};")
