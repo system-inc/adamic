@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.55s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/run-initializers/wrong-arity (0.53s)
+        checked_views_callable_later_ranked_test.go:131: gate cache node miss
+        checked_views_callable_later_ranked_test.go:151: gate cache node miss
+        checked_views_callable_later_ranked_test.go:171: backend0 exit 0 stdout "9\n" stderr "" want "createRunInitializersHelper" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/referenced-import/wrong-arity (0.47s)
+        checked_views_callable_later_ranked_test.go:131: gate cache node miss
+        checked_views_callable_later_ranked_test.go:151: gate cache node miss
+        checked_views_callable_later_ranked_test.go:171: backend0 exit 0 stdout "9\n" stderr "" want "getReferencedImportDeclaration" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/catch-update/wrong-arity (0.52s)
+        checked_views_callable_later_ranked_test.go:131: gate cache node miss
+        checked_views_callable_later_ranked_test.go:151: gate cache node miss
+        checked_views_callable_later_ranked_test.go:171: backend0 exit 0 stdout "9\n" stderr "" want "updateCatchClause" and "found function with arity 0"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.561s
+FAIL

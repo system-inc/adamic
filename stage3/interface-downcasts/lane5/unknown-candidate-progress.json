@@ -3008,6 +3008,73 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "initializer-import-catch",
+      "pairs": 3,
+      "candidateReads": 18,
+      "members": [
+        {
+          "receiver_type_id": 12054,
+          "type": "EmitHelperFactory",
+          "field": "createRunInitializersHelper",
+          "declared_types": [
+            "(thisArg: Expression, initializers: Expression, value?: Expression | undefined) => Expression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/transformers/esDecorators.ts",
+            "line": 609,
+            "column": 45
+          },
+          "rank": 274,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10401,
+          "type": "EmitResolver",
+          "field": "getReferencedImportDeclaration",
+          "declared_types": [
+            "(node: Identifier) => Declaration | undefined"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/transformers/utilities.ts",
+            "line": 313,
+            "column": 34
+          },
+          "rank": 275,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateCatchClause",
+          "declared_types": [
+            "(node: CatchClause, variableDeclaration: VariableDeclaration | undefined, block: Block) => CatchClause"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 1736,
+            "column": 16
+          },
+          "rank": 300,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

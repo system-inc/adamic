@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface CatchClause {readonly value:number;}
+interface VariableDeclaration {readonly value:number;}
+interface Block {readonly value:number;}
+interface Base {readonly updateCatchClause:unknown;}
+interface Target {updateCatchClause(node: CatchClause, variableDeclaration: VariableDeclaration | undefined, block: Block): CatchClause;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updateCatchClause({value:1},undefined,{value:3}).value}`);console.log(`${context.factory.updateCatchClause({value:1},{value:2},{value:3}).value}`);}
+probe({updateCatchClause:(node:CatchClause,variableDeclaration:VariableDeclaration|undefined,block:Block):CatchClause=>({value:node.value+(variableDeclaration===undefined?0:variableDeclaration.value)+block.value})});

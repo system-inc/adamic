@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Expression {readonly value:number;}
+interface Base {readonly createRunInitializersHelper:unknown;}
+interface Target {createRunInitializersHelper(thisArg: Expression, initializers: Expression, value?: Expression): Expression;}
+function probe(value:Base):void {function emitHelpers():Target{return value as Target;}console.log(`${emitHelpers().createRunInitializersHelper({value:1},{value:2},{value:3}).value}`);}
+probe({createRunInitializersHelper:3});

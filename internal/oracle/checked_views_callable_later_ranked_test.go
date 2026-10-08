@@ -8,6 +8,9 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"run-initializers", "createRunInitializersHelper", "6\n", "3\n3\n6\n", "0", "thisArg.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"referenced-import", "getReferencedImportDeclaration", "3\n", "0\n3\n", "0", "node.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"catch-update", "updateCatchClause", "6\n", "4\n6\n", "0", "node.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"array-type", "createArrayTypeNode", "3\n", "", "0", "elementType.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"export-default", "createExportDefault", "3\n", "", "0", "expression.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"not-emitted", "createNotEmittedStatement", "3\n", "", "0", "original.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Identifier {readonly value:number;}
+interface Declaration {readonly value:number;}
+interface Base {readonly getReferencedImportDeclaration:unknown;}
+interface Target {getReferencedImportDeclaration(node: Identifier): Declaration | undefined;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.getReferencedImportDeclaration({value:3});console.log(`${result===undefined?0:result.value}`);}
+probe({getReferencedImportDeclaration:3});

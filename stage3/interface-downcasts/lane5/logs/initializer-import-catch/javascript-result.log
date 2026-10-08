@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.23s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/run-initializers/wrong-result (0.43s)
+        checked_views_callable_later_ranked_test.go:131: gate cache node hit
+        checked_views_callable_later_ranked_test.go:151: gate cache node miss
+        checked_views_callable_later_ranked_test.go:171: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: emitHelpers().createRunInitializersHelper({value:1},{value:2},{value:3}).value is not initialized; expected number, found missing\n" want "createRunInitializersHelper" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: emitHelpers().createRunInitializersHelper expected (thisArg: Expression, initializers: Expression, value?: Expression | undefined) => Expression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/referenced-import/wrong-result (0.38s)
+        checked_views_callable_later_ranked_test.go:131: gate cache node hit
+        checked_views_callable_later_ranked_test.go:151: gate cache node miss
+        checked_views_callable_later_ranked_test.go:171: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: result.value is not initialized; expected number, found missing\n" want "getReferencedImportDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: resolver.getReferencedImportDeclaration expected (node: Identifier) => Declaration | undefined, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/catch-update/wrong-result (0.39s)
+        checked_views_callable_later_ranked_test.go:131: gate cache node hit
+        checked_views_callable_later_ranked_test.go:151: gate cache node miss
+        checked_views_callable_later_ranked_test.go:171: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateCatchClause({value:1},{value:2},{value:3}).value is not initialized; expected number, found missing\n" want "updateCatchClause" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateCatchClause expected (node: CatchClause, variableDeclaration: VariableDeclaration | undefined, block: Block) => CatchClause, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.238s
+FAIL
