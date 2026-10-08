@@ -42,6 +42,15 @@ func TestDecodeASCII(t *testing.T) {
 	if len(sources) == 0 {
 		t.Fatal("no runtime sources")
 	}
+	// Build the runtime as programs do (library.go cachedRuntime): the owner modules carried for
+	// ABI checking are linked only when an admitted operation selects their feature.
+	kept := sources[:0]
+	for _, source := range sources {
+		if base := filepath.Base(source); base != "node_process.c" && base != "parallel.c" {
+			kept = append(kept, source)
+		}
+	}
+	sources = kept
 	for _, target := range []string{"native", "wasi"} {
 		t.Run(target, func(t *testing.T) {
 			compiler := "clang"
