@@ -74,14 +74,14 @@ func (l *lowering) consoleStream(callee *ast.Node) (ir.Stream, error) {
 	return 0, l.notYet(callee, "console."+callee.Name().Text())
 }
 
-// Node's global console declaration merges with the prelude variable. Inspect
-// all declarations so source ordering cannot turn the real console into a user one.
+// Node project inputs can carry the pinned package's global without the prelude.
+// Follow its declaration identity, preserving a program's own console object.
 func isPreludeConsole(symbol *ast.Symbol) bool {
 	if symbol == nil || symbol.Name != "console" {
 		return false
 	}
 	for _, declaration := range symbol.Declarations {
-		if load.IsPrelude(ast.GetSourceFileOfNode(declaration)) {
+		if load.IsPrelude(ast.GetSourceFileOfNode(declaration)) || load.IsNodeLibrary(ast.GetSourceFileOfNode(declaration)) {
 			return true
 		}
 	}

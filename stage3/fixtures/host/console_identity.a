@@ -1,0 +1,10 @@
+import { basename } from "node:path";
+console.log(basename("folder/" + "owned.txt"));
+console.error("error:" + "owned");
+let seen = "";
+function local(): void {
+    const console = { log: (text: string): void => { seen = text; } };
+    console.log("local:" + "owned");
+}
+local();
+console.log(seen);
