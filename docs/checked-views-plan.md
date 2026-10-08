@@ -1257,3 +1257,8 @@ fixtures under lane5/scanner and lane5/performance. These preserve original tsc
 member signatures and call expressions with reduced receivers and implementations.
 No shared production hook is needed for these fixed scalar signatures. The lane
 counts helper adds these directories; candidate counts remain separate by census.
+
+Lane 5 also pins gaps/mixed-scalar-boxed-result.a against Node. It reproduces
+the predicates worker ABI boundary: a number-returning producer needs a boxed
+union result adapter. This adds no blanket callable admission. Aggregate callable
+results also need field-demand propagation before their shapes can be admitted.

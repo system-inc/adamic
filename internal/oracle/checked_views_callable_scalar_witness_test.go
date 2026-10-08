@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -61,5 +62,20 @@ func TestCheckedViewCallableScalarWitnesses(t *testing.T) {
 				}
 			})
 		}
+	}
+}
+
+func TestCheckedViewCallableMixedResultBoundary(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane5/gaps/mixed-scalar-boxed-result.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "5\n" {
+		t.Fatalf("Node: %#v", truth)
+	}
+	_, err = lowered(t, path)
+	if err == nil || !strings.Contains(err.Error(), "a function value returning union of differently held members") {
+		t.Fatalf("mixed result boundary: %v", err)
 	}
 }

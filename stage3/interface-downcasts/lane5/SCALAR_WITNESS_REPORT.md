@@ -23,3 +23,10 @@ Debug.assert's existing predicate guard remains. Integrator predicate merge is
 pending; assertions of expression must be tested explicitly when its SHA arrives.
 No firm all-family date is supported by these additional scalar observations;
 the prior October 12 estimate remains conditional on predicate and ABI work.
+
+Follow-up boundary: the predicates worker's reduced scalar-result-to-boxed-union
+example prints 5 on Node and remains refused at its call with "a function value
+returning union of differently held members". TestCheckedViewCallableMixedResultBoundary
+pins this refusal; no unsafe adapter admission was added. Rank 53's mixed
+numeric-literal shape remains pending, along with higher-ranked overload, aggregate,
+rest and predicate contracts. The two certified members do not certify those shapes.
