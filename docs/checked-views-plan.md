@@ -1628,3 +1628,15 @@ field and source hash is retained. No source admission hook or flow solver is
 added by these tests. Field-name fallback currently blocks two supported name
 reads with an unrelated never descriptor; recursive intersection admission
 blocks the third. Scoped admission must preserve checks through wider helpers.
+
+### Lane 4 direct tagged union target admission
+
+Named hook viewUnionTargetProof in lower/view_union_targets.go is called by
+cast_proof.go for a broad object source and union target. Each target arm must
+preserve source slots and carry a distinct, readonly, non-accessor literal tag.
+Existing cast.go emits its multi-value tag guard and enters the shared lazy
+view. No payload is trusted by the tag test. Lane 4 owns the corresponding
+union-target oracle and original FunctionLikeDeclaration/ClassDeclaration union
+fixtures. The integrator reconciles this small cast-proof dispatch hook.
+The existing certifiedCheckedCast hook also retains the union target contract
+on cast.go's multi-tag IR node. The tag proof remains distinct from payload proof.
