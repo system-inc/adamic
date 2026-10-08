@@ -227,7 +227,12 @@ explained = set()
 if os.path.exists(sys.argv[1]):
     for line in open(sys.argv[1]):
         if line.strip() and not line.startswith("#"):
-            explained.add(line.split("\t", 1)[0].removeprefix("origin/"))
+            # A row that starts OPEN names the red's owner and its fix-forward (for the star-idle
+            # alarm) without explaining it: landings stay paused until the row is lifted or fixed.
+            reference, _, note = line.partition("\t")
+            if note.startswith("OPEN"):
+                continue
+            explained.add(reference.removeprefix("origin/"))
 references = subprocess.run(["git", "ls-remote", "origin", "refs/heads/gate-logs/*"], capture_output=True, text=True, check=True).stdout.split("\n")
 logs = {}
 for line in references:
