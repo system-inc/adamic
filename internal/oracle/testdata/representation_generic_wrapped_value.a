@@ -1,0 +1,13 @@
+function maybeWrap<U>(value: U, mode: number): U | readonly U[] | undefined {
+    if (mode === 0) return undefined;
+    if (mode === 1) return value;
+    return [value];
+}
+console.log(`${typeof maybeWrap(0, 0)}:${typeof maybeWrap(0, 1)}:${typeof maybeWrap(0, 2)}`);
+console.log(`${typeof maybeWrap('', 0)}:${typeof maybeWrap('', 1)}:${typeof maybeWrap('', 2)}`);
+console.log(`${typeof maybeWrap(false, 0)}:${typeof maybeWrap(false, 1)}:${typeof maybeWrap(false, 2)}`);
+const object = { label: 'object'.repeat(2) };
+console.log(`${maybeWrap(object, 1) === object}:${typeof maybeWrap(object, 2)}`);
+const wrapped = maybeWrap(0, 2);
+if (typeof wrapped === 'object') console.log(`${wrapped.length}`);
+else console.log('wrong kind');

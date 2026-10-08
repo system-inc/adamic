@@ -1,0 +1,30 @@
+function addToMultimap<K, V>(map: Map<K, Set<V>>, key: K, value: V): void {
+    const held = map.get(key);
+    if (held !== undefined) {
+        held.add(value);
+    } else {
+        const made = new Set<V>();
+        made.add(value);
+        map.set(key, made);
+    }
+}
+const byString = new Map<string, Set<number>>();
+addToMultimap(byString, 'a', 7);
+addToMultimap(byString, 'a', 9);
+const numbers = byString.get('a');
+if (numbers === undefined) console.log('missing numbers');
+else console.log(`${numbers.has(7)} ${numbers.has(9)} ${numbers.size}`);
+const byNumber = new Map<number, Set<string>>();
+addToMultimap(byNumber, 0, 'a'.repeat(2));
+addToMultimap(byNumber, -0, 'b'.repeat(2));
+const words = byNumber.get(0);
+if (words === undefined) console.log('missing words');
+else console.log(`${words.has('aa')} ${words.has('bb')} ${words.size}`);
+const key = { label: 'object'.repeat(2) };
+const equalText = { label: key.label };
+const byObject = new Map<{ readonly label: string }, Set<boolean>>();
+addToMultimap(byObject, key, false);
+addToMultimap(byObject, key, true);
+const flags = byObject.get(key);
+if (flags === undefined) console.log('missing flags');
+else console.log(`${flags.has(false)} ${flags.has(true)} ${flags.size} ${byObject.has(equalText)}`);

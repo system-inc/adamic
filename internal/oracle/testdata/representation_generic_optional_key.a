@@ -1,0 +1,17 @@
+function firstKey<K>(keys: readonly K[]): K | undefined { return keys[0]; }
+const numbers: readonly number[] = [0];
+const noNumbers: readonly number[] = [];
+const strings: readonly string[] = [''];
+const noStrings: readonly string[] = [];
+const booleans: readonly boolean[] = [false];
+const noBooleans: readonly boolean[] = [];
+console.log(`${typeof firstKey(numbers)}:${firstKey(numbers) === undefined}`);
+console.log(`${typeof firstKey(noNumbers)}:${firstKey(noNumbers) === undefined}`);
+console.log(`${typeof firstKey(strings)}:${firstKey(strings) === undefined}`);
+console.log(`${typeof firstKey(noStrings)}:${firstKey(noStrings) === undefined}`);
+console.log(`${typeof firstKey(booleans)}:${firstKey(booleans) === undefined}`);
+console.log(`${typeof firstKey(noBooleans)}:${firstKey(noBooleans) === undefined}`);
+const object = { name: 'node'.repeat(2) };
+const objects: readonly { readonly name: string }[] = [object];
+const noObjects: readonly { readonly name: string }[] = [];
+console.log(`${firstKey(objects) === object}:${typeof firstKey(noObjects)}`);
