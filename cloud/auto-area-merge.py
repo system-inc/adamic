@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Dispatch green workers to integration's unchanged merge script (macOS and Linux)."""
 import argparse
-import ast
 import csv
 import datetime
 import fcntl
+import importlib.util
 import hashlib
 import io
 import json
@@ -61,33 +61,22 @@ def checkout():
     return root
 
 
-def table(path):
-    return [line.split('\t') for line in path.read_text().splitlines() if line and not line.startswith('#')]
-
-
-def areas_for(branch, directory):
-    """Overrides beat prefixes. Use integration's census rules, never changed-file heuristics."""
-    areas = table(directory / 'areas.tsv')
-    overrides = [owner for name, owner in table(directory / 'census-owners.tsv') if name == branch]
-    if overrides:
-        owners = set(overrides)
-        candidates = {area for area, owner, _ in areas if owner in owners}
-        # Census uses sub-Circle names for the two distinct cohere areas.
-        aliases = {'system_cohere_lint': 'stage1-lint', 'system_cohere_format': 'stage1-format'}
-        candidates.update(aliases[o] for o in owners if o in aliases)
-    else:
-        # Read the literal table without importing (or running) the census program.
-        module = ast.parse((directory / 'branch-census.py').read_text())
-        prefixes = next(ast.literal_eval(node.value) for node in module.body
-                        if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'prefixOwners' for t in node.targets))
-        owners = {owner for prefix, owner in prefixes if branch.startswith(prefix)}
-        candidates = {area for area, owner, _ in areas if owner in owners}
-        aliases = {'system_cohere_lint': 'stage1-lint', 'system_cohere_format': 'stage1-format'}
-        candidates.update(aliases[o] for o in owners if o in aliases)
-        # Area-spelled worker prefixes (codex/runtime-*, codex/compiler-*, etc.) are explicit.
-        candidates.update(area for area, _, _ in areas if branch.startswith(f'codex/{area}-'))
-    valid = {area for area, _, _ in areas}
-    return sorted(candidates & valid)
+def route(branch, directory):
+    """Use only integration's trusted route API; malformed/unavailable routing is held."""
+    try:
+        spec = importlib.util.spec_from_file_location('trusted_area_route', directory / 'area-route.py')
+        module = importlib.util.module_from_spec(spec)
+        # Load trusted source without writing __pycache__ into integration's checkout.
+        source = directory / 'area-route.py'
+        exec(compile(source.read_text(), str(source), 'exec'), module.__dict__)
+        area, how = module.route(branch)
+        if not isinstance(area, str) or not isinstance(how, str) or not how.strip():
+            return 'hold', 'integration route returned an invalid area/reason; ask system_adamic_integration'
+        if area != 'hold' and area not in module.areaNames():
+            return 'hold', f'integration route returned unknown area {area!r}; ask system_adamic_integration'
+        return area, how
+    except Exception as error:
+        return 'hold', f'integration routing unavailable: {error}; ask system_adamic_integration'
 
 
 def csv_line(row):
@@ -153,43 +142,118 @@ def publish_records():
         pending.unlink()
 
 
+def ai_database():
+    return Path(os.environ.get('ADAMIC_AI_DATABASE', '/Users/kirkouimet/Projects/ahra/modules/ai/data/ai.db'))
+
+
+def worker_session(connection, branch):
+    # A reply naming codex/foo-bar must not identify the worker of codex/foo.
+    pattern = re.compile(r'(?<![A-Za-z0-9_./-])' + re.escape(branch) + r'(?![A-Za-z0-9_./-])')
+    for session, text in connection.execute(
+            'select session_id, text from replies where instr(text, ?) > 0 order by fetched_at desc', (branch,)):
+        if session and pattern.search(text or ''):
+            return str(session)
+    return None
+
+
+def hold_job(branch, sha, reason, dry=False):
+    if dry:
+        log(f'held {branch} {sha}: {reason} (dry run, not reported)')
+        return
+    directory = STATE / 'area-held'
+    directory.mkdir(exist_ok=True)
+    key = hashlib.sha256(branch.encode()).hexdigest()
+    path = directory / (key + '.json')
+    previous = json.loads(path.read_text()) if path.exists() else {}
+    reported = previous.get('reported_to', ['system_adamic_integration'] if previous.get('reported') else [])
+    entry = {'branch': branch, 'sha': sha, 'reason': reason, 'reported_to': reported}
+    atomic_json(path, entry)
+    write_held_list()
+    circles = set(re.findall(r'@([A-Za-z0-9_]+)', reason))
+    circles.update(re.findall(r'\b(system_[A-Za-z0-9_]+)\b', reason))
+    targets = ['system_adamic_integration'] + sorted(circles - {'system_adamic_integration'})
+    message = f'Automatic area merge held: {branch} {sha}: {reason}. Job remains .held; integration must decide or clear the refusal.'
+    for target in targets:
+        if target in entry['reported_to']:
+            continue
+        try:
+            result = run('ahra', 'os', 'send', target, message,
+                         cwd='/Users/kirkouimet/Projects/ahra', check=False)
+            if result.returncode:
+                log(f'hold report to {target} failed for {branch}: {result.stdout.strip()}')
+                continue
+        except OSError as error:
+            log(f'hold report to {target} failed for {branch}: {error}')
+            continue
+        entry['reported_to'].append(target)
+        atomic_json(path, entry)
+        log(f'reported held branch {branch} to {target}')
+
+
+def write_held_list():
+    output = io.StringIO()
+    writer = csv.writer(output, delimiter='\t', lineterminator='\n')
+    writer.writerow(['branch', 'sha', 'reason'])
+    for file in sorted((STATE / 'area-held').glob('*.json')):
+        item = json.loads(file.read_text())
+        if not item.get('resolved'):
+            writer.writerow([item['branch'], item['sha'], item['reason']])
+    temporary = STATE / 'area-held.tsv.tmp'
+    temporary.write_text(output.getvalue())
+    temporary.replace(STATE / 'area-held.tsv')
+
+
+def clear_hold(branch):
+    # Keep the per-branch reported marker: future SHAs must not resend the same alert.
+    path = STATE / 'area-held' / (hashlib.sha256(branch.encode()).hexdigest() + '.json')
+    if path.exists():
+        entry = json.loads(path.read_text())
+        entry['resolved'] = True
+        atomic_json(path, entry)
+        write_held_list()
+
+
 def notify(branch, sha, area, outcome, output, logfile):
-    database = Path(os.environ.get('ADAMIC_AI_DATABASE', '/Users/kirkouimet/Projects/ahra/modules/ai/data/ai.db'))
+    database = ai_database()
     session = None
-    if database.exists():
+    if database.is_file():
         try:
             with sqlite3.connect(database.resolve().as_uri() + '?mode=ro', uri=True) as connection:
-                session = connection.execute('select session_id from replies where instr(text, ?) > 0 order by fetched_at desc limit 1', (branch,)).fetchone()
+                session = worker_session(connection, branch)
         except sqlite3.Error as error:
             log(f'ai.db lookup failed for {branch}: {error}')
     if not session:
         log(f'no session for {branch}; {outcome} details in {logfile}')
         return
     message = logfile.with_suffix('.message.txt')
-    text = f'Automatic area merge {outcome}: {branch} {sha} into area/{area}.\nResolve this in your branch and push a new tip for the fast gate.\n\n{output}\n'
+    if outcome == 'merged':
+        text = f'Merged {branch} {sha} into area/{area} automatically.\n'
+    else:
+        text = f'Automatic area merge {outcome}: {branch} {sha} into area/{area}.\nResolve this in your branch and push a new tip for the fast gate.\n\n{output}\n'
     # The script prints conflict names and new test failures; vet/census/lane errors name log files.
-    for name in sorted(set(re.findall(r'(/[^\s();,]+\.(?:log|txt))', output))):
+    for name in sorted(set(re.findall(r'(/[^\s();,]+\.(?:log|txt))', output))) if outcome != 'merged' else []:
         path = Path(name)
         if path.is_file():
             text += f'\n--- {path} ---\n' + path.read_text(errors='replace')[-100000:]
     message.write_text(text)
-    result = run('ahra', 'ai', 'send', str(session[0]), '--message-file', str(message),
+    result = run('ahra', 'ai', 'send', session, '--message-file', str(message),
                  cwd='/Users/kirkouimet/Projects/ahra', check=False)
-    log(f'worker {session[0]} notification: {result.returncode} {result.stdout.strip()}')
+    log(f'worker {session} notification: {result.returncode} {result.stdout.strip()}')
 
 
 def enabled():
     return (STATE / 'auto-area-merge').is_file()
 
 
-def attempt(root, branch, sha, dry):
+def attempt(root, branch, sha, dry, routing=None):
     start = time.monotonic()
     utc = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
-    candidates = areas_for(branch, root / 'cloud/integration')
-    area = candidates[0] if len(candidates) == 1 else ''
+    area, how = routing or route(branch, root / 'cloud/integration')
     output = ''
-    if not area:
-        log(f'no area for {branch}' + (f' (ambiguous: {", ".join(candidates)})' if candidates else ''))
+    if area == 'hold':
+        area = ''
+        log(f'no area for {branch}: {how}')
+        hold_job(branch, sha, how, dry)
         outcome = 'no-area'
     else:
         log(f'{branch} {sha} -> area/{area}' + (' (--no-push)' if dry else ''))
@@ -200,14 +264,22 @@ def attempt(root, branch, sha, dry):
         result = run(*arguments, cwd=root, check=False)
         output = result.stdout
         print(output, end='', flush=True)
-        if 'refused: another merge into area/' in output or 'refused: another machine is merging into area/' in output:
-            outcome = 'locked'
+        refusals = re.findall(r'^refused:.*$', output, re.MULTILINE)
+        if refusals:
+            reason = '; '.join(refusals)
+            # Live lock contention must retry, but all refusal details go to integration.
+            busy = any('another merge into area/' in line or 'another machine is merging into area/' in line for line in refusals)
+            outcome = 'locked' if busy else 'held'
+            hold_job(branch, sha, reason, dry)
         elif result.returncode == 3:
             outcome = 'conflict'
         elif result.returncode == 0:
             outcome = 'merged'
-        else:
+        elif result.returncode == 1 and re.search(r'^(not merged:|new failures from merging |go vet failed:|gofmt:)', output, re.MULTILINE):
             outcome = 'red'
+        else:
+            outcome = 'held'
+            hold_job(branch, sha, f'area-merge exited {result.returncode} without a recognized verdict: {output.strip()[:2000]}', dry)
     area_sha = ''
     if area:
         try:
@@ -220,7 +292,8 @@ def attempt(root, branch, sha, dry):
     logs.mkdir(exist_ok=True)
     logfile = logs / (hashlib.sha256((branch + sha + utc).encode()).hexdigest() + '.log')
     logfile.write_text(output)
-    if outcome in ('red', 'conflict') and not dry:
+    if outcome in ('merged', 'red', 'conflict') and not dry:
+        clear_hold(branch)
         try:
             notify(branch, sha, area, outcome, output, logfile)
         except (OSError, RuntimeError) as error:
@@ -246,7 +319,7 @@ def main():
             parser.error('want codex/* and a full sha')
         key = hashlib.sha256((branch + '\n' + sha).encode()).hexdigest()
         path = queue / (key + '.json')
-        if not path.exists() and not (queue / (key + '.done')).exists():
+        if not path.exists() and not (queue / (key + '.done')).exists() and not (queue / (key + '.held')).exists():
             atomic_json(path, [branch, sha])
             log(f'queued {branch} {sha}')
         return
@@ -263,17 +336,36 @@ def main():
             attempt(checkout(), branch, sha, True)
             return
         publish_records()
-        if not enabled() or not list(queue.glob('*.json')):
+        pending = list(queue.glob('*.json')) + list(queue.glob('*.held'))
+        if not enabled() or not pending:
             return
         root = checkout()
-        for path in sorted(queue.glob('*.json'), key=lambda p: p.stat().st_mtime):
+        for path in sorted(pending, key=lambda p: p.stat().st_mtime):
             if not enabled():
                 break
-            branch, sha = json.loads(path.read_text())
-            outcome = attempt(root, branch, sha, False)
-            if outcome != 'locked':
+            job = json.loads(path.read_text())
+            branch, sha = (job['branch'], job['sha']) if isinstance(job, dict) else job
+            routing = route(branch, root / 'cloud/integration')
+            if path.suffix == '.held' and isinstance(job, dict) and job.get('routing') == list(routing) and job.get('outcome') != 'locked':
+                # A route decision or refusal needs a changed route (or manual requeue), not another attempt each poll.
+                hold_job(branch, sha, job['reason'])
+                continue
+            if path.suffix == '.held':
+                queued = path.with_suffix('.json')
+                path.rename(queued)
+                path = queued
+                log(f'requeued held branch {branch}: routing changed or area lock retry')
+            outcome = attempt(root, branch, sha, False, routing=routing)
+            if outcome in ('merged', 'red', 'conflict'):
                 path.rename(path.with_suffix('.done'))
-            # A busy area remains queued. Other queued areas can make progress this poll.
+            else:
+                held_entry = STATE / 'area-held' / (hashlib.sha256(branch.encode()).hexdigest() + '.json')
+                reason = json.loads(held_entry.read_text())['reason'] if held_entry.exists() else f'unrecognized outcome {outcome!r}; ask system_adamic_integration'
+                if not held_entry.exists():
+                    hold_job(branch, sha, reason)
+                atomic_json(path, {'branch': branch, 'sha': sha, 'status': 'held', 'reason': reason,
+                                   'routing': list(routing), 'outcome': outcome})
+                path.rename(path.with_suffix('.held'))
             publish_records()
 
 

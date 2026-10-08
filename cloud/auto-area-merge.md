@@ -15,22 +15,34 @@ integration script owns the actual local and origin area locks. A lock refusal r
 `locked` and retains the job for a later poll; it never drops it. Removing the switch leaves
 the queue intact. No conflict is resolved by the dispatcher.
 
-## Mapping assumptions
+## Routing and holds
 
-The dispatcher fetches `origin/cloud/merge-tree` into its own stable Git checkout at
-`<state>/area-integration`, and uses that checkout's complete `cloud/integration` file set.
-It invokes that checkout's `area-merge.sh` unchanged. Candidate branches cannot supply the
-merge tools or mapping tables.
+Integration owns routing. The dispatcher fetches `origin/cloud/merge-tree` into its stable
+Git checkout at `<state>/area-integration` and loads `cloud/integration/area-route.py` from
+that checkout. It calls `route(branch)` unchanged, accepting `(area, how)` or `("hold", why)`.
+There is no watcher-owned fleet table or prefix policy. Importing the trusted source creates
+no bytecode or other modifications inside integration's checkout. A missing, broken, or
+malformed router holds the job for integration.
 
-Exact entries in `census-owners.tsv` override prefixes, including overrides with no area.
-Otherwise, use the literal `prefixOwners` table from integration's `branch-census.py`, plus
-worker prefixes that spell an area exactly: `codex/<area>-`. Resolve the resulting owners
-through `areas.tsv`. The census's `system_cohere_lint` and `system_cohere_format` are aliases
-for `stage1-lint` and `stage1-format`; their shared parent `system_cohere_adamic` is ambiguous.
-These are the assumptions used to reconcile the census and area tables. All matching
-prefixes are considered, so competing areas are rejected instead of choosing the first.
-An unknown or ambiguous mapping logs `no area for codex/x` and records `no-area` with an
-empty area column. There is no ownership inference from changed files or commit messages.
+A routing hold, refusal, or unrecognized outcome remains in `<state>/area-queue/<key>.held`,
+with branch, SHA, reason, routing decision and outcome. Only merged, red and conflict outcomes
+become `.done`. The dispatcher reevaluates held routes each poll: a changed `(area, how)` puts
+the held job back into the queue. Unchanged holds are not attempted again on every poll.
+Integration can manually retry a cleared refusal by renaming that job's `.held` file to `.json`.
+
+Refusal lines (`refused: ...`) are checked before exit status: they never become worker reds.
+The two existing busy-lock messages are recorded as `locked`, remain `.held`, and retry next
+poll so normal area serialization cannot drop a worker. All other refusals and unknown exits
+stay held pending a changed route or manual requeue. Lock refusals also notify integration,
+so a stale lock remains visible. Named failing-test/gofmt/vet verdicts with exit 1 are red;
+exit 3 without a refusal is conflict; exit 0 without a refusal is merged.
+
+`<state>/area-held.tsv` lists active held branches and reasons. Per-branch JSON entries under
+`<state>/area-held` retain successful notification recipients across polls, restarts and new
+SHAs. A hold sends branch, SHA and reason once to `system_adamic_integration`, and once to each
+Circle named as `@name` or `system_*` in the reason, using `ahra os send` from
+`/Users/kirkouimet/Projects/ahra`. Failed sends retry without repeating successful recipients.
+Routing decisions are never inferred from changed files. No conflict is resolved here.
 
 ## Records and worker feedback
 
@@ -38,14 +50,55 @@ Each attempt journals a CSV row before acknowledging the queued job. A detached 
 worktree appends it to `documentation/velocity/auto-area-merges.csv` and pushes only
 `records/auto-area-merges`, with ordinary fast-forward pushes. Failed pushes retain the
 journal for replay; replay checks the current remote CSV for the exact row before appending.
-CSV columns: `utc,branch,sha,area,outcome,seconds,area_sha_after`. The final SHA is read from
-origin, including after a failed worker merge whose main catch-up already succeeded.
+CSV columns: `utc,branch,sha,area,outcome,seconds,area_sha_after`. Routing holds use `no-area`;
+non-lock refusals and unknown exits use `held`. An unchanged held decision generates no new
+attempt/row each poll. The final area SHA is read from origin, including after a failed worker
+merge whose main catch-up already succeeded.
 
-Conflict (integration exit 3) and red results look up the newest `ai.db` reply containing
-the literal branch name, as the fast gate does. The dispatcher sends the script's output,
-including conflicting paths and named new failing tests, plus referenced failure logs, using
-`ahra ai send <session> --message-file <file>` from `/Users/kirkouimet/Projects/ahra`.
-No session or a send failure is logged locally. `ADAMIC_AI_DATABASE` has the gate's same default.
+Merged, red and conflict results look up the newest `ai.db` reply naming the complete branch.
+A longer branch name cannot identify a shorter branch's worker. The dispatcher sends a one-line
+success note on merged. Reds and conflicts send the script output, including conflicting paths,
+named failing tests and referenced failure logs, using `ahra ai send <session> --message-file`
+from `/Users/kirkouimet/Projects/ahra`. No session or a send failure is logged locally.
+Refusals send no instruction to the worker to fix its branch. `ADAMIC_AI_DATABASE` has the gate's
+same default. Dry runs send no worker or Circle messages.
+
+## Follow-up validation
+
+Merged gate tools `4af2c103d4e5e0f5de3a969fed5d4a3a7ea4276a` as a true merge. Enqueueing is
+inside the reaping loop after `voidCause()` accepts the verdict, with exact SHA and switch
+checks. Three slots, `--class`, shared classification and `cloud/land-*` watching are preserved.
+
+Shell syntax checks passed. Nineteen offline tests passed, including actual watcher reaping,
+route delegation, persistent holds/requeue, unknown outcomes, refusal priority, once-per-recipient
+notifications, merged worker feedback, no-push behavior, and isolated Git records replay.
+
+Run integration's own routing coverage test as part of this suite:
+
+```sh
+ADAMIC_FAST_GATE_WATCH_STATE=/path/to/review-state \
+  PYTHONDONTWRITEBYTECODE=1 python3 cloud/auto-area-merge-test.py --integration
+```
+
+This fetches and runs the unchanged `cloud/integration/area-route-test.py` in the trusted
+checkout. In this Linux review workspace, integration tools
+`09d3f789aae1bfe33243dc3edbca46aeae9171bc` reported 390 unlanded branches: 275 routed, 23 held
+by a named row, 71 undecided one-offs, and failed on these remaining recurring families:
+
+- `async`: codex/async-ordinary, codex/async-typeof
+- `census`: codex/census-generic-returns, codex/census-small-families, codex/census-small-families-3
+- `error`: codex/error-classes-counts, codex/error-classes-counts-2
+- `generic`: codex/generic-function-value, codex/generic-function-value-host-scratch
+- `non`: codex/non-null-check, codex/non-null-checked, codex/non-null-checked-area, codex/non-null-narrowed-number
+- `require`: codex/require-builtins, codex/require-builtins-2
+- `shared`: codex/shared-ssa-conditional-copy, codex/shared-ssa-unit-a
+- `string`: codex/string-views, codex/string-views-concurrency
+- `tsgo`: codex/tsgo-c-library, codex/tsgo-errors-as-values
+
+The Mac's live `ai.db`, fleet roster and Ahra CLI are unavailable here. The integration test's
+fleet fallback therefore has no local evidence, which may account for these failures. Integration
+owns any metadata correction; its files were not edited. The switch remains absent and no area
+was pushed during review. Live worker/Circle delivery and Mac execution are not verified.
 
 ## Review dry run
 
@@ -78,7 +131,7 @@ CSV row:
 2026-10-08T09:17:24Z,codex/stage3-a-check-headers,150c331b9429284004a0ac137e59a3207877a33a,stage3,merged,1.006,ef3141e9b1152ab51b51497f8ce3a2799449c8a3
 ```
 
-Verification: `bash -n cloud/fast-gate-watch.sh cloud/auto-area-merge.sh` and
+Original implementation verification: `bash -n cloud/fast-gate-watch.sh cloud/auto-area-merge.sh` and
 `PYTHONDONTWRITEBYTECODE=1 python3 cloud/auto-area-merge-test.py` (8 offline tests). Tests cover
 mapping overrides/ambiguity, switch-off, lock retries, queue deduplication, no-push invocation,
 failure feedback, exact session lookup, and real Git records retry against an isolated local origin.
