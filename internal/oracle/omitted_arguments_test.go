@@ -65,11 +65,11 @@ func TestOmittedArgumentZeroMutantIsCaught(t *testing.T) {
 	t.Logf("zero padding caught by Node: native %q, Node 11", native.stdout)
 }
 
-// Preserve the supplied source verbatim. Main accepts scalar non-null checks;
-// the omitted branch never evaluates that assertion, as Node also proves.
+// Preserve the supplied source verbatim, as tsc wrote it: a .ts, where a postfix ! is a checked
+// unwrap (a .a refuses it). The omitted branch never evaluates that assertion, as Node also proves.
 func TestOmittedOriginalProbePolicy(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/omitted_scanner_original.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/omitted_scanner_original.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
