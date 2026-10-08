@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Sends a finished fast gate's verdict to whoever waits on it, the moment the watcher reaps the gate.
 
-    cloud/verdict-notify.py <branch> <sha> <gate log>
+    cloud/verdict-notify.py <branch> <sha> <gate log> [--early <gate-logs ref>]
 
 Who hears it, from integration's own tables on cloud/merge-tree (cloud/integration/areas.tsv and its
 router, area-route.py, the one auto-area-merge trusts):
@@ -14,8 +14,10 @@ router, area-route.py, the one auto-area-merge trusts):
                  with the whole tools delta, reads red at darwin on every push and is checked by its canaries
 Integration hears every verdict, not only landings and areas, while the watcher's state directory holds a
 file named verdicts-to-integration. The message: green or red, the base it was gated against, the first
-failure's step and its package and test, the gate-logs ref, and the worker's session when the gate knew it.
-Green or red only: a void gate isn't a verdict, and the watcher reports those itself.
+failure's step and its package and test with the failure's last lines, the gate-logs ref, and the worker's
+session when the gate knew it. Green or red only: a void gate isn't a verdict, and the watcher reports
+those itself. --early sends a complete run's red at its first failure (the watcher publishes that ref
+the moment the failure is in the log); the final verdict follows when the run ends.
 """
 import json
 import os
@@ -137,16 +139,34 @@ def recipients(branch, sha):
     return seen, note
 
 
-def message(branch, sha, log):
+def excerpt(text):
+    """The first failure's test and the last lines of its output, short enough for a message: the block
+    the gate prints after 'FIRST FAILURE (...):', up to its verdict line, where the diagnostic is last."""
+    match = re.search(r'^FIRST FAILURE \([^\n]*\n(.*?)(?=^(?:green|red|void): |\Z)', text, re.M | re.S)
+    if not match:
+        return ''
+    lines = [line.rstrip()[:160] for line in match.group(1).splitlines()
+             if line.strip() and not line.startswith(('=== RUN', '=== PAUSE', '=== CONT'))]
+    if len(lines) > 9:
+        lines = lines[:1] + ['...'] + lines[-8:]
+    return '\n' + '\n'.join('    ' + line for line in lines)
+
+
+def message(branch, sha, log, early=None):
     text = Path(log).read_text(errors='replace')
     verdicts = re.findall(r'^(green|red): ' + sha + r' (.*)$', text, re.M)
+    if early is not None:
+        # A complete run's first failure, before its verdict line exists.
+        if not re.search(r'^FIRST FAILURE ', text, re.M):
+            return None
+        verdicts = [('red', '')]
     if not verdicts:
         return None
     verdict, rest = verdicts[-1]
     base = re.search(r'^fast gate: \S+ against (\S+) ([0-9a-f]{7})', text, re.M)
     published = re.findall(r'^published (gate-logs/\S+)', text, re.M)
     session = re.search(r'session ([0-9a-f]{8}-[0-9a-f-]{27})', rest)
-    parts = ['Fast gate %s: %s %s' % (verdict, branch, sha[:12])]
+    parts = ['Fast gate %s%s: %s %s' % (verdict, ' at its first failure (the complete run goes on)' if early is not None else '', branch, sha[:12])]
     if base:
         parts.append(' against %s %s' % (base.group(1), base.group(2)))
     if verdict == 'red':
@@ -163,18 +183,23 @@ def message(branch, sha, log):
         if took:
             parts.append(' in %s' % took.group(1))
     parts.append('.')
-    if published:
+    if early is not None:
+        parts.append(' Log: %s.' % early)
+    elif published:
         parts.append(' Log: %s.' % published[-1])
     if session:
         parts.append(' Worker session %s.' % session.group(1))
+    if verdict == 'red':
+        parts.append(excerpt(text))
     return ''.join(parts)
 
 
 def main():
     branch, sha, log = sys.argv[1:4]
+    early = sys.argv[5] if len(sys.argv) > 5 and sys.argv[4] == '--early' else None
     if branch == 'devtools/fast-gate':
         return
-    text = message(branch, sha, log)
+    text = message(branch, sha, log, early)
     if text is None:
         return
     names, note = recipients(branch, sha)

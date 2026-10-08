@@ -214,6 +214,36 @@ STOP
     done < "${state}/queue"
   done
 }
+# A complete run (a landing or an area) is red the moment its first failure is in its log, though it runs
+# on for its whole list: that red goes to gate-logs/<sha12>/<stamp>/fast-first-failure and to its owners
+# at once (the witness, Oct 8: landing reds sat on Kirk's Mac for half an hour). Once a gate.
+publishEarlyRed() {
+  local file pid branch sha slot box rest log stamp ref out tree commit index
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    [ -f "${state}/early-red/${pid}" ] && continue
+    read -r branch sha slot box rest < "${file}"
+    [[ ${branch} == cloud/land-* || ${branch} == area/* ]] || continue
+    log=${state}/logs/${sha:0:12}.log
+    grep -q '^FIRST FAILURE ' "${log}" 2> /dev/null || continue
+    touch "${state}/early-red/${pid}"
+    (
+      stamp=$(/bin/date -u +%Y%m%dT%H%M%SZ)
+      ref=gate-logs/${sha:0:12}/${stamp}/fast-first-failure
+      out=$(mktemp -d)
+      sed -nE 's/^FIRST FAILURE \(([^,]+), at ([0-9.]+) s\):.*/red: '"${sha}"' fast gate, first failure at \1 after \2 s (the complete run goes on; its whole record publishes as fast when it ends)/p' "${log}" | head -1 > "${out}/status.txt"
+      sed -n '/^FIRST FAILURE /,/^\(green\|red\|void\): /p' "${log}" | head -400 > "${out}/first-failure.txt"
+      index=$(mktemp -u)
+      tree=$(cd "${out}" && GIT_INDEX_FILE=${index} git --git-dir="$(git -C "${here}" rev-parse --absolute-git-dir)" --work-tree=. add -A -f . && GIT_INDEX_FILE=${index} git --git-dir="$(git -C "${here}" rev-parse --absolute-git-dir)" write-tree)
+      commit=$(git -C "${here}" commit-tree "${tree}" -m "First failure of ${branch} ${sha}: $(cat "${out}/status.txt")")
+      git -C "${here}" push -q origin "${commit}:refs/heads/${ref}" && echo "$(date -u +%H:%M:%S) early red ${branch} ${sha}: ${ref}"
+      python3 "${here}/cloud/verdict-notify.py" "${branch}" "${sha}" "${log}" --early "${ref}" >> "${state}/logs/verdict-notify.log" 2>&1
+      rm -f "${index}" "${out}/status.txt" "${out}/first-failure.txt"
+      rmdir "${out}"
+    ) &
+  done
+}
 usableSlots() {
   local branch=$1 box slot b c glob allowed total used runningBranch runningSha runningSlot runningBox rest blocked reservation
   while read -r box slot; do
@@ -305,7 +335,7 @@ clearStaleSlotLock start
 watchStart=$(date -u +%s)
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
-mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running"
+mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red"
 echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
@@ -338,10 +368,11 @@ while true; do
     mv "${state}/now.tmp" "${state}/seen"
   fi
   stopStaleRed
+  publishEarlyRed
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
-    rm -f "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")"
+    rm -f "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")" "${state}/early-red/$(basename "${file}")"
     read -r branch sha class box original testedHead gateLog < "${file}"
     # Merge claims are not gate verdicts: a crashed dispatcher/SSH must never queue area-merge/*.
     if [[ ${branch} == area-merge/* ]]; then rm "${file}"; continue; fi

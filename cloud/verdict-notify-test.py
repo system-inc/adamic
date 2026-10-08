@@ -28,7 +28,8 @@ class VerdictTests(unittest.TestCase):
             (root / 'routes/areas.tsv').write_text('# area\towner\toracle\ncompiler\tsystem_adamic_compiler\tnone\nstage3\tsystem_adamic_typescript\tnone\n')
             (root / 'routes/area-route.py').write_text(ROUTER)
             (root / 'bin').mkdir()
-            (root / 'bin/ahra').write_text('#!/bin/bash\nprintf "%s|%s\\n" "$3" "$4" >> "$SENDS"\n')
+            # One record per send, separated by \\x1e: a red's message carries its failure's lines.
+            (root / 'bin/ahra').write_text('#!/bin/bash\nprintf "%s|%s\\x1e" "$3" "$4" >> "$SENDS"\n')
             (root / 'bin/ahra').chmod(0o755)
             (root / 'state').mkdir()
             (root / 'roster.json').write_text('[{"label": "scout-map-keys", "fleet": "compiler"}, {"label": "scout-x", "fleet": "stage1-scouts"}]')
@@ -40,7 +41,7 @@ class VerdictTests(unittest.TestCase):
                        ADAMIC_FAST_GATE_AHRA_DIR=tmp, ADAMIC_FLEET_ROSTER=str(root / 'roster.json'))
             subprocess.run(['python3', str(script), branch, SHA, str(root / 'gate.log')], env=env, check=True, capture_output=True)
             sends = root / 'sends'
-            return [line.split('|', 1) for line in sends.read_text().splitlines()] if sends.exists() else []
+            return [record.split('|', 1) for record in sends.read_text().split('\x1e') if record] if sends.exists() else []
 
     red = ('fast gate: %s against area/compiler 2f024dda2787de4168550bdd6bc419536dc6a924, tools x, on server, class S\n'
            'FIRST FAILURE (tests, at 153.4 s):\ngithub.com/system-inc/adamic/internal/fuzz TestOwnershipShapes\n'
@@ -55,6 +56,8 @@ class VerdictTests(unittest.TestCase):
         self.assertIn('first failure at tests: internal/fuzz TestOwnershipShapes (2 failed, 1586 passed)', text)
         self.assertIn('Log: gate-logs/ababababab/20261008T160758Z/fast.', text)
         self.assertIn('Worker session 01a11b49-cdae-7122-96bf-971d73d43002.', text)
+        # The failure's test and its last lines ride along.
+        self.assertIn('\n    github.com/system-inc/adamic/internal/fuzz TestOwnershipShapes', text)
 
     def test_area_reaches_owner_and_integration(self):
         log = 'green: %s fast gate in 630.1 s (stuff)\n' % SHA

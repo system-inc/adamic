@@ -381,6 +381,22 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'stall alarm sent' in w.read('output'))
         self.assertIn('and 0 slots free', w.read('messages'))
 
+    def test_a_complete_run_s_first_failure_publishes_once_and_a_worker_s_does_not(self):
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        holders = []
+        for branch, sha in [('cloud/land-x', 'e' * 40), ('codex/worker', 'f' * 40)]:
+            holder = subprocess.Popen(['sleep', '30'])
+            self.addCleanup(holder.kill)
+            holders.append(holder)
+            (w.state / 'logs' / (sha[:12] + '.log')).write_text('fast gate: %s against main x\nFIRST FAILURE (tests, at 12.5 s):\npkg TestA\n    a_test.go:3: wrong\n' % sha)
+            (w.state / 'running' / str(holder.pid)).write_text('%s %s B box0 B x %s\n' % (branch, sha, w.state / 'logs' / (sha[:12] + '.log')))
+        w.wait(lambda: 'early red cloud/land-x' in w.read('output'))
+        time.sleep(.3)
+        self.assertEqual(w.read('output').count('early red'), 1)
+
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
                              [('cloud/land-other', 'B'), ('codex/small', 'S')])
