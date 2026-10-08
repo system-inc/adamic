@@ -1,6 +1,6 @@
 # Explicit any owner adaptation (partial)
 
-Current progress: 68 tokens removed, 142 left. See [PROGRESS.md](PROGRESS.md)
+Current progress: 70 tokens removed, 140 left. The 36 phantom brand sites use void, isArray takes unknown, and the filesystem stat local carries Stats | Dirent | undefined. See [BRANDS-VOID.md](BRANDS-VOID.md) and [PROGRESS.md](PROGRESS.md)
 for the combined 10+30+40 proof and reproduction. The section below records
 the original three-owner proof and its historical commands.
 
@@ -86,3 +86,24 @@ node stage3/adapt/40-explicit-any/classify-check.cjs "$tree" > classification-ch
 
 The follow-up stops without new source edits: JSON/config is the largest class
 (38), and its whole-class rule requires checked runtime input narrowing.
+
+## Filesystem entry classification
+
+Site 138 at sys.ts:1853 now uses `import("fs").Stats | import("fs").Dirent | undefined`.
+Both assignment branches require the union: statSync can return undefined,
+and readdirSync supplies Dirent. The existing continue narrows the optional
+stat before isFile/isDirectory. This local annotation emits no API declaration.
+The class rule checks the exact declaration line and VariableDeclaration
+AST owner inside getAccessibleFileSystemEntries; a second pass makes no edit.
+
+After apply and npm ci, reproduce the full upstream build comparison and mutant:
+
+```sh
+NODE_PATH=<stock-typescript-6.0.3-node_modules> node stage3/adapt/40-explicit-any/filesystem-proof.cjs <adapted-tree> <proof-directory> > filesystem-proof.log 2>&1
+```
+
+The proof compares every emitted JavaScript and declaration hash across builds
+with only this annotation changed, plus sys.ts's own stock JavaScript emission.
+It runs a real `let stat: string` mutant through upstream's npm build, requires
+TS2322, then restores and successfully rebuilds. Source maps and build metadata
+are outside the byte identity claim. See evidence/filesystem for measured results.
