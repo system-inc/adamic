@@ -1,0 +1,290 @@
+[
+  {
+    "loop": 1,
+    "variant": "before",
+    "mode": "cold",
+    "seconds": 18.956077669994556,
+    "command": [
+      "python3",
+      "/tmp/adamic-gate/warm-modules-proof/before-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-1-before-r_ak6hf_/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "0.03 0.88 1.06 1/1160 295286",
+      "load_after": "0.78 0.99 1.09 1/1161 295645"
+    }
+  },
+  {
+    "loop": 1,
+    "variant": "before",
+    "mode": "warm",
+    "seconds": 0.16427655100414995,
+    "command": [
+      "python3",
+      "/tmp/adamic-gate/warm-modules-proof/before-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-1-before-r_ak6hf_/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "0.78 0.99 1.09 1/1161 295645",
+      "load_after": "0.78 0.99 1.09 1/1161 295656"
+    }
+  },
+  {
+    "loop": 1,
+    "variant": "after",
+    "mode": "cold",
+    "seconds": 23.81789278400538,
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-1-after-deyigojw/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "0.78 0.99 1.09 1/1161 295656",
+      "load_after": "0.97 1.01 1.09 1/1163 296363"
+    }
+  },
+  {
+    "loop": 1,
+    "variant": "after",
+    "mode": "warm",
+    "seconds": 0.3649229590082541,
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-1-after-deyigojw/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "0.97 1.01 1.09 1/1163 296363",
+      "load_after": "0.97 1.01 1.09 1/1163 296374"
+    }
+  },
+  {
+    "loop": 2,
+    "variant": "after",
+    "mode": "cold",
+    "seconds": 26.278932191999047,
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-2-after-zmhslwhg/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "0.97 1.01 1.09 1/1163 296374",
+      "load_after": "1.45 1.12 1.13 1/1169 297742"
+    }
+  },
+  {
+    "loop": 2,
+    "variant": "after",
+    "mode": "warm",
+    "seconds": 0.3148458789946744,
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-2-after-zmhslwhg/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "1.45 1.12 1.13 1/1169 297742",
+      "load_after": "1.41 1.12 1.12 1/1169 297753"
+    }
+  },
+  {
+    "loop": 2,
+    "variant": "before",
+    "mode": "cold",
+    "seconds": 16.293297784010065,
+    "command": [
+      "python3",
+      "/tmp/adamic-gate/warm-modules-proof/before-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-2-before-mlfnog_s/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "1.41 1.12 1.12 1/1169 297753",
+      "load_after": "1.78 1.21 1.16 1/1165 298113"
+    }
+  },
+  {
+    "loop": 2,
+    "variant": "before",
+    "mode": "warm",
+    "seconds": 0.1642114629939897,
+    "command": [
+      "python3",
+      "/tmp/adamic-gate/warm-modules-proof/before-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-2-before-mlfnog_s/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "1.78 1.21 1.16 1/1165 298113",
+      "load_after": "1.78 1.21 1.16 1/1165 298124"
+    }
+  },
+  {
+    "loop": 3,
+    "variant": "before",
+    "mode": "cold",
+    "seconds": 18.26462516299216,
+    "command": [
+      "python3",
+      "/tmp/adamic-gate/warm-modules-proof/before-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-3-before-enox8p6x/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "1.78 1.21 1.16 1/1165 298124",
+      "load_after": "1.79 1.25 1.17 1/1166 298590"
+    }
+  },
+  {
+    "loop": 3,
+    "variant": "before",
+    "mode": "warm",
+    "seconds": 0.21455302099639084,
+    "command": [
+      "python3",
+      "/tmp/adamic-gate/warm-modules-proof/before-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-3-before-enox8p6x/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "1.79 1.25 1.17 1/1166 298590",
+      "load_after": "1.79 1.25 1.17 1/1166 298601"
+    }
+  },
+  {
+    "loop": 3,
+    "variant": "after",
+    "mode": "cold",
+    "seconds": 27.179025360994274,
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-3-after-qa_i0tqv/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "1.79 1.25 1.17 1/1166 298601",
+      "load_after": "1.78 1.28 1.18 1/1168 299310"
+    }
+  },
+  {
+    "loop": 3,
+    "variant": "after",
+    "mode": "warm",
+    "seconds": 0.31464926899934653,
+    "command": [
+      "python3",
+      "/workspace/adamic/cloud/setup-modules.py",
+      "/tmp/adamic-gate/warm-modules-proof/manifest-snapshot",
+      "/tmp/adamic-gate/warm-modules-proof/module-measure-3-after-qa_i0tqv/tools"
+    ],
+    "build_flags": {
+      "commit": "bb7feea2b7d875be3759491aab64b42243db763f",
+      "tested_commit": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644",
+      "nproc": "5",
+      "cpu_max": "400000 100000",
+      "go": "go version go1.27.1 linux/amd64",
+      "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+      "node": "v24.19.0",
+      "cached": true,
+      "load_before": "1.78 1.28 1.18 1/1168 299310",
+      "load_after": "1.78 1.28 1.18 1/1168 299321"
+    }
+  }
+]
