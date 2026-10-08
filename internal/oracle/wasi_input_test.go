@@ -268,15 +268,18 @@ func TestWASIWalkBehaviorCatchesMutants(t *testing.T) {
 	source := onNodeWith(t, how, path)
 	for _, engine := range []bool{false, true} {
 		expected, limited := expectedEngineBehavior(t, path, source, how, engine)
-		if !limited {
-			t.Fatal("missing walk assertion")
+		if limited != engine {
+			t.Fatal("walk: V8 compares to Node unchanged and wasmtime pins its host limit")
 		}
-		// Fixing either pending runtime bug must change the pinned result and be noticed.
-		for _, pair := range [][2]string{{"directory false\n", "cannot read status of : no such file\n"}, {"listed ", "fixed listing "}} {
+		// Node's empty-path errors are held as Node prints them: losing either must be noticed.
+		for _, line := range []string{"cannot read directory : no such directory\n", "cannot read status of : no such file\n"} {
+			if strings.Count(string(expected.stdout), line) != 1 {
+				t.Fatalf("walk witness lost Node's line %q", line)
+			}
 			changed := expected
-			changed.stdout = []byte(strings.Replace(string(expected.stdout), pair[0], pair[1], 1))
+			changed.stdout = []byte(strings.Replace(string(expected.stdout), line, "", 1))
 			if disagreement(expected, changed) != "stdout differs" {
-				t.Fatal("walk runtime mutant escaped")
+				t.Fatal("walk empty-path mutant escaped")
 			}
 		}
 		if engine {
@@ -287,5 +290,5 @@ func TestWASIWalkBehaviorCatchesMutants(t *testing.T) {
 			}
 		}
 	}
-	t.Log("walk empty-listing, empty-status and invalid-UTF-8 host assertion mutants caught")
+	t.Log("walk empty-path and invalid-UTF-8 host assertion mutants caught")
 }
