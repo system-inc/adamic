@@ -1,0 +1,25 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options_order.a
+    oracle_test.go:749: gate cache node hit
+    oracle_test.go:749: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:770: stdout differs
+        node:   exit 0, stdout "receiver\nkey\nfalse\ntrue:false\nundefined:false:true\ntrue:false\ntrue:undefined\n", stderr ""
+        native: exit 0, stdout "receiver\nkey\nkey\nfalse\ntrue:false\nundefined:false:true\ntrue:false\ntrue:undefined\n", stderr ""
+    oracle_test.go:776: JavaScript backend: stdout differs
+        node:    exit 0, stdout "receiver\nkey\nfalse\ntrue:false\nundefined:false:true\ntrue:false\ntrue:undefined\n", stderr ""
+        backend: exit 0, stdout "receiver\nkey\nkey\nfalse\ntrue:false\nundefined:false:true\ntrue:false\ntrue:undefined\n", stderr ""
+    oracle_test.go:603: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options_order.a (0.45s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.490s
+FAIL

@@ -1,0 +1,19 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options_order.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options.a
+    oracle_test.go:747: Lower: /workspace/hidden08/internal/oracle/testdata/hidden_boundary_indexed_options.a:15:12: stage 0 can't lower an ElementAccessExpression yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options_order.a
+    oracle_test.go:747: Lower: /workspace/hidden08/internal/oracle/testdata/hidden_boundary_indexed_options_order.a:14:9: stage 0 can't lower an ElementAccessExpression yet
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options.a (0.05s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_indexed_options_order.a (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.076s
+FAIL

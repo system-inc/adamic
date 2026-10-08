@@ -1,0 +1,27 @@
+{
+  "before": {
+    "hidden_intersection": 112,
+    "ranges": [
+      [
+        370572,
+        370684
+      ]
+    ]
+  },
+  "after": {
+    "hidden_intersection": 0,
+    "ranges": []
+  },
+  "delta": 112,
+  "next_boundary": {
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/tmp/hidden-adapted/src/compiler/utilities.ts:9374:1",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:9375:5",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "/tmp/hidden-adapted/src/compiler/utilities.ts:746:17: stage 0 can't lower a function returning U | undefined yet",
+    "start": 370796,
+    "end": 370910
+  }
+}

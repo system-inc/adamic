@@ -1,0 +1,57 @@
+{
+  "before": {
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:9369:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 370570,
+        "body_end": 370687,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getStrictOptionValue",
+        "top": "/tmp/hidden-adapted/src/compiler/utilities.ts:9369:1"
+      }
+    ],
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/utilities.ts:9369:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:9370:12",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/hidden-adapted/src/compiler/utilities.ts:9370:12: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/hidden-adapted/src/compiler/utilities.ts:9369:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:9370:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/hidden-adapted/src/compiler/utilities.ts:9370:12: stage 0 can't lower an ElementAccessExpression yet",
+        "start": 370572,
+        "end": 370684
+      }
+    ],
+    "measurement": "measured on a checker-rejected program"
+  },
+  "after": {
+    "units": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/hidden-adapted/src/compiler/utilities.ts:9369:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 370570,
+        "body_end": 370687,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "getStrictOptionValue",
+        "top": "/tmp/hidden-adapted/src/compiler/utilities.ts:9369:1"
+      }
+    ],
+    "findings": [],
+    "measurement": "measured on a checker-rejected program"
+  }
+}
