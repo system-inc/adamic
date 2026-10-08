@@ -1,0 +1,182 @@
+[
+  {
+    "file": "type-predicate/main.a",
+    "tsc": [
+      "src/compiler/factory/nodeTests.ts:318"
+    ],
+    "reason": "a type predicate",
+    "census_count": 588,
+    "current_reason": "a type predicate whose return is not proven (return expression is not a trusted check on node)",
+    "node": {
+      "stdout": "true:false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/real/type-predicate/main.a:8:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+    }
+  },
+  {
+    "file": "non-null-assertion/main.a",
+    "tsc": [
+      "src/compiler/core.ts:1098"
+    ],
+    "reason": "the non-null assertion !",
+    "census_count": 484,
+    "current_reason": "the non-null assertion !",
+    "node": {
+      "stdout": "7:a\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/real/non-null-assertion/main.a:7:12: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    }
+  },
+  {
+    "file": "function-without-body/main.a",
+    "tsc": [
+      "src/compiler/path.ts:310"
+    ],
+    "reason": "a function without a body",
+    "census_count": 191,
+    "current_reason": "a function without a body",
+    "node": {
+      "stdout": "/a:/:/\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/real/function-without-body/main.a:8:1: stage 0 can't lower a function without a body yet"
+    }
+  },
+  {
+    "file": "prefix-unary-value/main.a",
+    "tsc": [
+      "src/compiler/utilities.ts:997"
+    ],
+    "reason": "a PrefixUnaryExpression on a value",
+    "census_count": 85,
+    "current_reason": "a PrefixUnaryExpression on a value",
+    "node": {
+      "stdout": "true:false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/real/prefix-unary-value/main.a:7:13: stage 0 can't lower a PrefixUnaryExpression on a value yet"
+    }
+  },
+  {
+    "file": "structural-method-statics/main.a",
+    "tsc": [
+      "src/compiler/commandLineParser.ts:2239"
+    ],
+    "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+    "census_count": 80,
+    "current_reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+    "node": {
+      "stdout": "read:tsconfig.json:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/real/structural-method-statics/main.a:8:36: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+    }
+  },
+  {
+    "file": "generic-optional-return/main.a",
+    "tsc": [
+      "src/compiler/core.ts:1083"
+    ],
+    "reason": "a function returning T | undefined",
+    "census_count": 66,
+    "current_reason": "a function returning T | undefined",
+    "node": {
+      "stdout": "7:undefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/real/generic-optional-return/main.a:4:17: stage 0 can't lower a function returning T | undefined yet"
+    }
+  },
+  {
+    "file": "value-condition/main.a",
+    "tsc": [
+      "src/compiler/utilities.ts:10157"
+    ],
+    "reason": "a value as a condition",
+    "census_count": 56,
+    "current_reason": "a value as a condition",
+    "node": {
+      "stdout": "3:0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "stage3/fixtures/real/value-condition/main.a:6:12: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+    }
+  },
+  {
+    "file": "binary-value-value/main.a",
+    "tsc": [
+      "src/compiler/commandLineParser.ts:2317"
+    ],
+    "reason": "a BinaryExpression with a value and a value",
+    "census_count": 32,
+    "current_reason": "a BinaryExpression with a value and a value",
+    "node": {
+      "stdout": "2:2:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/real/binary-value-value/main.a:10:41: stage 0 can't lower a BinaryExpression with a value and a value yet"
+    }
+  },
+  {
+    "file": "any-value/main.a",
+    "tsc": [
+      "src/compiler/utilities.ts:8147"
+    ],
+    "reason": "a value of type any",
+    "census_count": 30,
+    "current_reason": "a value of type any",
+    "node": {
+      "stdout": "true:false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/real/any-value/main.a:4:36: stage 0 can't lower a value of type any yet"
+    }
+  },
+  {
+    "file": "optional-boolean-field/main.a",
+    "tsc": [
+      "src/compiler/factory/emitNode.ts:166"
+    ],
+    "reason": "a field of type boolean | undefined",
+    "census_count": 25,
+    "current_reason": "a field of type boolean | undefined",
+    "node": {
+      "stdout": "true:undefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/real/optional-boolean-field/main.a:6:12: stage 0 can't lower a field of type boolean | undefined yet"
+    }
+  }
+]

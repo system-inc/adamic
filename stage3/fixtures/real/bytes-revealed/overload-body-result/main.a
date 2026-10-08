@@ -1,0 +1,62 @@
+// a-check: checked
+// From src/compiler/transformers/es2018.ts:1220 (TypeScript 6.0.3, ed6e2975 adaptations).
+
+interface Statement {readonly text:string;}
+interface Block {readonly kind:242;readonly statements:Statement[];}
+interface Expression {readonly kind:9;readonly text:string;}
+type FunctionBody=Block;
+type ConciseBody=Block|Expression;
+interface FunctionDeclaration {readonly kind:263;readonly body:Block;}
+interface FunctionExpression {readonly kind:219;readonly body:Block;}
+interface ConstructorDeclaration {readonly kind:177;readonly body:Block;}
+interface MethodDeclaration {readonly kind:175;readonly body:Block;}
+interface AccessorDeclaration {readonly kind:178;readonly body:Block;}
+interface ArrowFunction {readonly kind:220;readonly body:ConciseBody;}
+type FunctionLikeDeclaration=FunctionDeclaration|FunctionExpression|ConstructorDeclaration|MethodDeclaration|AccessorDeclaration|ArrowFunction;
+    function transformFunctionBody(node: FunctionDeclaration | FunctionExpression | ConstructorDeclaration | MethodDeclaration | AccessorDeclaration): FunctionBody;
+    function transformFunctionBody(node: ArrowFunction): ConciseBody;
+    function transformFunctionBody(node: FunctionLikeDeclaration): ConciseBody {
+        resumeLexicalEnvironment();
+        let statementOffset = 0;
+        const statements: Statement[] = [];
+        const body = visitNode(node.body, visitor, isConciseBody) ?? factory.createBlock([]);
+        if (isBlock(body)) {
+            statementOffset = factory.copyPrologue(body.statements, statements, /*ensureUseStrict*/ false, visitor);
+        }
+        addRange(statements, appendObjectRestAssignmentsIfNeeded(/*statements*/ undefined, node));
+
+        const leadingStatements = endLexicalEnvironment();
+        if (statementOffset > 0 || some(statements) || some(leadingStatements)) {
+            const block = factory.converters.convertToFunctionBlock(body, /*multiLine*/ true);
+            insertStatementsAfterStandardPrologue(statements, leadingStatements);
+            addRange(statements, block.statements.slice(statementOffset));
+            return factory.updateBlock(block, setTextRange(factory.createNodeArray(statements), block.statements));
+        }
+        return body;
+    }
+
+const visitor=0;
+let leading:Statement[]=[];
+function resumeLexicalEnvironment():void {}
+function isConciseBody(node:ConciseBody):boolean {return true;}
+function visitNode(node:ConciseBody,visitor:number,test:(node:ConciseBody)=>boolean):ConciseBody {return node;}
+function isBlock(node:ConciseBody):node is Block {return node.kind===242;}
+function addRange(target:Statement[],source:Statement[]|undefined):void {if(source)target.push(...source);}
+function appendObjectRestAssignmentsIfNeeded(statements:undefined,node:FunctionLikeDeclaration):undefined {return undefined;}
+function endLexicalEnvironment():Statement[] {return leading;}
+function some(statements:Statement[]):boolean {return statements.length>0;}
+function insertStatementsAfterStandardPrologue(statements:Statement[],extra:Statement[]):void {statements.push(...extra);}
+function setTextRange(nodes:Statement[],location:Statement[]):Statement[] {return nodes;}
+const factory={
+ createBlock(statements:Statement[]):Block {return {kind:242,statements};},
+ copyPrologue(source:Statement[],target:Statement[],strict:boolean,visitor:number):number {return 0;},
+ converters:{convertToFunctionBlock(body:ConciseBody,multiline:boolean):Block {return body.kind===242 ? body : {kind:242,statements:[{text:'return '+body.text+';'}]};}},
+ updateBlock(node:Block,statements:Statement[]):Block {return {kind:242,statements};},
+ createNodeArray(statements:Statement[]):Statement[] {return statements;}
+};
+const unchanged=transformFunctionBody({kind:263,body:{kind:242,statements:[{text:'return 7;'}]}});
+console.log(unchanged.statements.map(s=>s.text).join(''));
+leading=[{text:'var temp;'}];
+const converted=transformFunctionBody({kind:220,body:{kind:9,text:'8'}});
+console.log(converted.kind===242 ? converted.statements.map(s=>s.text).join('') : converted.text);
+

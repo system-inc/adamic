@@ -1,0 +1,11 @@
+// a-check: refused a type predicate whose return is not proven
+// From src/compiler/factory/nodeTests.ts:318 (TypeScript 6.0.3, main adaptations).
+
+const SyntaxKind = { Identifier: 80 } as const;
+interface Node { readonly kind: number; }
+interface Identifier extends Node { readonly kind: typeof SyntaxKind.Identifier; readonly escapedText: string; }
+export function isIdentifier(node: Node): node is Identifier {
+    return node.kind === SyntaxKind.Identifier;
+}
+const identifier: Identifier = {kind:80, escapedText:'x'};
+console.log(`${isIdentifier(identifier)}:${isIdentifier({kind:11})}`);
