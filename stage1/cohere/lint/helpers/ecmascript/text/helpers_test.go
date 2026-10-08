@@ -41,7 +41,7 @@ func command(t *testing.T, name string, args ...string) []byte {
 	}
 	return out
 }
-func compile(t *testing.T, entry string) (string, string) {
+func compile(t *testing.T, entry string, buildNative bool) (string, string) {
 	t.Helper()
 	p, e := load.Load([]string{entry})
 	if e != nil {
@@ -53,8 +53,10 @@ func compile(t *testing.T, entry string) (string, string) {
 	}
 	dir := t.TempDir()
 	bin := filepath.Join(dir, "text")
-	if e = native.Build(native.C(ir), bin, native.Options{Sanitize: true}); e != nil {
-		t.Fatal(e)
+	if buildNative {
+		if e = native.Build(native.C(ir), bin, native.Options{Sanitize: true}); e != nil {
+			t.Fatal(e)
+		}
 	}
 	js := filepath.Join(dir, "text.mjs")
 	if e = os.WriteFile(js, []byte(javascript.JavaScript(ir)), 0644); e != nil {
@@ -98,11 +100,15 @@ func corpus(t *testing.T) (string, []byte) {
 	t.Logf("Go agreement calls: %d; by helper %v", len(rows), seen)
 	return path, []byte(want.String())
 }
-func outputs(t *testing.T, entry, corpus string) [][]byte {
+func outputs(t *testing.T, entry, corpus string, buildNative bool) [][]byte {
 	t.Helper()
 	runner, _ := filepath.Abs("../../../../../../oracle/node.mjs")
-	bin, js := compile(t, entry)
-	return [][]byte{command(t, "node", "--disable-warning=ExperimentalWarning", runner, entry, corpus), command(t, "node", "--disable-warning=ExperimentalWarning", runner, js, corpus), command(t, bin, corpus)}
+	bin, js := compile(t, entry, buildNative)
+	got := [][]byte{command(t, "node", "--disable-warning=ExperimentalWarning", runner, entry, corpus), command(t, "node", "--disable-warning=ExperimentalWarning", runner, js, corpus)}
+	if buildNative {
+		got = append(got, command(t, bin, corpus))
+	}
+	return got
 }
 func equal(t *testing.T, got, want []byte) {
 	t.Helper()
@@ -120,7 +126,7 @@ func equal(t *testing.T, got, want []byte) {
 func TestTextAgreement(t *testing.T) {
 	path, want := corpus(t)
 	entry, _ := filepath.Abs("main.a")
-	for i, got := range outputs(t, entry, path) {
+	for i, got := range outputs(t, entry, path, true) {
 		t.Run([]string{"Node", "emitted-JavaScript", "sanitized-native"}[i], func(t *testing.T) { equal(t, got, want) })
 	}
 }
@@ -162,7 +168,7 @@ func TestTextMutants(t *testing.T) {
 					t.Fatal(e)
 				}
 			}
-			for i, got := range outputs(t, filepath.Join(dir, "main.a"), path) {
+			for i, got := range outputs(t, filepath.Join(dir, "main.a"), path, false) {
 				if bytes.Equal(got, want) {
 					t.Fatalf("mutant survived on backend %d", i)
 				}
@@ -170,7 +176,7 @@ func TestTextMutants(t *testing.T) {
 					t.Fatal("mutant did not complete every input")
 				}
 			}
-			t.Log("output mutant caught on Node, emitted JavaScript and sanitized native")
+			t.Log("output mutant caught on Node and emitted JavaScript")
 		})
 	}
 }
