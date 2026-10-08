@@ -10,6 +10,8 @@ import json
 import os
 from pathlib import Path
 import re
+import resource
+import signal
 import statistics
 import subprocess
 import time
@@ -19,6 +21,22 @@ SPEC = importlib.util.spec_from_file_location(
     'scanner_profile', ROOT / 'stage1/typescript/scanner/profile.py')
 SCANNER = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(SCANNER)
+
+
+CPU_SECONDS = 120
+
+
+def limit_cpu():
+    # CPU time keeps this hang probe independent of scheduling delays on loaded boxes.
+    resource.setrlimit(resource.RLIMIT_CPU, (CPU_SECONDS, CPU_SECONDS + 1))
+
+
+def run_bounded(command, environment):
+    result = subprocess.run(command, capture_output=True, env=environment,
+                            preexec_fn=limit_cpu)
+    if result.returncode == -signal.SIGXCPU:
+        raise RuntimeError(f'stalled: exceeded {CPU_SECONDS}s of CPU time ({command[0]})')
+    return result
 
 
 def summarize(path):
@@ -47,7 +65,7 @@ def benchmark(baseline, final, prettier, output):
         for name, command in (sides if round_index % 2 == 0 else list(reversed(sides))):
             environment = dict(os.environ, ADAMIC_PORT_REQUEST=str(final / 'go-request.json'))
             started = time.perf_counter()
-            result = subprocess.run(command, capture_output=True, env=environment, timeout=120)
+            result = run_bounded(command, environment)
             elapsed = time.perf_counter() - started
             if result.returncode or result.stderr:
                 raise ValueError((name, result.returncode, result.stderr.decode()))

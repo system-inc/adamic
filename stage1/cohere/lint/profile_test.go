@@ -183,6 +183,7 @@ func TestProfileCompilation(t *testing.T) {
 // serial, so it has finished before this one is released.
 func TestProfileSnapshotsAgree(t *testing.T) {
 	t.Parallel()
+	skipWhenRuleScoped(t)
 	asked := os.Getenv("ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	if asked == "" {
 		t.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")
