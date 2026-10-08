@@ -16,6 +16,10 @@ import (
 
 // Validate every descriptor before even a filtered test. No rule can hide behind a filter.
 func TestMain(m *testing.M) {
+	if _, _, err := selectedMarker(".", packageDirectory); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 	if _, err := registry.Generate("."); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)

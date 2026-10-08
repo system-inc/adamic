@@ -259,14 +259,30 @@ func lintOracleKey(t *testing.T, root string) string {
 
 // Selected and full builds validate and render through the same registry API.
 func lintRegistry(root string) ([]registry.Descriptor, error) {
-	marker, err := os.ReadFile(filepath.Join(root, ".selected-rule"))
-	if os.IsNotExist(err) {
-		return registry.Generate(root)
-	}
+	marker, present, err := selectedMarker(root, packageDirectory)
 	if err != nil {
 		return nil, err
 	}
-	return registry.Generate(root, string(marker))
+	if !present {
+		return registry.Generate(root)
+	}
+	return registry.Generate(root, marker)
+}
+
+// selectedMarker reads root's .selected-rule marker. Only a test's copy of the port may carry one: in
+// the package's own directory it would narrow every test in the run to one rule, and each would pass.
+func selectedMarker(root, packageRoot string) (string, bool, error) {
+	marker, err := os.ReadFile(filepath.Join(root, ".selected-rule"))
+	if os.IsNotExist(err) {
+		return "", false, nil
+	}
+	if err != nil {
+		return "", false, err
+	}
+	if absolute, err := filepath.Abs(root); err != nil || absolute == packageRoot {
+		return "", false, fmt.Errorf("%s: a .selected-rule marker in the lint package itself narrows every test to %q; remove it", filepath.Join(root, ".selected-rule"), strings.TrimSpace(string(marker)))
+	}
+	return string(marker), true, nil
 }
 
 var lintOracles sync.Map

@@ -281,3 +281,20 @@ func TestSelectedFailingRuleParity(t *testing.T) {
 	}
 	t.Logf("full and selected verdict FAIL on Node, JavaScript and native; byte-identical findings: %d bytes", len(reference))
 }
+
+// A marker is honored in a copy of the port and refused in the package itself (TestMain refuses one
+// there before any test runs).
+func TestSelectedMarkerOnlyInCopies(t *testing.T) {
+	packageRoot, copied := t.TempDir(), t.TempDir()
+	for _, directory := range []string{packageRoot, copied} {
+		if err := os.WriteFile(filepath.Join(directory, ".selected-rule"), []byte("no-var"), 0600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if _, _, err := selectedMarker(packageRoot, packageRoot); err == nil {
+		t.Fatal("a marker in the package itself was honored")
+	}
+	if marker, present, err := selectedMarker(copied, packageRoot); err != nil || !present || marker != "no-var" {
+		t.Fatalf("a copy's marker: %q, %t, %v", marker, present, err)
+	}
+}
