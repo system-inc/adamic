@@ -1798,7 +1798,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if slotless(of) {
 		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
 	}
-	return ir.Property{Object: object, Name: index.Text(), Of: of}, nil
+	return l.readTupleViewElement(node, object, index.Text(), of), nil
 }
 
 // setIndex lowers array[index] = value, as a statement.

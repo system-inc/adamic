@@ -59,3 +59,36 @@ func TestCheckedViewMapCallableProducerMutants(t *testing.T) {
 		})
 	}
 }
+
+func TestCheckedViewMapTuplePayloadMutant(t *testing.T) {
+	program, path := interfaceFixture(t, "nullish/maps/entry-tuple")
+	truth := onNode(t, path)
+	native, _ := nativelyUncached(t, program)
+	if diff := disagreement(truth, native); diff != "" {
+		t.Fatal(diff)
+	}
+	changed := false
+	for index, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "pair" {
+			literal, ok := declaration.Value.(ir.ObjectLiteral)
+			if !ok || len(literal.Fields) != 2 {
+				t.Fatal("tuple storage changed")
+			}
+			literal.Fields[0].Value = literal.Fields[1].Value
+			declaration.Value = literal
+			program.Main[index] = declaration
+			changed = true
+			break
+		}
+	}
+	if !changed {
+		t.Fatal("tuple payload mutant missed")
+	}
+	native, _ = nativelyUncached(t, program)
+	for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "pair[0]") {
+			t.Fatalf("tuple helper trusted malformed position: %#v", got)
+		}
+	}
+	t.Logf("Node control=%q; wrong string payload stopped at helper pair[0]", truth.stdout)
+}

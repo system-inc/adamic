@@ -380,3 +380,24 @@ JS, Node and positive-fixture leak checks). Scoped View|Map|Contract|Callable
 package checks pass: lower 4.879s, native 34.342s, JS 0.976s; IR has no matching
 tests. Vet passes. The previously recorded broader census failures are unchanged
 in scope; this batch does not claim a full repository gate.
+
+## Fixed tuple Map entries (October 8)
+
+Merged integration 8afdc710 before this batch. Fixed, nonempty tuple entries have
+per-position contracts in their existing object storage. Readonly tuples permit
+position covariance; writable tuples require both directions. Map certificates
+also preserve tuple arity and readonly provenance. Optional/rest positions and
+callable positions remain refused. Ordinary tuple writes remain a stage-0 gap.
+Nullable tuple entries retain the null sentinel and undefined distinctly.
+JavaScript narrowing explicitly preserves a tuple's array identity while native
+narrowing preserves its object storage; neither changes source object identity.
+
+Node controls print 7, seven, 2 through a helper, also for a nullable tuple entry.
+Wrong element schema, wrong length, readonly-to-writable and writable literal
+widening mutants stop at node.value. An IR payload mutant puts a string in the
+numeric position while preserving the declared producer schema: both backends
+stop at helper pair[0]. Removing that read's guard runs on with exit 0 and kills
+the implementation mutation by behavior. Evidence is in map-tuple-*.log.gz.
+Map/nullish/nullable-selection oracle checks pass in 127.248s; final tuple
+selection passes in 10.585s. The exact production inventory remains 2,018 pairs /
+9,101 reads pending whole-program lowering and shared reaching-view proof.

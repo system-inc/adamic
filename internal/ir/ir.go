@@ -483,6 +483,7 @@ type (
 	// undefined).
 	Narrow struct {
 		Value Expression
+		Tuple bool // Native tuples are objects; JavaScript tuples retain array identity.
 		To    Type
 	}
 

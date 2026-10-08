@@ -67,6 +67,17 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 			}
 			return false
 		}
+		if len(source.Tuple) > 0 || len(target.Tuple) > 0 {
+			if len(source.Tuple) != len(target.Tuple) || source.ArrayReadonly && !target.ArrayReadonly {
+				return false
+			}
+			for index, element := range source.Tuple {
+				if !sameStorage(element, target.Tuple[index]) || !accepts(element, target.Tuple[index]) || !target.ArrayReadonly && !accepts(target.Tuple[index], element) {
+					return false
+				}
+			}
+			return true
+		}
 		if source.Kind == ViewCallable {
 			if target.Kind != ViewCallable || source.Result == 0 || target.Result == 0 || len(source.Parameters) != len(target.Parameters) {
 				return false

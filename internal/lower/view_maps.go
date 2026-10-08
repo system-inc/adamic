@@ -54,6 +54,9 @@ func mapEntryContract(contract ir.ViewContract) bool {
 }
 
 func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	if checker.IsTupleType(l.checker.GetNonNullableType(target)) {
+		return l.mapNullableTupleEntrySlot(node, target)
+	}
 	if l.callableViewContract(l.checker.GetNonNullableType(target)) {
 		return l.mapCallableEntrySlot(node, target)
 	}
@@ -87,6 +90,14 @@ func (l *lowering) mapEntryTypeProven(target *checker.Type, seen map[*checker.Ty
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
 			if !l.mapEntryTypeProven(member, seen) {
+				return false
+			}
+		}
+		return true
+	}
+	if checker.IsTupleType(target) {
+		for _, element := range l.checker.GetTypeArguments(target) {
+			if !l.mapEntryTypeProven(element, seen) {
 				return false
 			}
 		}
