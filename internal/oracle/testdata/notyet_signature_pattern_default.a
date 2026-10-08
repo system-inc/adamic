@@ -1,0 +1,22 @@
+interface Pattern {
+    prefix: string;
+    suffix: string;
+    rewrite: (text: string) => string;
+}
+let defaults = 0;
+function fresh(label: string): Pattern {
+    defaults++;
+    return {
+        prefix: [label, ":"].join(""),
+        suffix: "!",
+        rewrite: (text: string): string => [label, text].join("/")
+    };
+}
+function render(label: string, { prefix, suffix, rewrite }: Pattern = fresh(label)): string {
+    return `${prefix}${rewrite(label)}${suffix}`;
+}
+const supplied = fresh("given");
+console.log(render("custom", supplied));
+console.log(render("missing"));
+console.log(render("undefined", undefined));
+console.log(`${defaults}`);

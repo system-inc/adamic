@@ -91,7 +91,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	patterns := []patterned{}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
-		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
+		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && (declared.Initializer == nil || (name.Kind == ast.KindObjectBindingPattern && declaration.Kind != ast.KindConstructor)) && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
 			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})
 			function.Parameters = append(function.Parameters, incoming)
@@ -175,7 +175,13 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		var destructured []ir.Statement
 		patternType := l.checker.GetTypeAtLocation(parameter.parameter)
 		heldAs, _ := l.representation(patternType)
-		destructured, err = l.destructureFrom(parameter.pattern, patternType, heldAs, parameter.incoming)
+		selection, whole, selectionErr := l.patternDefault(parameter, heldAs)
+		if selectionErr != nil {
+			err = selectionErr
+			break
+		}
+		prologue = append(prologue, selection...)
+		destructured, err = l.destructureFrom(parameter.pattern, patternType, heldAs, whole)
 		prologue = append(prologue, destructured...)
 	}
 	for _, parameter := range defaults {
