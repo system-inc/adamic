@@ -49,6 +49,13 @@
 === RUN   TestWASIEmission
 --- FAIL: TestWASIEmission (93.18s)
 
+== github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a
+    counts_test.go:143: Lower: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a (0.15s)
+
 == github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (skipped; the census table classes it required-input)
 census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 === RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
