@@ -1,0 +1,87 @@
+[
+  {
+    "name": "debug-core",
+    "argv": [
+      "/tmp/namespace-reads-replay",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:108:5",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading Debug"
+    ],
+    "exit": 1,
+    "seconds": 4.8036116779985605,
+    "reproduced": false
+  },
+  {
+    "name": "debug-binder",
+    "argv": [
+      "/tmp/namespace-reads-replay",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/binder.ts:582:9",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading Debug"
+    ],
+    "exit": 1,
+    "seconds": 6.38134091199754,
+    "reproduced": false
+  },
+  {
+    "name": "debug-relative",
+    "argv": [
+      "/tmp/namespace-reads-replay",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:878:13",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading Debug"
+    ],
+    "exit": 1,
+    "seconds": 5.679611699000816,
+    "reproduced": false
+  },
+  {
+    "name": "performance-binder",
+    "argv": [
+      "/tmp/namespace-reads-replay",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/binder.ts:503:5",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading performance"
+    ],
+    "exit": 0,
+    "seconds": 4.834230629996455,
+    "reproduced": true
+  },
+  {
+    "name": "performance-tracing",
+    "argv": [
+      "/tmp/namespace-reads-replay",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/tracing.ts:191:9",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading performance"
+    ],
+    "exit": 0,
+    "seconds": 4.622726536996197,
+    "reproduced": true
+  }
+]

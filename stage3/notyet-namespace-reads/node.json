@@ -1,0 +1,32 @@
+{
+  "main": {
+    "exit": 0,
+    "stdout": "0:1:2:2\ntrue\n80:3:3\n",
+    "stderr": ""
+  },
+  "early": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: ReferenceError: Cannot access 'value' before initialization\n"
+  },
+  "initialized": {
+    "exit": 0,
+    "stdout": "7\n",
+    "stderr": ""
+  },
+  "direct_early": {
+    "exit": 70,
+    "stdout": "",
+    "stderr": "adamic: panic: ReferenceError: Cannot access 'value' before initialization\n"
+  },
+  "direct_initialized": {
+    "exit": 0,
+    "stdout": "9\n",
+    "stderr": ""
+  },
+  "hoisted": {
+    "exit": 0,
+    "stdout": "4\n",
+    "stderr": ""
+  }
+}

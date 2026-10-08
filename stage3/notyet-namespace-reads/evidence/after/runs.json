@@ -1,0 +1,87 @@
+[
+  {
+    "name": "debug-core",
+    "argv": [
+      "/tmp/namespace-reads-replay-final",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:108:5",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading Debug"
+    ],
+    "exit": 1,
+    "seconds": 10.329673660999106,
+    "reproduced": false
+  },
+  {
+    "name": "debug-binder",
+    "argv": [
+      "/tmp/namespace-reads-replay-final",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/binder.ts:582:9",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading Debug"
+    ],
+    "exit": 1,
+    "seconds": 10.010785390993988,
+    "reproduced": false
+  },
+  {
+    "name": "debug-relative",
+    "argv": [
+      "/tmp/namespace-reads-replay-final",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:878:13",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading Debug"
+    ],
+    "exit": 1,
+    "seconds": 6.199921915998857,
+    "reproduced": false
+  },
+  {
+    "name": "performance-binder",
+    "argv": [
+      "/tmp/namespace-reads-replay-final",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/binder.ts:503:5",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading performance"
+    ],
+    "exit": 1,
+    "seconds": 4.97076546199969,
+    "reproduced": false
+  },
+  {
+    "name": "performance-tracing",
+    "argv": [
+      "/tmp/namespace-reads-replay-final",
+      "-project",
+      "/tmp/namespace-init-sys-typescript/src/tsc/tsc.ts",
+      "-where",
+      "/tmp/namespace-init-sys-typescript/src/compiler/tracing.ts:191:9",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "reading performance"
+    ],
+    "exit": 1,
+    "seconds": 5.876583924997249,
+    "reproduced": false
+  }
+]
