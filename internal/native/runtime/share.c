@@ -118,6 +118,10 @@ void adamic_share(void *value) {
 			break;
 		}
 		case adamic_kind_number: case adamic_kind_boolean: break;
+		case adamic_kind_foreign:
+			// An Apple object's count is Objective-C's and its box is the main thread's: the effect check
+			// refuses one captured into parallel work, so reaching here is the check's miss (#5bajvpb).
+			adamic_panic("compiler bug: an Apple object reached parallel work", sizeof "compiler bug: an Apple object reached parallel work" - 1);
 		case adamic_kind_weak: case adamic_kind_map_iterator: case adamic_kind_typed_array: case adamic_kind_typed_array_iterator:
 			adamic_panic("compiler bug: non-shareable value reached a task", sizeof "compiler bug: non-shareable value reached a task" - 1);
 		}

@@ -312,7 +312,7 @@ id adamic_apple_objects(const adamic_array *array) {
 }
 
 static double number_field(const adamic_object *object, const char *name) {
-	adamic_slot_cache cache = {NULL, 0};
+	adamic_slot_cache cache = {0};
 	return adamic_object_field(object, name, &cache)->number;
 }
 
