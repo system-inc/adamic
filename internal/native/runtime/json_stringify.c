@@ -163,6 +163,11 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 	}
 	case adamic_json_boolean: ascii(w, s.value.boolean ? "true" : "false"); return true;
 	case adamic_json_string: quote(w, s.value.reference); return true;
+	case adamic_json_date: {
+		adamic_string *text = adamic_date_json(s.value.reference);
+		if (text == NULL) { ascii(w, "null"); } else { quote(w, text); adamic_release(text); }
+		return true;
+	}
 	case adamic_json_map: ascii(w, "{}"); return true;
 	case adamic_json_array: case adamic_json_tuple: {
 		bool tuple = s.kind == adamic_json_tuple;

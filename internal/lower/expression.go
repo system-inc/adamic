@@ -217,6 +217,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			if viewErr != nil {
 				return nil, viewErr
 			}
+			if own := l.checker.GetTypeAtLocation(node); !l.dateViewsMatch(own, contextual, map[[2]*checker.Type]bool{}) {
+				return nil, l.notYet(node, "a Date internal slot supplied or erased by a structural view")
+			}
 			if own := l.checker.GetTypeAtLocation(node); !skipKeeping && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
@@ -263,7 +266,7 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
-	if !l.nodeBufferView(from, to) {
+	if !l.nodeBufferView(from, to) || l.isLibraryType(from, "Date") != l.isLibraryType(to, "Date") {
 		return false
 	}
 	same := func(inside, viewed *checker.Type) bool {

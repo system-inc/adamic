@@ -748,6 +748,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "String.fromCharCode(" + codes + ")"
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
+	case ir.DateCall:
+		return e.dateCall(expression)
 	case ir.ObjectCall:
 		if expression.Method == "errorCaptureStack" {
 			return "(Object.defineProperty(" + e.value(expression.Arguments[0]) + ", 'stack', {value: '', writable: true, configurable: true, enumerable: false}), undefined)"

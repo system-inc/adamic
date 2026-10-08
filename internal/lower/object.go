@@ -17,6 +17,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
+	if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Date") || (l.checker.GetContextualType(node, checker.ContextFlagsNone) != nil && l.isLibraryType(l.checker.GetContextualType(node, checker.ContextFlagsNone), "Date")) {
+		return nil, l.notYet(node, "a structural object supplying Date internal slots")
+	}
 	literal := ir.ObjectLiteral{}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
@@ -596,6 +599,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return value, true, err
 	}
 	if value, known, err := l.libraryArrayGenericCall(node); known {
+		return value, true, err
+	}
+	if value, known, err := l.libraryDateCall(node); known {
 		return value, true, err
 	}
 	if value, known, err := l.libraryMathNumberCall(node); known {
@@ -1358,6 +1364,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 // newExpression lowers new Map(), and new Map([[key, value], ...]) with its pairs written out, which
 // is what the array of pairs means.
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
+	if l.isLibraryGlobal(node.AsNewExpression().Expression, "Date") {
+		return l.newDate(node)
+	}
 	if value, found, err := l.nodeFSFileDate(node); found {
 		return value, err
 	}

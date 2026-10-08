@@ -1,0 +1,1124 @@
+=== RUN   TestDateOracleCatchesMutants
+=== PAUSE TestDateOracleCatchesMutants
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestDateOracleCatchesMutants
+=== RUN   TestDateOracleCatchesMutants/constructor_clip
+=== PAUSE TestDateOracleCatchesMutants/constructor_clip
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_is.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_is.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_has_own.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_has_own.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign_fields.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign_fields.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_assign.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_assign.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_same.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_same.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_own.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_own.a
+=== RUN   TestNativeAgreesWithNode/dedication/dedication.a
+=== PAUSE TestNativeAgreesWithNode/dedication/dedication.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_scalars.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_options.a
+=== RUN   TestDateOracleCatchesMutants/UTC
+=== PAUSE TestDateOracleCatchesMutants/UTC
+=== RUN   TestDateOracleCatchesMutants/invalid_NaN
+=== PAUSE TestDateOracleCatchesMutants/invalid_NaN
+=== RUN   TestDateOracleCatchesMutants/getters
+=== PAUSE TestDateOracleCatchesMutants/getters
+=== RUN   TestDateOracleCatchesMutants/setters
+=== PAUSE TestDateOracleCatchesMutants/setters
+=== RUN   TestDateOracleCatchesMutants/iso_format
+=== PAUSE TestDateOracleCatchesMutants/iso_format
+=== RUN   TestDateOracleCatchesMutants/format
+=== PAUSE TestDateOracleCatchesMutants/format
+=== RUN   TestDateOracleCatchesMutants/parse
+=== PAUSE TestDateOracleCatchesMutants/parse
+=== CONT  TestDateOracleCatchesMutants/constructor_clip
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_options.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_escapes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_escapes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_undefined.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_indent.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_indent.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_replacer.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_replacer.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_function_expressions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_function_expressions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_globals.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_globals.a
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/01_hello.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/01_hello.ts
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/03_shapes.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/03_shapes.ts
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/04_closures.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/04_closures.ts
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/05_wordcount.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/05_wordcount.ts
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/06_stack.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/06_stack.ts
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/07_modules/main.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/07_modules/main.ts
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/08_results.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/08_results.ts
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/09_tree.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/09_tree.ts
+=== RUN   TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/10_unicode.ts
+=== PAUSE TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/10_unicode.ts
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/numbers.a
+=== CONT  TestDateOracleCatchesMutants/parse
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/bitwise_sweep.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/bitwise_sweep.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/loops.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/loops.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/booleans.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/booleans.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/shadowing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/shadowing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/effects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/effects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/dead_zone.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/dead_zone.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/modules/main.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/modules/main.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/panic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/panic.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a
+=== CONT  TestDateOracleCatchesMutants/getters
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/local_console.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/local_console.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/writes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/writes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/writes_past_end.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/writes_past_end.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+=== CONT  TestDateOracleCatchesMutants/setters
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/updates.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/updates.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/read_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/read_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/searches.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/searches.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/spreads.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/spreads.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/defaults.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/defaults.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/search_halves.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/search_halves.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/number_parsing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/number_parsing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/navigation.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/navigation.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/number_formats.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/number_formats.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/precision_range.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/precision_range.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/radixes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/radixes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/radix_range.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/radix_range.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/map_iteration.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/map_iteration.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sorts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sorts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sort_releases.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sort_releases.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/self_assignments.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/self_assignments.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/splice_empty.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/splice_empty.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_writes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_writes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_methods.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_fields.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_fields.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_compared.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_compared.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sort_top_level.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sort_top_level.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/splices.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/splices.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/fills.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/fills.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/fill_length.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/fill_length.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_from.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_from.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_from_length.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_from_length.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/array_from_undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/array_from_undefined.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/weak_parent.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/weak_parent.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/doubly_linked.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/doubly_linked.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/fresh_parser.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/fresh_parser.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/fresh_writes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/fresh_writes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/fresh_calls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/fresh_calls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/weak_narrowed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/weak_narrowed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_uncaught.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_uncaught.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_empty.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_empty.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/finally_leaves.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/finally_leaves.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_foreach_global.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_foreach_global.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/param_assigned_in_try.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/param_assigned_in_try.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/named_function_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/named_function_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/panic_in_try.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/panic_in_try.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/invariance_readonly.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/invariance_readonly.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/tuples_kept.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/tuples_kept.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/undefined_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/undefined_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_booleans.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_booleans.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_boolean_panic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_boolean_panic.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/unions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/unions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/case_mapping.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/case_mapping.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/undefined_elements.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/undefined_elements.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/map_zero_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/map_zero_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_limits.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_limits.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/pad_too_long.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/pad_too_long.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_exits.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_exits.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_iteration.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_iteration.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/number_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/number_edges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/long_chain.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/long_chain.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/write_after_shrink.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/write_after_shrink.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/normalize.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/normalize.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/normalize_form.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/normalize_form.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/ascii_scan.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/ascii_scan.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/size_class_churn.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/size_class_churn.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/borrow_reassigned.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/borrow_reassigned.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/writes_in_try.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/writes_in_try.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/set_undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/set_undefined.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/borrow_map_overwrite.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/borrow_map_overwrite.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/spread_snapshot.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/spread_snapshot.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_arrays.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_arrays.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_forward.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_forward.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_global_sibling.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_global_sibling.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_during_spread.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_during_spread.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_after_reuse.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_after_reuse.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/spread_undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/spread_undefined.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/lent_reads.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/lent_reads.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/trig_reduction.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/trig_reduction.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sets.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sets.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/set_maybe_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/set_maybe_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_iterators.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_iterators.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_group_by.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_group_by.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/stack_tail_call.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/stack_tail_call.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/concat_too_long.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/concat_too_long.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/replace_all_large.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/replace_all_large.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/normalize_long_marks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/normalize_long_marks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/power_of_two_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/power_of_two_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/declared_later.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/declared_later.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/return_panic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/return_panic.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/return_panic_fires.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/return_panic_fires.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/tuple_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/tuple_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_method_return.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_method_return.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/undefined_references.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/undefined_references.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/spread_calls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/spread_calls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/search_from.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/search_from.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/shared_slices.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/shared_slices.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_append.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_append.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/integer_format.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/integer_format.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_narrowed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_narrowed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/reuse_lent_global.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/reuse_lent_global.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/try_assignments.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/try_assignments.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_conversion.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_conversion.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_prototype.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_prototype.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_indices.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_indices.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_existing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_existing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_visit.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_visit.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_setops.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_setops.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_zeros.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_zeros.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_groupby_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_groupby_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_next.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_next.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/has_own.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/has_own.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/sweeps/regexp_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/sweeps/regexp_methods.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_matchall_nonglobal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_matchall_nonglobal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_null_narrowed.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_null_narrowed.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_exec.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_exec.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_match.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_match.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_search.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_search.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regexp_unicode.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regexp_unicode.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_identity.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_identity.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/object_prototype.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/object_prototype.a
+=== CONT  TestDateOracleCatchesMutants/invalid_NaN
+=== NAME  TestDateOracleCatchesMutants/setters
+    library_date_test.go:59: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/UTC
+=== NAME  TestDateOracleCatchesMutants/getters
+    library_date_test.go:59: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/format
+=== NAME  TestDateOracleCatchesMutants/constructor_clip
+    library_date_test.go:59: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestDateOracleCatchesMutants/iso_format
+=== NAME  TestDateOracleCatchesMutants/parse
+    library_date_test.go:59: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a
+=== NAME  TestDateOracleCatchesMutants/invalid_NaN
+    library_date_test.go:59: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_foreach_global.a
+=== NAME  TestDateOracleCatchesMutants/UTC
+    library_date_test.go:59: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/finally_leaves.a
+=== NAME  TestDateOracleCatchesMutants/format
+    library_date_test.go:59: Node caught the mutant: stdout differs; sanitizer clean
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== NAME  TestDateOracleCatchesMutants/iso_format
+    library_date_test.go:59: Node caught the mutant: stdout differs; sanitizer clean
+--- PASS: TestDateOracleCatchesMutants (0.00s)
+    --- PASS: TestDateOracleCatchesMutants/setters (2.63s)
+    --- PASS: TestDateOracleCatchesMutants/getters (2.64s)
+    --- PASS: TestDateOracleCatchesMutants/constructor_clip (3.04s)
+    --- PASS: TestDateOracleCatchesMutants/parse (3.54s)
+    --- PASS: TestDateOracleCatchesMutants/invalid_NaN (3.49s)
+    --- PASS: TestDateOracleCatchesMutants/UTC (2.40s)
+    --- PASS: TestDateOracleCatchesMutants/format (2.57s)
+    --- PASS: TestDateOracleCatchesMutants/iso_format (2.25s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_empty.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_uncaught.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/weak_narrowed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/fresh_calls.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/fresh_writes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/fresh_parser.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/doubly_linked.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/weak_parent.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_from_undefined.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_from_length.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/array_from.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/fill_length.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/fills.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/splices.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sort_top_level.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_compared.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_fields.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_methods.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_writes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/splice_empty.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/self_assignments.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sort_releases.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sorts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/map_iteration.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/radix_range.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/radixes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/precision_range.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/number_formats.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/navigation.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/object_prototype.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_identity.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_unicode.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_search.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_match.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_exec.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_null_narrowed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp_matchall_nonglobal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sweeps/regexp_methods.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/has_own.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_next.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_groupby_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_zeros.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_setops.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_visit.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_existing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_indices.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_prototype.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_conversion.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/try_assignments.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_lent_global.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_narrowed.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/integer_format.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_append.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/shared_slices.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/search_from.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/tuple_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/spread_calls.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/undefined_references.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_method_return.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/return_panic_fires.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/return_panic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/declared_later.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/power_of_two_string.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/normalize_long_marks.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/collections.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/replace_all_large.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/concat_too_long.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/stack_tail_call.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_group_by.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_iterators.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/set_maybe_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sets.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/trig_reduction.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/lent_reads.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/spread_undefined.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_after_reuse.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_during_spread.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_global_sibling.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_forward.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse_arrays.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/reuse.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/spread_snapshot.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/borrow_map_overwrite.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/set_undefined.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/writes_in_try.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/borrow_reassigned.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/size_class_churn.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/ascii_scan.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/normalize_form.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/long_chain.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/normalize.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/write_after_shrink.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/number_edges.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_iteration.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_exits.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/pad_too_long.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_limits.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/map_zero_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/undefined_elements.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/case_mapping.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/unions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_boolean_panic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_booleans.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/undefined_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/tuples_kept.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/invariance_readonly.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/panic_in_try.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/named_function_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/param_assigned_in_try.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_is.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_globals.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/number_parsing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/search_halves.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/defaults.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/spreads.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/searches.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/read_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/updates.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/writes_past_end.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/writes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/local_console.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/classes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/panic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/modules/main.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/dead_zone.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/effects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/functions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/shadowing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/booleans.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/loops.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/bitwise_sweep.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/strings.a
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/10_unicode.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/09_tree.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/08_results.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/07_modules/main.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/06_stack.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/05_wordcount.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/04_closures.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/03_shapes.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/02_fizzbuzz.ts
+=== CONT  TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/01_hello.ts
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_function_expressions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_replacer.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_indent.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_undefined.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_escapes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_options.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_scalars.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a
+=== CONT  TestNativeAgreesWithNode/dedication/dedication.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_own.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_same.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_assign.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign_fields.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_has_own.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a
+    oracle_test.go:566: Lower: /workspace/adamic/internal/oracle/testdata/library_date_set.a:33:16: Adamic 0.1 refuses a method read as a value (setUTCFullYear would lose its object, and this with it); call it in an arrow that keeps the object: (year, month, date) => its object.setUTCFullYear(year, month, date) (unbound-method)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a
+--- FAIL: TestNativeAgreesWithNode (0.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_foreach_global.a (3.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_format.a (3.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a (3.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_uncaught.a (2.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/finally_leaves.a (4.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_empty.a (2.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a (6.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/weak_narrowed.a (3.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/exceptions.a (4.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/fresh_calls.a (3.96s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/fresh_writes.a (5.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/fresh_parser.a (4.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_from_undefined.a (3.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/doubly_linked.a (5.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_from_length.a (3.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/weak_parent.a (5.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/fill_length.a (2.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/array_from.a (4.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/fills.a (4.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sort_top_level.a (4.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_compared.a (4.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/splices.a (5.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a (4.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_fields.a (3.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_writes.a (3.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_methods.a (4.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a (4.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_closures.a (3.34s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/splice_empty.a (4.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/self_assignments.a (3.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a (3.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a (3.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a (3.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/unused_parameters.a (3.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sort_releases.a (3.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a (5.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sorts.a (3.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/map_iteration.a (3.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a (3.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/radix_range.a (3.29s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/radixes.a (3.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/precision_range.a (3.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/number_formats.a (3.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/navigation.a (5.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_prototype.a (5.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_convert.a (4.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a (4.99s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/object_prototype.a (7.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_memory.a (4.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_identity.a (4.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_order.a (5.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_exceptions.a (4.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a (10.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_match.a (3.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a (6.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_search.a (5.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_unicode.a (7.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_exec.a (6.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_null_narrowed.a (4.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replace.a (7.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a (8.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_split.a (9.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp_matchall_nonglobal.a (6.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/has_own.a (5.23s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_groupby_keys.a (4.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_next.a (10.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_zeros.a (6.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_setops.a (7.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_visit.a (5.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_existing.a (5.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regexp.a (19.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a (5.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_indices.a (4.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_conversion.a (4.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_prototype.a (5.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sweeps/regexp_methods.a (27.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_lent_global.a (3.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/try_assignments.a (5.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_throw.a (3.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_narrowed.a (3.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/search_from.a (3.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/search_from_sweep.a (4.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/integer_format.a (6.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_append.a (7.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view.a (4.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/shared_slices.a (8.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a (5.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/tuple_values.a (6.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/spread_calls.a (4.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_references.a (4.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_values.a (4.34s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_method_return.a (4.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a (3.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_functions.a (4.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/from_code_point_fails.a (3.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/from_codes.a (4.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/return_panic_fires.a (4.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/return_panic.a (4.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/power_of_two_string.a (4.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/normalize_long_marks.a (4.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/declared_later.a (8.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/prompt_then_read.a (5.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a (8.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/write_stdout_order.a (3.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/write_stderr_order.a (6.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/collections.a (12.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_strings.a (5.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a (4.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/stack_tail_call.a (5.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/replace_all_large.a (11.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a (8.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_group_by.a (13.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_construct.a (15.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_iterators.a (14.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set_keys.a (12.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/set_maybe_numbers.a (6.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_map_set.a (12.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/trig_reduction.a (5.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sets.a (11.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/interleaved.a (5.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/output_then_panic.a (8.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/lent_reads.a (5.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/large_output.a (12.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/spread_undefined.a (7.23s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/move_throw.a (5.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a (5.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regions.a (5.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_after_reuse.a (6.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_element.a (10.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_global_sibling.a (7.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_weak_during_spread.a (8.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_forward.a (8.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/concat_too_long.a (62.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse_arrays.a (10.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/reuse.a (7.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/spread_snapshot.a (8.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_map_overwrite.a (7.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/set_undefined.a (6.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_reassigned.a (3.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a (7.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/writes_in_try.a (4.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/ascii_scan.a (3.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/long_literals.a (6.58s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_layouts.a (7.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a (12.87s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_positions.a (6.87s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/normalize_form.a (4.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/normalize.a (4.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/write_after_shrink.a (5.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/number_edges.a (4.29s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_iteration.a (4.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/long_chain.a (11.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_exits.a (3.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/size_class_churn.a (24.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_order.a (6.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a (3.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/stack_overflow.a (6.23s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/pad_too_long.a (4.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/map_zero_keys.a (4.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_limits.a (5.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/case_mapping.a (4.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_elements.a (5.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_boolean_panic.a (2.76s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_booleans.a (3.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/unions.a (6.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_strings.a (4.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_number_slots.a (10.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/tuples_kept.a (4.96s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/undefined_keys.a (6.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/panic_in_try.a (3.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/invariance_readonly.a (4.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_is.a (2.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_globals.a (2.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/named_function_values.a (5.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/param_assigned_in_try.a (3.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_math_number_math.a (2.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings_more.a (2.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/number_parsing.a (2.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/search_halves.a (2.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_numbers.a (2.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/defaults.a (2.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/spreads.a (3.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/read_order.a (3.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a (4.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/searches.a (4.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/visits.a (5.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_fails.a (2.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/writes_past_end.a (2.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/casts.a (2.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/updates.a (4.84s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/writes.a (3.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/local_console.a (2.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a (2.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures.a (3.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/classes.a (3.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/sorting.a (3.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maps_and_text.a (3.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/lone_surrogates.a (3.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/panic.a (3.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/modules/main.a (3.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/dead_zone.a (2.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/objects.a (3.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/effects.a (3.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/booleans.a (1.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/shadowing.a (2.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/functions.a (3.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/loops.a (2.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/numbers.a (1.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/10_unicode.ts (1.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/strings.a (2.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/09_tree.ts (2.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/08_results.ts (2.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/07_modules/main.ts (1.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/06_stack.ts (2.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/05_wordcount.ts (2.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/04_closures.ts (2.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/03_shapes.ts (2.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/02_fizzbuzz.ts (2.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/load/testdata/0.1/compile/01_hello.ts (2.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_subclass_holder.a (2.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a (2.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_function_expressions.a (2.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_replacer.a (1.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_keys.a (1.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_indent.a (1.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a (1.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_undefined.a (2.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_options.a (1.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_escapes.a (1.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_scalars.a (1.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_values.a (1.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a (1.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a (1.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a (2.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a (1.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a (2.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a (2.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a (2.84s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a (4.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a (2.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a (3.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a (3.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a (2.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_release.a (3.24s)
+    --- PASS: TestNativeAgreesWithNode/dedication/dedication.a (1.81s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a (3.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_own.a (1.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_deep.a (3.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_same.a (1.29s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_assign.a (1.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a (1.68s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign_fields.a (2.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_order.a (1.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_parse.a (1.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze.a (1.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_assign.a (1.46s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_has_own.a (1.79s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_keys.a (1.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_get.a (1.23s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_set.a (0.25s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_invalid_iso.a (1.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_iso.a (1.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_utc.a (1.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_date_construct.a (2.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/bitwise_sweep.a (34.06s)
+FAIL
+gate cache: native hits=0 misses=749
+gate cache: node hits=0 misses=536
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	282.293s
+FAIL
