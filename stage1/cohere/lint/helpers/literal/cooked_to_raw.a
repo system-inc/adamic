@@ -1,0 +1,29 @@
+import { Bytes, decode } from '../regexsyntax/utf8.a';
+import { escapeWidthInStringLiteral } from './escape_width_in_string_literal.a';
+import { cookedBytesProducedBy } from './cooked_bytes_produced_by.a';
+import { producesNoCookedBytes } from './produces_no_cooked_bytes.a';
+export class Mapping {
+ readonly valid: boolean; readonly offsets: number[];
+ constructor(valid: boolean, offsets: number[]) { this.valid = valid; this.offsets = offsets; }
+}
+// The tagged result distinguishes Go nil from a valid empty cooked string's [0].
+export function CookedToRaw(raw: string, cooked: string): Mapping {
+ const source = new Bytes(raw); const value = new Bytes(cooked); const offsets: number[] = [];
+ let rawIndex = 0; let cookedIndex = 0;
+ while(rawIndex < source.values.length && cookedIndex < value.values.length) {
+  let width = 0;
+  if(source.values[rawIndex] === 92 && rawIndex+1 < source.values.length) { width = escapeWidthInStringLiteral(raw,rawIndex); }
+  else { width = decode(source.values,rawIndex)[1] ?? 0; if(width === 0) { return new Mapping(false,[]); } }
+  const rawStart = source.positions[rawIndex] ?? raw.length;
+  const rawEnd = source.positions[rawIndex+width] ?? raw.length;
+  const cookedStart = value.positions[cookedIndex] ?? cooked.length;
+  const produced = cookedBytesProducedBy(raw.slice(rawStart,rawEnd),cooked.slice(cookedStart));
+  if(produced === 0) { return new Mapping(false,[]); }
+  for(let count = 0; count < produced; count++) { offsets.push(rawIndex); }
+  rawIndex += width; cookedIndex += produced;
+ }
+ if(cookedIndex !== value.values.length) { return new Mapping(false,[]); }
+ if(rawIndex < source.values.length && producesNoCookedBytes(raw.slice(source.positions[rawIndex] ?? raw.length))) { return new Mapping(false,[]); }
+ offsets.push(rawIndex);
+ return new Mapping(true,offsets);
+}

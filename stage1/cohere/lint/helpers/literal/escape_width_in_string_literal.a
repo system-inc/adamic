@@ -1,0 +1,27 @@
+import { Bytes, decode } from '../regexsyntax/utf8.a';
+import { allHexDigits } from '../regexsyntax/all_hex_digits.a';
+import { isHexDigit } from '../regexsyntax/is_hex_digit.a';
+// index and return width use Go UTF-8 byte offsets.
+export function escapeWidthInStringLiteral(raw: string, index: number): number {
+ const bytes = new Bytes(raw).values;
+ const next = bytes[index+1] ?? 0;
+ if(next === 117) {
+  if(index+2 < bytes.length && bytes[index+2] === 123) {
+   for(let at = index+3; at < bytes.length; at++) { if(bytes[at] === 125) { return at-index+1; } }
+   return 2;
+  }
+  if(index+5 < bytes.length && allHexDigits(bytes.slice(index+2,index+6))) { return 6; }
+  return 2;
+ }
+ if(next === 120) {
+  if(index+3 < bytes.length && isHexDigit(bytes[index+2] ?? 0) && isHexDigit(bytes[index+3] ?? 0)) { return 4; }
+  return 2;
+ }
+ if(next >= 48 && next <= 55) {
+  let width = 2; const limit = next > 51 ? 2 : 3;
+  while(width < limit+1 && index+width < bytes.length && (bytes[index+width] ?? 0) >= 48 && (bytes[index+width] ?? 0) <= 55) { width++; }
+  return width;
+ }
+ const width = decode(bytes,index+1)[1] ?? 0;
+ return width === 0 ? 2 : 1+width;
+}

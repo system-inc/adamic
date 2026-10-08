@@ -1,0 +1,29 @@
+{
+  "no-regex-spaces": {
+    "upstream_cases": 153,
+    "calls": 535,
+    "produced": 459,
+    "width": 19,
+    "mapping": 56,
+    "tail": 1,
+    "passed_tests": 163
+  },
+  "no-misleading-character-class": {
+    "upstream_cases": 261,
+    "calls": 1449,
+    "produced": 1182,
+    "width": 181,
+    "mapping": 82,
+    "tail": 4,
+    "passed_tests": 270
+  },
+  "controls": {
+    "upstream_cases": 8,
+    "calls": 189,
+    "produced": 124,
+    "width": 23,
+    "mapping": 26,
+    "tail": 16,
+    "passed_tests": 8
+  }
+}
