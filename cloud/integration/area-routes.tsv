@@ -49,6 +49,7 @@ codex/stage3-	stage3
 codex/require-	stage3	the host process tsc runs inside is stage 3's (@system_adamic, Oct 8)
 codex/views-	hold	@system_adamic_compiler or @system_adamic_typescript: the views touch lowering and stage 3's downcasts
 codex/proven-	hold	@system_adamic_compiler or @system_adamic_typescript: the predicates touch lowering and stage 3's census
+codex/scout-	hold	@system_adamic_compiler: scouts for the walls behind step 04, cut from the area-next candidate; they land through compiler once their step reaches wave 0
 # Platforms
 codex/platforms-	platforms
 codex/wasm	platforms
