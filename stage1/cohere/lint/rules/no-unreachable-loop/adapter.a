@@ -1,0 +1,74 @@
+import { panic } from 'adamic';
+import { AstArena } from '../../helpers/control_flow_graph/ast.a';
+import { CfgNodeIndex as NodeIndex } from '../../../arena/arena_index.a';
+import type { AstNode } from '../../helpers/control_flow_graph/ast.a';
+import type { RuleContext } from '../../context.ts';
+function child(children: readonly number[],position: number): number {return children[position] ?? -1;}
+function assignment(context: RuleContext,children: readonly number[]): number {
+ if(children.length<2)return -1;const last=child(children,children.length-1);const previous=child(children,children.length-2);const gap=context.source.slice(context.node(previous).end,context.start(last));return gap.includes('=')?last:-1;
+}
+function nodeHandles(arena: AstArena,slots: readonly number[]): readonly NodeIndex[] {const result: NodeIndex[]=[];for(const slot of slots)result.push(arena.indexAtSlot(slot));return result;}
+export function fromContext(context: RuleContext): AstArena {
+ const arena=new AstArena();for(const parsed of context.parser.nodes)arena.allocate();
+ for(let index=0;index<context.parser.nodes.length;index++){
+ const parsed=context.node(index);const node=arena.read(arena.indexAtSlot(index));node.Parent=arena.optionalIndexAtSlot(context.parent(index));node.Kind=parsed.kind;node.Text=parsed.text;node.Operator=parsed.operator;
+ const children: number[]=parsed.children.slice();node.children=nodeHandles(arena,children);
+ node.isStatement=parsed.kind.endsWith('Statement')||['Block','VariableStatement','FunctionDeclaration','ClassDeclaration','ImportDeclaration','ExportDeclaration'].includes(parsed.kind);
+ node.functionLike=context.functionLike(index);node.Decorators=nodeHandles(arena,context.children(index,'Decorator'));
+ node.optionalRoot=context.has(index,'QuestionDotToken');node.optionalChain=parsed.optional;
+ const parent=context.parent(index);node.outermostChain=parsed.optional&&(parent<0||!context.node(parent).optional||child(context.node(parent).children,0)!==index);
+ const first=child(children,0);const last=child(children,children.length-1);
+ switch(parsed.kind){
+ case 'SourceFile':node.Statements=nodeHandles(arena,children.filter((c)=>context.kind(c)!=='EndOfFileToken'));break;
+ case 'Block':case 'ModuleBlock':node.Statements=nodeHandles(arena,children);break;
+ case 'IfStatement':node.Expression=arena.optionalIndexAtSlot(first);node.ThenStatement=arena.optionalIndexAtSlot(child(children,1));node.ElseStatement=arena.optionalIndexAtSlot(child(children,2));break;
+ case 'WhileStatement':node.Expression=arena.optionalIndexAtSlot(first);node.Statement=arena.optionalIndexAtSlot(child(children,1));break;
+ case 'DoStatement':node.Statement=arena.optionalIndexAtSlot(first);node.Expression=arena.optionalIndexAtSlot(child(children,1));break;
+ case 'ForInStatement':case 'ForOfStatement':{const start=context.kind(first)==='AwaitKeyword'?1:0;node.Initializer=arena.optionalIndexAtSlot(child(children,start));node.Expression=arena.optionalIndexAtSlot(child(children,start+1));node.Statement=arena.optionalIndexAtSlot(last);break;}
+ case 'ForStatement':{
+ node.Statement=arena.optionalIndexAtSlot(last);let slot=0;context.scanAt(parsed.pos);let token=context.scanAt(context.scanEnd());
+ if(token==='AwaitKeyword'){slot++;token=context.scanAt(context.scanEnd());}
+ if(token!=='OpenParenToken')panic('CFG for header opening');token=context.scanAt(context.scanEnd());
+ if(token!=='SemicolonToken'){node.Initializer=arena.optionalIndexAtSlot(child(children,slot));slot++;context.scanAt(context.node(node.Initializer?.slot ?? -1).end);}
+ if(context.scanKind()!=='SemicolonToken')panic('CFG initializer separator');token=context.scanAt(context.scanEnd());
+ if(token!=='SemicolonToken'){node.Condition=arena.optionalIndexAtSlot(child(children,slot));slot++;context.scanAt(context.node(node.Condition?.slot ?? -1).end);}
+ if(context.scanKind()!=='SemicolonToken')panic('CFG condition separator');token=context.scanAt(context.scanEnd());
+ if(token!=='CloseParenToken')node.Incrementor=arena.optionalIndexAtSlot(child(children,slot));break;
+ }
+ case 'SwitchStatement':node.Expression=arena.optionalIndexAtSlot(first);node.CaseBlock=arena.optionalIndexAtSlot(child(children,1));break;
+ case 'CaseBlock':node.Clauses=nodeHandles(arena,children);break;
+ case 'CaseClause':node.Expression=arena.optionalIndexAtSlot(first);node.Statements=nodeHandles(arena,children.slice(1));break;
+ case 'DefaultClause':node.Statements=nodeHandles(arena,children);break;
+ case 'TryStatement':node.TryBlock=arena.optionalIndexAtSlot(first);for(let i=1;i<children.length;i++){const c=child(children,i);if(context.kind(c)==='CatchClause')node.CatchClause=arena.optionalIndexAtSlot(c);else node.FinallyBlock=arena.optionalIndexAtSlot(c);}break;
+ case 'CatchClause':node.Block=arena.optionalIndexAtSlot(last);if(first!==last)node.VariableDeclaration=arena.optionalIndexAtSlot(first);break;
+ case 'LabeledStatement':node.Label=arena.optionalIndexAtSlot(first);node.Statement=arena.optionalIndexAtSlot(child(children,1));break;
+ case 'BreakStatement':case 'ContinueStatement':node.Label=arena.optionalIndexAtSlot(first);break;
+ case 'WithStatement':node.Expression=arena.optionalIndexAtSlot(first);node.Statement=arena.optionalIndexAtSlot(child(children,1));break;
+ case 'ReturnStatement':case 'ThrowStatement':case 'ExpressionStatement':case 'ParenthesizedExpression':case 'NonNullExpression':case 'AsExpression':case 'SatisfiesExpression':case 'TypeAssertionExpression':case 'ComputedPropertyName':case 'Decorator':case 'SpreadElement':case 'SpreadAssignment':case 'YieldExpression':node.Expression=arena.optionalIndexAtSlot(first);break;
+ case 'BinaryExpression':node.Left=arena.optionalIndexAtSlot(first);node.OperatorToken=arena.optionalIndexAtSlot(child(children,1));node.Right=arena.optionalIndexAtSlot(child(children,2));break;
+ case 'ConditionalExpression':node.Condition=arena.optionalIndexAtSlot(first);node.WhenTrue=arena.optionalIndexAtSlot(child(children,2));node.WhenFalse=arena.optionalIndexAtSlot(child(children,4));break;
+ case 'PrefixUnaryExpression':case 'PostfixUnaryExpression':node.Operand=arena.optionalIndexAtSlot(first);break;
+ case 'PropertyAccessExpression':node.Expression=arena.optionalIndexAtSlot(first);node.Name=arena.optionalIndexAtSlot(last);break;
+ case 'ElementAccessExpression':node.Expression=arena.optionalIndexAtSlot(first);node.ArgumentExpression=arena.optionalIndexAtSlot(last);break;
+ case 'CallExpression':case 'NewExpression':node.Expression=arena.optionalIndexAtSlot(first);node.Arguments=nodeHandles(arena,context.arguments(index));node.TypeArguments=nodeHandles(arena,children.slice(1,children.length-(parsed.list<0?0:parsed.list)).filter((c)=>context.kind(c)!=='QuestionDotToken'));break;
+ case 'VariableStatement':node.DeclarationList=arena.optionalIndexAtSlot(first);break;
+ case 'VariableDeclarationList':node.Declarations=nodeHandles(arena,children);break;
+ case 'VariableDeclaration':case 'Parameter':case 'BindingElement':{
+ node.Name=arena.optionalIndexAtSlot(first);node.Initializer=arena.optionalIndexAtSlot(assignment(context,children));node.Type=arena.optionalIndexAtSlot(children.length>1&&child(children,1)!==(node.Initializer?.slot ?? -1)?child(children,1):-1);
+ if(context.kind(first)==='DotDotDotToken'){node.DotDotDotToken=arena.optionalIndexAtSlot(first);node.Name=arena.optionalIndexAtSlot(child(children,1));}break;
+ }
+ case 'ObjectBindingPattern':case 'ArrayBindingPattern':case 'ArrayLiteralExpression':node.Elements=nodeHandles(arena,children);break;
+ case 'ObjectLiteralExpression':node.Properties=nodeHandles(arena,children);break;
+ case 'PropertyAssignment':node.Name=arena.optionalIndexAtSlot(first);node.Initializer=arena.optionalIndexAtSlot(last);break;
+ case 'ShorthandPropertyAssignment':node.Name=arena.optionalIndexAtSlot(first);node.ObjectAssignmentInitializer=arena.optionalIndexAtSlot(first!==last?last:-1);break;
+ case 'ClassStaticBlockDeclaration':node.Body=arena.optionalIndexAtSlot(first);break;
+ case 'ClassDeclaration':case 'ClassExpression':node.Name=arena.optionalIndexAtSlot(context.name(index));node.Members=nodeHandles(arena,context.members(index));node.HeritageClauses=nodeHandles(arena,context.children(index,'HeritageClause'));node.TypeParameters=nodeHandles(arena,context.children(index,'TypeParameter'));break;
+ case 'HeritageClause':node.Types=nodeHandles(arena,children);break;
+ case 'PropertyDeclaration':node.Name=arena.optionalIndexAtSlot(context.name(index));node.Initializer=arena.optionalIndexAtSlot(assignment(context,children));break;
+ default:break;
+ }
+ if(node.functionLike){node.Name=arena.optionalIndexAtSlot(context.name(index));node.Parameters=nodeHandles(arena,context.children(index,'Parameter'));node.TypeParameters=nodeHandles(arena,context.children(index,'TypeParameter'));if(last>=0&&last!==(node.Name?.slot ?? -1)&&context.kind(last)!=='Parameter')node.Body=arena.optionalIndexAtSlot(last);}
+
+ }
+ return arena;
+}

@@ -1,0 +1,5 @@
+{
+  "name": "invert CFG end reachability consistent-return",
+  "from": "if(!fallsThrough(ast,i))continue;",
+  "to": "if(fallsThrough(ast,i))continue;"
+}

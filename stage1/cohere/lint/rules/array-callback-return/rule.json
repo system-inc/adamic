@@ -1,0 +1,13 @@
+{
+  "name": "array-callback-return",
+  "kinds": [
+    "FunctionExpression",
+    "ArrowFunction"
+  ],
+  "visit": "visit",
+  "oracle": "oracleCfgArrayCallbackReturn",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestArrayCallbackReturn",
+  "factory": "create",
+  "class": "Rule"
+}

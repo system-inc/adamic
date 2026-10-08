@@ -1,0 +1,29 @@
+package control_flow_graph
+import (
+ "testing"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/core"
+ "github.com/microsoft/TypeScript/tsc/shim/parser"
+)
+func TestAdamicArenaControls(t *testing.T) {
+ codes:=[]string{
+ `const object={ [key()](x){return x;}, get [other()](){return value;}, set [third()](x){use(x);} };`,
+ `while(0n) break; while(0x0n) break; while(0x10000000000000000n) continue; while(/x/) break; while('') break; while(1) break;`,
+ `function f(a=x, {b:y=z}={}) { try { yield x; return y; } catch({message:m}) { throw m; } finally { x++; } }`,
+ `function* f(){ while(a){ yield x; try { return y; } finally { yield z; } } }`,
+ `function f(){ try { try { throw x; } finally { y(); } } catch(e) { return z; } finally { f(); } }`,
+ `function f(){ try { return x; } finally { throw y; } }`,
+ `outer: inner: do { if(a)continue outer; else break inner; } while(b);`,
+ `label: { if(a)break label; x(); } for(;;) { switch(a) {default:break;case 1:continue;case 2:throw x;} }`,
+ `for(let i=0;i<5;i++){if(a)continue;else break;} for(let {x:y=z} of xs)continue; for([a=b] in obj)break;`,
+ `while(!(a&&b)||c?d:e){switch(x){case 1: break; default: return; case 2:continue;}}`,
+ `function f(){ a&&b; a||=b; a??=b; x=y; x+=y; [a,b=c,...d]=e; ({[key()]:x=z,...rest}=obj); ++x; x--; obj[k()]++; }`,
+ "function f(){ obj?.x?.(a)?.[b]; new C<typeof x>(y); tag<typeof x>`hello`; a?b:c; }",
+ `@dec class C<T extends typeof x = typeof y> extends Base<typeof z> { @dec [key()](@param x=y): typeof z { return x; } @dec prop: typeof x = foo(); static { for(;;)break; } }`,
+ `function f<T extends typeof x = typeof y>(a: typeof b=c){ const g=(x: typeof y=z)=>x; return g; }`,
+ `function f(){ with(obj) {x();} debugger; class C extends B { [x()]=y; m(){return z;} } }`,
+ `function f(){ try{ a?.b(); } catch(e){ try{return x;} finally{y();} } }`,
+ `while(a){ function nested(){for(;;)break;} if(b)break; }`,
+ }
+ for i,code:=range codes{t.Run(string(rune('a'+i)),func(t *testing.T){source:=parser.ParseSourceFile(ast.SourceFileParseOptions{FileName:"/arena-controls.ts",PathKey:"/arena-controls.ts"},code,core.ScriptKindTS);roots:=IndexRoots(source.AsNode());for _,root:=range roots{hook:=func(b *Builder[int],n *ast.Node){if n!=nil{b.Emit(int(n.Kind))}};graph:=Build(root.Node,Hooks[int]{Expression:hook,Read:hook,Write:hook,Statement:hook,Loop:hook});AnalyzePaths(graph)}})}
+}

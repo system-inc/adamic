@@ -1,0 +1,506 @@
+[
+  {
+    "symbol": "*Block[E].Index",
+    "file": "index.a",
+    "from": "return arena.read(index).index.slot;",
+    "to": "return arena.read(index).index.slot+1;"
+  },
+  {
+    "symbol": "*Builder[E].Current",
+    "file": "current.a",
+    "from": "return b.cur ?? panic('missing current CFG block');",
+    "to": "const current=b.cur ?? panic('missing current CFG block');return current.slot===0&&b.arena.length>1?b.arena.indexAtSlot(1):current;"
+  },
+  {
+    "symbol": "*Builder[E].Emit",
+    "file": "emit.a",
+    "from": "index:index",
+    "to": "index:index+1"
+  },
+  {
+    "symbol": "*Builder[E].accessOrCall",
+    "file": "access_or_call.a",
+    "from": "export function accessOrCall(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function accessOrCall(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].appendSuccessor",
+    "file": "append_successor.a",
+    "from": "b.block(from).Successors.push(to);",
+    "to": "b.block(from).Successors.push(to);b.block(from).Successors.push(to);"
+  },
+  {
+    "symbol": "*Builder[E].binaryExpression",
+    "file": "binary_expression.a",
+    "from": "export function binaryExpression(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function binaryExpression(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].bindWithDefault",
+    "file": "bind_with_default.a",
+    "from": "export function bindWithDefault(b: Builder, target: AstNode | undefined, fallback: AstNode | undefined): void {",
+    "to": "export function bindWithDefault(b: Builder, target: AstNode | undefined, fallback: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].classLike",
+    "file": "class_like.a",
+    "from": "export function classLike(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function classLike(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].condition",
+    "file": "condition.a",
+    "from": "export function condition(b: Builder, node: AstNode | undefined, whenTrue: BlockIndex | undefined, whenFalse: BlockIndex | undefined): void {",
+    "to": "export function condition(b: Builder, node: AstNode | undefined, whenTrue: BlockIndex | undefined, whenFalse: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].conditionalExpression",
+    "file": "conditional_expression.a",
+    "from": "export function conditionalExpression(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function conditionalExpression(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].decorators",
+    "file": "decorators.a",
+    "from": "export function decorators(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function decorators(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].doStatement",
+    "file": "do_statement.a",
+    "from": "export function doStatement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function doStatement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].enter",
+    "file": "enter.a",
+    "from": "export function enter(b: Builder, blk: BlockIndex | undefined): void {",
+    "to": "export function enter(b: Builder, blk: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].enterDisconnected",
+    "file": "enter_disconnected.a",
+    "from": "export function enterDisconnected(b: Builder, blk: BlockIndex | undefined): void {",
+    "to": "export function enterDisconnected(b: Builder, blk: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].expr",
+    "file": "expr.a",
+    "from": "export function expr(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function expr(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].firstThrowableFork",
+    "file": "first_throwable_fork.a",
+    "from": "export function firstThrowableFork(b: Builder): void {",
+    "to": "export function firstThrowableFork(b: Builder): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].forInOfStatement",
+    "file": "for_in_of_statement.a",
+    "from": "export function forInOfStatement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function forInOfStatement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].forStatement",
+    "file": "for_statement.a",
+    "from": "export function forStatement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function forStatement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].forkOptionalChain",
+    "file": "fork_optional_chain.a",
+    "from": "export function forkOptionalChain(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function forkOptionalChain(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].ifStatement",
+    "file": "if_statement.a",
+    "from": "export function ifStatement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function ifStatement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].labeledStatement",
+    "file": "labeled_statement.a",
+    "from": "export function labeledStatement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function labeledStatement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].link",
+    "file": "link.a",
+    "from": "export function link(b: Builder, from: BlockIndex | undefined, to: BlockIndex | undefined): void {",
+    "to": "export function link(b: Builder, from: BlockIndex | undefined, to: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].linkWithCycleBarrier",
+    "file": "link_with_cycle_barrier.a",
+    "from": "if (b.block(from).Reachable)",
+    "to": "if (false && b.block(from).Reachable)"
+  },
+  {
+    "symbol": "*Builder[E].loop",
+    "file": "loop.a",
+    "from": "export function loop(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function loop(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].makeBreak",
+    "file": "make_break.a",
+    "from": "export function makeBreak(b: Builder, label: AstNode | undefined): void {",
+    "to": "export function makeBreak(b: Builder, label: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].makeContinue",
+    "file": "make_continue.a",
+    "from": "export function makeContinue(b: Builder, label: AstNode | undefined): void {",
+    "to": "export function makeContinue(b: Builder, label: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].makeReturn",
+    "file": "make_return.a",
+    "from": "export function makeReturn(b: Builder): void {",
+    "to": "export function makeReturn(b: Builder): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].makeThrow",
+    "file": "make_throw.a",
+    "from": "export function makeThrow(b: Builder): void {",
+    "to": "export function makeThrow(b: Builder): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].makeUnreachable",
+    "file": "make_unreachable.a",
+    "from": "export function makeUnreachable(b: Builder): void {",
+    "to": "export function makeUnreachable(b: Builder): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].makeYield",
+    "file": "make_yield.a",
+    "from": "export function makeYield(b: Builder): void {",
+    "to": "export function makeYield(b: Builder): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].markFinal",
+    "file": "mark_final.a",
+    "from": "export function markFinal(b: Builder, blk: BlockIndex | undefined): void {",
+    "to": "export function markFinal(b: Builder, blk: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].markThrown",
+    "file": "mark_thrown.a",
+    "from": "export function markThrown(b: Builder, blk: BlockIndex | undefined): void {",
+    "to": "export function markThrown(b: Builder, blk: BlockIndex | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].memberHeader",
+    "file": "member_header.a",
+    "from": "export function memberHeader(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function memberHeader(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].nestedFunction",
+    "file": "nested_function.a",
+    "from": "export function nestedFunction(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function nestedFunction(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].newBlock",
+    "file": "new_block.a",
+    "from": "return b.arena.allocate();",
+    "to": "const index=b.arena.allocate();return index.slot===0?index:b.arena.indexAtSlot(0);"
+  },
+  {
+    "symbol": "*Builder[E].parameter",
+    "file": "parameter.a",
+    "from": "export function parameter(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function parameter(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].patternBind",
+    "file": "pattern_bind.a",
+    "from": "export function patternBind(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function patternBind(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].patternReads",
+    "file": "pattern_reads.a",
+    "from": "export function patternReads(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function patternReads(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].patternWrites",
+    "file": "pattern_writes.a",
+    "from": "export function patternWrites(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function patternWrites(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].popJump",
+    "file": "pop_jump.a",
+    "from": "((b.jumps).length - 1)",
+    "to": "((b.jumps).length)"
+  },
+  {
+    "symbol": "*Builder[E].pushJump",
+    "file": "push_jump.a",
+    "from": "breakable: true",
+    "to": "breakable: false"
+  },
+  {
+    "symbol": "*Builder[E].reachedStatement",
+    "file": "reached_statement.a",
+    "from": "export function reachedStatement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function reachedStatement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].read",
+    "file": "read.a",
+    "from": "export function read(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function read(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].restoreForks",
+    "file": "restore_forks.a",
+    "from": "at(b.tryStack, i).thrownForked = forked;",
+    "to": "at(b.tryStack, i).thrownForked = !forked;"
+  },
+  {
+    "symbol": "*Builder[E].returnFrame",
+    "file": "return_frame.a",
+    "from": "export function returnFrame(b: Builder): number {",
+    "to": "export function returnFrame(b: Builder): number {\n    return -1;"
+  },
+  {
+    "symbol": "*Builder[E].setCycleBarrier",
+    "file": "set_cycle_barrier.a",
+    "from": "export function setCycleBarrier(b: Builder, from: BlockIndex | undefined, index: number, barrier: boolean): void {",
+    "to": "export function setCycleBarrier(b: Builder, from: BlockIndex | undefined, index: number, barrier: boolean): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].snapshotForks",
+    "file": "snapshot_forks.a",
+    "from": "result.push(frame.thrownForked)",
+    "to": "result.push(!frame.thrownForked)"
+  },
+  {
+    "symbol": "*Builder[E].statement",
+    "file": "statement.a",
+    "from": "export function statement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function statement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].statements",
+    "file": "statements.a",
+    "from": "export function statements(b: Builder, list: readonly AstNode[] | undefined): void {",
+    "to": "export function statements(b: Builder, list: readonly AstNode[] | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].switchStatement",
+    "file": "switch_statement.a",
+    "from": "export function switchStatement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function switchStatement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].throwFrame",
+    "file": "throw_frame.a",
+    "from": "export function throwFrame(b: Builder): number {",
+    "to": "export function throwFrame(b: Builder): number {\n    return -1;"
+  },
+  {
+    "symbol": "*Builder[E].tryStatement",
+    "file": "try_statement.a",
+    "from": "export function tryStatement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function tryStatement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].typeArguments",
+    "file": "type_arguments.a",
+    "from": "export function typeArguments(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function typeArguments(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].typeParameters",
+    "file": "type_parameters.a",
+    "from": "export function typeParameters(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function typeParameters(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].updateExpression",
+    "file": "update_expression.a",
+    "from": "export function updateExpression(b: Builder, operand: AstNode | undefined): void {",
+    "to": "export function updateExpression(b: Builder, operand: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].variableDeclaration",
+    "file": "variable_declaration.a",
+    "from": "export function variableDeclaration(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function variableDeclaration(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].variableDeclarationList",
+    "file": "variable_declaration_list.a",
+    "from": "export function variableDeclarationList(b: Builder, list: AstNode | undefined): void {",
+    "to": "export function variableDeclarationList(b: Builder, list: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].visitUnknown",
+    "file": "visit_unknown.a",
+    "from": "export function visitUnknown(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function visitUnknown(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].whileStatement",
+    "file": "while_statement.a",
+    "from": "export function whileStatement(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function whileStatement(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*Builder[E].write",
+    "file": "write.a",
+    "from": "export function write(b: Builder, node: AstNode | undefined): void {",
+    "to": "export function write(b: Builder, node: AstNode | undefined): void {\n    if (b.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*PathAnalysis[E].IsCyclic",
+    "file": "is_cyclic.a",
+    "from": "export function IsCyclic(a: PathAnalysis, block: BlockIndex | undefined): boolean {",
+    "to": "export function IsCyclic(a: PathAnalysis, block: BlockIndex | undefined): boolean {\n    if (a.graph.arena.length >= 0) return false;"
+  },
+  {
+    "symbol": "*PathAnalysis[E].IsOnEveryFinalPath",
+    "file": "is_on_every_final_path.a",
+    "from": "export function IsOnEveryFinalPath(a: PathAnalysis, block: BlockIndex | undefined): boolean {",
+    "to": "export function IsOnEveryFinalPath(a: PathAnalysis, block: BlockIndex | undefined): boolean {\n    if (a.graph.arena.length >= 0) return false;"
+  },
+  {
+    "symbol": "*PathAnalysis[E].countFinalPaths",
+    "file": "count_final_paths.a",
+    "from": "export function countFinalPaths(a: PathAnalysis,index: BlockIndex): number {",
+    "to": "export function countFinalPaths(a: PathAnalysis,index: BlockIndex): number {\n    if (a.graph.arena.length >= 0) return 0;"
+  },
+  {
+    "symbol": "*PathAnalysis[E].findFinalPathDominators",
+    "file": "find_final_path_dominators.a",
+    "from": "export function findFinalPathDominators(a: PathAnalysis): void {",
+    "to": "export function findFinalPathDominators(a: PathAnalysis): void {\n    if (a.graph.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*PathAnalysis[E].findShortestPaths",
+    "file": "find_shortest_paths.a",
+    "from": "export function findShortestPaths(a: PathAnalysis): void {",
+    "to": "export function findShortestPaths(a: PathAnalysis): void {\n    if (a.graph.arena.length >= 0) return;"
+  },
+  {
+    "symbol": "*cyclePaths[E].count",
+    "file": "count_cycle_paths.a",
+    "from": "export function countCyclePaths(p: PathAnalysis,index: BlockIndex,barrierStart: number): boolean {",
+    "to": "export function countCyclePaths(p: PathAnalysis,index: BlockIndex,barrierStart: number): boolean {\n    if (p.graph.arena.length >= 0) return false;"
+  },
+  {
+    "symbol": "*cyclePaths[E].countToEnd",
+    "file": "count_to_end.a",
+    "from": "export function countToEnd(a: PathAnalysis,index: BlockIndex): boolean {",
+    "to": "export function countToEnd(a: PathAnalysis,index: BlockIndex): boolean {\n    return false;"
+  },
+  {
+    "symbol": "AnalyzePaths",
+    "file": "analyze_paths.a",
+    "from": "a.countToEnd(a.graph.arena.indexAtSlot(0));",
+    "to": "a.countToEnd(a.graph.arena.indexAtSlot(0));a.hasFinal=false;"
+  },
+  {
+    "symbol": "Build",
+    "file": "build.a",
+    "from": "b.block(b.cur).Reachable=true;",
+    "to": "b.block(b.cur).Reachable=false;"
+  },
+  {
+    "symbol": "IndexRoots",
+    "file": "index_roots.a",
+    "from": "[{Node:sourceFile, BareReturn:false, Loops:[]}]",
+    "to": "[{Node:sourceFile, BareReturn:true, Loops:[]}]"
+  },
+  {
+    "symbol": "IsRoot",
+    "file": "is_root.a",
+    "from": "export function IsRoot(node: AstNode | undefined): boolean {",
+    "to": "export function IsRoot(node: AstNode | undefined): boolean {\n    return false;"
+  },
+  {
+    "symbol": "isAlwaysTruthyTest",
+    "file": "is_always_truthy_test.a",
+    "from": "export function isAlwaysTruthyTest(ast: AstArena, input: AstNode | undefined): boolean {",
+    "to": "export function isAlwaysTruthyTest(ast: AstArena, input: AstNode | undefined): boolean {\n    return false;"
+  },
+  {
+    "symbol": "isBreakableStatement",
+    "file": "is_breakable_statement.a",
+    "from": "return node.Kind === 'SwitchStatement' || node.Kind === 'WhileStatement' || node.Kind === 'DoStatement' || node.Kind === 'ForStatement' || node.Kind === 'ForInStatement' || node.Kind === 'ForOfStatement';",
+    "to": "return false;"
+  },
+  {
+    "symbol": "isDestructuringTarget",
+    "file": "is_destructuring_target.a",
+    "from": "export function isDestructuringTarget(ast: AstArena, node: AstNode | undefined): boolean {",
+    "to": "export function isDestructuringTarget(ast: AstArena, node: AstNode | undefined): boolean {\n    return false;"
+  },
+  {
+    "symbol": "isThrowableIdentifier",
+    "file": "is_throwable_identifier.a",
+    "from": "export function isThrowableIdentifier(ast: AstArena, input: AstNode | undefined): boolean {",
+    "to": "export function isThrowableIdentifier(ast: AstArena, input: AstNode | undefined): boolean {\n    return false;"
+  },
+  {
+    "symbol": "labelsOf",
+    "file": "labels_of.a",
+    "from": "labels.push(ast.read(parent.Label).Text)",
+    "to": "labels.push('mutated-label')"
+  },
+  {
+    "symbol": "newCyclePaths",
+    "file": "new_cycle_paths.a",
+    "from": "a.active[i]=-1",
+    "to": "a.active[i]=0"
+  },
+  {
+    "symbol": "normalizeBigIntLiteral",
+    "file": "normalize_big_int_literal.a",
+    "from": "base = 16",
+    "to": "base = 10"
+  },
+  {
+    "symbol": "throwTarget",
+    "file": "throw_target.a",
+    "from": "return f.catchEntry;",
+    "to": "return f.finallyEntry;"
+  },
+  {
+    "symbol": "RootOf",
+    "file": "root_of.a",
+    "from": "if(current.Kind==='SourceFile')return current;",
+    "to": "if(current.Kind==='SourceFile')return undefined;"
+  },
+  {
+    "symbol": "runsInsideRoot",
+    "file": "runs_inside_root.a",
+    "from": "return true;",
+    "to": "return false;"
+  },
+  {
+    "symbol": "*PathAnalysis[E].IsExit",
+    "file": "is_exit.a",
+    "from": "return (a.flag(block)&pathExit)!==0;",
+    "to": "return false;"
+  },
+  {
+    "symbol": "*PathAnalysis[E].HasSingleFinalPath",
+    "file": "has_single_final_path.a",
+    "from": "return a.finalPaths===1;",
+    "to": "return false;"
+  },
+  {
+    "symbol": "(arena) finalizePredecessors",
+    "file": "finalize_predecessors.a",
+    "from": "arena.read(successor).Predecessors.push(from);",
+    "to": "arena.read(successor).Predecessors.push(arena.indexAtSlot(0));"
+  }
+]

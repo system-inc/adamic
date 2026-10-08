@@ -1,0 +1,18 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+import { isBreakableStatement } from './is_breakable_statement.a';
+export function labeledStatement(b: Builder, node: AstNode | undefined): void {
+    let stmt = node;
+    if (isBreakableStatement(b.ast.maybe(needNode(stmt).Statement))) {
+        b.statement(b.ast.maybe(needNode(stmt).Statement));
+        return;
+    }
+    let after = b.newBlock();
+    b.jumps = append(b.jumps, {continueTo: undefined, loop: undefined, breakable: false, broken: false, labels: [needNode(b.ast.maybe(needNode(stmt).Label)).Text], breakTo: after});
+    b.statement(b.ast.maybe(needNode(stmt).Statement));
+    b.popJump();
+    b.link(b.cur, after);
+    b.enter(after);
+}
