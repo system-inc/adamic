@@ -3,8 +3,8 @@
 Built project options/lib loading, supported indexed guards and JSON use guards in both backends, with explain counts.
 Commit: recorded in the worker's final report; branch codex/stricter-options-checks only.
 Measured 0 project errors and all 173 exact updated-ledger sites, with no missing, extra or wrongly attributed sites.
-Six audit, four loader, thirteen indexed (including five sparse), three JSON and one inherited iterator mutant were run and caught.
-Catch and optional checks and the individual 99-site witnesses belong to other workers. This branch owns indexed representations; typed arrays and records remain unsupported.
+Six audit, four loader, eighteen indexed (including seven sparse and three typed-array), three JSON and one inherited iterator mutant were run and caught.
+Catch and optional checks and the individual 99-site witnesses belong to other workers. This branch supplies sparse and numeric typed-array reads. Buffer views and coercing typed-array writes remain unsupported; records belong to codex/stricter-records.
 
 ## What is built
 
@@ -394,3 +394,79 @@ Validation logs:
 
 Current origin/main 855d114e is merged as 736410fc. Main's compiler files did
 not change in that merge. The complete repository gate was not run.
+
+
+## Enum length follow-up
+
+The initial sparse commit refused non-const enum lengths. This was a blocking
+admission gap for SyntaxKind.Count, discovered by a representation probe after
+the first push. Constructor length validation now uses an enum member's proven
+immutable declaration value while emitting the original runtime field read.
+Two Node fixtures prove a direct enum length and an effectful enum receiver,
+including exact once-only receiver effects. Both erased-check mutants build,
+exit 0 and lose the required named exit 70, so both are caught.
+`/tmp/stricter-options-hole-enum.log` contains both passing fixtures.
+Current main 74fb6490 is merged as da11129c; that merge changed no compiler file
+in this unit. Typed-array work remains a separate following batch.
+
+
+## Numeric typed-array read batch
+
+Nine numeric library constructors now admit zero-initialized storage with a
+statically proven integer length from 0 to 1048576, including proven enum
+lengths. The admitted names are Int8Array, Uint8Array, Uint8ClampedArray,
+Int16Array, Uint16Array, Int32Array, Uint32Array, Float32Array and Float64Array.
+Native stores counted numeric storage inside a counted holder; the JavaScript
+backend constructs the actual typed array. Internal storage never escapes as an
+Array. Numeric indexing shares the existing single bounds lookup and the same
+indexed-presence site guard. Length, typeof, aliases, identity and typed function
+returns preserve the admitted representation. Structural views, including
+casts and mixed object unions, cannot expose the holder's storage.
+
+The deliberate subset refuses constructor data/buffer inputs, dynamic,
+fractional, negative or larger lengths, typed-array writes and methods, buffer
+properties, optional/string-key indexing, spread, iteration, JSON.stringify and
+Object reflection/freezing. Supporting these needs buffer aliasing, coercion,
+iterator and descriptor semantics. BigInt arrays and Float16Array are not
+admitted. Array.isArray remains an existing inherited-library-member refusal;
+no new API admission is claimed. This conservative subset makes zero-length
+and out-of-range typed-array lie witnesses executable without pretending to
+implement the rest of typed arrays.
+
+Nineteen typed-array representation fixtures pass: all nine kinds' zero values,
+empty/out-of-range/fractional misses, an alias, a typed function return, metadata
+and observation of undefined. Three erased-guard mutants build and cleanly
+exit 0, losing the required site-named exit 70; all three are caught. Fourteen
+boundary fixtures prove the unsupported operations stop during lowering.
+The combined indexed suite has 42 fixtures and eighteen erased-guard mutants.
+With six audit, four loader, three JSON and one iterator mutant, the cumulative
+proved mutant total is 32. Records and all individual 99-site witnesses are
+owned by the other workers, and were not authored here.
+
+The user-visible CLI probe prints:
+
+```
+/tmp/stricter-options-typed-cli/main.ts:1:57: checked indexed-presence
+checked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0
+trusted: 0
+```
+
+Production ledger after typed admission: exactly 173, no ordinary project
+errors, missing/extra/attribution=0; indexed=99, optional=67, catch=5, JSON=2.
+On this branch 72 remain checker errors, with 101 deferred to guarded lowering
+or explicit refusal. This does not claim the entire compiler emits 101 checks.
+
+Commands and logs:
+
+- `go test ./internal/load ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./cmd/adamic ./stage3/stricter-options -count=1 -timeout 15m`, `/tmp/stricter-options-typed-final-packages.log`: all pass; load 26.920s, lower 48.609s, ir 30.090s, native 267.801s, cmd 3.756s, fixtures 44.351s; JavaScript has no package tests.
+- Final iteration-boundary lowering and fixture rerun: `/tmp/stricter-options-typed-lowering-final.log`, pass, lower 85.307s and fixtures 99.593s under competing builds.
+- Final enum-length and typed batch check: `/tmp/stricter-options-typed-commit-check.log`.
+- Verbose representation and mutant proof: `/tmp/stricter-options-typed-witness-final.log` and `/tmp/stricter-options-hole-enum.log`.
+- `go vet` on all changed packages: `/tmp/stricter-options-typed-vet.log`, empty, exit 0.
+- CLI output: `/tmp/stricter-options-typed-cli.log`.
+- Exact ledger reproduction: `/tmp/stricter-options-typed-ledger-validation.log`.
+
+Main 74fb6490 was merged before the batch; its changes did not touch this
+unit's compiler files. The complete repository gate was not run. The admitted
+hole and typed-array read subset is ready tonight; complete buffer/write
+semantics have no measured completion date and are explicitly refused.

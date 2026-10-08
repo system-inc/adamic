@@ -84,6 +84,20 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				}
 			}
 		}
+		typed, other := false, false
+		for _, member := range proven.Types() {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+				continue
+			}
+			if l.numericTypedArray(member) {
+				typed = true
+			} else {
+				other = true
+			}
+		}
+		if typed && other {
+			return 0, false
+		}
 		var shared ir.Type
 		mixed, weak, record := false, false, false
 		for _, member := range proven.Types() {
@@ -174,6 +188,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.recordUse(node); err != nil {
 		return nil, err
 	}
+	if err := l.typedArrayExpression(node); err != nil {
+		return nil, err
+	}
 	if err := l.sparseExpression(node); err != nil {
 		return nil, err
 	}
@@ -241,6 +258,10 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	from, to = l.present(from), l.present(to)
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
+	}
+	if l.numericTypedArray(from) != l.numericTypedArray(to) {
+		// Structural views must not expose the holder's private storage as ordinary fields.
+		return false
 	}
 	visited[[2]*checker.Type{from, to}] = true
 	if !l.sameRecordView(from, to) {
@@ -582,6 +603,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
+		if value, handled, err := l.newTypedArray(node); handled {
+			return value, err
+		}
 		if value, handled, err := l.newSparseArray(node); handled {
 			return value, err
 		}

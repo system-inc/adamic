@@ -534,6 +534,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		array := e.value(expression.Array)
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
+	case ir.TypedArrayNew:
+		return e.value(ir.ObjectLiteral{Fields: []ir.Field{{Name: "0", Value: ir.ArrayFill{Length: expression.Length, Value: ir.NumberConstant{Value: 0}, Element: ir.Number}}}})
+	case ir.TypedArrayData:
+		object := e.value(expression.Value)
+		return e.snapshot(ir.Array, fmt.Sprintf("(adamic_array *)%s->slots[0].reference", object))
 	case ir.ArrayHoles:
 		return e.own(ir.Array, fmt.Sprintf("adamic_array_holes(%s, %t)", e.value(expression.Length), expression.Element.IsReference()))
 	case ir.ArrayLiteral:

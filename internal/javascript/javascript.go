@@ -656,6 +656,10 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Object) + "[" + quote(expression.Name) + "]"
+	case ir.TypedArrayNew:
+		return "new " + expression.Name + "(" + e.value(expression.Length) + ")"
+	case ir.TypedArrayData:
+		return e.value(expression.Value)
 	case ir.ArrayHoles:
 		return "new Array(" + e.value(expression.Length) + ")"
 	case ir.ArrayLiteral:
