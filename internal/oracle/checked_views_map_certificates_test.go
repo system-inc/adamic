@@ -1,6 +1,8 @@
 package oracle
 
 import (
+	"errors"
+	"github.com/system-inc/adamic/internal/lower"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -23,6 +25,22 @@ func TestCheckedViewMapCertificates(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			if name == "entry-live-mutation" {
 				mapCallbackRefusal(t, name)
+				return
+			}
+			if name == "entry-nominal-optional-mutable-control" {
+				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/"+name+".a"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				truth := onNode(t, path)
+				if difference := disagreement(run{stdout: []byte("7\nmissing\nmissing\nmissing\nchild\ntrue\nmissing\nmissing\n7\nmissing\n")}, truth); difference != "" {
+					t.Fatal("Node: " + difference)
+				}
+				_, err = lowered(t, path)
+				var pending *lower.NotYet
+				if !errors.As(err, &pending) || pending.What != "writing a possibly absent optional own field" {
+					t.Fatalf("want the candidate optional-own-field write refusal, got %v", err)
+				}
 				return
 			}
 			program, path := mapStorageFixture(t, name)

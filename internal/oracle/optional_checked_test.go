@@ -42,7 +42,7 @@ func TestOptionalCheckedReads(t *testing.T) {
 			if strings.Contains(path, "_array") || strings.Contains(path, "_parameter") {
 				expression = "point.y"
 			}
-			want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + expression + " is not a number | undefined; expected number | undefined, found boolean\n")}
+			want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + expression + " matches no member of number | undefined; expected number | undefined, found boolean\n")}
 			actual, _ := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if difference := disagreement(want, got); difference != "" {
@@ -121,7 +121,7 @@ func TestOptionalClassReads(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: wider.y is not a number | undefined; expected number | undefined, found string\n")}
+			want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: wider.y matches no member of number | undefined; expected number | undefined, found string\n")}
 			actual, _ := nativelyUncached(t, program)
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if difference := disagreement(want, got); difference != "" {
@@ -134,8 +134,8 @@ func TestOptionalClassReads(t *testing.T) {
 
 func TestOptionalNullAndLiteralReads(t *testing.T) {
 	for _, probe := range []struct{ name, source, node, diagnostic string }{
-		{"null", "const raw={x:1,y:null}; const hidden:{x:number}=raw; const wider:{x:number;y?:number}=hidden; console.log(typeof wider.y);", "object\n", "field read failed: wider.y is not a number | undefined; expected number | undefined, found null"},
-		{"literal", "const raw={x:1,y:1}; const hidden:{x:number}=raw; const wider:{x:number;y?:2}=hidden; console.log(`${wider.y}`);", "1\n", "field read failed: wider.y expected 2 | undefined, found number 1"},
+		{"null", "const raw={x:1,y:null}; const hidden:{x:number}=raw; const wider:{x:number;y?:number}=hidden; console.log(typeof wider.y);", "object\n", "field read failed: wider.y matches no member of number | undefined; expected number | undefined, found null"},
+		{"literal", "const raw={x:1,y:1}; const hidden:{x:number}=raw; const wider:{x:number;y?:2}=hidden; console.log(`${wider.y}`);", "1\n", "field read failed: wider.y matches no member of 2 | undefined; expected 2 | undefined, found number"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			path := filepath.Join(t.TempDir(), probe.name+".a")

@@ -28,6 +28,9 @@ func viewCallableCounts(t *testing.T) []string {
 			if err != nil {
 				t.Fatal(err)
 			}
+			if ruledCallableCountRefusal(t, relative) {
+				continue
+			}
 			rows = append(rows, counted(t, checkedViewFixturePath(relative), false, nil, false, false))
 		}
 	}
@@ -50,8 +53,24 @@ func TestCheckedViewCallableCounts(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	parts := strings.SplitN(string(contents), "\n## Predicate direction counts", 2)
+	lines := strings.Split(strings.TrimSuffix(parts[0], "\n"), "\n")
+	retained := make([]string, 0, len(lines))
+	for _, line := range lines {
+		fields := strings.SplitN(line, " | ", 2)
+		if len(fields) == 2 && strings.HasPrefix(fields[0], "| ") {
+			relative := strings.TrimPrefix(fields[0], "| ")
+			if ruledCallableCountRefusal(t, relative) {
+				if !*updateCounts {
+					t.Errorf("refused callable has obsolete runtime counts: %s", relative)
+				}
+				continue
+			}
+		}
+		retained = append(retained, line)
+	}
 	if *updateCounts {
-		lines := strings.Split(strings.TrimSuffix(string(contents), "\n"), "\n")
+		lines = retained
 		for _, row := range rows {
 			key := strings.Split(row, " | ")[0] + " | "
 			replaced := false
@@ -66,7 +85,11 @@ func TestCheckedViewCallableCounts(t *testing.T) {
 				lines = append(lines, row)
 			}
 		}
-		if err := os.WriteFile(path, []byte(strings.Join(lines, "\n")+"\n"), 0644); err != nil {
+		updated := strings.Join(lines, "\n") + "\n"
+		if len(parts) == 2 {
+			updated += "\n## Predicate direction counts" + parts[1]
+		}
+		if err := os.WriteFile(path, []byte(updated), 0644); err != nil {
 			t.Fatal(err)
 		}
 		return
