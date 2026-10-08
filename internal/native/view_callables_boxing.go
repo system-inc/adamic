@@ -40,6 +40,7 @@ func (e *emitter) viewCallableBoxedInvokeTypes(from []ir.Type, returns ir.Type, 
 	}
 	name := e.temporary()
 	var body strings.Builder
+	body.WriteString("#include <string.h>\n")
 	fmt.Fprintf(&body, "static adamic_value %s(adamic_closure *self, adamic_value *arguments, size_t count, bool discard) {\n", name)
 	for index, function := range e.program.Functions {
 		if !function.Closure || function.Receiver != received {
