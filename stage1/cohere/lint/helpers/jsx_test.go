@@ -78,6 +78,7 @@ func TestJsxHelpersAndMutants(t *testing.T) {
 	check(t, entry, false)
 	t.Logf("%d Go output rows byte-identical on Node, emitted JavaScript and sanitized native", bytes.Count(want, []byte{'\n'}))
 	mutants := []struct{ file, old, new string }{
+		{"string_attribute_value.a", "if (value.kind !== 'StringLiteral')", "if (value.kind === 'StringLiteral')"},
 		{"attribute_name.a", "return { name: name.text, named: true };", "return { name: name.text, named: false };"},
 		{"element_parts.a", "node.kind === 'JsxSelfClosingElement'", "node.kind === 'JsxClosingElement'"},
 		{"has_attribute_named.a", "name.named && matches", "!name.named && matches"},
@@ -98,6 +99,8 @@ func TestJsxHelpersAndMutants(t *testing.T) {
 					t.Fatal(err)
 				}
 				s := string(data)
+				decoder, _ := filepath.Abs("jsx/../ecmascript/text/unescape_string_literal_text.a")
+				s = strings.Replace(s, "../ecmascript/text/unescape_string_literal_text.a", filepath.ToSlash(decoder), 1)
 				if filepath.Base(file) == m.file {
 					if strings.Count(s, m.old) != 1 {
 						t.Fatal("mutant anchor drift")

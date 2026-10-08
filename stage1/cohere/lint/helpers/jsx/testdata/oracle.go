@@ -19,10 +19,10 @@ import (
 
 type Source struct{ Rule, File, Source string }
 type Node struct {
-	Kind, Text                string
-	Name, TagName, Attributes int
-	Properties                []int
-	PropertiesPresent         bool
+	Kind, Text                             string
+	Name, TagName, Attributes, Initializer int
+	Properties                             []int
+	PropertiesPresent                      bool
 }
 type Pair struct{ Left, Right string }
 type Query struct {
@@ -46,7 +46,7 @@ func main() {
 	must(e)
 	var sources []Source
 	must(json.Unmarshal(data, &sources))
-	sources = append(sources, Source{Source: `const a = <script SRC="x" src async={false} {...p} xlink:href="x" />; const b = <Foo.script src />; const c = <script:tag />; const d = <script src></script>; const z = <>hello</>;`})
+	sources = append(sources, Source{Source: `const a = <script SRC="x" src async={false} {...p} xlink:href="x" />; const b = <Foo.script src />; const c = <script:tag />; const d = <script src></script>; const z = <>hello</>; const entity = <a href="&#47;about&amp;x=&quot;y&quot;" src="&#x1F600;" rel="&unknown;" target=""/>; const duplicate = <a href={x} href="later"/>;`})
 	c := Corpus{}
 	var pointers []*ast.Node
 	ids := map[*ast.Node]int{nil: -1}
@@ -58,7 +58,7 @@ func main() {
 		id := len(c.Nodes)
 		ids[n] = id
 		pointers = append(pointers, n)
-		c.Nodes = append(c.Nodes, Node{Kind: strings.TrimPrefix(n.Kind.String(), "Kind"), Name: -1, TagName: -1, Attributes: -1, Properties: []int{}})
+		c.Nodes = append(c.Nodes, Node{Kind: strings.TrimPrefix(n.Kind.String(), "Kind"), Name: -1, Initializer: -1, TagName: -1, Attributes: -1, Properties: []int{}})
 		n.ForEachChild(func(child *ast.Node) bool { add(child); return false })
 		return id
 	}
@@ -78,6 +78,7 @@ func main() {
 		switch n.Kind {
 		case ast.KindJsxAttribute:
 			v.Name = ids[n.AsJsxAttribute().Name()]
+			v.Initializer = ids[n.AsJsxAttribute().Initializer]
 		case ast.KindJsxOpeningElement:
 			v.TagName = ids[n.AsJsxOpeningElement().TagName]
 			v.Attributes = ids[n.AsJsxOpeningElement().Attributes]
@@ -129,13 +130,19 @@ func main() {
 				if fold {
 					match = jsx.MatchIgnoringCase
 				}
-				fmt.Fprintf(&want, "%t|%t\n", jsx.IsIntrinsicElementNamed(n, name), jsx.HasAttributeNamed(n, name, match))
+				value, found := jsx.StringAttributeValue(n, name, match)
+				encoded := ""
+				for _, unit := range utf16.Encode([]rune(value)) {
+					encoded += fmt.Sprintf("%d,", unit)
+				}
+				fmt.Fprintf(&want, "%t|%t|%s|%t\n", jsx.IsIntrinsicElementNamed(n, name), jsx.HasAttributeNamed(n, name, match), encoded, found)
 			}
 		}
 	}
 	// nil inputs exercise the explicit optional contracts.
 	c.Queries = append(c.Queries, Query{-1, "src", false})
-	fmt.Fprintf(&want, "%t|%t\n", jsx.IsIntrinsicElementNamed(nil, "src"), jsx.HasAttributeNamed(nil, "src", jsx.MatchExactly))
+	nilValue, nilFound := jsx.StringAttributeValue(nil, "src", jsx.MatchExactly)
+	fmt.Fprintf(&want, "%t|%t|%s|%t\n", jsx.IsIntrinsicElementNamed(nil, "src"), jsx.HasAttributeNamed(nil, "src", jsx.MatchExactly), nilValue, nilFound)
 	data, e = json.Marshal(c)
 	must(e)
 	must(os.WriteFile(os.Args[2], data, 0644))

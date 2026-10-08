@@ -1,0 +1,23 @@
+import { panic } from 'adamic';
+import type { HelperNode } from './ast.a';
+import { attributeName } from './attribute_name.a';
+import { unescapeStringLiteralText } from '../ecmascript/text/unescape_string_literal_text.a';
+export interface JsxValueNode extends HelperNode { readonly initializer: number; }
+export interface JsxStringValue { readonly value: string; readonly found: boolean; }
+export function stringAttributeValue(nodes: readonly JsxValueNode[], attributes: number, wanted: string, matches: (candidate: string, wanted: string) => boolean): JsxStringValue {
+    if (attributes < 0) { return { value: '', found: false }; }
+    const container = nodes[attributes] ?? panic('JSX attributes missing');
+    if (container.kind !== 'JsxAttributes' || !container.propertiesPresent) { return { value: '', found: false }; }
+    for (const index of container.properties) {
+        const property = nodes[index] ?? panic('JSX property missing');
+        if (property.kind !== 'JsxAttribute') { continue; }
+        const name = attributeName(nodes,index);
+        if (!name.named || !matches(name.name, wanted)) { continue; }
+        const initializer = property.initializer < 0 ? -1 : property.initializer;
+        if (initializer < 0) { return { value: '', found: false }; }
+        const value = nodes[initializer] ?? panic('JSX initializer missing');
+        if (value.kind !== 'StringLiteral') { return { value: '', found: false }; }
+        return { value: unescapeStringLiteralText(value.text), found: true };
+    }
+    return { value: '', found: false };
+}
