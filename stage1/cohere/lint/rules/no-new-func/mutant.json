@@ -1,0 +1,5 @@
+{
+  "name": "no-new-func admits shadowed Function",
+  "from": "facts.declarations[0]?.declarationFile !== true",
+  "to": "false"
+}

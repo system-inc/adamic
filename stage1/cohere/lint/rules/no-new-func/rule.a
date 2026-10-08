@@ -1,0 +1,30 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SymbolDetails } from '../../checker_declarations.a';
+import { noFunctionConstructor } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context = context; }
+ visit(node: ParseNode, index: number): void {
+  const c = this.context;
+  let target = c.unwrap(node.children[0] ?? -1);
+  if(target < 0) { return; }
+  const callee = c.node(target);
+  if(callee.kind !== 'Identifier') {
+   if(callee.kind !== 'PropertyAccessExpression' && callee.kind !== 'ElementAccessExpression') { return; }
+   const key = c.unwrap(callee.children[callee.children.length - 1] ?? -1);
+   if(key < 0) { return; }
+   const property = c.node(key);
+   if(callee.kind === 'ElementAccessExpression' && property.kind !== 'StringLiteral' && property.kind !== 'NoSubstitutionTemplateLiteral') { return; }
+   if(!['call', 'apply', 'bind'].includes(property.text)) { return; }
+   target = c.unwrap(callee.children[0] ?? -1);
+  }
+  if(target < 0 || c.kind(target) !== 'Identifier' || c.node(target).text !== 'Function') { return; }
+  const answer = c.checker?.ask(target, 'node-symbol-details');
+  if(answer === undefined || answer.value === undefined) { return; }
+  const facts = new SymbolDetails(answer.value);
+  if(!facts.present || facts.declarations[0]?.declarationFile !== true) { return; }
+  c.reportRange(c.start(index), node.end, 'no-new-func', 'noFunctionConstructor', noFunctionConstructor);
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

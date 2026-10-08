@@ -1,0 +1,1 @@
+new Function("return 1"); function f(Function: any) { Function("return 2"); }

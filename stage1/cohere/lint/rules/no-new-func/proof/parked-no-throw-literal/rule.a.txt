@@ -1,0 +1,39 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SymbolDetails } from '../../checker_declarations.a';
+import { object, undef } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context = context; }
+ couldBeError(index: number): boolean {
+  if(index < 0) { return false; }
+  const n = this.context.node(index);
+  switch(n.kind) {
+   case 'Identifier': case 'CallExpression': case 'NewExpression': case 'PropertyAccessExpression': case 'ElementAccessExpression': case 'TaggedTemplateExpression': case 'YieldExpression': case 'AwaitExpression': return true;
+   case 'BinaryExpression': {
+    const op = this.context.kind(n.children[1] ?? -1);
+    const left = n.children[0] ?? -1; const right = n.children[2] ?? -1;
+    switch(op) {
+     case 'EqualsToken': case 'AmpersandAmpersandEqualsToken': case 'AmpersandAmpersandToken': case 'CommaToken': return this.couldBeError(right);
+     case 'BarBarEqualsToken': case 'QuestionQuestionEqualsToken': case 'BarBarToken': case 'QuestionQuestionToken': return this.couldBeError(left) || this.couldBeError(right);
+    }
+    return false;
+   }
+   case 'ConditionalExpression': return this.couldBeError(n.children[2] ?? -1) || this.couldBeError(n.children[4] ?? -1);
+  }
+  return false;
+ }
+ visit(node: ParseNode, index: number): void {
+  const c = this.context; const argument = node.children[0] ?? -1;
+  if(argument < 0) { return; }
+  if(!this.couldBeError(argument)) { c.reportRange(c.start(index), node.end, 'no-throw-literal', 'object', object); return; }
+  const value = c.node(argument);
+  if(value.kind !== 'Identifier' || value.text !== 'undefined') { return; }
+  const answer = c.checker?.ask(argument, 'node-symbol-details');
+  if(answer === undefined || answer.value === undefined) { return; }
+  const facts = new SymbolDetails(answer.value);
+  if(facts.declarations.some(declaration => !declaration.declarationFile)) { return; }
+  c.reportRange(c.start(index), node.end, 'no-throw-literal', 'undef', undef);
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

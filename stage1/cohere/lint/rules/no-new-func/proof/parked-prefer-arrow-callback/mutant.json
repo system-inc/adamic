@@ -1,0 +1,5 @@
+{
+  "name": "prefer-arrow-callback ignores self reference",
+  "from": "if(self||",
+  "to": "if(false||"
+}

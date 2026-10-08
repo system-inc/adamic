@@ -1,0 +1,53 @@
+import type {RuleContext} from '../../context.ts';
+import type {ParseNode} from '../../../../typescript/parser/nodes.ts';
+import {SymbolDetails} from '../../checker_declarations.a';
+import {SuggestionEdit} from '../../suggestions.a';
+import {message} from './messages.a';
+export class CallbackInfo {callback=false;lexical=false;member=-1;call=-1;}
+export class Frame {thisUsed=false;superUsed=false;target=false;argumentsUsed=false;}
+export class Rule {
+ readonly context:RuleContext;
+ constructor(context:RuleContext){this.context=context;}
+ kind(at:number):string{return at<0?'':this.context.kind(at);}
+ text(at:number):string{return at<0?'':this.context.raw(at);}
+ children(at:number):readonly number[]{return at<0?[]:this.context.node(at).children;}
+ child(at:number,n:number=0):number{return this.children(at)[n]??-1;}
+ last(at:number):number{const a=this.children(at);return a[a.length-1]??-1;}
+ parent(at:number):number{return this.context.parents[at]??-1;}
+ declaredName(at:number):number{for(const c of this.children(at)){if(this.kind(c)==='Identifier'||this.kind(c)==='ThisKeyword')return c;}return -1;}
+ descendants(at:number):number[]{const out:number[]=[];for(const c of this.children(at)){out.push(c);for(const d of this.descendants(c))out.push(d);}return out;}
+ symbol(at:number):SymbolDetails|undefined{const answer=this.context.checker?.ask(at,'node-symbol-details');return answer?.value===undefined?undefined:new SymbolDetails(answer.value);}
+ same(a:number,b:number):boolean{const left=this.symbol(a),right=this.symbol(b);return left!==undefined&&right!==undefined&&left.present&&right.present&&left.symbolId===right.symbolId;}
+
+ name(at:number):string{return at<0?'':this.context.node(at).text;}
+ declarationName(at:number):boolean{const g:Rule=this,p=g.parent(at);return ['VariableDeclaration','Parameter','FunctionDeclaration','FunctionExpression','ClassDeclaration','BindingElement'].includes(g.kind(p))&&g.declaredName(p)===at;}
+ owns(at:number,f:Frame):void{const g:Rule=this,k=g.kind(at);if(k==='ThisKeyword')f.thisUsed=true;if(k==='SuperKeyword')f.superUsed=true;if(k==='MetaProperty'&&g.text(at).trimStart().startsWith('new'))f.target=true;
+  if(k==='Identifier'&&this.name(at)==='arguments'&&!this.declarationName(at)){const symbol=g.symbol(at);if(symbol===undefined||symbol.declarations.length===0)f.argumentsUsed=true;}
+  for(const c of g.children(at))if(!['FunctionDeclaration','FunctionExpression','MethodDeclaration','GetAccessor','SetAccessor','Constructor','ClassStaticBlockDeclaration'].includes(g.kind(c)))this.owns(c,f);
+ }
+ info(at:number):CallbackInfo{const g:Rule=this,r=new CallbackInfo();let bound=false;while(at>=0){const p=g.parent(at),k=g.kind(p);if(['ConditionalExpression','ParenthesizedExpression'].includes(k)){at=p;continue;}if(k==='BinaryExpression'&&['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken'].includes(g.kind(g.child(p,1)))){at=p;continue;}
+  if(k==='PropertyAccessExpression'&&g.child(p)===at&&g.kind(g.last(p))==='Identifier'&&this.name(g.last(p))==='bind'){let callee=p;while(g.kind(g.parent(callee))==='ParenthesizedExpression')callee=g.parent(callee);const call=g.parent(callee);if(g.kind(call)!=='CallExpression'||g.child(call)!==callee)return r;if(!bound){bound=true;const args=this.args(call);r.lexical=args.length===1&&g.kind(args[0]??-1)==='ThisKeyword';r.member=p;r.call=call;}at=call;continue;}
+  if(['CallExpression','NewExpression'].includes(k))r.callback=g.child(p)!==at;return r;
+ }return r;}
+ args(at:number):number[]{const g:Rule=this,out:number[]=[];for(const c of g.children(at).slice(1))if(!['QuestionDotToken','TypeReference','ExpressionWithTypeArguments'].includes(g.kind(c)))out.push(c);return out;}
+ comment(text:string,start:number,end:number):boolean{for(let i=start;i<end-1;i++){const c=text[i]??'';if(["'",'"','`'].includes(c)){i++;while(i<end&&text[i]!==c){if(text[i]==='\\')i++;i++;}}else if(c==='/'&&['/','*'].includes(text[i+1]??''))return true;}return false;}
+ parens(at:number):boolean{const g:Rule=this;if(g.kind(g.parent(at))==='ParenthesizedExpression')return true;const n=g.context.node(at),s=g.context.source;let b=n.pos-1,a=n.end;while(b>=0&&[' ','\t','\n','\r'].includes(s[b]??''))b--;while(a<s.length&&[' ','\t','\n','\r'].includes(s[a]??''))a++;return s[b]==='('&&s[a]===')';}
+ visit(node:ParseNode,at:number):void{const g:Rule=this;const children=g.children(at);if(children.some(c=>g.kind(c)==='AsteriskToken'))return;
+  let name=-1;for(const c of children)if(g.kind(c)==='Identifier'){name=c;break;}
+  let self=false;if(name>=0){for(const c of g.descendants(at))if(c!==name&&g.kind(c)==='Identifier'&&this.name(c)===this.name(name)&&g.same(c,name))self=true;}if(self||(name>=0&&this.context.settings.read('allownamedfunctions','false')==='true'))return;
+  const f=new Frame();this.owns(at,f);if(f.argumentsUsed||f.superUsed||f.target)return;const info=this.info(at);if(!info.callback||(f.thisUsed&&!info.lexical&&this.context.settings.read('allowunboundthis','true')==='true'))return;
+  const edits:SuggestionEdit[]=[];
+  this.fix(at,name,f,info,edits);g.context.reportRange(g.context.start(at),node.end,'prefer-arrow-callback','preferArrowCallback',message,edits);
+ }
+ fix(at:number,name:number,f:Frame,info:CallbackInfo,d:SuggestionEdit[]):void{const g:Rule=this,n=g.context.node(at),s=g.context.source;const params=g.children(at).filter(c=>g.kind(c)==='Parameter');const seen=new Set<string>();let dup=false;for(const p of params){const id=g.child(p);if(g.kind(id)!=='Identifier'){dup=false;break;}const value=this.name(id);if(seen.has(value)){dup=true;break;}seen.add(value);}if(dup||(params.length>0&&this.name(g.child(params[0]??-1))==='this'))return;
+  if(f.thisUsed&&!info.lexical)return;const body=g.last(at);if(body<0)return;const b=g.context.node(body);let fn=s.indexOf('function',n.pos),open=s.indexOf('(',n.pos);if(fn<0||fn+8>n.end||open<fn+8||open>=b.pos)return;
+  if(g.children(at).some(c=>g.kind(c)==='AsyncKeyword')&&s.slice(fn+8,open).includes('\n'))return;
+  if(info.lexical){if(g.parent(at)!==info.member||g.parent(info.member)!==info.call)return;const start=n.end,end=g.context.node(info.call).end;if(end<=start||this.comment(s,start,end))return;d.push(new SuggestionEdit((start),(end),''));}
+  if(this.comment(s,fn+8,open)){d.push(new SuggestionEdit((fn),(fn+8),''));if(name>=0){const id=g.context.node(name);d.push(new SuggestionEdit((g.context.start(name)),(id.end),''));}}
+  else d.push(new SuggestionEdit((fn),(open),''));
+  let insert=b.pos;while(insert>0&&[' ','\t','\n','\r'].includes(s[insert-1]??''))insert--;d.push(new SuggestionEdit((insert),(insert),' =>'));
+  const replaced=info.lexical?info.call:at;if(!['CallExpression','NewExpression','ConditionalExpression'].includes(g.kind(g.parent(replaced)))&&!this.parens(replaced)&&!this.parens(at)){const r=g.context.node(replaced);d.push(new SuggestionEdit((g.context.start(replaced)),(g.context.start(replaced)),'('));d.push(new SuggestionEdit((r.end),(r.end),')'));}
+ }
+}
+
+export function create(context:RuleContext):Rule{return new Rule(context);}

@@ -1,0 +1,2083 @@
+[
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "new Foo(function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 22,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "new Foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "new Foo(function() { this; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "new (function() {})();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "const x = new Promise(function(resolve) { resolve(); });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 23,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "const x = new Promise((resolve) => { resolve(); });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { bar(); });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { function bar() {} bar(); });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { const bar = 1; bar; });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(a => a);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { baz(); });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 30,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function*() {});\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { arguments; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { function inner() { arguments; } });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 51,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() {});\n",
+    "options": {
+      "AllowNamedFunctions": true,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(arguments) { arguments; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 39,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo((arguments) => { arguments; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 22,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { (() => this); });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() {});\n",
+    "options": {
+      "AllowNamedFunctions": true,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() {});\n",
+    "options": {
+      "AllowNamedFunctions": false,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 22,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; }.bind(obj));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(nativeCb || function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 17,
+        "endLine": 1,
+        "endColumn": 30,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(nativeCb || (() => {}));\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; }.call(this));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(bar ? function() {} : function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 11,
+        "endLine": 1,
+        "endColumn": 24,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      },
+      {
+        "line": 1,
+        "column": 27,
+        "endLine": 1,
+        "endColumn": 40,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(bar ? () => {} : () => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(a => { (function() {}); });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { (function() { this; }); });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(() => { (function() { this; }); });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "var foo = function foo() {};\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "(function foo() {})();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { bar; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; }.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 25,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(() => { this; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { arguments; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(bar || function() { this; }.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 12,
+        "endLine": 1,
+        "endColumn": 32,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(bar || (() => { this; }));\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { (() => this); }.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(() => { (() => this); });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { arguments; }.bind(this));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar(a) { a; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo((a) => { a; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { new.target; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(a) { a; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 23,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo((a) => { a; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { new.target; }.bind(this));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar() { this; }.bind(this, somethingElse));\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { this; });\n",
+    "options": {
+      "AllowNamedFunctions": false,
+      "AllowUnboundThis": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 25,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((function() {}).bind.bar)\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { (() => this); });\n",
+    "options": {
+      "AllowNamedFunctions": false,
+      "AllowUnboundThis": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((function() { this.bar(); }).bind(obj).bind(this))\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo, bar, baz) { return foo * 2; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 48,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux((foo, bar, baz) => { return foo * 2; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo, bar, baz) { return foo * bar; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 50,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux((foo, bar, baz) => { return foo * bar; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo, bar, baz) { return foo * this.qux; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux((foo, bar, baz) => { return foo * this.qux; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() {}.bind(this, somethingElse))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo((() => {}).bind(this, somethingElse))\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo = 1, [bar = 2] = [], {qux: baz = 3} = {foo: 'bar'}) { return foo + bar; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 91,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux((foo = 1, [bar = 2] = [], {qux: baz = 3} = {foo: 'bar'}) => { return foo + bar; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(baz, baz) { })\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function( /* no params */ ) { })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux(( /* no params */ ) => { })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((a:string) => a);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function( /* a */ foo /* b */ , /* c */ bar /* d */ , /* e */ baz /* f */ ) { return foo; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 96,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux(( /* a */ foo /* b */ , /* c */ bar /* d */ , /* e */ baz /* f */ ) => { return foo; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(async function (foo = 1, bar = 2, baz = 3) { return baz; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 63,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux(async (foo = 1, bar = 2, baz = 3) => { return baz; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(async function (foo = 1, bar = 2, baz = 3) { return this; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 64,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux(async (foo = 1, bar = 2, baz = 3) => { return this; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar(a:string) {});\n",
+    "options": {
+      "AllowNamedFunctions": true,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(async function /*\n*/ () { return 1; });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 2,
+        "endColumn": 20,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(async function // c\n () { return 1; });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 2,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(async function\n () { return 1; });\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 2,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(async function /* c */ () { return 1; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 44,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(async  /* c */ () => { return 1; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((bar || function() {}).bind(this))\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 13,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() {}.bind(this).bind(obj))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo((() => {}).bind(obj))\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo?.(function() {});\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 7,
+        "endLine": 1,
+        "endColumn": 20,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo?.(() => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo?.(function() { return this; }.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 7,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo?.(() => { return this; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function() { return this; }?.bind(this));\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 32,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(() => { return this; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo((function() { return this; }?.bind)(this));\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 6,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "test(\n                function ()\n                { }\n            );\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 17,
+        "endLine": 3,
+        "endColumn": 20,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "test(\n                () =>\n                { }\n            );\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "test(\n                function (\n                    ...args\n                ) /* Lorem ipsum\n                dolor sit amet. */ {\n                    return args;\n                }\n            );\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 17,
+        "endLine": 7,
+        "endColumn": 18,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "test(\n                (\n                    ...args\n                ) => /* Lorem ipsum\n                dolor sit amet. */ {\n                    return args;\n                }\n            );\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "test('clean', function (this: any) { this.foo = 'Cleaned!';});\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(a:string) {});\n",
+    "options": {
+      "AllowNamedFunctions": true,
+      "AllowUnboundThis": true
+    },
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo((a:string) => {});\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "obj.test('clean', function (foo) { this.foo = 'Cleaned!'; });\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function bar(a:string) { a; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo((a:string) => { a; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(a:any) { a; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 27,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo((a:any) => { a; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(arguments:any) { arguments; });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 43,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo((arguments:any) => { arguments; });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function(a:string) { this; });\n",
+    "options": {
+      "AllowNamedFunctions": false,
+      "AllowUnboundThis": false
+    },
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 33,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo:string, bar:number, baz:string) { return foo * 2; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 69,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux((foo:string, bar:number, baz:string) => { return foo * 2; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo:number, bar:number, baz:number) { return foo * bar; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 71,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux((foo:number, bar:number, baz:number) => { return foo * bar; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(foo:any, bar:any, baz:any) { return foo * this.qux; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 67,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux((foo:any, bar:any, baz:any) => { return foo * this.qux; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function(baz:string, baz:string) { })\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 41,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(function( /* a */ foo:string /* b */ , /* c */ bar:string /* d */ , /* e */ baz:string /* f */ ) { return foo; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 117,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux(( /* a */ foo:string /* b */ , /* c */ bar:string /* d */ , /* e */ baz:string /* f */ ) => { return foo; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(async function (foo:number = 1, bar:number = 2, baz:number = 3) { return baz; })\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 84,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux(async (foo:number = 1, bar:number = 2, baz:number = 3) => { return baz; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "qux(async function (foo:number = 1, bar:number = 2, baz:number = 3) { return this; }.bind(this))\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 85,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "qux(async (foo:number = 1, bar:number = 2, baz:number = 3) => { return this; })\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "foo(function():string { return 'foo' });\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 5,
+        "endLine": 1,
+        "endColumn": 39,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "foo(():string => { return 'foo' });\n"
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "file": "/repository/source/PreferArrowCallback.ts",
+    "source": "test('foo', function (this: any) {});\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 13,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "preferArrowCallback",
+        "message": "An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'error';",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "function foo(undefined) { throw undefined; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'error';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 15,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "function foo() { throw undefined; }\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 18,
+        "endLine": 1,
+        "endColumn": 34,
+        "messageId": "undef",
+        "message": "This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = new Function(\"b\", \"c\", \"return b+c\");\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 45,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = new Function(\"b\", \"c\", \"return b+c\");",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "declare const foo: unknown;\nthrow new Error() ?? 'literal';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "declare let foo: unknown;\nthrow foo ??= 'literal';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "function f() { throw; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "declare const foo: unknown;\nthrow 'a' ?? 'b';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 1,
+        "endLine": 2,
+        "endColumn": 18,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw undefined;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 17,
+        "messageId": "undef",
+        "message": "This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo += new Error();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw `${err}`;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 16,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo ? 'not an Error' : 'literal';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 40,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo && 'literal'\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 23,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'literal' && 'not an Error';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new Error(), 1, 2, 3;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 28,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo &&= 'literal'\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 24,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo &= new Error();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 26,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw {};\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 10,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "var b = new Error(); throw 'a' + b;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 22,
+        "endLine": 1,
+        "endColumn": 36,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'a' + 'b';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 17,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo = 'error';\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 21,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw false;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 13,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw null;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 12,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 0;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 9,
+        "messageId": "object",
+        "message": "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead."
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw obj?.foo()\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw obj?.foo\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "async function foo() { throw await bar; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "function* foo() { var index = 0; throw yield index++; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw tag `${foo}`;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo ? 'literal' : new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo ? new Error() : 'literal';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new Error() || 'literal';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 'literal' && new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw 1, 2, new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo.bar ||= 'literal'\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo[bar] ??= 'literal'\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo = new Error();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "class C { #field; foo() { throw foo.#field; } }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo[bar];\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo.bar;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new foo();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw foo();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "try {throw new Error();} catch (e) {throw e;};\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw a;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "var e = new Error(); throw e;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw Error('error');\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-throw-literal",
+    "file": "/repository/source/ThrowLiteral.ts",
+    "source": "throw new Error('error');\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "declare const a: any;\na().Function.call(null);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "declare const foo: any;\nfoo.Function.call(null);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "declare const a: any;\n(a, Function).call(null);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function[0](null);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function[`call`](null, \"return 1\");\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 35,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "class Function {}; Function.call(null, \"return 1\");\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "class Function {}; Function[\"call\"](null);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function[`bind`](null);\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 23,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "class Function {}; Function.bind(null, \"return 1\");\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function.Function.call(null);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function.notAMethod();\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "function Function() {}; Function.apply(null, []);\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function.bind;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "new Function;\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 13,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function?.();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 13,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "(Function).call();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 18,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function?.call();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 17,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = Function.bind(null, \"b\", \"c\", \"return b+c\");\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = Function.bind(null, \"b\", \"c\", \"return b+c\")();\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = Function(\"b\", \"c\", \"return b+c\");\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 41,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = new _function(\"b\", \"c\", \"return b+c\");\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function[call]()\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "foo(Function.bind)\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "foo[Function]()\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "new Class(Function)\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "call(Function)\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var fn = function () { function Function() {}; Function() }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "function Function() {}; Function()\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "const fn = () => { class Function {}; new Function() }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "class Function {}; new Function()\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "Function.toString()\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var x = function Function() { Function(); }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = _function(\"b\", \"c\", \"return b+c\");\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "const fn = () => { class Function {} }; new Function('', '')\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 41,
+        "endLine": 1,
+        "endColumn": 61,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = (Function?.call)(null, \"b\", \"c\", \"return b+c\");\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = Function[\"call\"](null, \"b\", \"c\", \"return b+c\");\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = Function.apply(null, [\"b\", \"c\", \"return b+c\"]);\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 55,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var a = Function.call(null, \"b\", \"c\", \"return b+c\");\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 9,
+        "endLine": 1,
+        "endColumn": 52,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "file": "/repository/source/NewFunc.ts",
+    "source": "var fn = function () { function Function() {} }; Function('', '')\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 1,
+        "column": 50,
+        "endLine": 1,
+        "endColumn": 66,
+        "messageId": "noFunctionConstructor",
+        "message": "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter."
+      }
+    ]
+  }
+]

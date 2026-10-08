@@ -1,0 +1,17 @@
+[
+  {
+    "line": 4096,
+    "test": "TestMutants/no-new-func_admits_shadowed_Function",
+    "output": "    lint_test.go:855: no-new-func admits shadowed Function caught on native: case 0 line 6: port \"/tmp/adamic-gate/TestMutantsno-new-func_admits_shadowed_Function3744835037/016/no-new-func-0.ts:1:55\", Go \"fixed\\tnew Function(\\\"return 1\\\"); function f(Function: any) { Function(\\\"return 2\\\"); }\\\\u000a\"\n"
+  },
+  {
+    "line": 4104,
+    "test": "TestMutants/no-new-func_admits_shadowed_Function",
+    "output": "    lint_test.go:855: no-new-func admits shadowed Function caught on Node: case 0 line 6: port \"/tmp/adamic-gate/TestMutantsno-new-func_admits_shadowed_Function3744835037/016/no-new-func-0.ts:1:55\", Go \"fixed\\tnew Function(\\\"return 1\\\"); function f(Function: any) { Function(\\\"return 2\\\"); }\\\\u000a\"\n"
+  },
+  {
+    "line": 4112,
+    "test": "TestMutants/no-new-func_admits_shadowed_Function",
+    "output": "    lint_test.go:855: no-new-func admits shadowed Function caught on emitted JavaScript: case 0 line 6: port \"/tmp/adamic-gate/TestMutantsno-new-func_admits_shadowed_Function3744835037/016/no-new-func-0.ts:1:55\", Go \"fixed\\tnew Function(\\\"return 1\\\"); function f(Function: any) { Function(\\\"return 2\\\"); }\\\\u000a\"\n"
+  }
+]

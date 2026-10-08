@@ -1,0 +1,1 @@
+throw "error"; throw undefined; function f(undefined: any) { throw undefined; }

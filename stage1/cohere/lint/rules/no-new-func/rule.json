@@ -1,0 +1,16 @@
+{
+  "name": "no-new-func",
+  "typed": true,
+  "programReads": [],
+  "node": true,
+  "kinds": [
+    "NewExpression",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave06NoNewFunc",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoNewFunc"
+}

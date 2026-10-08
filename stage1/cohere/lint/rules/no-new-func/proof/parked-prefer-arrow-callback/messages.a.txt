@@ -1,0 +1,1 @@
+export const message = 'An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.';

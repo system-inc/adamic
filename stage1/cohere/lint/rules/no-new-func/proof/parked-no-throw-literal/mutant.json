@@ -1,0 +1,5 @@
+{
+  "name": "no-throw-literal ignores undefined shadow",
+  "from": "facts.declarations.some(declaration => !declaration.declarationFile)",
+  "to": "false"
+}

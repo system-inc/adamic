@@ -1,0 +1,7 @@
+# prefer-arrow-callback shared fix endpoint refusal
+
+Observed on d845dccde in TestRulesAgree. Source: `blocked.ts.txt`. Go's expected fixed source: `expected-fixed.ts.txt`. All 83 unique asserted upstream combinations were captured. Native comparison stops at this case before all-case parity; no complete parity or caught mutant is claimed.
+
+The rule calls `w.ctx.ReportNodeWithFixes(node, messagePreferArrowCallbackPreferArrowCallback, fix...)` at cohere/internal/lint/rules/core/prefer_arrow_callback.go:313. The edits include removing `.bind(this)` at [31,42) and inserting `)` at 42. These do not intersect, and applying all proposed edits yields Go's exact expected text. Shared Linter.fixed rejects the insertion because editStart equals previous and editStart equals editEnd (lint.ts:165). It then reparses the incomplete expression at lint.ts:198 and the parser refuses `CloseParenToken, got SemicolonToken at 28`. This is also reproduced on source Node through the existing Linter and RuleContext by callback-fix-probe.a.txt: its log records the five edit ranges. No private checker was used by this checker-independent fix probe.
+
+Need the shared automatic-edit endpoint contract to agree with Go. No shared fixer/harness edit, altered upstream fix, skipped case, or private helper was introduced. Source snapshots and the unregistered descriptor are archived here; the rule stays out of the landing registry.

@@ -1,0 +1,22 @@
+import { Parser } from '../../../../../typescript/parser/parser.ts';
+import { Linter } from '../../../lint.ts';
+import { RuleContext } from '../../../context.ts';
+import { Settings } from '../../../settings.ts';
+import { Rule } from '../../prefer-arrow-callback/rule.a';
+const source = 'foo(bar || function() { this; }.bind(this));\n';
+const parser = new Parser(source, 'callback-reproducer.ts');
+const settings = new Settings();
+const linter = new Linter(source, parser, parser.scanner, 'no-new-func', '', '', false, settings);
+linter.run();
+const context = new RuleContext(source, parser, parser.scanner, 'prefer-arrow-callback', '', '', false, linter.parents, settings, linter.root);
+const rule = new Rule(context);
+for(let at = 0; at < parser.nodes.length; at++) {
+ const node = parser.node(at);
+ if(node.kind === 'FunctionExpression') { rule.visit(node, at); }
+}
+for(const finding of context.findings) {
+ console.log(finding.editStart, finding.editEnd, finding.replacement);
+ for(const edit of finding.extraFixes) { console.log(edit.start, edit.end, edit.text); }
+ linter.findings.push(finding);
+}
+console.log(linter.fixed());

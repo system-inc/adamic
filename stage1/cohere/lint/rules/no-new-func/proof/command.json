@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=3h",
+    "./stage1/cohere/lint"
+  ],
+  "inputs": {
+    "GOMAXPROCS": "4",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-06-typescript",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/wave-06-facts-profiles",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/wave-06-facts-profiles"
+  },
+  "baseline": "d845dccde413c89643293e808626344d12e3f023"
+}
