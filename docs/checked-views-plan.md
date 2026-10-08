@@ -1062,3 +1062,8 @@ Original candidate witnesses are verified against upstream TypeScript commit
 050880ce59e30b356b686bd3144efe24f875ebc8 in an independent source checkout, never
 by copying cohere files. Intrinsic and stored-callable evidence will be reported
 separately and counts remain candidates until exact reachability is measured.
+
+Lane 5 next group adds known-void signature metadata at the owned read adapter
+and runtime shape selection, including native method producer certificates.
+Void remains distinct from unknown and discarded-result contracts. Original
+FileWatcher.close witnesses pin this fixed zero-argument shape.
