@@ -3,11 +3,14 @@
 from pathlib import Path
 import os
 import subprocess
+import sys
 
 repository = Path(__file__).resolve().parents[3]
 logs = Path('/tmp/adamic-switch-case-mutants')
 logs.mkdir(exist_ok=True)
 mutants = [
+    ('optional-tag', 'internal/lower/object.go', 'test = fit(test, value.Type())', 'test = ir.MaybeOf{Of: value.Type()}', 'switch_case_optional_mapping'),
+    ('optional-presence', 'internal/lower/object.go', 'test = fit(test, value.Type())', 'test = fit(test, value.Type()); lowered.Value = ir.MaybeOf{Value: ir.NumberConstant{}, Of: value.Type()}', 'switch_case_optional_mapping'),
     ('native-read', 'internal/native/emit_locals.go', 'if read.Checked {', 'if read.Checked && e.program.Locals[read.Local].Ready == 0 {', 'switch_case_read_tdz'),
     ('native-write', 'internal/native/emit_statements.go', 'if statement.Checked {', 'if statement.Checked && e.program.Locals[statement.Local].Ready == 0 {', 'switch_case_write_tdz'),
     ('javascript-read', 'internal/javascript/javascript.go', 'if expression.Checked {', 'if expression.Checked && e.program.Locals[expression.Local].Ready == 0 {', 'switch_case_read_tdz'),
@@ -19,6 +22,8 @@ mutants = [
     ('oracle-transform', 'oracle/node.mjs', "mode: 'strip'", "mode: 'transform'", 'switch_case_scope'),
 ]
 for name, relative, before, after, fixture in mutants:
+    if len(sys.argv) > 1 and name not in sys.argv[1:]:
+        continue
     path = repository / relative
     original = path.read_text()
     assert before in original, name

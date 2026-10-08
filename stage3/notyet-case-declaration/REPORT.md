@@ -84,3 +84,36 @@ Go ready 0.029s, submodules 0.069s, markdown ready 0.082s, clang ready 0.208s,
 build ready 55.340s, cache warm 55.444s, done 55.470s. nproc=5, CPU quota=4.
 Node v24.19.0, Go 1.27.1, clang 20.1.8. Setup logs are
 /tmp/notyet-case-setup.log and /tmp/notyet-case-setup-retry.log.
+
+## Optional case representations
+
+The eight-site reason compares number | undefined (an optional enum, Map.get,
+array element or optional discriminant) with a present numeric case. Present
+case constants now carry the scrutinee's pair representation. The absent value
+is retained and does not accidentally match zero or false. The same operation
+also handles boolean | undefined. Other representation mismatches stay NotYet.
+The production diff is four lines in switchStatement; no backend change.
+
+Two reductions from checker.ts:19130 and :19144 use Map.get and string mapping,
+including absent entries and a template/string-array mapping. Node source tests
+pass. Both backends, release C, sanitized C and leaks pass (0.502s). The
+optional-tag mutant makes a case absent; optional-presence forces the scrutinee
+to present zero. Both fail stdout comparisons, with no build/refusal kill.
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestSwitchCaseOptionalSources|TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_optional_' -count=1 -v -timeout 10m
+python3 internal/oracle/testdata/run-switch-case-mutants.py optional-tag optional-presence
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
+```
+
+Counts pass in 30.033s and add only the two new rows. Fixture step b8cbb9e5 was
+pushed separately. Logs: /tmp/notyet-case-optional-{before,source,after,mutants,final,counts}.log.
+
+Exact requested replays for checker.ts:19130:13 and :19144:13, using the same
+-project entry and reason "a case whose type differs from the switch's", each
+exit 1 both before and after: Refused 'a cast the runtime can't check' at
+19129:40 and 19143:40 respectively. The old reason is hidden behind this earlier
+designed refusal on the latest compiler base. No claim of a reproduced before
+signature or full checker compilation is made. Raw replay logs are
+/tmp/notyet-case-replay-{19130,19144}-{before,after}.log. The original eight unique
+CSV sites are counted as the optional numeric-case lesson, not eight compiled units.
