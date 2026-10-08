@@ -1,0 +1,11 @@
+case 0
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+panic: invalid corpus /tmp/no-irregular-whitespace-invalid-corpus-min.ts: [Expression expected.]; source="@"
+
+goroutine 1 [running]:
+main.collect({0xd5355088840, 0x32}, {0x1334c20, 0x1}, {0xd5355139200, 0x7, 0x8}, 0x0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:186 +0xafe
+main.run({0xd5355088840?, 0xd53550439c0?}, 0x0, 0xd53550439c0, 0x0)
+	/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171
+main.main()
+	/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595

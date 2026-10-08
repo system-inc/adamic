@@ -1,0 +1,25 @@
+{
+  "profile_directory": "/tmp/no-irregular-whitespace-merged-whole-profile.40TtkX",
+  "nproc": "5",
+  "load_before": "2.63 4.14 3.39 1/149 145797",
+  "exit_code": 1,
+  "wall_seconds": 1912.0148645950003,
+  "load_after": "2.65 2.08 2.45 1/151 210141",
+  "counts_including_direct_subtests": {
+    "PASS": 119,
+    "SKIP": 1,
+    "FAIL": 2
+  },
+  "top_level_counts": {
+    "PASS": 33,
+    "SKIP": 1,
+    "FAIL": 2
+  },
+  "failures": [
+    "TestCompilerAndStage1Agree",
+    "TestProfileSnapshotsAgree"
+  ],
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ]
+}

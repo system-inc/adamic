@@ -1,0 +1,27 @@
+go:
+case 0
+fixed	await new a
+
+node:
+case 0
+/tmp/no-irregular-whitespace-await-one.ts:1:7
+  no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+
+range 6 11 noNewStatement 			6 11
+fixed	await new a
+
+js:
+case 0
+/tmp/no-irregular-whitespace-await-one.ts:1:7
+  no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+
+range 6 11 noNewStatement 			6 11
+fixed	await new a
+
+native:
+case 0
+/tmp/no-irregular-whitespace-await-one.ts:1:7
+  no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.
+
+range 6 11 noNewStatement 			6 11
+fixed	await new a
