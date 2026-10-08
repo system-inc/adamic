@@ -34,3 +34,13 @@ body byte. [on-next-headers.json](on-next-headers.json) retains actual reasons
 and body hashes. The pinned predicate rejects 72 wrong-header mutants and
 45 removed-error-header mutants; [on-next-header-mutants.json](on-next-header-mutants.json)
 records all 117 catches. Compiler source and fixture Node records are untouched.
+
+The subsequent real merge of compiler/area-next-fixtures at 547551cb renames
+omitted_scanner_original.a to .ts. The final in-place a-check therefore covers
+490 .a files: 407 checked (including 113 NotYet), 63 refused and 20 checker
+errors, all accepted. All 183 fixtures pass again, with 62 native checks.
+The 71 edited headers still belonging to .a programs are reproved on this
+compiler: 71 wrong-header and 44 removed-error-header mutants are caught.
+[on-next-547551cb-header-mutants.json](on-next-547551cb-header-mutants.json)
+records these 115 final catches. The earlier 491-file scan and 117 catches
+above preceded the compiler branch's file rename.
