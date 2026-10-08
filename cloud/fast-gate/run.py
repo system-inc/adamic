@@ -758,6 +758,10 @@ class Gate:
         binaries = os.path.realpath(self.arguments.tree) + "-binaries"
         os.makedirs(binaries, exist_ok=True)
         slots = threading.Semaphore(self.arguments.parallel)
+        # At most two test binaries build at once: each go test -c runs its own pool of compile processes as
+        # wide as the slot, so a big gate building one per test slot ran hundreds of compiles in a 12-CPU
+        # slot, and three such gates took Cloud to load 900 and Workshop to 10 GB free (Oct 8 11:2xZ).
+        builds = threading.Semaphore(2)
         threads = []
         # Every package compiled and listed, and every test process it planned exited 0: counted, so a
         # process that never ran can't pass for one that did.
@@ -768,7 +772,9 @@ class Gate:
             with slots:
                 if os.path.exists(binary):
                     os.rename(binary, binary + ".previous")
-                if self.stream("tests", ["go", "test", "-c", "-o", binary, importPath], None) != 0:
+                with builds:
+                    built = self.stream("tests", ["go", "test", "-c", "-o", binary, importPath], None)
+                if built != 0:
                     return
                 if not os.path.exists(binary):
                     # go test -c succeeded and wrote nothing: the package has no test files.

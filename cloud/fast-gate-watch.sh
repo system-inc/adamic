@@ -120,13 +120,19 @@ while true; do
                 END { for (i = 1; i <= n; i++) if (total[keys[i]] > used[keys[i]]) print keys[i] }' "${state}/slots" <(cat "${state}"/running/* 2>/dev/null))
     [ -n "${free}" ] || break
     classes=$(echo "${free}" | awk '{print $2}' | sort -u | tr '\n' ' ')
+    # Boxes where a big tip may borrow a small slot: a free small slot, and fewer than two big gates there
+    # already (its area slot and one borrowed). Three big gates borrowing on one box stacked hundreds of
+    # compiles and took Cloud and Workshop down (Oct 8 11:2xZ).
+    borrowable=$(echo "${free}" | awk '$2 == "S" {print $1}' | while read -r b; do
+      [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt 2 ] && echo "${b}"
+    done | head -1)
     # A tip takes a free slot of its class; a big tip may also take a free small slot, but only when
     # no small tip could have it (rank 10 and up): 74 big tips waited on two area slots while four small
     # slots sat idle (Oct 8 10:56Z). It then runs on the small slot's CPUs (12; Chonchon's 16).
     next=$(while read -r class queued branch sha; do
       slot=${class} extra=0
       if [[ " ${classes}" != *" ${class} "* ]]; then
-        [ "${class}" = B ] && [[ " ${classes}" == *" S "* ]] || continue
+        [ "${class}" = B ] && [ -n "${borrowable}" ] || continue
         slot=S extra=10
       fi
       if [[ ${branch} == cloud/land-* ]]; then rank=0
@@ -151,7 +157,11 @@ while true; do
       continue
     fi
     echo "${sha}" >> "${state}/gated"
-    box=$(echo "${free}" | awk -v class="${slot}" '$2 == class {print $1; exit}')
+    if [ "${slot}" = "${class}" ]; then
+      box=$(echo "${free}" | awk -v class="${slot}" '$2 == class {print $1; exit}')
+    else
+      box=${borrowable}
+    fi
     log=${state}/logs/${sha:0:12}.log
     ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" > "${log}" 2>&1 &
     echo "${branch} ${sha} ${slot} ${box} ${class}" > "${state}/running/$!"
