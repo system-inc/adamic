@@ -77,6 +77,28 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	if !isClassInstance(proven) && l.iteratorMember(proven) != nil {
 		return nil, true, l.notYet(node, "Object.keys on a literal with symbol-key storage")
 	}
+	// Structural views preserve the object's storage, including a literal's hidden symbol slot.
+	// Only filter when such a literal can inhabit this view; ordinary Object.keys stays unchanged.
+	filterSymbol := false
+	if !isClassInstance(proven) && !l.isStaticType(proven) && l.iteratorMember(proven) == nil {
+		modules, err := l.moduleOrder(l.program.Files()[0])
+		if err != nil {
+			return nil, true, err
+		}
+		var visit ast.Visitor
+		visit = func(candidate *ast.Node) bool {
+			if candidate.Kind == ast.KindObjectLiteralExpression {
+				shape := l.checker.GetTypeAtLocation(candidate)
+				if l.iteratorMember(shape) != nil && l.iterationShapeFits(shape, proven) {
+					filterSymbol = true
+				}
+			}
+			return candidate.ForEachChild(visit)
+		}
+		for _, module := range modules {
+			module.AsNode().ForEachChild(visit)
+		}
+	}
 	if !isClassInstance(proven) && !l.isStaticType(proven) && !l.hasAccessorStorage(proven) {
 		if l.isLibraryType(proven, "RegExp", "Error") || l.includesUndefined(proven) {
 			return l.objectCall(node, "keys")
@@ -94,5 +116,18 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	if value.Type() != ir.Object {
 		return nil, true, l.notYet(node, "Object.keys on a non-object")
 	}
-	return ir.ObjectKeys{Object: value}, true, nil
+	keys := ir.ObjectKeys{Object: value}
+	if !filterSymbol {
+		return keys, true, nil
+	}
+	function := len(l.result.Functions)
+	key := len(l.result.Locals)
+	l.result.Locals = append(l.result.Locals, ir.Local{Name: "key", Type: ir.String, Function: function})
+	l.result.Functions = append(l.result.Functions, ir.Function{
+		Name: "string_key", Closure: true, Parameters: []int{key}, Returns: ir.Boolean,
+		Body: []ir.Statement{ir.Return{Value: ir.Binary{Operator: ir.NotEqual,
+			Left: ir.Read{Local: key, Of: ir.String}, Right: ir.StringConstant{Index: l.constant(iteratorSlot)},
+		}}},
+	})
+	return ir.ArrayVisit{Method: "filter", Array: keys, Callback: ir.MakeClosure{Function: function}, Element: ir.String, Returns: ir.Boolean}, true, nil
 }
