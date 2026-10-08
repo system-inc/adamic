@@ -2,6 +2,7 @@ from pathlib import Path
 import os, subprocess, sys
 root = Path(__file__).resolve().parents[3]
 mutants = [
+ ('treat-structural-primitives-as-references', 'internal/lower/reference_logical.go', 'if of == ir.Object &&', 'if false && of == ir.Object &&', './internal/lower', '^TestReferenceLogicalStructuralPrimitivesStayOnExistingPaths$', 'got <nil>'),
  ('borrow-and-as-coalesce', 'internal/native/element_borrow.go', 'coalesce.ReferenceAnd || coalesce.Panic', 'coalesce.Panic', './internal/oracle', '^TestNativeAgreesWithNode/internal/oracle/testdata/reference_logical.a$', 'stdout'),
  ('lose-narrowing-check', 'internal/lower/narrowed.go', '&& (l.includesUndefined(whole) || l.includesNull(whole))', '&& (whole != nil)', './internal/oracle', '^TestNativeAgreesWithNode/internal/oracle/testdata/reference_logical_narrowed.a$', 'want the inserted check to fire'),
  ('collapse-lookup-absences', 'internal/lower/reference_logical.go', 'if !l.includesNull(proven) ||', 'if true || !l.includesNull(proven) ||', './internal/lower', '^TestNullableReferenceLookupNeedsTag$', 'got <nil>'),

@@ -382,3 +382,78 @@ func (l *lowering) genericIteratorFactoryKnown(member *ast.Symbol, source, itera
 	}
 	return l.iterationReturnsClass(body, iterator, source, 0)
 }
+
+// A returned receiver keeps its dynamic subclass, even when the result annotation names
+// the base. Follow local aliases too; they do not make this an exact base instance.
+func (l *lowering) iterationFactoryReturnsThis(member *ast.Symbol) bool {
+	var receiver func(*ast.Node, int) bool
+	receiver = func(node *ast.Node, depth int) bool {
+		if node == nil || depth > 16 {
+			return false
+		}
+		node = ast.SkipParentheses(node)
+		if node.Kind == ast.KindThisKeyword {
+			return true
+		}
+		if ast.IsIdentifier(node) {
+			symbol := l.symbol(node)
+			if symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+				return receiver(symbol.Declarations[0].AsVariableDeclaration().Initializer, depth+1)
+			}
+		}
+		return false
+	}
+	for _, root := range l.checker.GetRootSymbols(member) {
+		for _, declaration := range root.Declarations {
+			if declaration.Kind != ast.KindMethodDeclaration || declaration.Body() == nil {
+				continue
+			}
+			found := false
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if ast.IsFunctionLike(node) {
+					return false
+				}
+				if node.Kind == ast.KindReturnStatement && receiver(node.AsReturnStatement().Expression, 0) {
+					found = true
+					return true
+				}
+				return node.ForEachChild(visit)
+			}
+			declaration.Body().ForEachChild(visit)
+			if found {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// Unknown receiver origins matter only when a declared descendant can change the
+// protocol. A factory returning a base receiver remains sound in a closed class tree.
+func (l *lowering) iteratorReceiverOverrides(modules []*ast.SourceFile, iterator *checker.Type, next, close *ast.Symbol) bool {
+	class := l.classNodeFor(iterator)
+	if class == nil {
+		return false
+	}
+	changed := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindClassDeclaration && node.Name() != nil && node != class {
+			shape := l.checker.GetTypeAtLocation(node.Name())
+			if l.classView(shape, class) != nil {
+				actualNext := l.checker.GetPropertyOfType(shape, "next")
+				actualClose := l.checker.GetPropertyOfType(shape, "return")
+				if actualNext == nil || !l.sameMemberOrigin(actualNext, next) || (actualClose != nil) != (close != nil) || (close != nil && !l.sameMemberOrigin(actualClose, close)) {
+					changed = true
+					return true
+				}
+			}
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+	return changed
+}

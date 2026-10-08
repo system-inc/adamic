@@ -9,8 +9,13 @@ import (
 // Only these representations prove truthiness from presence. A string may be
 // empty, and a boxed union may contain a falsy primitive.
 func (l *lowering) truthyReference(proven *checker.Type) bool {
-	proven = l.concrete(proven)
-	of, known := l.representation(l.checker.GetNonNullableType(proven))
+	proven = l.checker.GetNonNullableType(l.concrete(proven))
+	of, known := l.representation(proven)
+	if of == ir.Object && (l.checker.IsTypeAssignableTo(l.checker.GetNumberType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetStringType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetBooleanType(), proven)) {
+		// Structural types such as {} also admit falsy primitives. The
+		// TypeScript object flag alone is not a truthiness proof.
+		return false
+	}
 	return known && (of == ir.Array || of == ir.Object || of == ir.Map || of == ir.Closure)
 }
 
