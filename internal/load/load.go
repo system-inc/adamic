@@ -42,6 +42,9 @@ type Program struct {
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
 	files []*ast.SourceFile
+
+	// A configured TypeScript check reports only the explicitly requested files.
+	requestedDiagnostics bool
 }
 
 // CheckError is a program the checker rejected, with every diagnostic it gave.
@@ -124,15 +127,26 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	if config == nil {
 		config = tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
 	} else {
-		// Project declaration roots may supply globals not imported by the requested file.
+		// Composite membership is a property of the whole project, even when a
+		// census asks for diagnostics from only one file. Keep explicit ambient
+		// roots too, and deduplicate the embedded prelude and Node declarations.
+		seen := make(map[tspath.RootedFilePath]bool, len(roots))
+		for _, name := range roots {
+			seen[name] = true
+		}
 		for _, name := range config.FileNames() {
 			if name.IsDeclarationFile() {
-				// The repository project lists the same embedded prelude on disk.
-				// Deduplicate identical facts, retaining every other project declaration.
 				text, _ := fs.ReadFile(name)
-				if text != prelude && !callerNodeTypes(name.AsString()) {
-					roots = append(roots, name)
+				if text == prelude || callerNodeTypes(name.AsString()) {
+					continue
 				}
+			}
+			if strings.HasSuffix(name.AsString(), ".a") {
+				name = name.AppendSuffix(".ts")
+			}
+			if !seen[name] {
+				roots = append(roots, name)
+				seen[name] = true
 			}
 		}
 	}
@@ -186,10 +200,7 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		}
 	}
 
-	loaded := &Program{compiler: program, fs: fs}
-	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
-		return nil, &CheckError{Diagnostics: diagnostics}
-	}
+	loaded := &Program{compiler: program, fs: fs, requestedDiagnostics: fs.projectConsole}
 
 	// Every root must be in the program. One that is not would be a file silently left unchecked.
 	byPath := make(map[tspath.PathKey]*ast.SourceFile)
@@ -202,6 +213,9 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 			return nil, fmt.Errorf("load: %s was named but the compiler did not load it", fs.displayName(root))
 		}
 		loaded.files = append(loaded.files, sourceFile)
+	}
+	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
+		return nil, &CheckError{Diagnostics: diagnostics}
 	}
 	return loaded, nil
 }
@@ -267,15 +281,38 @@ func rootFileName(fs *sourceFS, currentDirectory tspath.RootedDirectoryPath, pat
 // Syntax first, and only syntax when there is any: a file that doesn't parse produces cascades from
 // the later phases that bury the real error.
 func (p *Program) diagnostics(ctx context.Context) []string {
-	all := p.compiler.GetSyntacticDiagnostics(ctx, nil)
+	// Unconfigured inputs still check their entire import graph. Configured
+	// project inputs retain that graph but select diagnostics by requested file.
+	collect := func(get func(context.Context, *ast.SourceFile) []*ast.Diagnostic) []*ast.Diagnostic {
+		if !p.requestedDiagnostics {
+			return get(ctx, nil)
+		}
+		var result []*ast.Diagnostic
+		for _, file := range p.files {
+			result = append(result, get(ctx, file)...)
+		}
+		return result
+	}
+	all := collect(p.compiler.GetSyntacticDiagnostics)
 	if len(all) == 0 {
 		all = append(all, p.compiler.GetConfigFileParsingDiagnostics()...)
-		all = append(all, p.compiler.GetProgramDiagnostics()...)
+		for _, diagnostic := range p.compiler.GetProgramDiagnostics() {
+			if p.requestedDiagnostics && diagnostic.File() != nil {
+				requested := false
+				for _, file := range p.files {
+					requested = requested || diagnostic.File() == file
+				}
+				if !requested {
+					continue
+				}
+			}
+			all = append(all, diagnostic)
+		}
 		all = append(all, p.compiler.GetGlobalDiagnostics(ctx)...)
-		all = append(all, p.compiler.GetBindDiagnostics(ctx, nil)...)
-		all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
+		all = append(all, collect(p.compiler.GetBindDiagnostics)...)
+		all = append(all, collect(p.compiler.GetSemanticDiagnostics)...)
 		if len(all) == 0 && p.compiler.Options().GetEmitDeclarations() {
-			all = append(all, p.compiler.GetDeclarationDiagnostics(ctx, nil)...)
+			all = append(all, collect(p.compiler.GetDeclarationDiagnostics)...)
 		}
 	}
 	formatted := make([]string, 0, len(all))
