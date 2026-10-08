@@ -18,4 +18,5 @@ wasi-sdk	linux	test -d "${WASI_SYSROOT:-/nonexistent}"
 sysctl	darwin	command -v sysctl
 leaks	darwin	command -v leaks
 nm	all	command -v nm
+taskset	linux	command -v taskset
 bun	optional	true
