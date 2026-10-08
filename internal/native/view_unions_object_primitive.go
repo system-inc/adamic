@@ -42,8 +42,13 @@ func (e *emitter) viewObjectPrimitive(property ir.Property) string {
 		}
 	}
 	e.declarations = append(e.declarations, "#include \"view_unions_object_primitive.h\"")
-	object := e.value(property.Object)
-	value := fmt.Sprintf("adamic_object_primitive_view(%s, %s, &%s, (const adamic_object_primitive_member[]){%s}, %d, %t, %t, %t, %s, %s)", object, cString(property.Name), e.cache(), strings.Join(members, ", "), len(members), undefined, property.Absent, property.Optional, cString(contract.Name), cString(property.View))
+	object := e.nominalViewReceiver(property)
+	reader := "adamic_object_primitive_view"
+	if ir.ArrayTupleReceiver(e.program, property) != 0 {
+		e.declarations = append(e.declarations, "#include \"view_array_tuples.h\"")
+		reader = "adamic_array_tuple_primitive_view"
+	}
+	value := fmt.Sprintf("%s(%s, %s, &%s, (const adamic_object_primitive_member[]){%s}, %d, %t, %t, %t, %s, %s)", reader, object, cString(property.Name), e.cache(), strings.Join(members, ", "), len(members), undefined, property.Absent, property.Optional, cString(contract.Name), cString(property.View))
 	result := e.own(ir.Union, value)
 	tuples := 0
 	for _, id := range contract.Members {
