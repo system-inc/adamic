@@ -1,0 +1,1 @@
+const a = <script src="x" />; const b = <script src="x" async={false} />; const c = <script src="x" defer />; const d = <Script src="x" />; const e = <script {...{async:true}} src="x" />;
