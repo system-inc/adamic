@@ -1,0 +1,48 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "60m",
+    "./stage1/cohere/lint"
+  ],
+  "exit": 0,
+  "wall_seconds": 1652.495783981,
+  "counts_including_subtests": {
+    "pass": 115,
+    "fail": 0,
+    "skip": 1
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "nproc": 5,
+  "top_level": {
+    "pass": 34,
+    "fail": 0,
+    "skip": 1
+  },
+  "registered_mutants_caught": 77,
+  "area_base": "c4bdc23fa86d55cf7e579989201c11258f4d3a62",
+  "typescript_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "environment": {
+    "GOMAXPROCS": "4",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-24-corpus",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/wave24-narrow-profile",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/wave24-narrow-profile"
+  },
+  "load_first": [
+    1.9931640625,
+    0.95166015625,
+    1.9228515625
+  ],
+  "load_last": [
+    1.73095703125,
+    2.2197265625,
+    2.62451171875
+  ],
+  "load_samples_count": 330
+}

@@ -1,0 +1,58 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "60m",
+    "./stage1/cohere/lint"
+  ],
+  "exit": 1,
+  "wall_seconds": 1850.2899734460002,
+  "counts_including_subtests": {
+    "pass": 114,
+    "fail": 1,
+    "skip": 1
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "nproc": 5,
+  "top_level": {
+    "pass": 33,
+    "fail": 1,
+    "skip": 1
+  },
+  "registered_mutants_caught": 77,
+  "failed_tests": [
+    "TestCompilerAndStage1Agree"
+  ],
+  "load_one_minute": {
+    "minimum": 1.0,
+    "median": 1.98388671875,
+    "maximum": 7.451171875
+  },
+  "environment": {
+    "GOMAXPROCS": "4",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-24-corpus",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/unpark-wave-profile",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/unpark-wave-profile",
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "TMPDIR": "/tmp/adamic-gate"
+  },
+  "typescript_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "corpus_clean_before_and_after": true,
+  "load_first": [
+    4.2958984375,
+    11.2548828125,
+    8.54931640625
+  ],
+  "load_last": [
+    2.02099609375,
+    2.0947265625,
+    3.22265625
+  ],
+  "load_samples_count": 370
+}

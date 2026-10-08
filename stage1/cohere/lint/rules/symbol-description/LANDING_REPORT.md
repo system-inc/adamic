@@ -10,7 +10,7 @@ TestCompilerAndStage1Agree, stage1/cohere/lint/lint_test.go:467, reported exactl
     lint_test.go:467: Node: case 803 line 134154: port "fixed\texport class Foo { f(): Foo | undefined { if(Math.random()) return; return this; } g(): Foo {const self=this;return self;} }\\u000aexport {};\\u000a", Go "/workspace/adamic/stage1/cohere/typeaware/validation-wave-24/control-002.a:1:100"
 ```
 
-The extra tracked legacy input was stage1/cohere/typeaware/validation-wave-24/control-002.a. Cohere reports thisAssignment for the self binding; the area rule excludes .a at stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:14. Cohere's NoThisAlias reports at cohere/internal/lint/rules/typescript/no_this_alias.go:154; its file predicate in no_explicit_any.go:160 uses sourcename.TreatedAs, which includes .a. The original event log and the isolated source/output remain in evidence/landing. Raw reproducer text uses .a.txt here; it is evidence, not an imported module or a new active corpus source.
+The extra tracked legacy input was stage1/cohere/typeaware/validation-wave-24/control-002.a. Cohere reports thisAssignment for the self binding; the area rule excludes .a at stage1/cohere/lint/rules/typescript-no-this-alias/rule.a:14. Cohere's NoThisAlias reports at cohere/internal/lint/rules/typescript/no_this_alias.go:154; its file predicate in no_explicit_any.go:160 uses sourcename.TreatedAs, which includes .a. The original event log remains in pushed Git history; small summaries and the isolated source/output remain in evidence/landing. Raw reproducer text uses .a.txt here; it is evidence, not an imported module or a new active corpus source.
 
 ## Landing scope
 
@@ -24,7 +24,7 @@ go build -buildmode=c-archive -o /tmp/wave24-narrow-checker.a ./bridge/tsgo/arch
 /tmp/wave24-narrow-adamic build stage1/cohere/lint/main.ts -o /tmp/wave24-narrow-lint-native --tsgo /tmp/wave24-narrow-checker.a
 ```
 
-Descriptor generation, gofmt and vet pass. The two rules retain their Go options adapters, all upstream cases, witnesses, suggestions and caught mutants. Fresh full-package and area-only results are recorded below when complete. Historical broader-tree reports in evidence/landing/previous-report.md and lint-summary.json are explicitly not the current landing result.
+Descriptor generation, gofmt and vet pass. The two rules retain their Go options adapters, all upstream cases, witnesses, suggestions and caught mutants. Fresh full-package and area-only results are recorded below when complete. Historical broader-tree reports in evidence/landing/previous-report.md and lint-summary.txt are explicitly not the current landing result.
 
 ## Untouched area probe
 
@@ -44,6 +44,6 @@ PASS: one test passed, zero failed, zero skipped; package 685.578 seconds. The a
 
 Command: go test -json -count=1 -timeout 60m ./stage1/cohere/lint, after sourcing the installed cloud env, GOMAXPROCS=4, ADAMIC_LINT_BENCH=1, ADAMIC_TYPESCRIPT_SOURCE=/workspace/wave-24-corpus at clean 050880ce59e30b356b686bd3144efe24f875ebc8; both profile inputs /workspace/wave24-narrow-profile. Exit zero. Package PASS, 1641.150 seconds; outer wall 1652.495783981 seconds, nproc 5.
 
-Including subtests: 115 passed, zero failed, one skipped. Top level: 34 passed, zero failed, one skipped. All 77 registered mutants caught, including symbol-description-global and valid-typeof-options. TestRulesAgree, TestCompilerAndStage1Agree, TestOwnedWitnesses and all profile/option/cache controls pass on Node, emitted JavaScript and sanitized native. The ordinary CLI build also succeeds; there is no registered wave addition refused by that CLI. The only skip is TestCheckerBridgeRefusalPending, explicitly awaiting tsgoInspect's C error-buffer TSGoError result; no input-controlled test skips. Current logs/counts are narrow-lint.jsonl.gz and narrow-lint-summary.json.
+Including subtests: 115 passed, zero failed, one skipped. Top level: 34 passed, zero failed, one skipped. All 77 registered mutants caught, including symbol-description-global and valid-typeof-options. TestRulesAgree, TestCompilerAndStage1Agree, TestOwnedWitnesses and all profile/option/cache controls pass on Node, emitted JavaScript and sanitized native. The ordinary CLI build also succeeds; there is no registered wave addition refused by that CLI. The only skip is TestCheckerBridgeRefusalPending, explicitly awaiting tsgoInspect's C error-buffer TSGoError result; no input-controlled test skips. Current counts, timing and first/last load samples are in evidence/landing/narrow-lint-summary.txt. Compressed event logs and verbose load-sample JSON logs were removed from the landing tree; full evidence remains reachable through pushed Git history.
 
 The .a extension-guard issue in the unchanged area rule remains separately reproduced for integration to route; it is not silently repaired or relaxed here. The old larger landing tree failed its corpus check; its blocked legacy additions are excluded from this two-rule landing and retained in existing Git history. No history is rewritten, and no main or area branch is pushed.
