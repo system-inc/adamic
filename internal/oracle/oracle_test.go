@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"strings"
 	"syscall"
 	"testing"
 	"time"
@@ -507,6 +508,16 @@ func execute(t *testing.T, name string, arguments ...string) run {
 // name wins, so a sanitizer setting here can't be overridden by one inherited from the shell.
 func executeWith(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
+	// These large corpora also run with sanitizers and leak checks in the
+	// parallel oracle. Bound their CPU like long backtracking, rather than
+	// mistaking scheduler delay for failure. The dedicated release timing
+	// test still enforces its three-second CPU budget.
+	for _, component := range strings.Split(t.Name(), "/") {
+		switch component {
+		case "regexp_native_quadratic_exec.a", "regexp_native_quadratic_matchall.a", "regexp_native_quadratic_test.a":
+			return longRegExpRun(t, environment, name, arguments...)
+		}
+	}
 	command := bounded(t, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
