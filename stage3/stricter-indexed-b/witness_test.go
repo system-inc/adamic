@@ -97,16 +97,20 @@ func TestGeneratorWitnesses(t *testing.T) {
 					}
 					program, err := lower.Lower(context.Background(), checked)
 					if err != nil {
-
 						t.Fatalf("unexpected lowering failure for %s: %v", site.ID, err)
 					}
 					checks := ir.InsertedChecks(program)
 					if len(checks) != 1 || checks[0].Kind != "indexed-presence" {
 						t.Fatalf("explain actual guards: %+v", checks)
 					}
+					workingDirectory, err := os.Getwd()
+					if err != nil {
+						t.Fatal(err)
+					}
+					wantExplain := strings.TrimPrefix(checks[0].Where, filepath.ToSlash(workingDirectory)+"/") + ": checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
 					explain := run(cli, "--explain-checks", path)
-					if explain.code != 0 || explain.stderr != "" || strings.Count(explain.stdout, ": checked indexed-presence\n") != 1 || !strings.Contains(explain.stdout, "checked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n") {
-						t.Fatalf("CLI explain: %+v", explain)
+					if explain.code != 0 || explain.stderr != "" || explain.stdout != wantExplain {
+						t.Fatalf("CLI explain: %+v, want %q", explain, wantExplain)
 					}
 					c := native.C(program)
 					module, err := filepath.Abs("../../oracle/adamic.mjs")

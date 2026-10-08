@@ -1,6 +1,6 @@
 Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 27 sites proven.
-Base 390af985; latest preceding commit a3d71f97a2c59c097414c06cea878f47a5dc8480; branch codex/stricter-indexed-b only.
-Logged filtered go tests: 27 proven, 0 blocked, 0 remaining; final gate recorded below.
+Base 390af985; latest preceding commit e852f795a63d1be6c3d73547f8880d77bf6e2e1f; branch codex/stricter-indexed-b only.
+Complete witness gate and filtered oracle: 27 proven, 0 blocked, 0 remaining; outputs below.
 Every proven site has an emitted-C erase-panic mutant that builds under sanitizers and loses the pinned exit-70 observation.
 Whole-program compilation, sparse holes, typed arrays and records are not covered; refused shapes are never counted as proven.
 
@@ -17,7 +17,7 @@ Label is number; labelNumbers is number[][]; blockOffsets is number[].
 
 D212 and D220 originally retained the stock receiver non-null assertion !.
 The first runs observed its exact pre-emission refusal: Adamic 0.1 refuses
-the non-null assertion !; write ?? panic(why it cannot be missing), or narrow
+the non-null assertion !; write ?? panic('why it can't be missing'), or narrow
 and handle the missing case. This is syntax, not an unsupported array
 representation. Final minimal witnesses use guaranteed-present array receivers
 and omit the redundant assertion while retaining [j] and [blockIndex]. Node
@@ -26,7 +26,7 @@ not prove the complete original source, nor implement non-null assertions.
 
 D196/D197 share variables[i]. D200 uses one caseBlock.clauses[i] read;
 D201-D205 and D207/D208 share another such read. D213/D214 share blockStack[i].
-These are ledger diagnostic rows, not a claim of 27 unique upstream reads.
+These are 27 ledger diagnostic rows corresponding to 19 unique upstream reads.
 Each row has an isolated witness so a prior trap cannot hide its observation.
 Minimal witnesses stop at the read, before downstream property uses, allowing
 source Node to observe undefined rather than throw on a later dereference.
@@ -115,3 +115,48 @@ No compiler implementation files are edited. Unsupported receivers are
 reported with the observed refusal; this unit does not extend them.
 The full repository gate is not claimed. The final focused gate and vet
 results are appended after the last group.
+
+## Final verification
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./stage3/stricter-indexed-b -count=1 -timeout 10m -v > /tmp/stricter-indexed-b-final-witnesses.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./stage3/stricter-indexed-b ./internal/oracle -run 'TestGeneratorWitnesses|TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|narrowed_reads|narrowed_numbers|string_index)\.a$' -count=1 -timeout 10m -v > /tmp/stricter-indexed-b-final-gate.log 2>&1
+go vet ./stage3/stricter-indexed-b > /tmp/stricter-indexed-b-vet.log 2>&1
+gofmt -l stage3/stricter-indexed-b/witness_test.go
+git diff --check
+```
+
+The complete witness package proves all 27 with no skips. Each present
+and absent case runs source Node, backend Node, native release and native
+ASan/UBSan. All 27 independently built erase-panic mutants exit 0:
+the exact stderr/exit-70 contract catches every one. Each witness also
+checks the actual CLI location listing, count one and trusted zero.
+
+The combined slash-filtered command runs the four existing oracle fixtures;
+its slash filter does not run the generator subtests. The separate complete
+witness-package command above is the final 27-site gate. Oracle cache
+counters report native hits=0/misses=10 and node hits=0/misses=8.
+
+```text
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-b	42.915s
+ok  	github.com/system-inc/adamic/internal/oracle	3.417s
+vet exit=0, no diagnostics
+gofmt: no output
+git diff --check: no output
+```
+
+Completion covers the requested minimal indexed-read shapes. No native
+whole-program completion date is established: original receiver ! syntax
+still refuses, and full adapted-TypeScript compilation was not attempted.
+
+## Pushed checkpoints
+
+```text
+4ea89530 Add generator indexed witnesses with isolated project ts fixtures
+e3b48cfe Record runtime proof for five clause array rows
+bff31ede Record clause and numeric label indexed proofs through D209
+0f3ebb3a Record block array proofs and the D212 non-null refusal
+a3d71f97 Prove remaining block and nested array reads through D219
+e852f795 Complete all generator indexed read shape witnesses
+```
