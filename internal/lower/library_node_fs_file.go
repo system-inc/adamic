@@ -45,7 +45,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 	operation := ""
 	of := ir.Number // Void calls are only admitted as discarded statements.
 	switch symbol.Name {
-	case "isFile", "isDirectory", "isSymbolicLink":
+	case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket":
 		if declaration.Parent == nil || declaration.Parent.Name() == nil || declaration.Parent.Name().Text() != "StatsBase" {
 			return nil, false, nil
 		}
@@ -59,8 +59,9 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		if err != nil {
 			return nil, true, err
 		}
-		operation = map[string]string{"isFile": "is_file", "isDirectory": "is_directory", "isSymbolicLink": "is_symbolic_link"}[symbol.Name]
-		return ir.NodeFSFile{Operation: operation, Arguments: []ir.Expression{receiver}, Of: ir.Boolean}, true, nil
+		// StatsBase and Dirent share methods, including through a union.
+		// The runtime receiver chooses its layout, not the declaration order.
+		return ir.NodeHostCall{Module: "node:fs", Member: symbol.Name, Arguments: []ir.Expression{receiver}, Returns: ir.Boolean}, true, nil
 	case "readFileSync":
 		operation, of = "read_file", ir.String
 	case "mkdtempSync":
@@ -125,7 +126,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			read, reading := value.(ir.Read)
 			if reading {
 				for _, argument := range call.Arguments.Nodes {
-					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !(l.exactObject(argument, 0) || operation == "stat" && l.nodeFSDirectoryStatOptions(argument)) {
+					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !l.nodeHostExactOptions(argument, node) {
 						continue
 					}
 					symbol := l.symbol(ast.SkipParentheses(argument))
@@ -457,5 +458,5 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 }
 
 func init() {
-	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.code")
+	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.isBlockDevice", "node:fs.StatsBase.isCharacterDevice", "node:fs.StatsBase.isFIFO", "node:fs.StatsBase.isSocket", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.code")
 }

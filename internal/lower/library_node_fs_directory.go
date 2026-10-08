@@ -68,7 +68,7 @@ func (l *lowering) nodeHostMember(node *ast.Node) (string, string) {
 					if owner != "realpathSync" {
 						member = owner + "." + member
 					}
-				case "isFile", "isDirectory", "isSymbolicLink", "name":
+				case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket", "name":
 					if owner != "Dirent" {
 						member = owner + "." + member
 					}
@@ -105,7 +105,7 @@ func (l *lowering) nodeFSDirectoryCall(node *ast.Node) (ir.Expression, bool, err
 		case "realpathSync", "native":
 			lowered.Returns = ir.String
 			lowered.Throws = true
-		case "isFile", "isDirectory", "isSymbolicLink":
+		case "isFile", "isDirectory", "isSymbolicLink", "isBlockDevice", "isCharacterDevice", "isFIFO", "isSocket":
 			if call.Expression.Kind != ast.KindPropertyAccessExpression {
 				return nil, true, l.notYet(node, "a detached Dirent method")
 			}

@@ -26,6 +26,7 @@ func init() {
 		"internal/oracle/testdata/node_path_basename.a",
 		"internal/oracle/testdata/node_path_relative.a",
 		"internal/oracle/testdata/node_fs_directory_entries.a",
+		"internal/oracle/testdata/node_fs_directory_union.a",
 		"internal/oracle/testdata/node_fs_directory_realpath.a",
 		"internal/oracle/testdata/node_fs_directory_system.a",
 		"internal/oracle/testdata/node_fs_directory_stat_options.a",
