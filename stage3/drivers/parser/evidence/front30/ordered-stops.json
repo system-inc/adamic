@@ -1,0 +1,334 @@
+{
+  "warning": "Uncommitted discovery copy only. No Node identity or native acceptance. Host placeholder types intentionally any because Node bindings absent.",
+  "rows": [
+    {
+      "order": 1,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front30-discovery-final-slice/parser-proof-main.a:3:21: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts:883:25: error TS2503: Cannot find namespace 'NodeJS'.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/performanceCore.ts:37:37: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/performanceCore.ts:37:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:24:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:47:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:66:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:67:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n",
+      "file": "parser-proof-main.a",
+      "line": 3,
+      "column": 21,
+      "message": "error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "found_behind_stubs": false,
+      "minimal": "native-node-fs-import.a",
+      "placeholder": "Type-only Node activation import replaced by unused throwing declaration; no runtime binding invented."
+    },
+    {
+      "order": 2,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts:883:25: error TS2503: Cannot find namespace 'NodeJS'.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/performanceCore.ts:37:37: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/performanceCore.ts:37:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:24:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:47:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:66:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:67:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n",
+      "file": "src/compiler/core.ts",
+      "line": 883,
+      "column": 25,
+      "message": "error TS2503: Cannot find namespace 'NodeJS'.",
+      "found_behind_stubs": true,
+      "minimal": "native-nodejs-process-type.a",
+      "placeholder": "Missing NodeJS.Process substituted by type of a throwing any-return placeholder; scope limited to discovery host type."
+    },
+    {
+      "order": 3,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/performanceCore.ts:37:37: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/performanceCore.ts:37:84: error TS2591: Cannot find name 'perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:24:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:47:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:66:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:67:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n",
+      "file": "src/compiler/performanceCore.ts",
+      "line": 37,
+      "column": 37,
+      "message": "error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "found_behind_stubs": true,
+      "minimal": "native-require-perf-hooks.a",
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/performanceCore.ts",
+        "line": 37,
+        "column": 37,
+        "name": "tryGetPerformance",
+        "edits": [
+          {
+            "start": 1018,
+            "end": 2080,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing tryGetPerformance body; original inferred return shape explicit, removes require and perf_hooks type import together."
+    },
+    {
+      "order": 4,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:24:27: error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:47:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:66:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:67:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n",
+      "file": "src/compiler/tracing.ts",
+      "line": 24,
+      "column": 27,
+      "message": "error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "found_behind_stubs": true,
+      "minimal": "native-fs-type-import.a",
+      "placeholder": "Missing fs module type substituted by type of a throwing any-return placeholder; discovery only."
+    },
+    {
+      "order": 5,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:47:22: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:66:50: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts:67:39: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n",
+      "file": "src/compiler/tracing.ts",
+      "line": 47,
+      "column": 22,
+      "message": "error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
+      "found_behind_stubs": true,
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/tracing.ts",
+        "line": 47,
+        "column": 22,
+        "name": "startTracing",
+        "edits": [
+          {
+            "start": 1702,
+            "end": 3551,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Function body replaced by throwing placeholder; predicate callback annotations may become boolean as recorded. Preserve removed mode initialization with a throwing typed initializer to avoid artificial definite-assignment diagnostics.",
+      "minimal": "native-require-fs.a"
+    },
+    {
+      "order": 6,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts:195:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "file": "src/compiler/core.ts",
+      "line": 195,
+      "column": 37,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "found_behind_stubs": true,
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts",
+        "line": 195,
+        "column": 37,
+        "name": "sameMap",
+        "edits": [
+          {
+            "start": 7426,
+            "end": 7976,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Function body replaced by throwing placeholder; predicate callback annotations may become boolean as recorded.",
+      "minimal": "native-same-map-return-cast.a"
+    },
+    {
+      "order": 7,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts:421:34: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)\n",
+      "file": "src/compiler/core.ts",
+      "line": 421,
+      "column": 34,
+      "message": "Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)",
+      "found_behind_stubs": true,
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts",
+        "line": 421,
+        "column": 34,
+        "name": "toSorted",
+        "edits": [
+          {
+            "start": 15632,
+            "end": 15756,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Function body replaced by throwing placeholder; predicate callback annotations may become boolean as recorded.",
+      "minimal": "native-sorted-empty-conditional.a"
+    },
+    {
+      "order": 8,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts:525:17: Adamic 0.1 refuses arguments; name the parameters, or take a rest parameter\n",
+      "file": "src/compiler/core.ts",
+      "line": 525,
+      "column": 17,
+      "message": "Adamic 0.1 refuses arguments; name the parameters, or take a rest parameter",
+      "found_behind_stubs": true,
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts",
+        "line": 525,
+        "column": 17,
+        "name": "reduceLeft",
+        "edits": [
+          {
+            "start": 19465,
+            "end": 20148,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Function body replaced by throwing placeholder; predicate callback annotations may become boolean as recorded.",
+      "minimal": "native-arguments-length.a"
+    },
+    {
+      "order": 9,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts:594:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/core.ts",
+      "line": 594,
+      "column": 5,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts",
+        "line": 594,
+        "column": 5,
+        "name": "isArray",
+        "edits": [
+          {
+            "start": 20878,
+            "end": 20982,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Function body replaced by throwing placeholder; predicate callback annotations may become boolean as recorded.",
+      "minimal": "native-array-is-array-predicate.a"
+    },
+    {
+      "order": 10,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts:616:97: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/core.ts",
+      "line": 616,
+      "column": 97,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/core.ts",
+        "line": 616,
+        "column": 97,
+        "name": "cast",
+        "edits": [
+          {
+            "start": 21499,
+            "end": 21689,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n}"
+          },
+          {
+            "start": 21478,
+            "end": 21491,
+            "replacement": "boolean"
+          }
+        ]
+      },
+      "placeholder": "Function body replaced by throwing placeholder; predicate callback annotations may become boolean as recorded.",
+      "minimal": "native-predicate-callback-parameter.a"
+    },
+    {
+      "order": 11,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/debug.ts:429:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this\n",
+      "file": "src/compiler/debug.ts",
+      "line": 429,
+      "column": 5,
+      "message": "Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this",
+      "found_behind_stubs": true,
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/debug.ts",
+        "line": 429,
+        "column": 5,
+        "name": "attachFlowNodeDebugInfoWorker",
+        "edits": [
+          {
+            "start": 22729,
+            "end": 24783,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Function body replaced by throwing placeholder; predicate callback annotations may become boolean as recorded.",
+      "minimal": "native-namespace-object-receiver.a"
+    },
+    {
+      "order": 12,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/debug.ts:526:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this\n",
+      "file": "src/compiler/debug.ts",
+      "line": 526,
+      "column": 5,
+      "message": "Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this",
+      "found_behind_stubs": true,
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/debug.ts",
+        "line": 526,
+        "column": 5,
+        "name": "enableDebugInfo",
+        "edits": [
+          {
+            "start": 25853,
+            "end": 37300,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Function body replaced by throwing placeholder; predicate callback annotations may become boolean as recorded.",
+      "minimal": "native-namespace-object-receiver.a"
+    },
+    {
+      "order": 13,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/debug.ts:739:5: stage 0 can't lower a class inside a namespace; namespace constructor registration and initialization are not yet proven yet\n",
+      "file": "src/compiler/debug.ts",
+      "line": 739,
+      "column": 5,
+      "message": "stage 0 can't lower a class inside a namespace; namespace constructor registration and initialization are not yet proven yet",
+      "found_behind_stubs": true,
+      "stub_exit": 1,
+      "stub_error": "/workspace/scratch/parser-front27-stub.cjs:7\n if(!variable?.initializer)throw Error('No function or variable stub for diagnostic; structural declaration stop');\n                           ^\n\nError: No function or variable stub for diagnostic; structural declaration stop\n    at Object.<anonymous> (/workspace/scratch/parser-front27-stub.cjs:7:34)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n",
+      "stop_reason": "Cannot replace structural declaration with existing throwing-function placeholder",
+      "minimal": "native-namespace-class.a",
+      "placeholder": "Namespace class replaced with an interface and a typed value initialized by a throwing helper; exact structural edit retained. No runtime equivalence claim."
+    },
+    {
+      "order": 14,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/debug.ts:50:5: stage 0 can't lower a namespace merged with a function; callable object properties, identity and receivers are not represented yet\n",
+      "file": "src/compiler/debug.ts",
+      "line": 50,
+      "column": 5,
+      "message": "stage 0 can't lower a namespace merged with a function; callable object properties, identity and receivers are not represented yet",
+      "found_behind_stubs": true,
+      "minimal": "native-callable-namespace.a",
+      "placeholder": "Unused merged log function renamed to throwing placeholder; namespace log preserved; no direct Debug.log calls in slice."
+    },
+    {
+      "order": 15,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front30-discovery-final-slice/src/compiler/debug.ts:80:31: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "file": "src/compiler/debug.ts",
+      "line": 80,
+      "column": 31,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "found_behind_stubs": true,
+      "stub_exit": 0,
+      "stub": {
+        "file": "/workspace/scratch/parser-front30-discovery-final-slice/src/compiler/debug.ts",
+        "line": 80,
+        "column": 31,
+        "name": "setAssertionLevel",
+        "edits": [
+          {
+            "start": 3637,
+            "end": 4303,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "final_limit": "Fifteen stops reached",
+      "minimal": "native-key-array-cast.a",
+      "placeholder": "setAssertionLevel body replaced by a throwing placeholder. Fifteen-stop limit reached; no subsequent build."
+    }
+  ]
+}
