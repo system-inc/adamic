@@ -1,0 +1,190 @@
+{"Time":"2026-10-08T00:17:51.983881573Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-08T00:17:52.0386791Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness"}
+{"Time":"2026-10-08T00:17:52.038784108Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"=== RUN   TestArrayGrowthWitness\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049148096Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"=== PAUSE TestArrayGrowthWitness\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.04920358Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness"}
+{"Time":"2026-10-08T00:17:52.049207776Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownASTPreprocessing"}
+{"Time":"2026-10-08T00:17:52.04921018Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownASTPreprocessing","Output":"=== RUN   TestMarkdownASTPreprocessing\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049212994Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownASTPreprocessing","Output":"=== PAUSE TestMarkdownASTPreprocessing\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049217901Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownASTPreprocessing"}
+{"Time":"2026-10-08T00:17:52.049220065Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestWholeDocumentOraclePreflight"}
+{"Time":"2026-10-08T00:17:52.049221627Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestWholeDocumentOraclePreflight","Output":"=== RUN   TestWholeDocumentOraclePreflight\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.04922368Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestWholeDocumentOraclePreflight","Output":"=== PAUSE TestWholeDocumentOraclePreflight\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049225523Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestWholeDocumentOraclePreflight"}
+{"Time":"2026-10-08T00:17:52.049227316Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks"}
+{"Time":"2026-10-08T00:17:52.0492304Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Output":"=== RUN   TestMicromarkInputChunks\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049232373Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks","Output":"=== PAUSE TestMicromarkInputChunks\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049233976Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMicromarkInputChunks"}
+{"Time":"2026-10-08T00:17:52.049235778Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownSourceDecoding"}
+{"Time":"2026-10-08T00:17:52.049237471Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownSourceDecoding","Output":"=== RUN   TestMarkdownSourceDecoding\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049239574Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownSourceDecoding","Output":"=== PAUSE TestMarkdownSourceDecoding\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049241196Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownSourceDecoding"}
+{"Time":"2026-10-08T00:17:52.049247977Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEvents"}
+{"Time":"2026-10-08T00:17:52.049249539Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEvents","Output":"=== RUN   TestTokenizerEvents\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049252333Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEvents","Output":"=== PAUSE TestTokenizerEvents\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049253976Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestTokenizerEvents"}
+{"Time":"2026-10-08T00:17:52.049255809Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage"}
+{"Time":"2026-10-08T00:17:52.049257301Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Output":"=== RUN   TestFrontMatterStage\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049259885Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage","Output":"=== PAUSE TestFrontMatterStage\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049261377Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestFrontMatterStage"}
+{"Time":"2026-10-08T00:17:52.04926322Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestParserRepresentationProbes"}
+{"Time":"2026-10-08T00:17:52.049264662Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestParserRepresentationProbes","Output":"=== RUN   TestParserRepresentationProbes\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049268197Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestParserRepresentationProbes","Output":"=== PAUSE TestParserRepresentationProbes\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.0492698Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestParserRepresentationProbes"}
+{"Time":"2026-10-08T00:17:52.049271542Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierScalars"}
+{"Time":"2026-10-08T00:17:52.049273135Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierScalars","Output":"=== RUN   TestMdastIdentifierScalars\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.04927632Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierScalars","Output":"=== PAUSE TestMdastIdentifierScalars\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049277802Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierScalars"}
+{"Time":"2026-10-08T00:17:52.049279825Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout"}
+{"Time":"2026-10-08T00:17:52.049281187Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Output":"=== RUN   TestMarkdownListLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049283Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout","Output":"=== PAUSE TestMarkdownListLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049284662Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownListLayout"}
+{"Time":"2026-10-08T00:17:52.049286405Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownQuoteLayout"}
+{"Time":"2026-10-08T00:17:52.049289109Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownQuoteLayout","Output":"=== RUN   TestMarkdownQuoteLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049291252Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownQuoteLayout","Output":"=== PAUSE TestMarkdownQuoteLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049292824Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownQuoteLayout"}
+{"Time":"2026-10-08T00:17:52.049294817Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout"}
+{"Time":"2026-10-08T00:17:52.04929644Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout","Output":"=== RUN   TestMarkdownTableLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049298503Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout","Output":"=== PAUSE TestMarkdownTableLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049300075Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout"}
+{"Time":"2026-10-08T00:17:52.049302048Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownCodeBlockLayout"}
+{"Time":"2026-10-08T00:17:52.049303481Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownCodeBlockLayout","Output":"=== RUN   TestMarkdownCodeBlockLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049305584Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownCodeBlockLayout","Output":"=== PAUSE TestMarkdownCodeBlockLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049307176Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownCodeBlockLayout"}
+{"Time":"2026-10-08T00:17:52.049309069Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownHTMLBlockLayout"}
+{"Time":"2026-10-08T00:17:52.049310531Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownHTMLBlockLayout","Output":"=== RUN   TestMarkdownHTMLBlockLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049313345Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownHTMLBlockLayout","Output":"=== PAUSE TestMarkdownHTMLBlockLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049314848Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownHTMLBlockLayout"}
+{"Time":"2026-10-08T00:17:52.04931661Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout"}
+{"Time":"2026-10-08T00:17:52.049318093Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout","Output":"=== RUN   TestMarkdownWhitespaceLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049320025Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout","Output":"=== PAUSE TestMarkdownWhitespaceLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049321638Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout"}
+{"Time":"2026-10-08T00:17:52.049323681Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLeafComposition"}
+{"Time":"2026-10-08T00:17:52.049325394Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLeafComposition","Output":"=== RUN   TestMarkdownLeafComposition\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049330291Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLeafComposition","Output":"=== PAUSE TestMarkdownLeafComposition\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049331773Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLeafComposition"}
+{"Time":"2026-10-08T00:17:52.049333426Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownRootLayout"}
+{"Time":"2026-10-08T00:17:52.049335759Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownRootLayout","Output":"=== RUN   TestMarkdownRootLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049337722Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownRootLayout","Output":"=== PAUSE TestMarkdownRootLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049339234Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownRootLayout"}
+{"Time":"2026-10-08T00:17:52.049341057Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownStructureLayout"}
+{"Time":"2026-10-08T00:17:52.04934269Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownStructureLayout","Output":"=== RUN   TestMarkdownStructureLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049344593Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownStructureLayout","Output":"=== PAUSE TestMarkdownStructureLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049346075Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownStructureLayout"}
+{"Time":"2026-10-08T00:17:52.049348008Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastMalformedEvents"}
+{"Time":"2026-10-08T00:17:52.04934975Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastMalformedEvents","Output":"=== RUN   TestMdastMalformedEvents\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049351613Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastMalformedEvents","Output":"=== PAUSE TestMdastMalformedEvents\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049353105Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastMalformedEvents"}
+{"Time":"2026-10-08T00:17:52.049354918Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses"}
+{"Time":"2026-10-08T00:17:52.049356551Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses","Output":"=== RUN   TestMdastIdentifierWitnesses\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049358704Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses","Output":"=== PAUSE TestMdastIdentifierWitnesses\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049360186Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses"}
+{"Time":"2026-10-08T00:17:52.049362119Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeMdastConstruction"}
+{"Time":"2026-10-08T00:17:52.049363591Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeMdastConstruction","Output":"=== RUN   TestNativeMdastConstruction\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049366846Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeMdastConstruction","Output":"=== PAUSE TestNativeMdastConstruction\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049368499Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeMdastConstruction"}
+{"Time":"2026-10-08T00:17:52.049370281Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestOptionalStringInitializationWitness"}
+{"Time":"2026-10-08T00:17:52.049371784Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestOptionalStringInitializationWitness","Output":"=== RUN   TestOptionalStringInitializationWitness\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049391994Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestOptionalStringInitializationWitness","Output":"=== PAUSE TestOptionalStringInitializationWitness\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049393817Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestOptionalStringInitializationWitness"}
+{"Time":"2026-10-08T00:17:52.049397032Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownAstPath"}
+{"Time":"2026-10-08T00:17:52.049398634Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownAstPath","Output":"=== RUN   TestMarkdownAstPath\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049400637Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownAstPath","Output":"=== PAUSE TestMarkdownAstPath\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049402089Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownAstPath"}
+{"Time":"2026-10-08T00:17:52.049404032Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownParserPrefixes"}
+{"Time":"2026-10-08T00:17:52.049405605Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownParserPrefixes","Output":"=== RUN   TestMarkdownParserPrefixes\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049410101Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownParserPrefixes","Output":"=== PAUSE TestMarkdownParserPrefixes\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049411784Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownParserPrefixes"}
+{"Time":"2026-10-08T00:17:52.049413497Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct"}
+{"Time":"2026-10-08T00:17:52.049415129Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct","Output":"=== RUN   TestNativeBuildModesAreDistinct\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049417983Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct","Output":"=== PAUSE TestNativeBuildModesAreDistinct\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049419786Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestNativeBuildModesAreDistinct"}
+{"Time":"2026-10-08T00:17:52.049421929Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting"}
+{"Time":"2026-10-08T00:17:52.049423452Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting","Output":"=== RUN   TestMarkdownTextSplitting\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049426496Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting","Output":"=== PAUSE TestMarkdownTextSplitting\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049428079Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTextSplitting"}
+{"Time":"2026-10-08T00:17:52.049430803Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths"}
+{"Time":"2026-10-08T00:17:52.049432355Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Output":"=== RUN   TestMarkdownUnicodeWidths\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049434508Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths","Output":"=== PAUSE TestMarkdownUnicodeWidths\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049436191Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownUnicodeWidths"}
+{"Time":"2026-10-08T00:17:52.049440918Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness"}
+{"Time":"2026-10-08T00:17:52.04944237Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"=== CONT  TestArrayGrowthWitness\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.049687961Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout"}
+{"Time":"2026-10-08T00:17:52.049691006Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownWhitespaceLayout","Output":"=== CONT  TestMarkdownWhitespaceLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.072342056Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownCodeBlockLayout"}
+{"Time":"2026-10-08T00:17:52.072390369Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownCodeBlockLayout","Output":"=== CONT  TestMarkdownCodeBlockLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.072399843Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout"}
+{"Time":"2026-10-08T00:17:52.072403038Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownTableLayout","Output":"=== CONT  TestMarkdownTableLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.072405392Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownHTMLBlockLayout"}
+{"Time":"2026-10-08T00:17:52.072406884Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownHTMLBlockLayout","Output":"=== CONT  TestMarkdownHTMLBlockLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.871354408Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-08T00:17:52.967024004Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCommandDiagnosticsDropOnlyModuleDownloads"}
+{"Time":"2026-10-08T00:17:52.96708763Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCommandDiagnosticsDropOnlyModuleDownloads","Output":"=== RUN   TestCommandDiagnosticsDropOnlyModuleDownloads\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.96712054Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCommandDiagnosticsDropOnlyModuleDownloads","Output":"--- PASS: TestCommandDiagnosticsDropOnlyModuleDownloads (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:52.967123885Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCommandDiagnosticsDropOnlyModuleDownloads","Elapsed":0}
+{"Time":"2026-10-08T00:17:52.96716001Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestExecuteFailsOnStderrOtherThanModuleDownloads"}
+{"Time":"2026-10-08T00:17:52.967162203Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestExecuteFailsOnStderrOtherThanModuleDownloads","Output":"=== RUN   TestExecuteFailsOnStderrOtherThanModuleDownloads\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:53.341148438Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestExecuteFailsOnStderrOtherThanModuleDownloads","Output":"--- PASS: TestExecuteFailsOnStderrOtherThanModuleDownloads (0.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:53.341186135Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestExecuteFailsOnStderrOtherThanModuleDownloads","Elapsed":0.37}
+{"Time":"2026-10-08T00:17:53.341198364Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap"}
+{"Time":"2026-10-08T00:17:53.341201008Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"=== RUN   TestNestedConstructorGap\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:54.083623219Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"    gaps_test.go:35: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this\n"}
+{"Time":"2026-10-08T00:17:54.08366336Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Output":"--- PASS: TestNestedConstructorGap (0.75s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:54.083666805Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedConstructorGap","Elapsed":0.75}
+{"Time":"2026-10-08T00:17:54.083672804Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOptionAndComparatorGaps"}
+{"Time":"2026-10-08T00:17:54.083674767Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOptionAndComparatorGaps","Output":"=== RUN   TestOptionAndComparatorGaps\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:54.083679784Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOptionAndComparatorGaps","Output":"=== PAUSE TestOptionAndComparatorGaps\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:54.083681597Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOptionAndComparatorGaps"}
+{"Time":"2026-10-08T00:17:54.08368376Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch"}
+{"Time":"2026-10-08T00:17:54.083685303Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch","Output":"=== RUN   TestEmittedJavaScriptMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:54.287805564Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"    array_growth_gap_test.go:31: Node extends the array; both compiled backends panic. The production map appends with push.\n"}
+{"Time":"2026-10-08T00:17:54.287846937Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Output":"--- PASS: TestArrayGrowthWitness (2.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:54.287850993Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestArrayGrowthWitness","Elapsed":2.24}
+{"Time":"2026-10-08T00:17:54.287860978Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownQuoteLayout"}
+{"Time":"2026-10-08T00:17:54.287863562Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownQuoteLayout","Output":"=== CONT  TestMarkdownQuoteLayout\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:54.951236948Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-08T00:17:54.981336028Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes"}
+{"Time":"2026-10-08T00:17:54.981442749Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes","Output":"=== RUN   TestThePortParsesAsGoCohereDoes\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:17:59.334519116Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-08T00:17:59.348078312Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeProfileAgreementAndMutants"}
+{"Time":"2026-10-08T00:17:59.348163301Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeProfileAgreementAndMutants","Output":"=== RUN   TestVolumeProfileAgreementAndMutants\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.853760522Z","Action":"start","Package":"github.com/system-inc/adamic/internal/unicodeproperties"}
+{"Time":"2026-10-08T00:18:05.870085833Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases"}
+{"Time":"2026-10-08T00:18:05.870157711Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases","Output":"=== RUN   TestBinaryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870169038Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases","Output":"=== PAUSE TestBinaryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870171232Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases"}
+{"Time":"2026-10-08T00:18:05.8701768Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases"}
+{"Time":"2026-10-08T00:18:05.870178603Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases","Output":"=== RUN   TestGeneralCategoryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870182308Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases","Output":"=== PAUSE TestGeneralCategoryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870184061Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases"}
+{"Time":"2026-10-08T00:18:05.870187977Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet"}
+{"Time":"2026-10-08T00:18:05.870189509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet","Output":"=== RUN   TestScriptAliasSet\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870191692Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet","Output":"=== PAUSE TestScriptAliasSet\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870193585Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet"}
+{"Time":"2026-10-08T00:18:05.870195729Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames"}
+{"Time":"2026-10-08T00:18:05.87020317Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames","Output":"=== RUN   TestRejectedNames\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870205904Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames","Output":"=== PAUSE TestRejectedNames\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870207516Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames"}
+{"Time":"2026-10-08T00:18:05.87020977Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus"}
+{"Time":"2026-10-08T00:18:05.870211462Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus","Output":"=== RUN   TestStringPropertyCensus\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870213846Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus","Output":"=== PAUSE TestStringPropertyCensus\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870215328Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus"}
+{"Time":"2026-10-08T00:18:05.870218232Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries"}
+{"Time":"2026-10-08T00:18:05.870219765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries","Output":"=== RUN   TestSetBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870221848Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries","Output":"=== PAUSE TestSetBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.87022325Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries"}
+{"Time":"2026-10-08T00:18:05.870225183Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership"}
+{"Time":"2026-10-08T00:18:05.870226685Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership","Output":"=== RUN   TestKnownMembership\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870232193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership","Output":"=== PAUSE TestKnownMembership\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870233666Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership"}
+{"Time":"2026-10-08T00:18:05.870235358Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeExamples"}
+{"Time":"2026-10-08T00:18:05.870237772Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeExamples","Output":"=== RUN   TestCanonicalizeExamples\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870241247Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeExamples","Output":"=== PAUSE TestCanonicalizeExamples\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870242729Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeExamples"}
+{"Time":"2026-10-08T00:18:05.870244562Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed"}
+{"Time":"2026-10-08T00:18:05.870245954Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed","Output":"=== RUN   TestEquivalentsAreClosed\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870249139Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed","Output":"=== PAUSE TestEquivalentsAreClosed\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:05.870250721Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestEquivalentsAreClosed"}
+{"Time":"2026-10-08T00:18:05.870252694Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeLegacyNode"}
+{"Time":"2026-10-08T00:18:05.870254146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeLegacyNode","Output":"=== RUN   TestCanonicalizeLegacyNode\n","OutputType":"frame"}
+{"Time":"2026-10-08T00:18:06.224614362Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestCanonicalizeLegacyNode","Output":"legacy canonicalize values: 65536 code units against Node toUpperCase, disagreements 0\n"}
