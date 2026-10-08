@@ -177,6 +177,14 @@ func compareConstructionCensus(t *testing.T, output []byte, manifest string, mut
 type constructionMutant struct{ name, file, from, to string }
 
 var constructionMutants = []constructionMutant{
+	{"jsx component tag loses value", "lower.ts", "tag = { name: '', place: this.loadIdentifier(tagId) };", "tag = { name: '', place: this.fn.returns };"},
+	{"jsx host tag becomes component", "lower.ts", "if(name.text !== '' && name.text.charAt(0) >= 'a' && name.text.charAt(0) <= 'z')", "if(false)"},
+	{"jsx bare prop becomes false", "lower.ts", "initializer === undefined ? this.emit({ kind: 'Primitive', literal: 'bool:true' }", "initializer === undefined ? this.emit({ kind: 'Primitive', literal: 'bool:false' }"},
+	{"jsx spread loses marker", "lower.ts", "name: '', value: this.expression(attribute.children[0] ?? -1), spread: true", "name: '', value: this.expression(attribute.children[0] ?? -1), spread: false"},
+	{"jsx trivia becomes text", "lower.ts", "if(child.semantic !== '1')", "if(true)"},
+	{"jsx empty child becomes return place", "lower.ts", "if(inner !== undefined) { places.push(this.expression(inner)); }", "if(inner !== undefined) { places.push(this.expression(inner)); } else { places.push(this.fn.returns); }"},
+	{"jsx fragment drops first child", "lower.ts", "{ kind: 'JsxFragment', children: this.jsxChildren(children) }", "{ kind: 'JsxFragment', children: this.jsxChildren(children.slice(1)) }"},
+
 	{"do loop loses continue variant", "lower.ts", "this.jump(test.id, 1); this.current = test;", "this.jump(test.id, 0); this.current = test;"},
 	{"for increment jumps past loop", "lower.ts", "this.expression(increment); this.jump(test.id, 0);", "this.expression(increment); this.jump(fallthrough.id, 0);"},
 	{"iterator next loses collection", "lower.ts", "kind: 'IteratorNext', iterator, collection", "kind: 'IteratorNext', iterator, collection: iterator"},

@@ -3,7 +3,7 @@ import { panic, utf8Length } from 'adamic';
 import { HIRFunction, Instruction, BasicBlock, HIRArena, ConstructedHIR, blockIndex } from './core.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { written } from '../../typescript/parser/nodes.ts';
-import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface, FunctionIndex, BlockIndex } from './core.ts';
+import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface, JsxTagInterface, JsxAttributeInterface, FunctionIndex, BlockIndex } from './core.ts';
 import { SymbolSnapshot } from './symbol.ts';
 import { constructHIR } from './graph.ts';
 function literal(kind: string, text: string): string | undefined {
@@ -33,6 +33,17 @@ function supportedTarget(parser: Parser, id: number): boolean {
 }
 function supportedExpression(parser: Parser, id: number): boolean {
     const node = parser.node(id);
+    if(node.kind === 'JsxExpression') { return node.children.every((child) => parser.node(child).kind === 'DotDotDotToken' || supportedExpression(parser, child)); }
+    if(node.kind === 'JsxElement' || node.kind === 'JsxSelfClosingElement' || node.kind === 'JsxFragment') {
+        if(node.kind !== 'JsxFragment') {
+            const opening = node.kind === 'JsxElement' ? parser.node(node.children[0] ?? -1) : node;
+            const tag = parser.node(opening.children[0] ?? -1);
+            if(tag.kind === 'PropertyAccessExpression' && !supportedExpression(parser, opening.children[0] ?? -1)) { return false; }
+            const attributes = parser.node(opening.children[opening.children.length - 1] ?? -1);
+            for(const child of attributes.children) { const attribute = parser.node(child); const value = attribute.children[attribute.kind === 'JsxSpreadAttribute' ? 0 : 1]; if(value !== undefined && !supportedExpression(parser, value)) { return false; } }
+        }
+        return node.kind === 'JsxSelfClosingElement' || node.children.slice(1, node.children.length - 1).every((child) => parser.node(child).kind === 'JsxText' || supportedExpression(parser, child));
+    }
     if(node.kind === 'FunctionExpression' || node.kind === 'ArrowFunction') { return supportedFunction(parser, id); }
     if(node.kind === 'Identifier' || literal(node.kind, node.text) !== undefined) { return true; }
     if(['ParenthesizedExpression', 'TypeOfExpression', 'VoidExpression'].includes(node.kind)) {
@@ -500,8 +511,40 @@ class StraightLineBuilder {
         const place = this.expression(calleeId);
         return this.emit({ kind: 'CallExpression', callee: place, args: this.arguments(id), optional, origin }, id, undefined);
     }
+    jsxChildren(children: readonly number[]): PlaceInterface[] {
+        const places: PlaceInterface[] = [];
+        for(const id of children) {
+            const child = this.parser.node(id);
+            if(child.kind === 'JsxText') { if(child.semantic !== '1') { places.push(this.emit({ kind: 'JsxText', text: child.text }, id, undefined)); } }
+            else if(child.kind === 'JsxExpression') { const inner = child.children.find((value) => this.parser.node(value).kind !== 'DotDotDotToken'); if(inner !== undefined) { places.push(this.expression(inner)); } }
+            else { places.push(this.expression(id)); }
+        }
+        return places;
+    }
+    jsx(id: number): PlaceInterface {
+        const node = this.parser.node(id);
+        const children: number[] = node.kind === 'JsxSelfClosingElement' ? [] : node.children.slice(1, node.children.length - 1);
+        if(node.kind === 'JsxFragment') { return this.emit({ kind: 'JsxFragment', children: this.jsxChildren(children) }, id, undefined); }
+        const opening = node.kind === 'JsxElement' ? this.parser.node(node.children[0] ?? -1) : node;
+        const tagId = opening.children[0] ?? -1; const name = this.parser.node(tagId); let tag: JsxTagInterface = { name: 'unknown', place: undefined };
+        if(name.kind === 'Identifier') { if(name.text !== '' && name.text.charAt(0) >= 'a' && name.text.charAt(0) <= 'z') { tag = { name: name.text, place: undefined }; } else { tag = { name: '', place: this.loadIdentifier(tagId) }; } }
+        else if(name.kind === 'PropertyAccessExpression') { tag = { name: '', place: this.expression(tagId) }; }
+        const attributes = this.parser.node(opening.children[opening.children.length - 1] ?? -1); const props: JsxAttributeInterface[] = [];
+        for(const child of attributes.children) {
+            const attribute = this.parser.node(child);
+            if(attribute.kind === 'JsxSpreadAttribute') { props.push({ name: '', value: this.expression(attribute.children[0] ?? -1), spread: true }); }
+            else {
+                const name = this.parser.node(attribute.children[0] ?? -1); const initializer = attribute.children[1];
+                const value = initializer === undefined ? this.emit({ kind: 'Primitive', literal: 'bool:true' }, child, undefined) : this.expression(initializer);
+                props.push({ name: name.kind === 'Identifier' ? name.text : '', value, spread: false });
+            }
+        }
+        return this.emit({ kind: 'JsxExpression', tag, props, children: this.jsxChildren(children) }, id, undefined);
+    }
     expression(id: number): PlaceInterface {
         const node = this.parser.node(id);
+        if(node.kind === 'JsxElement' || node.kind === 'JsxSelfClosingElement' || node.kind === 'JsxFragment') { return this.jsx(id); }
+        if(node.kind === 'JsxExpression') { const inner = node.children.find((child) => this.parser.node(child).kind !== 'DotDotDotToken'); return inner === undefined ? this.emit({ kind: 'Primitive', literal: 'nil' }, id, undefined) : this.expression(inner); }
         if(node.kind === 'FunctionExpression' || node.kind === 'ArrowFunction') { return this.nested(id); }
         const primitive = literal(node.kind, node.text);
         if(primitive !== undefined) { return this.emit({ kind: 'Primitive', literal: primitive }, id, undefined); }

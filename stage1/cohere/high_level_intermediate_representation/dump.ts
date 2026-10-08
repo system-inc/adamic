@@ -64,6 +64,16 @@ function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunct
     else if(value.kind === 'LoadContext') { payload = `{"Place":${quote(placeText(value.place))}}`; }
     else if(value.kind === 'GetIterator' || value.kind === 'NextPropertyOf') { payload = `{"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'IteratorNext') { payload = `{"Collection":${quote(placeText(value.collection))},"Iterator":${quote(placeText(value.iterator))}}`; }
+    else if(value.kind === 'JsxText') { payload = `{"Value":${quote(value.text)}}`; }
+    else if(value.kind === 'JsxExpression' || value.kind === 'JsxFragment') {
+        const children = '[' + value.children.map((place) => quote(placeText(place))).join(',') + ']';
+        if(value.kind === 'JsxFragment') { payload = `{"Children":${children}}`; }
+        else {
+            const props = '[' + value.props.map((prop) => `{"Name":${quote(prop.name)},"Spread":${prop.spread ? 'true' : 'false'},"Value":${quote(placeText(prop.value))}}`).join(',') + ']';
+            const tag = `{"Name":${quote(value.tag.name)},"Place":${value.tag.place === undefined ? 'null' : quote(placeText(value.tag.place))}}`;
+            payload = `{"Children":${children},"Props":${props},"Tag":${tag}}`;
+        }
+    }
     else if(value.kind === 'FunctionExpression') { arena.read(value.functionReference.index); if(fn.functions[value.functionReference.ordinal] !== value.functionReference.index) { panic('function reference ordinal disagrees with arena index'); } payload = `{"Captures":[${value.captures.map((place) => quote(placeText(place))).join(',')}],"Function":${value.functionReference.ordinal}}`; }
     else if(value.kind === 'StoreLocal' || value.kind === 'StoreContext') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { payload = `{"LValue":${quote(placeText(value.lvalue))},"Operation":${quote(value.operation)},"Value":${quote(placeText(value.value))}}`; }

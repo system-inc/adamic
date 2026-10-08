@@ -48,6 +48,49 @@ func constructionExpression(n *ast.Node) bool {
 		return false
 	}
 	switch n.Kind {
+	case ast.KindJsxExpression:
+		x := n.AsJsxExpression()
+		return x.Expression == nil || constructionExpression(x.Expression)
+	case ast.KindJsxElement, ast.KindJsxSelfClosingElement, ast.KindJsxFragment:
+		var opening *ast.Node
+		var children *ast.NodeList
+		if n.Kind == ast.KindJsxElement {
+			x := n.AsJsxElement()
+			opening = x.OpeningElement
+			children = x.Children
+		} else if n.Kind == ast.KindJsxSelfClosingElement {
+			opening = n
+		} else {
+			children = n.AsJsxFragment().Children
+		}
+		if opening != nil {
+			tag, attributes := jsxOpeningParts(opening)
+			if tag != nil && tag.Kind == ast.KindPropertyAccessExpression && !constructionExpression(tag) {
+				return false
+			}
+			if attributes != nil && attributes.AsJsxAttributes().Properties != nil {
+				for _, prop := range attributes.AsJsxAttributes().Properties.Nodes {
+					if prop.Kind == ast.KindJsxSpreadAttribute {
+						if !constructionExpression(prop.AsJsxSpreadAttribute().Expression) {
+							return false
+						}
+					} else {
+						value := prop.AsJsxAttribute().Initializer
+						if value != nil && !constructionExpression(value) {
+							return false
+						}
+					}
+				}
+			}
+		}
+		if children != nil {
+			for _, child := range children.Nodes {
+				if child.Kind != ast.KindJsxText && !constructionExpression(child) {
+					return false
+				}
+			}
+		}
+		return true
 	case ast.KindFunctionExpression, ast.KindArrowFunction:
 		return constructionEligible(n)
 	case ast.KindIdentifier, ast.KindNumericLiteral, ast.KindStringLiteral, ast.KindBigIntLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindTrueKeyword, ast.KindFalseKeyword, ast.KindNullKeyword:
@@ -417,6 +460,11 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function Host(value, props) { return <div bare title='hello' count={value} {...props}>text {value}<span />{ /* empty */ }</div>; }",
+		"function Component(Foo, Namespace, value) { return <><Foo value={value} /><Namespace.Inner /> <div>🙂 &amp;\n  </div></>; }",
+		"function LocalComponent(value) { const Child = () => <span>{value}</span>; return <Child />; }",
+		"function Trivia() { return <div>\n  <span />\n  {' '} <> </> </div>; }",
+
 		"function DoLoop(n) { let x = 0; do { x++; if (x === 2) continue; if (x === 3) break; } while (x < n); return x; }",
 		"function ForLoop(n) { let x = 0; for (let i = 0; i < n; i++) { if (i === 2) continue; x += i; } return x; }",
 		"function ForEmpty(n) { for (;;) { if (n) break; return n; } for (; n;) { n--; } for (n = 1;; n++) { break; } return n; }",

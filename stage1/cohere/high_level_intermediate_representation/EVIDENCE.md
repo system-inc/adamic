@@ -272,3 +272,36 @@ edge. The supported arena record represents this absence by omitting its optiona
 BlockIndex field; all real targets retain the whole branded enum. Exact diagnostic:
 `Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot BlockIndex; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)`
 No required operation or graph edge was bypassed.
+
+## JSX certificate (Oct 8)
+
+Go lower_expression.go:707–839 and instruction.go:346–374 now lower and dump on
+both backends. `HIR_CENSUS_EXPORT=/tmp/hir-jsx-certified go test -v -count=1
+-timeout=25m ./stage1/cohere/high_level_intermediate_representation
+-run 'TestWholeConstructionCensus/catches_jsx'` passes: 380/1,465 corpus functions,
+50/50 probes, 430/1,515 overall; seven JSX mutants compile and execute, differ from
+Go and agree between Node/native. Mutants corrupt component tags, host tag
+classification, bare prop truth, spread markers, trivia elision, empty child
+elision and fragment child order. The checked off-by-one FunctionIndex mutant is
+also caught. All census rows are observed, including declines; exclusions persist.
+
+Two ordinary port-type corrections preceded the certificate. Go
+lower_expression.go:709 declares `var children []*ast.Node`; the port's conditional
+empty array needed explicit `number[]` instead of inferred never[]. Diagnostic:
+`stage 0 can't lower an array of never yet`.
+
+Go instruction.go:356–360 declares `type JsxTag struct { Name string; Place *Place }`.
+The initial port was `interface JsxTagInterface { readonly name: string;
+place?: PlaceInterface; }`. HIRFunction has a name and an instruction array, so that
+open structural type could actually hold the owning function as its tag, then
+reach the instruction table again. The port now requires `place: PlaceInterface |
+undefined`, corresponding to the always-present Go struct field and nil pointer.
+This removes the unintended assignability, and the compiler approves. Graph links
+stay index-based; no Weak slot or cycle-refusal bypass was added. Original diagnostic:
+
+```text
+Adamic 0.1 refuses Instruction[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/high_level_intermediate_representation/lower.ts:444:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<Instruction>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly Instruction[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+```
+
+No production operation was declined to make the compile pass. The full admitted
+Node/native census remains byte-identical to Go.

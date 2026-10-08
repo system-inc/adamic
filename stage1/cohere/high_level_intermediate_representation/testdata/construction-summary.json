@@ -1,9 +1,9 @@
 {
   "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
   "constructionCorpusFunctions": 1465,
-  "constructionCorpusFunctionsMatched": 311,
-  "pathProbes": 45,
-  "pathProbesMatched": 45,
+  "constructionCorpusFunctionsMatched": 380,
+  "pathProbes": 50,
+  "pathProbesMatched": 50,
   "upstreamFixtures": 395,
   "flowExcludedFixtures": [
     "error.bug-context-variable-catch-in-lambda.js",
@@ -96,12 +96,30 @@
   ],
   "matchedFunctions": [
     {
+      "key": "001e942a4a411b593d5221cacb8b969ffd5f97a053340b10a1630aa3bb02e6b6",
+      "start": 110,
+      "end": 242,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-aliased-ref-in-callback-invoked-during-render-.js/nested"
+      ]
+    },
+    {
       "key": "0243ffd256eee57f5e80af6f56e2f962cf11264887a9fa34d125f1f4f982a729",
       "start": 0,
       "end": 75,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "02aa6b9904693b651aeacddd93e8001e2738aa2c0f3fb996e510679e2861ea18",
+      "start": 41,
+      "end": 487,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-valid-functiondecl-hoisting.tsx"
       ]
     },
     {
@@ -114,6 +132,15 @@
       ]
     },
     {
+      "key": "04ad0aa86e3bd0ea453b0fac491e774c62314a2a345192d5a81cabf1a9885c66",
+      "start": 0,
+      "end": 111,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-property-store-to-frozen-value.js"
+      ]
+    },
+    {
       "key": "052156bdbb7fbe05cc5300270b0e9457e5da3be54de6478ab6a1fe159ac78ace",
       "start": 0,
       "end": 61,
@@ -123,12 +150,39 @@
       ]
     },
     {
+      "key": "07e0d3caed783bf7418f0115e45da8a73678c4fdb2d534166a1030844fee2f45",
+      "start": 62,
+      "end": 83,
+      "checker": true,
+      "calls": [
+        "upstream:error.mutate-function-property.js/nested"
+      ]
+    },
+    {
       "key": "0977d18213e193697af245f395c2997bc77b8679f55830b22d98cbd395f5e267",
       "start": 51,
       "end": 130,
       "checker": true,
       "calls": [
         "upstream:new-mutability/error.not-useEffect-external-mutate.js"
+      ]
+    },
+    {
+      "key": "0a780e0a10363f708b1b9a466e4527aa7c35ba42d8d5de94cc7475973e941345",
+      "start": 0,
+      "end": 141,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-disallow-mutating-ref-in-render.js"
+      ]
+    },
+    {
+      "key": "0b7d57224daa4cc051c97d07bc2184fc44d2a8e60dd02dbae1d5528528298618",
+      "start": 20,
+      "end": 79,
+      "checker": true,
+      "calls": [
+        "upstream:error.mutate-global-increment-op-invalid-react.js"
       ]
     },
     {
@@ -182,6 +236,15 @@
       ]
     },
     {
+      "key": "0ff0fa0c58d18c8c48346acf9d073bc5c944b9bbf6a9e449bd330434807aa95f",
+      "start": 95,
+      "end": 135,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.invalid-reassign-local-variable-in-jsx-callback.js/nested"
+      ]
+    },
+    {
       "key": "1022fbfe001c56b8a5e1ea1553f606d2cf331677a1ade2d9fe66462ce1ecda06",
       "start": 314,
       "end": 354,
@@ -200,6 +263,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "125047ee41274b38576d379aefb096e22e7e7f5600e54a5907a3a2ca124d0bfe",
+      "start": 0,
+      "end": 457,
+      "checker": true,
+      "calls": [
+        "upstream:fbt/error.todo-fbt-plural-in-expression-container.js"
       ]
     },
     {
@@ -248,6 +320,15 @@
       ]
     },
     {
+      "key": "15ee633eb245b651d90e6cb1e294d5b110679ea579e4cdb21c0fca3663c94195",
+      "start": 0,
+      "end": 635,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-global-in-render-helper-phi-return-prop.js"
+      ]
+    },
+    {
       "key": "179b1d972545e8448081d72edfd7f78098f191552de3304449dc83b5d2291985",
       "start": 0,
       "end": 271,
@@ -277,6 +358,15 @@
         "cache_test.go:221/nested/nested",
         "cache_test.go:79/nested/nested",
         "cache_test.go:83/nested/nested"
+      ]
+    },
+    {
+      "key": "1ba4dbfafd5a4675b6b42eddf9f19945a692490e2125592f7e2a0951ebaef119",
+      "start": 120,
+      "end": 1018,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-jsx-callback.js/nested"
       ]
     },
     {
@@ -370,6 +460,15 @@
       ]
     },
     {
+      "key": "22d54bd06757323c81d0610aa91ec280e89ccd4d0b3744a51962109b4322fa7a",
+      "start": 203,
+      "end": 302,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.bail.rules-of-hooks-8503ca76d6f8.js"
+      ]
+    },
+    {
       "key": "236cda9f45c98a34a5bf544b17782221fa0a5eb21b033474a204717fcd5db227",
       "start": 93,
       "end": 101,
@@ -430,6 +529,15 @@
       "checker": true,
       "calls": [
         "upstream:new-mutability/error.reassignment-to-global.js"
+      ]
+    },
+    {
+      "key": "28a8f59e7804776ecec31a5daee1867713d4602cf90ee0df1ae6b438cee2bcd5",
+      "start": 504,
+      "end": 547,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-context-in-callback.js/nested"
       ]
     },
     {
@@ -508,12 +616,30 @@
       ]
     },
     {
+      "key": "2e919a2cea3acd2813a2babb678d2fb3d6dfcde136684c8ba3952d32d783406d",
+      "start": 428,
+      "end": 455,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:174/nested"
+      ]
+    },
+    {
       "key": "2f4820cba0112692ef2c8cd0193e6d5ee5535703669ecde70df94ee2b1df997c",
       "start": 172,
       "end": 228,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/todo.error.rules-of-hooks-d0935abedc42.js"
+      ]
+    },
+    {
+      "key": "2f5e3158754c0af6eb27085dcb24a5ded98d9256e14a09445670923ae196186b",
+      "start": 554,
+      "end": 581,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:174/nested"
       ]
     },
     {
@@ -582,6 +708,15 @@
       ]
     },
     {
+      "key": "3732b1737a3cb7b134d68a291bf0696faabbc5169341d719ba17dc9496ec243e",
+      "start": 0,
+      "end": 237,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.invalid-impure-functions-in-render.js"
+      ]
+    },
+    {
       "key": "37a1d2713311ff01e913863f2e2882e7e8b9337b95fddf70086b828c6bcbbbcd",
       "start": 0,
       "end": 196,
@@ -618,6 +753,15 @@
       ]
     },
     {
+      "key": "3940bbe9ec2adf25106bfc9bbd4468307854341731885c46e8b0244c6a5d58c2",
+      "start": 563,
+      "end": 590,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:174/nested"
+      ]
+    },
+    {
       "key": "39a4a70522fb4be0a90c0e7fdac003fc6133469f721b6e2df7e09dea8a582036",
       "start": 35,
       "end": 72,
@@ -633,6 +777,15 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-hook-reassigned-in-conditional.js"
+      ]
+    },
+    {
+      "key": "3b2d781e7c6f8196e9ce8ac4e4a6b7a3a863cafbcf758a5e87a5cb474bfc1558",
+      "start": 0,
+      "end": 1074,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-jsx-callback.js"
       ]
     },
     {
@@ -660,6 +813,24 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-76a74b4666e9.js"
+      ]
+    },
+    {
+      "key": "3fd5c5fee55fccdefc97d28525a9904442ed8681f153f45e3038468232617d1e",
+      "start": 110,
+      "end": 207,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-ref-in-callback-invoked-during-render.js/nested"
+      ]
+    },
+    {
+      "key": "413cc9477389e235dabc4153d82e750690cd65ad2b90c3f4148a9d3a36d21a58",
+      "start": 77,
+      "end": 163,
+      "checker": true,
+      "calls": [
+        "upstream:error.validate-mutate-ref-arg-in-render.js"
       ]
     },
     {
@@ -703,6 +874,15 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:ref-like-name-in-useCallback.js/nested"
+      ]
+    },
+    {
+      "key": "4506fe20fdbdc2497f0146899c7a2ae30dea93c7945c4ec11447df484ac62101",
+      "start": 0,
+      "end": 62,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-pass-hook-as-prop.js"
       ]
     },
     {
@@ -805,12 +985,48 @@
       ]
     },
     {
+      "key": "4aa18877d4480c58969c3f9110d3b3141159eaa1d8ee4bc2b0e632a52a260aa3",
+      "start": 38,
+      "end": 72,
+      "checker": true,
+      "calls": [
+        "upstream:error.declare-reassign-variable-in-function-declaration.js/nested"
+      ]
+    },
+    {
+      "key": "4db21ed17f6e7528e553f9caa4f9b4f8cc81dc6669cff30c7b0ca442d4b06d3e",
+      "start": 0,
+      "end": 112,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-computed-store-to-frozen-value.js"
+      ]
+    },
+    {
+      "key": "4f2953acc8e61d3d2f43aa9657097b102fdb29f5afc9da92e116f597308866ab",
+      "start": 560,
+      "end": 587,
+      "checker": true,
+      "calls": [
+        "effects_react_effect_test.go:174/nested"
+      ]
+    },
+    {
       "key": "518be4c4218ce337cf0ed60d6c8d2d1bb4167f44e73702d10e6187c4aadde986",
       "start": 0,
       "end": 92,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "51c87d232f292d58a04aa12085c5053d6193b5594c7ef2bf25d97a284fd5f696",
+      "start": 0,
+      "end": 112,
+      "checker": true,
+      "calls": [
+        "upstream:error.function-expression-references-variable-its-assigned-to.js"
       ]
     },
     {
@@ -852,6 +1068,15 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-rules-of-hooks-c906cace44e9.js"
+      ]
+    },
+    {
+      "key": "57bdc395457dd49cfab4c59a13e466271f89af5e2074bfcdf199540bb4c44cf4",
+      "start": 43,
+      "end": 471,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-global-in-render-helper-prop.js/nested"
       ]
     },
     {
@@ -963,6 +1188,15 @@
       ]
     },
     {
+      "key": "636f2e755b92ab43282c0cd058d9298e5f44bb051cd74b08a13931ab1ba5f073",
+      "start": 242,
+      "end": 266,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-ref-in-callback-invoked-during-render.js/nested"
+      ]
+    },
+    {
       "key": "63e521841b4cc1962c0659651d695552ab47fd969dc5dd24d6742d04e116f10a",
       "start": 88,
       "end": 109,
@@ -978,6 +1212,24 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "644b810f070cb8f21cb39b158bd2cae529bdcea929ffd92f48737018dac3d124",
+      "start": 229,
+      "end": 308,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-unclosed-eslint-suppression.js"
+      ]
+    },
+    {
+      "key": "64d7c4a814bfbcc10e6c5053bf43e674cd2af786964551acb3e37ed9bd7b231f",
+      "start": 0,
+      "end": 427,
+      "checker": true,
+      "calls": [
+        "upstream:fault-tolerance/error.try-finally-and-mutation-of-props.js"
       ]
     },
     {
@@ -1017,6 +1269,15 @@
       ]
     },
     {
+      "key": "66b833e825bc961257f64dcb5a2f4d9a05e8a4b4b290eb92054072e7713912a0",
+      "start": 209,
+      "end": 325,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.bail.rules-of-hooks-3d692676194b.js"
+      ]
+    },
+    {
       "key": "679ff6f040e2403a745af8acc46b149347c23412909e495c6db4034acebbd27a",
       "start": 0,
       "end": 199,
@@ -1037,6 +1298,15 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:ref-like-name-in-effect.js/nested"
+      ]
+    },
+    {
+      "key": "67e749112acb0bee7e173ef213abc9b58b35d6ef8f7db72eefe885ef6f8b40e4",
+      "start": 0,
+      "end": 56,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -1067,6 +1337,24 @@
       ]
     },
     {
+      "key": "684de99ff5c45e1c3fe9a44548ac40fef6493d08eda2576348398295169e1af0",
+      "start": 0,
+      "end": 121,
+      "checker": true,
+      "calls": [
+        "upstream:gating/error.dynamic-gating-invalid-identifier.js"
+      ]
+    },
+    {
+      "key": "68e777744be8c25660456a8f6135b95ea9ce0a1885b1452b4429d29eba3e9df6",
+      "start": 0,
+      "end": 122,
+      "checker": true,
+      "calls": [
+        "upstream:error.declare-reassign-variable-in-function-declaration.js"
+      ]
+    },
+    {
       "key": "68f13b89cda6613332a57d7f56982ed6c28327d72770a14bc1d4e4b31dd06394",
       "start": 95,
       "end": 103,
@@ -1076,12 +1364,30 @@
       ]
     },
     {
+      "key": "68fd359990b42d4ee27938d41a94941aa3db23304202879ae7a064dda9c9369a",
+      "start": 0,
+      "end": 131,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-function-expression-references-later-variable-declaration.js"
+      ]
+    },
+    {
       "key": "695d16c97ec8c6b2779f287df319eab2c5c1f2609fef0f27bcbc43637d319b99",
       "start": 0,
       "end": 100,
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-hook-if-consequent.js"
+      ]
+    },
+    {
+      "key": "69baa1cf97e46ffeb28bbafd7b11df9bc0b44cf73881344cf8ac9726f917afd0",
+      "start": 72,
+      "end": 164,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-known-incompatible-hook.js"
       ]
     },
     {
@@ -1175,6 +1481,15 @@
       ]
     },
     {
+      "key": "7210e0ec465a0a088eb57e0f6fe1d09cc194b96fcaaa1bf9fb3eb640234fdcd9",
+      "start": 49,
+      "end": 104,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-type-provider-hooklike-module-default-not-hook.js"
+      ]
+    },
+    {
       "key": "724223604fc5d8fca0e183ea8f68540a17722ab6bde45fb3c089d4b926173725",
       "start": 0,
       "end": 64,
@@ -1190,6 +1505,15 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-hoist-function-decls.js"
+      ]
+    },
+    {
+      "key": "7268362b7aa64c4b7b3f26dec709df0d79e162045f9db53ffe732e22ed9cf597",
+      "start": 0,
+      "end": 127,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-ref-value-as-props.js"
       ]
     },
     {
@@ -1337,6 +1661,15 @@
       ]
     },
     {
+      "key": "7de5dfa8d2e5c5e30c910dcf1387d75cdf26ee30af1c9f525a32e9b0b3b7144d",
+      "start": 43,
+      "end": 585,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-global-in-render-helper-phi-return-prop.js/nested"
+      ]
+    },
+    {
       "key": "7e5eb42bc70925f406777d87631107b78a355000eeedf978624f53697facb9ec",
       "start": 165,
       "end": 212,
@@ -1355,6 +1688,15 @@
       ]
     },
     {
+      "key": "7eae88177110afe298a415c2c7b5defdeb706d69fddd988dd9374f5f4ec813e4",
+      "start": 159,
+      "end": 278,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/todo.error.rules-of-hooks-27c18dc8dad2.js"
+      ]
+    },
+    {
       "key": "7efc2207dd27c6398d678a497e615548691925b5a79f00024a7024210be76aa8",
       "start": 36,
       "end": 68,
@@ -1364,12 +1706,30 @@
       ]
     },
     {
+      "key": "7f25549ccf4656ba7d872fbaf3af909878c728c9429d8071ebea7b6ae5a0a8db",
+      "start": 102,
+      "end": 139,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-disallow-mutating-refs-in-render-transitive.js/nested"
+      ]
+    },
+    {
       "key": "7f321e625643aa5e3c3d353a3b1b573c46b8ff64b546300464897c9d34b6f535",
       "start": 43,
       "end": 165,
       "checker": true,
       "calls": [
         "upstream:error.todo-hook-call-spreads-mutable-iterator.js"
+      ]
+    },
+    {
+      "key": "7fcdb4e76bb4b6c9a92bab8c73a6c7c1523a537361442c5eb1c3f701e69ac1bc",
+      "start": 248,
+      "end": 287,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-non-imported-reanimated-shared-value-writes.jsx/nested"
       ]
     },
     {
@@ -1688,6 +2048,15 @@
       ]
     },
     {
+      "key": "95426642306f2e3c3d7413a9d229161a19f37b9af28d47f5607d601eadc73fc4",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "upstream:error.assign-global-in-component-tag-function.js"
+      ]
+    },
+    {
       "key": "9599d5e9fd198a7aa945874215093b889d796e7050354c89d34320e1cdb78714",
       "start": 78,
       "end": 95,
@@ -1712,6 +2081,33 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "96f754dc179f99ae8c2d7b4e29e73057332dc12059b3290012a8c7854d41f43c",
+      "start": 162,
+      "end": 272,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/todo.error.invalid-rules-of-hooks-8566f9a360e2.js"
+      ]
+    },
+    {
+      "key": "97521e20fd2c49a7cb6ab29f9548b2069dcc654d475149557383438fce108c87",
+      "start": 60,
+      "end": 100,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-reassign-local-variable-in-jsx-callback.js/nested"
+      ]
+    },
+    {
+      "key": "977b300a4584c7997859542cda000193d4e0748c05abeca27da57af5bbac36c3",
+      "start": 0,
+      "end": 169,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-hoisted-function-in-unreachable-code.js"
       ]
     },
     {
@@ -1769,6 +2165,15 @@
       ]
     },
     {
+      "key": "9b63875b3ebef8ee366499c3f7ee39392c6cf6455b0c6c8310027b02ffe55ad2",
+      "start": 165,
+      "end": 290,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/todo.error.invalid-rules-of-hooks-368024110a58.js"
+      ]
+    },
+    {
       "key": "9c8a4085810a9c77779abca43c73333bf4e27686b0bc9ca2aab1b72fca89af3e",
       "start": 895,
       "end": 1032,
@@ -1784,6 +2189,24 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "9e3cdeb482019ec669ff507a0980633c6d3e3795d1519d233075aedf5c17bbcd",
+      "start": 0,
+      "end": 169,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-invalid-jsx-in-try-with-finally.js"
+      ]
+    },
+    {
+      "key": "9e5daea165119a5aa45ff8268604e2a667dbac4a256678a7194627b91351bcd1",
+      "start": 69,
+      "end": 158,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-known-incompatible-function.js"
       ]
     },
     {
@@ -1820,6 +2243,15 @@
       "checker": true,
       "calls": [
         "upstream:error.not-useEffect-external-mutate.js/nested"
+      ]
+    },
+    {
+      "key": "a1a1eab86ceb3a40cb67809e109d640469a2a5c4a347c1e449cd4b79cf0f05d1",
+      "start": 0,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-read-ref-prop-in-render-property-load.js"
       ]
     },
     {
@@ -1865,6 +2297,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "a4872c0ca49309ca0e514eb011891169f8087d7b55254c30cfaa15b64716e5eb",
+      "start": 0,
+      "end": 164,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-write-ref-prop-in-render.js"
       ]
     },
     {
@@ -1994,12 +2435,30 @@
       ]
     },
     {
+      "key": "ad0400e8a30feff203eed6fc2195ab761557af414c0ccbdc8e470cb5c867345a",
+      "start": 0,
+      "end": 73,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-eval-unsupported.js"
+      ]
+    },
+    {
       "key": "ad7d01f8e0eeda2d0a99ab2ee1c67226576ea3d342c02851bcfb65148082af55",
       "start": 0,
       "end": 51,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "af2c718a7350f42dc777d2d41bf0c3ccf51a6a3692c187fc267175f385a56eb6",
+      "start": 0,
+      "end": 108,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-using-declaration.js"
       ]
     },
     {
@@ -2209,6 +2668,24 @@
       ]
     },
     {
+      "key": "c2b0207879506d8cc68a78afef62468e4f4aa1318a50738d5a418c3e6a7daa00",
+      "start": 0,
+      "end": 326,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-non-imported-reanimated-shared-value-writes.jsx"
+      ]
+    },
+    {
+      "key": "c2e48d6cb138b86ad8834a0e461daa7266f7b0720f5b173f6d112a72584a1613",
+      "start": 0,
+      "end": 586,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-context-in-callback.js"
+      ]
+    },
+    {
       "key": "c2f84809ce28c11cae14aaf95854aaa3edb4fcd26794f3daa041afe057245c19",
       "start": 0,
       "end": 99,
@@ -2245,6 +2722,15 @@
       ]
     },
     {
+      "key": "c6957e86ee8aecabc0b1fb90a2b0cf6b1b34e858903639fc096922785f474f9b",
+      "start": 0,
+      "end": 178,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-pass-mutable-function-as-prop.js"
+      ]
+    },
+    {
       "key": "c77f0a70d5381a57342620f155509c84b6e404969b8044215bf1af65d4f98283",
       "start": 20,
       "end": 84,
@@ -2269,6 +2755,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "c97c4b3648e2db73fb5ec6899335a042a7b9032a533f0481d6164e90bff20f83",
+      "start": 0,
+      "end": 217,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-disallow-mutating-refs-in-render-transitive.js"
       ]
     },
     {
@@ -2311,12 +2806,30 @@
       ]
     },
     {
+      "key": "cc3d1ddabfa30780042904d8a837796afb2a9d800089cc921bbe38ee59330e54",
+      "start": 27,
+      "end": 124,
+      "checker": true,
+      "calls": [
+        "upstream:error.bug-invariant-codegen-methodcall.js"
+      ]
+    },
+    {
       "key": "cee1a3aaf09bf4a52f8c6ee7b130786c4f8c4c8100fa9bcb807a7c0a9405d345",
       "start": 0,
       "end": 88,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "cf134f93783fc3852ef7149403f36705c46e0f01a0ab02ca03b5e78dae89d39e",
+      "start": 0,
+      "end": 314,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-aliased-ref-in-callback-invoked-during-render-.js"
       ]
     },
     {
@@ -2386,12 +2899,30 @@
       ]
     },
     {
+      "key": "d416570c6833ea25de6673a816e23e57cd31b1598fee5d2b6c389381b1ae7f68",
+      "start": 106,
+      "end": 149,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-pass-mutable-function-as-prop.js/nested"
+      ]
+    },
+    {
       "key": "d57ee7de3ca8034990c0924bbd1360f2a9e0c39c79f56495a8a9d81acdadd956",
       "start": 78,
       "end": 86,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "d64566331aac8c8fb5b7464f82fe8ef53fe643f29565854cc41403b2a8add726",
+      "start": 0,
+      "end": 205,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-impure-functions-in-render.js"
       ]
     },
     {
@@ -2413,12 +2944,30 @@
       ]
     },
     {
+      "key": "d79e7ee60022478959fe3feddb5bf82426c2fdce9b6e8656427b5cfb457a75a9",
+      "start": 54,
+      "end": 125,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-type-provider-nonhook-name-typed-as-hook.js"
+      ]
+    },
+    {
       "key": "d825fe2baea8422ee9d2d288c4646152dff8ef2f78fee07f91691b5b28e8fbe9",
       "start": 0,
       "end": 20,
       "checker": true,
       "calls": [
         "upstream:error.hook-property-load-local-hook.js"
+      ]
+    },
+    {
+      "key": "d842b0ed06cf1bb7bb72884e6524466eb206c53edc49add5a1ff0f627d85bba1",
+      "start": 0,
+      "end": 244,
+      "checker": true,
+      "calls": [
+        "upstream:error.assign-global-in-jsx-children.js"
       ]
     },
     {
@@ -2446,6 +2995,24 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38/nested"
+      ]
+    },
+    {
+      "key": "dd3d88bd2202ff8a28f80f5ba273b8421633f15d2dd3b7a73308da3ebec24d89",
+      "start": 0,
+      "end": 109,
+      "checker": true,
+      "calls": [
+        "upstream:fbt/error.todo-locally-require-fbt.js"
+      ]
+    },
+    {
+      "key": "ddc3c3efe17e36bd0280ed0769ad7ca4a603540f5fd8366f43c04d0bba6e9ec7",
+      "start": 0,
+      "end": 504,
+      "checker": true,
+      "calls": [
+        "upstream:fault-tolerance/error.try-finally-and-ref-access.js"
       ]
     },
     {
@@ -2485,12 +3052,30 @@
       ]
     },
     {
+      "key": "e050dda41a5b116a94753b5d37f1185cae68af529e678e43df11cbb57f8a0fc6",
+      "start": 0,
+      "end": 279,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-ref-in-callback-invoked-during-render.js"
+      ]
+    },
+    {
       "key": "e09de8be71c5b79977315910fe11d05d69a02a1b16cf0b7a49ad601ed38676d7",
       "start": 83,
       "end": 95,
       "checker": true,
       "calls": [
         "ranges_test.go:38/nested/nested"
+      ]
+    },
+    {
+      "key": "e0bba98761e6481c5eeae5cd615b23be4cdde867be4ed66aaf0a6b76ba853f79",
+      "start": 277,
+      "end": 301,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-aliased-ref-in-callback-invoked-during-render-.js/nested"
       ]
     },
     {
@@ -2533,6 +3118,15 @@
       ]
     },
     {
+      "key": "e3717d94ca6af540ddb483d8764559f4a356f96555082a18c71e97f54441e11a",
+      "start": 92,
+      "end": 307,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-invalid-jsx-in-catch-in-outer-try-with-finally.js"
+      ]
+    },
+    {
       "key": "e3a3ae14f2a4aaebe0995b42e9874ca01801056d98510632565a89d946a3f846",
       "start": 87,
       "end": 134,
@@ -2544,6 +3138,15 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:hoisting-setstate-captured-indirectly-jsx.js/nested"
+      ]
+    },
+    {
+      "key": "e46ba17079eb0815fe50079089afbc4cbc958d9ce309e50a35be89172eb63a20",
+      "start": 0,
+      "end": 1109,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.invalid-reassign-local-variable-in-jsx-callback.js"
       ]
     },
     {
@@ -2673,6 +3276,15 @@
       ]
     },
     {
+      "key": "ebfb12e1f9f229f5f2830834ac2a8dd69283869e05e0fb847022f51115bd914a",
+      "start": 0,
+      "end": 521,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-global-in-render-helper-prop.js"
+      ]
+    },
+    {
       "key": "ecff2891b353e214270c587b987f9542112f023990f8bd8abb20b082cbf8f4f1",
       "start": 0,
       "end": 57,
@@ -2787,6 +3399,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38/nested"
+      ]
+    },
+    {
+      "key": "f4e5187b542ae3ddc1685ef5074c61cd2d65f259d2d8b009808edeb3fada64c4",
+      "start": 155,
+      "end": 1053,
+      "checker": true,
+      "calls": [
+        "upstream:new-mutability/error.invalid-reassign-local-variable-in-jsx-callback.js/nested"
       ]
     },
     {

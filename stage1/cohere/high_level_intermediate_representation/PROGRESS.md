@@ -1,4 +1,26 @@
-# Unit 2 local checkpoint: remaining statement flow
+# Unit 2 local checkpoint: JSX
+
+JSX construction matches **380/1,465 corpus functions** on Node and native, up
+**69** from statement flow, plus **50/50 probes** (430/1,515 overall). Active
+non-Flow coverage is 380/1,442. Elements, self-closing elements, fragments, component
+and member tag places, host tags, bare/string/expression/spread props, empty expression
+children, text and newline-trivia handling preserve Go instruction and operand order.
+Seven new JSX lowering mutants compile, execute and differ from Go on both backends.
+The arena corruption mutant remains caught. The 42 earlier semantic witnesses remain
+certified at the preceding flow checkpoint.
+
+Native initially refused Instruction[] because an optional JsxTag.place made a
+function structurally assignable as a tag. Go's JsxTag contains both fields; the port
+now requires both, with undefined as the nil place. The compile and whole-census
+comparison pass with strong, acyclic value payloads and branded graph edges. See
+EVIDENCE.md for exact feedback. No new native language gap is claimed.
+
+ForFunction/cache integration and static-components remain unfinished, as do the
+expression/pattern/function variants still explicitly declined by construction.
+The next step is the file-owned rule entry cache and its checker integration.
+The plan branch remains unpushed until unit 2 is done.
+
+# Previous checkpoint: remaining statement flow
 
 The statement-flow seam matches **311/1,465 corpus functions** on Node and native,
 up **31** from the arena checkpoint, plus **45/45 probes** (356/1,510 overall).
