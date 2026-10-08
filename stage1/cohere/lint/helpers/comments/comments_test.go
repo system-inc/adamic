@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -28,7 +29,7 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	cmd.Stdout = f
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	if err = testguard.Run(cmd, testguard.Budget, testguard.Ceiling); err != nil {
+	if err = childguard.Run(cmd, childguard.Options{}); err != nil {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	if stderr.Len() != 0 {

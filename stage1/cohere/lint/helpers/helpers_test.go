@@ -5,17 +5,16 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/testguard"
 	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
-	"time"
 )
 
 func run(t *testing.T, dir, name string, args ...string) []byte {
@@ -30,7 +29,7 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	cmd.Stdout = f
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	if err = testguard.Run(cmd, testguard.Budget, testguard.Ceiling); err != nil {
+	if err = childguard.Run(cmd, childguard.Options{}); err != nil {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	if stderr.Len() != 0 {
@@ -215,6 +214,7 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 		}
 		expected := "adamic: " + want + "\n"
 		for _, command := range [][]string{{binary, path, catalog}, {"node", "--disable-warning=ExperimentalWarning", runner, entry, path, catalog}} {
+			// Refusals are silent until their final panic; protect startup with FirstOutput.
 			cmd := exec.Command(command[0], command[1:]...)
 			output, err := os.CreateTemp(t.TempDir(), "stdout-")
 			if err != nil {
@@ -223,7 +223,7 @@ func TestMessageRefusalsMatchGo(t *testing.T) {
 			cmd.Stdout = output
 			var stderr bytes.Buffer
 			cmd.Stderr = &stderr
-			err = testguard.Run(cmd, time.Minute, testguard.Ceiling)
+			err = childguard.Run(cmd, childguard.Options{})
 			output.Close()
 			exit, ok := err.(*exec.ExitError)
 			if !ok || exit.ExitCode() != 70 || stderr.String() != expected {
