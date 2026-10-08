@@ -1499,6 +1499,16 @@ emitted member selection). Fixtures are `lane2/ranked12-*.a`, held by
 TestCheckedViewRanked12ArrayContracts; the report is
 `lane2/RANKED12_ARRAYS_REPORT.md`.
 
+### Lane 2 thirteenth ranked arrays
+
+The thirteenth ranked group (seventeen pairs: type parameters, modifiers and type
+arguments of more declarations, MethodSignature.parameters, MappedTypeNode.members,
+JSDoc tag comments, ConditionalRoot type parameters, AnonymousType.aliasTypeArguments,
+SourceFile commentDirectives and parseDiagnostics) needed no new hook. Four casts to
+union aliases are lane 4's and MapLike's dynamic key is an index signature. Fixtures
+are `lane2/ranked13-*.a`, held by TestCheckedViewRanked13ArrayContracts; the report is
+`lane2/RANKED13_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
