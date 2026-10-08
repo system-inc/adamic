@@ -1739,3 +1739,10 @@ only the same flag. The single readTupleViewElement constructs every positional
 read, including alternative absence and narrowed maybe-number guards; descriptor
 errors propagate. Existing array dispatch predicates stay unchanged. Original
 watcher tuple alternatives retain both full parameter lists and the Date slot.
+
+Original private optional tuple oracle: prepare_optional_tuple.cjs extracts
+the complete written return declaration of tryGetModuleSpecifiersFromCacheWorker
+from the pinned upstream AST, with source/declaration hashes. It does not reduce
+fields or alter upstream code. Oracle binding validates those hashes separately
+from the 78 emitted declarations and pins the complete SourceFile field set.
+No new production hook is needed for module tuple positions.

@@ -1,10 +1,10 @@
 {
   "primary_candidate_pairs": 10,
   "primary_candidate_reads": 15,
-  "certified_pairs": 8,
-  "certified_reads": 12,
-  "remaining_pairs": 2,
-  "remaining_reads": 3,
+  "certified_pairs": 9,
+  "certified_reads": 14,
+  "remaining_pairs": 1,
+  "remaining_reads": 1,
   "certified": [
     {
       "type_id": 97934,
@@ -46,15 +46,16 @@
       "type_id": 95604,
       "field": "0",
       "reads": 1,
-      "commit": "watch filename pair commit"
-    }
-  ],
-  "remaining": [
+      "commit": "cd2500f87ea9d532b029c5cac7348a6692342a93"
+    },
     {
       "type_id": 68230,
       "field": "1",
-      "reads": 2
-    },
+      "reads": 2,
+      "commit": "module specifiers pair commit"
+    }
+  ],
+  "remaining": [
     {
       "type_id": 68230,
       "field": "0",

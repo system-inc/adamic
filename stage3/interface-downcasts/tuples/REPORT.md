@@ -1,3 +1,37 @@
+Built: original module specifier optional tuple position pair 68230/1, two candidate reads; total 9 pairs / 14 reads.
+Commits: module specifier certification follows watcher filename cd2500f87ea9d532b029c5cac7348a6692342a93; no production hook changes.
+Checks: six Node/JS/native release/sanitized witnesses PASS 6.144s, completing cases leak checked; 74 owned counts refreshed PASS 40.158s.
+Mutants: unchecked optional array slot FAIL 1.297s (boolean instead of refusal); widened arity accepts six positions and fails the named-refusal oracle.
+Remaining: module kind position, one primary pair / one read, and two overlapping lane 4b checks.
+
+The upstream worker is private, so standard declaration emission omits it.
+Conservative oracle assumption: extract its entire written return type from
+the original pinned source AST, with all five positions unchanged, and bind
+its imported types to the unchanged emitted declarations. This certifies the
+original declared tuple, not a reduced demand-only reconstruction.
+prepare_optional_tuple.cjs verifies the source pin and clean original source,
+then separately hashes the extracted declaration. Oracle binding pins source
+9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a and declaration
+a64ec3b73d8fceda35d0b7ccab60db0afcf50a56e2de1160862d23ae1a76d1c1.
+The 78 emitted declaration hashes remain unchanged. Completeness checks pin
+all five optional positions and the exact original SourceFile field set.
+Only kind/specifier reads are certified; other tuple slots remain lazy.
+
+Commands: node stage3/interface-downcasts/tuples/prepare_optional_tuple.cjs
+/tmp/views-tuples-pinned /tmp/views-tuples-original-declarations
+(/tmp/views-tuples-private-worker-prepare-final.log);
+TestCheckedViewTupleOriginalModuleSpecifiers -count=1 -v
+(/tmp/views-tuples-module-specifiers-final.log); ADAMIC_TUPLE_NUMERIC_MUTANT=1
+on module-specifiers-wrong-kind (/tmp/views-tuples-module-specifiers-mutant.log);
+ADAMIC_TUPLE_MODULE_MUTANT=arity on TestCheckedViewTupleOriginalModuleArityMutant
+(/tmp/views-tuples-module-arity-mutant.log); scoped tuple counts -args
+-update-counts (/tmp/views-tuples-module-specifiers-counts.log). Both mutants
+finish exit zero with invalid behavior instead of named refusal. The wrong-kind
+source uses typeof as its Node observation; calling join on a boolean would
+throw independently, so that initial fixture was corrected before certification.
+
+---
+
 Built: original watcher filename position pair 95604/0, one candidate read; total 8 pairs / 12 reads.
 Commits: filename certification is separate from watcher event patch 21fd3587, with no production changes.
 Checks: three Node/JS/native release/sanitized witnesses PASS 2.308s, completing cases leak checked; 68 owned counts refreshed PASS 45.359s.

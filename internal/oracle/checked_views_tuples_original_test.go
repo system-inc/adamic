@@ -13,6 +13,13 @@ import (
 )
 
 type tupleOriginalManifest struct {
+	PrivateModuleWorker struct {
+		OriginalFile              string `json:"original_file"`
+		OriginalSHA256            string `json:"original_sha256"`
+		OriginalReturnDeclaration string `json:"original_return_declaration"`
+		Declaration               string `json:"declaration"`
+		SHA256                    string `json:"sha256"`
+	} `json:"private_module_worker"`
 	Commit       string              `json:"upstream_commit"`
 	Declarations map[string]string   `json:"declarations"`
 	Fields       map[string][]string `json:"fields"`
@@ -51,6 +58,15 @@ func tupleOriginalInputs(t *testing.T) (string, tupleOriginalManifest) {
 			t.Fatal("declaration drift: " + name)
 		}
 	}
+	if worker := manifest.PrivateModuleWorker; worker.Declaration != "" {
+		data, err := os.ReadFile(filepath.Join(root, worker.Declaration))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if fmt.Sprintf("%x", sha256.Sum256(data)) != worker.SHA256 || worker.OriginalFile != "src/compiler/moduleSpecifiers.ts" || worker.OriginalSHA256 != "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a" || worker.SHA256 != "a64ec3b73d8fceda35d0b7ccab60db0afcf50a56e2de1160862d23ae1a76d1c1" || !strings.Contains(string(data), worker.OriginalReturnDeclaration) {
+			t.Fatal("original private worker declaration drift")
+		}
+	}
 	return root, manifest
 }
 
@@ -64,6 +80,7 @@ func tupleOriginalProgram(t *testing.T, root, name string) (string, *ir.Program)
 	bound = strings.ReplaceAll(bound, "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(root, "compiler/types.d.ts"))))
 	bound = strings.ReplaceAll(bound, "'original-tsc-sys'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(root, "compiler/sys.d.ts"))))
 	bound = strings.ReplaceAll(bound, "'original-tsc-modules'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(root, "compiler/moduleSpecifiers.d.ts"))))
+	bound = strings.ReplaceAll(bound, "'original-tsc-module-worker'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(root, "compiler/tupleModuleSpecifierWorker.d.ts"))))
 	path := filepath.Join(t.TempDir(), name+".a")
 	if err := os.WriteFile(path, []byte(bound), 0600); err != nil {
 		t.Fatal(err)
