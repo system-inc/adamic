@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly directoryExists:unknown;}
+interface Target {directoryExists(path: string): boolean;}
+function probe(value:Base):void {const sys=value as Target;console.log(`${sys.directoryExists("abc")}`);}
+probe({directoryExists:(path:string):number=>3});

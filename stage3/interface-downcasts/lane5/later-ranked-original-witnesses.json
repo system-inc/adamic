@@ -2731,6 +2731,153 @@
       "declarationFile": "src/compiler/types.ts",
       "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
       "declarationLine": 9264
+    },
+    {
+      "rank": 296,
+      "type": "NodeFactory",
+      "field": "createReflectSetCall",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1293,
+        "column": 38
+      },
+      "read": "factory.createReflectSetCall",
+      "readKind": "property",
+      "call": "factory.createReflectSetCall(superClassReference, setterName, expression, classConstructor)",
+      "utf16Start": 54524,
+      "utf16End": 54552,
+      "fileSha256": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4",
+      "declaration": "createReflectSetCall(target: Expression, propertyKey: Expression, value: Expression, receiver?: Expression): CallExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9375
+    },
+    {
+      "rank": 298,
+      "type": "NodeFactory",
+      "field": "createTryStatement",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 7094,
+        "column": 37
+      },
+      "read": "factory.createTryStatement",
+      "readKind": "property",
+      "call": "factory.createTryStatement(tryBlock, catchClause, finallyBlock)",
+      "utf16Start": 351352,
+      "utf16End": 351378,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createTryStatement(tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined): TryStatement;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9064
+    },
+    {
+      "rank": 301,
+      "type": "NodeFactory",
+      "field": "updateElementAccessExpression",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1044,
+        "column": 13
+      },
+      "read": "context.factory.updateElementAccessExpression",
+      "readKind": "property",
+      "call": "context.factory.updateElementAccessExpression(\r\n                node,\r\n                Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n                Debug.checkDefined(nodeVisitor(node.argumentExpression, visitor, isExpression)),\r\n            )",
+      "utf16Start": 49547,
+      "utf16End": 49592,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateElementAccessExpression(node: ElementAccessExpression, expression: Expression, argumentExpression: Expression): ElementAccessExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8950
+    },
+    {
+      "rank": 303,
+      "type": "NodeFactory",
+      "field": "updateExpressionWithTypeArguments",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1223,
+        "column": 16
+      },
+      "read": "context.factory.updateExpressionWithTypeArguments",
+      "readKind": "property",
+      "call": "context.factory.updateExpressionWithTypeArguments(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n            nodesVisitor(node.typeArguments, visitor, isTypeNode),\r\n        )",
+      "utf16Start": 59283,
+      "utf16End": 59332,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateExpressionWithTypeArguments(node: ExpressionWithTypeArguments, expression: Expression, typeArguments: readonly TypeNode[] | undefined): ExpressionWithTypeArguments;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9007
+    },
+    {
+      "rank": 307,
+      "type": "NodeFactory",
+      "field": "updateVariableDeclarationList",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 322,
+        "column": 17
+      },
+      "read": "factory.updateVariableDeclarationList",
+      "readKind": "property",
+      "call": "factory.updateVariableDeclarationList(node, [updatedDeclaration])",
+      "utf16Start": 10261,
+      "utf16End": 10298,
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "declaration": "updateVariableDeclarationList(node: VariableDeclarationList, declarations: readonly VariableDeclaration[]): VariableDeclarationList;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9070
+    },
+    {
+      "rank": 315,
+      "type": "System",
+      "field": "directoryExists",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 1388,
+        "column": 21
+      },
+      "read": "sys.directoryExists",
+      "readKind": "property",
+      "call": "sys.directoryExists(path)",
+      "utf16Start": 60983,
+      "utf16End": 61002,
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declaration": "directoryExists(path: string): boolean;",
+      "declarationFile": "src/compiler/sys.ts",
+      "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declarationLine": 1415
+    },
+    {
+      "rank": 316,
+      "type": "System",
+      "field": "fileExists",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 485,
+        "column": 33
+      },
+      "read": "system.fileExists",
+      "readKind": "property",
+      "call": "system.fileExists(fileName)",
+      "utf16Start": 15013,
+      "utf16End": 15030,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "fileExists(path: string): boolean;",
+      "declarationFile": "src/compiler/sys.ts",
+      "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declarationLine": 1414
     }
   ]
 }

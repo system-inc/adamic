@@ -1,0 +1,35 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.75s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/reflect-set/wrong-result (0.42s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createReflectSetCall({value:1},{value:2},{value:3},{value:4}).value is not initialized; expected number, found missing\n" want "createReflectSetCall" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createReflectSetCall expected (target: Expression, propertyKey: Expression, value: Expression, receiver?: Expression | undefined) => CallExpression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/try-statement/wrong-result (0.39s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createTryStatement({value:1},{value:2},{value:3}).value is not initialized; expected number, found missing\n" want "createTryStatement" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTryStatement expected (tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined) => TryStatement, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/element-access-update/wrong-result (0.37s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateElementAccessExpression({value:1},{value:2},{value:3}).value is not initialized; expected number, found missing\n" want "updateElementAccessExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateElementAccessExpression expected (node: ElementAccessExpression, expression: Expression, argumentExpression: Expression) => ElementAccessExpression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-arguments-update/wrong-result (0.39s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateExpressionWithTypeArguments({value:1},{value:2},[{value:3}]).value is not initialized; expected number, found missing\n" want "updateExpressionWithTypeArguments" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateExpressionWithTypeArguments expected (node: ExpressionWithTypeArguments, expression: Expression, typeArguments: readonly TypeNode[] | undefined) => ExpressionWithTypeArguments, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/declaration-list-update/wrong-result (0.39s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.updateVariableDeclarationList({value:1},[{value:2}]).value is not initialized; expected number, found missing\n" want "updateVariableDeclarationList" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.updateVariableDeclarationList expected (node: VariableDeclarationList, declarations: readonly VariableDeclaration[]) => VariableDeclarationList, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/system-directory-exists/wrong-result (0.37s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 0 stdout "3\n" stderr "" want "directoryExists" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: sys.directoryExists expected (path: string) => boolean, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/system-file-exists/wrong-result (0.38s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 0 stdout "3\n" stderr "" want "fileExists" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: system.fileExists expected (path: string) => boolean, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=7 misses=7
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.757s
+FAIL

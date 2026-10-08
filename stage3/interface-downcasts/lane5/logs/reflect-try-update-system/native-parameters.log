@@ -1,0 +1,35 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (3.30s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/reflect-set/wrong-members (0.51s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node miss
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend0 exit 0 stdout "10\n" stderr "" want "createReflectSetCall" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/try-statement/wrong-members (0.46s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node miss
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend0 exit 0 stdout "6\n" stderr "" want "createTryStatement" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/element-access-update/wrong-members (0.47s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node miss
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend0 exit 0 stdout "6\n" stderr "" want "updateElementAccessExpression" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-arguments-update/wrong-members (0.49s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node miss
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend0 exit 0 stdout "6\n" stderr "" want "updateExpressionWithTypeArguments" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/declaration-list-update/wrong-members (0.46s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node miss
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend0 exit 0 stdout "3\n" stderr "" want "updateVariableDeclarationList" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/system-directory-exists/wrong-members (0.43s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node miss
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend0 exit 0 stdout "true\n" stderr "" want "directoryExists" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/system-file-exists/wrong-members (0.43s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node miss
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend0 exit 0 stdout "true\n" stderr "" want "fileExists" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.315s
+FAIL

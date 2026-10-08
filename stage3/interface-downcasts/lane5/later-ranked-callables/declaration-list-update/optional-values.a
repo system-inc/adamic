@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface VariableDeclarationList {readonly value:number;}
+interface VariableDeclaration {readonly value:number;}
+interface Base {readonly updateVariableDeclarationList:unknown;}
+interface Target {updateVariableDeclarationList(node: VariableDeclarationList, declarations: readonly VariableDeclaration[]): VariableDeclarationList;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.updateVariableDeclarationList({value:1},[]).value}`);console.log(`${factory.updateVariableDeclarationList({value:1},[{value:2}]).value}`);}
+probe({updateVariableDeclarationList:(node:VariableDeclarationList,declarations:readonly VariableDeclaration[]):VariableDeclarationList=>{const declaration=declarations[0];return {value:node.value+(declaration===undefined?0:declaration.value)};}});

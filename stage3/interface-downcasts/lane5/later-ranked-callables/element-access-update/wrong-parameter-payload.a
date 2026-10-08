@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ElementAccessExpression {readonly value:number;}
+interface Expression {readonly value:number;}
+interface Base {readonly updateElementAccessExpression:unknown;}
+interface Target {updateElementAccessExpression(node: ElementAccessExpression, expression: Expression, argumentExpression: Expression): ElementAccessExpression;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updateElementAccessExpression({value:1},{value:2},{value:3}).value}`);}
+probe({updateElementAccessExpression:(node:{readonly value:string},expression:Expression,argumentExpression:Expression)=>({value:node.value})});

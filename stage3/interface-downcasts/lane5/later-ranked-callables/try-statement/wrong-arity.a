@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Block {readonly value:number;}
+interface CatchClause {readonly value:number;}
+interface TryStatement {readonly value:number;}
+interface Base {readonly createTryStatement:unknown;}
+interface Target {createTryStatement(tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined): TryStatement;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createTryStatement({value:1},{value:2},{value:3}).value}`);}
+probe({createTryStatement:():TryStatement=>({value:9})});

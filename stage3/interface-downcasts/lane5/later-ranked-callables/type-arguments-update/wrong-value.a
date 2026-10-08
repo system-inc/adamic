@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ExpressionWithTypeArguments {readonly value:number;}
+interface Expression {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly updateExpressionWithTypeArguments:unknown;}
+interface Target {updateExpressionWithTypeArguments(node: ExpressionWithTypeArguments, expression: Expression, typeArguments: readonly TypeNode[] | undefined): ExpressionWithTypeArguments;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updateExpressionWithTypeArguments({value:1},{value:2},[{value:3}]).value}`);}
+probe({updateExpressionWithTypeArguments:3});

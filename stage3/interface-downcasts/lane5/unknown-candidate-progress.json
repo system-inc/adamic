@@ -3075,6 +3075,153 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "reflect-try-update-system",
+      "pairs": 7,
+      "candidateReads": 42,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createReflectSetCall",
+          "declared_types": [
+            "(target: Expression, propertyKey: Expression, value: Expression, receiver?: Expression | undefined) => CallExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/transformers/classFields.ts",
+            "line": 1293,
+            "column": 38
+          },
+          "rank": 296,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createTryStatement",
+          "declared_types": [
+            "(tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined) => TryStatement"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 7094,
+            "column": 37
+          },
+          "rank": 298,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateElementAccessExpression",
+          "declared_types": [
+            "(node: ElementAccessExpression, expression: Expression, argumentExpression: Expression) => ElementAccessExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 1044,
+            "column": 13
+          },
+          "rank": 301,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateExpressionWithTypeArguments",
+          "declared_types": [
+            "(node: ExpressionWithTypeArguments, expression: Expression, typeArguments: readonly TypeNode[] | undefined) => ExpressionWithTypeArguments"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 1223,
+            "column": 16
+          },
+          "rank": 303,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateVariableDeclarationList",
+          "declared_types": [
+            "(node: VariableDeclarationList, declarations: readonly VariableDeclaration[]) => VariableDeclarationList"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/factory/utilities.ts",
+            "line": 322,
+            "column": 17
+          },
+          "rank": 307,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 8229,
+          "type": "System",
+          "field": "directoryExists",
+          "declared_types": [
+            "(path: string) => boolean"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/sys.ts",
+            "line": 1388,
+            "column": 21
+          },
+          "rank": 315,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 8229,
+          "type": "System",
+          "field": "fileExists",
+          "declared_types": [
+            "(path: string) => boolean"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 6,
+          "witness": {
+            "file": "src/compiler/program.ts",
+            "line": 485,
+            "column": 33
+          },
+          "rank": 316,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

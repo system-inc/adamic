@@ -8,6 +8,13 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"reflect-set", "createReflectSetCall", "10\n", "6\n10\n", "0", "target.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"try-statement", "createTryStatement", "6\n", "1\n6\n", "0", "tryBlock.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"element-access-update", "updateElementAccessExpression", "6\n", "", "0", "node.value", "1\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"type-arguments-update", "updateExpressionWithTypeArguments", "6\n", "3\n6\n", "0", "node.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"declaration-list-update", "updateVariableDeclarationList", "3\n", "1\n3\n", "0", "node.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"system-directory-exists", "directoryExists", "true\n", "false\ntrue\n", "0", "", "", "3\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members"},
+		{"system-file-exists", "fileExists", "true\n", "false\ntrue\n", "0", "", "", "3\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members"},
 		{"run-initializers", "createRunInitializersHelper", "6\n", "3\n3\n6\n", "0", "thisArg.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"referenced-import", "getReferencedImportDeclaration", "3\n", "0\n3\n", "0", "node.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"catch-update", "updateCatchClause", "6\n", "4\n6\n", "0", "node.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

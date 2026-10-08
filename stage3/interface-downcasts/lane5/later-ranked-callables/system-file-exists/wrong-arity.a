@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly fileExists:unknown;}
+interface Target {fileExists(path: string): boolean;}
+function probe(value:Base):void {const system=value as Target;console.log(`${system.fileExists("abc")}`);}
+probe({fileExists:():number=>9});

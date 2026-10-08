@@ -1,0 +1,35 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (3.17s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/reflect-set/wrong-arity (0.46s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 0 stdout "9\n" stderr "" want "createReflectSetCall" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createReflectSetCall expected (target: Expression, propertyKey: Expression, value: Expression, receiver?: Expression | undefined) => CallExpression, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/try-statement/wrong-arity (0.40s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 0 stdout "9\n" stderr "" want "createTryStatement" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTryStatement expected (tryBlock: Block, catchClause: CatchClause | undefined, finallyBlock: Block | undefined) => TryStatement, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/element-access-update/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 0 stdout "9\n" stderr "" want "updateElementAccessExpression" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateElementAccessExpression expected (node: ElementAccessExpression, expression: Expression, argumentExpression: Expression) => ElementAccessExpression, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-arguments-update/wrong-arity (0.50s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 0 stdout "9\n" stderr "" want "updateExpressionWithTypeArguments" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateExpressionWithTypeArguments expected (node: ExpressionWithTypeArguments, expression: Expression, typeArguments: readonly TypeNode[] | undefined) => ExpressionWithTypeArguments, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/declaration-list-update/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 0 stdout "9\n" stderr "" want "updateVariableDeclarationList" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.updateVariableDeclarationList expected (node: VariableDeclarationList, declarations: readonly VariableDeclaration[]) => VariableDeclarationList, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/system-directory-exists/wrong-arity (0.43s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 0 stdout "9\n" stderr "" want "directoryExists" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: sys.directoryExists expected (path: string) => boolean, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/system-file-exists/wrong-arity (0.42s)
+        checked_views_callable_later_ranked_test.go:138: gate cache node hit
+        checked_views_callable_later_ranked_test.go:158: gate cache node miss
+        checked_views_callable_later_ranked_test.go:178: backend2 exit 0 stdout "9\n" stderr "" want "fileExists" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: system.fileExists expected (path: string) => boolean, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=7 misses=7
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.176s
+FAIL

@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Expression {readonly value:number;}
+interface CallExpression {readonly value:number;}
+interface Base {readonly createReflectSetCall:unknown;}
+interface Target {createReflectSetCall(target: Expression, propertyKey: Expression, value: Expression, receiver?: Expression): CallExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createReflectSetCall({value:1},{value:2},{value:3},{value:4}).value}`);}
+probe({createReflectSetCall:():CallExpression=>({value:9})});
