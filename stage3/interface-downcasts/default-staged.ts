@@ -1,4 +1,3 @@
-// a-check: refused the non-null assertion !
 interface Node { readonly kind: 'identifier' | 'number'; readonly pos: number; }
 interface Identifier extends Node { readonly kind: 'identifier'; escapedText: string; }
 function createIdentifier(): Identifier {

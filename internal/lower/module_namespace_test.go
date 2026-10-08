@@ -14,7 +14,6 @@ import (
 
 func TestModuleNamespaceLimitsStayLoud(t *testing.T) {
 	for _, probe := range []struct{ source, provider, reason string }{
-		{"if (typeof performance.value === 'number') console.log(`${performance.value + 1}`);", "export let value: number | string = 1;", "narrowed namespace union"},
 		{"const escaped = performance;", "export const value = 7;", "ESM namespace object"},
 		{"console.log(Object.keys(performance).join(','));", "export const value = 7;", "ESM namespace object"},
 		{"console.log(`${performance['value']}`);", "export const value = 7;", "ESM namespace object"},

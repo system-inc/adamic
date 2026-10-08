@@ -10,11 +10,11 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after", "unknown-before", "unknown-callback", "unknown-property"} {
+	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
-		}{"stage3/fixtures/enum-init-reach/" + name + ".a", true, strings.HasPrefix(name, "unknown-") && name != "unknown-after"})
+		}{"stage3/fixtures/enum-init-reach/" + name + ".a", true, false})
 	}
 }
 

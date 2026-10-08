@@ -105,23 +105,11 @@ func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, err
 		return value, true, err
 	}
 	if local, found := l.local(node); found {
-		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local)})
-		if read.Type() == ir.Union {
-			parent := node.Parent
-			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
-				parent = parent.Parent
-			}
-			observing := comparedWithUndefined(node) || parent != nil && parent.Kind == ast.KindTypeOfExpression
-			if narrowed, known := l.representation(l.checker.GetTypeAtLocation(node)); known && narrowed != ir.Union && !observing {
-				return nil, true, l.notYet(node, "a narrowed namespace union member; read into a local before narrowing")
-			}
+		read, err := l.localRead(node, local)
+		if err != nil {
+			return nil, true, err
 		}
-		if declared := read.Type(); declared.IsMaybe() {
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
-				read = ir.Unwrap{Value: read}
-			}
-		}
-		return l.namespaceReadyValue(node, l.defined(node, read)), true, nil
+		return l.namespaceReadyValue(node, read), true, nil
 	}
 	return nil, true, l.notYet(node, "a namespace member without a lowered binding")
 }
@@ -469,6 +457,7 @@ func namespaceVariable(list *ast.Node) bool {
 
 func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
 	hoisted := []ir.Statement{}
+	seen := map[int]bool{}
 	for _, statement := range namespaceStatements(node) {
 		if statement.Kind != ast.KindVariableStatement {
 			continue
@@ -493,6 +482,10 @@ func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
 				if err != nil {
 					return nil, err
 				}
+				if seen[local] {
+					continue
+				}
+				seen[local] = true
 				var value ir.Expression
 				if l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
 					value = fit(ir.Undefined{Of: l.result.Locals[local].Type}, l.result.Locals[local].Type)
