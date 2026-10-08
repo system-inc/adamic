@@ -278,12 +278,9 @@ static void deallocate(adamic_heap *heap) {
 
 void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = value;
-#ifdef ADAMIC_CANONICAL_CLOSURES
-	// A canonical closure's interior cell is counted on its environment.
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
-		heap = &((adamic_cell *)heap)->owner->heap;
+		heap = ((adamic_cell *)heap)->owner;
 	}
-#endif
 	if (heap != NULL) {
 		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
@@ -320,11 +317,9 @@ static void list(void *value) {
 // a canonical closure's interior cell its environment. It never touches the freeing queue itself.
 static adamic_heap *drop_reference(void *value) {
 	adamic_heap *heap = value;
-#ifdef ADAMIC_CANONICAL_CLOSURES
 	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
-		heap = &((adamic_cell *)heap)->owner->heap;
+		heap = ((adamic_cell *)heap)->owner;
 	}
-#endif
 	if (heap == NULL) { return NULL; }
 	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 	if ((intptr_t)count > 0) {
@@ -396,16 +391,11 @@ static void free_one(void *value) {
 		}
 		break;
 	}
-#ifdef ADAMIC_CANONICAL_CLOSURES
 	case adamic_kind_environment: {
 		adamic_environment *environment = value;
-		for (size_t index = 0; index < environment->count; index++) {
-			adamic_cell *cell = &environment->cells[index];
-			if (cell->references) { let_go(cell->value.reference); }
-		}
+		adamic_environment_drop_cells(environment->cells, environment->count, let_go);
 		break;
 	}
-#endif
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
 #ifdef ADAMIC_CANONICAL_CLOSURES

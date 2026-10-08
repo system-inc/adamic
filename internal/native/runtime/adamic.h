@@ -36,9 +36,7 @@ enum adamic_kind {
 	adamic_kind_async_frame,
 	adamic_kind_async_promise,
 	adamic_kind_async_reaction,
-#ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_kind_environment,
-#endif
 };
 
 typedef struct adamic_heap {
@@ -123,23 +121,23 @@ typedef struct adamic_cell {
 	adamic_heap heap;
 	bool references;
 	bool ready;
-#ifdef ADAMIC_CANONICAL_CLOSURES
-	struct adamic_environment *owner;
-#endif
+	adamic_heap *owner;
 	adamic_value value;
 } adamic_cell;
 
-#ifdef ADAMIC_CANONICAL_CLOSURES
-// One counted allocation owns every interior captured slot.
+// One counted allocation owns every interior captured slot. A cell's owner is its environment or,
+// for an async function's own locals, its async frame (async.h); retain and release redirect there.
 typedef struct adamic_environment {
 	adamic_heap heap;
 	size_t count;
-	// Weak cache: closures unlink themselves before releasing this frame.
+	// Weak cache of canonical closures (ADAMIC_CANONICAL_CLOSURES): closures unlink themselves
+	// before releasing this frame.
 	struct adamic_closure *functions;
 	adamic_cell cells[];
 } adamic_environment;
 adamic_environment *adamic_environment_new(size_t count);
-#endif
+void adamic_environment_initialize_cells(adamic_heap *, adamic_cell *, size_t);
+void adamic_environment_drop_cells(adamic_cell *, size_t, void (*)(void *));
 
 adamic_cell *adamic_cell_new(adamic_value value, bool references);
 
@@ -164,7 +162,8 @@ struct adamic_closure {
 #endif
 	size_t count;
 #ifdef ADAMIC_CANONICAL_CLOSURES
-	adamic_environment *canonical_owner;
+	// The environment or async frame whose functions list caches this closure, or NULL.
+	adamic_heap *canonical_owner;
 	adamic_closure *canonical_previous;
 	adamic_closure *canonical_next;
 #endif

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
+	"os"
 	"strings"
 	"testing"
 )
@@ -28,15 +29,15 @@ func TestAsyncGeneratedIdentityCannotBeClaimedBySource(t *testing.T) {
 func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, want string }{
-		{"async function f(): Promise<void> { await Promise.resolve(); throw new Error(); }\nawait f();", "Error construction without one explicit message"},
+		{"import { parallelMap } from 'adamic'; async function f(): Promise<string> { const extra = 3; await Promise.resolve(); const items: readonly number[] = [1,2]; return parallelMap(items, item => item + extra).join(','); } console.log(await f());", "pool tasks capturing an async environment"},
 		{"async function f(): Promise<void> { await new Promise<void>(() => {}); }\nawait f();", "Promise executors"},
-		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "full Promise surface"},
-		{"async function f(): Promise<void> { try { await Promise.resolve(); } finally { console.log('cleanup'); } }\nawait f();", "try/catch/finally"},
-		{"async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();", "void-valued locals"},
-		{"async function f(): Promise<void> { await undefined; }\nawait f();", "undefined/void-valued expressions"},
-		{"async function f(): Promise<object> { return {}; }\nawait f();", "object, union"},
-		{"async function f(): Promise<void> { await f(); }\nawait f();", "recursive async call graphs"},
-		{"async function f(): Promise<void> { while (false) { await Promise.resolve(); } }\nawait f();", "control flow"},
+		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "Promise.all"},
+		{"async function f(): Promise<void> { try { throw new Error('why'); } catch { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},
+		{"async function f(): Promise<void> { try { await Promise.resolve(); } finally { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},
+		{"async function f(): Promise<number> { try { return await Promise.resolve(1); } finally { console.log('clean'); } }\nawait f();", "async finally completion routing"},
+		{"async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();", "type void"},
+		{"async function f(): Promise<number> { return Promise.resolve(1); }\nawait f();", "Promise adoption"},
+		{"async function f(): Promise<number> { return await {then(resolve: (value: number) => void): void { resolve(1); }}; }\nawait f();", "thenables"},
 		{"async function f(): Promise<void> {}\nf();", "unawaited async task"},
 		{"async function f(): Promise<void> { await Promise.resolve(); }\nvoid f();", "void operator"},
 		{"async function f(): Promise<void> { console.log(`${1 == 1}`); }\nawait f();", "refuses =="},
@@ -45,7 +46,7 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 		if err == nil || !strings.Contains(err.Error(), probe.want) {
 			t.Errorf("%s: got %v, want %s", probe.source, err, probe.want)
 		}
-		if strings.Contains(probe.want, "task") || probe.want == "void operator" || probe.want == "refuses ==" {
+		if probe.want == "unawaited async task" || probe.want == "void operator" || probe.want == "refuses ==" {
 			var refused *Refused
 			if !errors.As(err, &refused) {
 				t.Errorf("permanent refusal became NotYet: %v", err)
@@ -59,15 +60,141 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 	}
 }
 
-// Compound operands still need an async function value; they must name the gap rather than
-// indexing the empty synchronous function table. A typeof observation never calls its operand.
-func TestAsyncTypeOfCompoundFunctionValueIsNotYet(t *testing.T) {
+func TestPromisePayloadCannotHideUserCycles(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, "interface Box { promise: Promise<Box> | undefined; }\nfunction stash(box: Box, promise: Promise<Box>): void { box.promise = promise; }\nconst box: Box = {promise: undefined};\nconst promise = Promise.resolve(box);\nstash(box,promise);")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
+		t.Fatalf("Promise payload hid the user back-reference: %v", err)
+	}
+}
+
+func TestAsyncSuspensionEndsFreshConfinement(t *testing.T) {
+	source, err := os.ReadFile("../oracle/testdata/async_fresh_holder.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowerSource(t, string(source))
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked := false
+	for _, write := range fresh.ProveWrites(program) {
+		if write.Name == "item" {
+			checked = true
+			if write.Proven {
+				t.Fatal("frame-held value retained fresh confinement across suspension")
+			}
+		}
+	}
+	if !checked {
+		t.Fatal("holder write was not analyzed")
+	}
+}
+
+func TestAsyncProgramsDisableCallFreshnessSummaries(t *testing.T) {
+	program, err := lowerSource(t, `function make(): { text: string } { return { text: "held" }; }
+function write(holder: { item: { text: string } | undefined }): void { holder.item = make(); }
+async function run(): Promise<void> { await Promise.resolve(); }
+const holder: { item: { text: string } | undefined } = { item: undefined };
+write(holder);
+await run();`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	checked := false
+	for _, write := range fresh.ProveWrites(program) {
+		if write.Name == "item" {
+			checked = true
+			if write.Proven {
+				t.Fatal("async program used a call freshness summary")
+			}
+		}
+	}
+	if !checked {
+		t.Fatal("holder write was not analyzed")
+	}
+}
+
+// Ordinary function values also cover the formerly unsafe compound observations.
+func TestAsyncTypeOfCompoundFunctionValuesLower(t *testing.T) {
 	t.Parallel()
 	for _, expression := range []string{"typeof (true ? f : f)", "typeof (f === f)"} {
 		_, err := lowerSource(t, "async function f(): Promise<void> {}\nconsole.log("+expression+");\n")
+		if err != nil {
+			t.Fatalf("%s: %v", expression, err)
+		}
+	}
+}
+
+func TestAsyncReaderRefusals(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name, want string
+		cycle      bool
+	}{
+		{"async_refuse_frame_capture_cycle", "async frame capture cycle", true},
+		{"async_refuse_loop_body_capture", "async per-iteration captured cells", false},
+		{"async_refuse_return_thenable", "return of thenables", false},
+		{"async_refuse_arrow_thenable", "return of thenables", false},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			source, err := os.ReadFile("../oracle/testdata/async_refused/" + probe.name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lowerSource(t, string(source))
+			if err == nil || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("reader probe must be refused by name %q: %v", probe.want, err)
+			}
+			var refused *Refused
+			var notYet *NotYet
+			if probe.cycle {
+				if !errors.As(err, &refused) {
+					t.Fatalf("cycle must be Refused: %v", err)
+				}
+			} else if !errors.As(err, &notYet) {
+				t.Fatalf("unproved semantics must be NotYet: %v", err)
+			}
+		})
+	}
+}
+
+func TestAsyncRepeatedBindingRefusals(t *testing.T) {
+	t.Parallel()
+	for _, body := range []string{
+		"if (true) { const held = `item${i}`; readers.push(() => held); }",
+		"try { throw new Error(`item${i}`); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } }",
+	} {
+		for _, loop := range []string{
+			"while (i < 3) { BODY await Promise.resolve(); i++; }",
+			"for (; i < 3; i++) { BODY await Promise.resolve(); }",
+			"do { BODY await Promise.resolve(); i++; } while (i < 3);",
+		} {
+			source := "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " + strings.ReplaceAll(loop, "BODY", body) + " } await run();"
+			_, err := lowerSource(t, source)
+			if err == nil || !strings.Contains(err.Error(), "async per-iteration captured cells") {
+				t.Fatalf("repeated binding must be refused: %s: %v", source, err)
+			}
+		}
+	}
+}
+
+func TestAsyncReturnThenableShapes(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		`class Then { then(resolve: (value: number) => void): void { resolve(7); } }
+async function f(): Promise<number> { return new Then(); }
+const result = await f();`,
+		`async function f(flag: boolean): Promise<number> {
+return flag ? 4 : { then(resolve: (value: number) => void): void { resolve(7); } };
+}
+const result = await f(false);`,
+	} {
+		_, err := lowerSource(t, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "async function f as a value") || notYet.Where == "" {
-			t.Fatalf("%s: want a located async function value NotYet, got %v", expression, err)
+		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "return of thenables") {
+			t.Fatalf("class or union thenable must be refused by name: %v", err)
 		}
 	}
 }

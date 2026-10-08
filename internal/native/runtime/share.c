@@ -41,12 +41,8 @@ static bool visited(pending_values *pending, void *value) {
 }
 static void append(pending_values *pending, void *value) {
 	if (value == NULL) { return; }
-#ifdef ADAMIC_CANONICAL_CLOSURES
-	// A canonical closure's interior cell is counted on its environment, so the environment is what
-	// becomes shared, and with it every cell it holds.
 	adamic_heap *heap = value;
-	if (heap->kind == adamic_kind_cell && ((adamic_cell *)value)->owner != NULL) { value = &((adamic_cell *)value)->owner->heap; }
-#endif
+	if (heap->kind == adamic_kind_cell && ((adamic_cell *)value)->owner != NULL) value = ((adamic_cell *)value)->owner;
 	if (pending->count == pending->capacity) {
 		size_t capacity = pending->capacity == 0 ? 64 : pending->capacity * 2;
 		void **values = realloc(pending->values, capacity * sizeof *values);
@@ -104,7 +100,6 @@ void adamic_share(void *value) {
 			}
 			break;
 		}
-#ifdef ADAMIC_CANONICAL_CLOSURES
 		case adamic_kind_environment: {
 			adamic_environment *environment = (adamic_environment *)heap;
 			for (size_t index = 0; index < environment->count; index++) {
@@ -112,7 +107,6 @@ void adamic_share(void *value) {
 			}
 			break;
 		}
-#endif
 		case adamic_kind_cell: {
 			adamic_cell *cell = (adamic_cell *)heap;
 			if (cell->references) { append(&pending, cell->value.reference); }

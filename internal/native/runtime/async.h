@@ -12,6 +12,8 @@ struct adamic_async_frame {
     adamic_async_promise *waiting;
     void (*resume)(adamic_async_frame *, adamic_value, bool);
     void (*children)(adamic_async_frame *, void (*)(void *));
+    // Canonical closures over this frame's own locals, as adamic_environment's functions (closure.c).
+    struct adamic_closure *functions;
 };
 struct adamic_async_promise {
     adamic_heap heap;
@@ -25,6 +27,9 @@ void adamic_async_await(adamic_async_frame *, adamic_async_promise *);
 void adamic_async_cancel(adamic_async_promise *);
 void adamic_async_run(void);
 void adamic_async_teardown(void);
+/* Compiler-private environment cleanup. Promise producer/settlement ABI is unchanged. */
+void adamic_async_register_cleanup(adamic_async_frame *, void (*)(adamic_async_frame *));
+void adamic_async_forget_cleanup(adamic_async_frame *);
 void adamic_async_free_children(void *, void (*)(void *));
 
 /* Host bridge. This alias preserves unit 1's promise layout exactly. */

@@ -157,7 +157,7 @@ func (l *lowering) exceptions() error {
 				l.result.ClosuresMayThrow = true
 				changed = true
 			}
-			if !functions[index].MayThrow && l.throwsOut(functions[index].Body) {
+			if !functions[index].Async && !functions[index].MayThrow && l.throwsOut(functions[index].Body) {
 				functions[index].MayThrow = true
 				changed = true
 			}
@@ -196,7 +196,11 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			if node.Replacement != nil && l.result.ClosuresMayThrow {
 				found = true
 			}
-		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
+			if l.result.ClosureMayThrow(node.(ir.Expression)) {
+				found = true
+			}
+		case ir.ParallelMap:
 			// A call through a function value, written out or made by the runtime's loop.
 			if l.result.ClosuresMayThrow {
 				found = true
