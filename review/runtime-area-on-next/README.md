@@ -7,7 +7,8 @@ Limits: Linux review only; no full repository gate, full oracle, macOS, WASI or 
 Read merge messages ab827d7c and 48ea5354 before writing probes. Linux, Go 1.27.1,
 clang 20.1.8, Node 24.19.0; nproc 5, cgroup quota 4 CPUs. Setup's cumulative timing
 lines: Go 0.026s, Node 0.029s, dependencies 0.085s, submodules 0.114s, clang 0.197s,
-build/cache 51.913s, done 51.939s. Full evidence is beside this report.
+build/cache 51.913s, done 51.939s. Full evidence is beside this report. Saved logs are gzip-compressed without timestamps,
+preserving the exact source observations and sanitizer diagnostic bytes.
 
 ## Passing programs
 
