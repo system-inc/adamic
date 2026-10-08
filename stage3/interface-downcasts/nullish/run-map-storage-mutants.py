@@ -11,6 +11,10 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('nested-nominal-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMapNestedNominalMutants$/^(constructor|set|copy)$'),
+ ('nested-nominal-javascript-producer', 'internal/javascript/view_maps_nominal.go', '\"((entry) => {if (!(\" + strings.Join', '\"((entry) => {if (false && !(\" + strings.Join', '^TestCheckedViewMapNestedNominalMutants$/^(constructor|set|copy)$'),
+ ('nested-nominal-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMapNestedNominalMutants$/^(receiver|generic|field)$'),
+ ('nested-nominal-javascript-read', 'internal/javascript/view_nominal_reads.go', '\"((value) => (\" + strings.Join', '\"((value) => (true || \" + strings.Join', '^TestCheckedViewMapNestedNominalMutants$/^(receiver|generic|field)$'),
  ('boxed-key-hash', 'internal/native/runtime/map.c', 'if (key->kind == adamic_kind_number) return adamic_map_number_hash(((const adamic_number_box *)key)->number);', 'if (key->kind == adamic_kind_number) return (uint64_t)(uintptr_t)key >> 4;', 'entry-convert-key-boxed'),
  ('boxed-key-zero', 'internal/native/runtime/map.c', 'if (number == 0 && signbit(number))', 'if (false && number == 0 && signbit(number))', 'entry-convert-key-boxed-mixed'),
  ('boxed-key-undefined-query', runtime, 'if (map->key_type == 7) return adamic_map_get(map,(adamic_value){.number=adamic_maybe_number_pack((adamic_maybe_number){false,0})});', 'if (map->key_type == 7) return NULL;', 'entry-convert-key-boxed-optional-number'),
@@ -29,7 +33,7 @@ cases = [
  ('boxed-number-payload', 'internal/native/runtime/view_arrays.c', 'adamic_box_number(snapshot->number)', 'adamic_box_number(0)', 'entry-convert-nested-union'),
  ('boxed-owner', 'internal/native/runtime/view_arrays.c', 'adamic_array_push(owner, *snapshot);', '(void)owner;', 'entry-convert-nested-union'),
  ('nominal-native', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMapNominalProducerMutants$'),
- ('nominal-javascript', 'internal/javascript/view_maps_nominal.go', '"((entry) => (" + strings.Join', '"((entry) => (true || " + strings.Join', '^TestCheckedViewMapNominalProducerMutants$'),
+ ('nominal-javascript', 'internal/javascript/view_maps_nominal.go', '"((entry) => {if (!(" + strings.Join', '"((entry) => {if (false && !(" + strings.Join', '^TestCheckedViewMapNominalProducerMutants$'),
  ('key-presence', runtime, 'if (!query.present) { return NULL; }', 'if (false && !query.present) { return NULL; }', 'entry-convert-key'),
  ('key-read-presence', runtime, '(adamic_maybe_number){true, value.number}', '(adamic_maybe_number){false, value.number}', 'entry-convert-key'),
  ('nested-read-guard', 'internal/native/runtime/view_arrays.c', 'if (actual != wanted &&', 'if (false && actual != wanted &&', '^TestCheckedViewMapNestedPayloadMutant$'),

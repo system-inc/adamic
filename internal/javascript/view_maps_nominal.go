@@ -18,10 +18,13 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 		}
 		contract = e.program.ViewContracts[contract.Element-1]
 	}
-	if contract.NominalClass == 0 {
+	if !ir.HasMapNominalWitness(e.program, id) {
 		return value
 	}
-	accepted := []string{fmt.Sprintf("adamicInstanceOf(entry, %d)", contract.NominalClass)}
+	accepted := []string{"entry !== null && typeof entry === 'object'"}
+	if contract.NominalClass != 0 {
+		accepted = []string{fmt.Sprintf("adamicInstanceOf(entry, %d)", contract.NominalClass)}
+	}
 	if nullable {
 		accepted = append(accepted, "entry === null")
 	}
@@ -29,5 +32,11 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 		accepted = append(accepted, "entry === undefined")
 	}
 	message := quote("Map nominal producer failed: " + where + " expected " + contract.Name + ", found value without its class identity")
-	return "((entry) => (" + strings.Join(accepted, " || ") + ") ? entry : panic(" + message + "))(" + value + ")"
+	checks := ""
+	for _, field := range contract.Fields {
+		if ir.HasMapNominalWitness(e.program, field.Contract) {
+			checks += "if(entry != null){" + e.mapEntryNominalCertificate(field.Contract, "entry["+quote(field.Name)+"]", where+"."+field.Name) + ";}"
+		}
+	}
+	return "((entry) => {if (!(" + strings.Join(accepted, " || ") + ")) panic(" + message + ");" + checks + "return entry;})(" + value + ")"
 }

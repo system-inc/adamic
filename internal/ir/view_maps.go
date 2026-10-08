@@ -203,6 +203,45 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 			storage := sameStorage(source.Element, target.Element) || target.ArrayReadonly && ((program.ViewContracts[source.Element-1].Of == Number && program.ViewContracts[target.Element-1].Of == MaybeNumber || program.ViewContracts[source.Element-1].Of == Boolean && program.ViewContracts[target.Element-1].Of == MaybeBoolean) || PrimitiveArrayUnionStorage(program, source.Element, target.Element))
 			return storage && accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
 		}
+		if source.Kind == ViewObject && (HasMapNominalWitness(program, from) || HasMapNominalWitness(program, to)) {
+			if target.Kind != ViewObject || source.Unsupported != "" || target.Unsupported != "" {
+				return false
+			}
+			if target.Nominal != "" && source.Nominal != target.Nominal {
+				ancestor := false
+				for _, base := range source.NominalBases {
+					ancestor = ancestor || base == target.Nominal
+				}
+				if !ancestor {
+					return false
+				}
+			}
+			pair := [2]ViewContractID{from, to}
+			if active[pair] {
+				return true
+			}
+			active[pair] = true
+			defer delete(active, pair)
+			for _, field := range target.Fields {
+				found := false
+				for _, own := range source.Fields {
+					if own.Name != field.Name {
+						continue
+					}
+					found = true
+					if own.Optional && !field.Optional || !sameStorage(own.Contract, field.Contract) || !accepts(own.Contract, field.Contract) {
+						return false
+					}
+					if !field.Readonly && (own.Readonly || !accepts(field.Contract, own.Contract)) {
+						return false
+					}
+				}
+				if !found {
+					return false
+				}
+			}
+			return true
+		}
 		for _, id := range ScalarWriteContracts(program, from) {
 			if id == to {
 				return true

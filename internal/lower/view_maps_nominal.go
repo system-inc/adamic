@@ -6,14 +6,15 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Certify data classes at the entry root. Nested nominal stores and callable
-// members need recursive producer checks and remain outside this certificate.
+// Data class witnesses are private to Map certificates. Recursive class schemas
+// and callable members remain refused. Reads independently check class identity.
 func (l *lowering) mapNominalEntryTypeProven(target *checker.Type, seen map[*checker.Type]bool) bool {
 	present := l.checker.GetNonNullableType(target)
-	if len(seen) != 0 || l.classNodeFor(present) == nil {
+	if seen[present] || l.classNodeFor(present) == nil {
 		return false
 	}
 	seen[present] = true
+	defer delete(seen, present)
 	for _, field := range l.checker.GetPropertiesOfType(present) {
 		child := l.concrete(l.checker.GetTypeOfSymbol(field))
 		if len(l.checker.GetSignaturesOfType(child, checker.SignatureKindCall)) != 0 || !l.mapEntryTypeProven(child, seen) {
@@ -24,7 +25,7 @@ func (l *lowering) mapNominalEntryTypeProven(target *checker.Type, seen map[*che
 }
 
 func (l *lowering) mapNominalEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
-	if !l.mapNominalEntryTypeProven(target, map[*checker.Type]bool{}) {
+	if !l.mapNominalEntryTypeProven(target, map[*checker.Type]bool{}) || !l.mapNominalPathAcyclic(target, map[*checker.Type]bool{}) {
 		return 0
 	}
 	present := l.checker.GetNonNullableType(target)
@@ -54,6 +55,10 @@ func (l *lowering) mapNominalEntrySlot(node *ast.Node, target *checker.Type) ir.
 		l.result.ViewContracts = append(l.result.ViewContracts, contract)
 		id = ir.ViewContractID(len(l.result.ViewContracts))
 	}
+	if l.result.NominalReadContracts == nil {
+		l.result.NominalReadContracts = map[int]ir.ViewContractID{}
+	}
+	l.result.NominalReadContracts[int(present.Id())] = id
 	if target == present {
 		return id
 	}
@@ -62,5 +67,7 @@ func (l *lowering) mapNominalEntrySlot(node *ast.Node, target *checker.Type) ir.
 		return 0
 	}
 	l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewNullable, Of: of, Element: id, Null: l.includesNull(target), Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target)})
-	return ir.ViewContractID(len(l.result.ViewContracts))
+	nullable := ir.ViewContractID(len(l.result.ViewContracts))
+	l.result.NominalReadContracts[int(target.Id())] = nullable
+	return nullable
 }

@@ -76,6 +76,9 @@ func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewCon
 	if !l.mapEntryTypeProven(target, map[*checker.Type]bool{}) {
 		return 0
 	}
+	if l.mapNestedNominalType(target, map[*checker.Type]bool{}) {
+		return l.mapNestedNominalEntrySlot(node, target)
+	}
 	present := l.checker.GetNonNullableType(target)
 	array := l.viewArrayBase(present) != nil
 	optionalObject := l.includesUndefined(target) && !l.includesNull(target) && present.Flags()&checker.TypeFlagsObject != 0

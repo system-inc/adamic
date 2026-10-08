@@ -586,7 +586,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 	property.View = sourceExpression(node)
 	property.ViewWhere = l.program.Where(node)
 	if node.Kind == ast.KindPropertyAccessExpression {
-		property.ViewReceiverTypeID = int(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Id())
+		property.ViewReceiverTypeID = int(l.concrete(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)).Id())
 	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.concrete(l.checker.GetTypeOfSymbol(symbol))

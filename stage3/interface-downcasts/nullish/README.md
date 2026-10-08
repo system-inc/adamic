@@ -713,3 +713,39 @@ Nested nominal entry aggregates and boxed/packed JSON extraction remain named ga
 callable-bearing classes belong to lane 5. Required primitive brands remain refused
 by internal/lower/phantom_brands.go, (*lowering).phantomRefusal: a required brand member
 must be void (or optional and typed undefined). No primitive-brand rule changed.
+
+### October 8: nested immutable nominal witnesses
+
+Map certificates now carry data-class identities through readonly structural entry
+fields and the existing fixed tuple adapter. Class fields also admit null, undefined
+and both. Native and JavaScript recursively validate the nominal leaf at constructors,
+set calls and copied entries. Every field result and class receiver registered by these
+private witnesses checks class identity at its read, including ordinary and generic
+helpers, callbacks, direct loops and aliases held in fields. The canonical general
+class-view descriptor remains unsupported; a private witness discharges only property
+reads whose backend emits the identity check. Required primitive brands are unchanged.
+
+Six real lookalike payload mutants are caught at constructor, set, copied entry,
+field result, ordinary receiver and generic receiver boundaries. Four independent
+native/JavaScript producer/read guard counterfactuals were caught and restored. The
+producer-only fixture performs no descendant reads, so a later read guard cannot mask
+a disabled producer guard. A distinct class with identical public fields also stops
+at node.value when its Map schema differs. Existing root nominal guard counterfactuals
+were rerun and caught as well.
+
+The uncached Map/nullish/nullable-selection/JSON-boundary gate passed in 193.944 seconds.
+Touched-package checks passed (IR 0.012s, lower 5.727s, native 38.086s, JavaScript 1.153s);
+go vet ./... passed. After restricting private witness discharge to property reads and
+isolating the producer-only controls, the focused oracle passed in 12.756 seconds.
+The final restored oracle passed in 9.499s; lower/IR checks passed in 3.629s/0.015s.
+Logs are recorded under evidence/map-nested-nominal-*.
+The full repository gate was not run; the scoped package command retains the documented
+Phantom exclusion.
+
+Readonly arrays of classes, mutable structural paths and recursive aggregate paths
+retain named refusals at node.value; each has read/unread controls, and every unread
+control matches Node. Recursive private descriptors require a runtime visited witness
+before their producer schema can be certified. Nullable structural aggregate roots and
+optional structural fields are also outside this bounded adapter. Callable-bearing
+classes remain with lane 5; optional/rest tuples remain with lane 4c. Exact production
+reaching-view counts remain unmeasured (conservative inventory: 2,018 pairs / 9,101 reads).

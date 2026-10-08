@@ -24,7 +24,9 @@ type Program struct {
 	CheckedFields      map[string]bool
 	ViewContracts      []ViewContract
 	ViewContractTypes  map[int]ViewContractID
-	GraphTypes         map[int]bool
+	// NominalReadContracts are private Map producer witnesses, checked again at reads.
+	NominalReadContracts map[int]ViewContractID
+	GraphTypes           map[int]bool
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string

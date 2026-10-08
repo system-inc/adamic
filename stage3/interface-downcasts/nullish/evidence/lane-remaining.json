@@ -12,11 +12,6 @@
       "coordination": "broader callable conventions remain with lane 5"
     },
     {
-      "family": "nominal class beneath an entry aggregate",
-      "read": "node.value",
-      "outcome": "named compile refusal"
-    },
-    {
       "family": "required primitive brand",
       "read": "type declaration, both read and unread controls",
       "outcome": "existing language refusal: brand member must be void"
@@ -25,6 +20,21 @@
       "family": "JSON array extraction for boxed and packed boolean storage",
       "read": "JSON.stringify(values)",
       "outcome": "named compile refusal at consumer; runtime schema decoder does not use checked extraction"
+    },
+    {
+      "family": "nominal class beneath an array entry",
+      "read": "node.value",
+      "outcome": "named compile refusal"
+    },
+    {
+      "family": "nominal class beneath a mutable structural entry",
+      "read": "node.value",
+      "outcome": "named compile refusal"
+    },
+    {
+      "family": "nominal class beneath a recursive aggregate entry",
+      "read": "node.value",
+      "outcome": "named compile refusal"
     }
   ],
   "delegated": "optional and rest tuples belong to lane 4c; the inventory combines array and tuple rows and cannot isolate the tuple share",
@@ -42,6 +52,11 @@
     {
       "family": "primitive boxed and packed boolean Map key domains",
       "scope": "readonly numeric, boolean, string, optional numeric and optional boolean keys widen to primitive boxed unions; boolean keys widen to packed optional boolean; mixed primitive constructor keys use SameValueZero; owned extraction and reverse lookup preserve source storage",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nominal witnesses beneath immutable structural entries and fixed tuples",
+      "scope": "recursive producer identity checks; class/null/undefined fields; class identity checked on field results and helper/generic receivers; callback, loop and held alias reads",
       "production_reaching_view_counts": "unmeasured"
     }
   ]
