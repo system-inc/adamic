@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"reflect"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -40,6 +41,26 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return kind, true
 	}
 	flags := proven.Flags()
+	if l.finitePartialRecordElement(proven) != nil {
+		return ir.Record, true
+	}
+	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+		if l.recordElement(proven) != nil {
+			return ir.Record, true
+		}
+		regex := false
+		for _, info := range l.checker.GetIndexInfosOfType(proven) {
+			if declaration := info.Declaration(); declaration != nil {
+				file := ast.GetSourceFileOfNode(declaration)
+				if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
+					regex = true
+				}
+			}
+		}
+		if !regex {
+			return 0, false
+		}
+	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
@@ -260,6 +281,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
 		return fromKind != 0 && fromKind == toKind
 	}
+	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
+		return l.sameKeeping(a, b, visited)
+	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
@@ -449,6 +473,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return value, err
 	}
 	if value, known, err := l.enumExpression(node); known {
+		return value, err
+	}
+	if value, handled, err := l.recordExpression(node); handled {
 		return value, err
 	}
 	if observed, known := l.libraryArrayObservation(node); known {

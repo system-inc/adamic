@@ -137,10 +137,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/10_build_options.a:14:54: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/10_build_options.a:14:54: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet"}
   },
   {
     "file": "12_decorator_descriptor.a",
@@ -344,10 +341,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/27_delete_substitution.a:12:23: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet"}
   },
   {
     "file": "28_debugger.a",

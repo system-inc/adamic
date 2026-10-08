@@ -23,11 +23,9 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
-	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
 	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
-	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 }
 
@@ -92,6 +90,24 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = l.predicateRefusal(node)
 			return found != nil
 		}
+		if err := l.detachedOwnRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.recordLiteralRead(node); err != nil {
+			found = err
+			return true
+		}
+		if node.Kind == ast.KindIndexSignature {
+			if l.recordElement(l.checker.GetTypeAtLocation(node.Parent)) == nil {
+				found = l.notYet(node, "an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts)")
+				return true
+			}
+		}
+		if node.Kind == ast.KindDeleteExpression && !l.recordTarget(node.AsDeleteExpression().Expression) {
+			found = &Refused{Where: l.program.Where(node), What: "delete", Fix: "fixed objects cannot lose fields; use a record or Map"}
+			return true
+		}
 		if refused, isRefused := refusals[node.Kind]; isRefused {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
@@ -108,6 +124,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			}
 		}
 		if err := l.typedArrayUnsupported(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.recordStorageView(node); err != nil {
 			found = err
 			return true
 		}
@@ -131,7 +151,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			checkedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if node.Kind == ast.KindBinaryExpression {
-			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(logicalAssignment(node.AsBinaryExpression().OperatorToken.Kind) && nonNullAssignmentTarget(node.AsBinaryExpression().Left) != nil) {
+			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !(logicalAssignment(node.AsBinaryExpression().OperatorToken.Kind) && nonNullAssignmentTarget(node.AsBinaryExpression().Left) != nil) && !(node.AsBinaryExpression().OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) != nil) {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}
@@ -160,7 +180,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.detachedOwnMethod(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {

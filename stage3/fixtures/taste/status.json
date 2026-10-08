@@ -87,10 +87,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/taste/06_localized_message.a:4:36: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/taste/06_localized_message.a:6:12: stage 0 can't lower a BinaryExpression with a value and a string yet"}
   },
   {
     "file": "07_compact.a",
