@@ -1,0 +1,14 @@
+[
+  {
+    "file": "internal/oracle/testdata/scout_map_brands.a",
+    "exit": 0,
+    "stdout": "2:updated-1\nfile-1:updated-1\nfile-2:value-2\n3:true\nname-1\nname-2\n__call\n1:true\n",
+    "stderr": ""
+  },
+  {
+    "file": "internal/oracle/testdata/scout_map_brand_boundary.a",
+    "exit": 0,
+    "stdout": "boundary:1\nnumber\n",
+    "stderr": ""
+  }
+]

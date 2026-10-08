@@ -1,0 +1,34 @@
+=== RUN   TestScoutMapKeyOutcomes
+=== RUN   TestScoutMapKeyOutcomes/branded_map
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_map2204310279/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/branded_set
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesbranded_set2671244570/001/main.a:3:19: stage 0 can't lower a value of type Path yet
+=== RUN   TestScoutMapKeyOutcomes/mixed_map
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesmixed_map2668109189/001/main.a:2:13: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet
+=== RUN   TestScoutMapKeyOutcomes/nullish_set
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesnullish_set2197924269/001/main.a:2:13: stage 0 can't lower a Set of null | undefined (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet
+=== RUN   TestScoutMapKeyOutcomes/maplike
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesmaplike724164892/001/main.a:2:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added
+=== RUN   TestScoutMapKeyOutcomes/reused_pair_mutation
+    map_keys_scout_test.go:35: /tmp/adamic-gate/TestScoutMapKeyOutcomesreused_pair_mutation4141634677/001/main.a:10:21: stage 0 can't lower assigning an element of a value yet
+--- PASS: TestScoutMapKeyOutcomes (0.21s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_map (0.04s)
+    --- PASS: TestScoutMapKeyOutcomes/branded_set (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/mixed_map (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/nullish_set (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/maplike (0.03s)
+    --- PASS: TestScoutMapKeyOutcomes/reused_pair_mutation (0.03s)
+=== RUN   TestScoutMapBrandBoundary
+=== RUN   TestScoutMapBrandBoundary/42
+=== RUN   TestScoutMapBrandBoundary/undefined
+=== RUN   TestScoutMapBrandBoundary/false
+=== RUN   TestScoutMapBrandBoundary/null
+--- PASS: TestScoutMapBrandBoundary (0.11s)
+    --- PASS: TestScoutMapBrandBoundary/42 (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/undefined (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/false (0.03s)
+    --- PASS: TestScoutMapBrandBoundary/null (0.03s)
+=== RUN   TestScoutMapBrandRefinementRefused
+--- PASS: TestScoutMapBrandRefinementRefused (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.350s

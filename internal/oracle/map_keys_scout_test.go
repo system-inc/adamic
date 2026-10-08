@@ -9,6 +9,18 @@ import (
 )
 
 func init() {
+	for _, fixture := range []struct {
+		path    string
+		checked bool
+	}{
+		{"scout_map_brands.a", false}, {"scout_map_brand_boundary.a", true},
+	} {
+		fixtures = append(fixtures, struct {
+			path            string
+			lowers, checked bool
+		}{"internal/oracle/testdata/" + fixture.path, true, fixture.checked})
+	}
+
 	fixtures = append(fixtures, struct {
 		path    string
 		lowers  bool
@@ -100,4 +112,46 @@ static void scout_skip_pair(adamic_map *map, adamic_value key, adamic_value valu
 		t.Fatalf("want Node to catch dropped pair, got %q", difference)
 	}
 	t.Log("dropped second pair: clean exit 0, no sanitizer or leak finding, caught by Node stdout")
+}
+
+// Removing the string boundary check must yield valid code, not a clang failure.
+func TestScoutMapBrandBoundaryMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_map_brand_boundary.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := onJavaScriptBackend(t, program)
+	if want.exitCode != 70 || string(want.stdout) != "boundary:1\n" || string(want.stderr) != "adamic: panic: brand boundary failed: expected string for __String\n" {
+		t.Fatalf("wrong boundary contract: %d %q %q", want.exitCode, want.stdout, want.stderr)
+	}
+	changed := false
+	for index := range program.Functions {
+		function := &program.Functions[index]
+		if function.Name != "checked_collection_brand" {
+			continue
+		}
+		function.Body = function.Body[1:]
+		changed = true
+	}
+	if !changed {
+		t.Fatal("mutant removed no boundary check")
+	}
+	mutant, binary := nativelyUncached(t, program)
+	if mutant.exitCode != 0 || len(mutant.stderr) != 0 {
+		t.Fatalf("mutant must finish without sanitizer failure: %d %s", mutant.exitCode, mutant.stderr)
+	}
+	if difference := disagreement(want, mutant); difference == "" {
+		t.Fatal("missing brand check survived")
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	if actual := onJavaScriptBackend(t, program); actual.exitCode != 0 {
+		t.Fatalf("JavaScript mutant did not finish: %d %s", actual.exitCode, actual.stderr)
+	}
+	t.Log("missing brand check: both mutant backends exit 0, native sanitizer/leaks clean; expected panic exit 70 catches omission")
 }

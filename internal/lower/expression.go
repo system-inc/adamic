@@ -42,6 +42,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if l.collectionBrandString(proven) {
+		return ir.String, true
+	}
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}
@@ -112,6 +115,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		var shared ir.Type
 		mixed, weak := false, false
 		for _, member := range proven.Types() {
+			if _, empty := l.collectionBrandIntersection(member); empty {
+				continue
+			}
 			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
 				// undefined joins a union of references as a null pointer; it's checked below that
 				// the rest are references.

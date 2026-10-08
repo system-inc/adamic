@@ -1,0 +1,6 @@
+// Unproven input at the types.ts:6201 __String boundary must be a string.
+type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | '__call';
+let calls = 0;
+function source(): unknown { calls++; console.log(`boundary:${calls}`); return 42; }
+const value = source() as __String;
+console.log(typeof value);

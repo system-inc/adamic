@@ -241,3 +241,36 @@ The insertion mutant drops the second store while releasing its owned strings. I
 Setup used `GOPROXY=https://proxy.golang.org|direct`, `bash cloud/setup.sh`, then the printed `/workspace/adamic-tools/env.sh`. Observed cumulative timing lines: node 0.064s, Go 0.079s, clang 0.483s, markdown 1.941s, ready 2.135s, submodule 24.295s, build 198.426s, deferred 198.544s, warm 198.546s, done 198.580s. `nproc` printed 5. Setup succeeded. The pinned Node types installation described above resolved the only counts prerequisite failure.
 
 Mixed union keys, nullish tags, primitive brands and MapLike remain proposals or existing gaps. MapLike's index-signature diagnostic classification discrepancy remains explicit. No generator implementation, unchecked cast, widening, GC, full package test or full gate is included. This branch completes a conservative compiler lesson toward roadmap step 19; it does not complete step 19.
+
+
+## Step 19 ruling and resumed delivery
+
+@system_adamic's #pvvzhmy ruling supersedes the proposal-only status for these six decisions: MultiMap expandos adapt to composition with explicit receiver helpers under #pcwk8fh; custom-equality createSet retains its own protocol; Program-region collections hold keys and values strongly with plain region pointers; Path and __String brands erase, the branded void arm is never, and unproven input is checked as string; same-map/same-key has/get without an intervening write proves presence, retaining stored undefined when V permits it; indexed loops prove reads from the range condition and stable length, otherwise reads are checked loudly. No weak fallback or substitution of built-in Set semantics is authorized.
+
+Merged the authorized area-next line at dcdbb909 into the delivery branch, producing 04b105cf. The merge preserves the four previous units. The first ruled piece addresses string brands, which account for most concrete keys behind the 195-root general key reason and the branded Set reasons. No unrelated area branch was merged.
+
+### Piece 1: Path and __String collection keys
+
+Path and __String with their void markers are represented as strings. The __String branded void arm is uninhabited and omitted from representation selection. This implementation recognizes the two ruled marker names and void payloads; an unknown marker payload, other structural field contract, or branded literal refinement does not acquire permission. A string-to-brand cast erases only when the brand admits every string. An unproven input receives a single-evaluation typeof-string check and a panic before the value enters a string slot. Other unsafe cast rules stay in force. This is a local implementation of the ruled representation, without importing an unlanded area-views implementation.
+
+`scout_map_brands.a` is reduced from types.ts:23,6201, binder.ts:576 and builder.ts:1429. It checks allocated equal-content keys, overwrite order, Map/Set iteration, an empty key and a successful unknown boundary. Both backends agree with source Node under sanitizers, release and leaks. The failing boundary fixture prints `boundary:1` then both generated backends panic with `brand boundary failed: expected string for __String`, exit 70. Source Node instead accepts the assertion and prints `number`; the checked-fixture contract records this intentional difference. Lowering controls cover number, undefined, boolean and null boundaries and a refused branded literal refinement. The earlier unknown-marker baseline reductions stay NotYet because their unknown payload is not the ruled void brand.
+
+The semantic mutant removes the string check from the real generated helper. Both mutant backends exit 0, and native has no sanitizer or leak finding. The exact expected panic catches the omission. No compile-warning kill is counted.
+
+A guarded batch replay rechecks 159 exact historical collection signatures before and after, using the same 81 source hashes. On the merged baseline 137 reproduce. After this piece, 103 of those diagnostic signatures no longer reproduce: 83 general Map-key sites, 14 Set<__String> sites and 6 Set<Path> sites. Eighteen distinct selected units have no remaining lowering blockers in the replay. The remaining signatures and all newly exposed blockers are recorded, rather than credited as compilation success. The measurement is on a checker-rejected entry-root program. Whole tsc entry roots compiling: zero. No hidden-byte recovery is measured. See `stage3/map-keys/evidence/ruling-brands/retirement.json`, before/after compressed records and the reproducible `stage3/map-keys/replay.py`.
+
+Exact scoped validation, with the toolchain environment sourced and all output redirected:
+
+```sh
+python3 stage3/map-keys/replay.py /tmp/scout-map-keys-adapted /tmp/scout19-brands-before.jsonl > /tmp/scout19-brands-before.log 2>&1
+go test ./internal/lower -run '^TestScoutMap(BrandBoundary|BrandRefinementRefused|KeyOutcomes)$' -count=1 -v > /tmp/scout19-brands-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^scout_map_brand.*[.]a$' -count=1 -timeout 30m -v > /tmp/scout19-brands-oracle.log 2>&1
+go test ./internal/oracle -run '^TestScoutMapBrandBoundaryMutant$' -count=1 -timeout 30m -v > /tmp/scout19-brands-mutant.log 2>&1
+python3 stage3/map-keys/replay.py /tmp/scout-map-keys-adapted /tmp/scout19-brands-after.jsonl > /tmp/scout19-brands-after.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/scout19-brands-counts.log 2>&1
+go test ./internal/lower -run '^(TestScoutMap.*|TestCast.*)$' -count=1 -v > /tmp/scout19-brands-regression-lower.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(scout_map_.*[.]a|casts[.]a|cast_fails[.]a|unknown[.]a|library_map_set_keys[.]a)$' -count=1 -timeout 30m -v > /tmp/scout19-brands-regression-oracle.log 2>&1
+go vet ./internal/lower ./internal/oracle > /tmp/scout19-brands-vet.log 2>&1
+```
+
+All passed. Successful brand fixture counts: 34 allocations, 34 frees, 48 retains, 71 releases, peak 11, zero regions. The failing fixture stops at panic and is not a successful-program leak claim. Counts refresh changes only the two added rows. Setup succeeded with node 0.021s, Go 0.022s, submodules 0.065s, markdown 0.074s, clang 0.178s, build 37.967s, deferred 38.089s, warm 38.090s, done 38.119s, cumulative as printed; nproc 5. Full logs are under `stage3/map-keys/evidence/ruling-brands`.

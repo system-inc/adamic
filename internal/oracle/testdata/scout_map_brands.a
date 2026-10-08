@@ -1,0 +1,21 @@
+// Reduced from types.ts:23,6201 and binder.ts:576, builder.ts:1429.
+type Path = string & { __pathBrand: void };
+type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | '__call';
+function escape(text: string): __String { return text as __String; }
+function path(text: string): Path { return text as Path; }
+function boundary(text: unknown): __String { return text as __String; }
+const paths = new Map<Path, string>();
+paths.set(path(`file-${1}`), `value-${1}`);
+paths.set(path(`file-${2}`), `value-${2}`);
+paths.set(path(['file-', '1'].join('')), `updated-${1}`);
+console.log(`${paths.size}:${paths.get(path('file-1'))}`);
+for (const [key,value] of paths) console.log(`${key}:${value}`);
+const names = new Set<__String>();
+names.add(escape(`name-${1}`));
+names.add(escape(['name-', '1'].join('')));
+names.add(boundary(`name-${2}`));
+names.add('__call');
+console.log(`${names.size}:${names.has(escape('name-1'))}`);
+for (const name of names) console.log(`${name}`);
+const empty = new Set<Path>();
+empty.add(path('')); console.log(`${empty.size}:${empty.has(path(''))}`);

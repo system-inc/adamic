@@ -2,6 +2,7 @@ package lower
 
 import (
 	"errors"
+	"github.com/system-inc/adamic/internal/ir"
 	"os"
 	"path/filepath"
 	"strings"
@@ -56,5 +57,39 @@ func TestScoutMapIteratorPairRepresentationGap(t *testing.T) {
 	var notYet *NotYet
 	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "new Map from pairs held otherwise than the Map's keys and values") {
 		t.Fatalf("want representation-conversion gap, got %v", err)
+	}
+}
+
+func TestScoutMapBrandBoundary(t *testing.T) {
+	for _, input := range []string{"42", "undefined", "false", "null"} {
+		t.Run(input, func(t *testing.T) {
+			source := "type __String = (string & { __escapedIdentifier:void }) | (void & { __escapedIdentifier:void }) | '__call'; function f(x: unknown):__String { return x as __String; } console.log(typeof f(" + input + "));"
+			program, err := lowerSource(t, source)
+			if err != nil {
+				t.Fatal(err)
+			}
+			checks := 0
+			for _, function := range program.Functions {
+				if function.Name == "checked_collection_brand" {
+					for _, statement := range function.Body {
+						if _, ok := statement.(ir.If); ok {
+							checks++
+						}
+					}
+				}
+			}
+			if checks != 1 {
+				t.Fatalf("want one string boundary check, got %d", checks)
+			}
+		})
+	}
+}
+
+func TestScoutMapBrandRefinementRefused(t *testing.T) {
+	source := "type Path = string & { __pathBrand:void }; function f(text:string):Path & 'fixed' { return text as Path & 'fixed'; }"
+	_, err := lowerSource(t, source)
+	var refused *Refused
+	if !errors.As(err, &refused) {
+		t.Fatalf("want literal-refinement refusal, got %v", err)
 	}
 }

@@ -117,7 +117,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
-			checkedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
+			checkedCast = proof.collectionBrand || proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if err := l.namespaceRefusal(node); err != nil {
 			found = err

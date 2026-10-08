@@ -1,0 +1,11 @@
+=== RUN   TestScoutMapBrandBoundaryMutant
+    map_keys_scout_test.go:127: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    map_keys_scout_test.go:153: gate cache node miss
+    map_keys_scout_test.go:156: missing brand check: both mutant backends exit 0, native sanitizer/leaks clean; expected panic exit 70 catches omission
+--- PASS: TestScoutMapBrandBoundaryMutant (0.46s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.466s
