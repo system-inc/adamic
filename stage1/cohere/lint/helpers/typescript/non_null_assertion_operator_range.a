@@ -1,0 +1,9 @@
+export class OperatorRange {
+    readonly start: number;
+    readonly end: number;
+    constructor(start: number, end: number) { this.start = start; this.end = end; }
+}
+// The caller supplies the parsed node's end. ASCII ! is one byte or one UTF-16 unit.
+export function nonNullAssertionOperatorRange(end: number): OperatorRange {
+    return new OperatorRange(end - 1, end);
+}

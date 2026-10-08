@@ -1,0 +1,35 @@
+package typescript
+
+import (
+    "encoding/json"
+    "os"
+    "sync"
+    "github.com/microsoft/TypeScript/tsc/shim/ast"
+    "github.com/microsoft/TypeScript/tsc/shim/core"
+    "github.com/system-inc/cohere/internal/types/sourcename"
+)
+
+var adamicCaptureLock sync.Mutex
+func adamicRecord(value any) {
+    path := os.Getenv("ADAMIC_TYPESCRIPT_HELPER_CAPTURE")
+    if path == "" { panic("missing capture path") }
+    data, err := json.Marshal(value)
+    if err != nil { panic(err) }
+    adamicCaptureLock.Lock()
+    defer adamicCaptureLock.Unlock()
+    file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600)
+    if err != nil { panic(err) }
+    defer file.Close()
+    if _, err = file.Write(append(data, '\n')); err != nil { panic(err) }
+}
+func isTypeScriptSourceFile(name string) bool {
+    result := adamicOriginalIsTypeScriptSourceFile(name)
+    adamicRecord(map[string]any{"kind":"file", "name":name, "want":result})
+    adamicRecord(map[string]any{"kind":"name", "name":name, "want":sourcename.TreatedAs(name)})
+    return result
+}
+func nonNullAssertionOperatorRange(node *ast.Node) core.TextRange {
+    result := adamicOriginalNonNullAssertionOperatorRange(node)
+    adamicRecord(map[string]any{"kind":"range", "end":node.End(), "wantStart":result.Pos(), "wantEnd":result.End()})
+    return result
+}

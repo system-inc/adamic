@@ -1,0 +1,56 @@
+=== RUN   TestRulesAgree
+    lint_test.go:353: checker compilation phases: load=226.606173ms lower=4.298716668s C=651.388964ms JavaScript=35.55244ms
+    lint_test.go:353: checker native build: 1m24.7917457s
+    lint_test.go:276: cohere cases: 24 unique source/rule/options combinations
+    lint_test.go:376: Go, Node, emitted JavaScript, native identical: 501525 bytes
+--- PASS: TestRulesAgree (118.28s)
+=== RUN   TestMutants
+=== RUN   TestMutants/optional-chain-parentheses-not-skipped
+=== PAUSE TestMutants/optional-chain-parentheses-not-skipped
+=== CONT  TestMutants/optional-chain-parentheses-not-skipped
+    lint_test.go:818: checker compilation phases: load=202.808822ms lower=4.042098304s C=659.774639ms JavaScript=53.057071ms
+    lint_test.go:818: checker native mutant build: 1m15.531157s
+    lint_test.go:841: optional-chain-parentheses-not-skipped caught on Node: case 85 line 4371: port "/tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:6:1", Go "/tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:5:1"
+        Go context:
+        case 85
+        /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:4:1
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 67 76 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	75:76:	Remove the non-null assertion.	67 76
+        /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:5:1
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 78 89 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	88:89:	Remove the non-null assertion.	78 89
+        /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:6:1
+    lint_test.go:841: optional-chain-parentheses-not-skipped caught on emitted JavaScript: case 85 line 4371: port "/tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:6:1", Go "/tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:5:1"
+        Go context:
+        case 85
+        /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:4:1
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 67 76 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	75:76:	Remove the non-null assertion.	67 76
+        /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:5:1
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 78 89 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	88:89:	Remove the non-null assertion.	78 89
+        /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:6:1
+    lint_test.go:841: optional-chain-parentheses-not-skipped caught on native: case 85 line 4371: port "/tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:6:1", Go "/tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:5:1"
+        Go context:
+        case 85
+        /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:4:1
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 67 76 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	75:76:	Remove the non-null assertion.	67 76
+        /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:5:1
+          @typescript-eslint/no-non-null-asserted-optional-chain  An optional chain returns `undefined` by design when a link is nullish, so asserting the result non-null contradicts the reason the `?.` was written. The assertion is erased at compile time and the `undefined` still arrives at runtime, which turns a guard the author asked for into a crash the types promised could not happen. Handle the `undefined` case instead, or drop the `?.` if the value cannot actually be nullish.
+        
+        range 78 89 noNonNullOptionalChain suggestion-edits:suggestRemovingNonNull	88:89:	Remove the non-null assertion.	78 89
+        /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped1174124344/016/typescript-no-non-null-asserted-optional-chain-0.ts:6:1
+--- PASS: TestMutants (0.04s)
+    --- PASS: TestMutants/optional-chain-parentheses-not-skipped (82.95s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:71: checker native build: 70.328742ms
+    registration_test.go:71: Go, Node, emitted JavaScript, native identical: 9179 bytes
+--- PASS: TestOwnedWitnesses (1.37s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	202.704s

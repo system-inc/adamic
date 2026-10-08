@@ -1,0 +1,25 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-v",
+    "-json",
+    "-timeout=90m"
+  ],
+  "exit": 0,
+  "counts_include_subtests": true,
+  "pass": 117,
+  "fail": 0,
+  "skip": 1,
+  "package_fail": 0,
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "failures": [],
+  "wall_seconds": 3194.33,
+  "nproc": 5,
+  "load_before": "0.59 0.94 1.08 1/170 184515",
+  "load_after": "1.98 1.76 2.40 1/170 245767"
+}

@@ -1,0 +1,6 @@
+import { treatedAs } from '../sourcename/treated_as.a';
+// cohere/internal/lint/rules/typescript.isTypeScriptSourceFile.
+export function isTypeScriptSourceFile(fileName: string): boolean {
+    return treatedAs(fileName).endsWith('.ts') || fileName.endsWith('.tsx') ||
+        fileName.endsWith('.mts') || fileName.endsWith('.cts');
+}

@@ -1,0 +1,64 @@
+{
+  "NoExplicitAny": {
+    "invocations": 440,
+    "by_helper": {
+      "file": 220,
+      "name": 220
+    },
+    "passed_tests": 230
+  },
+  "BanTsComment": {
+    "invocations": 358,
+    "by_helper": {
+      "file": 179,
+      "name": 179
+    },
+    "passed_tests": 184
+  },
+  "NoThisAlias": {
+    "invocations": 106,
+    "by_helper": {
+      "file": 53,
+      "name": 53
+    },
+    "passed_tests": 60
+  },
+  "TripleSlashReference": {
+    "invocations": 160,
+    "by_helper": {
+      "file": 80,
+      "name": 80
+    },
+    "passed_tests": 80
+  },
+  "NoExtraNonNullAssertion": {
+    "invocations": 17,
+    "by_helper": {
+      "range": 17
+    },
+    "passed_tests": 28
+  },
+  "NoNonNullAssertion": {
+    "invocations": 40,
+    "by_helper": {
+      "range": 40
+    },
+    "passed_tests": 53
+  },
+  "NoNonNullAssertedOptionalChain": {
+    "invocations": 11,
+    "by_helper": {
+      "range": 11
+    },
+    "passed_tests": 27
+  },
+  "AdamicTypescriptHelperControls": {
+    "invocations": 408,
+    "by_helper": {
+      "file": 198,
+      "name": 198,
+      "range": 12
+    },
+    "passed_tests": 1
+  }
+}

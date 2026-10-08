@@ -1,0 +1,7 @@
+stage1/cohere/lint/helpers/typescript/main.a:7:7: variable input: { readonly kind: "Ok"; readonly text: string; } | { readonly kind: "Error"; readonly message: string; }
+stage1/cohere/lint/helpers/typescript/main.a:9:7: variable cases: OptionsJson
+stage1/cohere/lint/helpers/typescript/main.a:10:7: variable root: number
+stage1/cohere/lint/helpers/typescript/main.a:12:11: variable index: number
+stage1/cohere/lint/helpers/typescript/main.a:13:11: variable kind: string
+stage1/cohere/lint/helpers/typescript/main.a:15:15: variable result: OperatorRange
+stage1/cohere/lint/helpers/typescript/main.a:19:15: variable name: string

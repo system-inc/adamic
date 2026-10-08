@@ -1,0 +1,16 @@
+=== RUN   TestRulesAgree
+    lint_test.go:353: /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/rule.a:30:61: stage 0 can't lower an array of never yet
+--- FAIL: TestRulesAgree (13.09s)
+=== RUN   TestMutants
+=== RUN   TestMutants/optional-chain-parentheses-not-skipped
+=== PAUSE TestMutants/optional-chain-parentheses-not-skipped
+=== CONT  TestMutants/optional-chain-parentheses-not-skipped
+    lint_test.go:818: /tmp/adamic-gate/TestMutantsoptional-chain-parentheses-not-skipped3557419312/021/rules/typescript-no-non-null-asserted-optional-chain/rule.a:30:61: stage 0 can't lower an array of never yet
+--- FAIL: TestMutants (0.03s)
+    --- FAIL: TestMutants/optional-chain-parentheses-not-skipped (2.09s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:71: /workspace/adamic/stage1/cohere/lint/rules/typescript-no-non-null-asserted-optional-chain/rule.a:30:61: stage 0 can't lower an array of never yet
+--- FAIL: TestOwnedWitnesses (0.11s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	15.372s
+FAIL

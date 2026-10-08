@@ -1,0 +1,22 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import { treatedAs } from '../sourcename/treated_as.a';
+import { isTypeScriptSourceFile } from './is_typescript_source_file.a';
+import { nonNullAssertionOperatorRange } from './non_null_assertion_operator_range.a';
+const input = readTextFile(programArguments()[0] ?? panic('cases path'));
+if(input.kind === 'Error') { panic(input.message); }
+const cases = new OptionsJson(input.text);
+const root = cases.parse();
+if(root < 0) { panic(cases.error); }
+for(const index of cases.node(root).children) {
+    const kind = cases.node(cases.field(index, 'kind')).text;
+    if(kind === 'range') {
+        const result = nonNullAssertionOperatorRange(cases.node(cases.field(index, 'end')).number);
+        console.log(`${result.start} ${result.end}`);
+    }
+    else {
+        const name = cases.node(cases.field(index, 'name')).text;
+        console.log(kind === 'name' ? written(treatedAs(name)) : `${isTypeScriptSourceFile(name)}`);
+    }
+}

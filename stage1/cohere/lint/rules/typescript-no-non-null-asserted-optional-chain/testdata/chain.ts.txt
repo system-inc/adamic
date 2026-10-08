@@ -1,0 +1,13 @@
+declare const foo: any;
+declare const key: any;
+const é = '😀';
+foo?.bar!;
+(foo?.bar)!;
+foo?.bar()!;
+foo?.[key]!;
+foo.bar?.()!;
+foo?.bar!.baz;
+foo?.bar!();
+foo?.[key!];
+foo!?.bar;
+(foo?.bar /* kept */)!;

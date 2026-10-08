@@ -1,0 +1,33 @@
+import { RuleContext, noEdits } from '../../context.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { nonNullAssertionOperatorRange } from '../../helpers/typescript/non_null_assertion_operator_range.a';
+import { optionalChainMessage, removeAssertionMessage } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number): void {
+        const context = this.context;
+        const node = context.node(index);
+        let reports = false;
+        if(node.optional) {
+            const parent = context.parents[index] ?? -1;
+            reports = parent < 0 || !context.node(parent).optional ||
+                (context.kind(parent) !== 'NonNullExpression' && context.questionDot(parent)) ||
+                context.child(parent, 0) !== index;
+        }
+        else {
+            const expression = context.child(index, 0);
+            if(expression < 0) { return; }
+            const inner = context.unwrap(expression);
+            reports = inner >= 0 && context.node(inner).optional;
+        }
+        if(!reports) { return; }
+        const range = nonNullAssertionOperatorRange(node.end);
+        const suggestion = new Suggestion('suggestRemovingNonNull', removeAssertionMessage,
+            [new SuggestionEdit(range.start, range.end, '')]);
+        context.reportNode(index, '@typescript-eslint/no-non-null-asserted-optional-chain',
+            'noNonNullOptionalChain', optionalChainMessage, noEdits, [suggestion]);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

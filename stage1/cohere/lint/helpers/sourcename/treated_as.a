@@ -1,0 +1,8 @@
+// cohere/internal/types/sourcename.TreatedAs; a trailing slash is deliberately only '/'.
+export function treatedAs(fileName: string): string {
+    if(fileName.endsWith('.a')) {
+        const stem = fileName.slice(0, -2);
+        if(stem !== '' && !stem.endsWith('/')) { return stem + '.ts'; }
+    }
+    return fileName;
+}

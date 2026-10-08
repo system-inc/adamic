@@ -1,0 +1,17 @@
+=== RUN   TestTypescriptHelperCapturesAndMutants
+    helpers_test.go:11: Go agreement on Node: 1540 helper observations, 21472 bytes
+        Go agreement on emitted JavaScript: 1540 helper observations, 21472 bytes
+        Go agreement on sanitized native: 1540 helper observations, 21472 bytes
+        sourcename/treated_as.a semantic mutant caught on Node at output line 1207
+        sourcename/treated_as.a semantic mutant caught on emitted JavaScript at output line 1207
+        sourcename/treated_as.a semantic mutant caught on sanitized native at output line 1207
+        typescript/is_typescript_source_file.a semantic mutant caught on Node at output line 338
+        typescript/is_typescript_source_file.a semantic mutant caught on emitted JavaScript at output line 338
+        typescript/is_typescript_source_file.a semantic mutant caught on sanitized native at output line 338
+        typescript/non_null_assertion_operator_range.a semantic mutant caught on Node at output line 1065
+        typescript/non_null_assertion_operator_range.a semantic mutant caught on emitted JavaScript at output line 1065
+        typescript/non_null_assertion_operator_range.a semantic mutant caught on sanitized native at output line 1065
+        
+--- PASS: TestTypescriptHelperCapturesAndMutants (15.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/typescript	15.076s

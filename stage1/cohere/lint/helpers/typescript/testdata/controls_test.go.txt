@@ -1,0 +1,18 @@
+package typescript
+
+import (
+    "testing"
+    "github.com/microsoft/TypeScript/tsc/shim/ast"
+    "github.com/microsoft/TypeScript/tsc/shim/core"
+)
+func TestAdamicTypescriptHelperControls(t *testing.T) {
+    for _, stem := range []string{"", ".", "/", "\\", "x", "x/", "x\\", "Dog.test", "/repo/é😀", "a\nb", "a\tb"} {
+        for _, suffix := range []string{"", ".a", ".A", ".ts", ".TS", ".tsx", ".mts", ".cts", ".js", ".jsx", ".mjs", ".cjs", ".d.ts", ".d.a", ".a.ts", ".ts.a", ".tsx.a", ".a/"} {
+            isTypeScriptSourceFile(stem+suffix)
+        }
+    }
+    for _, end := range []int{-1, 0, 1, 2, 3, 10, 31, 127, 128, 1024, 65536, 1048576} {
+        node := &ast.Node{Loc:core.NewTextRange(0, end)}
+        nonNullAssertionOperatorRange(node)
+    }
+}
