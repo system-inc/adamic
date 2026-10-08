@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface TypeNode {readonly value:number;}
+interface IntersectionTypeNode {readonly value:number;readonly kind:194;}
+interface Base {readonly createIntersectionTypeNode:unknown;}
+interface Target {createIntersectionTypeNode(types: readonly TypeNode[]): IntersectionTypeNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createIntersectionTypeNode([]).value}`);}
+probe({createIntersectionTypeNode:(types: readonly TypeNode[]):IntersectionTypeNode=>({value:7,kind:194})});

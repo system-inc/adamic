@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly map:unknown;}
+interface Carrier<T> {map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];}
+type Target=Carrier<string>;
+function probe(value:Base):void {const text={split:(delimiter:RegExp):Target=>value as Target};text.split(/\r\n|\n|\r/).map((value:string):string=>value);console.log("done");}
+probe(["ok"]);

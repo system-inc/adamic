@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface TypeNode {readonly value:number;}
+interface RestTypeNode {readonly value:number;readonly kind:192;}
+interface Base {readonly createRestTypeNode:unknown;}
+interface Target {createRestTypeNode(type: TypeNode): RestTypeNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createRestTypeNode({value:7}).value}`);}
+probe({createRestTypeNode:():RestTypeNode=>({value:7,kind:192})});

@@ -1,0 +1,7 @@
+// Original optional member with its original Required/Pick receiver type.
+interface Node {readonly value:number;}
+interface SymbolTracker {reportInferenceFallback?(node: Node): void;}
+type Target = Required<Pick<SymbolTracker, "reportInferenceFallback">>;
+interface Base {readonly reportInferenceFallback:unknown;}
+function probe(value:Base):void {const context={tracker:value as Target};context.tracker.reportInferenceFallback({value:7});console.log("done");}
+probe({reportInferenceFallback:7});

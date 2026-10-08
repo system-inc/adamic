@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface JsxNamespacedName {readonly value:number;readonly kind:296;}
+interface Base {readonly createJsxNamespacedName:unknown;}
+interface Target {createJsxNamespacedName(namespace: Identifier, name: Identifier): JsxNamespacedName;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createJsxNamespacedName({value:7,kind:80},{value:7,kind:80}).value}`);}
+probe({createJsxNamespacedName:():JsxNamespacedName=>({value:7,kind:296})});

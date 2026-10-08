@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface TypeNode {readonly value:number;}
+interface OptionalTypeNode {readonly value:number;readonly kind:191;}
+interface Base {readonly createOptionalTypeNode:unknown;}
+interface Target {createOptionalTypeNode(type: TypeNode): OptionalTypeNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createOptionalTypeNode({value:7}).value}`);}
+probe({createOptionalTypeNode:():OptionalTypeNode=>({value:7,kind:191})});

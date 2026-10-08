@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface JSDocPropertyLikeTag {readonly value:number;}
+interface JSDocTypeLiteral {readonly value:number;readonly kind:323;}
+interface Base {readonly createJSDocTypeLiteral:unknown;}
+interface Target {createJSDocTypeLiteral(jsDocPropertyTags?: readonly JSDocPropertyLikeTag[], isArrayType?: boolean): JSDocTypeLiteral;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createJSDocTypeLiteral().value}`);}
+probe({createJSDocTypeLiteral:(jsDocPropertyTags?: readonly JSDocPropertyLikeTag[], isArrayType?: boolean):JSDocTypeLiteral=>({value:7,kind:323})});

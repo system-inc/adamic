@@ -1,0 +1,7 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Type {readonly value:number;}
+interface Base {readonly get:unknown;}
+interface Carrier<K,V> {get(key: K): V | undefined;}
+type Target=Carrier<number, Type>;
+function probe(value:Base):void {const context={enclosingSymbolTypes:value as Target};context.enclosingSymbolTypes.get(7);console.log("done");}
+probe(new Map<number,Type>());

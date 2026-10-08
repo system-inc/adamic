@@ -1,0 +1,7 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Statement {readonly value:number;}
+interface Base {readonly unshift:unknown;}
+interface Carrier<T> {unshift(...items: T[]): number;}
+type Target=Carrier<Statement>;
+function probe(value:Base):void {const left=value as Target;left.unshift({value:7});console.log("done");}
+probe([]);

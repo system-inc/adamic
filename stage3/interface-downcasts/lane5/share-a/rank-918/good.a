@@ -1,0 +1,9 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface TypeNode {readonly value:number;}
+interface ConstructSignatureDeclaration {readonly value:number;readonly kind:181;}
+interface Base {readonly createConstructSignature:unknown;}
+interface Target {createConstructSignature(typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined): ConstructSignatureDeclaration;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createConstructSignature(undefined,[],undefined).value}`);}
+probe({createConstructSignature:(typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined):ConstructSignatureDeclaration=>({value:7,kind:181})});

@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface TypeNode {readonly value:number;}
+interface JSDocNonNullableType {readonly value:number;readonly kind:316;}
+interface Base {readonly createJSDocNonNullableType:unknown;}
+interface Target {createJSDocNonNullableType(type: TypeNode, postfix?: boolean): JSDocNonNullableType;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createJSDocNonNullableType({value:7}).value}`);}
+probe({createJSDocNonNullableType:(type: TypeNode, postfix?: boolean):JSDocNonNullableType=>({value:7,kind:316})});

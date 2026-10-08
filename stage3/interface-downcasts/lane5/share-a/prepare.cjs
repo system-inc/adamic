@@ -6,6 +6,16 @@ if (cp.execFileSync('git', ['-C', pin, 'rev-parse', 'HEAD'], {encoding:'utf8'}).
 const lane = path.dirname(__dirname);
 const pairs = JSON.parse(fs.readFileSync(path.join(lane,'unknown-callable-pairs-ranked.json')));
 const recipes = new Map([
+ [915, [null, ["@Expression", "[]"], "CallExpression", "@CallExpression"]],
+ [918, [null, ["undefined", "[]", "undefined"], "ConstructSignatureDeclaration", "@ConstructSignatureDeclaration"]],
+ [921, [null, ["undefined", "\"ok\"", "[]"], "EnumDeclaration", "@EnumDeclaration"]],
+ [924, [null, ["[]"], "IntersectionTypeNode", "@IntersectionTypeNode"]],
+ [927, [null, ["@TypeNode"], "JSDocNonNullableType", "@JSDocNonNullableType"]],
+ [930, [null, [], "JSDocTypeLiteral", "@JSDocTypeLiteral"]],
+ [933, [null, ["@Identifier", "@Identifier"], "JsxNamespacedName", "@JsxNamespacedName"]],
+ [936, [null, ["@Identifier"], "NamespaceExport", "@NamespaceExport"]],
+ [939, [null, ["@TypeNode"], "OptionalTypeNode", "@OptionalTypeNode"]],
+ [942, [null, ["@TypeNode"], "RestTypeNode", "@RestTypeNode"]],
  [336, [null, ["@Type", "@Type"], "Ternary", "7"]],
  [471, [null, ["@Program"], "DiagnosticCollection", "@DiagnosticCollection"]],
  [510, [null, ["1"], "Node", "@Node"]],
@@ -107,15 +117,16 @@ for(const [rank,recipe] of recipes){
  const good='('+params+'):'+result+'=>'+body;
  const wrongArity=signature(decl).parameters.length===0?'(ignored:number):'+result+'=>'+body:'():'+result+'=>'+body;
  const directory='rank-'+rank;fs.mkdirSync(path.join(__dirname,directory),{recursive:true});
- for(const [name,producer] of [['good',good],['wrong-arity',wrongArity],['wrong-value','7']])fs.writeFileSync(path.join(__dirname,directory,name+'.a'),header+'probe({'+pair.field+':'+producer+'});\n');
+ for(const [name,producer] of [['good',good],['wrong-arity',wrongArity],['wrong-value','7']])fs.writeFileSync(path.join(__dirname,directory,name+'.a'),(header+'probe({'+pair.field+':'+producer+'});\n').replace(/\r\n/g,'\n'));
  const declarationSource=decl.getSourceFile(),hash=file=>crypto.createHash('sha256').update(fs.readFileSync(path.join(pin,file))).digest('hex');
  const virtual=path.join(__dirname,directory,'good.ts'),content=fs.readFileSync(path.join(__dirname,directory,'good.a'),'utf8'),options={strict:true,noEmit:true},host=ts.createCompilerHost(options),getSource=host.getSourceFile;
  host.getSourceFile=(file,...args)=>file===virtual?ts.createSourceFile(file,content,ts.ScriptTarget.Latest,true):getSource.call(host,file,...args);
  const program=ts.createProgram([virtual],options,host),checker=program.getTypeChecker(),fixture=program.getSourceFile(virtual);let target;
  function findTarget(n){if((ts.isMethodSignature(n)||ts.isPropertySignature(n))&&n.parent.name?.text==='Target'&&n.name.getText(fixture)===pair.field)target=n;ts.forEachChild(n,findTarget);}findTarget(fixture);
- const expectedOverrides={"510":"(kind: number) => Node","591":"(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block | undefined) => MethodDeclaration","432":"(variableDeclaration: string | VariableDeclaration | BindingName | undefined, block: Block) => CatchClause","447":"(assertsModifier: AssertsKeyword | undefined, parameterName: string | Identifier | ThisTypeNode, type: TypeNode | undefined) => TypePredicateNode","582":"(modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassDeclaration","102": "(literal: LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral) => LiteralTypeNode", "429": "(label?: string | Identifier | undefined) => BreakStatement", "477": "() => number", "489": "(path: string, encoding?: string | undefined) => string | undefined"};
+ const expectedOverrides={"927":"(type: TypeNode, postfix?: boolean | undefined) => JSDocNonNullableType","930":"(jsDocPropertyTags?: readonly JSDocPropertyLikeTag[] | undefined, isArrayType?: boolean | undefined) => JSDocTypeLiteral","510":"(kind: number) => Node","591":"(modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: string | PropertyName, questionToken: QuestionToken | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block | undefined) => MethodDeclaration","432":"(variableDeclaration: string | VariableDeclaration | BindingName | undefined, block: Block) => CatchClause","447":"(assertsModifier: AssertsKeyword | undefined, parameterName: string | Identifier | ThisTypeNode, type: TypeNode | undefined) => TypePredicateNode","582":"(modifiers: readonly ModifierLike[] | undefined, name: string | Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassDeclaration","102": "(literal: LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral) => LiteralTypeNode", "429": "(label?: string | Identifier | undefined) => BreakStatement", "477": "() => number", "489": "(path: string, encoding?: string | undefined) => string | undefined"};
  const expected=expectedOverrides[rank]||checker.typeToString(checker.getTypeAtLocation(target),target,ts.TypeFormatFlags.NoTruncation);
  rows.push({...pair,directory,expected,read:read.getText(sf),declaration:decl.getText(declarationSource),declarationFile:declarationSource.fileName,declarationSha256:hash(declarationSource.fileName),fileSha256:hash(pair.witness.file),utf16Start:read.getStart(sf),utf16End:read.end,arity:signature(decl).parameters.length,mutantArity:signature(decl).parameters.length===0?1:0,stdout:result==='void'?'done\n':result.includes('ProjectReference[]')?'1\n':result==='boolean'?'true\n':/^string/.test(result)?'ok\n':'7\n',carriers});
 }
+const previous=JSON.parse(fs.readFileSync(path.join(__dirname,'witnesses.json')));rows.push(...previous.members.filter(m=>m.rank===162));
 fs.writeFileSync(path.join(__dirname,'witnesses.json'),JSON.stringify({sourceSha,basis:'original member declarations/read spans; reduced adjacent carriers and implementations; candidate counts',members:rows},null,2)+'\n');
 console.log('Prepared '+rows.length+' pairs / '+rows.reduce((n,r)=>n+r.reads,0)+' candidate reads.');

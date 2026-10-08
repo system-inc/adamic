@@ -1,0 +1,8 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+type Path=string;
+interface FileInfo {readonly value:number;}
+interface Base {readonly get:unknown;}
+interface Carrier<K,V> {get(key: K): V | undefined;}
+type Target=Carrier<Path, FileInfo>;
+function probe(value:Base):void {const oldState={fileInfos:value as Target};oldState!.fileInfos.get("ok");console.log("done");}
+probe(new Map<Path,FileInfo>());

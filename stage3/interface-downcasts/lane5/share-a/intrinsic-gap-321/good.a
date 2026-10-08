@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly slice:unknown;}
+interface Carrier<T> {slice(start?: number, end?: number): T[];}
+type Target=Carrier<string>;
+function probe(value:Base):void {const path="ok";const getAccessibleFileSystemEntries=(path:string):{directories:Target}=>({directories:value as Target});getAccessibleFileSystemEntries(path).directories.slice(0);console.log("done");}
+probe(["ok"]);

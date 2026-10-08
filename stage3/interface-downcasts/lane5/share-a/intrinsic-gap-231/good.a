@@ -1,0 +1,7 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+type RelationComparisonResult=number;
+interface Base {readonly set:unknown;}
+interface Carrier<K,V> {set(key: K, value: V): this;}
+type Target=Carrier<string, RelationComparisonResult>;
+function probe(value:Base):void {const enumRelation=value as Target;enumRelation.set("ok",7);console.log("done");}
+probe(new Map<string,RelationComparisonResult>());

@@ -1,8 +1,8 @@
-Built: 54 callable pair certificates / 237 reads / 162 .a fixtures; this continuation adds 24 / 79.
-Commits: a3dd5fd9, a6277811 and c07e0670 pushed; checkpoint four follows on codex/views-callables-a.
-Checks: Node truth, native release/ASan/UBSan, JavaScript, finishing leak checks, original declarations and append-only counts. Global counts remains outside-share red.
-Mutants: 108 cumulative executable arity mutants caught by pinned exit/message assertions, plus source-verifier mutants.
-Uncovered: 712 pairs / 1179 reads pending; 68 pairs / 1143 reads need code, including 34 Set dependencies on 058635b9.
+Built: 65 callable pair certificates / 268 reads / 195 .a fixtures; this checkpoint adds 11 / 31.
+Commits: through 14a80a60 already pushed; checkpoint five follows on codex/views-callables-a, serving step 09.
+Checks: Node truth, release/native sanitizers, JavaScript, finishing leak checks, exact negative pins, original declarations and append-only counts pass; global counts remains outside-share red.
+Mutants: 130 cumulative executable arity mutants caught by pinned exit/messages; one new mapped-receiver source mutant fails verification.
+Uncovered: 689 pairs / 1060 reads pending; 80 pairs / 1231 reads need code, retaining 34 Set entries naming 058635b9.
 
 Certified ranks: 102, 120, 276, 291, 435, 450, 453, 456, 465, 357, 363, 444, 429, 285, 306, 333, 354, 360, 366, 369, 372, 375, 396, 399, 402, 426, 477, 486, 489, 513.
 The ledger assigns 897 remaining pairs / 2742 candidate reads before exclusions.
@@ -211,3 +211,59 @@ runtime arity mutant instances remain distinct from these source-verifier checks
 The raw evidence is in logs/lane5-a-batch4-final.log and the three source-mutant
 logs. All writes are fixtures, oracle tests, counts or reports. This is still a
 partial share delivery, with 712 untested pairs retained in ranked order.
+
+Checkpoint five certifies rank 162 (11 reads) and ranks 915, 918, 921, 924,
+927, 930, 933, 936, 939 and 942 (two reads each): 11 pairs / 31 reads.
+Lane totals become 221 / 2818 pairs and 2967 / 11063 candidate reads.
+Each new pair has a good control, exact arity and kind negative pins, finishing
+native leak checks, and two executed arity mutants. It appends 33 count rows;
+all previous 162 share rows remain unchanged.
+
+Rank 162 retains the original optional SymbolTracker.reportInferenceFallback
+member and its Required<Pick<SymbolTracker, "reportInferenceFallback">> receiver.
+The mapped receiver is independently verified rather than rewriting the optional
+member as a required declaration. An executed Required-to-Partial source mutant
+fails naming the changed mapped receiver; restoration returns green. The main
+preparer preserves this separately generated family. Fixture line endings are
+normalized to LF; the existing rank 528 enum fixtures are rechecked after that
+format-only normalization.
+
+Twelve additional code-needed controls cover 88 reads at ranks 126, 147, 228,
+231, 261, 267, 279, 282, 312, 318, 321 and 330. Rest/generic Array contracts
+refuse at lowering, Array/Map transport produces clang pointer-type failures,
+and valid Date.getTime reads stop at runtime (native missing field; JavaScript
+function with unknown signature). These stops are observations, never callable
+certificates or mutants. Path uses reduced string and RelationComparisonResult
+uses reduced number representation in frontier controls; full branded/enum
+domain certification is not claimed.
+
+The original helper-call and non-null receiver expressions at 126, 147, 228
+and 321 are retained. Their adjacent helper implementations are reduced to
+return the checked view of the actual built-in control. Nullish/conditional
+receivers 123, 171 and 270 retain pending status; no code blocker is inferred
+from their absence in the preparer. The Set dependency list still contains all
+34 entries / 91 reads with codex/views-set-receiver 058635b9, without merging or
+retesting that branch. No compiler/runtime code changed.
+
+Checkpoint five commands, with output written directly to logs:
+
+```sh
+node stage3/interface-downcasts/lane5/share-a/prepare.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-batch5-prepare.log 2>&1
+node stage3/interface-downcasts/lane5/share-a/prepare-mapped.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-mapped-prepare.log 2>&1
+node stage3/interface-downcasts/lane5/share-a/prepare-intrinsic-frontiers.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-batch5-intrinsic-prepare.log 2>&1
+go test ./internal/oracle -run '^TestCheckedViewCallableShareACounts$' -count=1 -timeout 10m -args -update-counts > /tmp/lane5-a-batch5-counts.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 10m -args -update-counts > /tmp/lane5-a-batch5-counts-global.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewCallableShareAIntrinsicControls$|^TestCheckedViewCallableShareAIntrinsicFrontiers$|^TestCheckedViewCallableShareACounts$|^TestCheckedViewCallableShareAFrontiers$|^TestCheckedViewCallableShareA$/^rank-(162|915|918|921|924|927|930|933|936|939|942)$' -count=1 -v -timeout 10m > /tmp/lane5-a-batch5-final.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewCallableShareA$/^rank-528$' -count=1 -v -timeout 10m > /tmp/lane5-a-batch5-line-endings.log 2>&1
+node stage3/interface-downcasts/lane5/share-a/verify.cjs /workspace/scratch/lane5-a-original /workspace/scratch/lane5-a-api/node_modules/typescript > /tmp/lane5-a-batch5-verify-final.log 2>&1
+go vet ./internal/oracle > /tmp/lane5-a-batch5-vet.log 2>&1
+```
+
+New callable batch PASS 17.650s; all intrinsic frontiers PASS 6.315s;
+combined new controls/mutants/frontiers and all 195 share count rows PASS 74.138s.
+Share counts update PASS 25.527s, appending 33 rows. Global counts exits 1 in
+63.821s on outside-share fixtures and does not write a partial global table.
+Source verification and vet pass. Earlier optional-parameter diagnostic pin
+corrections are harness corrections, not code frontiers or mutant evidence.
+The 22 new runtime mutant instances are individually recorded in the final log.
+This delivery remains partial; untested ranks are retained in their ranked queue.

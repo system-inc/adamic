@@ -1,0 +1,9 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface StringLiteral {readonly value:number;readonly kind:11;}
+type ModuleExportName = Identifier | StringLiteral;
+interface NamespaceExport {readonly value:number;readonly kind:281;}
+interface Base {readonly createNamespaceExport:unknown;}
+interface Target {createNamespaceExport(name: ModuleExportName): NamespaceExport;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createNamespaceExport({value:7,kind:80}).value}`);}
+probe({createNamespaceExport:7});

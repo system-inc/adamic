@@ -1,0 +1,6 @@
+// Original intrinsic member and read; actual built-in receiver, reduced adjacent carriers.
+interface Base {readonly getTime:unknown;}
+interface Carrier {getTime(): number;}
+type Target=Carrier;
+function probe(value:Base):void {const currentModifiedTime=value as Target;currentModifiedTime.getTime();console.log("done");}
+probe(new Date(0));
