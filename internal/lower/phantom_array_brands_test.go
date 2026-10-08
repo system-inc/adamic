@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"os/exec"
-	"reflect"
 	"strings"
 	"testing"
 )
@@ -70,7 +69,7 @@ console.log(out(into([3, 1])).join(','));`
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !reflect.DeepEqual(got, want) {
+	if !phantomExecutableIRMatches(t, got, want) {
 		t.Fatal("array brands or casts changed the unbranded IR")
 	}
 }
@@ -133,7 +132,7 @@ console.log(out(into([3, 1])).join(','));`
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !reflect.DeepEqual(got, want) {
+	if !phantomExecutableIRMatches(t, got, want) {
 		t.Fatal("required undefined array brands or casts changed the unbranded IR")
 	}
 }

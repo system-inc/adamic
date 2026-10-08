@@ -1,6 +1,13 @@
 package oracle
 
-import "testing"
+import (
+	"errors"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/lower"
+)
 
 // The eleventh ranked group of lane 2 array contracts: ClassDeclaration.typeParameters, modifiers of
 // Export, Variable, ImportEquals, ClassExpression, Constructor, Arrow and FunctionExpression
@@ -66,5 +73,21 @@ func TestCheckedViewRanked11ArrayContracts(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestCheckedViewArrayRecordCycleRefused(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, interfaceSource("lane2/array-record-cycle")))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "true\n" {
+		t.Fatalf("Node %#v", truth)
+	}
+	_, err = lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
+		t.Fatalf("got %v, want cycle refusal through ArrayRecord", err)
 	}
 }

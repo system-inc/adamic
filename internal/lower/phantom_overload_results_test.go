@@ -2,7 +2,6 @@ package lower
 
 import (
 	"errors"
-	"reflect"
 	"testing"
 )
 
@@ -44,7 +43,7 @@ console.log(path('built' + 'path'));`
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !reflect.DeepEqual(got, want) {
+	if !phantomExecutableIRMatches(t, got, want) {
 		t.Fatal("phantom overload results introduce runtime operations or change representation")
 	}
 }

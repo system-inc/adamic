@@ -6,8 +6,12 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Bit zero is undefined. A zero mask is an unknown signature, never all members.
+// Bit zero denotes an absent optional slot. Certified void uses a wildcard
+// result mask; unknown signatures remain refused at the certification boundary.
 func (l *lowering) viewCallableRepresentationMask(proven *checker.Type) uint16 {
+	if proven.Flags()&checker.TypeFlagsVoid != 0 {
+		return 0
+	}
 	if base := l.phantomBase(proven); base != nil {
 		proven = base
 	} else if base := l.phantomArrayBase(proven); base != nil {

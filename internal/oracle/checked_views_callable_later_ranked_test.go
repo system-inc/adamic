@@ -247,3 +247,22 @@ func checkedViewCallableFormerUnionControl(t *testing.T, program *ir.Program, tr
 		t.Fatal(report)
 	}
 }
+
+// A wider producer representation forces the boxed adapter while retaining the
+// source-file-update layout with five missing optional slots.
+func TestCheckedViewCallableSourceFileUpdateBoxedOptional(t *testing.T) {
+	program, path := interfaceFixture(t, "lane5/later-ranked-callables/source-file-update/boxed-optional")
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "7\n" {
+		t.Fatalf("Node %#v", truth)
+	}
+	sanitized, binary := nativelyUncached(t, program)
+	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatalf("%s: exit %d stderr %s", difference, got.exitCode, got.stderr)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+}

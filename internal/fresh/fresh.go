@@ -207,6 +207,9 @@ type object int32
 
 const outside object = 0
 
+// This is an internal ownership edge, never a source property name.
+const arrayPropertiesKey = "\x00array-properties"
+
 func newest(site int) object { return object(2*site + 1) }
 func older(site int) object  { return object(2*site + 2) }
 func siteOf(o object) int    { return int(o-1) / 2 }
@@ -1317,6 +1320,18 @@ func (a *analysis) value(expression ir.Expression) value {
 			}
 		}
 		return made
+	case ir.ArrayRecord:
+		// ArrayRecord preserves the fresh array, including references in its
+		// elements. Own properties are copied into separately owned storage.
+		array := a.value(expression.Array)
+		properties := a.value(expression.Properties)
+		copied := a.fresh(anyField, a.everything(properties))
+		for holder := range array.strong {
+			a.state.store(holder, arrayPropertiesKey, copied)
+		}
+		return array
+	case ir.ArrayProperties:
+		return a.load(a.value(expression.Array), arrayPropertiesKey)
 	case ir.ArrayLiteral:
 		var elements value
 		for index, element := range expression.Elements {

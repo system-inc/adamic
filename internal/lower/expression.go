@@ -994,7 +994,21 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if err != nil {
 				return nil, err
 			}
-			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
+			logical := ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}
+			if operator == ast.KindAmpersandAmpersandToken && left.Type().IsReference() && left.Type() != ir.String && left.Type() != ir.Union && right.Type() == ir.String {
+				leftType := l.concrete(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Left))
+				resultType := l.concrete(l.checker.GetTypeAtLocation(node))
+				if l.includesNull(leftType) {
+					return nil, &Refused{Where: l.program.Where(node), What: "a null-bearing reference retained by && as a string", Fix: "preserve null instead of treating it as undefined (adamic/logical-null)"}
+				}
+				if of == ir.String {
+					if !l.includesUndefined(resultType) || l.includesNull(resultType) || l.checker.GetNonNullableType(resultType).Flags()&checker.TypeFlagsStringLike == 0 {
+						return nil, l.notYet(node, "a retained reference without a string | undefined logical-result proof")
+					}
+					logical.AbsentString = true
+				}
+			}
+			return logical, nil
 		}
 		lowered := ir.And
 		if operator == ast.KindBarBarToken {

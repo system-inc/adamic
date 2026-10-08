@@ -6,7 +6,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"reflect"
 	"strings"
 	"testing"
 
@@ -67,7 +66,7 @@ console.log(out(into('made' + 'now')));`
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !reflect.DeepEqual(got, want) {
+	if !phantomExecutableIRMatches(t, got, want) {
 		t.Fatalf("casts must leave identical IR:\ngot %#v\nwant %#v", got.Functions, want.Functions)
 	}
 	for _, function := range got.Functions {

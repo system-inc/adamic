@@ -46,9 +46,11 @@ func (e *emitter) viewCallableBoxedInvokeTypes(from []ir.Type, returns ir.Type, 
 			continue
 		}
 		fmt.Fprintf(&body, "if (%s) {\n", e.closureCodeIdentity("self", index))
-		if len(from) != 0 {
-			fmt.Fprintf(&body, "adamic_value adapted[%d] = {0};\nfor (size_t i = 0; i < count && i < %d; i++) adapted[i] = arguments[i];\n", len(from), len(from))
-		}
+		call := ir.CallClosure{Closure: ir.MakeClosure{Function: index}, Direct: index + 1}
+		layout := e.program.ClosureArgumentLayout(call)
+		// Preserve every actual argument and zero every missing producer slot.
+		minimum := max(1, len(from), len(layout.Fixed))
+		fmt.Fprintf(&body, "size_t capacity = count > %d ? count : %d;\nadamic_value adapted[capacity];\nmemset(adapted, 0, sizeof adapted);\nfor (size_t i = 0; i < count; i++) adapted[i] = arguments[i];\n", minimum, minimum)
 		release := []string{}
 		for i, local := range function.Parameters {
 			if i >= len(from) {
@@ -68,13 +70,8 @@ func (e *emitter) viewCallableBoxedInvokeTypes(from []ir.Type, returns ir.Type, 
 				release = append(release, fmt.Sprintf("if (count > %d) adamic_release(adapted[%d].reference);\n", i, i))
 			}
 		}
-		packed := "arguments"
-		if len(from) != 0 {
-			packed = "adapted"
-		}
+		packed := "adapted"
 		adapter := emitter{program: e.program, reuse: e.reuse, indent: 1, scopes: [][]string{{}}}
-		call := ir.CallClosure{Closure: ir.MakeClosure{Function: index}, Direct: index + 1}
-		layout := e.program.ClosureArgumentLayout(call)
 		slots := []string{}
 		for i, of := range layout.Fixed {
 			slots = append(slots, fmt.Sprintf("{.%s = %s}", member(of), slotted(of, packedParameter(of, packed, "count", i))))

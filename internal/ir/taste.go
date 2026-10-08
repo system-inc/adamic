@@ -10,6 +10,9 @@ type Logical struct {
 	Left, Right Expression
 	Of          Type
 	KeepTruthy  bool
+	// AbsentString is certified only for a string | undefined && result,
+	// with a reference left operand whose source type excludes null.
+	AbsentString bool
 }
 
 func (l Logical) Type() Type { return l.Of }

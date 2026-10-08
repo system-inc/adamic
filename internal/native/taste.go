@@ -53,7 +53,12 @@ func (e *emitter) logicalValue(expression ir.Logical) string {
 	if from.IsMaybe() && expression.KeepTruthy {
 		left, from = left+"."+member(from.Present()), from.Present()
 	}
-	value, fresh := logicalConverted(from, expression.Of, left)
+	value, fresh := "", false
+	if expression.AbsentString {
+		value = zero(ir.String)
+	} else {
+		value, fresh = logicalConverted(from, expression.Of, left)
+	}
 	if expression.Of.IsReference() && !fresh {
 		value = retained(value)
 	}
