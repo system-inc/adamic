@@ -516,6 +516,8 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 	switch node.Kind {
 	case ast.KindNullKeyword:
 		return ir.Null{}, nil
+	case ast.KindNonNullExpression:
+		return l.nonNull(node)
 	case ast.KindRegularExpressionLiteral:
 		return l.regexConstant(node)
 	case ast.KindNumericLiteral:
@@ -688,8 +690,6 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 		return ir.Read{Local: l.this, Of: ir.Object}, nil
 	case ast.KindArrowFunction:
 		return l.closure(node)
-	case ast.KindNonNullExpression:
-		return l.nonNull(node)
 	case ast.KindAsExpression:
 		return l.cast(node)
 	case ast.KindSatisfiesExpression:
