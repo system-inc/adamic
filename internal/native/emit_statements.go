@@ -70,11 +70,21 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.AllocateEnvironment:
 		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
+		if statement.CopyCell {
+			cell := e.cellReference(statement.Local)
+			e.replaceIterationCell(statement.Local, e.asyncSlots[statement.Local], unslotted(e.program.Locals[statement.Local].Type, cell+"->value."+member(e.program.Locals[statement.Local].Type)), false)
+			return
+		}
 		if statement.Uninitialized {
 			if e.program.Locals[statement.Local].EnvironmentCell {
 				return
 			}
 			local := e.program.Locals[statement.Local]
+			if local.IterationCell {
+				e.replaceIterationCell(statement.Local, e.asyncSlots[statement.Local], zero(local.Type), true)
+				e.line("%s->ready = false;", e.cellReference(statement.Local))
+				return
+			}
 			if local.Captured {
 				e.makeCell(statement.Local, zero(local.Type), true)
 				e.line("%s->ready = false;", e.cellReference(statement.Local))

@@ -96,6 +96,7 @@ type Function struct {
 	// NestedParent is the enclosing function plus one for a named nested declaration.
 	NestedParent int
 	// FrameEnvironment is the layout of the single entry allocation for this frame.
+	// An IterationCell slot holds a reference to the current separately counted binding.
 	FrameEnvironment []int
 	NestedFrame      bool
 
@@ -207,6 +208,8 @@ type Local struct {
 	Preallocated bool
 	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
 	EnvironmentCell bool
+	// IterationCell is a separately counted binding held by an async frame slot.
+	IterationCell bool
 	// NestedFunction is the named declaration this binding holds, plus one.
 	NestedFunction int
 
@@ -1066,8 +1069,10 @@ type (
 	Declare struct {
 		// Uninitialized allocates only a captured cell, with its ready bit clear.
 		Uninitialized bool
-		Local         int
-		Value         Expression
+		// CopyCell starts the next for-header binding with the current value.
+		CopyCell bool
+		Local    int
+		Value    Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for

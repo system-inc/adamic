@@ -480,7 +480,6 @@ func TestAsyncReaderProbes(t *testing.T) {
 		cycle              bool
 	}{
 		{"async_refuse_frame_capture_cycle", "async frame capture cycle", "seed3:held:7\n", true},
-		{"async_refuse_loop_body_capture", "async per-iteration captured cells", "item0 item1 item2\n", false},
 		{"async_refuse_return_thenable", "return of thenables", "7\n", false},
 		{"async_refuse_arrow_thenable", "return of thenables", "7\n", false},
 	} {
@@ -565,5 +564,31 @@ func TestAsyncFrameCapturedClosureCycleMutant(t *testing.T) {
 				t.Fatal(report)
 			}
 		})
+	}
+}
+
+// Keeping a header binding in one cell preserves memory safety but breaks JavaScript identity.
+func TestAsyncLoopCellsCatchSharedCell(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_loop_cells.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	control := native.C(program)
+	pattern := regexp.MustCompile(`adamic_cell \*(adamic_temporary_[0-9]+) = adamic_cell_new\(\(adamic_value\)\{\.number = \(\(adamic_cell \*\)frame->cells\[([0-9]+)\]\.value\.reference\)->value\.number\}, false\);\n\s*adamic_release\(frame->cells\[[0-9]+\]\.value\.reference\);\n\s*frame->cells\[[0-9]+\]\.value\.reference = [^;]+;`)
+	code := pattern.ReplaceAllString(control, `/* shared iteration cell */`)
+	if code == control {
+		t.Fatal("mutant did not change input")
+	}
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	if disagreement(onNode(t, path), result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
+		t.Fatalf("Node output must catch shared-cell mutant: %+v", result)
 	}
 }
