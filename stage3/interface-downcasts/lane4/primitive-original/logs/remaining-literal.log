@@ -1,0 +1,23 @@
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-negative-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "true:123\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "42:123\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false:123\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "42:123\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-text-wrong
+--- PASS: TestCheckedViewObjectPrimitiveOriginalPairs (14.71s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-good (3.45s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-boolean (3.99s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-negative-wrong (4.16s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-text-wrong (3.09s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	14.752s

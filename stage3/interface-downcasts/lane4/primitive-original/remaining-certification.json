@@ -1,0 +1,20 @@
+{
+  "basis": "Static candidates; original full declarations, not whole-tsc execution",
+  "integration": "267fd75b",
+  "certified_pairs": 53,
+  "certified_candidate_reads": 661,
+  "remaining_pairs": 8,
+  "remaining_candidate_reads": 25,
+  "lane6_dictionary_reference_pairs": 3,
+  "lane6_dictionary_reference_reads": 14,
+  "owned_remaining_pairs": 5,
+  "owned_remaining_reads": 11,
+  "groups": [
+    {
+      "pair": "7536:value",
+      "reads": 10,
+      "evidence": "lane4b/original/certification.json and logs/remaining-literal.log",
+      "result": "original Node, C sanitizers and release, JavaScript pass; eight semantic backend mutant kills"
+    }
+  ]
+}

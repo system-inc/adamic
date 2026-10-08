@@ -266,3 +266,14 @@ contains the three dictionary reference components / fourteen reads, lane 4b
 object alternatives four / eighteen, and lane 7 intersections two / three.
 Raw remaining is eleven / thirty-nine, including two tuple scalar false positives.
 Exact whole-tsc reachability still requires a checker-clean program.
+
+Remaining-pair reconciliation: LiteralType.value (one pair / ten candidate
+reads) reuses integrated lane 4b production and complete original witnesses.
+Uncached TestCheckedViewObjectPrimitiveOriginalPairs/literal- passed in
+14.752s with original declarations enabled. Four cases passed Node, native
+ASan/UBSan, release C and JavaScript; eight independent backend mutant kills
+cover wrong member, skipped union check, wrong nested shape and transitive
+omission. No new production code needed for this already integrated pair.
+Corrected column now 53 / 661 certified, 8 / 25 remaining. Lane 6 owns
+three dictionary reference pairs / fourteen reads; this worker has five /
+eleven remaining. Counts are static candidates, not exact reachability.

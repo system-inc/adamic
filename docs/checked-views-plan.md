@@ -2324,3 +2324,13 @@ proves every admitted runtime kind primitive/nullish. Unknown flow fallback is
 unchanged. Actual reference kinds are excluded and stop at this read until their
 owning lane provides selection, so unread reference alternatives cannot poison
 a selected scalar. Object and array alternatives receive no certification credit.
+
+### Lane 4 remaining candidate reconciliation
+
+User expands this worker to the six remaining nondictionary candidate pairs
+(21 reads), reusing integrated lane 4b and lane 7 code where available.
+Dictionary reference arms for CompilerOptions, OptionsBase and BuildOptions
+(three pairs / fourteen reads) belong to lane 6 and are excluded here.
+Owned follow-up witnesses and ledger live under lane4/primitive-original.
+LiteralType.value already has integrated original-declaration certification;
+rerun its full Node/backend/refusal/mutant evidence before crediting it here.
