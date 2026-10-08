@@ -1360,6 +1360,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
+	if err := l.libraryCollectionKeySlots(node, key); err != nil {
+		return 0, 0, err
+	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).
 	if !valueKnown || slotless(value) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))

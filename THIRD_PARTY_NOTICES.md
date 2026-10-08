@@ -73,6 +73,9 @@ IN THE SOFTWARE.
     ArrayEveryLoopContinuation and ArraySomeLoopContinuation in Node.js v24.19.0's
     `deps/v8/src/builtins/array-filter.tq`, `array-every.tq` and `array-some.tq`;
     dense arrays only, using represented values for ToBoolean);
+  - mixed Map and Set key dispatch (`internal/native/runtime/map.c`, after
+    SameValueZeroHeapNumber, SameValueZeroString, FindOrderedHashTableEntryForOtherKey
+    and NormalizeNumberKey in src/builtins/builtins-collections-gen.cc, Node v24.19.0);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);
