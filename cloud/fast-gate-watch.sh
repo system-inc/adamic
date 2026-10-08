@@ -127,8 +127,10 @@ while true; do
     # Boxes where a big tip may borrow a small slot: a free small slot, and fewer than two big gates there
     # already (its area slot and one borrowed). Three big gates borrowing on one box stacked hundreds of
     # compiles and took Cloud and Workshop down (Oct 8 11:2xZ).
+    # The limit is ${state}/big-per-box (default 2), read every poll, so it moves by measurement.
+    bigPerBox=$(cat "${state}/big-per-box" 2>/dev/null || echo 2)
     borrowable=$(echo "${free}" | awk '$2 == "S" {print $1}' | while read -r b; do
-      [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt 2 ] && echo "${b}"
+      [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt "${bigPerBox}" ] && echo "${b}"
     done | head -1)
     # A tip takes a free slot of its class; a big tip may also take a free small slot, but only when
     # no small tip could have it (rank 10 and up): 74 big tips waited on two area slots while four small
