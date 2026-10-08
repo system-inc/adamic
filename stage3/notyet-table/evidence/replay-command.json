@@ -1,0 +1,13 @@
+[
+  "go",
+  "run",
+  "./stage3/census/latent/replay",
+  "-project",
+  "/tmp/stage3-notyet-adapted/src/tsc/tsc.ts",
+  "-where",
+  "/tmp/stage3-notyet-adapted/src/compiler/binder.ts:579:18",
+  "-kind",
+  "NotYet",
+  "-reason",
+  "a method call through a structural signature in a program with statics; use typeof the declaring class"
+]

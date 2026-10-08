@@ -1,0 +1,14 @@
+E
+======================================================================
+ERROR: setUpClass (__main__.ReplayTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/census/latent/replay/replay_test.py", line 54, in setUpClass
+    assert reasons == {'a string as a condition', 'a number as a condition', 'var'}, cls.expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [{'measurement': 'measured on a checker-rejected program', 'unit': '/tmp/adamic-gate/census-replay-tests-b0rait_w/source/probe.a:5:5', 'phase': 'lowering', 'kind': 'Refused', 'where': '/tmp/adamic-gate/census-replay-tests-b0rait_w/source/probe.a:9:38', 'reason': 'var', 'text': '/tmp/adamic-gate/census-replay-tests-b0rait_w/source/probe.a:9:38: Adamic 0.1 refuses var; use const or let'}, {'measurement': 'measured on a checker-rejected program', 'unit': '/tmp/adamic-gate/census-replay-tests-b0rait_w/source/probe.a:5:5', 'phase': 'lowering', 'kind': 'Boundary', 'where': '/tmp/adamic-gate/census-replay-tests-b0rait_w/source/probe.a:9:38', 'reason': 'failed statement; state rolled back; continued at next statement or declaration', 'text': '/tmp/adamic-gate/census-replay-tests-b0rait_w/source/probe.a:9:38: Adamic 0.1 refuses var; use const or let', 'start': 347, 'end': 366}]
+
+----------------------------------------------------------------------
+Ran 0 tests in 17.885s
+
+FAILED (errors=1)

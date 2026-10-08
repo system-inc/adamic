@@ -1,0 +1,5 @@
+PASS: top non-context-sensitive reason, table example, exact phase/kind/where/reason signature, one eligible unit, all 10 ordered findings (apart from scope labels), and real sibling-selection mutant
+selected unit: /tmp/stage3-notyet-adapted/src/compiler/binder.ts:571:5
+replay load/register/lower: 6.968941302s
+reproduced NotYet: a method call through a structural signature in a program with statics; use typeof the declaring class at /tmp/stage3-notyet-adapted/src/compiler/binder.ts:579:18
+replay total (including overlay and Go build): 18.081668236s

@@ -1,0 +1,7 @@
+--- FAIL: TestCountsAreRecorded (0.07s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.03s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/process_exit.a (0.04s)
+            counts_test.go:169: Lower: /workspace/adamic/internal/oracle/testdata/process_exit.a:2:44: stage 0 can't lower process.exit as a value (use its supported process operation directly) yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.095s
+FAIL

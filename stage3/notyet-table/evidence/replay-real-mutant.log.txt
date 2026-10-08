@@ -1,0 +1,5 @@
+replay load/register/lower: 2.810592677s
+replay signature did not reproduce: NotYet a method call through a structural signature in a program with statics; use typeof the declaring class at /tmp/stage3-notyet-adapted/src/compiler/binder.ts:579:18 (selected /tmp/stage3-notyet-adapted/src/compiler/binder.ts:330:1)
+exit status 1
+replay total (including overlay and Go build): 3.236332956s
+exit status 1

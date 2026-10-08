@@ -1,0 +1,3 @@
+replay load/register/lower: 6.968941302s
+reproduced NotYet: a method call through a structural signature in a program with statics; use typeof the declaring class at /tmp/stage3-notyet-adapted/src/compiler/binder.ts:579:18
+replay total (including overlay and Go build): 18.081668236s
