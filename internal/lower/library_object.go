@@ -63,7 +63,14 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
 		// Reflection cannot use a widened view: a hidden field can have another representation.
 		// A plain const's literal initializer proves the complete shape, including field presence.
-		if !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		shape := ast.SkipParentheses(written[0])
+		if shape.Kind == ast.KindAsExpression {
+			assertion := shape.AsAsExpression()
+			if assertion.Type.Kind == ast.KindTypeReference && assertion.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+				shape = ast.SkipParentheses(assertion.Expression)
+			}
+		}
+		if !l.exactObject(shape, 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])
