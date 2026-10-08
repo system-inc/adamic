@@ -5,6 +5,7 @@ import hashlib
 from concurrent.futures import ThreadPoolExecutor
 import tarfile
 import urllib.request
+import urllib.error
 import json
 import os
 import shutil
@@ -48,15 +49,25 @@ def fetch(store, name, destination):
         shutil.copyfile(Path(store) / name, destination)
 
 
+class ProductMissing(RuntimeError):
+    """Only an absent manifest permits a local fallback build."""
+
+
 def restore_product(store, key, out):
-    # A miss never triggers a build in a cold test. Verify before extracting,
-    # and expose the output only after the complete archive has been restored.
+    # Verify before extracting and expose the output only after the complete archive has been restored.
     with tempfile.TemporaryDirectory(prefix='stage3-product-', dir=out.parent) as scratch:
         scratch = Path(scratch)
         manifest_path = scratch / 'manifest.json'
         archive = scratch / 'tree.tgz'
         try:
-            fetch(store, key + '.manifest', manifest_path)
+            try:
+                fetch(store, key + '.manifest', manifest_path)
+            except FileNotFoundError as error:
+                raise ProductMissing(f'product {key} missing from {store}') from error
+            except urllib.error.HTTPError as error:
+                if error.code == 404:
+                    raise ProductMissing(f'product {key} missing from {store}') from error
+                raise
             manifest = json.loads(manifest_path.read_text())
             if manifest['format'] != FORMAT or manifest['key'] != key:
                 raise RuntimeError('adapted product input key mismatch')
@@ -117,6 +128,34 @@ def save_product(store, key, out):
         manifest_path = Path(scratch) / 'manifest.json'
         manifest_path.write_text(json.dumps(manifest, sort_keys=True) + '\n')
         os.replace(manifest_path, store / (key + '.manifest'))
+
+
+def publish_hook(store, key):
+    """Describe local payloads for developer tools; never read credentials/upload."""
+    store = Path(store).resolve()
+    manifest_path = store / (key + '.manifest')
+    manifest = json.loads(manifest_path.read_text())
+    if manifest['format'] != FORMAT or manifest['key'] != key:
+        raise RuntimeError('adapted product input key mismatch')
+    payloads = []
+    for index, part in enumerate(manifest['parts']):
+        if part['suffix'] != f'p{index:03d}':
+            raise RuntimeError('adapted product part manifest mismatch')
+        payload = store / (key + '.' + part['suffix'])
+        with payload.open('rb') as source:
+            actual = hashlib.file_digest(source, 'sha256').hexdigest()
+        if payload.stat().st_size != part['size'] or actual != part['sha256']:
+            raise RuntimeError('adapted product part hash mismatch')
+        payloads.append(dict(path=str(payload), asset='adamic/build-cache/' + payload.name))
+    if not payloads:
+        raise RuntimeError('adapted product part manifest mismatch')
+    payloads.append(dict(path=str(manifest_path), asset='adamic/build-cache/' + manifest_path.name))
+    return dict(format=FORMAT, key=key,
+                inputs=['stage3/source.json', 'stage3/apply.py', 'stage3/api/package.json',
+                        'stage3/api/package-lock.json', 'stage3/adapt/** (except __pycache__)',
+                        'node --version'],
+                pinned_source=json.loads((stage / 'source.json').read_text()),
+                payloads=payloads, publish_order='parts first, manifest last')
 
 
 def run(*args, **kwargs):
@@ -193,11 +232,20 @@ def main():
                         help='also update the checked-in stage3/patch-set.md')
     parser.add_argument('--build-product', action='store_true',
                         help='prepare keyed product outside test units')
+    parser.add_argument('--publish-hook', action='store_true',
+                        help='print local payload paths and key for developer tools publisher')
     parser.add_argument('--key', action='store_true', help='print the input hash only')
     args = parser.parse_args()
     key = product_key()
     if args.key:
         print(key)
+        return
+    if args.publish_hook:
+        cache = Path(os.environ.get('STAGE3_CACHE', str(Path.home() / '.cache/adamic-stage3')))
+        store = os.environ.get('STAGE3_PRODUCT_STORE', str(cache / 'products'))
+        if store.startswith(('http://', 'https://', 'file://')):
+            parser.error('--publish-hook requires the local product store')
+        print(json.dumps(publish_hook(store, key), indent=2))
         return
     if args.output is None:
         parser.error('output is required')
@@ -216,7 +264,14 @@ def main():
         build_product(out, cache)
         save_product(store, key, out)
     else:
-        restore_product(store, key, out)
+        try:
+            restore_product(store, key, out)
+        except ProductMissing:
+            print(f'stage3 product cache miss: {key}; building adapted tree locally', file=sys.stderr)
+            cache.mkdir(parents=True, exist_ok=True)
+            build_product(out, cache)
+            local_store = store if not store.startswith(('http://', 'https://', 'file://')) else str(cache / 'products')
+            save_product(local_store, key, out)
     if args.write_table:
         (stage / 'patch-set.md').write_bytes((out / 'patch-set.md').read_bytes())
     print(out)

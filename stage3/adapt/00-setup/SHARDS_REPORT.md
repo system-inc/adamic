@@ -2,7 +2,25 @@ Built a hash-keyed adapted-tree store and independent Python/corpus-file test sh
 Base: origin/main 54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8; implementation commit: this commit.
 Measured 178 fresh-process invocations: maximum 15.788 s; original apply test 151.065 s.
 Seventeen new guard, partition, and planted-source mutants were caught; planted failures had exactly one owning shard.
-Incomplete: remote publication and the historical proof scripts listed below; branch is not ready to push.
+Developer tools owns remote publication; historical proof measurement gaps remain listed below.
+
+# Developer tools publish hook
+
+Owner: developer tools publisher #x2651cf, kirkouimet assets, restricted to adamic/build-cache/. This script performs no upload and reads no cache credential. The gate runs preparation once, outside test units:
+
+```bash
+source /workspace/adamic-tools/env.sh
+export STAGE3_PRODUCT_STORE=/absolute/local/stage3-products
+bash stage3/apply.sh --key > /tmp/stage3-product-key.txt
+bash stage3/apply.sh --build-product /absolute/new/adapted-tree > /tmp/stage3-product-build.log 2>&1
+bash stage3/apply.sh --publish-hook > /tmp/stage3-product-hook.json
+```
+
+The hook JSON supplies format, key, inputs, pinned_source and payloads. Each payload has an absolute local path and an asset destination under adamic/build-cache/. Inputs are pinned stage3/source.json, apply.py, API package/lock, all adaptation entries (excluding generated __pycache__), and node --version. Names, modes, file bytes, directories, and file symlink targets participate in the hash; directory symlinks are refused. The payload is a gzip tar of the complete adapted tree including .git snapshot refs and patch-set.md, split into 16 MiB keyed .pNNN files, plus a keyed .manifest containing part and complete archive sizes and SHA256 hashes. The hook verifies each part before describing it. Developer tools publishes parts first and the manifest last, using only its own publisher and credentials.
+
+For fetches, ADAMIC_BUILD_CACHE_URL must be the public URL corresponding to the published adamic/build-cache/ asset directory. Requests append KEY.manifest or KEY.pNNN to that base. Existing workers.dev is the fallback base for compatibility; developer tools supplies the correct asset-serving base if different. STAGE3_PRODUCT_STORE can instead select a local directory or explicit URL. Missing manifest builds locally with `stage3 product cache miss: KEY; building adapted tree locally` on stderr and saves the result in the local product store. On a remote miss, that store defaults to STAGE3_CACHE/products. There is no remote write. Corruption is fatal rather than a cache miss.
+
+The test suite now replaces the earlier never-build-on-miss test with build-and-report coverage, plus corrupt-product refusal, local hook contract, and precise missing-manifest classification. Earlier timings and mutant records below describe the initial revision and are retained as historical evidence. Current-revision timings and mutants are recorded separately in the follow-up validation section.
 
 # Measurements and limits
 
@@ -14,7 +32,7 @@ Original command: python3 stage3/test_apply.py in a detached origin/main checkou
 
 Run python3 stage3/test_apply.py --list-shards N to list every Python case and owner. ADAMIC_TEST_SHARD=i/N selects its cases. ADAMIC_TEST_LIST_SHARDS=1 ADAMIC_TEST_SHARD=0/N node stage3/adapt/SLUG/verify.cjs BEFORE AFTER lists every corpus file and owner. The partition tests check several counts, including more shards than cases, for exact union and unique ownership.
 
-Product preparation: bash stage3/apply.sh --build-product OUTPUT. Ordinary bash stage3/apply.sh OUTPUT retrieves by the hash of pinned source metadata, every adaptation directory, apply.py, API locks, and Node version. STAGE3_PRODUCT_STORE selects a local store; ADAMIC_BUILD_CACHE_URL selects the remote store. Missing or corrupt products fail without rebuilding. Products contain git snapshot refs needed by proof helpers. Manifest and each part are verified; extracted paths use the data tar filter. Source tables change only with --write-table.
+Product preparation: bash stage3/apply.sh --build-product OUTPUT. Ordinary bash stage3/apply.sh OUTPUT retrieves by the hash of pinned source metadata, every adaptation directory, apply.py, API locks, and Node version. STAGE3_PRODUCT_STORE selects a local store; ADAMIC_BUILD_CACHE_URL selects the remote store. As requested in the October 8 follow-up, absent manifests (local missing file or HTTP 404) now cause an explicit logged local build. Corrupt products, missing parts, authorization errors, and other retrieval failures still fail without rebuilding. A missing-cache build exceeds 30 seconds; only tests after fetching a published product satisfy the measured budget. Products contain git snapshot refs needed by proof helpers. Manifest and each part are verified; extracted paths use the data tar filter. Source tables change only with --write-table.
 
 # Before and after table
 
@@ -2175,6 +2193,54 @@ Local evidence: /tmp/stage3-apply-cold/*.log and timings.json; /tmp/stage3-apply
 
 # Outstanding work
 
-The remote publisher was not implemented or executed: automatic approval review rejected adding a publisher that reads the local gate credential and uploads adapted source to adamic-build-cache.kirk-ouimet.workers.dev, citing missing explicit authorization for the payload and destination. This worker also has no cache credential. Only local product retrieval and tiny file-URL retrieval have been tested. No remote hash product has been published.
+Remote publishing belongs to developer tools under the explicit follow-up instruction. This worker neither uses cache credentials nor uploads products. Only local product retrieval and tiny file-URL retrieval have been tested; no remote hash product has been published by this worker.
 
-Not measured or converted here: 20 baseline proof, 40 historical compiled class/filesystem/error-host proofs, 41 full artifact/oracle proof, 70/71/75 proof families, and ancillary census/API scripts. In particular, 41/oracle-proof.cjs invokes stage3/oracle/run.sh whose runner unconditionally installs/builds outside this territory; it has no supplied-product option. Their cold budget is not established by these measurements. This report does not certify the entire stage 3 tier. Further work is needed before the requested single finished-unit push.
+Not measured or converted here: 20 baseline proof, 40 historical compiled class/filesystem/error-host proofs, 41 full artifact/oracle proof, 70/71/75 proof families, and ancillary census/API scripts. In particular, 41/oracle-proof.cjs invokes stage3/oracle/run.sh whose runner unconditionally installs/builds outside this territory; it has no supplied-product option. Their cold budget is not established by these measurements. This report does not certify the entire stage 3 tier. The follow-up requests pushing the fetch side and documented hook with these coverage gaps retained.
+
+# Follow-up validation
+
+Current fetch/hook/fallback tests, run individually in fresh processes:
+
+| Unit | Seconds | Exit |
+| --- | ---: | ---: |
+| ProductTests.test_corrupt_product_never_builds | 0.202 | 0 |
+| ProductTests.test_existing_output_is_refused | 0.186 | 0 |
+| ProductTests.test_input_key_covers_all_inputs | 0.299 | 0 |
+| ProductTests.test_manifest_mutant_is_rejected | 0.247 | 0 |
+| ProductTests.test_missing_product_builds_and_reports | 0.158 | 0 |
+| ProductTests.test_only_manifest_absence_is_a_cache_miss | 0.227 | 0 |
+| ProductTests.test_payload_manifest_mutant_is_rejected | 0.193 | 0 |
+| ProductTests.test_payload_mutant_is_rejected | 0.276 | 0 |
+| ProductTests.test_publish_hook_describes_local_payloads | 0.395 | 0 |
+| ProductTests.test_restore_fetches_verified_product | 0.173 | 0 |
+| ProductTests.test_shards_partition_every_case | 0.138 | 0 |
+| ProductTests.test_unkeyed_parser_override_is_refused | 0.159 | 0 |
+| ProductTests.test_write_table_is_explicit | 0.151 | 0 |
+| ProofShardTests.test_every_indexed_read_file_has_one_shard | 0.281 | 0 |
+
+Commands: `python3 stage3/test_apply.py CASE`, output to `/tmp/stage3-followup-CASE.log`; results `/tmp/stage3-followup-tests.json`. The hook rejection assertion was subsequently strengthened to require the exact error class/message and its focused test rerun passed. Each isolated check mutant below produced one assertion failure and zero errors:
+
+| Mutant | Catcher |
+| --- | --- |
+| part-hash | test_payload_mutant_is_rejected |
+| payload-hash | test_payload_manifest_mutant_is_rejected |
+| manifest-key | test_manifest_mutant_is_rejected |
+| lock-input | test_input_key_covers_all_inputs |
+| node-input | test_input_key_covers_all_inputs |
+| write-table | test_write_table_is_explicit |
+| existing-output | test_existing_output_is_refused |
+| parser-override | test_unkeyed_parser_override_is_refused |
+| directory-symlink | test_input_key_covers_all_inputs |
+| cache-miss-fallback | test_missing_product_builds_and_reports |
+| cache-miss-message | test_missing_product_builds_and_reports |
+| corrupt-fallback | test_corrupt_product_never_builds |
+| http-miss | test_only_manifest_absence_is_a_cache_miss |
+| hook-key | test_publish_hook_describes_local_payloads |
+| hook-empty | test_publish_hook_describes_local_payloads |
+| hook-suffix | test_publish_hook_describes_local_payloads |
+| hook-assets | test_publish_hook_describes_local_payloads |
+| hook-part-hash | test_publish_hook_describes_local_payloads |
+
+Mutant commands: `python3 /tmp/stage3-followup-mutants.py > /tmp/stage3-followup-mutants.log 2>&1`; per-mutant logs and results.json in `/tmp/stage3-followup-mutants/`. The script mutates isolated apply modules, not repository files. The first hook-key probe accidentally mutated the fetch guard and survived; the corrected probe targets only the hook guard and was killed.
+
+Final product preparation exercises the ordinary local-store cache-miss path against the final input hash; its output and elapsed result are in `/tmp/stage3-followup-build-final.log` and `/tmp/stage3-followup-build-final.json`. This is preparation outside test units and is expected to exceed 30 seconds. Final ordinary apply and both clean/planted Python shards run after this product exists, with outputs and timings in `/tmp/stage3-followup-final-*.log` and `/tmp/stage3-followup-final.json`. The CLI hook output is `/tmp/stage3-followup-publish-hook.json`; developer tools can reproduce it with `bash stage3/apply.sh --publish-hook`. No product upload or credential use occurs.

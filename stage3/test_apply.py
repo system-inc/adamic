@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Exercise ordinary apply on a clean checkout with a deliberately stale table."""
+import io
 import os
 import importlib.util
 import json
@@ -180,14 +181,81 @@ class ProductTests(unittest.TestCase):
                 APPLY.restore_product(str(store), 'test-key', scratch / 'output')
             self.assertFalse((scratch / 'output').exists())
 
-    def test_missing_product_never_builds(self):
+    def test_missing_product_builds_and_reports(self):
         with tempfile.TemporaryDirectory() as scratch:
-            with mock.patch.object(APPLY, 'build_product', side_effect=AssertionError('rebuilt')):
-                with self.assertRaisesRegex(RuntimeError, 'outside tests'):
-                    with mock.patch.object(APPLY, 'product_key', return_value='missing'), mock.patch.dict(
-                            os.environ, STAGE3_PRODUCT_STORE=scratch), mock.patch.object(
-                            sys, 'argv', ['apply.py', str(Path(scratch) / 'output')]):
-                        APPLY.main()
+            scratch = Path(scratch)
+            output = scratch / 'output'
+            def build(out, cache):
+                out.mkdir()
+                (out / 'patch-set.md').write_text('fallback table')
+            message = io.StringIO()
+            with (mock.patch.object(APPLY, 'build_product', side_effect=build) as builder, mock.patch.object(
+                    APPLY, 'product_key', return_value='missing'), mock.patch.dict(
+                    os.environ, STAGE3_PRODUCT_STORE=str(scratch / 'products'), STAGE3_CACHE=str(scratch / 'cache')),
+                    mock.patch.object(sys, 'argv', ['apply.py', str(output)]), mock.patch.object(sys, 'stderr', message)):
+                APPLY.main()
+            builder.assert_called_once_with(output, scratch / 'cache')
+            self.assertIn('cache miss: missing; building adapted tree locally', message.getvalue())
+            self.assertEqual((output / 'patch-set.md').read_text(), 'fallback table')
+            APPLY.restore_product(str(scratch / 'products'), 'missing', scratch / 'fetched')
+            self.assertEqual((scratch / 'fetched/patch-set.md').read_text(), 'fallback table')
+
+    def test_only_manifest_absence_is_a_cache_miss(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            output = Path(scratch) / 'output'
+            for error in [FileNotFoundError('missing'),
+                          APPLY.urllib.error.HTTPError('https://cache/key.manifest', 404, 'missing', {}, None)]:
+                with mock.patch.object(APPLY, 'fetch', side_effect=error):
+                    with self.assertRaises(RuntimeError) as caught:
+                        APPLY.restore_product('https://cache', 'key', output)
+                    self.assertIsInstance(caught.exception, APPLY.ProductMissing)
+            for error in [PermissionError('denied'),
+                          APPLY.urllib.error.HTTPError('https://cache/key.manifest', 403, 'denied', {}, None)]:
+                with mock.patch.object(APPLY, 'fetch', side_effect=error):
+                    with self.assertRaises(RuntimeError) as caught:
+                        APPLY.restore_product('https://cache', 'key', output)
+                    self.assertNotIsInstance(caught.exception, APPLY.ProductMissing)
+            self.assertFalse(output.exists())
+
+    def test_corrupt_product_never_builds(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            scratch = Path(scratch)
+            store = self.product(scratch)
+            (store / 'test-key.p000').write_bytes(b'corrupt')
+            with (mock.patch.object(APPLY, 'build_product', side_effect=AssertionError('rebuilt corruption')),
+                    mock.patch.object(APPLY, 'product_key', return_value='test-key'), mock.patch.dict(
+                    os.environ, STAGE3_PRODUCT_STORE=str(store)), mock.patch.object(
+                    sys, 'argv', ['apply.py', str(scratch / 'output')])):
+                with self.assertRaisesRegex(RuntimeError, 'part hash mismatch'):
+                    APPLY.main()
+
+    def test_publish_hook_describes_local_payloads(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            scratch = Path(scratch)
+            store = self.product(scratch)
+            hook = APPLY.publish_hook(str(store), 'test-key')
+            self.assertEqual(hook['key'], 'test-key')
+            self.assertEqual(hook['pinned_source'], json.loads((ROOT / 'stage3/source.json').read_text()))
+            self.assertIn('stage3/apply.py', hook['inputs'])
+            self.assertEqual([Path(p['path']).name for p in hook['payloads']],
+                             ['test-key.p000', 'test-key.manifest'])
+            self.assertTrue(all(p['asset'] == 'adamic/build-cache/' + Path(p['path']).name
+                                for p in hook['payloads']))
+            self.assertEqual(hook['publish_order'], 'parts first, manifest last')
+            path = store / 'test-key.manifest'
+            original = json.loads(path.read_text())
+            for field, value, message in [('key', 'other', 'input key mismatch'),
+                                           ('parts', [], 'part manifest mismatch'),
+                                           ('parts', [dict(original['parts'][0], suffix='../../outside')], 'part manifest mismatch')]:
+                path.write_text(json.dumps(dict(original, **{field: value})))
+                with self.assertRaises(Exception) as caught:
+                    APPLY.publish_hook(str(store), 'test-key')
+                self.assertIsInstance(caught.exception, RuntimeError)
+                self.assertRegex(str(caught.exception), message)
+            path.write_text(json.dumps(original))
+            (store / 'test-key.p000').write_bytes(b'corrupt')
+            with self.assertRaisesRegex(RuntimeError, 'part hash mismatch'):
+                APPLY.publish_hook(str(store), 'test-key')
 
     def test_write_table_is_explicit(self):
         with tempfile.TemporaryDirectory() as scratch:
