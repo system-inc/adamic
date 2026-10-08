@@ -1,8 +1,8 @@
-Built switch-wide case bindings with local readiness and capture cells; Node decides behavior.
-Commits: compiler base b410340d, replay merge a3bed8f1, fixture reduction a66178c6; implementation follows this report.
-Focused source/backend/release/sanitized oracle passed (1.419s); counts refresh passed (22.265s).
-Nine independent mutants failed output or exit comparisons; no build-warning or lowering-refusal kills counted.
-Coverage: 63 unique declaration sites from 72 CSV observations; full tsc lowering and unrelated refusals remain uncovered.
+a2e856a6: built switch-wide lexical bindings/TDZ, optional case constants and literal undefined; pushed after merging main ef3141e9.
+Implementation commits e101af4f, b7e2a9a6, ccf20ba4; replay merge a3bed8f1; reduction commits a66178c6, b8cbb9e5, a49f0526.
+Ten fixtures pass Node source, JavaScript, release/sanitized native and leak checks; final merge fixture run 3.472s; all three counts refreshes pass.
+Thirteen independent mutants fail Node output or exit comparisons; fixture/catcher mapping and exact commands are recorded below.
+Coverage 63 + 8 + 1 = 72 unique CSV reason-sites; other named stops, dynamic cases and designed refusals remain; no runtime C edits.
 
 Assumption: start at origin/main, then merge the specifically requested current
 origin/area/compiler. The compiler pin resolved to b410340dc8f889b5799c3bc519117c63def3aa24.
@@ -160,3 +160,25 @@ After replay: the parseComparator switch lowers; no NotYet remains in its source
 body (lines 336-400). The requested signature therefore exits 1 as disappeared.
 Earlier helper findings remain, including NotYet assigning to an
 ObjectLiteralExpression at semver.ts:60:14 and reading major at 130:28.
+
+## Final landing verification
+
+Merged current origin/main ef3141e9 into the personal branch as a2e856a6 and
+pushed it. A final fetch confirms main is still ef3141e9. All ten unit fixtures
+pass uncached again after that merge (3.472s), using:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestSwitchCase(SourceReductions|OptionalSources|UndefinedSource)|TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_' -count=1 -v -timeout 10m
+node --check oracle/node.mjs
+```
+
+The touched-package command recorded above passes: internal/ir 25.283s,
+internal/lower 42.141s, internal/native 333.432s, internal/oracle 193.082s.
+internal/javascript has no test files; the cross-backend oracle fixtures test
+its output. Package checks started before the main merge; that merge changed
+only corpus selection/format tests and documentation, not these packages. The
+post-merge unit oracle ran against the merged tree. No full repository gate ran.
+Logs: /tmp/notyet-case-landed-fixtures.log and /tmp/notyet-case-node-syntax.log.
+
+Implementation support files are listed above for merge review. No runtime C
+helper was added. The final tree contains no active mutant or uncommitted code.
