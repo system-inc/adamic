@@ -30,7 +30,7 @@ function references(text: string): number[] {
         if(text.charCodeAt(i) !== 38) { continue; }
         let end = i + 1;
         while(end < text.length && referenceBody(text.charCodeAt(end))) { end++; }
-        if(end > i + 1 && text.charCodeAt(end) === 59) { found.push(i, end + 1); i = end; }
+        if(end > i + 1 && text.charCodeAt(end) === 59) { found.push(i); found.push(end + 1); i = end; }
     }
     return found;
 }
@@ -94,7 +94,10 @@ export class Rule {
     props = 'never'; children = 'never'; elements = 'ignore';
     constructor(context: RuleContext) {
         this.context = context;
-        if(context.settings.text === '') { return; }
+    }
+    loadOptions(): void {
+        const context = this.context;
+        if(!context.enabled('react/jsx-curly-brace-presence') || context.settings.text === '') { return; }
         const options = new OptionsJson(context.settings.text); const root = options.parse();
         if(root < 0 || options.error !== '') { panic(options.error); }
         const node = options.node(root);
@@ -107,7 +110,10 @@ export class Rule {
         for(let i = 0; i < node.keys.length; i++) {
             const key = (node.keys[i] ?? panic('option key')).toLowerCase();
             const value = options.node(node.children[i] ?? panic('option value'));
-            if(!['props', 'children', 'propelementvalues'].includes(key)) { panic('unknown jsx-curly-brace-presence option'); }
+            if(!['props', 'children', 'propelementvalues'].includes(key)) {
+                if(context.selected === 'all') { continue; }
+                panic('unknown jsx-curly-brace-presence option');
+            }
             if(value.kind === 'null') { continue; }
             if(value.kind !== 'string') { panic('invalid jsx-curly-brace-presence setting'); }
             if(!valid(value.text)) { continue; }
@@ -192,7 +198,7 @@ export class Rule {
             else { replacement = wrapChild(raw); }
         }
         const start = context.kind(index) === 'JsxText' ? context.node(index).pos : context.start(index);
-        context.reportRange(start, context.node(index).end, 'react/jsx-curly-brace-presence', 'MissingCurly', missing, [context.edit(index, replacement)]).editStart = start;
+        context.reportNode(index, 'react/jsx-curly-brace-presence', 'MissingCurly', missing, [context.edit(index, replacement)]).editStart = start;
     }
     visit(index: number, parent: number): void {
         const context = this.context; const kind = context.kind(index);
@@ -235,4 +241,8 @@ export class Rule {
         if(this.wanted(parent, 'always')) { this.missing(index, parent); }
     }
 }
-export function create(context: RuleContext): Rule { return new Rule(context); }
+export function create(context: RuleContext): Rule {
+    const rule = new Rule(context);
+    rule.loadOptions();
+    return rule;
+}
