@@ -148,12 +148,13 @@ comment prefix loss (byte 9609), shifted columns (14), and a lost document end
 marker (1974423). Cohere lint/types reported 276 rules and 100% Adamic-ready.
 
 [structuralPosition.ts](gaps/structuralPosition.ts) prints `1` on Node and
-gets `lower.Refused` before clang. A structural `{ start, end }` position type
-also admits objects with diagnostic arrays reaching another such position.
-The cycle check consequently refuses copying caller-owned diagnostic arrays.
-The port uses distinct `startPoint` and `endPoint` names for point indices.
-This is a conservative 0.1 structural refusal, not an observed memory bug.
-`TestStructuralPositionRefusal` holds the exact refusal and Node result.
+native. Graph regions closed the former structural refusal: a structural
+`{ start, end }` position type can admit objects with diagnostic arrays reaching
+another such position, and copying caller-owned diagnostic arrays now lowers
+and runs safely. The sanitized native build agrees with Node, and the counted
+build reports 6 allocations and 6 frees, with 0 regions remaining.
+`TestStructuralPositionMatchesNode` checks lowering and sanitized native agreement.
+The port still uses distinct `startPoint` and `endPoint` names for point indices.
 
 ```sh
 ADAMIC_YAML_LIBRARY=/tmp/stage1-yaml-library go test -v -count=1 -timeout=15m ./stage1/cohere/yaml -run 'TestUnist|TestStructuralPosition' > /tmp/stage1-yaml-unist-final.log 2>&1

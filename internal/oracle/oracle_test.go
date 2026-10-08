@@ -136,6 +136,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_mutation.a", true, false},
 	{"internal/oracle/testdata/async_catch_return.a", true, false},
 	{"internal/oracle/testdata/async_fresh_holder.a", true, false},
+	{"internal/oracle/testdata/async_top_catch_binding.a", true, false},
+	{"internal/oracle/testdata/async_top_catch_after_await.a", true, false},
+	{"internal/oracle/testdata/async_top_loop.a", true, false},
 
 	{"internal/oracle/testdata/graph_regions_weak_mixed.a", true, false},
 	{"internal/oracle/testdata/graph_regions_structural_literal.a", true, false},
@@ -563,6 +566,10 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/reuse_spread_method_alias.a", true, false},
 	// A move handed to a call whose later argument throws (reuse.go, handOver).
 	{"internal/oracle/testdata/reuse_handover_throw.a", true, false},
+	// Fresh values handed to a call whose later argument throws.
+	{"internal/oracle/testdata/reuse_handover_fresh.a", true, false},
+	// Reuse across every string and object slab size.
+	{"internal/oracle/testdata/slab_sizes.a", true, false},
 	// A throw from inside a ?:, && or ?? arm after the statement built strings (9984394).
 	{"internal/oracle/testdata/aside_throw.a", true, false},
 	// Spreading an Error, directly and through a view (integration's reading of 9984394): not yet.
@@ -769,7 +776,8 @@ func leaks(t *testing.T, program *ir.Program, sanitized string) string {
 func releasedUncached(t *testing.T, program *ir.Program) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "release")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	// What ships: adamic build's options (ThinLTO), as TestReleaseBuildConfigurationAgrees holds.
+	if err := native.Build(native.C(program), binary, native.Options{Release: true}); err != nil {
 		t.Fatal(err)
 	}
 	return execute(t, binary)

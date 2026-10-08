@@ -18,6 +18,11 @@ type TypedArrayFill struct {
 	Arguments []Expression
 }
 
+// TypedArraySort orders the receiver numerically in place and returns it.
+type TypedArraySort struct {
+	Array Expression
+}
+
 // TypedArraySet copies a same-kind source into the receiver, safely across overlap.
 type TypedArraySet struct {
 	Array     Expression
@@ -32,5 +37,6 @@ type TypedArraySubarray struct {
 
 func (v TypedArrayNew) Type() Type      { return v.Of }
 func (v TypedArrayFill) Type() Type     { return v.Array.Type() }
+func (v TypedArraySort) Type() Type     { return v.Array.Type() }
 func (TypedArraySet) Type() Type        { return 0 }
 func (v TypedArraySubarray) Type() Type { return v.Array.Type() }

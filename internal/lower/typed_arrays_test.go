@@ -16,6 +16,7 @@ func TestTypedArraysLower(t *testing.T) {
 const values = new `+kind+`(source);
 values[0] = 300;
 values.fill(-1, 1);
+values.sort();
 values.set(values.subarray(0, 1), 2);
 for (const value of values) { console.log(value.toString()); }
 console.log((values[values.length] ?? -999).toString());
@@ -71,6 +72,20 @@ func TestTypedArrayViewsCannotChangeRepresentation(t *testing.T) {
 		var gap *NotYet
 		if !errors.As(err, &gap) {
 			t.Errorf("representation change accepted: %s: %v", source, err)
+		}
+	}
+}
+
+func TestTypedArraySortComparatorIsNotYet(t *testing.T) {
+	t.Parallel()
+	for _, kind := range []string{"Uint8Array", "Uint16Array", "Int32Array", "Float64Array"} {
+		for _, comparator := range []string{"(a, b) => a - b", "compare"} {
+			_, err := lowerSource(t, `function compare(a: number, b: number): number { return a - b; }
+const values = new `+kind+`([10, 2]); values.sort(`+comparator+`);`)
+			var gap *NotYet
+			if !errors.As(err, &gap) || !strings.Contains(err.Error(), "typed array sort with a comparator") {
+				t.Errorf("%s %s: expected named comparator gap, got %v", kind, comparator, err)
+			}
 		}
 	}
 }

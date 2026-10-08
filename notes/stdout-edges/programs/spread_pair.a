@@ -1,0 +1,7 @@
+// One spread where writeTextFile expects a path and a text. Lowering reports the
+// spread instead of blaming the checker for the argument count.
+import { writeTextFile } from 'adamic';
+
+const pair: [string, string] = ['/tmp/adamic-spread-pair.txt', 'text'];
+const result = writeTextFile(...pair);
+console.log(result.kind === 'Ok' ? 'ok' : result.message);

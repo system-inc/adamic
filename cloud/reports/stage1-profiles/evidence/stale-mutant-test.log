@@ -1,0 +1,7 @@
+=== RUN   TestStage1ProfileStalenessAndDeterminism
+    stage1_profile_test.go:142: two profile builds are byte-identical: 57cd377d09308011373065bc8a294895c37e35ae56f023516c713b5d45f266bf; all 48 runtime compiles and link retain both semantic flags
+    stage1_profile_test.go:169: stale/profile flag reached wrong clang invocation: profile=false argv=["-std=c11" "-Wall" "-Wextra" "-Werror" "-pedantic" "-Wno-unused-variable" "-Wno-unused-but-set-variable" "-Wno-unused-function" "-Wno-unused-parameter" "-Wno-self-assign" "-ffp-contract=off" "-fno-optimize-sibling-calls" "-O2" "-flto=thin" "-fprofile-use=/tmp/adamic-gate/TestStage1ProfileStalenessAndDeterminism2968811816/001/cache/adamic/profiles/04580f4acf641be7b2c9d926d1ab1a1ca0ee943d630de84aa362099b4531a8bc/profile.profdata" "-Wno-profile-instr-out-of-date" "-fuse-ld=lld" "-I" "/tmp/adamic-gate/TestStage1ProfileStalenessAndDeterminism2968811816/001/cache/adamic/runtime/a5617044d5b35a8a2ce7ff01d5e2e4f5923deed20f6b5aecb405abae9cca7aa2" "-o" "/tmp/adamic-gate/TestStage1ProfileStalenessAndDeterminism2968811816/001/fallback" "/tmp/adamic-gate/adamic-build-1940552952/main.c" "-Xlinker" "--whole-archive" "/tmp/adamic-gate/TestStage1ProfileStalenessAndDeterminism2968811816/001/cache/adamic/runtime/a5617044d5b35a8a2ce7ff01d5e2e4f5923deed20f6b5aecb405abae9cca7aa2/runtime.a" "-Xlinker" "--no-whole-archive" "-lm"]
+--- FAIL: TestStage1ProfileStalenessAndDeterminism (5.71s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	5.718s
+FAIL

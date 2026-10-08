@@ -586,6 +586,8 @@ func (e *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.TypedArrayNew:
 		return "new " + typedArrayName(expression.Of) + "(" + e.value(expression.Source) + ")"
+	case ir.TypedArraySort:
+		return e.value(expression.Array) + ".sort()"
 	case ir.TypedArrayFill:
 		return e.value(expression.Array) + ".fill(" + e.values(expression.Arguments) + ")"
 	case ir.TypedArraySet:

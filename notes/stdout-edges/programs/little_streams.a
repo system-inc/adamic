@@ -1,0 +1,10 @@
+// A little stdout and a little stderr, including empty lines. Native keeps a pipe's
+// stdout in a buffer and must flush that buffer before stderr, then again at exit.
+console.log('out');
+console.error('err');
+console.log('');
+console.error('');
+console.log('a');
+console.error('b');
+console.log('last out');
+console.error('last err');

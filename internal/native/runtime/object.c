@@ -63,7 +63,8 @@ adamic_value *adamic_object_find(const adamic_object *object, const char *name, 
 	adamic_panic(message, sizeof message - 1);
 }
 
-adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method) {
+// Keep name searches outside repeated cached reads.
+static __attribute__((noinline)) adamic_closure *callee_cache_miss(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method) {
 	const adamic_shape *shape = object->shape;
 	// The cache's index counts the fields, then the methods after them.
 	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
@@ -88,6 +89,20 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 		}
 		adamic_slot_cache_store(cache, shape, slot);
 	}
+	if (slot < shape->count) {
+		return object->slots[slot].reference;
+	}
+	*method = shape->methods->code[slot - shape->count];
+	return NULL;
+}
+
+adamic_closure *adamic_object_callee(const adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_method *method) {
+	const adamic_shape *shape = object->shape;
+	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
+	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)shape) {
+		return callee_cache_miss(object, name, cache, method);
+	}
+	size_t slot = packed >> 48;
 	if (slot < shape->count) {
 		return object->slots[slot].reference;
 	}

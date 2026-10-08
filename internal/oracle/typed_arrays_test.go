@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"uint8array", "uint16array", "uint16_stop", "int32array", "float64array", "views", "order", "primes", "primes_large", "stats", "workers_stats", "stop"} {
+	for _, name := range []string{"sort_uint8array", "sort_uint16array", "sort_int32array", "sort_float64array", "uint8array", "uint16array", "uint16_stop", "int32array", "float64array", "views", "order", "primes", "primes_large", "stats", "workers_stats", "stop"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

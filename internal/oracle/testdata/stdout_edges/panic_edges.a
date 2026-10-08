@@ -1,0 +1,12 @@
+// Panic text with lone surrogates and the character just below them (U+D7FF, whose
+// UTF-8 starts with ED but is not a surrogate). Stdout is past one buffer first, and
+// stderr already holds a surrogate, so both the panic path and the stderr path run.
+import { panic } from 'adamic';
+
+const below = String.fromCharCode(0xd7ff);
+const above = String.fromCharCode(0xe000);
+const high = String.fromCharCode(0xd800);
+const low = String.fromCharCode(0xdfff);
+console.log('o'.repeat(70000));
+console.error(`err ${low}${below}${high}`);
+panic(`${low}${below}${high}${above}${high}${low}`);

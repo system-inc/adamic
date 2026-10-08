@@ -32,6 +32,9 @@ type runtimeBuild struct {
 // uses the embedded runtime; the fuzzer supplies another checkout's runtime directory instead.
 // Sources and headers are snapshotted together, so the key and the compiled bytes cannot disagree.
 func RuntimeLibrary(directory string, options Options) (string, error) {
+	if shippedRelease(options) && options.Profile != "" && !options.profileValidated {
+		return "", fmt.Errorf("native: profile runtime requires Build to verify its emitted C first")
+	}
 	if err := ValidateOptions(options); err != nil {
 		return "", err
 	}
@@ -83,6 +86,12 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 	// Length prefixes preserve flag boundaries, order and arbitrary source bytes.
 	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
 	part("adamic-runtime-v1")
+	for _, flag := range flags {
+		if strings.HasPrefix(flag, "-fprofile-") {
+			part("stable-profile-source-names-v1")
+			break
+		}
+	}
 	part(goruntime.GOOS)
 	part(goruntime.GOARCH)
 	part(compiler)
@@ -139,7 +148,17 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		}
 		object := filepath.Join(temporary, strings.TrimSuffix(file.name, ".c")+".o")
 		arguments := append(append([]string{}, flags...), "-c", filepath.Join(temporary, file.name), "-o", object)
-		if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+		command := exec.Command(compiler, arguments...)
+		for _, flag := range flags {
+			if strings.HasPrefix(flag, "-fprofile-") {
+				// ThinLTO uses source identity in private names and GUIDs. Keep it
+				// independent of random cache directory names for reproducible binaries.
+				command.Args[len(flags)+2] = file.name
+				command.Dir = temporary
+				break
+			}
+		}
+		if output, err := command.CombinedOutput(); err != nil {
 			return "", fmt.Errorf("native: compiling runtime %s: %w\n%s", file.name, err, output)
 		}
 		objects = append(objects, object)

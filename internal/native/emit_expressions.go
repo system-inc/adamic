@@ -12,7 +12,7 @@ import (
 // expression that stays valid to the end of the statement.
 func (e *emitter) evaluate(expression ir.Expression) string {
 	switch expression := expression.(type) {
-	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray:
+	case ir.TypedArrayNew, ir.TypedArrayFill, ir.TypedArraySet, ir.TypedArraySubarray, ir.TypedArraySort:
 		return e.typedArrayValue(expression)
 	case ir.PromiseValue:
 		return e.promiseValue(expression)
