@@ -28,7 +28,10 @@ registerHooks({
 			// Decode and encode use the identical source trigger and descriptor insertion path.
 			if (source.includes('decodeJson') || source.includes('encodeJson')) {
 				const root = fileURLToPath(new URL('../', import.meta.url));
-				const sources = JSON.parse(execFileSync('go', ['run', './oracle/json_types.go', fileURLToPath(url)], { cwd: root, encoding: 'utf8' }));
+				// Go tests build this once per package run; direct invocations retain go run.
+				const binary = process.env.ADAMIC_JSON_TYPES;
+				const arguments_ = binary ? [fileURLToPath(url)] : ['run', './oracle/json_types.go', fileURLToPath(url)];
+				const sources = JSON.parse(execFileSync(binary || 'go', arguments_, { cwd: root, encoding: 'utf8' }));
 				source = sources[fileURLToPath(url)];
 			}
 			return { format: 'module', source: stripTypeScriptTypes(source, { mode: 'transform' }), shortCircuit: true };

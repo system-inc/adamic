@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/oracletest"
 )
 
 // A result is evidence, not a saved verdict: ordinary fixture comparisons and counts still run.
@@ -449,13 +450,15 @@ func cacheProbe(t *testing.T, path string, program *ir.Program, external string,
 }
 
 func TestMain(main *testing.M) {
-	status := main.Run()
-	if gate.cache != nil {
-		for index, kind := range resultKinds {
-			fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
+	os.Exit(oracletest.Run(func() int {
+		status := main.Run()
+		if gate.cache != nil {
+			for index, kind := range resultKinds {
+				fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
+			}
 		}
-	}
-	os.Exit(status)
+		return status
+	}))
 }
 
 // Changing generated C is the lowering-change case: the source and both toolchains stay put.

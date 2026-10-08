@@ -119,9 +119,7 @@ func TestJSONDecodeValidationMutants(t *testing.T) {
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("caught outside Node comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}
-			if diff := disagreement(onNode(t, path), got); diff != "stdout differs" {
-				t.Fatalf("mutant survived or wrong check caught it: %q", diff)
-			}
+			requireJSONMutantCaught(t, onNode(t, path), got)
 			t.Logf("%s: caught only by Node stdout comparison", c.name)
 		})
 	}
@@ -161,9 +159,7 @@ func TestJSONDecodeParserMutants(t *testing.T) {
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("caught outside comparison: %d %s", got.exitCode, got.stderr)
 			}
-			if diff := disagreement(onNode(t, path), got); diff != "stdout differs" {
-				t.Fatalf("mutant survived: %q", diff)
-			}
+			requireJSONMutantCaught(t, onNode(t, path), got)
 			t.Logf("%s: caught only by Node stdout comparison", c.name)
 		})
 	}
@@ -238,9 +234,7 @@ func TestJSONDecodeFieldPresenceMutants(t *testing.T) {
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				t.Fatalf("caught outside comparison: %d %s", got.exitCode, got.stderr)
 			}
-			if diff := disagreement(onNode(t, path), got); diff != "stdout differs" {
-				t.Fatalf("mutant survived: %q", diff)
-			}
+			requireJSONMutantCaught(t, onNode(t, path), got)
 			t.Logf("%s: caught only by Node stdout comparison", c.name)
 		})
 	}
