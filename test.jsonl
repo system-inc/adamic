@@ -88,3 +88,13 @@
 {"Time":"2026-10-08T01:24:30.874944612Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix","Elapsed":30.17}
 {"Time":"2026-10-08T01:24:30.874953996Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind"}
 {"Time":"2026-10-08T01:24:30.87496307Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"=== RUN   TestWitnessScriptKind\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:24:58.663650336Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"    harness_test.go:188: Go, Node, emitted JavaScript, native identical: 514 bytes\n"}
+{"Time":"2026-10-08T01:24:58.675033469Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"--- PASS: TestWitnessScriptKind (27.80s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:24:58.675059678Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Elapsed":27.8}
+{"Time":"2026-10-08T01:24:58.675068031Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintReleaseAndThroughput"}
+{"Time":"2026-10-08T01:24:58.675071005Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintReleaseAndThroughput","Output":"=== RUN   TestJsxLintReleaseAndThroughput\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:24:58.675238318Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintReleaseAndThroughput","Output":"    jsx_integration_test.go:74: set ADAMIC_LINT_BENCH=1 for JSX throughput\n"}
+{"Time":"2026-10-08T01:24:58.675306941Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintReleaseAndThroughput","Output":"--- SKIP: TestJsxLintReleaseAndThroughput (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:24:58.675310146Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintReleaseAndThroughput","Elapsed":0}
+{"Time":"2026-10-08T01:24:58.675336886Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees"}
+{"Time":"2026-10-08T01:24:58.675355174Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Output":"=== RUN   TestJsxLintTrees\n","OutputType":"frame"}
