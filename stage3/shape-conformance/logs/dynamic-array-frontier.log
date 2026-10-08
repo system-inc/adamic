@@ -1,0 +1,14 @@
+=== RUN   TestShapeDynamicArrayFrontier
+=== RUN   TestShapeDynamicArrayFrontier/proven-dynamic
+    shape_dynamic_erasure_test.go:35: index reaching={Sites:[-1] Unknown:false Reasons:[]}
+    shape_dynamic_erasure_test.go:28: cast reaching={Sites:[-1] Unknown:true Reasons:[missing expression]}
+    shape_dynamic_erasure_test.go:46: checked reads=1
+=== RUN   TestShapeDynamicArrayFrontier/nonconforming-dynamic
+    shape_dynamic_erasure_test.go:35: index reaching={Sites:[-2 -1] Unknown:false Reasons:[]}
+    shape_dynamic_erasure_test.go:28: cast reaching={Sites:[-2 -1] Unknown:true Reasons:[missing expression]}
+    shape_dynamic_erasure_test.go:46: checked reads=1
+--- PASS: TestShapeDynamicArrayFrontier (0.15s)
+    --- PASS: TestShapeDynamicArrayFrontier/proven-dynamic (0.11s)
+    --- PASS: TestShapeDynamicArrayFrontier/nonconforming-dynamic (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.180s

@@ -1,0 +1,90 @@
+=== RUN   TestOverloadedShorthandFunctionValueStaysNotYet
+    census_optional_values_test.go:28: got <nil>, want overload-value diagnostic
+--- FAIL: TestOverloadedShorthandFunctionValueStaysNotYet (0.08s)
+=== RUN   TestCensusPredicateMarkerKeepsProofBoundaries
+    census_predicate_marker_test.go:19: unobservable marker exception escaped its boundary: /tmp/adamic-gate/TestCensusPredicateMarkerKeepsProofBoundaries171430455/002/main.a:1:88: stage 0 can't lower passing union of differently held members to a function value yet
+--- FAIL: TestCensusPredicateMarkerKeepsProofBoundaries (0.16s)
+=== RUN   TestCensusOverloadRelation
+=== RUN   TestCensusOverloadRelation/parameter_contravariance
+=== RUN   TestCensusOverloadRelation/generic_parameter_constraints
+=== RUN   TestCensusOverloadRelation/mutable_parameters
+=== RUN   TestCensusOverloadRelation/result_covariance
+    census_small_test.go:41: expected strict overload refusal naming "overload 1 of ensureTrailingDirectorySeparator result"; got /tmp/adamic-gate/TestCensusOverloadRelationresult_covariance1368021798/001/main.a:1:13: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom
+--- FAIL: TestCensusOverloadRelation (0.44s)
+    --- PASS: TestCensusOverloadRelation/parameter_contravariance (0.09s)
+    --- PASS: TestCensusOverloadRelation/generic_parameter_constraints (0.16s)
+    --- PASS: TestCensusOverloadRelation/mutable_parameters (0.11s)
+    --- FAIL: TestCensusOverloadRelation/result_covariance (0.08s)
+=== RUN   TestNestedFunctionGapsAreLoud
+=== PAUSE TestNestedFunctionGapsAreLoud
+=== RUN   TestPhantomArrayCastsAreErased
+=== PAUSE TestPhantomArrayCastsAreErased
+=== RUN   TestPhantomArrayProofs
+=== PAUSE TestPhantomArrayProofs
+=== RUN   TestPhantomArrayRequiredCastsAreErased
+=== PAUSE TestPhantomArrayRequiredCastsAreErased
+=== CONT  TestNestedFunctionGapsAreLoud
+=== RUN   TestNestedFunctionGapsAreLoud/optional
+=== CONT  TestPhantomArrayProofs
+=== RUN   TestPhantomArrayProofs/mutable_widening
+=== PAUSE TestPhantomArrayProofs/mutable_widening
+=== RUN   TestPhantomArrayProofs/interface_mutable_widening
+=== PAUSE TestPhantomArrayProofs/interface_mutable_widening
+=== RUN   TestPhantomArrayProofs/tuple_representation
+=== PAUSE TestPhantomArrayProofs/tuple_representation
+=== RUN   TestPhantomArrayProofs/element_narrowing
+=== PAUSE TestPhantomArrayProofs/element_narrowing
+=== RUN   TestPhantomArrayProofs/readonly_removal
+=== PAUSE TestPhantomArrayProofs/readonly_removal
+=== RUN   TestPhantomArrayProofs/cycle
+=== PAUSE TestPhantomArrayProofs/cycle
+=== CONT  TestPhantomArrayProofs/mutable_widening
+=== CONT  TestPhantomArrayProofs/readonly_removal
+=== CONT  TestPhantomArrayProofs/tuple_representation
+=== CONT  TestPhantomArrayCastsAreErased
+=== CONT  TestPhantomArrayRequiredCastsAreErased
+=== NAME  TestNestedFunctionGapsAreLoud/optional
+    nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+=== RUN   TestNestedFunctionGapsAreLoud/default
+=== CONT  TestPhantomArrayProofs/element_narrowing
+=== CONT  TestPhantomArrayProofs/interface_mutable_widening
+=== NAME  TestPhantomArrayCastsAreErased
+    phantom_array_brands_test.go:74: array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayCastsAreErased (0.37s)
+=== CONT  TestPhantomArrayProofs/cycle
+=== NAME  TestNestedFunctionGapsAreLoud/default
+    nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+=== RUN   TestNestedFunctionGapsAreLoud/rest
+=== NAME  TestPhantomArrayProofs/cycle
+    phantom_array_brands_test.go:93: got <nil>, want refusal containing adamic/cycle-capable
+--- FAIL: TestPhantomArrayProofs (0.00s)
+    --- PASS: TestPhantomArrayProofs/tuple_representation (0.25s)
+    --- PASS: TestPhantomArrayProofs/mutable_widening (0.28s)
+    --- PASS: TestPhantomArrayProofs/readonly_removal (0.28s)
+    --- PASS: TestPhantomArrayProofs/interface_mutable_widening (0.21s)
+    --- PASS: TestPhantomArrayProofs/element_narrowing (0.24s)
+    --- FAIL: TestPhantomArrayProofs/cycle (0.17s)
+=== NAME  TestNestedFunctionGapsAreLoud/rest
+    nested_functions_test.go:28: want NotYet "parameter that isn't a plain name", got /tmp/adamic-gate/TestNestedFunctionGapsAreLoudrest1898364139/001/main.a:1:41: stage 0 can't lower a rest parameter in a named closure yet
+=== RUN   TestNestedFunctionGapsAreLoud/self_value
+=== NAME  TestPhantomArrayRequiredCastsAreErased
+    phantom_array_brands_test.go:137: required undefined array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayRequiredCastsAreErased (0.42s)
+=== RUN   TestNestedFunctionGapsAreLoud/block
+=== RUN   TestNestedFunctionGapsAreLoud/generic
+=== RUN   TestNestedFunctionGapsAreLoud/sibling_value
+=== RUN   TestNestedFunctionGapsAreLoud/ancestor_call
+=== RUN   TestNestedFunctionGapsAreLoud/dynamic_this
+--- FAIL: TestNestedFunctionGapsAreLoud (1.14s)
+    --- FAIL: TestNestedFunctionGapsAreLoud/optional (0.28s)
+    --- FAIL: TestNestedFunctionGapsAreLoud/default (0.26s)
+    --- FAIL: TestNestedFunctionGapsAreLoud/rest (0.11s)
+    --- PASS: TestNestedFunctionGapsAreLoud/self_value (0.07s)
+    --- PASS: TestNestedFunctionGapsAreLoud/block (0.05s)
+    --- PASS: TestNestedFunctionGapsAreLoud/generic (0.08s)
+    --- PASS: TestNestedFunctionGapsAreLoud/sibling_value (0.11s)
+    --- PASS: TestNestedFunctionGapsAreLoud/ancestor_call (0.09s)
+    --- PASS: TestNestedFunctionGapsAreLoud/dynamic_this (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.829s
+FAIL

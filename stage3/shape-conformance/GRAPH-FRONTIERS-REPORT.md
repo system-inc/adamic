@@ -48,3 +48,7 @@ The broader uncached original run of `TestShapeGraphCountSnapshot` plus the eigh
 `export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh`, then `source /workspace/adamic-tools/env.sh`.
 
 Timing lines: node ready 0.061s; Go ready 0.079s; clang ready 0.506s; markdown install step 0.990s, ready 1.161s; submodules ready 216.195s; Go build ready 509.965s; build cache warm 510.131s; done 510.188s. `nproc` = 5; cgroup cpu.max = 400000 100000, 17.6 GB. An early test before submodules completed failed for the missing cohere/TypeScript/tsc/go.mod; setup resolved it. Exact cohere and nested TypeScript pins were retained; no cohere file was copied.
+
+## Follow-up on newest integration
+
+After merging views-integration 322bd65d and main 74fb6490, the earlier symbols/flow/parse checked-array-write frontier is fixed upstream. The owned eight-location regression now requires source-Node agreement in all three execution modes and leak checks for every fixture, including symbols. The original 43-row graph count snapshot passes unchanged. Final evidence is logs/dynamic-landing-oracle.log. The initial observations above remain historical step-1 evidence, not current blockers.

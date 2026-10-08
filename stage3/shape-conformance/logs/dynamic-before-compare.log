@@ -1,0 +1,28 @@
+PASS: all 2936 before outcomes and reasons unchanged after current integration/main merge; 260 diagnostics
+{
+  "counts": {
+    "tagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1758
+    },
+    "untagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1178
+    }
+  },
+  "unknown_reasons": {
+    "tagged": {
+      "diagnosed body": 1500,
+      "flow the graph can't see": 258
+    },
+    "untagged": {
+      "diagnosed body": 927,
+      "flow the graph can't see": 248,
+      "host metadata": 3
+    }
+  }
+}

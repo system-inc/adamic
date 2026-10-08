@@ -3,12 +3,11 @@ package oracle
 import (
 	"bytes"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
-// Preserve the eight previously reported abort locations. A named checked
-// array write remains a frontier, not evidence of agreement with Node.
+// Preserve all eight previously reported abort locations against source Node.
+// Current integration also closes the earlier symbols array-write frontier.
 func TestShapeGraphReportedFrontiers(t *testing.T) {
 	for _, name := range []string{"cache", "entries", "literals", "regression_06", "regression_07", "regression_08", "regression_09", "symbols"} {
 		t.Run(name, func(t *testing.T) {
@@ -27,18 +26,12 @@ func TestShapeGraphReportedFrontiers(t *testing.T) {
 			sanitized, binary := nativelyUncached(t, program)
 			runs := []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)}
 			for _, actual := range runs {
-				if name == "symbols" {
-					if actual.exitCode != 70 || len(actual.stdout) != 0 || !strings.Contains(string(actual.stderr), "element read failed: <array write> expected object, found uncertified source element contract") {
-						t.Fatalf("unnamed or changed symbols frontier: %+v", actual)
-					}
-				} else if actual.exitCode != reference.exitCode || !bytes.Equal(actual.stdout, reference.stdout) || len(actual.stderr) != 0 {
+				if actual.exitCode != reference.exitCode || !bytes.Equal(actual.stdout, reference.stdout) || len(actual.stderr) != 0 {
 					t.Fatalf("disagreement: Node=%+v backend=%+v", reference, actual)
 				}
 			}
-			if name != "symbols" {
-				if report := leaksUncached(t, program, binary); report != "" {
-					t.Fatal(report)
-				}
+			if report := leaksUncached(t, program, binary); report != "" {
+				t.Fatal(report)
 			}
 		})
 	}

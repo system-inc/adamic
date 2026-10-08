@@ -1,0 +1,13 @@
+=== RUN   TestShapeDynamicArrayExecution
+=== RUN   TestShapeDynamicArrayExecution/proven-dynamic
+=== RUN   TestShapeDynamicArrayExecution/nonconforming-dynamic
+    shape_dynamic_array_test.go:36: unsafe dynamic read-erasure mutant caught: exit=0 stdout="true\nfalse\n"
+    shape_dynamic_array_test.go:36: unsafe dynamic read-erasure mutant caught: exit=0 stdout="true\n0\n"
+--- PASS: TestShapeDynamicArrayExecution (1.66s)
+    --- PASS: TestShapeDynamicArrayExecution/proven-dynamic (0.93s)
+    --- PASS: TestShapeDynamicArrayExecution/nonconforming-dynamic (0.73s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=5
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.669s

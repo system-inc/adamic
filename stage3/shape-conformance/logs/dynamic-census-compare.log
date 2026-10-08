@@ -1,0 +1,30 @@
+PASS: all 2936 optimized outcomes and reasons equal the independently audited first after census; 260 diagnostics
+{
+  "counts": {
+    "tagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1758
+    },
+    "untagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 1178
+    }
+  },
+  "unknown_reasons": {
+    "tagged": {
+      "diagnosed body": 1566,
+      "flow the graph can't see": 192
+    },
+    "untagged": {
+      "diagnosed body": 973,
+      "flow the graph can't see": 202,
+      "host metadata": 3
+    }
+  },
+  "allocation_shapes": 2522
+}
+transition artifact bytes 23205

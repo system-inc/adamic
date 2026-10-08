@@ -1,0 +1,38 @@
+=== RUN   TestShapeDynamicKeys
+=== RUN   TestShapeDynamicKeys/finite
+    shape_dynamic_keys_test.go:73: finite lost keys, slots or Unknown: {Sites:[-2] Unknown:false Reasons:[]}
+=== RUN   TestShapeDynamicKeys/open
+=== RUN   TestShapeDynamicKeys/unbounded
+=== RUN   TestShapeDynamicKeys/absent
+    shape_dynamic_keys_test.go:73: absent lost keys, slots or Unknown: {Sites:[-2] Unknown:true Reasons:[dynamic projected slot absent or allocation not modeled: absent]}
+=== RUN   TestShapeDynamicKeys/mutation
+    shape_dynamic_keys_test.go:73: mutation lost keys, slots or Unknown: {Sites:[-2] Unknown:true Reasons:[indexed store effects not certified]}
+=== RUN   TestShapeDynamicKeys/store
+    shape_dynamic_keys_test.go:73: store lost keys, slots or Unknown: {Sites:[-4 -2] Unknown:false Reasons:[]}
+=== RUN   TestShapeDynamicKeys/array
+    shape_dynamic_keys_test.go:73: array lost keys, slots or Unknown: {Sites:[-2] Unknown:false Reasons:[]}
+=== RUN   TestShapeDynamicKeys/array-mutation
+    shape_dynamic_keys_test.go:73: array-mutation lost keys, slots or Unknown: {Sites:[-2] Unknown:true Reasons:[array mutation prevents element certificate]}
+=== RUN   TestShapeDynamicKeys/production-array
+    shape_dynamic_keys_test.go:73: production-array lost keys, slots or Unknown: {Sites:[-2] Unknown:false Reasons:[]}
+=== RUN   TestShapeDynamicKeys/opaque-store
+    shape_dynamic_keys_test.go:73: opaque-store lost keys, slots or Unknown: {Sites:[-4 -2] Unknown:true Reasons:[field store has opaque receiver or clears readiness: first local or result has no tracked producer]}
+=== RUN   TestShapeDynamicKeys/depth
+=== RUN   TestShapeDynamicKeys/spread
+    shape_dynamic_keys_test.go:73: spread lost keys, slots or Unknown: {Sites:[-2] Unknown:true Reasons:[spread field projection not certified]}
+--- FAIL: TestShapeDynamicKeys (0.00s)
+    --- FAIL: TestShapeDynamicKeys/finite (0.00s)
+    --- PASS: TestShapeDynamicKeys/open (0.00s)
+    --- PASS: TestShapeDynamicKeys/unbounded (0.00s)
+    --- FAIL: TestShapeDynamicKeys/absent (0.00s)
+    --- FAIL: TestShapeDynamicKeys/mutation (0.00s)
+    --- FAIL: TestShapeDynamicKeys/store (0.00s)
+    --- FAIL: TestShapeDynamicKeys/array (0.00s)
+    --- FAIL: TestShapeDynamicKeys/array-mutation (0.00s)
+    --- FAIL: TestShapeDynamicKeys/production-array (0.00s)
+    --- FAIL: TestShapeDynamicKeys/opaque-store (0.00s)
+    --- PASS: TestShapeDynamicKeys/depth (0.00s)
+    --- FAIL: TestShapeDynamicKeys/spread (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.041s
+FAIL

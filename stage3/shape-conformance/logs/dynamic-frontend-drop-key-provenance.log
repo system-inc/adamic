@@ -1,0 +1,6 @@
+/tmp/shape-dynamic-frontend-mutants/drop-key-provenance/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/dynamic-keys/controls.py", line 21, in <module>
+    if owner=='hostKey':assert row['reason']=='host metadata' and 'JSON.parse' in row['host_values'],row
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 358, 'end': 371, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 358, 'end': 371, 'owner': 'hostKey'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['dynamic key membership not proven', 'opaque call may mutate projected fields'], 'allocation_sites': [-1], 'fields': [], 'host_values': [], 'diagnostic_causes': []}

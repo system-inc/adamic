@@ -1,0 +1,30 @@
+=== RUN   TestShapeDynamicKeys
+=== RUN   TestShapeDynamicKeys/finite
+=== RUN   TestShapeDynamicKeys/open
+=== RUN   TestShapeDynamicKeys/unbounded
+=== RUN   TestShapeDynamicKeys/absent
+=== RUN   TestShapeDynamicKeys/mutation
+=== RUN   TestShapeDynamicKeys/store
+    shape_dynamic_keys_test.go:73: store lost keys, slots or Unknown: {Sites:[-3 -2] Unknown:false Reasons:[]}
+=== RUN   TestShapeDynamicKeys/array
+=== RUN   TestShapeDynamicKeys/array-mutation
+=== RUN   TestShapeDynamicKeys/production-array
+=== RUN   TestShapeDynamicKeys/opaque-store
+=== RUN   TestShapeDynamicKeys/depth
+=== RUN   TestShapeDynamicKeys/spread
+--- FAIL: TestShapeDynamicKeys (0.00s)
+    --- PASS: TestShapeDynamicKeys/finite (0.00s)
+    --- PASS: TestShapeDynamicKeys/open (0.00s)
+    --- PASS: TestShapeDynamicKeys/unbounded (0.00s)
+    --- PASS: TestShapeDynamicKeys/absent (0.00s)
+    --- PASS: TestShapeDynamicKeys/mutation (0.00s)
+    --- FAIL: TestShapeDynamicKeys/store (0.00s)
+    --- PASS: TestShapeDynamicKeys/array (0.00s)
+    --- PASS: TestShapeDynamicKeys/array-mutation (0.00s)
+    --- PASS: TestShapeDynamicKeys/production-array (0.00s)
+    --- PASS: TestShapeDynamicKeys/opaque-store (0.00s)
+    --- PASS: TestShapeDynamicKeys/depth (0.00s)
+    --- PASS: TestShapeDynamicKeys/spread (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.009s
+FAIL

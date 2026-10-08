@@ -1,0 +1,79 @@
+src/compiler/tracing.ts:247:43 untagged
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  dynamic projected slot absent or allocation not modeled: 0
+src/compiler/tracing.ts:256:39 untagged
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  dynamic projected slot absent or allocation not modeled: 0
+src/compiler/tracing.ts:266:41 untagged
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  dynamic projected slot absent or allocation not modeled: 0
+src/compiler/tracing.ts:277:42 untagged
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  dynamic projected slot absent or allocation not modeled: 0
+src/compiler/tracing.ts:286:43 untagged
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  dynamic projected slot absent or allocation not modeled: 0
+src/compiler/tracing.ts:296:43 untagged
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  dynamic projected slot absent or allocation not modeled: 0
+src/compiler/tracing.ts:321:63 untagged
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  dynamic projected slot absent or allocation not modeled: 0
+src/compiler/tracing.ts:322:77 untagged
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  dynamic projected slot absent or allocation not modeled: 0
+src/compiler/tracing.ts:324:62 untagged
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  dynamic projected slot absent or allocation not modeled: 0
+src/compiler/factory/nodeFactory.ts:7047:42 tagged
+  no reaching allocation established
+  untracked source lower.latentShapeUnknown
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/factory/nodeFactory.ts:6973:14
+  function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/factory/nodeFactory.ts:6972:14
+src/compiler/factory/nodeFactory.ts:7051:43 tagged
+  no reaching allocation established
+  untracked source lower.latentShapeUnknown
+  dynamic key membership not proven
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/factory/nodeFactory.ts:6973:14
+  function value may receive untracked callback arguments at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/factory/nodeFactory.ts:6972:14
+  unmodeled expression KindBinaryExpression at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/factory/nodeFactory.ts:7050:30
+src/compiler/commandLineParser.ts:3231:32 untagged
+  local or result has no tracked producer
+  no reaching allocation established
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  no tracked producer
+src/compiler/checker.ts:36293:111 tagged
+  no reaching allocation established
+  untracked source lower.latentShapeUnknown
+  dynamic key membership not proven
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  unmodeled expression KindBinaryExpression at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:36285:22
+  unmodeled expression KindPrefixUnaryExpression at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/core.ts:205:12
+  unmodeled expression KindBinaryExpression at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/core.ts:200:18
+  unmodeled expression KindPrefixUnaryExpression at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/core.ts:199:37
+src/compiler/checker.ts:36293:170 tagged
+  no reaching allocation established
+  untracked source lower.latentShapeUnknown
+  dynamic key membership not proven
+  indexed store effects not certified
+  opaque call may mutate projected fields
+  unmodeled expression KindBinaryExpression at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/checker.ts:36285:22
+  unmodeled expression KindPrefixUnaryExpression at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/core.ts:205:12
+  unmodeled expression KindBinaryExpression at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/core.ts:200:18
+  unmodeled expression KindPrefixUnaryExpression at /tmp/shape-stage3-234ab1aa-adapted/src/compiler/core.ts:199:37
+changed kinds {'tagged': 66, 'untagged': 46}

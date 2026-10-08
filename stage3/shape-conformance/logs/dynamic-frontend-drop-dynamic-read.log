@@ -1,0 +1,6 @@
+/tmp/shape-dynamic-frontend-mutants/drop-dynamic-read/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/dynamic-keys/controls.py", line 17, in <module>
+    owner=row['adapted']['owner']; assert row['outcome']==expected[owner],(owner,row)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('finiteString', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 349, 'end': 362, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 349, 'end': 362, 'owner': 'finiteString'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['dynamic element key not modeled at /tmp/shape-dynamic-controls/clean/src/compiler/main.a:5:122'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

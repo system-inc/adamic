@@ -1,0 +1,95 @@
+=== RUN   TestMapSmallProfile
+    map_small_test.go:33: trial 1: maps=271022 live=143047 set=1201980 get=4429860 has=318504 checksum=5269033 cpu=0.152528000 wall=0.172576825 rss=40712; normalized RSS 40712 KiB
+    map_small_test.go:33: trial 2: maps=271022 live=143047 set=1201980 get=4429860 has=318504 checksum=5269033 cpu=0.103233000 wall=0.242138272 rss=40720; normalized RSS 40720 KiB
+    map_small_test.go:33: trial 3: maps=271022 live=143047 set=1201980 get=4429860 has=318504 checksum=5269033 cpu=0.101865000 wall=0.230563443 rss=40732; normalized RSS 40732 KiB
+--- PASS: TestMapSmallProfile (0.83s)
+=== RUN   TestMapSmallResidentMutant
+    map_small_test.go:88: disabled inline storage: clean exit 0, RSS 66968 KiB exceeds 49152 KiB gate
+--- PASS: TestMapSmallResidentMutant (6.82s)
+=== RUN   TestMapSmallStorage
+--- PASS: TestMapSmallStorage (0.46s)
+=== RUN   TestGraphRegionsRuntime
+=== PAUSE TestGraphRegionsRuntime
+=== RUN   TestGraphClosureEnvironment
+=== PAUSE TestGraphClosureEnvironment
+=== RUN   TestGraphRegionsMillion
+    graph_regions_test.go:219: adamic: graph region: live 1000000 bytes 92000000 reachable 950001 bytes 87400092 unreachable 49999 bytes 4599908 metadata 16000064
+        adamic: graph counts: regions 1 merges 999999
+        adamic: counts: allocations 1000000 frees 1000000 retains 0 releases 1000000 peak 1000000 regions 0
+        members 1000000 reachable 950001
+        rss_kib 110380
+        
+--- FAIL: TestGraphRegionsMillion (0.31s)
+=== RUN   TestGraphContainerBoundary
+=== PAUSE TestGraphContainerBoundary
+=== RUN   TestGraphLazyRegions
+=== PAUSE TestGraphLazyRegions
+=== RUN   TestGraphUnreleasedAnchorCounted
+=== PAUSE TestGraphUnreleasedAnchorCounted
+=== RUN   TestShapeGraphMapAdoption
+--- PASS: TestShapeGraphMapAdoption (0.58s)
+=== CONT  TestGraphRegionsRuntime
+=== CONT  TestGraphLazyRegions
+=== CONT  TestGraphUnreleasedAnchorCounted
+=== CONT  TestGraphClosureEnvironment
+=== CONT  TestGraphContainerBoundary
+=== NAME  TestGraphUnreleasedAnchorCounted
+    graph_regions_test.go:396: anchor count predicate: ""
+    graph_regions_test.go:396: leak count predicate: "heap values leaked: 4 (allocations 5, frees 1, in regions 0)"
+--- PASS: TestGraphUnreleasedAnchorCounted (0.39s)
+=== NAME  TestGraphRegionsRuntime
+    graph_regions_test.go:119: unreleased anchor counted=false: exit 1
+        
+        =================================================================
+        ==17142==ERROR: LeakSanitizer: detected memory leaks
+        
+        Indirect leak of 324 byte(s) in 3 object(s) allocated from:
+            #0 0x55adf0501324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55adf055e101 in allocate_storage /home/agent/.cache/adamic/runtime/.build-2699972114/heap.c:198:10
+            #2 0x55adf055e101 in adamic_heap_graph_storage /home/agent/.cache/adamic/runtime/.build-2699972114/heap.c:228:25
+        
+        Indirect leak of 79 byte(s) in 1 object(s) allocated from:
+            #0 0x55adf0501324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55adf055dfdf in allocate_storage /home/agent/.cache/adamic/runtime/.build-2699972114/heap.c:198:10
+            #2 0x55adf055dfdf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2699972114/heap.c:212:9
+        
+        Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+            #0 0x55adf05014f9 in calloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:74:3
+            #1 0x55adf055bb7e in new_region /home/agent/.cache/adamic/runtime/.build-2699972114/graph_regions.c:74:25
+            #2 0x55adf05449d0 in main /tmp/adamic-gate/adamic-build-3045276744/main.c:54:48
+        
+        SUMMARY: AddressSanitizer: 467 byte(s) leaked in 5 allocation(s).
+=== NAME  TestGraphClosureEnvironment
+    graph_regions_test.go:158: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1047047952/main.c:10:47: error: incompatible function pointer types passing 'adamic_value (adamic_closure *, adamic_value *)' (aka 'union adamic_value (struct adamic_closure *, union adamic_value *)') to parameter of type 'adamic_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *, unsigned long)') [-Wincompatible-function-pointer-types]
+           10 |  adamic_closure *closure = adamic_closure_new(code, 1);
+              |                                               ^~~~
+        /home/agent/.cache/adamic/runtime/c2980f99bcb34936ce6ae46e91a6de1d64a7d4b0909f1705b07c91e5d0279c3e/adamic.h:114:48: note: passing argument to parameter 'code' here
+          114 | adamic_closure *adamic_closure_new(adamic_code code, size_t count);
+              |                                                ^
+        1 error generated.
+        
+--- FAIL: TestGraphClosureEnvironment (13.40s)
+=== NAME  TestGraphLazyRegions
+    graph_regions_test.go:371: adamic: graph region: live 4 bytes 368 reachable 4 bytes 368 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 1 bytes 92 reachable 1 bytes 92 unreachable 0 bytes 0 metadata 16
+        adamic: graph counts: regions 2 merges 3
+        adamic: counts: allocations 5 frees 5 retains 1 releases 6 peak 4 regions 0
+        
+--- FAIL: TestGraphLazyRegions (13.64s)
+=== NAME  TestGraphContainerBoundary
+    graph_regions_test.go:327: adamic: graph region: live 4 bytes 528 reachable 3 bytes 256 unreachable 1 bytes 272 metadata 128
+        adamic: graph counts: regions 1 merges 3
+        adamic: counts: allocations 6 frees 6 retains 1 releases 5 peak 6 regions 0
+        
+--- FAIL: TestGraphContainerBoundary (13.71s)
+=== NAME  TestGraphRegionsRuntime
+    graph_regions_test.go:97: adamic: graph region: live 3 bytes 276 reachable 2 bytes 184 unreachable 1 bytes 92 metadata 112
+        adamic: graph counts: regions 1 merges 2
+        adamic: counts: allocations 5 frees 5 retains 0 releases 4 peak 5 regions 0
+        made at runtime
+        
+--- FAIL: TestGraphRegionsRuntime (13.92s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	22.978s
+FAIL

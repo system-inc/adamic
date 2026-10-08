@@ -1,0 +1,12 @@
+drop-cached-sources: semantic allocation assertion caught valid Go mutant
+drop-production-array-edge: semantic allocation assertion caught valid Go mutant
+drop-opaque-slot-store: semantic allocation assertion caught valid Go mutant
+ignore-projection-depth: semantic allocation assertion caught valid Go mutant
+drop-key-arm: semantic allocation assertion caught valid Go mutant
+ignore-open-key: semantic allocation assertion caught valid Go mutant
+ignore-absent-slot: semantic allocation assertion caught valid Go mutant
+ignore-indexed-store: semantic allocation assertion caught valid Go mutant
+drop-slot-store: semantic allocation assertion caught valid Go mutant
+ignore-array-mutation: semantic allocation assertion caught valid Go mutant
+ignore-record-spread: semantic allocation assertion caught valid Go mutant
+drop-open-slots: semantic allocation assertion caught valid Go mutant

@@ -1,0 +1,83 @@
+{
+  "before_patterns": {
+    "function-value escape callback boundary": {
+      "untagged": 20,
+      "tagged": 55
+    },
+    "constructors": {
+      "untagged": 36
+    },
+    "dynamic keys": {
+      "untagged": 56,
+      "tagged": 70
+    },
+    "whole-array contracts": {
+      "untagged": 4
+    },
+    "unbounded callback identity": {
+      "untagged": 23,
+      "tagged": 40
+    }
+  },
+  "after_patterns": {
+    "function-value escape callback boundary": {
+      "untagged": 13,
+      "tagged": 22
+    },
+    "constructors": {
+      "untagged": 36
+    },
+    "whole-array contracts": {
+      "untagged": 4
+    },
+    "unbounded callback identity": {
+      "untagged": 23,
+      "tagged": 23
+    }
+  },
+  "transitions": [
+    {
+      "before": "diagnosed body",
+      "after": "diagnosed body",
+      "kind": "tagged",
+      "sites": 1500
+    },
+    {
+      "before": "diagnosed body",
+      "after": "diagnosed body",
+      "kind": "untagged",
+      "sites": 927
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "diagnosed body",
+      "kind": "tagged",
+      "sites": 66
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "diagnosed body",
+      "kind": "untagged",
+      "sites": 46
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "flow the graph can't see",
+      "kind": "tagged",
+      "sites": 192
+    },
+    {
+      "before": "flow the graph can't see",
+      "after": "flow the graph can't see",
+      "kind": "untagged",
+      "sites": 202
+    },
+    {
+      "before": "host metadata",
+      "after": "host metadata",
+      "kind": "untagged",
+      "sites": 3
+    }
+  ],
+  "unchanged_diagnostics": 260
+}
