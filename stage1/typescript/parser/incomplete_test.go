@@ -1,10 +1,10 @@
 package parser
 
 import (
-	"bytes"
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -19,8 +19,10 @@ func incompleteDeadline(inputBytes int) time.Duration {
 	return 10*time.Second + time.Duration((inputBytes+(1<<20)-1)/(1<<20))*10*time.Second
 }
 
-// Four workers each run independently bounded subprocesses. The corpus pin
-// and point selection are deterministic and no diagnostic input is filtered.
+// Workers run short manifests to amortize process startup. The corpus pin and
+// point selection are deterministic; every planned case must return once.
+// Prepare shared builds and start the corpus workers before the parent pauses.
+// The workers overlap other tests even while the parent waits in the queue.
 func TestIncompleteCompilerAgrees(t *testing.T) {
 	manifest, files := compilerManifest(t)
 	data, err := os.ReadFile(manifest)
@@ -36,10 +38,18 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	batchRunner, err := filepath.Abs("testdata/batch_node.mjs")
+	if err != nil {
+		t.Fatal(err)
+	}
 	binary := buildPort(t, directory, true)
 	artifacts := os.Getenv("ADAMIC_RECOVERY_ARTIFACTS")
 	if artifacts == "" {
 		artifacts = "/tmp/adamic-parser-incomplete"
+	}
+	artifacts, err = filepath.Abs(artifacts)
+	if err != nil {
+		t.Fatal(err)
 	}
 	if err := os.MkdirAll(artifacts, 0755); err != nil {
 		t.Fatal(err)
@@ -85,7 +95,10 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		planned += count
 		t.Logf("planned %s: %d tokens, cutoff stride %d, edit stride %d, %d inputs", sourcePath, len(tokens), stride, editStride, count)
 	}
-	t.Logf("planned all %d compiler files: %d inputs; each Go/Node/native parse and print has a 10s + 10s per started MiB deadline", files, planned)
+	t.Logf("planned all %d compiler files: %d inputs; each shard child has a %s CPU budget", files, planned, incompleteShardCPUBudget)
+	if planned != 22497 {
+		t.Fatalf("missing or extra pinned corpus cases: planned %d, expected 22497", planned)
+	}
 	var checked atomic.Int64
 	type comparison struct {
 		position, index  int
@@ -93,13 +106,8 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		input            []byte
 	}
 	jobs := []comparison{}
-	start := 0
 	if value := os.Getenv("ADAMIC_RECOVERY_START"); value != "" {
-		start, err = strconv.Atoi(value)
-		if err != nil || start < 0 || start >= planned {
-			t.Fatalf("invalid ADAMIC_RECOVERY_START %q", value)
-		}
-		t.Logf("debug continuation skips first %d inputs; this is not a full corpus gate", start)
+		t.Fatal("ADAMIC_RECOVERY_START is not supported by the full corpus gate")
 	}
 	position := 0
 	for _, sourcePath := range strings.Fields(string(data)) {
@@ -116,9 +124,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		t.Logf("%s: %d tokens, cutoff stride %d", sourcePath, len(tokens), stride)
 		compare := func(mode string, index int, input []byte) {
 			position++
-			if position > start {
-				jobs = append(jobs, comparison{position, index, sourcePath, mode, input})
-			}
+			jobs = append(jobs, comparison{position, index, sourcePath, mode, input})
 		}
 		compare("cut", 0, nil)
 		for i := stride - 1; i < len(tokens); i += stride {
@@ -140,92 +146,185 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 			compare("duplicate", i+1, duplicated)
 		}
 	}
+	if position != planned || len(jobs) != planned {
+		t.Fatalf("missing or extra planned cases: generated %d, scheduled %d, expected %d", position, len(jobs), planned)
+	}
+	// Bound each command by both case count and input bytes. A slow or broken
+	// parser cannot turn a whole-corpus command into a package-long hang.
+	const maxCases = 64
+	const maxBytes = 8 << 20
+	batches := [][]comparison{}
+	for begin := 0; begin < len(jobs); {
+		end, inputBytes := begin, 0
+		for end < len(jobs) && end-begin < maxCases {
+			if end > begin && inputBytes+len(jobs[end].input) > maxBytes {
+				break
+			}
+			inputBytes += len(jobs[end].input)
+			end++
+		}
+		batches = append(batches, jobs[begin:end])
+		begin = end
+	}
+	workerCount := min(runtime.NumCPU(), 8)
+	t.Logf("%d workers, %d short manifests; maximum %d cases or %d input bytes; child CPU budget %s", workerCount, len(batches), maxCases, maxBytes, incompleteShardCPUBudget)
 	type timing struct {
 		duration time.Duration
 		path     string
 	}
 	slowest := map[string]timing{}
-	var timingLock sync.Mutex
-	measure := func(inputBytes int, label, path, command string, args ...string) ([]byte, error) {
-		started := time.Now()
-		data, err := recoveryRunLimit(t, incompleteDeadline(inputBytes), path+"."+label, command, args...)
-		duration := time.Since(started)
-		timingLock.Lock()
-		if duration > slowest[label].duration {
-			slowest[label] = timing{duration, path}
+	seen := make([]bool, planned)
+	var resultLock sync.Mutex
+	// Large successful answers stay in local test scratch. Only failures are
+	// copied to the persistent artifact directory, with rebased input manifests.
+	workDirectory := t.TempDir()
+	runBatch := func(batchIndex int) {
+		batch := batches[batchIndex]
+		workBatch := filepath.Join(workDirectory, fmt.Sprintf("shard-%04d", batchIndex))
+		if err := os.Mkdir(workBatch, 0755); err != nil {
+			t.Error(err)
+			return
 		}
-		timingLock.Unlock()
-		return data, err
+		defer func() {
+			if err := os.RemoveAll(workBatch); err != nil {
+				t.Error(err)
+			}
+		}()
+		prefix := filepath.Join(workBatch, "output")
+		savedPrefix := filepath.Join(artifacts, fmt.Sprintf("shard-%04d", batchIndex))
+		paths, names := []string{}, []string{}
+		for _, job := range batch {
+			name := fmt.Sprintf("%05d-%s-%s-%d.ts", job.position, filepath.Base(job.sourcePath), job.mode, job.index)
+			path := filepath.Join(workBatch, name)
+			names = append(names, filepath.Join(artifacts, name))
+			if err := os.WriteFile(path, job.input, 0644); err != nil {
+				t.Error(err)
+				break
+			}
+			paths = append(paths, path)
+		}
+		if len(paths) != len(batch) {
+			return
+		}
+		manifestPath := prefix + ".manifest"
+		if err := os.WriteFile(manifestPath, []byte(strings.Join(paths, "\n")+"\n"), 0644); err != nil {
+			t.Error(err)
+			return
+		}
+
+		saveFailure := func() {
+			for index, path := range paths {
+				data, err := os.ReadFile(path)
+				if err != nil {
+					t.Error(err)
+					continue
+				}
+				if err := os.WriteFile(names[index], data, 0644); err != nil {
+					t.Error(err)
+				}
+			}
+			if err := os.WriteFile(savedPrefix+".manifest", []byte(strings.Join(names, "\n")+"\n"), 0644); err != nil {
+				t.Error(err)
+			}
+			for _, label := range []string{"Go", "Node", "native"} {
+				for _, suffix := range []string{".stdout", ".stderr"} {
+					data, err := os.ReadFile(prefix + "." + label + suffix)
+					if err != nil {
+						t.Error(err)
+						continue
+					}
+					if err := os.WriteFile(savedPrefix+"."+label+suffix, data, 0644); err != nil {
+						t.Error(err)
+					}
+				}
+			}
+		}
+		answers := make([][]byte, 3)
+		failed := false
+		for sideIndex, side := range []struct {
+			name, command string
+			args          []string
+		}{
+			{"Go", oracle, []string{"--manifest", manifestPath, "--whole", "--recovery"}},
+			{"Node", "node", []string{"--disable-warning=ExperimentalWarning", batchRunner, runner, filepath.Join(directory, "main.ts"), "--manifest", manifestPath, "--whole", "--recovery"}},
+			{"native", binary, []string{"--manifest", manifestPath, "--whole", "--recovery"}},
+		} {
+			started := time.Now()
+			answer, err := recoveryRunLimit(t, incompleteShardCPUBudget, prefix+"."+side.name, side.command, side.args...)
+			elapsed := time.Since(started)
+			resultLock.Lock()
+			if elapsed > slowest[side.name].duration {
+				slowest[side.name] = timing{elapsed, manifestPath}
+			}
+			resultLock.Unlock()
+			if err != nil {
+				t.Errorf("%s shard %d (%s through %s): %v; saved manifest %s", side.name, batchIndex, names[0], names[len(names)-1], err, savedPrefix+".manifest")
+				failed = true
+				continue
+			}
+			answers[sideIndex] = answer
+			if err := checkIncompleteFrames(answer, names); err != nil {
+				t.Errorf("%s shard %d: %v", side.name, batchIndex, err)
+				failed = true
+			}
+		}
+		if failed {
+			saveFailure()
+			return
+		}
+		for sideIndex, side := range []string{"Node", "native"} {
+			if err := compareIncompleteFrames(answers[0], answers[sideIndex+1], names); err != nil {
+				t.Errorf("%s shard %d: %v; saved manifest %s", side, batchIndex, err, savedPrefix+".manifest")
+				failed = true
+			}
+		}
+		resultLock.Lock()
+		for _, job := range batch {
+			if seen[job.position-1] {
+				t.Errorf("extra case %s-%s-%d", job.sourcePath, job.mode, job.index)
+			}
+			seen[job.position-1] = true
+			checked.Add(1)
+		}
+		resultLock.Unlock()
+		if failed {
+			saveFailure()
+			return
+		}
+		t.Logf("shard %d: %d cases compared; total %d of %d", batchIndex, len(batch), checked.Load(), planned)
 	}
 	var cursor atomic.Int64
 	var workers sync.WaitGroup
-	for worker := 0; worker < 4; worker++ {
+	for worker := 0; worker < workerCount; worker++ {
 		workers.Add(1)
 		go func() {
 			defer workers.Done()
 			for {
-				index := int(cursor.Add(1)) - 1
-				if index >= len(jobs) {
+				batchIndex := int(cursor.Add(1)) - 1
+				if batchIndex >= len(batches) {
 					return
 				}
-				job := jobs[index]
-				func() {
-					path := filepath.Join(artifacts, fmt.Sprintf("%05d-%s-%s-%d.ts", job.position, filepath.Base(job.sourcePath), job.mode, job.index))
-					if err := os.WriteFile(path, job.input, 0644); err != nil {
-						t.Error(err)
-						return
-					}
-					want, err := measure(len(job.input), "go", path, oracle, path, "--whole", "--recovery")
-					if err != nil {
-						t.Errorf("Go %s: %v; saved input %s", job.sourcePath, err, path)
-						return
-					}
-					failed := false
-					for _, side := range []struct {
-						name, command string
-						args          []string
-					}{
-						{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), path, "--whole", "--recovery"}},
-						{"native", binary, []string{path, "--whole", "--recovery"}},
-					} {
-						got, err := measure(len(job.input), side.name, path, side.command, side.args...)
-						if err != nil {
-							failed = true
-							t.Errorf("%s %s %s token %d: %v; saved input %s", side.name, job.sourcePath, job.mode, job.index, err, path)
-						} else if !bytes.Equal(got, want) {
-							failed = true
-							t.Errorf("%s %s %s token %d: %s; saved input %s", side.name, job.sourcePath, job.mode, job.index, difference(got, want), path)
-						}
-					}
-					count := checked.Add(1)
-					if failed {
-						return
-					}
-					for _, suffix := range []string{"", ".go.stdout", ".go.stderr", ".Node.stdout", ".Node.stderr", ".native.stdout", ".native.stderr"} {
-						if err := os.Remove(path + suffix); err != nil {
-							t.Error(err)
-							return
-						}
-					}
-					if count%64 == 0 {
-						t.Logf("checked %d of %d scheduled inputs", count, len(jobs))
-					}
-				}()
+				runBatch(batchIndex)
 			}
 		}()
 	}
+	t.Parallel()
 	workers.Wait()
-	for _, label := range []string{"go", "Node", "native"} {
+	for _, label := range []string{"Go", "Node", "native"} {
 		sample := slowest[label]
-		t.Logf("slowest %s parse and print: %s; input %s", label, sample.duration, sample.path)
+		t.Logf("slowest %s child: %s; manifest %s", label, sample.duration, sample.path)
+	}
+	for index, present := range seen {
+		if !present {
+			job := jobs[index]
+			t.Errorf("missing case %s-%s-%d", job.sourcePath, job.mode, job.index)
+		}
+	}
+	if checked.Load() != int64(planned) {
+		t.Errorf("missing or extra case count: compared %d, expected %d", checked.Load(), planned)
 	}
 	if t.Failed() {
 		t.Fatalf("comparison completed after checking %d inputs; failures retained", checked.Load())
 	}
-
-	if start != 0 {
-		t.Logf("debug continuation: %d inputs checked, %d skipped; full corpus gate not run", checked.Load(), start)
-	} else {
-		t.Logf("%d compiler files, %d incomplete inputs: Go, Node and sanitized native identical", files, checked.Load())
-	}
+	t.Logf("%d compiler files, %d incomplete inputs: Go, Node and sanitized native identical", files, checked.Load())
 }
