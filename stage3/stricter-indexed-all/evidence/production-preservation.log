@@ -1,0 +1,5 @@
+=== RUN   TestIndexedLedgerProbePreservesOtherDiagnostics
+    indexed_ledger_probe_controls_test.go:59: Removed the exact 72 audited optional/catch diagnostics; retained an ordinary and an indexed diagnostic unchanged
+--- PASS: TestIndexedLedgerProbePreservesOtherDiagnostics (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	0.005s

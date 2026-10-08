@@ -1,0 +1,57 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_numeric.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_numeric.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_numeric_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_numeric_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_string_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_string_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const_numeric_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const_numeric_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const_string_fails.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const_string_fails.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const_numeric_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_string.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_numeric.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const_string_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_string_fails.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_numeric_fails.a
+--- PASS: TestNativeAgreesWithNode (0.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_string.a (15.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const_numeric_fails.a (15.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_numeric.a (15.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const.a (15.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a (15.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_string_fails.a (1.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a (1.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/enums_open_never_index.a (2.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_const_string_fails.a (2.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a (2.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a (1.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/cast_enum_numeric_fails.a (1.93s)
+PASS
+gate cache: native hits=0 misses=29
+gate cache: node hits=0 misses=24
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	19.218s

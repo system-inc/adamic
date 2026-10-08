@@ -1,0 +1,59 @@
+=== RUN   TestTypedArrayRepresentationBoundaries
+=== PAUSE TestTypedArrayRepresentationBoundaries
+=== CONT  TestTypedArrayRepresentationBoundaries
+=== RUN   TestTypedArrayRepresentationBoundaries/cast-view
+--- PASS: TestTypedArrayRepresentationBoundaries (0.22s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/cast-view (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-options	0.231s
+=== RUN   TestRecordBoundaries
+=== PAUSE TestRecordBoundaries
+=== CONT  TestRecordBoundaries
+=== RUN   TestRecordBoundaries/recursive
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecursive3551407956/001/main.ts:1:24: stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/fixed_to_record
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesfixed_to_record1880807835/001/main.ts:1:80: stage 0 can't lower a { entry: number; } seen as a { readonly [key: string]: number; } (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/nested_view
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_view2840655985/001/main.ts:1:127: stage 0 can't lower a { readonly record: { readonly [key: string]: number; }; } seen as a { readonly record: {}; } (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/array_widening
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesarray_widening564415848/001/main.ts:1:108: stage 0 can't lower a { readonly [key: string]: "a"[]; } seen as a { readonly [key: string]: string[]; } (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/proto_literal
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesproto_literal2379755692/001/main.ts:1:54: stage 0 can't lower __proto__ in a record literal changes JavaScript's prototype yet
+=== RUN   TestRecordBoundaries/record_cast
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_cast1617282119/001/main.ts:1:70: stage 0 can't lower a cast changing the storage representation, including incompatible record and fixed-object views or mutable payload types yet
+=== RUN   TestRecordBoundaries/mutable
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesmutable3010085256/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/undefined
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesundefined4038848903/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/record_to_fixed
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_to_fixed20363109/001/main.ts:1:74: stage 0 can't lower a { readonly [key: string]: number; } seen as a {} (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/named_read
+    boundaries_test.go:62: Node stdout="undefined\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnamed_read1019939936/001/main.ts:1:68: stage 0 can't lower a named property or prototype member on a record; read an own string key with brackets yet
+=== RUN   TestRecordBoundaries/spread
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesspread2734353723/001/main.ts:1:107: stage 0 can't lower a record literal with spread, methods or accessors yet
+=== RUN   TestRecordBoundaries/mixed
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesmixed315791709/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet
+=== RUN   TestRecordBoundaries/reflection
+    boundaries_test.go:62: Node stdout="\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesreflection1396603021/001/main.ts:1:80: stage 0 can't lower a { readonly [key: string]: number; } seen as a {} (one keeps something weakly that the other keeps strongly) yet
+=== RUN   TestRecordBoundaries/nested_cast
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_cast4037914971/001/main.ts:1:102: stage 0 can't lower a cast changing the storage representation, including incompatible record and fixed-object views or mutable payload types yet
+=== RUN   TestRecordBoundaries/nullable
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnullable1314983936/001/main.ts:1:17: stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet
+--- PASS: TestRecordBoundaries (3.28s)
+    --- PASS: TestRecordBoundaries/recursive (0.26s)
+    --- PASS: TestRecordBoundaries/fixed_to_record (0.21s)
+    --- PASS: TestRecordBoundaries/nested_view (0.22s)
+    --- PASS: TestRecordBoundaries/array_widening (0.21s)
+    --- PASS: TestRecordBoundaries/proto_literal (0.22s)
+    --- PASS: TestRecordBoundaries/record_cast (0.21s)
+    --- PASS: TestRecordBoundaries/mutable (0.24s)
+    --- PASS: TestRecordBoundaries/undefined (0.23s)
+    --- PASS: TestRecordBoundaries/record_to_fixed (0.22s)
+    --- PASS: TestRecordBoundaries/named_read (0.21s)
+    --- PASS: TestRecordBoundaries/spread (0.21s)
+    --- PASS: TestRecordBoundaries/mixed (0.21s)
+    --- PASS: TestRecordBoundaries/reflection (0.21s)
+    --- PASS: TestRecordBoundaries/nested_cast (0.22s)
+    --- PASS: TestRecordBoundaries/nullable (0.20s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-records	3.289s

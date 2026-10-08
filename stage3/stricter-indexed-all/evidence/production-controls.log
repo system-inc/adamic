@@ -1,0 +1,6 @@
+missing-exclusion: caught before lowering: indexed ledger probe: want exactly 72 exclusions, got 71
+wrong-row-identity: caught before lowering: indexed ledger probe: 1 exclusions lack exact option audit evidence
+exclude-joint-indexed-row: caught before lowering: indexed ledger probe: exclusion attribution changed: /tmp/stricter-indexed-all-typescript/src/compiler/checker.ts:43517:20:TS2412
+missing-indexed-audit: caught by classifier: indexed audit identities differ from the 99 dated rows
+fabricated-built-entry: caught by classifier: new lowering/native outcome requires direct source-to-guard classification
+wrong-excluded-id: caught by classifier: excluded row IDs differ from the exact 72
