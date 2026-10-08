@@ -323,7 +323,7 @@ while true; do
     if ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null &&
        { [ ! -f "${state}/storm" ] || [ "$((now - last))" -ge 600 ]; }; then
       free=$(freeSlots) draining=$(drainingBoxes)
-      box=$(usableSlots canary/main | awk '$2 == "S" {print $1; exit}')
+      box=$(usableSlots canary/main | awk '$2 == "S" && box == "" {box = $1} END {print box}')
       sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
       if [ -n "${box}" ] && [ -n "${sha}" ]; then
         log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
@@ -370,7 +370,7 @@ while true; do
       elif [[ ${branch} == devtools/* ]]; then rank=3
       else rank=4; fi
       if [ "${slot}" = "${class}" ]; then
-        box=$(echo "${eligible}" | awk -v c="${slot}" '$2 == c {print $1; exit}')
+        box=$(echo "${eligible}" | awk -v c="${slot}" '$2 == c && box == "" {box = $1} END {print box}')
       else box=${borrowable}; fi
       echo "$(( rank + extra )) ${queued} ${branch} ${sha} ${class} ${slot} ${box}"
     done < "${state}/queue" | sort -k1,1n -k2,2nr | head -1)
