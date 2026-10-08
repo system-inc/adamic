@@ -10,11 +10,12 @@ files = {
         'transformers/es2015.ts', 'transformers/esnext.ts',
         'transformers/module/esnextAnd2015.ts', 'transformers/esDecorators.ts',
         'transformers/jsx.ts', 'program.ts', 'commandLineParser.ts',
+        'moduleNameResolver.ts', 'sourcemap.ts', 'transformers/declarations.ts',
     )
 }
 ref = 'a1a16427a46149435e25f847c45ad136f1f1e55c'
 ledger = subprocess.check_output([
-    'git', 'show', ref + ':stage3/ledger/checker-259/rows.csv',
+    'git', 'show', ref + ':stage3/ledger/checker-259/rows-2026-10-08.csv',
 ], text=True)
 rows = {
     row['id']: row for row in csv.DictReader(io.StringIO(ledger))
@@ -30,4 +31,5 @@ for site in sites:
     assert site['expression'] == row['source_expression']
     assert site['cause'] == row['cause']
 print(f'{len(sites)} ledger rows, 0 missing, 0 extra, exact source metadata')
-print('Requested 27; exact seven-file option filter contains 24.')
+assert len(sites) == 27, 'expected all 27 rows after corrected ownership split'
+print('Corrected ten-file option filter contains all 27 assigned rows.')
