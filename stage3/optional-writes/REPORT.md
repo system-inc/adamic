@@ -147,3 +147,18 @@ Focused loader/lower/command tests pass (5.682s, 0.662s, 0.008s); the prior spre
 oracle pass was 5.036s. The updated guard refusal is also rechecked before commit.
 The provisional completion estimate remains October 10 UTC, with no verified
 whole-program completion date while the declaration blocks remain.
+
+Next conditional-contract attempt is blocked: admitting the literal on the right
+of `resolved && { ... }` schedules 54 sites, but the native runtime fixture fails
+to compile. Cleanup references `adamic_local_2_optionalConstruction` outside the
+branch scope where the guard declared it. This is a clang error, not a successful
+mutant catch. The attempted acceptance and reflection extensions were withdrawn;
+the pushed implementation retains 53 scheduled contracts and 14 explicit errors.
+The reproducible .a witness and raw clang log are saved in evidence. Resolving
+this requires correct ownership and cleanup scope for Effects locals in lazy
+branches; widening the accepted diagnostic without that fix is unsound.
+
+Spread native package validation passed in 125.274s; JavaScript has no package
+tests. Updated focused runtime proof passed in 5.341s. Batch commit 59ca7f85 is
+pushed to codex/stricter-optional-writes. Provisional October 10 UTC remains an
+estimate, contingent on the ownership-scope and production declaration blocks.
