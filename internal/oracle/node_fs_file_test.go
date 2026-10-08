@@ -181,7 +181,7 @@ func TestNodeFSFileMutants(t *testing.T) {
 		{"mkdirSync first directory", "mkdir", "mkdir", `static adamic_string *fs_file_mutant(const adamic_string *path,bool recursive,double mode) { adamic_string *result=adamic_fs_file_mkdir(path,recursive,mode);adamic_release(result);return NULL; }`},
 		{"unlinkSync swallowed failure", "unlink", "unlink", `static double fs_file_mutant(const adamic_string *path) { double result=adamic_fs_file_unlink(path);if(adamic_thrown!=NULL){adamic_release(adamic_thrown);adamic_thrown=NULL;}return result; }`},
 		{"utimesSync milliseconds", "utimes", "utimes", `static double fs_file_mutant(const adamic_string *path,double atime,double mtime) { return adamic_fs_file_utimes(path,atime,mtime+1); }`},
-		{"Date timestamp", "date", "date_time", `static double fs_file_mutant(const adamic_object *date) { return adamic_fs_file_date_time(date)+1; }`},
+		{"Date timestamp", "date", "date_time", `static double fs_file_mutant(const adamic_object *date) { return adamic_date_value(date)+1; }`},
 
 		{"System fileExists", "system", "is_file", `static bool fs_file_mutant(const adamic_object *value) { (void)value;return false; }`},
 		{"System getFileSize", "system", "stat", `static adamic_object *fs_file_mutant(const adamic_string *path,bool throws) { adamic_object *result=adamic_fs_file_stat(path,throws);if(result!=NULL)result->slots[0].number+=1;return result; }`},
@@ -210,6 +210,9 @@ func TestNodeFSFileMutants(t *testing.T) {
 				// helper and its Node-only behavioral comparison unchanged.
 				pattern := regexp.MustCompile(`adamic_node_fs_dirent_is\(([^,\n]+), "` + method + `"\)`)
 				code = pattern.ReplaceAllString(code, "fs_file_mutant(${1})")
+			} else if one.operation == "date_time" {
+				// The embedded Node Date declaration now emits the shared Date runtime.
+				code = strings.ReplaceAll(code, "adamic_date_value(", "fs_file_mutant(")
 			} else {
 				code = strings.ReplaceAll(code, "adamic_fs_file_"+one.operation+"(", "fs_file_mutant(")
 			}
