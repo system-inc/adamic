@@ -95,6 +95,52 @@ cat > ~/"${out}"/run.sh <<RUN
 set -u
 exec 9> ~/full-gate/lock
 flock 9
+# A run that can't stop the box's idle jobs is void, naming the box: under set -e it would end with no
+# full.json, and the loop waits for that file without a deadline.
+preempt() {
+# BEGIN idle preemption (keep identical to cloud/idle-preempt.sh)
+python3 - <<'IDLE_PREEMPT'
+import os, signal, time
+
+def marked():
+    result = []
+    for name in os.listdir('/proc'):
+        if not name.isdigit():
+            continue
+        try:
+            path = '/proc/' + name
+            if os.stat(path).st_uid != os.getuid():
+                continue
+            if b'ADAMIC_IDLE_JOB=1' in open(path + '/environ', 'rb').read().split(b'\\0'):
+                if open(path + '/stat').read().rsplit(')', 1)[1].split()[0] != 'Z':
+                    result.append(int(name))
+        except (OSError, ProcessLookupError):
+            pass
+    return result
+
+# SIGKILL prevents a dying parent from spawning new children after the scan.
+# Repeat for children born between scanning /proc and killing their parent.
+deadline = time.monotonic() + 10
+while True:
+    pids = marked()
+    if not pids:
+        break
+    for pid in pids:
+        try:
+            os.kill(pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    if time.monotonic() >= deadline:
+        raise SystemExit('idle preemption timed out; gate aborted')
+    time.sleep(.05)
+IDLE_PREEMPT
+# END idle preemption
+}
+if ! preempt; then
+  echo "void: ${sha} full gate, box \$(hostname) could not stop its idle jobs in 10 s" > ~/"${out}"/status.txt
+  echo '{"finished": true, "void": true}' > ~/"${out}"/full.json
+  exit 0
+fi
 source ~/adamic-tools/env.sh
 # Stock tsc is the gates' pinned TypeScript 6.0.3 (the LKG checkout setup provides), for oracles that
 # take it from PATH (cmd/adamic-test262's stock-rejection check). No box had a tsc on PATH.
