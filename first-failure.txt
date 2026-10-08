@@ -1,0 +1,9 @@
+FIRST FAILURE (tests, at 1102.7 s):
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/host/14_getCurrentDirectory.a/stage0
+=== RUN   TestFixtures/host/14_getCurrentDirectory.a/stage0
+    fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/host/14_getCurrentDirectory.a:16:24: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case}; recorded {Outcome:Checker What:stage3/fixtures/host/14_getCurrentDirectory.a:6:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+        stage3/fixtures/host/14_getCurrentDirectory.a:7:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+        stage3/fixtures/host/14_getCurrentDirectory.a:8:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+        stage3/fixtures/host/14_getCurrentDirectory.a:9:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.}
+--- FAIL: TestFixtures/host/14_getCurrentDirectory.a/stage0 (0.00s)
+
