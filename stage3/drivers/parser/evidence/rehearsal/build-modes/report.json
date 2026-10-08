@@ -1,0 +1,14 @@
+[
+  {
+    "split": 0,
+    "exit": 1,
+    "wall_seconds": 0.5155693190172315,
+    "stderr": "/workspace/scratch/parser-rehearsal-slice/src/compiler/debug.ts:113:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/parser-rehearsal-slice/src/compiler/debug.ts:114:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n"
+  },
+  {
+    "split": 1,
+    "exit": 1,
+    "wall_seconds": 0.5243448250112124,
+    "stderr": "/workspace/scratch/parser-rehearsal-slice/src/compiler/debug.ts:113:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/parser-rehearsal-slice/src/compiler/debug.ts:114:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n"
+  }
+]

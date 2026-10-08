@@ -1,0 +1,6 @@
+// Reduced from TypeScript 6.0.3, src/compiler/debug.ts:289
+function getFunctionName(func: () => void): string {
+    const text = Function.prototype.toString.call(func);
+    return text;
+}
+console.log(getFunctionName(() => {}));

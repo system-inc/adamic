@@ -1,0 +1,742 @@
+{
+  "probes": [
+    {
+      "file": "native-error-capture-stack.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-error-capture-stack.a"
+        ],
+        "exit": 0,
+        "stdout": "error declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-error-capture-stack.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-error-capture-stack.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "/workspace/adamic/stage3/drivers/parser/native-error-capture-stack.a:4:15: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/adamic/stage3/drivers/parser/native-error-capture-stack.a:4:42: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-namespace-object-receiver.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-namespace-object-receiver.a"
+        ],
+        "exit": 0,
+        "stdout": "receiver declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-namespace-object-receiver.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-namespace-object-receiver.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-namespace-object-receiver.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "receiver declaration loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399088,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-namespace-class.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-namespace-class.a"
+        ],
+        "exit": 0,
+        "stdout": "class declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-namespace-class.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-namespace-class.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-namespace-class.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "class declaration loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399328,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-callable-namespace.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-callable-namespace.a"
+        ],
+        "exit": 0,
+        "stdout": "callable namespace loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-callable-namespace.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-callable-namespace.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-callable-namespace.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "callable namespace loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399088,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-enum-map.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-enum-map.a"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-enum-map.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-enum-map.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-enum-map.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399528,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-call-before-enum.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-call-before-enum.a"
+        ],
+        "exit": 0,
+        "stdout": "0:0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-call-before-enum.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-call-before-enum.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-call-before-enum.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "0:0\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399528,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-maplike-index.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-maplike-index.a"
+        ],
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-maplike-index.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-maplike-index.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-maplike-index.a:2:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-nonnull.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-nonnull.a"
+        ],
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-nonnull.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-nonnull.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-nonnull.a:5:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-predicate-overload.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-overload.a"
+        ],
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-overload.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-predicate-overload.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-predicate-overload.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399184,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-predicate-callback.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-callback.a"
+        ],
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-callback.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-predicate-callback.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-predicate-callback.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399184,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-same-map-return-cast.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-same-map-return-cast.a"
+        ],
+        "exit": 0,
+        "stdout": "2\nundefined\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-same-map-return-cast.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-same-map-return-cast.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-same-map-return-cast.a:4:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-key-array-cast.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-key-array-cast.a"
+        ],
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-key-array-cast.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-key-array-cast.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-key-array-cast.a:4:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-arguments-length.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-arguments-length.a"
+        ],
+        "exit": 0,
+        "stdout": "false\ntrue\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-arguments-length.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-arguments-length.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-arguments-length.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "false\ntrue\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 398984,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-arguments-length-value.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-arguments-length-value.a"
+        ],
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-arguments-length-value.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-arguments-length-value.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-arguments-length-value.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399136,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-generic-array-cast.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-array-cast.a"
+        ],
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-array-cast.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-generic-array-cast.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-array-cast.a:4:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-generic-empty-array.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-generic-empty-array.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a:5:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-sorted-array-brand.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-sorted-array-brand.a"
+        ],
+        "exit": 0,
+        "stdout": "2\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-sorted-array-brand.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-sorted-array-brand.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-sorted-array-brand.a:7:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-predicate-callback-parameter.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-callback-parameter.a"
+        ],
+        "exit": 0,
+        "stdout": "callback declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-callback-parameter.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-predicate-callback-parameter.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-predicate-callback-parameter.a:2:90: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-some-predicate-overload.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-some-predicate-overload.a"
+        ],
+        "exit": 0,
+        "stdout": "overload declarations loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-some-predicate-overload.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-some-predicate-overload.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-some-predicate-overload.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "overload declarations loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399088,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-debug-namespace.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-debug-namespace.a"
+        ],
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-debug-namespace.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-debug-namespace.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-debug-namespace.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 398984,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-map-before-namespace.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-map-before-namespace.a"
+        ],
+        "exit": 0,
+        "stdout": "0:false\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-map-before-namespace.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-minimals/native-map-before-namespace.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-minimals/native-map-before-namespace.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "0:false\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399184,
+      "native_byte_mutant_cmp": 1
+    }
+  ],
+  "passing": 12,
+  "total": 21,
+  "full_slice": "Source-stop minimal witnesses; native comparison and byte mutants only if any builds"
+}

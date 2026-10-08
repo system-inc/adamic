@@ -1,0 +1,176 @@
+{
+  "baseline": "ec71eb48",
+  "probes": [
+    {
+      "file": "native-error-capture-stack.a",
+      "previous_pass": false,
+      "rehearsal_pass": false,
+      "status": "still there",
+      "diagnostic": "/workspace/adamic/stage3/drivers/parser/native-error-capture-stack.a:4:15: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/adamic/stage3/drivers/parser/native-error-capture-stack.a:4:42: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-namespace-object-receiver.a",
+      "previous_pass": true,
+      "rehearsal_pass": true,
+      "status": "remains admitted",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-namespace-class.a",
+      "previous_pass": true,
+      "rehearsal_pass": true,
+      "status": "remains admitted",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-callable-namespace.a",
+      "previous_pass": true,
+      "rehearsal_pass": true,
+      "status": "remains admitted",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-enum-map.a",
+      "previous_pass": false,
+      "rehearsal_pass": true,
+      "status": "gone",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-call-before-enum.a",
+      "previous_pass": false,
+      "rehearsal_pass": true,
+      "status": "gone",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-maplike-index.a",
+      "previous_pass": false,
+      "rehearsal_pass": false,
+      "status": "still there",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/parser/native-maplike-index.a:2:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-nonnull.a",
+      "previous_pass": false,
+      "rehearsal_pass": false,
+      "status": "still there",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/parser/native-nonnull.a:5:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-predicate-overload.a",
+      "previous_pass": true,
+      "rehearsal_pass": true,
+      "status": "remains admitted",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-predicate-callback.a",
+      "previous_pass": true,
+      "rehearsal_pass": true,
+      "status": "remains admitted",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-same-map-return-cast.a",
+      "previous_pass": false,
+      "rehearsal_pass": false,
+      "status": "still there",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/parser/native-same-map-return-cast.a:4:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-key-array-cast.a",
+      "previous_pass": false,
+      "rehearsal_pass": false,
+      "status": "still there",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/parser/native-key-array-cast.a:4:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-arguments-length.a",
+      "previous_pass": true,
+      "rehearsal_pass": true,
+      "status": "remains admitted",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-arguments-length-value.a",
+      "previous_pass": true,
+      "rehearsal_pass": true,
+      "status": "remains admitted",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-generic-array-cast.a",
+      "previous_pass": false,
+      "rehearsal_pass": false,
+      "status": "still there",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-array-cast.a:4:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-generic-empty-array.a",
+      "previous_pass": false,
+      "rehearsal_pass": false,
+      "status": "still there",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a:5:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-sorted-array-brand.a",
+      "previous_pass": false,
+      "rehearsal_pass": false,
+      "status": "still there",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/parser/native-sorted-array-brand.a:7:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-predicate-callback-parameter.a",
+      "previous_pass": false,
+      "rehearsal_pass": false,
+      "status": "still there",
+      "diagnostic": "adamic: /workspace/adamic/stage3/drivers/parser/native-predicate-callback-parameter.a:2:90: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-some-predicate-overload.a",
+      "previous_pass": true,
+      "rehearsal_pass": true,
+      "status": "remains admitted",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-debug-namespace.a",
+      "previous_pass": false,
+      "rehearsal_pass": true,
+      "status": "gone",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    },
+    {
+      "file": "native-map-before-namespace.a",
+      "previous_pass": false,
+      "rehearsal_pass": true,
+      "status": "gone",
+      "diagnostic": "",
+      "pending": "rehearsal only; awaits compatible landing and complete parser acceptance"
+    }
+  ],
+  "passing": 12,
+  "total": 21,
+  "native_parser": "not built"
+}

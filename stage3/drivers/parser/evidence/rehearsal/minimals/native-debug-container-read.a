@@ -1,0 +1,9 @@
+// Reduced from TypeScript 6.0.3, src/compiler/debug.ts:102
+namespace Debug {
+    export function check(): void {}
+    export function remember(name: "check"): void {
+        const assertion = Debug[name];
+        console.log(typeof assertion);
+    }
+}
+Debug.remember("check");

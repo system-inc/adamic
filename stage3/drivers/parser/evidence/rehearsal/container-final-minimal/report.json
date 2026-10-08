@@ -1,0 +1,35 @@
+{
+  "probes": [
+    {
+      "file": "native-debug-container-read.a",
+      "source": "/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-debug-container-read.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-debug-container-read.a"
+        ],
+        "exit": 0,
+        "stdout": "function\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-debug-container-read.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-container-final-minimal/native-debug-container-read.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-debug-container-read.a:5:27: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet\n"
+      },
+      "pass": false
+    }
+  ],
+  "passing": 0,
+  "total": 1,
+  "full_slice": "Source-stop minimal witnesses; native comparison and byte mutants only if any builds"
+}

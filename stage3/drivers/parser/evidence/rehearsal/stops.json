@@ -1,0 +1,311 @@
+{
+  "baseline": "ec71eb48",
+  "comparison": "Current measured header/probes plus previously listed historical forms; new means newly exposed source form, not a claim of a new compiler regression.",
+  "native_acceptance": "pending: no parser C; rehearsal never lands whole",
+  "rows": [
+    {
+      "order": 1,
+      "attempt": 1,
+      "file": "src/compiler/debug.ts",
+      "line": 113,
+      "column": 19,
+      "message": "error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.",
+      "owner": "library",
+      "status_against_blockers": "still there",
+      "minimal": "native-error-capture-stack.a",
+      "pending": false,
+      "awaits": "compatible area/library ErrorConstructor facts; attempted library merge conflicted",
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable."
+    },
+    {
+      "order": 2,
+      "attempt": 2,
+      "file": "src/compiler/corePublic.ts",
+      "line": 9,
+      "column": 5,
+      "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+      "owner": "compiler / records",
+      "status_against_blockers": "still there",
+      "minimal": "native-maplike-index.a",
+      "pending": true,
+      "awaits": "records-maplike-next 8c013f1c reconciled on the train; merge conflicted",
+      "placeholder": "export type MapLike<T> = Record<string, T>;\nfunction parserProofMissingMapLike<T>(): Record<string, T> { throw \"discovery-only dictionary declaration\"; }\n"
+    },
+    {
+      "order": 3,
+      "attempt": 3,
+      "file": "src/compiler/core.ts",
+      "line": 195,
+      "column": 37,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "owner": "stage3 source contract",
+      "status_against_blockers": "still there",
+      "minimal": "native-same-map-return-cast.a",
+      "pending": true,
+      "awaits": "truthful sameMap/builder/diagnostic contract; union proposal remains unapplied",
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable."
+    },
+    {
+      "order": 4,
+      "attempt": 4,
+      "file": "src/compiler/core.ts",
+      "line": 230,
+      "column": 22,
+      "message": "Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)",
+      "owner": "compiler / generic arrays",
+      "status_against_blockers": "still there",
+      "minimal": "native-generic-empty-array.a",
+      "pending": true,
+      "awaits": "generic empty-array fallback admitted on train",
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable."
+    },
+    {
+      "order": 5,
+      "attempt": 5,
+      "file": "src/compiler/core.ts",
+      "line": 421,
+      "column": 12,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "owner": "compiler / array brands",
+      "status_against_blockers": "still there",
+      "minimal": "native-sorted-array-brand.a",
+      "pending": true,
+      "awaits": "SortedReadonlyArray brand cast/view on train",
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable."
+    },
+    {
+      "order": 6,
+      "attempt": 6,
+      "file": "src/compiler/core.ts",
+      "line": 616,
+      "column": 97,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "owner": "compiler / predicates",
+      "status_against_blockers": "still there",
+      "minimal": "native-predicate-callback-parameter.a",
+      "pending": true,
+      "awaits": "proven generic predicate callback parameter",
+      "placeholder": "All predicates in the containing overload group become boolean; implementation throws. Exact edits retained; discovery only."
+    },
+    {
+      "order": 7,
+      "attempt": 7,
+      "file": "src/compiler/core.ts",
+      "line": 890,
+      "column": 14,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "owner": "stage3 source types / compiler casts",
+      "status_against_blockers": "still there",
+      "minimal": "native-process-any-cast.a",
+      "pending": true,
+      "awaits": "truthful removal of the browser cast, or supported checked any view; no edit in this unit",
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable."
+    },
+    {
+      "order": 8,
+      "attempt": 8,
+      "file": "src/compiler/debug.ts",
+      "line": 80,
+      "column": 31,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "owner": "compiler / entries provenance",
+      "status_against_blockers": "still there",
+      "minimal": "native-key-array-cast.a",
+      "pending": true,
+      "awaits": "finite key-array provenance; entries-provenance 05a60066 conflicted; 76 already supplies truthful key type",
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable."
+    },
+    {
+      "order": 9,
+      "attempt": 9,
+      "file": "src/compiler/debug.ts",
+      "line": 102,
+      "column": 56,
+      "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet",
+      "owner": "compiler / namespace containers",
+      "status_against_blockers": "new",
+      "minimal": "minimals/native-debug-container-read.a",
+      "pending": true,
+      "awaits": "dynamic Debug namespace value container; initialization/declaration probes do not cover this",
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable."
+    },
+    {
+      "order": 10,
+      "attempt": 10,
+      "file": "src/compiler/debug.ts",
+      "line": 161,
+      "column": 131,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed value to NonNullable<T>); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "owner": "compiler / assertion predicates",
+      "status_against_blockers": "still there",
+      "minimal": "native-generic-assert-non-nullable.a",
+      "pending": true,
+      "awaits": "generic NonNullable assertion proof on train",
+      "placeholder": "All predicates in the containing overload group become boolean; implementation throws. Exact edits retained; discovery only."
+    },
+    {
+      "order": 11,
+      "attempt": 12,
+      "file": "src/compiler/debug.ts",
+      "line": 191,
+      "column": 105,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "owner": "compiler / predicate callbacks",
+      "status_against_blockers": "new",
+      "minimal": "native-predicate-callback-parameter.a",
+      "pending": true,
+      "awaits": "assertEachNode predicate callback and assertion overload proof",
+      "placeholder": "All predicates in the containing overload group become boolean; implementation throws. Exact edits retained; discovery only."
+    },
+    {
+      "order": 12,
+      "attempt": 13,
+      "file": "src/compiler/debug.ts",
+      "line": 207,
+      "column": 101,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "owner": "compiler / predicate callbacks",
+      "status_against_blockers": "new",
+      "minimal": "native-predicate-callback-parameter.a",
+      "pending": true,
+      "awaits": "assertNode predicate callback and assertion overload proof",
+      "placeholder": "All predicates in the containing overload group become boolean; implementation throws. Exact edits retained; discovery only."
+    },
+    {
+      "order": 13,
+      "attempt": 16,
+      "file": "src/compiler/debug.ts",
+      "line": 220,
+      "column": 107,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "owner": "compiler / predicate callbacks",
+      "status_against_blockers": "new",
+      "minimal": "native-predicate-callback-parameter.a",
+      "pending": true,
+      "awaits": "assertNotNode predicate callback and assertion overload proof",
+      "placeholder": "All predicates in the containing overload group become boolean; implementation throws. Exact edits retained; discovery only."
+    },
+    {
+      "order": 14,
+      "attempt": 17,
+      "file": "src/compiler/debug.ts",
+      "line": 233,
+      "column": 97,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "owner": "compiler / predicate callbacks",
+      "status_against_blockers": "new",
+      "minimal": "native-predicate-callback-parameter.a",
+      "pending": true,
+      "awaits": "assertOptionalNode predicate callback and assertion overload proof",
+      "placeholder": "All predicates in the containing overload group become boolean; implementation throws. Exact edits retained; discovery only."
+    },
+    {
+      "order": 15,
+      "attempt": 18,
+      "file": "src/compiler/debug.ts",
+      "line": 289,
+      "column": 26,
+      "message": "Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)",
+      "owner": "compiler / detached callable methods",
+      "status_against_blockers": "new",
+      "minimal": "minimals/native-function-to-string-call.a",
+      "pending": true,
+      "awaits": "Function.prototype.toString.call receiver/call support",
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable."
+    },
+    {
+      "order": 16,
+      "attempt": 19,
+      "file": "src/compiler/debug.ts",
+      "line": 358,
+      "column": 34,
+      "message": "Adamic 0.1 refuses a value of type typeof import(\"/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/_namespaces/ts\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "owner": "compiler / enum record views",
+      "status_against_blockers": "new",
+      "minimal": "minimals/native-enum-module-record-cast.a",
+      "pending": true,
+      "awaits": "namespace-import enum dictionary view without invariant mutable writes",
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable."
+    }
+  ],
+  "excluded_artifacts": [
+    {
+      "order": 11,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/debug.ts:170:9: error TS2322: Type 'T | null | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | null | undefined'.\n",
+      "file": "src/compiler/debug.ts",
+      "line": 170,
+      "column": 9,
+      "message": "error TS2322: Type 'T | null | undefined' is not assignable to type 'T'.",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/debug.ts",
+        "line": 170,
+        "column": 9,
+        "name": "checkDefined",
+        "edits": [
+          {
+            "start": 6651,
+            "end": 6800,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "discovery_artifact": true,
+      "stub_exit": 0
+    },
+    {
+      "order": 14,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/factory/nodeConverters.ts:68:81: error TS2345: Argument of type 'BindingName' is not assignable to parameter of type 'Expression'.\n  Property '_expressionBrand' is missing in type 'ArrayBindingPattern' but required in type 'Expression'.\n/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/factory/nodeConverters.ts:88:84: error TS2345: Argument of type 'BindingName' is not assignable to parameter of type 'Expression'.\n  Property '_expressionBrand' is missing in type 'ArrayBindingPattern' but required in type 'Expression'.\n/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/factory/nodeConverters.ts:95:91: error TS2345: Argument of type 'BindingName' is not assignable to parameter of type 'string | Identifier'.\n  Type 'ArrayBindingPattern' is not assignable to type 'string | Identifier'.\n    Type 'ArrayBindingPattern' is missing the following properties from type 'Identifier': escapedText, _jsdocContainerBrand, _flowContainerBrand, _declarationBrand, and 7 more.\n",
+      "file": "src/compiler/factory/nodeConverters.ts",
+      "line": 68,
+      "column": 81,
+      "message": "error TS2345: Argument of type 'BindingName' is not assignable to parameter of type 'Expression'.",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/factory/nodeConverters.ts",
+        "line": 68,
+        "column": 81,
+        "name": "convertToArrayAssignmentElement",
+        "edits": [
+          {
+            "start": 3078,
+            "end": 3834,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "discovery_artifact": true,
+      "stub_exit": 0
+    },
+    {
+      "order": 15,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/factory/nodeConverters.ts:12:9: error TS2322: Type '(element: ArrayBindingOrAssignmentElement) => void' is not assignable to type '(element: ArrayBindingOrAssignmentElement) => Expression'.\n  Type 'void' is not assignable to type 'Expression'.\n/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/factory/nodeConverters.ts:130:58: error TS2345: Argument of type 'void[]' is not assignable to parameter of type 'readonly Expression[]'.\n  Type 'void' is not assignable to type 'Expression'.\n/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/factory/nodeConverters.ts:88:84: error TS2345: Argument of type 'BindingName' is not assignable to parameter of type 'Expression'.\n  Property '_expressionBrand' is missing in type 'ArrayBindingPattern' but required in type 'Expression'.\n/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/factory/nodeConverters.ts:95:91: error TS2345: Argument of type 'BindingName' is not assignable to parameter of type 'string | Identifier'.\n  Type 'ArrayBindingPattern' is not assignable to type 'string | Identifier'.\n    Type 'ArrayBindingPattern' is missing the following properties from type 'Identifier': escapedText, _jsdocContainerBrand, _flowContainerBrand, _declarationBrand, and 7 more.\n",
+      "file": "src/compiler/factory/nodeConverters.ts",
+      "line": 12,
+      "column": 9,
+      "message": "error TS2322: Type '(element: ArrayBindingOrAssignmentElement) => void' is not assignable to type '(element: ArrayBindingOrAssignmentElement) => Expression'.",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery3-slice/src/compiler/factory/nodeConverters.ts",
+        "line": 12,
+        "column": 9,
+        "name": "createNodeConverters",
+        "edits": [
+          {
+            "start": 889,
+            "end": 5851,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "discovery_artifact": true,
+      "stub_exit": 0
+    }
+  ]
+}

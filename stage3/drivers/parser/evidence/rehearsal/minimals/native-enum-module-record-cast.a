@@ -1,0 +1,6 @@
+// Reduced from TypeScript 6.0.3, src/compiler/debug.ts:358
+import * as ts from "./enum-module.a";
+function formatSyntaxKind(): string {
+    return String((ts as Record<"SyntaxKind", Record<string, string | number>>).SyntaxKind.Identifier);
+}
+console.log(formatSyntaxKind());

@@ -1,0 +1,6 @@
+// Reduced from TypeScript 6.0.3, src/compiler/debug.ts:102
+function noop(): void {}
+namespace Debug { export function check(): void {} }
+function replace(name: "check"): void { (Debug as any)[name] = noop; }
+replace("check");
+console.log("replaced");

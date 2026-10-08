@@ -1,0 +1,203 @@
+{
+  "probes": [
+    {
+      "file": "native-process-any-cast.a",
+      "source": "/workspace/adamic/stage3/drivers/parser/native-process-any-cast.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-process-any-cast.a"
+        ],
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-process-any-cast.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-extra-minimals/native-process-any-cast.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-process-any-cast.a:4:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-partial-record-view.a",
+      "source": "/workspace/adamic/stage3/drivers/parser/native-partial-record-view.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-partial-record-view.a"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-partial-record-view.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-extra-minimals/native-partial-record-view.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-extra-minimals/native-partial-record-view.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399080,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-predicate-function-view.a",
+      "source": "/workspace/adamic/stage3/drivers/parser/native-predicate-function-view.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-function-view.a"
+        ],
+        "exit": 0,
+        "stdout": "predicate view loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-predicate-function-view.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-extra-minimals/native-predicate-function-view.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-extra-minimals/native-predicate-function-view.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "predicate view loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 399088,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-generic-assert-non-nullable.a",
+      "source": "/workspace/adamic/stage3/drivers/parser/native-generic-assert-non-nullable.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-assert-non-nullable.a"
+        ],
+        "exit": 0,
+        "stdout": "assertion declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-generic-assert-non-nullable.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-extra-minimals/native-generic-assert-non-nullable.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-assert-non-nullable.a:3:90: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed value to NonNullable<T>); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-function-to-string-call.a",
+      "source": "/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-function-to-string-call.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-function-to-string-call.a"
+        ],
+        "exit": 0,
+        "stdout": "()=>{}\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-function-to-string-call.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-extra-minimals/native-function-to-string-call.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-function-to-string-call.a:3:18: Adamic 0.1 refuses a method read as a value (toString would lose its object, and this with it); call it in an arrow that keeps the object: () => its object.toString() (unbound-method)\n"
+      },
+      "pass": false
+    },
+    {
+      "file": "native-enum-module-record-cast.a",
+      "source": "/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-enum-module-record-cast.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-enum-module-record-cast.a"
+        ],
+        "exit": 0,
+        "stdout": "80\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-rehearsal-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-enum-module-record-cast.a",
+          "-o",
+          "/workspace/scratch/parser-rehearsal-extra-minimals/native-enum-module-record-cast.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/native-enum-module-record-cast.a:4:20: Adamic 0.1 refuses a value of type typeof import(\"/workspace/adamic/stage3/drivers/parser/evidence/rehearsal/minimals/enum-module.a\") seen as Record<\"SyntaxKind\", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false
+    }
+  ],
+  "passing": 2,
+  "total": 6,
+  "full_slice": "Source-stop minimal witnesses; native comparison and byte mutants only if any builds"
+}

@@ -1,0 +1,403 @@
+{
+  "warning": "Discovery only. No Node identity/native acceptance claim.",
+  "rows": [
+    {
+      "order": 1,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:113:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:114:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n",
+      "file": "src/compiler/debug.ts",
+      "line": 113,
+      "column": 19,
+      "message": "error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.",
+      "found_behind_stubs": false,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 113,
+        "column": 19,
+        "name": "fail",
+        "edits": [
+          {
+            "start": 5235,
+            "end": 5533,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 2,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/corePublic.ts:9:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n",
+      "file": "src/compiler/corePublic.ts",
+      "line": 9,
+      "column": 5,
+      "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+      "found_behind_stubs": true,
+      "placeholder": "export type MapLike<T> = Record<string, T>;\nfunction parserProofMissingMapLike<T>(): Record<string, T> { throw \"discovery-only dictionary declaration\"; }\n",
+      "stub_exit": 0
+    },
+    {
+      "order": 3,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/core.ts:195:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "file": "src/compiler/core.ts",
+      "line": 195,
+      "column": 37,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/core.ts",
+        "line": 195,
+        "column": 37,
+        "name": "sameMap",
+        "edits": [
+          {
+            "start": 7426,
+            "end": 7976,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 4,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/core.ts:230:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n",
+      "file": "src/compiler/core.ts",
+      "line": 230,
+      "column": 22,
+      "message": "Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/core.ts",
+        "line": 230,
+        "column": 22,
+        "name": "flatMap",
+        "edits": [
+          {
+            "start": 7858,
+            "end": 8308,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 5,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/core.ts:421:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "file": "src/compiler/core.ts",
+      "line": 421,
+      "column": 12,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/core.ts",
+        "line": 421,
+        "column": 12,
+        "name": "toSorted",
+        "edits": [
+          {
+            "start": 15237,
+            "end": 15361,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 6,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/core.ts:616:97: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/core.ts",
+      "line": 616,
+      "column": 97,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "placeholder": "All predicates in the containing overload group become boolean; implementation throws. Exact edits retained; discovery only.",
+      "stub_exit": 0
+    },
+    {
+      "order": 7,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/core.ts:890:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "file": "src/compiler/core.ts",
+      "line": 890,
+      "column": 14,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/core.ts",
+        "line": 890,
+        "column": 14,
+        "name": "isNodeLikeSystem",
+        "edits": [
+          {
+            "start": 30653,
+            "end": 30927,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 8,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:80:31: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n",
+      "file": "src/compiler/debug.ts",
+      "line": 80,
+      "column": 31,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 80,
+        "column": 31,
+        "name": "setAssertionLevel",
+        "edits": [
+          {
+            "start": 3662,
+            "end": 4328,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 9,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:102:56: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet\n",
+      "file": "src/compiler/debug.ts",
+      "line": 102,
+      "column": 56,
+      "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 102,
+        "column": 56,
+        "name": "shouldAssertFunction",
+        "edits": [
+          {
+            "start": 4320,
+            "end": 4538,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 10,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:161:131: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed value to NonNullable<T>); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/debug.ts",
+      "line": 161,
+      "column": 131,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed value to NonNullable<T>); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 161,
+        "column": 131,
+        "name": "assertIsDefined",
+        "edits": [
+          {
+            "start": 6512,
+            "end": 6706,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 11,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:191:105: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/debug.ts",
+      "line": 191,
+      "column": 105,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 191,
+        "column": 105,
+        "name": "assertEachNode",
+        "edits": [
+          {
+            "start": 8139,
+            "end": 8148,
+            "replacement": "boolean"
+          },
+          {
+            "start": 8039,
+            "end": 8229,
+            "replacement": ""
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 12,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:191:109: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/debug.ts",
+      "line": 191,
+      "column": 109,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 191,
+        "column": 109,
+        "name": "assertEachNode",
+        "edits": [
+          {
+            "start": 8143,
+            "end": 8152,
+            "replacement": "boolean"
+          },
+          {
+            "start": 8043,
+            "end": 8233,
+            "replacement": ""
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 13,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:191:125: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/debug.ts",
+      "line": 191,
+      "column": 125,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 191,
+        "column": 125,
+        "name": "assertEachNode",
+        "edits": [
+          {
+            "start": 8159,
+            "end": 8168,
+            "replacement": "boolean"
+          },
+          {
+            "start": 8047,
+            "end": 8261,
+            "replacement": ""
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 14,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:191:129: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/debug.ts",
+      "line": 191,
+      "column": 129,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 191,
+        "column": 129,
+        "name": "assertEachNode",
+        "edits": [
+          {
+            "start": 8163,
+            "end": 8172,
+            "replacement": "boolean"
+          },
+          {
+            "start": 8051,
+            "end": 8265,
+            "replacement": ""
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 15,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:197:72: Adamic 0.1 refuses a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n",
+      "file": "src/compiler/debug.ts",
+      "line": 197,
+      "column": 72,
+      "message": "Adamic 0.1 refuses a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 197,
+        "column": 72,
+        "edits": [
+          {
+            "start": 8606,
+            "end": 8665,
+            "replacement": "{ throw \"scratch-only discovery stub\";}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 16,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts:203:101: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/debug.ts",
+      "line": 203,
+      "column": 101,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-rehearsal-discovery-slice/src/compiler/debug.ts",
+        "line": 203,
+        "column": 101,
+        "name": "assertNode",
+        "edits": [
+          {
+            "start": 8835,
+            "end": 8844,
+            "replacement": "boolean"
+          },
+          {
+            "start": 8739,
+            "end": 8913,
+            "replacement": ""
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    }
+  ]
+}
