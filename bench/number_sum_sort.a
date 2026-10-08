@@ -1,0 +1,39 @@
+// The existing sort benchmark's fixed-seed generator and random/nearly-sorted cases.
+// Integer inputs make full sums exact, independent of addition order.
+let seed = 1;
+function next(): number {
+    seed = (seed * 1103515245 + 12345) % 2147483648;
+    return seed / 2147483648;
+}
+const count = 1000000;
+const random: number[] = [];
+const nearly: number[] = [];
+for(let index = 0; index < count; index++) {
+    random.push(Math.floor(next() * 1000000));
+}
+for(let index = 0; index < count; index++) {
+    nearly.push(index + (next() < 0.01 ? Math.floor(next() * 1000) : 0));
+}
+function sum(values: number[]): number {
+    let total = 0;
+    for(const value of values) {
+        total += value;
+    }
+    return total;
+}
+const before = sum(random) + sum(nearly);
+random.sort((left, right) => left - right);
+nearly.sort((left, right) => left - right);
+const after = sum(random) + sum(nearly);
+let ordered = true;
+let checksum = 0;
+for(let index = 0; index < count; index++) {
+    checksum = (checksum * 33 + (random[index] ?? 0) + (nearly[index] ?? 0)) % 2147483647;
+    if(
+        index > 0 &&
+        ((random[index - 1] ?? 0) > (random[index] ?? 0) || (nearly[index - 1] ?? 0) > (nearly[index] ?? 0))
+    ) {
+        ordered = false;
+    }
+}
+console.log(`${before} ${after} ${ordered} ${checksum}`);

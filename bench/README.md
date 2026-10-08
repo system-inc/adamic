@@ -1,6 +1,6 @@
 # Benchmarks
 
-Nine fair programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program makes its own input from a fixed seed and prints a checksum, so there's no I/O in the timing and every runtime has to give the same answer.
+Deterministic programs, the same source run three ways: Adamic's native binary (`adamic build`, clang `-O2`, no sanitizers), Node, and Bun when it's installed. Each program makes its own input from a fixed seed and prints a checksum, so there's no I/O in the timing and every runtime has to give the same answer.
 
 ```
 go run ./bench                      # every program, 5 interleaved rounds, best of 5
@@ -23,6 +23,40 @@ The runs are interleaved round by round, so a machine that slows down slows all 
 | `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
 | `string_build.a` | 6,000 bounded formatter documents, short `+=` pieces, templates, array joins, slices, repeat and padding; every UTF-16 unit checksummed |
 | `map_workload.a` | four cache/store batches, each with 2,048 initial entries and 16,384 mixed requests over runtime-built string keys, numeric record keys and an active-name Set |
+
+## Reproducible wall and user time comparison
+
+```sh
+source /workspace/adamic-tools/env.sh  # use the path printed by cloud/setup.sh
+bash bench/run.sh                     # validates outputs, times, writes bench/RESULTS.md
+bash bench/run.sh --check-only        # builds and validates without timing
+bash bench/run.sh --only primes,map_200k --output /tmp/bench-results.md
+```
+
+This script builds with `go run ./cmd/adamic build`, requires Node v24.19.0,
+and locates Bun or installs Bun 1.3.14 from its GitHub release into a user cache.
+Set `BUN` to an executable to select an installed version. All three runtimes are
+required; a missing runtime, execution error, timeout or checksum disagreement
+fails the run and leaves any prior report intact. Python 3 and curl are required.
+
+The selected workloads are `primes.a` (ten Uint8Array sieves near two million),
+`number_sum_sort.a` (full sums and sorts of two million-number arrays, adapted
+from `sort.ts`), `string_build.a` and `word_count.ts` (existing building and
+splitting programs), `map_200k.a` (200,000 distinct string keys), `trees.ts` and
+`nbody.ts` (existing recursive allocation/walk and float workloads). These are
+six workload categories, with two existing programs for the string category.
+`json_encode.a` adds nested JSON encoding; decoding is not measured because
+native refuses JSON.parse. An explicit JSON.stringify refusal is recorded as
+not measured; any other build error stops the run.
+
+One untimed output check precedes five fresh-process interleaved rounds. Every
+measured run must also match stdout exactly. The starting runtime rotates each
+round. The table reports minimum wall time and the user CPU time from that same
+sample, both native/Node and native/Bun ratios, and explicit native losses. The
+report includes machine, CPU/affinity/quota, versions, load before/after timing,
+source checksums, exact outputs and every timing sample. Startup, type stripping,
+workload checksum calculation and printing are included; builds are excluded.
+[RESULTS.md](RESULTS.md) records the measured run and its limitations.
 
 ## Parallel files, October 6, 2026
 

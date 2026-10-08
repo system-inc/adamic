@@ -1,0 +1,17 @@
+// Nested literal structure with runtime scalar fields; fresh encoding on every iteration.
+let checksum = 0;
+let units = 0;
+for(let index = 0; index < 100000; index++) {
+    const encoded =
+        JSON.stringify({
+            id: index,
+            name: `entry-${index}`,
+            metadata: { active: index % 2 === 0, label: 'é🌍', limits: { low: index, high: index + 10 } },
+            values: [index, index + 1, index + 2],
+        }) ?? '';
+    units += encoded.length;
+    for(let unit = 0; unit < encoded.length; unit++) {
+        checksum = (checksum * 33 + encoded.charCodeAt(unit)) % 2147483647;
+    }
+}
+console.log(`${units} units ${checksum}`);
