@@ -1,0 +1,53 @@
+const values = [1, 2, 3, 4];
+console.log(
+    `${values.reduce((acc: number, item: number, index: number, source: number[]): number => {
+        console.log(`left ${index} ${source.length}`);
+        return acc * 10 + item;
+    })}`,
+);
+console.log(
+    `${values.reduceRight((acc: number, item: number, index: number, source: number[]): number => {
+        console.log(`right ${index} ${source.length}`);
+        return acc * 10 + item;
+    })}`,
+);
+console.log(`${values.reduceRight((acc: string, item: number): string => acc + `${item}`, 'x'.repeat(2))}`);
+const growing = [1, 2];
+console.log(
+    `${growing.reduce((acc: number, item: number, index: number): number => {
+        growing.push(9);
+        console.log(`grow ${index}`);
+        return acc + item;
+    }, 0)}`,
+);
+const shrinking = [1, 2, 3, 4];
+console.log(
+    `${shrinking.reduceRight((acc: number, item: number, index: number): number => {
+        if(index === 3) {
+            shrinking.splice(0, 3);
+        }
+        console.log(`shrink ${index} ${item}`);
+        return acc + item;
+    }, 0)}`,
+);
+const strings = ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2)];
+console.log(`${strings.reduce((acc: string, item: string): string => acc + item)}`);
+console.log(`${strings.reduceRight((acc: string, item: string): string => acc + item)}`);
+const empty: number[] = [];
+console.log(`${empty.reduce((acc: number, item: number): number => acc + item, 17)}`);
+try {
+    console.log(`${empty.reduce((acc: number, item: number): number => acc + item)}`);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`${error.name}: ${error.message}`);
+    }
+}
+try {
+    console.log(`${empty.reduceRight((acc: number, item: number): number => acc + item)}`);
+}
+catch(error) {
+    if(error instanceof Error) {
+        console.log(`${error.name}: ${error.message}`);
+    }
+}

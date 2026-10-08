@@ -13,6 +13,7 @@ var libraryArrayMethods = map[string]bool{
 	"join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
 	"with": true, "flatMap": true, "copyWithin": true, "toSpliced": true, "flat": true,
 	"findLast": true, "findLastIndex": true, "toReversed": true, "toSorted": true,
+	"reduce": true, "reduceRight": true, "sort": true,
 }
 
 // libraryArrayMethod keeps this slice's additions out of the shared method dispatch.
@@ -35,6 +36,16 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	}
 	written := node.AsCallExpression().Arguments.Nodes
 	switch name {
+	case "reduce", "reduceRight":
+		return l.libraryArrayReduce(node, array, element, name)
+	case "sort":
+		if len(written) != 0 {
+			return l.arraySort(node, array, element)
+		}
+		if element != ir.Number && element != ir.Boolean && element != ir.String || l.includesUndefined(l.checker.GetElementTypeOfArrayType(l.checker.GetTypeAtLocation(receiver))) {
+			return nil, true, l.notYet(node, "default sort requiring object coercion or optional element partitioning")
+		}
+		return ir.ArraySort{Array: array, Element: element, Comparator: l.libraryArrayComparator(element)}, true, nil
 	case "join":
 		return l.libraryArrayJoin(node, receiver, array)
 	case "with":
@@ -456,6 +467,9 @@ func (l *lowering) libraryArrayMethodName(node *ast.Node) string {
 }
 
 func (l *lowering) libraryArrayObservation(node *ast.Node) (ir.Expression, bool) {
+	if l.libraryArrayPrototypeLength(node) {
+		return ir.NumberConstant{}, true
+	}
 	node = ast.SkipParentheses(node)
 	if node.Kind == ast.KindTypeOfExpression {
 		if name := l.libraryArrayMethodName(node.AsTypeOfExpression().Expression); name != "" {
@@ -476,7 +490,10 @@ func (l *lowering) libraryArrayObservation(node *ast.Node) (ir.Expression, bool)
 }
 
 func (l *lowering) libraryArrayObservedMethod(node *ast.Node) bool {
-	if l.libraryArrayExplicitSearch(node) != "" {
+	if node.Parent != nil && l.libraryArrayPrototypeLength(node.Parent) {
+		return true
+	}
+	if l.libraryArrayExplicitMethod(node) != "" {
 		return true
 	}
 	if l.libraryArrayMethodName(node) == "" {
@@ -646,4 +663,47 @@ func (l *lowering) libraryArrayJoin(node, receiver *ast.Node, array ir.Expressio
 		}
 	}
 	return ir.ArrayJoin{Array: array, Separator: separator, Element: element, Depth: depth}, true, nil
+}
+
+// Prototype mutation is refused by the shared refusal pass, so the intrinsic
+// prototype's length remains zero. Recognize reads only, never a store target.
+func (l *lowering) libraryArrayPrototypeLength(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindPropertyAccessExpression || node.Name().Text() != "length" || node.AsPropertyAccessExpression().QuestionDotToken != nil {
+		return false
+	}
+	receiver := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
+	if receiver.Kind != ast.KindPropertyAccessExpression || receiver.Name().Text() != "prototype" || receiver.AsPropertyAccessExpression().QuestionDotToken != nil || !l.isLibraryGlobal(receiver.AsPropertyAccessExpression().Expression, "Array") {
+		return false
+	}
+	outer := node
+	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
+		outer = outer.Parent
+	}
+	if outer.Parent != nil {
+		if outer.Parent.Kind == ast.KindPrefixUnaryExpression || outer.Parent.Kind == ast.KindPostfixUnaryExpression {
+			return false
+		}
+		if outer.Parent.Kind == ast.KindBinaryExpression && outer.Parent.AsBinaryExpression().Left == outer {
+			operator := outer.Parent.AsBinaryExpression().OperatorToken.Kind
+			_, compound := compoundAssignments[operator]
+			if operator == ast.KindEqualsToken || compound {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// Reference representations erase optionality, so carry the element proof into
+// search visits explicitly rather than guessing from the physical slot type.
+func (l *lowering) libraryArrayVisitAllowsUndefined(node *ast.Node) bool {
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression {
+		return false
+	}
+	receiver := callee.AsPropertyAccessExpression().Expression
+	arrayType := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver))
+	element := l.checker.GetElementTypeOfArrayType(arrayType)
+	return element != nil && l.includesUndefined(element)
 }

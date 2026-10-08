@@ -58,6 +58,18 @@ IN THE SOFTWARE.
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
     GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
+  - dense Array construction (`internal/lower/library_array_construct.go`, after
+    ArrayConstructInitializeElements in src/objects/elements.cc, V8 13.6.233.17);
+  - Array reduce and reduceRight (`internal/lower/library_array_reduce.go`, after
+    src/builtins/array-reduce.tq and src/builtins/array-reduce-right.tq, V8 13.6.233.17);
+  - Array.from string iteration (`internal/lower/library_array_from.go`, after
+    src/builtins/array-from.tq, V8 13.6.233.17);
+  - immutable string receivers of Array mutations (`internal/lower/library_array_call_string.go`,
+    after GenericArrayPush / GenericArrayPop in src/builtins/builtins-array.cc,
+    src/builtins/array-shift.tq and src/builtins/array-unshift.tq, V8 13.6.233.17);
+  - optional elements at removed indexes in Array find methods (`internal/native/emit_arrays.go`
+    and `internal/javascript/javascript.go`, after src/builtins/array-find.tq,
+    array-findindex.tq, array-findlast.tq and array-findlastindex.tq, V8 13.6.233.17);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);

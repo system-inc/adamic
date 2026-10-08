@@ -1,0 +1,28 @@
+=== RUN   TestLibraryArrayGenericRefusals
+=== PAUSE TestLibraryArrayGenericRefusals
+=== CONT  TestLibraryArrayGenericRefusals
+=== RUN   TestLibraryArrayGenericRefusals/sparse_constructor_length
+=== PAUSE TestLibraryArrayGenericRefusals/sparse_constructor_length
+=== RUN   TestLibraryArrayGenericRefusals/constructor_indexed_extension
+=== PAUSE TestLibraryArrayGenericRefusals/constructor_indexed_extension
+=== RUN   TestLibraryArrayGenericRefusals/constructor_reassignment_holes
+=== PAUSE TestLibraryArrayGenericRefusals/constructor_reassignment_holes
+=== RUN   TestLibraryArrayGenericRefusals/constructor_integer_property
+=== PAUSE TestLibraryArrayGenericRefusals/constructor_integer_property
+=== CONT  TestLibraryArrayGenericRefusals/sparse_constructor_length
+=== CONT  TestLibraryArrayGenericRefusals/constructor_reassignment_holes
+=== CONT  TestLibraryArrayGenericRefusals/constructor_indexed_extension
+=== CONT  TestLibraryArrayGenericRefusals/constructor_integer_property
+    library_array_test.go:49: want refusal containing "outside a proven dense prefix", got <nil>
+=== NAME  TestLibraryArrayGenericRefusals/constructor_reassignment_holes
+    library_array_test.go:49: want refusal containing "outside a proven dense prefix", got <nil>
+=== NAME  TestLibraryArrayGenericRefusals/constructor_indexed_extension
+    library_array_test.go:49: want refusal containing "outside a proven dense prefix", got <nil>
+--- FAIL: TestLibraryArrayGenericRefusals (0.00s)
+    --- FAIL: TestLibraryArrayGenericRefusals/constructor_integer_property (0.08s)
+    --- FAIL: TestLibraryArrayGenericRefusals/constructor_reassignment_holes (0.08s)
+    --- FAIL: TestLibraryArrayGenericRefusals/constructor_indexed_extension (0.10s)
+    --- PASS: TestLibraryArrayGenericRefusals/sparse_constructor_length (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.106s
+FAIL

@@ -1,0 +1,198 @@
+=== RUN   TestLibraryArrayNewFamilyMutants
+=== PAUSE TestLibraryArrayNewFamilyMutants
+=== RUN   TestLibraryArrayGenericRefusals
+=== PAUSE TestLibraryArrayGenericRefusals
+=== RUN   TestLibraryArrayVisitUndefinedProof
+=== PAUSE TestLibraryArrayVisitUndefinedProof
+=== CONT  TestLibraryArrayNewFamilyMutants
+=== CONT  TestLibraryArrayVisitUndefinedProof
+=== RUN   TestLibraryArrayVisitUndefinedProof/number
+=== PAUSE TestLibraryArrayVisitUndefinedProof/number
+=== RUN   TestLibraryArrayVisitUndefinedProof/number_|_undefined
+=== PAUSE TestLibraryArrayVisitUndefinedProof/number_|_undefined
+=== RUN   TestLibraryArrayVisitUndefinedProof/Leaf
+=== PAUSE TestLibraryArrayVisitUndefinedProof/Leaf
+=== CONT  TestLibraryArrayGenericRefusals
+=== RUN   TestLibraryArrayGenericRefusals/optional_numeric_constructor
+=== PAUSE TestLibraryArrayGenericRefusals/optional_numeric_constructor
+=== RUN   TestLibraryArrayGenericRefusals/mixed_numeric_constructor
+=== PAUSE TestLibraryArrayGenericRefusals/mixed_numeric_constructor
+=== RUN   TestLibraryArrayGenericRefusals/sparse_constructor_length
+=== PAUSE TestLibraryArrayGenericRefusals/sparse_constructor_length
+=== RUN   TestLibraryArrayGenericRefusals/constructor_indexed_extension
+=== PAUSE TestLibraryArrayGenericRefusals/constructor_indexed_extension
+=== RUN   TestLibraryArrayGenericRefusals/constructor_reassignment_holes
+=== PAUSE TestLibraryArrayGenericRefusals/constructor_reassignment_holes
+=== RUN   TestLibraryArrayGenericRefusals/constructor_integer_property
+=== PAUSE TestLibraryArrayGenericRefusals/constructor_integer_property
+=== RUN   TestLibraryArrayGenericRefusals/generic_boxed_result
+=== PAUSE TestLibraryArrayGenericRefusals/generic_boxed_result
+=== RUN   TestLibraryArrayVisitUndefinedProof/Leaf_|_undefined
+=== RUN   TestLibraryArrayGenericRefusals/generic_unknown_shape
+=== PAUSE TestLibraryArrayGenericRefusals/generic_unknown_shape
+=== PAUSE TestLibraryArrayVisitUndefinedProof/Leaf_|_undefined
+=== RUN   TestLibraryArrayGenericRefusals/default_optional_sort
+=== PAUSE TestLibraryArrayGenericRefusals/default_optional_sort
+=== RUN   TestLibraryArrayVisitUndefinedProof/string
+=== RUN   TestLibraryArrayGenericRefusals/detached
+=== PAUSE TestLibraryArrayVisitUndefinedProof/string
+=== PAUSE TestLibraryArrayGenericRefusals/detached
+=== RUN   TestLibraryArrayVisitUndefinedProof/string_|_undefined
+=== RUN   TestLibraryArrayGenericRefusals/shadowed_Array
+=== PAUSE TestLibraryArrayVisitUndefinedProof/string_|_undefined
+=== PAUSE TestLibraryArrayGenericRefusals/shadowed_Array
+=== CONT  TestLibraryArrayVisitUndefinedProof/number
+=== RUN   TestLibraryArrayGenericRefusals/widened_shape
+=== PAUSE TestLibraryArrayGenericRefusals/widened_shape
+=== RUN   TestLibraryArrayGenericRefusals/reassigned_shape
+=== PAUSE TestLibraryArrayGenericRefusals/reassigned_shape
+=== RUN   TestLibraryArrayGenericRefusals/object_coercion
+=== PAUSE TestLibraryArrayGenericRefusals/object_coercion
+=== RUN   TestLibraryArrayGenericRefusals/empty_object_field
+=== PAUSE TestLibraryArrayGenericRefusals/empty_object_field
+=== RUN   TestLibraryArrayGenericRefusals/optional_field_value
+=== PAUSE TestLibraryArrayGenericRefusals/optional_field_value
+=== RUN   TestLibraryArrayGenericRefusals/optional_search_value
+=== PAUSE TestLibraryArrayGenericRefusals/optional_search_value
+=== RUN   TestLibraryArrayGenericRefusals/hidden_object_field
+=== PAUSE TestLibraryArrayGenericRefusals/hidden_object_field
+=== RUN   TestLibraryArrayGenericRefusals/hidden_search_view
+=== PAUSE TestLibraryArrayGenericRefusals/hidden_search_view
+=== RUN   TestLibraryArrayNewFamilyMutants/constructor_argument_order
+=== RUN   TestLibraryArrayGenericRefusals/null_array_search
+=== PAUSE TestLibraryArrayGenericRefusals/null_array_search
+=== RUN   TestLibraryArrayGenericRefusals/hidden_array
+=== PAUSE TestLibraryArrayGenericRefusals/hidden_array
+=== RUN   TestLibraryArrayGenericRefusals/optional_array
+=== PAUSE TestLibraryArrayGenericRefusals/optional_array
+=== CONT  TestLibraryArrayGenericRefusals/optional_numeric_constructor
+=== PAUSE TestLibraryArrayNewFamilyMutants/constructor_argument_order
+=== RUN   TestLibraryArrayNewFamilyMutants/reduceRight_index_stride
+=== PAUSE TestLibraryArrayNewFamilyMutants/reduceRight_index_stride
+=== RUN   TestLibraryArrayNewFamilyMutants/reduce_saved_length_boundary
+=== PAUSE TestLibraryArrayNewFamilyMutants/reduce_saved_length_boundary
+=== RUN   TestLibraryArrayNewFamilyMutants/reduce_empty_TypeError_message
+=== PAUSE TestLibraryArrayNewFamilyMutants/reduce_empty_TypeError_message
+=== RUN   TestLibraryArrayNewFamilyMutants/generic_nullish_TypeError_message
+=== PAUSE TestLibraryArrayNewFamilyMutants/generic_nullish_TypeError_message
+=== RUN   TestLibraryArrayNewFamilyMutants/generic_primitive_every_result
+=== PAUSE TestLibraryArrayNewFamilyMutants/generic_primitive_every_result
+=== RUN   TestLibraryArrayNewFamilyMutants/from_string_iteration_order
+=== PAUSE TestLibraryArrayNewFamilyMutants/from_string_iteration_order
+=== RUN   TestLibraryArrayNewFamilyMutants/string_mutation_readonly_error
+=== PAUSE TestLibraryArrayNewFamilyMutants/string_mutation_readonly_error
+=== RUN   TestLibraryArrayNewFamilyMutants/generic_forward_boundary
+=== PAUSE TestLibraryArrayNewFamilyMutants/generic_forward_boundary
+=== RUN   TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign
+=== PAUSE TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign
+=== RUN   TestLibraryArrayNewFamilyMutants/isArray_classification
+=== PAUSE TestLibraryArrayNewFamilyMutants/isArray_classification
+=== RUN   TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end
+=== PAUSE TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end
+=== CONT  TestLibraryArrayNewFamilyMutants/constructor_argument_order
+=== CONT  TestLibraryArrayGenericRefusals/reassigned_shape
+=== CONT  TestLibraryArrayVisitUndefinedProof/string
+=== CONT  TestLibraryArrayVisitUndefinedProof/string_|_undefined
+=== CONT  TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end
+=== CONT  TestLibraryArrayNewFamilyMutants/isArray_classification
+=== CONT  TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign
+=== CONT  TestLibraryArrayNewFamilyMutants/generic_forward_boundary
+=== NAME  TestLibraryArrayNewFamilyMutants/constructor_argument_order
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/string_mutation_readonly_error
+=== NAME  TestLibraryArrayNewFamilyMutants/isArray_classification
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/from_string_iteration_order
+=== NAME  TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/generic_primitive_every_result
+=== NAME  TestLibraryArrayNewFamilyMutants/string_mutation_readonly_error
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/generic_nullish_TypeError_message
+=== NAME  TestLibraryArrayNewFamilyMutants/from_string_iteration_order
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/reduce_empty_TypeError_message
+=== NAME  TestLibraryArrayNewFamilyMutants/generic_primitive_every_result
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/reduce_saved_length_boundary
+=== NAME  TestLibraryArrayNewFamilyMutants/generic_forward_boundary
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayNewFamilyMutants/reduceRight_index_stride
+=== NAME  TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayVisitUndefinedProof/Leaf
+=== CONT  TestLibraryArrayVisitUndefinedProof/Leaf_|_undefined
+=== NAME  TestLibraryArrayNewFamilyMutants/generic_nullish_TypeError_message
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayGenericRefusals/generic_boxed_result
+=== CONT  TestLibraryArrayGenericRefusals/widened_shape
+=== CONT  TestLibraryArrayGenericRefusals/shadowed_Array
+=== CONT  TestLibraryArrayGenericRefusals/detached
+=== CONT  TestLibraryArrayGenericRefusals/default_optional_sort
+=== NAME  TestLibraryArrayNewFamilyMutants/reduce_empty_TypeError_message
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayGenericRefusals/generic_unknown_shape
+=== CONT  TestLibraryArrayGenericRefusals/hidden_object_field
+=== NAME  TestLibraryArrayNewFamilyMutants/reduce_saved_length_boundary
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+=== CONT  TestLibraryArrayGenericRefusals/optional_array
+=== CONT  TestLibraryArrayGenericRefusals/hidden_array
+=== CONT  TestLibraryArrayGenericRefusals/null_array_search
+=== CONT  TestLibraryArrayGenericRefusals/hidden_search_view
+=== CONT  TestLibraryArrayGenericRefusals/optional_field_value
+=== CONT  TestLibraryArrayGenericRefusals/optional_search_value
+=== CONT  TestLibraryArrayVisitUndefinedProof/number_|_undefined
+=== CONT  TestLibraryArrayGenericRefusals/constructor_indexed_extension
+=== CONT  TestLibraryArrayGenericRefusals/constructor_integer_property
+=== CONT  TestLibraryArrayGenericRefusals/constructor_reassignment_holes
+=== NAME  TestLibraryArrayNewFamilyMutants/reduceRight_index_stride
+    library_array_mutants_test.go:264: caught only by stdout comparison with Node; exit 0, no sanitizer or leak report
+--- PASS: TestLibraryArrayNewFamilyMutants (0.00s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/constructor_argument_order (0.55s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/isArray_classification (0.52s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/copyWithin_undefined_end (0.54s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/string_mutation_readonly_error (0.64s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/from_string_iteration_order (0.59s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/generic_primitive_every_result (0.57s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/generic_forward_boundary (1.27s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/generic_backward_negative_sign (1.49s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/generic_nullish_TypeError_message (0.54s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/reduce_empty_TypeError_message (0.68s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/reduce_saved_length_boundary (0.73s)
+    --- PASS: TestLibraryArrayNewFamilyMutants/reduceRight_index_stride (0.68s)
+=== CONT  TestLibraryArrayGenericRefusals/sparse_constructor_length
+=== CONT  TestLibraryArrayGenericRefusals/mixed_numeric_constructor
+--- PASS: TestLibraryArrayVisitUndefinedProof (0.00s)
+    --- PASS: TestLibraryArrayVisitUndefinedProof/string (0.08s)
+    --- PASS: TestLibraryArrayVisitUndefinedProof/number (0.10s)
+    --- PASS: TestLibraryArrayVisitUndefinedProof/string_|_undefined (0.10s)
+    --- PASS: TestLibraryArrayVisitUndefinedProof/Leaf (0.09s)
+    --- PASS: TestLibraryArrayVisitUndefinedProof/Leaf_|_undefined (0.07s)
+    --- PASS: TestLibraryArrayVisitUndefinedProof/number_|_undefined (0.08s)
+=== CONT  TestLibraryArrayGenericRefusals/empty_object_field
+=== CONT  TestLibraryArrayGenericRefusals/object_coercion
+--- PASS: TestLibraryArrayGenericRefusals (0.00s)
+    --- PASS: TestLibraryArrayGenericRefusals/optional_numeric_constructor (0.10s)
+    --- PASS: TestLibraryArrayGenericRefusals/reassigned_shape (0.14s)
+    --- PASS: TestLibraryArrayGenericRefusals/generic_boxed_result (0.07s)
+    --- PASS: TestLibraryArrayGenericRefusals/shadowed_Array (0.07s)
+    --- PASS: TestLibraryArrayGenericRefusals/widened_shape (0.09s)
+    --- PASS: TestLibraryArrayGenericRefusals/generic_unknown_shape (0.04s)
+    --- PASS: TestLibraryArrayGenericRefusals/default_optional_sort (0.06s)
+    --- PASS: TestLibraryArrayGenericRefusals/detached (0.08s)
+    --- PASS: TestLibraryArrayGenericRefusals/hidden_object_field (0.11s)
+    --- PASS: TestLibraryArrayGenericRefusals/null_array_search (0.10s)
+    --- PASS: TestLibraryArrayGenericRefusals/optional_array (0.12s)
+    --- PASS: TestLibraryArrayGenericRefusals/hidden_array (0.15s)
+    --- PASS: TestLibraryArrayGenericRefusals/hidden_search_view (0.07s)
+    --- PASS: TestLibraryArrayGenericRefusals/optional_field_value (0.07s)
+    --- PASS: TestLibraryArrayGenericRefusals/optional_search_value (0.07s)
+    --- PASS: TestLibraryArrayGenericRefusals/constructor_indexed_extension (0.06s)
+    --- PASS: TestLibraryArrayGenericRefusals/constructor_reassignment_holes (0.07s)
+    --- PASS: TestLibraryArrayGenericRefusals/sparse_constructor_length (0.07s)
+    --- PASS: TestLibraryArrayGenericRefusals/constructor_integer_property (0.09s)
+    --- PASS: TestLibraryArrayGenericRefusals/mixed_numeric_constructor (0.04s)
+    --- PASS: TestLibraryArrayGenericRefusals/object_coercion (0.04s)
+    --- PASS: TestLibraryArrayGenericRefusals/empty_object_field (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.246s

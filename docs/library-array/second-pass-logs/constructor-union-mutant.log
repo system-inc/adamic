@@ -1,0 +1,8 @@
+--- FAIL: TestLibraryArrayGenericRefusals (0.00s)
+    --- FAIL: TestLibraryArrayGenericRefusals/optional_numeric_constructor (0.05s)
+        library_array_test.go:53: want refusal containing "ambiguous numeric length overload", got <nil>
+    --- FAIL: TestLibraryArrayGenericRefusals/mixed_numeric_constructor (0.05s)
+        library_array_test.go:53: want refusal containing "ambiguous numeric length overload", got /tmp/adamic-gate/TestLibraryArrayGenericRefusalsmixed_numeric_constructor1770908004/001/main.a:1:59: stage 0 can't lower an array of string | number yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.062s
+FAIL

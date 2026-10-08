@@ -1,0 +1,7 @@
+function text(): string {
+    console.log('source');
+    return 'a'.repeat(2) + '\u{1F600}' + '\uD800' + 'b';
+}
+const characters = Array.from(text());
+console.log(`${characters.length} ${characters.join(',')}`);
+console.log(`${Array.from('').length}`);

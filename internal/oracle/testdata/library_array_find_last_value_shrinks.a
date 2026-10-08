@@ -1,0 +1,7 @@
+const list = ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2), 'd'.repeat(2)];
+const at = list.findLast((item: string, index: number): boolean => {
+	console.log(`${index} ${item}`);
+	if (index === 3) { list.splice(0, 3); }
+	return false;
+});
+console.log(`${at ?? 'absent'}`);

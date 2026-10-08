@@ -1296,7 +1296,7 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	if name != "forEach" && returns != ir.Boolean {
 		return nil, true, &Refused{Where: l.program.Where(arguments[0]), What: "a " + name + " callback that doesn't return a boolean", Fix: "return a comparison, like word.length > 0: 0.1 has no truthiness"}
 	}
-	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns}, true, nil
+	return ir.ArrayVisit{Method: name, Array: array, Callback: callback, Element: element, Returns: returns, AllowsUndefined: l.libraryArrayVisitAllowsUndefined(node)}, true, nil
 }
 
 // arrayReduce lowers array.reduce(callback, initial). 0.1 requires the initial value (docs/0.1.md):
@@ -1357,6 +1357,9 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "String") {
 		return nil, l.notYet(node, "new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)")
+	}
+	if value, known, err := l.libraryArrayConstruct(node); known {
+		return value, err
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)

@@ -1,0 +1,240 @@
+=== RUN   TestArrayFamilyMutants
+=== PAUSE TestArrayFamilyMutants
+=== RUN   TestArrayShrinkingSearchChecksAndMutants
+=== PAUSE TestArrayShrinkingSearchChecksAndMutants
+=== RUN   TestArrayOptionalShrinkingSearchMutants
+=== PAUSE TestArrayOptionalShrinkingSearchMutants
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestArrayFamilyMutants
+=== RUN   TestArrayFamilyMutants/iterator_index
+=== PAUSE TestArrayFamilyMutants/iterator_index
+=== RUN   TestArrayFamilyMutants/join_separator
+=== PAUSE TestArrayFamilyMutants/join_separator
+=== RUN   TestArrayFamilyMutants/method_metadata
+=== PAUSE TestArrayFamilyMutants/method_metadata
+=== RUN   TestArrayFamilyMutants/with_replacement
+=== PAUSE TestArrayFamilyMutants/with_replacement
+=== RUN   TestArrayFamilyMutants/flatMap_order
+=== CONT  TestArrayOptionalShrinkingSearchMutants
+=== CONT  TestNativeAgreesWithNode
+=== PAUSE TestArrayFamilyMutants/flatMap_order
+=== RUN   TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_numbers.a
+=== PAUSE TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_numbers.a
+=== RUN   TestArrayFamilyMutants/spliced_copy
+=== PAUSE TestArrayFamilyMutants/spliced_copy
+=== CONT  TestArrayShrinkingSearchChecksAndMutants
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== RUN   TestArrayShrinkingSearchChecksAndMutants/findLastIndex
+=== RUN   TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_leaves.a
+=== PAUSE TestArrayShrinkingSearchChecksAndMutants/findLastIndex
+=== RUN   TestArrayFamilyMutants/flat_order
+=== PAUSE TestArrayFamilyMutants/flat_order
+=== PAUSE TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_leaves.a
+=== CONT  TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_numbers.a
+=== CONT  TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_leaves.a
+=== RUN   TestArrayShrinkingSearchChecksAndMutants/findLast
+=== PAUSE TestArrayShrinkingSearchChecksAndMutants/findLast
+=== CONT  TestArrayShrinkingSearchChecksAndMutants/findLastIndex
+=== RUN   TestArrayFamilyMutants/copyWithin_write
+=== PAUSE TestArrayFamilyMutants/copyWithin_write
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/searches.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/searches.a
+=== RUN   TestArrayFamilyMutants/search_direction
+=== PAUSE TestArrayFamilyMutants/search_direction
+=== RUN   TestArrayFamilyMutants/copy_reversal
+=== PAUSE TestArrayFamilyMutants/copy_reversal
+=== RUN   TestArrayFamilyMutants/default_sort_ordering
+=== PAUSE TestArrayFamilyMutants/default_sort_ordering
+=== RUN   TestArrayFamilyMutants/reverse_callback_order
+=== PAUSE TestArrayFamilyMutants/reverse_callback_order
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_order.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_order.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== CONT  TestArrayShrinkingSearchChecksAndMutants/findLast
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last_shrinks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last_shrinks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last_value_shrinks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last_value_shrinks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_dense_construction.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_dense_construction.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_reductions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_reductions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_default_sort.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_default_sort.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_receiver_calls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_receiver_calls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_from_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_from_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_string_mutations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_string_mutations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_leaves.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_leaves.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_methods.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_methods.a
+=== CONT  TestArrayFamilyMutants/iterator_index
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestArrayFamilyMutants/copyWithin_write
+=== NAME  TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_leaves.a
+    library_array_shrinks_test.go:147: Node and both backends: exit 0, stdout "1\n2\nhole\n-1\n"
+=== NAME  TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_numbers.a
+    library_array_shrinks_test.go:147: Node and both backends: exit 0, stdout "1\n2\nhole\n-1\n"
+=== NAME  TestArrayShrinkingSearchChecksAndMutants/findLast
+    library_array_shrinks_test.go:74: Node: exit 0, stdout "3 dd\n2 undefined\n1 undefined\n0 dd\nabsent\n"; both backends: exit 70 after 3 dd
+=== NAME  TestArrayShrinkingSearchChecksAndMutants/findLastIndex
+    library_array_shrinks_test.go:74: Node: exit 0, stdout "3 dd\n2 undefined\n1 undefined\n0 dd\n-1\n"; both backends: exit 70 after 3 dd
+=== NAME  TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_numbers.a
+    library_array_shrinks_test.go:168: native unconditional-stop mutant caught by Node comparison: exit 70, stdout "1\n2\n"; no sanitizer report
+=== NAME  TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_leaves.a
+    library_array_shrinks_test.go:168: native unconditional-stop mutant caught by Node comparison: exit 70, stdout "1\n2\n"; no sanitizer report
+=== NAME  TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_numbers.a
+    library_array_shrinks_test.go:178: JavaScript unconditional-stop mutant caught by Node comparison: exit 70, stdout "1\n2\n"; no sanitizer report
+=== CONT  TestArrayFamilyMutants/reverse_callback_order
+=== NAME  TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_leaves.a
+    library_array_shrinks_test.go:178: JavaScript unconditional-stop mutant caught by Node comparison: exit 70, stdout "1\n2\n"; no sanitizer report
+--- PASS: TestArrayOptionalShrinkingSearchMutants (0.01s)
+    --- PASS: TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_numbers.a (2.30s)
+    --- PASS: TestArrayOptionalShrinkingSearchMutants/library_array_find_shrinks_optional_leaves.a (2.37s)
+=== CONT  TestArrayFamilyMutants/default_sort_ordering
+=== NAME  TestArrayShrinkingSearchChecksAndMutants/findLast
+    library_array_shrinks_test.go:95: native skip mutant caught: exit 0, stdout "3 dd\n0 dd\nabsent\n"; no sanitizer or leak report
+=== NAME  TestArrayShrinkingSearchChecksAndMutants/findLastIndex
+    library_array_shrinks_test.go:95: native skip mutant caught: exit 0, stdout "3 dd\n0 dd\n-1\n"; no sanitizer or leak report
+=== NAME  TestArrayShrinkingSearchChecksAndMutants/findLast
+    library_array_shrinks_test.go:113: JavaScript skip mutant caught: exit 0, stdout "3 dd\n0 dd\nabsent\n"
+=== CONT  TestArrayFamilyMutants/copy_reversal
+=== NAME  TestArrayShrinkingSearchChecksAndMutants/findLastIndex
+    library_array_shrinks_test.go:113: JavaScript skip mutant caught: exit 0, stdout "3 dd\n0 dd\n-1\n"
+--- PASS: TestArrayShrinkingSearchChecksAndMutants (0.04s)
+    --- PASS: TestArrayShrinkingSearchChecksAndMutants/findLast (2.75s)
+    --- PASS: TestArrayShrinkingSearchChecksAndMutants/findLastIndex (2.86s)
+=== CONT  TestArrayFamilyMutants/search_direction
+=== NAME  TestArrayFamilyMutants/copyWithin_write
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestArrayFamilyMutants/flatMap_order
+=== NAME  TestArrayFamilyMutants/reverse_callback_order
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestArrayFamilyMutants/flat_order
+=== NAME  TestArrayFamilyMutants/default_sort_ordering
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestArrayFamilyMutants/spliced_copy
+=== NAME  TestArrayFamilyMutants/copy_reversal
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestArrayFamilyMutants/method_metadata
+=== NAME  TestArrayFamilyMutants/flatMap_order
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestArrayFamilyMutants/with_replacement
+=== NAME  TestArrayFamilyMutants/flat_order
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestArrayFamilyMutants/join_separator
+=== NAME  TestArrayFamilyMutants/spliced_copy
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a
+=== NAME  TestArrayFamilyMutants/method_metadata
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_receiver_calls.a
+=== NAME  TestArrayFamilyMutants/with_replacement
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_default_sort.a
+=== NAME  TestArrayFamilyMutants/join_separator
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_reductions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_dense_construction.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last_value_shrinks.a
+=== NAME  TestArrayFamilyMutants/search_direction
+    library_array_mutant_test.go:124: caught only by stdout comparison with Node
+--- PASS: TestArrayFamilyMutants (0.09s)
+    --- PASS: TestArrayFamilyMutants/iterator_index (1.10s)
+    --- PASS: TestArrayFamilyMutants/copyWithin_write (2.10s)
+    --- PASS: TestArrayFamilyMutants/reverse_callback_order (1.39s)
+    --- PASS: TestArrayFamilyMutants/default_sort_ordering (1.69s)
+    --- PASS: TestArrayFamilyMutants/copy_reversal (1.51s)
+    --- PASS: TestArrayFamilyMutants/flatMap_order (1.39s)
+    --- PASS: TestArrayFamilyMutants/flat_order (1.65s)
+    --- PASS: TestArrayFamilyMutants/spliced_copy (1.37s)
+    --- PASS: TestArrayFamilyMutants/method_metadata (1.23s)
+    --- PASS: TestArrayFamilyMutants/with_replacement (0.96s)
+    --- PASS: TestArrayFamilyMutants/join_separator (1.39s)
+    --- PASS: TestArrayFamilyMutants/search_direction (4.55s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last_shrinks.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_order.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/searches.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_methods.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_leaves.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_string_mutations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_from_string.a
+--- PASS: TestNativeAgreesWithNode (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_join.a (1.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_default_sort.a (1.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_receiver_calls.a (1.87s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_dense_construction.a (1.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last_value_shrinks.a (1.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_reductions.a (2.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last_shrinks.a (1.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_collections.a (2.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a (1.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/adversarial_order.a (2.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/searches.a (2.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a (2.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy.a (2.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw.a (3.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_copy_within.a (2.25s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_spliced.a (1.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat.a (2.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_flat_map.a (2.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_search.a (4.45s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_metadata.a (1.41s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_with.a (1.98s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_numbers.a (1.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_iterators.a (2.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_leaves.a (1.82s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_shrinks_optional_methods.a (2.57s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_string_mutations.a (2.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_from_string.a (1.50s)
+PASS
+gate cache: native hits=0 misses=82
+gate cache: node hits=0 misses=78
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	18.653s
