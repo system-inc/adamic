@@ -18,7 +18,7 @@ The 46 probes are 20 root/path/optional/ref cases, all 25 result merges, and the
 
 ## Shared input blocker and request to hir-01
 
-`TestScopeReplayBlocked`, comparison_test.go:154: actual Go `BuildReactiveScopeTerminals` emits a `Scope` terminal for `function f(){return[]}`. The literal graph uses no checker. `testdata/scope.graph.txt` is its complete Go-produced graph, not a fabricated scope witness. Node, emitted JavaScript and sanitized native all stop at `unknown terminal Scope` in `../../replay/decode.ts:134`. `../../core.ts:89` excludes Scope from TerminalType.
+`TestScopeReplayBlocked`, comparison_test.go:154: actual Go `BuildReactiveScopeTerminals` emits a `Scope` terminal for `function f(){return[]}`. The literal graph uses no checker. `testdata/scope.graph.json` losslessly encodes its complete Go-produced graph (including empty-column spaces), not a fabricated scope witness. Node, emitted JavaScript and sanitized native all stop at `unknown terminal Scope` in `../../replay/decode.ts:134`. `../../core.ts:89` excludes Scope from TerminalType.
 
 Request: add the central Scope terminal, function-local checked ScopeIndex identity mapping, its block/fallthrough/order fields, and matching replay decode/encode/dump/copy/visitor support. Go's record is `cohere/internal/lint/ecmascript/high_level_intermediate_representation/terminal.go:324`; its producer is `scope_terminals.go:335`. Unit 10's source graph still contains that terminal immediately before `ValidatePreservedManualMemoizationWithPruned` (`preserve_manual_memoization.go:107`), so dropping it or replaying construction instead would falsify the input.
 
@@ -28,7 +28,7 @@ No compiler language gap was observed in the comparison. The Scope selector test
 
 ## Commands and setup
 
-`source /workspace/adamic-tools/env.sh`; `go test -json -count=1 -timeout=20m ./stage1/cohere/high_level_intermediate_representation/passes/unit-10`: 2 pass, 0 fail, 0 skip, package time 56.045s. Both top-level tests and both tagged Go tests call t.Parallel. Owned `go vet` and `gofmt -l` pass with empty output. Full repository and full HIR census gates were not run because the required validator input fails in the shared decoder.
+`source /workspace/adamic-tools/env.sh`; `go test -json -count=1 -timeout=20m ./stage1/cohere/high_level_intermediate_representation/passes/unit-10`: 2 pass, 0 fail, 0 skip, package time 53.241s. Both top-level tests and both tagged Go tests call t.Parallel. Owned `go vet` and `gofmt -l` pass with empty output. Full repository and full HIR census gates were not run because the required validator input fails in the shared decoder.
 
 Initial `bash cloud/setup.sh` failed: `fatal: cannot create directory at 'tsc/testdata/baselines/reference/fourslash': No space left on device`; the pinned TypeScript submodule could not finish checkout. Cleared disposable Go cache with `go clean -cache`, completed only that fresh submodule's pinned checkout, and retried setup. Success: Go ready 0.021s, Node 0.025s, submodules 0.073s, markdown 0.074s, clang 0.188s, build 217.203s, complete 217.333s; nproc 5 (CPU quota 4). Timing lines are in validation/setup.txt; the initial log is /tmp/hir-unit-10-setup.log.
 

@@ -159,11 +159,15 @@ func TestScopeReplayBlocked(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	golden, err := os.ReadFile(filepath.Join(own, "testdata/scope.graph.txt"))
+	golden, err := os.ReadFile(filepath.Join(own, "testdata/scope.graph.json"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !bytes.Equal(golden, want) {
+	var graph string
+	if err := json.Unmarshal(golden, &graph); err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal([]byte(graph), want) {
 		t.Fatal("actual Go scope producer differs from blocker fixture")
 	}
 	entry := filepath.Join(own, "scope_replay_main.a")
