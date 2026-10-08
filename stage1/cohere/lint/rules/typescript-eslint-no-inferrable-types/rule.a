@@ -1,0 +1,154 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { message } from './messages.a';
+
+function call(ctx: RuleContext, index: number, name: string, construct = false): boolean {
+    const node = ctx.node(index);
+    const target = node.children[0] ?? -1;
+    return (
+        node.kind === (construct ? 'NewExpression' : 'CallExpression') &&
+        target >= 0 &&
+        ctx.node(target).kind === 'Identifier' &&
+        ctx.node(target).text === name
+    );
+}
+function inferred(ctx: RuleContext, type: number, value: number): string {
+    const kind = ctx.node(type).kind;
+    const node = ctx.node(value);
+    let unwrapped = value;
+    if(node.kind === 'PrefixUnaryExpression' && ['PlusToken', 'MinusToken'].includes(node.operator))
+        unwrapped = node.children[0] ?? value;
+    const inner = ctx.node(unwrapped);
+    switch(kind) {
+        case 'NumberKeyword':
+            return inner.kind === 'NumericLiteral' ||
+                (inner.kind === 'Identifier' && ['NaN', 'Infinity'].includes(inner.text)) ||
+                call(ctx, unwrapped, 'Number')
+                ? 'number'
+                : '';
+        case 'BigIntKeyword': {
+            const big =
+                node.kind === 'PrefixUnaryExpression' && node.operator === 'MinusToken'
+                    ? ctx.node(node.children[0] ?? value)
+                    : node;
+            return [
+                'NumericLiteral',
+                'BigIntLiteral',
+                'StringLiteral',
+                'RegularExpressionLiteral',
+                'TrueKeyword',
+                'FalseKeyword',
+                'NullKeyword',
+            ].includes(big.kind) ||
+                call(
+                    ctx,
+                    node.kind === 'PrefixUnaryExpression' && node.operator === 'MinusToken'
+                        ? (node.children[0] ?? value)
+                        : value,
+                    'BigInt',
+                )
+                ? 'bigint'
+                : '';
+        }
+        case 'BooleanKeyword':
+            return ['TrueKeyword', 'FalseKeyword'].includes(node.kind) ||
+                (node.kind === 'PrefixUnaryExpression' && node.operator === 'ExclamationToken') ||
+                call(ctx, value, 'Boolean')
+                ? 'boolean'
+                : '';
+        case 'StringKeyword':
+            return ['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(node.kind) ||
+                call(ctx, value, 'String')
+                ? 'string'
+                : '';
+        case 'SymbolKeyword':
+            return call(ctx, value, 'Symbol') ? 'symbol' : '';
+        case 'UndefinedKeyword':
+            return node.kind === 'VoidExpression' || (node.kind === 'Identifier' && node.text === 'undefined')
+                ? 'undefined'
+                : '';
+        case 'LiteralType':
+            return child(ctx, type, 'NullKeyword') >= 0 && node.kind === 'NullKeyword' ? 'null' : '';
+        case 'TypeReference': {
+            const name = ctx.node(type).children[0] ?? -1;
+            return name >= 0 &&
+                ctx.node(name).kind === 'Identifier' &&
+                ctx.node(name).text === 'RegExp' &&
+                (node.kind === 'RegularExpressionLiteral' ||
+                    call(ctx, value, 'RegExp') ||
+                    call(ctx, value, 'RegExp', true))
+                ? 'RegExp'
+                : '';
+        }
+        default:
+            return '';
+    }
+}
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+    const ctx = this.context;
+    if(node.kind === 'Parameter') {
+        const parent = ctx.parent(index);
+        if(parent < 0 || !ctx.functionLike(parent) || ctx.settings.read('ignoreparameters', 'false') === 'true') return;
+    }
+    if(
+        node.kind === 'PropertyDeclaration' &&
+        (ctx.settings.read('ignoreproperties', 'false') === 'true' ||
+            ctx.has(index, 'ReadonlyKeyword') ||
+            ctx.has(index, 'QuestionToken'))
+    )
+        return;
+    const declaration = parts(ctx, node, index);
+    const name = declaration[0] ?? -1;
+    const type = declaration[1] ?? -1;
+    const value = declaration[2] ?? -1;
+    if(type < 0 || value < 0) return;
+    const text = inferred(ctx, type, value);
+    if(text === '') return;
+    const parameterProperty =
+        node.kind === 'Parameter' &&
+        node.children.some((child) =>
+            ['PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'OverrideKeyword'].includes(
+                ctx.node(child).kind,
+            ),
+        );
+    const token = child(ctx, index, node.kind === 'Parameter' ? 'QuestionToken' : 'ExclamationToken');
+    let colon = ctx.start(type) - 1;
+    while(colon >= 0 && ' \t\n\r\v\f'.includes(ctx.source[colon] ?? '')) colon--;
+    if(colon < 0 || ctx.source[colon] !== ':') colon = ctx.start(type);
+    const edits: SuggestionEdit[] = [];
+    if(token >= 0) edits.push(new SuggestionEdit(ctx.start(token), ctx.node(token).end, ''));
+    edits.push(new SuggestionEdit(colon, ctx.node(type).end, ''));
+    ctx.reportNode(parameterProperty ? name : index, '@typescript-eslint/no-inferrable-types',
+        'noInferrableType', message(text), edits);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
+
+// Only this rule needs the old batch declaration decomposition.
+function child(ctx: RuleContext, index: number, kind: string): number {
+    for(const item of ctx.node(index).children) if(ctx.node(item).kind === kind) return item;
+    return -1;
+}
+function parts(ctx: RuleContext, node: ParseNode, index: number): number[] {
+    const name = ctx.name(index);
+    let annotation = -1;
+    let initializer = -1;
+    let previous = name < 0 ? ctx.start(index) : ctx.node(name).end;
+    for(const item of node.children) {
+        const value = ctx.node(item);
+        if(item === name || value.end <= previous) continue;
+        if(value.kind === 'QuestionToken' || value.kind === 'ExclamationToken') {
+            previous = value.end;
+            continue;
+        }
+        const token = ctx.scanAt(previous);
+        if(token === 'ColonToken') annotation = item;
+        if(token === 'EqualsToken') initializer = item;
+        previous = value.end;
+    }
+    return [name, annotation, initializer];
+}
