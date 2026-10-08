@@ -14,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -30,12 +31,10 @@ type execution struct {
 	duration time.Duration
 }
 
-// Output is a file, never a pipe: the large corpus must also work on Node's writev path.
+// Guarded output is captured in a file so the large corpus need not stay in memory while running.
 func execute(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	command.Dir = directory
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
@@ -46,7 +45,7 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	err = childguard.Run(command, childguard.Options{})
 	duration := time.Since(started)
 	if err != nil || stderr.Len() != 0 {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
