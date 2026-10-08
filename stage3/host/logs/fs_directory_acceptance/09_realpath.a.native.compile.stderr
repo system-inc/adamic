@@ -1,4 +1,0 @@
-stage3/fixtures/host/09_realpath.a:6:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-stage3/fixtures/host/09_realpath.a:7:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-stage3/fixtures/host/09_realpath.a:8:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
-stage3/fixtures/host/09_realpath.a:9:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.

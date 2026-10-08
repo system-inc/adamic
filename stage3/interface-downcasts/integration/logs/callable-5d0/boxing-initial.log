@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewCallableBoxing (2.06s)
-    --- FAIL: TestCheckedViewCallableBoxing/parameter-throw (0.03s)
-        checked_views_callable_boxing_test.go:10: Load: /workspace/adamic/stage3/interface-downcasts/lane5/boxing/parameter-throw.a:2:56: error TS18046: 'error' is of type 'unknown'.
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=10
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	2.072s
-FAIL

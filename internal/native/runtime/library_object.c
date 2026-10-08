@@ -20,7 +20,7 @@ bool adamic_object_is(const adamic_heap *left, const adamic_heap *right) {
 bool adamic_object_is_frozen(const adamic_heap *value) {
  if (value == NULL) return true;
  if (value->kind == adamic_kind_object) return ((const adamic_object *)value)->frozen;
- return value->kind == adamic_kind_null || value->kind == adamic_kind_string || value->kind == adamic_kind_number || value->kind == adamic_kind_boolean;
+ return value->kind == adamic_kind_string || value->kind == adamic_kind_number || value->kind == adamic_kind_boolean;
 }
 
 adamic_object *adamic_object_freeze(adamic_object *object) {
@@ -108,10 +108,6 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
 }
 
 adamic_array *adamic_object_values(const adamic_object *object, bool references, bool entries) {
- return adamic_object_values_checked(object, references, entries, NULL);
-}
-
-adamic_array *adamic_object_values_checked(const adamic_object *object, bool references, bool entries, const char *expression) {
  size_t *indices = ordered(object);
  adamic_array *values = adamic_array_new(object->shape->count, entries || references);
  static const char *const names[] = {"0", "1"};
@@ -123,8 +119,7 @@ adamic_array *adamic_object_values_checked(const adamic_object *object, bool ref
   size_t index = indices[at];
   const char *name = object->shape->names[index];
   if (name[0] == '#') continue;
-  adamic_slot_cache cache = {NULL, 0};
-  adamic_value value = expression == NULL ? object->slots[index] : *adamic_object_read(object, name, &cache, expression);
+  adamic_value value = object->slots[index];
   if (references) adamic_retain(value.reference);
   if (entries) {
    adamic_object *pair = adamic_object_new(references ? &string_pair : &number_pair);
@@ -139,19 +134,14 @@ adamic_array *adamic_object_values_checked(const adamic_object *object, bool ref
 }
 
 void adamic_object_assign(adamic_object *target, const adamic_object *source) {
- adamic_object_assign_checked(target, source, NULL);
-}
-
-void adamic_object_assign_checked(adamic_object *target, const adamic_object *source, const char *expression) {
  size_t *indices = ordered(source);
  for (size_t at = 0; at < source->shape->count; at++) {
   size_t index = indices[at];
   const char *name = source->shape->names[index];
-  adamic_slot_cache read_cache = {NULL, 0};
-  adamic_value value = expression == NULL ? source->slots[index] : *adamic_object_read(source, name, &read_cache, expression);
   adamic_object_check_write(target, name);
   adamic_slot_cache cache = {NULL, 0};
-  adamic_value *slot = adamic_object_write_field(target, name, &cache);
+  adamic_value *slot = adamic_object_field(target, name, &cache);
+  adamic_value value = source->slots[index];
   if (source->shape->references[index]) {
    adamic_retain(value.reference);
    adamic_release(slot->reference);

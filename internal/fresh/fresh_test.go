@@ -36,11 +36,6 @@ func TestEveryWriteIsRecordedAndKnown(t *testing.T) {
 	}
 	writes, proven := 0, 0
 	for _, path := range paths {
-		// These process probes test runtime IR, not source lowering, and do not
-		// import the Node declarations. Their dedicated oracle tests remain active.
-		if filepath.Base(path) == "node_process_directory_mutation.a" || filepath.Base(path) == "node_process_environment_mutation.a" {
-			continue
-		}
 		absolute, err := filepath.Abs(path)
 		if err != nil {
 			t.Fatal(err)

@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRankedParserArrayContracts (0.00s)
-    --- FAIL: TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-member (1.82s)
-        checked_views_ranked_parser_arrays_test.go:37: stderr differs; stderr "adamic: panic: field read failed: values[0] expected ElementFlags.Required, found number 2\n"; stdout ""; exit 70
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=28
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	3.995s
-FAIL

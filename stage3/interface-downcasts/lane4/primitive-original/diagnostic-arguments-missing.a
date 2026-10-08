@@ -1,8 +1,0 @@
-import type { DiagnosticArguments } from 'original-tsc-types';
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: DiagnosticArguments; }
-function helper(value: DiagnosticArguments, index: number): void { console.log(String(value[index])); }
-const raw = {kind: 'box' as const, child: []};
-const base: Base = raw;
-const carrier = base as Carrier;
-helper(carrier.child, 1);

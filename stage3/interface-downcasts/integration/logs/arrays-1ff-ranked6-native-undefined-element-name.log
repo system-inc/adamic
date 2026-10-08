@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRanked6ArrayContracts (0.00s)
-    --- FAIL: TestCheckedViewRanked6ArrayContracts/ranked6-jsx-hole (18.41s)
-        checked_views_ranked6_arrays_test.go:69: stderr differs; stderr "adamic: panic: element read failed: properties[1] expected JsxAttributeLike, found nullish\n"; stdout "2:jsx-attribute\n"; exit 70
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	18.456s
-FAIL

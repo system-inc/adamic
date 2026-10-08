@@ -1,8 +1,0 @@
-function run(start: number): string {
- let count = start;
- let text = `item${start}`;
- function read(): string { return `${count}:${text}`; }
- function write(): void { count += 2; text = text + '!'; }
- const before = read(); write(); return `${before} ${read()}`;
-}
-console.log(run(3)); console.log(run(10));

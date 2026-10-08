@@ -1,6 +1,0 @@
-=== RUN   TestCheckedViewPrimitiveProbe
-    checked_views_primitive_probe_test.go:39: sanitized=false variant=mismatched-string: exit codes differ; got oracle.run{stdout:[]uint8{0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x3a, 0x66, 0x61, 0x6c, 0x73, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
---- FAIL: TestCheckedViewPrimitiveProbe (5.00s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	5.013s
-FAIL

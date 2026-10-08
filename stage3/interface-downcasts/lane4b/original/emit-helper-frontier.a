@@ -1,6 +1,0 @@
-import type { ScopedEmitHelper } from 'original-tsc-types';
-interface Base { readonly name: string; }
-function read(node: ScopedEmitHelper): string { return typeof node.text; }
-const concrete = {name:'helper', scoped:true, text:'script'};
-const base: Base = concrete;
-console.log(read(base as ScopedEmitHelper));

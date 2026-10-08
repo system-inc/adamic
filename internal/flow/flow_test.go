@@ -42,22 +42,14 @@ func programs(t *testing.T) []string {
 	// every point its loops pass doesn't finish within the trace's five minutes even alone; its loops
 	// are shapes the other programs trace, and its size is what it's for. bitwise_sweep.a records
 	// over a million points and exceeds the same limit in the full gate; bitwise.a covers its loop
-	// and operator shapes here, and the oracle still runs the full sweep.
-	// These oracle fixtures are explicitly registered as expected NotYet or deliberately
-	// refused, so they have no accepted IR to trace. The oracle still verifies refusal.
-	// The process runtime-only probes are tested through explicit IR by their oracle
-	// tests; their source does not lower. Keep each exclusion explicit so other lowering
-	// failures still fail the flow gate. normalize_coverage_long.a observes every point of
-	// million-unit normalized strings; its trace would record hundreds of millions of
-	// instructions, the smaller normalization fixtures cover the same loop shapes here, and
-	// the oracle still runs the long program.
+	// and operator shapes here, and the oracle still runs the full sweep. The large typed-array
+	// sieve prints a 100,001-element buffer at every traced point and exceeds that limit;
+	// typed_arrays_primes.a traces the same sieve through limit 100, and the oracle runs both.
+	// normalize_coverage_long.a observes every point of million-unit normalized strings.
+	// Its trace would record hundreds of millions of instructions; the smaller normalization
+	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		switch filepath.Base(path) {
-		case "regexp_surrogate_limit_refused.a", "regexp_surrogate_nested_limit_refused.a", "regexp_native_write_groups_compound_missing.a",
-			"node_process_errors.a", "node_process_directory_mutation.a", "node_process_environment_mutation.a":
-			return true
-		}
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "normalize_coverage_long.a" || filepath.Base(path) == "typed_arrays_primes_large.a"
+		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))

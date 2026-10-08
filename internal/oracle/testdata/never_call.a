@@ -1,6 +1,0 @@
-import { panic } from 'adamic';
-function stop(): never {
-    console.log('called');
-    panic('kept original');
-}
-stop();

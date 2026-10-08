@@ -1,8 +1,0 @@
-=== RUN   TestInterfaceConstructionProof
-=== RUN   TestInterfaceConstructionProof/missing_payload
-    interface_cast_test.go:39: want refusal containing "lacks required field name", got <nil>
---- FAIL: TestInterfaceConstructionProof (0.03s)
-    --- FAIL: TestInterfaceConstructionProof/missing_payload (0.03s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.035s
-FAIL

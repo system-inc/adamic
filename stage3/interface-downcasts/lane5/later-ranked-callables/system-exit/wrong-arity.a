@@ -1,7 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface ExitStatusCarrier {readonly value:number;}
-const ExitStatus={DiagnosticsPresent_OutputsSkipped:3};
-interface Base {readonly exit:unknown;}
-interface Target {exit(exitCode?: number): void;}
-function probe(value:Base):void {const system=value as Target;system.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped);}
-probe({exit:():void=>{console.log("9");}});

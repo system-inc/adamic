@@ -1,7 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Expression {readonly value:number;}
-interface LeftHandSideExpression {readonly value:number;}
-interface Base {readonly parenthesizeLeftSideOfAccess:unknown;}
-interface Target {parenthesizeLeftSideOfAccess(expression: Expression, optionalChain?: boolean): LeftHandSideExpression;}
-function probe(value:Base):void {const target=value as Target;function parenthesizerRules():Target {return target;}const expression:Expression={value:3};console.log(`${parenthesizerRules().parenthesizeLeftSideOfAccess(expression,false).value}`);}
-probe({parenthesizeLeftSideOfAccess:(expression:Expression,optionalChain?:boolean):number=>9});

@@ -1,7 +1,0 @@
-function ordered<T>(values: readonly T[], compare?: (a: T, b: T) => number): readonly T[] {
- return values.slice().sort(compare);
-}
-console.log(`${ordered([10, 9, 1])}`);
-console.log(`${ordered([10, 9, 1], (a: number, b: number) => a - b)}`);
-console.log(`${ordered([true, false, true])}`);
-console.log(`${ordered(["\uE000", "𝄞", "a"])}`);

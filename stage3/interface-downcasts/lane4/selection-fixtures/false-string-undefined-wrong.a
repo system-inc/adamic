@@ -1,8 +1,0 @@
-interface Base { readonly kind: 'box' | 'other' }
-interface Box extends Base { readonly kind: 'box'; readonly value: false | string | undefined }
-function read(base: Base): void {
- const value = (base as Box).value;
- console.log(typeof value + ':' + String(value));
-}
-const raw = {kind: 'box' as const, value: true};
-read(raw);

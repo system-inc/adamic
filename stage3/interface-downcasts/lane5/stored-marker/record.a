@@ -1,6 +1,0 @@
-type AnyFunction = (...args: never[]) => void;
-const callback: AnyFunction = (): Record<string, string> => {
-    return { key: ['made', 'here'].join('-') };
-};
-callback();
-console.log('called');

@@ -1,6 +1,0 @@
-import type { BindablePropertyAssignmentExpression } from 'original-tsc-types';
-interface Base { readonly kind: number; }
-function read(node: BindablePropertyAssignmentExpression): string { return `${node.left.kind}`; }
-const concrete = { kind: 227, left: { kind: 212, expression: { kind: 80 } } };
-const base: Base = concrete;
-console.log(read(base as BindablePropertyAssignmentExpression));

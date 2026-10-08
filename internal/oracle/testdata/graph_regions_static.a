@@ -1,1 +1,0 @@
-class Box { static value: typeof Box | undefined = undefined; } Box.value = Box; console.log(`${Box.value === Box}`);

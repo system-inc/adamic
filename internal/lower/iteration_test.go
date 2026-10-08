@@ -80,16 +80,16 @@ func TestGeneratorsAreRefusedEvenWithoutYield(t *testing.T) {
 
 func TestLiteralMethodCapturesCannotMakeCycles(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function make():void{
+	_, err := lowerSource(t, `function make():void{
  let holder:{read():number}|undefined;
  const value={read():number{return holder===undefined?0:1;}};
  holder=value;
  console.log('made');
  } make();`)
-	if err != nil || len(program.GraphTypes) == 0 {
-		t.Fatalf("want graph ownership for literal method captures, got %v", err)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "cycle") {
+		t.Fatalf("got %v, want a captured literal-method cycle refusal", err)
 	}
-
 }
 
 func TestLiteralMethodViewsDoNotLoseThis(t *testing.T) {

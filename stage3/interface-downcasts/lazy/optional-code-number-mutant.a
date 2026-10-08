@@ -1,5 +1,0 @@
-interface Base { readonly name: string; readonly message: string; }
-interface Errno extends Base { readonly code?: string; }
-function make(): Base { const raw = { name: 'Error', message: 'plain', code: 42 }; return raw; }
-const error = make() as Errno;
-console.log(error.code ?? 'missing');

@@ -1,7 +1,0 @@
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: (string | number)[]; }
-function helper(value: (string | number)[]): void { console.log(String(value[2])); }
-const raw = {kind: 'box' as const, child: []};
-const base: Base = raw;
-const carrier = base as Carrier;
-helper(carrier.child);

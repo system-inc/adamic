@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRanked7ArrayContracts (0.00s)
-    --- FAIL: TestCheckedViewRanked7ArrayContracts/ranked7-heritage-wrong-token (0.56s)
-        checked_views_ranked7_arrays_test.go:68: exit codes differ; stderr ""; stdout "1\n5\n"; exit 0
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.578s
-FAIL

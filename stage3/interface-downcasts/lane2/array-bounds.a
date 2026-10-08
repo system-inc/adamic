@@ -1,6 +1,0 @@
-interface Base { readonly kind: 'items' | 'other'; }
-interface Items extends Base { readonly kind: 'items'; readonly values: readonly number[]; }
-function items(node: Base): Items { return node as Items; }
-const raw = {kind: 'items' as const, values: [7]};
-const values = items(raw).values;
-console.log(`${values[5] ?? -1}:${values.at(-1) ?? -1}`);

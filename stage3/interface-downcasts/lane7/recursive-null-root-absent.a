@@ -1,9 +1,0 @@
-interface Named { readonly text: string }
-interface Link { readonly count: number; readonly next?: Link }
-interface Box { readonly value: object | null }
-interface Target extends Box { readonly value: (Named & Link) | null }
-const actual = { text: 'name', count: 42, next: { count: true } };
-const box: Box = { value: null };
-const view = box as Target;
-const root = view.value;
-console.log(`${root === root}`);

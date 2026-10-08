@@ -1,2 +1,0 @@
-const f: () => boolean | string = (): boolean => true;
-console.log(`${f()}`);

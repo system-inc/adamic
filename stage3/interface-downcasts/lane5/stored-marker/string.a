@@ -1,6 +1,0 @@
-type AnyFunction = (...args: never[]) => void;
-let counter = 7;
-counter += 1;
-const callback: AnyFunction = (): string => { console.log("producer"); return `result${counter}`; };
-callback();
-console.log('called');

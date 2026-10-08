@@ -8,7 +8,7 @@ const jsonStringifyRuntime = `const adamicJSONValue = (value) => {
  if (Array.isArray(value)) return value.map(adamicJSONValue);
  if (value !== null && typeof value === 'object' && !(value instanceof Map) && !(value instanceof Set)) {
   const copy = {};
-  for (const key of Object.keys(value)) Object.defineProperty(copy, key, {value: adamicJSONValue(value[key]), enumerable: true, configurable: true, writable: true});
+  for (const key of Object.keys(value)) copy[key] = adamicJSONValue(value[key]);
   return copy;
  }
  return value;

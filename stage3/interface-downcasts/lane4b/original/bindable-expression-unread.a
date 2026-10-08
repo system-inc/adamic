@@ -1,6 +1,0 @@
-import type { BindableStaticPropertyAssignmentExpression } from 'original-tsc-types';
-interface Base { readonly kind: number; }
-const concrete = { kind: 227, left: { kind: 212, expression: { kind: 80 } } };
-const base: Base = concrete;
-const viewed = base as BindableStaticPropertyAssignmentExpression;
-console.log('admitted');

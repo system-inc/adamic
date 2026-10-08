@@ -1,3 +1,0 @@
-const r: Record<string, number> = {};
-function set(key: string): void {r[key]=1;}
-set('__proto__');

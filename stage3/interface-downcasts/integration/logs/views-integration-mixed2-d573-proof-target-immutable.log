@@ -1,6 +1,0 @@
---- FAIL: TestViewUnionTargetAdmission (0.03s)
-    --- FAIL: TestViewUnionTargetAdmission/mutable_target_tag (0.03s)
-        view_union_targets_test.go:26: unsafe union target admitted: <nil>
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.043s
-FAIL

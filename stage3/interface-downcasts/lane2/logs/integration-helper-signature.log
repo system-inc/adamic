@@ -1,5 +1,0 @@
---- FAIL: TestViewCallableSignature (0.00s)
-    view_callables_test.go:13: want "fixture.a:1: Adamic 0.1 refuses a checked view call to member run; its signature cannot be checked at runtime and no compatible implementation is proven; prove the callable implementation before calling through this view", got <nil>
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.016s
-FAIL

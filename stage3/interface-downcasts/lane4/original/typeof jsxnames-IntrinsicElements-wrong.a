@@ -1,8 +1,0 @@
-import type { JsxNames } from 'original-tsc-names';
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: typeof JsxNames; }
-function helper(value: typeof JsxNames): void { console.log(String(value.IntrinsicElements)); }
-const raw = {kind: 'box' as const, child: {IntrinsicElements: 42}};
-const base: Base = raw;
-const carrier = base as Carrier;
-helper(carrier.child);

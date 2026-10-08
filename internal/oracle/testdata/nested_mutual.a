@@ -1,7 +1,0 @@
-function parity(start: number): string {
- let calls = 0;
- function even(n: number): boolean { calls += 1; return n === 0 ? true : odd(n - 1); }
- function odd(n: number): boolean { calls += 1; return n === 0 ? false : even(n - 1); }
- return `${even(start)} ${odd(start)} ${calls}`;
-}
-console.log(parity(10)); console.log(parity(11));

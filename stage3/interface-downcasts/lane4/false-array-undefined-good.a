@@ -1,9 +1,0 @@
-interface Base { readonly kind: 'box' | 'other' }
-interface Box extends Base { readonly kind: 'box'; readonly payload: false | string[] | undefined }
-function read(node: Base): void { const view = node as Box; const value = view.payload; console.log(String(value)); }
-const sample0 = {kind:'box' as const, payload:false};
-read(sample0);
-const sample1 = {kind:'box' as const, payload:['one', 'two']};
-read(sample1);
-const sample2 = {kind:'box' as const, payload:undefined};
-read(sample2);

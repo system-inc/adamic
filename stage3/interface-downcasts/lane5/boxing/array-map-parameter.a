@@ -1,3 +1,0 @@
-const values = [1, 2, 3];
-const callback = (value:number|string):string => `${value}`;
-console.log(values.map(callback).join(","));

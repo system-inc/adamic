@@ -1,8 +1,0 @@
-interface Base { readonly run:unknown; }
-interface Target { readonly run:()=>number|string; }
-function probe(value:Base):void {
- const viewed = value as Target;
- const callback = viewed.run;
- console.log(`${callback()}`);
-}
-probe({run:():boolean=>true});

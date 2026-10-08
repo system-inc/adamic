@@ -1,9 +1,0 @@
-=== RUN   TestCheckedViewNullishCallableArity
-    checked_views_nullish_callable_integration_test.go:31: optional callable certificate omission caught by refusal pin: exit=0 stdout="present\n"
-    checked_views_nullish_callable_integration_test.go:31: optional callable certificate omission caught by refusal pin: exit=0 stdout="present\n"
---- PASS: TestCheckedViewNullishCallableArity (0.62s)
-PASS
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=3
-gate cache: probe hits=0 misses=0
-ok  	github.com/system-inc/adamic/internal/oracle	0.631s

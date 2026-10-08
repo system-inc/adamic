@@ -1,4 +1,0 @@
-// r24's literal and String(values), with the repository's required .a extension.
-interface Values {[key: string]: number}
-const values: Values = {};
-console.log(String(values));

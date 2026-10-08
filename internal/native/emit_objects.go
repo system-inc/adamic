@@ -129,7 +129,6 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 		}
 		object := e.own(ir.Object, e.spreadCopy(literal, source))
-		e.adoptGraphObject(object, literal)
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -137,14 +136,10 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
-			cache := e.cache()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldInitialRepresentation(field))
-			e.line("adamic_object_contracts(%s)[%s.index] = %d;", object, cache, field.Contract)
-			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
 			if field.Value.Type().IsReference() {
-				e.dropIn(object, slot+"->reference")
-				e.line("%s->reference = %s;", slot, e.keptIn(object, values[index]))
+				e.line("adamic_release(%s->reference);", slot)
+				e.line("%s->reference = %s;", slot, e.kept(values[index]))
 			} else {
 				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 			}
@@ -171,21 +166,11 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.literalShape(literal)))
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
-		e.adoptGraphObject(object, literal)
-	}
-	if literal.RealType != "" {
-		e.line("%s->real_type = %s;", object, cString(literal.RealType))
 	}
 	if literal.Class != 0 {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
-		e.line("%s->real_type = %s;", object, cString(e.program.Classes[literal.Class-1].Name))
 	}
 	for index, field := range literal.Fields {
-		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
-		e.line("adamic_object_contracts(%s)[%d] = %d;", object, index, field.Contract)
-		if field.Uninitialized {
-			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
-		}
 		value := values[index]
 		if e.regionValues[value] {
 			// A value in the region is immortal while the region lives: held without a count.
@@ -193,7 +178,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			continue
 		}
 		if field.Value.Type().IsReference() {
-			value = e.keptIn(object, value)
+			value = e.kept(value)
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
@@ -339,29 +324,4 @@ func (e *emitter) cache() string {
 	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
 	return name
-}
-
-// Null and undefined share a null pointer physically, but an optional checked read
-// must accept only undefined. Keep that semantic distinction in the slot tag.
-func fieldRepresentation(value ir.Expression) int {
-	switch value.(type) {
-	case ir.Null:
-		return 12
-	case ir.Undefined:
-		// Untagged recursive producer hook: explicit reference undefined is
-		// initialized semantic undefined, distinct from null and absent slots.
-		if value.Type().IsReference() {
-			return 13
-		}
-	}
-	return int(value.Type())
-}
-
-// Reserved boxed union slots retain their physical write representation. Their
-// readiness bit refuses reads; there is no initialized undefined payload yet.
-func fieldInitialRepresentation(field ir.Field) int {
-	if field.Uninitialized && field.Value.Type() == ir.Union {
-		return int(ir.Union)
-	}
-	return fieldRepresentation(field.Value)
 }

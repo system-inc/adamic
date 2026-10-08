@@ -1,6 +1,0 @@
---- FAIL: TestPhantomArrayProofs (0.00s)
-    --- FAIL: TestPhantomArrayProofs/element_narrowing (0.04s)
-        phantom_array_brands_test.go:87: got <nil>, want refusal containing source is not assignable
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.043s
-FAIL

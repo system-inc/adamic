@@ -1,7 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Node {readonly value:number;}
-interface Statement {readonly value:number;}
-interface Base {readonly liftToBlock:unknown;}
-interface Target {liftToBlock(nodes: readonly Node[]): Statement;}
-function probe(value:Base):void {const context={factory:value as Target};const lifted=context.factory.liftToBlock;const nodes:readonly Node[]=[{value:3}];console.log(`${lifted(nodes).value}`);}
-probe({liftToBlock:(nodes:readonly Node[]):Statement=>{const node=nodes[0];return {value:node===undefined?0:node.value};}});

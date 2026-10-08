@@ -1,8 +1,0 @@
-import type { NodeLinks, EmitNode } from 'original-tsc-types';
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: EmitNode; }
-function helper(value: EmitNode): void { const { constantValue } = value; console.log(String(constantValue)); }
-const raw = {kind: 'box' as const, child: {constantValue: undefined}};
-const base: Base = raw;
-const carrier = base as Carrier;
-helper(carrier.child);

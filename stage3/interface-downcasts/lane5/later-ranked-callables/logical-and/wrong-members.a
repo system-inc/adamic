@@ -1,7 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface Expression {readonly value:number;}
-interface BinaryExpression {readonly value:number;}
-interface Base {readonly createLogicalAnd:unknown;}
-interface Target {createLogicalAnd(left: Expression, right: Expression): BinaryExpression;}
-function probe(value:Base):void {const factory=value as Target;const left:Expression={value:3};const right:Expression={value:4};console.log(`${factory.createLogicalAnd(left,right).value}`);}
-probe({createLogicalAnd:(left:number,right:Expression):BinaryExpression=>({value:7})});

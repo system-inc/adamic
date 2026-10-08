@@ -1,4 +1,0 @@
-type A = { kind: 0; id?: number };
-const narrow: (A | { kind: 1 }) & A = { kind: 0, id: 7 };
-const wide: { id?: number } = narrow;
-console.log(wide.id === 7 ? "7" : "wrong");
