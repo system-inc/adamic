@@ -1,0 +1,9 @@
+// a-check: type error TS2322
+interface Base {readonly kind:'ok'|'other';readonly ready?:boolean;}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function absentRead():Ready {let node:Base|undefined;return node as Ready;}
+function conditionalRead():Ready {let node:Base|undefined;if(false)node={kind:'ok' as const,ready:true};return node as Ready;}
+function assignedRead():Ready {let node:Base|undefined;node={kind:'ok' as const,ready:true};return node as Ready;}
+function initializedRead():Ready {const raw={kind:'ok' as const,ready:true};const node:Base=raw;return node as Ready;}
+console.log(JSON.stringify([absentRead(),conditionalRead(),assignedRead(),initializedRead()].map(value=>value===undefined?'missing':typeof value.ready))!);

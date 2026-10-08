@@ -381,7 +381,11 @@ func (m *latentShapeMeter) body(root *ast.Node) {
 		case ast.KindVariableDeclaration:
 			declaration := node.AsVariableDeclaration()
 			if ast.IsIdentifier(declaration.Name()) {
-				m.append(ir.Declare{Local: m.local(declaration.Name()), Value: m.expression(declaration.Initializer)})
+				value := m.expression(declaration.Initializer)
+                if declaration.Initializer == nil {
+                    value = latentShapeUnknown{Category:"flow the graph can't see", Reason:"variable declaration without an initializer at "+m.Loaded.Where(node), Value:m.text(declaration.Name())}
+                }
+                m.append(ir.Declare{Local: m.local(declaration.Name()), Value: value})
 				return false
 			}
 		case ast.KindReturnStatement:
