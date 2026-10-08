@@ -24,9 +24,9 @@ var gaps = []struct {
 }{
 	{path: "gaps/1_index_of_position.ts", stdout: "3\n"},
 	{path: "gaps/2_boolean_or_undefined_field.ts", notYet: "a field of type boolean | undefined", stdout: "true\n"},
-	{path: "gaps/3_case_constant.ts", notYet: "a case that isn't a constant", stdout: "newline other\n"},
+	{path: "gaps/3_case_constant.ts", stdout: "newline other\n"},
 	{path: "gaps/4_private_method.ts", stdout: "2\n"},
-	{path: "gaps/5_empty_array_default.ts", notYet: "an array of never", stdout: "1 0\n"},
+	{path: "gaps/5_empty_array_default.ts", stdout: "1 0\n"},
 }
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {

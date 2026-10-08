@@ -20,6 +20,9 @@ var updateCounts = flag.Bool("update-counts", false, "rewrite counts.md with the
 // countsPath is the checked-in table of every fixture's counts.
 const countsPath = "counts.md"
 
+// Extra counters register source witnesses that need an explicit frontend adapter.
+var additionalFixtureCounts []func(*testing.T) []string
+
 const countsHeader = `# Counts
 
 Every oracle fixture, input fixtures included, built counted (` + "`adamic build --count`" + `, runtime/count.h) and run once. Counts are deterministic, so a
@@ -96,6 +99,9 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 			if writes {
 				how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
 			}
+			if strings.HasPrefix(path, "internal/oracle/testdata/node_fs_file_") {
+				how = fsFilePrepare(t, shared, "counted")
+			}
 			binary := filepath.Join(shared, "program")
 			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
 				t.Fatal(err)
@@ -131,11 +137,11 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 // Every fixture's counts are recorded, and a change to them fails until the table is updated with it.
 func TestCountsAreRecorded(t *testing.T) {
 	t.Parallel()
-	rows := make([]string, len(fixtures)+len(inputFixtures))
+	rows := make([]string, len(fixtures)+len(inputFixtures)+len(fsFileFixtures))
 	var lock sync.Mutex
 	t.Run("fixtures", func(t *testing.T) {
 		for index, fixture := range fixtures {
-			if !fixture.lowers || uncounted[fixture.path] {
+			if !fixture.lowers || uncounted[fixture.path] || refusedAdamicNonNullFixture(fixture.path) {
 				continue
 			}
 			t.Run(fixture.path, func(t *testing.T) {
@@ -155,9 +161,23 @@ func TestCountsAreRecorded(t *testing.T) {
 				lock.Unlock()
 			})
 		}
+		for index, fixture := range fsFileFixtures {
+			path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
+			t.Run(path, func(t *testing.T) {
+				t.Parallel()
+				row := counted(t, path, true, nil, false, false)
+				lock.Lock()
+				rows[len(fixtures)+len(inputFixtures)+index] = row
+				lock.Unlock()
+			})
+		}
 	})
 	if t.Failed() {
 		return
+	}
+	rows = append(rows, interfaceCastCounts(t)...)
+	for _, count := range additionalFixtureCounts {
+		rows = append(rows, count(t)...)
 	}
 	var table strings.Builder
 	table.WriteString(countsHeader)
@@ -167,6 +187,7 @@ func TestCountsAreRecorded(t *testing.T) {
 			table.WriteString("\n")
 		}
 	}
+	table.WriteString(predicateCountsTable(t))
 	if *updateCounts {
 		if err := os.WriteFile(countsPath, []byte(table.String()), 0o644); err != nil {
 			t.Fatal(err)

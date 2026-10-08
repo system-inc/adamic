@@ -11,9 +11,11 @@ import (
 // The proof contains checker types only, so refusals precede representation lowering of unknown
 // operands. Concrete generic instantiations are proved again when they are lowered.
 type castProof struct {
-	field   string
-	allowed []*checker.Type
-	classes []*checker.Type
+	structuralView bool
+	interfaceView  bool
+	field          string
+	allowed        []*checker.Type
+	classes        []*checker.Type
 }
 
 const castRepair = "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
@@ -95,7 +97,7 @@ func castMembers(proven *checker.Type) []*checker.Type {
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	as := node.AsAsExpression()
-	if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
@@ -168,6 +170,18 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		return castProof{classes: targets}, nil
 	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
+
+		origins := len(l.result.ViewOrigins)
+		defer func() { l.result.ViewOrigins = l.result.ViewOrigins[:origins] }()
+		if checked, err := l.interfaceCast(node, ir.Read{Of: ir.Object}, source, target); checked != nil || err != nil {
+			return castProof{interfaceView: checked != nil}, err
+		}
+		from, fromKnown := l.representation(source)
+		to, toKnown := l.representation(target)
+		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && fromKnown && toKnown && from == ir.Object && to == ir.Object && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) && l.widened(target, source, map[[2]*checker.Type]bool{}) == nil && len(l.checker.GetIndexInfosOfType(target)) == 0 {
+			return castProof{structuralView: true}, nil
+		}
+
 		return castProof{}, refused
 	}
 	if !l.castUnionWrites(source) {

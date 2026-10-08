@@ -151,5 +151,43 @@ class EntryCensusTests(unittest.TestCase):
             self.assertIsNone(planted['lowering_census'])
 
 
+@unittest.skipUnless(os.environ.get('ENTRY_CENSUS_BINARY') and os.environ.get('CENSUS_BINARY'),
+                     'set ENTRY_CENSUS_BINARY and CENSUS_BINARY for full nested entry measurement')
+class FullEntryCensusTests(unittest.TestCase):
+    def test_rejected_entry_measures_clean_nested_body_and_catches_first_error_mutant(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            tree = Path(scratch) / 'tree'
+            entry = tree / 'src/tsc/tsc.ts'
+            entry.parent.mkdir(parents=True)
+            dependency = tree / 'src/executeCommandLine.a'
+            dependency.write_text('''export function root(text: string, count: number): void {
+ const impossible: number = "wrong";
+ function safe(): void { var x = 1; if (text) { } if (count) { } }
+}
+''')
+            entry.write_text('import { root } from "../executeCommandLine.a"; root("x", 1);\n')
+            observations = []
+            for name, extra in [('full', {}), ('mutant', {'LATENT_MUTANT_FIRST_ERROR_ONLY': '1'})]:
+                run = Path(scratch) / name
+                run.mkdir()
+                with (run / 'census.log').open('w') as log:
+                    subprocess.run([os.environ['CENSUS_BINARY'], str(entry), str(run / 'census.jsonl')],
+                                   check=True, stdout=log, stderr=log)
+                with (run / 'latent.log').open('w') as log:
+                    subprocess.run([os.environ['ENTRY_CENSUS_BINARY'], str(entry), str(run / 'latent.jsonl')],
+                                   check=True, env=dict(os.environ, LATENT_FULL='1', LATENT_ASSERT_NO_OUTPUT='1', **extra), stdout=log, stderr=log)
+                observations.append(entry_summary(tree, run))
+            full, mutant = observations
+            self.assertFalse(full['checker_whole_program'])
+            self.assertEqual(full['whole_program_diagnostics'], 1)
+            self.assertFalse(full['lowering_attempted'])
+            self.assertTrue(full['measurement_attempted'])
+            self.assertEqual(full['lowering_census']['source_files'], 2)
+            self.assertEqual(full['lowering_census']['measurement'], 'measured on a checker-rejected entry-root program')
+            self.assertEqual(full['lowering_census']['totals']['Refused'], 3)
+            with self.assertRaises(AssertionError):
+                self.assertEqual(mutant['lowering_census']['totals']['Refused'], 3)
+
+
 if __name__ == '__main__':
     unittest.main()

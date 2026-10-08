@@ -1,0 +1,15 @@
+function exercise<V>(map: Map<string, V>, first: V, second: V): void {
+    map.set('one', first); map.set('two', second);
+    console.log(`${map.has('one')} ${map.has('missing')} ${map.get('missing')}`);
+    console.log(`${map.get('one')} ${map.get('two')}`);
+    for (const [key, value] of map.entries()) { console.log(`${key}:${value}:${typeof value}`); }
+    for (const value of map.values()) { console.log(`value:${value}:${typeof value}`); }
+    map.forEach((value, key): void => { console.log(`visit:${key}:${value}`); });
+    const iterator = map.entries();
+    const step = iterator.next();
+    if (!step.done) { const [key, value] = step.value; console.log(`first:${key}:${value}`); }
+}
+const values = new Map<string, string | number>();
+exercise<string | number>(values, 0, '');
+const numbers = new Map<string, number>();
+exercise(numbers, 7, 8);

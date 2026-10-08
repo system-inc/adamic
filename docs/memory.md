@@ -671,8 +671,8 @@ What's left on `nbody` is one retain and one release per element a variable is g
 
 **The proof: nothing in `v`'s live range can change the array.** `v`'s live range is the rest of the block that declares it, every nested statement included. Every expression and statement there must be one that can't take an element out of any array, through any alias. That's a fixed list, never a guess about what's safe:
 
-- **Allowed:** what `pure` in `borrow.go` allows (reads, arithmetic, field and element reads, string work); a field store into an object (`SetProperty`, which lets go of the field's old value, never an array's slot); declarations and assignments of other variables; a `push` (it adds, and moving the buffer doesn't move the objects); an Error allocation, with its message and name expressions checked too; and direct, nonvirtual calls to named functions whose bodies, and everything they call, are made only of allowed things.
-- **A change, which stops the borrow:** a store into an element (`SetIndex`); `pop`, `shift`, `splice` (also discarded, `adamic_array_remove`), `fill`, `sort`, `reverse`; anything reuse could do in place to an array (`map`, a spread of an array, `[...a, x]`); any call through a function value, and every runtime operation that calls one (`map`, `forEach`, `reduce`, `filter`, `find`, a `sort` comparator, `Array.from` with a function); a call to a named function that does any of these, at any depth; every virtual call, whose static signature does not prove what an override does; and an assignment to `a` itself.
+- **Allowed:** what `pure` in `borrow.go` allows (reads, arithmetic, field and element reads, string work); a field store into an object (`SetProperty`, which lets go of the field's old value, never an array's slot); declarations and assignments of other variables; a `push` (it adds, and moving the buffer doesn't move the objects); an Error allocation, with its message and name expressions checked too; and calls whose every possible target has a body, and reachable callees, made only of allowed things. Named and virtual calls use `CallTargets`; calls through function values use `ClosureTargets` and require a known target set.
+- **A change, which stops the borrow:** a store into an element (`SetIndex`); `pop`, `shift`, `splice` (also discarded, `adamic_array_remove`), `fill`, `sort`, `reverse`; anything reuse could do in place to an array (`map`, a spread of an array, `[...a, x]`); a call through a function value with Unknown targets or any changing target, and every runtime operation that calls one (`map`, `forEach`, `reduce`, `filter`, `find`, a `sort` comparator, `Array.from` with a function); a call to a named function that does any of these, at any depth; a virtual call with any changing implementation; and an assignment to `a` itself.
 - **A throw.** A throw out of the live range ends `v` without a release. A borrowed `v` has none to give, so a throw path needs nothing. A call that can throw is judged by what it does, like any other.
 
 **What else must know.** A borrowed `v` holds no count, so nothing may treat it as owned:
@@ -776,12 +776,15 @@ without releasing the array's element. `borrow_element_throw.a` exercises both, 
 field write in an indexed loop, a pop in a catch before the last use (refused borrowing), and
 a pop through a direct call in the Error's message (also refused).
 
-A virtual call now stops borrowing. The old summary used only `Call.Function`, its static
-signature. In `borrow_element_virtual_store.a`, that signature reads only the array's length,
-while the implementation replaces its element. Keeping the array alive, and prohibiting its
-move into a consumed parameter, does not keep an element alive after an explicit replacement.
-The conservative fix checks `Call.Virtual == 0` before consulting the direct-call summary.
-Resolving all possible overrides could recover some borrows later; it is not proven here.
+A virtual call stops borrowing when any possible implementation changes an array. The
+current summary checks every `CallTargets` implementation, rather than only `Call.Function`
+or a `Call.Virtual == 0` guard. In `borrow_element_virtual_store.a`, the static signature
+reads only the array's length, while an implementation replaces its element, so borrowing
+is refused. Calls through function values likewise check every `ClosureTargets` function;
+Unknown targets stop borrowing. `devirt_borrow_doc_claim.a` covers virtual implementations
+and a known closure that only read lengths, so those calls preserve the element borrow.
+Keeping the array alive, and prohibiting its move into a consumed parameter, does not keep
+an element alive after an explicit replacement.
 
 **Mutants actually run.** Each began from the final compiler independently, and the source was
 restored after every run. Oracle mutants ran uncached, against Node, release C and sanitized C;
@@ -1557,7 +1560,7 @@ Long non-ASCII strings keep a byte checkpoint every 32 UTF-16 units and a cursor
 
 An indexed string with no supplementary points also keeps a compact UTF-16 view, two bytes per unit, for direct `charCodeAt` and `codePointAt` reads. Lone surrogates are BMP units and can use this view. ASCII strings need neither cache; short strings and stack pieces still walk without an index. The view is made when the long string's index is first built, freed with that index, and invalidated with it before an in-place append. This trades extra cache bytes and one decoding pass for cheaper repeated reads. Measurements and the Node sweeps are recorded in [UTF-16 views](utf16-views.md).
 
-Since a string is immutable, a slice can read its parent's bytes in place, as a Go string does, and hold a reference to the parent (its owner) so they outlive it (runtime/string_share.c, fixture `shared_slices.a`). A slice of a slice holds the first one's owner, so no chain grows. Its caches (units and index) are its own, counted from its own first byte. A short slice of a long string is copied instead: a slice shares only when it is at least 64 bytes and a quarter of its owner, so it never keeps more than four times its own bytes alive.
+Since a string is immutable, a slice can read its parent's bytes in place, as a Go string does, and hold a reference to the parent (its owner) so they outlive it (runtime/string_share.c, fixture `shared_slices.a`). A slice of a slice holds the first one's owner, so no chain grows. Its caches (units and index) are its own, counted from its own first byte. A small slice is copied only when its ultimate owner's header and byte capacity exceed eight times the slice's header and byte length. Spare append capacity counts toward that bound. There is no minimum slice length: short views can share small parents. Constants pin no counted storage, so their slices share freely. A stack piece without a count or literal marker is copied, including a whole slice, because no view can keep its bytes alive. Empty slices use the immortal empty string. ASCII indexing uses 128 immortal one-unit strings, so it allocates and copies nothing; longer slices retain their byte owner. UTF-16 slices carry their already known unit length, and a split surrogate boundary still builds the necessary WTF-8 half.
 
 `text = text + more` on a local nothing else can write while `more` is evaluated (not a global, not captured) is an append (runtime/string_append.c, fixture `string_append.a`). When the local holds the only reference, a count of one, no one can see the string change, so the append writes after its last byte if there's room, and resets what was cached about the old bytes (units and index). Otherwise it copies into a new string with twice the room. A loop of n appends allocates about log n times, not n. A string built that way can hold up to twice its bytes. A shared slice, a constant and a string some slice reads are never written: their room is 0, or their count is more than one.
 

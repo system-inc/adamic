@@ -1,0 +1,99 @@
+reason,site,expression,receiver,key,result
+an ElementAccessExpression,src/compiler/binder.ts:1746:21,clauses[i],NodeArray<CaseOrDefaultClause>,number,CaseOrDefaultClause | undefined
+an ElementAccessExpression,src/compiler/binder.ts:1757:28,clauses[i],NodeArray<CaseOrDefaultClause>,number,CaseOrDefaultClause | undefined
+an ElementAccessExpression,src/compiler/checker.ts:12583:73,declaration.statements[0],NodeArray<JsonObjectExpressionStatement>,0,JsonObjectExpressionStatement | undefined
+an ElementAccessExpression,src/compiler/checker.ts:14176:16,signature.optionalCallSignatureCache[key],{ inner?: Signature | undefined; outer?: Signature | undefined; },"""inner"" | ""outer""",Signature | undefined
+an ElementAccessExpression,src/compiler/checker.ts:17262:114,(checkNode as TupleTypeNode).elements[0],NodeArray<TypeNode | NamedTupleMember>,0,TypeNode | NamedTupleMember | undefined
+an ElementAccessExpression,src/compiler/checker.ts:19528:13,type[cache],IndexedAccessType,"""simplifiedForWriting"" | ""simplifiedForReading""",Type | undefined
+an ElementAccessExpression,src/compiler/checker.ts:19540:20,type[cache],IndexedAccessType,"""simplifiedForWriting"" | ""simplifiedForReading""",Type | undefined
+an ElementAccessExpression,src/compiler/checker.ts:19549:24,type[cache],IndexedAccessType,"""simplifiedForWriting"" | ""simplifiedForReading""",Type | undefined
+an ElementAccessExpression,src/compiler/checker.ts:19569:24,type[cache],IndexedAccessType,"""simplifiedForWriting"" | ""simplifiedForReading""",Type | undefined
+an ElementAccessExpression,src/compiler/checker.ts:19572:16,type[cache],IndexedAccessType,"""simplifiedForWriting"" | ""simplifiedForReading""",Type | undefined
+an ElementAccessExpression,src/compiler/checker.ts:20414:28,(node as TupleTypeNode).elements[0],NodeArray<TypeNode | NamedTupleMember>,0,TypeNode | NamedTupleMember | undefined
+an ElementAccessExpression,src/compiler/checker.ts:21689:27,node.children[i],NodeArray<JsxChild>,number,JsxChild | undefined
+an ElementAccessExpression,src/compiler/checker.ts:28835:20,callExpression.arguments[predicate.parameterIndex],NodeArray<Expression>,number,Expression | undefined
+an ElementAccessExpression,src/compiler/checker.ts:29925:32,switchStatement.caseBlock.clauses[i],NodeArray<CaseOrDefaultClause>,number,CaseOrDefaultClause | undefined
+an ElementAccessExpression,src/compiler/checker.ts:30127:38,callExpression.arguments[0],NodeArray<Expression>,0,Expression | undefined
+an ElementAccessExpression,src/compiler/checker.ts:31594:13,container.parent.parent.parent.arguments[2],NodeArray<Expression>,2,Expression | undefined
+an ElementAccessExpression,src/compiler/checker.ts:33201:27,target.parameters[targetParameterCount],NodeArray<ParameterDeclaration>,number,ParameterDeclaration | undefined
+an ElementAccessExpression,src/compiler/checker.ts:33206:64,target.parameters[0],NodeArray<ParameterDeclaration>,0,ParameterDeclaration | undefined
+an ElementAccessExpression,src/compiler/checker.ts:33342:23,elements[i],NodeArray<Expression>,number,Expression | undefined
+an ElementAccessExpression,src/compiler/checker.ts:37942:27,node.arguments[0],NodeArray<Expression>,0,Expression | undefined
+an ElementAccessExpression,src/compiler/checker.ts:37944:79,node.arguments[1],NodeArray<Expression>,1,Expression | undefined
+an ElementAccessExpression,src/compiler/checker.ts:37947:35,node.arguments[i],NodeArray<Expression>,number,Expression | undefined
+an ElementAccessExpression,src/compiler/checker.ts:40244:26,properties[propertyIndex],NodeArray<ObjectLiteralElementLike>,number,ObjectLiteralElementLike | undefined
+an ElementAccessExpression,src/compiler/checker.ts:40298:17,node.elements[i],NodeArray<Expression>,number,Expression | undefined
+an ElementAccessExpression,src/compiler/checker.ts:40308:25,elements[elementIndex],NodeArray<Expression>,number,Expression | undefined
+an ElementAccessExpression,src/compiler/checker.ts:41428:23,patternElements[i],NodeArray<ArrayBindingElement>,number,ArrayBindingElement | undefined
+an ElementAccessExpression,src/compiler/checker.ts:42398:64,declaration.parameters[0],NodeArray<ParameterDeclaration>,0,ParameterDeclaration | undefined
+an ElementAccessExpression,src/compiler/checker.ts:42693:21,node.typeArguments![i],NodeArray<TypeNode>,number,TypeNode | undefined
+an ElementAccessExpression,src/compiler/checker.ts:45839:34,iterationTypes[getIterationTypesKeyFromIterationTypeKind(typeKind)],IterationTypes,"""yieldType"" | ""returnType"" | ""nextType""",Type
+an ElementAccessExpression,src/compiler/checker.ts:45900:16,(type as IterableOrIteratorType)[cacheKey],IterableOrIteratorType,"MatchingKeys<IterableOrIteratorType, IterationTypes | undefined>",IterationTypes | undefined
+an ElementAccessExpression,src/compiler/checker.ts:45904:16,(type as IterableOrIteratorType)[cacheKey],IterableOrIteratorType,"MatchingKeys<IterableOrIteratorType, IterationTypes | undefined>",IterationTypes | undefined
+an ElementAccessExpression,src/compiler/checker.ts:46488:34,iterationTypes[getIterationTypesKeyFromIterationTypeKind(kind)],IterationTypes,"""yieldType"" | ""returnType"" | ""nextType""",Type
+an ElementAccessExpression,src/compiler/checker.ts:52325:31,parameters[i],NodeArray<ParameterDeclaration>,number,ParameterDeclaration | undefined
+an ElementAccessExpression,src/compiler/checker.ts:53652:50,nodeArguments[1],NodeArray<Expression>,1,Expression | undefined
+an ElementAccessExpression,src/compiler/debug.ts:1110:36,switchStatement.caseBlock.clauses[i],NodeArray<CaseOrDefaultClause>,number,CaseOrDefaultClause | undefined
+an ElementAccessExpression,src/compiler/debug.ts:168:36,assertionCache[key],"Partial<Record<AssertionKeys, { level: AssertionLevel; assertion: AnyFunction; } | undefined>>",AssertionKeys,{ level: AssertionLevel; assertion: AnyFunction; } | undefined
+an ElementAccessExpression,src/compiler/debug.ts:996:29,links[id],"Record<number, FlowGraphNode>",number,FlowGraphNode | undefined
+an ElementAccessExpression,src/compiler/emitter.ts:4013:35,statements[0],NodeArray<Statement>,0,Statement | undefined
+an ElementAccessExpression,src/compiler/emitter.ts:4116:43,node.tags[0],NodeArray<JSDocTag>,0,JSDocTag | undefined
+an ElementAccessExpression,src/compiler/emitter.ts:4296:34,statements[0],NodeArray<Statement>,0,Statement | undefined
+an ElementAccessExpression,src/compiler/emitter.ts:4474:36,modifiers[pos],NodeArray<ModifierLike>,number,ModifierLike | undefined
+an ElementAccessExpression,src/compiler/factory/emitHelpers.ts:720:23,input[i],TemplateStringsArray,number,string | undefined
+an ElementAccessExpression,src/compiler/factory/emitHelpers.ts:723:19,input[input.length - 1],TemplateStringsArray,number,string | undefined
+an ElementAccessExpression,src/compiler/parser.ts:10454:23,currentArray[currentArrayIndex],NodeArray<Node>,number,Node | undefined
+an ElementAccessExpression,src/compiler/parser.ts:10523:39,array[i],NodeArray<Node>,number,Node | undefined
+an ElementAccessExpression,src/compiler/parser.ts:10787:26,pragma.args[i],"readonly [PragmaArgumentSpecification<string>] | readonly [PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>] | readonly [...] | readonly [...]",number,PragmaArgumentSpecification<string> | undefined
+an ElementAccessExpression,src/compiler/parser.ts:1876:35,sourceFile.statements[pos],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/parser.ts:1877:35,sourceFile.statements[start],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/parser.ts:1925:35,sourceFile.statements[pos],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/parser.ts:1945:51,statements[i],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/parser.ts:1954:52,statements[i],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/parser.ts:6056:53,children[children.length - 1],NodeArray<JsxChild>,number,JsxChild | undefined
+an ElementAccessExpression,src/compiler/program.ts:996:18,node.elements[0],NodeArray<ImportAttribute>,0,ImportAttribute | undefined
+an ElementAccessExpression,src/compiler/resolutionCache.ts:273:22,pathComponents[0],Readonly<PathPathComponents>,0,Path | undefined
+an ElementAccessExpression,src/compiler/resolutionCache.ts:275:9,pathComponents[0],Readonly<PathPathComponents>,0,Path | undefined
+an ElementAccessExpression,src/compiler/resolutionCache.ts:293:9,pathComponents[indexAfterOsRoot],Readonly<PathPathComponents>,number,Path | undefined
+an ElementAccessExpression,src/compiler/resolutionCache.ts:333:13,fileOrDirComponents[i],Readonly<PathPathComponents>,number,Path | undefined
+an ElementAccessExpression,src/compiler/resolutionCache.ts:426:17,dirPathComponents[i],Readonly<PathPathComponents>,number,Path | undefined
+an ElementAccessExpression,src/compiler/resolutionCache.ts:451:25,dirPathComponents[lastNodeModulesIndex + 1],Readonly<PathPathComponents>,number,Path | undefined
+an ElementAccessExpression,src/compiler/scanner.ts:3509:69,valuesOfNonBinaryUnicodeProperties[propertyName],{ General_Category: Set<string>; Script: Set<string>; Script_Extensions: Set<string>; },"""General_Category"" | ""Script"" | ""Script_Extensions""",Set<string>
+an ElementAccessExpression,src/compiler/sourcemap.ts:810:25,generatedMappings[targetIndex],SortedReadonlyArray<MappedPosition>,number,MappedPosition | undefined
+an ElementAccessExpression,src/compiler/sys.ts:291:84,pollingChunkSize[queue.pollingInterval],{ 250: number; 500: number; 2000: number; },PollingInterval,number
+an ElementAccessExpression,src/compiler/sys.ts:333:53,unchangedPollThresholds[pollingInterval],{ 2000: number; 500: number; 250: number; },PollingInterval,number
+an ElementAccessExpression,src/compiler/sys.ts:485:73,pollingChunkSize[PollingInterval.Low],{ 250: number; 500: number; 2000: number; },PollingInterval.Low,number
+an ElementAccessExpression,src/compiler/transformers/classThis.ts:77:23,node.body.statements[0],NodeArray<Statement>,0,Statement | undefined
+an ElementAccessExpression,src/compiler/transformers/declarations/diagnostics.ts:722:51,node.parameters[0],NodeArray<ParameterDeclaration>,0,ParameterDeclaration | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:1361:48,node.declarationList.declarations[0],NodeArray<VariableDeclaration>,0,VariableDeclaration | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:1382:13,node.arguments[0],NodeArray<Expression>,0,Expression | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:1459:31,body.statements[i],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:1476:35,body.statements[superCallIndex],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:1573:31,body.statements[i],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:1704:26,node.arguments[1],NodeArray<Expression>,1,Expression | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:2715:29,node.elements[i],NodeArray<Expression>,number,Expression | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:2729:18,node.declarationList.declarations[0],NodeArray<VariableDeclaration>,0,VariableDeclaration | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:3317:30,properties[i],NodeArray<ObjectLiteralElementLike>,number,ObjectLiteralElementLike | undefined
+an ElementAccessExpression,src/compiler/transformers/es2015.ts:4096:30,properties[i],NodeArray<ObjectLiteralElementLike>,number,ObjectLiteralElementLike | undefined
+an ElementAccessExpression,src/compiler/transformers/es2018.ts:632:29,node.elements[i],NodeArray<Expression>,number,Expression | undefined
+an ElementAccessExpression,src/compiler/transformers/generators.ts:2044:31,nodes[i],NodeArray<Node>,number,Node | undefined
+an ElementAccessExpression,src/compiler/transformers/namedEvaluation.ts:144:23,node.body.statements[0],NodeArray<Statement>,0,Statement | undefined
+an ElementAccessExpression,src/compiler/transformers/ts.ts:1351:32,statementsIn[superStatementIndex],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/transformers/utilities.ts:549:27,statements[i],NodeArray<Statement>,number,Statement | undefined
+an ElementAccessExpression,src/compiler/transformers/utilities.ts:656:86,parameters[0],NodeArray<ParameterDeclaration>,0,ParameterDeclaration | undefined
+an ElementAccessExpression,src/compiler/utilities.ts:1251:34,node.jsDoc![0],JSDocArray,0,JSDoc | undefined
+an ElementAccessExpression,src/compiler/utilities.ts:2355:55,info.declaration.parameters[0],NodeArray<ParameterDeclaration>,0,ParameterDeclaration | undefined
+an ElementAccessExpression,src/compiler/utilities.ts:3856:17,args[0],NodeArray<Expression>,0,Expression | undefined
+an ElementAccessExpression,src/compiler/utilities.ts:4125:38,expr.arguments[1],NodeArray<Expression>,1,Expression | undefined
+an ElementAccessExpression,src/compiler/utilities.ts:4418:20,node.arguments[0],NodeArray<Expression>,0,Expression | undefined
+an ElementAccessExpression,src/compiler/utilities.ts:8605:43,localizedDiagnosticMessages[message.key],MapLike<string>,string,string | undefined
+an ElementAccessExpression,src/compiler/utilities.ts:9370:12,compilerOptions[flag],CompilerOptions,StrictOptionName,boolean | undefined
+an ElementAccessExpression,src/compiler/utilitiesPublic.ts:1353:53,node.parent.typeParameters[0],NodeArray<TypeParameterDeclaration>,0,TypeParameterDeclaration | undefined
+an ElementAccessExpression,src/compiler/visitorPublic.ts:423:27,parameters[i],NodeArray<ParameterDeclaration>,number,ParameterDeclaration | undefined
+?.[] on a value,src/compiler/checker.ts:22931:59,source.symbol?.declarations?.[0],Declaration[] | undefined,0,Declaration | undefined
+?.[] on a value,src/compiler/checker.ts:33479:27,symbol.declarations?.[0],Declaration[] | undefined,0,Declaration | undefined
+?.[] on a value,src/compiler/checker.ts:33484:27,symbol.declarations?.[0],Declaration[] | undefined,0,Declaration | undefined
+?.[] on a value,src/compiler/checker.ts:33490:27,symbol.declarations?.[0],Declaration[] | undefined,0,Declaration | undefined
+?.[] on a value,src/compiler/checker.ts:7440:67,labeledElementDeclarations?.[i],readonly (NamedTupleMember | ParameterDeclaration | undefined)[] | undefined,number,NamedTupleMember | ParameterDeclaration | undefined
+?.[] on a value,src/compiler/checker.ts:9101:112,symbol.declarations?.[0],Declaration[] | undefined,0,Declaration | undefined
+?.[] on a value,src/compiler/factory/emitNode.ts:148:12,node.emitNode?.tokenSourceMapRanges?.[token],(SourceMapRange | undefined)[] | undefined,SyntaxKind,SourceMapRange | undefined

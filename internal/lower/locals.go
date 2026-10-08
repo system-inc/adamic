@@ -2,7 +2,6 @@
 package lower
 
 import (
-	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -11,7 +10,7 @@ import (
 
 // variables lowers const and let declarations, each to a local of its own.
 func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
-	if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) && !namespaceVariable(list) {
 		return nil, &Refused{Where: l.program.Where(list), What: "var", Fix: "use const or let"}
 	}
 	statements := []ir.Statement{}
@@ -23,15 +22,53 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
+			for index, statement := range destructured {
+				if declared, ok := statement.(ir.Declare); ok && l.result.Locals[declared.Local].NamespaceVar {
+					destructured[index] = ir.Assign{Local: declared.Local, Value: declared.Value}
+				}
+			}
 			statements = append(statements, destructured...)
 			continue
 		}
 		if !ast.IsIdentifier(name) {
 			return nil, l.notYet(name, "a destructuring declaration")
 		}
+
+		if list.Flags&ast.NodeFlagsBlockScoped == 0 && !namespaceVariable(list) {
+			if symbol := l.symbol(name); symbol != nil && len(symbol.Declarations) > 1 {
+				return nil, &Refused{Where: l.program.Where(declaration), What: "repeated var assertion declarations", Fix: "use one declaration and subsequent assignments"}
+			}
+		}
 		local, err := l.declareLocal(name)
 		if err != nil {
 			return nil, err
+		}
+		if list.Flags&ast.NodeFlagsBlockScoped == 0 {
+			l.result.Locals[local].Hoisted = true
+		}
+		if l.result.Locals[local].NamespaceVar && declaration.Initializer() == nil {
+			continue // Hoisted storage must not overwrite an earlier assignment.
+		}
+		if l.uninitializedDeclaration(declaration) {
+			l.result.Locals[local].Uninitialized = true
+			statements = append(statements, ir.Declare{Local: local, Uninitialized: true})
+			continue
+		}
+
+		if initializer := declaration.AsVariableDeclaration().Initializer; l.lazyAssertionInitializer(initializer) {
+			prefix, present, value, err := l.lazyAssertion(initializer, l.result.Locals[local].Type)
+			if err != nil {
+				return nil, err
+			}
+			if known, ok := present.(ir.BooleanConstant); ok && known.Value && len(prefix) == 0 {
+				statements = append(statements, ir.Declare{Local: local, Value: value})
+				continue
+			}
+			l.result.Locals[local].Uninitialized = true
+			l.result.Locals[local].InitializerExpression = sourceExpression(initializer)
+			statements = append(statements, prefix...)
+			statements = append(statements, ir.Declare{Local: local, Uninitialized: true}, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: local, Value: value}}})
+			continue
 		}
 		var value ir.Expression
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
@@ -44,15 +81,22 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-		} else if l.includesUndefined(l.checker.GetTypeAtLocation(name)) {
+		} else if !l.result.Locals[local].NamespaceVar && (l.includesUndefined(l.checker.GetTypeAtLocation(name)) || l.evolvingObject(name) != nil) {
 			// An optional declaration can be read before assignment. Its first value
-			// is undefined, not the backend's unobservable storage placeholder.
+			// is undefined, not the backend's unobservable storage placeholder. Namespace
+			// var was initialized when hoisted; a later declaration must not reset it.
 			value = ir.Undefined{Of: ir.Object}
 		}
 		if closure, literal := value.(ir.MakeClosure); literal && list.Flags&ast.NodeFlagsConst != 0 {
 			l.result.Locals[local].ConstantClosure = closure.Function + 1
 		}
-		statements = append(statements, ir.Declare{Local: local, Value: fit(value, l.result.Locals[local].Type)})
+		if l.result.Locals[local].NamespaceVar {
+			if value != nil {
+				statements = append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type)})
+			}
+		} else {
+			statements = append(statements, l.initializeLocal(local, fit(value, l.result.Locals[local].Type))...)
+		}
 	}
 	return statements, nil
 }
@@ -67,13 +111,17 @@ func skipped(binding *ast.Node) bool {
 func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	symbol := l.symbol(name)
 	if symbol == nil {
-		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
+		return 0, l.notYet(name, "the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
+	inferred := l.evolvingObject(name)
 	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
-			return 0, err
+			if inferred == nil {
+				return 0, err
+			}
+			valueType = ir.Object
 		}
 	}
 	if l.locals == nil {
@@ -85,7 +133,11 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	}
 	l.locals[symbol] = len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex})
-	l.noteLocal(l.locals[symbol], l.checker.GetTypeAtLocation(name), name)
+	proven := l.checker.GetTypeAtLocation(name)
+	if inferred != nil {
+		proven = inferred
+	}
+	l.noteLocal(l.locals[symbol], proven, name)
 	return l.locals[symbol], nil
 }
 
@@ -142,6 +194,9 @@ func (l *lowering) local(identifier *ast.Node) (int, bool) {
 // between its function and this one carries that cell in its environment.
 func (l *lowering) touch(local int) {
 	declared := l.result.Locals[local]
+	if declared.Ready != 0 {
+		l.touch(declared.Ready - 1)
+	}
 	if declared.Global || declared.Function == l.functionIndex {
 		return
 	}
@@ -165,10 +220,9 @@ func (l *lowering) touch(local int) {
 	}
 }
 
-// checked reports whether touching a local must be checked against the temporal dead zone: a
-// global reached from a function or a cyclic module body may precede its declaration.
+// checked guards switch lexical bindings, captured cells, and globals reached before initialization.
 func (l *lowering) checked(local int) bool {
-	return l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)
+	return l.result.Locals[local].NamespaceState || l.result.Locals[local].Ready != 0 || (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
 }
 
 func (l *lowering) constant(value string) int {
@@ -181,4 +235,65 @@ func (l *lowering) constant(value string) int {
 	l.strings[value] = len(l.result.Strings)
 	l.result.Strings = append(l.result.Strings, value)
 	return l.strings[value]
+}
+
+// localRead preserves checker narrowing for both private and qualified singleton reads.
+func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
+	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
+	if l.result.Locals[local].Type == ir.Union {
+		// Where the checker has narrowed it to fewer members held one way, it's read as that.
+		parent := node.Parent
+		for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+			parent = parent.Parent
+		}
+		observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
+		if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
+			// Calls and captured writes can invalidate the checker's narrowing. Check the
+			// held member before casting it, with ordinary IR shared by both backends.
+			name := "object"
+			switch narrowed.Present() {
+			case ir.Number:
+				name = "number"
+			case ir.Boolean:
+				name = "boolean"
+			case ir.String:
+				name = "string"
+			case ir.Closure:
+				name = "function"
+			}
+			if name == "object" {
+				// typeof cannot distinguish differently held object members.
+				declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
+				members := []*checker.Type{declared}
+				if declared.Flags()&checker.TypeFlagsUnion != 0 {
+					members = declared.Types()
+				}
+				for _, member := range members {
+					if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
+						return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
+					}
+				}
+			}
+			b := l.libraryArrayBuilder([]ir.Expression{read})
+			held := b.read(b.parameters[0])
+			matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+			if narrowed == ir.Array {
+				matches = ir.ArrayIsArray{Value: held}
+			}
+			if l.includesUndefined(l.arrayPredicateObservedType(node)) {
+				matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
+			}
+			message := "union member where the checker narrowed it away: a call since the narrowing put it back"
+			b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+			read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
+			l.result.Functions[b.function].CheckedUnionNarrow = true
+		}
+	}
+	if declared := l.result.Locals[local].Type; declared.IsMaybe() {
+		// Where the checker has narrowed it to what it holds, it's read as that.
+		if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
+			read = ir.Unwrap{Value: read}
+		}
+	}
+	return l.defined(node, read), nil
 }

@@ -111,9 +111,20 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 	if len(fromSignatures) > 0 && len(toSignatures) > 0 {
 		// A function seen as another is handed the other's arguments, and its results are seen as
 		// the other's: each a view of its own.
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			if l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
+				return nil
+			}
+			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])
+			target := l.checker.GetReturnTypeOfSignature(toSignatures[0])
+			if !l.checker.IsTypeAssignableTo(source, target) {
+				return &widening{source: source, target: target}
+			}
+			return l.widened(source, target, visited)
+		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			takes, given := l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])
+			takes, given := l.censusCallableParameterType(fromParameters[index]), l.censusCallableParameterType(toParameters[index])
 			if !l.enumAssignable(given, takes) || !l.checker.IsTypeAssignableTo(given, takes) {
 				// tsc relates a method's parameters both ways (method bivariance), so a method taking
 				// a Dog can be seen as one taking any Animal, and handed a Cat.
@@ -391,12 +402,15 @@ func viewSite(node *ast.Node) bool {
 
 // refuseWidening refuses a value seen through a type that can write what it can't hold.
 func (l *lowering) refuseWidening(node *ast.Node) error {
+	if l.nodeFSFileReadOnlyArgument(node) || l.regexCallbackIntrinsicView(node) {
+		return nil
+	}
 	var own, contextual *checker.Type
 	var found *widening
 	switch {
 	case node.Kind == ast.KindAsExpression:
 		as := node.AsAsExpression()
-		if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+		if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 			return nil
 		}
 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)

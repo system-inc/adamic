@@ -10,6 +10,22 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	ViewOrigins       []Expression
+	ViewContracts     []ViewContract
+	ViewContractTypes map[int]ViewContractID
+
+	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
+	argumentFacts *argumentFacts
+	// UninitializedFields records the field names whose readiness can be observed.
+	UninitializedFields map[string]bool
+	// PredicateChecks counts overload-result directions, per emitted call site.
+	// Unobservable is included in Proven: no narrowed read consumes that region.
+	PredicateChecks PredicateCheckCounts
+
+	// CheckedFields conservatively checks these field names at every object read.
+	CheckedFields map[string]bool
+	NonNullChecks NonNullCheckCounts
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 
@@ -29,6 +45,16 @@ type Program struct {
 	Classes       []Class
 	MethodTargets map[int][]int
 
+	// StructuralMethodThunks records methods reachable through a source interface receiver.
+	// Nil keeps conservative admission for hand-built IR. Count candidates remain independent.
+	StructuralMethodThunks map[int]bool
+
+	// FunctionTypeTargets is the closed-world set for each checker function type.
+	FunctionTypeTargets map[int][]int
+	// Packed calls reserve fixed words and separate rest tails, never a count word.
+	FixedArgumentSlots int
+	RestArgumentSlots  map[RestArguments]int
+
 	// Main is what the program does, in order.
 	Main []Statement
 
@@ -38,6 +64,34 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// PredicateCheckCounts counts emitted overload-result directions. Unobservable
+// directions are proven and are also counted separately so erasure is visible.
+type PredicateCheckCounts struct {
+	Proven, Checked, Unobservable int
+	Sites                         []PredicateCallCheck
+}
+
+type PredicateCallCheck struct {
+	Where, Function string
+	Overload        int
+	Directions      []PredicateDirectionCheck
+}
+
+type PredicateDirectionCheck struct {
+	Direction, Status, Reason string
+}
+
+// NonNullCheckCounts records proven assertions and inserted nullish checks.
+type NonNullCheckCounts struct {
+	Proven, Checked int
+	Sites           []NonNullCheck
+}
+
+type NonNullCheck struct {
+	Where, Expression string
+	Proven            bool
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -65,10 +119,25 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
-	Name string
+	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
+	CheckedUnionNarrow bool
+	Name               string
+	MethodName         string
 
 	// Parameters are locals, in order.
 	Parameters []int
+
+	// ArgumentsCount is the one-based local for the hidden actual argument count.
+	ArgumentsCount int
+	ReadsArguments bool
+	// ForwardsArguments is the one-based target of an implementation-only adapter.
+	ForwardsArguments int
+	// Receiver excludes the leading implementation-only this from that count.
+	Receiver bool
+	// OptionalParameters records source presence independently of reference representation.
+	OptionalParameters map[int]bool
+	// RestElement identifies the final parameter as a rest array.
+	RestElement Type
 
 	// Returns is the result's type, or 0 for void.
 	Returns Type
@@ -79,6 +148,18 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+	// NestedParent is the enclosing function plus one for a named nested declaration.
+	NestedParent int
+	// ForwardedNestedParent identifies a named group called directly from this
+	// anonymous closure. Its complete shared layout is forwarded after lowering.
+	ForwardedNestedParent int
+	// FrameEnvironment is the layout of the single entry allocation for this frame.
+	FrameEnvironment []int
+	NestedFrame      bool
+	// FrameIdentity is a synthetic cell plus one, anchoring canonical nested values.
+	FrameIdentity int
+	// ReferenceParents are lexical groups whose completed layouts this closure needs.
+	ReferenceParents []int
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -125,6 +206,11 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Typed arrays hold numbers in one flat buffer of the element width.
+	Uint8Array
+	Int32Array
+	Float64Array
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -157,22 +243,45 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
-	Name string
-	Type Type
+	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
+	Uninitialized         bool
+	InitializerExpression string
+	Hoisted               bool
+	Name                  string
+	Type                  Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
+
+	// NamespaceState stays unready until assigned when its type excludes undefined.
+	NamespaceState bool
+
+	// NamespaceVar has hoisted storage; its initializer is an assignment in source order.
+	NamespaceVar bool
 
 	// Function is the function that declares it, -1 for the module's top level.
 	Function int
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+	// Preallocated cells exist before their source initializer executes.
+	Preallocated bool
+	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
+	EnvironmentCell bool
+	// NestedFunction is the named declaration this binding holds, plus one.
+	NestedFunction int
+
+	// Ready is the readiness local index plus one for a switch lexical binding.
+	// Its storage exists at switch entry, but its declaration initializes it later.
+	Ready int
+
+	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
+	ExpressionAssigned bool
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
@@ -201,20 +310,27 @@ type (
 	StringConstant  struct{ Index int }
 
 	// Read reads a local. Of is the local's type, so a Read is typed without the program in hand.
-	// Checked is a global read whose initialization is not proven, including function
-	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
-	// Adamic checks it out loud.
+	// Checked guards switch lexical bindings, captured cells, and globals whose initialization
+	// is not proven, including function bodies and cyclic module evaluation. JavaScript throws
+	// in the temporal dead zone; Adamic checks it out loud.
 	Read struct {
-		Local   int
-		Of      Type
-		Checked bool
+		Local     int
+		Of        Type
+		Checked   bool
+		Readiness string
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
 	Call struct {
 		Function  int
 		Arguments []Expression
-		Returns   Type
+		// Spread marks array arguments expanded at the call, in evaluation order.
+		Spread []bool
+		// ArgumentCount forwards a caller count through a compiler-generated adapter.
+		ArgumentCount Expression
+		RestPacked    bool
+		ForwardCount  bool
+		Returns       Type
 
 		// Virtual is a one-based method slot. Function supplies its static signature.
 		Virtual  int
@@ -242,7 +358,7 @@ type (
 
 	// Binary is an operator whose operands are already of the types it takes (the checker and
 	// lowering saw to that): arithmetic on numbers, comparison of numbers, equality of like types,
-	// bitwise operations on numbers, and && and || on booleans, which short-circuit.
+	// bitwise operations on numbers, and && and || on booleans or maybe booleans, which short-circuit.
 	Binary struct {
 		Operator    Operator
 		Left, Right Expression
@@ -274,6 +390,10 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		// Record uses counted own-key storage when indexed aliases can add fields.
+		Record          bool
+		GraphTypes      []int
+		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -296,10 +416,22 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
-		Object   Expression
-		Name     string
-		Of       Type
-		Optional bool
+		ViewContract       ViewContractID
+		ViewTypeID         int
+		ViewReceiverTypeID int
+		ViewWhere          string
+		ViewOrdinary       bool
+
+		// View names a required field read whose presence, readiness and representation are checked.
+		View        string
+		ViewType    string
+		ViewAllowed []Expression
+		// Readiness is the source expression for a checked field read, empty when proven ready.
+		Readiness string
+		Object    Expression
+		Name      string
+		Of        Type
+		Optional  bool
 		// Absent is an optional own field: a shape without it reads as undefined.
 		Absent bool
 		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
@@ -317,6 +449,8 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
+		GraphTypes []int
+
 		Element  Type
 		Elements []Expression
 		Spread   []bool
@@ -489,11 +623,14 @@ type (
 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
 	// in both backends (docs/0.1.md, decision 5).
 	CheckedCast struct {
-		Value     Expression
-		Field     string
-		FieldType Type
-		Allowed   []Expression
-		Message   string
+		ViewContract ViewContractID
+
+		CheckedFields bool
+		Value         Expression
+		Field         string
+		FieldType     Type
+		Allowed       []Expression
+		Message       string
 	}
 
 	// ArrayIndex is array[index]: the element, or undefined when index isn't one of the array's (a
@@ -503,6 +640,7 @@ type (
 		Array, Index Expression
 		Element      Type
 		Relative     bool
+		Optional     bool // array?.[index], skipping the index when the receiver is missing
 	}
 
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,
@@ -541,6 +679,7 @@ type (
 	// undefined and its index, in order. First is the type of the callback's first parameter, which
 	// undefined is passed as (0 when it has none).
 	ArrayFrom struct {
+		CallbackType     int
 		Length, Callback Expression
 		Element, First   Type
 	}
@@ -559,6 +698,7 @@ type (
 	// last returned (Initial the first time), the element, its index and the array, read and skipped
 	// as ArrayVisit does. Result is Initial's type, and the callback's.
 	ArrayReduce struct {
+		CallbackType             int
 		Array, Callback, Initial Expression
 		Element, Result          Type
 	}
@@ -579,18 +719,23 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
-		Closure   Expression
-		Arguments []Expression
-		Returns   Type
+		// Direct identifies canonical sibling code sharing Closure as its environment.
+		Direct       int
+		Closure      Expression
+		Arguments    []Expression
+		Spread       []bool
+		FunctionType int
+		Returns      Type
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Result   Type
+		CallbackType int
+		Array        Expression
+		Callback     Expression
+		Element      Type
+		Result       Type
 	}
 
 	// ArrayVisit is one of the array methods that call a function per element, in order, with the
@@ -599,11 +744,12 @@ type (
 	// is skipped, both as JavaScript does. Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
-		Method   string
-		Array    Expression
-		Callback Expression
-		Element  Type
-		Returns  Type
+		CallbackType int
+		Method       string
+		Array        Expression
+		Callback     Expression
+		Element      Type
+		Returns      Type
 	}
 
 	// MapEntries is [...map]: an array of [key, value] pairs, each a tuple, an object whose fields
@@ -622,10 +768,11 @@ type (
 	// ArraySort is array.sort(comparator): one of the module's functions (Comparator), or a function
 	// value (Callback, when it isn't nil). It sorts in place, stably, and is the array.
 	ArraySort struct {
-		Array      Expression
-		Comparator int
-		Callback   Expression
-		Element    Type
+		CallbackType int
+		Array        Expression
+		Comparator   int
+		Callback     Expression
+		Element      Type
 	}
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
@@ -655,6 +802,7 @@ type (
 	// set.forEach(Callback) (Set), with each element twice and the set, in insertion order and live as
 	// for...of is. Returns is what the callback returns, 0 for nothing; forEach itself is void.
 	MapForEach struct {
+		CallbackType  int
 		Map, Callback Expression
 		Key, Value    Type
 		Set           bool
@@ -761,9 +909,11 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
-	Name    string
-	Value   Expression
-	Private bool
+	// Uninitialized reserves storage without making its typed value readable.
+	Uninitialized bool
+	Name          string
+	Value         Expression
+	Private       bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
@@ -930,6 +1080,9 @@ func (u Unary) Type() Type {
 }
 
 func (b Binary) Type() Type {
+	if (b.Operator == And || b.Operator == Or) && b.Left.Type() == MaybeBoolean && b.Right.Type() == MaybeBoolean {
+		return MaybeBoolean
+	}
 	switch b.Operator {
 	case Add, Subtract, Multiply, Divide, Remainder, Power, BitAnd, BitOr, BitXor, ShiftLeft, ShiftRight, ShiftRightUnsigned:
 		return Number
@@ -993,14 +1146,19 @@ type (
 		Value  Expression
 	}
 
+	// AllocateEnvironment is one frame allocation site, visible to future placement analysis.
+	AllocateEnvironment struct{ Cells []int }
+
 	// Declare introduces a local with its first value.
 	Declare struct {
-		Local int
-		Value Expression
+		// Uninitialized allocates only a captured cell, with its ready bit clear.
+		Uninitialized bool
+		Local         int
+		Value         Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
-	// Read: a write to a global from inside a function.
+	// Read: a write to an unready switch binding or a global from inside a function.
 	Assign struct {
 		Local   int
 		Value   Expression
@@ -1025,9 +1183,11 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Object Expression
-		Name   string
-		Value  Expression
+		Record        bool // write into counted own-key storage
+		Uninitialized bool
+		Object        Expression
+		Name          string
+		Value         Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -1049,6 +1209,7 @@ type (
 	// the body, or after it when CheckAfter is set), and Update runs after each pass, continue
 	// included.
 	Loop struct {
+		Labels     []string
 		Condition  Expression
 		Body       []Statement
 		Update     []Statement
@@ -1066,6 +1227,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		Labels   []string
 		Iterable Expression
 		Element  Type
 		Local    int
@@ -1095,8 +1257,11 @@ type (
 
 	// Depth counts the enclosing loops and switches skipped by a labeled break.
 	// Zero is the innermost breakable, as for an unlabeled break.
-	Break    struct{ Depth int }
-	Continue struct{}
+	Break struct {
+		Depth int
+		Label string
+	}
+	Continue struct{ Label string }
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
@@ -1124,23 +1289,24 @@ type Case struct {
 	Body  []Statement
 }
 
-func (WriteLine) statement()   {}
-func (Declare) statement()     {}
-func (Assign) statement()      {}
-func (Evaluate) statement()    {}
-func (Panic) statement()       {}
-func (SetProperty) statement() {}
-func (SetIndex) statement()    {}
-func (Return) statement()      {}
-func (If) statement()          {}
-func (Loop) statement()        {}
-func (Block) statement()       {}
-func (ForOf) statement()       {}
-func (Switch) statement()      {}
-func (Break) statement()       {}
-func (Continue) statement()    {}
-func (Throw) statement()       {}
-func (Try) statement()         {}
+func (WriteLine) statement()           {}
+func (AllocateEnvironment) statement() {}
+func (Declare) statement()             {}
+func (Assign) statement()              {}
+func (Evaluate) statement()            {}
+func (Panic) statement()               {}
+func (SetProperty) statement()         {}
+func (SetIndex) statement()            {}
+func (Return) statement()              {}
+func (If) statement()                  {}
+func (Loop) statement()                {}
+func (Block) statement()               {}
+func (ForOf) statement()               {}
+func (Switch) statement()              {}
+func (Break) statement()               {}
+func (Continue) statement()            {}
+func (Throw) statement()               {}
+func (Try) statement()                 {}
 
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {

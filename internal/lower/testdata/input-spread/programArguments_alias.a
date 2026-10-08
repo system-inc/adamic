@@ -1,0 +1,3 @@
+import { programArguments as door } from 'adamic';
+const args: [] = [];
+door(...args);

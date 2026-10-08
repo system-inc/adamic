@@ -24,7 +24,34 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
 	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
 	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
-	if !isNewError && !isCaught {
+	// Error is structurally typed: { name, message, stack } can satisfy it without
+	// being an Error on Node. Follow only immutable bindings to a real allocation.
+	seen := map[*ast.Symbol]bool{}
+	var madeError func(*ast.Node) bool
+	madeError = func(value *ast.Node) bool {
+		if value == nil {
+			return false
+		}
+		value = ast.SkipParentheses(value)
+		if value.Kind == ast.KindNewExpression {
+			return l.isLibraryGlobal(value.AsNewExpression().Expression, "Error")
+		}
+		if !ast.IsIdentifier(value) {
+			return false
+		}
+		symbol := l.symbol(value)
+		if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
+			return false
+		}
+		seen[symbol] = true
+		declaration := symbol.Declarations[0]
+		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindVariableDeclarationList || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+			return false
+		}
+		return madeError(declaration.AsVariableDeclaration().Initializer)
+	}
+	isStoredError := !isNewError && !isCaught && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") && madeError(thrown)
+	if !isNewError && !isCaught && !isStoredError {
 		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
 			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
 		}
@@ -157,10 +184,16 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
+		case ir.NodeFSFile:
+			found = found || node.MayThrow()
 		case ir.Throw:
 			found = true
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
+				found = true
+			}
+		case ir.RegExpCall:
+			if node.Replacement != nil && l.result.ClosuresMayThrow {
 				found = true
 			}
 		case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
@@ -209,11 +242,18 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if l.objectCanFreeze() {
 				failing = "a write to a potentially frozen object"
 			}
+		case ir.NodeBufferCall:
+			if node.Function == "hash_update" || node.Function == "hash_digest" {
+				failing = "Hash finalization, whose catchable .code contract is not supported yet"
+			}
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {
 				failing = "Object.assign into a potentially frozen object"
 			}
 		case ir.RegExpCall:
+			if node.Replacement != nil {
+				callsClosures = true
+			}
 			if node.Method == "replaceAll" || node.Method == "matchAll" {
 				failing = "RegExp global-flag validation"
 			}
@@ -232,6 +272,12 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if bounds := formatArguments[node.Method]; node.Argument != nil && !constantWithin(node.Argument, bounds[0], bounds[1]) {
 				failing = node.Method
 			}
+		case ir.TypedArrayNew:
+			if !node.FromArray && !constantWithin(node.Source, 0, 9007199254740991) {
+				failing = "typed array length conversion"
+			}
+		case ir.TypedArraySet:
+			failing = "typed array set range validation"
 		case ir.ArrayFill:
 			if node.Array == nil && !constantWithin(node.Length, 0, 4294967295) {
 				failing = "new Array(length)"

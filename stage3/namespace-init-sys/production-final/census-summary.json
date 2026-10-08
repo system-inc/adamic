@@ -1,0 +1,132 @@
+{
+  "rows": 173,
+  "states": {
+    "scheduled": 168,
+    "emitted as a check": 0,
+    "refused": 5
+  },
+  "indexed": {
+    "scheduled": 99,
+    "emitted as a check": 0,
+    "read-local refused": 0,
+    "read-local errors": 0,
+    "read-local not reached": 99
+  },
+  "ordinary_errors": 0,
+  "program_blocker": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+  "native_artifacts": 0,
+  "attempts": [
+    {
+      "entry": "src/compiler/_namespaces/ts.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/checker.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/commandLineParser.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/moduleNameResolver.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/program.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/sourcemap.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformer.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformers/classFields.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformers/declarations.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformers/es2015.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformers/es2017.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformers/esDecorators.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformers/esnext.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformers/generators.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformers/jsx.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    },
+    {
+      "entry": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "stage": "lower",
+      "error": "/tmp/namespace-init-sys-typescript/src/compiler/core.ts:307:5: Adamic 0.1 refuses a write to discriminant field 'length' that could move the object to variant 0 or number; changing variant means building a new object",
+      "error_kind": "Refused",
+      "checks": []
+    }
+  ]
+}

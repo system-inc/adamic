@@ -38,6 +38,24 @@ func (e *emitter) logical(binary ir.Binary) string {
 	if binary.Operator == ir.Or {
 		operator = "||"
 	}
+	if binary.Type() == ir.MaybeBoolean {
+		result := e.temporary()
+		e.line("%s %s = %s;", cType(ir.MaybeBoolean), result, left)
+		test := result + ".present && " + result + ".boolean"
+		if binary.Operator == ir.Or {
+			test = "!(" + test + ")"
+		}
+		e.line("if (%s) {", test)
+		e.out.WriteString(text)
+		e.indent++
+		e.line("%s = %s;", result, right)
+		for index := len(owned) - 1; index >= 0; index-- {
+			e.line("adamic_release(%s);", owned[index])
+		}
+		e.indent--
+		e.line("}")
+		return result
+	}
 	if text == "" && len(owned) == 0 {
 		return fmt.Sprintf("(%s %s %s)", left, operator, right)
 	}
@@ -121,6 +139,14 @@ func unwrap(expression string) string {
 func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	value := e.value(coalesce.Value)
 	present, unwrapped := value+" != NULL", value
+	_, undefined := coalesce.Value.(ir.Undefined)
+	_, null := coalesce.Value.(ir.Null)
+	if undefined || null {
+		// Literal absence is known without comparing sentinel addresses in C.
+		present = "false"
+	} else if coalesce.Value.Type() == ir.Union {
+		present += " && " + value + " != &adamic_null"
+	}
 	if coalesce.Value.Type().IsMaybe() {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}

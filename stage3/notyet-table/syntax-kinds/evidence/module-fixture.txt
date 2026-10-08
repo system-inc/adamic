@@ -1,0 +1,29 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestSyntaxModuleDeclarationMutants
+=== PAUSE TestSyntaxModuleDeclarationMutants
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestSyntaxModuleDeclarationMutants
+=== RUN   TestSyntaxModuleDeclarationMutants/initializer
+=== PAUSE TestSyntaxModuleDeclarationMutants/initializer
+=== RUN   TestSyntaxModuleDeclarationMutants/scoped_read
+=== PAUSE TestSyntaxModuleDeclarationMutants/scoped_read
+=== CONT  TestSyntaxModuleDeclarationMutants/initializer
+=== CONT  TestSyntaxModuleDeclarationMutants/scoped_read
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/syntax_module_declarations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/syntax_module_declarations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/syntax_module_declarations.a
+=== NAME  TestSyntaxModuleDeclarationMutants/scoped_read
+    syntax_module_declarations_test.go:88: caught in both backends by source Node stdout comparison
+=== NAME  TestSyntaxModuleDeclarationMutants/initializer
+    syntax_module_declarations_test.go:88: caught in both backends by source Node stdout comparison
+--- PASS: TestSyntaxModuleDeclarationMutants (0.00s)
+    --- PASS: TestSyntaxModuleDeclarationMutants/scoped_read (0.34s)
+    --- PASS: TestSyntaxModuleDeclarationMutants/initializer (0.34s)
+--- PASS: TestNativeAgreesWithNode (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/syntax_module_declarations.a (0.36s)
+PASS
+gate cache: native hits=0 misses=7
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.412s

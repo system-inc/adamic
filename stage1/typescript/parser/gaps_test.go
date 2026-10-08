@@ -1,14 +1,18 @@
 package parser
 
 import (
+	"bytes"
 	"context"
 	"errors"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestStrongAstParentGap(t *testing.T) {
@@ -84,7 +88,7 @@ func TestClassMethodInterfaceGap(t *testing.T) {
 	t.Logf("Node prints 1; Adamic reports: %v", notYet)
 }
 
-func TestOptionalFunctionValueGap(t *testing.T) {
+func TestClosedOptionalFunctionValueGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/5_optional_function_value.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -93,22 +97,43 @@ func TestOptionalFunctionValueGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path)
-	if string(result.output) != "1\n" {
-		t.Fatalf("Node gap result %q", result.output)
+	expected := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
+	if string(expected) != "1\n" {
+		t.Fatalf("Node optional function result %q", expected)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "a function value with an optional parameter" {
-		t.Fatalf("GAPS.md records optional function value NotYet, got %v", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "optional")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ASAN_OPTIONS", "detect_leaks=1")
+	actual := execute(t, "", binary).output
+	emitted := filepath.Join(t.TempDir(), "optional.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	backend := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
+	for _, side := range []struct {
+		name   string
+		output []byte
+	}{{"native ASan/UBSan/LSan", actual}, {"JavaScript backend", backend}} {
+		if !bytes.Equal(side.output, expected) {
+			t.Fatalf("%s: %q, Node %q", side.name, side.output, expected)
+		}
 	}
 }
 
-func TestConditionalEmptyArrayGap(t *testing.T) {
+// TestClosedConditionalEmptyArrayGap: the untyped [] branch of a conditional lowers on
+// compiler/area-stack (views slice 1, Oct 8), held to Node on native ASan/UBSan/LSan and the
+// JavaScript backend. The driver's number[] annotation still stands.
+func TestClosedConditionalEmptyArrayGap(t *testing.T) {
 	path, err := filepath.Abs("gaps/6_conditional_empty_array.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -117,17 +142,35 @@ func TestConditionalEmptyArrayGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path)
-	if string(result.output) != "1\n" {
-		t.Fatalf("Node gap result %q", result.output)
+	expected := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
+	if string(expected) != "1\n" {
+		t.Fatalf("Node gap result %q", expected)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "an array of never" {
-		t.Fatalf("GAPS.md records empty conditional array NotYet, got %v", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "conditional")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ASAN_OPTIONS", "detect_leaks=1")
+	actual := execute(t, "", binary).output
+	emitted := filepath.Join(t.TempDir(), "conditional.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	backend := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
+	for _, side := range []struct {
+		name   string
+		output []byte
+	}{{"native ASan/UBSan/LSan", actual}, {"JavaScript backend", backend}} {
+		if !bytes.Equal(side.output, expected) {
+			t.Fatalf("%s: %q, Node %q", side.name, side.output, expected)
+		}
 	}
 }

@@ -175,6 +175,9 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 	if err != nil {
 		return nil, true, err
 	}
+	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
+		return nil, true, l.notYet(node, "an optional RegExp call")
+	}
 	var arguments []ir.Expression
 	for _, arg := range args {
 		v, e := l.expression(arg)
@@ -187,6 +190,9 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, true, l.notYet(node, "RegExp input other than a string")
 	}
 	if name == "replace" || name == "replaceAll" {
+		if len(arguments) == 2 && arguments[1].Type() == ir.Closure {
+			return l.regexReplacement(node, value, arguments, name, args[1])
+		}
 		if len(arguments) != 2 || arguments[1].Type() != ir.String {
 			return nil, true, l.notYet(node, "regex replacement other than a string")
 		}
@@ -206,9 +212,6 @@ func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error) {
 		if len(arguments) != 2 || arguments[1].Type() != ir.Number {
 			return nil, true, l.notYet(node, "regex split limit other than a number")
 		}
-	}
-	if callee.AsPropertyAccessExpression().QuestionDotToken != nil {
-		return nil, true, l.notYet(node, "an optional RegExp call")
 	}
 	return ir.RegExpCall{Value: value, Arguments: arguments, Method: method, Returns: result}, true, nil
 }
