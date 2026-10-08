@@ -1168,7 +1168,9 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 	if err != nil {
 		return nil, err
 	}
-	l.fitCallArguments(function, arguments, spread)
+	if !l.overloadCallParameterBoundary(call) {
+		l.fitCallArguments(function, arguments, spread)
+	}
 	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns})
 }
 
