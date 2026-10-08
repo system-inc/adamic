@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface Base {readonly parenthesizeExpressionOfExportDefault:unknown;}
+interface Target {parenthesizeExpressionOfExportDefault(expression: Expression): Expression;}
+function probe(value:Base):void {function parenthesizerRules():Target {return value as Target;}console.log(`${parenthesizerRules().parenthesizeExpressionOfExportDefault({value:3}).value}`);}
+probe({parenthesizeExpressionOfExportDefault:(expression: Expression):number=>9});

@@ -1,0 +1,7 @@
+// Original callable declaration/read; Map and primitive Path retained.
+type Path = string & { __pathBrand: any; };
+interface PackageJsonInfoCacheEntry {readonly value:number;}
+interface Base {readonly getInternalMap:unknown;}
+interface Target {getInternalMap(): Map<Path, PackageJsonInfoCacheEntry> | undefined;}
+function probe(value:Base):void {const moduleResolutionCache={getPackageJsonInfoCache:():Target=>value as Target};moduleResolutionCache.getPackageJsonInfoCache().getInternalMap();}
+probe({getInternalMap:7});

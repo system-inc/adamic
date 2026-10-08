@@ -62,7 +62,7 @@ for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
  else if (member.read.startsWith('emitHelpers().')) receiver = 'function emitHelpers():Target {return value as Target;}';
  else if (member.read.startsWith('(host as Program).')) receiver = 'const host = value;';
  else if (/^[A-Za-z_$][\w$]*\(\)\./.test(member.read)) receiver = 'function ' + member.read.slice(0,member.read.indexOf('(')) + '():Target {return value as Target;}';
- else receiver = 'const ' + member.read.slice(0, member.read.lastIndexOf('.')).replace(/[?!]$/, '') + '=value as Target;';
+ else {const parts=member.read.slice(0,member.read.lastIndexOf('.')).replace(/[?!]$/,'').split('.');let holder='value as Target';for(const part of parts.slice(1).reverse()) holder='{'+part+':'+holder+'}';receiver='const '+parts[0]+'='+holder+';'}
  let prefix = '// Original declaration and read; adjacent data carriers reduced.\n' + carriers + '\ninterface Base {readonly ' + member.field + ':unknown;}\ninterface Target {' + member.declaration + '}\n' + (member.rank === 622 ? 'interface Program extends Target {}\n' : '') + 'function probe(value:Base):void {' + receiver + call + '}\n';
  if ([268,739].includes(member.rank)) {
   const slot=member.rank===268?'source':'mapper1', type=member.rank===268?'DebugType':'DebugTypeMapper';

@@ -1,0 +1,40 @@
+[
+  {
+    "rank": 976,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateMethodSignature",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 693,
+      "column": 16
+    },
+    "read": "context.factory.updateMethodSignature",
+    "call": "context.factory.updateMethodSignature(\r\n            node,\r\n            nodesVisitor(node.modifiers, visitor, isModifier),\r\n            Debug.checkDefined(nodeVisitor(node.name, visitor, isPropertyName)),\r\n            tokenVisitor ? nodeVisitor(node.questionToken, tokenVisitor, isQuestionToken) : node.questionToken,\r\n            nodesVisitor(node.typeParameters, visitor, isTypeParameterDeclaration),\r\n            nodesVisitor(node.parameters, visitor, isParameter),\r\n            nodeVisitor(node.type, visitor, isTypeNode),\r\n        )",
+    "utf16Start": 31217,
+    "utf16End": 31254,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateMethodSignature(node: MethodSignature, modifiers: readonly Modifier[] | undefined, name: PropertyName, questionToken: QuestionToken | undefined, typeParameters: NodeArray<TypeParameterDeclaration> | undefined, parameters: NodeArray<ParameterDeclaration>, type: TypeNode | undefined): MethodSignature;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [
+      "interface NodeArray<T> extends ReadonlyArray<T> {}"
+    ],
+    "expected": "(node: MethodSignature, modifiers: readonly Modifier[] | undefined, name: PropertyName, questionToken: QuestionToken | undefined, typeParameters: NodeArray<TypeParameterDeclaration> | undefined, parameters: NodeArray<ParameterDeclaration>, type: TypeNode | undefined) => MethodSignature",
+    "directory": "rank-976-array-carrier",
+    "resultType": "MethodSignature",
+    "arity": "0",
+    "variants": [
+      "good"
+    ],
+    "filename": "rank-976-array-carrier/good.a",
+    "observedExpected": "(node: MethodSignature, modifiers: readonly Modifier[] | undefined, name: PropertyName, questionToken: QuestionToken | undefined, typeParameters: NodeArray<...> | undefined, parameters: NodeArray<...>, type: TypeNode | undefined) => MethodSignature"
+  }
+]

@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface FilePreprocessingDiagnostics { readonly value: number; }
+interface Base {readonly getFileProcessingDiagnostics:unknown;}
+interface Target {getFileProcessingDiagnostics(): FilePreprocessingDiagnostics[] | undefined;}
+function probe(value:Base):void {const programDiagnostics=value as Target;const result=programDiagnostics.getFileProcessingDiagnostics();if (result !== undefined) {for (const element of result) {if (element !== undefined) {console.log(`${element.value}`);}}}}
+probe({getFileProcessingDiagnostics:():FilePreprocessingDiagnostics[] | undefined=>{return [{value:3}];}});

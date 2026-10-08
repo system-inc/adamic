@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface TypeNode { readonly value: number; }
+interface Base {readonly parenthesizeExtendsTypeOfConditionalType:unknown;}
+interface Target {parenthesizeExtendsTypeOfConditionalType(type: TypeNode): TypeNode;}
+function probe(value:Base):void {function parenthesizerRules():Target {return value as Target;}console.log(`${parenthesizerRules().parenthesizeExtendsTypeOfConditionalType({value:3}).value}`);}
+probe({parenthesizeExtendsTypeOfConditionalType:(type: TypeNode):number=>9});

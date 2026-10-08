@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface NonNullExpression { readonly value: number; }
+interface Expression { readonly value: number; }
+interface Base {readonly updateNonNullExpression:unknown;}
+interface Target {updateNonNullExpression(node: NonNullExpression, expression: Expression): NonNullExpression;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateNonNullExpression({value:3},{value:3}).value}`);}
+probe({updateNonNullExpression:(node: NonNullExpression, expression: Expression):number=>9});

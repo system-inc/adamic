@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly toString:unknown;}
+interface Target {toString(): string;}
+function probe(value:Base):void {const sourceMapGenerator=value as Target;console.log(sourceMapGenerator.toString());}
+probe({toString:():string=>{return "answer3";}});

@@ -1,0 +1,10 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface TypeAliasDeclaration { readonly value: number; }
+interface ModifierLike { readonly value: number; }
+interface Identifier { readonly value: number; }
+interface TypeParameterDeclaration { readonly value: number; }
+interface TypeNode { readonly value: number; }
+interface Base {readonly updateTypeAliasDeclaration:unknown;}
+interface Target {updateTypeAliasDeclaration(node: TypeAliasDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier, typeParameters: readonly TypeParameterDeclaration[] | undefined, type: TypeNode): TypeAliasDeclaration;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateTypeAliasDeclaration({value:3},[{value:3}],{value:3},[{value:3}],{value:3}).value}`);}
+probe({updateTypeAliasDeclaration:(node: TypeAliasDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier, typeParameters: readonly TypeParameterDeclaration[] | undefined, type: TypeNode):TypeAliasDeclaration=>{console.log(`${node.value}`);if (modifiers !== undefined) {for (const element of modifiers) {console.log(`${element.value}`);}}console.log(`${name.value}`);if (typeParameters !== undefined) {for (const element of typeParameters) {console.log(`${element.value}`);}}console.log(`${type.value}`);return {value:3};}});

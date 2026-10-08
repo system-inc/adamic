@@ -1,0 +1,9 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface IndexSignatureDeclaration { readonly value: number; }
+interface ModifierLike { readonly value: number; }
+interface ParameterDeclaration { readonly value: number; }
+interface TypeNode { readonly value: number; }
+interface Base {readonly updateIndexSignature:unknown;}
+interface Target {updateIndexSignature(node: IndexSignatureDeclaration, modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode): IndexSignatureDeclaration;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateIndexSignature({value:3},[{value:3}],[{value:3}],{value:3}).value}`);}
+probe({updateIndexSignature:(node:number,modifiers:number,parameters:number,type:number):IndexSignatureDeclaration=>{return {value:3};}});

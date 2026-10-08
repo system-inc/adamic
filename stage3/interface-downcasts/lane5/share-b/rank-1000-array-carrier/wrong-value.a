@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface TypeNode { readonly value: number; }
+interface NodeArray<T> extends ReadonlyArray<T> {}
+interface Base {readonly parenthesizeConstituentTypesOfIntersectionType:unknown;}
+interface Target {parenthesizeConstituentTypesOfIntersectionType(constituents: readonly TypeNode[]): NodeArray<TypeNode>;}
+function probe(value:Base):void {function parenthesizerRules():Target {return value as Target;}const result=parenthesizerRules().parenthesizeConstituentTypesOfIntersectionType([{value:3}]);if (result !== undefined) {for (const element of result) {if (element !== undefined) {console.log(`${element.value}`);}}}}
+probe({parenthesizeConstituentTypesOfIntersectionType:7});

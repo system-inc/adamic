@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface TypeQueryNode { readonly value: number; }
+interface EntityName { readonly value: number; }
+interface TypeNode { readonly value: number; }
+interface Base {readonly updateTypeQueryNode:unknown;}
+interface Target {updateTypeQueryNode(node: TypeQueryNode, exprName: EntityName, typeArguments?: readonly TypeNode[]): TypeQueryNode;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateTypeQueryNode({value:3},{value:3},[{value:3}]).value}`);}
+probe({updateTypeQueryNode:(node: TypeQueryNode, exprName: EntityName, typeArguments?: readonly TypeNode[]):number=>9});

@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SourceFile { readonly value: number; }
+interface CancellationToken { readonly value: number; }
+interface Diagnostic { readonly value: number; }
+interface Base {readonly getProgramDiagnostics:unknown;}
+interface Target {getProgramDiagnostics(sourceFile: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];}
+function probe(value:Base):void {const state={program:value as Target};const result=state.program.getProgramDiagnostics({value:3},{value:3});if (result !== undefined) {for (const element of result) {if (element !== undefined) {console.log(`${element.value}`);}}}}
+probe({getProgramDiagnostics:(sourceFile: SourceFile, cancellationToken?: CancellationToken):number=>9});

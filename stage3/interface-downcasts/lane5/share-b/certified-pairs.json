@@ -998,5 +998,205 @@
     "directory": "rank-967",
     "certified": true,
     "basis": "original declaration/read; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 970,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateIndexSignature",
+    "candidateReads": 2,
+    "directory": "rank-970",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 973,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateJsxOpeningElement",
+    "candidateReads": 2,
+    "directory": "rank-973",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 979,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateNonNullExpression",
+    "candidateReads": 2,
+    "directory": "rank-979",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 982,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateReturnStatement",
+    "candidateReads": 2,
+    "directory": "rank-982",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 985,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateTypeAliasDeclaration",
+    "candidateReads": 2,
+    "directory": "rank-985",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 988,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateTypeQueryNode",
+    "candidateReads": 2,
+    "directory": "rank-988",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 997,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeCheckTypeOfConditionalType",
+    "candidateReads": 2,
+    "directory": "rank-997",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1000,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeConstituentTypesOfIntersectionType",
+    "candidateReads": 2,
+    "directory": "rank-1000-array-carrier",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1003,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeExpressionOfExportDefault",
+    "candidateReads": 2,
+    "directory": "rank-1003",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1006,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeExtendsTypeOfConditionalType",
+    "candidateReads": 2,
+    "directory": "rank-1006",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1009,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeOperandOfTypeOperator",
+    "candidateReads": 2,
+    "directory": "rank-1009",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1024,
+    "receiver_type_id": 9939,
+    "type": "Program",
+    "field": "getConfigFileParsingDiagnostics",
+    "candidateReads": 2,
+    "directory": "rank-1024",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1027,
+    "receiver_type_id": 9939,
+    "type": "Program",
+    "field": "getProgramDiagnostics",
+    "candidateReads": 2,
+    "directory": "rank-1027",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1033,
+    "receiver_type_id": 11235,
+    "type": "Program | undefined",
+    "field": "getSourceFiles",
+    "candidateReads": 2,
+    "directory": "rank-1033",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1036,
+    "receiver_type_id": 10094,
+    "type": "ProgramDiagnostics",
+    "field": "getFileProcessingDiagnostics",
+    "candidateReads": 2,
+    "directory": "rank-1036",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1045,
+    "receiver_type_id": 98884,
+    "type": "ResolutionCache",
+    "field": "invalidateResolutionsOfFailedLookupLocations",
+    "candidateReads": 2,
+    "directory": "rank-1045",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1048,
+    "receiver_type_id": 98911,
+    "type": "ResolutionCacheHost",
+    "field": "onChangedAutomaticTypeDirectiveNames",
+    "candidateReads": 2,
+    "directory": "rank-1048",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1054,
+    "receiver_type_id": 42407,
+    "type": "ResolveModuleNameResolutionHost",
+    "field": "getCanonicalFileName",
+    "candidateReads": 2,
+    "directory": "rank-1054",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1057,
+    "receiver_type_id": 84746,
+    "type": "RuntimeTypeSerializer",
+    "field": "serializeParameterTypesOfNode",
+    "candidateReads": 2,
+    "directory": "rank-1057",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1093,
+    "receiver_type_id": 12237,
+    "type": "SourceMapGenerator",
+    "field": "toString",
+    "candidateReads": 2,
+    "directory": "rank-1093",
+    "certified": true,
+    "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   }
 ]

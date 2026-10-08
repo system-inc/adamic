@@ -1,0 +1,767 @@
+[
+  {
+    "rank": 970,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateIndexSignature",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 776,
+      "column": 16
+    },
+    "read": "context.factory.updateIndexSignature",
+    "call": "context.factory.updateIndexSignature(\r\n            node,\r\n            nodesVisitor(node.modifiers, visitor, isModifierLike),\r\n            nodesVisitor(node.parameters, visitor, isParameter),\r\n            Debug.checkDefined(nodeVisitor(node.type, visitor, isTypeNode)),\r\n        )",
+    "utf16Start": 35866,
+    "utf16End": 35902,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateIndexSignature(node: IndexSignatureDeclaration, modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode): IndexSignatureDeclaration;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(node: IndexSignatureDeclaration, modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode) => IndexSignatureDeclaration",
+    "directory": "rank-970",
+    "resultType": "IndexSignatureDeclaration",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 973,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateJsxOpeningElement",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 1651,
+      "column": 16
+    },
+    "read": "context.factory.updateJsxOpeningElement",
+    "call": "context.factory.updateJsxOpeningElement(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.tagName, visitor, isJsxTagNameExpression)),\r\n            nodesVisitor(node.typeArguments, visitor, isTypeNode),\r\n            Debug.checkDefined(nodeVisitor(node.attributes, visitor, isJsxAttributes)),\r\n        )",
+    "utf16Start": 80806,
+    "utf16End": 80845,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateJsxOpeningElement(node: JsxOpeningElement, tagName: JsxTagNameExpression, typeArguments: readonly TypeNode[] | undefined, attributes: JsxAttributes): JsxOpeningElement;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(node: JsxOpeningElement, tagName: JsxTagNameExpression, typeArguments: readonly TypeNode[] | undefined, attributes: JsxAttributes) => JsxOpeningElement",
+    "directory": "rank-973",
+    "resultType": "JsxOpeningElement",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 979,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateNonNullExpression",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 1252,
+      "column": 13
+    },
+    "read": "context.factory.updateNonNullExpression",
+    "call": "context.factory.updateNonNullExpression(\r\n                node,\r\n                Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n            )",
+    "utf16Start": 60723,
+    "utf16End": 60762,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateNonNullExpression(node: NonNullExpression, expression: Expression): NonNullExpression;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(node: NonNullExpression, expression: Expression) => NonNullExpression",
+    "directory": "rank-979",
+    "resultType": "NonNullExpression",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 982,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateReturnStatement",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 1366,
+      "column": 16
+    },
+    "read": "context.factory.updateReturnStatement",
+    "call": "context.factory.updateReturnStatement(\r\n            node,\r\n            nodeVisitor(node.expression, visitor, isExpression),\r\n        )",
+    "utf16Start": 66409,
+    "utf16End": 66446,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateReturnStatement(node: ReturnStatement, expression: Expression | undefined): ReturnStatement;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(node: ReturnStatement, expression: Expression | undefined) => ReturnStatement",
+    "directory": "rank-982",
+    "resultType": "ReturnStatement",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 985,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateTypeAliasDeclaration",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 1465,
+      "column": 16
+    },
+    "read": "context.factory.updateTypeAliasDeclaration",
+    "call": "context.factory.updateTypeAliasDeclaration(\r\n            node,\r\n            nodesVisitor(node.modifiers, visitor, isModifierLike),\r\n            Debug.checkDefined(nodeVisitor(node.name, visitor, isIdentifier)),\r\n            nodesVisitor(node.typeParameters, visitor, isTypeParameterDeclaration),\r\n            Debug.checkDefined(nodeVisitor(node.type, visitor, isTypeNode)),\r\n        )",
+    "utf16Start": 71711,
+    "utf16End": 71753,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateTypeAliasDeclaration(node: TypeAliasDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier, typeParameters: readonly TypeParameterDeclaration[] | undefined, type: TypeNode): TypeAliasDeclaration;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(node: TypeAliasDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier, typeParameters: readonly TypeParameterDeclaration[] | undefined, type: TypeNode) => TypeAliasDeclaration",
+    "directory": "rank-985",
+    "resultType": "TypeAliasDeclaration",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 988,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateTypeQueryNode",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 822,
+      "column": 16
+    },
+    "read": "context.factory.updateTypeQueryNode",
+    "call": "context.factory.updateTypeQueryNode(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.exprName, visitor, isEntityName)),\r\n            nodesVisitor(node.typeArguments, visitor, isTypeNode),\r\n        )",
+    "utf16Start": 38205,
+    "utf16End": 38240,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateTypeQueryNode(node: TypeQueryNode, exprName: EntityName, typeArguments?: readonly TypeNode[]): TypeQueryNode;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(node: TypeQueryNode, exprName: EntityName, typeArguments?: readonly TypeNode[] | undefined) => TypeQueryNode",
+    "directory": "rank-988",
+    "resultType": "TypeQueryNode",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 997,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeCheckTypeOfConditionalType",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 2581,
+      "column": 26
+    },
+    "read": "parenthesizerRules().parenthesizeCheckTypeOfConditionalType",
+    "call": "parenthesizerRules().parenthesizeCheckTypeOfConditionalType(checkType)",
+    "utf16Start": 104290,
+    "utf16End": 104349,
+    "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "declaration": "parenthesizeCheckTypeOfConditionalType(type: TypeNode): TypeNode;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "ParenthesizerRules"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(type: TypeNode) => TypeNode",
+    "directory": "rank-997",
+    "resultType": "TypeNode",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 1000,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeConstituentTypesOfIntersectionType",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 2570,
+      "column": 86
+    },
+    "read": "parenthesizerRules().parenthesizeConstituentTypesOfIntersectionType",
+    "call": "createUnionOrIntersectionTypeNode(SyntaxKind.IntersectionType, types, parenthesizerRules().parenthesizeConstituentTypesOfIntersectionType)",
+    "utf16Start": 103680,
+    "utf16End": 103747,
+    "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "declaration": "parenthesizeConstituentTypesOfIntersectionType(constituents: readonly TypeNode[]): NodeArray<TypeNode>;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "ParenthesizerRules"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [
+      "wrong-result"
+    ],
+    "carrierDeclarations": [
+      "interface NodeArray<T> extends ReadonlyArray<T> {}"
+    ],
+    "expected": "(constituents: readonly TypeNode[]) => NodeArray<TypeNode>",
+    "directory": "rank-1000-array-carrier",
+    "resultType": "NodeArray<TypeNode>",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 1003,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeExpressionOfExportDefault",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 4926,
+      "column": 15
+    },
+    "read": "parenthesizerRules().parenthesizeExpressionOfExportDefault",
+    "call": "parenthesizerRules().parenthesizeExpressionOfExportDefault(expression)",
+    "utf16Start": 212433,
+    "utf16End": 212491,
+    "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "declaration": "parenthesizeExpressionOfExportDefault(expression: Expression): Expression;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "ParenthesizerRules"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(expression: Expression) => Expression",
+    "directory": "rank-1003",
+    "resultType": "Expression",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 1006,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeExtendsTypeOfConditionalType",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 2582,
+      "column": 28
+    },
+    "read": "parenthesizerRules().parenthesizeExtendsTypeOfConditionalType",
+    "call": "parenthesizerRules().parenthesizeExtendsTypeOfConditionalType(extendsType)",
+    "utf16Start": 104390,
+    "utf16End": 104451,
+    "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "declaration": "parenthesizeExtendsTypeOfConditionalType(type: TypeNode): TypeNode;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "ParenthesizerRules"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(type: TypeNode) => TypeNode",
+    "directory": "rank-1006",
+    "resultType": "TypeNode",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 1009,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeOperandOfTypeOperator",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 2701,
+      "column": 13
+    },
+    "read": "parenthesizerRules().parenthesizeOperandOfTypeOperator",
+    "call": "parenthesizerRules().parenthesizeOperandOfTypeOperator(type)",
+    "utf16Start": 109387,
+    "utf16End": 109441,
+    "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "declaration": "parenthesizeOperandOfTypeOperator(type: TypeNode): TypeNode;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "ParenthesizerRules"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(type: TypeNode) => TypeNode",
+    "directory": "rank-1009",
+    "resultType": "TypeNode",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 1024,
+    "receiver_type_id": 9939,
+    "type": "Program",
+    "field": "getConfigFileParsingDiagnostics",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/builder.ts",
+      "line": 1221,
+      "column": 14
+    },
+    "read": "state.program.getConfigFileParsingDiagnostics",
+    "call": "state.program.getConfigFileParsingDiagnostics()",
+    "utf16Start": 53571,
+    "utf16End": 53616,
+    "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+    "declaration": "getConfigFileParsingDiagnostics(): readonly Diagnostic[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "Program"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [
+      "wrong-result"
+    ],
+    "carrierDeclarations": [],
+    "expected": "() => readonly Diagnostic[]",
+    "directory": "rank-1024",
+    "resultType": "readonly Diagnostic[]",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result"
+    ]
+  },
+  {
+    "rank": 1027,
+    "receiver_type_id": 9939,
+    "type": "Program",
+    "field": "getProgramDiagnostics",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/builder.ts",
+      "line": 1044,
+      "column": 9
+    },
+    "read": "state.program.getProgramDiagnostics",
+    "call": "state.program.getProgramDiagnostics(sourceFile)",
+    "utf16Start": 45048,
+    "utf16End": 45083,
+    "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+    "declaration": "getProgramDiagnostics(sourceFile: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "Program"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [
+      "wrong-result"
+    ],
+    "carrierDeclarations": [],
+    "expected": "(sourceFile: SourceFile, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]",
+    "directory": "rank-1027",
+    "resultType": "readonly Diagnostic[]",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 1033,
+    "receiver_type_id": 11235,
+    "type": "Program | undefined",
+    "field": "getSourceFiles",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 791,
+      "column": 13
+    },
+    "read": "newProgram?.getSourceFiles",
+    "call": "newProgram?.getSourceFiles()",
+    "utf16Start": 34769,
+    "utf16End": 34795,
+    "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "declaration": "getSourceFiles(): readonly SourceFile[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "Program"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [
+      "wrong-result"
+    ],
+    "carrierDeclarations": [],
+    "expected": "() => readonly SourceFile[]",
+    "directory": "rank-1033",
+    "resultType": "readonly SourceFile[]",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result"
+    ]
+  },
+  {
+    "rank": 1036,
+    "receiver_type_id": 10094,
+    "type": "ProgramDiagnostics",
+    "field": "getFileProcessingDiagnostics",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 1905,
+      "column": 45
+    },
+    "read": "programDiagnostics.getFileProcessingDiagnostics",
+    "call": "programDiagnostics.getFileProcessingDiagnostics()",
+    "utf16Start": 90807,
+    "utf16End": 90854,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "getFileProcessingDiagnostics(): FilePreprocessingDiagnostics[] | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/programDiagnostics.ts",
+    "declarationSha256": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5",
+    "inheritancePath": [
+      "ProgramDiagnostics"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [
+      "wrong-result"
+    ],
+    "carrierDeclarations": [],
+    "expected": "() => FilePreprocessingDiagnostics[] | undefined",
+    "directory": "rank-1036",
+    "resultType": "FilePreprocessingDiagnostics[] | undefined",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result"
+    ]
+  },
+  {
+    "rank": 1045,
+    "receiver_type_id": 98884,
+    "type": "ResolutionCache",
+    "field": "invalidateResolutionsOfFailedLookupLocations",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 864,
+      "column": 20
+    },
+    "read": "resolutionCache.invalidateResolutionsOfFailedLookupLocations",
+    "call": "resolutionCache.invalidateResolutionsOfFailedLookupLocations()",
+    "utf16Start": 42944,
+    "utf16End": 43004,
+    "fileSha256": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+    "declaration": "invalidateResolutionsOfFailedLookupLocations(): boolean;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/resolutionCache.ts",
+    "declarationSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "inheritancePath": [
+      "ResolutionCache"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "() => boolean",
+    "directory": "rank-1045",
+    "resultType": "boolean",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result"
+    ]
+  },
+  {
+    "rank": 1048,
+    "receiver_type_id": 98911,
+    "type": "ResolutionCacheHost",
+    "field": "onChangedAutomaticTypeDirectiveNames",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1499,
+      "column": 13
+    },
+    "read": "resolutionHost.onChangedAutomaticTypeDirectiveNames",
+    "call": "resolutionHost.onChangedAutomaticTypeDirectiveNames()",
+    "utf16Start": 70529,
+    "utf16End": 70580,
+    "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "declaration": "onChangedAutomaticTypeDirectiveNames(): void;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/resolutionCache.ts",
+    "declarationSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "inheritancePath": [
+      "ResolutionCacheHost"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "() => void",
+    "directory": "rank-1048",
+    "resultType": "void",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity"
+    ]
+  },
+  {
+    "rank": 1054,
+    "receiver_type_id": 42407,
+    "type": "ResolveModuleNameResolutionHost",
+    "field": "getCanonicalFileName",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 6505,
+      "column": 12
+    },
+    "read": "host.getCanonicalFileName",
+    "call": "host.getCanonicalFileName(getNormalizedAbsolutePath(path, host.getCurrentDirectory()))",
+    "utf16Start": 252934,
+    "utf16End": 252959,
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "declaration": "getCanonicalFileName(p: string): string;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/utilities.ts",
+    "declarationSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "inheritancePath": [
+      "ResolveModuleNameResolutionHost"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(p: string) => string",
+    "directory": "rank-1054",
+    "resultType": "string",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 1057,
+    "receiver_type_id": 84746,
+    "type": "RuntimeTypeSerializer",
+    "field": "serializeParameterTypesOfNode",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 1131,
+      "column": 100
+    },
+    "read": "typeSerializer.serializeParameterTypesOfNode",
+    "call": "typeSerializer.serializeParameterTypesOfNode({ currentLexicalScope, currentNameScope: container }, node, container)",
+    "utf16Start": 45475,
+    "utf16End": 45519,
+    "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+    "declaration": "serializeParameterTypesOfNode(serializerContext: RuntimeTypeSerializerContext, node: Node, container: ClassLikeDeclaration): ArrayLiteralExpression;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/transformers/typeSerializer.ts",
+    "declarationSha256": "8219081416c67c9ea7f1f8da6125775652eb7d065e8897fd430f50d83dbac5d6",
+    "inheritancePath": [
+      "RuntimeTypeSerializer"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "(serializerContext: RuntimeTypeSerializerContext, node: Node, container: ClassLikeDeclaration) => ArrayLiteralExpression",
+    "directory": "rank-1057",
+    "resultType": "ArrayLiteralExpression",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 1093,
+    "receiver_type_id": 12237,
+    "type": "SourceMapGenerator",
+    "field": "toString",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/emitter.ts",
+      "line": 1042,
+      "column": 35
+    },
+    "read": "sourceMapGenerator.toString",
+    "call": "sourceMapGenerator.toString()",
+    "utf16Start": 39535,
+    "utf16End": 39562,
+    "fileSha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63",
+    "declaration": "toString(): string;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "SourceMapGenerator"
+    ],
+    "carrierEnums": [],
+    "nodeErrors": [],
+    "carrierDeclarations": [],
+    "expected": "() => string",
+    "directory": "rank-1093",
+    "resultType": "string",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result"
+    ]
+  }
+]

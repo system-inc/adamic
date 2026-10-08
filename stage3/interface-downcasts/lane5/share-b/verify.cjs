@@ -52,6 +52,8 @@ for (const family of families) {
   if (process.env.ADAMIC_CALLABLE_SHARE_B_ENUM_MUTANT === '529' && family.rank === 529 && variant === 'good') fixtureText = fixtureText.replace('Field = "f"', 'Field = "x"');
   if (process.env.ADAMIC_CALLABLE_SHARE_B_ALIAS_MUTANT === '658' && family.rank === 658 && variant === 'good') fixtureText = fixtureText.replace('type ResolutionMode = ModuleKind.ESNext |', 'type ResolutionMode = ModuleKind.CommonJS |');
   if (process.env.ADAMIC_CALLABLE_SHARE_B_DECLARATION_MUTANT === '799' && family.rank === 799 && variant === 'good') fixtureText = fixtureText.replace('reportErrors: boolean', 'reportErrors: number');
+  if (process.env.ADAMIC_CALLABLE_SHARE_B_DECLARATION_MUTANT === '979' && family.rank === 979 && variant === 'good') fixtureText = fixtureText.replace('expression: Expression','expression: number');
+  if (process.env.ADAMIC_CALLABLE_SHARE_B_ARRAY_MUTANT === '1000' && family.rank === 1000 && variant === 'good') fixtureText = fixtureText.replace('interface NodeArray<T> extends ReadonlyArray<T> {}','interface NodeArray<T> {readonly value:number;}');
   const source = ts.createSourceFile(file,fixtureText,ts.ScriptTarget.Latest,true);
   let declaration, read;
   function visit(node) {
@@ -90,7 +92,7 @@ for (const member of blocked) {
  if (normalized(declarations.join('\n')) !== normalized(member.declaration) || !read) throw Error(files[member.rank] + ': original blocker declaration/read changed');
 }
 
-const probes = ['batch-02-probes.json','batch-03-debug-probes.json','batch-03-signature-probes.json','batch-03-map-probes.json','batch-03-array-probes.json','batch-03-diagnostic-probes.json','batch-04-tracing-probes.json','batch-04-map-probes.json','batch-04-fs-probes.json','batch-05-map-probes.json','batch-05-array-probes.json','batch-05-signature-probes.json','batch-05-cast-probes.json','batch-05-diagnostic-probes.json','batch-06-map-probes.json','batch-06-array-probes.json','batch-06-signature-probes.json'].flatMap(f=>JSON.parse(fs.readFileSync(path.join(__dirname,f))));
+const probes = ['batch-02-probes.json','batch-03-debug-probes.json','batch-03-signature-probes.json','batch-03-map-probes.json','batch-03-array-probes.json','batch-03-diagnostic-probes.json','batch-04-tracing-probes.json','batch-04-map-probes.json','batch-04-fs-probes.json','batch-05-map-probes.json','batch-05-array-probes.json','batch-05-signature-probes.json','batch-05-cast-probes.json','batch-05-diagnostic-probes.json','batch-06-map-probes.json','batch-06-array-probes.json','batch-06-signature-probes.json','batch-07-signature-probes.json','batch-07-diagnostic-probes.json'].flatMap(f=>JSON.parse(fs.readFileSync(path.join(__dirname,f))));
 const optional = JSON.parse(fs.readFileSync(path.join(__dirname,'batch-02-original.json'))).members.find(m=>m.rank===205);
 for (const member of [...probes,{...optional,filename:'rank-205/good.a'}]) {
  const source = ts.createSourceFile(member.filename,fs.readFileSync(path.join(__dirname,member.filename),'utf8'),ts.ScriptTarget.Latest,true);

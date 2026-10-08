@@ -1,0 +1,39 @@
+[
+  {
+    "rank": 994,
+    "receiver_type_id": 12286,
+    "type": "PackageJsonInfoCache",
+    "field": "getInternalMap",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1209,
+      "column": 73
+    },
+    "read": "moduleResolutionCache.getPackageJsonInfoCache().getInternalMap",
+    "call": "moduleResolutionCache.getPackageJsonInfoCache().getInternalMap()",
+    "utf16Start": 56520,
+    "utf16End": 56582,
+    "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "declaration": "getInternalMap(): Map<Path, PackageJsonInfoCacheEntry> | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/moduleNameResolver.ts",
+    "declarationSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+    "inheritancePath": [
+      "PackageJsonInfoCache"
+    ],
+    "filename": "rank-994/contract-probe.a",
+    "output": "",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  }
+]

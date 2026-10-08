@@ -1,0 +1,9 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface RuntimeTypeSerializerContext { readonly value: number; }
+interface Node { readonly value: number; }
+interface ClassLikeDeclaration { readonly value: number; }
+interface ArrayLiteralExpression { readonly value: number; }
+interface Base {readonly serializeParameterTypesOfNode:unknown;}
+interface Target {serializeParameterTypesOfNode(serializerContext: RuntimeTypeSerializerContext, node: Node, container: ClassLikeDeclaration): ArrayLiteralExpression;}
+function probe(value:Base):void {const typeSerializer=value as Target;console.log(`${typeSerializer.serializeParameterTypesOfNode({value:3},{value:3},{value:3}).value}`);}
+probe({serializeParameterTypesOfNode:(serializerContext:number,node:number,container:number):ArrayLiteralExpression=>{return {value:3};}});

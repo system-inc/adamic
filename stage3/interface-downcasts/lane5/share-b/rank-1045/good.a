@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly invalidateResolutionsOfFailedLookupLocations:unknown;}
+interface Target {invalidateResolutionsOfFailedLookupLocations(): boolean;}
+function probe(value:Base):void {const resolutionCache=value as Target;console.log(`${resolutionCache.invalidateResolutionsOfFailedLookupLocations()}`);}
+probe({invalidateResolutionsOfFailedLookupLocations:():boolean=>{return true;}});

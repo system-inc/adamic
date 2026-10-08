@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly onChangedAutomaticTypeDirectiveNames:unknown;}
+interface Target {onChangedAutomaticTypeDirectiveNames(): void;}
+function probe(value:Base):void {const resolutionHost=value as Target;resolutionHost.onChangedAutomaticTypeDirectiveNames();}
+probe({onChangedAutomaticTypeDirectiveNames:():void=>{}});
