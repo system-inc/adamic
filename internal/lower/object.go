@@ -120,6 +120,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 	}
+	literal.ArrayWriteContract = l.viewArrayObjectSourceContract(node, literal)
 	return literal, nil
 }
 
@@ -278,6 +279,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	if !spreads {
 		literal.Spread = nil
 	}
+	literal.ElementContract = l.viewArrayLiteralSourceContract(node)
 	return literal, nil
 }
 

@@ -15,6 +15,7 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	array->capacity = capacity;
 	array->references = references;
 	array->element_kind = 0;
+	array->element_contract = 0;
 	array->elements = NULL;
 	array->properties = NULL;
 	array->sparse = NULL;
@@ -123,6 +124,7 @@ adamic_array *adamic_array_slice(const adamic_array *array, double start, double
 	size_t from = (size_t)start, to = end > start ? (size_t)end : from;
 	adamic_array *sliced = adamic_array_new(to - from, array->references);
 	sliced->element_kind = array->element_kind;
+	sliced->element_contract = array->element_contract;
 	for (size_t index = from; index < to; index++) {
 		adamic_value value = array->elements[index];
 		if (array->references) {

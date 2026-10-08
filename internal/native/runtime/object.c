@@ -11,6 +11,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->array_write_contract = 0;
 	object->real_type = "record";
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
@@ -22,6 +23,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
 	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
 	adamic_object *object = adamic_object_new(shape);
+	if (source->class == NULL) object->array_write_contract = source->array_write_contract;
 	for (size_t position = 0; position < shape->count; position++) {
 		size_t index = adamic_public_index(shape, position);
 		adamic_slot_cache cache = {NULL, 0};

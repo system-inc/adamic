@@ -54,6 +54,7 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // assignments clear readiness; calls invalidate slots that a captured writer can clear.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	prepareViewArrayReferenceWrites(program)
 	objectWrites := false
 	inspect := func(value any) bool {
 		if write, ok := value.(ir.SetProperty); ok && write.WriteContract != 0 && write.Value.Type() == ir.Object {

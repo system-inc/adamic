@@ -11,7 +11,7 @@ func TestCheckedViewArraySearch(t *testing.T) {
 		{"native-array-search-sparse", "1:3:false:true\n", ""},
 		{"native-array-search-evaluation", "1:2:9\n", ""},
 		{"native-array-search-boolean", "1:true\n", ""},
-		{"native-array-reference-write", "", "element read failed: <array write> expected object, found uncertified source element contract"},
+		{"native-array-reference-write", "", "element write failed: <array write> expected { value: number; secret: number; }, found { value: number; }"},
 		{"native-array-search-bad", "", "element read failed: items(raw).values[element] expected number, found string"},
 		{"native-array-search-literal", "", "field read failed: items(raw).values[element] expected \"ok\", found string bad"},
 	} {

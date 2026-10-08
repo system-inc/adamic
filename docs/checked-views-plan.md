@@ -1047,3 +1047,44 @@ Fixtures live under stage3/interface-downcasts/lane2/node-array-*.a; their oracl
 is TestCheckedViewNodeArrayRecords. This checkpoint covers scalar own-field
 reads/writes and lazy object element reads. It does not certify reference element
 writes, arbitrary array shape mutation, all consumers, or whole-tsc compilation.
+
+### Lane 2 reference element writes
+
+Lane 2 adds the following named shared hooks for the flat required scalar-record
+subset. Callable declarations remain Lane 5's territory.
+
+- `viewArrayLiteralSourceContract` and `viewArrayObjectSourceContract` in
+  `internal/lower/view_array_writes.go` are called from array/object literal
+  production. They retain original allocation declarations, excluding nominal,
+  optional, nested and callable records. Contextual scalar slot declarations are
+  retained without trusting contextual readonly views as allocation evidence.
+- `markViewArrayScalarSlotWrite` is called from `setProperty` and
+  `updateProperty`; `prepareViewArrayReferenceWrites` runs first in readiness.
+  Together they preserve scalar RHS contracts and activate original-slot guards
+  for certified records, including alias writes discovered before array origins.
+- IR metadata: `ArrayLiteral.ElementContract`,
+  `ObjectLiteral.ArrayWriteContract`, `SetProperty.ArraySlotWriteContract`.
+  `FlatArrayRecordContract` and `ArrayRecordWritePairs` in a new IR file use the
+  shared `ScalarWriteContracts` structural and mutable-field invariant rule.
+- Native/JavaScript `viewArraySourceCertificate` is dispatched from their existing
+  array-view value hooks. Native `viewArrayReferenceWrite` and JavaScript
+  `adamicArrayReferenceWrite` are used by checked element replacement and push.
+  The existing emitters pass the already-evaluated incoming value to the named
+  mutation hook; verification precedes retaining and changing the array.
+- New native runtime files `view_array_writes.c/.h` provide certificate setters
+  and the compatibility guard. `adamic_array.element_contract` and
+  `adamic_object.array_write_contract` are unsigned IDs, separate from physical
+  `element_kind`. Constructors (including region objects) initialize zero.
+  Dense/checked sparse slice preserves the array ID; plain record copying
+  preserves its object ID. Source literal hooks establish certificates; zero
+  means unsupported production and refuses writes. No destructor ownership
+  change is introduced. JavaScript mirrors the IDs with WeakMaps.
+- Generated scalar-record verification checks incoming fields for presence,
+  readiness, scalar kind and finite literal constraints at the write. Array
+  field reads still do not scan elements. Unsupported original/incoming record
+  contracts remain named exit-70 refusals.
+
+Fixtures are `lane2/reference-array-*.a`, held by
+`TestCheckedViewArrayReferenceWrites`. This is a flat-record write foundation,
+not certification of complete tsc Type/Symbol/Diagnostic shapes, class elements,
+optional/nested record writes, array/map/function elements or every mutator.
