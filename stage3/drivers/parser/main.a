@@ -1,3 +1,4 @@
+// a-check: type error TS2307
 // Run from the adapted tree root. run.sh stages this driver there.
 import { panic, programArguments, readTextFile } from 'adamic';
 import { createSourceFile, forEachChild } from './src/compiler/parser.ts';
