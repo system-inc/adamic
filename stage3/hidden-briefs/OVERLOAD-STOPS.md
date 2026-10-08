@@ -91,3 +91,36 @@ retain compiler pin, source hashes, spans, raising functions and exact text.
 All seven intervals remain fully hidden, totaling 58,158 bytes. The original full
 compiler result bodies are still unproved; the accepted fixtures are the cases
 whose admitted-argument return proof succeeds. No hidden-byte reveal is claimed.
+
+## After field storage and constrained parameters
+
+Compiler `dacbdb8cb2ce9033552aa5246a187b666b5cc395` reuses hidden-06's
+constraint storage through the existing parameter typeOf path. Matching storage
+is now required when reading a field of a union of overload result objects.
+The full result.kind and result.value diagnostics remain admission refusals,
+not property-read observations. Hidden-05 needs checked views and stays refused.
+
+| Region | Hidden before | Hidden after | Revealed bytes | Next stop | Owner / raising function |
+|---|---:|---:|---:|---|---|
+| 01 large | 13,625 | 13,625 | 0 | declarations.ts:1387:5 excluded body; TS2345 at declarations.ts:1678:110 beyond interval | Checker, #k881crd; isSignatureApplicable |
+| 01 small | 6,899 | 6,899 | 0 | Same excluded body; TS2345 at declarations.ts:1678:110 | Checker, #k881crd; isSignatureApplicable |
+| 05 large | 6,078 | 6,078 | 0 | es2018.ts:828:9 calls visitNode; visitorPublic.ts:123:5 parameter node refusal | Lowering, censusOverload |
+| 05 small | 5,748 | 5,748 | 0 | es2015.ts:3193:9; same visitNode parameter node refusal | Lowering, censusOverload |
+| 06 | 11,417 | 3,369 | 8,048 | esDecorators.ts:1250:13 calls visitNodes; visitorPublic.ts:196:5 parameter visitor refusal | Lowering, censusOverload |
+| 13 | 7,289 | 7,289 | 0 | es2017.ts:736:5 Block result refusal at result.kind; implementation also checker-excluded | Lowering, censusOverload |
+| 14 | 7,102 | 7,102 | 0 | evaluate body entry; utilities.ts:11320:5 EvaluatorResult result refusal at result.value | Lowering, censusOverload |
+
+The six unchanged exact diagnostics above still match the fresh census. The new
+hidden-06 first boundary is [61665,61755), with this exact dependency diagnostic:
+
+```text
+visitorPublic.ts:196:5: Adamic 0.1 refuses overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance
+```
+
+[Comparison](../../docs/overload-results/groups/fields/regions.json),
+[exact stop records](../../docs/overload-results/groups/fields/next-stops.json),
+[raw census](../../docs/overload-results/groups/fields/after.jsonl.gz) and
+[proof and validation report](../../docs/overload-results/groups/fields/REPORT.md).
+All 82 adapted hashes remain pinned to 388096e6; total assigned hidden bytes
+fall from 58,158 to 50,110. This is an intersection measurement on a
+checker-rejected project, not a whole-compiler emission claim.

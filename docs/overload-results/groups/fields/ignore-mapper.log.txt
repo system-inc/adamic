@@ -1,0 +1,34 @@
+=== RUN   TestHiddenTNodeConstraintRepresentation
+=== RUN   TestHiddenTNodeConstraintRepresentation/number
+=== RUN   TestHiddenTNodeConstraintRepresentation/string
+    hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 3, true
+=== RUN   TestHiddenTNodeConstraintRepresentation/boolean
+    hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 2, true
+=== RUN   TestHiddenTNodeConstraintRepresentation/object
+    hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 10, true
+=== RUN   TestHiddenTNodeConstraintRepresentation/object_union
+    hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 10, true
+=== RUN   TestHiddenTNodeConstraintRepresentation/structural_length
+    hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 0, false
+=== RUN   TestHiddenTNodeConstraintRepresentation/unconstrained
+    hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 0, false
+=== RUN   TestHiddenTNodeConstraintRepresentation/unknown
+    hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 0, false
+=== RUN   TestHiddenTNodeConstraintRepresentation/any
+    hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 0, false
+=== RUN   TestHiddenTNodeConstraintRepresentation/array_layout
+    hidden_boundary_generic_tnode_test.go:67: lost concrete checker mapping: 0, false
+--- FAIL: TestHiddenTNodeConstraintRepresentation (0.29s)
+    --- PASS: TestHiddenTNodeConstraintRepresentation/number (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/string (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/boolean (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/object (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/object_union (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/structural_length (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/unconstrained (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/unknown (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/any (0.03s)
+    --- FAIL: TestHiddenTNodeConstraintRepresentation/array_layout (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.299s
+FAIL
