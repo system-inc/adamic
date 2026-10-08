@@ -1,0 +1,4 @@
+interface Item {name: string}
+const r: Record<string, Item> = {value: {name: 'gone'}};
+function drop(): void {delete r['value'];}
+if(r['value'] !== undefined) {drop(); console.log(r['value'].name);}

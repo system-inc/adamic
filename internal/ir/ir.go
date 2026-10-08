@@ -133,6 +133,8 @@ const (
 	Uint8Array
 	Int32Array
 	Float64Array
+	// Record is a dictionary of own string entries, distinct from fixed object slots.
+	Record
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -165,7 +167,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray()
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
