@@ -31,7 +31,7 @@ the strip choice fails the switch scope fixture on source output. This is an
 observed source-transformation bug, not an Adamic semantic exception.
 
 Commands ran with /workspace/adamic-tools/env.sh sourced; all test output went
-to files. No whole-package test or full gate ran.
+to files. The final touched-package tests below supersede the initial focused-only run; no full gate ran.
 
 ```sh
 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestSwitchCaseSourceReductions|TestNativeAgreesWithNode/internal/oracle/testdata/(switch_case_|enums\.a|parameter_properties\.a)' -count=1 -v -timeout 10m
@@ -117,3 +117,46 @@ designed refusal on the latest compiler base. No claim of a reproduced before
 signature or full checker compilation is made. Raw replay logs are
 /tmp/notyet-case-replay-{19130,19144}-{before,after}.log. The original eight unique
 CSV sites are counted as the optional numeric-case lesson, not eight compiled units.
+
+
+## Undefined constant case
+
+semver.ts:380:13 is literal undefined, not a dynamic expression. Its exact
+before replay reproduced the named stop. switchStatement now fits the constant
+to the scrutinee representation: null reference for optional strings, absent
+pair for optional numbers and booleans. Dynamic expressions remain NotYet.
+The standalone Node reduction tests grouped labels, default placement, empty
+strings, zero, false and NaN. Source, JavaScript, release native, sanitized
+native and leak checks pass in 0.400s.
+
+undefined-string replaces the absent string constant with "="; undefined-pair
+replaces numeric absence with present zero. Both fail Node stdout comparisons.
+The first numeric mutant attempt used a nonexistent IR type and failed to build;
+that was rejected as evidence, corrected to IsMaybe/Present, and rerun to an
+actual oracle comparison failure. All mutants were restored.
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestSwitchCaseUndefinedSource|TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_undefined' -count=1 -v -timeout 10m
+python3 internal/oracle/testdata/run-switch-case-mutants.py undefined-string undefined-pair
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m -args -update-counts
+go run ./stage3/census/latent/replay -project /tmp/notyet-case-adapted/src/tsc/tsc.ts -where /tmp/notyet-case-adapted/src/compiler/semver.ts:380:13 -kind NotYet -reason "a case that isn't a constant"
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle -count=1 -timeout 30m
+```
+
+Counts refresh passes in 25.393s and adds exactly one fixture row. Raw CSV has
+one observation and one unique site for this reason: total coverage across the
+three requested reasons is 63 + 8 + 1 = 72 unique reason-sites. None was skipped
+for territory; no designed refusal was relaxed and no runtime C file changed.
+Files outside switchStatement in the overall implementation: internal/ir/ir.go,
+internal/lower/locals.go, internal/lower/switch_declarations.go,
+internal/native/emit_locals.go, internal/javascript/javascript.go, oracle/node.mjs,
+the three independent oracle registration/source test files, ten .a fixtures,
+the mutant runner, counts.md and this report/coverage.json. Other workers' lower
+functions were not edited; remote notyet ownership logs were checked.
+Logs: /tmp/notyet-case-undefined-{before,after,mutants,pair-mutant,counts}.log,
+/tmp/notyet-case-replay-semver-{before,after}.log, /tmp/notyet-case-packages.log.
+
+After replay: the parseComparator switch lowers; no NotYet remains in its source
+body (lines 336-400). The requested signature therefore exits 1 as disappeared.
+Earlier helper findings remain, including NotYet assigning to an
+ObjectLiteralExpression at semver.ts:60:14 and reading major at 130:28.

@@ -33,5 +33,11 @@
       "src/compiler/program.ts": 1,
       "src/compiler/watch.ts": 1
     }
-  }
+  },
+  "undefined_case": {
+    "reason": "a case that isn't a constant",
+    "observations": 1,
+    "unique_sites": 1
+  },
+  "total_unique_sites": 72
 }
