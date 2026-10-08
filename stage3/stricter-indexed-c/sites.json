@@ -8,10 +8,11 @@
     "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
     "evidence": "Adapted source: enabledSyntaxKindFeatures[kind] |= SyntaxKindFeatureFlags.Substitution;\nCensus-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",
     "receiver": "array with holes",
-    "typed": "const enabledSyntaxKindFeatures = new Array<number>(2);\nconst kind = 0;\nconst value: number = enabledSyntaxKindFeatures[kind];\nconsole.log(`${value}`);\n",
+    "typed": "const enabledSyntaxKindFeatures = new Array<number>(2);\nINPUT\nconst kind = 0;\nconst value: number = enabledSyntaxKindFeatures[kind];\nconsole.log(`${value}`);\n",
     "read": "enabledSyntaxKindFeatures[kind]",
-    "blocked": "stage 0 can't lower new an Identifier yet",
-    "want": "present\n"
+    "present": "enabledSyntaxKindFeatures[0] = 7;",
+    "absent": "",
+    "want": "7\n"
   },
   {
     "id": "D156",
@@ -22,10 +23,11 @@
     "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
     "evidence": "Adapted source: enabledSyntaxKindFeatures[kind] |= SyntaxKindFeatureFlags.EmitNotifications;\nCensus-input stock option ablation removes this exact row: noUncheckedIndexedAccess.",
     "receiver": "array with holes",
-    "typed": "const enabledSyntaxKindFeatures = new Array<number>(2);\nconst kind = 0;\nconst value: number = enabledSyntaxKindFeatures[kind];\nconsole.log(`${value}`);\n",
+    "typed": "const enabledSyntaxKindFeatures = new Array<number>(2);\nINPUT\nconst kind = 0;\nconst value: number = enabledSyntaxKindFeatures[kind];\nconsole.log(`${value}`);\n",
     "read": "enabledSyntaxKindFeatures[kind]",
-    "blocked": "stage 0 can't lower new an Identifier yet",
-    "want": "present\n"
+    "present": "enabledSyntaxKindFeatures[0] = 7;",
+    "absent": "",
+    "want": "7\n"
   },
   {
     "id": "D157",

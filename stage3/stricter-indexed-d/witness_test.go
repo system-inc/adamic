@@ -112,13 +112,7 @@ func TestLedgerWitnesses(t *testing.T) {
 						t.Fatal(err)
 					}
 					program, err := lower.Lower(context.Background(), checked)
-					if name == "hole" {
-						if err == nil || !strings.Contains(err.Error(), "stage 0 can't lower new an Identifier yet") {
-							t.Fatalf("expected hole representation refusal: %v", err)
-						}
-						t.Logf("HOLE BLOCKED %s %s: %v; Node %q", s.ID, s.Receiver, err, node.stdout)
-						return
-					}
+
 					if s.Blocked {
 						refusal := s.Refusal
 						if refusal == "" {
