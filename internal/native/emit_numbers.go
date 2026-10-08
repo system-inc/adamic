@@ -15,6 +15,9 @@ var cMath = map[string]string{
 // numberFormat emits toExponential and toPrecision (runtime/dtoa.c) and toString with a radix
 // (runtime/radix.c), the receiver before the argument, as JavaScript reads them.
 func (e *emitter) numberFormat(format ir.NumberFormat) string {
+	if ir.NumberFormatMayThrow(format) {
+		return e.libraryNumberFormat(format.Method, format.Value, format.Argument)
+	}
 	value := e.value(format.Value)
 	if format.Method == "toString" {
 		if format.Argument == nil {

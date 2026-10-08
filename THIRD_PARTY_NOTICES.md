@@ -68,6 +68,9 @@ IN THE SOFTWARE.
     notice is below);
   - Math integer and float conversions (`runtime/library_math_number.c`, after src/builtins/math.tq
     and src/numbers/conversions-inl.h, V8 13.6.233.17);
+  - Number formatting validation and catchable range errors (`runtime/library_number_format.c`,
+    declarations in `runtime/library_number_format.h`, after src/builtins/builtins-number.cc
+    and src/builtins/number.tq, V8 13.6.233.17);
   - Math.hypot (`runtime/hypot.c`, after src/builtins/math.tq);
   - exponential, precision and shortest digits (`runtime/dtoa.c`, after src/base/numbers and
     src/numbers/conversions.cc);
