@@ -30,5 +30,23 @@ for (const name of ['Identifier','Symbol','PrivateIdentifier','TransientSymbol',
  const symbol = exportsOfModule.find(s => s.name === name);
  fields[name] = checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(f => f.name).sort();
 }
-fs.writeFileSync(path.join(out,'brand-manifest.json'),JSON.stringify({upstream_commit:pin.commit,declarations:emitted.declarations,fields,pairs},null,2)+'\n');
+const checkerSource = ts.createSourceFile('checker.ts',fs.readFileSync(path.join(root,'src/compiler/checker.ts'),'utf8'),ts.ScriptTarget.Latest,true);
+let namesDeclaration = "import type { __String } from './compiler/types';\n";
+for (const name of ['JsxNames','ReactNames']) {
+ const namespace = checkerSource.statements.find(n => ts.isModuleDeclaration(n) && n.name.text === name);
+ if (!namespace || !ts.isModuleBlock(namespace.body)) throw Error('original namespace missing');
+ const members = [];
+ for (const statement of namespace.body.statements) {
+  if (!ts.isVariableStatement(statement) || !(statement.declarationList.flags & ts.NodeFlags.Const)) throw Error('unexpected namespace member');
+  for (const member of statement.declarationList.declarations) {
+   if (!ts.isIdentifier(member.name) || !ts.isAsExpression(member.initializer) || member.initializer.type.getText(checkerSource) !== '__String') throw Error('namespace member type drift');
+   members.push(member.name.text);
+  }
+ }
+ fields['typeof '+name] = [...members].sort();
+ namesDeclaration += 'export declare namespace '+name+' {\n'+members.map(m=>' export const '+m+': __String;').join('\n')+'\n}\n';
+}
+fs.writeFileSync(path.join(out,'brand-names.d.ts'),namesDeclaration);
+const names_sha256 = hash(path.join(out,'brand-names.d.ts'));
+fs.writeFileSync(path.join(out,'brand-manifest.json'),JSON.stringify({upstream_commit:pin.commit,declarations:emitted.declarations,fields,pairs,names_sha256,namespace_source_sha256:hash(path.join(root,'src/compiler/checker.ts'))},null,2)+'\n');
 console.log('Verified complete original Identifier and Symbol field sets');

@@ -308,6 +308,21 @@
       "propertyName",
       "resolvedProperties",
       "siblings"
+    ],
+    "typeof JsxNames": [
+      "Element",
+      "ElementAttributesPropertyNameContainer",
+      "ElementChildrenAttributeNameContainer",
+      "ElementClass",
+      "ElementType",
+      "IntrinsicAttributes",
+      "IntrinsicClassAttributes",
+      "IntrinsicElements",
+      "JSX",
+      "LibraryManagedAttributes"
+    ],
+    "typeof ReactNames": [
+      "Fragment"
     ]
   },
   "pairs": [
@@ -851,5 +866,7 @@
         "column": 65
       }
     }
-  ]
+  ],
+  "names_sha256": "4e3c5d92c4c0dc1ae9c1562bbec69a1180594c28c4a13b3bbc78aff1ff26cbf8",
+  "namespace_source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
 }

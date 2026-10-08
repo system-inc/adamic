@@ -46,3 +46,18 @@ bypass mutants run exit 0 instead of the refusal, caught in both backends.
 Full original fields are checked against the expanded upstream manifest.
 Combined delivered coverage is eleven pairs / 505 candidate reads. The original
 __String table remains six / 496 certified and twenty-four / 47 pending.
+
+Fourth group: eleven original namespace field pairs / twenty-three reads certified,
+bringing the thirty-pair table to seventeen / 519 certified, thirteen / 24 pending.
+Including the optional-branded group, twenty-two pairs / 528 reads are certified.
+Uncached oracle passed in 66.045s, sixty-six cases. Eleven bypass mutants are
+caught in both C and JavaScript. No namespace or static receiver is trusted in
+the fixtures: a viewed carrier holds the namespace-shaped value and passes it
+into a helper whose static type is the complete original typeof namespace.
+Private JsxNames and ReactNames are omitted by ordinary exported declarations.
+The adapter derives declaration-only namespaces from pristine checker.ts AST,
+preserving every original export const and its exact __String cast annotation.
+It rejects any changed member form, retains all ten JsxNames fields and React's
+Fragment, imports the full upstream __String declaration, and hashes both source
+and generated declarations. It does not compile tsc namespace implementations
+or weaken Adamic's namespace syntax refusal. Runtime values come from fixtures.

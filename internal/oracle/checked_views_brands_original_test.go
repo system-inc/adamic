@@ -27,6 +27,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 		Commit       string              `json:"upstream_commit"`
 		Declarations map[string]string   `json:"declarations"`
 		Fields       map[string][]string `json:"fields"`
+		NamesHash    string              `json:"names_sha256"`
 	}
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		t.Fatal(err)
@@ -43,10 +44,19 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 			t.Fatal("declaration drift: " + file)
 		}
 	}
+	if manifest.NamesHash != "" {
+		data, err := os.ReadFile(filepath.Join(declarations, "brand-names.d.ts"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if fmt.Sprintf("%x", sha256.Sum256(data)) != manifest.NamesHash {
+			t.Fatal("namespace declaration drift")
+		}
+	}
 	for _, pair := range []struct {
 		typ, field string
 		optional   bool
-	}{{"Identifier", "escapedText", false}, {"Symbol", "escapedName", false}, {"PrivateIdentifier", "escapedText", false}, {"Identifier | PrivateIdentifier", "escapedText", false}, {"TransientSymbol", "escapedName", false}, {"MemberName", "escapedText", false}, {"UnionType", "keyPropertyName", true}, {"SourceFile", "localJsxFragmentNamespace", true}, {"SourceFile", "localJsxNamespace", true}, {"SymbolLinks", "typeOnlyExportStarName", true}, {"WideningContext", "propertyName", true}} {
+	}{{"Identifier", "escapedText", false}, {"Symbol", "escapedName", false}, {"PrivateIdentifier", "escapedText", false}, {"Identifier | PrivateIdentifier", "escapedText", false}, {"TransientSymbol", "escapedName", false}, {"MemberName", "escapedText", false}, {"UnionType", "keyPropertyName", true}, {"SourceFile", "localJsxFragmentNamespace", true}, {"SourceFile", "localJsxNamespace", true}, {"SymbolLinks", "typeOnlyExportStarName", true}, {"WideningContext", "propertyName", true}, {"typeof JsxNames", "IntrinsicElements", false}, {"typeof JsxNames", "IntrinsicAttributes", false}, {"typeof JsxNames", "Element", false}, {"typeof JsxNames", "IntrinsicClassAttributes", false}, {"typeof JsxNames", "JSX", false}, {"typeof JsxNames", "ElementAttributesPropertyNameContainer", false}, {"typeof JsxNames", "ElementChildrenAttributeNameContainer", false}, {"typeof JsxNames", "ElementClass", false}, {"typeof JsxNames", "ElementType", false}, {"typeof JsxNames", "LibraryManagedAttributes", false}, {"typeof ReactNames", "Fragment", false}} {
 		variants := []string{"good", "internal", "undefined", "wrong", "null", "missing"}
 		union := pair.typ == "Identifier | PrivateIdentifier" || pair.typ == "MemberName"
 		if union {
@@ -56,7 +66,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 			variant := strings.TrimSuffix(fixtureVariant, "-other")
 			t.Run(pair.typ+"/"+pair.field+"/"+fixtureVariant, func(t *testing.T) {
 				name := strings.ToLower(pair.typ) + "-" + fixtureVariant
-				if pair.optional {
+				if pair.optional || strings.HasPrefix(pair.typ, "typeof ") {
 					name = strings.ToLower(pair.typ) + "-" + pair.field + "-" + fixtureVariant
 				}
 				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/original/" + name + ".a")
@@ -64,6 +74,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 					t.Fatal(err)
 				}
 				bound := strings.Replace(string(input), "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(declarations, "compiler/types.d.ts"))), 1)
+				bound = strings.Replace(bound, "'original-tsc-names'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(declarations, "brand-names.d.ts"))), 1)
 				file := filepath.Join(t.TempDir(), name+".a")
 				if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
 					t.Fatal(err)

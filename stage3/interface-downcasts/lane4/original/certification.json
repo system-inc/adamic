@@ -3,10 +3,10 @@
   "measurement": "Static candidate counts; no whole-tsc or exact allocation reachability claim",
   "total_pairs": 30,
   "total_reads": 543,
-  "certified_pairs": 6,
-  "certified_reads": 496,
-  "remaining_pairs": 24,
-  "remaining_reads": 47,
+  "certified_pairs": 17,
+  "certified_reads": 519,
+  "remaining_pairs": 13,
+  "remaining_reads": 24,
   "pairs": [
     {
       "receiver_type_id": 6997,
@@ -139,7 +139,7 @@
         "line": 34017,
         "column": 54
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 70883,
@@ -196,7 +196,7 @@
         "line": 22898,
         "column": 56
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 34691,
@@ -253,7 +253,7 @@
         "line": 34285,
         "column": 27
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 75216,
@@ -272,7 +272,7 @@
         "line": 22899,
         "column": 61
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 75216,
@@ -291,7 +291,7 @@
         "line": 34094,
         "column": 113
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 77441,
@@ -310,7 +310,7 @@
         "line": 37535,
         "column": 46
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 10782,
@@ -500,7 +500,7 @@
         "line": 34162,
         "column": 57
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 75216,
@@ -519,7 +519,7 @@
         "line": 34170,
         "column": 57
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 75216,
@@ -538,7 +538,7 @@
         "line": 34279,
         "column": 33
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 75216,
@@ -557,7 +557,7 @@
         "line": 34153,
         "column": 65
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 75216,
@@ -576,7 +576,7 @@
         "line": 34148,
         "column": 65
       },
-      "state": "pending original certification"
+      "state": "certified original declarations"
     }
   ],
   "undefined_fields": {
