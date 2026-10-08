@@ -368,9 +368,16 @@ func buildUnits(source, output string, options Options) error {
 }
 
 func buildUnitsWithLibrary(source, output string, options Options, library string, extraLinkFlags []string) error {
+	source, compilerUnit, err := splitRegExpCompiler(source)
+	if err != nil {
+		return err
+	}
 	header, units, err := splitC(source)
 	if err != nil {
 		return err
+	}
+	if compilerUnit != nil {
+		units = append(units, *compilerUnit)
 	}
 	directory, err := os.MkdirTemp("", "adamic-units-")
 	if err != nil {
@@ -378,7 +385,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	defer os.RemoveAll(directory)
 	if library == "" {
-		library, err = RuntimeLibrary("", options)
+		library, err = RuntimeLibraryForSource("", source, options)
 		if err != nil {
 			return err
 		}
@@ -397,7 +404,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	common := []runtimeFile{{"units.h", []byte(header)}}
 	for _, file := range runtimeFiles {
-		if strings.HasSuffix(file.name, ".h") {
+		if strings.HasSuffix(file.name, ".h") || compilerUnit != nil && regExpCompilerFile(file.name) {
 			common = append(common, file)
 		}
 	}
