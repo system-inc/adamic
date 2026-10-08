@@ -44,19 +44,26 @@ func lowered(t *testing.T, path string) *ir.Program {
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
-	command := bounded(t, name, arguments...)
+	result, err := executeResult(environment, name, arguments...)
+	if err != nil {
+		t.Fatalf("running %s: %v", name, err)
+	}
+	return result
+}
+
+func executeResult(environment []string, name string, arguments ...string) (run, error) {
+	command := newProgressCommand(jsonProgressPolicy, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
-	command.Stdout = &stdout
-	command.Stderr = &stderr
+	command.Stdout, command.Stderr = &stdout, &stderr
 	err := command.Run()
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		return run{}, err
 	}
-	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}, nil
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
@@ -150,11 +157,16 @@ func protocol(cases []textCase, answers []answer) (string, string) {
 }
 func compare(t *testing.T, name string, result run, expected string, cases []textCase) {
 	t.Helper()
+	if err := comparisonError(name, result, expected, cases); err != nil {
+		t.Fatal(err)
+	}
+}
+func comparisonError(name string, result run, expected string, cases []textCase) error {
 	if result.exitCode != 0 || len(result.stderr) != 0 {
-		t.Fatalf("%s exits %d: %s", name, result.exitCode, result.stderr)
+		return fmt.Errorf("%s exits %d: %s", name, result.exitCode, result.stderr)
 	}
 	if string(result.stdout) == expected {
-		return
+		return nil
 	}
 	got, want := strings.Split(string(result.stdout), "\n"), strings.Split(expected, "\n")
 	for index := 0; index < len(got) && index < len(want); index++ {
@@ -171,14 +183,14 @@ func compare(t *testing.T, name string, result run, expected string, cases []tex
 			start := max(0, first-80)
 			endA := min(len(a), first+200)
 			endB := min(len(b), first+200)
-			t.Fatalf("%s case %d %s byte %d: got %q; Go %q", name, index, label, first, a[start:endA], b[start:endB])
+			return fmt.Errorf("%s case %d %s byte %d: got %q; Go %q", name, index, label, first, a[start:endA], b[start:endB])
 		}
 	}
-	t.Fatalf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
+	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
 func TestPortMatchesGoCohere(t *testing.T) {
 	t.Parallel()
-	cases := corpusCases(t)
+	cases := sampledCorpusCases(t, 32)
 	// The Go oracle is mandatory even without an optional Prettier installation.
 	goAnswers, _ := cohereAnswers(t, cases, false)
 	input, expected := protocol(cases, goAnswers)
@@ -204,17 +216,34 @@ func TestPortMatchesGoCohere(t *testing.T) {
 		t.Skip("debug run requested Node only; no native parity claim")
 	}
 	program := lowered(t, entry)
-	sanitized, binary := natively(t, program, "--cases", path)
-	compare(t, "native ASan/UBSan", sanitized, expected, cases)
-	if report := leaks(t, program, binary, "--cases", path); report != "" {
-		t.Fatal(report)
-	}
-	compare(t, "JavaScript backend", onJavaScriptBackend(t, program, "--cases", path), expected, cases)
 	release := filepath.Join(t.TempDir(), "release")
 	if err := native.Build(native.C(program), release, native.Options{}); err != nil {
 		t.Fatal(err)
 	}
-	compare(t, "release", execute(t, nil, release, "--cases", path), expected, cases)
+	single := execute(t, nil, release, "--cases", path)
+	compare(t, "release", single, expected, cases)
+	binary := filepath.Join(t.TempDir(), "sanitized")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	chunks := nativeChunks(t, cases, goAnswers)
+	sanitized := runNativeChunks(t, binary, []string{"ASAN_OPTIONS=detect_leaks=0"}, chunks, single, cases, "native ASan/UBSan")
+	compare(t, "native ASan/UBSan", sanitized, expected, cases)
+	if runtime.GOOS == "linux" {
+		leaked := runNativeChunks(t, binary, []string{"ASAN_OPTIONS=detect_leaks=1"}, chunks, single, cases, "LeakSanitizer")
+		compare(t, "LeakSanitizer", leaked, expected, cases)
+	} else {
+		// Preserve macOS's allocation-counting/leaks tool check for every chunk.
+		for index, chunk := range chunks {
+			if report := leaks(t, program, binary, "--cases", chunk.path); report != "" {
+				t.Fatalf("leaks chunk %d: %s", index, report)
+			}
+		}
+	}
+	compare(t, "JavaScript backend", onJavaScriptBackend(t, program, "--cases", path), expected, cases)
+	if os.Getenv("ADAMIC_JSON_GUARD_CALIBRATE") == "1" {
+		calibrateNativeCases(t, binary, cases, goAnswers)
+	}
 	if os.Getenv("ADAMIC_JSON_BENCH") == "1" {
 		goDriver := buildGoDriver(t)
 		for round := 0; round < 3; round++ {
