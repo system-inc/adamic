@@ -1215,7 +1215,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	if symbol != nil {
 		for _, declaration := range symbol.Declarations {
 			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
-				return nil, l.notYet(node, "an overloaded function as a value")
+				if !l.overloadCallbackServed(node, l.censusImplementation(declaration)) {
+					return nil, l.notYet(node, "an overloaded function as a value")
+				}
 			}
 		}
 	}

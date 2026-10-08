@@ -352,6 +352,9 @@ func (l *lowering) overloadDirectUses(implementation *ast.Node) error {
 				parent = parent.Parent
 			}
 			if parent.Kind != ast.KindCallExpression || ast.SkipParentheses(parent.AsCallExpression().Expression) != node {
+				if l.overloadCallbackServed(node, implementation) {
+					return false
+				}
 				switch parent.Kind {
 				case ast.KindImportSpecifier, ast.KindExportSpecifier, ast.KindImportClause:
 				default:
