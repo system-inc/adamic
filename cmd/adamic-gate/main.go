@@ -311,6 +311,20 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 	return names, nil
 }
 func children(pkg, parent string) ([]string, error) {
+	if strings.HasSuffix(pkg, "/internal/fuzz") {
+		switch parent {
+		case "TestGeneratedProgramsCheckAndLower", "TestRegexProgramsPassTheChecker":
+			return literalChildren("internal/fuzz/fuzz_test.go", parent)
+		case "TestUndefinedNumbersShapes":
+			return literalChildren("internal/fuzz/undefined_numbers_test.go", parent)
+		case "TestOverridesShapesAndLower":
+			return literalChildren("internal/fuzz/overrides_test.go", parent)
+		case "TestReduceKeepsTheSignature":
+			return literalChildren("internal/fuzz/reduce_test.go", parent)
+		case "TestFuzzerSharesRuntimeLibrary":
+			return literalChildren("internal/fuzz/runtime_test.go", parent)
+		}
+	}
 	if strings.HasSuffix(pkg, "/stage1/cohere/typeaware") && parent == "TestVolumeAgreementAndMutants" {
 		return literalChildren("stage1/cohere/typeaware/volume_test.go", parent, "changes")
 	}
