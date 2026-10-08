@@ -1,0 +1,20 @@
+function equal<T>(left: T, right: T): boolean { return left === right; }
+let visits = 0;
+function visit(index: number): number { visits++; console.log(`visit ${index}`); return index; }
+function arraysEqual<T>(left: readonly T[], right: readonly T[], compare: (left: T, right: T, index: number) => boolean = equal): boolean {
+ if (left.length !== right.length) { return false; }
+ for (let i = 0; i < left.length; i++) {
+  const a = left[i];
+  const b = right[i];
+  if (a === undefined || b === undefined || !compare(a, b, visit(i))) { return false; }
+ }
+ return true;
+}
+console.log(`${arraysEqual([3, 5], [3, 5])} ${visits}`);
+console.log(`${arraysEqual([3, 5], [3, 7])} ${visits}`);
+console.log(`${arraysEqual([3], [3, 5])} ${visits}`);
+const indexed: (left: number, right: number, index: number) => boolean = equal;
+console.log(`${indexed(9, 9, visit(7))} ${visits}`);
+function identity<T>(value: T): T { return value; }
+const project: (value: number, ignored: string) => number = identity;
+console.log(`${project(13, ['i', 'gnored'].join(''))}`);
