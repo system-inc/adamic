@@ -1,0 +1,9 @@
+namespace Debug {
+ export function checkDefined<T>(value:T|null|undefined):T {
+  if(value===undefined || value===null){throw new Error('missing');}
+  return value;
+ }
+}
+console.log(`${Debug.checkDefined<number>(3)}`);
+try{console.log(`${Debug.checkDefined<number>(null)}`);}catch(error){console.log('null rejected');}
+try{console.log(`${Debug.checkDefined<number>(undefined)}`);}catch(error){console.log('undefined rejected');}

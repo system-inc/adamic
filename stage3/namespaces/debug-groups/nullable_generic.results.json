@@ -1,0 +1,42 @@
+{
+  "group": "nullable_generic",
+  "sites": [
+    "debug.ts:255:37"
+  ],
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/stage3/namespaces/debug-groups/nullable_generic.a"
+    ],
+    "stdout": "3\nnull rejected\nundefined rejected\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "mutant": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/debug-groups/nullable_generic/mutant.a"
+    ],
+    "stdout": "3\nnull\nundefined rejected\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "build": {
+    "command": [
+      "/tmp/debug-groups-adamic",
+      "build",
+      "/workspace/adamic/stage3/namespaces/debug-groups/nullable_generic.a",
+      "-o",
+      "/tmp/debug-groups/nullable_generic/native",
+      "--sanitize"
+    ],
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/debug-groups/nullable_generic.a:2:34: stage 0 can't lower a value of type T | null | undefined yet\n",
+    "exit": 1
+  },
+  "judgment": "The machine ABI has no distinct null and undefined tags in a nullable generic parameter. Preserve NotYet. Narrow sound acceptance requires both absence tags plus a concrete T representation, retaining both runtime tests; collapsing null to undefined is unsound for other admitted observers."
+}

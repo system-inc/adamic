@@ -397,3 +397,11 @@ identity-only metadata use. Monomorphized direct calls cannot silently stand
 in for that value. `debug-groups/generic_function_value.*` records an isolated
 self-reference, Node output, changed-identity source mutant and the explicit
 production NotYet. No native acceptance is claimed for that boundary.
+
+Debug.checkDefined's T | null | undefined parameter (debug.ts:255:37) stays
+NotYet. Current representations have no general distinct null and undefined
+storage tags for that parameter. Its reduced Node fixture accepts a number
+and rejects each absence independently; dropping the null branch changes
+Node's result. Narrow sound acceptance needs those tags and a concrete T
+representation, preserving runtime narrowing and ownership. Evidence:
+`debug-groups/nullable_generic.*`; neither absence is silently erased.
