@@ -4,9 +4,12 @@ Roadmap step 11, checked views, task #1af9j57. Delivery branch: compiler/views-v
 
 ## State and boundary
 
-The required origin/compiler/views-v2 ref is absent. This document records preparation
-on codex/views-v5-dry-run, based on 54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8. No compiler admission, fixture,
-count, refusal expectation or gap has changed. No delivery branch has been pushed.
+The current protocol uses compiler/views-rehearsal, first observed at 9f16421c.
+V5 starts when its log contains a subject beginning "views-v4: ". That predecessor
+is not present at this preparation checkpoint. Waiting for a green V2 is superseded.
+Preparation stays on codex/views-v5-dry-run, originally based on
+54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8. No compiler admission, fixture,
+count, refusal expectation or gap has changed. No implementation branch has been pushed.
 The source pins are dictionaries 48d166cf, dictionary joint 9a917fc5 and
 intersections 040999bc. Conflict rulings are read from c923d1cc.
 
@@ -14,13 +17,122 @@ The inventory below selects nonmerge commits touching the dictionaries or lane7
 owned fixture tree, plus the eight joint commits after 1771221b. c41eaf85 is a
 separate lane 4 dictionary-selector handoff found in the dictionary tip's ancestry;
 it is not a joint branch's own commit. Its dictionary hunks must be reconciled with
-V2 rather than importing its unrelated primitive certification changes. This is
+the rehearsal predecessor rather than importing unrelated primitive changes. This is
 an inventory for review, not a promise to take every path in each commit.
 No integration merge is a proposed cherry-pick. Exclude 2724dabd, fresh_refused,
 graph_regions, other slices' admissions and unrelated lane 4 fixture/report updates.
 Historical logs and reports are evidence, not current-machine validation.
 
-## Conflict probes
+## Net patches and rehearsal protocol
+
+Apply one net change per lane, comparing the pinned final tree with its fork point.
+Resolve each shared file once per lane and apply its approved judgments together.
+The original individual-pick observations below remain historical evidence; they
+are not the delivery procedure.
+
+Dictionary and intersection fork at 9ecdda53. The joint fork is 1771221b, directly
+before 8861b316. Raw fork-to-tip diffs include integration merges: 11,032 paths for
+dictionaries, 11,872 for intersections and 52 for joint. Whole raw diffs would import
+other slices. The prepared candidate diffs select owned paths and named V5 hooks;
+their shared-file hunks still require reconciliation against the rehearsal tree.
+Use its existing array, union and callable implementations, never the older whole
+shared file. Keep 2724dabd, graph_regions and fresh_refused excluded.
+
+The first net-patch probes against main each exited 1, before recording a resulting
+unmerged index: existing shared-view prerequisites are absent. Logs report both
+conflicted shared hunks and missing files, including ir/views.go and
+lower/view_contracts.go. This is not a working or resolved application.
+
+Prepare three lane commits, in dictionary, intersection, joint order. Subjects begin
+"views-v5: ". Each body lists its original full SHAs and subjects. Include territory
+reservations eb3ce2d6 (dictionary) and 6ed85d48 (intersection), omitted by the earlier
+fixture-path inventory. Name c41eaf85 separately as the dictionary-selector handoff.
+Only the last lane commit carries this exact body trailer:
+
+```text
+Train-slice: views-v5
+```
+
+Immediately before push, fetch the rehearsal and place the slice commits on its
+current tip. Run go build ./... and go vet ./internal/... with output in logs.
+Push compiler/views-rehearsal fast-forward only, then push the same last commit as
+compiler/views-v5. A rejected push requires fetch, rebase, rebuild and retry; never
+force. Push once it compiles even when sweep checks remain red, naming those reds.
+There is no prerequisite that the predecessor's tests be green.
+
+After pushing, run the complete sweep on the exact slice source commit. A V5 fix
+made before any later slice appears uses "views-v5 fix: " and the same Train-slice
+trailer. A fix made after a later slice appears uses that subject prefix with no
+Train-slice trailer; report its SHA to compiler for placement. Do not mark a commit
+containing a later slice as the new V5 source. Do not rewrite pushed history.
+
+
+## Reproducible prepared net patches
+
+These path masks preserve whole lane-owned fixture trees and named shared hook
+files. Shared-file diffs still contain merged history and must be resolved by
+V5 obligation, not installed wholesale. In particular, a dictionary guard in
+shape_conformance.go does not authorize the V6 eraser, and a dictionary guard in
+cycles.go does not authorize runtime graph admission.
+
+| Lane | Fork | Tip | Selected paths | Provenance commits | Patch bytes | SHA-256 |
+| --- | --- | --- | ---: | ---: | ---: | --- |
+| dictionaries | 9ecdda53 | 48d166cf | 414 | 17 | 1590102 | `91d88b5c50c4b8943ae930598bf9ae4ade459399413b223345b8241cb250f138` |
+| intersections | 9ecdda53 | 040999bc | 259 | 23 | 1389870 | `29b313beb3fbb48a63556ec66e129579e4447ce627bd0ceaf93b527578a18161` |
+| dictionary joint | 1771221b | 9a917fc5 | 52 | 8 | 124773 | `5f954dd8bfa51daa238757b4c13704aa7cc13016adc08b7cf8bcf97a57e0a406` |
+
+The dictionary provenance includes the c41eaf85 selector handoff separately from
+its own commits. Patch files are /tmp/views-v5-<lane>-prepared-net.patch; messages
+are /tmp/views-v5-<lane>-commit-message.txt. The recipe below regenerates the
+prepared bytes from Git pins if scratch files disappear. It does not apply code.
+
+```python
+import pathlib
+import subprocess
+
+def git(*arguments):
+    return subprocess.check_output(["git", *arguments])
+
+original_main = "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8"
+lanes = [
+    ("dictionaries", "9ecdda53", "48d166cf",
+     "stage3/interface-downcasts/dictionaries", "eb3ce2d6"),
+    ("intersections", "9ecdda53", "040999bc",
+     "stage3/interface-downcasts/lane7", "6ed85d48"),
+    ("dictionary-joint", "1771221b", "9a917fc5", None, None),
+]
+for lane, fork, tip, tree, reservation in lanes:
+    arguments = ["log", "--reverse", "--no-merges", "--format=%H"]
+    if tree is None:
+        arguments += ["--first-parent", fork + ".." + tip]
+    else:
+        arguments += [original_main + ".." + tip, "--", tree]
+    commits = git(*arguments).decode().splitlines()
+    if reservation:
+        commits.insert(0, git("rev-parse", reservation).decode().strip())
+    paths = set()
+    for commit in commits:
+        paths.update(git("diff-tree", "--no-commit-id", "--name-only",
+                         "-r", commit).decode().splitlines())
+    if lane == "dictionaries":
+        handoff = git("diff-tree", "--no-commit-id", "--name-only",
+                      "-r", "c41eaf85").decode().splitlines()
+        paths.update(path for path in handoff
+                     if path.startswith("internal/") or "/dictionary-" in path
+                     or path.endswith("/measure-dictionary-candidates.cjs"))
+    paths.discard("docs/checked-views-plan.md")
+    paths = sorted(path for path in paths
+                   if "fresh_refused" not in path and "graph_regions" not in path)
+    patch = git("diff", "--binary", fork, tip, "--", *paths)
+    pathlib.Path("/tmp/views-v5-" + lane + "-prepared-net.patch").write_bytes(patch)
+```
+
+Preparation-only go build ./... and go vet ./internal/... both exited 0 on
+the unchanged main-based compiler. Logs are /tmp/views-v5-preparation-build.log
+and /tmp/views-v5-preparation-vet.log. These are not V5 implementation results.
+The fetched rehearsal log still has no views-v4 subject at this checkpoint.
+
+## Historical individual conflict probes
 
 Each inventory commit was actually attempted with git cherry-pick --no-commit in
 /tmp/views-v5-replay, starting from the identical current-main tree, then aborted
@@ -33,10 +145,10 @@ The union of unresolved paths is 465. Full per-attempt logs are
 
 These independent probes expose missing prerequisite files as modify/delete
 conflicts and Git's directory-rename guesses as rename conflicts. They are not a
-cumulative resolved replay, and the count does not predict V2's actual conflicts.
+cumulative resolved replay, and the count does not predict rehearsal conflicts.
 Resolving every missing-file conflict in favor of incoming code would recreate
-other slices' implementation without their boundary controls. Repeat the ordered
-replay on V2 when it exists; apply the ruled hunk decisions rather than either
+other slices' implementation without their boundary controls. Apply the net lane
+patches on the rehearsal after V4 appears; use the ruled hunk decisions rather than either
 whole side. An unresolved dependency stays named rather than merged from another
 worker's unlanded tip.
 
@@ -54,7 +166,7 @@ Apply dictionary descriptor/source hooks first (e9a06829, c9ad59e4), then generi
 index propagation (5029b110), container controls, optional receiver distinction,
 erased-source casts, finite keys, and enumeration. Check the ordinary record
 prerequisite from records-lowering 456c981b: the dictionary lane merged it, so its
-implementation is absent from this own-commit inventory. If V2 lacks those APIs,
+implementation is absent from this own-commit inventory. If the rehearsal lacks those APIs,
 name that dependency and separate the V5 read hooks from ordinary-record admission;
 do not import the records lane merge or claim a working dictionary slice.
 
@@ -71,7 +183,7 @@ The joint commits add readonly dictionary conversion and rich member selection.
 is consumed. Storage-dependent operations remain refused when allocation origins
 cannot certify them. c77f7326 depends on the prior primitive selector handoff and
 array/object descriptor machinery; retain demanded refusals for any family absent
-from V2. dbeb7b5c adds original CompilerOptions, OptionsBase and BuildOptions controls.
+from the predecessor. dbeb7b5c adds original CompilerOptions, OptionsBase and BuildOptions controls.
 
 Intersections use a conjunction of nonphantom runtime obligations, never union
 selection. Checker-combined fields preserve duplicate-name child intersections.
@@ -85,7 +197,7 @@ A bounded contract walk is not graph ownership admission; cycles retain the base
 refusal and no graph_regions fixture is adopted.
 
 There is no proof yet that V5 is inseparable from a different slice: the required
-base is unavailable. There are concrete conditional dependencies: record lowering
+V4 predecessor is unavailable. There are concrete conditional dependencies: record lowering
 456c981b; c77f7326's rich dictionary selection needs the existing array descriptors;
 48d166cf's result containers need the existing tuple consumers or their refusal;
 47c6c23a onward need V1's lazy field propagation and V2's union descriptors.
@@ -181,10 +293,11 @@ avoid lower.go, native/emit.go, native/native.go and oracle/oracle_test.go.
 
 ## Required real-build verification
 
-When the remote base appears, fetch it and create compiler/views-v5 from its exact
-SHA. Preserve this plan, take only reviewed V5 own commits and scoped handoffs,
-and record actual taken SHAs separately from this inventory. First collect same-
-machine base observations and then replay exactly the same commands on V5:
+Use the exact rehearsal parent before V5 as the comparison base. Preserve this
+plan, reconcile only V5 net changes and scoped handoffs, and list original lane
+SHAs in their commit messages. Build and vet before the first partial push; the
+full sweep follows that push. Collect same-machine parent observations and replay
+exactly the same commands on the slice source commit:
 
 ```sh
 export GOPROXY='https://proxy.golang.org|direct'
@@ -204,7 +317,7 @@ with only its host platform guard lifted locally on each tree; restore and verif
 the guard bytes before committing.
 
 cloud/fast-gate/run.py is absent both from current main and c923d1cc, so its exact
-aCheck implementation cannot be inspected on these trees. Read it from V2 when
+aCheck implementation cannot be inspected on these trees. Read it from the rehearsal when
 available. Audit every added/changed external-package .a: successful checker or
 first-line exact expected refusal/type-error plus an asserting test. Original-tsc
 imports require the lane's pinned declaration adapters, not copied cohere files.
@@ -221,7 +334,7 @@ checks. Existing lane-mutant reports are recipes, not this machine's proof.
 
 No new runtime check has been installed here, so no removal mutant or compiler
 package comparison is claimed. No Node language ruling is invented from a text
-conflict. Required inspections remain conditional on the actual V2 compiler.
+conflict. Required inspections remain conditional on the actual rehearsal predecessor.
 Unresolved array/tuple consumers remain refused rather than adding another slice.
 
 ## Preparation commands and outcomes
@@ -238,9 +351,10 @@ clang 0.384s, Go build 81.581s, deferred test binaries 81.749s,
 cache warm 81.752s, done 81.800s. nproc: 5; cgroup quota: 4 CPUs.
 The printed environment is /workspace/adamic-tools/env.sh.
 
-No implementation test, count refresh, stage3 run, stage1 run or mutant has been
-run for a nonexistent V2 comparison. This preparatory document adds no .a files.
-No compiler/views-v5 push is authorized as a finished green unit yet.
+No count refresh, stage3 run, stage1 run or mutant has been run for a V5 comparison.
+This preparatory document adds no .a files. Compiler/views-v5 and its rehearsal
+commits will be pushed after the authorized V4 predecessor exists and build/vet
+pass, without waiting for the full sweep to be green.
 
 ## Own-commit inventory and exact probe conflicts
 
