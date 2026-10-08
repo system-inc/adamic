@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"block", "evaluator", "fields"} {
+	for _, name := range []string{"block", "evaluator", "fields", "factory"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool

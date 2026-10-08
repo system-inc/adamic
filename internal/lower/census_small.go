@@ -208,7 +208,7 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 				}
 				return fmt.Sprintf("%d", index+1)
 			}
-			return &Refused{Where: l.program.Where(parameter), What: label + " parameter " + name(parameter) + " cannot be served by implementation parameter " + name(actual), Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
+			return &Refused{Where: l.program.Where(parameter), What: label + " parameter " + name(parameter) + " cannot be served by implementation parameter " + name(actual) + l.overloadCallbackParameterRelation(given, takes), Fix: "make the implementation accept every value admitted by this overload, without mutable widening or bivariance"}
 		}
 	}
 	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
@@ -226,7 +226,7 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		if l.overloadCheckableResult(implementation, produced, promised) || promised.Flags()&checker.TypeFlagsTypeParameter != 0 && len(overload.TypeParameters()) > 0 {
 			return l.overloadDirectUses(implementation) // Every use must resolve its checked boundary.
 		}
-		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced) + " at " + l.overloadResultPath(produced, promised, "result", map[[2]*checker.Type]bool{}), Fix: "prove every return for this overload's admitted arguments, preserving result variance"}
+		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced) + " at " + l.overloadResultPath(produced, promised, "result", map[[2]*checker.Type]bool{}) + "; " + l.overloadResultRelation(produced, promised), Fix: "prove every return for this overload's admitted arguments, preserving result variance"}
 	}
 	if l.overloadHasDeferredParameters(implementation, overload) {
 		return l.overloadDirectUses(implementation)
