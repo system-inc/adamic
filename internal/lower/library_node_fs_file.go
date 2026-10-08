@@ -123,7 +123,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			read, reading := value.(ir.Read)
 			if reading {
 				for _, argument := range call.Arguments.Nodes {
-					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !l.exactObject(argument, 0) {
+					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !l.nodeHostExactOptions(argument, node) {
 						continue
 					}
 					symbol := l.symbol(ast.SkipParentheses(argument))
