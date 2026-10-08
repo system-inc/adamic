@@ -181,3 +181,34 @@ watch oracle PASS 143.190s (native misses 7, Node misses 50, zero hits); vet PAS
 Broader NotYet table fails two expectations for primitive-union callable
 parameters now accepted by integration. Those failures are retained in
 logs/integration-refusal-table.log; no full gate claim and no pair count change.
+
+Read-only primitive array batch certifies four original pairs / nine candidate
+reads: (string | number)[] positions 0, 1 and 2 (4/3/1 reads), and
+DiagnosticArguments dynamic indexing (1 read). Stock-checker source witnesses and
+original declared element types are pinned in array-candidates.json. Both valid
+members match Node in both backends; wrong boolean and missing reads have exact
+named exit-70 pins. Eight actual-value member-admission and eight first-member
+backend mutants are caught. A native forged producer-metadata mutant prints
+the actual 42 and is caught by the named unknown-storage refusal.
+
+Storage, producer ABI and writes are unchanged. The indexed-read adapter retains
+the receiver before index evaluation, validates physical producer metadata,
+snapshots one slot, selects a complete primitive descriptor, then owns its box.
+The same adapter serves typeof. Ordinary and viewed values pass through the
+same helper. Alias updates, callback replacement/evaluation once, sparse holes,
+bounds, finite literals and null refusals have controls. Sanitized runtime
+controls release arrays before using retained string and scalar boxes.
+
+Clean pair oracle PASS 17.738s (native misses 8, Node misses 40, no hits); safety
+oracle PASS 13.940s (native misses 6, Node misses 20); metadata mutant/storage
+test PASS 1.144s. Focused native/lower/ir/JS packages PASS 91.391s / 38.965s /
+0.108s / 3.343s, vet PASS. Earlier safety harness failures are retained: console
+typing corrected, and sparse typeof controls preserve the unrelated holey
+UnionToString refusal. No full repository gate claim. Cumulative primitive
+selector mutants: 50 actual-value member backend kills, 36 first-member backend
+kills, plus one native storage-certificate kill.
+
+Corrected candidate column: 52 pairs / 651 reads certified; 9 / 35 remaining.
+Raw column: 11 / 39 remaining, including two scalar tuple false positives.
+Owned remaining: three shared rich dictionary selector components / fourteen
+reads. Dictionary null hooks are in progress and receive no credit in this batch.

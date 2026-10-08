@@ -2282,3 +2282,27 @@ both untagged-object and primitive property preparation, and scoped fallback
 with integration callable exemptions. Global unknown fallback remains intact.
 Integration callable implementation-name validation supersedes the narrower
 producer-name helper, retaining computed-name refusal and binding-pattern safety.
+
+### Lane 4 read-only primitive array indexes
+
+Named primitiveArrayIndexRead in object.go recognizes only complete primitive
+member descriptors at an indexed read. elementType, producers, writes and other
+consumers stay unchanged. Owned view_array_primitives.go files in lower/native/
+javascript plus runtime/view_array_primitives.{h,c} retain the receiver before
+index evaluation, validate physical producer metadata, snapshot one slot, select
+its declared member, and return an owned scalar box. No allocation layout or ABI
+rewrite. Native evaluate and JS array-read dispatch are minimal named hooks.
+
+PrimitiveArrayReads IR metadata enables existing producer storage certificates
+for ordinary primitive array reads too. emit_slots.go's arrayIndexSlot uses the
+same selector and owned box for typeof, so typeof cannot bypass selection.
+
+### Lane 4 dictionary primitive and nullish selection
+
+Named DictionaryReadKinds ViewNull admission and native kind mask now retain
+null separately from undefined. The dictionary slot normalizers classify the
+existing adamic_null heap sentinel, and adamic_view_dictionary_box preserves
+that sentinel for both scalar null slots and boxed records. No lookup, absence,
+enumeration, allocation layout or ownership ABI is changed. Lane 6 owns those
+operations; lane 4 certifies only the scalar/nullish component of rich original
+CompilerOptions, OptionsBase and BuildOptions element unions.

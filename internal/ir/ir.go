@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// PrimitiveArrayReads requires producer metadata even without a cast.
+	PrimitiveArrayReads bool
 	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
 	ViewOrigins     []Expression
 	MapCertificates [][2]ViewContractID

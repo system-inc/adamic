@@ -700,26 +700,26 @@
     "total_reads": 690,
     "certified_brand_subset_pairs": 34,
     "certified_brand_subset_reads": 551,
-    "remaining_pairs": 15,
-    "remaining_reads": 48,
-    "note": "Candidate counts. Two tuple pairs / four reads are scalar false positives, not certification credit. Corrected column: 61 / 686, certified 48 / 642, remaining 13 / 44. Lane 7 receivers: 2 / 3; lane 4b object alternatives: 4 / 18; shared rich dictionaries: 3 / 14; primitive arrays: 4 / 9.",
-    "certified_nonbrand_pairs": 14,
-    "certified_nonbrand_reads": 91,
-    "certified_pairs": 48,
-    "certified_reads": 642
+    "remaining_pairs": 11,
+    "remaining_reads": 39,
+    "note": "Candidate counts. Corrected column excludes two scalar tuple pairs / four reads, without certification credit. Owned remaining: three shared rich dictionary selector components / fourteen reads; lane 4b object alternatives and lane 7 intersections remain separate.",
+    "certified_nonbrand_pairs": 18,
+    "certified_nonbrand_reads": 100,
+    "certified_pairs": 52,
+    "certified_reads": 651
   },
   "owned_remaining_pairs": 0,
   "owned_remaining_reads": 0,
   "corrected_mixed_primitive_column": {
     "total_pairs": 61,
     "total_reads": 686,
-    "certified_pairs": 48,
-    "certified_reads": 642,
-    "remaining_pairs": 13,
-    "remaining_reads": 44,
+    "certified_pairs": 52,
+    "certified_reads": 651,
+    "remaining_pairs": 9,
+    "remaining_reads": 35,
     "reclassified_scalar_tuple_pairs": 2,
     "reclassified_scalar_tuple_reads": 4,
-    "owned_remaining_components_pairs": 7,
-    "owned_remaining_components_reads": 23
+    "owned_remaining_components_pairs": 3,
+    "owned_remaining_components_reads": 14
   }
 }

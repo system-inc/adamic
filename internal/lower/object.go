@@ -1824,6 +1824,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return ir.StringIndex{Value: object, Index: position}, nil
 	}
 	if object.Type() == ir.Array {
+		if read, handled, err := l.primitiveArrayIndexRead(node, object); handled {
+			return read, err
+		}
 		element, err := l.elementType(access.Expression)
 		if err != nil {
 			return nil, err
