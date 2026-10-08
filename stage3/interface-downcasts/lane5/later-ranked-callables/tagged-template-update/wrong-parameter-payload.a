@@ -1,0 +1,11 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface TemplateExpression {readonly kind:229;readonly value:number;}
+interface NoSubstitutionTemplateLiteral {readonly kind:15;readonly value:number;}
+type TemplateLiteral = | TemplateExpression | NoSubstitutionTemplateLiteral;
+interface TaggedTemplateExpression {readonly value:number;}
+interface Expression {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly updateTaggedTemplateExpression:unknown;}
+interface Target {updateTaggedTemplateExpression(node: TaggedTemplateExpression, tag: Expression, typeArguments: readonly TypeNode[] | undefined, template: TemplateLiteral): TaggedTemplateExpression;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updateTaggedTemplateExpression({value:1},{value:2},[{value:3}],{kind:15,value:4}).value}`);}
+probe({updateTaggedTemplateExpression:(node:TaggedTemplateExpression,tag:Expression,typeArguments:readonly TypeNode[]|undefined,template:{readonly kind:229;readonly value:string}|{readonly kind:15;readonly value:string})=>({value:template.value})});

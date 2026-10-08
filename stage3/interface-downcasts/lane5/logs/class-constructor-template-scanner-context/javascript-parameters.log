@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.59s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-expression-update/wrong-members (0.44s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "21\n" stderr "" want "updateClassExpression" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateClassExpression expected (node: ClassExpression, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassExpression, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/constructor-update/wrong-members (0.39s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "10\n" stderr "" want "updateConstructorDeclaration" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateConstructorDeclaration expected (node: ConstructorDeclaration, modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], body: Block | undefined) => ConstructorDeclaration, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/tagged-template-update/wrong-members (0.39s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "10\n" stderr "" want "updateTaggedTemplateExpression" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateTaggedTemplateExpression expected (node: TaggedTemplateExpression, tag: Expression, typeArguments: readonly TypeNode[] | undefined, template: TemplateLiteral) => TaggedTemplateExpression, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/scanner-jsdoc/wrong-members (0.34s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "3\n" stderr "" want "setSkipJsDocLeadingAsterisks" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: scanner.setSkipJsDocLeadingAsterisks expected (skip: boolean) => void, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.600s
+FAIL

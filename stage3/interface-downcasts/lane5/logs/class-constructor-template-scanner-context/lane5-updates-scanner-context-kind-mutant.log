@@ -1,0 +1,17 @@
+Original TemplateExpression discriminator mutation caught and restored.
+/workspace/adamic/stage3/interface-downcasts/lane5/verify-tagged-callable-carriers.cjs:56
+   if (typeof expected !== 'number' || !fixtureKind || !ts.isLiteralTypeNode(fixtureKind.type) || !ts.isNumericLiteral(fixtureKind.type.literal) || Number(fixtureKind.type.literal.text) !== expected || !fixtureKind.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.ReadonlyKeyword)) throw Error(name+': original discriminator changed '+carrier);
+                                                                                                                                                                                                                                                                                                     ^
+
+Error: good.a: original discriminator changed TemplateExpression
+    at Object.<anonymous> (/workspace/adamic/stage3/interface-downcasts/lane5/verify-tagged-callable-carriers.cjs:56:300)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.19.0
+

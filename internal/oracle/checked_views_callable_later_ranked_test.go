@@ -8,6 +8,12 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"class-expression-update", "updateClassExpression", "21\n", "1\n7\n21\n", "0", "member.value", "6\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"constructor-update", "updateConstructorDeclaration", "10\n", "1\n4\n10\n", "0", "parameter.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"tagged-template-update", "updateTaggedTemplateExpression", "10\n", "7\n7\n10\n10\n", "0", "template.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"scanner-jsdoc", "setSkipJsDocLeadingAsterisks", "3\n", "0\n3\n", "0", "", "", "", "good,optional-values,wrong-value,wrong-arity,wrong-members"},
+		{"context-emit-host", "getEmitHost", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
+		{"lexical-resume", "resumeLexicalEnvironment", "3\n", "", "1", "", "", "", "good,wrong-value,wrong-arity"},
 		{"conditional-type", "createConditionalTypeNode", "10\n", "", "0", "checkType.value", "1\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"constructor-declaration", "createConstructorDeclaration", "6\n", "0\n2\n6\n", "0", "parameter.value", "2\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"export-assignment", "createExportAssignment", "5\n", "3\n3\n4\n5\n", "0", "modifier.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

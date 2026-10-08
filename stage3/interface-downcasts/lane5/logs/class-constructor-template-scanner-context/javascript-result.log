@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.68s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-expression-update/wrong-result (0.47s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateClassExpression(classDecl,[{value:2}],{value:3},[{value:4}],[{value:5}],[{value:6}]).value is not initialized; expected number, found missing\n" want "updateClassExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateClassExpression expected (node: ClassExpression, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassExpression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/constructor-update/wrong-result (0.40s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateConstructorDeclaration({value:1},[{value:2}],[{value:3}],{value:4}).value is not initialized; expected number, found missing\n" want "updateConstructorDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateConstructorDeclaration expected (node: ConstructorDeclaration, modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], body: Block | undefined) => ConstructorDeclaration, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/tagged-template-update/wrong-result (0.40s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateTaggedTemplateExpression({value:1},{value:2},[{value:3}],{kind:15,value:4}).value is not initialized; expected number, found missing\n" want "updateTaggedTemplateExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateTaggedTemplateExpression expected (node: TaggedTemplateExpression, tag: Expression, typeArguments: readonly TypeNode[] | undefined, template: TemplateLiteral) => TaggedTemplateExpression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/context-emit-host/wrong-result (0.38s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.getEmitHost().value is not initialized; expected string, found missing\n" want "getEmitHost" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.getEmitHost expected () => EmitHost, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.689s
+FAIL

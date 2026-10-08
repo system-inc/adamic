@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.07s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-expression-update/wrong-members (0.55s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "21\n" stderr "" want "updateClassExpression" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/constructor-update/wrong-members (0.45s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "10\n" stderr "" want "updateConstructorDeclaration" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/tagged-template-update/wrong-members (0.50s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "10\n" stderr "" want "updateTaggedTemplateExpression" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/scanner-jsdoc/wrong-members (0.54s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "3\n" stderr "" want "setSkipJsDocLeadingAsterisks" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.079s
+FAIL

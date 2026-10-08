@@ -2734,6 +2734,133 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "class-constructor-template-scanner-context",
+      "pairs": 6,
+      "candidateReads": 42,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateClassExpression",
+          "declared_types": [
+            "(node: ClassExpression, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: readonly HeritageClause[] | undefined, members: readonly ClassElement[]) => ClassExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 1212,
+            "column": 16
+          },
+          "rank": 246,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateConstructorDeclaration",
+          "declared_types": [
+            "(node: ConstructorDeclaration, modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], body: Block | undefined) => ConstructorDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 719,
+            "column": 16
+          },
+          "rank": 247,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateTaggedTemplateExpression",
+          "declared_types": [
+            "(node: TaggedTemplateExpression, tag: Expression, typeArguments: readonly TypeNode[] | undefined, template: TemplateLiteral) => TaggedTemplateExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 1078,
+            "column": 16
+          },
+          "rank": 249,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 28206,
+          "type": "Scanner",
+          "field": "setSkipJsDocLeadingAsterisks",
+          "declared_types": [
+            "(skip: boolean) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 3911,
+            "column": 9
+          },
+          "rank": 251,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "getEmitHost",
+          "declared_types": [
+            "() => EmitHost"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/transformers/module/module.ts",
+            "line": 202,
+            "column": 18
+          },
+          "rank": 256,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "resumeLexicalEnvironment",
+          "declared_types": [
+            "() => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 523,
+            "column": 5
+          },
+          "rank": 257,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

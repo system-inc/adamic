@@ -1,0 +1,31 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.33s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-expression-update/wrong-arity (0.43s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "9\n" stderr "" want "updateClassExpression" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateClassExpression expected (node: ClassExpression, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassExpression, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/constructor-update/wrong-arity (0.39s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "9\n" stderr "" want "updateConstructorDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateConstructorDeclaration expected (node: ConstructorDeclaration, modifiers: readonly ModifierLike[] | undefined, parameters: readonly ParameterDeclaration[], body: Block | undefined) => ConstructorDeclaration, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/tagged-template-update/wrong-arity (0.42s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "9\n" stderr "" want "updateTaggedTemplateExpression" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateTaggedTemplateExpression expected (node: TaggedTemplateExpression, tag: Expression, typeArguments: readonly TypeNode[] | undefined, template: TemplateLiteral) => TaggedTemplateExpression, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/scanner-jsdoc/wrong-arity (0.35s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "9\n" stderr "" want "setSkipJsDocLeadingAsterisks" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: scanner.setSkipJsDocLeadingAsterisks expected (skip: boolean) => void, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/context-emit-host/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "9\n" stderr "" want "getEmitHost" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: context.getEmitHost expected () => EmitHost, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/lexical-resume/wrong-arity (0.35s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node hit
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend2 exit 0 stdout "9\n" stderr "" want "resumeLexicalEnvironment" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: context.resumeLexicalEnvironment expected () => void, found function with arity 1\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=6 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.341s
+FAIL

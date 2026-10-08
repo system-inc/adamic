@@ -1,0 +1,31 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.70s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-expression-update/wrong-arity (0.52s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "9\n" stderr "" want "updateClassExpression" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/constructor-update/wrong-arity (0.46s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "9\n" stderr "" want "updateConstructorDeclaration" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/tagged-template-update/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "9\n" stderr "" want "updateTaggedTemplateExpression" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/scanner-jsdoc/wrong-arity (0.41s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "9\n" stderr "" want "setSkipJsDocLeadingAsterisks" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/context-emit-host/wrong-arity (0.41s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "9\n" stderr "" want "getEmitHost" and "found function with arity 1"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/lexical-resume/wrong-arity (0.42s)
+        checked_views_callable_later_ranked_test.go:121: gate cache node miss
+        checked_views_callable_later_ranked_test.go:141: gate cache node miss
+        checked_views_callable_later_ranked_test.go:161: backend0 exit 0 stdout "9\n" stderr "" want "resumeLexicalEnvironment" and "found function with arity 1"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.708s
+FAIL

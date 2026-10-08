@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly setSkipJsDocLeadingAsterisks:unknown;}
+interface Target {setSkipJsDocLeadingAsterisks(skip: boolean): void;}
+function probe(value:Base):void {const scanner=value as Target;scanner.setSkipJsDocLeadingAsterisks(false);scanner.setSkipJsDocLeadingAsterisks(true);}
+probe({setSkipJsDocLeadingAsterisks:(skip:boolean):void=>{console.log(`${skip?3:0}`);}});
