@@ -10,6 +10,7 @@ import (
 	"time"
 	"unicode/utf16"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -35,10 +36,10 @@ func printerAnswers(t *testing.T, cases, mode string) string {
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	cmd := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinterCases$", "./internal/format/css")
+	cmd := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinterCases$", "./internal/format/css")
 	cmd.Dir = filepath.Join(repo, "cohere")
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := cmd.CombinedOutput()
+	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
 	if err != nil {
 		t.Fatalf("Go printer: %v\n%s", err, output)
 	}
@@ -282,10 +283,10 @@ func TestCSSPrinterThroughput(t *testing.T) {
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	cmd := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinterThroughput$", "./internal/format/css")
+	cmd := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinterThroughput$", "./internal/format/css")
 	cmd.Dir = filepath.Join(repo, "cohere")
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := cmd.CombinedOutput()
+	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
 	if err != nil {
 		t.Fatalf("Go throughput: %v %s", err, output)
 	}
