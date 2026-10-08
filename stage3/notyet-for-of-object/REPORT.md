@@ -158,3 +158,14 @@ optional return. Preserving those origins needs a separate protocol representati
 this change neither assumes an own closure nor removes existing origin checks.
 Coverage for the original 118 object roots remains **0/118**. No runtime C files
 were changed. The array metadata and structural protocol limitations are explicit.
+
+## Landing verification
+
+Implementation commit: 88207be7. Merged current origin/main
+(ef3141e9b1152ab51b51497f8ce3a2799449c8a3) in 24abd055, without conflicts.
+The same focused lower/oracle command passes after merge: lower 0.261s,
+oracle 0.712s (/tmp/for-of-landing-focus.log). The two original binder replays
+both still exit 0 and reproduce their exact original object stops, recorded in
+/tmp/for-of-after-432.log and /tmp/for-of-after-1296.log. No backend comparison
+is claimed for those stopped reductions. Counts were refreshed again after
+merge (/tmp/for-of-landing-counts.log). No full package tests or full gate ran.
