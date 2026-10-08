@@ -1,0 +1,420 @@
+{
+  "sha": "fae43130d8de7bdec8c16f824c71d6156c08f4a3",
+  "branch": "codex/fuzz-flaked-under-load",
+  "branch_source": "given",
+  "session": "01a119e5-4186-73f1-b882-e05d70a0e037",
+  "session_source": "ai.db reply naming the branch",
+  "base": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "base_name": "main",
+  "tools_sha": "19f0e3d2e5d226e43c01100a208bdeeb5aacbb1c",
+  "machine": {
+    "hostname": "Server",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "206c8891b3e22e6782b4d8eaa4bcad61ac833533",
+  "reads": [
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "internal/fuzz/confirm_test.go"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "cmd/adamic-fuzz/main.go",
+    "internal/fuzz/confirm_test.go",
+    "internal/fuzz/reduce.go",
+    "internal/fuzz/run.go"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/cmd/adamic-fuzz",
+    "github.com/system-inc/adamic/internal/fuzz",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore"
+  ],
+  "unowned_files": [],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools-3",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestFindingReproducesAlone",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestConfirmationWaitsForOtherPrograms",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestObserveConfirmsCompilerCrash",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestOneSeedOneProgram",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestGeneratedProgramsCheckAndLower",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestRegexProgramsPassTheChecker",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestOctoberFeaturesAppear",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestShrinkKeepsOnlyWhatFails",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestSharedSliceCutsShare",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestOwnershipShapes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestJudgeReadsThePanicLine",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestOverridesShapesAndLower",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestSourceTreeCutsAtItems",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestReduceKeepsTheSignature",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestExecuteCPUHelper",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestExecuteCPULimit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestFuzzerSharesRuntimeLibrary",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestUndefinedNumbersShapes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "status": "passed"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestConfirmationWaitsForOtherPrograms",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 37.411
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestFindingReproducesAlone",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 37.423
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestObserveConfirmsCompilerCrash",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 37.439
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestGeneratedProgramsCheckAndLower",
+      "expected_seconds": 18.048,
+      "slots": 1,
+      "after_seconds": 37.446
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestUndefinedNumbersShapes",
+      "expected_seconds": 12.72,
+      "slots": 1,
+      "after_seconds": 37.458
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestReduceKeepsTheSignature",
+      "expected_seconds": 11.152,
+      "slots": 1,
+      "after_seconds": 37.471
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestFuzzerSharesRuntimeLibrary",
+      "expected_seconds": 9.712,
+      "slots": 1,
+      "after_seconds": 37.854
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestExecuteCPULimit",
+      "expected_seconds": 8.904,
+      "slots": 1,
+      "after_seconds": 37.909
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestOverridesShapesAndLower",
+      "expected_seconds": 6.424,
+      "slots": 1,
+      "after_seconds": 39.095
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestRegexProgramsPassTheChecker",
+      "expected_seconds": 5.312,
+      "slots": 1,
+      "after_seconds": 45.194
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "expected_seconds": 9.74,
+      "slots": 1,
+      "after_seconds": 47.345
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestOwnershipShapes",
+      "expected_seconds": 3.664,
+      "slots": 1,
+      "after_seconds": 47.587
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestOctoberFeaturesAppear",
+      "expected_seconds": 0.536,
+      "slots": 1,
+      "after_seconds": 48.55
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestOneSeedOneProgram",
+      "expected_seconds": 0.41472,
+      "slots": 1,
+      "after_seconds": 48.872
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestSharedSliceCutsShare",
+      "expected_seconds": 0.064,
+      "slots": 1,
+      "after_seconds": 49.028
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestShrinkKeepsOnlyWhatFails",
+      "expected_seconds": 0.02,
+      "slots": 1,
+      "after_seconds": 49.054
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "expected_seconds": 0.02,
+      "slots": 1,
+      "after_seconds": 49.177
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "expected_seconds": 0.02,
+      "slots": 1,
+      "after_seconds": 49.18
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestExecuteCPUHelper",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 49.56
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestJudgeReadsThePanicLine",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 49.706
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fuzz",
+      "test": "TestSourceTreeCutsAtItems",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 49.842
+    }
+  ],
+  "undeclared_tools": [],
+  "split_tests": {
+    "github.com/system-inc/adamic/cmd/adamic-fuzz": 0,
+    "github.com/system-inc/adamic/internal/fuzz": 18,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3
+  },
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "split_tally": {
+    "packages": 3,
+    "planned": 21,
+    "passed": 21,
+    "touched": 3
+  },
+  "wall_seconds": 153.0,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.2,
+    "vet": 27.5,
+    "smoke": 44.6,
+    "build": 45.8,
+    "tests": 151.5,
+    "census": 0.3
+  },
+  "pass": 108,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "smoke": 0,
+    "build": 0,
+    "tests": 0,
+    "census": 0
+  },
+  "finished": true,
+  "planned_test_counts": {
+    "passed": 21,
+    "failed": 0,
+    "not run": 0
+  }
+}
