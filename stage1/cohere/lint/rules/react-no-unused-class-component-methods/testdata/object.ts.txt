@@ -1,0 +1,8 @@
+declare function createReactClass(a: any, b: any): any;
+createReactClass(null, {
+    getInitialState() { return {}; },
+    state: {},
+    used() {},
+    render() { const { used: alias } = this; return null; },
+    unused() {},
+});

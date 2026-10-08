@@ -1,0 +1,16 @@
+=== RUN   TestReactNoUnusedClassComponentMethodsPort
+=== PAUSE TestReactNoUnusedClassComponentMethodsPort
+=== CONT  TestReactNoUnusedClassComponentMethodsPort
+    lint_test.go:295: cohere cases: 5338 unique source/rule/options combinations
+    harness_test.go:211: react/no-unused-class-component-methods: 133 unique upstream cases
+    harness_test.go:218: checker compilation phases: load=309.267998ms lower=20.648887046s C=3.021896732s JavaScript=192.285321ms
+    harness_test.go:218: checker native build: 2m17.966153651s
+    harness_test.go:218: Go, Node, emitted JavaScript, native identical: 63098 bytes
+    lint_test.go:147: checker compilation phases: load=282.905366ms lower=13.08155217s C=1.466039681s JavaScript=79.247096ms
+    lint_test.go:155: checker native mutant build: 1m55.760718021s
+    harness_test.go:228: assignment mutant compiled, ran and disagreed on Node: case 1 line 8: port "fixed\t\\u000a         class ClassAssignPropertyInMethodTest extends React.Component {\\u000a           constructor() {\\u000a             this.foo = 3;\\u000a           }\\u000a           render() {\\u000a             return <SomeComponent />;\\u000a           }\\u000a         }\\u000a       ", Go "/tmp/adamic-gate/lint-shared-3834855880/upstream-211480794/case-4905/repository/source/NoUnusedClassComponentMethods.tsx:4:19"
+    harness_test.go:228: assignment mutant compiled, ran and disagreed on emitted JavaScript: case 1 line 8: port "fixed\t\\u000a         class ClassAssignPropertyInMethodTest extends React.Component {\\u000a           constructor() {\\u000a             this.foo = 3;\\u000a           }\\u000a           render() {\\u000a             return <SomeComponent />;\\u000a           }\\u000a         }\\u000a       ", Go "/tmp/adamic-gate/lint-shared-3834855880/upstream-211480794/case-4905/repository/source/NoUnusedClassComponentMethods.tsx:4:19"
+    harness_test.go:228: assignment mutant compiled, ran and disagreed on sanitized native: case 1 line 8: port "fixed\t\\u000a         class ClassAssignPropertyInMethodTest extends React.Component {\\u000a           constructor() {\\u000a             this.foo = 3;\\u000a           }\\u000a           render() {\\u000a             return <SomeComponent />;\\u000a           }\\u000a         }\\u000a       ", Go "/tmp/adamic-gate/lint-shared-3834855880/upstream-211480794/case-4905/repository/source/NoUnusedClassComponentMethods.tsx:4:19"
+--- PASS: TestReactNoUnusedClassComponentMethodsPort (652.57s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	653.315s

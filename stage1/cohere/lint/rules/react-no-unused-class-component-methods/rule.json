@@ -1,0 +1,11 @@
+{
+  "name": "react/no-unused-class-component-methods",
+  "kinds": ["SourceFile"],
+  "visit": "visit",
+  "parent": false,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactNoUnusedClassComponentMethods",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoUnusedClassComponentMethods"
+}

@@ -1,0 +1,8 @@
+declare const React: any;
+class Outer extends React.Component {
+    componentDidMount() {
+        class Inner extends React.Component { render() { return null; } innerUnused() {} }
+    }
+    outerUnused() {}
+    render() { return null; }
+}

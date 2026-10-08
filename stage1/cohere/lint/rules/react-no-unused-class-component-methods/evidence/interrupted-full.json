@@ -1,0 +1,19 @@
+{
+  "nproc": 5,
+  "load_before": "2.73 5.09 5.70 2/171 20033",
+  "typescript_source": "/workspace/scratch/tsc-cycles/TypeScript",
+  "profile_dir": "/workspace/scratch/react-no-unused-class-component-methods/profile.gc6C8L",
+  "profile_snapshots": "/workspace/scratch/react-no-unused-class-component-methods/profile.gc6C8L",
+  "wasi_sysroot": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+  "bench": "1",
+  "command": [
+    "go",
+    "test",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-json",
+    "-timeout=30m"
+  ],
+  "completed": false,
+  "reason": "Environment reconnect interrupted the foreground process; no package exit status was recorded."
+}

@@ -1,0 +1,118 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { isThisExpression } from '../../helpers/rules-react/is_this_expression.a';
+import { description } from './messages.a';
+
+const lifecycle: readonly string[] = [
+    'constructor', 'componentDidCatch', 'componentDidMount', 'componentDidUpdate',
+    'componentWillMount', 'componentWillReceiveProps', 'componentWillUnmount',
+    'componentWillUpdate', 'getChildContext', 'getSnapshotBeforeUpdate', 'render',
+    'shouldComponentUpdate', 'UNSAFE_componentWillMount',
+    'UNSAFE_componentWillReceiveProps', 'UNSAFE_componentWillUpdate',
+];
+const assignments: readonly string[] = [
+    'EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken',
+    'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken',
+    'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+    'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken',
+    'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken',
+    'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken',
+];
+
+// Go gathers each component independently, including accesses inside nested classes.
+class Gather {
+    readonly context: RuleContext;
+    readonly definitions: number[] = [];
+    readonly used: Map<string, boolean> = new Map<string, boolean>();
+    constructor(context: RuleContext) { this.context = context; }
+    literal(index: number): boolean {
+        return ['Identifier', 'StringLiteral', 'NumericLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.context.kind(index));
+    }
+    key(member: number): number {
+        if(!['MethodDeclaration', 'PropertyDeclaration', 'GetAccessor', 'SetAccessor', 'PropertyAssignment', 'ShorthandPropertyAssignment'].includes(this.context.kind(member))) { return -1; }
+        const name = this.context.name(member);
+        if(this.context.kind(name) === 'ComputedPropertyName') {
+            const inner = this.context.child(name, 0);
+            return this.literal(inner) && this.context.kind(inner) !== 'Identifier' ? inner : -1;
+        }
+        return this.literal(name) ? name : -1;
+    }
+    collect(index: number): void {
+        const node = this.context.node(index);
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
+            const receiver = node.children[0] ?? -1;
+            const property = this.context.property(index);
+            if(isThisExpression(this.context, receiver) && this.literal(property) && !(node.kind === 'ElementAccessExpression' && this.context.kind(property) === 'Identifier')) {
+                const parent = this.context.parent(index);
+                const isAssignment = this.context.kind(parent) === 'BinaryExpression' && this.context.child(parent, 0) === index && assignments.includes(this.context.kind(this.context.child(parent, 1)));
+                if(isAssignment) { this.definitions.push(property); }
+                else { this.used.set(this.context.node(property).text, true); }
+            }
+        }
+        if(node.kind === 'VariableDeclaration') {
+            const initializer = node.children[node.children.length - 1] ?? -1;
+            const name = node.children[0] ?? -1;
+            if(isThisExpression(this.context, initializer) && this.context.kind(name) === 'ObjectBindingPattern') {
+                for(const element of this.context.node(name).children) {
+                    if(this.context.kind(element) !== 'BindingElement') { continue; }
+                    const children = this.context.node(element).children;
+                    // A rest binding has no PropertyName, so Go uses its Name.
+                    const key = children[this.context.kind(children[0] ?? -1) === 'DotDotDotToken' ? 1 : 0] ?? -1;
+                    if(this.literal(key)) { this.used.set(this.context.node(key).text, true); }
+                }
+            }
+        }
+        for(const child of node.children) { this.collect(child); }
+    }
+    report(className: string, es6: boolean): void {
+        for(const key of this.definitions) {
+            const name = this.context.node(key).text;
+            if(this.used.has(name) || lifecycle.includes(name) || (es6 ? name === 'state' : ['getInitialState', 'getDefaultProps', 'mixins'].includes(name))) { continue; }
+            this.context.reportNode(key, 'react/no-unused-class-component-methods', className === '' ? 'unused' : 'unusedWithClass', description(name, className));
+        }
+    }
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    nodes: HelperNode[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    visit(root: number): void {
+        this.nodes = project(this.context.parser.nodes);
+        this.walk(root);
+    }
+    walk(index: number): void {
+        const node = this.context.node(index);
+        if(node.kind === 'ClassDeclaration' && reactEs6ComponentClass(this.nodes, index, (expression: number): boolean => isComponentBase(this.nodes, expression, isComponentBaseName))) {
+            const gathered = new Gather(this.context);
+            for(const member of this.context.members(index)) {
+                if(this.context.has(member, 'StaticKeyword')) { continue; }
+                const key = gathered.key(member);
+                if(key >= 0) { gathered.definitions.push(key); }
+                gathered.collect(member);
+            }
+            const name = this.context.name(index);
+            gathered.report(this.context.kind(name) === 'Identifier' ? this.context.node(name).text : '', true);
+        }
+        if(node.kind === 'ObjectLiteralExpression') {
+            const parent = this.context.parent(index);
+            const callee = this.context.kind(parent) === 'CallExpression' ? this.context.child(parent, 0) : -1;
+            // Go tests only the parent callee, so every argument position counts.
+            if(this.context.kind(callee) === 'Identifier' && this.context.node(callee).text === 'createReactClass') {
+                const gathered = new Gather(this.context);
+                for(const property of node.children) {
+                    const key = gathered.key(property);
+                    if(key >= 0) { gathered.definitions.push(key); }
+                    gathered.collect(property);
+                }
+                gathered.report('', false);
+            }
+        }
+        for(const child of node.children) { this.walk(child); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

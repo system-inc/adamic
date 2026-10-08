@@ -1,0 +1,10 @@
+declare const React: any;
+class Keys extends React.Component {
+    ['line\n"quoted"']() {}
+    [`template`]() {}
+    42() {}
+    #private() {}
+    get getter() { return 1; }
+    set setter(value: number) {}
+    render() { return null; }
+}

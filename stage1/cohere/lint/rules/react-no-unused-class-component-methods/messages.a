@@ -1,0 +1,28 @@
+import { printable } from '../../unicode.ts';
+
+// fmt's %q quotes without the comment helper's whitespace folding or truncation.
+function quoted(value: string): string {
+    let result = '"';
+    for(const character of value) {
+        const point = character.codePointAt(0) ?? 0;
+        if(point === 34) { result += '\\"'; }
+        else if(point === 92) { result += '\\\\'; }
+        else if(point === 7) { result += '\\a'; }
+        else if(point === 8) { result += '\\b'; }
+        else if(point === 9) { result += '\\t'; }
+        else if(point === 10) { result += '\\n'; }
+        else if(point === 11) { result += '\\v'; }
+        else if(point === 12) { result += '\\f'; }
+        else if(point === 13) { result += '\\r'; }
+        else if(point < 32 || point === 127) { result += `\\x${point.toString(16).padStart(2, '0')}`; }
+        else if(!printable(point)) { result += point <= 65535 ? `\\u${point.toString(16).padStart(4, '0')}` : `\\U${point.toString(16).padStart(8, '0')}`; }
+        else { result += character; }
+    }
+    return `${result}"`;
+}
+export function description(name: string, className: string): string {
+    const subject = className === '' ? `Unused method or property ${quoted(name)}` : `Unused method or property ${quoted(name)} of class ${quoted(className)}`;
+    return subject + '. Nothing inside this component reads it, so it is either dead code or a ' +
+        'call site that was renamed and left this behind. React calls the lifecycle methods ' +
+        'itself and those are exempt; anything else has to be reached from within the component.';
+}

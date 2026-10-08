@@ -1,0 +1,9 @@
+declare const React: any;
+class Example extends React.Component {
+    state = {};
+    render() { return <button onClick={this.used}>Hello</button>; }
+    used() {}
+    unused() {}
+    componentDidMount() { this.assigned += 1; }
+    static other() { this.unused(); }
+}

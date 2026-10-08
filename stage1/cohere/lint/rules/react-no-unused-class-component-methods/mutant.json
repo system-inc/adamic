@@ -1,0 +1,5 @@
+{
+  "name": "react-unused-assignments-count-as-uses",
+  "from": "if(isAssignment) { this.definitions.push(property); }",
+  "to": "if(isAssignment) { this.used.set(this.context.node(property).text, true); }"
+}
