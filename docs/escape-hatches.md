@@ -1489,3 +1489,39 @@ restriction described above. Both comparisons use the matching pinned checkout
 and `GOFLAGS=-buildvcs=false`, with no committed submodule change. The clean base
 also needed its pinned Node API dependencies installed before comparison.
 The full repository gate, census replay and scanner slice were not run.
+
+## Runtime fixtures preserved as TypeScript
+
+The delivery correction on `codex/non-null-checked-next` moves 50 existing
+programs from `.a` to `.ts`, without changing a byte. It includes the three
+definite-declaration programs, which retain their readiness checks. Only the
+deliberate non-null refusal pins remain `.a` in this fixture group. Registrations,
+predicate fixtures, custom runtime controls and flow globs use the new paths.
+The migration manifest records every old path, new path and SHA-256 hash in
+`docs/verification/non-null-fixture-migration.json`. A test guards each program's
+bytes, count row and ordinary runtime registration.
+
+The filename-normalized comparison in
+`docs/verification/non-null-fixture-restored.json` supersedes the retired-coverage
+comparison above. All 108 excluded flow cases are restored. All 819 original
+count rows survive, with eight added rows and no retired rows. Twenty-three
+measurements change because eager `.ts` assertions stop before the historical
+readiness-based reads. Every other original measurement remains identical.
+Lower, IR, the final whole flow suite, the uncached filtered Node oracle, the
+complete count table, runtime controls and the original mutants pass. The Weak
+expression diagnostic mutant runs again. The formerly refused initialization
+controls now execute and pin the eager check in both backends.
+
+Two migrated programs exposed a constant sentinel comparison rejected by clang.
+The native coalescing check now recognizes literal undefined and null as absent
+without comparing sentinel addresses. Both literal union initializer probes stop
+with the pinned non-null panic, and removing their checks changes stdout. No
+representation or fixture program was changed to address the C emission issue.
+
+The additional complete native package run retains `TestDecodeASCII/native`'s
+existing runtime linker failure. Clean `337aa466` reproduces the same missing
+`adamic_write_raw`, `adamic_share`, `adamic_stack_thread_start` and
+`adamic_heap_thread_end` symbols with unchanged runtime sources. That failure is
+left unchanged. Root disk exhaustion interrupted one count check; discarding
+only reproducible Go cache artifacts allowed its complete rerun to pass. The
+full repository gate, census replay and scanner slice were not run.

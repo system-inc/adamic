@@ -42,18 +42,13 @@ func interfaceCastCounts(t *testing.T) []string {
 		rows = append(rows, fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", path, match[1], match[2], match[3], match[4], match[5], match[6]))
 	}
 	for _, name := range []string{"default-staged", "default-wrong-type", "default-wrong-boolean", "default-literal", "default-boxed-string", "default-boxed-write", "default-destructure", "default-read-before-set"} {
-		if name == "default-staged" || name == "default-boxed-write" || name == "default-read-before-set" {
-			_, err := lowered(t, filepath.Join(repository, "stage3/interface-downcasts/"+name+".a"))
-			assertAdamicNonNullRefusal(t, err)
-			continue
-		}
-		rows = append(rows, counted(t, "stage3/interface-downcasts/"+name+".a", false, nil, false, false))
+
+		rows = append(rows, counted(t, interfaceFixturePath(name), false, nil, false, false))
 	}
 	// These rows count the source lowering and shared readiness helpers. The checked
 	// view substitution in TestNarrowedFieldUsesSharedReadiness is a separate IR probe.
 	for _, name := range []string{"identifier", "identifier-uninitialized", "number", "number-uninitialized"} {
-		_, err := lowered(t, filepath.Join(repository, "stage3/interface-downcasts/readiness-"+name+".a"))
-		assertAdamicNonNullRefusal(t, err)
+		rows = append(rows, counted(t, "stage3/interface-downcasts/readiness-"+name+".ts", false, nil, false, false))
 	}
 	return rows
 }

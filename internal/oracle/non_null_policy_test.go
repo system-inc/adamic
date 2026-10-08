@@ -9,18 +9,10 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// Historical ordinary assertions are refusal controls under the .a ruling.
-// Declaration assertions are distinct syntax and keep their readiness checks.
+// Only deliberate .a refusal pins are excluded from runnable fixtures.
 func refusedAdamicNonNullFixture(path string) bool {
 	name := filepath.Base(path)
-	if name == "09_checker_constituent_recursion.a" && strings.HasSuffix(filepath.ToSlash(path), "stage3/fixtures/nested-functions/"+name) {
-		return true
-	}
-	if filepath.Ext(path) != ".a" || !strings.HasPrefix(name, "non_null") {
-		return false
-	}
-	switch name {
-	case "non_null_definite.a", "non_null_definite_local.a", "non_null_definite_field.a":
+	if filepath.Ext(path) != ".a" || !(strings.HasPrefix(name, "non_null_refuse_") || strings.HasPrefix(name, "non_null_possible_")) {
 		return false
 	}
 	return true

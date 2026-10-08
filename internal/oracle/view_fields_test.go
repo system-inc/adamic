@@ -4,6 +4,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -116,8 +117,8 @@ func TestRequiredViewFieldOperandOnce(t *testing.T) {
 	}
 }
 
-// Historical .a storage markers now pin refusal; primitive readiness tests above
-// continue to check the shared backend field machinery.
+// Unchanged storage sources now run as checked TypeScript; their initializers
+// stop eagerly. The shared field readiness primitives remain exercised above.
 func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 	for _, probe := range []struct {
 		name, field, stdout string
@@ -129,23 +130,25 @@ func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 		{"number-uninitialized", "value", "number\n", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/readiness-"+probe.name+".a"))
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/readiness-"+probe.name+".ts"))
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lowered(t, path)
-			assertAdamicNonNullRefusal(t, err)
+			expression := "undefined!"
+			if strings.HasPrefix(probe.name, "number") {
+				expression = "null!"
+			}
+			assertMigratedNonNullCheck(t, path, expression, "", false)
 		})
 	}
 }
 
 func TestViewFieldInheritedStaticReadiness(t *testing.T) {
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_static_initialized.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_static_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lowered(t, path)
-	assertAdamicNonNullRefusal(t, err)
+	assertMigratedNonNullCheck(t, path, "undefined!", "", false)
 }
 
 // These exercise real source casts and writes, without replacing any lowered IR.
@@ -162,8 +165,11 @@ func TestDefaultTaggedSourceViews(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			if probe.name == "default-staged" || probe.name == "default-boxed-write" || probe.name == "default-read-before-set" {
-				_, err := lowered(t, filepath.Join(repository, "stage3/interface-downcasts/"+probe.name+".a"))
-				assertAdamicNonNullRefusal(t, err)
+				path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath(probe.name)))
+				if err != nil {
+					t.Fatal(err)
+				}
+				assertMigratedNonNullCheck(t, path, "undefined!", "", false)
 				return
 			}
 			program, path := interfaceFixture(t, probe.name)

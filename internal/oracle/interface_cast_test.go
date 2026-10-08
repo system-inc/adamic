@@ -12,7 +12,7 @@ import (
 
 func interfaceFixture(t *testing.T, name string) (*ir.Program, string) {
 	t.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts", name+".a"))
+	path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath(name)))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -21,6 +21,14 @@ func interfaceFixture(t *testing.T, name string) (*ir.Program, string) {
 		t.Fatal(err)
 	}
 	return program, path
+}
+
+func interfaceFixturePath(name string) string {
+	extension := ".a"
+	if name == "default-staged" || name == "default-boxed-write" || name == "default-read-before-set" || strings.HasPrefix(name, "readiness-") {
+		extension = ".ts"
+	}
+	return "stage3/interface-downcasts/" + name + extension
 }
 
 // Default tagged admission is compared to Node on successful programs.

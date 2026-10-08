@@ -2,7 +2,6 @@ package lower
 
 import (
 	"bytes"
-	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -44,7 +43,11 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 		{"overload_nominal", "called\ntrue\n", "", "", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs("testdata/predicates/" + probe.name + ".a")
+			extension := ".a"
+			if probe.name == "parser_every_result" || probe.name == "overload_every" {
+				extension = ".ts"
+			}
+			path, err := filepath.Abs("testdata/predicates/" + probe.name + extension)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -72,13 +75,10 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lowerSource(t, string(source))
-			if probe.name == "parser_every_result" || probe.name == "overload_every" {
-				var refused *Refused
-				if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
-					t.Fatalf("want .a assertion refused, got %v", err)
-				}
-				return
+			if extension == ".ts" {
+				program, err = lowerTypeScriptAssertionSource(t, string(source))
 			}
+
 			if err != nil {
 				t.Fatal(err)
 			}

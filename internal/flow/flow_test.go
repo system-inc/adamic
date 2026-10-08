@@ -28,8 +28,7 @@ func programs(t *testing.T) []string {
 		"../load/testdata/0.1/compile/*.ts",
 		"../load/testdata/0.1/compile/07_modules/main.ts",
 		"../oracle/testdata/*.a",
-		"../oracle/testdata/non_null_checked_*.ts",
-		"../oracle/testdata/non_null_refuse_*.ts",
+		"../oracle/testdata/non_null*.ts",
 		"../oracle/testdata/modules/main.a",
 		"testdata/*.a",
 	} {
@@ -59,15 +58,10 @@ func programs(t *testing.T) []string {
 	return paths
 }
 
-// Ordinary .a assertions are refusal controls; definite declarations still lower.
-// All TypeScript assertion controls remain runnable with inserted checks.
+// Only deliberate .a refusal controls are excluded. Runtime assertions use .ts.
 func refusedNonNullFixture(path string) bool {
 	name := filepath.Base(path)
-	if filepath.Ext(path) != ".a" || !strings.HasPrefix(name, "non_null") {
-		return false
-	}
-	switch name {
-	case "non_null_definite.a", "non_null_definite_local.a", "non_null_definite_field.a":
+	if filepath.Ext(path) != ".a" || !(strings.HasPrefix(name, "non_null_refuse_") || strings.HasPrefix(name, "non_null_possible_")) {
 		return false
 	}
 	return true

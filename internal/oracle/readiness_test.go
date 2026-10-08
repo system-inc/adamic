@@ -13,12 +13,16 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/non_null_" + name + ".a", true, name != "initialized" && name != "definite" && name != "static_initialized" && name != "lazy_initialized"})
+		}{nonNullRuntimeFixture(name), true, name != "definite"})
 	}
 }
 
-// Historical .a assertion fixtures now pin the refusal instead of a runtime check.
-// Checked .ts mutants live in TestCheckedNonNullTypeScript.
+func nonNullRuntimeFixture(name string) string {
+	return "internal/oracle/testdata/non_null_" + name + ".ts"
+}
+
+// The unchanged programs now run as checked TypeScript. Initializer assertions
+// stop eagerly; these pins keep their runtime checks covered.
 func TestReadinessMutants(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, fixture, stdout, stderr string }{
@@ -32,24 +36,32 @@ func TestReadinessMutants(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".a"))
+			path, err := filepath.Abs(filepath.Join(repository, nonNullRuntimeFixture(probe.fixture)))
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lowered(t, path)
-			assertAdamicNonNullRefusal(t, err)
+			expression, stdout := "undefined!", ""
+			if probe.fixture == "uninitialized_loop" {
+				expression = "null!"
+			}
+			if probe.fixture == "lazy_read" {
+				expression = "textInitial!"
+			}
+			if probe.fixture == "weak" {
+				expression, stdout = "holder.value!", "before\n"
+			}
+			assertMigratedNonNullCheck(t, path, expression, stdout, true)
 		})
 	}
 }
 
 func TestUninitializedIsNotNullishMutant(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lowered(t, path)
-	assertAdamicNonNullRefusal(t, err)
+	assertMigratedNonNullCheck(t, path, "undefined!", "", true)
 }
 
 func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.Statement {
@@ -85,23 +97,52 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 	return transform(reflect.ValueOf(statements)).Interface().([]ir.Statement)
 }
 
-// The historical Weak assertion is refused in .a under the source-mode ruling.
+// Native Weak lifetime differs from Node tracing; keep both original observations.
 func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lowered(t, path)
-	assertAdamicNonNullRefusal(t, err)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	node := run{stdout: []byte("before\nlivelive\n")}
+	for _, got := range []run{onNode(t, path), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(node, got); difference != "" {
+			t.Fatal(difference)
+		}
+	}
+	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: non-null assertion failed at " + path + ":9:17: holder.value! is null or undefined\n"), exitCode: 70}
+	actual, _ := nativelyUncached(t, program)
+	if difference := disagreement(want, actual); difference != "" {
+		t.Fatal(difference)
+	}
+	changes := 0
+	program.Main = mutateReadiness(program.Main, func(node any) any {
+		if target, ok := node.(ir.WeakTarget); ok && !target.Present {
+			target.Present = true
+			changes++
+			return target
+		}
+		return node
+	})
+	if changes == 0 {
+		t.Fatal("Weak diagnostic mutant changed nothing")
+	}
+	mutant, _ := nativelyUncached(t, program)
+	if mutant.exitCode != 70 || disagreement(want, mutant) == "" {
+		t.Fatal("freed Weak diagnostic mutant escaped pinned output")
+	}
+	t.Logf("freed Weak diagnostic mutant caught: %s", mutant.stderr)
 }
 
 func TestLazyInitializerIsNotEagerMutant(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lowered(t, path)
-	assertAdamicNonNullRefusal(t, err)
+	assertMigratedNonNullCheck(t, path, "textInitial!", "", true)
 }

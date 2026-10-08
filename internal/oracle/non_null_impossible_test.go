@@ -9,20 +9,6 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// Adamic assertions remain refused; TypeScript controls carry inserted checks.
-var impossibleAssertionFixtures = []string{
-	"initialized", "literal_statement", "literal_return", "uninitialized_default",
-}
-
-func impossibleAssertionFixture(name string) bool {
-	for _, refused := range impossibleAssertionFixtures {
-		if name == refused {
-			return true
-		}
-	}
-	return false
-}
-
 func init() {
 	for _, operand := range []string{"undefined", "null"} {
 		fixtures = append(fixtures, struct {
@@ -35,9 +21,6 @@ func init() {
 func TestImpossibleNonNullFixturesAreRefused(t *testing.T) {
 	t.Parallel()
 	paths := []string{}
-	for _, name := range impossibleAssertionFixtures {
-		paths = append(paths, "non_null_"+name+".a")
-	}
 	for _, extension := range []string{"a", "ts"} {
 		for _, operand := range []string{"undefined", "null"} {
 			paths = append(paths, "non_null_refuse_"+operand+"."+extension)
