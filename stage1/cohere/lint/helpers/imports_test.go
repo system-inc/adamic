@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -14,6 +15,16 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
+
+// Match the parent lint package's native build cap in this separate test binary.
+// Testing's parallel limit still bounds the number of active case subtests.
+var nativeBuilds = make(chan struct{}, min(runtime.NumCPU(), 4))
+
+func nativeBuild(build func() error) error {
+	nativeBuilds <- struct{}{}
+	defer func() { <-nativeBuilds }()
+	return build()
+}
 
 // Retained captures query unchanged Go helpers on every consumer input and factory control.
 func TestImportsAgreementAndMutants(t *testing.T) {
@@ -30,6 +41,7 @@ func TestImportsAgreementAndMutants(t *testing.T) {
 		{"segment", "has_path_segment.a", "byte === 92", "false"},
 	} {
 		t.Run(c.name, func(t *testing.T) {
+			t.Parallel()
 			dir, _ := filepath.Abs("imports/testdata/" + c.name)
 			scratch := t.TempDir()
 			virtual := filepath.Join(cohere, "adamic_imports_oracle.go")
@@ -115,7 +127,7 @@ func TestImportsAgreementAndMutants(t *testing.T) {
 				// Native agreement is the unmutated canary; semantic mutants run on
 				// Node and emitted JavaScript against the same complete Go output.
 				if !mutant {
-					if err = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
+					if err = nativeBuild(func() error { return native.Build(native.C(ir), binary, native.Options{Sanitize: true}) }); err != nil {
 						t.Fatal(err)
 					}
 				}
