@@ -15,8 +15,8 @@ function fresh(label: string): Pattern {
 function render(label: string, { prefix, suffix, rewrite }: Pattern = fresh(label)): string {
     return `${prefix}${rewrite(label)}${suffix}`;
 }
-const supplied = fresh("given");
-console.log(render("custom", supplied));
-console.log(render("missing"));
-console.log(render("undefined", undefined));
+const supplied = fresh(["giv", "en"].join(""));
+console.log(render(["cus", "tom"].join(""), supplied));
+console.log(render(["miss", "ing"].join("")));
+console.log(render(["unde", "fined"].join(""), undefined));
 console.log(`${defaults}`);
