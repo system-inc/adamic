@@ -2,7 +2,6 @@
 package json
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"io/fs"
@@ -10,10 +9,10 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"syscall"
 	"testing"
-	"time"
 	"unicode/utf8"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 type textCase struct {
@@ -214,10 +213,10 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 	}
 	writeJSON(t, overlayPath, map[string]any{"Replace": replacements})
 	goPath := filepath.Join(scratch, "go.json")
-	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicJSONAudit$", "./internal/format/javascript")
+	command := exec.Command("go", "test", "-v", "-count=1", "-timeout=70m", "-overlay="+overlayPath, "-run=^TestAdamicJSONAudit$", "./internal/format/javascript")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_JSON_CASES="+casesPath, "ADAMIC_JSON_ANSWERS="+goPath)
-	output, err := command.CombinedOutput()
+	output, err := childguard.CombinedOutput(command, childguard.Options{})
 	if err != nil {
 		t.Fatalf("Go cohere: %v\n%s", err, output)
 	}
@@ -240,8 +239,8 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 		return readAnswers(goPath), nil
 	}
 	prettierPath := filepath.Join(scratch, "prettier.json")
-	command = bounded(t, "node", "testdata/library.mjs", library, casesPath, prettierPath)
-	output, err = command.CombinedOutput()
+	command = exec.Command("node", "testdata/library.mjs", library, casesPath, prettierPath)
+	output, err = childguard.CombinedOutput(command, childguard.Options{})
 	if err != nil {
 		t.Fatalf("Prettier: %v\n%s", err, output)
 	}
@@ -258,17 +257,6 @@ func writeJSON(t *testing.T, path string, value any) {
 	if err := os.WriteFile(path, encoded, 0o644); err != nil {
 		t.Fatal(err)
 	}
-}
-
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 5 * time.Second
-	return command
 }
 
 // These mutate the upstream Go printer, not an Adamic port. They prove that the external comparison

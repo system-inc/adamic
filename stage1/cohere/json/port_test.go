@@ -13,6 +13,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -43,14 +44,14 @@ func lowered(t *testing.T, path string) *ir.Program {
 
 func execute(t *testing.T, environment []string, name string, arguments ...string) run {
 	t.Helper()
-	command := bounded(t, name, arguments...)
+	command := exec.Command(name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
@@ -376,9 +377,9 @@ func buildGoDriver(t *testing.T) string {
 	overlay := filepath.Join(directory, "overlay.json")
 	writeJSON(t, overlay, map[string]any{"Replace": map[string]string{filepath.Join(cohere, "command/formatter_comparison/main.go"): source}})
 	binary := filepath.Join(directory, "go-cohere")
-	command := bounded(t, "go", "build", "-overlay="+overlay, "-o", binary, "./command/formatter_comparison")
+	command := exec.Command("go", "build", "-overlay="+overlay, "-o", binary, "./command/formatter_comparison")
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
 		t.Fatalf("Go driver: %v\n%s", err, output)
 	}
 	return binary
