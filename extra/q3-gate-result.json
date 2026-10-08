@@ -1,0 +1,158 @@
+{
+  "sha": "b91dc0ebf8a7c776b20d07fbdee7fe1fdb84b88e",
+  "base": "1c704f5e5bf9bc069cc03dc9b9bcd50191ddf8b1",
+  "order_followed": true,
+  "used": [
+    "./stage1/cohere/markdownblocks",
+    "./stage1/cohere/lint",
+    "./stage1/cohere/css",
+    "./stage1/cohere/typeaware",
+    "./internal/unicodeproperties",
+    "./internal/oracle",
+    "./stage1/cohere/json",
+    "./stage1/cohere/markdowninline",
+    "./stage1/typescript/parser",
+    "./internal/native",
+    "./stage1/cohere/cssnumbers",
+    "./stage1/cohere/cssstrings",
+    "./stage1/cohere/lint/helpers/comments",
+    "./internal/flow",
+    "./bridge/tsgo",
+    "./stage1/cohere/lint/helpers",
+    "./stage1/typescript/scanner",
+    "./cmd/adamic-test262",
+    "./internal/fresh",
+    "./stage1/cohere/graphql",
+    "./internal/lower",
+    "./stage1/cohere/formatfiles",
+    "./stage1/cohere/gitignore",
+    "./stage1/cohere/lint/inventory",
+    "./stage1/cohere/selector",
+    "./stage1/cohere/values",
+    "./stage1/cohere/suppression",
+    "./internal/fuzz",
+    "./cloud",
+    "./stage3/fixtures",
+    "./stage1/cohere/mediaquery",
+    "./internal/regexp",
+    "./cmd/adamic",
+    "./cmd/adamic-meter",
+    "./internal/load",
+    "./internal/ir",
+    "./cmd/adamic-gate",
+    "./cmd/adamic-stage1-progress",
+    "./stage1/cohere/lint/registry",
+    "./bridge/tsgo/checker",
+    "./bench",
+    "./bench/regex",
+    "./bridge/tsgo/archive",
+    "./bridge/tsgo/cost",
+    "./bridge/tsgo/oracle",
+    "./bridge/tsgo/spec",
+    "./cmd/adamic-fuzz",
+    "./cmd/adamic-reduce",
+    "./cmd/lint-registry",
+    "./internal/javascript",
+    "./stage1/cohere/markdownblocks/tools/generate_classes",
+    "./stage1/cohere/markdownblocks/tools/generate_entities",
+    "./stage1/cohere/markdownblocks/tools/generate_width",
+    "./stage3/census/latent/tool",
+    "./stage3/census/tool",
+    "./stage3/drivers/parser/probe",
+    "./cloud/reports/decode-ascii",
+    "./cloud/reports/release-lto",
+    "./cmd/adamic-lint-check",
+    "./cmd/adamic-metamorphic",
+    "./cmd/adamic-refusals",
+    "./internal/boundedrun",
+    "./internal/boundedrun/testfixture",
+    "./internal/leakcheck",
+    "./internal/metamorphic",
+    "./internal/nodepin",
+    "./internal/refusalprobe",
+    "./internal/skipcensus",
+    "./internal/skipcensus/cmd",
+    "./verify/coverage/runtimelibrary"
+  ],
+  "dropped": [],
+  "added": [
+    "./cloud/reports/decode-ascii",
+    "./cloud/reports/release-lto",
+    "./cmd/adamic-lint-check",
+    "./cmd/adamic-metamorphic",
+    "./cmd/adamic-refusals",
+    "./internal/boundedrun",
+    "./internal/boundedrun/testfixture",
+    "./internal/leakcheck",
+    "./internal/metamorphic",
+    "./internal/nodepin",
+    "./internal/refusalprobe",
+    "./internal/skipcensus",
+    "./internal/skipcensus/cmd",
+    "./verify/coverage/runtimelibrary"
+  ],
+  "order_check": {
+    "exit": 0,
+    "seconds": 71.792
+  },
+  "whole": {
+    "exit": 1,
+    "seconds": 4433.04
+  },
+  "reruns": {
+    "internal/oracle": {
+      "exit": 1,
+      "seconds": 1288.933
+    },
+    "stage1/cohere/lint": {
+      "exit": 0,
+      "seconds": 3173.98710106
+    },
+    "stage1/cohere/markdownblocks": {
+      "exit": 0,
+      "seconds": 2462.743910332998
+    },
+    "stage1/cohere/typeaware": {
+      "exit": 0,
+      "seconds": 1838.082260074003
+    }
+  },
+  "stage3_exit": 1,
+  "interrupted_solo": {
+    "package": "stage1/cohere/lint",
+    "reason": "workspace transition terminated runner and publisher",
+    "log": "/workspace/q3-interrupted-solo-stage1_cohere_lint.jsonl",
+    "last_event": "2026-10-08T00:11:28.670412396Z",
+    "counts": {
+      "pass": 79,
+      "fail": 0,
+      "skip": 5
+    }
+  },
+  "setup_inputs": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/adamic-tools/gate-inputs/typescript",
+    "ADAMIC_TS_PRETTIER": "/workspace/adamic-tools/gate-inputs/css-printer",
+    "ADAMIC_JSON_PRETTIER": "/workspace/adamic-tools/gate-inputs/json-prettier",
+    "ADAMIC_GRAPHQL_PRETTIER": "/workspace/adamic-tools/gate-inputs/css-printer",
+    "ADAMIC_CSS_LIBRARY": "/workspace/adamic-tools/gate-inputs/css",
+    "ADAMIC_CSS_PRINTER_LIBRARY": "/workspace/adamic-tools/gate-inputs/css-printer",
+    "ADAMIC_ESTREE_LIBRARY": "/workspace/adamic-tools/gate-inputs/css-printer",
+    "ADAMIC_YAML_LIBRARY": "/workspace/adamic-tools/gate-inputs/css-printer",
+    "ADAMIC_GRAPHQL_LIBRARY": "/workspace/adamic-tools/gate-inputs/graphql",
+    "ADAMIC_MEDIA_QUERY_LIBRARY": "/workspace/adamic-tools/gate-inputs/media-query",
+    "ADAMIC_SELECTOR_LIBRARY": "/workspace/adamic-tools/gate-inputs/selector",
+    "ADAMIC_VALUES_LIBRARY": "/workspace/adamic-tools/gate-inputs/values"
+  },
+  "second_interrupted_solo": {
+    "package": "stage1/cohere/lint",
+    "reason": "second workspace transition terminated runner and publisher",
+    "log": "/workspace/q3-interrupted-solo-2-stage1_cohere_lint.jsonl",
+    "counts": {
+      "pass": 47,
+      "fail": 0,
+      "skip": 2
+    }
+  },
+  "whole_and_reruns_wall_seconds": 17773.690897464752,
+  "wall_time_basis": "first whole-run JSON event through completion, including workspace interruption and lint restart"
+}
