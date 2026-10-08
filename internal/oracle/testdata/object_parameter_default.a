@@ -1,0 +1,17 @@
+interface Box { readonly word: string }
+let calls = 0;
+function fallback(): Box { calls += 1; return { word: "owned:" + calls.toString() }; }
+function word({ word }: Box = fallback()): string { return word; }
+console.log(word());
+console.log(word({ word: "present" }));
+console.log(word(undefined));
+console.log(calls.toString());
+function before(first: string = "first", { word }: Box = { word: first }): string { return word; }
+function after({ word }: Box = { word: "after" }, suffix: string = word): string { return suffix; }
+console.log(before());
+console.log(before("given"));
+console.log(after());
+console.log(after({ word: "later" }));
+function nullable(word: string | null = "default"): string | null { return word; }
+console.log(nullable(null) === null ? "null" : "wrong");
+console.log(nullable() ?? "wrong");
