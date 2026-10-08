@@ -951,6 +951,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.WeakTarget:
 		return e.value(expression.Value)
 	case ir.Narrow:
+		if expression.Undefined {
+			return "((value) => value === undefined ? undefined : panic(" + quote("undefined storage conversion failed: "+expression.UndefinedWhere+" expected undefined, found present reference") + "))(" + e.value(expression.Value) + ")"
+		}
 		if expression.Tuple {
 			return fmt.Sprintf("adamicNarrow(%s, %d)", e.value(expression.Value), ir.Array)
 		}

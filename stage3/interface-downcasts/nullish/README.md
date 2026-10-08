@@ -426,3 +426,49 @@ conversion gap, not a completed branded-nullish control. Its executable gap test
 pins the refusal. Production demand remains 2,018 pairs / 9,101 reads awaiting
 whole-program lowering and shared reaching-view proof; broader callable work
 stays with lane 5.
+
+## Readonly Map storage conversions (October 8)
+
+This checkpoint closes the branded string|branded void gap above. Constructor
+and .set conversions evaluate branded void once and check that its payload is
+undefined before selecting reference storage. The effects control prints
+2, string, undefined, true, matching Node.
+
+Readonly Map certificates now admit top-level number/boolean to boxed unions,
+number|undefined and boolean|undefined to boxed unions, supported reference
+families to boxed unions, number to packed number|undefined, and boolean to
+packed boolean|undefined. Mutable Maps retain invariant storage. The Map keeps
+its original storage and identity; get, values/entries snapshots, cloning,
+forEach, direct loops and stored iterators acquire owned converted values.
+Supported reference controls include string, object, array, fixed tuple and
+already certified callable entries. This does not broaden callable conventions.
+
+Controls match Node for false, missing versus present undefined, NaN, negative
+zero, iterator exhaustion and values held across Map.clear(). A boolean iterator
+exposed a packed-byte decoder being interpreted as a pointer; the nullish reader
+now unpacks it. IR mutants corrupt the producer storage header and the branded
+void payload: unsupported storage and a present payload stop with exit 70.
+Ten independent implementation mutations are caught by behavior: numeric boxing,
+boolean boxing, numeric presence, boolean presence, numeric undefined, boolean
+undefined, reference ownership (ASan use-after-free), packed boolean field
+presence, native undefined guard and JavaScript undefined guard. Evidence and
+individual logs are in map-storage-mutants.json and map-storage-*.log.gz;
+run-map-storage-mutants.py restores every mutated source.
+
+Exact remaining fixture gaps are pinned by TestCheckedViewMapStorageGaps:
+optional object/array to nullable unions, nested array element conversions and
+key storage conversions stop at node.value with exit 70. Optional/rest tuples
+refuse at the named value read during compilation. True nominal/intersection
+witnesses, callable tuple positions, ordinary tuple writes and broader callable
+conventions remain outside this batch. Array snapshots with boxed-union or
+packed-boolean elements still encounter the existing array representation gap;
+direct Map value loops are covered. Production inventory remains 2,018 pairs /
+9,101 reads pending whole-program lowering and shared reaching-view proof.
+Fixture controls are not subtracted from that inventory.
+
+Uncached oracle selection Map|Nullish|NullableSelection passes in 128.420s
+(native sanitizer/release, JavaScript, Node and positive-fixture leak checks).
+Scoped View|Map|Contract|Callable|Tuple checks pass: IR 0.014s, lower 5.460s,
+native 41.677s, JavaScript 1.033s. Vet passes. Added gap controls pass in 1.903s
+and boolean mixed-union control in 0.516s. Previously documented broader gate
+failures remain outside this selection; no full repository gate pass is claimed.

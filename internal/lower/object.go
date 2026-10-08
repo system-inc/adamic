@@ -1486,7 +1486,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		}
 		// A number, or undefined, where number | undefined goes is made that pair.
 		entryKey = fit(entryKey, key)
-		entryValue = fit(entryValue, value)
+		entryValue = l.fitMapEntry(elements[1], entryValue, value)
 		if entryKey.Type() != key || entryValue.Type() != value {
 			return nil, l.notYet(pair, "a Map entry whose key or value is of another type than the Map's")
 		}
@@ -1541,7 +1541,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 		want = 2
 	}
 	if name == "set" && len(arguments) == 2 {
-		arguments[1] = fit(arguments[1], value)
+		arguments[1] = l.fitMapEntry(node.AsCallExpression().Arguments.Nodes[1], arguments[1], value)
 	}
 	if len(arguments) != want || arguments[0].Type() != key || (name == "set" && arguments[1].Type() != value) {
 		return nil, true, l.notYet(node, "map."+name+" with arguments of other types")

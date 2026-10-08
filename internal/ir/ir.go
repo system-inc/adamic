@@ -482,9 +482,11 @@ type (
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
 	// undefined).
 	Narrow struct {
-		Value Expression
-		Tuple bool // Native tuples are objects; JavaScript tuples retain array identity.
-		To    Type
+		Value          Expression
+		Tuple          bool // Native tuples are objects; JavaScript tuples retain array identity.
+		Undefined      bool
+		UndefinedWhere string
+		To             Type
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".

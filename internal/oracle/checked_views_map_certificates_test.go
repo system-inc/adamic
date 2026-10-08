@@ -7,7 +7,7 @@ import (
 )
 
 func TestCheckedViewMapCertificates(t *testing.T) {
-	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean", "structural", "structural-schema", "structural-covariant", "structural-payload-wrong", "structural-mutable-invariant", "object-key", "object-key-schema", "structural-schema-unused-payload", "optional-number", "array", "array-schema", "array-payload-wrong", "array-covariant", "array-mutable-invariant", "array-mutable", "array-schema-unused-payload", "array-recursive", "node-array", "node-array-own-schema", "node-array-readonly-schema", "node-array-covariant", "node-array-own-schema-unused-payload", "optional-array", "optional-array-schema", "optional-object", "entry-mixed-schema", "entry-null-schema", "entry-undefined-schema", "entry-boolean-undefined", "entry-lifecycle", "entry-live-mutation", "entry-callable-plain", "entry-callable-null", "entry-callable-undefined", "entry-callable-both", "entry-callable-result-schema", "entry-callable-parameter-schema", "entry-callable-contravariant", "entry-callable-clone", "entry-tuple", "entry-tuple-schema", "entry-tuple-covariant", "entry-tuple-mutable-invariant", "entry-tuple-length-schema", "entry-tuple-readonly-schema", "entry-tuple-nullish", "entry-brand-string", "entry-brand-number", "entry-brand-boolean", "entry-brand-array", "entry-brand-schema"}
+	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean", "structural", "structural-schema", "structural-covariant", "structural-payload-wrong", "structural-mutable-invariant", "object-key", "object-key-schema", "structural-schema-unused-payload", "optional-number", "array", "array-schema", "array-payload-wrong", "array-covariant", "array-mutable-invariant", "array-mutable", "array-schema-unused-payload", "array-recursive", "node-array", "node-array-own-schema", "node-array-readonly-schema", "node-array-covariant", "node-array-own-schema-unused-payload", "optional-array", "optional-array-schema", "optional-object", "entry-mixed-schema", "entry-null-schema", "entry-undefined-schema", "entry-boolean-undefined", "entry-lifecycle", "entry-live-mutation", "entry-callable-plain", "entry-callable-null", "entry-callable-undefined", "entry-callable-both", "entry-callable-result-schema", "entry-callable-parameter-schema", "entry-callable-contravariant", "entry-callable-clone", "entry-tuple", "entry-tuple-schema", "entry-tuple-covariant", "entry-tuple-mutable-invariant", "entry-tuple-length-schema", "entry-tuple-readonly-schema", "entry-tuple-nullish", "entry-brand-string", "entry-brand-number", "entry-brand-boolean", "entry-brand-array", "entry-brand-nullish", "entry-brand-nullish-effects", "entry-convert-owned-get", "entry-convert-owned-callback", "entry-brand-schema", "entry-convert-number-null", "entry-convert-number-undefined", "entry-convert-boolean-null", "entry-convert-boolean-undefined", "entry-convert-string-null", "entry-convert-object-null", "entry-convert-array-null", "entry-convert-tuple-null", "entry-convert-callable-null", "entry-convert-false-null", "entry-convert-false-undefined", "entry-convert-snapshot", "entry-convert-iterator", "entry-convert-maybe-number", "entry-convert-maybe-boolean", "entry-convert-nan-null", "entry-convert-nan-undefined", "entry-convert-negative-zero", "entry-convert-boolean-iterator", "entry-convert-boolean-mixed", "entry-convert-schema", "entry-convert-mutable-invariant"}
 	for _, variant := range []string{"null", "undefined", "both"} {
 		for _, mutation := range []string{"", "-wrong", "-value-schema", "-opposite"} {
 			if variant == "both" && mutation == "-opposite" {
@@ -155,15 +155,29 @@ func TestCheckedViewMapUnionEntryStorage(t *testing.T) {
 	}
 }
 
-func TestCheckedViewMapBrandNullishRepresentationGap(t *testing.T) {
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/entry-brand-nullish.a"))
-	if err != nil {
-		t.Fatal(err)
+func TestCheckedViewMapStorageGaps(t *testing.T) {
+	for _, family := range []string{"optional-object", "optional-array", "nested-array", "key", "optional-tuple", "rest-tuple"} {
+		t.Run(family, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/entry-convert-gap-"+family+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			truth := onNode(t, path)
+			if err != nil {
+				if !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "Map") {
+					t.Fatalf("gap refused away from demanded read: %v", err)
+				}
+				t.Logf("Node=%q; named compile refusal: %v", truth.stdout, err)
+				return
+			}
+			native, _ := nativelyUncached(t, program)
+			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if got.exitCode != 70 || !strings.Contains(string(got.stderr), "node.value") {
+					t.Fatalf("unsupported conversion ran on: %#v", got)
+				}
+			}
+			t.Logf("Node=%q; unsupported conversion stops at node.value", truth.stdout)
+		})
 	}
-	_, err = lowered(t, path)
-	truth := onNode(t, path)
-	if err == nil || !strings.Contains(err.Error(), "Map entry whose key or value is of another type") {
-		t.Fatalf("erased void storage converted without proof: %v", err)
-	}
-	t.Logf("Node stdout=%q; retained representation boundary: %v", truth.stdout, err)
 }

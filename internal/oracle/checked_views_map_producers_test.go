@@ -92,3 +92,58 @@ func TestCheckedViewMapTuplePayloadMutant(t *testing.T) {
 	}
 	t.Logf("Node control=%q; wrong string payload stopped at helper pair[0]", truth.stdout)
 }
+
+func TestCheckedViewMapStorageMetadataMutant(t *testing.T) {
+	program, path := interfaceFixture(t, "nullish/maps/entry-convert-number-undefined")
+	truth := onNode(t, path)
+	changed := false
+	for index, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok {
+			if creation, ok := declaration.Value.(ir.MapNew); ok && program.Locals[declaration.Local].Name == "source" {
+				creation.Value = ir.Boolean
+				declaration.Value = creation
+				program.Main[index] = declaration
+				changed = true
+				break
+			}
+		}
+	}
+	if !changed {
+		t.Fatal("storage metadata mutation missed")
+	}
+	native, _ := nativelyUncached(t, program)
+	for _, got := range []run{native, releasedUncached(t, program)} {
+		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "Map value storage cannot be converted") {
+			t.Fatalf("unavailable read conversion ran on: %#v", got)
+		}
+	}
+	// JavaScript has no physical storage reinterpretation in this mutant.
+	if diff := disagreement(truth, onJavaScriptBackend(t, program)); diff != "" {
+		t.Fatal(diff)
+	}
+	t.Logf("incompatible physical Boolean producer stops before a Number|undefined slot read; Node=%q", truth.stdout)
+}
+
+func TestCheckedViewMapUndefinedStorageMutant(t *testing.T) {
+	program, path := interfaceFixture(t, "nullish/maps/entry-brand-nullish")
+	truth := onNode(t, path)
+	changed := false
+	for index, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "missing" {
+			declaration.Value = ir.ObjectLiteral{Fields: []ir.Field{{Name: "count", Value: ir.NumberConstant{Value: 7}}}}
+			program.Main[index] = declaration
+			changed = true
+			break
+		}
+	}
+	if !changed {
+		t.Fatal("undefined producer mutant missed")
+	}
+	native, _ := nativelyUncached(t, program)
+	for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "undefined storage conversion failed: missing") {
+			t.Fatalf("present payload stored as branded undefined: %#v", got)
+		}
+	}
+	t.Logf("present object producer refused before undefined conversion; Node control=%q", truth.stdout)
+}
