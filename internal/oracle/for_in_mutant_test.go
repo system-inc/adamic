@@ -153,3 +153,30 @@ func TestForInScalarBoxMutant(t *testing.T) {
 	}
 	t.Logf("Node %q; string box mutant %q", truth.stdout, got.stdout)
 }
+
+func TestForInObjectKeysMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/for_in_runtime.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := native.C(program)
+	after := strings.ReplaceAll(source, "adamic_for_in_object_keys(", "adamic_class_object_keys(")
+	if after == source {
+		t.Fatal("mutant changed nothing")
+	}
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(after, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	truth := onNode(t, path)
+	if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(truth, got) != "stdout differs" {
+		t.Fatalf("metadata exposure mutant catcher: %+v", got)
+	}
+	t.Logf("Node %q; exposed metadata mutant %q", truth.stdout, got.stdout)
+}

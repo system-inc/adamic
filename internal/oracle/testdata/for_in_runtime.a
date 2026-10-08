@@ -41,3 +41,7 @@ for (const key in value) {
 	value = {};
 	console.log(key);
 }
+
+function ownKeys(value: {}): string { return Object.keys(value).join('|'); }
+console.log(ownKeys(copied));
+console.log(ownKeys(absent));

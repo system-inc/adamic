@@ -1,0 +1,226 @@
+=== RUN   TestForInMutants
+=== PAUSE TestForInMutants
+=== RUN   TestForInInheritedMutant
+=== PAUSE TestForInInheritedMutant
+=== RUN   TestForInScalarBoxMutant
+=== PAUSE TestForInScalarBoxMutant
+=== RUN   TestForInObjectKeysMutant
+=== PAUSE TestForInObjectKeysMutant
+=== RUN   TestForInOptionsRuling
+=== PAUSE TestForInOptionsRuling
+=== RUN   TestForInArrayRuling
+=== PAUSE TestForInArrayRuling
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestForInMutants
+=== RUN   TestForInMutants/synthetic_keys
+=== PAUSE TestForInMutants/synthetic_keys
+=== RUN   TestForInMutants/shared_presence
+=== CONT  TestForInOptionsRuling
+=== CONT  TestForInScalarBoxMutant
+=== CONT  TestForInInheritedMutant
+=== CONT  TestForInObjectKeysMutant
+=== PAUSE TestForInMutants/shared_presence
+=== RUN   TestForInMutants/missing_write
+=== PAUSE TestForInMutants/missing_write
+=== RUN   TestForInMutants/numeric_order
+=== PAUSE TestForInMutants/numeric_order
+=== RUN   TestForInMutants/removed_key
+=== PAUSE TestForInMutants/removed_key
+=== RUN   TestForInMutants/receiver_twice
+=== PAUSE TestForInMutants/receiver_twice
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_runtime.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_runtime.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_static.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_static.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_primitives.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_primitives.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_storage_name.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_storage_name.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+=== CONT  TestForInArrayRuling
+=== NAME  TestForInInheritedMutant
+    for_in_mutant_test.go:123: gate cache node miss
+=== NAME  TestForInObjectKeysMutant
+    for_in_mutant_test.go:177: gate cache node miss
+=== NAME  TestForInScalarBoxMutant
+    for_in_mutant_test.go:150: gate cache node miss
+=== NAME  TestForInOptionsRuling
+    for_in_ruling_test.go:52: gate cache node miss
+=== NAME  TestForInArrayRuling
+    for_in_ruling_test.go:81: gate cache node miss
+=== NAME  TestForInScalarBoxMutant
+    for_in_mutant_test.go:154: Node "\n\n0|1|2\n\n\n"; string box mutant "0|1\n\n0|1|2\n0|1\n\n"
+--- PASS: TestForInScalarBoxMutant (10.97s)
+=== CONT  TestForInMutants/synthetic_keys
+=== NAME  TestForInInheritedMutant
+    for_in_mutant_test.go:127: Node "own|base\nown\n"; own-only mutant "own\nown\n"
+--- PASS: TestForInInheritedMutant (10.97s)
+=== CONT  TestForInMutants/numeric_order
+=== NAME  TestForInObjectKeysMutant
+    for_in_mutant_test.go:181: Node "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"; exposed metadata mutant "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\n2|a|b|\x01\n2|a|b|\x01\n"
+--- PASS: TestForInObjectKeysMutant (11.00s)
+=== CONT  TestForInMutants/receiver_twice
+=== NAME  TestForInArrayRuling
+    for_in_ruling_test.go:91: Node "0|1|2\n0|2\n"; retained /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:10:15: stage 0 can't lower an OmittedExpression in an array literal yet
+--- PASS: TestForInArrayRuling (11.06s)
+=== CONT  TestForInMutants/removed_key
+=== NAME  TestForInOptionsRuling
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestForInMutants/numeric_order
+    for_in_mutant_test.go:88: gate cache node hit
+    for_in_mutant_test.go:100: numeric_order caught only by stdout: Node "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"; native "b\nb\nb|a\nb\nb|2\nb|2|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"
+=== CONT  TestForInMutants/missing_write
+=== NAME  TestForInMutants/synthetic_keys
+    for_in_mutant_test.go:88: gate cache node hit
+    for_in_mutant_test.go:100: synthetic_keys caught only by stdout: Node "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"; native "b\nb\na|b\nb\n2|b\n2|a|b\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"
+=== CONT  TestForInMutants/shared_presence
+=== NAME  TestForInMutants/receiver_twice
+    for_in_mutant_test.go:88: gate cache node hit
+    for_in_mutant_test.go:96: gate cache node miss
+=== NAME  TestForInOptionsRuling
+    for_in_ruling_test.go:61: gate cache node miss
+    oracle_test.go:594: gate cache native hit
+--- PASS: TestForInOptionsRuling (11.50s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== NAME  TestForInMutants/removed_key
+    for_in_mutant_test.go:88: gate cache node hit
+    for_in_mutant_test.go:96: gate cache node miss
+=== NAME  TestForInMutants/receiver_twice
+    for_in_mutant_test.go:100: receiver_twice caught only by stdout: Node "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"; native "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n2\n0\n1\nb\nb|a\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestForInMutants/removed_key
+    for_in_mutant_test.go:100: removed_key caught only by stdout: Node "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"; native "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1|2\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_storage_name.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_storage_name.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_storage_name.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestForInMutants/shared_presence
+    for_in_mutant_test.go:88: gate cache node hit
+    for_in_mutant_test.go:100: shared_presence caught only by stdout: Node "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"; native "b\nb\nb|a\nb|a\n2|b|a\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\n2|b|a\n2|b|a\n"
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_primitives.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_storage_name.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestForInMutants/missing_write
+    for_in_mutant_test.go:88: gate cache node hit
+    for_in_mutant_test.go:100: missing_write caught only by stdout: Node "b\nb\nb|a\nb\n2|b\n2|b|a\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb|a\n"; native "b\nb\nb\nb\nb\nb\n2|a|b\n2|10|stable|extra\n0|1|2\n0|1\nfirst\nsecond\n1\n0\n1\nb\nb\n"
+--- PASS: TestForInMutants (0.00s)
+    --- PASS: TestForInMutants/numeric_order (0.41s)
+    --- PASS: TestForInMutants/synthetic_keys (0.43s)
+    --- PASS: TestForInMutants/receiver_twice (0.54s)
+    --- PASS: TestForInMutants/removed_key (0.47s)
+    --- PASS: TestForInMutants/shared_presence (0.39s)
+    --- PASS: TestForInMutants/missing_write (0.46s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_static.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_primitives.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node miss
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_static.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node miss
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_storage_name.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_primitives.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a
+    oracle_test.go:594: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_runtime.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_storage_name.a
+    oracle_test.go:594: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_primitives.a
+    oracle_test.go:594: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:594: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a
+    oracle_test.go:734: not yet: /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:10:15: stage 0 can't lower an OmittedExpression in an array literal yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_runtime.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:740: gate cache node hit
+    oracle_test.go:587: gate cache native hit
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_static.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_runtime.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a
+    oracle_test.go:594: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_static.a
+    oracle_test.go:594: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+    oracle_test.go:740: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+    oracle_test.go:587: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_runtime.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/for_in_runtime.a
+    oracle_test.go:594: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+    oracle_test.go:580: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a
+    oracle_test.go:594: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a
+    oracle_test.go:594: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_properties.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_storage_name.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_primitives.a (0.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a (0.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_array_refused.a (0.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_options_refused.a (0.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_static.a (0.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/for_in_runtime.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_keys.a (0.53s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in_live.a (0.65s)
+PASS
+gate cache: native hits=11 misses=18
+gate cache: node hits=11 misses=21
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.944s

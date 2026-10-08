@@ -1,0 +1,5 @@
+replay load/register/lower: 9.756657736s
+replay signature did not reproduce: NotYet for...in over an array (holes and own enumerable properties are not represented; use for...of for elements) at /tmp/notyet-for-in-census-input/src/compiler/factory/nodeFactory.ts:7538:23 (selected /tmp/notyet-for-in-census-input/src/compiler/factory/nodeFactory.ts:7536:1)
+exit status 1
+replay total (including overlay and Go build): 11.490167445s
+exit status 1

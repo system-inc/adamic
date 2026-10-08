@@ -1,0 +1,19 @@
+--- FAIL: TestEveryFunctionIsInSingleAssignment (49.66s)
+    flow_test.go:104: Lower: /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:10:15: stage 0 can't lower an OmittedExpression in an array literal yet
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.11s)
+    --- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/for_in_array_refused.a (0.28s)
+        trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:10:15: stage 0 can't lower an OmittedExpression in an array literal yet
+--- FAIL: TestEveryMutationIsInItsRange (196.17s)
+    --- FAIL: TestEveryMutationIsInItsRange/programs (0.11s)
+        --- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/for_in_array_refused.a (0.45s)
+            ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:10:15: stage 0 can't lower an OmittedExpression in an array literal yet
+    ranges_test.go:78: 98832 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestLivenessHoldsOnEveryPath (201.80s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.17s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/for_in_array_refused.a (0.14s)
+            trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/for_in_array_refused.a:10:15: stage 0 can't lower an OmittedExpression in an array literal yet
+    trace_test.go:426: 56872460 variable-and-point pairs checked
+FAIL
+FAIL	github.com/system-inc/adamic/internal/flow	201.892s
+ok  	github.com/system-inc/adamic/cmd/adamic	22.601s
+FAIL

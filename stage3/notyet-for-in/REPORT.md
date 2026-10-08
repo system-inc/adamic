@@ -1,7 +1,7 @@
 Built runtime for-in enumeration for both assigned kinds; the earlier ruling-only result is superseded.
-Base b410340dc8f889b5799c3bc519117c63def3aa24; replay merge 1aa37cf4; implementation SHA recorded in the delivery report.
+Base b410340dc8f889b5799c3bc519117c63def3aa24; replay merge 1aa37cf4; implementation d90f6c61eef475dc00c7b44881743633981c84f2; checked non-null merge 7a7f3905; main landing b16699be.
 All touched package tests, Node-held backend fixtures, sanitizers, leak checks and counts refresh are recorded in evidence/.
-Nine semantic mutants produce wrong stdout; two representation-proof mutants fail their negative assertions.
+Ten semantic mutants produce wrong stdout; two representation-proof mutants fail their negative assertions.
 Ten origin roots and one array root lose these guards; three representative replays reach named next stops. Sparse array construction remains unsupported.
 
 ## Results
@@ -33,11 +33,12 @@ All new fixtures are .a and registered from for_in_ruling_test.go. for_in_option
 | receiver_twice | Receiver called twice; native and JS stdout differ |
 | own-only inherited keys | Static fixture omits inherited base key |
 | scalar string boxing | Primitive fixture erroneously enumerates number's string characters |
+| metadata exposed through Object.keys | Runtime fixture exposes absent storage and hidden metadata in stdout |
 | disabled RegExp indices present | Array-property fixture adds indices without /d; exit 0 and stdout mismatch |
 | ignored structural property read | TestForInStructuralSlotProof wrongly accepts field use |
 | first virtual target only | TestForInStructuralSlotVirtualTargets wrongly accepts a target with field use |
 
-The first eight semantic mutants are executable tests in for_in_mutant_test.go. The RegExp mutation and two proof mutations use scratch Go overlays; their diffs and logs accompany this report. All semantic mutants build and exit normally with clean sanitizer stderr; stdout alone kills them. Proof mutants fail explicit negative assertions.
+The first nine semantic mutants are executable tests in for_in_mutant_test.go. The RegExp mutation and two proof mutations use scratch Go overlays; their diffs and logs accompany this report. All semantic mutants build and exit normally with clean sanitizer stderr; stdout alone kills them. Proof mutants fail explicit negative assertions.
 
 ## Validation commands
 
@@ -57,3 +58,19 @@ Repeat replay with commandLineParser.ts:2975:24, and factory/nodeFactory.ts:7538
 Setup succeeded: Node 0.027s, Go 0.040s, clang 0.249s, markdown ready 1.077s, submodules 16.447s, Go build 221.748s, done 221.886s; nproc=5, CPU quota=4. Go 1.27.1, clang 20.1.8, Node 24.19.0. GOPROXY used https://proxy.golang.org|direct.
 
 The two kinds share the runtime dispatch and structural-slot proof, so they form one minimal functional implementation group. The largest-kind witness was implemented first. Outside-function production changes are limited to IR, fresh analysis, both emitters and native ownership/copy hooks; the commit body names every changed file.
+
+## Requested checked non-null merge and landing
+
+Merged c41c0e062e99da37820f822968d4df1b48cdaee7 in 7a7f3905, then current origin/main 749a69adbfae2a7bf22c1f0436d9ef73345c3070 in b16699be. Both merges are clean; the implementation group and merges were pushed to codex/notyet-for-in. Replayed all three examples again after both merges. The origin loop bodies still reach core.ts:1266:29 `a value of type object`; the array body still reaches factory/nodeFactory.ts:7539:9 `an array index that isn't a number`. The 2788 unit also has earlier independent stops `a Map of CompilerOptionsValue` and `a BinaryExpression with a value and a value`, and a later `reading result` stop. None of these three representative results is a NonNullExpression stop. All three old-reason replay commands exit 1 because their former for-in signatures are gone.
+
+Final isolation fix: programs using for-in must also keep the new tagged metadata private from existing Object.keys operations. The own-key hook uses tracked real keys and retains class own-only behavior; for-in alone includes inherited static fields. The new Object.keys mutant exits normally under sanitizers and exposes absent fields plus the hidden storage key, caught only by Node stdout. Focused final oracle/mutants pass in 12.944s; counts refresh passes in 32.869s. The sparse refusal witness is excluded explicitly from runnable flow graphs; its omission is not a weakening of the Node refusal oracle. Full flow passes in 115.983s after that registration fix.
+
+Validation history: the package run started before the requested merge timed out its native package at the default 10-minute limit and observed counts while the merge changed their rows. The post-merge package run passes lower (89.992s), IR (67.000s), fresh (145.193s), oracle (412.681s); JavaScript has no package tests. Native again reaches the default 10-minute limit. Command tests pass in 22.601s. A subsequent native run was cancelled because the Object.keys isolation fix superseded its source snapshot. Final native and oracle commands use a 30-minute timeout; their results are recorded below after completion. No timeout is counted as a semantic mutant kill.
+
+```sh
+go test ./internal/flow -count=1 -timeout 30m
+go test ./internal/native -count=1 -timeout 30m
+go test ./internal/oracle -count=1 -timeout 30m
+go test ./internal/oracle -run 'TestForIn|TestNativeAgreesWithNode/internal/oracle/testdata/(for_in_|library_for_in)' -count=1 -timeout 30m -v
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts
+```

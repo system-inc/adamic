@@ -6,3 +6,5 @@ function names(value: {}): string {
 class Base { static readonly base = 1; }
 class Derived extends Base { static readonly own = 2; }
 console.log(names(Derived));
+
+console.log(Object.keys(Derived).join('|'));

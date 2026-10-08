@@ -16,6 +16,10 @@ func (e *emitter) libraryLanguageValue(value ir.Expression) string {
 			e.forInDeclarations()
 			return e.own(ir.Array, fmt.Sprintf("adamic_for_in_keys((const adamic_heap *)%s)", e.value(value.Object)))
 		}
+		if e.enumeratesKeys() {
+			e.forInDeclarations()
+			return e.own(ir.Array, fmt.Sprintf("adamic_for_in_object_keys(%s)", e.value(value.Object)))
+		}
 		return e.own(ir.Array, fmt.Sprintf("adamic_class_object_keys(%s)", e.value(value.Object)))
 	case ir.ClosureSelf:
 		return e.own(ir.Closure, "adamic_retain(self)")

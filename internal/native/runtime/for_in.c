@@ -190,3 +190,11 @@ adamic_array *adamic_for_in_keys(const adamic_heap *value) {
  }
  return keys;
 }
+
+// Preserve Object.keys' own-only semantics while hiding enumeration metadata.
+adamic_array *adamic_for_in_object_keys(const adamic_object *object) {
+ if (!tracked(object)) return adamic_class_object_keys(object);
+ adamic_array *keys = copy_keys(presence(object));
+ order_keys(keys);
+ return keys;
+}

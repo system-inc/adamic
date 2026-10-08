@@ -10,6 +10,7 @@ func (e *emitter) forInDeclarations() {
 	e.declarations = append(e.declarations,
 		"extern const adamic_methods adamic_for_in_metadata;",
 		"adamic_array *adamic_for_in_keys(const adamic_heap *);",
+		"adamic_array *adamic_for_in_object_keys(const adamic_object *);",
 		"bool adamic_for_in_own(const adamic_heap *, const adamic_string *);",
 		"adamic_object *adamic_for_in_copy(const adamic_object *);",
 		"void adamic_for_in_initialize(adamic_object *, size_t);",
