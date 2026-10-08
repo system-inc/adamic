@@ -83,6 +83,27 @@ type cDeclaration struct {
 	name              string
 }
 
+// skipAttribute returns the index of the closing parenthesis of the __attribute__((...)) group at
+// tokens[at], or at itself when no group follows.
+func skipAttribute(tokens []cToken, at, limit int) int {
+	if at+1 >= limit || tokens[at+1].text != "(" {
+		return at
+	}
+	depth := 0
+	for j := at + 1; j < limit; j++ {
+		switch tokens[j].text {
+		case "(":
+			depth++
+		case ")":
+			depth--
+			if depth == 0 {
+				return j
+			}
+		}
+	}
+	return limit - 1
+}
+
 func splitDeclarations(source string) ([]cDeclaration, error) {
 	tokens, err := cTokens(source)
 	if err != nil {
@@ -147,22 +168,23 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 			limit = declaration.initializer
 		}
 		// Generated declarators are a single identifier, followed by an array or argument list.
+		// __attribute__((...)) can stand before the name or after it, and is never the name: its
+		// parenthesized group is skipped, wherever it is.
+		name := ""
 		for j := 1; j < limit; j++ {
-			if declaration.tokens[j].text == "(" {
-				declaration.name = declaration.tokens[j-1].text
+			text := declaration.tokens[j].text
+			if text == "__attribute__" {
+				j = skipAttribute(declaration.tokens, j, limit)
+				continue
+			}
+			if text == "(" || text == "[" {
 				break
 			}
-			if declaration.tokens[j].text == "[" {
-				declaration.name = declaration.tokens[j-1].text
-				break
+			if cName.MatchString(text) {
+				name = text
 			}
 		}
-		if declaration.name == "" && limit >= 2 {
-			declaration.name = declaration.tokens[limit-1].text
-		}
-		if declaration.name == ";" && limit >= 3 {
-			declaration.name = declaration.tokens[limit-2].text
-		}
+		declaration.name = name
 		if declaration.name != "main" && (!cName.MatchString(declaration.name) || declaration.tokens[0].text != "static") {
 			return nil, fmt.Errorf("native: split: unsupported declaration near %q", declaration.tokens[0].text)
 		}

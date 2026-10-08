@@ -154,3 +154,24 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	}
 	t.Log("system-header extension accepted; changed header observed cached and uncached; user-header extension rejected")
 }
+
+// __attribute__((...)) is never a declaration's name, before the name or after it. Two
+// declarations both naming __attribute__ gave the split build a duplicate definition.
+func TestSplitNamesSkipAttributes(t *testing.T) {
+	t.Parallel()
+	source := "static __attribute__((unused)) int adamic_before = 1;\n" +
+		"static int adamic_after __attribute__((aligned(8))) = 2;\n" +
+		"static __attribute__((noinline)) int adamic_function(int value) { return value; }\n" +
+		"static int adamic_array[2] __attribute__((unused));\n"
+	declarations, err := splitDeclarations(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var names []string
+	for _, declaration := range declarations {
+		names = append(names, declaration.name)
+	}
+	if got, want := strings.Join(names, ","), "adamic_before,adamic_after,adamic_function,adamic_array"; got != want {
+		t.Fatalf("names %q, want %q", got, want)
+	}
+}
