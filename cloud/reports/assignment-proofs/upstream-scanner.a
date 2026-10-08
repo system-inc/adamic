@@ -1,0 +1,5 @@
+import { createScanner } from "/workspace/scratch/branch-shape/typescript/src/compiler/scanner.ts";
+import { ScriptTarget, SyntaxKind } from "/workspace/scratch/branch-shape/typescript/src/compiler/types.ts";
+const scanner = createScanner(ScriptTarget.Latest, true);
+scanner.setText("abstract name");
+while (scanner.scan() !== SyntaxKind.EndOfFileToken) { console.log(scanner.getTokenText()); }

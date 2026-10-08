@@ -44,7 +44,7 @@ func (l *lowering) closedFrameInput(local int) bool {
 				ir.Binary, ir.Unary, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap,
 				ir.MaybeOf, ir.Defined, ir.IsUndefined, ir.NumberToString, ir.BooleanToString,
 				ir.Concat, ir.Length, ir.Property, ir.ArrayIndex, ir.ArrayLiteral, ir.ObjectLiteral,
-				ir.Call, ir.CallClosure, ir.MakeClosure, ir.ClosureSelf:
+				ir.Call, ir.CallClosure, ir.MakeClosure, ir.ClosureSelf, ir.Effects:
 			default:
 				safe = false
 			}

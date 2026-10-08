@@ -1,0 +1,14 @@
+let calls = 0;
+function next(): number { calls += 1; return calls; }
+let first: number | string = "before";
+let second: number | undefined = undefined;
+let third = 0;
+const answer = first = second = third = next();
+console.log(`${answer} ${first} ${second} ${third} ${calls}`);
+let text = "";
+let other = "";
+function make(): string { calls += 1; return `heap-${calls}`; }
+function replace(): number { text = "gone"; other = "gone"; return calls; }
+function show(value: string, count: number): void { console.log(`${value} ${count}`); }
+show(text = other = make(), replace());
+console.log(`${text} ${other} ${calls}`);

@@ -1,0 +1,5 @@
+let calls = 0;
+function next(): string | undefined { calls += 1; return calls <= 6 ? `heap-${calls}` : undefined; }
+let value: string | undefined = undefined;
+while (value = next()) { console.log(value); }
+console.log(`${calls} ${value === undefined}`);

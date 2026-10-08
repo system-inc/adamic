@@ -1,0 +1,98 @@
+[
+  {
+    "state": "before",
+    "source": "internal/oracle/testdata/assignment_scanner.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "before",
+    "source": "internal/oracle/testdata/assignment_module_specifiers.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "before",
+    "source": "internal/oracle/testdata/assignment_chain.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "before",
+    "source": "internal/oracle/testdata/assignment_while.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "before",
+    "source": "internal/oracle/testdata/assignment_order.a",
+    "exit": 1,
+    "first_stop": "adamic: /workspace/adamic/internal/oracle/testdata/assignment_order.a:21:38: stage 0 can't lower returning a property or element assignment yet"
+  },
+  {
+    "state": "before",
+    "source": "internal/oracle/testdata/assignment_proofs.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "before",
+    "source": "internal/oracle/testdata/assignment_throw.a",
+    "exit": 1,
+    "first_stop": "adamic: /workspace/adamic/internal/oracle/testdata/assignment_throw.a:5:19: stage 0 can't lower an assignment value to a member yet"
+  },
+  {
+    "state": "before",
+    "source": "/workspace/scratch/assignment-proofs/upstream-scanner.a",
+    "exit": 1,
+    "first_stop": "/workspace/scratch/branch-shape/typescript/src/compiler/binder.ts:1109:17: error TS2412: Type 'undefined' is not assignable to type 'FlowNode' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+  },
+  {
+    "state": "after",
+    "source": "internal/oracle/testdata/assignment_scanner.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "after",
+    "source": "internal/oracle/testdata/assignment_module_specifiers.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "after",
+    "source": "internal/oracle/testdata/assignment_chain.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "after",
+    "source": "internal/oracle/testdata/assignment_while.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "after",
+    "source": "internal/oracle/testdata/assignment_order.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "after",
+    "source": "internal/oracle/testdata/assignment_proofs.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "after",
+    "source": "internal/oracle/testdata/assignment_throw.a",
+    "exit": 0,
+    "first_stop": null
+  },
+  {
+    "state": "after",
+    "source": "/workspace/scratch/assignment-proofs/upstream-scanner.a",
+    "exit": 1,
+    "first_stop": "/workspace/scratch/branch-shape/typescript/src/compiler/binder.ts:1109:17: error TS2412: Type 'undefined' is not assignable to type 'FlowNode' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+  }
+]

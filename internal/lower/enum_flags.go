@@ -99,7 +99,7 @@ func (l *lowering) flagDomain(node *ast.Node, target *ast.Symbol) bool {
 }
 
 func (l *lowering) flagDomainSeen(node *ast.Node, target *ast.Symbol, seen map[*ast.Node]bool) bool {
-	node = ast.SkipParentheses(node)
+	node = assignmentRight(node)
 	if node.Kind == ast.KindBinaryExpression {
 		binary := node.AsBinaryExpression()
 		switch binary.OperatorToken.Kind {

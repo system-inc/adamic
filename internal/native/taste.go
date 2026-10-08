@@ -102,11 +102,23 @@ func (e *emitter) effects(expression ir.Effects) string {
 	savedOwned, savedAt := e.owned, e.at
 	e.outerOwned = append(e.outerOwned, savedOwned)
 	e.owned, e.at = nil, nil
+	e.scopes = append(e.scopes, nil)
 	for _, statement := range expression.Body {
 		e.statement(statement)
 	}
+	// The result must outlive the internal bindings, including when an Effects
+	// expression executes repeatedly in a loop condition.
+	result := e.snapshot(expression.Result.Type(), e.value(expression.Result))
+	if expression.Type().IsReference() {
+		held := e.temporary()
+		e.line("%s %s = %s;", cType(expression.Type()), held, retained(result))
+		result = held
+		savedOwned = append(savedOwned, result)
+	}
+	e.releaseScopes(len(e.scopes) - 1)
+	e.scopes = e.scopes[:len(e.scopes)-1]
 	e.end()
 	e.owned, e.at = savedOwned, savedAt
 	e.outerOwned = e.outerOwned[:len(e.outerOwned)-1]
-	return e.value(expression.Result)
+	return result
 }

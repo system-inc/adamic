@@ -1,0 +1,7 @@
+let events = "";
+let slot = "old";
+function fail(): string { events += "R"; throw new Error(`heap-${events}`); }
+function target(): { value: string } { events += "L"; return { value: `heap-${events}` }; }
+try { console.log(target().value = fail()); } catch (error) { if (error instanceof Error) { console.log(error.message); } }
+try { console.log(slot = fail()); } catch (error) { if (error instanceof Error) { console.log(error.message); } }
+console.log(`${events} ${slot}`);

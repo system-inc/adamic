@@ -1,0 +1,121 @@
+[
+  {
+    "name": "proof-origin",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/assignment-proofs/proof-origin-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/assignment_scanner",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "caught_by": "adamic/enum-literal"
+  },
+  {
+    "name": "rhs-twice",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/assignment-proofs/rhs-twice-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/assignment_chain",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "caught_by": "stdout differs"
+  },
+  {
+    "name": "result-retain",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/assignment-proofs/result-retain-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/assignment_order",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "caught_by": "AddressSanitizer: heap-use-after-free"
+  },
+  {
+    "name": "temporary-cleanup",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/assignment-proofs/temporary-cleanup-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/assignment_while",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "caught_by": "LeakSanitizer: detected memory leaks"
+  },
+  {
+    "name": "reference-order",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/assignment-proofs/reference-order-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/assignment_order",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "caught_by": "stdout differs"
+  },
+  {
+    "name": "effects-writes",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/assignment-proofs/effects-writes-overlay.json",
+      "./internal/lower",
+      "-run",
+      "TestAssignmentProofsClosedInputStillInspectsEffects",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "caught_by": "an internal field store was hidden by Effects"
+  },
+  {
+    "name": "alias-proof",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/assignment-proofs/alias-proof-overlay.json",
+      "./internal/lower",
+      "-run",
+      "TestAssignmentProofsDoNotInventMembersOrUniqueAliases",
+      "-count=1",
+      "-timeout",
+      "10m"
+    ],
+    "exit": 1,
+    "caught_by": "want refusal, got <nil>"
+  }
+]

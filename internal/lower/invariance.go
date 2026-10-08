@@ -523,6 +523,16 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 // covariant, and only what's inside it, held elsewhere too, is walked as a view.
 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
 	node = ast.SkipParentheses(node)
+	if right := assignmentRight(node); right != node {
+		// Allocation provenance survives, but storing creates an alias. Do not use
+		// literal freshness to permit incompatible mutable views of that alias.
+		if l.canWrite(own, map[*checker.Type]bool{}) {
+			if found := l.widened(own, contextual, map[[2]*checker.Type]bool{}); found != nil {
+				return found
+			}
+		}
+		return l.freshOrWidened(right, l.checker.GetTypeAtLocation(right), contextual)
+	}
 	// A numeric enum read narrowed to never has a non-returning IR check at this exact site.
 	// It cannot write a value into the contextual slot, including a closed string-enum slot.
 	if own.Flags()&checker.TypeFlagsNever != 0 && l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {

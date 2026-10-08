@@ -205,9 +205,6 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		return []ir.Statement{returned}, nil
 	}
 	expression = ast.SkipParentheses(expression)
-	if expression.Kind == ast.KindBinaryExpression && expression.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
-		return l.returnAssignment(expression)
-	}
 	if l.isPanicCall(expression) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
@@ -228,26 +225,4 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
 	}
 	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
-}
-
-// returnAssignment preserves the right side's value, assigns once, then returns
-// that same value. Reading the target again could observe another write.
-func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
-	statements, err := l.assignment(node)
-	if err != nil {
-		return nil, err
-	}
-	if len(statements) != 1 {
-		return nil, l.notYet(node, "returning a destructuring assignment")
-	}
-	assignment, ok := statements[0].(ir.Assign)
-	if !ok {
-		return nil, l.notYet(node, "returning a property or element assignment")
-	}
-	held := len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: "assigned", Type: assignment.Value.Type(), Function: l.functionIndex})
-	value := assignment.Value
-	read := ir.Read{Local: held, Of: value.Type()}
-	assignment.Value = read
-	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(read, l.function.Returns)}}, nil
 }

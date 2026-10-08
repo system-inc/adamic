@@ -1,0 +1,12 @@
+// Reduced from TypeScript 6.0.3 moduleSpecifiers.ts:145. No assignment hoisting.
+function middleSlashes(pattern: string): number {
+ let slash = pattern.indexOf("/");
+ const lastSlash = pattern.lastIndexOf("/");
+ let middle = 0;
+ if (slash === lastSlash) { return middle; }
+ while ((slash = pattern.indexOf("/", slash + 1)) !== lastSlash) {
+  if (pattern[slash - 1] !== "\\") { middle += 1; }
+ }
+ return middle;
+}
+for (const pattern of ["/abc/iu", "/a/b/c/i", "/a\\/b/u"]) { console.log(`${middleSlashes(pattern)}`); }

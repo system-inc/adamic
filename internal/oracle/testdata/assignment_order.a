@@ -1,0 +1,25 @@
+let order = "";
+const box = { value: "old" };
+function receiver(): { value: string } { order += "L"; return box; }
+function right(): string { order += "R"; return `heap-${order}`; }
+console.log(receiver().value = right());
+console.log(`${order} ${box.value}`);
+const values: string[] = ["old"];
+function array(): string[] { order += "A"; return values; }
+function key(): number { order += "K"; return 0; }
+console.log(array()[key()] = right());
+console.log(`${order} ${values[0]}`);
+class Setter {
+ private stored = "";
+ get value(): string { order += "G"; return this.stored; }
+ set value(text: string) { order += "S"; this.stored = `stored-${text}`; }
+}
+const setter = new Setter();
+console.log(setter.value = right());
+console.log(`${order} ${setter.value}`);
+
+function returned(): string { return receiver().value = right(); }
+console.log(returned());
+console.log(order);
+function clear(): string | undefined { let value: string | undefined = "old"; return value = undefined; }
+console.log(`${clear() === undefined}`);

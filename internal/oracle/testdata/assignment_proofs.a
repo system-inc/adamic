@@ -1,0 +1,16 @@
+import { panic } from "adamic";
+const enum Kind { Unknown, Name, Keyword }
+let token: Kind = Kind.Unknown;
+const member: Kind.Name = token = Kind.Name;
+console.log(`${member} ${token}`);
+let text: string | undefined = undefined;
+function word(): string | undefined { return `heap-${member}`; }
+console.log(`${(text = word() ?? panic("missing word")).length}`);
+type Small = { readonly kind: "small"; readonly value: string };
+type Large = { readonly kind: "large"; readonly value: number };
+let viewed: Small | Large = { kind: "large", value: 1 };
+function input(): Small | Large { return { kind: "small", value: `heap-${member}` }; }
+console.log((viewed = input() as Small).value);
+let copy: { readonly name: string }[] = [];
+const copied = copy = [{ name: `heap-${member}` }];
+console.log(`${copied === copy} ${copied[0]?.name}`);

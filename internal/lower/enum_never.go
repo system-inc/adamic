@@ -8,7 +8,7 @@ import (
 
 // Array reads have no field symbol. Recover their stored element type before flow narrowing.
 func (l *lowering) enumStoredType(node *ast.Node) *checker.Type {
-	node = ast.SkipParentheses(node)
+	node = assignmentRight(node)
 	if symbol := l.flagValueSymbol(node); symbol != nil {
 		return l.checker.GetTypeOfSymbol(symbol)
 	}
@@ -26,7 +26,7 @@ func (l *lowering) enumStoredType(node *ast.Node) *checker.Type {
 // Follow the declared type, not the flow type that has already become never. A never alias
 // keeps its initializer's enum identity, but never acquires a runtime member proof.
 func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *ast.Symbol {
-	node = ast.SkipParentheses(node)
+	node = assignmentRight(node)
 	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || seen[node] {
 		return nil
 	}
@@ -60,7 +60,7 @@ func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *a
 // Only immutable aliases of actual members prove membership. Parameters, mutable slots,
 // numeric literals, casts, arithmetic and flag-domain proofs do not prove a declared member.
 func (l *lowering) enumMemberOrigin(node *ast.Node, identity *ast.Symbol, seen map[*ast.Node]bool) bool {
-	node = ast.SkipParentheses(node)
+	node = assignmentRight(node)
 	if member := l.enumMember(node); member != nil {
 		return l.symbol(member.Parent.Name()) == identity
 	}
