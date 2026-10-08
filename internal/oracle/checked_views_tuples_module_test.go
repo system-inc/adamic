@@ -64,3 +64,13 @@ func TestCheckedViewTupleOriginalModuleArityMutant(t *testing.T) {
 	}
 	t.Fatal("mutant escaped")
 }
+
+func TestCheckedViewTupleOriginalModuleKind(t *testing.T) {
+	verifyOriginalTupleCases(t, []originalTupleCase{
+		{"module-kind-absent", "undefined\n", "", ""},
+		{"module-kind-undefined", "undefined\n", "", ""},
+		{"module-kind-present", "relative\n", "", ""},
+		{"module-kind-wrong-literal", "wrong\n", "", "field read failed: entry[0] expected \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined, found string wrong"},
+		{"module-kind-wrong-kind", "false\n", "", "field read failed: entry[0] is not a \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined; expected \"ambient\" | \"node_modules\" | \"paths\" | \"redirect\" | \"relative\" | undefined, found boolean"},
+	})
+}

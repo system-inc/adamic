@@ -1,0 +1,3 @@
+import type {OriginalModuleSpecifierTuple} from 'original-tsc-module-worker';
+interface Base {readonly kind:string;} interface Target extends Base {readonly value:OriginalModuleSpecifierTuple;}
+const pair:readonly []=[]; const raw={kind:'probe',value:pair};const base:Base=raw;const viewed=base as Target;const entry=viewed.value; console.log(String(entry[0]));

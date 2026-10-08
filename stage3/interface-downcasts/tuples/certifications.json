@@ -1,10 +1,10 @@
 {
   "primary_candidate_pairs": 10,
   "primary_candidate_reads": 15,
-  "certified_pairs": 9,
-  "certified_reads": 14,
-  "remaining_pairs": 1,
-  "remaining_reads": 1,
+  "certified_pairs": 10,
+  "certified_reads": 15,
+  "remaining_pairs": 0,
+  "remaining_reads": 0,
   "certified": [
     {
       "type_id": 97934,
@@ -52,16 +52,16 @@
       "type_id": 68230,
       "field": "1",
       "reads": 2,
-      "commit": "module specifiers pair commit"
-    }
-  ],
-  "remaining": [
+      "commit": "f1f41adaa37b3173a9b085fee0999bc91fc609b3"
+    },
     {
       "type_id": 68230,
       "field": "0",
-      "reads": 1
+      "reads": 1,
+      "commit": "module kind pair commit"
     }
   ],
+  "remaining": [],
   "additional_forms": {
     "optional_tuple_map": "certified absent, present undefined and present with Node, both backends and leaks",
     "rest_tuple_map": "certified zero, one, many and mismatched rest contracts with Node and both backends; completing cases leak checked"

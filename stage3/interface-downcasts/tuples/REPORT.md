@@ -1,3 +1,21 @@
+Built: original module kind position pair 68230/0; all primary 10 pairs / 15 candidate reads certified.
+Commits: kind certification is separate from module specifier patch f1f41ada.
+Checks: five Node/JS/native release/sanitized witnesses PASS 5.041s, finishing cases leak checked; 79 owned tuple rows refreshed PASS 49.248s.
+Mutants: unchecked literal position returns wrong with exit zero instead of literal refusal (FAIL 0.878s).
+Remaining: two overlapping lane 4b frontier checks; two stale optional/rest Map admission expectations will be refreshed separately.
+
+Commands: TestCheckedViewTupleOriginalModuleKind -count=1 -v
+(/tmp/views-tuples-module-kind-final.log); ADAMIC_TUPLE_NUMERIC_MUTANT=0
+on module-kind-wrong-literal (/tmp/views-tuples-module-kind-mutant.log);
+TestCheckedViewTupleOriginalCounts -args -update-counts
+(/tmp/views-tuples-module-kind-counts.log). All original kind alternatives and
+undefined remain checked. Additional TestCheckedViewMapStorageGaps exposed two
+stale refusal expectations for exact optional/rest tuple Map schemas; these
+now succeed and match Node, as this unit intends. The other four gaps retain
+named failures. That expectation refresh is separate from this primary pair.
+
+---
+
 Built: original module specifier optional tuple position pair 68230/1, two candidate reads; total 9 pairs / 14 reads.
 Commits: module specifier certification follows watcher filename cd2500f87ea9d532b029c5cac7348a6692342a93; no production hook changes.
 Checks: six Node/JS/native release/sanitized witnesses PASS 6.144s, completing cases leak checked; 74 owned counts refreshed PASS 40.158s.
