@@ -1,0 +1,84 @@
+{
+  "family": "diagnostics",
+  "reason": "Internal consumers retain the input diagnostic type; related-information rest storage is read only. JSON conversion accepts only the push operation for location diagnostics.",
+  "edits": [
+    {
+      "file": "src/compiler/utilities.ts",
+      "before": "function addRelatedInfo<T extends Diagnostic>(diagnostic: T, ...relatedInformation: DiagnosticRelatedInformation[])",
+      "after": "function addRelatedInfo<T extends Diagnostic, R extends DiagnosticRelatedInformation>(diagnostic: T, ...relatedInformation: readonly R[])"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "before": "function createDiagnosticMessageChainFromDiagnostic(diagnostic: DiagnosticRelatedInformation)",
+      "after": "function createDiagnosticMessageChainFromDiagnostic<T extends DiagnosticRelatedInformation>(diagnostic: T)"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "before": "function addErrorOrSuggestion(isError: boolean, diagnostic: Diagnostic)",
+      "after": "function addErrorOrSuggestion<T extends Diagnostic>(isError: boolean, diagnostic: T)"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "before": "function invocationErrorRecovery(apparentType: Type, kind: SignatureKind, diagnostic: Diagnostic)",
+      "after": "function invocationErrorRecovery<T extends Diagnostic>(apparentType: Type, kind: SignatureKind, diagnostic: T)"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "before": "function addTypeOnlyDeclarationRelatedInfo(diagnostic: Diagnostic,",
+      "after": "function addTypeOnlyDeclarationRelatedInfo<T extends Diagnostic>(diagnostic: T,"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "before": "    type Diagnostic,",
+      "after": "    type Diagnostic, type DiagnosticWithLocation,"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "before": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Diagnostic[],\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any ",
+      "after": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any "
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "before": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Diagnostic[],\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any ",
+      "after": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any "
+    }
+  ],
+  "owners": [
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "addRelatedInfo",
+      "runtime_sha256": "76abf5fb3f009aae0d85f465c26c1860b1967df0470813020c7260767e609d12"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "function": "createDiagnosticMessageChainFromDiagnostic",
+      "runtime_sha256": "838ba556d988414abb7ff3fe96117216436f338b853ab5abdf5a16c615aff09d"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "function": "addErrorOrSuggestion",
+      "runtime_sha256": "1bfa47cad9dc42a64bf80afe31705d5ccf35bfa1d6a6a2dea65825c4e9f8a6f5"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "function": "invocationErrorRecovery",
+      "runtime_sha256": "e9da17f414b8a2350d3bc16ee4f286604eed51cea27d97eca6a599fd160c0e09"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "function": "addTypeOnlyDeclarationRelatedInfo",
+      "runtime_sha256": "137c194db68b2c43a56fa0bb9cc2191332f531aa391e008dbeca76483bebc1d9"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "function": "convertConfigFileToObject",
+      "runtime_sha256": "91947d1277534294038595087066bf9463ac8a7e0a797ab00f0f047420b86e6e"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "function": "convertToJson",
+      "runtime_sha256": "3fd5b5b7a47064a2d3886bb52145c48543849de4dac7bc8880204f6ac36fb73a"
+    }
+  ],
+  "undo_index": 0
+}

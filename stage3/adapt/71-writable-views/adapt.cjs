@@ -76,6 +76,7 @@ function inspectInitializer(node) {
 }
 inspectInitializer(factory);
 if (initializers !== 1) throw new Error('SourceFile cache initialization changed');
+const families = require('./type-plans.cjs')(program, tree, [require('./diagnostics.json')], edits);
 // Complete every audit before changing any source. Preserve all other bytes.
 for (const [file] of edits) if (fs.readFileSync(file.fileName, 'utf8') !== file.text)
     throw new Error(`source changed during audit: ${file.fileName}`);
@@ -86,4 +87,4 @@ for (const [file, positions] of edits) {
     fs.writeFileSync(file.fileName, text);
 }
 console.log(JSON.stringify({ typescript: ts.version, files: edits.size,
-    caches: cacheRecords, parameters: records.map(({ node, ...record }) => record) }, null, 2));
+    families, caches: cacheRecords, parameters: records.map(({ node, ...record }) => record) }, null, 2));

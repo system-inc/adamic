@@ -1,8 +1,8 @@
-Built a partial, type-only writable-view adaptation: 51 range inputs and five cache declarations.
+Built type-only adaptations for 51 range inputs, five cache declarations, and seven diagnostic consumer bodies.
 Base: ef3141e9b1152ab51b51497f8ce3a2799449c8a3; refusal-table input: d35a81d36fdafccf827bad0f572d311b2a0d4deb.
 Apply builds; landing lane PASS; oracle results match main: 106366 passing, one sanctioned API-baseline failure.
 Undo mutant restores two census rows; two adaptation guards and two Node witness mutants catch planted changes.
-Not complete: diagnostic, tuple, empty-array and other table families remain without a completed proof.
+Diagnostics add 75 proven removals; tuple and empty-array follow-ups are in progress. See DIAGNOSTICS.md.
 
 The edit changes only type annotations, preserves source bytes elsewhere, and introduces neither any nor unknown. The range inputs become Readonly<TextRange>, including their existing undefined unions. The sibling 70 checker-symbol audit proves no writes or escapes, following local callees. parameters.json is the explicit selection; evidence/range-survey.json records the wider candidate survey. These are internal functions or local closures.
 
@@ -42,3 +42,5 @@ Commands run, with all test output redirected to logs:
 - node witness.cjs and node witness.cjs --node-flags: zero TypeScript diagnostics; Node prints 1 despite the literal-zero holder type. Each --mutant replaces the write with a zero write, prints 0, and fails the output assertion with exit 1.
 
 Logs, verdicts, guard results, idempotence audit, witness outputs and failed witness assertions are retained under evidence/. No compiler edits, full package confirmation runs, public API expansion or runtime source changes were made. This branch is a reviewable partial result, not completion of all Disposition=adaptation rows.
+
+The diagnostic follow-up removes another 75 sites (1112 -> 1037). See [DIAGNOSTICS.md](DIAGNOSTICS.md) for its source audit, mutations, remaining sites and fresh-apply/oracle/lane evidence. The earlier counts above describe the initial 3bc49948 subset.
