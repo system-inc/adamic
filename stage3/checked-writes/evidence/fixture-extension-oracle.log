@@ -1,0 +1,178 @@
+=== RUN   TestCheckedWiderWrites
+=== RUN   TestCheckedWiderWrites/never-nullable-fit
+    checked_writes_test.go:100: Node exit 0 stdout "0\n"; checked exit 0 stderr ""; 0 checks
+=== RUN   TestCheckedWiderWrites/never-nullable-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: view[] expects never, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-index-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[0] expects never, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-splice-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-wide-fit
+    checked_writes_test.go:100: Node exit 0 stdout "0\n1\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/never-number-fit
+    checked_writes_test.go:100: Node exit 0 stdout "0\n0\n"; checked exit 0 stderr ""; 0 checks
+=== RUN   TestCheckedWiderWrites/never-number-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-string-fit
+    checked_writes_test.go:100: Node exit 0 stdout "0\n0\n"; checked exit 0 stderr ""; 0 checks
+=== RUN   TestCheckedWiderWrites/never-string-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got badbad\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/never-object-fit
+    checked_writes_test.go:100: Node exit 0 stdout "0\n0\n"; checked exit 0 stderr ""; 0 checks
+=== RUN   TestCheckedWiderWrites/never-object-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "1\n"; checked exit 70 stderr "adamic: panic: write failed: values[] expects never, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-alias-fit
+    checked_writes_test.go:100: Node exit 0 stdout "16\n"; checked exit 0 stderr ""; 2 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-alias-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: wide.flags expects 16, got 0\n"; 2 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-proof-fit
+    checked_writes_test.go:100: Node exit 0 stdout "newnew 16\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-proof-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: (view as Mutable<T>).file expects SynthesizedSourceFile, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-rich-fit
+    checked_writes_test.go:100: Node exit 0 stdout "newnew 3 2 3 4\nNaN -Infinity\n"; checked exit 0 stderr ""; 3 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-rich-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SourceFile, got undefined\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-related-fit
+    checked_writes_test.go:100: Node exit 0 stdout "7\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-related-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.start expects number, got undefined\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-nested-fit
+    checked_writes_test.go:100: Node exit 0 stdout "newnew 16\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-nested-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SynthesizedSourceFile, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-inner-fit
+    checked_writes_test.go:100: Node exit 0 stdout "32\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-inner-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "0\n"; checked exit 70 stderr "adamic: panic: write failed: view.file.metadata.flags expects 16 | 32, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/reference-structure
+    checked_writes_test.go:100: Node exit 0 stdout "right\n"; checked exit 70 stderr "adamic: panic: write failed: (node as Mutable<T>).parent expects { readonly name: \"left\"; }, got object\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/flags-fit
+    checked_writes_test.go:100: Node exit 0 stdout "16\n268435472\n"; checked exit 0 stderr ""; 2 checks
+=== RUN   TestCheckedWiderWrites/flags-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "before 16\nafter 0\n"; checked exit 70 stderr "adamic: panic: write failed: (node as Mutable<T>).flags expects NodeFlags.Synthesized, got 0\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/string-fit
+    checked_writes_test.go:100: Node exit 0 stdout "right\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/string-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "outsideoutside\n"; checked exit 70 stderr "adamic: panic: write failed: view.text expects \"left\" | \"right\", got outsideoutside\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/boolean-fit
+    checked_writes_test.go:100: Node exit 0 stdout "true\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/boolean-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "false\n"; checked exit 70 stderr "adamic: panic: write failed: view.enabled expects true, got false\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-fit
+    checked_writes_test.go:100: Node exit 0 stdout "inputinput\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/diagnostic-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.file expects SourceFile, got undefined\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/number-fit
+    checked_writes_test.go:100: Node exit 0 stdout "2 7\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/number-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.count expects 1 | 2, got 3\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/compound-fit
+    checked_writes_test.go:100: Node exit 0 stdout "1\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/compound-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.count expects 0 | 1, got 2\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/nullable-number-fit
+    checked_writes_test.go:100: Node exit 0 stdout "true\n2\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/nullable-number-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: view.count expects 1 | 2 | undefined, got 3\n"; 1 checks
+=== RUN   TestCheckedWiderWrites/range-fit
+    checked_writes_test.go:100: Node exit 0 stdout "0 1\n"; checked exit 0 stderr ""; 2 checks
+=== RUN   TestCheckedWiderWrites/range-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "0 2\n"; checked exit 70 stderr "adamic: panic: write failed: range.end expects 1, got 2\n"; 2 checks
+=== RUN   TestCheckedWiderWrites/receiver-fit
+    checked_writes_test.go:100: Node exit 0 stdout "2 7\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/parent-fit
+    checked_writes_test.go:100: Node exit 0 stdout "parentparent\n"; checked exit 0 stderr ""; 1 checks
+=== RUN   TestCheckedWiderWrites/parent-misfit
+    checked_writes_test.go:100: Node exit 0 stdout "stored\n"; checked exit 70 stderr "adamic: panic: write failed: (copy as Mutable<T>).parent expects Parent, got undefined\n"; 1 checks
+--- PASS: TestCheckedWiderWrites (27.86s)
+    --- PASS: TestCheckedWiderWrites/never-nullable-fit (0.78s)
+    --- PASS: TestCheckedWiderWrites/never-nullable-misfit (0.61s)
+    --- PASS: TestCheckedWiderWrites/never-index-misfit (0.53s)
+    --- PASS: TestCheckedWiderWrites/never-splice-misfit (0.58s)
+    --- PASS: TestCheckedWiderWrites/never-wide-fit (0.71s)
+    --- PASS: TestCheckedWiderWrites/never-number-fit (0.76s)
+    --- PASS: TestCheckedWiderWrites/never-number-misfit (0.86s)
+    --- PASS: TestCheckedWiderWrites/never-string-fit (0.67s)
+    --- PASS: TestCheckedWiderWrites/never-string-misfit (0.67s)
+    --- PASS: TestCheckedWiderWrites/never-object-fit (0.62s)
+    --- PASS: TestCheckedWiderWrites/never-object-misfit (0.56s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-alias-fit (0.76s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-alias-misfit (0.62s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-proof-fit (0.67s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-proof-misfit (0.61s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-rich-fit (0.75s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-rich-misfit (0.65s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-related-fit (0.61s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-related-misfit (0.62s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-nested-fit (0.68s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-nested-misfit (0.60s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-inner-fit (0.68s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-inner-misfit (0.58s)
+    --- PASS: TestCheckedWiderWrites/reference-structure (0.57s)
+    --- PASS: TestCheckedWiderWrites/flags-fit (0.61s)
+    --- PASS: TestCheckedWiderWrites/flags-misfit (0.58s)
+    --- PASS: TestCheckedWiderWrites/string-fit (0.60s)
+    --- PASS: TestCheckedWiderWrites/string-misfit (0.57s)
+    --- PASS: TestCheckedWiderWrites/boolean-fit (0.67s)
+    --- PASS: TestCheckedWiderWrites/boolean-misfit (0.57s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-fit (0.59s)
+    --- PASS: TestCheckedWiderWrites/diagnostic-misfit (0.57s)
+    --- PASS: TestCheckedWiderWrites/number-fit (0.61s)
+    --- PASS: TestCheckedWiderWrites/number-misfit (0.67s)
+    --- PASS: TestCheckedWiderWrites/compound-fit (0.72s)
+    --- PASS: TestCheckedWiderWrites/compound-misfit (1.10s)
+    --- PASS: TestCheckedWiderWrites/nullable-number-fit (0.65s)
+    --- PASS: TestCheckedWiderWrites/nullable-number-misfit (0.55s)
+    --- PASS: TestCheckedWiderWrites/range-fit (0.62s)
+    --- PASS: TestCheckedWiderWrites/range-misfit (0.66s)
+    --- PASS: TestCheckedWiderWrites/receiver-fit (0.59s)
+    --- PASS: TestCheckedWiderWrites/parent-fit (0.61s)
+    --- PASS: TestCheckedWiderWrites/parent-misfit (0.58s)
+=== RUN   TestCheckedWiderWriteMutants
+=== RUN   TestCheckedWiderWriteMutants/drop_check
+    checked_writes_test.go:170: caught drop check: expected exit 70, mutant exit 0 stdout "before 16\nafter 0\n"
+=== RUN   TestCheckedWiderWriteMutants/drop_literal_set
+    checked_writes_test.go:170: caught drop literal set: expected exit 70, mutant exit 0 stdout "before 16\nafter 0\n"
+--- PASS: TestCheckedWiderWriteMutants (1.00s)
+    --- PASS: TestCheckedWiderWriteMutants/drop_check (0.50s)
+    --- PASS: TestCheckedWiderWriteMutants/drop_literal_set (0.49s)
+=== RUN   TestCheckedWiderWritesAdamicRefuses
+--- PASS: TestCheckedWiderWritesAdamicRefuses (0.12s)
+=== RUN   TestCheckedWiderWritesProvenAdamic
+--- PASS: TestCheckedWiderWritesProvenAdamic (0.61s)
+=== RUN   TestCheckedNeverContractMutant
+    checked_writes_test.go:267: caught drop never contract: expected exit 70, mutant exit 0 stdout "1\n"
+--- PASS: TestCheckedNeverContractMutant (0.45s)
+=== RUN   TestCheckedWiderWritesKeepSpreadOverrideRefusal
+--- PASS: TestCheckedWiderWritesKeepSpreadOverrideRefusal (0.05s)
+=== RUN   TestCheckedDiagnosticReferenceMutants
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_alias_check
+    checked_writes_test.go:370: caught drop alias check: expected exit 70, mutant exit 0 stdout "0\n"
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_allocation_proof
+    checked_writes_test.go:370: caught drop allocation proof: expected exit 70, mutant exit 0 stdout "0\n"
+=== RUN   TestCheckedDiagnosticReferenceMutants/drop_nested_contract
+    checked_writes_test.go:370: caught drop nested contract: expected exit 70, mutant exit 0 stdout "0\n"
+--- PASS: TestCheckedDiagnosticReferenceMutants (1.56s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_alias_check (0.55s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_allocation_proof (0.50s)
+    --- PASS: TestCheckedDiagnosticReferenceMutants/drop_nested_contract (0.50s)
+PASS
+gate cache: native hits=0 misses=28
+gate cache: node hits=0 misses=100
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	31.664s
+=== RUN   TestExplainCheckedWritesOutput
+--- PASS: TestExplainCheckedWritesOutput (0.61s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic	0.624s
+=== RUN   TestUniformFieldsMatchNode
+=== PAUSE TestUniformFieldsMatchNode
+=== RUN   TestCEndsInNewline
+=== PAUSE TestCEndsInNewline
+=== CONT  TestUniformFieldsMatchNode
+=== CONT  TestCEndsInNewline
+--- PASS: TestCEndsInNewline (0.07s)
+--- PASS: TestUniformFieldsMatchNode (0.92s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.947s

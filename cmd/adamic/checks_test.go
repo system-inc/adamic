@@ -62,7 +62,7 @@ func TestExplainChecksDriver(t *testing.T) {
 }
 
 func TestExplainCheckedWritesOutput(t *testing.T) {
-	source, err := os.ReadFile("../../stage3/checked-writes/number-misfit.a")
+	source, err := os.ReadFile("../../stage3/checked-writes/number-misfit.ts")
 	if err != nil {
 		t.Fatal(err)
 	}

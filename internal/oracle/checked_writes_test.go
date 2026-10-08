@@ -58,16 +58,11 @@ var checkedWriteFixtures = []struct{ name, stdout, message string }{
 	{"parent-misfit", "", "write failed: (copy as Mutable<T>).parent expects Parent, got undefined"},
 }
 
-// Authored witnesses are .a; only the harness materializes their TypeScript inputs.
-// Loading their original .a paths separately holds the stronger source-file promise.
+// Runtime witnesses are real TypeScript files. Adamic refusal controls are separate.
 func checkedWriteFixture(t *testing.T, name string) (*ir.Program, string) {
 	t.Helper()
-	source, err := os.ReadFile(filepath.Join(repository, "stage3/checked-writes", name+".a"))
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/checked-writes", name+".ts"))
 	if err != nil {
-		t.Fatal(err)
-	}
-	path := filepath.Join(t.TempDir(), name+".ts")
-	if err = os.WriteFile(path, source, 0644); err != nil {
 		t.Fatal(err)
 	}
 	program, err := lowered(t, path)
@@ -191,17 +186,50 @@ func checkedWriteCounts(t *testing.T) []string {
 		if match == nil {
 			t.Fatalf("missing counts: %#v", got)
 		}
-		rows = append(rows, fmt.Sprintf("| stage3/checked-writes/%s.a (TypeScript input) | %s | %s | %s | %s | %s | %s |", fixture.name, match[1], match[2], match[3], match[4], match[5], match[6]))
+		rows = append(rows, fmt.Sprintf("| stage3/checked-writes/%s.ts | %s | %s | %s | %s | %s | %s |", fixture.name, match[1], match[2], match[3], match[4], match[5], match[6]))
 	}
+	rows = append(rows, counted(t, "stage3/checked-writes/proven-number.a", false, nil, false, false))
 	return rows
 }
 
 func TestCheckedWiderWritesAdamicRefuses(t *testing.T) {
-	for _, name := range []string{"flags-fit", "string-fit", "boolean-fit", "diagnostic-fit", "parent-misfit", "never-number-fit"} {
-		_, err := lowered(t, filepath.Join(repository, "stage3/checked-writes", name+".a"))
-		if err == nil || !strings.Contains(err.Error(), "refuses") {
-			t.Fatalf("%s .a: %v", name, err)
+	for _, name := range []string{"flags-refused", "string-refused", "shared-never"} {
+		path := filepath.Join(repository, "stage3/checked-writes", name+".a")
+		expected, err := os.ReadFile(strings.TrimSuffix(path, ".a") + ".refused")
+		if err != nil {
+			t.Fatal(err)
 		}
+		_, err = lowered(t, path)
+		if err == nil || !strings.Contains(err.Error(), strings.TrimSpace(string(expected))) {
+			t.Fatalf("%s .a: %v; want %s", name, err, expected)
+		}
+	}
+}
+
+func TestCheckedWiderWritesProvenAdamic(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/checked-writes/proven-number.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(program.WriteChecks) != 0 {
+		t.Fatal("proven write inserted a runtime check")
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "16\n" {
+		t.Fatalf("Node: %#v", truth)
+	}
+	got, binary := nativelyUncached(t, program)
+	for name, result := range map[string]run{"native sanitized": got, "native release": releasedUncached(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+		if d := disagreement(truth, result); d != "" {
+			t.Fatalf("%s: %s", name, d)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }
 
@@ -240,7 +268,7 @@ func TestCheckedNeverContractMutant(t *testing.T) {
 }
 
 func TestCheckedWiderWritesKeepSpreadOverrideRefusal(t *testing.T) {
-	source, err := os.ReadFile(filepath.Join(repository, "stage3/checked-writes/spread-override.a"))
+	source, err := os.ReadFile(filepath.Join(repository, "stage3/checked-writes/spread-override.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}

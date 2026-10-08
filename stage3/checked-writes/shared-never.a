@@ -1,3 +1,4 @@
+// a-check: refused a value of type never[] seen as number[]
 const shared: never[] = [];
 function store(values: number[]): void { values.push(1); }
 store(shared);

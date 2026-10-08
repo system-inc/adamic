@@ -1,0 +1,29 @@
+{
+  "tools_sha": "3e339bbf06e0695f1b1223065ee8d4eef4813ba8",
+  "a_check": {
+    "stage3/checked-writes/flags-refused.a": {
+      "outcome": "refused",
+      "expected": "refused a value of type",
+      "first": "adamic: /workspace/adamic/stage3/checked-writes/flags-refused.a:6:6: Adamic 0.1 refuses a value of type T seen as Mutable<T>, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of T[\"flags\"] would replace; keep flags readonly in th"
+    },
+    "stage3/checked-writes/proven-number.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/checked-writes/shared-never.a": {
+      "outcome": "refused",
+      "expected": "refused a value of type never[] seen as number[]",
+      "first": "adamic: /workspace/adamic/stage3/checked-writes/shared-never.a:4:7: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { "
+    },
+    "stage3/checked-writes/string-refused.a": {
+      "outcome": "refused",
+      "expected": "refused a value of type",
+      "first": "adamic: /workspace/adamic/stage3/checked-writes/string-refused.a:4:7: Adamic 0.1 refuses a value of type { readonly text: \"left\" | \"right\"; } seen as { text: string; }, whose readonly field text becomes writable: a readonly field may hold something narrower than \"left\" | \"right\", which a write of st"
+    }
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failures": []
+}
