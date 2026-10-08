@@ -36,8 +36,9 @@ batch protocol; it returns `ok` with escaped formatting, or `notyet` with its re
 
 ## Independent oracles
 
-The branch starts at scanner/parser commit `ed2477e538f54e772c62593de9bab4ddeca0d4ab`.
-The cohere submodule pin is `715ba94f3608a6500086b1076ce5cb7e51b836db`; its embedded Prettier is **3.9.6**.
+The initial printer branch started at scanner/parser commit `ed2477e538f54e772c62593de9bab4ddeca0d4ab`.
+That slice used cohere `715ba94f3608a6500086b1076ce5cb7e51b836db`; the tsc-corpus repair uses
+`7945d102a6c18dd36adf9114a758ce646e8b2359`. Both embed Prettier **3.9.6**.
 The TypeScript source pin is 6.0.3, `050880ce59e30b356b686bd3144efe24f875ebc8`.
 Install upstream Prettier in a scratch directory and point the test at it:
 
@@ -54,26 +55,31 @@ go test -v -count=1 -timeout 30m ./stage1/cohere/tsprinter > /tmp/ts-printer-tes
 
 The tests overlay helpers into cohere without changing its checkout. Go selects maximal supported
 fragments using its original TypeScript AST and expression-context predicate, then formats each
-fragment independently. All 120 `.ts` files in this checkout, including other stage-1 ports and gap
-programs, and all 77 `src/compiler` files are walked. The root cohere submodule is excluded from the
-repository walk: it is a separate repository, not the requested Adamic source corpus. A rejected
-parent is traversed for supported children; it is never silently counted as formatted. Invalid
-standalone contexts, such as `delete` extracted from a property name, are counted separately.
+fragment independently. The corpus is the git-tracked `.ts` files under the named roots in
+[corpus_test.go](corpus_test.go): `bench`, `bridge`, `cmd`, `internal`, `stage1`,
+`stage3/drivers/tsc/corpus`, and the pinned TypeScript checkout's `src/compiler`.
+Every root logs its count and fails if missing or empty. Untracked files and unnamed roots do not
+enter the corpus. The initial slice had 120 repository files and 77 compiler files; those historical
+counts below are not the current gate's counts. A rejected parent is traversed for supported children;
+it is never silently counted as formatted. Invalid standalone contexts, such as `delete` extracted
+from a property name, are counted separately.
 
-The selected fragments plus 1,203 generated cases total **149,852**. Generated cases include 625
+The initial selected fragments plus 1,203 generated cases total **149,852**. Generated cases include 625
 operator pairs, 52 literal/operator/access/array edges, 60 long argument lists, 60 numeric fills,
 and 406 supported recursively generated expressions (seed 20261006). Ninety-four generated
 expanded-argument shapes are recorded as outside this core. Counts are fragments, **not complete
-files**. Every file parses in Go; no file is dropped for a parse error. Coverage and rejected
+files**. Every initial file parsed in Go; the deliberate tsc corpus now records one Go parse
+refusal in [TSC_CORPUS.md](TSC_CORPUS.md). Coverage and rejected
 candidate counts are saved as `coverage.json`. Counts naturally change when repository sources do.
 
 The document oracle uses cohere's own spec generator, not docs assembled by this port: 5,000 seeded
 docs plus 72 boundary docs, exercising widths 8 through 47, tabs and two/four-space indentation,
 Unicode, shared groups and every document kind. Native with ASan/UBSan and leaks, source on Node,
 and the JavaScript backend must match Go byte for byte. The actual npm Prettier doc engine and
-TypeScript printer are separate comparisons; every selected case must agree with them too. The
-separate unported proving corpus records one anonymous-function spacing difference in `testdata/prettier-differences.json`; accepted cases have
-no exceptions.
+TypeScript printer are separate comparisons. Port output must always match Go. The tsc-corpus
+repair separately pins 29 external text/error outcomes in `testdata/tsc-upstream-differences.json`;
+all unpinned external outcomes must match Go too. The separate unported proving corpus records
+one anonymous-function spacing difference in `testdata/prettier-differences.json`.
 Fifteen unported shapes are checked for `NotYet` on all three executions, while Go and Prettier
 prove that the same source texts are formatable. Native release output is also compared.
 
@@ -214,3 +220,7 @@ The independent statement oracle walks the same source files and records both ma
 and the number of complete files. `ADAMIC_TS_STATEMENT_KEEP` and `ADAMIC_TS_STATEMENT_ARTIFACTS`
 retain its corpus and release executable. Complete-file coverage does not imply that any whole
 TypeScript compiler file is supported.
+
+The deliberate tsc-driver corpus gate and its complete disagreement audit are documented in
+[TSC_CORPUS.md](TSC_CORPUS.md). Its focused test reports every differing fragment with the originating
+file, on source Node, sanitized native and emitted JavaScript. Go cohere remains the formatting oracle.

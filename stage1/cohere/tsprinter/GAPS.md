@@ -1,9 +1,35 @@
 # TypeScript printer gaps
 
+## Tsc-driver corpus repair
+
+The 300 git-tracked inputs under `stage3/drivers/tsc/corpus` are now a named corpus root, not
+incidental files found by a filesystem walk. [TSC_CORPUS.md](TSC_CORPUS.md) records the audit,
+and [results/tsc-corpus-before.json](results/tsc-corpus-before.json) preserves every original
+file-labelled port/Go disagreement: two NotYet results and five text differences, with no errors.
+
+Four causes are closed: yield lookahead before literals, a leading block in standalone expression
+text, bodyless untyped function declarations, and top-level ternary grouping in statement files.
+The shared parser's yield predicate now mirrors TypeScript's identifier/keyword/literal lookahead
+on the same line. It does not force a generator context; ordinary calls and newline boundaries
+are independently held to Go in `stage1/typescript/parser/yield_test.go`.
+
+The surprising `{}[0]` output is a standalone parsing boundary: Go reads a block followed by an
+array expression. The expression driver follows that program interpretation rather than inventing
+an object receiver. The original source's object context is not present in that extracted text.
+The full audit also names any upstream parser or Prettier differences separately; they never
+allow the port to differ from Go.
+
+All 1,729 selected expression fragments and 874 selected statement fragments from this root
+match Go on Node, sanitized native and the JavaScript backend. This is fragment coverage, not a
+claim to format 300 complete files. Go's selector refuses the full file
+`239_expressionWithJSDocTypeArguments/expressionWithJSDocTypeArguments.ts` with `Type expected.`;
+the selectors retain that refusal in their coverage reports. Existing unsupported families below
+remain explicit gaps, and no compiler or runtime implementation changed.
+
 Status: **partly ported**. The shared document engine, expression core, sequence expressions, assignments, conditionals and object values are held to Go cohere and
 Prettier 3.9.6. This is not a claim to port all of `internal/format/javascript`, or to format whole
-TypeScript compiler files yet. The composition uses the existing indexed TypeScript parser without
-editing it, the compiler or the runtime.
+TypeScript compiler files yet. The composition uses the indexed TypeScript parser, including the yield lookahead repair
+recorded above. The compiler and runtime are unchanged.
 
 ## Expression work remaining
 
@@ -304,8 +330,10 @@ binding patterns, modifiers, if-statements and hashbang headers.
 There is a real upstream contract boundary for control-flow statements: the pinned Go printer's
 `print_statements.go` deliberately prints `if(`, `while(`, `for(`, `switch(` and `catch(`, and places
 else/catch/finally on separate lines. npm Prettier 3.9.6 uses spaces and cuddles block boundaries.
-These are cohere customizations, not a compiler gap. The current accepted expression and statement
-corpora have no upstream exceptions. A future control-flow family must report these exact
+These are cohere customizations, not a compiler gap. Before adding the tsc-driver corpus, the accepted expression and statement
+corpora had no upstream exceptions. The new corpus pins its external outcomes separately in
+[testdata/tsc-upstream-differences.json](testdata/tsc-upstream-differences.json); the port still
+matches Go without exceptions. A future control-flow family must report these exact
 upstream differences while retaining Go cohere as the primary contract, as previously decided.
 
 The five fork/npm pairs are pinned in
