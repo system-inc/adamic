@@ -10,10 +10,11 @@
 # when a gate starts: what integration is landing first (area/*, and any branch named in the state
 # directory's priority file, one per line, such as a fix-forward), then devtools/*, then workers'
 # codex/*, newest first within each, and only a branch's newest tip. Each tip is classed when queued:
-# big (an area, a stage3/ change, which runs the stage 3 lane, or more than two touched packages) or small. While a big gate runs and a small change
-# waits, the free slot takes the small one, so a worker's tip waits at most one small gate; with no
-# small change waiting, a second big gate may take it. The gating line names how long a tip waited. Each gate publishes gate-logs/<sha12>/<UTC stamp>/fast
-# like any other, with the branch and, when an ai.db reply names the branch, the worker's session.
+# big (an area, a stage3/ change, which runs the stage 3 lane, or more than two touched packages) or
+# small. At most one big gate runs at a time, so one slot is always small-only and a worker's tip
+# waits at most one small gate. The gating line names how long a tip waited. Each gate publishes
+# gate-logs/<sha12>/<UTC stamp>/fast like any other, with the branch and, when an ai.db reply names
+# the branch, the worker's session.
 set -uo pipefail
 
 here=$(cd "$(dirname "$0")/.." && pwd)
