@@ -14,21 +14,16 @@ import (
 
 func refusedBeforeDeadline(t *testing.T, argv []string, diagnostic string) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel()
-	cmd := exec.CommandContext(ctx, argv[0], argv[1:]...)
 	output, err := os.CreateTemp(t.TempDir(), "stdout")
 	if err != nil {
 		t.Fatal(err)
 	}
 	var stderr bytes.Buffer
-	cmd.Stdout = output
-	cmd.Stderr = &stderr
-	err = cmd.Run()
+	err, timedOut := runWithCPUBudget(t, argv, output, &stderr, 2*time.Second)
 	output.Close()
 	info, _ := os.Stat(output.Name())
-	if ctx.Err() != nil || err == nil || info.Size() != 0 || !strings.Contains(stderr.String(), diagnostic) {
-		t.Fatalf("%v: timeout=%v exit=%v stdout=%d stderr=%s", argv, ctx.Err(), err, info.Size(), &stderr)
+	if timedOut || err == nil || info.Size() != 0 || !strings.Contains(stderr.String(), diagnostic) {
+		t.Fatalf("%v: timeout=%v exit=%v stdout=%d stderr=%s", argv, timedOut, err, info.Size(), &stderr)
 	}
 }
 func TestBoundedPortParser(t *testing.T) {
@@ -72,7 +67,7 @@ func TestBoundedPortParser(t *testing.T) {
 		}
 	}
 	t.Log("all 13 recorded stalls terminate: Go-accepted inputs match and Go-refused inputs explicitly refuse in all three port builds")
-	t.Log("three EOF recovery cases explicitly refuse with parser diagnostics before 2s on Node, sanitized native and emitted JS")
+	t.Log("three EOF recovery cases explicitly refuse with parser diagnostics before 2s of child CPU time on Node, sanitized native and emitted JS")
 }
 func TestPortStallControl(t *testing.T) {
 	main := mutantPort(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
