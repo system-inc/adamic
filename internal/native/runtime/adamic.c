@@ -5,8 +5,10 @@
 
 #include "adamic.h"
 #include "count.h"
+#include "parallel.h"
 
 #include <errno.h>
+#include <pthread.h>
 #ifndef ADAMIC_TARGET_WASI
 #include <fcntl.h>
 #include <poll.h>
@@ -64,16 +66,13 @@ static int write_all(int descriptor, const char *bytes, size_t length) {
 static char output[1 << 16];
 static size_t output_used;
 
-// output_whole is where the buffer's last whole line ends: what a signal's handler writes out, so it
-// writes whole lines, as Node would have. It's set after the line's bytes are in, with a fence between,
-// so the handler never sees it ahead of them.
-static volatile size_t output_whole;
-
 // output_mode is 0 until the first line, then 1 for a pipe buffer, or 2 for a file or terminal.
 static int output_mode;
 
 // broken is the stream a write to has failed, from then on dropped; 0 while none has.
 static bool broken[3];
+static pthread_mutex_t output_lock = PTHREAD_MUTEX_INITIALIZER;
+static atomic_flag panicking = ATOMIC_FLAG_INIT;
 
 static void output_failed(enum adamic_stream stream) {
 	broken[stream] = true;
@@ -82,8 +81,6 @@ static void output_failed(enum adamic_stream stream) {
 static void flush(void) {
 	if (output_used > 0) {
 		size_t used = output_used;
-		output_whole = 0;
-		atomic_signal_fence(memory_order_seq_cst);
 		output_used = 0;
 		if (!broken[adamic_stdout] && write_all(adamic_stdout, output, used) != 0) {
 			output_failed(adamic_stdout);
@@ -93,8 +90,13 @@ static void flush(void) {
 
 // finish is the end of the program's output, at exit.
 static void finish(void) {
+	// Registration can happen in a worker, after the pool registered its own exit hook.
+	adamic_parallel_shutdown();
+	pthread_mutex_lock(&output_lock);
 	flush();
-	if (broken[adamic_stdout] || broken[adamic_stderr]) {
+	bool failed = broken[adamic_stdout] || broken[adamic_stderr];
+	pthread_mutex_unlock(&output_lock);
+	if (failed) {
 		_exit(70);
 	}
 }
@@ -116,24 +118,87 @@ static void buffer(const char *bytes, size_t length) {
 }
 
 void adamic_output_flush(void) {
+	pthread_mutex_lock(&output_lock);
 	flush();
+	pthread_mutex_unlock(&output_lock);
 }
 
-// stopped handles external stop signals: the buffer's whole lines go out, and the
-// signal is raised again with its default action, so the program ends the way Node's does, killed by
-// it. write, poll, sigaction and raise are async-signal-safe POSIX calls.
-// A signal arriving inside flush finds the buffer already emptied, and
-// what that write hadn't finished is lost.
+// The handler only forwards a byte to a nonblocking pipe. Descriptors are initialized before
+// installing handlers and remain open and unchanged until process death, including during exit.
+// The normal signal thread can wait for a writer's lock without deadlocking an interrupted writer.
 #ifndef ADAMIC_TARGET_WASI
+static int stop_pipe[2];
+static pthread_t stop_thread;
 static struct sigaction default_action;
 
+// Catch external stop signals; preserve fault/abort handlers installed by sanitizers.
+static const int stop_signals[] = {
+	SIGTERM, SIGINT, SIGHUP, SIGQUIT, SIGUSR2,
+	SIGALRM, SIGXCPU, SIGVTALRM, SIGPROF,
+#ifdef SIGIO
+	SIGIO,
+#endif
+#ifdef SIGPWR
+	SIGPWR,
+#endif
+};
+
 static void stopped(int signal_number) {
-	size_t whole = output_whole;
-	if (whole > 0 && !broken[adamic_stdout]) {
-		(void)write_all(adamic_stdout, output, whole);
+	int saved_errno = errno;
+	unsigned char event = (unsigned char)signal_number;
+	ssize_t written;
+	do { written = write(stop_pipe[1], &event, 1); } while (written < 0 && errno == EINTR);
+	errno = saved_errno;
+}
+
+static void *stop_loop(void *unused) {
+	(void)unused;
+	unsigned char event;
+	for (;;) {
+		ssize_t received = read(stop_pipe[0], &event, 1);
+		if (received < 0 && errno == EINTR) { continue; }
+		if (received != 1 || event == 0) { return NULL; }
+		// A writer holds output_lock until its newline is buffered. Waiting for that lock
+		// flushes complete lines without racing or interrupting a writer midway through one.
+		pthread_mutex_lock(&output_lock);
+		flush();
+		// Keep writers out until the default action terminates the process.
+		sigaction(event, &default_action, NULL);
+		sigset_t delivered;
+		sigemptyset(&delivered);
+		sigaddset(&delivered, event);
+		pthread_sigmask(SIG_UNBLOCK, &delivered, NULL);
+		raise(event);
 	}
-	(void)sigaction(signal_number, &default_action, NULL);
-	(void)raise(signal_number);
+}
+
+static void stop_end(void) {
+	unsigned char event = 0;
+	// The read end stays open: handlers on other threads never write to a reused descriptor.
+	while (write(stop_pipe[1], &event, 1) < 0) {
+		if (errno != EINTR && errno != EAGAIN) { break; }
+	}
+	pthread_join(stop_thread, NULL);
+}
+
+static void stop_start(void) {
+	if (pipe(stop_pipe) != 0 || fcntl(stop_pipe[1], F_SETFL, O_NONBLOCK) != 0) {
+		adamic_panic("cannot start signal loop", 24);
+	}
+	sigset_t blocked, previous;
+	sigemptyset(&blocked);
+	for (size_t index = 0; index < sizeof stop_signals / sizeof stop_signals[0]; index++) {
+		sigaddset(&blocked, stop_signals[index]);
+	}
+#if defined(SIGRTMIN) && defined(SIGRTMAX)
+	for (int number = SIGRTMIN; number <= SIGRTMAX; number++) { sigaddset(&blocked, number); }
+#endif
+	pthread_sigmask(SIG_BLOCK, &blocked, &previous);
+	int error = pthread_create(&stop_thread, NULL, stop_loop, NULL);
+	pthread_sigmask(SIG_SETMASK, &previous, NULL);
+	if (error != 0 || atexit(stop_end) != 0) {
+		adamic_panic("cannot start signal loop", 24);
+	}
 }
 
 // Node resets inherited ignored SIGINT, SIGHUP and SIGTERM at startup. Other ignored signals
@@ -203,24 +268,9 @@ void adamic_start(int count, char **values) {
 	signal(SIGUSR1, SIG_IGN);
 	default_action.sa_handler = SIG_DFL;
 	sigemptyset(&default_action.sa_mask);
-	stop_with(SIGTERM);
-	stop_with(SIGINT);
-	stop_with(SIGHUP);
-	// Signals used to stop a process from outside. Leave fault and abort dispositions alone,
-	// especially the sanitizer handlers that report runtime bugs with a stack. SIGKILL cannot
-	// be caught; SIGPIPE, SIGXFSZ and SIGUSR1 are ignored above. Optional names stay guarded.
-	const int fatal[] = {
-		SIGQUIT, SIGUSR2,
-		SIGALRM, SIGXCPU, SIGVTALRM, SIGPROF,
-#ifdef SIGIO
-		SIGIO,
-#endif
-#ifdef SIGPWR
-		SIGPWR,
-#endif
-	};
-	for (size_t index = 0; index < sizeof fatal / sizeof fatal[0]; index++) {
-		stop_with(fatal[index]);
+	stop_start();
+	for (size_t index = 0; index < sizeof stop_signals / sizeof stop_signals[0]; index++) {
+		stop_with(stop_signals[index]);
 	}
 #if defined(SIGRTMIN) && defined(SIGRTMAX)
 	// Realtime signals also terminate by default. The C library excludes its reserved signals.
@@ -232,6 +282,7 @@ void adamic_start(int count, char **values) {
 }
 
 void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
+	pthread_mutex_lock(&output_lock);
 	if (output_mode == 0) {
 #ifndef ADAMIC_TARGET_WASI
 		struct stat destination;
@@ -248,16 +299,22 @@ void adamic_write_line(enum adamic_stream stream, const adamic_string *string) {
 	}
 	write_text(stream, string->bytes, string->length);
 	put(stream, "\n", 1);
-	if (stream == adamic_stdout) {
-		atomic_signal_fence(memory_order_seq_cst);
-		output_whole = output_used;
-	}
 	if (stream == adamic_stdout && output_mode == 2) {
 		flush();
 	}
+	pthread_mutex_unlock(&output_lock);
 }
 
 _Noreturn void adamic_panic(const char *message, size_t length) {
+#ifndef ADAMIC_TARGET_WASI
+	// Losing panics must not terminate the process before the winner finishes its one message.
+	if (atomic_flag_test_and_set_explicit(&panicking, memory_order_relaxed)) {
+		for (;;) { pause(); }
+	}
+#else
+	(void)panicking;
+#endif
+	pthread_mutex_lock(&output_lock);
 	static const char prefix[] = "adamic: panic: ";
 	// Everything the program printed comes first, as on Node.
 	flush();

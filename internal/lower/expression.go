@@ -541,6 +541,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
+		if value, known := l.asyncTypeOf(node); known {
+			return value, nil
+		}
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
 		}
@@ -1213,6 +1216,9 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // and rest parameters and forwards the original count, even though its ordinary
 // parameters have been padded or collected before reaching the target.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if l.result.Async != nil {
+		return nil, l.notYet(node, "async function "+node.Text()+" as a value; only direct typeof observations and awaited calls are lowered")
+	}
 	symbol := l.symbol(node)
 	if node.Kind == ast.KindShorthandPropertyAssignment {
 		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)

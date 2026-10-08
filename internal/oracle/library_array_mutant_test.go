@@ -24,7 +24,7 @@ func TestArrayFamilyMutants(t *testing.T) {
 			return strings.ReplaceAll(source, "adamic_array_join_nested(", "array_mutant_join_nested(")
 		}},
 		{"method metadata", "library_array_metadata.a", func(source string) string {
-			return strings.ReplaceAll(source, "ADAMIC_STRING(\"indexOf\")", "ADAMIC_STRING(\"wrong\")")
+			return strings.ReplaceAll(source, "ADAMIC_STRING_UNITS(\"indexOf\", 7)", "ADAMIC_STRING_UNITS(\"wrong\", 5)")
 		}},
 		{"with replacement", "library_array_with.a", func(source string) string {
 			return strings.ReplaceAll(source, "adamic_array_set(", "array_mutant_set(")

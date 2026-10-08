@@ -1,0 +1,3 @@
+import { parallelMap } from 'adamic';
+const items: readonly string[] = ['abc', '🙂', 'z'];
+console.log(parallelMap(items, (item, index) => `${index}:${item.slice(0, 2)}`).join('|'));

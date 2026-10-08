@@ -56,6 +56,10 @@ type Program struct {
 	// Counted is where macOS writes the counted build.
 	Counted string
 
+	// BuildCounted optionally builds the counted program against a changed runtime.
+	// Nil uses native.Build and the embedded production runtime.
+	BuildCounted func(code, output string) error
+
 	// Arguments gives the program's arguments, once for each run, so a program that writes can be
 	// given a fresh place to write in every time. Nil is no arguments.
 	Arguments func() []string
@@ -76,7 +80,11 @@ func Check(program Program) (string, error) {
 	}
 	switch runtime.GOOS {
 	case "darwin":
-		if err := native.Build(program.C, program.Counted, native.Options{Count: true}); err != nil {
+		build := program.BuildCounted
+		if build == nil {
+			build = func(code, output string) error { return native.Build(code, output, native.Options{Count: true}) }
+		}
+		if err := build(program.C, program.Counted); err != nil {
 			return "", err
 		}
 		if report := Unbalanced(program.Execute(nil, program.Counted, arguments()...)); report != "" {
