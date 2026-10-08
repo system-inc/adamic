@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-284 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+330 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -946,3 +946,32 @@ were edited, no baseline corpus tests skipped, and these full packages are not
 claimed green. Required checked-view gates remain separate and active.
 
 Required array merge gates: lower 10.608s, native 41.276s, JavaScript 1.935s; full IR 34.312s; filtered oracle 326.925s with both original-declaration suites enabled and no exclusions; go vet ./... exit 0.
+
+Object/primitive newest tip 534b8c525de2624b938dd25dd3dc36f49ae51b25
+
+Resolve the single docs/checked-views-plan.md append conflict by retaining both
+complete additions. library_object.go merges the objectPrimitiveIntersectionStorage
+physical-storage hook without deleting the existing scalar intersection fallback.
+This hook proves storage only; shared deferred contracts still govern reads.
+
+Regenerate both original declaration manifests from pristine upstream 050880ce.
+The first original preflight (48.999s) found six diagnostic-only mismatches.
+generated-prefix-wrong.a still exits 70, now with the owner's nullable selector
+message naming member.prefix/string | undefined/boolean. Four bindable/JSDoc
+frontiers still refuse, now at kind's unsupported union intersection contract.
+jsdoc-comment-probe.a still refuses as NotYet for interpolating an aggregate union.
+Update those exact pins; the six corrected witnesses pass in 3.332s. No refused
+frontier is credited as certified, and no acceptance condition is relaxed.
+
+New original LiteralType root/nested omission and wrong-shape controls execute
+eight counterfactuals. The five new original pairs execute twenty outer/member
+counterfactuals, sixteen nested type/omission counterfactuals, and two optional
+GeneratedNamePart prefix omissions: 46 new checks, cumulative 330. Each expected
+refusal is lost in valid release-native and JavaScript execution. Existing source
+and original SourceFile/Diagnostic counterfactuals rerun without double counting.
+The declaration field-set and hash assertions remain complete. Eight witnessed
+original field pairs carry 59 static candidate reads; original enclosing compiler
+functions and exact execution reachability remain unmeasured. Optional-boolean
+landing hold remains until explicitly lifted by the user.
+
+Object/primitive required gates pass: lower 13.159s, native 20.909s, JavaScript 1.386s; full IR 18.977s; filtered uncached oracle 298.001s, 1531 Node executions, both original suites enabled; go vet ./... exit 0.

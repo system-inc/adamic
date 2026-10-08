@@ -259,7 +259,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 	if err := json.Unmarshal(manifestBytes, &manifest); err != nil {
 		t.Fatal(err)
 	}
-	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) == 0 || len(manifest.Pairs) != 2 {
+	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" || len(manifest.Declarations) == 0 || len(manifest.Pairs) != 34 {
 		t.Fatal("original declaration provenance changed")
 	}
 	for file, expected := range manifest.Declarations {
@@ -274,7 +274,29 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 	if manifest.Pairs[0].Type != "SourceFile" || manifest.Pairs[0].Reads != 20 || len(manifest.Pairs[0].Sites) != 20 || manifest.Pairs[1].Type != "Diagnostic" || manifest.Pairs[1].Reads != 15 || len(manifest.Pairs[1].Sites) != 15 {
 		t.Fatal("candidate pair provenance changed")
 	}
+	if manifest.Pairs[2].Type != "BindableStaticAccessExpression" || manifest.Pairs[2].Reads != 11 || len(manifest.Pairs[2].Sites) != 11 || manifest.Pairs[3].Type != "LiteralType" || manifest.Pairs[3].Reads != 10 || len(manifest.Pairs[3].Sites) != 10 {
+		t.Fatal("next pair provenance changed")
+	}
 	for _, sample := range []struct{ name, source, output, message, root, nested string }{
+		{"conditional-good", "false\n2\nabsent\n", "false\n2\nabsent\n", "", "ConditionalType", ""},
+		{"conditional-true", "true\n", "", "field read failed: type.resolvedConstraintOfDistributive matches no member of false | Type | undefined; expected false | Type | undefined, found boolean", "ConditionalType", ""},
+		{"conditional-flags-wrong", "false\n", "", "field read failed: member.flags is not a TypeFlags; expected TypeFlags, found boolean", "ConditionalType", "member.flags"},
+		{"location-good", "plain\nchain:42\n", "plain\nchain:42\n", "", "DiagnosticWithLocation", ""},
+		{"location-boolean", "wrong\n", "", "field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "DiagnosticWithLocation", ""},
+		{"location-code-wrong", "chain:false\n", "", "field read failed: member.code is not a number; expected number, found boolean", "DiagnosticWithLocation", "member.code"},
+		{"detached-good", "plain\nchain:42\n", "plain\nchain:42\n", "", "DiagnosticWithDetachedLocation", ""},
+		{"detached-boolean", "wrong\n", "", "field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "DiagnosticWithDetachedLocation", ""},
+		{"detached-code-wrong", "chain:false\n", "", "field read failed: member.code is not a number; expected number, found boolean", "DiagnosticWithDetachedLocation", "member.code"},
+		{"related-good", "plain\nchain:42\n", "plain\nchain:42\n", "", "DiagnosticRelatedInformation", ""},
+		{"related-boolean", "wrong\n", "", "field read failed: diagnostic.messageText matches no member of string | DiagnosticMessageChain; expected string | DiagnosticMessageChain, found boolean", "DiagnosticRelatedInformation", ""},
+		{"related-code-wrong", "chain:false\n", "", "field read failed: member.code is not a number; expected number, found boolean", "DiagnosticRelatedInformation", "member.code"},
+		{"generated-good", "plain\nnested\nabsent\nundefined\nabsent\n", "plain\nnested\nabsent\nundefined\nabsent\n", "", "AutoGenerateInfo", ""},
+		{"generated-boolean", "wrong\n", "", "field read failed: info.prefix matches no member of string | GeneratedNamePart | undefined; expected string | GeneratedNamePart | undefined, found boolean", "AutoGenerateInfo", ""},
+		{"generated-prefix-wrong", "false\n", "", "field read failed: member.prefix matches no member of string | undefined; expected string | undefined, found boolean", "AutoGenerateInfo", "member.prefix"},
+		{"literal-good", "plain\n42\ntrue:123\n", "plain\n42\ntrue:123\n", "", "LiteralType", ""},
+		{"literal-boolean", "wrong\n", "", "field read failed: type.value matches no member of string | number | PseudoBigInt; expected string | number | PseudoBigInt, found boolean", "LiteralType", ""},
+		{"literal-negative-wrong", "42:123\n", "", "field read failed: member.negative is not a boolean; expected boolean, found number", "LiteralType", "member.negative"},
+		{"literal-text-wrong", "false:123\n", "", "field read failed: member.base10Value is not a string; expected string, found number", "LiteralType", ""},
 		{"source-file-helpers-good", "true\ntrue\n", "true\ntrue\n", "", "SourceFile", ""},
 		{"source-file-helpers-false", "false\n", "", "field read failed: file.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found boolean", "SourceFile", ""},
 		{"source-file-uninitialized", "null\n", "", "field read failed: file.externalModuleIndicator is not initialized; expected true | Node | undefined, found uninitialized", "SourceFile", ""},
@@ -312,7 +334,7 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			for _, name := range []string{sample.root, map[string]string{"SourceFile": "Node", "Diagnostic": "DiagnosticMessageChain"}[sample.root]} {
+			for _, name := range []string{sample.root, map[string]string{"SourceFile": "Node", "Diagnostic": "DiagnosticMessageChain", "LiteralType": "PseudoBigInt", "DiagnosticRelatedInformation": "DiagnosticMessageChain", "AutoGenerateInfo": "GeneratedNamePart", "ConditionalType": "Type", "DiagnosticWithLocation": "DiagnosticMessageChain", "DiagnosticWithDetachedLocation": "DiagnosticMessageChain"}[sample.root]} {
 				complete := false
 				for _, contract := range program.ViewContracts {
 					if contract.Name != name {
@@ -391,23 +413,29 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 			if sample.nested != "" {
 				var original ir.Property
 				matches := func(read ir.Property) bool { return read.View == sample.nested }
-				if count := changeObjectPrimitiveRead(program, matches, func(read ir.Property) ir.Property {
-					original = read
-					read.ViewAllowed = nil
-					read.Of = ir.Boolean
-					return read
-				}); count != 1 {
-					t.Fatalf("want one nested read, got %d", count)
+				if sample.root != "AutoGenerateInfo" {
+					if count := changeObjectPrimitiveRead(program, matches, func(read ir.Property) ir.Property {
+						original = read
+						read.ViewAllowed = nil
+						if sample.root == "LiteralType" {
+							read.Of = ir.Number
+						} else {
+							read.Of = ir.Boolean
+						}
+						return read
+					}); count != 1 {
+						t.Fatalf("want one nested read, got %d", count)
+					}
+					caught("accept wrong nested shape")
+					changeObjectPrimitiveRead(program, matches, func(read ir.Property) ir.Property { return original })
 				}
-				caught("accept wrong nested shape")
-				changeObjectPrimitiveRead(program, matches, func(read ir.Property) ir.Property { return original })
 				changeObjectPrimitiveRead(program, matches, func(read ir.Property) ir.Property { read.View = ""; return read })
 				caught("drop transitive check")
 			}
-			if sample.name == "source-file-false" || sample.name == "source-file-helpers-false" || sample.name == "diagnostic-boolean" {
+			if sample.name == "source-file-false" || sample.name == "source-file-helpers-false" || sample.name == "diagnostic-boolean" || sample.name == "literal-boolean" || sample.name == "related-boolean" || sample.name == "generated-boolean" || sample.name == "conditional-true" || sample.name == "location-boolean" || sample.name == "detached-boolean" {
 				var root ir.Property
 				match := func(read ir.Property) bool {
-					return read.View == "file.externalModuleIndicator" || read.View == "diagnostic.messageText"
+					return read.View == "file.externalModuleIndicator" || read.View == "diagnostic.messageText" || read.View == "type.value" || read.View == "info.prefix" || read.View == "type.resolvedConstraintOfDistributive"
 				}
 				if count := changeObjectPrimitiveRead(program, match, func(read ir.Property) ir.Property { root = read; return read }); count != 1 {
 					t.Fatalf("want one union read, got %d", count)
@@ -419,10 +447,10 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 						continue
 					}
 					original := *member
-					if sample.root == "SourceFile" && member.Of == ir.Boolean && len(member.Allowed) == 1 {
+					if member.Of == ir.Boolean && len(member.Allowed) == 1 {
 						member.Allowed = append([]ir.ViewLiteral(nil), member.Allowed...)
-						member.Allowed[0].Boolean = false
-					} else if sample.root == "Diagnostic" && member.Of == ir.String {
+						member.Allowed[0].Boolean = !member.Allowed[0].Boolean
+					} else if sample.root != "SourceFile" && member.Of == ir.String {
 						member.Of, member.Allowed = ir.Boolean, nil
 					} else {
 						continue
@@ -440,4 +468,61 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 			}
 		})
 	}
+	for _, frontier := range []struct{ name, output, refusal, notYet string }{
+		{"bindable-expression-unread", "admitted\n", "", ""},
+		{"bindable-expression-frontier", "80\n", "checked view read of field kind with unsupported union intersection contract", ""},
+		{"jsdoc-parent-probe", "80\n", "checked view read of field kind with unsupported union intersection contract", ""},
+		{"compiler-options-key-probe", "true\n", "a cast the runtime can't check", ""},
+		{"bindable-static-left-probe", "212\n", "checked view read of field kind with unsupported union intersection contract", ""},
+		{"bindable-left-probe", "212\n", "checked view read of field kind with unsupported union intersection contract", ""},
+		{"jsdoc-comment-probe", "plain\n", "", "a template interpolating a union with an object, an array, a map or a function in it"},
+	} {
+		name := frontier.name
+		t.Run(name, func(t *testing.T) {
+			input, err := os.ReadFile("../../stage3/interface-downcasts/lane4b/original/" + name + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			bound := strings.Replace(string(input), "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(declarations, "compiler/types.d.ts"))), 1)
+			file := filepath.Join(t.TempDir(), name+".a")
+			if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
+				t.Fatal(err)
+			}
+			output := frontier.output
+			if diff := disagreement(run{stdout: []byte(output)}, onNode(t, file)); diff != "" {
+				t.Fatal("source Node: " + diff)
+			}
+			loaded, err := load.Load([]string{file})
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lower.Lower(context.Background(), loaded)
+			if frontier.refusal != "" {
+				refusal, ok := err.(*lower.Refused)
+				if !ok || refusal.What != frontier.refusal {
+					t.Fatalf("expected pinned uncertified frontier, got %v", err)
+				}
+				t.Log("uncertified original pair: " + refusal.What)
+				return
+			}
+			if frontier.notYet != "" {
+				unsupported, ok := err.(*lower.NotYet)
+				if !ok || unsupported.What != frontier.notYet {
+					t.Fatalf("expected pinned uncertified representation frontier, got %v", err)
+				}
+				t.Log("uncertified original pair: " + unsupported.What)
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			sanitized, _ := nativelyUncached(t, program)
+			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if diff := disagreement(run{stdout: []byte(output)}, got); diff != "" {
+					t.Fatal(diff)
+				}
+			}
+		})
+	}
+
 }
