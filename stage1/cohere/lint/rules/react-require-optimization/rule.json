@@ -1,0 +1,16 @@
+{
+  "name": "react/require-optimization",
+  "kinds": [
+    "ClassDeclaration",
+    "CallExpression"
+  ],
+  "parent": true,
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactRequireOptimization",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestRequireOptimization",
+  "finish": "finish"
+}

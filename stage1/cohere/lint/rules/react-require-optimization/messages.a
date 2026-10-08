@@ -1,0 +1,1 @@
+export const messageNoShouldComponentUpdate = "This class component re-renders whenever its parent does, even when nothing it displays has changed. React cannot know that on its own, so the component has to say so: add a `shouldComponentUpdate` method, or extend `React.PureComponent`, which compares props and state shallowly for you.";

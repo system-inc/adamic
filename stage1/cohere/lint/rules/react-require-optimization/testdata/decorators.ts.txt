@@ -1,0 +1,6 @@
+@pure class Exempt extends Component {}
+@pure() class Called extends Component {}
+@reactMixin.decorate(PureRenderMixin) class Mixin extends Component {}
+@reactMixin.decorate(OtherMixin) class Other extends Component {}
+@bar export abstract class Exported extends Component {}
+export default @bar class Default extends Component {}
