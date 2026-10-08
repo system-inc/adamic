@@ -27,18 +27,15 @@ func recoveredGrammar() []string {
 	}
 }
 func TestRecoveredGrammar(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, recoveredGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatal(name + ": " + diff)
-		}
-	}
+	checkPort(t, main, []string{"--manifest", list}, want, false, false)
 	t.Logf("%d recovered grammar cases, %d identical bytes in all three port builds", len(recoveredGrammar()), len(want))
 }
 func TestRecoveryMutants(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, recoveredGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	for _, item := range []struct{ name, file, from, to string }{
@@ -47,19 +44,14 @@ func TestRecoveryMutants(t *testing.T) {
 		{"module-await", "pipeline.ts", "&& externalModule(parser.nodes, root)", "&& false && externalModule(parser.nodes, root)"},
 	} {
 		t.Run(item.name, func(t *testing.T) {
+			t.Parallel()
 			main := mutantPort(t, item.file, item.from, item.to)
-			binary, _ := build(t, main, true)
-			for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-				if diff := firstDifference(want, got); diff == "" {
-					t.Fatal(name + " mutant survived")
-				} else {
-					t.Log(name + ": " + diff)
-				}
-			}
+			checkPort(t, main, []string{"--manifest", list}, want, true, false)
 		})
 	}
 }
 func TestRecoveryLibraryGaps(t *testing.T) {
+	t.Parallel()
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
