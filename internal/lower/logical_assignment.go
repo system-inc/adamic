@@ -2,11 +2,12 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
 func logicalAssignment(operator ast.Kind) bool {
-	return operator == ast.KindBarBarEqualsToken || operator == ast.KindAmpersandAmpersandEqualsToken
+	return operator == ast.KindBarBarEqualsToken || operator == ast.KindAmpersandAmpersandEqualsToken || operator == ast.KindQuestionQuestionEqualsToken
 }
 
 // expressionScope puts an expression's statements in an immediately called closure. Captures
@@ -113,6 +114,9 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 	if node.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandEqualsToken {
 		name = "logical_and_assignment"
 	}
+	if node.AsBinaryExpression().OperatorToken.Kind == ast.KindQuestionQuestionEqualsToken {
+		name = "logical_nullish_assignment"
+	}
 	return l.expressionScope(name, func(b *libraryArrayBuilder) (ir.Expression, error) {
 		binary := node.AsBinaryExpression()
 		current, _, store, err := l.assignmentReference(b, binary.Left)
@@ -131,9 +135,31 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 		}
 		result := b.local("assignment_right", right.Type())
 		taken := []ir.Statement{ir.Declare{Local: result, Value: right}, store(b.read(result)), ir.Return{Value: assignmentResult(b.read(result), resultType)}}
-		take := l.assignmentTruthy(current)
-		if binary.OperatorToken.Kind == ast.KindBarBarEqualsToken {
-			take = ir.Unary{Operator: ir.Not, Operand: take}
+		var take ir.Expression
+		switch binary.OperatorToken.Kind {
+		case ast.KindBarBarEqualsToken:
+			take = ir.Unary{Operator: ir.Not, Operand: l.assignmentTruthy(current)}
+		case ast.KindAmpersandAmpersandEqualsToken:
+			take = l.assignmentTruthy(current)
+		case ast.KindQuestionQuestionEqualsToken:
+			take = ir.BooleanConstant{Value: false}
+			if current.Type().IsMaybe() || current.Type().IsReference() {
+				take = ir.IsUndefined{Value: current}
+				declared := l.checker.GetTypeAtLocation(binary.Left)
+				target := ast.SkipParentheses(binary.Left)
+				if symbol := l.symbol(target); symbol != nil {
+					declared = l.checker.GetTypeOfSymbol(symbol)
+				}
+				if target.Kind == ast.KindElementAccessExpression {
+					holder := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(target.AsElementAccessExpression().Expression))
+					if l.checker.IsArrayType(holder) {
+						declared = l.checker.GetElementTypeOfArrayType(holder)
+					}
+				}
+				if declared != nil && declared.Flags()&checker.TypeFlagsNever == 0 && l.includesNull(l.concrete(declared)) {
+					take = ir.Binary{Operator: ir.Or, Left: take, Right: ir.IsNull{Value: current}}
+				}
+			}
 		}
 		b.body = append(b.body, ir.If{Condition: take, Then: taken})
 		return assignmentResult(current, resultType), nil

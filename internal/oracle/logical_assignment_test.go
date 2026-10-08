@@ -10,6 +10,10 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{"internal/oracle/testdata/logical_nullish_assignment.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{"internal/oracle/testdata/logical_and_assignment.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string
@@ -20,8 +24,12 @@ func init() {
 // Mutants preserve valid IR and ownership. Each must compile and finish cleanly, then disagree
 // with source Node in both backends on the side-effect counters or expression value.
 func TestLogicalAssignmentMutants(t *testing.T) {
-	for _, operator := range []string{"or", "and"} {
-		for _, mutation := range []string{"target_twice", "right_always"} {
+	for _, operator := range []string{"or", "and", "nullish"} {
+		mutations := []string{"target_twice", "right_always"}
+		if operator == "nullish" {
+			mutations = append(mutations, "zero_nullish", "empty_nullish")
+		}
+		for _, mutation := range mutations {
 			t.Run(operator+"/"+mutation, func(t *testing.T) {
 				path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/logical_"+operator+"_assignment.a"))
 				if err != nil {
@@ -45,6 +53,29 @@ func TestLogicalAssignmentMutants(t *testing.T) {
 								continue
 							}
 							function.Body = append(append(append([]ir.Statement{}, body[:at]...), ir.Evaluate{Value: declaration.Value}), body[at:]...)
+							changed++
+							break
+						}
+						if mutation == "zero_nullish" || mutation == "empty_nullish" {
+							branch, ok := statement.(ir.If)
+							if !ok {
+								continue
+							}
+							declaration, ok := body[at-1].(ir.Declare)
+							if !ok || program.Locals[declaration.Local].Name != "assignment_current" {
+								t.Fatal("no saved current value")
+							}
+							current := ir.Read{Local: declaration.Local, Of: declaration.Value.Type()}
+							if mutation == "zero_nullish" && current.Type() == ir.Number {
+								branch.Condition = ir.Binary{Operator: ir.Equal, Left: current, Right: ir.NumberConstant{Value: 0}}
+							} else if mutation == "zero_nullish" && current.Type() == ir.MaybeNumber {
+								branch.Condition = ir.Conditional{Condition: ir.IsUndefined{Value: current}, WhenTrue: ir.BooleanConstant{Value: true}, WhenNot: ir.Binary{Operator: ir.Equal, Left: ir.Unwrap{Value: current}, Right: ir.NumberConstant{Value: 0}}}
+							} else if mutation == "empty_nullish" && current.Type() == ir.String {
+								branch.Condition = ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: current}, Right: ir.Binary{Operator: ir.Equal, Left: ir.StringLength{Value: current}, Right: ir.NumberConstant{Value: 0}}}
+							} else {
+								continue
+							}
+							body[at] = branch
 							changed++
 							break
 						}
