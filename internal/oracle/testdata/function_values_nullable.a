@@ -1,0 +1,8 @@
+function describe(value: string | number | undefined): string {
+    if (value === undefined) return 'missing';
+    return typeof value === 'number' ? `number:${value * 2}` : `string:${value}`;
+}
+const read = describe;
+console.log(read(7));
+console.log(read(`held${2}`));
+console.log(read(undefined));

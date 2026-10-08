@@ -1021,6 +1021,12 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 	return ir.MakeClosure{Function: index}, nil
 }
 
+// callableSlotless keeps the union reference slot available at callable boundaries.
+// Other slots still use slotless until their own boxed representation is supported.
+func callableSlotless(valueType ir.Type) bool {
+	return slotless(valueType) && valueType != ir.Union
+}
+
 // functionValue lowers a module function read as a value rather than called: a function value whose
 // code forwards its arguments to the function, made once for each function read so, before the
 // program runs. It takes exactly
@@ -1038,7 +1044,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 		}
 	}
 	callee := l.result.Functions[target]
-	if slotless(callee.Returns) {
+	if callableSlotless(callee.Returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(callee.Returns))
 	}
 	index := len(l.result.Functions)
@@ -1046,7 +1052,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
-		if slotless(declared.Type) {
+		if callableSlotless(declared.Type) {
 			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
 		}
 		local := len(l.result.Locals)
@@ -1131,11 +1137,11 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	for _, argument := range arguments {
-		if slotless(argument.Type()) {
+		if callableSlotless(argument.Type()) {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}
-	if slotless(returns) {
+	if callableSlotless(returns) {
 		return nil, l.notYet(node, "a function value returning "+typeName(returns))
 	}
 	return ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns}, nil

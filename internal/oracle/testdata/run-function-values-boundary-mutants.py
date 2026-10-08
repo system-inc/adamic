@@ -11,7 +11,7 @@ for name,path,old,new,caught in cases:
   path.write_text(original.replace(old,new))
   log=Path('/tmp/function-values-boundary-mutant-'+name+'.log')
   with log.open('w') as out:
-   result=subprocess.run(['go','test','./internal/oracle','-run','^TestFunctionValueBoundaryBoxing$','-count=1','-timeout','10m'],cwd=root,stdout=out,stderr=subprocess.STDOUT)
+   result=subprocess.run(['go','test','./internal/lower','-run','^TestFunctionValueBoundaryBoxing$','-count=1','-timeout','10m'],cwd=root,stdout=out,stderr=subprocess.STDOUT)
   output=log.read_text()
   assert result.returncode!=0 and caught in output and '[build failed]' not in output
   print(name,'exit',result.returncode,'caught by fixture representation assertion:',log,flush=True)
