@@ -91,6 +91,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 				}
 			}
 			if !isKnown {
+				valueType, isKnown = l.clockGenericReturnsT01(returns)
+			}
+			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
 				if where == nil {
