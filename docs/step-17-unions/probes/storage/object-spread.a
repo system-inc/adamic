@@ -1,0 +1,4 @@
+interface Item { readonly name: string; }
+const old: {readonly value: Item | null} = {value: null};
+const copy: {readonly value: Item | null | undefined} = {...old};
+console.log(`${copy.value === null}`);

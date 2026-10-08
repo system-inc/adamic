@@ -1,0 +1,6 @@
+=== RUN   TestNullableObjectSharedStorageStaysNotYet
+--- PASS: TestNullableObjectSharedStorageStaysNotYet (0.14s)
+=== RUN   TestNullableObjectUnionKeepsStrongCyclesRefused
+--- PASS: TestNullableObjectUnionKeepsStrongCyclesRefused (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.199s

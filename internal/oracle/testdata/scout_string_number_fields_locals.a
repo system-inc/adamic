@@ -1,0 +1,40 @@
+interface Holder { value: string | number | undefined; }
+function describe(holder: Holder): string {
+    if (typeof holder.value === 'string') return `${holder.value.length}:${holder.value.toUpperCase()}`;
+    return `${holder.value ?? -1}`;
+}
+function describeLocal(value: string | number | undefined): string {
+    if (typeof value === 'string') return `${value.length}:${value.toUpperCase()}`;
+    return `${value ?? -1}`;
+}
+function exercise(): void {
+    const holder: Holder = {value: undefined};
+    const alias = holder;
+    for (let i = 0; i < 8; i++) {
+        alias.value = `word${i}`;
+        console.log(describe(holder));
+        console.log(describeLocal(holder.value));
+        alias.value = i;
+        console.log(describe(holder));
+        console.log(describeLocal(holder.value));
+        alias.value = undefined;
+        console.log(describe(holder));
+        console.log(describeLocal(holder.value));
+    }
+    let local: string | number | undefined = `local${7}`;
+    console.log(describeLocal(local));
+    local = 7;
+    console.log(describeLocal(local));
+    local = undefined;
+    console.log(`${local ?? 'missing'}`);
+    console.log(describeLocal(local));
+    const copy = {...holder};
+    console.log(describe(copy));
+}
+exercise();
+function replace(holder: Holder): void { holder.value = 23; }
+const stale: Holder = {value: 'text'};
+if (typeof stale.value === 'string') {
+    replace(stale);
+    console.log(`${stale.value === 'text'}|${typeof stale.value}`);
+}

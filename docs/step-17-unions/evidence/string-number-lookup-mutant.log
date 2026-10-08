@@ -1,0 +1,12 @@
+=== RUN   TestNullableObjectStorageViewOutcomes
+=== RUN   TestNullableObjectStorageViewOutcomes/lookup
+    scout_string_number_test.go:27: gate cache node hit
+    scout_string_number_test.go:32: want a storage view stop, got <nil>
+--- FAIL: TestNullableObjectStorageViewOutcomes (0.22s)
+    --- FAIL: TestNullableObjectStorageViewOutcomes/lookup (0.22s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.236s
+FAIL

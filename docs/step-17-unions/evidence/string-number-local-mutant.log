@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+    oracle_test.go:770: stdout differs
+        node:   exit 0, stdout "5:WORD0\n5:WORD0\n0\n0\n-1\n-1\n5:WORD1\n5:WORD1\n1\n1\n-1\n-1\n5:WORD2\n5:WORD2\n2\n2\n-1\n-1\n5:WORD3\n5:WORD3\n3\n3\n-1\n-1\n5:WORD4\n5:WORD4\n4\n4\n-1\n-1\n5:WORD5\n5:WORD5\n5\n5\n-1\n-1\n5:WORD6\n5:WORD6\n6\n6\n-1\n-1\n5:WORD7\n5:WORD7\n7\n7\n-1\n-1\n6:LOCAL7\n7\nmissing\n-1\n-1\nfalse|number\n", stderr ""
+        native: exit 0, stdout "5:WORD0\n5:WORD0\n0\n0\n-1\n-1\n5:WORD1\n5:WORD1\n1\n1\n-1\n-1\n5:WORD2\n5:WORD2\n2\n2\n-1\n-1\n5:WORD3\n5:WORD3\n3\n3\n-1\n-1\n5:WORD4\n5:WORD4\n4\n4\n-1\n-1\n5:WORD5\n5:WORD5\n5\n5\n-1\n-1\n5:WORD6\n5:WORD6\n6\n6\n-1\n-1\n5:WORD7\n5:WORD7\n7\n7\n-1\n-1\n6:LOCAL7\n7\nmutant\n6:MUTANT\n-1\nfalse|number\n", stderr ""
+    oracle_test.go:776: JavaScript backend: stdout differs
+        node:    exit 0, stdout "5:WORD0\n5:WORD0\n0\n0\n-1\n-1\n5:WORD1\n5:WORD1\n1\n1\n-1\n-1\n5:WORD2\n5:WORD2\n2\n2\n-1\n-1\n5:WORD3\n5:WORD3\n3\n3\n-1\n-1\n5:WORD4\n5:WORD4\n4\n4\n-1\n-1\n5:WORD5\n5:WORD5\n5\n5\n-1\n-1\n5:WORD6\n5:WORD6\n6\n6\n-1\n-1\n5:WORD7\n5:WORD7\n7\n7\n-1\n-1\n6:LOCAL7\n7\nmissing\n-1\n-1\nfalse|number\n", stderr ""
+        backend: exit 0, stdout "5:WORD0\n5:WORD0\n0\n0\n-1\n-1\n5:WORD1\n5:WORD1\n1\n1\n-1\n-1\n5:WORD2\n5:WORD2\n2\n2\n-1\n-1\n5:WORD3\n5:WORD3\n3\n3\n-1\n-1\n5:WORD4\n5:WORD4\n4\n4\n-1\n-1\n5:WORD5\n5:WORD5\n5\n5\n-1\n-1\n5:WORD6\n5:WORD6\n6\n6\n-1\n-1\n5:WORD7\n5:WORD7\n7\n7\n-1\n-1\n6:LOCAL7\n7\nmutant\n6:MUTANT\n-1\nfalse|number\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a (0.53s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.555s
+FAIL

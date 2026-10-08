@@ -1,0 +1,31 @@
+=== RUN   TestNullableObjectStorageViewOutcomes
+=== RUN   TestNullableObjectStorageViewOutcomes/array
+    scout_string_number_test.go:27: gate cache node miss
+    scout_string_number_test.go:34: /workspace/adamic/docs/step-17-unions/probes/storage/array.a:3:52: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet
+=== RUN   TestNullableObjectStorageViewOutcomes/field
+    scout_string_number_test.go:27: gate cache node miss
+    scout_string_number_test.go:34: /workspace/adamic/docs/step-17-unions/probes/storage/field.a:3:57: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet
+=== RUN   TestNullableObjectStorageViewOutcomes/callable
+    scout_string_number_test.go:27: gate cache node miss
+    scout_string_number_test.go:34: /workspace/adamic/docs/step-17-unions/probes/storage/callable.a:3:45: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet
+=== RUN   TestNullableObjectStorageViewOutcomes/array-spread
+    scout_string_number_test.go:27: gate cache node miss
+    scout_string_number_test.go:34: /workspace/adamic/docs/step-17-unions/probes/storage/array-spread.a:3:56: stage 0 can't lower spreading an array of other elements yet
+=== RUN   TestNullableObjectStorageViewOutcomes/object-spread
+    scout_string_number_test.go:27: gate cache node miss
+    scout_string_number_test.go:34: /workspace/adamic/docs/step-17-unions/probes/storage/object-spread.a:3:61: stage 0 can't lower sharing nullable object storage with different null/undefined tags; copy values into tagged storage yet
+=== RUN   TestNullableObjectStorageViewOutcomes/lookup
+    scout_string_number_test.go:27: gate cache node miss
+    scout_string_number_test.go:34: /workspace/adamic/docs/step-17-unions/probes/storage/lookup.a:3:16: stage 0 can't lower a nullable object lookup without separate null/undefined tags yet
+--- PASS: TestNullableObjectStorageViewOutcomes (0.80s)
+    --- PASS: TestNullableObjectStorageViewOutcomes/array (0.16s)
+    --- PASS: TestNullableObjectStorageViewOutcomes/field (0.13s)
+    --- PASS: TestNullableObjectStorageViewOutcomes/callable (0.13s)
+    --- PASS: TestNullableObjectStorageViewOutcomes/array-spread (0.13s)
+    --- PASS: TestNullableObjectStorageViewOutcomes/object-spread (0.13s)
+    --- PASS: TestNullableObjectStorageViewOutcomes/lookup (0.13s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.811s

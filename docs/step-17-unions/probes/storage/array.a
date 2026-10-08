@@ -1,0 +1,4 @@
+interface Item { readonly name: string; }
+const old: readonly (Item | null)[] = [null];
+const view: readonly (Item | null | undefined)[] = old;
+console.log(`${view[0] === null}`);

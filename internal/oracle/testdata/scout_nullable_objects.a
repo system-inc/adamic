@@ -47,3 +47,7 @@ console.log(orDefault<Item>(null, defaultItem).text);
 console.log(orDefault<Item>({text: 'present'}, defaultItem).text);
 function optionalText(value: Item | null | undefined): string { return value?.text ?? 'missing'; }
 console.log(`${optionalText(null)}|${optionalText(undefined)}|${optionalText({text: 'optional'})}`);
+const fresh: readonly (Item | null | undefined)[] = [nullable(false), null, undefined, nullable(true)];
+console.log(`${describe(fresh[0])}|${describe(fresh[1])}|${describe(fresh[2])}|${describe(fresh[3])}`);
+const legacyArray: readonly (Item | null)[] = [null];
+console.log(`${typeof legacyArray[0]}|${typeof legacyArray[1]}`);

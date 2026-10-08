@@ -104,3 +104,97 @@ func (l *lowering) optionalNullableObject(read ir.Expression) ir.Expression {
 	absent := ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: held}, Right: ir.IsUndefined{Value: held}}
 	return b.finish("optional_nullable_object", ir.Conditional{Condition: absent, WhenTrue: ir.Undefined{Of: ir.Object}, WhenNot: ir.Narrow{Value: held, To: ir.Object}, Of: ir.Object})
 }
+
+// A value boundary can normalize a pointer. Shared fields, elements and callable
+// signatures cannot change their storage convention without a copy or adapter.
+func (l *lowering) nullableObjectSharedView(from, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+	from, to = l.present(l.concrete(from)), l.present(l.concrete(to))
+	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
+		return false
+	}
+	visited[[2]*checker.Type{from, to}] = true
+	shared := func(inside, viewed *checker.Type) bool {
+		inside, viewed = l.concrete(inside), l.concrete(viewed)
+		before, knownBefore := l.representation(inside)
+		after, knownAfter := l.representation(viewed)
+		if knownBefore && knownAfter && before != after &&
+			(before == ir.Object && l.includesNull(inside) && after == ir.Union ||
+				after == ir.Object && l.includesNull(viewed) && before == ir.Union) {
+			return true
+		}
+		return l.nullableObjectSharedView(inside, viewed, visited)
+	}
+	a := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	b := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	if len(a) > 0 && len(b) > 0 {
+		for i, parameter := range a[0].Parameters() {
+			if i < len(b[0].Parameters()) && shared(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(b[0].Parameters()[i])) {
+				return true
+			}
+		}
+		return shared(l.checker.GetReturnTypeOfSignature(a[0]), l.checker.GetReturnTypeOfSignature(b[0]))
+	}
+	if l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+		a, b := l.typeArguments(from), l.typeArguments(to)
+		for i := range a {
+			if i < len(b) && shared(a[i], b[i]) {
+				return true
+			}
+		}
+		return false
+	}
+	for _, field := range l.checker.GetPropertiesOfType(to) {
+		if field.Flags&ast.SymbolFlagsMethod != 0 {
+			continue
+		}
+		if previous := l.checker.GetPropertyOfType(from, field.Name); previous != nil && shared(l.checker.GetTypeOfSymbol(previous), l.checker.GetTypeOfSymbol(field)) {
+			return true
+		}
+	}
+	return false
+}
+
+func freshNullableObjectStorage(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	if node.Kind != ast.KindArrayLiteralExpression && node.Kind != ast.KindObjectLiteralExpression {
+		return false
+	}
+	for _, part := range literalParts(node) {
+		if part.Kind == ast.KindSpreadElement || part.Kind == ast.KindSpreadAssignment {
+			return false
+		}
+	}
+	return true
+}
+
+func (l *lowering) nullableObjectViewHazard(node *ast.Node, contextual *checker.Type) bool {
+	if !freshNullableObjectStorage(node) && l.nullableObjectSharedView(l.checker.GetTypeAtLocation(node), contextual, map[[2]*checker.Type]bool{}) {
+		return true
+	}
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindObjectLiteralExpression {
+		for _, part := range literalParts(node) {
+			if part.Kind == ast.KindSpreadAssignment && l.nullableObjectSharedView(l.checker.GetTypeAtLocation(part.AsSpreadAssignment().Expression), contextual, map[[2]*checker.Type]bool{}) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// These existing typeof paths retain the lookup slot's presence until it is
+// classified. An ordinary nullable pointer lookup loses that distinction.
+func nullableObjectLookupTypeOf(node *ast.Node, value ir.Expression) bool {
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	if parent == nil || parent.Kind != ast.KindTypeOfExpression {
+		return false
+	}
+	switch value.(type) {
+	case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
+		return true
+	}
+	return false
+}

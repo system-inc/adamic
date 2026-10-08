@@ -1,0 +1,37 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_stale_field.a (0.69s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/taste_stage3_representations.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_fields.a (0.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_string_number_fields_locals.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_object_stale_field.a (0.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_boxed_scalar_stale_field.a (0.52s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.329s

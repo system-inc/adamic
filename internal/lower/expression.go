@@ -206,7 +206,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	value, err := l.value(node)
 	if err == nil {
+		if value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {
+			return nil, l.notYet(node, "a nullable object lookup without separate null/undefined tags")
+		}
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if l.nullableObjectViewHazard(node, contextual) {
+				return nil, l.notYet(node, "sharing nullable object storage with different null/undefined tags; copy values into tagged storage")
+			}
 			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
 				return nil, err
 			}
@@ -536,7 +542,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 				parent = parent.Parent
 			}
-			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
+			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression) || unionEqualityObservation(node) || l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0
 			if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
 				// Calls and captured writes can invalidate the checker's narrowing. Check the
 				// held member before casting it, with ordinary IR shared by both backends.

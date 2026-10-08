@@ -281,7 +281,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
 		// kept weakly.
 		if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
-			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
+			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && (!slotless(declared) || declared == ir.Union) {
 				arrayType = contextual
 			}
 		}
@@ -504,7 +504,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Union, Optional: optional, Class: l.classOf(node)})
 				return l.checkedNullableString(node, read), nil
 			}
-			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored == ir.Union && of != ir.Union && !of.IsReference() {
+			if stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored == ir.Union && (of.Present() == ir.Number || of.Present() == ir.Boolean || of == ir.String) {
 				read := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: ir.Union, Optional: optional, Class: l.classOf(node)})
 				return l.checkedBoxedScalarField(node, read, of), nil
 			}

@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a
+    oracle_test.go:770: stdout differs
+        node:   exit 0, stdout "item7|true\nnull|object|false\nundefined|undefined|false\nnull|object\nlegacy\nnull\nlegacy\nundefined\ntrue|item7\nlegacy\nnull\nitem7\nundefined\nnull\nitem7|true\nnull|object|false\nundefined|undefined|false\nnull|object\nlegacy\nnull\nlegacy\nundefined\ntrue|item7\nlegacy\nnull\nitem7\nundefined\nnull\ngeneric\ngeneric\npresent\nmissing|missing|optional\nnull|null|undefined|legacy\nobject|undefined\n", stderr ""
+        native: exit 0, stdout "item7|true\nnull|object|false\nundefined|undefined|false\nnull|object\nlegacy\nnull\nlegacy\nundefined\ntrue|item7\nlegacy\nnull\nitem7\nundefined\nnull\nitem7|true\nnull|object|false\nundefined|undefined|false\nnull|object\nlegacy\nnull\nlegacy\nundefined\ntrue|item7\nlegacy\nnull\nitem7\nundefined\nnull\ngeneric\ngeneric\npresent\nmissing|missing|optional\nnull|undefined|undefined|legacy\nobject|undefined\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.06s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_nullable_objects.a (0.96s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.032s
+FAIL
