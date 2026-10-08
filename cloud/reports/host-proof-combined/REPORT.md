@@ -1,6 +1,6 @@
 # Combined host proof
 
-24/25 adapted fixtures agree with Node on each backend and jointly. Pristine controls remain 16/25 on each backend. All 25 sources in both sets were rerun after the final compiler repair. The WASI host suite was run and is not green; its failures are listed in the latest recount below.
+24/25 adapted fixtures agree with Node on each backend and jointly. Pristine controls remain 16/25 on each backend. All 25 sources in both sets were rerun with generic-function-value 21e50844 and wasi-host-error-identity 6054117 merged. The WebAssembly host test suite passes, including the new Error identity oracle and tag-dropping mutant. Fixture 25 still refuses the conditional generic identity return at 1088:12.
 
 Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 9eba5d10. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
@@ -407,3 +407,30 @@ Final failing host tests:
 ```
 
 The Error-to-ErrnoException refusal occurs at node_fs_directory_symlink.a:5:42 and node_fs_directory_stat_options.a:19:46: optional errno absent from Error (adamic/no-optional-widening). Full exact output differences are preserved in the compressed WASI log. No full gate, full flow suite, full counts regeneration or macOS execution. Only codex/host-proof-combined is pushed, without rebase, force, main or area push.
+
+
+## Generic value and WASI Error identity recount
+
+Merged 21e50844 with merge commit 318553b0 and 6054117 with merge commit bb526abf. The expression conflict retains Promise/optional-intrinsic hooks and adds generic-function identity checks. The obsolete generic-value refusal test now checks an uncontextualized generic value; unrelated refusals already superseded by this proof remain removed.
+
+All adapted fixtures: 24/25 native, 24/25 JavaScript. All pristine controls: 16/25 on each backend. Adapted fixture 25 remains Refused on both backends at 1088:12:
+
+```
+adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)
+```
+
+Verified one-line reproducer (C lowering refuses at 1:190):
+
+```typescript
+function identity<T>(value: T): T { return value; } function lower(value: string): string { return value.toLowerCase(); } function choose(flag: boolean): (value: string) => string { return flag ? identity : lower; } console.log(choose(true)('X'));
+```
+
+Commands and results:
+- `go build -o /tmp/fs-combined-adamic ./cmd/adamic`: PASS.
+- `observe-disagreements.py --all` and pristine snapshot runner: complete all 25; exit 1 because the recorded refusals remain.
+- `go test ./internal/lower -run '^TestGenericFunctionValue' -count=1 -v`: PASS, 0.425s.
+- `go test ./internal/oracle -run '^TestGenericFunctionValueWrongResultMutant$' -count=1 -timeout 5m -v`: PASS, 19.094s. Wrong numeric specialization returns -1; Node stdout comparison catches it on both backends.
+- `ADAMIC_ORACLE_WASI=1 go test ./internal/oracle -run '^TestWASI(InputAgreesWithNode|HostRuntimeRefusals|FileAgreesWithNode|EmptySymlinkAgreesWithNode|HostErrorIdentity)$|^TestNodeFSDirectoryUnion|^TestOptionalWideningNodeParentheses$|^TestNonNullStorageReadinessMutants$|^TestMemoizeRegions$' -count=1 -timeout 15m -v`: PASS, 65.409s. Honest target refusals stay explicit; these are not claimed as successful WASI filesystem executions.
+- Host Error tag-dropping mutant caught by Node stdout; empty-symlink, static Stats/Dirent dispatch, missing WASI kind guard and storage-readiness mutants also pass their expected failure checks.
+
+Raw logs are compressed in logs/fs_last_*.log.gz. No full `go test ./...`, full counts regeneration or macOS gate was run. This remains a proof branch, never a main or area landing; no force push or rebase.
