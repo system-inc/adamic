@@ -1,0 +1,16 @@
+=== RUN   TestProfileSnapshotsAgree
+    performance_test.go:18: full corpus: 2790 cases before gate sampling
+    performance_test.go:18: corpus repository: 1696 tracked JSON files; checked against Git HEAD
+    performance_test.go:18: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    performance_test.go:18: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    performance_test.go:18: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    performance_test.go:18: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    performance_test.go:19: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 2790 texts in 19.020s
+        --- PASS: TestAdamicJSONAudit (20.78s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	20.813s
+    performance_test.go:28: 2 profiled snapshots agree on 2790 texts, 163928745 answer bytes
+--- PASS: TestProfileSnapshotsAgree (137.52s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	137.598s

@@ -152,13 +152,20 @@ static chunk *new_chunk(size_t class) {
 static void drain_remote(chunk *each);
 
 static void *take(size_t class, uint32_t *number) {
-	// Full chunks may have remote frees waiting without being on a giving list.
-	if (giving[class] == NULL) {
-		for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) {
-			drain_remote(each);
+	// Remote frees require a second heap thread. Avoid walking every owned chunk
+	// (and exchanging empty queues) while a serial program fills its size classes.
+	// The count is monotonic: once another thread has an identity, keep draining.
+	// A concurrent first remote free may miss this pass, just as it may arrive
+	// after an exchange; a later allocation or thread cleanup drains it.
+	if (atomic_load_explicit(&thread_count, memory_order_relaxed) > 1) {
+		// Full chunks may have remote frees waiting without being on a giving list.
+		if (giving[class] == NULL) {
+			for (chunk *each = owned_chunks; each != NULL; each = each->owned_next) {
+				drain_remote(each);
+			}
+		} else {
+			drain_remote(giving[class]);
 		}
-	} else {
-		drain_remote(giving[class]);
 	}
 	size_t size = (class + 1) * GRANULE;
 	chunk *each = giving[class];

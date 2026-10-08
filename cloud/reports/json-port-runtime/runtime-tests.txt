@@ -1,0 +1,40 @@
+=== RUN   TestFreedValuesAreCaughtWithSlabs
+=== PAUSE TestFreedValuesAreCaughtWithSlabs
+=== RUN   TestSizeClassesShareTheirChunks
+=== PAUSE TestSizeClassesShareTheirChunks
+=== RUN   TestParallelMemory
+=== PAUSE TestParallelMemory
+=== RUN   TestQuarantineCatchesAStaleReadOfAReusedSlot
+=== PAUSE TestQuarantineCatchesAStaleReadOfAReusedSlot
+=== CONT  TestFreedValuesAreCaughtWithSlabs
+=== CONT  TestParallelMemory
+=== RUN   TestParallelMemory/asan
+=== CONT  TestQuarantineCatchesAStaleReadOfAReusedSlot
+=== CONT  TestSizeClassesShareTheirChunks
+    heap_test.go:126: peak 7600 KiB through every class, 7144 KiB at one size
+--- PASS: TestSizeClassesShareTheirChunks (3.75s)
+=== NAME  TestQuarantineCatchesAStaleReadOfAReusedSlot
+    slab_quarantine_test.go:61: without quarantine: exit <nil>, stdout "slot reused\nstale length 40\n", first sanitizer line ""
+=== NAME  TestParallelMemory/asan
+    parallel_test.go:90: harness threads=4 arguments=[] runs=1 elapsed=676.518439ms
+=== RUN   TestParallelMemory/asan_slabs
+=== NAME  TestQuarantineCatchesAStaleReadOfAReusedSlot
+    slab_quarantine_test.go:61: with quarantine: exit exit status 1, stdout "slot quarantined\n", first sanitizer line "==9644==ERROR: AddressSanitizer: use-after-poison on address 0x7e3e379e0870 at pc 0x55d134315bad bp 0x7ffe7a1b7600 sp 0x7ffe7a1b75f8"
+--- PASS: TestQuarantineCatchesAStaleReadOfAReusedSlot (12.79s)
+--- PASS: TestFreedValuesAreCaughtWithSlabs (12.81s)
+=== NAME  TestParallelMemory/asan_slabs
+    parallel_test.go:90: harness threads=4 arguments=[] runs=1 elapsed=505.313749ms
+=== RUN   TestParallelMemory/count
+    parallel_test.go:90: harness threads=4 arguments=[] runs=1 elapsed=95.76149ms
+=== RUN   TestParallelMemory/malloc
+    parallel_test.go:90: harness threads=4 arguments=[] runs=1 elapsed=82.490194ms
+=== RUN   TestParallelMemory/tsan
+    parallel_test.go:90: harness threads=4 arguments=[] runs=3 elapsed=3.698644438s
+--- PASS: TestParallelMemory (28.17s)
+    --- PASS: TestParallelMemory/asan (7.32s)
+    --- PASS: TestParallelMemory/asan_slabs (6.02s)
+    --- PASS: TestParallelMemory/count (3.45s)
+    --- PASS: TestParallelMemory/malloc (3.41s)
+    --- PASS: TestParallelMemory/tsan (7.97s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	28.174s
