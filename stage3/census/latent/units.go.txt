@@ -1,0 +1,199 @@
+// Independent body units exist only in the no-output measurement overlay.
+package lower
+
+import (
+	"context"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+type latentCandidate struct {
+	node        *ast.Node
+	parent, top string
+	depth       int
+	ancestors   map[*ast.Node]bool
+}
+
+func latentCandidates(program *load.Program, file *ast.SourceFile) []latentCandidate {
+	result := []latentCandidate{}
+	var nested func(*ast.Node, string, string, int, map[*ast.Node]bool)
+	nested = func(node *ast.Node, parent, top string, depth int, ancestors map[*ast.Node]bool) {
+		result = append(result, latentCandidate{node, parent, top, depth, ancestors})
+		next := make(map[*ast.Node]bool, len(ancestors)+1)
+		for key, value := range ancestors {
+			next[key] = value
+		}
+		next[node] = true
+		latentNestedDeclarations(node.Body(), func(child *ast.Node) bool { nested(child, program.Where(node), top, depth+1, next); return false })
+	}
+	for _, node := range file.Statements.Nodes {
+		if node.Kind == ast.KindFunctionDeclaration {
+			nested(node, "", program.Where(node), 0, map[*ast.Node]bool{})
+		} else {
+			result = append(result, latentCandidate{node, "", program.Where(node), 0, nil})
+			latentNestedDeclarations(node, func(child *ast.Node) bool {
+				nested(child, program.Where(node), program.Where(node), 0, map[*ast.Node]bool{})
+				return false
+			})
+		}
+	}
+	return result
+}
+
+// Register declarations throughout diagnosed containers without attempting their
+// bodies. This establishes sibling names, not a proof that closures can compile.
+func (l *lowering) latentRegisterNested(files []*ast.SourceFile) {
+	for _, file := range files {
+		for _, candidate := range latentCandidates(l.program, file) {
+			node := candidate.node
+			if node.Kind != ast.KindFunctionDeclaration || node.Name() == nil {
+				continue
+			}
+			symbol := l.symbol(node.Name())
+			if symbol == nil {
+				continue
+			}
+			if len(node.TypeParameters()) > 0 {
+				l.generics[symbol] = node
+				continue
+			}
+			if _, exists := l.functions[symbol]; exists {
+				continue
+			}
+			index := len(l.result.Functions)
+			l.functions[symbol] = index
+			l.result.Functions = append(l.result.Functions, ir.Function{Name: node.Name().Text()})
+			l.latentDeclarations[index] = node
+		}
+	}
+}
+
+// Seed only a read's actual ancestor binding, using its checked type. Unsupported
+// representations are still reported at the read; no ancestor initializer runs.
+func (l *lowering) latentLexicalLocal(identifier *ast.Node, symbol *ast.Symbol) {
+	if symbol == nil || l.latentAncestors == nil {
+		return
+	}
+	if _, exists := l.locals[symbol]; exists {
+		return
+	}
+	declaration := symbol.ValueDeclaration
+	if declaration == nil {
+		return
+	}
+	if declaration.Kind != ast.KindVariableDeclaration && declaration.Kind != ast.KindParameter && declaration.Kind != ast.KindBindingElement {
+		return
+	}
+	owner := declaration.Parent
+	for owner != nil && owner.Kind != ast.KindFunctionDeclaration && owner.Kind != ast.KindFunctionExpression && owner.Kind != ast.KindArrowFunction {
+		owner = owner.Parent
+	}
+	if !l.latentAncestors[owner] || declaration.Name() == nil || !ast.IsIdentifier(declaration.Name()) {
+		return
+	}
+	outer := l.functionIndex
+	l.functionIndex = -1
+	if owner.Name() != nil {
+		if index, exists := l.functions[l.symbol(owner.Name())]; exists {
+			l.functionIndex = index
+		}
+	}
+	_, err := l.declareLocal(declaration.Name())
+	l.functionIndex = outer
+	if err != nil && l.unlowerable == nil {
+		l.unlowerable = err
+	}
+}
+
+func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+	for _, file := range program.Files() {
+		latentFindings = nil
+		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
+		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
+		checker, release := program.Checker(ctx, file)
+		fresh := func() *lowering {
+			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+		}
+		func() {
+			defer func() {
+				if failure := recover(); failure != nil {
+					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(file.AsNode()), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
+				}
+			}()
+			latentRecord(fresh().latentRefuse(file))
+		}()
+		// Registration is prepared once per file, then deep-copied per attempted unit.
+		base := fresh()
+		base.noteInheritance(program.Files())
+		base.noteAccessorNames(program.Files())
+		base.latentRegister(program.Files())
+		base.latentRegisterNested(program.Files())
+		for _, candidate := range latentCandidates(program, file) {
+			node := candidate.node
+			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
+			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "attempted", CheckerDiagnostics: []string{}, Parent: candidate.parent, Top: candidate.top, Depth: candidate.depth}
+			if node.Name() != nil {
+				unit.Name = node.Name().Text()
+			}
+			if node.Kind == ast.KindFunctionDeclaration && node.Body() != nil {
+				unit.BodyStart, unit.BodyEnd = node.Body().Pos(), node.Body().End()
+				diagnostics := program.LatentOwnDiagnosticsIn(node.Body())
+				if len(diagnostics) > 0 {
+					unit.CheckerDiagnostics = diagnostics
+					unit.Status = "split_checker_body"
+					record.Units = append(record.Units, unit)
+					continue
+				}
+			}
+			func() {
+				defer func() {
+					if failure := recover(); failure != nil {
+						unit.Status = "panic"
+						latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(node), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
+						latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "Boundary", Where: program.Where(node), Reason: "unit panic; continued at next declaration", Text: fmt.Sprint(failure), Start: node.Pos(), End: node.End()})
+					}
+				}()
+				l := base.latentSnapshot()
+				l.latentAncestors = candidate.ancestors
+				if node.Kind != ast.KindFunctionDeclaration {
+					_, err := l.statement(node)
+					latentRecord(err)
+					return
+				}
+				if node.Name() == nil {
+					latentRecord(l.notYet(node, "an anonymous function declaration"))
+					return
+				}
+				index, exists := l.functions[l.symbol(node.Name())]
+				if !exists {
+					index = len(l.result.Functions)
+					l.result.Functions = append(l.result.Functions, ir.Function{Name: node.Name().Text()})
+					l.functions[l.symbol(node.Name())] = index
+				}
+				err := l.lowerFunction(index, node, -1)
+				latentRecord(err)
+				latentRecord(l.unlowerable)
+				if err != nil {
+					start, end := unit.BodyStart, unit.BodyEnd
+					if end <= start {
+						start, end = node.Pos(), node.End()
+					}
+					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "Boundary", Where: program.Where(node), Reason: "function signature or prologue failed; continued at next declaration", Text: err.Error(), Start: start, End: end})
+				}
+			}()
+			record.Units = append(record.Units, unit)
+		}
+		release()
+		seen := map[LatentFinding]bool{}
+		record.Findings = []LatentFinding{}
+		for _, finding := range latentFindings {
+			if !seen[finding] {
+				seen[finding] = true
+				record.Findings = append(record.Findings, finding)
+			}
+		}
+		emit(record)
+	}
+}
