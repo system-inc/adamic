@@ -61,9 +61,10 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
-		// Reflection cannot use a widened view: a hidden field can have another representation.
+		// Value reflection cannot use a widened view: hidden fields can have another representation.
+		// hasOwn only tests named presence and never reads a hidden value.
 		// A plain const's literal initializer proves the complete shape, including field presence.
-		if !((name == "keys" || name == "assign") && l.literalObjectKeys(written[0], 0)) && !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		if name != "hasOwn" && !((name == "keys" || name == "assign") && l.literalObjectKeys(written[0], 0)) && !l.exactObject(written[0], 0) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])
@@ -77,7 +78,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		switch name {
 		case "hasOwn":
 			key := ast.SkipParentheses(written[1])
-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
+			if key.Kind != ast.KindStringLiteral || strings.ContainsRune(key.Text(), 0) || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
 				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
 			}
 			keyValue, err := l.expression(key)
@@ -104,7 +105,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 				element = pair[1]
 			}
 			call.Element, _ = l.representation(element)
-			if call.Element != ir.Number && call.Element != ir.String && call.Element != ir.Boolean {
+			if call.Element != ir.Number && call.Element != ir.String && call.Element != ir.Boolean && call.Element != ir.MaybeNumber {
 				return refused("tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound")
 			}
 			if declaration := l.enumObject(written[0]); declaration != nil {

@@ -140,3 +140,52 @@ func init() {
 		lowers, checked bool
 	}{"internal/oracle/testdata/optional_field_checked_copy.a", true, true})
 }
+
+// This restores the old plain-object branch of class key enumeration. It must
+// compile and finish cleanly; only the source Node observation catches its list.
+func TestOptionalFieldAliasCatchesStaticEnumeration(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/optional_field_alias.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := native.C(program)
+	mutant := strings.ReplaceAll(source, "adamic_class_object_keys(", "mutant_static_keys(")
+	if mutant == source {
+		t.Fatal("static enumeration mutant target absent")
+	}
+	helper := `
+#include "adamic.h"
+#include <string.h>
+static adamic_array *mutant_static_keys(const adamic_object *object) {
+ const adamic_shape *shape = object->shape;
+ adamic_array *keys = adamic_array_new(shape->count, true);
+ for (size_t index = 0; index < shape->count; index++) {
+  const char *name = shape->names[adamic_public_index(shape, index)];
+  adamic_string *key = adamic_string_allocate(strlen(name));
+  memcpy((char *)key->bytes, name, key->length);
+  adamic_array_push(keys, (adamic_value){.reference = key});
+ }
+ return keys;
+}
+`
+	expected := onNode(t, path)
+	for _, sanitize := range []bool{false, true} {
+		binary := filepath.Join(t.TempDir(), "static-keys")
+		if err := native.Build(helper+mutant, binary, native.Options{Sanitize: sanitize}); err != nil {
+			t.Fatal(err)
+		}
+		got := execute(t, binary)
+		if got.exitCode != 0 || len(got.stderr) != 0 {
+			t.Fatalf("mutant must finish cleanly: %d %s", got.exitCode, got.stderr)
+		}
+		if disagreement(expected, got) == "" {
+			t.Fatal("static key list escaped Node comparison")
+		}
+		t.Logf("Node caught static enumeration, sanitize=%t: %q", sanitize, got.stdout)
+	}
+}

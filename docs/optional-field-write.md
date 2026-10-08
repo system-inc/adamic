@@ -181,3 +181,49 @@ Not covered: the entire repository/stage-1 test gate, Darwin or WASI execution,
 performance measurements, optional boolean/mixed-union layout extensions,
 arbitrary dynamic keys, and retroactive reservation through widened aliases.
 Developer-tools generated-program reruns were not run, as requested.
+
+## Alias enumeration follow-up, October 8
+
+The probe at codex/views-lazy-admission a0cc0afd4 exposed a wrong-output exit-0
+case on 86b3fe99 that the earlier fixture set missed. Its presence/alias.a is
+preserved verbatim as internal/oracle/testdata/optional_field_alias.a. Node and
+backend JavaScript omit the deleted key; native's plain-object branch of
+adamic_class_object_keys enumerated the descriptor without consulting presence.
+
+Plain objects now delegate to adamic_object_keys even when emitted through the
+class/ObjectKeys path. There is no binding-local static key exemption: runtime
+ranks determine absence and insertion order through all aliases. Class public
+and static descriptors retain their existing path. Plain quoted # names remain
+public; the shared key enumerator must not mistake them for private identifiers.
+The existing class_features_private.a and library_for_in.a controls hold this.
+
+Object.hasOwn on interface-annotated values is included as a small fix. It does
+not read values, so it does not need a complete-shape proof. Present plain-object,
+declared literal-key and private-name checks remain, with NUL names refused.
+Values/entries still require their exact shape and homogeneous representation.
+Homogeneous number | undefined values/entries are admitted using the existing
+packed-number runtime path so the requested entries control can preserve present
+undefined. Optional fields and hidden heterogeneous views remain refused there.
+
+The variants exercise deletion through an optional-annotated literal binding
+observed through its alias, entries and values after alias deletion, spread after
+deletion, present undefined after reinsertion, insertion order with a second key,
+and hasOwn through an interface on initially absent and later present undefined.
+A non-optional literal field cannot itself be deleted under this checker:
+TS2790 requires an optional operand. The direct-binding control therefore declares
+its literal binding optional, with no checker option changed.
+
+TestOptionalFieldAliasCatchesStaticEnumeration restores the previous plain-object
+static descriptor list. Source Node catches its exact original wrong stdout:
+false / [first] / false, then true / [first] / true. Both release and ASan/UBSan
+mutants exit 0 with empty stderr. Focused lowering/oracle and mutant checks passed
+(/tmp/optional-alias-focus3.log); the final variants passed 0.538s; the quoted-#
+and alias controls passed 16.491s (/tmp/optional-alias-prefix-control.log).
+Linux counts regenerated in 39.072s (/tmp/optional-alias-counts-complete.log),
+adding only two rows: 10/10/9/20/6/0 and 69/69/29/96/16/0. Existing rows are
+unchanged. Stage 3 update check passed 19.835s with no record changes.
+
+The complete uncached lower/native/oracle/stage3 gate is running on fixed sources
+at this checkpoint. Vet, formatting and whitespace checks pass. No protected
+emit.go/lower.go hooks were needed. Full repository/stage-1 tests, Darwin/WASI
+execution and performance measurements remain outside this follow-up.

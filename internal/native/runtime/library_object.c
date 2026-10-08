@@ -101,7 +101,8 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  adamic_array *keys = adamic_array_new(object->shape->count, true);
  for (size_t at = 0; at < object->shape->count; at++) {
   const char *name = object->shape->names[indices[at]];
-  if (name[0] == '#' || adamic_object_orders(object)[indices[at]] == 0) continue;
+  // Quoted # names are public on plain objects; class descriptors handle private storage.
+  if (adamic_object_orders(object)[indices[at]] == 0) continue;
   adamic_array_push(keys, (adamic_value){.reference = key_string(name)});
  }
  free(indices);

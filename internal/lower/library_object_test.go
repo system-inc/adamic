@@ -42,7 +42,6 @@ func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 		`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.entries(view);`,
 		`Object.assign({value:1}, {extra:2});`,
 		`function keys(source:{value:number}|undefined):string[] { return Object.keys({...source}); }`,
-		`function own(object:{value?:number}):boolean { return Object.hasOwn(object,'value'); }`,
 		`const object={value:1}; Object.freeze(object); try { object.value=2; } catch { console.log('caught'); }`,
 		`Object.groupBy([1,2], (value:number):string => value===1 ? 'one' : 'other');`,
 	} {
@@ -54,5 +53,13 @@ func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 				t.Fatalf("got %v, want NotYet", err)
 			}
 		})
+	}
+}
+
+func TestObjectHasOwnInterface(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `function own(object:{value?:number}):boolean { return Object.hasOwn(object,'value'); }`)
+	if err != nil {
+		t.Fatal(err)
 	}
 }
