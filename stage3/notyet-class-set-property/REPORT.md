@@ -44,3 +44,11 @@ Each production mutant was applied temporarily, tested with its specific oracle 
 | Dereference optional receiver without null guard | UBSan null member access |
 
 The worker ownership audit fetched origin/codex/notyet-* and examined commits after the compiler base. Edits in object.go, census_small.go and refusals.go are minimal hooks or shared helpers; other workers' property, arrayMethodArguments, representation and callClosure functions were not edited.
+
+Structural method follow-up:
+
+Structural MethodSignature writes now carry SetProperty.OwnMethod. Both backends evaluate receiver then RHS, and require an existing own data slot before replacing its owned closure. An inherited class method would create an expando, so both backends stop with the same fixed-shape guard; the source Node fixture demonstrates the different JavaScript behavior for a ruling. Direct class method writes and inherited library methods retain their refusal.
+
+core.ts:1544/1545 now reach `reading map`, after the same earlier uncheckable cast. Those two root sites are census echoes of that failed initializer, not evidence that Map expandos have been implemented. sys.ts:1382 now reaches the structural call at 1387:49, owned by the statics worker. The representative method-storage stop is removed.
+
+The two additional oracle fixtures pass in both backends, sanitizers and release. All four additional mutants fail: rejecting MethodSignature storage stops lowering; dropping OwnMethod from the IR produces a backend/native disagreement; disabling either backend guard produces a disagreement. Focused tests also passed in internal/ir (call targets), internal/native (fields and inheritance), internal/lower (class features and optional widening), internal/javascript (no standalone tests), and oracle. TestCountsAreRecorded -args -update-counts passed in 46.121s. No runtime C files changed.
