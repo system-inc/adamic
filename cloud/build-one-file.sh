@@ -19,13 +19,15 @@ mkdir -p "${state}"
 
 measure() {
   local sha=$1 rows records
+  # The edits come from this checkout, copied over each run, since a slot's tools checkout moves.
+  scp -q "${here}/cloud/build-one-file-box.sh" "${box}:fast-gate/build-one-file-box.sh"
   rows=$(ssh "${box}" bash -s -- "${sha}" <<'BOX'
 set -euo pipefail
 sha=$1
 exec 9> ~/fast-gate/lock-2
 flock 9
 cpus=$(nproc --all)
-taskset -c "$((cpus / 2))-$((cpus - 1))" bash ~/fast-gate/tools-2/cloud/build-one-file-box.sh "${sha}"
+taskset -c "$((cpus / 2))-$((cpus - 1))" bash ~/fast-gate/build-one-file-box.sh "${sha}"
 BOX
 )
   records=${state}/records
