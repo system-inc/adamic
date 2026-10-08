@@ -1,0 +1,50 @@
+enum SyntaxKind { Identifier = 1, NumericLiteral = 2, FirstX = Identifier, LastX = NumericLiteral }
+enum MetadataFlags { None, Flag }
+interface Identifier { readonly flags: MetadataFlags; readonly kind: SyntaxKind.Identifier; readonly text: string }
+interface NumericLiteral { readonly flags: MetadataFlags; readonly kind: SyntaxKind.NumericLiteral; readonly value: number }
+type Node = Identifier | NumericLiteral;
+function equality(node: Node): string {
+    if (node.kind === SyntaxKind.Identifier) { return node.text; }
+    return `${node.value + 1}`;
+}
+function inequality(node: Node): string {
+    if (node.kind !== SyntaxKind.NumericLiteral) { return node.text; }
+    return `${node.value + 2}`;
+}
+function aliased(node: Node): string {
+    if (node.kind === SyntaxKind.FirstX) { return node.text; }
+    return `${node.value + 3}`;
+}
+function switched(node: Node): string {
+    switch (node.kind) {
+        case SyntaxKind.FirstX: return node.text;
+        case SyntaxKind.LastX: return `${node.value + 4}`;
+        default: return 'default';
+    }
+}
+const identifier: Identifier = { flags: MetadataFlags.None, kind: SyntaxKind.Identifier, text: 'identifier' };
+const number: NumericLiteral = { flags: MetadataFlags.Flag, kind: SyntaxKind.NumericLiteral, value: 10 };
+console.log(`${equality(identifier)} ${equality(number)}`);
+console.log(`${inequality(identifier)} ${inequality(number)}`);
+console.log(`${aliased(identifier)} ${aliased(number)}`);
+console.log(`${switched(identifier)} ${switched(number)}`);
+function kind(value: number): SyntaxKind { return value; }
+function defaultBranch(value: SyntaxKind): string {
+    switch (value) {
+        case SyntaxKind.Identifier: return 'identifier';
+        case SyntaxKind.NumericLiteral: return 'number';
+        default: return 'out-of-range';
+    }
+}
+console.log(defaultBranch(kind(42)));
+class ExactIdentifier {
+    readonly kind: SyntaxKind.Identifier = SyntaxKind.Identifier;
+    readonly flags: MetadataFlags = MetadataFlags.None;
+    readonly text: string = 'exact-class';
+}
+console.log(equality(new ExactIdentifier()));
+function casted(node: Node): string {
+    const view = node as Identifier;
+    return view.text;
+}
+console.log(casted(identifier));

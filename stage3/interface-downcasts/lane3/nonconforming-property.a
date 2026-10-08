@@ -1,0 +1,9 @@
+interface Base { readonly kind: 'identifier' | 'other'; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly ready: boolean; }
+const good = {kind: 'identifier' as const, ready: true};
+const wrong = {kind: 'identifier' as const, ready: 0};
+function read(value: Base): boolean { return (value as Identifier).ready; }
+const heldGood={child:good};
+const heldWrong={child:wrong};
+console.log(`${read(heldGood.child)}`);
+console.log(`${read(heldWrong.child)}`);

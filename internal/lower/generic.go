@@ -141,6 +141,7 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 // signatures and structural fields; a native representation alone loses those facts.
 // This is also where nullable representations can extend the key.
 func (l *lowering) genericTypeKey(proven *checker.Type) string {
+	proven = l.phantomArrayView(proven)
 	held, known := l.representation(proven)
 	if !known {
 		return "unread"
@@ -214,6 +215,17 @@ func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
 // so a generic function calling another with its own type parameter passes the concrete type on.
 func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
 	if declared == nil || instantiated == nil {
+		return
+	}
+	// Optional implementation parameters and results can wrap the same generic
+	// binder that the resolved overload exposes directly. Infer from the present
+	// member; an absent argument supplies no evidence about that binder.
+	if declared.Flags()&checker.TypeFlagsUnion != 0 && l.censusHasUndefined(declared) {
+		present := l.checker.GetNonNullableType(declared)
+		given := l.checker.GetNonNullableType(instantiated)
+		if present.Flags()&checker.TypeFlagsUnion == 0 && given.Flags()&checker.TypeFlagsNever == 0 {
+			l.inferTypes(present, given, into)
+		}
 		return
 	}
 	if declared.Flags()&checker.TypeFlagsTypeParameter != 0 {

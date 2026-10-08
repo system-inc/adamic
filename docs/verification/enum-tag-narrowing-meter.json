@@ -1,0 +1,71 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "count_definition": "unique (kind, where, reason, text) sites across all attempts",
+  "compilers": {
+    "before": "48c05d091f0a43c31cbe051b1d6578d99eeedf19",
+    "after": "c9cd9d6216b120c5cb7f70f912b8a2f2187f0d28"
+  },
+  "after_binary_sha256": "cb629bf109a61f20f197e8702b407ad888e5a18ae98c153b9cfd0493ca1ba18a",
+  "trees": {
+    "main": {
+      "input_ref": "origin/main",
+      "input_commit": "48c05d091f0a43c31cbe051b1d6578d99eeedf19",
+      "input_sha256": "7de8b2849c3e1d437ed222774ca24eb50d805b75f4aca101cb5eff2899b70bb9",
+      "source_files": 79,
+      "before_totals": {
+        "NotYet": 1470,
+        "Refused": 4684,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "after_totals": {
+        "NotYet": 1470,
+        "Refused": 3723,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "rows": {
+        "an object refinement using an open numeric enum as a literal tag": {
+          "before": 966,
+          "after": 0
+        },
+        "an ambiguous singleton numeric enum tag without a checked object view": {
+          "before": 0,
+          "after": 0
+        }
+      }
+    },
+    "area": {
+      "input_ref": "origin/area/stage3",
+      "input_commit": "b2c4549f60a79c6f38d312af06bee73a6102bdf4",
+      "input_sha256": "6294c141e351a80e6f8bf7cc2bfa3f0803546d98731c574b2e4e1cbd2146ed0d",
+      "source_files": 79,
+      "before_totals": {
+        "NotYet": 1468,
+        "Refused": 5059,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "after_totals": {
+        "NotYet": 1468,
+        "Refused": 3882,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "rows": {
+        "an object refinement using an open numeric enum as a literal tag": {
+          "before": 1182,
+          "after": 0
+        },
+        "an ambiguous singleton numeric enum tag without a checked object view": {
+          "before": 0,
+          "after": 0
+        }
+      }
+    }
+  }
+}

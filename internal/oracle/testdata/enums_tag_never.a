@@ -1,0 +1,16 @@
+enum SyntaxKind { Identifier = 1, NumericLiteral = 2, FirstX = Identifier }
+function kind(value: number): SyntaxKind { return value; }
+function show(value: SyntaxKind): void {
+    switch (value) {
+        case SyntaxKind.FirstX: return;
+        case SyntaxKind.NumericLiteral: return;
+        default: {
+            console.log('default');
+            const unreachable: never = value;
+            console.log('unreachable');
+        }
+    }
+}
+console.log('before');
+show(kind(42));
+console.log('after');

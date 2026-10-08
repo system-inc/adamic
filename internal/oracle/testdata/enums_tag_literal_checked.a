@@ -1,0 +1,12 @@
+enum AKind { A }
+enum BKind { B = 1 }
+interface A { readonly kind: AKind; readonly value: 'bad' }
+interface B { readonly kind: BKind; readonly value: 'good' | 'fine' }
+function numeric(): number { return 1; }
+const a: A = { kind: numeric(), value: 'bad' };
+function show(value: A | B): void {
+    if (value.kind === BKind.B) { console.log(value.value); }
+}
+console.log('before');
+show(a);
+console.log('after');

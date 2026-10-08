@@ -9,6 +9,7 @@ import (
 	"strings"
 	"testing"
 
+	"errors"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/bundled"
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
@@ -17,6 +18,8 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // The census is a type-relation inventory, not lowering or permission to compile unchecked code.
@@ -32,7 +35,7 @@ func TestOptionalWideningCensus(t *testing.T) {
 		t.Fatal(err)
 	}
 	directory := filepath.Dir(configPath)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)), nil, nil, osvfs.FS(), nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(configPath), nil, nil, osvfs.FS(), nil)
 	if config == nil || len(diagnostics) != 0 || len(config.Errors) != 0 {
 		t.Fatalf("config diagnostics: %v %v", diagnostics, config)
 	}
@@ -48,9 +51,22 @@ func TestOptionalWideningCensus(t *testing.T) {
 	}
 	defer output.Close()
 	encoder := json.NewEncoder(output)
+	var formatter *load.Program
+	admission := os.Getenv("OPTIONAL_WIDENING_ADMISSION") != ""
+	if admission {
+		path := filepath.Join(t.TempDir(), "formatter.a")
+		if err := os.WriteFile(path, []byte("export {};"), 0600); err != nil {
+			t.Fatal(err)
+		}
+		formatter, err = load.Load([]string{path})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	disposition := map[string]int{}
 	sites, files := 0, 0
 	for _, file := range program.GetSourceFiles() {
-		if file.IsDeclarationFile || !strings.HasPrefix(file.FileName().AsString(), directory+"/") {
+		if file.IsDeclarationFile || !strings.HasPrefix(string(file.FileName()), directory+"/") {
 			continue
 		}
 		files++
@@ -69,8 +85,24 @@ func TestOptionalWideningCensus(t *testing.T) {
 					File                                 string
 					Line, Column                         int
 					Kind, Property, Source, Target, Text string
+					Disposition, Diagnostic              string
 				}{
-					strings.TrimPrefix(file.FileName().AsString(), directory+"/"), line + 1, column + 1, node.Kind.String(), found.property, checker.TypeToString(found.source), checker.TypeToString(found.target), file.Text()[position:end],
+					strings.TrimPrefix(string(file.FileName()), directory+"/"), line + 1, column + 1, node.Kind.String(), found.property, checker.TypeToString(found.source), checker.TypeToString(found.target), file.Text()[position:end], "", "",
+				}
+				if admission {
+					audit := &lowering{checker: checker, program: formatter, result: &ir.Program{}}
+					_, err := audit.viewSchema(node, found.target)
+					row.Disposition = "ContractReady"
+					if err != nil {
+						row.Diagnostic = err.Error()
+						var refused *Refused
+						if errors.As(err, &refused) {
+							row.Disposition = "Refused"
+						} else {
+							row.Disposition = "NotYet"
+						}
+					}
+					disposition[row.Disposition]++
 				}
 				if err := encoder.Encode(row); err != nil {
 					t.Fatal(err)
@@ -84,5 +116,5 @@ func TestOptionalWideningCensus(t *testing.T) {
 		release()
 	}
 	fmt.Fprintf(output, "{\"summary\":{\"files\":%d,\"sites\":%d}}\n", files, sites)
-	t.Logf("%d files, %d optional-widening relation sites", files, sites)
+	t.Logf("%d files, %d optional-widening relation sites; target schema dispositions %v", files, sites, disposition)
 }

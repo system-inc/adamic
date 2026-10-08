@@ -1,0 +1,8 @@
+function score(point: { x: number; y?: number }): number {
+	return point.x + (point.y ?? 100);
+}
+const original = { x: 1, y: true };
+const view: { x: number } = original;
+console.log(`${score(view)}`);
+console.log(`${score({ x: 1 })}`);
+console.log(`${score({ x: 1, y: 2 })}`);

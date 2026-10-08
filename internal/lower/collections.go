@@ -49,7 +49,7 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 			}
 		}
 	}
-	if l.checker.IsArrayType(l.checker.GetTypeAtLocation(node)) {
+	if l.checker.IsArrayType(l.phantomArrayView(l.checker.GetTypeAtLocation(node))) {
 		element, err := l.elementType(node)
 		if err != nil {
 			return nil, 0, err
@@ -349,6 +349,9 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
+		value.View = sourceExpression(binding) + " (field " + field + ")"
+		value.ViewType = l.checker.TypeToString(fieldType)
+		value.ViewAllowed = l.viewLiterals(fieldType)
 		statements = append(statements, ir.Declare{Local: local, Value: value})
 	}
 	return statements, nil

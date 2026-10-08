@@ -1,0 +1,11 @@
+// A nested overload promises a Map its implementation does not return.
+function measure(): string {
+    function lookup(key: string, create: true): Map<string, number>;
+    function lookup(key: string, create: false): Map<string, number> | undefined;
+    function lookup(key: string, create: boolean): Map<string, number> | undefined {
+        console.log('called');
+        return key === 'never' && create ? new Map<string, number>() : undefined;
+    }
+    return typeof lookup('abc', true);
+}
+console.log(measure());

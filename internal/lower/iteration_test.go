@@ -80,16 +80,16 @@ func TestGeneratorsAreRefusedEvenWithoutYield(t *testing.T) {
 
 func TestLiteralMethodCapturesCannotMakeCycles(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `function make():void{
+	program, err := lowerSource(t, `function make():void{
  let holder:{read():number}|undefined;
  const value={read():number{return holder===undefined?0:1;}};
  holder=value;
  console.log('made');
  } make();`)
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "cycle") {
-		t.Fatalf("got %v, want a captured literal-method cycle refusal", err)
+	if err != nil || len(program.GraphTypes) == 0 {
+		t.Fatalf("want graph ownership for literal method captures, got %v", err)
 	}
+
 }
 
 func TestLiteralMethodViewsDoNotLoseThis(t *testing.T) {
@@ -99,9 +99,8 @@ func TestLiteralMethodViewsDoNotLoseThis(t *testing.T) {
 		"const own={value:1,read():number{return this.value;}};const view:{readonly value:number;read():number}=own;console.log(`${view.read()}`);",
 	} {
 		_, err := lowerSource(t, source)
-		var gap *NotYet
-		if !errors.As(err, &gap) || !strings.Contains(gap.What, "erases its receiver") {
-			t.Fatalf("got %v, want an explicit erased literal-method refusal", err)
+		if err != nil {
+			t.Fatalf("literal-method call must preserve its receiver: %v", err)
 		}
 	}
 }

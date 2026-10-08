@@ -1,0 +1,6 @@
+--- FAIL: TestOptionalWriteErasure (0.04s)
+    --- FAIL: TestOptionalWriteErasure/stored (0.04s)
+        optional_write_erasure_test.go:60: stored literal was counted unaliased
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.045s
+FAIL

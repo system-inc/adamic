@@ -129,6 +129,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 		}
 		object := e.own(ir.Object, e.spreadCopy(literal, source))
+		e.adoptGraphObject(object, literal)
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -136,10 +137,14 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		for index, field := range literal.Fields {
 			slot := e.temporary()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), e.cache())
+			cache := e.cache()
+			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldRepresentation(field.Value))
+			e.line("adamic_object_contracts(%s)[%s.index] = %d;", object, cache, field.Contract)
+			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
-				e.line("adamic_release(%s->reference);", slot)
-				e.line("%s->reference = %s;", slot, e.kept(values[index]))
+				e.dropIn(object, slot+"->reference")
+				e.line("%s->reference = %s;", slot, e.keptIn(object, values[index]))
 			} else {
 				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
 			}
@@ -166,11 +171,21 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		object = e.regionValue(fmt.Sprintf("adamic_object_new_in(region, &%s)", e.literalShape(literal)))
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
+		e.adoptGraphObject(object, literal)
+	}
+	if literal.RealType != "" {
+		e.line("%s->real_type = %s;", object, cString(literal.RealType))
 	}
 	if literal.Class != 0 {
 		e.line("%s->class = &adamic_class_%d;", object, literal.Class)
+		e.line("%s->real_type = %s;", object, cString(e.program.Classes[literal.Class-1].Name))
 	}
 	for index, field := range literal.Fields {
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldRepresentation(field.Value))
+		e.line("adamic_object_contracts(%s)[%d] = %d;", object, index, field.Contract)
+		if field.Uninitialized {
+			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
+		}
 		value := values[index]
 		if e.regionValues[value] {
 			// A value in the region is immortal while the region lives: held without a count.
@@ -178,7 +193,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			continue
 		}
 		if field.Value.Type().IsReference() {
-			value = e.kept(value)
+			value = e.keptIn(object, value)
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
@@ -223,7 +238,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
 	}
 	fields := fieldNames
-	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	key := strings.Join(names, ",") + "|" + fmt.Sprint(fieldTypes)
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}
@@ -263,12 +278,12 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 }
 
 // dispatchable reports whether a class's method can be called through an interface: each value it
-// takes and gives fits an adamic_value. One that doesn't (boolean | undefined, a union) can't be
+// takes and gives fits an adamic_value. One that doesn't (a union) can't be
 // passed to a function value either (lower's callClosure says not yet), so no call through an
 // interface reaches it with one, and it's left out of its class's table.
 func (e *emitter) dispatchable(function int) bool {
 	method := e.program.Functions[function]
-	slotless := func(valueType ir.Type) bool { return valueType == ir.MaybeBoolean || valueType == ir.Union }
+	slotless := func(valueType ir.Type) bool { return valueType == ir.Union }
 	for index, parameter := range method.Parameters {
 		if index > 0 && slotless(e.program.Locals[parameter].Type) {
 			return false
@@ -291,13 +306,13 @@ func (e *emitter) methodThunk(function int) string {
 	}
 	e.thunks[function] = true
 	method := e.program.Functions[function]
-	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments) {", name), "\t(void)arguments;"}
+	lines := []string{fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments, size_t argument_count) {", name), "\t(void)arguments;", "\t(void)argument_count;"}
 	values := []string{}
 	for index, parameter := range method.Parameters {
 		local := e.program.Locals[parameter]
 		value := "self"
 		if index > 0 {
-			value = unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index-1, member(local.Type)))
+			value = closureArgument(local.Type, index-1)
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
@@ -324,4 +339,64 @@ func (e *emitter) cache() string {
 	name := fmt.Sprintf("adamic_cache_%d", e.temporaries)
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
 	return name
+}
+
+// A checked view may read a field only from a generated layout that keeps its
+// actual type. Shape identity includes primitive types, not just reference bits.
+func (e *emitter) checkedFieldShape(object, name string, of ir.Type) string {
+	seen := map[string]bool{}
+	checks := []string{}
+	walkExpressions(e.program, func(expression ir.Expression) {
+		literal, ok := expression.(ir.ObjectLiteral)
+		if !ok || literal.Spread != nil {
+			return
+		}
+		for _, field := range literal.Fields {
+			if field.Name == name && field.Value.Type() == of {
+				shape := e.literalShape(literal)
+				if !seen[shape] {
+					seen[shape] = true
+					checks = append(checks, fmt.Sprintf("%s->shape == &%s", object, shape))
+				}
+			}
+		}
+	})
+	for _, class := range e.program.Classes {
+		fields := class.PublicFields
+		if !class.Literal {
+			fields = nil
+			for _, field := range class.Fields {
+				if !field.Private {
+					fields = append(fields, field)
+				}
+			}
+		}
+		for _, field := range fields {
+			if field.Name == name && field.Value.Type() == of {
+				shape := e.publicClassShape(class)
+				if !seen[shape] {
+					seen[shape] = true
+					checks = append(checks, fmt.Sprintf("%s->shape == &%s", object, shape))
+				}
+			}
+		}
+	}
+	if len(checks) == 0 {
+		return "false"
+	}
+	return object + " != NULL && (" + strings.Join(checks, " || ") + ")"
+}
+
+// Null and undefined share a null pointer physically, but an optional checked read
+// must accept only undefined. Keep that semantic distinction in the slot tag.
+func fieldRepresentation(value ir.Expression) int {
+	switch value := value.(type) {
+	case ir.Null:
+		return 12
+	case ir.Box:
+		if _, null := value.Value.(ir.Null); null {
+			return 12
+		}
+	}
+	return int(value.Type())
 }

@@ -1,0 +1,11 @@
+Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  8d550c837 Skip non-public members when resolving reverse-mapped types
+
+If you want to keep it by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> 8d550c837
+
+HEAD is now at d92d9bfee Merge upstream main (a1ef42b9e) into adamic: 15 upstream commits, among them #64159's typed file paths

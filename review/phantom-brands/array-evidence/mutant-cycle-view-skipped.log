@@ -1,0 +1,6 @@
+--- FAIL: TestPhantomArrayProofs (0.00s)
+    --- FAIL: TestPhantomArrayProofs/cycle (0.04s)
+        phantom_array_brands_test.go:87: got <nil>, want refusal containing adamic/cycle-capable
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.044s
+FAIL

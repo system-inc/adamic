@@ -23,14 +23,85 @@ func (l *lowering) enumStoredType(node *ast.Node) *checker.Type {
 	return nil
 }
 
+// Recover the full stored object union, including a never alias's initializer.
+func (l *lowering) enumRemainderType(node *ast.Node, seen map[*ast.Node]bool) *checker.Type {
+	node = ast.SkipParentheses(node)
+	if seen[node] {
+		return nil
+	}
+	seen[node] = true
+	stored := l.enumStoredType(node)
+	if stored != nil && stored.Flags()&checker.TypeFlagsNever == 0 {
+		return stored
+	}
+	if symbol := l.flagValueSymbol(node); symbol != nil && symbol.ValueDeclaration != nil && symbol.ValueDeclaration.Kind == ast.KindVariableDeclaration {
+		if initializer := symbol.ValueDeclaration.AsVariableDeclaration().Initializer; initializer != nil {
+			return l.enumRemainderType(initializer, seen)
+		}
+	}
+	return stored
+}
+
+func (l *lowering) enumObjectRemainder(node *ast.Node) (*checker.Type, string, *ast.Symbol) {
+	return l.enumObjectRemainderSeen(node, map[*ast.Node]bool{})
+}
+
+func (l *lowering) enumObjectRemainderSeen(node *ast.Node, seen map[*ast.Node]bool) (*checker.Type, string, *ast.Symbol) {
+	node = ast.SkipParentheses(node)
+	if seen[node] {
+		return nil, "", nil
+	}
+	seen[node] = true
+	if symbol := l.flagValueSymbol(node); symbol != nil && symbol.ValueDeclaration != nil && symbol.ValueDeclaration.Kind == ast.KindVariableDeclaration {
+		if initializer := symbol.ValueDeclaration.AsVariableDeclaration().Initializer; initializer != nil {
+			if stored, field, identity := l.enumObjectRemainderSeen(initializer, seen); stored != nil {
+				return stored, field, identity
+			}
+		}
+	}
+	stored := l.enumRemainderType(node, map[*ast.Node]bool{})
+	if stored == nil || stored.Flags()&checker.TypeFlagsUnion == 0 {
+		return nil, "", nil
+	}
+	for _, field := range l.checker.GetPropertiesOfType(stored) {
+		var first *checker.Type
+		unit, different, numeric := false, false, true
+		for _, member := range stored.Types() {
+			property := l.checker.GetPropertyOfType(member, field.Name)
+			if member.Flags()&checker.TypeFlagsObject == 0 || property == nil {
+				numeric = false
+				break
+			}
+			tag := l.checker.GetTypeOfSymbol(property)
+			unit = unit || tag.Flags()&checker.TypeFlagsUnit != 0
+			numeric = numeric && l.numericEnum(l.enumIdentity(tag))
+			if first == nil {
+				first = tag
+			} else {
+				different = different || first != tag
+			}
+		}
+		if unit && different && numeric && (l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever != 0 || l.enumTagValuesExcluded(node, l.flagValueSymbol(node), field.Name, stored)) {
+			return stored, field.Name, l.enumIdentity(first)
+		}
+	}
+	return nil, "", nil
+}
+
 // Follow the declared type, not the flow type that has already become never. A never alias
 // keeps its initializer's enum identity, but never acquires a runtime member proof.
 func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *ast.Symbol {
 	node = ast.SkipParentheses(node)
-	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || seen[node] {
+	if seen[node] {
 		return nil
 	}
 	seen[node] = true
+	if _, _, identity := l.enumObjectRemainder(node); identity != nil {
+		return identity
+	}
+	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 {
+		return nil
+	}
 	symbol := l.flagValueSymbol(node)
 	stored := l.enumStoredType(node)
 	if stored == nil {
@@ -96,6 +167,11 @@ func (l *lowering) enumNeverCheck(node *ast.Node, value ir.Expression, identity 
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "enum_never_value", Type: value.Type(), Function: function})
 	read := ir.Read{Local: local, Of: value.Type()}
 	var printed ir.Expression = ir.NumberToString{Value: read}
+	if value.Type() == ir.Object {
+		_, field, _ := l.enumObjectRemainder(node)
+		printed = ir.NumberToString{Value: ir.Property{Object: read, Name: field, Of: ir.Number}}
+		of = ir.Object
+	}
 	if value.Type().IsMaybe() {
 		printed = ir.MaybeToString{Value: read}
 	} else if value.Type() == ir.Union {

@@ -1,0 +1,16 @@
+enum AKind { A } enum BKind { B = 1 }
+interface Wide { readonly kind: AKind; readonly child?: { readonly ready: number }; readonly multiLine?: number; }
+interface Narrow { readonly kind: BKind; readonly child?: { readonly ready: boolean }; readonly multiLine?: boolean; }
+function show(v: Wide | Narrow): void {
+    if (v.kind === BKind.B) {
+        console.log('narrowed');
+        console.log(String(v.multiLine ?? false));
+        const alias = v.child;
+        if (alias !== undefined) console.log(String(alias.ready));
+    }
+}
+const present: Narrow = { kind: BKind.B, multiLine: true, child: { ready: true } };
+const absent: Narrow = { kind: BKind.B };
+show(present);
+show(absent);
+console.log('after');

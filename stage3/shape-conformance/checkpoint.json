@@ -1,0 +1,28 @@
+{
+  "status": "dependency checkpoint; eraser and adapted-tree conformance measurement not implemented",
+  "baseline_ledger_sha256": "15739c81ad33071014c88e0b4514b08c7562cb3191d0bd20e7df321fc2bc1cab",
+  "baseline_rows": 2936,
+  "baseline_buckets": {
+    "untagged": 1178,
+    "tagged": 1758
+  },
+  "baseline_outcomes": {
+    "undecidable": 2936
+  },
+  "baseline_reasons": {
+    "prior assertion is not a shape certificate": 18,
+    "parameter shape-flow set not proven": 2127,
+    "constructor needs initialized typed-shape certificate": 2,
+    "opaque/declared call needs boundary certificate": 58,
+    "factory/call needs construction and effects summary": 214,
+    "expression needs allocation/shape-flow analysis": 26,
+    "property/element shape-flow set not proven": 256,
+    "mutable binding needs assignment/points-to analysis": 50,
+    "destructured value needs shape-flow analysis": 90,
+    "binding has no allocation certificate": 72,
+    "conditional needs joined allocation sets": 23
+  },
+  "after_measurement": null,
+  "checks_erased": 0,
+  "limits": "The baseline is the existing pristine-source audit, verified against its ledger. It is not a new whole-program measurement of the adapted tree."
+}

@@ -1,0 +1,60 @@
+{
+  "typescript": "6.0.3",
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "ledger_sha256": "15739c81ad33071014c88e0b4514b08c7562cb3191d0bd20e7df321fc2bc1cab",
+  "counts": {
+    "tagged": {
+      "total": 1758,
+      "conforms": 0,
+      "conforms_if": 0,
+      "never": 0,
+      "undecidable": 1758
+    },
+    "untagged": {
+      "total": 1178,
+      "conforms": 0,
+      "conforms_if": 0,
+      "never": 0,
+      "undecidable": 1178
+    }
+  },
+  "reasons": {
+    "tagged": {
+      "mutable binding needs assignment/points-to analysis": 41,
+      "property/element shape-flow set not proven": 189,
+      "parameter shape-flow set not proven": 1297,
+      "opaque/declared call needs boundary certificate": 26,
+      "destructured value needs shape-flow analysis": 85,
+      "prior assertion is not a shape certificate": 2,
+      "factory/call needs construction and effects summary": 61,
+      "binding has no allocation certificate": 54,
+      "expression needs allocation/shape-flow analysis": 2,
+      "conditional needs joined allocation sets": 1
+    },
+    "untagged": {
+      "prior assertion is not a shape certificate": 16,
+      "parameter shape-flow set not proven": 830,
+      "constructor needs initialized typed-shape certificate": 2,
+      "opaque/declared call needs boundary certificate": 32,
+      "factory/call needs construction and effects summary": 153,
+      "expression needs allocation/shape-flow analysis": 24,
+      "property/element shape-flow set not proven": 67,
+      "mutable binding needs assignment/points-to analysis": 9,
+      "binding has no allocation certificate": 18,
+      "destructured value needs shape-flow analysis": 5,
+      "conditional needs joined allocation sets": 22
+    }
+  },
+  "boundary_syntax_counts": {
+    "Object.create": 4,
+    "require": 9,
+    "JSON.parse": 3,
+    "Object.assign": 1
+  },
+  "literal_candidates": 0,
+  "required_brand_sites": {
+    "tagged": 1661,
+    "untagged": 96
+  },
+  "limits": "Conservative evidence audit. No whole-program points-to, typed-layout, initialization, method-body or alias-effect certificate exists for this corpus. Declared interfaces are not treated as actual runtime shapes. Null check-field/depth entries mean unknown, not zero. Candidate literals are not admitted cast proofs."
+}

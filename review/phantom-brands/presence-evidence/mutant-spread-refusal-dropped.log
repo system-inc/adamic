@@ -1,0 +1,10 @@
+--- FAIL: TestPhantomArrayPresenceRefusals (0.00s)
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker:_undefined/object_spread (0.08s)
+        phantom_array_presence_test.go:32: got /tmp/adamic-gate/TestPhantomArrayPresenceRefusalsmarker_undefinedobject_spread537770708/001/main.a:1:108: stage 0 can't lower spreading a value yet, want Adamic 0.1 refuses presence of phantom array brand member marker via object spread; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker?:_undefined/object_spread (0.08s)
+        phantom_array_presence_test.go:32: got /tmp/adamic-gate/TestPhantomArrayPresenceRefusalsmarker_undefinedobject_sprea82251288/001/main.a:1:109: stage 0 can't lower spreading a value yet, want Adamic 0.1 refuses presence of phantom array brand member marker via object spread; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+    --- FAIL: TestPhantomArrayPresenceRefusals/marker:_void/object_spread (0.10s)
+        phantom_array_presence_test.go:32: got /tmp/adamic-gate/TestPhantomArrayPresenceRefusalsmarker_voidobject_spread2289547003/001/main.a:1:103: stage 0 can't lower spreading a value yet, want Adamic 0.1 refuses presence of phantom array brand member marker via object spread; read the brand member's undefined value without testing its presence; use a separate real field or Map for observable presence
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.724s
+FAIL

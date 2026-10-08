@@ -29,7 +29,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
-	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
@@ -63,18 +62,62 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
 	}
+	// Validate arguments before visiting their annotations, so a failed contract
+	// names the actual argument and parameter even for an inline arrow.
+	var contractError error
+	var contracts ast.Visitor
+	contracts = func(node *ast.Node) bool {
+		if contractError != nil {
+			return true
+		}
+		if node.Kind == ast.KindCallExpression {
+			contractError = l.predicateArguments(node)
+		}
+		if contractError == nil {
+			node.ForEachChild(contracts)
+		}
+		return contractError != nil
+	}
+	module.AsNode().ForEachChild(contracts)
+	if contractError != nil {
+		return contractError
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused {
-			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+		if err := l.phantomArrayPresenceRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.phantomArrayRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.phantomRefusal(node); err != nil {
+			found = err
 			return true
 		}
 		if node.Kind == ast.KindTypePredicate {
-			if err := l.provePredicate(node); err != nil {
+			found = l.predicateRefusal(node)
+			return found != nil
+		}
+		if err := l.refuseNodeRequire(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.nodeLibraryRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if refused, isRefused := refusals[node.Kind]; isRefused && !l.nodeProcessEnvironmentDelete(node) {
+			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+			return true
+		}
+		if node.Kind == ast.KindCallExpression {
+			if err := l.predicateArguments(node); err != nil {
 				found = err
 				return true
 			}
@@ -84,26 +127,15 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		checkedCast := false
-		if node.Kind == ast.KindAsExpression {
+		// A cast on a process path (process.stdout as {...}) is never lowered as a cast: processPath
+		// reads through it, and processValue lowers the complete path or refuses it.
+		if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" {
 			proof, err := l.castProof(node)
 			if err != nil {
 				found = err
 				return true
 			}
-			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
-		}
-		var assertion *ast.Node
-		if node.Kind == ast.KindPropertyDeclaration {
-			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
-				assertion = token
-			}
-		}
-		if node.Kind == ast.KindVariableDeclaration {
-			assertion = node.AsVariableDeclaration().ExclamationToken
-		}
-		if assertion != nil {
-			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
-			return true
+			checkedCast = proof.view || proof.lowering != castLoweringNone || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if node.Kind == ast.KindBinaryExpression {
 			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
@@ -135,7 +167,13 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) {
+		if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {
+			if err := l.nodeBufferUnsupportedUse(node); err != nil {
+				found = err
+				return true
+			}
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.nodeProcessMethodObservation(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {

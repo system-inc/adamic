@@ -1,0 +1,22 @@
+// Overload signatures inside a function body are type-only. The implementation
+// is the one runtime function, and an overload's narrower result is checked.
+function measure(create: boolean): number {
+    const maps = new Map<string, Map<string, number>>();
+    function lookup(key: string, create: true): Map<string, number>;
+    function lookup(key: string, create: false): Map<string, number> | undefined;
+    function lookup(key: string, create: boolean): Map<string, number> | undefined {
+        let result = maps.get(key);
+        if (create && result === undefined) {
+            result = new Map<string, number>();
+            result.set(key, key.length);
+            maps.set(key, result);
+        }
+        return result;
+    }
+    const made = lookup("abc", true);
+    const found = lookup(create ? "abc" : "missing", false);
+    return made.size + (found === undefined ? 10 : found.size + 100);
+}
+
+console.log(`${measure(true)}`);
+console.log(`${measure(false)}`);

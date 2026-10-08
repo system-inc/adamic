@@ -347,29 +347,65 @@ func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error) {
 	return ir.Call{Function: index, Arguments: []ir.Expression{object, key}, Returns: of}, true, nil
 }
 
+// A discriminant occurs in every variant, has a unit type in at least one,
+// differs between variants, and has actually changed in this refinement.
+// Identical metadata fields cannot be evidence for narrowing.
+func (l *lowering) enumTagDiscriminant(declared, observed *checker.Type, name string) bool {
+	declared = l.checker.GetNonNullableType(declared)
+	if declared.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	var first *checker.Type
+	unit, different, open, changed := false, false, false, false
+	members := 0
+	view := l.checker.GetPropertyOfType(observed, name)
+	if view == nil {
+		return false
+	}
+	here := l.checker.GetTypeOfSymbol(view)
+	for _, member := range declared.Types() {
+		if member.Flags()&checker.TypeFlagsObject == 0 {
+			return false
+		}
+		field := l.checker.GetPropertyOfType(member, name)
+		if field == nil {
+			return false
+		}
+		tag := l.checker.GetTypeOfSymbol(field)
+		members++
+		unit = unit || tag.Flags()&checker.TypeFlagsUnit != 0
+		open = open || l.openNumericEnumType(tag)
+		changed = changed || tag != here
+		if first == nil {
+			first = tag
+		} else {
+			different = different || first != tag
+		}
+	}
+	return members > 1 && unit && different && open && changed
+}
+
 func (l *lowering) enumRefusal(node *ast.Node) error {
-	if l.isExpression(node) {
-		if symbol := l.flagValueSymbol(node); symbol != nil {
-			declared := l.checker.GetTypeOfSymbol(symbol)
-			observed := l.checker.GetTypeAtLocation(node)
-			objectMembers := 0
-			if declared.Flags()&checker.TypeFlagsUnion != 0 {
-				for _, member := range declared.Types() {
-					if member.Flags()&checker.TypeFlagsObject != 0 {
-						objectMembers++
-					}
-				}
+	if l.isExpression(node) && (viewSite(node) || (node.Parent != nil && node.Parent.Kind == ast.KindAsExpression)) {
+		if member := l.enumMemberSlot(node); member != nil && l.numericEnum(l.symbol(member.Parent.Name())) && l.checker.GetTypeAtLocation(member.Parent.Name()).Flags()&checker.TypeFlagsUnion == 0 {
+			source := l.checker.GetTypeAtLocation(node)
+			literal := source.Flags()&checker.TypeFlagsNumberLiteral != 0 && !l.openNumericEnumType(source) && reflect.DeepEqual(source.AsLiteralType().Value(), l.checker.GetConstantValue(member))
+			origin := l.enumMemberOrigin(node, l.symbol(member.Parent.Name()), map[*ast.Node]bool{})
+			if !literal && !origin {
+				return &Refused{Where: l.program.Where(node), What: "an unproven value assigned to an explicit numeric enum member slot", Fix: "use the member constant or keep the whole enum type (adamic/enum-literal)"}
 			}
-			if objectMembers > 1 && declared.Flags()&checker.TypeFlagsUnion != 0 && observed != declared && observed.Flags()&checker.TypeFlagsObject != 0 {
-				for _, member := range declared.Types() {
-					for _, field := range l.checker.GetPropertiesOfType(member) {
-						tag := l.checker.GetTypeOfSymbol(field)
-						if l.openNumericEnumType(tag) {
-							return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
-						}
-					}
-				}
-			}
+		}
+	}
+
+	if l.isExpression(node) && viewSite(node) && node.Kind != ast.KindObjectLiteralExpression && node.Kind != ast.KindArrayLiteralExpression && node.Kind != ast.KindAsExpression {
+		if target := l.checker.GetContextualType(node, checker.ContextFlagsNone); target != nil && !l.enumMemberPromises(l.checker.GetTypeAtLocation(node), target, map[[2]*checker.Type]bool{}) {
+			return &Refused{Where: l.program.Where(node), What: "an unproven singleton numeric enum member field in an object view", Fix: "construct the member-tagged object or use a checked cast (adamic/enum-literal)"}
+		}
+	}
+
+	if remainder, _, _ := l.enumObjectRemainder(node); remainder != nil && viewSite(node) {
+		if target := l.checker.GetContextualType(node, checker.ContextFlagsNone); target != nil && target.Flags()&checker.TypeFlagsNever == 0 && !l.checker.IsTypeAssignableTo(remainder, target) {
+			return &Refused{Where: l.program.Where(node), What: "an open numeric enum object remainder seen as " + l.checker.TypeToString(target), Fix: "keep the full object union or check a member view before using its payload (adamic/enum-tag)"}
 		}
 	}
 
@@ -480,12 +516,15 @@ func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
 func (l *lowering) enumSwitchCovered(node *ast.Node) bool {
 	statement := node.AsSwitchStatement()
 	proven := l.checker.GetTypeAtLocation(statement.Expression)
-	if proven.Flags()&checker.TypeFlagsEnumLike == 0 {
+	if proven.Flags()&checker.TypeFlagsEnumLike == 0 || l.numericEnum(l.enumIdentity(proven)) {
 		return false
 	}
 	covered := map[any]bool{}
 	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
 		if clause.Kind == ast.KindDefaultClause {
+			if l.numericEnum(l.enumIdentity(proven)) {
+				return false
+			}
 			continue
 		}
 		test := clause.AsCaseOrDefaultClause().Expression

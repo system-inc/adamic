@@ -1,0 +1,20 @@
+enum AKind { A }
+enum BKind { B = 1 }
+interface A { readonly kind: AKind; readonly value: string }
+interface B { readonly kind: BKind; readonly value: number }
+function numeric(): number { return 42; }
+const a: A = { kind: numeric(), value: 'text' };
+function show(value: A | B): void {
+    switch (value.kind) {
+        case AKind.A: return;
+        case BKind.B: return;
+        default: {
+            console.log('default');
+            const unreachable: never = value;
+            console.log('unreachable');
+        }
+    }
+}
+console.log('before');
+show(a);
+console.log('after');

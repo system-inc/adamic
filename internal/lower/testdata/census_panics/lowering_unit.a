@@ -1,0 +1,4 @@
+enum Kind { A }
+function make(): void {
+  const table = { [Kind.A]: 'a' } satisfies Partial<Record<Kind, string>>;
+}

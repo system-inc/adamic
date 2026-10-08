@@ -172,6 +172,8 @@ func (b *builder) statement(at *ir.Statement) {
 		b.emit(at, 0, nil, b.uses(statement), nil)
 	case ir.SetProperty:
 		b.emit(at, 0, nil, b.uses(statement), nil)
+	case ir.AllocateEnvironment:
+		b.emit(at, 0, nil, nil, nil)
 	case ir.Declare:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), b.defines(statement.Local))
 	case ir.Assign:
@@ -446,7 +448,18 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				walk(value.Elem())
 			}
 		case reflect.Struct:
+			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
+				throws = true
+			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.ArrayHoles{}), reflect.TypeOf(ir.ArraySetLength{}):
+				throws = true
+			case reflect.TypeOf(ir.NodeHostCall{}):
+				throws = throws || value.Interface().(ir.NodeHostCall).Throws
+			case reflect.TypeOf(ir.PhantomMember{}):
+				if !value.Interface().(ir.PhantomMember).Optional {
+					throws = true
+				}
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true

@@ -1,0 +1,1940 @@
+{
+  "measurement": "measured on a checker-rejected program",
+  "count_definition": "unique (kind, where, reason, text) sites across all attempts",
+  "compilers": {
+    "baseline": "48c05d091f0a43c31cbe051b1d6578d99eeedf19",
+    "discriminant_checkpoint": "7b2579adb7cadedcf3c9292d74a9f71a67dfe82b",
+    "implementation": "488e6a050ac5f5a5d231b81724d819cbed19ee4c",
+    "payload_implementation": "720849c8c22cf9c2842cae2670adce128196be0f",
+    "merged_main": "ce0750f28ef3943057f1f852b3ae5d93e6c5d644"
+  },
+  "implementation_binary_sha256": "7d0593cd588006a92497f40473c2f4dacc88169d2f6a555f3b7ac0dfa4fb28e5",
+  "old_reason": "an object refinement using an open numeric enum as a literal tag",
+  "new_NotYet_prefix": "a checked numeric enum object view with an incompatible structured or optional payload field ",
+  "trees": {
+    "main": {
+      "input_ref": "origin/main",
+      "input_commit": "48c05d091f0a43c31cbe051b1d6578d99eeedf19",
+      "input_sha256": "7de8b2849c3e1d437ed222774ca24eb50d805b75f4aca101cb5eff2899b70bb9",
+      "source_files": 79,
+      "coverage_complete": true,
+      "before_totals": {
+        "NotYet": 1470,
+        "Refused": 4684,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "checkpoint_totals": {
+        "NotYet": 1470,
+        "Refused": 3824,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "final_totals": {
+        "NotYet": 1560,
+        "Refused": 3735,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 2
+      },
+      "final_panics": [
+        {
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:1:1",
+          "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName"
+        },
+        {
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:606:1",
+          "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName"
+        }
+      ],
+      "old_refusal_counts": {
+        "before": 966,
+        "checkpoint": 101,
+        "final": 0
+      },
+      "metadata_false_positives_removed": 865,
+      "candidate_discriminant_sites": 101,
+      "new_checked_view_NotYet_sites": 90,
+      "new_NotYet_at_checkpoint_locations": 90,
+      "checkpoint_locations_without_that_new_boundary": 11,
+      "other_checkpoint_locations_with_cast_refusal": 8,
+      "other_checkpoint_locations_without_findings": 3,
+      "new_NotYet_per_field": {
+        "_expressionBrand": 16,
+        "_jsDocTypeAssertionBrand": 2,
+        "_literalExpressionBrand": 3,
+        "_propertyAccessExpressionLikeQualifiedNameBrand": 20,
+        "elements": 1,
+        "escapedText": 3,
+        "expression": 3,
+        "left": 6,
+        "multiLine": 1,
+        "name": 3,
+        "parent": 24,
+        "statements": 4,
+        "tag": 2,
+        "textSourceNode": 2
+      },
+      "candidate_location_outcomes": [
+        {
+          "where": "src/compiler/binder.ts:1571:38",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:1571:43",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2477:66",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2477:75",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2479:67",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2479:76",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2481:72",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2481:81",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2492:41",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2492:50",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2495:42",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2495:51",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2498:79",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2498:88",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2499:101",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2499:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2499:71",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2499:92",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2500:35",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2500:44",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:943:100",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:943:109",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:2775:35",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:2775:40",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:2779:28",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:2779:33",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5245:38",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field textSourceNode"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5246:34",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field textSourceNode"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5256:58",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field name"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5257:51",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field name"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5261:30",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5263:24",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:895:42",
+          "findings": []
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:896:50",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _jsDocTypeAssertionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:896:93",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _jsDocTypeAssertionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:898:44",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:900:62",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:906:143",
+          "findings": []
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:913:64",
+          "findings": []
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:917:38",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:920:41",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:932:45",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:934:46",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:936:60",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:950:70",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:35",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:56:63",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:57:39",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:59:28",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/parenthesizerRules.ts:464:48",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/parenthesizerRules.ts:464:79",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/parenthesizerRules.ts:466:71",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/parenthesizerRules.ts:466:78",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:311:40",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:322:55",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:324:26",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:328:105",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:328:73",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:329:96",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:336:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:338:64",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:338:77",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:338:90",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:339:82",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/parser.ts:2369:49",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field tag"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/parser.ts:2369:69",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field tag"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/parser.ts:2374:64",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field escapedText"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:569:66",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:569:71",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/es2018.ts:1228:52",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/es2018.ts:746:88",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:933:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:933:67",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:934:103",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:934:108",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:936:47",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:936:52",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:959:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:959:67",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:960:103",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:960:108",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:961:43",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:961:48",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1362:51",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1373:36",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1383:30",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1664:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1667:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1670:25",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field multiLine"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1673:25",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field elements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1676:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1679:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1682:69",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field escapedText"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/typeSerializer.ts:398:48",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7548:66",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field expression"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7549:53",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field expression"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7550:71",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field expression"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7554:43",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field escapedText"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7557:43",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field name"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilitiesPublic.ts:1264:52",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilitiesPublic.ts:1264:61",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        }
+      ]
+    },
+    "area": {
+      "input_ref": "origin/area/stage3",
+      "input_commit": "b2c4549f60a79c6f38d312af06bee73a6102bdf4",
+      "input_sha256": "6294c141e351a80e6f8bf7cc2bfa3f0803546d98731c574b2e4e1cbd2146ed0d",
+      "source_files": 79,
+      "coverage_complete": true,
+      "before_totals": {
+        "NotYet": 1468,
+        "Refused": 5059,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "checkpoint_totals": {
+        "NotYet": 1468,
+        "Refused": 3983,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 3
+      },
+      "final_totals": {
+        "NotYet": 1558,
+        "Refused": 3894,
+        "SkippedDependency": 3,
+        "error": 0,
+        "panic": 2
+      },
+      "final_panics": [
+        {
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:1:1",
+          "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName"
+        },
+        {
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:606:1",
+          "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName"
+        }
+      ],
+      "old_refusal_counts": {
+        "before": 1182,
+        "checkpoint": 101,
+        "final": 0
+      },
+      "metadata_false_positives_removed": 1081,
+      "candidate_discriminant_sites": 101,
+      "new_checked_view_NotYet_sites": 90,
+      "new_NotYet_at_checkpoint_locations": 90,
+      "checkpoint_locations_without_that_new_boundary": 11,
+      "other_checkpoint_locations_with_cast_refusal": 8,
+      "other_checkpoint_locations_without_findings": 3,
+      "new_NotYet_per_field": {
+        "_expressionBrand": 16,
+        "_jsDocTypeAssertionBrand": 2,
+        "_literalExpressionBrand": 3,
+        "_propertyAccessExpressionLikeQualifiedNameBrand": 20,
+        "elements": 1,
+        "escapedText": 3,
+        "expression": 3,
+        "left": 6,
+        "multiLine": 1,
+        "name": 3,
+        "parent": 24,
+        "statements": 4,
+        "tag": 2,
+        "textSourceNode": 2
+      },
+      "candidate_location_outcomes": [
+        {
+          "where": "src/compiler/binder.ts:1571:38",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:1571:43",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2477:66",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2477:75",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2479:67",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2479:76",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2481:72",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2481:81",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2492:41",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2492:50",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2495:42",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2495:51",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2498:79",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2498:88",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2499:101",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2499:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2499:71",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2499:92",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2500:35",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:2500:44",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:943:100",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/binder.ts:943:109",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _propertyAccessExpressionLikeQualifiedNameBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:2775:35",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:2775:40",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:2779:28",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:2779:33",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5245:38",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field textSourceNode"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5246:34",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field textSourceNode"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5256:58",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field name"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5257:51",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field name"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5261:30",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/emitter.ts:5263:24",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:895:42",
+          "findings": []
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:896:50",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _jsDocTypeAssertionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:896:93",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _jsDocTypeAssertionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:898:44",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:900:62",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:906:143",
+          "findings": []
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:913:64",
+          "findings": []
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:917:38",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:920:41",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:932:45",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:934:46",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:936:60",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/expressionToTypeNode.ts:950:70",
+          "findings": [
+            {
+              "kind": "Refused",
+              "reason": "a cast the runtime can't check"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:55:35",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:56:63",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:57:39",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/nodeConverters.ts:59:28",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/parenthesizerRules.ts:464:48",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/parenthesizerRules.ts:464:79",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/parenthesizerRules.ts:466:71",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/parenthesizerRules.ts:466:78",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:311:40",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:322:55",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:324:26",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:328:105",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:328:73",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:329:96",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:336:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:338:64",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:338:77",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:338:90",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/factory/utilities.ts:339:82",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/parser.ts:2369:49",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field tag"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/parser.ts:2369:69",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field tag"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/parser.ts:2374:64",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field escapedText"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:569:66",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/declarations/diagnostics.ts:569:71",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/es2018.ts:1228:52",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field statements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/es2018.ts:746:88",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:933:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:933:67",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:934:103",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:934:108",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:936:47",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:936:52",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:959:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:959:67",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:960:103",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:960:108",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:961:43",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:961:48",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1362:51",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1373:36",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1383:30",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _expressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1664:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field left"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1667:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1670:25",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field multiLine"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1673:25",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field elements"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1676:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1679:62",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:1682:69",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field escapedText"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/transformers/typeSerializer.ts:398:48",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field _literalExpressionBrand"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7548:66",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field expression"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7549:53",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field expression"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7550:71",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field expression"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7554:43",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field escapedText"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilities.ts:7557:43",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field name"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilitiesPublic.ts:1264:52",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        },
+        {
+          "where": "src/compiler/utilitiesPublic.ts:1264:61",
+          "findings": [
+            {
+              "kind": "NotYet",
+              "reason": "a checked numeric enum object view with an incompatible structured or optional payload field parent"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
