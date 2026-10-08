@@ -1,0 +1,12 @@
+# github.com/system-inc/adamic/bridge/tsgo/checker [github.com/system-inc/adamic/bridge/tsgo/checker.test]
+bridge/tsgo/checker/declaration_ancestry.go:33:12: cannot use file.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/declaration_ancestry.go:35:54: file.Path undefined (type *"github.com/microsoft/TypeScript/tsc/internal/ast".SourceFile has no field or method Path)
+bridge/tsgo/checker/declaration_facts.go:17:11: cannot use source.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/declaration_facts.go:22:55: source.Path undefined (type *"github.com/microsoft/TypeScript/tsc/internal/ast".SourceFile has no field or method Path)
+bridge/tsgo/checker/facts.go:290:14: cannot use f.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/wave19_program_modules.go:25:12: cannot use source.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/wave19_program_modules.go:28:56: source.Path undefined (type *"github.com/microsoft/TypeScript/tsc/internal/ast".SourceFile has no field or method Path)
+bridge/tsgo/checker/wave19_program_modules.go:76:62: cannot use module.ResolvedFileName (variable of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as *module.ResolvedModule value in argument to p.Compiler.GetSourceFileForResolvedModule
+bridge/tsgo/checker/wave19_program_modules.go:77:19: cannot use target.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in assignment
+bridge/tsgo/checker/wave19_resolved_callee.go:37:11: cannot use source.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/wave19_resolved_callee.go:37:11: too many errors
