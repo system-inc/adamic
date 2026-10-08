@@ -21,6 +21,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 			}
 		}
 	}
+	if l.catchOrigin(node, map[*ast.Symbol]bool{}) && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0 {
+		return ir.Union, nil
+	}
 	if l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		if symbol := l.flagValueSymbol(ast.SkipParentheses(node)); symbol != nil {
 			if stored, known := l.representation(l.checker.GetTypeOfSymbol(symbol)); known {
@@ -93,7 +96,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
-	case flags&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0:
+	case flags&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsUnknown != 0:
 		return ir.Union, true
@@ -286,6 +289,11 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if skipped := ast.SkipParentheses(node); err == nil && skipped.Kind != ast.KindSpreadElement {
 		if contextual := l.checker.GetContextualType(skipped, checker.ContextFlagsNone); contextual != nil && l.tupleWhereArrayGoes(l.checker.GetTypeAtLocation(skipped), contextual, 0) {
 			return nil, l.notYet(skipped, "a tuple where an array goes (as "+l.checker.TypeToString(contextual)+")")
+		}
+	}
+	if err == nil && value.Type() != ir.Union && ast.SkipParentheses(node).Kind != ast.KindNullKeyword && l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && contextual.Flags()&checker.TypeFlagsUnknown != 0 {
+			value = l.boxCaughtValue(node, value)
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
@@ -604,6 +612,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
 				read = ir.Unwrap{Value: read}
 			}
+		}
+		if l.catchOrigin(node, map[*ast.Symbol]bool{}) {
+			read = l.checkedCatchUse(node, read)
 		}
 		return l.defined(node, read), nil
 	case ast.KindVoidExpression:

@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestOptionLedgerContinuesAfterRemainingErrors(t *testing.T) {
+func TestOptionLedgerContinuesAfterOrdinaryErrors(t *testing.T) {
 	t.Parallel()
 	paths := projectProgram(t, `{"strict":true,"useUnknownInCatchVariables":false,"lib":["es2024"],"types":[]}`, `const items: number[] = [];
 const first: number = items[0];
@@ -26,11 +26,11 @@ const wrong: number = 'wrong';`)
 	if program != nil || !errors.As(err, &rejected) {
 		t.Fatalf("rejected census exposed a compilable program: %v", err)
 	}
-	if len(report.Rows) != 4 || report.Counts[OptionCheckScheduled] != 3 || report.Counts[OptionRemainingError] != 1 {
+	if len(report.Rows) != 4 || report.Counts[OptionCheckScheduled] != 4 || report.Counts[OptionRemainingError] != 0 {
 		t.Fatalf("incomplete census: %+v; %v", report, err)
 	}
-	if report.Rows["D128"].State != OptionRemainingError || !strings.Contains(report.Rows["D128"].Reason, "TS18046") {
-		t.Fatalf("catch error lost: %+v", report.Rows["D128"])
+	if report.Rows["D128"].State != OptionCheckScheduled || report.Rows["D128"].Kind != "caught-type" {
+		t.Fatalf("catch contract lost: %+v", report.Rows["D128"])
 	}
 	if len(report.OrdinaryErrors) != 1 || !strings.Contains(report.OrdinaryErrors[0], "Type 'string' is not assignable") {
 		t.Fatalf("ordinary error was attributed or suppressed: %+v", report.OrdinaryErrors)
@@ -70,5 +70,13 @@ func TestReadOptionLedgerMultiline(t *testing.T) {
 	rows, err := ReadOptionLedger(strings.NewReader("id,file,line,column,code,message\nD099,main.ts,1,7,TS2322,\"first line\nsecond line\"\n"))
 	if err != nil || len(rows) != 1 || rows[0].ID != "D099" || rows[0].Code != 2322 {
 		t.Fatalf("ledger identity corrupted: %v %v", rows, err)
+	}
+}
+
+func TestUnsupportedOptionContractRemainsError(t *testing.T) {
+	site := OptionSite{Options: []string{"strictBindCallApply"}, Message: "unsupported stricter option diagnostic"}
+	row := (&Program{}).scheduleOptionSite(site)
+	if row.State != OptionRemainingError || !strings.Contains(row.Reason, site.Message) {
+		t.Fatalf("unsupported option lost its named remaining error: %+v", row)
 	}
 }

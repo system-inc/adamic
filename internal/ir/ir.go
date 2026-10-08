@@ -445,7 +445,10 @@ type (
 	MaybeToString struct{ Value Expression }
 
 	// Box is Value where a Union goes: a number boxed, a boolean as its box, a reference as itself.
-	Box struct{ Value Expression }
+	Box struct {
+		Value Expression
+		Null  bool
+	}
 
 	// Narrow is a Union the checker has proven to be one member (by typeof, ===, or assignment), as
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
@@ -453,6 +456,9 @@ type (
 	Narrow struct {
 		Value Expression
 		To    Type
+		// Checked guards a project catch value at a typed use; Optional admits undefined.
+		Checked, Optional bool
+		Where             string
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
@@ -801,6 +807,8 @@ type Field struct {
 	Name          string
 	Value         Expression
 	Private       bool
+	// Null says a NULL reference slot means null, not undefined.
+	Null bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter

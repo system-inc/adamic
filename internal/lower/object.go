@@ -126,7 +126,8 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if slotless(value.Type()) && value.Type() != ir.MaybeBoolean && value.Type() != ir.Union {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
+			fieldType := l.checker.GetTypeAtLocation(property.Name())
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Null: l.includesNull(fieldType) && !l.includesUndefined(fieldType)})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
@@ -365,6 +366,9 @@ func (l *lowering) emptySpread(node *ast.Node, own []ir.Field) ([]ir.Field, erro
 
 // typeOfSymbol is what's left at runtime of a symbol's declared type, or NotYet at node.
 func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, error) {
+	if l.caught[symbol] {
+		return ir.Union, nil
+	}
 	declared := l.checker.GetTypeOfSymbol(symbol)
 	if valueType, isKnown := l.representation(declared); isKnown {
 		return valueType, nil
@@ -403,6 +407,9 @@ func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
 	field := l.checker.GetPropertyOfType(contextual, name)
 	if field == nil {
 		return 0
+	}
+	if l.caught[field] {
+		return ir.Union
 	}
 	declared, _ := l.representation(l.checker.GetTypeOfSymbol(field))
 	return declared
@@ -532,6 +539,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.catchProperty(node); handled {
+		return value, err
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -714,6 +724,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 		of, err := l.typeOf(node)
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && l.caught[field] {
+			of, err = ir.Union, nil
+		}
 		if err != nil && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 			// Narrowed to undefined (just assigned it): read as the field is declared.
 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
@@ -756,7 +769,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
-		return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
+		value := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})
+		if of == ir.Union {
+			value = l.checkedCatchUse(node, value)
+		}
+		return l.defined(node, value), nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
@@ -1891,7 +1908,7 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	l.touch(local)
 	of := l.result.Locals[local].Type
-	if slotless(of) {
+	if slotless(of) && of != ir.Union {
 		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
 	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
@@ -2404,4 +2421,11 @@ func isCallee(node *ast.Node) bool {
 		node = node.Parent
 	}
 	return node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node
+}
+
+// Only catch-derived fields change their declared slot to the generic carrier.
+// Ordinary unknown contextual fields retain the initializer's proven layout.
+func (l *lowering) catchFieldContext(literal *ast.Node, name string) bool {
+	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	return contextual != nil && l.caught[l.checker.GetPropertyOfType(contextual, name)]
 }

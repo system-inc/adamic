@@ -41,7 +41,7 @@ D099,scheduled-check,optional-presence,src/compiler/checker.ts,6035,9,2375
 D100,scheduled-check,optional-presence,src/compiler/checker.ts,7837,133,2379
 D101,scheduled-check,optional-presence,src/compiler/checker.ts,8082,62,2379
 D107,scheduled-check,indexed-presence,src/compiler/commandLineParser.ts,2077,79,2345
-D108,remaining-error,catch-error,src/compiler/commandLineParser.ts,2301,91,18046
+D108,scheduled-check,caught-type,src/compiler/commandLineParser.ts,2301,91,18046
 D109,scheduled-check,optional-presence,src/compiler/commandLineParser.ts,2663,9,2375
 D110,scheduled-check,optional-presence,src/compiler/commandLineParser.ts,2677,9,2322
 D112,scheduled-check,json-stringify-defined,src/compiler/commandLineParser.ts,2952,13,2322
@@ -57,11 +57,11 @@ D124,scheduled-check,optional-presence,src/compiler/moduleNameResolver.ts,647,35
 D125,scheduled-check,optional-presence,src/compiler/moduleNameResolver.ts,648,5,2322
 D126,scheduled-check,optional-presence,src/compiler/program.ts,1876,11,2375
 D127,scheduled-check,optional-presence,src/compiler/program.ts,2599,9,2375
-D128,remaining-error,catch-error,src/compiler/program.ts,406,25,18046
+D128,scheduled-check,caught-type,src/compiler/program.ts,406,25,18046
 D129,scheduled-check,indexed-presence,src/compiler/program.ts,4157,64,2345
 D130,scheduled-check,indexed-presence,src/compiler/program.ts,4160,69,2345
 D131,scheduled-check,indexed-presence,src/compiler/program.ts,4160,95,2345
-D132,remaining-error,catch-error,src/compiler/program.ts,441,25,18046
+D132,scheduled-check,caught-type,src/compiler/program.ts,441,25,18046
 D133,scheduled-check,optional-presence,src/compiler/program.ts,472,11,2375
 D134,scheduled-check,optional-presence,src/compiler/program.ts,4956,9,2412
 D135,scheduled-check,optional-presence,src/compiler/program.ts,4957,9,2412
@@ -74,8 +74,8 @@ D143,scheduled-check,optional-presence,src/compiler/resolutionCache.ts,1332,58,2
 D144,scheduled-check,optional-presence,src/compiler/resolutionCache.ts,1386,9,2412
 D150,scheduled-check,optional-presence,src/compiler/resolutionCache.ts,990,43,2379
 D151,scheduled-check,indexed-presence,src/compiler/sourcemap.ts,216,58,2345
-D152,remaining-error,catch-error,src/compiler/sys.ts,1281,43,18046
-D153,remaining-error,catch-error,src/compiler/sys.ts,1617,13,2322
+D152,scheduled-check,caught-type,src/compiler/sys.ts,1281,43,18046
+D153,scheduled-check,caught-type,src/compiler/sys.ts,1617,13,2322
 D154,scheduled-check,json-stringify-defined,src/compiler/sys.ts,1708,56,2345
 D155,scheduled-check,indexed-presence,src/compiler/transformer.ts,367,9,2532
 D156,scheduled-check,indexed-presence,src/compiler/transformer.ts,395,9,2532

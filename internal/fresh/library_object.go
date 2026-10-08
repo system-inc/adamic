@@ -13,6 +13,8 @@ func (a *analysis) objectCall(call ir.ObjectCall) value {
 		}
 	}
 	switch call.Method {
+	case "catchProperty":
+		return outsideValue()
 	case "freeze", "assign":
 		return target
 	case "keys", "values", "entries":

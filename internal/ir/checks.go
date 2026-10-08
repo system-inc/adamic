@@ -36,6 +36,9 @@ func InsertedChecks(program *Program) []InsertedCheck {
 					checks = append(checks, InsertedCheck{Kind: "optional-write", Where: call.Readiness})
 				}
 			}
+			if narrow, ok := value.Interface().(Narrow); ok && narrow.Checked {
+				checks = append(checks, InsertedCheck{Kind: "caught-type", Where: narrow.Where})
+			}
 			if coalesce, ok := value.Interface().(Coalesce); ok && coalesce.Panic != nil {
 				if message, ok := coalesce.Panic.(StringConstant); ok {
 					text := program.Strings[message.Index]

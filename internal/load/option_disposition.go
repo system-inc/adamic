@@ -22,6 +22,9 @@ func (p *Program) scheduleOptionSite(site OptionSite) OptionDisposition {
 	case len(site.Options) > 0 && site.Options[0] == "noUncheckedIndexedAccess" && (len(site.Options) == 1 || len(site.Options) == 2 && site.Options[1] == "exactOptionalPropertyTypes"):
 		// checkedIndexedRead must emit presence or refuse its representation.
 		row.Kind = "indexed-presence"
+	case len(site.Options) == 1 && site.Options[0] == "useUnknownInCatchVariables":
+		// Catch-derived values retain their tags; lowering checks definite typed uses.
+		row.Kind = "caught-type"
 	case p.acceptOptionalWrite(site), p.acceptOptionalRelation(site), p.acceptOptionalLiteral(site), p.acceptOptionalView(site), p.acceptOptionalDefined(site), p.acceptOptionalNested(site):
 		row.Kind = "optional-presence"
 	default:

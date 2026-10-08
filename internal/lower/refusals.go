@@ -38,6 +38,7 @@ var refusedOperators = map[ast.Kind]refusal{
 // refuse walks a module for permanent refusals first, then record operations not
 // implemented yet, then temporary record declaration refusals. Each names its fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	l.prepareCatchValues()
 	if err := l.refuseDiscriminantWrites(module); err != nil {
 		return err
 	}

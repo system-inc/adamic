@@ -309,6 +309,7 @@ static void free_one(void *value) {
 		}
 		break;
 	}
+	case adamic_kind_null:
 	case adamic_kind_number:
 	case adamic_kind_boolean:
 		break;
