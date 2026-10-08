@@ -10,7 +10,7 @@ import (
 func viewCallableCounts(t *testing.T) []string {
 	t.Helper()
 	var rows []string
-	for _, directory := range []string{"group1", "marker", "probes", "stored-marker", "canonical", "watcher", "scanner", "performance", "boxing", "numeric-literal", "element-access", "property-access", "property-assignment", "aggregate/expression-statement", "aggregate/diagnostic-add", "aggregate/void-zero", "aggregate/this", "aggregate/emit-helper", "aggregate/node-check-flag"} {
+	for _, directory := range []string{"group1", "marker", "probes", "stored-marker", "canonical", "watcher", "scanner", "performance", "boxing", "numeric-literal", "array-callables/call-expression", "array-callables/inline-expressions", "element-access", "property-access", "property-assignment", "aggregate/expression-statement", "aggregate/diagnostic-add", "aggregate/void-zero", "aggregate/this", "aggregate/emit-helper", "aggregate/node-check-flag"} {
 		paths, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5", directory, "*.a"))
 		if err != nil {
 			t.Fatal(err)

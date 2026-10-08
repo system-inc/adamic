@@ -1334,3 +1334,11 @@ viewCallableBoxedRecordField in view_callables_boxing.go. A supported contextual
 scalar/object union field stores the initializer in the declared boxed form.
 This fixes rank 50's scalar argument field being retained as a pointer before
 callable dispatch. Unknown, nominal and dictionary members remain unsupported.
+
+## Lane 5 callable array payloads (October 8)
+
+Owned hooks in lower/view_callables_boxing.go and view_callables_aggregate.go
+recognize represented array parameters/results and complete their deferred
+element schemas before lazy demand. Array extraction continues through lane 2's
+named metadata hooks; no callback ABI guard or owner-mutation refusal is removed.
+Schema creation certifies neither array contents nor descendant object fields.

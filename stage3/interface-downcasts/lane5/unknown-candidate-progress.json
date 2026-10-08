@@ -270,6 +270,53 @@
           "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; arity, parameter and boxed-field mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "array-callables",
+      "pairs": 2,
+      "candidateReads": 124,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createCallExpression",
+          "declared_types": [
+            "(expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[] | undefined) => CallExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 89,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 221,
+            "column": 16
+          },
+          "rank": 13,
+          "certified": true,
+          "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; array payload and arity mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "inlineExpressions",
+          "declared_types": [
+            "(expressions: readonly Expression[]) => Expression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 35,
+          "witness": {
+            "file": "src/compiler/transformers/destructuring.ts",
+            "line": 178,
+            "column": 12
+          },
+          "rank": 49,
+          "certified": true,
+          "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; array payload and arity mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

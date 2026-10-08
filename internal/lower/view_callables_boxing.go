@@ -67,6 +67,9 @@ func (l *lowering) viewCallableBoxedRepresentation(proven *checker.Type) bool {
 	if of == ir.Object && !isClassInstance(proven) && l.unsupportedViewFamily(proven) == "" {
 		return true
 	}
+	if of == ir.Array && l.viewArrayElementType(proven) != nil {
+		return true
+	}
 	if viewCallableScalarRepresentation(of) {
 		return true
 	}
@@ -79,7 +82,7 @@ func (l *lowering) viewCallableBoxedRepresentation(proven *checker.Type) bool {
 		if member.Flags()&checker.TypeFlagsUndefined != 0 {
 			continue
 		}
-		if !known || !(viewCallableScalarRepresentation(child) || child == ir.Object && !isClassInstance(member) && l.unsupportedViewFamily(member) == "") {
+		if !known || !(viewCallableScalarRepresentation(child) || child == ir.Object && !isClassInstance(member) && l.unsupportedViewFamily(member) == "" || child == ir.Array && l.viewArrayElementType(member) != nil) {
 			return false
 		}
 	}

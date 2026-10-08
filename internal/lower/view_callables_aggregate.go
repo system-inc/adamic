@@ -13,7 +13,7 @@ type viewCallablePayloadType struct {
 
 func (l *lowering) recordViewCallablePayloadType(node *ast.Node, proven *checker.Type) int {
 	of, known := l.representation(proven)
-	if !known || of != ir.Object && of != ir.Union || !l.viewCallableAggregateType(proven) {
+	if !known || of != ir.Object && of != ir.Union && of != ir.Array || !l.viewCallableAggregateType(proven) {
 		return 0
 	}
 	if l.viewCallablePayloadTypes == nil {
@@ -79,7 +79,7 @@ func (l *lowering) prepareViewCallableAggregateSchemas() error {
 	for _, payloads := range l.viewCallableProducerPayloads {
 		for _, payload := range payloads {
 			of, known := l.representation(payload.proven)
-			if !known || of != ir.Object && of != ir.Union {
+			if !known || of != ir.Object && of != ir.Union && of != ir.Array {
 				continue
 			}
 			id, err := l.viewContract(payload.node, payload.proven)
@@ -162,7 +162,7 @@ func (l *lowering) viewCallableAggregateType(proven *checker.Type) bool {
 		return false
 	}
 	of, known := l.representation(proven)
-	return known && of == ir.Object && proven.Flags()&checker.TypeFlagsObject != 0
+	return known && (of == ir.Object && proven.Flags()&checker.TypeFlagsObject != 0 || of == ir.Array && l.viewArrayElementType(proven) != nil)
 }
 
 // A concrete supported read checks its own declared contract. A broader producer

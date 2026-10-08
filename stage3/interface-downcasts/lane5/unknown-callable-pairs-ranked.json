@@ -246,7 +246,8 @@
       "column": 16
     },
     "rank": 13,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; array payload and arity mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 11739,
@@ -936,7 +937,8 @@
       "column": 12
     },
     "rank": 49,
-    "certified": false
+    "certified": true,
+    "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; array payload and arity mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 11739,
