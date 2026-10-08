@@ -1,0 +1,6 @@
+// Nothing is written to stdout. The first line still classifies stdout, and a stderr
+// line longer than the stdout buffer goes out through the unbuffered write.
+console.error('small');
+console.error('');
+console.error('E'.repeat(70000));
+console.error('after');

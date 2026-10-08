@@ -1,0 +1,10 @@
+// A few lines, then work that does not end. A signal from outside has to flush the
+// stdout line that is still buffered after stderr, and the process has to die of it.
+console.log('little out');
+console.error('little err');
+console.log('second');
+let spins = 0;
+while (spins >= 0) {
+	spins += 1;
+}
+console.log(`never ${spins}`);
