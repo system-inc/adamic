@@ -310,5 +310,46 @@
     "present": "[{ name: \"7\" }]",
     "absent": "[]",
     "blocked": false
+  },
+  {
+    "id": "D119",
+    "file": "src/compiler/moduleNameResolver.ts",
+    "line": 474,
+    "expression": "paths",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "typesVersions[key]",
+    "receiver": "record of records of string arrays",
+    "source": "const typesVersions: { readonly [key: string]: { readonly [path: string]: string[] } } = @VALUES@; const key = \"version\";\nconst value: { readonly [path: string]: string[] } = typesVersions[key];\nconsole.log(value === undefined ? \"undefined\" : \"7\");\n",
+    "present": "{ version: { entry: [\"7\"] } }",
+    "absent": "{}",
+    "blocked": true
+  },
+  {
+    "id": "D151",
+    "file": "src/compiler/sourcemap.ts",
+    "line": 216,
+    "expression": "map.sourcesContent",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "map.sourcesContent[raw.sourceIndex]",
+    "receiver": "array of string or null",
+    "source": "const map: { readonly sourcesContent: (string | null)[] } = { sourcesContent: @VALUES@ }; const raw = { sourceIndex: 0 };\nconst value: string | null = map.sourcesContent[raw.sourceIndex];\nconsole.log(`${value}`);\n",
+    "present": "[\"7\"]",
+    "absent": "[]",
+    "nullPresent": "[null]",
+    "blocked": true,
+    "refusal": "stage 0 can't lower a value of type string | null yet"
+  },
+  {
+    "id": "D170",
+    "file": "src/compiler/transformers/declarations.ts",
+    "line": 1678,
+    "expression": "clause.types",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "clause.types[0]",
+    "receiver": "NodeArray of object",
+    "source": "interface Item { readonly name: string }\nconst clause: { readonly types: readonly Item[] } = { types: @VALUES@ };\nconst value: Item = clause.types[0];\nconsole.log(value === undefined ? \"undefined\" : `${value.name}`);\n",
+    "present": "[{ name: \"7\" }]",
+    "absent": "[]",
+    "blocked": false
   }
 ]
