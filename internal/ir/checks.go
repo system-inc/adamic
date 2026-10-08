@@ -22,6 +22,7 @@ func InsertedChecks(program *Program) []InsertedCheck {
 		{"catch value is not Error: ", "catch-error"},
 		{"JSON.stringify result is undefined: ", "json-stringify-defined"},
 		{"optional property write is undefined: ", "optional-write"},
+		{"optional contract produced undefined at ", "optional-write"},
 	}
 	var visit func(reflect.Value)
 	visit = func(value reflect.Value) {
@@ -29,6 +30,12 @@ func InsertedChecks(program *Program) []InsertedCheck {
 			return
 		}
 		if value.Kind() == reflect.Struct && value.CanInterface() {
+			if call, ok := value.Interface().(ObjectCall); ok {
+				switch call.Method {
+				case "optionalWritePresence", "optionalSpreadPresence", "optionalViewStorage":
+					checks = append(checks, InsertedCheck{Kind: "optional-write", Where: call.Readiness})
+				}
+			}
 			if coalesce, ok := value.Interface().(Coalesce); ok && coalesce.Panic != nil {
 				if message, ok := coalesce.Panic.(StringConstant); ok {
 					text := program.Strings[message.Index]

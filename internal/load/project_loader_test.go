@@ -22,10 +22,10 @@ const ordinary: number = 'wrong';
 	if !errors.As(err, &rejected) || len(rejected.OptionSites) != 3 {
 		t.Fatalf("unconverted sites must remain errors and be recorded: %v", err)
 	}
-	if !strings.Contains(err.Error(), "main.ts:5:") || !strings.Contains(err.Error(), "main.ts:3:") || !strings.Contains(err.Error(), "main.ts:4:") {
+	if !strings.Contains(err.Error(), "main.ts:5:") || !strings.Contains(err.Error(), "main.ts:4:") {
 		t.Fatalf("ordinary or unconverted error disappeared: %v", err)
 	}
-	if strings.Contains(err.Error(), "main.ts:2:") {
+	if strings.Contains(err.Error(), "main.ts:2:") || strings.Contains(err.Error(), "main.ts:3:") {
 		t.Fatalf("indexed row was not deferred to its lowering check: %v", err)
 	}
 }

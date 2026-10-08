@@ -37,12 +37,13 @@ type Program struct {
 	// tsgo opts this compilation into the external native checker library.
 	tsgo bool
 
-	compiler       *compiler.Program
-	projectOptions bool
-	optionSites    []OptionSite
-	fs             *sourceFS
-	sparseOnce     sync.Once
-	sparseArrays   bool
+	compiler           *compiler.Program
+	projectOptions     bool
+	optionSites        []OptionSite
+	optionDispositions []OptionDisposition
+	fs                 *sourceFS
+	sparseOnce         sync.Once
+	sparseArrays       bool
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
 	files             []*ast.SourceFile
@@ -60,6 +61,8 @@ type CheckError struct {
 	// OptionSites remain errors until lowering can insert their runtime checks.
 	OptionSites          []OptionSite
 	ScheduledOptionSites []OptionSite
+	OptionDispositions   []OptionDisposition
+	OrdinaryDiagnostics  []string
 }
 
 func (e *CheckError) Error() string {
@@ -163,7 +166,7 @@ func loadInput(paths []string, overlay map[string]string, requestedProject strin
 	if err != nil {
 		return nil, err
 	}
-	fs.projectConsole = project != ""
+	fs.projectConsole = project != "" || requestedProject != ""
 	checkRoots := append([]tspath.RootedFilePath{}, roots...)
 	if project != "" {
 		projectConfig, _ = tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(project), &core.CompilerOptions{}, nil, fs, nil)
@@ -214,7 +217,8 @@ func loadInput(paths []string, overlay map[string]string, requestedProject strin
 		}
 		fs.nodeTypes = true
 		roots = append(roots, currentDirectory.ResolveFile(index))
-		config = tsoptions.NewParsedCommandLine(options, roots, nil, currentDirectory, fs.CaseSensitivity())
+		nodeRoots := append(append([]tspath.RootedFilePath{}, roots...), preludePath, setPreludePath)
+		config = tsoptions.NewParsedCommandLine(options, nodeRoots, nil, currentDirectory, fs.CaseSensitivity())
 		if projectConfig != nil {
 			config = projectConfig.WithFileNames(roots)
 		}
@@ -289,24 +293,20 @@ func loadInput(paths []string, overlay map[string]string, requestedProject strin
 			}
 		}
 	}
+	ordinaryDiagnostics := append([]string(nil), diagnostics...)
+	scheduled := []OptionSite{}
 	for _, site := range sites {
-		if len(site.Options) == 1 && site.Options[0] == "JSON.stringify" {
-			continue
-		}
-		// Every successfully lowered project indexed read requiring presence is
-		// guarded by lower.checkedIndexedRead. Unsupported representations refuse
-		// before emission. For a joint optional/index site the recorded ancestor
-		// also forces the read guard through its permissive contextual type.
-		if len(site.Options) > 0 && site.Options[0] == "noUncheckedIndexedAccess" && (len(site.Options) == 1 || len(site.Options) == 2 && site.Options[1] == "exactOptionalPropertyTypes") {
-			continue
-		}
-		if !loaded.acceptOptionalWrite(site) && !loaded.acceptOptionalRelation(site) && !loaded.acceptOptionalLiteral(site) && !loaded.acceptOptionalView(site) && !loaded.acceptOptionalDefined(site) {
+		row := loaded.scheduleOptionSite(site)
+		loaded.optionDispositions = append(loaded.optionDispositions, row)
+		if row.State == OptionRemainingError {
 			diagnostics = append(diagnostics, site.Message)
+		} else {
+			scheduled = append(scheduled, site)
 		}
 	}
 	if len(diagnostics) > 0 {
 		sort.Strings(diagnostics)
-		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites}
+		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites, ScheduledOptionSites: scheduled, OptionDispositions: loaded.optionDispositions, OrdinaryDiagnostics: ordinaryDiagnostics}
 	}
 
 	// Every root must be in the program. One that is not would be a file silently left unchecked.

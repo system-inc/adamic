@@ -346,9 +346,10 @@ func (e *emitter) checkDefined(value string, message string) {
 	if (ir.Defined{Message: message}).Throws() {
 		e.line("\tstatic adamic_string error_message = ADAMIC_STRING(%s);", cString(strings.TrimPrefix(message, "TypeError: ")))
 		e.line("\tstatic adamic_string error_name = ADAMIC_STRING(\"TypeError\");")
-		e.line("\tadamic_thrown = adamic_error_new(&error_message);")
-		e.line("\tadamic_release(adamic_thrown->slots[0].reference);")
-		e.line("\tadamic_thrown->slots[0].reference = adamic_retain(&error_name);")
+		e.line("\tadamic_thrown = (adamic_heap *)adamic_error_new(&error_message);")
+		e.line("\tadamic_release(((adamic_object *)adamic_thrown)->slots[0].reference);")
+		e.line("\t((adamic_object *)adamic_thrown)->slots[0].reference = adamic_retain(&error_name);")
+		e.line("\tadamic_exception_pending = true;")
 		e.checkThrown()
 	} else {
 		e.line("\tstatic const char message[] = %s;", cString(message))
