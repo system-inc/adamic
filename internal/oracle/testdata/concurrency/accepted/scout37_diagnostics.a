@@ -1,0 +1,43 @@
+// Reduced program.ts:2778 getDiagnosticsHelper: obtain per-file diagnostics,
+// merge by input file order, then sort and deduplicate. This does not implement type checking.
+import { parallelMap } from 'adamic';
+interface Diagnostic {
+    readonly file: string;
+    readonly start: number;
+    readonly code: number;
+    readonly message: string;
+}
+interface FileDiagnostics {
+    readonly diagnostics: readonly Diagnostic[];
+}
+const groups: readonly FileDiagnostics[] = [
+    { diagnostics: [{ file: 'b.ts', start: 7, code: 2300, message: 'duplicate' }, { file: 'b.ts', start: 7, code: 2300, message: 'related' }] },
+    { diagnostics: [] },
+    { diagnostics: [{ file: 'a.ts', start: 1, code: 2322, message: 'type' }] }
+];
+const empty: readonly Diagnostic[] = [];
+const files: readonly FileDiagnostics[] = Array.from({ length: 96 }, (_unused, index) => groups[index % groups.length] ?? { diagnostics: empty });
+const partitions = parallelMap(files, (file: FileDiagnostics): readonly Diagnostic[] => {
+    return file.diagnostics.slice();
+});
+const merged: Diagnostic[] = [];
+for (let index = 0; index < partitions.length; index++) {
+    const group = partitions[index] ?? empty;
+    console.log(`partition ${index}/${group.length}`);
+    for (const diagnostic of group) { merged.push(diagnostic); }
+}
+merged.sort((left: Diagnostic, right: Diagnostic): number => {
+    if (left.file < right.file) { return -1; }
+    if (left.file > right.file) { return 1; }
+    const location = left.start - right.start;
+    if (location !== 0) { return location; }
+    const code = left.code - right.code;
+    if (code !== 0) { return code; }
+    return left.message < right.message ? -1 : left.message > right.message ? 1 : 0;
+});
+let previous = '';
+for (const diagnostic of merged) {
+    const key = `${diagnostic.file}:${diagnostic.start}:${diagnostic.code}:${diagnostic.message}`;
+    if (key !== previous) { console.log(key); }
+    previous = key;
+}
