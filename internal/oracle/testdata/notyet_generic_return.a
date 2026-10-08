@@ -1,0 +1,20 @@
+// Reduction of checker.ts runWithoutResolvedSignatureCaching and binder.ts doWithConditionalBranches.
+function runWithoutCaching<T>(cached: boolean, fn: () => T): T {
+    if (cached) {
+        const result: T = fn();
+        return result;
+    }
+    return fn();
+}
+function withValue<T>(action: (value: T) => void, value: T): void {
+    action(value);
+}
+console.log(`${runWithoutCaching(true, () => 17)} ${runWithoutCaching(false, () => 29)}`);
+console.log(runWithoutCaching(true, () => ['held', 'string'].join('-')));
+console.log(`${runWithoutCaching(false, () => true)}`);
+const object = runWithoutCaching(true, () => ({ name: ['held', 'object'].join('-') }));
+console.log(object.name);
+const array = runWithoutCaching(false, () => [3, 5]);
+console.log(array.join(','));
+withValue((value: string) => console.log(value), ['value', 'string'].join('-'));
+withValue((value: number) => console.log(`${value}`), 41);
