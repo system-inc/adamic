@@ -346,16 +346,26 @@ class Gate:
                     fixtures.add(entry.group(1))
             else:
                 return whole("%s is not a fixture, a fixture registration or counts.md" % path)
-        registered = set()
+        registered, inputs = set(), set()
         for name in os.listdir(directory):
             if name.endswith("_test.go"):
                 with open(os.path.join(directory, name)) as handle:
                     source = handle.read()
-                registered.update(re.findall(r'"(internal/oracle/testdata/[^"]+\.a)"', source))
+                literals = re.findall(r'"(internal/oracle/testdata/[^"]+\.a)"', source)
+                registered.update(literals)
+                if "inputFixtures" in source:
+                    # Input fixtures have lanes of their own (TestInputAgreesWithNode and kin); a changed
+                    # one runs the package whole rather than be held to the fixtures' lanes alone.
+                    inputs.update(literals)
                 for function in re.split(r"\nfunc ", source)[1:]:
                     lane = re.match(r"(Test\w+)\(", function)
-                    if lane and "range fixtures" in function and lane.group(1) not in oracleLanes:
-                        return whole("%s ranges over the fixtures and isn't a known lane" % lane.group(1))
+                    for table in re.findall(r"range (\w*[Ff]ixtures)\b", function):
+                        if lane and table == "fixtures" and lane.group(1) not in oracleLanes:
+                            return whole("%s ranges over the fixtures and isn't a known lane" % lane.group(1))
+                        if lane and table not in ("fixtures", "inputFixtures"):
+                            return whole("%s ranges over %s, a fixture table the selection doesn't know" % (lane.group(1), table))
+        if fixtures & inputs:
+            return whole("an input fixture changed: %s" % ", ".join(sorted(fixtures & inputs)))
         unregistered = sorted(fixtures - registered)
         if unregistered:
             # A changed .a no table names (a module a fixture imports, say): which fixture reads it isn't known here.
