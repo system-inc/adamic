@@ -240,6 +240,7 @@ func (l *lowering) instantiate(declaration *ast.Node, classType *checker.Type, w
 			return nil, err
 		}
 	}
+	l.program.RecordOptionalRelation(declaration)
 	return lowered, nil
 }
 
@@ -461,7 +462,11 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Uninitialized: uninitialized, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	store := ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Uninitialized: uninitialized, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}
+	if _, checked := l.program.OptionalWriteSite(target); checked {
+		return l.checkedOptionalWrite(target, store), nil
+	}
+	return []ir.Statement{store}, nil
 }
 
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).

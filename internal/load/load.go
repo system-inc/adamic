@@ -40,15 +40,19 @@ type Program struct {
 	fs       *sourceFS
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
-	files   []*ast.SourceFile
-	entries []*ast.SourceFile
+	files             []*ast.SourceFile
+	entries           []*ast.SourceFile
+	optionalChecks    map[string]OptionSite
+	optionalRelations map[string]OptionSite
+	checkedOptions    map[string]bool
 }
 
 // CheckError is a program the checker rejected, with every diagnostic it gave.
 type CheckError struct {
 	Diagnostics []string
 	// OptionSites remain errors until lowering can insert their runtime checks.
-	OptionSites []OptionSite
+	OptionSites          []OptionSite
+	ScheduledOptionSites []OptionSite
 }
 
 func (e *CheckError) Error() string {
@@ -258,12 +262,17 @@ func loadInput(paths []string, overlay map[string]string, requestedProject strin
 		}
 	}
 	diagnostics := loaded.diagnostics(context.Background())
+	scheduled := []OptionSite{}
 	for _, site := range sites {
-		diagnostics = append(diagnostics, site.Message)
+		if !loaded.acceptOptionalWrite(site) && !loaded.acceptOptionalRelation(site) {
+			diagnostics = append(diagnostics, site.Message)
+		} else {
+			scheduled = append(scheduled, site)
+		}
 	}
 	if len(diagnostics) > 0 {
 		sort.Strings(diagnostics)
-		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites}
+		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites, ScheduledOptionSites: scheduled}
 	}
 
 	// Every root must be in the program. One that is not would be a file silently left unchecked.

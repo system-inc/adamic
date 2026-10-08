@@ -140,6 +140,16 @@ func compileLibrary(path string, tsgo bool) (*ir.Program, int) {
 }
 
 func compileInput(paths []string, project string, tsgo bool) (*ir.Program, int) {
+	explain := false
+	filtered := []string{}
+	for _, path := range paths {
+		if path == "--explain-checks" {
+			explain = true
+		} else {
+			filtered = append(filtered, path)
+		}
+	}
+	paths = filtered
 	program, code := checkInput(paths, project)
 	if program == nil {
 		return nil, code
@@ -151,6 +161,11 @@ func compileInput(paths []string, project string, tsgo bool) (*ir.Program, int) 
 	if err != nil {
 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
 		return nil, 1
+	}
+	if explain {
+		for _, check := range program.ExplainedOptionalChecks() {
+			fmt.Fprintln(os.Stderr, relative(check))
+		}
 	}
 	return lowered, 0
 }

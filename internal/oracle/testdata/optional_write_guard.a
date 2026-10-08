@@ -1,0 +1,15 @@
+interface Fields { slot?: number | undefined; }
+const record: Fields = {};
+const alias = record;
+record.slot = 4;
+record.slot = undefined;
+console.log(`${'slot' in alias}|${Object.keys(alias).join(',')}|${Object.hasOwn(alias, 'slot')}|${String(alias.slot)}`);
+interface TextFields { text?: string | undefined; }
+const textRecord: TextFields = {};
+textRecord.text = ['present', 'value'].join('-');
+textRecord.text = undefined;
+console.log(`${'text' in textRecord}|${Object.keys(textRecord).join(',')}|${Object.hasOwn(textRecord, 'text')}|${String(textRecord.text)}`);
+class Box { classSlot?: number | undefined; }
+const box = new Box();
+box.classSlot = undefined;
+console.log(`${'classSlot' in box}|${Object.keys(box).join(',')}|${Object.hasOwn(box, 'classSlot')}|${String(box.classSlot)}`);

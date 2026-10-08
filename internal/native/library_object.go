@@ -12,6 +12,9 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "optionalWritePresence":
+		e.line("extern bool adamic_optional_write_presence(const adamic_object *, const adamic_string *, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_write_presence(%s, %s, %s)", arguments[0], arguments[1], cString(call.Readiness)))
 	case "is":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is(%s, %s)", arguments[0], arguments[1]))
 	case "isFrozen":
