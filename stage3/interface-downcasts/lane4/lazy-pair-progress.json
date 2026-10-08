@@ -4082,6 +4082,136 @@
       ]
     },
     {
+      "type_id": 9858,
+      "view_reason": {
+        "kind": "field-read",
+        "from": 10107,
+        "field": "options",
+        "site": {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2650,
+          "column": 14,
+          "start": 104763,
+          "end": 104788,
+          "text": "configParseResult.options"
+        }
+      },
+      "type": "CompilerOptions",
+      "field": "<dynamic-key>",
+      "declared_type": "TsConfigSourceFile | CompilerOptionsValue",
+      "declared_families": [
+        "array contracts",
+        "dictionary contracts",
+        "nullish members",
+        "object or interface contracts",
+        "object plus primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "array contracts",
+        "dictionary contracts",
+        "dictionary reads",
+        "nullish members",
+        "object or interface contracts",
+        "object plus primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 10,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 9370,
+          "column": 12,
+          "start": 368896,
+          "end": 368917,
+          "text": "compilerOptions[flag]"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 9370,
+          "column": 89,
+          "start": 368973,
+          "end": 368994,
+          "text": "compilerOptions[flag]"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 9402,
+          "column": 9,
+          "start": 370470,
+          "end": 370490,
+          "text": "options[option.name]"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2901,
+          "column": 42,
+          "start": 116876,
+          "end": 116901,
+          "text": "options[allSetOptions[0]]"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2933,
+          "column": 24,
+          "start": 117983,
+          "end": 117999,
+          "text": "options[setting]"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2979,
+          "column": 17,
+          "start": 119908,
+          "end": 119921,
+          "text": "options[name]"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 4269,
+          "column": 59,
+          "start": 182121,
+          "end": 182130,
+          "text": "opts[key]"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1525,
+          "column": 24,
+          "start": 68838,
+          "end": 68858,
+          "text": "options[option.name]"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 5099,
+          "column": 53,
+          "start": 265832,
+          "end": 265851,
+          "text": "option[d.skippedOn]"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1449,
+          "column": 21,
+          "start": 65977,
+          "end": 65990,
+          "text": "options[name]"
+        }
+      ],
+      "rank": 4,
+      "source_integration": "pending",
+      "pair_id": "9858:<dynamic-key>",
+      "state": "pending shared dictionary selection",
+      "lane4_scope": "string, number, boolean, null, undefined selection only",
+      "other_owners": {
+        "lane6": "lookup, absence, enumeration and record storage",
+        "lane4b": "object and array alternatives with descendant contracts"
+      }
+    },
+    {
       "type_id": 9170,
       "view_reason": {
         "kind": "field-read",
@@ -4603,106 +4733,6 @@
       "evidence": []
     },
     {
-      "type_id": 6998,
-      "view_reason": {
-        "kind": "cast",
-        "site": "src/compiler/utilities.ts:91787:91805"
-      },
-      "type": "SourceFile",
-      "field": "localJsxFragmentNamespace",
-      "declared_type": "__String | undefined",
-      "declared_families": [
-        "intersection field contract",
-        "mixed primitive union",
-        "nullish members",
-        "scalar contracts"
-      ],
-      "families": [
-        "intersection field contract",
-        "mixed primitive union",
-        "nullish members",
-        "optional properties",
-        "scalar contracts"
-      ],
-      "intrinsic": false,
-      "element": false,
-      "read_count": 2,
-      "sites": [
-        {
-          "file": "src/compiler/checker.ts",
-          "line": 2441,
-          "column": 25,
-          "start": 97341,
-          "end": 97371,
-          "text": "file.localJsxFragmentNamespace"
-        },
-        {
-          "file": "src/compiler/checker.ts",
-          "line": 2442,
-          "column": 32,
-          "start": 97407,
-          "end": 97437,
-          "text": "file.localJsxFragmentNamespace"
-        }
-      ],
-      "pair_id": "6998:localJsxFragmentNamespace",
-      "state": "complete source fixture group",
-      "evidence": [
-        "TestCheckedViewBrandCandidatePairs",
-        "brand-pairs/6998-localJsxFragmentNamespace-*.a"
-      ]
-    },
-    {
-      "type_id": 6998,
-      "view_reason": {
-        "kind": "cast",
-        "site": "src/compiler/utilities.ts:91787:91805"
-      },
-      "type": "SourceFile",
-      "field": "localJsxNamespace",
-      "declared_type": "__String | undefined",
-      "declared_families": [
-        "intersection field contract",
-        "mixed primitive union",
-        "nullish members",
-        "scalar contracts"
-      ],
-      "families": [
-        "intersection field contract",
-        "mixed primitive union",
-        "nullish members",
-        "optional properties",
-        "scalar contracts"
-      ],
-      "intrinsic": false,
-      "element": false,
-      "read_count": 2,
-      "sites": [
-        {
-          "file": "src/compiler/checker.ts",
-          "line": 2487,
-          "column": 13,
-          "start": 99740,
-          "end": 99762,
-          "text": "file.localJsxNamespace"
-        },
-        {
-          "file": "src/compiler/checker.ts",
-          "line": 2488,
-          "column": 20,
-          "start": 99786,
-          "end": 99808,
-          "text": "file.localJsxNamespace"
-        }
-      ],
-      "pair_id": "6998:localJsxNamespace",
-      "state": "complete source fixture group",
-      "evidence": [
-        "TestCheckedViewBrandCandidatePairs",
-        "brand-pairs/6998-localJsxNamespace-*.a"
-      ]
-    },
-    {
       "type_id": 10782,
       "view_reason": {
         "kind": "cast",
@@ -4803,6 +4833,106 @@
       "evidence": []
     },
     {
+      "type_id": 6998,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/utilities.ts:91787:91805"
+      },
+      "type": "SourceFile",
+      "field": "localJsxFragmentNamespace",
+      "declared_type": "__String | undefined",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2441,
+          "column": 25,
+          "start": 97341,
+          "end": 97371,
+          "text": "file.localJsxFragmentNamespace"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2442,
+          "column": 32,
+          "start": 97407,
+          "end": 97437,
+          "text": "file.localJsxFragmentNamespace"
+        }
+      ],
+      "pair_id": "6998:localJsxFragmentNamespace",
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/6998-localJsxFragmentNamespace-*.a"
+      ]
+    },
+    {
+      "type_id": 6998,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/utilities.ts:91787:91805"
+      },
+      "type": "SourceFile",
+      "field": "localJsxNamespace",
+      "declared_type": "__String | undefined",
+      "declared_families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "scalar contracts"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2487,
+          "column": 13,
+          "start": 99740,
+          "end": 99762,
+          "text": "file.localJsxNamespace"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 2488,
+          "column": 20,
+          "start": 99786,
+          "end": 99808,
+          "text": "file.localJsxNamespace"
+        }
+      ],
+      "pair_id": "6998:localJsxNamespace",
+      "state": "complete source fixture group",
+      "evidence": [
+        "TestCheckedViewBrandCandidatePairs",
+        "brand-pairs/6998-localJsxNamespace-*.a"
+      ]
+    },
+    {
       "type_id": 97892,
       "view_reason": {
         "kind": "union-member",
@@ -4845,6 +4975,53 @@
       "pair_id": "97892:signature",
       "state": "pending source integration",
       "evidence": []
+    },
+    {
+      "type_id": 64997,
+      "view_reason": {
+        "kind": "cast",
+        "site": "src/compiler/commandLineParser.ts:84552:84575"
+      },
+      "type": "BuildOptions",
+      "field": "<dynamic-key>",
+      "declared_type": "CompilerOptionsValue",
+      "declared_families": [
+        "array contracts",
+        "dictionary contracts",
+        "nullish members",
+        "object plus primitive union",
+        "scalar contracts"
+      ],
+      "families": [
+        "array contracts",
+        "dictionary contracts",
+        "dictionary reads",
+        "nullish members",
+        "object plus primitive union",
+        "scalar contracts"
+      ],
+      "intrinsic": false,
+      "element": false,
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 334,
+          "column": 75,
+          "start": 12398,
+          "end": 12423,
+          "text": "buildOptions[option.name]"
+        }
+      ],
+      "rank": 27,
+      "source_integration": "pending",
+      "pair_id": "64997:<dynamic-key>",
+      "state": "pending shared dictionary selection",
+      "lane4_scope": "string, number, boolean, null, undefined selection only",
+      "other_owners": {
+        "lane6": "lookup, absence, enumeration and record storage",
+        "lane4b": "object and array alternatives with descendant contracts"
+      }
     },
     {
       "type_id": 6995,
@@ -5109,5 +5286,15 @@
       "state": "pending source integration",
       "evidence": []
     }
-  ]
+  ],
+  "dictionary_selection_handoff": {
+    "source_commit": "ce4eeaa45750a49d1fd44f0881473513d3d82eb8",
+    "source_path": "stage3/interface-downcasts/dictionaries/candidate-pair-progress.json",
+    "source_sha256": "f7920887c9c810f8c10c84f2f0ffc1fb6233f51d9428c2a06b42116e847f7238",
+    "candidate_pairs": 2,
+    "candidate_reads": 11,
+    "remaining_pairs": 2,
+    "remaining_reads": 11,
+    "completion_rule": "Shared pairs; scalar/nullish selection alone does not certify full dictionary element extraction. Original family totals remain separate."
+  }
 }

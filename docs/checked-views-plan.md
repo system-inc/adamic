@@ -1059,3 +1059,15 @@ fourteen candidate pairs / five hundred eleven reads. Candidate counts are not
 certified production reachability. The full key gaps inherit a library Record
 index signature and checker-validate a numeric keyof key without constructing
 runtime dictionary storage. They remain compile refusals, not completions.
+
+### Lane 4 dictionary scalar and nullish element selection
+
+Lane 6 GROUP4 at ce4eeaa4 hands lane 4 the scalar/nullish selection portion of
+CompilerOptions and BuildOptions dynamic element extraction, two candidate pairs /
+eleven reads. Lane 6 retains lookup, absence, enumeration and storage; lane 4b
+retains object/array alternatives and descendant contracts. The ranked lane 4
+ledger now has eleven pending scheduling pairs / thirty-eight candidate reads,
+including nine original mixed primitive pairs / twenty-seven reads. Full shared
+extraction remains pending; container certification is not child-read coverage.
+See stage3/interface-downcasts/lane4/DICTIONARY-HANDOFF.md. No new hook or second
+flow analysis is added by this scheduling checkpoint.
