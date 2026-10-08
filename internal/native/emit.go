@@ -28,6 +28,21 @@ func cProgram(program *ir.Program, handler int) string {
 	elementBorrows, lending := planElementBorrows(program)
 	emitter := &emitter{program: program, reuse: planReuse(program, lending), regions: planRegions(program), elementBorrows: elementBorrows}
 	var builder strings.Builder
+	regexCallbacks, nodeHost := false, false
+	walkExpressions(program, func(expression ir.Expression) {
+		switch call := expression.(type) {
+		case ir.RegExpCall:
+			regexCallbacks = regexCallbacks || call.Replacement != nil
+		case ir.NodeFSFile:
+			nodeHost = nodeHost || strings.HasPrefix(call.Operation, "host_") || call.Operation == "mkdtemp" || call.Operation == "rm"
+		}
+	})
+	if regexCallbacks {
+		builder.WriteString("#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n")
+	}
+	if nodeHost {
+		builder.WriteString("#define ADAMIC_NODE_HOST 1\n")
+	}
 	if program.ClosureReceiversNeeded() {
 		builder.WriteString("#define ADAMIC_CLOSURE_RECEIVERS 1\n")
 	}

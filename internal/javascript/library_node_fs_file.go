@@ -1,6 +1,9 @@
 package javascript
 
-import "github.com/system-inc/adamic/internal/ir"
+import (
+	"github.com/system-inc/adamic/internal/ir"
+	"strings"
+)
 
 func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	args := make([]string, len(call.Arguments))
@@ -8,6 +11,14 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		args[i] = e.value(arg)
 	}
 	switch call.Operation {
+	case "host_join":
+		return "adamicNodePath.join(" + strings.Join(args, ", ") + ")"
+	case "host_tmpdir":
+		return "adamicNodeOS.tmpdir()"
+	case "host_cwd":
+		return "adamicNodeProcess.cwd()"
+	case "host_chdir":
+		return "adamicNodeProcess.chdir(" + args[0] + ")"
 	case "date_new":
 		return "new Date(" + args[0] + ")"
 	case "date_time":
@@ -38,6 +49,10 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		return "adamicNodeFSFile.statSync(" + args[0] + ", {throwIfNoEntry:" + args[1] + "})"
 	case "mkdir":
 		return "adamicNodeFSFile.mkdirSync(" + args[0] + ", {recursive:" + args[1] + ", mode:" + args[2] + "})"
+	case "mkdtemp":
+		return "adamicNodeFSFile.mkdtempSync(" + args[0] + ")"
+	case "rm":
+		return "adamicNodeFSFile.rmSync(" + args[0] + ", {recursive:" + args[1] + ", force:" + args[2] + "})"
 	case "unlink":
 		return "adamicNodeFSFile.unlinkSync(" + args[0] + ")"
 	case "utimes", "utimes_dates", "utimes_atime_date", "utimes_mtime_date":

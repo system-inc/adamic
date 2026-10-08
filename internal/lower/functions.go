@@ -82,6 +82,14 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
 				valueType, isKnown = ir.Object, true
 			}
+			if function.Closure && l.regexReplacementArgument(declaration) {
+				if returns.Flags()&checker.TypeFlagsUndefined != 0 {
+					valueType, isKnown = ir.String, true
+				}
+				if returns.Flags()&checker.TypeFlagsNull != 0 {
+					valueType, isKnown = ir.Object, true
+				}
+			}
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
@@ -130,7 +138,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			}
 			function.RestElement = element
 		}
-		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) {
+		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) && !(l.result.Locals[local].Type == ir.Union && l.regexReplacementArgument(declaration)) {
 			// Its arguments are each one adamic_value.
 			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}
@@ -147,7 +155,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && censusCallableSlotless(function.Returns) {
+	if function.Closure && censusCallableSlotless(function.Returns) && !(function.Returns == ir.Union && l.regexReplacementArgument(declaration)) {
 		// A function value's arguments and result must each fit one adamic_value.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
 	}

@@ -1,8 +1,8 @@
-Built: merged census 24a2b287, host blockers b788e96e, and front-3 28a10122 with selective counted pointers and canonical nested calls.
-Commits: census merge bf1a3823; host merge 14856bbf; this front-3 merge retains 9534e8ab and checkpoint 4526aa46.
-Commands and outputs: selected native ABI gate passed; selected Node oracle passed in 21.171s; metadata/host/non-null/census oracle passed in 11.615s; weak_parent 253/302 and typeof_dispatch 6/16 match main.
-Mutants: drop the count: clang under -Werror says expected 3, have 2; excess count: emitted-C pins reject unobserved and unrelated function types; nested reference and switch mutants caught by Node.
-Not covered: parser C and binary identity FAIL after the merges; hardware instructions/cycles unavailable; taste 21 blocks the complete gate; host fixture 24 and library callback runtime integration remain next steps.
+Built: merged census 24a2b287, host blockers b788e96e, front-3 28a10122, current main ce0750f2, and library dependencies for exact host fixture 24; acceptance remains partial. Final release parser best of five: main 48c05d09 9.347 ms, merged 10.137 ms.
+Commits: census merge bf1a3823; host merge 14856bbf; front-3 merge ec485eab; current main merge 28443efc. All are pushed to codex/closure-convention; this host fixture checkpoint follows them. No other branch was pushed.
+Commands and outputs: uncached host/replacement Node gate 38.225s, full flow 195.888s, recorded counts 160.115s excluding only blocked taste 21, all passed; host24 agrees in both backends. weak_parent 253/302 and typeof_dispatch 6/16 remain main's counts.
+Mutants: generated and runtime drop-count rejected by clang under -Werror; excess-count and unused-runtime literal mutants caught by pins; five callback, 31 filesystem, nested-reference and switch mutants caught by their Node/backend checks.
+Not covered: parser C and binary identity FAIL; hardware instructions/cycles unavailable; taste 21 blocks the complete gate; host fixture 24 now agrees with Node in both backends; four external process/parallel runtime call sites remain unintegrated.
 
 One convention
 
@@ -33,7 +33,7 @@ Live tree: array.c's sort comparator calls adamic_closure_call(compare, {left,ri
 adamic.h:137 and :141 are the counted/plain closure invocations; :290 and :291 are the counted/plain method invocations. One typedef per shape.
 object.c:67 and :93 retrieve adamic_method_entry; they do not invoke a code pointer. union.c:135 inspects a method table; class_inheritance.c inspects function-index virtual tables.
 map_set.c: collection_next ignores presence, so its definition and constructor use adamic_code(self, arguments), with no count.
-The external library snapshot 132d9919 additionally contains node_process.c:436/:441, parallel.c:197/:300, regexp_replace.c:114. They are not in this merge; the prior checkpoint lists each original two-argument site. Their integration is not claimed here.
+This branch also carries regexp_replace.c:114 through the typed closure helper. The external library snapshot 132d9919 contains node_process.c:436/:441 and parallel.c:197/:300; those four sites remain outside this branch and their integration is not claimed.
 
 Retains
 
@@ -62,5 +62,48 @@ Validation logs
 /tmp/closure-convention-front-call-targets-final.log: shared call-target guard passed, 33.147s.
 /tmp/closure-convention-front-lower-final.log: nested-rest admission and array predicate proof tests passed, 0.502s.
 /tmp/closure-convention-front-counts-selected.log: executable counts passed, 52.598s; taste 21 excluded explicitly.
-The full touched-package attempt passed native (469.753s), load (9.566s), fresh (182.986s). Lower and IR failures were fixed and rechecked. Flow discovered missing hidden parameters (fixed), a case-admission regression (fixed), and an existing readiness trace mismatch; full flow has not been re-greened.
+The full touched-package attempt passed native (469.753s), load (9.566s), fresh (182.986s). Lower and IR failures were fixed and rechecked. The final complete flow run passed in 177.169s, including SSA, reaching definitions, mutation ranges and Node trace edges. A tentative readiness-edge change was removed after its mutant survived; the existing declaration fixes already made that fixture pass. No unproven graph change is retained.
 Setup succeeded in 52.417s; nproc 5, CPU quota 4; Go 1.27.1, clang 20.1.8, Node 24.19.0. Setup timing details remain in the historical checkpoint and /tmp/closure-convention-setup.log.
+
+Checkpoint evidence after current-main integration
+
+Observed: git merge-base --is-ancestor succeeds for 24a2b287, b788e96e, 28a10122, 9534e8ab and current origin/main ce0750f2. Front-3 and host tips were unchanged by the final fetch. Main advanced by a signal-reset runtime patch and meter evidence; both were merged, without conflicts, and the inherited-signal Node checks passed.
+
+Observed: the final parser C contains no ADAMIC_CLOSURE_CONVENTION macro and no argument_count binding. C SHA256 e5115e8d8daacce460238b6266e9ef3dbe2ecd05aff2fe1c3f47aeb300a95951 differs from main 48c05d09's 1e6bfaa8b9e114078056060a632f9e8e3d782d511badeed1ab0030cba674a5d9. Final release binary SHA256 a0d99447bda0c8d31fb2579d2d7d108221ee11bdf93eed119d13967ededb2c48 differs from main's db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e. Identity FAIL is an outstanding requirement, not a successful no-cost claim.
+Observed: five alternating release runs, after other test runs stopped, all exited zero and printed 10523. Main wall milliseconds: 20.184, 9.658, 9.699, 9.347, 9.957. Merged: 18.937, 10.354, 19.608, 12.058, 10.137. Best of five: 9.347 / 10.137 ms. This is not an instructions/cycles measurement or proof that performance is unchanged within noise. Both requested hardware events return perf_event_open errno 2 because this machine lacks a CPU PMU.
+Observed C differences: the optional-method admission adds four method-table entries and an unused interned string; the normalized semantic diff is preserved. Host-blockers adds object state allocation and runtime translation units even when parser field checks do not observe them. Current main also changes startup signal behavior. Inference: selective count emission alone cannot establish byte identity until these remaining merged features are made selective too.
+
+Host fixture 24
+
+Exact source preserved as closure-convention-evidence/host24.a, from codex/host-proof-combined. SHA256 4a30cf39a2b30c91703baf39ba4f3574921f30cafedf1c91ee528499c2025159 matches the upstream fixture byte for byte. Node prints false, false, true, false, aBc_09.TS, one per line. At checkpoint 28443efc both C and JS compilation stopped at line 23: stage 0 can't lower node:fs.mkdtempSync yet. The host dependency port below resolves that refusal and establishes end-to-end agreement.
+The required filesystem scratch operations are library commit 82c12699, as-const stat options ed957219, with path/process and RegExp callback support on the library branches; they are absent from the three requested compiler tips. Merely changing a closure signature cannot implement those operations. Further library integration must preserve their error and ownership behavior and adapt callback rest slots to this convention.
+
+Runtime audit completeness
+
+The whole merged runtime has exactly four code-pointer invocation sites, all in adamic.h: counted closure at 137, plain closure at 141, counted method at 290 and plain method at 291. Their typedefs are respectively adamic_counted_code, adamic_code, adamic_counted_method and adamic_method. There is no function-pointer cast. The sort caller at array.c:198 dispatches through those closure typedefs.
+The requested six source call sites are each listed in closure-convention-evidence/runtime-sites.json. array.c:198 and regexp_replace.c:114 are now present and typed in this branch. The two node_process.c performance sites and two parallel.c sites belong to an external library runtime. Audit is complete; integration of those four sites is incomplete. Their old direct calls must not be accepted as evidence of typed compatibility with this header. Process builtin initializers and callback rest packing also require adaptation, so a five-line call replacement alone would not be a sound port.
+
+Final commands
+
+ADAMIC_GATE_UNCACHED=1 go test ./internal/flow -count=1 -timeout 15m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -run 'TestClosureConventionDropCount|TestNoReaderCallingConvention|TestASignalLeavesWhatWasPrinted|TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length|TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention|TestNativeAgreesWithNode/internal/oracle/testdata/census_optional_values|TestNativeAgreesWithNode/internal/oracle/testdata/host_' -count=1 -timeout 15m
+The two commands passed uncached; their logs are committed in closure-convention-evidence. The complete gate is not green: stage3/fixtures/taste/21_truthy_loops.a:34:25 still refuses checked view field objectType of type Type. Its source, success expectation and incoming counts row remain intact.
+The excess-count mutant changes packedClosureCall's selector to always true. TestNoReaderCallingConvention rejects both an unobserved program's count binding and a count reaching an unrelated function type. The source is restored. The drop-count mutant removes the actual call's last argument; clang rejects expected 3, have 2 under -Werror. Neither mutant survives.
+
+Host fixture completion
+
+Observed: exact host fixture 24 is registered as closure_convention_host24.a, with its source unchanged. Both backends agree with Node on false, false, true, false, aBc_09.TS. Release, sanitizers and leak checks passed. Its counted run records allocations/frees 219/219, retains/releases 162/200, peak 53.
+The port carries Adamic library scratch operations from 82c12699, exact as-const stat-option proof from ed957219, the lexical join and process directory behavior from codex/host-proof-combined, and guarded RegExp replacement from 96bb40f6 / 132d9919. No cohere code was copied. Unimplemented Node members keep their named refusal.
+The callback uses the same counted/plain pointer types and argument order. Its actual count includes captures, offset, input and optional named groups; packing uses the program's reserved rest slot. JS receives the original argument list and uses its existing rest binding. The obsolete library arrow-only rest path was removed, so there is one binding rule.
+The new closure_convention_regexp_count.a witness checks named function callbacks with arguments.length, both with and without named groups, plus a callback with a heterogeneous rest tail. All agree with Node. The original callback, arguments, throw, argument_guard and group_guard fixtures are preserved, as are scratch mkdtemp and rm fixtures.
+Callbacks are accounted for in exception edges, freshness, mutation inference and global move planning. ABI flags are emitted from IR observations, never selected by a name occurring in a user literal. Node host and replacement translation units are omitted when unused; scratch definitions are similarly guarded. The host port leaves the parser C and release binary byte-identical to checkpoint 28443efc: C e5115e8d8daacce460238b6266e9ef3dbe2ecd05aff2fe1c3f47aeb300a95951, binary a0d99447bda0c8d31fb2579d2d7d108221ee11bdf93eed119d13967ededb2c48. They still differ from main 48c05d09; that acceptance condition remains open.
+
+Host validation and mutants
+
+Uncached host/replacement Node gate: 38.225s. Scratch admission and refusal gate: lower 14.837s; typed generated/runtime drop-count and no-reader pins: native 9.020s; all filesystem input fixtures and 31 existing filesystem mutants: oracle 20.127s. Final IR marker/host/mutant gate: native 0.694s, oracle 4.084s. Final contracts: native 0.580s, lower 1.767s. Full flow after the port: 195.888s, passed. Counts update excluding only the blocked taste 21: 160.115s, passed; its incoming row was restored in the proper table position and is not claimed remeasured. Existing counts, including weak_parent and typeof_dispatch, did not move.
+Drop the count at regexp_replace.c:114: clang under -Werror rejects expected 3, have 2. Offset off by one, swapped capture order and omitted named groups: only source-on-Node stdout caught each, with clean sanitizer/leak runs. Remove argument or group guards: the checked backend comparison caught each, with clean mutant execution. Select runtime code by matching keywords in user literals: TestClosureConventionRuntimeFeaturesIgnoreLiterals rejects the unused feature. All compiler source mutations were restored.
+The matching-subset counts assertion passed in 40.443s before adding host fixtures, with only the explicitly skipped taste-21 row temporarily excluded from the expected subset and restored afterward. No numeric expectation was changed for that assertion. The ordinary whole-file counts check remains blocked by taste 21's unsupported recursive checked view.
+
+Remaining work
+
+Parser identity to main 48c05d09 remains false because of the merged optional method-table additions, admission string and host object-state/runtime changes. Hardware instructions and cycles remain unavailable on this box. Four external runtime sites remain outside this compiler branch: node_process.c performance invocation at 436/441 and parallel.c at 197/300. This port exposes only cwd/chdir/tmpdir/join; it does not pretend to implement performance or parallel scheduling. The six-site audit identifies the required typed dispatcher and actual count for every site, but does not claim those external modules have been compiled against this header.

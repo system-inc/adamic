@@ -60,6 +60,10 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		return ir.NodeFSFile{Operation: operation, Arguments: []ir.Expression{receiver}, Of: ir.Boolean}, true, nil
 	case "readFileSync":
 		operation, of = "read_file", ir.String
+	case "mkdtempSync":
+		operation, of = "mkdtemp", ir.String
+	case "rmSync":
+		operation = "rm"
 	case "openSync":
 		operation = "open"
 	case "readSync":
@@ -87,7 +91,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		return nil, false, nil
 	}
 	switch operation {
-	case "close", "write_file", "unlink", "utimes":
+	case "close", "write_file", "unlink", "utimes", "rm":
 		outer := node
 		for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 			outer = outer.Parent
@@ -118,7 +122,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			read, reading := value.(ir.Read)
 			if reading {
 				for _, argument := range call.Arguments.Nodes {
-					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !l.exactObject(argument, 0) {
+					if !ast.IsIdentifier(ast.SkipParentheses(argument)) || !(l.exactObject(argument, 0) || l.nodeFSDirectoryStatOptions(argument)) {
 						continue
 					}
 					symbol := l.symbol(ast.SkipParentheses(argument))
@@ -143,8 +147,17 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		// Splitting a literal into runtime parameters must neither drop effects
 		// from unused fields nor reorder the effects of its fields.
+		literalValue := func(value ir.Expression) ir.Expression {
+			if optional, ok := value.(ir.MaybeOf); ok {
+				if optional.Value == nil {
+					return ir.Undefined{}
+				}
+				return optional.Value
+			}
+			return value
+		}
 		for _, field := range literal.Fields {
-			switch field.Value.(type) {
+			switch literalValue(field.Value).(type) {
 			case ir.NumberConstant, ir.BooleanConstant, ir.StringConstant, ir.Undefined, ir.Null:
 			default:
 				return nil, l.notYet(node, memberName+": "+"fs option literals containing evaluated expressions; bind a plain options object first")
@@ -152,7 +165,11 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		for _, field := range literal.Fields {
 			if field.Name == name {
-				return field.Value, nil
+				value := literalValue(field.Value)
+				if _, absent := value.(ir.Undefined); absent {
+					return fallback, nil
+				}
+				return value, nil
 			}
 		}
 		return fallback, nil
@@ -171,6 +188,49 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	var err error
 	switch operation {
+	case "mkdtemp":
+		if len(args) > 1 {
+			enc := args[1]
+			if enc.Type() == ir.Object {
+				enc, err = option(enc, "encoding", constant("utf8"))
+				if err != nil {
+					return nil, true, err
+				}
+			}
+			if err = encoding(enc); err != nil {
+				return nil, true, err
+			}
+		}
+		if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsStringLike == 0 {
+			return nil, true, l.notYet(node, "node:fs.mkdtempSync outside the string UTF8 result")
+		}
+		args = args[:1]
+	case "rm":
+		recursive, force := ir.Expression(ir.BooleanConstant{Value: false}), ir.Expression(ir.BooleanConstant{Value: false})
+		if len(args) > 1 {
+			recursive, err = option(args[1], "recursive", recursive)
+			if err != nil {
+				return nil, true, err
+			}
+			force, err = option(args[1], "force", force)
+			if err != nil {
+				return nil, true, err
+			}
+			for _, name := range []string{"maxRetries", "retryDelay"} {
+				fallback := number(0)
+				if name == "retryDelay" {
+					fallback = number(100)
+				}
+				value, e := option(args[1], name, fallback)
+				if e != nil {
+					return nil, true, e
+				}
+				if n, ok := value.(ir.NumberConstant); !ok || n.Value != fallback.(ir.NumberConstant).Value {
+					return nil, true, l.notYet(node, "node:fs.rmSync retry options outside the driver defaults")
+				}
+			}
+		}
+		args = []ir.Expression{args[0], recursive, force}
 	case "read_file":
 		raw := l.nodeBufferType(l.checker.GetTypeAtLocation(node), "Buffer")
 		if !raw && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsStringLike == 0 {
@@ -341,7 +401,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		"read_file": {ir.String, ir.String}, "read_fd": {ir.Number, ir.String}, "open": {ir.String, ir.String, ir.Number},
 		"write": {ir.Number, ir.String, ir.Number}, "close": {ir.Number}, "write_file": {ir.String, ir.String, ir.String, ir.Number, ir.Boolean}, "write_fd": {ir.Number, ir.String, ir.String, ir.Number, ir.Boolean},
 		"utimes_dates": {ir.String, ir.Object, ir.Object}, "utimes_atime_date": {ir.String, ir.Object, ir.Number}, "utimes_mtime_date": {ir.String, ir.Number, ir.Object},
-		"exists": {ir.String}, "stat": {ir.String, ir.Boolean}, "mkdir": {ir.String, ir.Boolean, ir.Number}, "unlink": {ir.String}, "utimes": {ir.String, ir.Number, ir.Number},
+		"mkdtemp": {ir.String}, "rm": {ir.String, ir.Boolean, ir.Boolean}, "exists": {ir.String}, "stat": {ir.String, ir.Boolean}, "mkdir": {ir.String, ir.Boolean, ir.Number}, "unlink": {ir.String}, "utimes": {ir.String, ir.Number, ir.Number},
 	}
 	for i, t := range types[operation] {
 		if args[i].Type() != t {
@@ -397,7 +457,7 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 	}
 	index := 1
 	switch symbol.Name {
-	case "statSync", "mkdirSync", "readFileSync":
+	case "statSync", "mkdirSync", "readFileSync", "rmSync", "mkdtempSync":
 	case "writeFileSync":
 		index = 2
 	default:
@@ -407,5 +467,5 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
 }
 
 func init() {
-	RegisterNodeLibraryMembers("node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.code")
+	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.code")
 }

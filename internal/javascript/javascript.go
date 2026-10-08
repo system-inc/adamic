@@ -222,6 +222,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicNodeFSFile.") {
 		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
 	}
+	for _, module := range []struct{ name, path string }{{"adamicNodePath", "node:path"}, {"adamicNodeOS", "node:os"}, {"adamicNodeProcess", "node:process"}} {
+		if strings.Contains(code, module.name+".") {
+			code = "import * as " + module.name + " from '" + module.path + "';\n" + code
+		}
+	}
 	return code
 }
 
@@ -689,6 +694,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		r := e.program.Regexps[expression.Index]
 		return "new RegExp(" + quote(r.Pattern) + ", " + quote(r.Flags) + ")"
 	case ir.RegExpCall:
+		if expression.Replacement != nil {
+			return e.regexReplacement(expression)
+		}
 		if expression.Method == "iteratorDone" {
 			return e.value(expression.Value) + ".done"
 		}

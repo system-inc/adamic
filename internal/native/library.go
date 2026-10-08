@@ -40,6 +40,12 @@ func RuntimeLibraryForSource(directory string, source string, options Options) (
 	if strings.Contains(source, "#define ADAMIC_CLOSURE_RECEIVERS 1\n") {
 		flags = append(flags, "-DADAMIC_CLOSURE_RECEIVERS=1")
 	}
+	if strings.Contains(source, "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n") {
+		flags = append(flags, "-DADAMIC_REGEXP_REPLACE_CALLBACK=1")
+	}
+	if strings.Contains(source, "#define ADAMIC_NODE_HOST 1\n") {
+		flags = append(flags, "-DADAMIC_NODE_HOST=1")
+	}
 	return runtimeLibrary(directory, options, flags)
 }
 
@@ -55,6 +61,24 @@ func runtimeLibrary(directory string, options Options, extraFlags []string) (str
 	files, err := readRuntime(sources, root)
 	if err != nil {
 		return "", fmt.Errorf("native: runtime: %w", err)
+	}
+	if !slicesContain(extraFlags, "-DADAMIC_REGEXP_REPLACE_CALLBACK=1") {
+		kept := files[:0]
+		for _, file := range files {
+			if file.name != "regexp_replace.c" {
+				kept = append(kept, file)
+			}
+		}
+		files = kept
+	}
+	if !slicesContain(extraFlags, "-DADAMIC_NODE_HOST=1") {
+		kept := files[:0]
+		for _, file := range files {
+			if file.name != "node_host.c" {
+				kept = append(kept, file)
+			}
+		}
+		files = kept
 	}
 	compiler, err := exec.LookPath(compilerName(options))
 	if err != nil {
@@ -130,7 +154,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		return "", fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(temporary)
-	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"} {
+	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
 		if slicesContain(flags, "-D"+feature+"=1") {
 			files = append([]runtimeFile(nil), files...)
 			for i := range files {
