@@ -1,7 +1,7 @@
 Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-27 explicit implementation/component mutants were caught and restored, alongside the fixture payload mutants.
+38 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -239,3 +239,31 @@ changes or replacement of prior reconciliation. Presence operators and broader
 nullish source dispatch remain explicitly incomplete. No new production check
 is added, and no additional mutant claim is made for this evidence-only merge.
 The usual focused package, full IR, filtered Node oracle and vet gates follow.
+
+## Dictionary read components follow-up, October 8
+
+Tip e9a06829 merges cleanly on the priority owner merge 566c1ec03. There are no
+conflicted hunks and no bulk/whole-file choices. The plan records the user's
+new permission for lanes to add their named minimal shared hooks. This tip
+declares viewDictionaryContractHook, but shared source classification/indexed
+dispatch and record producers remain unwired. Its descriptor stays Unsupported
+dictionary source dispatch; no scalar table is reinterpreted from a target cast.
+
+Native reads only source-certified boxed records and retains child contracts;
+JavaScript uses own data descriptors and refuses accessors without invoking them.
+Five options/nested/array component source controls compare with Node, including
+sanitized native. Eleven executable component mutants run in the oracle gate:
+skip-check, accept-wrong-shape and drop-transitive-contract each in native/JS;
+native uncertified storage; JavaScript container, accessor, missing-child and
+required-missing guards. Mutations are in-process harness copies, never changes
+to production files. Nested mutants prove the adapter seam, not compiler flow.
+The candidate ranking reproduces exactly: 29 pairs / 228 reads still pending,
+with exact runtime reachability unmeasured. Formatting and source diff checks
+pass. Focused compiler packages (including records against Node), full IR,
+uncached filtered Node oracle and vet are the integration gates. The previously
+reproduced array-callback predicate fixture is still the sole oracle exclusion.
+
+Dictionary component gates pass: lower 10.935s, native 44.416s, JavaScript
+1.303s, full IR 24.167s, uncached filtered oracle 78.664s, vet exit 0.
+All eleven new component mutations execute valid code and lose the expected
+refusal, as pinned by the passing mutant tests. No source pair is completed.

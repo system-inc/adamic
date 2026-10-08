@@ -1,0 +1,38 @@
+=== RUN   TestCheckedViewDictionaryComponents
+=== PAUSE TestCheckedViewDictionaryComponents
+=== RUN   TestCheckedViewDictionaryComponentMutants
+=== PAUSE TestCheckedViewDictionaryComponentMutants
+=== CONT  TestCheckedViewDictionaryComponents
+=== CONT  TestCheckedViewDictionaryComponentMutants
+=== RUN   TestCheckedViewDictionaryComponentMutants/skip-check
+=== RUN   TestCheckedViewDictionaryComponents/options-good
+=== NAME  TestCheckedViewDictionaryComponentMutants/skip-check
+    checked_views_dictionaries_test.go:97: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+    checked_views_dictionaries_test.go:97: pinned exit-70 diagnostic catches mutant: exit=0 stdout="[object Object]\nundefined\n"
+=== RUN   TestCheckedViewDictionaryComponentMutants/accept-wrong-shape
+    checked_views_dictionaries_test.go:97: pinned exit-70 diagnostic catches mutant: exit=0 stdout="undefined\n"
+    checked_views_dictionaries_test.go:95: mutant must finish with a lost refusal: oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x65, 0x6e, 0x74, 0x72, 0x79, 0x2e, 0x6e, 0x61, 0x6d, 0x65, 0x20, 0x69, 0x73, 0x20, 0x6e, 0x6f, 0x74, 0x20, 0x61, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x3b, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, exitCode:70}
+=== RUN   TestCheckedViewDictionaryComponentMutants/drop-transitive-contract
+=== RUN   TestCheckedViewDictionaryComponents/options-wrong
+=== NAME  TestCheckedViewDictionaryComponentMutants/drop-transitive-contract
+    checked_views_dictionaries_test.go:97: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+    checked_views_dictionaries_test.go:97: pinned exit-70 diagnostic catches mutant: exit=0 stdout="42\n"
+--- FAIL: TestCheckedViewDictionaryComponentMutants (10.25s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/skip-check (10.01s)
+    --- FAIL: TestCheckedViewDictionaryComponentMutants/accept-wrong-shape (0.12s)
+    --- PASS: TestCheckedViewDictionaryComponentMutants/drop-transitive-contract (0.12s)
+=== RUN   TestCheckedViewDictionaryComponents/nested-good
+=== RUN   TestCheckedViewDictionaryComponents/nested-wrong
+=== RUN   TestCheckedViewDictionaryComponents/array-wrong
+--- PASS: TestCheckedViewDictionaryComponents (10.70s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-good (3.61s)
+    --- PASS: TestCheckedViewDictionaryComponents/options-wrong (0.15s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-good (0.14s)
+    --- PASS: TestCheckedViewDictionaryComponents/nested-wrong (0.14s)
+    --- PASS: TestCheckedViewDictionaryComponents/array-wrong (0.13s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=13
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	10.708s
+FAIL
