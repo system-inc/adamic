@@ -36,8 +36,9 @@ type Options struct {
 
 	// Enter and Leave, when set, are JavaScript expressions evaluated as each call of a function
 	// starts and as it ends, however it ends short of a panic.
-	Enter func(function int) string
-	Leave func(function int) string
+	Enter           func(function int) string
+	Leave           func(function int) string
+	Suspend, Resume func() string
 }
 
 // JavaScriptWith is JavaScript with options.
@@ -70,6 +71,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } return { code: (closure, values) => object[name](object, ...values) }; };\n")
 	}
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
+	builder.WriteString("const adamicParallelMap = (items, work) => items.map((item, index) => adamicCall(work, [item, index]));\n")
 	// The array and the callback are each evaluated once, in that order, before the first call.
 	builder.WriteString("const adamicVisit = (array, method, callback) => array[method]((element, index, all) => adamicCall(callback, [element, index, all]));\n")
 	// map reads the length once, as JavaScript's does; an array the callback shrinks would leave a hole,
@@ -158,7 +160,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		if function.ArgumentsCount != 0 && !function.Closure {
 			parameters = append([]string{emitter.name(function.ArgumentsCount - 1)}, parameters...)
 		}
-		fmt.Fprintf(&builder, "\nfunction %s(%s) {\n", functionName(program, index), strings.Join(parameters, ", "))
+		prefix := ""
+		if function.Async {
+			prefix = "async "
+		}
+		fmt.Fprintf(&builder, "\n"+prefix+"function %s(%s) {\n", functionName(program, index), strings.Join(parameters, ", "))
 		if function.Closure {
 			if function.ArgumentsCount != 0 {
 				count := "values.length"
@@ -185,7 +191,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 			}
 		}
 		if options.Enter != nil {
-			emitter.line("%s;", options.Enter(index))
+			if function.Async && options.Suspend != nil {
+				emitter.line("const adamicActivation = %s;", options.Enter(index))
+			} else {
+				emitter.line("%s;", options.Enter(index))
+			}
 			emitter.line("try {")
 			emitter.indent++
 		}
@@ -217,6 +227,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString(prototype)
 	}
 	emitter.statements(program.Main)
+	if program.AsyncEntry != 0 {
+		emitter.line("await %s();", functionName(program, program.AsyncEntry-1))
+	}
 	builder.WriteString(emitter.out.String())
 	code := builder.String()
 	if strings.Contains(code, "adamicNodeFSFile.") {
@@ -415,6 +428,10 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.AllocateEnvironment:
 		// Emitted at function entry before parameter cells are initialized.
 	case ir.Declare:
+		if wait, ok := statement.Value.(ir.Await); ok && e.options.Suspend != nil {
+			e.tracedAwait(at, wait, statement.Local)
+			return
+		}
 		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
 			if e.program.Locals[statement.Local].EnvironmentCell {
 				return
@@ -466,6 +483,10 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.line("%s = true;", e.localReady(statement.Local))
 		}
 	case ir.Evaluate:
+		if wait, ok := statement.Value.(ir.Await); ok && e.options.Suspend != nil {
+			e.tracedAwait(at, wait, -1)
+			return
+		}
 		e.line("%s;", e.value(statement.Value))
 	case ir.Panic:
 		e.line("panic(%s);", e.value(statement.Message))
@@ -593,6 +614,7 @@ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
 	e.line("%s: for (;;) {", breakLabel)
 	e.indent++
 	if !statement.CheckAfter {
+		e.statements(statement.Test)
 		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
 	}
 	for _, name := range statement.Labels {
@@ -615,6 +637,7 @@ func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
 	}
 	e.statements(statement.Update)
 	if statement.CheckAfter {
+		e.statements(statement.Test)
 		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
 	}
 	e.indent--
@@ -693,6 +716,18 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Array) + ".set(" + e.values(expression.Arguments) + ")"
 	case ir.TypedArraySubarray:
 		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
+	case ir.Await:
+		return "(await " + e.value(expression.Value) + ")"
+	case ir.PromiseValue:
+		name := "resolve"
+		if expression.Reject {
+			name = "reject"
+		}
+		value := ""
+		if expression.Value != nil {
+			value = e.value(expression.Value)
+		}
+		return "Promise." + name + "(" + value + ")"
 	case ir.NodeFSFile:
 		return e.nodeFSFile(expression)
 	case ir.RegExpNew:
@@ -1151,6 +1186,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Map) + ".size"
 	case ir.HasOwn:
 		return e.value(expression.Object) + ".hasOwnProperty(" + e.value(expression.Key) + ")"
+	case ir.ParallelMap:
+		return "adamicParallelMap(" + e.value(expression.Items) + ", " + e.value(expression.Work) + ")"
 	case ir.ReadTextFile:
 		return "readTextFile(" + e.value(expression.Path) + ")"
 	case ir.ProgramArguments:

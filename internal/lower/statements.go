@@ -119,6 +119,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		return statements, err
 	}
 	switch expression.Kind {
+	case ast.KindAwaitExpression:
+		value, err := l.awaitExpression(expression)
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	case ast.KindNonNullExpression, ast.KindVoidExpression:
 		value, err := l.expression(expression)
 		if err != nil {
@@ -167,6 +173,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		call, err := l.callOrMethod(expression)
 		if err != nil {
 			return nil, err
+		}
+		if call.Type() == ir.Promise {
+			return nil, &Refused{Where: l.program.Where(expression), What: "an unawaited async task", Fix: "await the call or keep and return its Promise"}
 		}
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
@@ -224,10 +233,14 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
-	if l.function.Returns == 0 {
+	if err := l.checkAsyncReturn(expression, value); err != nil {
+		return nil, err
+	}
+	// BodyReturns is what the body returns: an async function's settled value, not its Promise.
+	if l.function.BodyReturns() == 0 {
 		return []ir.Statement{ir.Evaluate{Value: value}, ir.Return{}}, nil
 	}
-	return []ir.Statement{ir.Return{Value: fit(value, l.function.Returns)}}, nil
+	return []ir.Statement{ir.Return{Value: fit(value, l.function.BodyReturns())}}, nil
 }
 
 // returnAssignment preserves the right side's value, assigns once, then returns

@@ -1,0 +1,16 @@
+=== RUN   TestNonShippingFlagsStayIdentical
+=== PAUSE TestNonShippingFlagsStayIdentical
+=== RUN   TestReleaseFlagsReachLink
+=== PAUSE TestReleaseFlagsReachLink
+=== RUN   TestReleaseArithmeticIsNeverFused
+=== PAUSE TestReleaseArithmeticIsNeverFused
+=== CONT  TestNonShippingFlagsStayIdentical
+=== CONT  TestReleaseArithmeticIsNeverFused
+=== CONT  TestReleaseFlagsReachLink
+--- PASS: TestNonShippingFlagsStayIdentical (0.00s)
+--- PASS: TestReleaseFlagsReachLink (0.00s)
+=== NAME  TestReleaseArithmeticIsNeverFused
+    release_test.go:93: link-only -ffp-contract=off omission caught by arithmetic output
+--- PASS: TestReleaseArithmeticIsNeverFused (2.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	2.042s
