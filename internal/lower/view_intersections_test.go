@@ -57,6 +57,25 @@ func TestViewIntersectionContracts(t *testing.T) {
 			if err != nil || len(members) != test.members || calls != test.members {
 				t.Fatalf("members %v, calls %d, error %v; want %d", members, calls, err, test.members)
 			}
+			if !l.structuralViewIntersection(target) {
+				t.Fatal("structural intersection not recognized")
+			}
+			l.result = &ir.Program{}
+			id, err := l.internStructuralViewIntersection(node, target)
+			if err != nil {
+				t.Fatal(err)
+			}
+			contract := l.result.ViewContracts[id-1]
+			if !contract.Intersection || contract.Kind != ir.ViewObject || len(contract.Members) != test.members {
+				t.Fatalf("lost conjunction: %#v", contract)
+			}
+			if test.name == "brand" || test.name == "optional brand" {
+				for _, field := range contract.Fields {
+					if field.Name == "__brand" {
+						t.Fatal("phantom introduced runtime field")
+					}
+				}
+			}
 			sentinel := errors.New("member unavailable")
 			members, err = l.viewIntersectionContracts(node, target, func(*checker.Type) (ir.ViewContractID, error) { return 0, sentinel })
 			if !errors.Is(err, sentinel) || members != nil {
@@ -65,6 +84,39 @@ func TestViewIntersectionContracts(t *testing.T) {
 			members, err = l.viewIntersectionContracts(node, target, func(*checker.Type) (ir.ViewContractID, error) { return 0, nil })
 			if err == nil || members != nil {
 				t.Fatal("unknown member certified intersection")
+			}
+		})
+	}
+}
+
+func TestViewIntersectionAncestorProof(t *testing.T) {
+	t.Parallel()
+	for _, sample := range []struct {
+		name, source string
+		inherits     bool
+	}{
+		{"declared", "interface A { readonly value: number } interface B extends A { readonly other: string } type Target = B;", true},
+		{"structural only", "interface A { readonly value: number } interface B { readonly value: number; readonly other: string } type Target = B;", false},
+		{"intersection", "interface A { readonly value: number } interface B extends A { readonly other: string } type Target = B & { readonly more: number };", true},
+		{"generic ancestry", "interface A { readonly value: number } interface B<T> extends A { readonly other: T } type Target = B<string>;", true},
+	} {
+		t.Run(sample.name, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "ancestor.a")
+			if err := os.WriteFile(path, []byte(sample.source), 0600); err != nil {
+				t.Fatal(err)
+			}
+			program, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			file := program.Files()[0]
+			checked, release := program.Checker(context.Background(), file)
+			defer release()
+			l := &lowering{program: program, checker: checked, result: &ir.Program{}}
+			ancestor := checked.GetTypeAtLocation(file.Statements.Nodes[0].Name())
+			source := checked.GetTypeAtLocation(file.Statements.Nodes[len(file.Statements.Nodes)-1].Name())
+			if got := l.viewIntersectionInherits(source, ancestor, map[*checker.Type]bool{}); got != sample.inherits {
+				t.Fatalf("declared ancestry %v, want %v", got, sample.inherits)
 			}
 		})
 	}

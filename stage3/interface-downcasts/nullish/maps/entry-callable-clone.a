@@ -1,0 +1,8 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,(()=>number)|null>|null}
+const first=():number=>7;
+const original=new Map<string,(()=>number)|null>([['key',first],['null',null]]);
+const map=new Map<string,(()=>number)|null>(original);
+const raw={kind:'box',value:map};const base:Base=raw;
+const checked=(base as Target).value;
+if(checked!==null){const fn=checked.get('key');if(fn!==null&&fn!==undefined){console.log(String(fn()));}console.log(String(checked.has('null')));}

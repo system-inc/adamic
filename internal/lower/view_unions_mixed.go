@@ -61,3 +61,26 @@ func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.T
 	l.result.ViewContracts[int(id)-1] = contract
 	return id, nil
 }
+
+// Approved phantom-void alternatives in a string representation use the scalar
+// reader's undefined payload certificate, independently of optional absence.
+func (l *lowering) viewBrandedStringUndefined(target *checker.Type) bool {
+	if l.includesNull(target) {
+		return false
+	}
+	of, known := l.representation(target)
+	if !known || of != ir.String {
+		return false
+	}
+	if l.phantomUndefined(target) {
+		return true
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if l.phantomUndefined(member) {
+				return true
+			}
+		}
+	}
+	return false
+}

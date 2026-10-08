@@ -1,0 +1,8 @@
+class Named{readonly count:number=7;}
+interface Entry{readonly child?:Named|undefined}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,Entry>}
+const fake={count:7};const item:Entry={child:new Named()};const empty={};const present={child:undefined};const source=new Map<string,Entry>([['key',item],['empty',empty],['present',present]]);const raw={kind:'box',value:source};const base:Base=raw;
+function read(node:Target):void{node.value.forEach(entry=>{const child=entry.child;if(child!==undefined){console.log(String(child.count));}else{console.log('missing');}});}
+read(base as Target);console.log(String(fake.count));
+console.log(String(Object.hasOwn(present,'child')));console.log(Object.keys(empty).join(','));console.log(Object.keys(present).join(','));

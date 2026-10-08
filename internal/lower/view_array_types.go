@@ -20,6 +20,9 @@ func (l *lowering) viewArrayBaseSeen(target *checker.Type, seen map[*checker.Typ
 		return target
 	}
 	seen[target] = true
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		return l.viewReadonlyArrayUnionBase(target, seen)
+	}
 	var bases []*checker.Type
 	if target.Flags()&checker.TypeFlagsIntersection != 0 {
 		bases = target.Types()
@@ -77,7 +80,11 @@ func (l *lowering) viewArrayOwnProperties(target, base *checker.Type) []*ast.Sym
 }
 
 func (l *lowering) viewArrayElementType(target *checker.Type) *checker.Type {
-	base := l.viewArrayBase(l.checker.GetNonNullableType(target))
+	target = l.checker.GetNonNullableType(target)
+	if element := l.viewArrayUnionElementType(target); element != nil {
+		return element
+	}
+	base := l.viewArrayBase(target)
 	if base == nil {
 		return nil
 	}

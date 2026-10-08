@@ -1,0 +1,6 @@
+import type { TsConfigSourceFile } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+const raw = { kind: 308, extendedSourceFiles: 'bad' };
+const base: Base = raw;
+const viewed = base as TsConfigSourceFile;
+console.log(`${viewed.kind}`);

@@ -24,6 +24,12 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 		name, nodeOut, checkedOut, message string
 		checked                            bool
 	}{
+		{"ordinary_regions", "word\ntrue\ntrue\n", "", "", false},
+		{"parser_assert_defined", "assertion declaration loaded\n", "", "", false},
+		{"assert_defined_read", "WORD\nmissing\nword\nno match\n1\nno number\nevaluated\nfalse\nnull evaluated\nfalse\n", "", "", false},
+		{"parser_callback_parameter", "callback declaration loaded\n", "", "", false},
+		{"generic_callback_parameter_read", "WORD\nSECOND\n", "", "", false},
+		{"callback_parameter_read", "WORD\nmissing\nSECOND\n", "", "", false},
 		{"parser_every_result", "overload declarations loaded\n", "", "", false},
 		{"parser_some_result", "overload declarations loaded\n", "", "", false},
 		{"overload_some", "true:false\n", "", "", false},

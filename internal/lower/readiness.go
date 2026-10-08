@@ -54,6 +54,7 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // assignments clear readiness; calls invalidate slots that a captured writer can clear.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	prepareViewArrayReferenceWrites(program)
 	objectWrites := false
 	inspect := func(value any) bool {
 		if write, ok := value.(ir.SetProperty); ok && write.WriteContract != 0 && write.Value.Type() == ir.Object {
@@ -355,13 +356,13 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !program.CheckedFields[expression.Name] {
+				if expression.DictionaryKey == nil && !program.CheckedFields[expression.Name] && !primitiveBindingConversion(program, expression) {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
 					expression.ViewContract = 0
 					expression.ViewTypeID = 0
-				} else if expression.ViewTypeID != 0 {
+				} else if expression.ViewTypeID != 0 && !expression.DictionaryPrimitive {
 					// A function read can precede the cast that interns its contract.
 					expression.ViewContract = program.ViewContractTypes[expression.ViewTypeID]
 				}
@@ -385,6 +386,15 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 			return result
 		}
 		switch value.Kind() {
+		case reflect.Pointer:
+			// Dictionary read adapters share the same receiver readiness facts
+			// as their enclosing record operation, including generic parameters.
+			if value.Type() != reflect.TypeOf((*ir.Property)(nil)) || value.IsNil() {
+				return value
+			}
+			result := reflect.New(value.Type().Elem())
+			result.Elem().Set(transform(value.Elem()))
+			return result
 		case reflect.Struct:
 			result := reflect.New(value.Type()).Elem()
 			for i := 0; i < value.NumField(); i++ {

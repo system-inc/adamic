@@ -6,7 +6,7 @@
 #include <string.h>
 
 /* Recorded by the implementation producer, never supplied by an asserted view.
-   Zero representation is unknown. Exact matching is deliberately conservative. */
+   Zero representation is unknown. Directional member checks remain conservative. */
 typedef struct adamic_callable_signature {
     size_t arity;
     const unsigned char *parameters;
@@ -29,6 +29,17 @@ static inline bool adamic_callable_representation_compatible(unsigned char from,
     uint16_t given = adamic_callable_members(from, from_members);
     uint16_t wanted = adamic_callable_members(to, to_members);
     return given != 0 && wanted != 0 && (given & wanted) == given;
+}
+
+/* Shared immutable producer predicate for field reads and union selectors. */
+static inline bool adamic_view_callable_signatures_match(const adamic_callable_signature *recorded, const adamic_callable_signature *expected) {
+    if (recorded == NULL || expected == NULL || recorded->arity != expected->arity || recorded->result == 0 || expected->result == 0) return false;
+    if (expected->result != 255 && !adamic_callable_representation_compatible(recorded->result, expected->result, recorded->result_mask, expected->result_mask)) return false;
+    if (recorded->arity != 0 && (recorded->parameters == NULL || expected->parameters == NULL)) return false;
+    for (size_t i = 0; i < recorded->arity; i++) {
+        if (!adamic_callable_representation_compatible(expected->parameters[i], recorded->parameters[i], expected->parameter_masks == NULL ? 0 : expected->parameter_masks[i], recorded->parameter_masks == NULL ? 0 : recorded->parameter_masks[i])) return false;
+    }
+    return true;
 }
 
 static inline const adamic_heap *adamic_view_callable_shape(
@@ -55,7 +66,7 @@ static inline const adamic_heap *adamic_view_callable_shape(
             for (size_t index = 0; compatible && index < recorded->arity; index++) {
                 compatible = adamic_callable_representation_compatible(expected->parameters[index], recorded->parameters[index], expected->parameter_masks == NULL ? 0 : expected->parameter_masks[index], recorded->parameter_masks == NULL ? 0 : recorded->parameter_masks[index]);
             }
-            if (compatible) { return value; }
+            if (compatible && adamic_view_callable_signatures_match(recorded, expected)) { return value; }
             found = "function with incompatible parameter representations";
         }
     }

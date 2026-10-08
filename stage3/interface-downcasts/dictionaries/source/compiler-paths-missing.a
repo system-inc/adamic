@@ -1,0 +1,11 @@
+interface MapLike<T> { [key: string]: T; }
+interface Plugin { readonly name: string; }
+interface Project { readonly path: string; }
+interface Source { readonly text: string; }
+type RichValue = string | number | boolean | (string | number)[] | MapLike<string[]> | Plugin[] | Project[] | Source | null | undefined;
+interface Base { readonly kind: 'Paths'; }
+interface CompilerOptions extends Base { readonly paths?: MapLike<string[]>; readonly [key: string]: RichValue; }
+const payload={kind:'Paths' as const,paths:undefined};
+const base:Base=payload;
+const view=base as CompilerOptions;
+const table=view.paths; console.log(table===undefined ? 'missing' : 'present');

@@ -10,12 +10,17 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// PrimitiveArrayReads requires producer metadata even without a cast.
+	PrimitiveArrayReads bool
 	// ViewOrigins are metadata for the shared may-flow graph, never executable IR.
-	ViewOrigins []Expression
+	// DictionaryEntryOrigins are derived containers, never additional cast sites.
+	DictionaryEntryOrigins []Expression
+	ViewOrigins            []Expression
+	MapCertificates        [][2]ViewContractID
 
-	// PredicateChecks counts overload-result directions, per emitted call site.
+	// PredicateChecks counts predicate directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
-	PredicateChecks struct{ Proven, Checked, Unobservable int }
+	PredicateChecks PredicateCheckCounts
 
 	// CheckedFields conservatively checks these field names at every object read.
 	OptionalViewFields map[string]bool
@@ -23,7 +28,9 @@ type Program struct {
 	CheckedFields      map[string]bool
 	ViewContracts      []ViewContract
 	ViewContractTypes  map[int]ViewContractID
-	GraphTypes         map[int]bool
+	// NominalReadContracts are private Map producer witnesses, checked again at reads.
+	NominalReadContracts map[int]ViewContractID
+	GraphTypes           map[int]bool
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -53,6 +60,23 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// PredicateCheckCounts counts emitted predicate directions. Unobservable
+// directions are proven and are also counted separately so erasure is visible.
+type PredicateCheckCounts struct {
+	Proven, Checked, Unobservable int
+	Sites                         []PredicateCallCheck
+}
+
+type PredicateCallCheck struct {
+	Where, Function string
+	Overload        int // Zero for an ordinary predicate call.
+	Directions      []PredicateDirectionCheck
+}
+
+type PredicateDirectionCheck struct {
+	Direction, Status, Reason string
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -156,6 +180,10 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Record is a dictionary of own string entries, distinct from fixed object slots.
+	// 12 and 13 are reserved runtime slot tags for null and undefined.
+	Record Type = 14
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -188,7 +216,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -318,9 +346,10 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
-		RealType        string
-		SpreadReadiness string
-		GraphTypes      []int
+		ArrayWriteContract ViewContractID
+		RealType           string
+		SpreadReadiness    string
+		GraphTypes         []int
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -343,6 +372,10 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// DictionaryKey selects an own string key; its read always validates storage.
+		DictionaryKey Expression
+		// DictionaryPrimitive retains the original type ID but checks only scalar/nullish arms; reference arms stop at this read.
+		DictionaryPrimitive bool
 		// View names a required field read whose presence, readiness and representation are checked.
 		Nullish            bool
 		NullAllowed        bool
@@ -378,10 +411,11 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
-		GraphTypes []int
-		Element    Type
-		Elements   []Expression
-		Spread     []bool
+		ElementContract ViewContractID
+		GraphTypes      []int
+		Element         Type
+		Elements        []Expression
+		Spread          []bool
 	}
 
 	// Length is array.length.
@@ -440,9 +474,12 @@ type (
 
 	// ArrayPush is Array.push(Value): it appends and is the new length.
 	ArrayPush struct {
-		Array   Expression
-		Value   Expression
-		Element Type
+		// DictionaryProduction appends checked snapshots to a private new result.
+		// It conveys no writable element certificate for later aliases.
+		DictionaryProduction bool
+		Array                Expression
+		Value                Expression
+		Element              Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
 		Site int
@@ -484,8 +521,11 @@ type (
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
 	// undefined).
 	Narrow struct {
-		Value Expression
-		To    Type
+		Value          Expression
+		Tuple          bool // Native object slots; JavaScript array identity.
+		Undefined      bool
+		UndefinedWhere string
+		To             Type
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
@@ -568,6 +608,7 @@ type (
 	// null reference, or a Maybe pair). Relative is array.at(index), where a negative index counts
 	// from the end and a fraction truncates.
 	ArrayIndex struct {
+		TupleUnion       bool // Selected read has the lowering tuple/scalar union plan.
 		Required         bool
 		UndefinedAllowed bool
 		View, ViewType   string
@@ -724,9 +765,11 @@ type (
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
-		GraphTypes []int
-		Key, Value Type
-		Entries    [][2]Expression
+		KeyContract, ValueContract ViewContractID
+		ContractName               string
+		GraphTypes                 []int
+		Key, Value                 Type
+		Entries                    [][2]Expression
 
 		// Pairs, when it's set, is an array of [key, value] tuples the map is made from instead, each
 		// set in order: new Map(pairs), or new Map(otherMap) through its entries.
@@ -772,7 +815,10 @@ type (
 		ValueType       Type
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
 		// what it writes into), or 0 when nothing recorded one.
-		Site int
+		Site          int
+		KeyContract   ViewContractID
+		ValueContract ViewContractID
+		ValueWhere    string
 	}
 
 	// MapHas is map.has(Key), and MapDelete map.delete(Key).
@@ -1144,14 +1190,15 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		WriteProven    bool
-		TargetContract ViewContractID
-		WriteContract  ViewContractID
-		WriteWhere     string
-		Uninitialized  bool
-		Object         Expression
-		Name           string
-		Value          Expression
+		ArraySlotWriteContract ViewContractID
+		WriteProven            bool
+		TargetContract         ViewContractID
+		WriteContract          ViewContractID
+		WriteWhere             string
+		Uninitialized          bool
+		Object                 Expression
+		Name                   string
+		Value                  Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of

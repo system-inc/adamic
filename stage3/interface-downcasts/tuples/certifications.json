@@ -1,0 +1,72 @@
+{
+  "primary_candidate_pairs": 10,
+  "primary_candidate_reads": 15,
+  "certified_pairs": 10,
+  "certified_reads": 15,
+  "remaining_pairs": 0,
+  "remaining_reads": 0,
+  "certified": [
+    {
+      "type_id": 97934,
+      "reads": 1,
+      "commit": "f753567dd8837e90914e7c229df88d8536a3bf8b"
+    },
+    {
+      "type_id": 70161,
+      "reads": 1,
+      "commit": "6b58eb3c02d57ea341985643ae9528b5597115ac"
+    },
+    {
+      "type_id": 97926,
+      "reads": 1,
+      "commit": "0a6edef2d89f5241f7dbeb392b607fec9fc4acff"
+    },
+    {
+      "type_id": 97913,
+      "reads": 1,
+      "commit": "f1f6355adf5cfb4a48e766b9d575c0c7386dfe5f"
+    },
+    {
+      "type_id": 97898,
+      "reads": 4,
+      "commit": "3c143841114922f672fad316938fa7ac383b9bd5"
+    },
+    {
+      "type_id": 97931,
+      "reads": 1,
+      "commit": "19418766cc313c0dc2d4fcb4fe26a7da248609e1"
+    },
+    {
+      "type_id": 95604,
+      "field": "1",
+      "reads": 2,
+      "commit": "21fd3587d6a32fef3f195a31be84605c02f58953"
+    },
+    {
+      "type_id": 95604,
+      "field": "0",
+      "reads": 1,
+      "commit": "cd2500f87ea9d532b029c5cac7348a6692342a93"
+    },
+    {
+      "type_id": 68230,
+      "field": "1",
+      "reads": 2,
+      "commit": "f1f41adaa37b3173a9b085fee0999bc91fc609b3"
+    },
+    {
+      "type_id": 68230,
+      "field": "0",
+      "reads": 1,
+      "commit": "3c32b869f9a53a357e0de9074948f7ee194d52c9"
+    }
+  ],
+  "remaining": [],
+  "additional_forms": {
+    "optional_tuple_map": "certified absent, present undefined and present with Node, both backends and leaks",
+    "rest_tuple_map": "certified zero, one, many and mismatched rest contracts with Node and both backends; completing cases leak checked"
+  },
+  "lane4b_checks": "outSignature frontier certified; direct array-to-tuple cast frontier blocked at adamic/no-unchecked-cast; both overlap primary census",
+  "exact_reaching_view_coverage": "not measured",
+  "approval_blockers": []
+}

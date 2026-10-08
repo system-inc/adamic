@@ -11,8 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Component seam only. The source compiler still refuses index signatures.
-// It cannot lose that refusal until record producers and read dispatch are wired.
+// Component seam tests complement the compiler-generated source controls.
 func TestCheckedViewDictionaryComponents(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "dictionary")
@@ -21,7 +20,7 @@ func TestCheckedViewDictionaryComponents(t *testing.T) {
 	}
 	for _, variant := range []string{"options-good", "options-wrong", "nested-good", "nested-wrong", "array-wrong"} {
 		t.Run(variant, func(t *testing.T) {
-			path, err := filepath.Abs("../../stage3/interface-downcasts/dictionaries/components/" + variant + ".a")
+			path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/dictionaries/components/" + variant + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -63,7 +62,7 @@ func TestCheckedViewDictionaryComponents(t *testing.T) {
 // certify frontend aliases while source dispatch remains absent.
 func TestCheckedViewDictionaryComponentMutants(t *testing.T) {
 	t.Parallel()
-	production, err := os.ReadFile("../native/runtime/view_dictionaries.c")
+	production, err := os.ReadFile(checkedViewFixturePath("../native/runtime/view_dictionaries.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -73,7 +72,7 @@ func TestCheckedViewDictionaryComponentMutants(t *testing.T) {
 		{"drop-transitive-contract", "nested-wrong", "reference ? child_contract : 0", "reference ? 0 : child_contract", "reference ? childContract : 0", "reference ? 0 : childContract"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
-			c := string(production)
+			c := strings.Split(string(production), "\nstatic adamic_view_union_value dictionary_boxed_value")[0]
 			jsRuntime := javascript.DictionaryRuntime()
 			if strings.Count(c, mutant.oldC) != 1 || strings.Count(jsRuntime, mutant.oldJS) != 1 {
 				t.Fatal("mutation anchor changed")
@@ -213,7 +212,7 @@ func TestCheckedViewDictionaryJavaScriptGuards(t *testing.T) {
 
 func TestCheckedViewDictionaryNativeStorageGuard(t *testing.T) {
 	t.Parallel()
-	production, err := os.ReadFile("../native/runtime/view_dictionaries.c")
+	production, err := os.ReadFile(checkedViewFixturePath("../native/runtime/view_dictionaries.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -221,7 +220,7 @@ func TestCheckedViewDictionaryNativeStorageGuard(t *testing.T) {
 	harness = strings.ReplaceAll(harness, "record,true,key,", "record,false,key,")
 	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.options['value']; expected string | number | boolean | undefined, found unsupported representation\n")}
 	for _, mutated := range []bool{false, true} {
-		source := strings.ReplaceAll(string(production), "adamic_view_dictionary_read(", "adamic_view_dictionary_read_guard(")
+		source := strings.ReplaceAll(strings.Split(string(production), "\nstatic adamic_view_union_value dictionary_boxed_value")[0], "adamic_view_dictionary_read(", "adamic_view_dictionary_read_guard(")
 		if mutated {
 			source = strings.Replace(source, "!boxed_storage || record == NULL || key == NULL", "!boxed_storage && record == NULL && key == NULL", 1)
 		}

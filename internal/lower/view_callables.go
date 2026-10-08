@@ -233,3 +233,12 @@ func (l *lowering) viewProvenClassCast(node *ast.Node, value ir.Expression, sour
 	}
 	return nil, nil
 }
+
+// Only these declarations have a scalar property name. Binding patterns are not names.
+func callableDataDeclaration(node *ast.Node) bool {
+	switch node.Kind {
+	case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindPropertyDeclaration, ast.KindMethodDeclaration:
+		return true
+	}
+	return false
+}

@@ -1,0 +1,8 @@
+type Path = string & { readonly __pathBrand: void; };
+interface Base { readonly kind: 'Text'; }
+interface TextView extends Base { readonly text: Path; }
+const payload = {kind: 'Text' as const, text: 42};
+const base: Base = payload;
+const view = base as TextView;
+function read(value: Path, index: number): void { const selected = value[index]; if (selected !== undefined) console.log(`${selected.charCodeAt(0)}`); else console.log('missing'); }
+read(view.text, 0);

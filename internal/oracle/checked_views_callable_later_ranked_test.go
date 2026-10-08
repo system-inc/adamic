@@ -2,6 +2,8 @@ package oracle
 
 import (
 	"path/filepath"
+
+	"github.com/system-inc/adamic/internal/ir"
 	"strings"
 	"testing"
 )
@@ -194,7 +196,7 @@ func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 }
 
 func TestCheckedViewCallableLaterRankedUnionRefusal(t *testing.T) {
-	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/string-from-node/good.a")
+	path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/string-from-node/good.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -202,14 +204,15 @@ func TestCheckedViewCallableLaterRankedUnionRefusal(t *testing.T) {
 	if truth.exitCode != 0 || string(truth.stdout) != "3\n" {
 		t.Fatalf("Node %#v", truth)
 	}
-	_, err = lowered(t, path)
-	if err == nil || !strings.Contains(err.Error(), "unsupported untagged object union contract") {
-		t.Fatalf("union payload refusal: %v", err)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
 	}
+	checkedViewCallableFormerUnionControl(t, program, truth)
 }
 
 func TestCheckedViewCallableLaterRankedBindingRefusal(t *testing.T) {
-	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/good.a")
+	path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/good.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -224,7 +227,7 @@ func TestCheckedViewCallableLaterRankedBindingRefusal(t *testing.T) {
 }
 
 func TestCheckedViewCallableLaterRankedMethodRefusal(t *testing.T) {
-	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/lift-block/good.a")
+	path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/lift-block/good.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -272,7 +275,7 @@ func TestCheckedViewCallableLaterRankedOriginalReadRefusals(t *testing.T) {
 		{"environment-variable", "abc\n", "unbound-method"},
 	} {
 		t.Run(witness.directory, func(t *testing.T) {
-			path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/" + witness.directory + "/good.a")
+			path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/" + witness.directory + "/good.a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -280,10 +283,32 @@ func TestCheckedViewCallableLaterRankedOriginalReadRefusals(t *testing.T) {
 			if truth.exitCode != 0 || string(truth.stdout) != witness.output {
 				t.Fatalf("Node %#v", truth)
 			}
-			_, err = lowered(t, path)
+			program, err := lowered(t, path)
+			if witness.refusal == "unsupported untagged object union contract" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				checkedViewCallableFormerUnionControl(t, program, truth)
+				return
+			}
 			if err == nil || !strings.Contains(err.Error(), witness.refusal) {
 				t.Fatalf("original read refusal: %v", err)
 			}
 		})
+	}
+}
+
+// Integrated untagged adapters now support these formerly compile-blocked reads.
+// Signature guards and descendant checks remain covered by their mutant suites.
+func checkedViewCallableFormerUnionControl(t *testing.T, program *ir.Program, truth run) {
+	t.Helper()
+	actual, binary := nativelyUncached(t, program)
+	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, got); difference != "" {
+			t.Fatalf("former union frontier: %s; got %#v", difference, got)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }

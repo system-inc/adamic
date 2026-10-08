@@ -1,0 +1,7 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:1256,1266-1268
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+function hasProperty(map: object, key: string): boolean {
+    return hasOwnProperty.call(map, key);
+}
+console.log(`${hasProperty({ value: 1 }, "value")}`);
+console.log(`${hasProperty({ value: 1 }, "missing")}`);

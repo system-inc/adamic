@@ -1,0 +1,37 @@
+[
+  {
+    "name": "optional-nominal-javascript-object-kind",
+    "test": "^TestCheckedViewOptionalNominalMutants$/^container$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-optional-nominal-javascript-object-kind.log.gz"
+  },
+  {
+    "name": "optional-nominal-native-producer",
+    "test": "^TestCheckedViewOptionalNominalMutants$/^producer$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-optional-nominal-native-producer.log.gz"
+  },
+  {
+    "name": "optional-nominal-javascript-producer",
+    "test": "^TestCheckedViewOptionalNominalMutants$/^producer$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-optional-nominal-javascript-producer.log.gz"
+  },
+  {
+    "name": "optional-nominal-native-read",
+    "test": "^TestCheckedViewOptionalNominalMutants$/^read$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-optional-nominal-native-read.log.gz"
+  },
+  {
+    "name": "optional-nominal-javascript-read",
+    "test": "^TestCheckedViewOptionalNominalMutants$/^read$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-optional-nominal-javascript-read.log.gz"
+  }
+]

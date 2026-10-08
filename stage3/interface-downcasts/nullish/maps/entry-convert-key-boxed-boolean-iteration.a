@@ -1,0 +1,16 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<boolean|null|undefined,string>|null}
+const source=new Map<boolean,string>([[false,'false'],[true,'true']]);
+const raw={kind:'box',value:source};const base:Base=raw;
+function read(node:Target):void{const map=node.value;if(map!==null){
+console.log(String(map.get(false)));console.log(String(map.get(null)));console.log(String(map.get(undefined)));
+for(const key of map.keys()){console.log('key:'+String(key));}
+for(const [key,value] of map){console.log(String(key)+':'+value);}
+const keys=[...map.keys()];console.log(keys.join(','));
+const copy=new Map<boolean|null|undefined,string>(map);copy.set(null,'null');copy.set(undefined,'missing');copy.set(true,'again');
+console.log(String(copy.get(false)));console.log(String(copy.get(null)));console.log(String(copy.get(undefined)));console.log(String(copy.size));
+const iterator=map.keys();console.log(String(iterator.next().value));console.log(String(iterator.next().value));console.log(String(iterator.next().done));
+for (const [key, value] of map) {console.log('callback:'+String(key)+':'+value);}
+source.clear();console.log(keys.join(','));console.log(String(copy.get(false)));
+}}
+read(base as Target);

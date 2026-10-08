@@ -14,21 +14,12 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 	expected := e.viewCallableExpected(property)
 	recorded := e.temporary()
 	e.line("const adamic_callable_signature *%s = NULL;", recorded)
-	for index, function := range e.program.Functions {
-		if !function.Closure || function.Receiver {
-			continue
-		}
-		parameters := make([]ir.Type, len(function.Parameters))
-		for i, local := range function.Parameters {
-			parameters[i] = e.program.Locals[local].Type
-			if parameters[i] == ir.Object && len(function.CallableMasks) == len(function.Parameters)+1 && function.CallableMasks[i] == 0 {
-				parameters[i] = 0
-			}
-		}
-		signature := e.viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name, function.CallableMasks)
-		e.line("if (%s != NULL && %s->heap.kind == adamic_kind_closure && %s->code == %s) %s = %s;", value, value, value, e.functionName(index), recorded, signature)
+	for _, producer := range e.viewCallableProducers() {
+		e.line("if (%s != NULL && %s->heap.kind == adamic_kind_closure && %s->code == %s) %s = %s;", value, value, value, e.functionName(producer.Function), recorded, producer.Signature)
 	}
-	return emitViewCallableShape(value, recorded, expected, property.View, property.Absent || property.Optional)
+	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
+	e.certifyUntaggedCallableRecorded(property, value, recorded, expected)
+	return emitViewCallableShape(value, recorded, expected, property.View, property.Absent || property.Optional || property.UndefinedAllowed)
 }
 
 func (e *emitter) viewCallableExpected(property ir.Property) string {
@@ -87,4 +78,27 @@ func viewCallableProducerResult(result ir.Type) ir.Type {
 		return ir.Type(254)
 	}
 	return result
+}
+
+type viewCallableProducer struct {
+	Function  int
+	Signature string
+}
+
+func (e *emitter) viewCallableProducers() []viewCallableProducer {
+	producers := []viewCallableProducer{}
+	for index, function := range e.program.Functions {
+		if !function.Closure || function.Receiver {
+			continue
+		}
+		parameters := make([]ir.Type, len(function.Parameters))
+		for i, local := range function.Parameters {
+			parameters[i] = e.program.Locals[local].Type
+			if parameters[i] == ir.Object && len(function.CallableMasks) == len(function.Parameters)+1 && function.CallableMasks[i] == 0 {
+				parameters[i] = 0
+			}
+		}
+		producers = append(producers, viewCallableProducer{index, e.viewCallableSignature(parameters, viewCallableProducerResult(function.Returns), function.Name, function.CallableMasks)})
+	}
+	return producers
 }

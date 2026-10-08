@@ -1,0 +1,12 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,number|string|null|undefined>|null}
+const map=new Map<string,number|string|null|undefined>([['present','seven'],['null',null]]);
+map.set('undefined',undefined);
+const raw={kind:'box',value:map};const base:Base=raw;
+function read(node:Target):void{const map=node.value;if(map!==null){
+ const v=map.get('present');if(v!==null&&v!==undefined){console.log(String(v));}
+ console.log(String(map.get('null')===null));console.log(typeof map.get('missing'));
+ console.log(String(map.has('null')));console.log(String(map.has('missing')));
+ for (const [iterationKey, v] of map) {console.log(typeof v+':'+String(v===null));}
+}}
+read(base as Target);

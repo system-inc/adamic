@@ -59,11 +59,11 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 }
 
 func (l *lowering) viewDataType(target *checker.Type) bool {
-	if l.viewArrayBase(target) != nil {
+	if l.structuralViewIntersection(target) || l.viewArrayBase(target) != nil {
 		return true
 	}
 	if base := l.phantomBase(target); base != nil {
-		return interfaceScalar(base)
+		return interfaceScalar(base) || l.phantomUndefined(target)
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
@@ -86,11 +86,8 @@ func viewInterfaceType(target *checker.Type) bool {
 // An untagged structural cast installs the same checked reads without a tag test.
 // Admission preserves nominal identity and the existing writable-slot restrictions.
 func (l *lowering) structuralViewCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
-	if value.Type() != ir.Object || source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || !l.checker.IsTypeAssignableTo(target, source) {
+	if (value.Type() != ir.Object && value.Type() != ir.Record) || source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || !l.checker.IsTypeAssignableTo(target, source) {
 		return nil, nil
-	}
-	if len(l.checker.GetIndexInfosOfType(target)) != 0 {
-		return nil, l.notYet(node, "a dictionary checked view")
 	}
 	if err := l.widened(target, source, map[[2]*checker.Type]bool{}); err != nil {
 		return nil, l.notYet(node, "a writable-slot checked view requiring source contract certification")

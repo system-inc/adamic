@@ -1,0 +1,6 @@
+interface Dictionary { [key: string]: string | number | boolean | null | undefined; }
+function helper(value: Dictionary, key: string): void { console.log(String(value[key])); }
+const raw = {item: undefined};
+const base: {} = raw;
+const viewed = base as Dictionary;
+helper(viewed, 'item');

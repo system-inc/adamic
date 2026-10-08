@@ -120,6 +120,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	}
+	if value, handled, err := l.recordExpression(expression); handled {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}
@@ -131,6 +137,9 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		}
 		return []ir.Statement{ir.Evaluate{Value: value}}, nil
 	case ast.KindCallExpression:
+		if statements, handled, err := l.tupleOptionalForEach(expression); handled {
+			return statements, err
+		}
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 			return l.superStatement(expression)
 		}
@@ -167,6 +176,7 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if err != nil {
 			return nil, err
 		}
+		l.recordOrdinaryPredicateChecks(expression.AsCallExpression())
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	case ast.KindBinaryExpression:
 		return l.assignment(expression)

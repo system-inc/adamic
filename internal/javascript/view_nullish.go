@@ -7,8 +7,9 @@ import (
 )
 
 func (e *emitter) nullishViewField(property ir.Property) string {
-	value := fmt.Sprintf("adamicViewNullish(%s, %s, %s, %s, %d, %t, %t, [%s], %t, %t)", e.value(property.Object), quote(property.Name), quote(property.View), quote(property.ViewType), property.NullishKinds, property.NullAllowed, property.UndefinedAllowed, e.values(property.ViewAllowed), property.Absent, property.Optional)
-	return e.viewCallableNullishCertificate(property, e.nullishMemberSelection(property, value))
+	value := fmt.Sprintf("adamicViewNullish(%s, %s, %s, %s, %d, %t, %t, [%s], %t, %t)", e.nominalViewReceiver(property), quote(property.Name), quote(property.View), quote(property.ViewType), property.NullishKinds, property.NullAllowed, property.UndefinedAllowed, e.values(property.ViewAllowed), property.Absent, property.Optional)
+	value = e.nominalViewRead(e.program.NominalReadContracts[property.ViewTypeID], e.mapViewCertificate(property, e.nullishMemberSelection(property, value)), property.View, property.Absent)
+	return e.viewIntersectionNullishRead(property, e.viewCallableNullishCertificate(property, value))
 }
 
 func (e *emitter) nullishMemberSelection(property ir.Property, value string) string {
@@ -55,5 +56,13 @@ func (e *emitter) nullishMemberSelection(property ir.Property, value string) str
 		}
 		tests = append(tests, "("+test+")")
 	}
-	return fmt.Sprintf("((v) => {if(v != null && !(%s)) panic('field read failed: '+%s+'; expected '+%s+', found '+typeof v);return v;})(%s)", strings.Join(tests, " || "), quote(property.View), quote(property.ViewType), value)
+	checks := ""
+	for _, id := range contract.Members {
+		if e.program.ViewContracts[id-1].Kind == ir.ViewMap {
+			mapped := property
+			mapped.ViewContract = id
+			checks += "if(v != null && adamicLogicalKind(v)===6){" + e.mapViewCertificate(mapped, "v") + ";}"
+		}
+	}
+	return fmt.Sprintf("((v) => {if(v != null && !(%s)) panic('field read failed: '+%s+'; expected '+%s+', found '+typeof v);%s return v;})(%s)", strings.Join(tests, " || "), quote(property.View+" matches no member of "+property.ViewType), quote(property.ViewType), checks, value)
 }

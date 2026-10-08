@@ -115,6 +115,9 @@ func TestPredicateCallbackContracts(t *testing.T) {
 		name, source string
 		refused      bool
 	}{
+		{"inferred arrow", `function apply(callback: (value: number) => value is 1): boolean { return callback(1); } apply((value: number) => value === 1);`, false},
+		{"inferred opaque", `function lie(value: number): value is 1; function lie(value: number): boolean { return true; } function apply(callback: (value: number) => value is 1): boolean { return callback(2); } apply((value: number) => lie(value));`, true},
+		{"inferred named", `function apply(callback: (value: number) => value is 1): boolean { return callback(1); } function guard(value: number) { return value === 1; } apply(guard);`, false},
 		{"arrow", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => typeof value === "number");`, false},
 		{"named", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } function isNumber(value: number): value is number { return typeof value === "number"; } apply(isNumber);`, false},
 		{"unproven", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => true);`, true},

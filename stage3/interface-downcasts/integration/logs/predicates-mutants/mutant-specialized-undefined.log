@@ -1,0 +1,6 @@
+--- FAIL: TestParserAssertionBackends (0.32s)
+    --- FAIL: TestParserAssertionBackends/native (0.24s)
+        predicates_parser_test.go:101: native output "WORD\nmissing\nword\nno match\n1\nno number\nevaluated\nfalse\nnull evaluated\ntrue\n", error <nil>; want "WORD\nmissing\nword\nno match\n1\nno number\nevaluated\nfalse\nnull evaluated\nfalse\n"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.329s
+FAIL

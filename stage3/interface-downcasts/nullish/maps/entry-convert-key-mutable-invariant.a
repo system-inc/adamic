@@ -1,0 +1,15 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:Map<number|undefined,string>|null}
+const source=new Map<number,string>([[NaN,'nan'],[-0,'zero'],[7,'seven']]);
+const raw={kind:'box',value:source};const base:Base=raw;
+function read(node:Target):void{const map=node.value;if(map!==null){
+console.log(typeof map.get(undefined));console.log(String(map.has(undefined)));console.log(String(map.get(NaN)));console.log(String(map.get(0)));console.log(String(map.get(-0)));
+for(const key of map.keys()){console.log('key:'+String(key));}
+for(const [key,value] of map){console.log(String(key)+':'+value);}
+const keys=[...map.keys()];console.log(keys.join(','));
+const copy=new Map<number|undefined,string>(map);console.log(String(copy.get(NaN)));console.log(String(copy.has(undefined)));copy.set(undefined,'missing');console.log(String(copy.get(undefined)));console.log(String(copy.get(NaN)));
+const iterator=map.keys();console.log(String(iterator.next().value));console.log(String(iterator.next().value));console.log(String(iterator.next().value));console.log(String(iterator.next().done));
+map.forEach((value,key)=>{console.log('callback:'+String(key)+':'+value);});
+source.set(9,'nine');console.log(String(map.get(9)));console.log(String(source.size));
+}}
+read(base as Target);

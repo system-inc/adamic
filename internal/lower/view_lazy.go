@@ -15,13 +15,22 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
 		return id, nil
 	}
-	if target.Flags()&checker.TypeFlagsUnion != 0 && l.includesNull(target) {
+	if target.Flags()&checker.TypeFlagsUnion != 0 && (l.includesNull(target) || l.includesUndefined(target) && l.isLibraryType(l.checker.GetNonNullableType(target), "Map", "ReadonlyMap")) {
 		return l.nullishViewContract(node, target)
+	}
+	if l.isLibraryType(target, "Map", "ReadonlyMap") {
+		return l.mapViewContract(node, target)
+	}
+	if l.stringDictionary(target) || l.finitePartialRecordElement(target) != nil {
+		return viewDictionaryContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
 	}
 	family := l.unsupportedViewFamily(target)
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
 		if err == nil {
+			if family := l.viewIntersectionReadFamily(id, target); family != "" {
+				l.result.ViewContracts[id-1].Unsupported = family
+			}
 			return id, nil
 		}
 		family = "representation conversion"
@@ -40,8 +49,17 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 }
 
 func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
+	if l.phantomUndefined(target) {
+		return ""
+	}
 	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
 		return ""
+	}
+	if l.objectPrimitiveTupleMember(target) {
+		return "tuple union member"
+	}
+	if l.viewMutableArrayUnion(target) {
+		return "mutable array union"
 	}
 	if l.viewArrayBase(target) != nil {
 		return ""
@@ -57,12 +75,18 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case flags&checker.TypeFlagsTypeParameter != 0:
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
+		if l.structuralViewIntersection(target) {
+			return ""
+		}
 		return "intersection"
 	case isClassInstance(target):
 		return "nominal class"
 	case l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		return "collection"
 	case checker.IsTupleType(target):
+		if supportedTupleArity(target) {
+			return ""
+		}
 		return "tuple"
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetIndexInfosOfType(target)) != 0 && !l.checker.IsArrayType(target):
 		return "dictionary"
@@ -74,6 +98,10 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 // Demand uses the same allocations, joined arguments/results and projected
 // stores as shape certification. Unknown is never an empty proof of safety.
 func (l *lowering) checkLazyViewReads() error {
+	// Finish producer and descendant certificates before bounded admission.
+	l.certifyUntaggedCallableProducers()
+	l.completeUntaggedRecursiveContracts()
+	l.finishBoundedIntersections()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
 		return nil
@@ -95,7 +123,7 @@ func (l *lowering) checkLazyViewReads() error {
 			}
 		}
 	}
-	for _, origin := range program.ViewOrigins {
+	for _, origin := range dictionaryEnumerationOrigins(program) {
 		add(graph.ReachingAllocations(origin))
 	}
 	index := graph.projectionIndex()
@@ -141,6 +169,7 @@ func (l *lowering) checkLazyViewReads() error {
 			}
 		}
 	}
+	scopedFields, untrackedScope := l.scopedViewFieldFamilies(graph)
 	var refused error
 	inspect := func(node any) bool {
 		if refused != nil {
@@ -148,19 +177,41 @@ func (l *lowering) checkLazyViewReads() error {
 		}
 		var receiver ir.Expression
 		var typeID, receiverTypeID int
+		var selectedContract ir.ViewContractID
 		var field, where string
+		operationFamily := ""
+		nominalCheckedRead := false
 		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
 			receiver, typeID, field, where = array, read.ViewTypeID, "[element]", read.View
+			nominalCheckedRead = ir.HasArrayViews(program) && (read.Element == ir.Object || read.Element == ir.Union)
 		}
 		switch read := node.(type) {
+		case ir.RecordCall:
+			if read.Method != "get" && read.Method != "values" && read.Method != "entries" {
+				return true
+			}
+			receiver, typeID, field, where = read.Arguments[0], read.ViewTypeID, "[dictionary element]", read.ViewWhere
+			if read.Method == "values" || read.Method == "entries" {
+				operationFamily = "dictionary enumeration"
+			} else if read.DictionaryRead == nil {
+				operationFamily = "dictionary read without a supported contract"
+			} else if read.DictionaryRead.DictionaryPrimitive && ir.PrimitiveDictionaryReadCertificate(program, *read.DictionaryRead) {
+				selectedContract = read.DictionaryRead.ViewContract
+			} else if id := program.ViewContractTypes[typeID]; id != 0 {
+				if _, ok := ir.DictionaryReadKinds(program, id); !ok {
+					operationFamily = "dictionary element"
+				}
+			}
 		case ir.Property:
 			if !program.CheckedFields[read.Name] {
 				return true
 			}
 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
 			receiverTypeID = read.ViewReceiverTypeID
+			nominalCheckedRead = true
 		case ir.ArrayIndex:
 			receiver, typeID, field, where = read.Array, read.ViewTypeID, "[element]", read.View
+			nominalCheckedRead = ir.HasArrayViews(program) && (read.Element == ir.Object || read.Element == ir.Union)
 		case ir.ArrayMap:
 			arrayRead(read.Array, read.ViewRead)
 		case ir.ArrayVisit:
@@ -179,15 +230,45 @@ func (l *lowering) checkLazyViewReads() error {
 			return true
 		}
 		contract := program.ViewContractTypes[typeID]
-		family := ""
+		if selectedContract != 0 {
+			contract = selectedContract
+		}
+		family := operationFamily
+		// Dictionary entries carrying checked array children still lack the
+		// tuple consumer ownership proof. General tuple certificates do not
+		// discharge this producer-specific boundary.
+		if field == "[element]" && contract != 0 && program.ViewContracts[contract-1].FixedTuple && dictionaryEntryReadUnproven(program, graph, receiver) {
+			family = "tuple"
+		}
 		if contract != 0 {
-			family = program.ViewContracts[contract-1].Unsupported
+			if unsupported := program.ViewContracts[contract-1].Unsupported; unsupported != "" {
+				family = unsupported
+			}
 		}
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" && !viewCallableConcreteReadContract(program, contract) {
-			family = unsupportedFields[field]
+		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) && !l.viewTuplePositionChecks(program.ViewContractTypes[receiverTypeID], field, contract) && !(contract != 0 && program.ViewContracts[contract-1].Kind == ir.ViewCallable && viewCallableConcreteReadContract(program, contract)) {
+			reaches := graph.ReachingAllocations(receiver)
+			if untrackedScope || unknown || reaches.Unknown {
+				family = unsupportedFields[field]
+			} else {
+				for _, site := range reaches.Sites {
+					if scopedFields[site]["*"] != "" {
+						family = scopedFields[site]["*"]
+						break
+					}
+					if scopedFields[site][field] != "" {
+						family = scopedFields[site][field]
+						break
+					}
+				}
+			}
+		}
+		if nominalCheckedRead && family == "nominal class" && (program.NominalReadContracts[typeID] != 0 || program.NominalReadContracts[receiverTypeID] != 0) {
+			// Both backends check the registered class identity at this field read,
+			// including helper receivers and array element extraction.
+			family = ""
 		}
 		if family == "" {
 			return true
@@ -213,8 +294,14 @@ func viewAggregate(value ir.Expression) bool {
 	if value == nil {
 		return false
 	}
+	// A nullish constant has reference-shaped storage but no object allocation.
+	// Following it as an aggregate falsely introduces an unknown producer.
+	switch value.(type) {
+	case ir.Null, ir.Undefined:
+		return false
+	}
 	switch value.Type() {
-	case ir.Object, ir.Array, ir.Map, ir.Union, ir.Closure:
+	case ir.Object, ir.Record, ir.Array, ir.Map, ir.Union, ir.Closure:
 		return true
 	}
 	return false

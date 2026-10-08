@@ -1,0 +1,13 @@
+F......
+======================================================================
+FAIL: test_reach_includes_dependency_outside_compiler_and_excludes_unused_file (entry_test.EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/stage3-meter-latent-hook/stage3/meter/entry_test.py", line 124, in test_reach_includes_dependency_outside_compiler_and_excludes_unused_file
+    self.assertEqual(clean['lowering_census']['source_files'], 2)
+AssertionError: 1 != 2
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.986s
+
+FAILED (failures=1)

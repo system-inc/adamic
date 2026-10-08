@@ -1,0 +1,21 @@
+=== RUN   TestViewWriteStorageCoherence
+=== PAUSE TestViewWriteStorageCoherence
+=== CONT  TestViewWriteStorageCoherence
+=== RUN   TestViewWriteStorageCoherence/boolean-dictionary
+=== PAUSE TestViewWriteStorageCoherence/boolean-dictionary
+=== CONT  TestViewWriteStorageCoherence/boolean-dictionary
+    view_write_storage_test.go:35: expected backend: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-sanitized: stdout="" stderr="adamic: panic: field read failed: read['value']; expected number | boolean | undefined, found unsupported representation\n" exit=70
+    view_write_storage_test.go:52: native-sanitized: exit codes differ
+    view_write_storage_test.go:50: native-release: stdout="" stderr="adamic: panic: field read failed: read['value']; expected number | boolean | undefined, found unsupported representation\n" exit=70
+    view_write_storage_test.go:52: native-release: exit codes differ
+    view_write_storage_test.go:50: javascript: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+--- FAIL: TestViewWriteStorageCoherence (0.00s)
+    --- FAIL: TestViewWriteStorageCoherence/boolean-dictionary (22.18s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	22.193s
+FAIL

@@ -125,6 +125,9 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.PhantomMember:
 		return e.phantomMember(expression)
 	case ir.Property:
+		if expression.DictionaryKey != nil {
+			return e.dictionaryRead(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}
@@ -330,6 +333,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
 		callback := e.value(expression.Callback)
+		owner := e.viewArrayReadOwner(expression.Element)
 		mapped := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s->length, %t)", source, expression.Result.IsReference()))
 		e.adoptGraph(mapped, "sizeof *"+mapped, e.graphTypes(expression.GraphTypes))
 		count, index := e.temporary(), e.temporary()
@@ -345,7 +349,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		element := e.temporary()
 		argument := fmt.Sprintf("%s->elements[%s]", source, index)
 		if expression.ViewRead.View != "" {
-			argument = e.viewArrayElementSlot(expression.ViewRead, source, index)
+			argument = e.viewArrayElementSlot(expression.ViewRead, source, index, owner)
 		}
 		invoke := e.viewCallableBoxedInvokeTypes([]ir.Type{expression.Element, ir.Number, ir.Array}, expression.Result, false)
 		e.line("adamic_value %s = %s(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3, false);", element, invoke, callback, argument, index, source)
@@ -452,7 +456,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		return e.own(expression.Element, fmt.Sprintf("%s->length == 0 ? NULL : %s", array, popped))
 	case ir.MapEntries:
 		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
-		return e.graphArray(fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair), expression.GraphTypes)
+		return e.graphArray(fmt.Sprintf("adamic_map_entries_as(%s, &%s, %d, %d)", e.value(expression.Map), pair, expression.KeyType, expression.ValueType), expression.GraphTypes)
 	case ir.ArraySlice:
 		array := e.value(expression.Array)
 		arguments := []string{"0.0", "0.0"}
@@ -504,18 +508,30 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			pairs = e.value(expression.Pairs)
 		}
 		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
+		e.line("%s->key_type = %d; %s->value_type = %d;", created, expression.Key, created, expression.Value)
+		e.line("%s->key_contract = %d; %s->value_contract = %d; %s->contract_name = %s;", created, expression.KeyContract, created, expression.ValueContract, created, cString(func() string {
+			if expression.ContractName == "" {
+				return "uncertified Map"
+			}
+			return expression.ContractName
+		}()))
 		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		for _, entry := range entries {
+			e.mapEntryNominalCertificate(expression.KeyContract, entry[0], "Map constructor key")
+			e.mapEntryNominalCertificate(expression.ValueContract, entry[1], "Map constructor entry")
+			e.mapEntryCallableCertificate(expression.ValueContract, entry[1], "Map constructor entry")
 			e.line("adamic_map_set(%s, %s, %s);", created, e.heldIn(created, expression.Key, entry[0]), e.heldIn(created, expression.Value, entry[1]))
 		}
 		if expression.Pairs != nil {
+			e.mapPairNominalCertificates(expression.KeyContract, expression.ValueContract, pairs)
+			e.mapPairCallableCertificates(expression.ValueContract, pairs)
 			e.line("adamic_map_add_pairs(%s, %s);", created, pairs)
 		}
 		return created
 	case ir.MapKeys:
-		return e.graphArray(fmt.Sprintf("adamic_map_keys(%s)", e.value(expression.Map)), expression.GraphTypes)
+		return e.graphArray(fmt.Sprintf("adamic_map_keys_as(%s, %d)", e.value(expression.Map), expression.Key), expression.GraphTypes)
 	case ir.MapValues:
-		return e.graphArray(fmt.Sprintf("adamic_map_values(%s)", e.value(expression.Map)), expression.GraphTypes)
+		return e.graphArray(fmt.Sprintf("adamic_map_values_as(%s, %d)", e.value(expression.Map), expression.Value), expression.GraphTypes)
 	case ir.MapClear:
 		e.line("adamic_map_clear(%s);", e.value(expression.Map))
 		return "0"
@@ -544,18 +560,21 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		if expression.Type().IsMaybe() {
 			return e.snapshot(expression.Type(), maybeSlot(expression.ValueType, slot))
 		}
-		// Retained, so a set later in the same statement can't free it from under its reader.
-		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->%s)", slot, slot, member(expression.ValueType)))
+		// The read adapter owns its reference before a later set releases the entry.
+		return e.own(expression.ValueType, fmt.Sprintf("%s == NULL ? NULL : %s->%s", slot, slot, member(expression.ValueType)))
 	case ir.MapSet:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
 		value := e.value(expression.Value)
+		e.mapEntryNominalCertificate(expression.KeyContract, key, expression.ValueWhere)
+		e.mapEntryNominalCertificate(expression.ValueContract, value, expression.ValueWhere)
+		e.mapEntryCallableCertificate(expression.ValueContract, value, expression.ValueWhere)
 		e.line("adamic_map_set(%s, %s, %s);", object, e.heldIn(object, expression.KeyType, key), e.heldIn(object, expression.ValueType, value))
 		return object
 	case ir.MapHas:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
-		return e.snapshot(ir.Boolean, fmt.Sprintf("(adamic_map_get(%s, %s) != NULL)", object, borrowed(expression.KeyType, key)))
+		return e.snapshot(ir.Boolean, fmt.Sprintf("(adamic_map_get_as(%s, %s, %d) != NULL)", object, borrowed(expression.KeyType, key), expression.KeyType))
 	case ir.MapDelete:
 		object := e.value(expression.Map)
 		key := e.value(expression.Key)
@@ -588,13 +607,15 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
-		e.viewArrayMutation(array, expression.Element)
+		if !expression.DictionaryProduction {
+			e.viewArrayMutation(array, expression.Element, value)
+		}
 		if expression.Element.IsReference() {
 			value = e.heldReferenceIn(array, value)
 		}
 		// The append happens here, in JavaScript's order, and the new length is the value.
 		push := "adamic_array_push"
-		if ir.HasArrayViews(e.program) {
+		if ir.HasArrayViews(e.program) && !expression.DictionaryProduction {
 			push = "adamic_view_array_push"
 		}
 		e.line("%s(%s, (adamic_value){.%s = %s});", push, array, member(expression.Element), slotted(expression.Element, value))
@@ -686,6 +707,12 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			return e.own(ir.String, function+"(0, NULL)")
 		}
 		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+	case ir.RecordCoalesce:
+		return e.recordCoalesce(expression)
+	case ir.RecordCall:
+		return e.recordCall(expression)
+	case ir.RecordLiteral:
+		return e.recordLiteral(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:

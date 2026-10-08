@@ -1,15 +1,15 @@
---- FAIL: TestCheckedViewCallableScalarWitnesses (14.67s)
-    --- FAIL: TestCheckedViewCallableScalarWitnesses/scanner/wrong-result (14.26s)
-        checked_views_callable_scalar_witness_test.go:16: gate cache node miss
-        checked_views_callable_scalar_witness_test.go:35: gate cache node miss
-        checked_views_callable_scalar_witness_test.go:54: backend 0: oracle.run{stdout:[]uint8{0x66, 0x61, 0x6c, 0x73, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0} want "adamic: panic: field read failed: scanner.hasPrecedingLineBreak expected () => boolean, found function with incompatible result representation\n"
-    --- FAIL: TestCheckedViewCallableScalarWitnesses/performance/wrong-result (0.42s)
-        checked_views_callable_scalar_witness_test.go:16: gate cache node miss
-        checked_views_callable_scalar_witness_test.go:35: gate cache node miss
-        checked_views_callable_scalar_witness_test.go:54: backend 0: oracle.run{stdout:[]uint8{}, stderr:[]uint8{}, exitCode:0} want "adamic: panic: field read failed: performance.mark expected (markName: string) => void, found function with incompatible result representation\n"
+--- FAIL: TestCheckedViewCallableScalarWitnesses (18.13s)
+    --- FAIL: TestCheckedViewCallableScalarWitnesses/scanner/wrong-result (17.64s)
+        checked_views_callable_scalar_witness_test.go:17: gate cache node miss
+        checked_views_callable_scalar_witness_test.go:36: gate cache node miss
+        checked_views_callable_scalar_witness_test.go:55: backend 0: oracle.run{stdout:[]uint8{0x66, 0x61, 0x6c, 0x73, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0} want "adamic: panic: field read failed: scanner.hasPrecedingLineBreak expected () => boolean, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableScalarWitnesses/performance/wrong-result (0.49s)
+        checked_views_callable_scalar_witness_test.go:17: gate cache node miss
+        checked_views_callable_scalar_witness_test.go:36: gate cache node miss
+        checked_views_callable_scalar_witness_test.go:55: backend 0: oracle.run{stdout:[]uint8{}, stderr:[]uint8{}, exitCode:0} want "adamic: panic: field read failed: performance.mark expected (markName: string) => void, found function with incompatible result representation\n"
 FAIL
 gate cache: native hits=0 misses=0
 gate cache: node hits=0 misses=4
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	14.683s
+FAIL	github.com/system-inc/adamic/internal/oracle	18.146s
 FAIL

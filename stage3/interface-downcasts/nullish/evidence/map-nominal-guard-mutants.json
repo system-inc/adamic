@@ -1,0 +1,28 @@
+[
+  {
+    "backend": "native",
+    "caught_by_behavior": true,
+    "sites": [
+      "constructor",
+      "set",
+      "copy",
+      "key-constructor",
+      "key-set",
+      "key-copy"
+    ],
+    "log": "map-nominal-native-guard-mutant.log.gz"
+  },
+  {
+    "backend": "javascript",
+    "caught_by_behavior": true,
+    "sites": [
+      "constructor",
+      "set",
+      "copy",
+      "key-constructor",
+      "key-set",
+      "key-copy"
+    ],
+    "log": "map-nominal-javascript-guard-mutant.log.gz"
+  }
+]

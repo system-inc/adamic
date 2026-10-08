@@ -1,0 +1,21 @@
+=== RUN   TestViewWriteStorageCoherence
+=== PAUSE TestViewWriteStorageCoherence
+=== CONT  TestViewWriteStorageCoherence
+=== RUN   TestViewWriteStorageCoherence/boolean-required-undefined
+=== PAUSE TestViewWriteStorageCoherence/boolean-required-undefined
+=== CONT  TestViewWriteStorageCoherence/boolean-required-undefined
+    view_write_storage_test.go:35: expected backend: stdout="" stderr="adamic: panic: field read failed: scalar.value is not a boolean; expected boolean, found nullish\n" exit=70
+    view_write_storage_test.go:36: Node: stdout="undefined\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-sanitized: stdout="false\n" stderr="" exit=0
+    view_write_storage_test.go:52: native-sanitized: exit codes differ
+    view_write_storage_test.go:50: native-release: stdout="false\n" stderr="" exit=0
+    view_write_storage_test.go:52: native-release: exit codes differ
+    view_write_storage_test.go:50: javascript: stdout="" stderr="adamic: panic: field read failed: scalar.value is not a boolean; expected boolean, found nullish\n" exit=70
+--- FAIL: TestViewWriteStorageCoherence (0.00s)
+    --- FAIL: TestViewWriteStorageCoherence/boolean-required-undefined (20.81s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	20.827s
+FAIL

@@ -1,0 +1,128 @@
+{
+  "base_merge": "69c73b375aae3e8132536fdd165654981b1980a5",
+  "profile_and_ftime_source_commit": "11fa34b7afdc46f6496e634b3fa2ef249da83a90",
+  "actual_helper_trace_and_gate_commit": "2b194d70f62ed0f8dedcc3383e3ea9c59abe116e",
+  "unit_process_wall": [
+    {
+      "unit": "functions_0000.c",
+      "sanitized_preprocess_seconds": 0.038032606999877316,
+      "sanitized_compile_seconds": 0.4479614510000829,
+      "release_preprocess_seconds": 0.055561430000125256,
+      "release_compile_seconds": 0.16773214600016217
+    },
+    {
+      "unit": "functions_0001.c",
+      "sanitized_preprocess_seconds": 0.04512530499960121,
+      "sanitized_compile_seconds": 3.7554623839996566,
+      "release_preprocess_seconds": 0.04315530499934539,
+      "release_compile_seconds": 0.4602915790001134
+    },
+    {
+      "unit": "functions_0002.c",
+      "sanitized_preprocess_seconds": 0.03348454199931439,
+      "sanitized_compile_seconds": 0.3874357329996201,
+      "release_preprocess_seconds": 0.05869347099996958,
+      "release_compile_seconds": 0.20110097599990695
+    },
+    {
+      "unit": "functions_0003.c",
+      "sanitized_preprocess_seconds": 0.043817842999487766,
+      "sanitized_compile_seconds": 0.9814400140003272,
+      "release_preprocess_seconds": 0.024082672000076855,
+      "release_compile_seconds": 0.28520765299981576
+    },
+    {
+      "unit": "functions_0004.c",
+      "sanitized_preprocess_seconds": 0.0309148729993467,
+      "sanitized_compile_seconds": 0.9925536930004455,
+      "release_preprocess_seconds": 0.03474392999942211,
+      "release_compile_seconds": 0.30028456899981393
+    },
+    {
+      "unit": "functions_0005.c",
+      "sanitized_preprocess_seconds": 0.033043862000340596,
+      "sanitized_compile_seconds": 0.7130855140003405,
+      "release_preprocess_seconds": 0.05155689099956362,
+      "release_compile_seconds": 0.30318235400045523
+    },
+    {
+      "unit": "functions_0006.c",
+      "sanitized_preprocess_seconds": 0.025944904999960272,
+      "sanitized_compile_seconds": 1.0535777510003754,
+      "release_preprocess_seconds": 0.029739555000560358,
+      "release_compile_seconds": 0.313538824000716
+    },
+    {
+      "unit": "functions_0007.c",
+      "sanitized_preprocess_seconds": 0.08237079199989239,
+      "sanitized_compile_seconds": 0.21973170999990543,
+      "release_preprocess_seconds": 0.02946748700014723,
+      "release_compile_seconds": 0.1372679109999808
+    },
+    {
+      "unit": "main.c",
+      "sanitized_preprocess_seconds": 0.046586536999711825,
+      "sanitized_compile_seconds": 27.835129688999587,
+      "release_preprocess_seconds": 0.08432736799932172,
+      "release_compile_seconds": 6.881707153999741
+    },
+    {
+      "unit": "state.c",
+      "sanitized_preprocess_seconds": 0.047734879999552504,
+      "sanitized_compile_seconds": 0.1627610999994431,
+      "release_preprocess_seconds": 0.04841806600052223,
+      "release_compile_seconds": 0.09820832400055224
+    }
+  ],
+  "link_process_wall_seconds": {
+    "sanitized": [
+      0.4102608240000336
+    ],
+    "release": [
+      0.05657548900035181
+    ]
+  },
+  "actual_helper_build_seconds": {
+    "sanitized": 30.164955,
+    "release": 8.441605
+  },
+  "warm_runtime_lookup_seconds": {
+    "sanitized": 0.12411,
+    "release": 0.08827
+  },
+  "isolated_lowered_wall_seconds": 15.126765,
+  "profile_cpu_seconds": 16.96,
+  "owner_gate": {
+    "name": "owner-review-full",
+    "wall_seconds": 686.1561304349998,
+    "exit": 0,
+    "sampled_cgroup_peak_bytes": 6710026240,
+    "cgroup_memory_peak_bytes": 8050589696,
+    "load": "2.44 1.80 1.48 1/141 16971"
+  },
+  "catches": {
+    "total": 68,
+    "output": 62,
+    "diagnostic": 3,
+    "go_oracle": 3,
+    "no_skips": true,
+    "fresh_sanitized_canary": true
+  },
+  "negative_controls": {
+    "comparison": {
+      "test": "TestMarkdownWhitespaceLayout",
+      "exit": 1,
+      "message": "Go document layout first byte difference at 0 (lengths 199383/199383)",
+      "same_as_serial": true,
+      "message_occurrences": 1
+    },
+    "worker": {
+      "test": "TestMarkdownWhitespaceLayout",
+      "exit": 1,
+      "message": "Go layout: exit status 1",
+      "same_as_serial": true,
+      "message_occurrences": 1,
+      "buffered_detail": "go: reading overlay: open /tmp/markdown-fixture-deliberately-missing-overlay.json: no such file or directory"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/wrong-string
+    checked_views_primitives_original_test.go:246: member/literal-check bypass caught by named refusal pin
+    checked_views_primitives_original_test.go:246: member/literal-check bypass caught by named refusal pin
+=== RUN   TestCheckedViewOriginalFinitePrimitiveFields/node-links/wrong-string
+    checked_views_primitives_original_test.go:246: member/literal-check bypass caught by named refusal pin
+    checked_views_primitives_original_test.go:246: member/literal-check bypass caught by named refusal pin
+--- PASS: TestCheckedViewOriginalFinitePrimitiveFields (14.73s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/bundle-pending/wrong-string (6.64s)
+    --- PASS: TestCheckedViewOriginalFinitePrimitiveFields/node-links/wrong-string (8.05s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	14.800s

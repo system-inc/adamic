@@ -28,16 +28,19 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		l.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
-	if target.Flags()&checker.TypeFlagsUndefined != 0 {
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
 		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object})
 		l.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
+	if l.structuralViewIntersection(target) {
+		return l.internStructuralViewIntersection(node, target)
+	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
 	// Pure phantom brands retain their existing erased contract path.
 	// Real NodeArray own fields still require the array adapter.
-	if l.viewArrayBase(target) != nil && l.phantomArrayBase(target) == nil || checker.IsTupleType(target) {
+	if l.viewArrayBase(target) != nil && l.phantomArrayBase(target) == nil && !l.untaggedPlainArrayUnion(target) || checker.IsTupleType(target) {
 		if viewArrayContractHook == nil {
 			return 0, l.notYet(node, "an array checked-view contract")
 		}
@@ -54,13 +57,19 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	}
 	if l.includesUndefined(target) {
 		present := l.checker.GetNonNullableType(target)
-		if of, known := l.representation(present); known && of == ir.Object {
+		if of, known := l.representation(present); known && (of == ir.Object || of == ir.Record) {
 			id, err := build(present)
 			if err != nil {
 				return 0, err
 			}
 			contract := l.result.ViewContracts[id-1]
+			// Untagged recursive optional hook: retain the reserved child ID;
+			// copying its unfinished descriptor would erase its descendants.
+			if (contract.Kind == ir.ViewObject && len(contract.Fields) == 0) || (contract.Kind == ir.ViewUnion && len(contract.Members) == 0) {
+				contract = ir.ViewContract{Kind: ir.ViewUnion, Of: ir.Object, Members: []ir.ViewContractID{id}}
+			}
 			contract.Undefined = true
+			contract.ObjectPresent = id
 			contract.Name = l.checker.TypeToString(target)
 			optional := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 			l.result.ViewContracts = append(l.result.ViewContracts, contract)
@@ -72,7 +81,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	if !known {
 		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))
 	}
-	contract := ir.ViewContract{Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target), Of: of}
+	contract := ir.ViewContract{TupleUnion: tupleAlternativesType(target), Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target), Of: of}
 	if isClassInstance(target) {
 		if declaration := l.classNodeFor(target); declaration != nil {
 			contract.Nominal = l.program.Where(declaration) + ":" + contract.Name
@@ -83,7 +92,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	if base := l.phantomBase(target); base != nil {
 		scalar = base
 	}
-	if target.Flags()&checker.TypeFlagsUndefined != 0 {
+	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
 		contract.Kind = ir.ViewUndefined
 	} else if interfaceScalar(scalar) && of != ir.Union {
 		contract.Kind = ir.ViewScalar
@@ -108,7 +117,19 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			contract.Members = append(contract.Members, child)
 		}
 	}
-	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object) {
+	// Array-union read hook: retain the joined element contract for each
+	// consumed index, without scanning unread elements at a field read.
+	if contract.Kind == ir.ViewUnion && contract.Of == ir.Array {
+		element := l.untaggedArrayElement(target)
+		if element != nil {
+			child, err := build(element)
+			if err != nil {
+				return 0, err
+			}
+			contract.Element = child
+		}
+	}
+	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object && !contract.TupleUnion) {
 		for _, property := range l.checker.GetPropertiesOfType(target) {
 			child, err := build(l.checker.GetTypeOfSymbol(property))
 			if err != nil {
@@ -124,13 +145,11 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
 		}
 	}
-	if contract.Kind == ir.ViewUnion && contract.Of == ir.Object {
-		tagged := false
-		for _, field := range contract.Fields {
-			child := l.result.ViewContracts[field.Contract-1]
-			tagged = tagged || !field.Optional && child.Kind == ir.ViewScalar && len(child.Allowed) != 0
-		}
-		if !tagged {
+	if contract.Kind == ir.ViewUnion && contract.Of == ir.Object && !contract.TupleUnion {
+		// Publish recursive descendants before the untagged support query.
+		l.result.ViewContracts[id-1] = contract
+		tagged := ir.ViewUnionHasDiscriminant(l.result.ViewContracts, contract)
+		if !tagged && !l.supportsUntaggedRead(contract) {
 			contract.Unsupported = "untagged object union"
 		}
 	}

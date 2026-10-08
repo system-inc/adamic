@@ -1,0 +1,998 @@
+=== RUN   TestCheckedViewNodeArrayRecords
+=== PAUSE TestCheckedViewNodeArrayRecords
+=== RUN   TestCheckedViewArrayReferenceWrites
+=== PAUSE TestCheckedViewArrayReferenceWrites
+=== RUN   TestCheckedViewArraySearch
+=== PAUSE TestCheckedViewArraySearch
+=== RUN   TestCheckedViewNativeArrays
+=== PAUSE TestCheckedViewNativeArrays
+=== RUN   TestCheckedViewArrays
+=== PAUSE TestCheckedViewArrays
+=== RUN   TestCheckedViewGenericArrayCast
+=== PAUSE TestCheckedViewGenericArrayCast
+=== RUN   TestCheckedViewOptionalDeclarations
+=== PAUSE TestCheckedViewOptionalDeclarations
+=== RUN   TestCheckedViewRanked4ArrayContracts
+=== PAUSE TestCheckedViewRanked4ArrayContracts
+=== RUN   TestCheckedViewRanked5ArrayContracts
+=== PAUSE TestCheckedViewRanked5ArrayContracts
+=== RUN   TestCheckedViewRanked5UnionCastFrontier
+=== PAUSE TestCheckedViewRanked5UnionCastFrontier
+=== RUN   TestCheckedViewRanked6ArrayContracts
+=== PAUSE TestCheckedViewRanked6ArrayContracts
+=== RUN   TestCheckedViewRanked6Frontiers
+=== PAUSE TestCheckedViewRanked6Frontiers
+=== RUN   TestCheckedViewRankedArrayUnionContracts
+=== PAUSE TestCheckedViewRankedArrayUnionContracts
+=== RUN   TestCheckedViewMutableArrayUnionRefusal
+=== PAUSE TestCheckedViewMutableArrayUnionRefusal
+=== RUN   TestCheckedViewRankedArrayContracts
+=== PAUSE TestCheckedViewRankedArrayContracts
+=== RUN   TestCheckedViewRankedParserArrayContracts
+=== PAUSE TestCheckedViewRankedParserArrayContracts
+=== CONT  TestCheckedViewNodeArrayRecords
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-reads
+=== CONT  TestCheckedViewRanked5ArrayContracts
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-function
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-function
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-reads
+=== CONT  TestCheckedViewRanked4ArrayContracts
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-case-lazy
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-case-lazy
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-case-nested
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-case-nested
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-case-wrong-array
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-lazy
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-case-wrong-array
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-case-wrong-tag
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-case-wrong-tag
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-case
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-case
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-lazy
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-chain-absent
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-chain-absent
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-chain-deep
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-chain-deep
+=== CONT  TestCheckedViewOptionalDeclarations
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-properties-copy
+=== RUN   TestCheckedViewOptionalDeclarations/optional-declarations-present
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-properties-copy
+=== PAUSE TestCheckedViewOptionalDeclarations/optional-declarations-present
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-function-arrow
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-own-mutation
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-function-arrow
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-own-mutation
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-function-mixed
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-function-mixed
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-array
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-missing-own
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-array
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-missing-own
+=== RUN   TestCheckedViewOptionalDeclarations/optional-declarations-absent
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-kind
+=== PAUSE TestCheckedViewOptionalDeclarations/optional-declarations-absent
+=== RUN   TestCheckedViewOptionalDeclarations/optional-declarations-undefined
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-kind
+=== PAUSE TestCheckedViewOptionalDeclarations/optional-declarations-undefined
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-name
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-name
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-heritage
+=== RUN   TestCheckedViewOptionalDeclarations/optional-declarations-lazy
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-heritage
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-wrong-own
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-chain-push-wrong
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-heritage-absent
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-heritage-absent
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-heritage-lazy
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-heritage-lazy
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-heritage-wrong-array
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-heritage-wrong-array
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-heritage-wrong-late
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-heritage-wrong-late
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-wrong-own
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-wrong-reference
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc
+=== PAUSE TestCheckedViewOptionalDeclarations/optional-declarations-lazy
+=== RUN   TestCheckedViewOptionalDeclarations/optional-declarations-wrong-array
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-chain-push-wrong
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-wrong-reference
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-absent
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-chain-push
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-wrong-element
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-wrong-element
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-wrong-field
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-wrong-field
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-wrong-array
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-absent
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-filter
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-chain-push
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-filter
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-wrong-array
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-chain-set-wrong
+=== RUN   TestCheckedViewNodeArrayRecords/node-array-write-literal
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-filter-wrong
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-chain-set-wrong
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-filter-wrong
+=== PAUSE TestCheckedViewOptionalDeclarations/optional-declarations-wrong-array
+=== PAUSE TestCheckedViewNodeArrayRecords/node-array-write-literal
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-chain-set
+=== CONT  TestCheckedViewGenericArrayCast
+=== RUN   TestCheckedViewOptionalDeclarations/optional-declarations-wrong-element
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-chain-set
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-chain-undefined
+=== PAUSE TestCheckedViewOptionalDeclarations/optional-declarations-wrong-element
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-chain-undefined
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-chain-wrong-array
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-wrong-comment
+=== RUN   TestCheckedViewOptionalDeclarations/optional-declarations-wrong-field
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-wrong-comment
+=== PAUSE TestCheckedViewOptionalDeclarations/optional-declarations-wrong-field
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-wrong-element
+=== CONT  TestCheckedViewArrays
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-wrong-element
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-chain-wrong-array
+=== RUN   TestCheckedViewArrays/array-lazy
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-chain
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-chain
+=== PAUSE TestCheckedViewArrays/array-lazy
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-modifiers
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-modifiers
+=== RUN   TestCheckedViewArrays/array-iteration
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-absent
+=== PAUSE TestCheckedViewArrays/array-iteration
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-comma-map-wrong
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-absent
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-some
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-some
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-array
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-array
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-decorator
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-decorator
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-tag
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-comma-map-wrong
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-tag
+=== RUN   TestCheckedViewArrays/array-map
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-comma-map
+=== PAUSE TestCheckedViewArrays/array-map
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-comma-map
+=== RUN   TestCheckedViewArrays/array-pop
+=== PAUSE TestCheckedViewArrays/array-pop
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-comma-wrong-element
+=== RUN   TestCheckedViewArrays/array-bounds
+=== PAUSE TestCheckedViewArrays/array-bounds
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures
+=== RUN   TestCheckedViewArrays/array-second
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-elements-wrong
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-elements-wrong
+=== PAUSE TestCheckedViewArrays/array-second
+=== RUN   TestCheckedViewArrays/array-length-kind
+=== PAUSE TestCheckedViewArrays/array-length-kind
+=== RUN   TestCheckedViewArrays/callable-missing
+=== PAUSE TestCheckedViewArrays/callable-missing
+=== RUN   TestCheckedViewArrays/callable-uninitialized
+=== PAUSE TestCheckedViewArrays/callable-uninitialized
+=== RUN   TestCheckedViewArrays/callable-kind
+=== PAUSE TestCheckedViewArrays/callable-kind
+=== RUN   TestCheckedViewArrays/array-missing
+=== PAUSE TestCheckedViewArrays/array-missing
+=== RUN   TestCheckedViewArrays/array-uninitialized
+=== PAUSE TestCheckedViewArrays/array-uninitialized
+=== RUN   TestCheckedViewArrays/array-boolean
+=== PAUSE TestCheckedViewArrays/array-boolean
+=== RUN   TestCheckedViewArrays/array-iteration-bad
+=== PAUSE TestCheckedViewArrays/array-iteration-bad
+=== RUN   TestCheckedViewArrays/array-map-bad
+=== PAUSE TestCheckedViewArrays/array-map-bad
+=== RUN   TestCheckedViewArrays/array-alias
+=== PAUSE TestCheckedViewArrays/array-alias
+=== RUN   TestCheckedViewArrays/array-undefined
+=== PAUSE TestCheckedViewArrays/array-undefined
+=== RUN   TestCheckedViewArrays/array-string-literal
+=== PAUSE TestCheckedViewArrays/array-string-literal
+=== RUN   TestCheckedViewArrays/nullable-array-string
+=== PAUSE TestCheckedViewArrays/nullable-array-string
+=== RUN   TestCheckedViewArrays/nullable-array-element
+=== PAUSE TestCheckedViewArrays/nullable-array-element
+=== RUN   TestCheckedViewArrays/generic-array-element
+=== PAUSE TestCheckedViewArrays/generic-array-element
+=== RUN   TestCheckedViewArrays/array-field
+=== PAUSE TestCheckedViewArrays/array-field
+=== RUN   TestCheckedViewArrays/array-element
+=== PAUSE TestCheckedViewArrays/array-element
+=== RUN   TestCheckedViewArrays/object-element
+=== PAUSE TestCheckedViewArrays/object-element
+=== RUN   TestCheckedViewArrays/non-array
+=== PAUSE TestCheckedViewArrays/non-array
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-comma-wrong-element
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-comma-wrong-field
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-comma-wrong-field
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-comma
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-comma
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-files-assign
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-files-assign
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-files-join-wrong
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-files-join-wrong
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-files-push-wrong
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-files-push-wrong
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-files-push
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-files-push
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-files-set-wrong
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-files-set-wrong
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-files-wrong-element
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-files-wrong-element
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-files
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-files
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-label-assign-from-array
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-label-assign-from-array
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-label-assign-undefined
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-label-assign-undefined
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-label-assign
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-label-assign
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-label-push
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-label-push
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-label-undefined
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-label-undefined
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-label-wrong-element
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-label-wrong-element
+=== RUN   TestCheckedViewRanked4ArrayContracts/ranked4-label
+=== PAUSE TestCheckedViewRanked4ArrayContracts/ranked4-label
+=== CONT  TestCheckedViewNativeArrays
+=== RUN   TestCheckedViewNativeArrays/native-array-join
+=== PAUSE TestCheckedViewNativeArrays/native-array-join
+=== RUN   TestCheckedViewNativeArrays/native-array-join-evaluation
+=== PAUSE TestCheckedViewNativeArrays/native-array-join-evaluation
+=== RUN   TestCheckedViewNativeArrays/native-array-large-field
+=== PAUSE TestCheckedViewNativeArrays/native-array-large-field
+=== RUN   TestCheckedViewNativeArrays/native-array-join-boolean
+=== PAUSE TestCheckedViewNativeArrays/native-array-join-boolean
+=== RUN   TestCheckedViewNativeArrays/native-array-mutation
+=== PAUSE TestCheckedViewNativeArrays/native-array-mutation
+=== RUN   TestCheckedViewNativeArrays/native-array-string-mutation
+=== PAUSE TestCheckedViewNativeArrays/native-array-string-mutation
+=== RUN   TestCheckedViewNativeArrays/native-array-sparse
+=== PAUSE TestCheckedViewNativeArrays/native-array-sparse
+=== RUN   TestCheckedViewNativeArrays/native-array-sparse-pop-hole
+=== PAUSE TestCheckedViewNativeArrays/native-array-sparse-pop-hole
+=== RUN   TestCheckedViewNativeArrays/native-array-join-bad
+=== PAUSE TestCheckedViewNativeArrays/native-array-join-bad
+=== RUN   TestCheckedViewNativeArrays/native-array-join-literal
+=== PAUSE TestCheckedViewNativeArrays/native-array-join-literal
+=== RUN   TestCheckedViewNativeArrays/native-array-write-bad
+=== PAUSE TestCheckedViewNativeArrays/native-array-write-bad
+=== RUN   TestCheckedViewNativeArrays/native-array-push-bad
+=== PAUSE TestCheckedViewNativeArrays/native-array-push-bad
+=== RUN   TestCheckedViewNativeArrays/native-array-copy-bad
+=== PAUSE TestCheckedViewNativeArrays/native-array-copy-bad
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-records
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-records
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-wrong
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-wrong
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-declaration
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-declaration
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-lazy
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-lazy
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-map
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-map
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-map-wrong
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-map-wrong
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-array
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-array
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-element
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-element
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-parameters
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-parameters
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-tuple
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-tuple
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-tuple-for-of
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-tuple-for-of
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-array
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-array
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-element
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-element
+=== RUN   TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-name
+=== PAUSE TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-name
+=== CONT  TestCheckedViewArraySearch
+=== RUN   TestCheckedViewArraySearch/native-array-search
+=== PAUSE TestCheckedViewArraySearch/native-array-search
+=== RUN   TestCheckedViewArraySearch/native-array-search-lazy
+=== PAUSE TestCheckedViewArraySearch/native-array-search-lazy
+=== RUN   TestCheckedViewArraySearch/native-array-search-object
+=== PAUSE TestCheckedViewArraySearch/native-array-search-object
+=== RUN   TestCheckedViewArraySearch/native-array-search-sparse
+=== PAUSE TestCheckedViewArraySearch/native-array-search-sparse
+=== RUN   TestCheckedViewArraySearch/native-array-search-evaluation
+=== PAUSE TestCheckedViewArraySearch/native-array-search-evaluation
+=== RUN   TestCheckedViewArraySearch/native-array-search-boolean
+=== PAUSE TestCheckedViewArraySearch/native-array-search-boolean
+=== RUN   TestCheckedViewArraySearch/native-array-reference-write
+=== PAUSE TestCheckedViewArraySearch/native-array-reference-write
+=== RUN   TestCheckedViewArraySearch/native-array-search-bad
+=== PAUSE TestCheckedViewArraySearch/native-array-search-bad
+=== RUN   TestCheckedViewArraySearch/native-array-search-literal
+=== PAUSE TestCheckedViewArraySearch/native-array-search-literal
+=== CONT  TestCheckedViewArrayReferenceWrites
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-set
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-set
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-push
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-push
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-alias
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-alias
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-empty
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-empty
+=== CONT  TestCheckedViewRankedArrayUnionContracts
+=== CONT  TestCheckedViewRankedParserArrayContracts
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-variables
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-variables
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-variables-wrong-array
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-variables-wrong-array
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-call
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-slice
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-slice
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-lazy
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-call
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-call-wrong-array
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-lazy
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-missing-field
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-call-wrong-array
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-object
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-missing-field
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-narrow-field
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-object
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-object-wrong-array
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-narrow-field
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-readonly-incoming
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-object-wrong-array
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-readonly-incoming
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-mutable-incoming
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-tuple
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-mutable-incoming
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-tuple
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-uncertified
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-uncertified
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-array
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-source-alias
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-array
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-types
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-source-alias
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-types
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-types-wrong-array
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-types-wrong-array
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-signature
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-uninitialized
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-uninitialized
+=== RUN   TestCheckedViewArrayReferenceWrites/reference-array-evaluation
+=== PAUSE TestCheckedViewArrayReferenceWrites/reference-array-evaluation
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-array
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-signature
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-array
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-signature-wrong-array
+=== CONT  TestCheckedViewRankedArrayContracts
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-union-types
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-signature-wrong-array
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-union-types
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-intersection-types
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-class
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-intersection-types
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-signature-type-parameters
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-class
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-signature-type-parameters
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-signature-parameters
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-class-wrong-array
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-signature-parameters
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-array
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-source-statements
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-array
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-source-statements
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-signature-absent
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-signature-absent
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-union-lazy
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-union-lazy
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-union-wrong-array
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-union-wrong-array
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-array-wrong-array
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-array-wrong-array
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-class-wrong-array
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-intersection-wrong-field
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-intersection-wrong-field
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-reference
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-reference
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-signature-wrong-array
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-reference-wrong-array
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-reference-wrong-array
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-tuple-number
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-lazy
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-lazy
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-tuple-number
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-element
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-member
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-element
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-member
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-tag
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-flag
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-tag
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-flag
+=== RUN   TestCheckedViewRankedParserArrayContracts/ranked2-call-lazy
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-mutable-array-unread
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-mutable-array-unread
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-reference-absent
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-reference-absent
+=== PAUSE TestCheckedViewRankedParserArrayContracts/ranked2-call-lazy
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-signature-wrong-array
+=== CONT  TestCheckedViewRanked6ArrayContracts
+=== CONT  TestCheckedViewMutableArrayUnionRefusal
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-calls
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-calls
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-calls-filter
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-calls-filter
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-calls-lazy
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-calls-lazy
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-calls-wrong-array
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-calls-wrong-array
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-calls-wrong-element
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-calls-wrong-element
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-class-like
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-class-like
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-class-like-wrong-name
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-class-like-wrong-name
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-class-members
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-class-members
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-array
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-array
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-name
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-name
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-tag
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-tag
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-element-flags
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-element-flags
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-absent
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-absent
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-push
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-push
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-array
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-array
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-signature-wrong-element
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-doc
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-doc
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-element
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-element
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-tag
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-tag
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsx
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsx
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsx-hole
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsx-hole
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsx-some
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsx-some
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-array
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-signature-wrong-element
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-array
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-spread
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-spread
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-tag
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-tag
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-labels
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-labels
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-labels-absent
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-labels-absent
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-labels-hole
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-labels-hole
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-labels-wrong-array
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-labels-wrong-array
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-labels-wrong-tag
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-labels-wrong-tag
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-template
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-template
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-template-assign
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-template-assign
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-template-assign-wrong
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-template-assign-wrong
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-template-join-wrong
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-template-join-wrong
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-template-map
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-template-map
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-template-wrong-array
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-template-wrong-array
+=== RUN   TestCheckedViewRanked6ArrayContracts/ranked6-template-wrong-element
+=== PAUSE TestCheckedViewRanked6ArrayContracts/ranked6-template-wrong-element
+=== CONT  TestCheckedViewRanked6Frontiers
+=== RUN   TestCheckedViewRankedArrayContracts/ranked-source-wrong-array
+=== RUN   TestCheckedViewRanked6Frontiers/ranked6-class-like-union-cast
+=== PAUSE TestCheckedViewRanked6Frontiers/ranked6-class-like-union-cast
+=== RUN   TestCheckedViewRanked6Frontiers/ranked6-jsdoc-parent-cache
+=== PAUSE TestCheckedViewRanked6Frontiers/ranked6-jsdoc-parent-cache
+=== PAUSE TestCheckedViewRankedArrayContracts/ranked-source-wrong-array
+=== CONT  TestCheckedViewRanked5UnionCastFrontier
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-reads
+--- PASS: TestCheckedViewMutableArrayUnionRefusal (4.21s)
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-wrong-reference
+--- PASS: TestCheckedViewRanked5UnionCastFrontier (4.30s)
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-write-literal
+--- PASS: TestCheckedViewGenericArrayCast (4.49s)
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-wrong-array
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-wrong-field
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-wrong-element
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-own-mutation
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-wrong-own
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-missing-own
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-properties-copy
+=== CONT  TestCheckedViewNodeArrayRecords/node-array-lazy
+=== CONT  TestCheckedViewOptionalDeclarations/optional-declarations-present
+=== CONT  TestCheckedViewOptionalDeclarations/optional-declarations-wrong-field
+=== CONT  TestCheckedViewOptionalDeclarations/optional-declarations-wrong-element
+--- PASS: TestCheckedViewNodeArrayRecords (0.00s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-reads (4.57s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-wrong-reference (0.44s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-write-literal (0.48s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-wrong-array (0.47s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-wrong-field (0.53s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-wrong-element (0.54s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-own-mutation (0.56s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-wrong-own (0.51s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-missing-own (0.52s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-properties-copy (0.51s)
+    --- PASS: TestCheckedViewNodeArrayRecords/node-array-lazy (0.52s)
+=== CONT  TestCheckedViewOptionalDeclarations/optional-declarations-wrong-array
+=== CONT  TestCheckedViewOptionalDeclarations/optional-declarations-lazy
+=== CONT  TestCheckedViewOptionalDeclarations/optional-declarations-undefined
+=== CONT  TestCheckedViewOptionalDeclarations/optional-declarations-absent
+=== CONT  TestCheckedViewArrays/array-lazy
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-case-lazy
+=== CONT  TestCheckedViewNativeArrays/native-array-join
+--- PASS: TestCheckedViewOptionalDeclarations (0.00s)
+    --- PASS: TestCheckedViewOptionalDeclarations/optional-declarations-present (0.48s)
+    --- PASS: TestCheckedViewOptionalDeclarations/optional-declarations-wrong-field (0.47s)
+    --- PASS: TestCheckedViewOptionalDeclarations/optional-declarations-wrong-element (0.46s)
+    --- PASS: TestCheckedViewOptionalDeclarations/optional-declarations-wrong-array (0.46s)
+    --- PASS: TestCheckedViewOptionalDeclarations/optional-declarations-lazy (0.48s)
+    --- PASS: TestCheckedViewOptionalDeclarations/optional-declarations-undefined (0.49s)
+    --- PASS: TestCheckedViewOptionalDeclarations/optional-declarations-absent (0.44s)
+=== CONT  TestCheckedViewArrays/non-array
+=== CONT  TestCheckedViewArrays/object-element
+=== CONT  TestCheckedViewArrays/array-element
+=== CONT  TestCheckedViewArrays/array-field
+=== CONT  TestCheckedViewArrays/generic-array-element
+=== CONT  TestCheckedViewArrays/nullable-array-element
+=== CONT  TestCheckedViewArrays/nullable-array-string
+=== CONT  TestCheckedViewArrays/array-string-literal
+=== CONT  TestCheckedViewArrays/array-undefined
+=== CONT  TestCheckedViewArrays/array-alias
+=== CONT  TestCheckedViewArrays/array-map-bad
+=== CONT  TestCheckedViewArrays/array-iteration-bad
+=== CONT  TestCheckedViewArrays/array-boolean
+=== CONT  TestCheckedViewArrays/array-uninitialized
+=== CONT  TestCheckedViewArrays/array-missing
+=== CONT  TestCheckedViewArrays/callable-kind
+=== CONT  TestCheckedViewArrays/callable-uninitialized
+=== CONT  TestCheckedViewArrays/callable-missing
+=== CONT  TestCheckedViewArrays/array-length-kind
+=== CONT  TestCheckedViewArrays/array-second
+=== CONT  TestCheckedViewArrays/array-bounds
+=== CONT  TestCheckedViewArrays/array-pop
+=== CONT  TestCheckedViewArrays/array-map
+=== CONT  TestCheckedViewArrays/array-iteration
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-function
+=== CONT  TestCheckedViewArraySearch/native-array-search
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-label
+--- PASS: TestCheckedViewArrays (0.00s)
+    --- PASS: TestCheckedViewArrays/array-lazy (0.44s)
+    --- PASS: TestCheckedViewArrays/non-array (0.33s)
+    --- PASS: TestCheckedViewArrays/object-element (0.44s)
+    --- PASS: TestCheckedViewArrays/array-element (0.43s)
+    --- PASS: TestCheckedViewArrays/array-field (0.41s)
+    --- PASS: TestCheckedViewArrays/generic-array-element (0.33s)
+    --- PASS: TestCheckedViewArrays/nullable-array-element (0.33s)
+    --- PASS: TestCheckedViewArrays/nullable-array-string (0.34s)
+    --- PASS: TestCheckedViewArrays/array-string-literal (0.34s)
+    --- PASS: TestCheckedViewArrays/array-undefined (0.35s)
+    --- PASS: TestCheckedViewArrays/array-alias (0.32s)
+    --- PASS: TestCheckedViewArrays/array-iteration-bad (0.35s)
+    --- PASS: TestCheckedViewArrays/array-map-bad (0.35s)
+    --- PASS: TestCheckedViewArrays/array-boolean (0.34s)
+    --- PASS: TestCheckedViewArrays/array-uninitialized (0.37s)
+    --- PASS: TestCheckedViewArrays/array-missing (0.32s)
+    --- PASS: TestCheckedViewArrays/callable-kind (0.36s)
+    --- PASS: TestCheckedViewArrays/callable-uninitialized (0.37s)
+    --- PASS: TestCheckedViewArrays/callable-missing (0.40s)
+    --- PASS: TestCheckedViewArrays/array-length-kind (0.32s)
+    --- PASS: TestCheckedViewArrays/array-second (0.34s)
+    --- PASS: TestCheckedViewArrays/array-bounds (0.47s)
+    --- PASS: TestCheckedViewArrays/array-pop (0.44s)
+    --- PASS: TestCheckedViewArrays/array-map (0.46s)
+    --- PASS: TestCheckedViewArrays/array-iteration (0.43s)
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-label-wrong-element
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-label-undefined
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-label-push
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-label-assign
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-label-assign-undefined
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-label-assign-from-array
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-files
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-files-wrong-element
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-files-set-wrong
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-files-push
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-files-push-wrong
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-files-join-wrong
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-files-assign
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-comma
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-comma-wrong-field
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-comma-wrong-element
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-comma-map
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-comma-map-wrong
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-chain
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-chain-wrong-array
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-chain-undefined
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-chain-set
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-chain-set-wrong
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-chain-push
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-chain-push-wrong
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-chain-deep
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-chain-absent
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-case
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-case-wrong-tag
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-case-wrong-array
+=== CONT  TestCheckedViewRanked4ArrayContracts/ranked4-case-nested
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-tag
+=== CONT  TestCheckedViewNativeArrays/native-array-copy-bad
+=== CONT  TestCheckedViewNativeArrays/native-array-push-bad
+=== CONT  TestCheckedViewNativeArrays/native-array-write-bad
+=== CONT  TestCheckedViewNativeArrays/native-array-join-literal
+--- PASS: TestCheckedViewRanked4ArrayContracts (0.00s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-case-lazy (0.52s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-label-wrong-element (0.47s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-label (0.51s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-label-undefined (0.46s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-label-push (0.49s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-label-assign (0.48s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-label-assign-undefined (0.50s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-label-assign-from-array (0.52s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-files (0.48s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-files-wrong-element (0.44s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-files-set-wrong (0.42s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-files-push (0.46s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-files-join-wrong (0.42s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-files-push-wrong (0.45s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-files-assign (0.45s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-comma (0.48s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-comma-wrong-field (0.45s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-comma-wrong-element (0.47s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-comma-map (0.52s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-chain-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-chain (0.48s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-comma-map-wrong (0.56s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-chain-undefined (0.48s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-chain-set-wrong (0.50s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-chain-set (0.54s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-chain-push (0.55s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-chain-push-wrong (0.48s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-chain-absent (0.48s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-chain-deep (0.52s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-case-wrong-tag (0.47s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-case (0.50s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-case-wrong-array (0.46s)
+    --- PASS: TestCheckedViewRanked4ArrayContracts/ranked4-case-nested (0.52s)
+=== CONT  TestCheckedViewNativeArrays/native-array-join-bad
+=== CONT  TestCheckedViewNativeArrays/native-array-sparse-pop-hole
+=== CONT  TestCheckedViewNativeArrays/native-array-sparse
+=== CONT  TestCheckedViewNativeArrays/native-array-string-mutation
+=== CONT  TestCheckedViewNativeArrays/native-array-mutation
+=== CONT  TestCheckedViewNativeArrays/native-array-join-boolean
+=== CONT  TestCheckedViewNativeArrays/native-array-large-field
+=== CONT  TestCheckedViewNativeArrays/native-array-join-evaluation
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-decorator
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-array
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-some
+--- PASS: TestCheckedViewNativeArrays (0.00s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join (0.46s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-copy-bad (0.45s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-push-bad (0.43s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-write-bad (0.46s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join-literal (0.46s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join-bad (0.45s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-sparse-pop-hole (0.48s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-string-mutation (0.46s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-mutation (0.45s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-sparse (0.52s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join-boolean (0.48s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-large-field (0.43s)
+    --- PASS: TestCheckedViewNativeArrays/native-array-join-evaluation (0.46s)
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-absent
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-modifiers
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-wrong-element
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-wrong-comment
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-filter-wrong
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-filter
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-absent
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-heritage-wrong-late
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-heritage-wrong-array
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-heritage-lazy
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-heritage-absent
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-heritage
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-name
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-kind
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-array
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-function-mixed
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-function-arrow
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-map
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-lazy
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-declaration
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-wrong
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-records
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-elements-wrong
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-tuple-for-of
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-name
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-element
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-array
+=== CONT  TestCheckedViewArraySearch/native-array-search-boolean
+=== CONT  TestCheckedViewArraySearch/native-array-search-literal
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-map-wrong
+=== CONT  TestCheckedViewArraySearch/native-array-search-bad
+=== CONT  TestCheckedViewArraySearch/native-array-reference-write
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-tuple
+=== CONT  TestCheckedViewArraySearch/native-array-search-sparse
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-parameters
+=== CONT  TestCheckedViewArraySearch/native-array-search-evaluation
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-element
+=== CONT  TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-array
+=== CONT  TestCheckedViewArraySearch/native-array-search-object
+=== CONT  TestCheckedViewArraySearch/native-array-search-lazy
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-set
+--- PASS: TestCheckedViewRanked5ArrayContracts (0.00s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-function (0.57s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-tag (0.50s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-decorator (0.54s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-wrong-array (0.50s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-absent (0.48s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-modifiers-some (0.66s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-modifiers (0.59s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-wrong-element (0.55s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-wrong-comment (0.61s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-filter-wrong (0.66s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-filter (0.69s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc-absent (0.53s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-jsdoc (0.60s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-heritage-wrong-late (0.63s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-heritage-wrong-array (0.51s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-heritage-lazy (0.61s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-heritage-absent (0.50s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-heritage (0.57s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-name (0.59s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-array (0.43s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-function-wrong-kind (0.53s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-function-arrow (0.50s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-lazy (0.47s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-function-mixed (0.66s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-map (0.53s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-wrong (0.52s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-declaration (0.64s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-elements-wrong (0.51s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign-records (0.56s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-assign (0.50s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures (0.50s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-tuple-for-of (0.60s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-name (0.58s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-tuple-wrong-element (0.50s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-map-wrong (0.52s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-tuple (0.57s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-parameters (0.48s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-element (0.48s)
+    --- PASS: TestCheckedViewRanked5ArrayContracts/ranked5-signatures-wrong-array (0.47s)
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-narrow-field
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-evaluation
+--- PASS: TestCheckedViewArraySearch (0.00s)
+    --- PASS: TestCheckedViewArraySearch/native-array-search (0.50s)
+    --- PASS: TestCheckedViewArraySearch/native-array-search-boolean (0.45s)
+    --- PASS: TestCheckedViewArraySearch/native-array-search-literal (0.45s)
+    --- PASS: TestCheckedViewArraySearch/native-array-search-bad (0.44s)
+    --- PASS: TestCheckedViewArraySearch/native-array-reference-write (0.46s)
+    --- PASS: TestCheckedViewArraySearch/native-array-search-sparse (0.46s)
+    --- PASS: TestCheckedViewArraySearch/native-array-search-evaluation (0.46s)
+    --- PASS: TestCheckedViewArraySearch/native-array-search-lazy (0.44s)
+    --- PASS: TestCheckedViewArraySearch/native-array-search-object (0.54s)
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-uninitialized
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-source-alias
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-uncertified
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-mutable-incoming
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-readonly-incoming
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-slice
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-missing-field
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-lazy
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-alias
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-empty
+=== CONT  TestCheckedViewArrayReferenceWrites/reference-array-push
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-variables
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-reference
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-reference-absent
+--- PASS: TestCheckedViewArrayReferenceWrites (0.00s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-set (0.47s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-narrow-field (0.47s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-evaluation (0.42s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-uninitialized (0.47s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-source-alias (0.45s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-uncertified (0.46s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-mutable-incoming (0.47s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-readonly-incoming (0.46s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-slice (0.47s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-missing-field (0.50s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-lazy (0.48s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-alias (0.52s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-empty (0.49s)
+    --- PASS: TestCheckedViewArrayReferenceWrites/reference-array-push (0.49s)
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-mutable-array-unread
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-tag
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-element
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-lazy
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-reference-wrong-array
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-array
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-call-lazy
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-flag
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-member
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-tuple-number
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-array-wrong-array
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-array
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-signature
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-class-wrong-array
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-class
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-signature-wrong-array
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-call-wrong-array
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-tuple
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-object-wrong-array
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-object
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-types
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-types-wrong-array
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-array
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-variables-wrong-array
+=== CONT  TestCheckedViewRankedParserArrayContracts/ranked2-call
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-calls
+--- PASS: TestCheckedViewRankedArrayUnionContracts (0.00s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern (0.47s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-reference (0.47s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-mutable-array-unread (0.45s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-reference-absent (0.46s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-tag (0.46s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-element (0.44s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-reference-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-lazy (0.52s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-signature (0.45s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-class-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-class (0.43s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-signature-wrong-array (0.41s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-types (0.47s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-array (0.46s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-types-wrong-array (0.49s)
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsx
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-template-wrong-element
+--- PASS: TestCheckedViewRankedParserArrayContracts (0.00s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-variables (0.50s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-call-lazy (0.49s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-flag (0.46s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-tuple-wrong-member (0.46s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-tuple-number (0.47s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-array-wrong-array (0.44s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-array (0.48s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-call-wrong-array (0.47s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-object-wrong-array (0.46s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-tuple (0.50s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-object (0.52s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-variables-wrong-array (0.46s)
+    --- PASS: TestCheckedViewRankedParserArrayContracts/ranked2-call (0.51s)
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-template-wrong-array
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-template-map
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-template-join-wrong
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-template-assign-wrong
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-template-assign
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-template
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-labels-wrong-tag
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-labels-wrong-array
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-labels-hole
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-labels-absent
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-labels
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-tag
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-spread
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-array
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsx-some
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsx-hole
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-name
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-tag
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-element
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-doc
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-array
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-push
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-absent
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-element-flags
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-tag
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-calls-wrong-element
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-array
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-class-members
+=== CONT  TestCheckedViewRanked6Frontiers/ranked6-class-like-union-cast
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-class-like-wrong-name
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-calls-wrong-array
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-class-like
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-calls-lazy
+=== CONT  TestCheckedViewRanked6Frontiers/ranked6-jsdoc-parent-cache
+=== CONT  TestCheckedViewRanked6ArrayContracts/ranked6-calls-filter
+--- PASS: TestCheckedViewRanked6Frontiers (0.00s)
+    --- PASS: TestCheckedViewRanked6Frontiers/ranked6-class-like-union-cast (0.17s)
+    --- PASS: TestCheckedViewRanked6Frontiers/ranked6-jsdoc-parent-cache (0.19s)
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-union-types
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-source-wrong-array
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-signature-wrong-element
+--- PASS: TestCheckedViewRanked6ArrayContracts (0.00s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-calls (0.51s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsx (0.55s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-template-wrong-element (0.46s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-template-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-template-join-wrong (0.44s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-template-map (0.51s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-template-assign-wrong (0.46s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-template-assign (0.48s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-labels-wrong-tag (0.50s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-template (0.53s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-labels-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-labels-hole (0.51s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-labels-absent (0.46s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-labels (0.53s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-tag (0.47s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-spread (0.50s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsx-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsx-hole (0.52s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsx-some (0.58s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-name (0.50s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-tag (0.47s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-element (0.47s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-doc (0.46s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-wrong-array (0.46s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-push (0.45s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent-absent (0.53s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-jsdoc-parent (0.52s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-element-flags (0.47s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-tag (0.52s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-calls-wrong-element (0.45s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-class-members-wrong-array (0.46s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-class-members (0.55s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-calls-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-class-like-wrong-name (0.52s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-class-like (0.65s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-calls-lazy (0.47s)
+    --- PASS: TestCheckedViewRanked6ArrayContracts/ranked6-calls-filter (0.54s)
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-signature-wrong-array
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-intersection-wrong-field
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-union-wrong-array
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-union-lazy
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-signature-absent
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-source-statements
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-signature-parameters
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-signature-type-parameters
+=== CONT  TestCheckedViewRankedArrayContracts/ranked-intersection-types
+--- PASS: TestCheckedViewRankedArrayContracts (0.00s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-union-types (0.44s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-signature-wrong-element (0.43s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-source-wrong-array (0.46s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-signature-wrong-array (0.47s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-intersection-wrong-field (0.43s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-union-wrong-array (0.45s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-union-lazy (0.48s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-signature-absent (0.46s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-source-statements (0.48s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-signature-parameters (0.42s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-signature-type-parameters (0.45s)
+    --- PASS: TestCheckedViewRankedArrayContracts/ranked-intersection-types (0.41s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=449
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	32.166s
+exit=0

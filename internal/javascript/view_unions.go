@@ -9,12 +9,28 @@ import (
 
 // The arrow holds the returned object, preserving a side-effectful receiver.
 func (e *emitter) viewObjectUnion(property ir.Property, value string) string {
+	if checked, tuple := e.viewTuple(property, value); tuple {
+		return checked
+	}
 	if property.ViewContract == 0 {
 		return value
 	}
 	contract := e.program.ViewContracts[int(property.ViewContract)-1]
-	if contract.Kind != ir.ViewUnion {
+	if contract.TupleUnion {
+		return e.tupleArrayUnionCheck(property.ViewContract, property.View, value)
+	}
+
+	if contract.Intersection {
+		return e.viewObjectIntersection(property, value)
+	}
+	if contract.IntersectionTag != "" {
+		return e.viewIntersectionUnion(property, value)
+	}
+	if contract.Kind != ir.ViewUnion || (contract.Of != ir.Object && contract.Of != ir.Array) {
 		return value
+	}
+	if untaggedObjectUnion(e.program.ViewContracts, contract) {
+		return e.viewUntaggedObjectUnion(property, value)
 	}
 	for _, field := range contract.Fields {
 		tag := e.program.ViewContracts[int(field.Contract)-1]

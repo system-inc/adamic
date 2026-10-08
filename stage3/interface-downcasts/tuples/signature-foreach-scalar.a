@@ -1,0 +1,5 @@
+import type {IncrementalBuildInfoEmitSignature} from 'original-tsc-builder';
+interface Base {readonly kind:string;}
+interface Target extends Base {readonly values:readonly IncrementalBuildInfoEmitSignature[]|undefined;}
+const values=[7];
+const raw={kind:'probe',values}; const base:Base=raw; const viewed=base as Target; const selected=viewed.values; selected?.forEach((item)=>{console.log(typeof item);}); console.log('done');

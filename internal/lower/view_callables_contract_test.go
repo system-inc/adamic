@@ -48,7 +48,7 @@ func TestViewCallableShapeContract(t *testing.T) {
 			if l.result.ViewContracts[id-1].Result != 0 {
 				t.Fatal("unknown signature recorded as proven")
 			}
-			supported := declaration == "type Target = (value?: number) => number;" || declaration == "type Target = (value: number) => number;" || declaration == "type Target = () => string;"
+			supported := declaration == "type Target = (value: number) => number;" || declaration == "type Target = () => string;" || declaration == "type Target = (value?: number) => number;"
 			sentinel := errors.New("child unavailable")
 			err = l.completeViewCallableShapeContract(node, target, id, func(*checker.Type) (ir.ViewContractID, error) { calls++; return 0, sentinel })
 			if supported {

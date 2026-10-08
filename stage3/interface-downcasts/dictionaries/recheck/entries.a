@@ -1,0 +1,4 @@
+interface MapLike<T>{[key:string]:T;}
+interface Base {readonly kind:'Recheck';}
+interface View extends Base {readonly table:MapLike<string>;}
+const payload={kind:'Recheck' as const,table:{item:'name'}};const base:Base=payload;const view=base as View;const result=Object.entries(view.table);console.log(`${result.length}`);

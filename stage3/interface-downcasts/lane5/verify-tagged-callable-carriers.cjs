@@ -44,7 +44,7 @@ for (const rank of process.argv[3].split(',').map(Number)) {
  const directory = path.join(__dirname, 'later-ranked-callables', family.directory);
  const aliasSource = family.aliasFile ? ts.createSourceFile(family.aliasFile, fs.readFileSync(path.join(pin,family.aliasFile),'utf8'),ts.ScriptTarget.Latest,true) : original;
  const aliasNodes = family.aliasFile ? collect(aliasSource) : originalNodes;
- for (const name of fs.readdirSync(directory).filter(name => name.endsWith('.a'))) {
+ for (const name of fs.readdirSync(directory).filter(name => (name.endsWith('.a') || name.endsWith('.ts')))) {
   const source = ts.createSourceFile(name, fs.readFileSync(path.join(directory,name),'utf8'), ts.ScriptTarget.Latest, true);
   const fixture = collect(source);
   for (const alias of family.aliases) {

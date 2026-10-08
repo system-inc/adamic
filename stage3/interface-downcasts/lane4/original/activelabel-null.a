@@ -1,0 +1,8 @@
+import type { ActiveLabel } from 'original-tsc-private';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: ActiveLabel; }
+function helper(value: ActiveLabel): void { console.log(String(value.name)); }
+const raw = {kind: 'box' as const, child: {name: null}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

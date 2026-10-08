@@ -91,7 +91,7 @@ func TestCheckedViewNullishRegexIdentity(t *testing.T) {
 
 func TestCheckedViewNullishCallableSignatureMutant(t *testing.T) {
 	path := filepath.Join(repository, "stage3/interface-downcasts/nullish/fixtures/callable-signature-mutant.a")
-	path, pathErr := filepath.Abs(path)
+	path, pathErr := filepath.Abs(checkedViewFixturePath(path))
 	if pathErr != nil {
 		t.Fatal(pathErr)
 	}
@@ -131,28 +131,31 @@ func TestCheckedViewNullishMapUnread(t *testing.T) {
 		})
 	}
 }
-func TestCheckedViewNullishMapReadRefusals(t *testing.T) {
+func TestCheckedViewNullishMapReads(t *testing.T) {
 	for _, variant := range []string{"null", "undefined", "both"} {
 		for _, mutation := range []string{"", "-wrong", "-opposite"} {
 			if variant == "both" && mutation == "-opposite" {
 				continue
 			}
 			t.Run(variant+mutation, func(t *testing.T) {
-				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/fixtures/map-"+variant+mutation+".a"))
-				if err != nil {
-					t.Fatal(err)
-				}
-				_, err = lowered(t, path)
+				program, path := interfaceFixture(t, "nullish/fixtures/map-"+variant+mutation)
 				truth := onNode(t, path)
-				t.Logf("Node source: exit=%d stdout=%q", truth.exitCode, truth.stdout)
-				if err == nil || !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "collection") {
-					t.Fatalf("map read escaped family refusal: %v", err)
+				native, binary := nativelyUncached(t, program)
+				for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if mutation == "" {
+						if diff := disagreement(truth, got); diff != "" {
+							t.Fatal(diff)
+						}
+					} else if got.exitCode != 70 || !strings.Contains(string(got.stderr), "node.value") {
+						t.Fatalf("map read mutant ran on: %#v", got)
+					}
 				}
-				// Refusal belongs to the helper's read, before the downstream get call.
-				if !strings.Contains(err.Error(), ":9:14:") && !strings.Contains(err.Error(), ":10:14:") {
-					t.Fatalf("refusal not at map field read: %v", err)
+				if mutation == "" {
+					if report := leaks(t, program, binary); report != "" {
+						t.Fatal(report)
+					}
 				}
-				t.Logf("caught unsupported map read: %v", err)
+				t.Logf("Node exit=%d stdout=%q, mutation=%q", truth.exitCode, truth.stdout, mutation)
 			})
 		}
 	}

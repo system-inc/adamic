@@ -35,7 +35,7 @@ func TestOptionalWideningCensus(t *testing.T) {
 		t.Fatal(err)
 	}
 	directory := filepath.Dir(configPath)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(configPath), nil, nil, osvfs.FS(), nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(filepath.ToSlash(configPath)), nil, nil, osvfs.FS(), nil)
 	if config == nil || len(diagnostics) != 0 || len(config.Errors) != 0 {
 		t.Fatalf("config diagnostics: %v %v", diagnostics, config)
 	}
@@ -66,7 +66,7 @@ func TestOptionalWideningCensus(t *testing.T) {
 	disposition := map[string]int{}
 	sites, files := 0, 0
 	for _, file := range program.GetSourceFiles() {
-		if file.IsDeclarationFile || !strings.HasPrefix(string(file.FileName()), directory+"/") {
+		if file.IsDeclarationFile || !strings.HasPrefix(file.FileName().AsString(), directory+"/") {
 			continue
 		}
 		files++
@@ -87,7 +87,7 @@ func TestOptionalWideningCensus(t *testing.T) {
 					Kind, Property, Source, Target, Text string
 					Disposition, Diagnostic              string
 				}{
-					strings.TrimPrefix(string(file.FileName()), directory+"/"), line + 1, column + 1, node.Kind.String(), found.property, checker.TypeToString(found.source), checker.TypeToString(found.target), file.Text()[position:end], "", "",
+					strings.TrimPrefix(file.FileName().AsString(), directory+"/"), line + 1, column + 1, node.Kind.String(), found.property, checker.TypeToString(found.source), checker.TypeToString(found.target), file.Text()[position:end], "", "",
 				}
 				if admission {
 					audit := &lowering{checker: checker, program: formatter, result: &ir.Program{}}

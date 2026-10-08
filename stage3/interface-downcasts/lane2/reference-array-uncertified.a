@@ -1,0 +1,10 @@
+interface Base { readonly kind: 'items' | 'other'; }
+interface Entry { readonly value: number; readonly text: string; }
+interface Items extends Base { readonly kind: 'items'; readonly values: Entry[]; }
+function items(node: Base): Items { return node as Items; }
+function entry(value: number): Entry { return {value, text: `item${value}`}; }
+interface Optional { readonly value: number; readonly text: string; extra?: number; }
+const optional: Optional = {value: 1, text: 'first'};
+const raw = {kind: 'items' as const, values: [optional]};
+items(raw).values.push(entry(2));
+console.log('written');

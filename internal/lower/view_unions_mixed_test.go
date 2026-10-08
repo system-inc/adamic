@@ -153,3 +153,17 @@ func TestMixedUnionContractPhantomBrandUsesPrimitiveBase(t *testing.T) {
 		t.Fatal("string member lost")
 	}
 }
+
+func TestMixedUnionContractPhantomVoidIsUndefined(t *testing.T) {
+	l, target, release := mixedUnionLowering(t, `type Target=void&{readonly marker:void};`)
+	defer release()
+	node := l.program.Files()[0].Statements.Nodes[0]
+	id, err := l.viewContract(node, target)
+	if err != nil || id == 0 {
+		t.Fatalf("phantom void refused: %v", err)
+	}
+	contract := l.result.ViewContracts[id-1]
+	if contract.Kind != ir.ViewUndefined || !contract.Undefined || contract.Unsupported != "" || len(contract.Fields) != 0 {
+		t.Fatalf("phantom void became an object obligation: %#v", contract)
+	}
+}
