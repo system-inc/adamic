@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.adamic.fleet-floor</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/env</string>
+		<string>python3</string>
+		<string>/Users/kirkouimet/Projects/system/adamic-gate-watch/cloud/fleet-floor.py</string>
+	</array>
+	<key>WorkingDirectory</key>
+	<string>/Users/kirkouimet/Projects/system/adamic-gate-watch</string>
+	<key>KeepAlive</key>
+	<true/>
+	<key>AbandonProcessGroup</key>
+	<true/>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>ThrottleInterval</key>
+	<integer>60</integer>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/Users/kirkouimet/Projects/ahra/node_modules/.bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+	</dict>
+	<key>StandardOutPath</key>
+	<string>/Users/kirkouimet/Projects/system/adamic-gate-logs/fleet-floor.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/kirkouimet/Projects/system/adamic-gate-logs/fleet-floor.log</string>
+</dict>
+</plist>
