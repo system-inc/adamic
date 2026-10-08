@@ -179,7 +179,7 @@ func TestCorpusPinRejectsMissingProvisionedInputs(t *testing.T) {
 		t.Fatal("provisioned input witness changed")
 	}
 	err := corpusPinError(full, actual)
-	if err == nil || !strings.Contains(err.Error(), "missing stage3/api/node_modules/typescript/package.json") || !strings.Contains(err.Error(), "Adamic: got 1402, pinned 1420") {
+	if err == nil || !strings.Contains(err.Error(), "missing stage3/api/node_modules/typescript/package.json") || !strings.Contains(err.Error(), fmt.Sprintf("Adamic: got %d, pinned %d", full.Groups["Adamic"].Count-18, full.Groups["Adamic"].Count)) {
 		t.Fatalf("short-box pin mutant survived: %v", err)
 	}
 	t.Logf("caught the 18-input provisioning mutant: %v", err)
@@ -194,6 +194,7 @@ func TestCorpusPinBeforeSampling(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Setenv("ADAMIC_GATE_CHANGED", changed)
+	total := len(corpusCases(t))
 	cases := sampledCorpusCases(t, 32)
 	found, generated := false, 0
 	for _, item := range cases {
@@ -204,7 +205,7 @@ func TestCorpusPinBeforeSampling(t *testing.T) {
 			generated++
 		}
 	}
-	if !found || generated != 34 || len(cases) >= 2496 {
+	if !found || generated != 34 || len(cases) >= total {
 		t.Fatalf("sample changed/controls/count: %v %d %d", found, generated, len(cases))
 	}
 }

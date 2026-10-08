@@ -1,10 +1,10 @@
 {
-  "count": 2496,
-  "sha256": "d783351f69ade8b7fc7ce6bd9ae3605d09f6f2f0ebfa90f8e0e1322f3aa6ebb5",
+  "count": 2610,
+  "sha256": "6f06b10daf2a61472bfc8f72e8c264a670849878cee52f78789b3918a72dde3d",
   "groups": {
     "Adamic": {
-      "count": 1420,
-      "sha256": "76acaa31409b41f9b647f34044048297f6f9330c378c678049929e7d1d99a1fd"
+      "count": 1534,
+      "sha256": "932ef2b20bf1e025d598de50385b0db23517b1fe0fa983a1db9767f08130cc1c"
     },
     "TypeScript": {
       "count": 203,
@@ -5117,12 +5117,44 @@
       "sha256": "37914e33b47564078edbd83495d67819fc6fe4182f4de73c810c66ad0fdafb7c"
     },
     {
+      "path": "stage1/cohere/lint/regex/sites.json",
+      "sha256": "e8337480d5394b69a1be38faed4114ddfb89299ec5ed4ec039559f373a1b4c3f"
+    },
+    {
+      "path": "stage1/cohere/lint/regex/table.json",
+      "sha256": "6c7be291276908ee47f1e3f2357c51bc9b38db4d5ac040033a404afddea170e4"
+    },
+    {
+      "path": "stage1/cohere/lint/regex/testdata/corpus-files.json",
+      "sha256": "94166991ecabe7f5fd1df3eec4d00498b869c6a3cb5154438573bea2f57fbe1f"
+    },
+    {
+      "path": "stage1/cohere/lint/regex/testdata/corpus.json",
+      "sha256": "222695f8b905a89222e649f1e4f6ac205e1d57f6d98d74c49cc77cc7fa1e0bf1"
+    },
+    {
+      "path": "stage1/cohere/lint/regex/testdata/shapes/census-review.json",
+      "sha256": "291ebad0370624897f9f3de331af2638b8f43fab327c9867a8d60c1d8b588522"
+    },
+    {
+      "path": "stage1/cohere/lint/regex/testdata/shapes/fixtures.json",
+      "sha256": "68346542ee550c7766c4134aff0f6552acfbf766d4406ec2a821884e5d34a7fb"
+    },
+    {
       "path": "stage1/cohere/lint/rules/adamic-no-type-predicate/mutant.json",
       "sha256": "54231b93ffaaf9ede68832d89a733456faecb29388b7cccb4bc171567d92a4a7"
     },
     {
       "path": "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.json",
       "sha256": "ee0c2be9cd36182938e62e822248e3f1360bdd557323510f8d07ee2fb856e0ab"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/base-boundary-no-global-container/mutant.json",
+      "sha256": "4b59d1b1d2e50299cc1f6518480cfbb3c90107446aea686429444f7f5d16495f"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/base-boundary-no-global-container/rule.json",
+      "sha256": "60379df2502602abae4a12dca5869a69dd19d004767bfcb716e0e264bac2aafb"
     },
     {
       "path": "stage1/cohere/lint/rules/base-consistency-no-console/mutant.json",
@@ -5133,6 +5165,26 @@
       "sha256": "095c31f7d12d2b9cd3825170737619f2d0e4fb9560bf05f2900d97eaafe21283"
     },
     {
+      "path": "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/evidence/base-declared-error-mutant-shards.json",
+      "sha256": "efe7ae0859ef40f3246d339ef8b6a4dbb71caacedfd47229d75774fb631ee027"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/mutant.json",
+      "sha256": "a7e36f7e62235aa9ea2d9ea8fd455f56e307657da795fe1c92a9f7d54bb72967"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.json",
+      "sha256": "9fed79c9a39042a64e3ac9fbfb0f237e57162fe904e4dd3ed34ab10f79a0e1c0"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/mutant.json",
+      "sha256": "580a28d2176847a3e14c92ff864ed6b9deef3c71cec04aacbcda95f8226fffcf"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.json",
+      "sha256": "2d804a5add912157f58aff6683aa63f7ef8ff12115af951ade81c4102f4e2fe6"
+    },
+    {
       "path": "stage1/cohere/lint/rules/eqeqeq/mutant.json",
       "sha256": "0a7c1f96e10c2ca1ba67a2666e71b645df2c4e6f755c4529d0e0a12b12f23d94"
     },
@@ -5141,12 +5193,132 @@
       "sha256": "fbd850759232d806b348c42f7fbf0fd719e178da2eee069ac89ce17679bd862e"
     },
     {
+      "path": "stage1/cohere/lint/rules/max-classes-per-file/mutant.json",
+      "sha256": "dfabf133dd262dd8c9f1b2e6c48f2bccbe32850fa9a47feab51e201643a7e218"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/max-classes-per-file/rule.json",
+      "sha256": "71f6eabec97b7d5046969a86683adab1be203f607bd1c3f3e573b92f1e1c326f"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/max-depth/evidence/source-hashes.json",
+      "sha256": "db3d6ad77e030f79cff557840952b2c81e457ad5aa79d45bf548737591a9b018"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/max-depth/mutant.json",
+      "sha256": "f5dd83c190ee59e1554f8a7e76b61bb04c552c8b837c0d90113f850369f9a8dc"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/max-depth/rule.json",
+      "sha256": "8b01f97cdfd33f7bbc5b23c4f780f0ec0ec075c7413a0b9492dca3a411a85aa1"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/max-nested-callbacks/mutant.json",
+      "sha256": "c51c2a27595f6c27b2151d31acec6ecc7726ba95f8edf9b6665a0c231b5641e6"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/max-nested-callbacks/rule.json",
+      "sha256": "3ffc4f69968dedeea370de9370aeb41551c74137f8ebde9dff82269d920bd485"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/mutant.json",
+      "sha256": "d7076564e58bf5b258d664203c8b9a4f1ad25c0147063c6ded7ef7c5209c9a0c"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.json",
+      "sha256": "5d6068c84fd53056aebf65293294a77093b6e09563621e006a8f68227801ad8f"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/mutant.json",
+      "sha256": "9c520f45d8a8b70089e4b0ae2b6523160ee4a760a4ebf4bea1ce3a204200d89f"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.json",
+      "sha256": "98d0e6ae9cc07d2566b41f07f73bb9ba9ee27974ed9651ecef4e7fd553ebc858"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/testdata/witness.options.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
       "path": "stage1/cohere/lint/rules/nexus-consistency-no-enum/mutant.json",
       "sha256": "e000e1f2228b7991c814f02d205e7dca367d3139464d3a1dcc12160539b74809"
     },
     {
       "path": "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.json",
       "sha256": "30a77dcad9bd68bb40cb28ef5aa406f1dbe4c009ee9bcdbf50e40e49a5c2e489"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-for-in/evidence/files.json",
+      "sha256": "62a163a9b1d7b47fda784b05d559802444c3bde390e232d023d3f25e4a8da83f"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-for-in/mutant.json",
+      "sha256": "dd127c75b87e2ac9197360ca3a543576238a534a9206e0eaceb1b2709d7fed9b"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.json",
+      "sha256": "7c134fe2ccd1f9609b333654455e6171f178fab2183fe1fe7b04b73be60bfaa1"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-for-in/testdata/empty-options.options.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/coverage.json",
+      "sha256": "86392d3031b2ff429c95a96d556ac9bba9d06c1dae827e878fed9bf8fbb7fdf5"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/mutant.json",
+      "sha256": "5e07e1034f32a9fa5997fcdf4890279fcbf13008743c8d50c00110a5123804b5"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.json",
+      "sha256": "9aa329dda83f0c2a85e47818361980fe8098c0caacce253c60690a39cbbee658"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/testdata/threshold.options.json",
+      "sha256": "90c4480e22768e47e48bb43ba468a3bf19732450be77786161838da13c9eb53b"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/mutant.json",
+      "sha256": "e3b167a2311f6a428b0f89077a965923b6fa299e78ed8139e1f2e19bf2be1ab7"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.json",
+      "sha256": "88fb485a8ccc592b4f40b11cb5d69ac9ffd0ebc44dde9acb9a7ab0e1cb587b65"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/testdata/witness.options.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/mutant.json",
+      "sha256": "3252ba903ac7919613722dcb3b07b0bc3fd3855eca3e4ab85dcc996e6e74f577"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.json",
+      "sha256": "e1bb898a09446a8cb2a866e828e014b24e8bc62fd8df34d5169edb36f777ac6e"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/testdata/allow.options.json",
+      "sha256": "92fc576153e24c4d6e820baee29991eb8e0deada6b101f75159567d3125799ea"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/mutant.json",
+      "sha256": "b2ea20b484bce510b331bba6f6e7dfd1c8877c2adb4c47c76b89eaaeb9356c09"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.json",
+      "sha256": "fc35061e5b5346c0b7025aaf63276061faaa0b67921aa4daaa490c3bea32adcc"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/mutant.json",
+      "sha256": "434fefef4ec30a583f3c1a88b98f77dd8dd8f508de7b2c49182e705647703970"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.json",
+      "sha256": "e661cb8c2abfdd4014546d8aebd7fa41268ecd583b6a4303837540fc0d95a6f1"
     },
     {
       "path": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/mutant.json",
@@ -5171,6 +5343,22 @@
     {
       "path": "stage1/cohere/lint/rules/no-bitwise/rule.json",
       "sha256": "8710c338d42fd0ba6df30dec5eb1061e5d714c2385e08a6e1c3fe55285b36dd5"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-bitwise/testdata/allowed.options.json",
+      "sha256": "b05dce5f59da22f18e249b91cade35e758ab4c76ea9e0eda4fd439044b5cdb64"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-caller/evidence/options-overlay.json",
+      "sha256": "b824ad88961d93bd5a13c1f119700308a1ccb0707ad997d1e908be96321e011d"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-caller/mutant.json",
+      "sha256": "3c88d41916a26c607911dbbda8e0cf873f88d7468f826eeacecb0c58df509132"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-caller/rule.json",
+      "sha256": "498bc874b8846f2017ecd0b4601730db4288fc275c200ad6c2569f377bbdab34"
     },
     {
       "path": "stage1/cohere/lint/rules/no-continue/mutant.json",
@@ -5205,6 +5393,34 @@
       "sha256": "836b40a45b8119b1fd8b57cc737c6ae3fdff4ba76bd97847f1aefc732c1c509e"
     },
     {
+      "path": "stage1/cohere/lint/rules/no-empty-character-class/mutant.json",
+      "sha256": "12f76198f379858cde237182d60782dabd97742ec3f45bf0fee2752ed36857f4"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-empty-character-class/rule.json",
+      "sha256": "7198f50394de45abe0cac5337b5bc5d9deec871adf4f28dbff77a2b6f802a025"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-empty-pattern/mutant.json",
+      "sha256": "403865ed37cbda0fab4ad26f4009968815c94514d3d30821d7fcc5e89dd35a81"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-empty-pattern/rule.json",
+      "sha256": "2bcd5da5ae909772c1a9276a7c41c9adc7a25ac3ef954ae3edac83f806a05f3f"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-empty-static-block/evidence/logs.json",
+      "sha256": "4560a477897112b66e2d1059e5994dc253421e14f8bf69cd0600bcaed98269d2"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-empty-static-block/mutant.json",
+      "sha256": "abf65fc95ee8e6055302b9c4273df6898ff81ea54af47509543e3a9915412494"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-empty-static-block/rule.json",
+      "sha256": "caf8209a149658ffcf5db2d0762eac5eccd4f08b14fcb7eb5507df78f38ded91"
+    },
+    {
       "path": "stage1/cohere/lint/rules/no-empty/mutant.json",
       "sha256": "7a4827eca271bf75327f81910fc71b00deef78cb34eed05534b49abdfeb84df0"
     },
@@ -5213,12 +5429,64 @@
       "sha256": "17919bf5b1e8d18e63b26a867d93f36b0d08bf28344e7d6b898b245028d71310"
     },
     {
+      "path": "stage1/cohere/lint/rules/no-ex-assign/mutant.json",
+      "sha256": "d703256a6f590845da469b8c448a05932f6ca0f705792f7a8cad450e788875ad"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-ex-assign/rule.json",
+      "sha256": "bd4a7dcc4913d509b049c0b73610e224d4e524e6401170eb677798545386ef67"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-iterator/evidence/index.json",
+      "sha256": "1896b68ca429bf9fd550d3412aa74ea9a70e2beb727622c55c844264c5908e50"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-iterator/mutant.json",
+      "sha256": "9da6b9fc264584e3ddc3dfca1cdbd7fb34097ba42b959bab8b368327880dae5c"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-iterator/rule.json",
+      "sha256": "d01a220cd8b537d72ead01e68d2c997976eda34195a0942aa68d3333a58ce5d4"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-iterator/testdata/witness.options.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
       "path": "stage1/cohere/lint/rules/no-labels/mutant.json",
       "sha256": "9c5554b2f3d888894a94366da9103df9cdb11e88909f15af255c6d6ff0c13811"
     },
     {
       "path": "stage1/cohere/lint/rules/no-labels/rule.json",
       "sha256": "3ddb2af44cb628b9b5400b283f206500745a8d8005bad8b0c7848adcad2b503b"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-multi-assign/evidence/hashes.json",
+      "sha256": "5158fec75804a323bd69c529eedfc63afc5e9afadfbfc986e879caa0edc80d44"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-multi-assign/evidence/report-id-mutant.json",
+      "sha256": "1a24c343a14d12901678f2a1f05624813cec2b92ce400e8725c6e7a9e1371ec1"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-multi-assign/evidence/semantic-options-mutant.json",
+      "sha256": "92b0f9d396a50a9c2831292f0030741941b7c4bd1e15bbb04cfce768b59fc0d4"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-multi-assign/evidence/upstream-tests.json",
+      "sha256": "db5a983c851e28691c8b8c418566c007de422ee6a84741d431f8adb04c9ec3c3"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-multi-assign/mutant.json",
+      "sha256": "92b0f9d396a50a9c2831292f0030741941b7c4bd1e15bbb04cfce768b59fc0d4"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-multi-assign/rule.json",
+      "sha256": "ba632462e0aa398a69e4a2fba8d3f5171974599407d5dbe4ecba3f47cc6787f2"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-multi-assign/testdata/ignore-non-declaration.options.json",
+      "sha256": "9e3a7a846af827ef220141d46a97e70c9c736d451df9509ce6b9ae2ec623f990"
     },
     {
       "path": "stage1/cohere/lint/rules/no-negated-condition/mutant.json",
@@ -5253,12 +5521,40 @@
       "sha256": "c3101ef34fc4dec72909c9cc5473c05a060a102f30c70d9142c3461a0273314d"
     },
     {
+      "path": "stage1/cohere/lint/rules/no-proto/mutant.json",
+      "sha256": "e477ea818224ad2ad24b3e2e035ec72b5dd1163e5a299331d6b7f5627d1b2e1b"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-proto/rule.json",
+      "sha256": "37ff9277187286c684d3c685ba443dbe4b565abaa2cd3938caaab8e8aeaf46e0"
+    },
+    {
       "path": "stage1/cohere/lint/rules/no-return-assign/mutant.json",
       "sha256": "ff335cf3c6f6c270a4ed0a2169bfd0a16d3a50ca23d6f50164e5304ded7fb026"
     },
     {
       "path": "stage1/cohere/lint/rules/no-return-assign/rule.json",
       "sha256": "b53d120c817ac24ccec01816dd2ae885a4fc1644c9d29c0e5a29edf81e7e473e"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-script-url/mutant.json",
+      "sha256": "ce32339df42646a6156cba9426f9819144d0ad55c85e557d6f27bd6c9f03493a"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-script-url/rule.json",
+      "sha256": "886902a32aa5eb408678f886950ecf6f2cca97b161121367d16607024843163f"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-script-url/testdata/witness.options.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-self-compare/mutant.json",
+      "sha256": "cfb32e2f7661c4e6149ca9d863b5aa933bfc3fcf824509c2d116abc86bfef254"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-self-compare/rule.json",
+      "sha256": "98da58927899869b00f46896b2b236dc351e8c28097056d15852b76bab513b78"
     },
     {
       "path": "stage1/cohere/lint/rules/no-sequences/mutant.json",
@@ -5285,6 +5581,22 @@
       "sha256": "16f117ec7511df711398a5f7979da539ddb30e756f00755aa43be7325eac7423"
     },
     {
+      "path": "stage1/cohere/lint/rules/no-underscore-dangle/evidence/sources.json",
+      "sha256": "358a6fe165e35758a9d5ca2e5b30d4a3441611590bff98026ed07ed582a38517"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-underscore-dangle/mutant.json",
+      "sha256": "105fd4d8e9571220ebe5be8a413daf77a288601a971779e6c93b48c5870e67c0"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-underscore-dangle/rule.json",
+      "sha256": "d2070d3927df822d48fcf128eaf8dd60d9eb77a73344c13f402ee505933ecf01"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-underscore-dangle/testdata/constructor-property.options.json",
+      "sha256": "3ab85ae4d4a55db40c824448a2a99112691b00abc6453c9333e1ebc34afbf368"
+    },
+    {
       "path": "stage1/cohere/lint/rules/no-unexpected-multiline/mutant.json",
       "sha256": "e17ca414f353b39b7738e4b1ae5cf41f173036ac9560b4e8c4c7a90d2c847dde"
     },
@@ -5301,12 +5613,80 @@
       "sha256": "f00d8b1cbcf477376f4cca6520cde9f111e8bf6d74c99acc5855a299f5010357"
     },
     {
+      "path": "stage1/cohere/lint/rules/no-unsafe-finally/mutant.json",
+      "sha256": "213b5aa86a99e38380da6b14a621d72cca0a962f7a5744fa6c6b749fa97ee5ce"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-unsafe-finally/rule.json",
+      "sha256": "a96df4085ffd70e4bb7dd9b062acd9dfc73be4f8106db3e5a7891514d6f82bc8"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-unsafe-finally/testdata/escaping.options.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-unsafe-negation/evidence/sources.json",
+      "sha256": "9e04d06004d96733026adb9ccf8261ec32b13c43b28b4159c00489cf45b137f1"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-unsafe-negation/mutant.json",
+      "sha256": "b8df14ebf98e57c810830b261b70dcc1d9283efad7c63cb87202bf9b6d58fe2e"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-unsafe-negation/rule.json",
+      "sha256": "b60bb3e4cf8d5ad1ada98861b41f555d70102729619ccbc2d4c252db8ab6abc7"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-unsafe-negation/testdata/ordering.options.json",
+      "sha256": "5f6b899b5b120996aad4dc57736f31d7ce027123281259975e3295f4d4684741"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/evidence/sources.json",
+      "sha256": "4571630b40614d1467185ef57efc0d12cd33fc2fadcd75c8ee5d20074d45228e"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/mutant.json",
+      "sha256": "adbf75affb467226b03fc44975c2708923b68c0de97ae05c51f7e74119d678f0"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.json",
+      "sha256": "0cd9de2c2bf8c23c67162e4c714ae0486f04a70542bbe24fdc83de218011d7fd"
+    },
+    {
       "path": "stage1/cohere/lint/rules/no-unused-private-class-members/mutant.json",
       "sha256": "d5dd6a3e283e204d4e4df2f99841cda4bcc961b4d6c72e8058dc9b1e451d3e79"
     },
     {
       "path": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.json",
       "sha256": "50945e04b7c736d8a2e2a0d995259f113f3d12d5e4e6e256fd5aa8a63760c35e"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-useless-catch/evidence/inputs.json",
+      "sha256": "f95d8f7573c262a23b05ba971d32be6e62e3ccb0a0f940773e55ada6050af452"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-useless-catch/evidence/streams.json",
+      "sha256": "03ad06f71f007de3d978ba5ce64da9f5cf0f17bd66f1d0a7e74a13c6673e06aa"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-useless-catch/evidence/timing.json",
+      "sha256": "aca197a6f3cf71ca610326c5a30832a97c020f1a4d555e18703defb9556ffc9e"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-useless-catch/mutant.json",
+      "sha256": "cb6333ebe030f6ec09338f64f1d4e401cfda5e32b5f81f27451ac0dafb378033"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-useless-catch/rule.json",
+      "sha256": "51e32b8095666838925ba0e412afae441a486633a44cff100f5db8495c21b31c"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-useless-concat/mutant.json",
+      "sha256": "a2959148d92cc54da10735f4357eddcbbade4b2c3a30e677dc94507f65c7e64a"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/no-useless-concat/rule.json",
+      "sha256": "a1e72183d1098d0c5d405e078f390f49999812a61da298a4a6d412c7f606be60"
     },
     {
       "path": "stage1/cohere/lint/rules/no-useless-constructor/mutant.json",
@@ -5339,6 +5719,30 @@
     {
       "path": "stage1/cohere/lint/rules/no-with/rule.json",
       "sha256": "97265b52b39ceb1885dccf60b8dcf7b9536590da2f5510414e756c80629e0cec"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/prefer-destructuring/evidence/mutants.json",
+      "sha256": "12d1aa964a79f373de28bfdbf8cefe426fc654e36f6811d8f72e33629fac14e4"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/prefer-destructuring/evidence/source-sha256.json",
+      "sha256": "926fc5b5add87fa354471cd346c1c445076444276277a90bb1b0c14fe03cab8b"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/prefer-destructuring/evidence/upstream-tests.json",
+      "sha256": "cd13850e4f4ae1c578cc213aaf542ddf1638df70fe08ccef4a2a378c2d04f37d"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/prefer-destructuring/mutant.json",
+      "sha256": "c1721bd3ae58c030699599c78364adc297fa689efedae7c17d3ffc6e58665fc3"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/prefer-destructuring/rule.json",
+      "sha256": "b4e516b9fcb2730c4883c32e692368914ff3e97c3728ca3c6242245e40a23c57"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/prefer-destructuring/testdata/renamed.options.json",
+      "sha256": "b5887eaf4038a2b2fbab82fffb0d79c2d518e8c92cd71fa84678fce33e227df1"
     },
     {
       "path": "stage1/cohere/lint/rules/prefer-template/mutant.json",
@@ -5397,12 +5801,56 @@
       "sha256": "f080ab7fbbe834e0de7b6a723ba279a520db483553bdd0fb1f13316827f2fccf"
     },
     {
+      "path": "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/mutant.json",
+      "sha256": "726864ef3cf7f17f3a8a37f14d99e6ff8e27ad3a21fc88e896f3b6a368ada076"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.json",
+      "sha256": "8d5ee490a35d37c930ee1830f355ac313af45c71ad9f319d8765f7457fad05d4"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-init-declarations/evidence/mutants.json",
+      "sha256": "bbfb6da3a88f0cd9306226828237a902e51bf57ffae34a72cf77c0579b46a00f"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-init-declarations/evidence/provenance.json",
+      "sha256": "951f080876eecd15727578cd727e353f69187e1976e8e0e932c8bff70f229922"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-init-declarations/mutant.json",
+      "sha256": "c84b9fb687eefad896b628a56050926a9139a15c841dac0bc064a3dc663acc22"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-init-declarations/rule.json",
+      "sha256": "f33fd111c72fe6a070c2e4a44ef92d96034e148a062a55c5d6a39914fe8259eb"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-init-declarations/testdata/always.options.json",
+      "sha256": "df111e629e84eb665b1cde63f1a99d7f2b1c8a6cd7d65dd8d5f525b79755ec35"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-init-declarations/testdata/ignore-loop.options.json",
+      "sha256": "3a1158a7cf76e5cd2d15e2780b56a8aa802d11fed7f7d39777f06dc91a39f05d"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-init-declarations/testdata/never.options.json",
+      "sha256": "7d27fb3b8c5d8759ab0187c384c6e7ccd91e64f3dde3a9b4f8dc6e3ceb1853dd"
+    },
+    {
       "path": "stage1/cohere/lint/rules/typescript-method-signature-style/mutant.json",
       "sha256": "8fb7b45238128a849ee58742ba66c599904f1b26503468f0cf336624ddda3e03"
     },
     {
       "path": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.json",
       "sha256": "ae8ed8e4584de8888f0dba37eba50f56e5c553d06e9cdfff85ab4febbed60000"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-no-this-alias/mutant.json",
+      "sha256": "bcc8d41fc69c7210b273fb9d1b001d4aa310c6e00d1d34a9f5c9c8bd8aec7158"
+    },
+    {
+      "path": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.json",
+      "sha256": "b4432f48869233bb138dd6f31880bfda8de57ce9822884f67c44d7899fc60fef"
     },
     {
       "path": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/mutant.json",
@@ -5435,6 +5883,14 @@
     {
       "path": "stage1/cohere/lint/rules/vars-on-top/rule.json",
       "sha256": "418e4aff8a3542659809b682a0252e274b3ecec06a2348fe187dec26f7661ce5"
+    },
+    {
+      "path": "stage1/cohere/lint/validation/native-canary/catches-before-after.json",
+      "sha256": "900f66e094d65f2e1efa990b4ec75d8252560d693e93696018ccdf637d51a996"
+    },
+    {
+      "path": "stage1/cohere/lint/validation/native-canary/wall.json",
+      "sha256": "04164762f881b844e5dd05a467d5d4fa5bf64b9c45c7349e730f0f5eac49e047"
     },
     {
       "path": "stage1/cohere/markdownblocks/fixture_speed_evidence/floor/measurements.json",
