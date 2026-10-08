@@ -167,6 +167,11 @@ type iterationPlan struct {
 
 func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	source := l.concrete(l.checker.GetTypeAtLocation(where))
+	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		if constraint := l.checker.GetBaseConstraintOfType(source); constraint != nil && isClassInstance(constraint) {
+			source = constraint
+		}
+	}
 	entry := l.iteratorMember(source)
 	if entry == nil {
 		return nil, nil

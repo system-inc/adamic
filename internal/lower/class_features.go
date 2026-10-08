@@ -12,6 +12,9 @@ import (
 // declares it (privateName), the same spelling fieldName gives every read and write of it, so a
 // definition and its uses always agree, whichever instantiation or static object holds it.
 func (l *lowering) memberKey(name *ast.Node, class int) string {
+	if name.Kind == ast.KindComputedPropertyName {
+		return iteratorSlot
+	}
 	if name.Kind == ast.KindPrivateIdentifier {
 		if declaring := l.declaringClass(name); declaring != nil {
 			return l.privateName(name.Text(), declaring)

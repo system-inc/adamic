@@ -6,7 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// A class method is statically called; own literal methods and arrow fields are closures with
+// Class methods use virtual slots; own literal methods and arrow fields are closures with
 // different argument layouts. A structural view must not hide a different layout.
 func memberConvention(member *ast.Symbol) *ast.Node {
 	if member == nil || len(member.Declarations) == 0 {
@@ -115,7 +115,10 @@ func (l *lowering) iterationOrigin(node *ast.Node, members []*ast.Symbol, closeP
 	}
 	node = ast.SkipParentheses(node)
 	switch node.Kind {
-	case ast.KindObjectLiteralExpression, ast.KindNewExpression, ast.KindThisKeyword:
+	case ast.KindThisKeyword:
+		// A method receiver can be a subclass, including one with a new close method.
+		return false
+	case ast.KindObjectLiteralExpression, ast.KindNewExpression:
 		if node.Kind == ast.KindObjectLiteralExpression {
 			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 				if property.Kind == ast.KindSpreadAssignment {
@@ -396,7 +399,7 @@ func (l *lowering) iterationFactoryReturnsReceiver(member *ast.Symbol) bool {
 		}
 		if ast.IsIdentifier(node) {
 			symbol := l.symbol(node)
-			if symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+			if symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration && symbol.Declarations[0].Parent != nil && symbol.Declarations[0].Parent.Flags&ast.NodeFlagsConst != 0 {
 				return receiver(symbol.Declarations[0].AsVariableDeclaration().Initializer, depth+1)
 			}
 		}
