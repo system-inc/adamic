@@ -336,8 +336,7 @@
     "present": "[\"7\"]",
     "absent": "[]",
     "nullPresent": "[null]",
-    "blocked": true,
-    "refusal": "an indexed presence check on nullable array elements (the lookup needs to retain its presence slot)"
+    "blocked": false
   },
   {
     "id": "D170",

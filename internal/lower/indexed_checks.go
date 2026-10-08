@@ -9,8 +9,8 @@ import (
 // checkedIndexedRead guards the lookup already emitted by ArrayIndex/StringIndex.
 // Coalesce evaluates that lookup once and stops if its presence result is false;
 // it is shared by the native and JavaScript backends. Observations of undefined
-// retain their value. A null element needs a separate presence slot and refuses
-// here until that representation is carried through this check.
+// retain their value. Migrated null sentinels are values, distinct from the
+// absent reference NULL. Legacy nullable elements still need a separate slot.
 func (l *lowering) checkedIndexedRead(node *ast.Node, value ir.Expression) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
 	if !l.program.RequiresIndexedPresenceChecks() || node.Kind != ast.KindElementAccessExpression || l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(node))) {
@@ -27,7 +27,7 @@ func (l *lowering) checkedIndexedRead(node *ast.Node, value ir.Expression) (ir.E
 	switch index := lookup.(type) {
 	case ir.ArrayIndex:
 		arguments := l.typeArguments(l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))
-		if l.includesNull(l.concrete(l.checker.GetTypeAtLocation(node))) || len(arguments) > 0 && l.includesNull(l.concrete(arguments[0])) {
+		if !index.Element.UsesNullSentinel() && (l.includesNull(l.concrete(l.checker.GetTypeAtLocation(node))) || len(arguments) > 0 && l.includesNull(l.concrete(arguments[0]))) {
 			return nil, l.notYet(node, "an indexed presence check on nullable array elements (the lookup needs to retain its presence slot)")
 		}
 		if index.Element == ir.Union || index.Element == ir.Weak {
@@ -44,5 +44,5 @@ func (l *lowering) checkedIndexedRead(node *ast.Node, value ir.Expression) (ir.E
 		return nil, l.notYet(node, "an indexed presence check for this representation")
 	}
 	message := "indexed read is absent: " + l.program.Where(node)
-	return ir.Coalesce{Value: lookup, Panic: ir.StringConstant{Index: l.constant(message)}, Of: of}, nil
+	return ir.Coalesce{UndefinedOnly: true, Value: lookup, Panic: ir.StringConstant{Index: l.constant(message)}, Of: of}, nil
 }

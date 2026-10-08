@@ -327,3 +327,30 @@ Project .ts nullish ==/!= with a null operand is lowered explicitly; .a keeps
 its existing loose-equality refusal. Indexed-presence remains the next step:
 D151 now reaches the later nullable indexed-check refusal, pinned in sites.json.
 The guard implementation and D151 proof are not claimed by this step.
+
+
+## Nullable strings, step 2
+
+Representation step pushed as eff7e8e9. Indexed checks now admit sentinel-backed
+nullable string arrays. Their Coalesce IR sets UndefinedOnly, so native tests
+NULL alone and JS uses the existing adamicDefined helper (=== undefined), not
+JavaScript's nullish ?? operator. Ordinary ?? still treats both null and
+undefined as missing. Null is an in-range value, not an absence.
+
+`TestNullableStringPresenceGuard` runs independent [null], ["ma" + "de"] and []
+programs. Source Node prints the three equality observations, typeof, String()
+and direct console output. Present cases match Node in JS, native release and
+ASan/UBSan. Absent cases stop in all three with exit 70, empty stdout and exact
+named site stderr. IR identifies precisely one indexed-presence check. Erasing
+that one native panic builds and runs in release and sanitized modes, then exits
+0 with Node's undefined observations; the named-stop assertion catches both.
+
+D151's existing witness now also passes string, null, absent, explain and
+sanitized erase-guard cases. Its hole control remains an explicit constructor
+refusal. To keep the manifest accurate as soon as support is enabled, D151 is
+marked unblocked in this step; the next step expands its observations.
+
+Commands: focused guard suite (1.613s), focused D151 witness (7.347s) and
+`go test ./stage3/stricter-options -count=1 -timeout 5m` (5.778s), all pass.
+Logs are committed as nullable-step2*.log. Current totals: 23 dense rows proven,
+4 record rows blocked (D119, D129, D130, D131), 23 hole variants blocked.

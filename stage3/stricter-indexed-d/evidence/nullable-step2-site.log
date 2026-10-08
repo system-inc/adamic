@@ -1,0 +1,18 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D151
+=== RUN   TestLedgerWitnesses/D151/present
+    witness_test.go:197: PRESENT D151 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D151/absent
+    witness_test.go:195: PROVEN D151 read=map.sourcesContent[raw.sourceIndex]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D151/hole
+    witness_test.go:119: HOLE BLOCKED D151 array of string or null: /tmp/adamic-gate/TestLedgerWitnessesD151hole719310325/001/D151.ts:1:79: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D151/null
+    witness_test.go:197: PRESENT D151 matches source Node in release/sanitized and JS
+--- PASS: TestLedgerWitnesses (7.34s)
+    --- PASS: TestLedgerWitnesses/D151 (2.27s)
+        --- PASS: TestLedgerWitnesses/D151/present (0.63s)
+        --- PASS: TestLedgerWitnesses/D151/absent (0.77s)
+        --- PASS: TestLedgerWitnesses/D151/hole (0.22s)
+        --- PASS: TestLedgerWitnesses/D151/null (0.64s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	7.347s
