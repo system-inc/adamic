@@ -262,14 +262,44 @@ func TestCheckedViewIntersectionRecursiveDemand(t *testing.T) {
 			t.Fatal(difference)
 		}
 	}
-	readPath, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane7/recursive-read.a"))
-	if err != nil {
-		t.Fatal(err)
+	for _, test := range []struct{ name, diagnostic string }{
+		{"recursive-good", ""}, {"recursive-absent", ""}, {"recursive-optional-absent", ""}, {"recursive-null-root-absent", ""},
+		{"recursive-null-root-wrong", "field read failed: view.value.next.count is not a number; expected number, found boolean"},
+		{"recursive-optional-root", "field read failed: view.value.next.count is not a number; expected number, found boolean"}, {"recursive-literal-good", ""},
+		{"recursive-literal-wrong", "field read failed: view.value.next.mode expected \"a\\0b\" | \"c\", found string a"},
+		{"recursive-number-literal", "field read failed: view.value.next.code expected 1 | undefined, found number 2"},
+		{"recursive-boolean-literal", "field read failed: view.value.next.enabled expected true | undefined, found boolean false"},
+		{"recursive-read", "field read failed: view.value.next.count is not a number; expected number, found boolean"},
+		{"recursive-deep-wrong", "field read failed: view.value.next.next.next.count is not a number; expected number, found boolean"},
+		{"recursive-missing", "field read failed: view.value.next.count is not initialized; expected number, found missing"},
+		{"recursive-object-wrong", "field read failed: view.value.next is not a Link | undefined; expected Link | undefined, found boolean"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			program, path := interfaceFixture(t, "lane7/"+test.name)
+			if got := onNode(t, path); got.exitCode != 0 || string(got.stdout) != "true\n" {
+				t.Fatalf("Node: %#v", got)
+			}
+			if kind := os.Getenv("ADAMIC_INTERSECTION_RECURSIVE_MUTANT"); kind != "" && (test.name == "recursive-read" || kind == "optional" && test.name == "recursive-optional-root" || kind == "literal-mode" && test.name == "recursive-literal-wrong" || kind == "literal-code" && test.name == "recursive-number-literal" || kind == "literal-enabled" && test.name == "recursive-boolean-literal") {
+				intersectionRecursiveMutant(t, program, kind)
+			}
+			want := run{stdout: []byte("true\n")}
+			if test.diagnostic != "" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: " + test.diagnostic + "\n")}
+			}
+			actual, binary := nativelyUncached(t, program)
+			if want.exitCode == 0 {
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Errorf("%s; got %#v", difference, got)
+				}
+			}
+		})
 	}
-	_, err = lowered(t, readPath)
-	if err == nil || !strings.Contains(err.Error(), "field value with unsupported recursive intersection payload") {
-		t.Fatalf("recursive demand must refuse, got %v", err)
-	}
+
 }
 
 func TestCheckedViewIntersectionSelectedArms(t *testing.T) {
@@ -285,7 +315,7 @@ func TestCheckedViewIntersectionSelectedArms(t *testing.T) {
 			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
 				t.Fatal("Node: " + difference)
 			}
-			if kind := os.Getenv("ADAMIC_INTERSECTION_ARM_MUTANT"); kind != "" && test.name == "leading-access-wrong" {
+			if kind := os.Getenv("ADAMIC_INTERSECTION_ARM_MUTANT"); kind != "" && (test.name == "leading-access-wrong" || kind == "tag" && test.name == "leading-access-unknown-tag") {
 				intersectionArmMutant(t, program, kind)
 			}
 			want := run{stdout: []byte("true\n")}
@@ -313,6 +343,18 @@ func intersectionArmMutant(t *testing.T, program *ir.Program, kind string) {
 	changed := false
 	for i := range program.ViewContracts {
 		c := &program.ViewContracts[i]
+		if kind == "tag" && c.IntersectionTag != "" {
+			arm := &program.ViewContracts[c.Members[0]-1]
+			for j, f := range arm.Fields {
+				if f.Name == c.IntersectionTag {
+					child := program.ViewContracts[f.Contract-1]
+					child.Allowed = append(append([]ir.ViewLiteral(nil), child.Allowed...), ir.ViewLiteral{Of: ir.Number, Number: 999})
+					arm.Fields[j].Contract = ir.ViewContractID(len(program.ViewContracts) + 1)
+					program.ViewContracts = append(program.ViewContracts, child)
+					return
+				}
+			}
+		}
 		if kind == "skip" && c.IntersectionTag != "" {
 			for _, member := range c.Members {
 				arm := &program.ViewContracts[member-1]
@@ -349,5 +391,56 @@ func intersectionArmMutant(t *testing.T, program *ir.Program, kind string) {
 	}
 	if !changed {
 		t.Fatal("arm mutant found no obligation")
+	}
+}
+
+func intersectionRecursiveMutant(t *testing.T, program *ir.Program, kind string) {
+	t.Helper()
+	changed := false
+	for i := range program.ViewContracts {
+		c := &program.ViewContracts[i]
+		if kind == "optional" && c.Intersection {
+			c.Intersection = false
+			changed = true
+		}
+		if kind == "canonical" && c.ObjectPresent != 0 {
+			c.ObjectPresent = 0
+			changed = true
+		}
+		if kind == "skip" && c.IntersectionRecursive {
+			c.Fields = nil
+			changed = true
+		}
+		if strings.HasPrefix(kind, "literal-") {
+			for _, field := range c.Fields {
+				if field.Name == strings.TrimPrefix(kind, "literal-") {
+					program.ViewContracts[field.Contract-1].Allowed = nil
+					changed = true
+				}
+			}
+		}
+		if c.ObjectPresent == 0 {
+			continue
+		}
+		target := &program.ViewContracts[c.ObjectPresent-1]
+		if kind == "nested" {
+			target.Fields = nil
+			changed = true
+		}
+		if kind == "shape" {
+			for j, f := range target.Fields {
+				if f.Name == "count" {
+					child := program.ViewContracts[f.Contract-1]
+					child.Of = ir.Boolean
+					child.Name = "boolean"
+					target.Fields[j].Contract = ir.ViewContractID(len(program.ViewContracts) + 1)
+					program.ViewContracts = append(program.ViewContracts, child)
+					changed = true
+				}
+			}
+		}
+	}
+	if !changed {
+		t.Fatal("recursive mutant found no obligation")
 	}
 }

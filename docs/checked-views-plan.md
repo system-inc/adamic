@@ -1197,3 +1197,28 @@ wiring restrictions for those named hooks. The integration worker reconciles
 each overlapping hunk individually, preserving all refusals and Node agreements.
 Lanes still consume other lanes through codex/views-integration; a hook or
 component alone is not evidence of complete source admission.
+
+
+Lane 7 recursive hook group, October 8: IR IntersectionRecursive selects the
+lane-owned recursive object walker. ObjectPresent in optional descriptors points
+to their completed canonical object; view_contracts.go sets this link when copying
+a present object descriptor. Lane-owned IR RecursiveIntersectionObjects emits
+only the graph reachable from this read. Native/runtime/adamic.h includes the
+new owned view_intersections_recursive.h; its C walker reads each combined field
+through shared presence/readiness/physical-type validation, checks literals,
+recurses with a full field path and tracks (object, contract) active pairs.
+Paths are explicitly allocated and freed; successful native fixtures pass leak
+checks. JavaScript uses the same descriptor obligations and active-pair rule.
+
+Two further minimal shared hooks, native/view_nullish.go and
+javascript/view_nullish.go, call viewIntersectionNullishRead after physical
+nullish admission. A present optional or null-allowing intersection must retain
+its payload checks. The new optional-root test caught the former bypass in both
+backends. Null and undefined controls remain handled by their owning lane.
+
+Plain recursive object/scalar intersections are now supported. Recursive union,
+array, callable, nullable descendant and nominal payloads remain pending or lazy
+unsupported obligations at descendant reads. Cyclic allocated source programs
+are not claimed as covered. Reduced recursive fixtures do not decrement full
+upstream candidate counts: 17 pairs / 66 reads remain. Date remains October 11,
+2026, 23:00 UTC. Original leading tsc witness spans are in the prior group.

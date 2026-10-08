@@ -18,6 +18,7 @@ func (e *emitter) nullishViewField(property ir.Property) string {
 		}
 		e.line("if (%s != NULL && %s != &adamic_null && !(%s)) adamic_nullish_failure(%s, %s, %s);", value, value, strings.Join(tests, " || "), cString(property.View), cString(property.ViewType), value)
 	}
+	e.viewIntersectionNullishRead(property, value)
 	if property.Of == ir.Union {
 		return value
 	}

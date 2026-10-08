@@ -151,6 +151,11 @@ func (l *lowering) viewIntersectionReadFamily(id ir.ViewContractID, target *chec
 			}
 		}
 	}
+	if root.Intersection && l.recursiveIntersectionPayload(target) && l.recursiveIntersectionSupported(id, map[ir.ViewContractID]bool{}) {
+		l.result.ViewContracts[id-1].Unsupported = ""
+		l.result.ViewContracts[id-1].IntersectionRecursive = true
+		return ""
+	}
 	if !root.Intersection {
 		return ""
 	}
@@ -341,4 +346,32 @@ func (l *lowering) viewIntersectionUnionTagCandidate(id ir.ViewContractID, eligi
 		return ""
 	}
 	return l.viewIntersectionUnionTag(id)
+}
+
+// Runtime recursion uses canonical optional descriptors, never a reservation copy.
+// Nullable, union, array and callable recursive payloads remain demand refusals.
+func (l *lowering) recursiveIntersectionSupported(id ir.ViewContractID, seen map[ir.ViewContractID]bool) bool {
+	c := l.result.ViewContracts[id-1]
+	if c.ObjectPresent != 0 {
+		return l.recursiveIntersectionSupported(c.ObjectPresent, seen)
+	}
+	if seen[id] {
+		return true
+	}
+	seen[id] = true
+	if c.Unsupported != "" && c.Unsupported != "recursive intersection payload" {
+		return true
+	} // descendant remains lazy
+	if c.Kind == ir.ViewScalar {
+		return c.Of != ir.Union
+	}
+	if c.Kind != ir.ViewObject || c.Nominal != "" {
+		return false
+	}
+	for _, f := range c.Fields {
+		if !l.recursiveIntersectionSupported(f.Contract, seen) {
+			return false
+		}
+	}
+	return true
 }

@@ -1,0 +1,35 @@
+=== RUN   TestCheckedViewIntersectionRecursiveDemand
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-good
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-absent
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-optional-absent
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-absent
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-wrong
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-optional-root
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-literal-good
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-literal-wrong
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-number-literal
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-boolean-literal
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-read
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-deep-wrong
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-missing
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-object-wrong
+--- PASS: TestCheckedViewIntersectionRecursiveDemand (6.45s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-good (0.44s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-absent (0.41s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-optional-absent (0.39s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-absent (0.52s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-wrong (0.51s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-optional-root (0.42s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-literal-good (0.44s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-literal-wrong (0.40s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-number-literal (0.40s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-boolean-literal (0.44s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-read (0.59s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-deep-wrong (0.42s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-missing (0.42s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-object-wrong (0.39s)
+PASS
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=30
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.463s

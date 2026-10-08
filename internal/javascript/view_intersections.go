@@ -28,6 +28,9 @@ const adamicViewIntersectionRequire = (snapshot, members, match, expression, dec
 
 // Retain one evaluated receiver and one snapshot per combined field.
 func (e *emitter) viewObjectIntersection(property ir.Property, value string) string {
+	if e.program.ViewContracts[property.ViewContract-1].IntersectionRecursive {
+		return e.viewRecursiveIntersection(property, value)
+	}
 	body := e.viewIntersectionFields(property.ViewContract, "adamicIntersectionValue", property.View, map[ir.ViewContractID]bool{})
 	return "((adamicIntersectionValue) => { if (adamicIntersectionValue !== undefined) {" + body + "} return adamicIntersectionValue; })(" + value + ")"
 }

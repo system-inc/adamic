@@ -10,6 +10,10 @@ import (
 // The aggregate's checker-combined fields retain every constituent obligation,
 // including intersections on duplicate names. Every physical slot is read once.
 func (e *emitter) viewObjectIntersection(property ir.Property, object string) {
+	if e.program.ViewContracts[property.ViewContract-1].IntersectionRecursive {
+		e.viewRecursiveIntersection(property, object)
+		return
+	}
 	e.viewIntersectionFields(property.ViewContract, object, property.View, map[ir.ViewContractID]bool{})
 }
 

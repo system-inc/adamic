@@ -59,6 +59,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			}
 			contract := l.result.ViewContracts[id-1]
 			contract.Undefined = true
+			contract.ObjectPresent = id
 			contract.Name = l.checker.TypeToString(target)
 			optional := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 			l.result.ViewContracts = append(l.result.ViewContracts, contract)
