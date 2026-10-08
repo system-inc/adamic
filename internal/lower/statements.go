@@ -101,6 +101,12 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 // ++ and --. A discarded RegExp still evaluates construction and its arguments.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
 	expression = ast.SkipParentheses(expression)
+	if value, handled, err := l.borrowedOwnCall(expression); handled {
+		if err != nil {
+			return nil, err
+		}
+		return []ir.Statement{ir.Evaluate{Value: value}}, nil
+	}
 	if value, known, err := l.libraryErrorValue(expression); known {
 		if err != nil {
 			return nil, err

@@ -30,7 +30,12 @@ func TestLibraryInferredCollectionMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			code := native.C(program)
-			mutant := strings.ReplaceAll(code, " != NULL)", " == NULL)")
+			mutant := code
+			for _, line := range strings.Split(code, "\n") {
+				if strings.Contains(line, "bool ") && strings.Contains(line, "adamic_map_get(") && strings.Contains(line, " != NULL)") {
+					mutant = strings.Replace(mutant, line, strings.Replace(line, " != NULL)", " == NULL)", 1), 1)
+				}
+			}
 			if mutant == code {
 				t.Fatal("membership mutant changed no code")
 			}

@@ -2,6 +2,7 @@ package native
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -15,6 +16,20 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "intrinsicObjectPrototype":
+		e.declarations = append(e.declarations, "#include \"library_prototypes.h\"")
+		return e.own(ir.Object, "adamic_object_intrinsic_prototype()")
+	case "create", "setPrototypeOf", "getPrototypeOf":
+		e.declarations = append(e.declarations, "#include \"library_prototypes.h\"")
+		function := map[string]string{"create": "create", "setPrototypeOf": "set", "getPrototypeOf": "get"}[call.Method]
+		value := e.own(ir.Object, fmt.Sprintf("adamic_object_%s_prototype(%s)", function, strings.Join(arguments, ", ")))
+		if call.Method == "setPrototypeOf" {
+			e.checkThrown()
+		}
+		return value
+	case "errorIsType":
+		e.declarations = append(e.declarations, "#include \"library_errors.h\"")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_library_error_is_type(%s, %s)", arguments[0], arguments[1]))
 	case "errorCaptureStack":
 		return fmt.Sprintf("adamic_error_capture_stack(%s)", arguments[0])
 	case "errorReadStack":
@@ -38,6 +53,7 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 	case "assign":
 		for _, source := range arguments[1:] {
 			e.line("adamic_object_assign(%s, %s);", arguments[0], source)
+			e.checkThrown()
 		}
 		return e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", arguments[0]))
 	}

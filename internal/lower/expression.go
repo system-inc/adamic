@@ -447,6 +447,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.borrowedOwnCall(node); handled {
+		return value, err
+	}
+	if value, handled, err := l.borrowedOwnValue(node); handled {
+		return value, err
+	}
 	if value, known, err := l.nodeCryptoNamespaceValue(node); known {
 		return value, err
 	}
@@ -794,6 +800,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		return value, err
 	}
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
+	if operator == ast.KindPlusToken && (left.Type() == ir.Object || right.Type() == ir.Object) {
+		return l.objectStringAddition(node, left, right)
+	}
 	if operator == ast.KindPlusToken && both(ir.String) {
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}
@@ -918,35 +927,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		if text, known, err := l.dateStringConversion(span.AsTemplateSpan().Expression, value); known {
-			if err != nil {
-				return nil, err
-			}
-			value = text
-		}
-		switch value.Type() {
-		case ir.Number:
-			value = ir.NumberToString{Value: value}
-		case ir.Boolean:
-			value = ir.BooleanToString{Value: value}
-		case ir.MaybeNumber, ir.MaybeBoolean:
-			value = ir.MaybeToString{Value: value}
-		case ir.Union:
-			if !l.writable(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression)) {
-				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
-			}
-			value = ir.UnionToString{Value: value}
-		case ir.String:
-			value = l.spelled(span.AsTemplateSpan().Expression, value)
-		default:
-			proven := l.concrete(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression))
-			if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
-				value = l.spelled(span.AsTemplateSpan().Expression, value)
-				break
-			}
-			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
-			// its source; 0.1 has no use for any of it.
-			return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")
+		value, err = l.stringConversionValue(span.AsTemplateSpan().Expression, value)
+		if err != nil {
+			return nil, err
 		}
 		parts = append(parts, value)
 		if literal := span.AsTemplateSpan().Literal.Text(); literal != "" {

@@ -2,6 +2,8 @@ package oracle
 
 import (
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native"
+	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -97,7 +99,6 @@ func TestScout30Refusals(t *testing.T) {
 	for _, probe := range []struct{ name, reason string }{
 		{"json_specs", "never"},
 		{"json_parse", "any"},
-		{"object_prototype", "prototype"},
 		{"object_entries_references", "entries"},
 		{"string_diagnostic", "String"},
 		{"scanner_parse_concat", "BinaryExpression"},
@@ -118,4 +119,46 @@ func TestScout30Refusals(t *testing.T) {
 			t.Log(err)
 		})
 	}
+}
+
+// This old gap fixture closes when the proven prototype-query branch is merged.
+func TestScout30PrototypeObservationMatchesNode(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_30_refused/object_prototype.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := onNode(t, path)
+	actual, binary := natively(t, program)
+	if difference := disagreement(expected, actual); difference != "" {
+		t.Fatal(difference)
+	}
+	if difference := disagreement(expected, onJavaScriptBackend(t, program)); difference != "" {
+		t.Fatal(difference)
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+		if difference := disagreement(expected, onWASI(t, native.C(program))); difference != "" {
+			t.Fatal(difference)
+		}
+	}
+	wrong := len(program.Strings)
+	program.Strings = append(program.Strings, "wrong prototype kind")
+	changed := false
+	mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), func(value ir.Expression) ir.Expression {
+		if call, ok := value.(ir.ObjectCall); ok && call.Method == "getPrototypeOf" {
+			changed = true
+			return ir.StringConstant{Index: wrong}
+		}
+		return value
+	})
+	if !changed {
+		t.Fatal("no prototype observation changed")
+	}
+	scout22MutantMatchesOnlyNode(t, path, program)
 }

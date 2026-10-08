@@ -76,6 +76,14 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+	// Primitive template operands need no call wrapper, including narrowed nullish references.
+	if node.Parent != nil && node.Parent.Kind == ast.KindTemplateSpan {
+		proven := l.concrete(l.checker.GetTypeAtLocation(node))
+		scalar := value.Type() == ir.Number || value.Type() == ir.Boolean || value.Type() == ir.MaybeNumber || value.Type() == ir.MaybeBoolean || value.Type() == ir.Union
+		if value.Type() == ir.String || (!scalar && proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0) {
+			return l.spelled(node, value), nil
+		}
+	}
 	if l.checker.GetTypeAtLocation(node).Flags() == checker.TypeFlagsUndefined {
 		return ir.StringConstant{Index: l.constant("undefined")}, nil
 	}
@@ -531,83 +539,6 @@ func (l *lowering) stringRawTemplate(node *ast.Node) (ir.Expression, error) {
 		parts = append(parts, substitution, raw(span.AsTemplateSpan().Literal.RawText()))
 	}
 	return ir.Concat{Parts: parts}, nil
-}
-
-// Only statically callable own conversion members are admitted. If an object result needs
-// a second member the type doesn't expose, refuse instead of guessing what an erased view hid.
-func (l *lowering) stringObjectConversion(node *ast.Node, value ir.Expression) (ir.Expression, error) {
-	typeOf := l.checker.GetTypeAtLocation(node)
-	function, reads := l.stringHelper("primitive", []ir.Expression{value})
-	body := []ir.Statement{}
-	for _, name := range []string{"toString", "valueOf"} {
-		member := l.checker.GetTypeOfPropertyOfType(typeOf, name)
-		if member == nil || l.inheritedLibrarySymbol(l.checker.GetPropertyOfType(typeOf, name)) {
-			if name == "valueOf" && l.exactObject(node, 0) {
-				continue
-			}
-			// Only a literal's complete shape proves the default Object.prototype.toString.
-			if name == "toString" && l.exactObject(node, 0) {
-				l.result.Functions[function].Body = []ir.Statement{ir.Return{Value: ir.StringConstant{Index: l.constant("[object Object]")}}}
-				return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.String}, nil
-			}
-			return nil, l.notYet(node, "String ToPrimitive needs a conversion member hidden by the object view")
-		}
-		signatures := l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)
-		if len(signatures) == 0 && member.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
-			continue
-		}
-		if len(signatures) != 1 || len(signatures[0].Parameters()) != 0 || l.includesUndefined(member) {
-			return nil, l.notYet(node, "String ToPrimitive with an optional, noncallable or parameterized "+name)
-		}
-		returned := l.checker.GetReturnTypeOfSignature(signatures[0])
-		of, known := l.representation(returned)
-		never := returned.Flags()&checker.TypeFlagsNever != 0
-		if never {
-			of, known = ir.Type(0), true
-		}
-		if !known {
-			return nil, l.notYet(node, "String ToPrimitive with an unrepresented result")
-		}
-		call := ir.CallClosure{Closure: ir.Property{Object: reads[0], Name: name, Of: ir.Closure, Method: true}, Returns: of}
-		var text ir.Expression
-		switch of {
-		case ir.String:
-			text = call
-			if l.includesUndefined(returned) {
-				text = ir.Coalesce{Value: call, Fallback: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}
-			}
-		case ir.Number:
-			text = ir.NumberToString{Value: call}
-		case ir.Boolean:
-			text = ir.BooleanToString{Value: call}
-		case ir.MaybeNumber, ir.MaybeBoolean:
-			text = ir.MaybeToString{Value: call}
-		case ir.Union:
-			if l.writable(returned) {
-				text = ir.UnionToString{Value: call}
-			}
-		}
-		if text != nil {
-			body = append(body, ir.Return{Value: text})
-			l.result.Functions[function].Body = body
-			return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.String}, nil
-		}
-		if of != ir.Object && of != ir.Array && of != ir.Map && of != ir.Closure && !never {
-			return nil, l.notYet(node, "String ToPrimitive with a mixed primitive and object result")
-		}
-		body = append(body, ir.Evaluate{Value: call})
-		if never {
-			body = append(body, ir.Return{Value: ir.StringConstant{Index: l.constant("")}})
-			l.result.Functions[function].Body = body
-			return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.String}, nil
-		}
-	}
-	body = append(body, ir.Throw{Value: ir.ObjectLiteral{Fields: []ir.Field{
-		{Name: "name", Value: ir.StringConstant{Index: l.constant("TypeError")}},
-		{Name: "message", Value: ir.StringConstant{Index: l.constant("Cannot convert object to primitive value")}},
-	}}})
-	l.result.Functions[function].Body = body
-	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.String}, nil
 }
 
 // .call evaluates every explicit argument before entering the intrinsic's ToPrimitive step.

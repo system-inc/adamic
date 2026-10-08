@@ -498,3 +498,13 @@ the legacy parser and zone formatter inherited from the Date area branch.
   its zero count; the literal-index sentinel prevents string cache writes.
 - `date_string.c:name:1`: statically initialized immortal error-name string with
   the same zero-count and literal-index protection; no writers.
+Library error files reviewed: `runtime-file:library_errors.c` and
+`runtime-file:library_errors.h`. All error strings are automatic constants or
+owned heap copies. There are no mutable statics or lazy registries; the pending
+error uses the existing thread-local adamic_thrown protocol.
+
+
+Prototype files: `runtime-file:library_prototypes.c`, `runtime-file:library_prototypes.h`.
+`library_prototypes.c:object_prototype:1` is a statically initialized immortal
+empty intrinsic with no writers. Lowering prevents it from being a mutation
+receiver. `empty_shape` is const; all counted links live on heap or region objects.

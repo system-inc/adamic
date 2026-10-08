@@ -33,7 +33,10 @@ func (e *emitter) appendTo(local int, parts []ir.Expression) {
 	for _, part := range parts {
 		values = append(values, e.value(part))
 	}
+	e.declarations = append(e.declarations, "#include \"library_errors.h\"")
 	name := e.localName(local)
+	e.line("(void)adamic_library_concat_check(%d, (adamic_string *const[]){%s, %s});", len(values)+1, name, strings.Join(values, ", "))
+	e.checkThrown()
 	e.line("%s = adamic_string_append(%s, %d, (adamic_string *const[]){%s});", name, name, len(values), strings.Join(values, ", "))
 }
 
@@ -62,9 +65,13 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 		e.line("adamic_maybe_number %s = adamic_string_code_point_at(%s, %s);", result, value, arguments[0])
 		return result
 	case "padStart", "padEnd":
-		return e.own(ir.String, fmt.Sprintf("adamic_string_pad(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "padStart"))
+		result := e.own(ir.String, fmt.Sprintf("adamic_string_pad(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "padStart"))
+		e.checkThrown()
+		return result
 	case "repeat":
-		return e.own(ir.String, fmt.Sprintf("adamic_string_repeat(%s, %s)", value, arguments[0]))
+		result := e.own(ir.String, fmt.Sprintf("adamic_string_repeat(%s, %s)", value, arguments[0]))
+		e.checkThrown()
+		return result
 	case "split":
 		return e.own(ir.Array, fmt.Sprintf("adamic_string_split(%s, %s)", value, arguments[0]))
 	case "indexOf":
@@ -83,7 +90,9 @@ func (e *emitter) stringCall(call ir.StringCall) string {
 	case "toLowerCase":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_to_lower(%s)", value))
 	case "normalize":
-		return e.own(ir.String, fmt.Sprintf("adamic_string_normalize(%s, %s)", value, arguments[0]))
+		result := e.own(ir.String, fmt.Sprintf("adamic_string_normalize(%s, %s)", value, arguments[0]))
+		e.checkThrown()
+		return result
 	case "replace", "replaceAll":
 		return e.own(ir.String, fmt.Sprintf("adamic_string_replace(%s, %s, %s, %t)", value, arguments[0], arguments[1], call.Method == "replaceAll"))
 	case "includes":
