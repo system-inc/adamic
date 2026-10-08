@@ -773,6 +773,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken || l.nullishComparison(node) {
 		_, leftNull := left.(ir.Null)
 		_, rightNull := right.(ir.Null)
+		if leftNull && rightNull && l.nullishComparison(node) {
+			return ir.BooleanConstant{Value: operator == ast.KindEqualsEqualsToken}, nil
+		}
 		if leftNull != rightNull {
 			value := left
 			if leftNull {
@@ -785,7 +788,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !value.Type().UsesNullSentinel() && !l.includesNull(l.checker.GetTypeAtLocation(operand)), IncludeUndefined: l.nullishComparison(node)})
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.nullishComparison(node) && !value.Type().UsesNullSentinel() && !l.includesNull(l.checker.GetTypeAtLocation(operand)), IncludeUndefined: l.nullishComparison(node)})
 			if operator == ast.KindExclamationEqualsEqualsToken || operator == ast.KindExclamationEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}

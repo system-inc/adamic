@@ -22,6 +22,7 @@ import (
 type site struct {
 	ID, File, Expression, Cause, Read, Receiver, Source, Present, Absent string
 	Refusal, NullPresent                                                 string
+	WantPresent, WantAbsent, WantNull                                    string
 	Line, Guards                                                         int
 	Blocked                                                              bool
 }
@@ -83,6 +84,15 @@ func TestLedgerWitnesses(t *testing.T) {
 				}
 				if name == "null" {
 					values, want = s.NullPresent, "null\n"
+				}
+				if name == "present" && s.WantPresent != "" {
+					want = s.WantPresent
+				}
+				if absent && s.WantAbsent != "" {
+					want = s.WantAbsent
+				}
+				if name == "null" && s.WantNull != "" {
+					want = s.WantNull
 				}
 				if name == "hole" {
 					if s.Blocked {
@@ -200,6 +210,14 @@ func TestLedgerWitnesses(t *testing.T) {
 						}
 						t.Logf("PROVEN %s read=%s; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit %d stdout=%q stderr=%q", s.ID, s.Read, got.code, got.stdout, got.stderr)
 					} else {
+						if name == "null" {
+							binary := nullableSentinelMutant(t, c)
+							got := run(binary)
+							if got == expected {
+								t.Fatal("sentinel conflation mutant survived")
+							}
+							t.Logf("PROVEN %s null sentinel mutant caught: exit %d stdout=%q stderr=%q", s.ID, got.code, got.stdout, got.stderr)
+						}
 						t.Logf("PRESENT %s matches source Node in release/sanitized and JS", s.ID)
 					}
 				})
