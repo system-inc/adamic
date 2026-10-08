@@ -863,3 +863,42 @@ func TestLabelBlockUnlabeledBreakMutant(t *testing.T) {
 		})
 	}
 }
+
+// Reusing the numeric binding is memory safe; Node must catch the lost identity.
+func TestAsyncForOfCellsCatchSharedCell(t *testing.T) {
+	for _, fixture := range []string{"async_for_of_cells", "async_for_of_body_cells", "async_for_of_break_cells"} {
+		t.Run(fixture, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			control := native.C(program)
+			pattern := regexp.MustCompile(`adamic_cell \*(adamic_temporary_[0-9]+) = adamic_cell_new\(\(adamic_value\)\{\.number = ([^\n]+)\}, false\);\n\s*adamic_release\(frame->cells\[([0-9]+)\]\.value\.reference\);\n\s*frame->cells\[[0-9]+\]\.value\.reference = [^;]+;`)
+			code := pattern.ReplaceAllString(control, `adamic_cell *$1 = adamic_cell_new((adamic_value){.number = $2}, false);
+if (frame->cells[$3].value.reference != NULL) {
+ ((adamic_cell *)frame->cells[$3].value.reference)->value.number = $1->value.number;
+ adamic_release($1);
+} else { frame->cells[$3].value.reference = $1; }`)
+			if code == control {
+				t.Fatal("mutant did not share an iteration cell")
+			}
+			binary := filepath.Join(t.TempDir(), "shared-cell")
+			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			if report := leakcheck.Report(t, code, binary); report != "" {
+				t.Fatal(report)
+			}
+			result := execute(t, binary)
+			oracle := onNode(t, path)
+			if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
+				t.Fatalf("Node stdout must catch shared-cell mutant: %+v", result)
+			}
+			t.Logf("caught: Node %q; shared cells %q", oracle.stdout, result.stdout)
+		})
+	}
+}
