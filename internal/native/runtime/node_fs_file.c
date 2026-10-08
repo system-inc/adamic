@@ -27,7 +27,9 @@ static void raise_error(const char *name, const char *code, const char *message)
     error->slots[0].reference = text(name);
     error->slots[1].reference = text(message);
     error->slots[2].reference = text(code);
-    adamic_thrown = error;
+    error->class = &adamic_host_error_class;
+    adamic_thrown = &error->heap;
+    adamic_exception_pending = true;
 }
 
 static void system_error(int error, const char *operation, const char *path) {
@@ -339,7 +341,7 @@ static double write_data(int descriptor, const char *buffer, size_t length, bool
     // finally closes an internally opened fd, even after write/fsync failed.
     // A close failure overrides an earlier exception as Node's finally does.
     if (owned && close(descriptor) < 0 && errno != EINTR) {
-        if (adamic_thrown != NULL) { adamic_release(adamic_thrown); adamic_thrown = NULL; }
+        if (adamic_exception_pending) { adamic_release(adamic_thrown); adamic_thrown = NULL; adamic_exception_pending = false; }
         system_error(errno, "close", NULL);
     }
     return 0;
@@ -574,7 +576,7 @@ static void remove_path(const char *name, bool recursive, bool force) {
     DIR *directory = opendir(name);
     if (directory == NULL) { if (errno != ENOENT) { remove_error(errno, "scandir", name); } return; }
     struct dirent *entry;
-    while (adamic_thrown == NULL) {
+    while (!adamic_exception_pending) {
         errno = 0; entry = readdir(directory);
         if (entry == NULL) { if (errno != 0) { remove_error(errno, "scandir", name); } break; }
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) { continue; }
@@ -585,7 +587,7 @@ static void remove_path(const char *name, bool recursive, bool force) {
         remove_path(child, true, true); free(child);
     }
     closedir(directory);
-    if (adamic_thrown == NULL && rmdir(name) != 0 && errno != ENOENT) { remove_error(errno, "rmdir", name); }
+    if (!adamic_exception_pending && rmdir(name) != 0 && errno != ENOENT) { remove_error(errno, "rmdir", name); }
 }
 
 double adamic_fs_file_rm(const adamic_string *path, bool recursive, bool force) {

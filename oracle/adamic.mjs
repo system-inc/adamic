@@ -4,21 +4,7 @@
 // makes preceding writes reach their descriptors before process.exit, including pipes on macOS.
 import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 
-// A second failure while the first is being reported (stderr closed under it, say) ends the program
-// at once. Without this, the write fails, that failure is another uncaught exception, whose report
-// fails the same way, forever, at full speed: two orphaned processes once ran for half an hour so.
-let panicking = false;
-
-process.on('uncaughtException', (error) => {
-	if (panicking) {
-		process.exit(70);
-	}
-	panicking = true;
-	const message = String(error);
-	process.stderr.write(`adamic: panic: ${message}\n`);
-	process.exitCode = 70;
-});
-
+// Uncaught language exceptions retain Node's exit 1 behavior. Only panic exits 70.
 for (const stream of [process.stdout, process.stderr]) {
 	// Node exposes this on pipe and terminal handles; regular files already write synchronously.
 	stream._handle?.setBlocking(true);

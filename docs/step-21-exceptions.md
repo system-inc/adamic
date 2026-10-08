@@ -344,3 +344,87 @@ matches existing class_inheritance_exceptions and fallthrough_exceptions, for
 twelve ordinary oracle fixtures in total. Five proposal probes, five semantic IR
 mutants and the direct throw-path liveness assertion all pass. The five production
 mutants are separate expected-failure runs recorded in their individual logs.
+
+## Adopted items 1 and 3: arbitrary payloads and unknown catches
+
+The ruling adopts the design above and supersedes its proposal status. The branch
+merges area-next's own `dcdbb909` line. Items 1 and 3 are implemented together;
+items 5, 4 and 2 follow in that order. The extension applies to both .a and .ts.
+
+Throws now use the existing owned union representation. Scalars have boxes,
+references preserve their identity and heap brand, null has an explicit sentinel,
+and undefined is a null payload pointer. `adamic_exception_pending` is independent
+of that pointer, so both null and undefined propagate through callbacks and
+finally. Typed nullable references convert their null pointer to the explicit
+null sentinel before entering the payload. The operand is evaluated once.
+
+A catch now holds Union, the runtime representation of unknown. typeof and literal
+tests observe the actual payload. instanceof Error tests a nominal runtime class;
+a plain object with name/message fields fails it. Narrowed Error and user-class
+reads recheck nominal identity before interpreting fields. Unknown interface and
+call-signature assertions remain Refused; unguarded message reads remain TS18046.
+Reassigning a catch binding stores a new dynamic value and subsequent tests see it.
+
+The completion paths retain or move the same payload. A finalizer's return, break
+or replacement throw releases the suspended payload through its owning scope.
+Boxing now preserves reachability in region escape analysis. A fresh object which
+can be thrown is allocated under a durable heap owner, rather than in the
+consuming statement's region. No owning frame is skipped by longjmp.
+
+Uncaught exceptions flush stdout and exit 1. Neither runtime invokes String or
+prints a stack. The Node oracle runtime no longer intercepts all exceptions and
+converts them into exit-70 panics. The shared oracle comparison is changed only as
+required by the adopted rule: equal exit-1 exceptions compare stdout and exit code;
+sanitizer reports still fail, and exit-70 panics keep their stderr comparison.
+The shared fixture registry is retained. Inserted checks and compiler invariants
+remain terminal panics and cannot be caught.
+
+The new dynamic and region-payload reductions generalize program.ts:2844-2854 and
+commandLineParser.ts:2297. Arbitrary origin tags are scope extensions because tsc
+itself originates only Error values. Additional uncaught controls cover undefined
+and an object whose conversion method would print if invoked. A temporary .ts
+copy of the .a dynamic fixture proves equal admission without adding a new .ts
+program to the repository.
+
+Rule mutants are reproducible with `run-adopted-mutants.py`, run serially:
+
+| Mutant | Catcher |
+| --- | --- |
+| Disable both unknown-assertion proof barriers | admission test requires Refused |
+| Convert an uncaught object to a string | uncaught test rejects exit 70 |
+| Use payload presence as pending state | Node stdout comparison |
+| Fold instanceof Error to true | Node exit comparison |
+| Classify a boolean as a number | Node stdout comparison |
+| Box null as undefined | Node stdout comparison |
+| Give finally's pending payload two owners | ASan heap-use-after-free |
+| Ignore boxed reachability, allocating the payload in the statement region | ASan heap-use-after-free when catch reads it |
+| Exit 70 for an uncaught exception | uncaught exit check |
+
+All nine mutants fail for their intended reason and restore source bytes. One
+preliminary unknown-assertion mutation survived because the up-front proof still
+refused it; the credited mutant disables both independent barriers. An earlier
+uncaught mutant was rejected by the runner's expected-message assertion despite
+correctly failing the test; the final runner names the actual exit check.
+
+Measured census retirement for items 1 and 3: **zero roots, zero hidden bytes**.
+The pinned census contains no corresponding actual refusal roots. The generalized
+undefined proposal now compiles; the TS18046 diagnostics remain correct refusals
+of unguarded unknown reads and are not claimed as retired. Saved Error origin,
+Error subclasses and library recovery retain their current barriers for the later
+numbered deliveries.
+
+Commands and observed results for this delivery:
+
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStep21|TestNativeAgreesWithNode/internal/oracle/testdata/(step21_|exceptions[.]a$|exceptions_uncaught[.]a$|closures_throw[.]a$|closures_throw_uncaught[.]a$|regions_throw[.]a$|reuse_throw[.]a$)' -count=1 -v -timeout 10m`: PASS, 12.336s, native misses 70, Node misses 52. The selector also includes class-inheritance and fallthrough exception regressions.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStep21TypeScriptExtension|TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_host24[.]a$' -count=1 -v -timeout 10m`: PASS, 9.802s. This follows the host local-name collision exposed by the first counts run.
+- `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args -update-counts`: PASS, 39.368s. The initial run failed on that host C name collision and is retained as evidence.
+- `python3 docs/step-21-exceptions/run-adopted-mutants.py`: nine intended failures, runner exit zero.
+- `python3 docs/step-21-exceptions/prove-uncaught-sanitizer.py`: intended ASan failure, runner exit zero. The shared oracle reports sanitizer failure even though stdout and exit 1 match the source.
+- `go test ./internal/lower -run 'TestWhatZeroOneRefusesIsRefusedWithAFix|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat' -count=1`: PASS, 0.802s.
+- `go vet ./internal/lower ./internal/native ./internal/javascript ./internal/oracle`: exit zero, empty output.
+
+Logs are retained in `evidence/items13-*`, `evidence/adopted-*` and the individual
+mutant files. New allocation/free rows are 65/65 (dynamic), 3/3 (region payload),
+0/0 (uncaught undefined) and 3/3 (uncaught object). Existing catches gain counted
+borrows for checked dynamic narrowing; the refreshed rows record those actual
+retains/releases. No full package test or full gate was run.
