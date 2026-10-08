@@ -1,3 +1,4 @@
+// a-check: refused changing prototypes after creation; outside the .a sound subset; use a .ts program with proven heap lifetimes
 // A parameter may arrive from a statement region. Do not retain across its lifetime.
 function attach(receiver: {}): {} {
  const prototype = {};

@@ -1,3 +1,4 @@
+// a-check: type error TS2304
 export interface MultiMap<K, V> extends Map<K, V[]> {
     /**
      * Adds the value to an array of values associated with the key, and returns the array.
