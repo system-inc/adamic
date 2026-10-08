@@ -1,0 +1,5 @@
+{
+  "name": "dangerous-prop-inverted",
+  "from": "ctx.node(ni).text!=='dangerouslySetInnerHTML'",
+  "to": "ctx.node(ni).text==='dangerouslySetInnerHTML'"
+}

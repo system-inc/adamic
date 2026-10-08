@@ -1,0 +1,60 @@
+// Go path.Match dialect: full match, stars do not cross slash, ^ negates classes.
+export class Token {
+ readonly kind: string;readonly text: string;readonly ranges: readonly number[];readonly negate: boolean;
+ constructor(kind: string,text: string,ranges: readonly number[],negate: boolean) {this.kind=kind;this.text=text;this.ranges=ranges;this.negate=negate;}
+}
+function character(source: string, index: number): string {
+ const first=source.charCodeAt(index);const second=source.charCodeAt(index+1);
+ return source.slice(index,index+(first>=55296 && first<=56319 && second>=56320 && second<=57343 ? 2 : 1));
+}
+function scalar(text: string): number {
+ const first=text.charCodeAt(0);return text.length===2 ? (first-55296)*1024+text.charCodeAt(1)-56320+65536 : first;
+}
+export function glob(pattern: string, name: string): boolean {
+ const tokens: Token[]=[];
+ for(let i=0;i<pattern.length;) {
+  let ch=character(pattern,i);i+=ch.length;
+  if(ch==='*' || ch==='?') {tokens.push(new Token(ch,'',[],false));continue;}
+  if(ch===String.fromCharCode(92)) {
+   if(i>=pattern.length) {return false;}ch=character(pattern,i);i+=ch.length;tokens.push(new Token('literal',ch,[],false));continue;
+  }
+  if(ch!=='[') {tokens.push(new Token('literal',ch,[],false));continue;}
+  let negate=false;if(pattern.slice(i,i+1)==='^') {negate=true;i++;}
+  const ranges: number[]=[];let closed=false;
+  while(i<pattern.length) {
+   if(pattern.slice(i,i+1)===']' && ranges.length>0) {i++;closed=true;break;}
+   let low=character(pattern,i);i+=low.length;
+   if(low==='-' || low===']') {return false;}
+   if(low===String.fromCharCode(92)) {if(i>=pattern.length) {return false;}low=character(pattern,i);i+=low.length;}
+   let high=low;
+   if(pattern.slice(i,i+1)==='-') {
+    i++;if(i>=pattern.length) {return false;}high=character(pattern,i);i+=high.length;
+    if(high==='-' || high===']') {return false;}
+    if(high===String.fromCharCode(92)) {if(i>=pattern.length) {return false;}high=character(pattern,i);i+=high.length;}
+   }
+   ranges.push(scalar(low));ranges.push(scalar(high));
+  }
+  if(!closed) {return false;}tokens.push(new Token('class','',ranges,negate));
+ }
+ let positions: number[]=[0];
+ for(const token of tokens) {
+  const next: number[]=[];
+  for(const position of positions) {
+   if(token.kind==='*') {
+    next.push(position);let j=position;
+    while(j<name.length && name.slice(j,j+1)!=='/') {j+=character(name,j).length;next.push(j);}
+    continue;
+   }
+   if(position>=name.length) {continue;}
+   const ch=character(name,position);let matches=token.kind==='literal' && token.text===ch || token.kind==='?' && ch!=='/';
+   if(token.kind==='class') {
+    const code=scalar(ch);let contained=false;
+    for(let i=0;i<token.ranges.length;i+=2) {if(code>=(token.ranges[i] ?? 0) && code<=(token.ranges[i+1] ?? 0)) {contained=true;}}
+    matches=contained!==token.negate;
+   }
+   if(matches) {next.push(position+ch.length);}
+  }
+  positions=next;
+ }
+ return positions.includes(name.length);
+}

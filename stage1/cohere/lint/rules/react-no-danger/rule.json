@@ -1,0 +1,13 @@
+{
+  "name": "react/no-danger",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoDanger",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoDanger"
+}
