@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// recordElement recognizes resolved pure mutable string signatures, including aliases.
+// recordElement recognizes resolved mutable string dictionaries, including named keys.
 func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 	if t == nil {
 		return nil
@@ -29,7 +29,7 @@ func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 			}
 		}
 	}
-	if len(infos) != 1 || infos[0].KeyType().Flags() != checker.TypeFlagsString || infos[0].IsReadonly() || len(l.checker.GetPropertiesOfType(t)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
+	if len(infos) != 1 || infos[0].KeyType().Flags() != checker.TypeFlagsString || infos[0].IsReadonly() || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
 		return nil
 	}
 	return infos[0].ValueType()
@@ -47,8 +47,8 @@ func (l *lowering) recordSlot(node *ast.Node) (ir.Type, error) {
 	if t == nil {
 		return 0, l.notYet(node, "a record without a pure mutable string index signature")
 	}
-	of, known := l.kept(t)
-	if !known || slotless(of) || of == ir.MaybeBoolean || of == ir.Weak {
+	of, known := l.recordStorageType(t)
+	if !known {
 		return 0, l.notYet(node, "a record value of type "+l.checker.TypeToString(t))
 	}
 	return of, nil
@@ -140,7 +140,11 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			read = l.recordOwnRead(r, k, of)
 		}
 		here := l.checker.GetTypeAtLocation(node)
-		if !l.includesUndefined(here) && !comparedWithUndefined(node) {
+		read, err = l.recordReadType(node, read, here)
+		if err != nil {
+			return nil, true, err
+		}
+		if !l.includesUndefined(here) && !recordTagObservation(node) {
 			if narrowed, known := l.representation(here); known && read.Type().IsMaybe() && !narrowed.IsMaybe() {
 				read = ir.Unwrap{Value: read}
 			}
@@ -182,6 +186,10 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 		if err != nil {
 			return nil, true, err
 		}
+		if err := l.recordNamedWrite(b.Left, b.Right); err != nil {
+			return nil, true, err
+		}
+		returns := v.Type()
 		v = fit(v, of)
 		if v.Type() != of {
 			return nil, true, l.notYet(node, "a record write with a different slot representation")
@@ -192,7 +200,13 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			}
 			return ir.RecordCoalesce{Record: r, Key: k, Value: v, Element: of, Site: l.writeSite(recordReceiver(b.Left))}, true, nil
 		}
-		return ir.RecordCall{Method: "set", Arguments: []ir.Expression{r, k, v}, Element: of, Returns: of, Site: l.writeSite(recordReceiver(b.Left))}, true, nil
+		write := ir.Expression(ir.RecordCall{Method: "set", Arguments: []ir.Expression{r, k, v}, Element: of, Returns: of, Site: l.writeSite(recordReceiver(b.Left))})
+		if of == ir.Union && returns != of {
+			write = ir.Narrow{Value: write, To: returns}
+		} else if of.IsMaybe() && returns == of.Present() {
+			write = ir.Unwrap{Value: write}
+		}
+		return write, true, nil
 	}
 	return nil, false, nil
 }
@@ -204,8 +218,8 @@ func recordReceiver(node *ast.Node) *ast.Node {
 	return n.AsPropertyAccessExpression().Expression
 }
 func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression, error) {
-	of, known := l.kept(t)
-	if !known || slotless(of) || of == ir.MaybeBoolean || of == ir.Weak {
+	of, known := l.recordStorageType(t)
+	if !known {
 		return nil, l.notYet(node, "record values with an unsupported slot representation")
 	}
 	result := ir.RecordLiteral{Element: of, Site: l.writeSite(node)}
@@ -276,7 +290,10 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 	return result, nil
 }
 func (l *lowering) recordObjectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
-	args := node.AsCallExpression().Arguments.Nodes
+	return l.recordObjectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) recordObjectCallArguments(node *ast.Node, name string, args []*ast.Node) (ir.Expression, bool, error) {
 	if len(args) == 0 || l.recordElement(l.checker.GetTypeAtLocation(args[0])) == nil {
 		return nil, false, nil
 	}
@@ -329,6 +346,9 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 	if source == nil || target == nil || ast.SkipParentheses(source).Kind == ast.KindObjectLiteralExpression {
 		return nil
 	}
+	if l.recordLibraryArgument(source) {
+		return nil // Intrinsic adapters validate the actual storage, not their erased checker parameter.
+	}
 	if parent := source.Parent; parent != nil && parent.Kind == ast.KindCallExpression {
 		if l.detachedOwnCallReceiver(parent) != nil {
 			return nil
@@ -378,7 +398,7 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	visited[[2]*checker.Type{from, to}] = true
 	inside, viewed := l.recordElement(from), l.recordElement(to)
 	if inside != nil || viewed != nil {
-		return inside != nil && viewed != nil && l.sameRecordStorage(inside, viewed, visited)
+		return inside != nil && viewed != nil && l.sameRecordNamedContracts(from, to, inside, viewed, visited) && l.sameRecordStorage(inside, viewed, visited)
 	}
 	a, b := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall), l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(a) > 0 && len(b) > 0 {

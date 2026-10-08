@@ -9,13 +9,13 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
-	if value, handled, err := l.recordObjectCall(node, name); handled {
-		return value, true, err
-	}
 	return l.objectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
 }
 
 func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.recordObjectCallArguments(node, name, written); handled {
+		return value, true, err
+	}
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}

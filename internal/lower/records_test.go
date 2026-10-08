@@ -9,6 +9,7 @@ import (
 func TestRecordForms(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
+		`interface R { [key:string]:number; named:number } const r:R={named:1}; console.log(String(r.named));`,
 		`interface R { [key:string]: number } const r:R={}; r['x']=1; console.log(String(r['x']));`,
 		`type R=Record<string,string>; const r:R={x:'one'}; console.log(Object.keys(r).join(','));`,
 		`function show(r:Record<string,number>|undefined):void {console.log(String(JSON.stringify(r)));} show(undefined); show({x:1});`,
@@ -30,7 +31,6 @@ func TestRecordRefusals(t *testing.T) {
 		source, reason string
 		notYet         bool
 	}{
-		{`interface R { [key:string]:number; named:number } const r:R={named:1};`, "named", true},
 		{`import type {Weak} from 'adamic'; interface Item {name:string} const r:Record<string,Weak<Item>>={};`, "slot representation", true},
 		{`function show(r:Record<string,number>|null):void {console.log(String(JSON.stringify(r)));}`, "value of type", true},
 		{`interface R { readonly [key:string]:number } const r:R={};`, "signature", true},
