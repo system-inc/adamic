@@ -1,0 +1,6 @@
+{
+  "name": "array function type unwrapped",
+  "file": "rule.a",
+  "from": "['UnionType', 'IntersectionType', 'ArrayType']",
+  "to": "['UnionType', 'IntersectionType']"
+}

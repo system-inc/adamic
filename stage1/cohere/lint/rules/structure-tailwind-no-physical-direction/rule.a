@@ -1,0 +1,51 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+const pattern = /^-?(?:[a-z]+:)*(?:[a-z]+-)?[a-z]+(?:-[a-z0-9.\[\]/]+)?$/;
+const fields = /[^\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+/g;
+const prefixes = ['ml-', 'mr-', 'pl-', 'pr-', 'text-left', 'text-right', 'left-', 'right-', 'border-l', 'border-l-', 'border-r', 'border-r-', 'rounded-l', 'rounded-l-', 'rounded-r', 'rounded-r-', 'scroll-ml-', 'scroll-mr-', 'scroll-pl-', 'scroll-pr-'];
+const replacements = ['ms-', 'me-', 'ps-', 'pe-', 'text-start', 'text-end', 'start-', 'end-', 'border-s', 'border-s-', 'border-e', 'border-e-', 'rounded-s', 'rounded-s-', 'rounded-e', 'rounded-e-', 'scroll-ms-', 'scroll-me-', 'scroll-ps-', 'scroll-pe-'];
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    literal(index: number): void {
+        const text = this.context.node(index).text;
+        const tokens: string[] = [];
+        const matches = text.match(fields);
+        if(matches !== null) { for(const token of matches) { tokens.push(token ?? panic('missing token')); } }
+        if(!tokens.some(token => pattern.test(token))) { return; }
+        for(const token of tokens) {
+            const parts = token.split(':');
+            const base = parts.pop() ?? panic('missing class');
+            if(parts.includes('rtl') || parts.includes('ltr')) { continue; }
+            const negative = base.startsWith('-');
+            const body = negative ? base.slice(1) : base;
+            for(let mapping = 0; mapping < prefixes.length; mapping++) {
+                const prefix = prefixes[mapping] ?? panic('missing prefix');
+                const exact = !prefix.endsWith('-');
+                if(exact ? body !== prefix : !body.startsWith(prefix) || body.length === prefix.length) { continue; }
+                const negatable = mapping < 4 || mapping === 6 || mapping === 7;
+                if(negative && !negatable) { continue; }
+                const logical = replacements[mapping] ?? panic('missing replacement');
+                const replacement = `${parts.length > 0 ? parts.join(':') + ':' : ''}${negative ? '-' : ''}${logical}${exact ? '' : body.slice(prefix.length)}`;
+                this.context.report(index, 'structure/tailwind-no-physical-direction', 'useLogicalClass', message(token, replacement), '', '', '');
+                break;
+            }
+        }
+    }
+    visit(index: number): void {
+        const path = this.context.parser.path;
+        if(!path.endsWith('.a') && !path.endsWith('.ts') && !path.endsWith('.tsx')) { return; }
+        if(this.context.node(index).kind !== 'TemplateExpression') { this.literal(index); return; }
+        for(const child of this.context.node(index).children) {
+            const node = this.context.node(child);
+            if(node.kind === 'TemplateHead') { this.literal(child); }
+            if(node.kind === 'TemplateSpan') {
+                this.literal(node.children[node.children.length - 1] ?? panic('missing template piece'));
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

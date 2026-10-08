@@ -1,0 +1,6 @@
+{
+  "name": "reason ignored",
+  "file": "rule.a",
+  "from": "if((pieces[1] ?? '').trim() !== '') { return; }",
+  "to": "if((pieces[1] ?? '').trim() === 'impossible-reason') { return; }"
+}
