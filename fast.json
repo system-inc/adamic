@@ -1,0 +1,3733 @@
+{
+  "sha": "98c0019b6f9f9a1ac9fb3e9f80a5b9ab7d0aa96d",
+  "branch": "codex/any-returns-concrete",
+  "branch_source": "given",
+  "session": "01a11c2b-4f20-74b4-ab0c-3a1b61a7401f",
+  "session_source": "ai.db reply naming the branch",
+  "base": "d72728e570fe09d91cf55b37b564dbad0fefc24d",
+  "base_name": "main",
+  "tools_sha": "664f7672bda94b262376487fb47bfff0ee6748c1",
+  "machine": {
+    "hostname": "Workshop",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "206c8891b3e22e6782b4d8eaa4bcad61ac833533",
+  "oracle_selection": {
+    "whole": false,
+    "fixtures": [
+      "internal/oracle/testdata/any_returns_concrete.a",
+      "internal/oracle/testdata/node_namespace_timeout.a"
+    ],
+    "tests": [
+      "TestCountsAreRecorded"
+    ],
+    "lanes": [
+      "TestCountsAreRecorded",
+      "TestNativeAgreesWithNode",
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission"
+    ]
+  },
+  "reads": [
+    {
+      "line": 127,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/any_returns_concrete.a",
+        "internal/oracle/testdata/node_namespace_timeout.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 151,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/any_returns_concrete.a",
+        "internal/oracle/testdata/node_namespace_timeout.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 175,
+      "package": "internal/ir",
+      "glob": "internal/lower/*.go",
+      "paths": [
+        "internal/lower/any_returns_test.go",
+        "internal/lower/functions.go",
+        "internal/lower/generic.go",
+        "internal/lower/instantiate.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "internal/load/node_namespace_test.go",
+        "internal/lower/any_returns_test.go",
+        "internal/oracle/any_returns_test.go",
+        "internal/oracle/testdata/any_returns_concrete.a",
+        "internal/oracle/testdata/node_namespace_timeout.a",
+        "stage3/census/any-returns-concrete/REPORT.md",
+        "stage3/census/any-returns-concrete/RESULT.json",
+        "stage3/census/any-returns-concrete/evidence/area-counts.log.txt",
+        "stage3/census/any-returns-concrete/evidence/area-lower.log.txt",
+        "stage3/census/any-returns-concrete/evidence/area-mutants.log.txt",
+        "stage3/census/any-returns-concrete/evidence/area-oracle.log.txt",
+        "stage3/census/any-returns-concrete/evidence/copier-final.log.txt",
+        "stage3/census/any-returns-concrete/evidence/copier-loses-alias.log.txt",
+        "stage3/census/any-returns-concrete/evidence/counts.log.txt",
+        "stage3/census/any-returns-concrete/evidence/delivery-build.log.txt",
+        "stage3/census/any-returns-concrete/evidence/delivery-run.log.txt",
+        "stage3/census/any-returns-concrete/evidence/delivery.jsonl.gz",
+        "stage3/census/any-returns-concrete/evidence/emitter-alone-trace.log.txt",
+        "stage3/census/any-returns-concrete/evidence/final-lower.log.txt",
+        "stage3/census/any-returns-concrete/evidence/final-oracle.log.txt",
+        "stage3/census/any-returns-concrete/evidence/generic-regression.log.txt",
+        "stage3/census/any-returns-concrete/evidence/mapper-only-result.json",
+        "stage3/census/any-returns-concrete/evidence/mapper-only-run.log.txt",
+        "stage3/census/any-returns-concrete/evidence/mapper-only.jsonl.gz",
+        "stage3/census/any-returns-concrete/evidence/memoize-trace.log.txt",
+        "stage3/census/any-returns-concrete/evidence/mutants.log.txt",
+        "stage3/census/any-returns-concrete/evidence/node-context.log.txt",
+        "stage3/census/any-returns-concrete/evidence/opaque-mapper.log.txt",
+        "stage3/census/any-returns-concrete/evidence/setup.log.txt",
+        "stage3/census/any-returns-concrete/evidence/source-verification.json",
+        "stage3/census/any-returns-concrete/evidence/statecopy.log.txt",
+        "stage3/census/any-returns-concrete/evidence/trust-any.log.txt",
+        "stage3/census/any-returns-concrete/evidence/unsubstituted-return.log.txt",
+        "stage3/census/any-returns-concrete/mutants.py",
+        "stage3/census/any-returns-concrete/statecopy-checker-alias.patch",
+        "stage3/census/any-returns-concrete/step05/REPORT.md",
+        "stage3/census/any-returns-concrete/step05/RESULT.json",
+        "stage3/census/any-returns-concrete/step05/evidence/accept-unresolved-type.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/after-build.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/after-run.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/after-trace.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/after.jsonl.gz",
+        "stage3/census/any-returns-concrete/step05/evidence/before-build.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/before-run.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/before-trace.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/before.jsonl.gz",
+        "stage3/census/any-returns-concrete/step05/evidence/counts.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/ignore-namespace.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/ignore-unresolved-alias.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/load-tests.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/local-member-before.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/mutants.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/node-install.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/oracle-tests.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/reduction-test-before.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/replace-local-namespace.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/setup.log.txt",
+        "stage3/census/any-returns-concrete/step05/evidence/source-verification.json",
+        "stage3/census/any-returns-concrete/step05/evidence/stock.json.gz",
+        "stage3/census/any-returns-concrete/step05/evidence/summary.log.txt",
+        "stage3/census/any-returns-concrete/step05/mutants.py",
+        "stage3/census/any-returns-concrete/step05/summarize.py",
+        "stage3/census/any-returns-concrete/step05/trace.go.txt",
+        "stage3/census/any-returns-concrete/summarize.py",
+        "stage3/census/latent/statecopy/checker_alias_test.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 622,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "stage3/census/any-returns-concrete/RESULT.json",
+        "stage3/census/any-returns-concrete/evidence/mapper-only-result.json",
+        "stage3/census/any-returns-concrete/evidence/source-verification.json",
+        "stage3/census/any-returns-concrete/step05/RESULT.json",
+        "stage3/census/any-returns-concrete/step05/evidence/source-verification.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "internal/oracle/counts.md",
+        "stage3/census/any-returns-concrete/REPORT.md",
+        "stage3/census/any-returns-concrete/step05/REPORT.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {
+    "inert": 51,
+    "stage3": 8
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "internal/load/load.go",
+    "internal/load/node_library.go",
+    "internal/load/node_namespace_test.go",
+    "internal/lower/any_returns_test.go",
+    "internal/lower/functions.go",
+    "internal/lower/generic.go",
+    "internal/lower/instantiate.go",
+    "internal/oracle/any_returns_test.go",
+    "internal/oracle/counts.md",
+    "internal/oracle/testdata/any_returns_concrete.a",
+    "internal/oracle/testdata/node_namespace_timeout.a",
+    "stage3/census/any-returns-concrete/REPORT.md",
+    "stage3/census/any-returns-concrete/RESULT.json",
+    "stage3/census/any-returns-concrete/evidence/area-counts.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-lower.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-mutants.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-oracle.log.txt",
+    "stage3/census/any-returns-concrete/evidence/copier-final.log.txt",
+    "stage3/census/any-returns-concrete/evidence/copier-loses-alias.log.txt",
+    "stage3/census/any-returns-concrete/evidence/counts.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery-build.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery-run.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery.jsonl.gz",
+    "stage3/census/any-returns-concrete/evidence/emitter-alone-trace.log.txt",
+    "stage3/census/any-returns-concrete/evidence/final-lower.log.txt",
+    "stage3/census/any-returns-concrete/evidence/final-oracle.log.txt",
+    "stage3/census/any-returns-concrete/evidence/generic-regression.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mapper-only-result.json",
+    "stage3/census/any-returns-concrete/evidence/mapper-only-run.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mapper-only.jsonl.gz",
+    "stage3/census/any-returns-concrete/evidence/memoize-trace.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mutants.log.txt",
+    "stage3/census/any-returns-concrete/evidence/node-context.log.txt",
+    "stage3/census/any-returns-concrete/evidence/opaque-mapper.log.txt",
+    "stage3/census/any-returns-concrete/evidence/setup.log.txt",
+    "stage3/census/any-returns-concrete/evidence/source-verification.json",
+    "stage3/census/any-returns-concrete/evidence/statecopy.log.txt",
+    "stage3/census/any-returns-concrete/evidence/trust-any.log.txt",
+    "stage3/census/any-returns-concrete/evidence/unsubstituted-return.log.txt",
+    "stage3/census/any-returns-concrete/mutants.py",
+    "stage3/census/any-returns-concrete/statecopy-checker-alias.patch",
+    "stage3/census/any-returns-concrete/step05/REPORT.md",
+    "stage3/census/any-returns-concrete/step05/RESULT.json",
+    "stage3/census/any-returns-concrete/step05/evidence/accept-unresolved-type.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/after-build.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/after-run.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/after-trace.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/after.jsonl.gz",
+    "stage3/census/any-returns-concrete/step05/evidence/before-build.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/before-run.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/before-trace.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/before.jsonl.gz",
+    "stage3/census/any-returns-concrete/step05/evidence/counts.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/ignore-namespace.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/ignore-unresolved-alias.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/load-tests.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/local-member-before.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/mutants.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/node-install.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/oracle-tests.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/reduction-test-before.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/replace-local-namespace.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/setup.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/source-verification.json",
+    "stage3/census/any-returns-concrete/step05/evidence/stock.json.gz",
+    "stage3/census/any-returns-concrete/step05/evidence/summary.log.txt",
+    "stage3/census/any-returns-concrete/step05/mutants.py",
+    "stage3/census/any-returns-concrete/step05/summarize.py",
+    "stage3/census/any-returns-concrete/step05/trace.go.txt",
+    "stage3/census/any-returns-concrete/summarize.py",
+    "stage3/census/latent/statecopy/checker_alias_test.go",
+    "stage3/census/latent/statecopy/main.go"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/internal/flow",
+    "github.com/system-inc/adamic/internal/fresh",
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/internal/load",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/replay",
+    "github.com/system-inc/adamic/stage3/census/latent/replay/worker",
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "github.com/system-inc/adamic/stage3/census/predicates/tools/tool",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "unowned_files": [
+    "stage3/census/any-returns-concrete/REPORT.md",
+    "stage3/census/any-returns-concrete/RESULT.json",
+    "stage3/census/any-returns-concrete/evidence/area-counts.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-lower.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-mutants.log.txt",
+    "stage3/census/any-returns-concrete/evidence/area-oracle.log.txt",
+    "stage3/census/any-returns-concrete/evidence/copier-final.log.txt",
+    "stage3/census/any-returns-concrete/evidence/copier-loses-alias.log.txt",
+    "stage3/census/any-returns-concrete/evidence/counts.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery-build.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery-run.log.txt",
+    "stage3/census/any-returns-concrete/evidence/delivery.jsonl.gz",
+    "stage3/census/any-returns-concrete/evidence/emitter-alone-trace.log.txt",
+    "stage3/census/any-returns-concrete/evidence/final-lower.log.txt",
+    "stage3/census/any-returns-concrete/evidence/final-oracle.log.txt",
+    "stage3/census/any-returns-concrete/evidence/generic-regression.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mapper-only-result.json",
+    "stage3/census/any-returns-concrete/evidence/mapper-only-run.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mapper-only.jsonl.gz",
+    "stage3/census/any-returns-concrete/evidence/memoize-trace.log.txt",
+    "stage3/census/any-returns-concrete/evidence/mutants.log.txt",
+    "stage3/census/any-returns-concrete/evidence/node-context.log.txt",
+    "stage3/census/any-returns-concrete/evidence/opaque-mapper.log.txt",
+    "stage3/census/any-returns-concrete/evidence/setup.log.txt",
+    "stage3/census/any-returns-concrete/evidence/source-verification.json",
+    "stage3/census/any-returns-concrete/evidence/statecopy.log.txt",
+    "stage3/census/any-returns-concrete/evidence/trust-any.log.txt",
+    "stage3/census/any-returns-concrete/evidence/unsubstituted-return.log.txt",
+    "stage3/census/any-returns-concrete/mutants.py",
+    "stage3/census/any-returns-concrete/statecopy-checker-alias.patch",
+    "stage3/census/any-returns-concrete/step05/REPORT.md",
+    "stage3/census/any-returns-concrete/step05/RESULT.json",
+    "stage3/census/any-returns-concrete/step05/evidence/accept-unresolved-type.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/after-build.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/after-run.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/after-trace.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/after.jsonl.gz",
+    "stage3/census/any-returns-concrete/step05/evidence/before-build.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/before-run.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/before-trace.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/before.jsonl.gz",
+    "stage3/census/any-returns-concrete/step05/evidence/counts.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/ignore-namespace.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/ignore-unresolved-alias.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/load-tests.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/local-member-before.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/mutants.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/node-install.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/oracle-tests.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/reduction-test-before.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/replace-local-namespace.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/setup.log.txt",
+    "stage3/census/any-returns-concrete/step05/evidence/source-verification.json",
+    "stage3/census/any-returns-concrete/step05/evidence/stock.json.gz",
+    "stage3/census/any-returns-concrete/step05/evidence/summary.log.txt",
+    "stage3/census/any-returns-concrete/step05/mutants.py",
+    "stage3/census/any-returns-concrete/step05/summarize.py",
+    "stage3/census/any-returns-concrete/step05/trace.go.txt",
+    "stage3/census/any-returns-concrete/summarize.py"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCountsAreRecorded",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIAgreesWithNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestStarExportCollisionNamesBothModules",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestExplicitExportResolvesStarCollision",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestDeclarationsCarryTheirProvenTypes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestATypeErrorFailsTheLoad",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestAdamicOptionsAreOn",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestEveryFileIsAModule",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestAdamicFilesImportEachOther",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestThePreludeDeclaresConsoleAndPanic",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestLoadRefusesWhatIsNotAdamic",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestTheProgramsInTheSpecLoad",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestOverlayPrecedesDiskForAdamicAliases",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeLibraryUsesPinnedDeclarations",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeLibraryRejectsDifferentVersion",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceAnnotationUsesPinnedTimeout",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceAliasesKeepTimeout",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceUnresolvedTypesStayRejected",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceLocalDeclarationIsNotReplaced",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceLocalMissingMemberIsNotReplaced",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestTypeScriptIsThePinnedCommit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestRegExpCaptureTypes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestCheckerMapperAliasKeepsIdentity",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownMutableContainerFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownForeignPointerFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+      "test": "TestMissingStatementFailsWithMethodName",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestEveryWriteIsRecordedAndKnown",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeBufferHashUpdateKeepsAlias",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileOperationsAreKnown",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileOperandsStillJudgeWrites",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileDoesNotEscapeBorrowedObjects",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileResultsAreFresh",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestRegexOperationsDoNotPoisonTreeWrites",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestRegexOperandsStillJudgeCycleWrites",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestFutureRegexMethodRemainsUnknown",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryFunctionIsInSingleAssignment",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryMutationIsInItsRange",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryPathNodeTakesIsInTheGraph",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestLivenessHoldsOnEveryPath",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericResolvedReturnContracts",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericReturnFixtureLowers",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericMapperKeepsCheckerIdentity",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArgumentsLengthRefusals",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArgumentsLengthReadNeighbors",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArgumentsLengthRefusalFixtures",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicatePreservesDeclaredElementContract",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicateCannotInventAnElementContract",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicateCoexistsWithUnknownReflection",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUncheckableCastsStayRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCheckedCastProofAndElision",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusMarkerResultIsAssignable",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalFunctionValueRelation",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadedShorthandFunctionValueStaysNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusOverloadReturnProof",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateInteractionBoundary",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateInteractionEscapes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateMarkerCallStaysNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusOverloadRelation",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusSmallFiniteKeyBoundary",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusRestMutableElements",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusBooleanDeadBranch",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCheckPragmasAreRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCheckPragmaNeighborsCompile",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTsgoHonorsNoCheckInAdamicFiles",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesReadonlyChecker",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesPrivateChecker",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesPrivateStorage",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesAccessorRefusals",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticDeclarationsExecute",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticSoundness",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesAccessorCaptureCycle",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesNarrowedAccessor",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticParentCycle",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticInterfaceCycle",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesUnsoundOverrides",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceKeepsCheckerConstructorRules",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceAllowsSoundOverrides",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceHasClassIdentity",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRejectsUnsupportedConstructorShapes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesFalseNominalViews",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceKeepsNominalTupleDestructuring",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericMonomorphizations",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesGrowingGenericClasses",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericSoundness",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceConditionalThisRules",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericViewsKeepNominalArguments",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericNominalConstraints",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericFactoryLayouts",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceNativeSignatureNeighbors",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceNativeSignatureLimits",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassArgumentsUseCheckerIdentity",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassWrongOutputIteratorReceiver",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassWrongOutputKeysRepair",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassWrongOutputPrivateRepair",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefiniteAssignmentUsesReadiness",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefiniteAssignmentSoundNeighbors",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumsOpen",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumsDomain",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumNeverDefault",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumLiteralSpellings",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumMemberAliases",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumNameEnumeration",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumInlineIteration",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumAliasBoundaries",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNumericEnumsAreOpen",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestStringEnumsStayClosed",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNumericEnumNeverProof",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNumericEnumLiteralPromises",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumSlotViews",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumSwitchExhaustiveness",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumLimitsStayLoud",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestConstEnumErasesRuntimeObject",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumIdentityAcrossModules",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericFunctionPolymorphicRecursionIsRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericUnionFixtureHasSeparateInstances",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericJSONUnionArrayIsNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOriginalCycleLedger",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUndecidedCycleReadsUseReadyChecks",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInputSpreadArgumentsAreNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInputSpreadCoverage",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefaultTaggedInterfaceAdmission",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorGapsAreExplicit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorViewsCannotHideReturn",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorViewsCannotEraseReceivers",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGeneratorsAreRefusedEvenWithoutYield",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLiteralMethodCapturesCannotMakeCycles",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLiteralMethodViewsDoNotLoseThis",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorDescriptorReasons",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestRepresentedMethodReplacementIsNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericIteratorViewsPreserveNativeArguments",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorMapperIndexHasNumberRepresentation",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorSymbolKeysAreNotStringKeys",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryLanguageBoundaries",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMapSetGapsStayRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMapSetIteratorCopyTypesRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMethodValues",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMethodValueBoundaries",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMethodValueSafety",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeBufferRefusals",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileOptionsBorrow",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileRefusesOptionEffects",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileRefusesVoidValues",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileNamespaceImport",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileQualifiedErrorType",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileKeepsDetachedMethodRefusal",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileBufferBorrow",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileScratchOptionsBorrow",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileScratchOverloadsAreNamed",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryNamesUnimplementedMembers",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryDistinguishesReceiverOwners",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryQualifiedTypeAssertion",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestObjectRefusalsExplainSoundness",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestObjectUnprovenShapesStayNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryStringRefusals",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestConsoleLowersToWriteLine",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAMutableLocationSeenWiderIsRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAViewThatCantWriteIsNotRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestATupleSeenAsAnArrayIsNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAMethodReadAsAValueIsRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNamespaceLimitsStayLoud",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNamespaceReceiverRefusal",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNamespaceTypesErase",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedFunctionGapsAreLoud",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedFunctionCycleIsRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedEnvironmentHasOneAllocationSite",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedCapturedParametersAreOwned",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClosedFrameInputRejectsMutation",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedRebindingNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedCallbackCycleIsRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedBodylessDeclarationsAreLoud",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedRestIsSupported",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNonNullAssertionLowersToNullishPanic",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNonNullAssertionOnPresentTypeIsErased",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningCensus",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningAllowed",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningSpreadOverwrite",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverrideOptionalNumberRefusesNativeSignature",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverrideOptionalRefusesNativeSignature",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestParameterPropertiesSoundness",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestParameterPropertyCheckerContracts",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestParameterPropertyCallbackReceiver",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateOverloadRuntime",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIndirectPredicateOverloadIsPending",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateBodyProof",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestConditionAssertionAdmission",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateCallbackContracts",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEveryNeedsCallbackEffects",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateOverloadCallback",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateUseRegions",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateUsesBelongToEachCall",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnprovenPredicateReturnsAreRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateBodiesAreProven",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPrimitiveAdmittingSlotsUseBoxes",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritedLibraryReadsNeverLoadOwnFields",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPrototypeMethodsAreRefusedWithReasons",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNullishPrototypeReadsAreRejectedByChecker",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPrototypeHazardsBehindObjectViewsAreNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnrepresentedPrototypeCallsAreNotYet",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIsPrototypeOfReadsExplainThePrototypeRefusal",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestProvenRelationsRefuse",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestProvenRelationsErase",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestReadinessElisionRequiresDominatingAssignment",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestRegExpNativeRefusals",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestRegExpSourceNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestSuppressionDirectivesAreRefused",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestSuppressionDirectiveSoundNeighbors",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTasteRepresentationLimitsStayExplicit",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTypedArraysLower",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTypedArrayGaps",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTypedArrayViewsCannotChangeRepresentation",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnknownReflectionRefusals",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestArgumentLayouts",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestClosureArgumentsCountTargets",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestCallTargetReaders",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestCallTargetsIncludeEveryDescendant",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestClosureTargetsBoundOnlyProvenValues",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestCompiler41231d51Shape",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestMissingFunctionMutantFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestChangedVisitorMutantFailsLoudly",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixturePaths",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuard",
+      "status": "passed"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "expected_seconds": 925.648,
+      "slots": 4,
+      "after_seconds": 36.015
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "expected_seconds": 15.95,
+      "slots": 1,
+      "after_seconds": 36.017
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCountsAreRecorded",
+      "expected_seconds": 164.29,
+      "slots": 1,
+      "after_seconds": 36.533
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode",
+      "expected_seconds": 0.728,
+      "slots": 1,
+      "after_seconds": 36.544
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission",
+      "expected_seconds": 0.1472,
+      "slots": 1,
+      "after_seconds": 36.551
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIAgreesWithNode",
+      "expected_seconds": 0.128,
+      "slots": 1,
+      "after_seconds": 36.561
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestATypeErrorFailsTheLoad",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 45.672
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestAdamicFilesImportEachOther",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 45.673
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestAdamicOptionsAreOn",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 45.674
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestDeclarationsCarryTheirProvenTypes",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 45.676
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestEveryFileIsAModule",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 45.921
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestExplicitExportResolvesStarCollision",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 45.952
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.036
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestLoadRefusesWhatIsNotAdamic",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.038
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.19
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeLibraryRejectsDifferentVersion",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.204
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeLibraryUsesPinnedDeclarations",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.206
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceAliasesKeepTimeout",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.377
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceAnnotationUsesPinnedTimeout",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.407
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceLocalDeclarationIsNotReplaced",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 46.836
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceLocalMissingMemberIsNotReplaced",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 47.028
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestNodeNamespaceUnresolvedTypesStayRejected",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 47.075
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "expected_seconds": 79.296,
+      "slots": 1,
+      "after_seconds": 47.251
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestOverlayPrecedesDiskForAdamicAliases",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 47.256
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestRegExpCaptureTypes",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 47.323
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestStarExportCollisionNamesBothModules",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 47.591
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestThePreludeDeclaresConsoleAndPanic",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 47.708
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestTheProgramsInTheSpecLoad",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 47.823
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/load",
+      "test": "TestTypeScriptIsThePinnedCommit",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 47.852
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestCheckerMapperAliasKeepsIdentity",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 47.972
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownForeignPointerFailsLoudly",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 48.019
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownMutableContainerFailsLoudly",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 48.109
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+      "test": "TestMissingStatementFailsWithMethodName",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 48.153
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "expected_seconds": 38.404096,
+      "slots": 1,
+      "after_seconds": 48.522
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "expected_seconds": 36.65,
+      "slots": 1,
+      "after_seconds": 48.642
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "expected_seconds": 36.3,
+      "slots": 1,
+      "after_seconds": 48.711
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "expected_seconds": 22.45,
+      "slots": 1,
+      "after_seconds": 48.754
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "expected_seconds": 7.13,
+      "slots": 1,
+      "after_seconds": 60.37
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "expected_seconds": 6.27,
+      "slots": 1,
+      "after_seconds": 69.565
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "expected_seconds": 4.56,
+      "slots": 1,
+      "after_seconds": 70.065
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "expected_seconds": 3.87072,
+      "slots": 1,
+      "after_seconds": 71.143
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "expected_seconds": 1.752,
+      "slots": 1,
+      "after_seconds": 71.925
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "expected_seconds": 0.366414398,
+      "slots": 1,
+      "after_seconds": 73.34
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "expected_seconds": 0.1728,
+      "slots": 1,
+      "after_seconds": 73.397
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "expected_seconds": 0.016,
+      "slots": 1,
+      "after_seconds": 73.729
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 73.906
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestEveryWriteIsRecordedAndKnown",
+      "expected_seconds": 39.792,
+      "slots": 1,
+      "after_seconds": 74.052
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestRegexOperandsStillJudgeCycleWrites",
+      "expected_seconds": 0.01,
+      "slots": 1,
+      "after_seconds": 74.185
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryMutationIsInItsRange",
+      "expected_seconds": 55.14,
+      "slots": 1,
+      "after_seconds": 74.358
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestLivenessHoldsOnEveryPath",
+      "expected_seconds": 54.3,
+      "slots": 1,
+      "after_seconds": 82.233
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryFunctionIsInSingleAssignment",
+      "expected_seconds": 40.3,
+      "slots": 1,
+      "after_seconds": 82.33
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryPathNodeTakesIsInTheGraph",
+      "expected_seconds": 0.03,
+      "slots": 1,
+      "after_seconds": 83.586
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestArgumentLayouts",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 121.401
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestClosureArgumentsCountTargets",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 121.53
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArgumentsLengthReadNeighbors",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 121.695
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArgumentsLengthRefusalFixtures",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 122.182
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArgumentsLengthRefusals",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 123.124
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicateCannotInventAnElementContract",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 123.95
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicateCoexistsWithUnknownReflection",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 124.592
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 125.136
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicatePreservesDeclaredElementContract",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 125.481
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusBooleanDeadBranch",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 125.99
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateInteractionBoundary",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 126.226
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateInteractionEscapes",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 126.621
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateMarkerCallStaysNotYet",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 126.984
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 127.255
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClosedFrameInputRejectsMutation",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 127.684
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestConditionAssertionAdmission",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 127.921
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefaultTaggedInterfaceAdmission",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 128.134
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 129.299
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefiniteAssignmentUsesReadiness",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 129.546
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEveryNeedsCallbackEffects",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 130.024
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericMapperKeepsCheckerIdentity",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 130.249
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericResolvedReturnContracts",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 130.391
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericReturnFixtureLowers",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 130.613
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIndirectPredicateOverloadIsPending",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 130.855
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedBodylessDeclarationsAreLoud",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 131.073
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedCallbackCycleIsRefused",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 131.273
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedCapturedParametersAreOwned",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 131.502
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 131.774
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedEnvironmentHasOneAllocationSite",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 132.034
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedFunctionCycleIsRefused",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 132.331
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedFunctionGapsAreLoud",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 132.568
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedRebindingNotYet",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 132.948
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedRestIsSupported",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 133.184
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNonNullAssertionLowersToNullishPanic",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 133.416
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNonNullAssertionOnPresentTypeIsErased",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 133.674
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateBodyProof",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 133.903
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateCallbackContracts",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 134.783
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateOverloadCallback",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 135.565
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateOverloadRuntime",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 135.896
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateUseRegions",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 135.927
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateUsesBelongToEachCall",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 137.322
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPrimitiveAdmittingSlotsUseBoxes",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 137.623
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestReadinessElisionRequiresDominatingAssignment",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 137.897
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTasteRepresentationLimitsStayExplicit",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 138.661
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 139.447
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "expected_seconds": 12.8,
+      "slots": 1,
+      "after_seconds": 139.885
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOriginalCycleLedger",
+      "expected_seconds": 8.68,
+      "slots": 1,
+      "after_seconds": 140.359
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestCallTargetReaders",
+      "expected_seconds": 8.14,
+      "slots": 1,
+      "after_seconds": 144.034
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUndecidedCycleReadsUseReadyChecks",
+      "expected_seconds": 7.96,
+      "slots": 1,
+      "after_seconds": 146.38
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "expected_seconds": 7.92,
+      "slots": 1,
+      "after_seconds": 151.017
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryNamesUnimplementedMembers",
+      "expected_seconds": 3.22,
+      "slots": 1,
+      "after_seconds": 152.43
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNullishPrototypeReadsAreRejectedByChecker",
+      "expected_seconds": 2.85,
+      "slots": 1,
+      "after_seconds": 154.118
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumLimitsStayLoud",
+      "expected_seconds": 2.02,
+      "slots": 1,
+      "after_seconds": 156.139
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+      "expected_seconds": 1.76,
+      "slots": 1,
+      "after_seconds": 157.182
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryLanguageBoundaries",
+      "expected_seconds": 1.38,
+      "slots": 1,
+      "after_seconds": 157.593
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPrototypeHazardsBehindObjectViewsAreNotYet",
+      "expected_seconds": 1.35,
+      "slots": 1,
+      "after_seconds": 158.597
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPrototypeMethodsAreRefusedWithReasons",
+      "expected_seconds": 1.22,
+      "slots": 1,
+      "after_seconds": 159.658
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticSoundness",
+      "expected_seconds": 1.19,
+      "slots": 1,
+      "after_seconds": 160.318
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateBodiesAreProven",
+      "expected_seconds": 1.19,
+      "slots": 1,
+      "after_seconds": 160.614
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileScratchOverloadsAreNamed",
+      "expected_seconds": 1.16,
+      "slots": 1,
+      "after_seconds": 161.261
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNamespaceLimitsStayLoud",
+      "expected_seconds": 1.016,
+      "slots": 1,
+      "after_seconds": 161.582
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMethodValueSafety",
+      "expected_seconds": 0.952,
+      "slots": 1,
+      "after_seconds": 161.639
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNumericEnumsAreOpen",
+      "expected_seconds": 0.93,
+      "slots": 1,
+      "after_seconds": 162.952
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnrepresentedPrototypeCallsAreNotYet",
+      "expected_seconds": 0.89,
+      "slots": 1,
+      "after_seconds": 162.992
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryQualifiedTypeAssertion",
+      "expected_seconds": 0.87,
+      "slots": 1,
+      "after_seconds": 163.306
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+      "expected_seconds": 0.83,
+      "slots": 1,
+      "after_seconds": 163.825
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileOptionsBorrow",
+      "expected_seconds": 0.82,
+      "slots": 1,
+      "after_seconds": 163.837
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileQualifiedErrorType",
+      "expected_seconds": 0.8,
+      "slots": 1,
+      "after_seconds": 164.235
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileScratchOptionsBorrow",
+      "expected_seconds": 0.79,
+      "slots": 1,
+      "after_seconds": 165.047
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestRegExpNativeRefusals",
+      "expected_seconds": 0.77,
+      "slots": 1,
+      "after_seconds": 165.246
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassWrongOutputIteratorReceiver",
+      "expected_seconds": 0.76,
+      "slots": 1,
+      "after_seconds": 165.319
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMethodValues",
+      "expected_seconds": 0.752,
+      "slots": 1,
+      "after_seconds": 165.848
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestSuppressionDirectiveSoundNeighbors",
+      "expected_seconds": 0.74,
+      "slots": 1,
+      "after_seconds": 165.997
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTypedArrayGaps",
+      "expected_seconds": 0.728,
+      "slots": 1,
+      "after_seconds": 166.559
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNumericEnumLiteralPromises",
+      "expected_seconds": 0.72,
+      "slots": 1,
+      "after_seconds": 166.644
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumAliasBoundaries",
+      "expected_seconds": 0.69,
+      "slots": 1,
+      "after_seconds": 167.036
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMethodValueBoundaries",
+      "expected_seconds": 0.672,
+      "slots": 1,
+      "after_seconds": 167.331
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesReadonlyChecker",
+      "expected_seconds": 0.67,
+      "slots": 1,
+      "after_seconds": 167.648
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumSwitchExhaustiveness",
+      "expected_seconds": 0.61,
+      "slots": 1,
+      "after_seconds": 167.731
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNumericEnumNeverProof",
+      "expected_seconds": 0.61,
+      "slots": 1,
+      "after_seconds": 168.285
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+      "expected_seconds": 0.6,
+      "slots": 1,
+      "after_seconds": 168.332
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestProvenRelationsErase",
+      "expected_seconds": 0.59392,
+      "slots": 1,
+      "after_seconds": 168.457
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMapSetGapsStayRefused",
+      "expected_seconds": 0.59,
+      "slots": 1,
+      "after_seconds": 168.836
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+      "expected_seconds": 0.552,
+      "slots": 1,
+      "after_seconds": 168.844
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCheckPragmaNeighborsCompile",
+      "expected_seconds": 0.5,
+      "slots": 1,
+      "after_seconds": 168.865
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesAccessorRefusals",
+      "expected_seconds": 0.47,
+      "slots": 1,
+      "after_seconds": 169.335
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMapSetIteratorCopyTypesRefused",
+      "expected_seconds": 0.47,
+      "slots": 1,
+      "after_seconds": 169.409
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryDistinguishesReceiverOwners",
+      "expected_seconds": 0.47,
+      "slots": 1,
+      "after_seconds": 169.608
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestParameterPropertiesSoundness",
+      "expected_seconds": 0.47,
+      "slots": 1,
+      "after_seconds": 169.839
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefiniteAssignmentSoundNeighbors",
+      "expected_seconds": 0.45,
+      "slots": 1,
+      "after_seconds": 169.872
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileBufferBorrow",
+      "expected_seconds": 0.44,
+      "slots": 1,
+      "after_seconds": 170.313
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileRefusesVoidValues",
+      "expected_seconds": 0.44,
+      "slots": 1,
+      "after_seconds": 170.464
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileNamespaceImport",
+      "expected_seconds": 0.42,
+      "slots": 1,
+      "after_seconds": 170.488
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGeneratorsAreRefusedEvenWithoutYield",
+      "expected_seconds": 0.41,
+      "slots": 1,
+      "after_seconds": 170.961
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileRefusesOptionEffects",
+      "expected_seconds": 0.39,
+      "slots": 1,
+      "after_seconds": 171.058
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+      "expected_seconds": 0.38,
+      "slots": 1,
+      "after_seconds": 171.222
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileKeepsDetachedMethodRefusal",
+      "expected_seconds": 0.36,
+      "slots": 1,
+      "after_seconds": 171.296
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTsgoHonorsNoCheckInAdamicFiles",
+      "expected_seconds": 0.36,
+      "slots": 1,
+      "after_seconds": 171.35
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceConditionalThisRules",
+      "expected_seconds": 0.34,
+      "slots": 1,
+      "after_seconds": 171.727
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "expected_seconds": 0.33,
+      "slots": 1,
+      "after_seconds": 171.844
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusOverloadReturnProof",
+      "expected_seconds": 0.32,
+      "slots": 1,
+      "after_seconds": 171.861
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericNominalConstraints",
+      "expected_seconds": 0.3,
+      "slots": 1,
+      "after_seconds": 172.0
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusOverloadRelation",
+      "expected_seconds": 0.264,
+      "slots": 1,
+      "after_seconds": 172.079
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorViewsCannotHideReturn",
+      "expected_seconds": 0.26,
+      "slots": 1,
+      "after_seconds": 172.155
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestParameterPropertyCheckerContracts",
+      "expected_seconds": 0.26,
+      "slots": 1,
+      "after_seconds": 172.281
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticDeclarationsExecute",
+      "expected_seconds": 0.25,
+      "slots": 1,
+      "after_seconds": 172.39
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLiteralMethodViewsDoNotLoseThis",
+      "expected_seconds": 0.24,
+      "slots": 1,
+      "after_seconds": 172.417
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTypedArraysLower",
+      "expected_seconds": 0.232,
+      "slots": 1,
+      "after_seconds": 172.436
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericSoundness",
+      "expected_seconds": 0.23,
+      "slots": 1,
+      "after_seconds": 172.598
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIsPrototypeOfReadsExplainThePrototypeRefusal",
+      "expected_seconds": 0.23,
+      "slots": 1,
+      "after_seconds": 172.701
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestStringEnumsStayClosed",
+      "expected_seconds": 0.22,
+      "slots": 1,
+      "after_seconds": 172.757
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceHasClassIdentity",
+      "expected_seconds": 0.2,
+      "slots": 1,
+      "after_seconds": 172.792
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTypedArrayViewsCannotChangeRepresentation",
+      "expected_seconds": 0.2,
+      "slots": 1,
+      "after_seconds": 172.825
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassWrongOutputPrivateRepair",
+      "expected_seconds": 0.18,
+      "slots": 1,
+      "after_seconds": 172.894
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumInlineIteration",
+      "expected_seconds": 0.18,
+      "slots": 1,
+      "after_seconds": 173.039
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorSymbolKeysAreNotStringKeys",
+      "expected_seconds": 0.18,
+      "slots": 1,
+      "after_seconds": 173.053
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+      "expected_seconds": 0.17,
+      "slots": 1,
+      "after_seconds": 173.103
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestConsoleLowersToWriteLine",
+      "expected_seconds": 0.17,
+      "slots": 1,
+      "after_seconds": 173.118
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumNameEnumeration",
+      "expected_seconds": 0.17,
+      "slots": 1,
+      "after_seconds": 173.216
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticInterfaceCycle",
+      "expected_seconds": 0.16,
+      "slots": 1,
+      "after_seconds": 173.278
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumIdentityAcrossModules",
+      "expected_seconds": 0.16,
+      "slots": 1,
+      "after_seconds": 173.281
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesGrowingGenericClasses",
+      "expected_seconds": 0.16,
+      "slots": 1,
+      "after_seconds": 173.36
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverrideOptionalRefusesNativeSignature",
+      "expected_seconds": 0.16,
+      "slots": 1,
+      "after_seconds": 173.373
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestConstEnumErasesRuntimeObject",
+      "expected_seconds": 0.15,
+      "slots": 1,
+      "after_seconds": 173.468
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericFunctionPolymorphicRecursionIsRefused",
+      "expected_seconds": 0.15,
+      "slots": 1,
+      "after_seconds": 173.543
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericIteratorViewsPreserveNativeArguments",
+      "expected_seconds": 0.15,
+      "slots": 1,
+      "after_seconds": 173.577
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+      "expected_seconds": 0.15,
+      "slots": 1,
+      "after_seconds": 173.603
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesPrivateChecker",
+      "expected_seconds": 0.14,
+      "slots": 1,
+      "after_seconds": 173.638
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumMemberAliases",
+      "expected_seconds": 0.14,
+      "slots": 1,
+      "after_seconds": 173.752
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericJSONUnionArrayIsNotYet",
+      "expected_seconds": 0.14,
+      "slots": 1,
+      "after_seconds": 173.807
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericUnionFixtureHasSeparateInstances",
+      "expected_seconds": 0.14,
+      "slots": 1,
+      "after_seconds": 173.818
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericViewsKeepNominalArguments",
+      "expected_seconds": 0.14,
+      "slots": 1,
+      "after_seconds": 173.866
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalFunctionValueRelation",
+      "expected_seconds": 0.14,
+      "slots": 1,
+      "after_seconds": 173.905
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverrideOptionalNumberRefusesNativeSignature",
+      "expected_seconds": 0.14,
+      "slots": 1,
+      "after_seconds": 174.002
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+      "expected_seconds": 0.13,
+      "slots": 1,
+      "after_seconds": 174.033
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesAccessorCaptureCycle",
+      "expected_seconds": 0.13,
+      "slots": 1,
+      "after_seconds": 174.068
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticParentCycle",
+      "expected_seconds": 0.13,
+      "slots": 1,
+      "after_seconds": 174.113
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+      "expected_seconds": 0.13,
+      "slots": 1,
+      "after_seconds": 174.232
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericFactoryLayouts",
+      "expected_seconds": 0.13,
+      "slots": 1,
+      "after_seconds": 174.24
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "expected_seconds": 0.13,
+      "slots": 1,
+      "after_seconds": 174.271
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorMapperIndexHasNumberRepresentation",
+      "expected_seconds": 0.13,
+      "slots": 1,
+      "after_seconds": 174.32
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningSpreadOverwrite",
+      "expected_seconds": 0.13,
+      "slots": 1,
+      "after_seconds": 174.332
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestCallTargetsIncludeEveryDescendant",
+      "expected_seconds": 0.128,
+      "slots": 1,
+      "after_seconds": 174.444
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusSmallFiniteKeyBoundary",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.45
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesNarrowedAccessor",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.486
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesPrivateStorage",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.529
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassWrongOutputKeysRepair",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.558
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumNeverDefault",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.661
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumLiteralSpellings",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.691
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceAllowsSoundOverrides",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.697
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericMonomorphizations",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.76
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceKeepsNominalTupleDestructuring",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.817
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorViewsCannotEraseReceivers",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.895
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLiteralMethodCapturesCannotMakeCycles",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 174.935
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestRepresentedMethodReplacementIsNotYet",
+      "expected_seconds": 0.1,
+      "slots": 1,
+      "after_seconds": 174.94
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNamespaceReceiverRefusal",
+      "expected_seconds": 0.096,
+      "slots": 1,
+      "after_seconds": 174.995
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusRestMutableElements",
+      "expected_seconds": 0.09,
+      "slots": 1,
+      "after_seconds": 175.034
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNamespaceTypesErase",
+      "expected_seconds": 0.09,
+      "slots": 1,
+      "after_seconds": 175.163
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadedShorthandFunctionValueStaysNotYet",
+      "expected_seconds": 0.09,
+      "slots": 1,
+      "after_seconds": 175.165
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusMarkerResultIsAssignable",
+      "expected_seconds": 0.08,
+      "slots": 1,
+      "after_seconds": 175.174
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestRegExpSourceNode",
+      "expected_seconds": 0.08,
+      "slots": 1,
+      "after_seconds": 175.207
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritedLibraryReadsNeverLoadOwnFields",
+      "expected_seconds": 0.07,
+      "slots": 1,
+      "after_seconds": 175.252
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestParameterPropertyCallbackReceiver",
+      "expected_seconds": 0.07,
+      "slots": 1,
+      "after_seconds": 175.395
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestCompiler41231d51Shape",
+      "expected_seconds": 0.02,
+      "slots": 1,
+      "after_seconds": 175.397
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "expected_seconds": 0.016,
+      "slots": 1,
+      "after_seconds": 175.401
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestRegexOperationsDoNotPoisonTreeWrites",
+      "expected_seconds": 0.01,
+      "slots": 1,
+      "after_seconds": 175.409
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumsDomain",
+      "expected_seconds": 0.01,
+      "slots": 1,
+      "after_seconds": 175.555
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInputSpreadCoverage",
+      "expected_seconds": 0.01,
+      "slots": 1,
+      "after_seconds": 175.597
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestSuppressionDirectivesAreRefused",
+      "expected_seconds": 0.01,
+      "slots": 1,
+      "after_seconds": 175.682
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "expected_seconds": 0.01,
+      "slots": 1,
+      "after_seconds": 176.283
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningRefused",
+      "expected_seconds": 0.0064,
+      "slots": 1,
+      "after_seconds": 176.851
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAMutableLocationSeenWiderIsRefused",
+      "expected_seconds": 0.00512,
+      "slots": 1,
+      "after_seconds": 177.607
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestATupleSeenAsAnArrayIsNotYet",
+      "expected_seconds": 0.00512,
+      "slots": 1,
+      "after_seconds": 177.662
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestProvenRelationsRefuse",
+      "expected_seconds": 0.00512,
+      "slots": 1,
+      "after_seconds": 177.835
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestFutureRegexMethodRemainsUnknown",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 178.441
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeBufferHashUpdateKeepsAlias",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 178.613
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileDoesNotEscapeBorrowedObjects",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 178.714
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileOperandsStillJudgeWrites",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 178.768
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileOperationsAreKnown",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 178.887
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileResultsAreFresh",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 178.945
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestClosureTargetsBoundOnlyProvenValues",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 179.09
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAMethodReadAsAValueIsRefused",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 179.12
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAViewThatCantWriteIsNotRefused",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 179.272
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCheckPragmasAreRefused",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 179.299
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCheckedCastProofAndElision",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 179.684
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassArgumentsUseCheckerIdentity",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 179.853
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumSlotViews",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 180.216
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumsOpen",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 180.251
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceKeepsCheckerConstructorRules",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 180.452
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceNativeSignatureLimits",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 180.478
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceNativeSignatureNeighbors",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 180.806
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesFalseNominalViews",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 180.973
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesUnsoundOverrides",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 181.209
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRejectsUnsupportedConstructorShapes",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 181.382
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInputSpreadArgumentsAreNotYet",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 181.405
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorDescriptorReasons",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 181.515
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorGapsAreExplicit",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 181.694
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryStringRefusals",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 181.705
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeBufferRefusals",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 181.871
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestObjectRefusalsExplainSoundness",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 182.011
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestObjectUnprovenShapesStayNotYet",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 182.159
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningAllowed",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 182.245
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningCensus",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 182.592
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUncheckableCastsStayRefused",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 182.669
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnknownReflectionRefusals",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 182.719
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnprovenPredicateReturnsAreRefused",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 182.758
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 183.576
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 183.639
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 183.947
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 184.668
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 184.845
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 185.039
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 185.119
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestChangedVisitorMutantFailsLoudly",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 185.233
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestMissingFunctionMutantFailsLoudly",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 185.4
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixturePaths",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 185.577
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuard",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 185.682
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "expected_seconds": 0.0,
+      "slots": 1,
+      "after_seconds": 185.782
+    }
+  ],
+  "undeclared_tools": [],
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/internal/oracle": 4,
+    "github.com/system-inc/adamic/internal/load": 22,
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/replay": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/replay/worker": 0,
+    "github.com/system-inc/adamic/stage1/cohere/json": 19,
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy": 3,
+    "github.com/system-inc/adamic/stage3/census/latent/tool": 0,
+    "github.com/system-inc/adamic/stage3/census/predicates/tools/tool": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite": 1,
+    "github.com/system-inc/adamic/stage3/census/tool": 0,
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08": 0,
+    "github.com/system-inc/adamic/internal/fresh": 9,
+    "github.com/system-inc/adamic/internal/flow": 4,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/internal/lower": 190,
+    "github.com/system-inc/adamic/internal/ir": 5,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite": 4,
+    "github.com/system-inc/adamic/stage3/fixtures": 4
+  },
+  "gate_samples": [
+    "TestMarkdownInline 45/1355 files, stride 32, offset 5",
+    "TestPortMatchesGoCohere 111/3336 files, stride 32, offset 5",
+    "TestUpstreamRepositoryCorpusParity 422/3336 files, stride 8, offset 5",
+    "TestCorpusPinBeforeSampling 105/3336 files, stride 32, offset 8"
+  ],
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "split_tally": {
+    "packages": 23,
+    "planned": 270,
+    "passed": 270,
+    "touched": 23
+  },
+  "stage3_exits": {
+    "stage3-lane-tests": 0,
+    "stage3-apply-tests": 0,
+    "stage3-lane": 0
+  },
+  "wall_seconds": 710.5,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "vet": 32.6,
+    "build": 38.7,
+    "smoke": 62.2,
+    "tests": 269.8,
+    "stage3": 708.4,
+    "census": 0.8
+  },
+  "pass": 4900,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 3,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "stage3"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "build": 0,
+    "smoke": 0,
+    "tests": 0,
+    "stage3": 0,
+    "census": 0
+  },
+  "finished": true,
+  "long_test_threshold_seconds": 10,
+  "long_tests": 14,
+  "long_test_seconds": 915.7,
+  "planned_test_counts": {
+    "passed": 270,
+    "failed": 0,
+    "not run": 0
+  }
+}
