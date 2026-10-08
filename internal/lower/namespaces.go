@@ -59,8 +59,10 @@ func (l *lowering) namespaceDeclaration(node *ast.Node) *ast.Node {
 }
 
 func (l *lowering) namespaceMember(node *ast.Node) bool {
+	module := false
 	if node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
-		if l.namespaceDeclaration(node.Expression()) == nil {
+		module = l.moduleNamespace(node.Expression())
+		if !module && l.namespaceDeclaration(node.Expression()) == nil {
 			return false
 		}
 	}
@@ -73,7 +75,7 @@ func (l *lowering) namespaceMember(node *ast.Node) bool {
 		if declaration.Kind == ast.KindVariableDeclaration {
 			parent = parent.Parent.Parent
 		}
-		if parent != nil && parent.Kind == ast.KindModuleBlock {
+		if parent != nil && (parent.Kind == ast.KindModuleBlock || module && parent.Kind == ast.KindSourceFile) {
 			return true
 		}
 	}
@@ -95,7 +97,23 @@ func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, err
 		return value, true, err
 	}
 	if local, found := l.local(node); found {
-		return ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}, true, nil
+		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local)})
+		if read.Type() == ir.Union {
+			parent := node.Parent
+			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+				parent = parent.Parent
+			}
+			observing := comparedWithUndefined(node) || parent != nil && parent.Kind == ast.KindTypeOfExpression
+			if narrowed, known := l.representation(l.checker.GetTypeAtLocation(node)); known && narrowed != ir.Union && !observing {
+				return nil, true, l.notYet(node, "a narrowed namespace union member; read into a local before narrowing")
+			}
+		}
+		if declared := read.Type(); declared.IsMaybe() {
+			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
+				read = ir.Unwrap{Value: read}
+			}
+		}
+		return l.defined(node, read), true, nil
 	}
 	return nil, true, l.notYet(node, "a namespace member without a lowered binding")
 }
@@ -119,6 +137,9 @@ func (l *lowering) namespaceValueNode(node *ast.Node) bool {
 }
 
 func (l *lowering) namespaceRefusal(node *ast.Node) error {
+	if err := l.moduleNamespaceRefusal(node); err != nil {
+		return err
+	}
 	if node.Kind == ast.KindModuleDeclaration {
 		if !ast.IsIdentifier(node.Name()) || ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
 			return l.notYet(node, "an ambient namespace or external module; use named file imports")
