@@ -1,0 +1,6105 @@
+{
+  "slots": [
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 594,
+      "column": 16,
+      "start": 20713,
+      "end": 20723,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:594:16@20713-20723",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17019:17035",
+        "target": "file",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 594,
+          "column": 9,
+          "start": 20706,
+          "end": 20723
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 595,
+      "column": 19,
+      "start": 20744,
+      "end": 20754,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:595:19@20744-20754",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17046:17070",
+        "target": "options",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 595,
+          "column": 9,
+          "start": 20734,
+          "end": 20754
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 596,
+      "column": 27,
+      "start": 20783,
+      "end": 20793,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:596:27@20783-20793",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17081:17110",
+        "target": "languageVersion",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 596,
+          "column": 9,
+          "start": 20765,
+          "end": 20793
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 597,
+      "column": 18,
+      "start": 20813,
+      "end": 20823,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:597:18@20813-20823",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17121:17133",
+        "target": "parent",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 597,
+          "column": 9,
+          "start": 20804,
+          "end": 20823
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 598,
+      "column": 21,
+      "start": 20846,
+      "end": 20856,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:598:21@20846-20856",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17144:17189",
+        "target": "container",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 598,
+          "column": 9,
+          "start": 20834,
+          "end": 20856
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 599,
+      "column": 31,
+      "start": 20889,
+      "end": 20899,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:599:31@20889-20899",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17200:17255",
+        "target": "thisParentContainer",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 599,
+          "column": 9,
+          "start": 20867,
+          "end": 20899
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 600,
+      "column": 31,
+      "start": 20932,
+      "end": 20942,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:600:31@20932-20942",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17292:17335",
+        "target": "blockScopeContainer",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 600,
+          "column": 9,
+          "start": 20910,
+          "end": 20942
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 601,
+      "column": 25,
+      "start": 20969,
+      "end": 20979,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:601:25@20969-20979",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17346:17370",
+        "target": "lastContainer",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 601,
+          "column": 9,
+          "start": 20953,
+          "end": 20979
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 602,
+      "column": 30,
+      "start": 21011,
+      "end": 21021,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:602:30@21011-21021",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17381:17454",
+        "target": "delayedTypeAliases",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 602,
+          "column": 9,
+          "start": 20990,
+          "end": 21021
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 603,
+      "column": 24,
+      "start": 21047,
+      "end": 21057,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:603:24@21047-21057",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17500:17530",
+        "target": "jsDocImports",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 603,
+          "column": 9,
+          "start": 21032,
+          "end": 21057
+        }
+      }
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 605,
+      "column": 23,
+      "start": 21116,
+      "end": 21126,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/binder.ts:605:23@21116-21126",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/binder.ts:17587:17608",
+        "target": "currentFlow",
+        "initializer": {
+          "file": "src/compiler/binder.ts",
+          "line": 605,
+          "column": 9,
+          "start": 21102,
+          "end": 21126
+        }
+      }
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32881,
+      "column": 52,
+      "start": 1956850,
+      "end": 1956860,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/checker.ts:32881:52@1956850-1956860",
+      "slot": {
+        "kind": "element",
+        "target": "contextualTypeNodes[contextualTypeCount]",
+        "initializer": {
+          "file": "src/compiler/checker.ts",
+          "line": 32881,
+          "column": 9,
+          "start": 1956807,
+          "end": 1956860
+        }
+      }
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32883,
+      "column": 50,
+      "start": 1956971,
+      "end": 1956981,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/checker.ts:32883:50@1956971-1956981",
+      "slot": {
+        "kind": "element",
+        "target": "contextualIsCache[contextualTypeCount]",
+        "initializer": {
+          "file": "src/compiler/checker.ts",
+          "line": 32883,
+          "column": 9,
+          "start": 1956930,
+          "end": 1956981
+        }
+      }
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32903,
+      "column": 56,
+      "start": 1957703,
+      "end": 1957713,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/checker.ts:32903:56@1957703-1957713",
+      "slot": {
+        "kind": "element",
+        "target": "inferenceContextNodes[inferenceContextCount]",
+        "initializer": {
+          "file": "src/compiler/checker.ts",
+          "line": 32903,
+          "column": 9,
+          "start": 1957656,
+          "end": 1957713
+        }
+      }
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32924,
+      "column": 53,
+      "start": 1958466,
+      "end": 1958476,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/checker.ts:32924:53@1958466-1958476",
+      "slot": {
+        "kind": "element",
+        "target": "activeTypeMappers[activeTypeMappersCount]",
+        "initializer": {
+          "file": "src/compiler/checker.ts",
+          "line": 32924,
+          "column": 9,
+          "start": 1958422,
+          "end": 1958476
+        }
+      }
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6645,
+      "column": 26,
+      "start": 350569,
+      "end": 350579,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/checker.ts:6645:26@350569-350579",
+      "slot": {
+        "kind": "object-field",
+        "key": "tracker",
+        "target": "tracker",
+        "initializer": {
+          "file": "src/compiler/checker.ts",
+          "line": 6640,
+          "column": 49,
+          "start": 350299,
+          "end": 352057
+        },
+        "property": {
+          "file": "src/compiler/checker.ts",
+          "line": 6645,
+          "column": 17,
+          "start": 350560,
+          "end": 350579
+        }
+      }
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2373,
+      "column": 19,
+      "start": 92605,
+      "end": 92615,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/commandLineParser.ts:2373:19@92605-92615",
+      "slot": {
+        "kind": "object-field",
+        "key": "name",
+        "target": "name",
+        "initializer": {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2372,
+          "column": 32,
+          "start": 92584,
+          "end": 94508
+        },
+        "property": {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2373,
+          "column": 13,
+          "start": 92599,
+          "end": 92615
+        }
+      }
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1896,
+      "column": 24,
+      "start": 66755,
+      "end": 66765,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/core.ts:1896:24@66755-66765",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/core.ts:66604:66621",
+        "target": "callback",
+        "initializer": {
+          "file": "src/compiler/core.ts",
+          "line": 1896,
+          "column": 13,
+          "start": 66744,
+          "end": 66765
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1215,
+      "column": 23,
+      "start": 41948,
+      "end": 41958,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:1215:23@41948-41958",
+      "slot": {
+        "kind": "field",
+        "key": "symbol",
+        "target": "node.symbol",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 1215,
+          "column": 9,
+          "start": 41934,
+          "end": 41958
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1309,
+      "column": 23,
+      "start": 46274,
+      "end": 46284,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:1309:23@46274-46284",
+      "slot": {
+        "kind": "field",
+        "key": "symbol",
+        "target": "node.symbol",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 1309,
+          "column": 9,
+          "start": 46260,
+          "end": 46284
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6071,
+      "column": 33,
+      "start": 264148,
+      "end": 264158,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6071:33@264148-264158",
+      "slot": {
+        "kind": "field",
+        "key": "parseDiagnostics",
+        "target": "node.parseDiagnostics",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6071,
+          "column": 9,
+          "start": 264124,
+          "end": 264158
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6072,
+      "column": 32,
+      "start": 264192,
+      "end": 264202,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6072:32@264192-264202",
+      "slot": {
+        "kind": "field",
+        "key": "bindDiagnostics",
+        "target": "node.bindDiagnostics",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6072,
+          "column": 9,
+          "start": 264169,
+          "end": 264202
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6074,
+      "column": 24,
+      "start": 264281,
+      "end": 264291,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6074:24@264281-264291",
+      "slot": {
+        "kind": "field",
+        "key": "lineMap",
+        "target": "node.lineMap",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6074,
+          "column": 9,
+          "start": 264266,
+          "end": 264291
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6077,
+      "column": 24,
+      "start": 264422,
+      "end": 264432,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6077:24@264422-264432",
+      "slot": {
+        "kind": "field",
+        "key": "pragmas",
+        "target": "node.pragmas",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6077,
+          "column": 9,
+          "start": 264407,
+          "end": 264432
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6079,
+      "column": 32,
+      "start": 264510,
+      "end": 264520,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6079:32@264510-264520",
+      "slot": {
+        "kind": "field",
+        "key": "referencedFiles",
+        "target": "node.referencedFiles",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6079,
+          "column": 9,
+          "start": 264487,
+          "end": 264520
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6080,
+      "column": 40,
+      "start": 264562,
+      "end": 264572,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6080:40@264562-264572",
+      "slot": {
+        "kind": "field",
+        "key": "typeReferenceDirectives",
+        "target": "node.typeReferenceDirectives",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6080,
+          "column": 9,
+          "start": 264531,
+          "end": 264572
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6081,
+      "column": 39,
+      "start": 264613,
+      "end": 264623,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6081:39@264613-264623",
+      "slot": {
+        "kind": "field",
+        "key": "libReferenceDirectives",
+        "target": "node.libReferenceDirectives",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6081,
+          "column": 9,
+          "start": 264583,
+          "end": 264623
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6082,
+      "column": 32,
+      "start": 264657,
+      "end": 264667,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6082:32@264657-264667",
+      "slot": {
+        "kind": "field",
+        "key": "amdDependencies",
+        "target": "node.amdDependencies",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6082,
+          "column": 9,
+          "start": 264634,
+          "end": 264667
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6084,
+      "column": 28,
+      "start": 264742,
+      "end": 264752,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6084:28@264742-264752",
+      "slot": {
+        "kind": "field",
+        "key": "identifiers",
+        "target": "node.identifiers",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6084,
+          "column": 9,
+          "start": 264723,
+          "end": 264752
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6087,
+      "column": 24,
+      "start": 264870,
+      "end": 264880,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6087:24@264870-264880",
+      "slot": {
+        "kind": "field",
+        "key": "imports",
+        "target": "node.imports",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6087,
+          "column": 9,
+          "start": 264855,
+          "end": 264880
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6088,
+      "column": 36,
+      "start": 264918,
+      "end": 264928,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6088:36@264918-264928",
+      "slot": {
+        "kind": "field",
+        "key": "moduleAugmentations",
+        "target": "node.moduleAugmentations",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6088,
+          "column": 9,
+          "start": 264891,
+          "end": 264928
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6089,
+      "column": 35,
+      "start": 264965,
+      "end": 264975,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/nodeFactory.ts:6089:35@264965-264975",
+      "slot": {
+        "kind": "field",
+        "key": "ambientModuleNames",
+        "target": "node.ambientModuleNames",
+        "initializer": {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6089,
+          "column": 9,
+          "start": 264939,
+          "end": 264975
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 1396,
+      "column": 38,
+      "start": 57829,
+      "end": 57839,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/utilities.ts:1396:38@57829-57839",
+      "slot": {
+        "kind": "element",
+        "target": "userStateStack[stackIndex]",
+        "initializer": {
+          "file": "src/compiler/factory/utilities.ts",
+          "line": 1396,
+          "column": 9,
+          "start": 57800,
+          "end": 57839
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 1476,
+      "column": 60,
+      "start": 63921,
+      "end": 63931,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/utilities.ts:1476:60@63921-63931",
+      "slot": {
+        "kind": "object-field",
+        "key": "value",
+        "target": "value",
+        "initializer": {
+          "file": "src/compiler/factory/utilities.ts",
+          "line": 1476,
+          "column": 51,
+          "start": 63912,
+          "end": 63933
+        },
+        "property": {
+          "file": "src/compiler/factory/utilities.ts",
+          "line": 1476,
+          "column": 53,
+          "start": 63914,
+          "end": 63931
+        }
+      }
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 1479,
+      "column": 43,
+      "start": 64117,
+      "end": 64127,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/factory/utilities.ts:1479:43@64117-64127",
+      "slot": {
+        "kind": "array-element",
+        "key": "0",
+        "target": "array[0]",
+        "initializer": {
+          "file": "src/compiler/factory/utilities.ts",
+          "line": 1479,
+          "column": 42,
+          "start": 64116,
+          "end": 64128
+        }
+      }
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1789,
+      "column": 22,
+      "start": 98031,
+      "end": 98041,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/parser.ts:1789:22@98031-98041",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/parser.ts:83251:83269",
+        "target": "sourceText",
+        "initializer": {
+          "file": "src/compiler/parser.ts",
+          "line": 1789,
+          "column": 9,
+          "start": 98018,
+          "end": 98041
+        }
+      }
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1790,
+      "column": 27,
+      "start": 98070,
+      "end": 98080,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/parser.ts:1790:27@98070-98080",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/parser.ts:83280:83309",
+        "target": "languageVersion",
+        "initializer": {
+          "file": "src/compiler/parser.ts",
+          "line": 1790,
+          "column": 9,
+          "start": 98052,
+          "end": 98080
+        }
+      }
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1792,
+      "column": 22,
+      "start": 98139,
+      "end": 98149,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/parser.ts:1792:22@98139-98149",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/parser.ts:83320:83342",
+        "target": "scriptKind",
+        "initializer": {
+          "file": "src/compiler/parser.ts",
+          "line": 1792,
+          "column": 9,
+          "start": 98126,
+          "end": 98149
+        }
+      }
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1793,
+      "column": 27,
+      "start": 98178,
+      "end": 98188,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/parser.ts:1793:27@98178-98188",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/parser.ts:83353:83385",
+        "target": "languageVariant",
+        "initializer": {
+          "file": "src/compiler/parser.ts",
+          "line": 1793,
+          "column": 9,
+          "start": 98160,
+          "end": 98188
+        }
+      }
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1795,
+      "column": 28,
+      "start": 98244,
+      "end": 98254,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/parser.ts:1795:28@98244-98254",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/parser.ts:83396:83446",
+        "target": "parseDiagnostics",
+        "initializer": {
+          "file": "src/compiler/parser.ts",
+          "line": 1795,
+          "column": 9,
+          "start": 98225,
+          "end": 98254
+        }
+      }
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1796,
+      "column": 28,
+      "start": 98284,
+      "end": 98294,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/parser.ts:1796:28@98284-98294",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/parser.ts:83457:83507",
+        "target": "jsDocDiagnostics",
+        "initializer": {
+          "file": "src/compiler/parser.ts",
+          "line": 1796,
+          "column": 9,
+          "start": 98265,
+          "end": 98294
+        }
+      }
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1798,
+      "column": 23,
+      "start": 98348,
+      "end": 98358,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/parser.ts:1798:23@98348-98358",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/parser.ts:83650:83682",
+        "target": "identifiers",
+        "initializer": {
+          "file": "src/compiler/parser.ts",
+          "line": 1798,
+          "column": 9,
+          "start": 98334,
+          "end": 98358
+        }
+      }
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1520,
+      "column": 29,
+      "start": 68652,
+      "end": 68662,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/program.ts:1520:29@68652-68662",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/program.ts:68142:68328",
+        "target": "_createProgramOptions",
+        "initializer": {
+          "file": "src/compiler/program.ts",
+          "line": 1520,
+          "column": 5,
+          "start": 68628,
+          "end": 68662
+        }
+      }
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1521,
+      "column": 27,
+      "start": 68691,
+      "end": 68701,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/program.ts:1521:27@68691-68701",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/program.ts:67931:67992",
+        "target": "_rootNamesOrOptions",
+        "initializer": {
+          "file": "src/compiler/program.ts",
+          "line": 1521,
+          "column": 5,
+          "start": 68669,
+          "end": 68701
+        }
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 4025,
+      "column": 22,
+      "start": 210662,
+      "end": 210672,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/scanner.ts:4025:22@210662-210672",
+      "slot": {
+        "kind": "variable",
+        "binding": "src/compiler/scanner.ts:71342:71361",
+        "target": "tokenValue",
+        "initializer": {
+          "file": "src/compiler/scanner.ts",
+          "line": 4025,
+          "column": 9,
+          "start": 210649,
+          "end": 210672
+        }
+      }
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 4097,
+      "column": 24,
+      "start": 218730,
+      "end": 218740,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/scanner.ts:4097:24@218730-218740",
+      "slot": {
+        "kind": "object-field",
+        "key": "Script_Extensions",
+        "target": "Script_Extensions",
+        "initializer": {
+          "file": "src/compiler/scanner.ts",
+          "line": 4094,
+          "column": 44,
+          "start": 214403,
+          "end": 218759
+        },
+        "property": {
+          "file": "src/compiler/scanner.ts",
+          "line": 4097,
+          "column": 5,
+          "start": 218711,
+          "end": 218755
+        }
+      }
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8514,
+      "column": 19,
+      "start": 334343,
+      "end": 334353,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/utilities.ts:8514:19@334343-334353",
+      "slot": {
+        "kind": "field",
+        "key": "parent",
+        "target": "this.parent",
+        "initializer": {
+          "file": "src/compiler/utilities.ts",
+          "line": 8514,
+          "column": 5,
+          "start": 334329,
+          "end": 334353
+        }
+      }
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8527,
+      "column": 19,
+      "start": 334800,
+      "end": 334810,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/utilities.ts:8527:19@334800-334810",
+      "slot": {
+        "kind": "field",
+        "key": "parent",
+        "target": "this.parent",
+        "initializer": {
+          "file": "src/compiler/utilities.ts",
+          "line": 8527,
+          "column": 5,
+          "start": 334786,
+          "end": 334810
+        }
+      }
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8539,
+      "column": 19,
+      "start": 335230,
+      "end": 335240,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/utilities.ts:8539:19@335230-335240",
+      "slot": {
+        "kind": "field",
+        "key": "parent",
+        "target": "this.parent",
+        "initializer": {
+          "file": "src/compiler/utilities.ts",
+          "line": 8539,
+          "column": 5,
+          "start": 335216,
+          "end": 335240
+        }
+      }
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 224,
+      "column": 48,
+      "start": 7485,
+      "end": 7495,
+      "expression": "undefined!",
+      "operand_type": "undefined",
+      "status": "checked",
+      "stock_project_status": "checked",
+      "stock_project_type": "undefined",
+      "id": "src/compiler/watch.ts:224:48@7485-7495",
+      "slot": {
+        "kind": "field",
+        "key": "onUnRecoverableConfigFileDiagnostic",
+        "target": "host.onUnRecoverableConfigFileDiagnostic",
+        "initializer": {
+          "file": "src/compiler/watch.ts",
+          "line": 224,
+          "column": 5,
+          "start": 7442,
+          "end": 7495
+        }
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "id": "src/compiler/binder.ts:17019:17035",
+      "file": "src/compiler/binder.ts",
+      "line": 513,
+      "column": 9,
+      "start": 17019,
+      "end": 17035,
+      "name": "file"
+    },
+    {
+      "id": "src/compiler/binder.ts:17046:17070",
+      "file": "src/compiler/binder.ts",
+      "line": 514,
+      "column": 9,
+      "start": 17046,
+      "end": 17070,
+      "name": "options"
+    },
+    {
+      "id": "src/compiler/binder.ts:17081:17110",
+      "file": "src/compiler/binder.ts",
+      "line": 515,
+      "column": 9,
+      "start": 17081,
+      "end": 17110,
+      "name": "languageVersion"
+    },
+    {
+      "id": "src/compiler/binder.ts:17121:17133",
+      "file": "src/compiler/binder.ts",
+      "line": 516,
+      "column": 9,
+      "start": 17121,
+      "end": 17133,
+      "name": "parent"
+    },
+    {
+      "id": "src/compiler/binder.ts:17144:17189",
+      "file": "src/compiler/binder.ts",
+      "line": 517,
+      "column": 9,
+      "start": 17144,
+      "end": 17189,
+      "name": "container"
+    },
+    {
+      "id": "src/compiler/binder.ts:17200:17255",
+      "file": "src/compiler/binder.ts",
+      "line": 518,
+      "column": 9,
+      "start": 17200,
+      "end": 17255,
+      "name": "thisParentContainer"
+    },
+    {
+      "id": "src/compiler/binder.ts:17292:17335",
+      "file": "src/compiler/binder.ts",
+      "line": 519,
+      "column": 9,
+      "start": 17292,
+      "end": 17335,
+      "name": "blockScopeContainer"
+    },
+    {
+      "id": "src/compiler/binder.ts:17346:17370",
+      "file": "src/compiler/binder.ts",
+      "line": 520,
+      "column": 9,
+      "start": 17346,
+      "end": 17370,
+      "name": "lastContainer"
+    },
+    {
+      "id": "src/compiler/binder.ts:17381:17454",
+      "file": "src/compiler/binder.ts",
+      "line": 521,
+      "column": 9,
+      "start": 17381,
+      "end": 17454,
+      "name": "delayedTypeAliases"
+    },
+    {
+      "id": "src/compiler/binder.ts:17500:17530",
+      "file": "src/compiler/binder.ts",
+      "line": 523,
+      "column": 9,
+      "start": 17500,
+      "end": 17530,
+      "name": "jsDocImports"
+    },
+    {
+      "id": "src/compiler/binder.ts:17587:17608",
+      "file": "src/compiler/binder.ts",
+      "line": 526,
+      "column": 9,
+      "start": 17587,
+      "end": 17608,
+      "name": "currentFlow"
+    },
+    {
+      "id": "src/compiler/core.ts:66604:66621",
+      "file": "src/compiler/core.ts",
+      "line": 1891,
+      "column": 28,
+      "start": 66604,
+      "end": 66621,
+      "name": "callback"
+    },
+    {
+      "id": "src/compiler/parser.ts:83251:83269",
+      "file": "src/compiler/parser.ts",
+      "line": 1503,
+      "column": 9,
+      "start": 83251,
+      "end": 83269,
+      "name": "sourceText"
+    },
+    {
+      "id": "src/compiler/parser.ts:83280:83309",
+      "file": "src/compiler/parser.ts",
+      "line": 1504,
+      "column": 9,
+      "start": 83280,
+      "end": 83309,
+      "name": "languageVersion"
+    },
+    {
+      "id": "src/compiler/parser.ts:83320:83342",
+      "file": "src/compiler/parser.ts",
+      "line": 1505,
+      "column": 9,
+      "start": 83320,
+      "end": 83342,
+      "name": "scriptKind"
+    },
+    {
+      "id": "src/compiler/parser.ts:83353:83385",
+      "file": "src/compiler/parser.ts",
+      "line": 1506,
+      "column": 9,
+      "start": 83353,
+      "end": 83385,
+      "name": "languageVariant"
+    },
+    {
+      "id": "src/compiler/parser.ts:83396:83446",
+      "file": "src/compiler/parser.ts",
+      "line": 1507,
+      "column": 9,
+      "start": 83396,
+      "end": 83446,
+      "name": "parseDiagnostics"
+    },
+    {
+      "id": "src/compiler/parser.ts:83457:83507",
+      "file": "src/compiler/parser.ts",
+      "line": 1508,
+      "column": 9,
+      "start": 83457,
+      "end": 83507,
+      "name": "jsDocDiagnostics"
+    },
+    {
+      "id": "src/compiler/parser.ts:83650:83682",
+      "file": "src/compiler/parser.ts",
+      "line": 1513,
+      "column": 9,
+      "start": 83650,
+      "end": 83682,
+      "name": "identifiers"
+    },
+    {
+      "id": "src/compiler/program.ts:68142:68328",
+      "file": "src/compiler/program.ts",
+      "line": 1516,
+      "column": 9,
+      "start": 68142,
+      "end": 68328,
+      "name": "_createProgramOptions"
+    },
+    {
+      "id": "src/compiler/program.ts:67931:67992",
+      "file": "src/compiler/program.ts",
+      "line": 1515,
+      "column": 31,
+      "start": 67931,
+      "end": 67992,
+      "name": "_rootNamesOrOptions"
+    },
+    {
+      "id": "src/compiler/scanner.ts:71342:71361",
+      "file": "src/compiler/scanner.ts",
+      "line": 1049,
+      "column": 9,
+      "start": 71342,
+      "end": 71361,
+      "name": "tokenValue"
+    }
+  ],
+  "references": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1894,
+      "column": 13,
+      "start": 66686,
+      "end": 66694,
+      "binding": "src/compiler/core.ts:66604:66621",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1895,
+      "column": 21,
+      "start": 66719,
+      "end": 66727,
+      "binding": "src/compiler/core.ts:66604:66621",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1896,
+      "column": 13,
+      "start": 66744,
+      "end": 66752,
+      "binding": "src/compiler/core.ts:66604:66621",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1069,
+      "column": 30,
+      "start": 72027,
+      "end": 72037,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1250,
+      "column": 38,
+      "start": 79441,
+      "end": 79451,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1252,
+      "column": 23,
+      "start": 79491,
+      "end": 79501,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1258,
+      "column": 17,
+      "start": 79674,
+      "end": 79684,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1258,
+      "column": 44,
+      "start": 79701,
+      "end": 79711,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1261,
+      "column": 67,
+      "start": 79901,
+      "end": 79911,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1308,
+      "column": 13,
+      "start": 81886,
+      "end": 81896,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1315,
+      "column": 13,
+      "start": 82288,
+      "end": 82298,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1319,
+      "column": 13,
+      "start": 82402,
+      "end": 82412,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1357,
+      "column": 9,
+      "start": 83848,
+      "end": 83858,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1525,
+      "column": 9,
+      "start": 90625,
+      "end": 90635,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1817,
+      "column": 21,
+      "start": 104276,
+      "end": 104286,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1819,
+      "column": 24,
+      "start": 104357,
+      "end": 104367,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1821,
+      "column": 51,
+      "start": 104503,
+      "end": 104513,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1871,
+      "column": 13,
+      "start": 106590,
+      "end": 106600,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1874,
+      "column": 17,
+      "start": 106770,
+      "end": 106780,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1874,
+      "column": 48,
+      "start": 106801,
+      "end": 106811,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1882,
+      "column": 28,
+      "start": 107168,
+      "end": 107178,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1884,
+      "column": 28,
+      "start": 107291,
+      "end": 107301,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1885,
+      "column": 20,
+      "start": 107348,
+      "end": 107358,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1886,
+      "column": 13,
+      "start": 107373,
+      "end": 107383,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1975,
+      "column": 21,
+      "start": 111216,
+      "end": 111226,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2136,
+      "column": 25,
+      "start": 119232,
+      "end": 119242,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2137,
+      "column": 30,
+      "start": 119336,
+      "end": 119346,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2139,
+      "column": 29,
+      "start": 119455,
+      "end": 119465,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2141,
+      "column": 25,
+      "start": 119525,
+      "end": 119535,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2141,
+      "column": 45,
+      "start": 119545,
+      "end": 119555,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2147,
+      "column": 25,
+      "start": 119916,
+      "end": 119926,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2148,
+      "column": 30,
+      "start": 119998,
+      "end": 120008,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2150,
+      "column": 29,
+      "start": 120112,
+      "end": 120122,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2152,
+      "column": 25,
+      "start": 120182,
+      "end": 120192,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2152,
+      "column": 45,
+      "start": 120202,
+      "end": 120212,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2158,
+      "column": 25,
+      "start": 120576,
+      "end": 120586,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2159,
+      "column": 30,
+      "start": 120658,
+      "end": 120668,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2161,
+      "column": 29,
+      "start": 120771,
+      "end": 120781,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2163,
+      "column": 25,
+      "start": 120841,
+      "end": 120851,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2163,
+      "column": 45,
+      "start": 120861,
+      "end": 120871,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2309,
+      "column": 25,
+      "start": 128162,
+      "end": 128172,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2317,
+      "column": 25,
+      "start": 128632,
+      "end": 128642,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2336,
+      "column": 29,
+      "start": 129647,
+      "end": 129657,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2344,
+      "column": 29,
+      "start": 130159,
+      "end": 130169,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2360,
+      "column": 25,
+      "start": 131257,
+      "end": 131267,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2430,
+      "column": 13,
+      "start": 134205,
+      "end": 134215,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2432,
+      "column": 17,
+      "start": 134320,
+      "end": 134330,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2607,
+      "column": 13,
+      "start": 143512,
+      "end": 143522,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2769,
+      "column": 37,
+      "start": 151777,
+      "end": 151787,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2777,
+      "column": 41,
+      "start": 152181,
+      "end": 152191,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 2929,
+      "column": 89,
+      "start": 159807,
+      "end": 159817,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3005,
+      "column": 102,
+      "start": 163355,
+      "end": 163365,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3007,
+      "column": 56,
+      "start": 163441,
+      "end": 163451,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3007,
+      "column": 127,
+      "start": 163512,
+      "end": 163522,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3012,
+      "column": 50,
+      "start": 163824,
+      "end": 163834,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3014,
+      "column": 37,
+      "start": 163922,
+      "end": 163932,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3763,
+      "column": 9,
+      "start": 200266,
+      "end": 200276,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3779,
+      "column": 21,
+      "start": 201227,
+      "end": 201237,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3784,
+      "column": 17,
+      "start": 201378,
+      "end": 201388,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3800,
+      "column": 17,
+      "start": 201898,
+      "end": 201908,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3837,
+      "column": 9,
+      "start": 203447,
+      "end": 203457,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3901,
+      "column": 21,
+      "start": 206389,
+      "end": 206399,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3909,
+      "column": 21,
+      "start": 206831,
+      "end": 206841,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3919,
+      "column": 13,
+      "start": 207319,
+      "end": 207329,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3921,
+      "column": 17,
+      "start": 207436,
+      "end": 207446,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3935,
+      "column": 32,
+      "start": 207896,
+      "end": 207906,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3946,
+      "column": 13,
+      "start": 208330,
+      "end": 208340,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3958,
+      "column": 32,
+      "start": 208739,
+      "end": 208749,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 3970,
+      "column": 9,
+      "start": 209091,
+      "end": 209101,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 4025,
+      "column": 9,
+      "start": 210649,
+      "end": 210659,
+      "binding": "src/compiler/scanner.ts:71342:71361",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1641,
+      "column": 67,
+      "start": 91050,
+      "end": 91066,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1724,
+      "column": 34,
+      "start": 95258,
+      "end": 95269,
+      "binding": "src/compiler/parser.ts:83650:83682",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1725,
+      "column": 63,
+      "start": 95334,
+      "end": 95350,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1726,
+      "column": 13,
+      "start": 95378,
+      "end": 95394,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1727,
+      "column": 67,
+      "start": 95465,
+      "end": 95481,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1743,
+      "column": 9,
+      "start": 96278,
+      "end": 96288,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1744,
+      "column": 9,
+      "start": 96313,
+      "end": 96328,
+      "binding": "src/compiler/parser.ts:83280:83309",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1746,
+      "column": 9,
+      "start": 96397,
+      "end": 96407,
+      "binding": "src/compiler/parser.ts:83320:83342",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1747,
+      "column": 9,
+      "start": 96432,
+      "end": 96447,
+      "binding": "src/compiler/parser.ts:83353:83385",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1749,
+      "column": 9,
+      "start": 96494,
+      "end": 96510,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1751,
+      "column": 9,
+      "start": 96555,
+      "end": 96566,
+      "binding": "src/compiler/parser.ts:83650:83682",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1757,
+      "column": 17,
+      "start": 96721,
+      "end": 96731,
+      "binding": "src/compiler/parser.ts:83320:83342",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1772,
+      "column": 25,
+      "start": 97286,
+      "end": 97296,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1774,
+      "column": 33,
+      "start": 97372,
+      "end": 97387,
+      "binding": "src/compiler/parser.ts:83280:83309",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1775,
+      "column": 36,
+      "start": 97426,
+      "end": 97441,
+      "binding": "src/compiler/parser.ts:83353:83385",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1776,
+      "column": 31,
+      "start": 97475,
+      "end": 97485,
+      "binding": "src/compiler/parser.ts:83320:83342",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1789,
+      "column": 9,
+      "start": 98018,
+      "end": 98028,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1790,
+      "column": 9,
+      "start": 98052,
+      "end": 98067,
+      "binding": "src/compiler/parser.ts:83280:83309",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1792,
+      "column": 9,
+      "start": 98126,
+      "end": 98136,
+      "binding": "src/compiler/parser.ts:83320:83342",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1793,
+      "column": 9,
+      "start": 98160,
+      "end": 98175,
+      "binding": "src/compiler/parser.ts:83353:83385",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1795,
+      "column": 9,
+      "start": 98225,
+      "end": 98241,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1796,
+      "column": 9,
+      "start": 98265,
+      "end": 98281,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1798,
+      "column": 9,
+      "start": 98334,
+      "end": 98345,
+      "binding": "src/compiler/parser.ts:83650:83682",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1822,
+      "column": 66,
+      "start": 99644,
+      "end": 99654,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1828,
+      "column": 34,
+      "start": 99957,
+      "end": 99968,
+      "binding": "src/compiler/parser.ts:83650:83682",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1829,
+      "column": 63,
+      "start": 100033,
+      "end": 100049,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1831,
+      "column": 13,
+      "start": 100134,
+      "end": 100150,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1832,
+      "column": 67,
+      "start": 100221,
+      "end": 100237,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1842,
+      "column": 13,
+      "start": 100500,
+      "end": 100516,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1842,
+      "column": 70,
+      "start": 100557,
+      "end": 100567,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1853,
+      "column": 62,
+      "start": 100927,
+      "end": 100937,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1868,
+      "column": 39,
+      "start": 101576,
+      "end": 101592,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1870,
+      "column": 9,
+      "start": 101605,
+      "end": 101621,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1885,
+      "column": 26,
+      "start": 102529,
+      "end": 102545,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1931,
+      "column": 26,
+      "start": 104855,
+      "end": 104871,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1991,
+      "column": 45,
+      "start": 107493,
+      "end": 107503,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2004,
+      "column": 31,
+      "start": 108079,
+      "end": 108089,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2155,
+      "column": 43,
+      "start": 113894,
+      "end": 113910,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2158,
+      "column": 57,
+      "start": 114091,
+      "end": 114101,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2159,
+      "column": 13,
+      "start": 114150,
+      "end": 114166,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2260,
+      "column": 44,
+      "start": 118076,
+      "end": 118092,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2283,
+      "column": 17,
+      "start": 119323,
+      "end": 119339,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2369,
+      "column": 37,
+      "start": 122921,
+      "end": 122931,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2375,
+      "column": 66,
+      "start": 123335,
+      "end": 123350,
+      "binding": "src/compiler/parser.ts:83280:83309",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2380,
+      "column": 32,
+      "start": 123527,
+      "end": 123537,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2510,
+      "column": 52,
+      "start": 128957,
+      "end": 128967,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2638,
+      "column": 26,
+      "start": 134664,
+      "end": 134675,
+      "binding": "src/compiler/parser.ts:83650:83682",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2640,
+      "column": 13,
+      "start": 134741,
+      "end": 134752,
+      "binding": "src/compiler/parser.ts:83650:83682",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 4569,
+      "column": 51,
+      "start": 225037,
+      "end": 225053,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 4573,
+      "column": 60,
+      "start": 225274,
+      "end": 225284,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 4874,
+      "column": 40,
+      "start": 239088,
+      "end": 239104,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 4876,
+      "column": 43,
+      "start": 239197,
+      "end": 239213,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 5348,
+      "column": 17,
+      "start": 262147,
+      "end": 262162,
+      "binding": "src/compiler/parser.ts:83353:83385",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 5769,
+      "column": 36,
+      "start": 282514,
+      "end": 282524,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 5812,
+      "column": 21,
+      "start": 284651,
+      "end": 284666,
+      "binding": "src/compiler/parser.ts:83353:83385",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 5854,
+      "column": 21,
+      "start": 286606,
+      "end": 286621,
+      "binding": "src/compiler/parser.ts:83353:83385",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 5880,
+      "column": 18,
+      "start": 287837,
+      "end": 287852,
+      "binding": "src/compiler/parser.ts:83353:83385",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6084,
+      "column": 148,
+      "start": 298801,
+      "end": 298811,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6088,
+      "column": 153,
+      "start": 299121,
+      "end": 299131,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6118,
+      "column": 41,
+      "start": 301231,
+      "end": 301241,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6145,
+      "column": 55,
+      "start": 302685,
+      "end": 302695,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6146,
+      "column": 138,
+      "start": 302855,
+      "end": 302865,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6372,
+      "column": 22,
+      "start": 313112,
+      "end": 313127,
+      "binding": "src/compiler/parser.ts:83353:83385",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6426,
+      "column": 36,
+      "start": 315959,
+      "end": 315969,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 6817,
+      "column": 145,
+      "start": 337368,
+      "end": 337378,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8466,
+      "column": 51,
+      "start": 417635,
+      "end": 417651,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8470,
+      "column": 60,
+      "start": 417872,
+      "end": 417882,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8677,
+      "column": 41,
+      "start": 427506,
+      "end": 427516,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8798,
+      "column": 57,
+      "start": 434525,
+      "end": 434541,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8799,
+      "column": 17,
+      "start": 434573,
+      "end": 434589,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8800,
+      "column": 71,
+      "start": 434664,
+      "end": 434680,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8846,
+      "column": 57,
+      "start": 437023,
+      "end": 437039,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8854,
+      "column": 48,
+      "start": 437366,
+      "end": 437382,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8861,
+      "column": 22,
+      "start": 437721,
+      "end": 437737,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8862,
+      "column": 21,
+      "start": 437762,
+      "end": 437778,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8864,
+      "column": 26,
+      "start": 437830,
+      "end": 437846,
+      "binding": "src/compiler/parser.ts:83457:83507",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8864,
+      "column": 44,
+      "start": 437848,
+      "end": 437864,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8867,
+      "column": 13,
+      "start": 437962,
+      "end": 437978,
+      "binding": "src/compiler/parser.ts:83396:83446",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8886,
+      "column": 29,
+      "start": 438640,
+      "end": 438650,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9633,
+      "column": 98,
+      "start": 480197,
+      "end": 480207,
+      "binding": "src/compiler/parser.ts:83251:83269",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 568,
+      "column": 81,
+      "start": 19801,
+      "end": 19805,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 572,
+      "column": 9,
+      "start": 19919,
+      "end": 19923,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 573,
+      "column": 9,
+      "start": 19938,
+      "end": 19945,
+      "binding": "src/compiler/binder.ts:17046:17070",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 574,
+      "column": 9,
+      "start": 19963,
+      "end": 19978,
+      "binding": "src/compiler/binder.ts:17081:17110",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 574,
+      "column": 47,
+      "start": 20001,
+      "end": 20008,
+      "binding": "src/compiler/binder.ts:17046:17070",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 575,
+      "column": 41,
+      "start": 20052,
+      "end": 20056,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 584,
+      "column": 14,
+      "start": 20320,
+      "end": 20324,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 585,
+      "column": 73,
+      "start": 20408,
+      "end": 20412,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 586,
+      "column": 18,
+      "start": 20470,
+      "end": 20474,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 588,
+      "column": 13,
+      "start": 20519,
+      "end": 20523,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 589,
+      "column": 13,
+      "start": 20564,
+      "end": 20568,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 594,
+      "column": 9,
+      "start": 20706,
+      "end": 20710,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 595,
+      "column": 9,
+      "start": 20734,
+      "end": 20741,
+      "binding": "src/compiler/binder.ts:17046:17070",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 596,
+      "column": 9,
+      "start": 20765,
+      "end": 20780,
+      "binding": "src/compiler/binder.ts:17081:17110",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 597,
+      "column": 9,
+      "start": 20804,
+      "end": 20810,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 598,
+      "column": 9,
+      "start": 20834,
+      "end": 20843,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 599,
+      "column": 9,
+      "start": 20867,
+      "end": 20886,
+      "binding": "src/compiler/binder.ts:17200:17255",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 600,
+      "column": 9,
+      "start": 20910,
+      "end": 20929,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 601,
+      "column": 9,
+      "start": 20953,
+      "end": 20966,
+      "binding": "src/compiler/binder.ts:17346:17370",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 602,
+      "column": 9,
+      "start": 20990,
+      "end": 21008,
+      "binding": "src/compiler/binder.ts:17381:17454",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 603,
+      "column": 9,
+      "start": 21032,
+      "end": 21044,
+      "binding": "src/compiler/binder.ts:17500:17530",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 605,
+      "column": 9,
+      "start": 21102,
+      "end": 21113,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 860,
+      "column": 25,
+      "start": 35933,
+      "end": 35937,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 869,
+      "column": 21,
+      "start": 36633,
+      "end": 36637,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 891,
+      "column": 38,
+      "start": 37583,
+      "end": 37592,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 891,
+      "column": 65,
+      "start": 37610,
+      "end": 37619,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 894,
+      "column": 34,
+      "start": 37733,
+      "end": 37742,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 895,
+      "column": 38,
+      "start": 37798,
+      "end": 37807,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 915,
+      "column": 65,
+      "start": 39663,
+      "end": 39672,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 916,
+      "column": 36,
+      "start": 39745,
+      "end": 39754,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 916,
+      "column": 51,
+      "start": 39760,
+      "end": 39769,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 917,
+      "column": 42,
+      "start": 39906,
+      "end": 39915,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 917,
+      "column": 69,
+      "start": 39933,
+      "end": 39942,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 920,
+      "column": 45,
+      "start": 40193,
+      "end": 40202,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 921,
+      "column": 52,
+      "start": 40320,
+      "end": 40329,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 921,
+      "column": 79,
+      "start": 40347,
+      "end": 40356,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 926,
+      "column": 34,
+      "start": 40544,
+      "end": 40553,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 927,
+      "column": 38,
+      "start": 40609,
+      "end": 40618,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 957,
+      "column": 31,
+      "start": 42565,
+      "end": 42574,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 958,
+      "column": 41,
+      "start": 42617,
+      "end": 42636,
+      "binding": "src/compiler/binder.ts:17200:17255",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 959,
+      "column": 42,
+      "start": 42680,
+      "end": 42699,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 982,
+      "column": 17,
+      "start": 44340,
+      "end": 44359,
+      "binding": "src/compiler/binder.ts:17200:17255",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 982,
+      "column": 39,
+      "start": 44362,
+      "end": 44371,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 984,
+      "column": 13,
+      "start": 44401,
+      "end": 44410,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 984,
+      "column": 25,
+      "start": 44413,
+      "end": 44432,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 986,
+      "column": 18,
+      "start": 44536,
+      "end": 44545,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 987,
+      "column": 37,
+      "start": 44627,
+      "end": 44636,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 991,
+      "column": 13,
+      "start": 44767,
+      "end": 44786,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 993,
+      "column": 18,
+      "start": 44901,
+      "end": 44920,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 997,
+      "column": 37,
+      "start": 45089,
+      "end": 45100,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1014,
+      "column": 17,
+      "start": 46196,
+      "end": 46207,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1016,
+      "column": 21,
+      "start": 46455,
+      "end": 46466,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1031,
+      "column": 19,
+      "start": 47527,
+      "end": 47538,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1034,
+      "column": 95,
+      "start": 47948,
+      "end": 47959,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1041,
+      "column": 52,
+      "start": 48232,
+      "end": 48243,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1044,
+      "column": 52,
+      "start": 48352,
+      "end": 48363,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1045,
+      "column": 17,
+      "start": 48383,
+      "end": 48394,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1047,
+      "column": 102,
+      "start": 48773,
+      "end": 48784,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1051,
+      "column": 17,
+      "start": 48879,
+      "end": 48890,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1074,
+      "column": 9,
+      "start": 50041,
+      "end": 50050,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1075,
+      "column": 9,
+      "start": 50077,
+      "end": 50096,
+      "binding": "src/compiler/binder.ts:17200:17255",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1076,
+      "column": 9,
+      "start": 50133,
+      "end": 50152,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1107,
+      "column": 13,
+      "start": 51371,
+      "end": 51382,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1121,
+      "column": 29,
+      "start": 51957,
+      "end": 51968,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1490,
+      "column": 84,
+      "start": 69287,
+      "end": 69298,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1491,
+      "column": 86,
+      "start": 69394,
+      "end": 69405,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1519,
+      "column": 38,
+      "start": 70496,
+      "end": 70507,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1520,
+      "column": 9,
+      "start": 70519,
+      "end": 70530,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1522,
+      "column": 9,
+      "start": 70628,
+      "end": 70639,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1524,
+      "column": 38,
+      "start": 70791,
+      "end": 70802,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1525,
+      "column": 9,
+      "start": 70814,
+      "end": 70825,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1532,
+      "column": 35,
+      "start": 71140,
+      "end": 71151,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1533,
+      "column": 9,
+      "start": 71163,
+      "end": 71174,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1535,
+      "column": 42,
+      "start": 71312,
+      "end": 71323,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1536,
+      "column": 9,
+      "start": 71335,
+      "end": 71346,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1538,
+      "column": 9,
+      "start": 71460,
+      "end": 71471,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1547,
+      "column": 37,
+      "start": 71877,
+      "end": 71888,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1548,
+      "column": 9,
+      "start": 71900,
+      "end": 71911,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1550,
+      "column": 9,
+      "start": 72006,
+      "end": 72017,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1552,
+      "column": 44,
+      "start": 72180,
+      "end": 72191,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1553,
+      "column": 9,
+      "start": 72203,
+      "end": 72214,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1555,
+      "column": 37,
+      "start": 72325,
+      "end": 72336,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1556,
+      "column": 9,
+      "start": 72348,
+      "end": 72359,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1563,
+      "column": 37,
+      "start": 72672,
+      "end": 72683,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1564,
+      "column": 9,
+      "start": 72695,
+      "end": 72706,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1568,
+      "column": 38,
+      "start": 72867,
+      "end": 72878,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1574,
+      "column": 37,
+      "start": 73174,
+      "end": 73185,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1575,
+      "column": 9,
+      "start": 73197,
+      "end": 73208,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1583,
+      "column": 9,
+      "start": 73527,
+      "end": 73538,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1585,
+      "column": 36,
+      "start": 73640,
+      "end": 73651,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1586,
+      "column": 9,
+      "start": 73663,
+      "end": 73674,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1588,
+      "column": 36,
+      "start": 73776,
+      "end": 73787,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1589,
+      "column": 9,
+      "start": 73799,
+      "end": 73810,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1600,
+      "column": 52,
+      "start": 74294,
+      "end": 74305,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1603,
+      "column": 9,
+      "start": 74343,
+      "end": 74354,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1619,
+      "column": 38,
+      "start": 74978,
+      "end": 74989,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1620,
+      "column": 13,
+      "start": 75005,
+      "end": 75016,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1654,
+      "column": 39,
+      "start": 76722,
+      "end": 76733,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1657,
+      "column": 40,
+      "start": 76856,
+      "end": 76867,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1660,
+      "column": 13,
+      "start": 76998,
+      "end": 77009,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1665,
+      "column": 43,
+      "start": 77404,
+      "end": 77415,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1668,
+      "column": 44,
+      "start": 77553,
+      "end": 77564,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1689,
+      "column": 13,
+      "start": 79293,
+      "end": 79304,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1691,
+      "column": 17,
+      "start": 79376,
+      "end": 79387,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1693,
+      "column": 17,
+      "start": 79558,
+      "end": 79569,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1699,
+      "column": 112,
+      "start": 80034,
+      "end": 80045,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1704,
+      "column": 118,
+      "start": 80501,
+      "end": 80512,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1709,
+      "column": 17,
+      "start": 80851,
+      "end": 80862,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1709,
+      "column": 120,
+      "start": 80954,
+      "end": 80965,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1713,
+      "column": 13,
+      "start": 81041,
+      "end": 81052,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1723,
+      "column": 29,
+      "start": 81447,
+      "end": 81458,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1725,
+      "column": 40,
+      "start": 81531,
+      "end": 81542,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1736,
+      "column": 9,
+      "start": 82273,
+      "end": 82284,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1748,
+      "column": 21,
+      "start": 82870,
+      "end": 82881,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1756,
+      "column": 13,
+      "start": 83282,
+      "end": 83293,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1759,
+      "column": 31,
+      "start": 83425,
+      "end": 83436,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1760,
+      "column": 19,
+      "start": 83457,
+      "end": 83468,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1760,
+      "column": 93,
+      "start": 83531,
+      "end": 83538,
+      "binding": "src/compiler/binder.ts:17046:17070",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1761,
+      "column": 46,
+      "start": 83615,
+      "end": 83626,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1767,
+      "column": 33,
+      "start": 83751,
+      "end": 83762,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1768,
+      "column": 9,
+      "start": 83773,
+      "end": 83784,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1770,
+      "column": 9,
+      "start": 83848,
+      "end": 83859,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1785,
+      "column": 17,
+      "start": 84585,
+      "end": 84596,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1785,
+      "column": 46,
+      "start": 84614,
+      "end": 84625,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1805,
+      "column": 43,
+      "start": 85311,
+      "end": 85322,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1806,
+      "column": 9,
+      "start": 85334,
+      "end": 85345,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1820,
+      "column": 13,
+      "start": 85870,
+      "end": 85881,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1820,
+      "column": 68,
+      "start": 85925,
+      "end": 85936,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1855,
+      "column": 9,
+      "start": 87508,
+      "end": 87519,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1862,
+      "column": 84,
+      "start": 87891,
+      "end": 87902,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1863,
+      "column": 86,
+      "start": 87998,
+      "end": 88009,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1927,
+      "column": 33,
+      "start": 90429,
+      "end": 90435,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1930,
+      "column": 36,
+      "start": 90565,
+      "end": 90571,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1931,
+      "column": 17,
+      "start": 90590,
+      "end": 90596,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1951,
+      "column": 45,
+      "start": 91717,
+      "end": 91728,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 1955,
+      "column": 21,
+      "start": 91956,
+      "end": 91967,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2000,
+      "column": 29,
+      "start": 93948,
+      "end": 93959,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2000,
+      "column": 87,
+      "start": 94006,
+      "end": 94017,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2011,
+      "column": 17,
+      "start": 94443,
+      "end": 94449,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2036,
+      "column": 33,
+      "start": 95291,
+      "end": 95302,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2040,
+      "column": 9,
+      "start": 95461,
+      "end": 95472,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2042,
+      "column": 37,
+      "start": 95573,
+      "end": 95584,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2046,
+      "column": 44,
+      "start": 95706,
+      "end": 95717,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2047,
+      "column": 9,
+      "start": 95729,
+      "end": 95740,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2049,
+      "column": 38,
+      "start": 95843,
+      "end": 95854,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2053,
+      "column": 44,
+      "start": 95974,
+      "end": 95985,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2054,
+      "column": 9,
+      "start": 95997,
+      "end": 96008,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2066,
+      "column": 13,
+      "start": 96505,
+      "end": 96516,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2066,
+      "column": 68,
+      "start": 96560,
+      "end": 96571,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2103,
+      "column": 27,
+      "start": 98036,
+      "end": 98047,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2105,
+      "column": 60,
+      "start": 98130,
+      "end": 98141,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2110,
+      "column": 33,
+      "start": 98302,
+      "end": 98313,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2111,
+      "column": 9,
+      "start": 98325,
+      "end": 98336,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2148,
+      "column": 84,
+      "start": 99876,
+      "end": 99887,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2149,
+      "column": 86,
+      "start": 99983,
+      "end": 99994,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2186,
+      "column": 13,
+      "start": 101698,
+      "end": 101709,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2190,
+      "column": 84,
+      "start": 101976,
+      "end": 101987,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2191,
+      "column": 86,
+      "start": 102083,
+      "end": 102094,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2198,
+      "column": 37,
+      "start": 102332,
+      "end": 102343,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2201,
+      "column": 13,
+      "start": 102494,
+      "end": 102505,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2244,
+      "column": 21,
+      "start": 104213,
+      "end": 104224,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2244,
+      "column": 50,
+      "start": 104242,
+      "end": 104253,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2251,
+      "column": 17,
+      "start": 104636,
+      "end": 104647,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2251,
+      "column": 75,
+      "start": 104694,
+      "end": 104705,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2257,
+      "column": 13,
+      "start": 104815,
+      "end": 104828,
+      "binding": "src/compiler/binder.ts:17346:17370",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2258,
+      "column": 13,
+      "start": 104845,
+      "end": 104858,
+      "binding": "src/compiler/binder.ts:17346:17370",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2261,
+      "column": 9,
+      "start": 104903,
+      "end": 104916,
+      "binding": "src/compiler/binder.ts:17346:17370",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2265,
+      "column": 17,
+      "start": 105094,
+      "end": 105103,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2281,
+      "column": 38,
+      "start": 105976,
+      "end": 105985,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2281,
+      "column": 65,
+      "start": 106003,
+      "end": 106012,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2293,
+      "column": 38,
+      "start": 106795,
+      "end": 106804,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2293,
+      "column": 65,
+      "start": 106822,
+      "end": 106831,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2319,
+      "column": 21,
+      "start": 108306,
+      "end": 108315,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2319,
+      "column": 56,
+      "start": 108341,
+      "end": 108350,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2320,
+      "column": 38,
+      "start": 108406,
+      "end": 108415,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2326,
+      "column": 29,
+      "start": 108672,
+      "end": 108681,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2326,
+      "column": 56,
+      "start": 108699,
+      "end": 108708,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2327,
+      "column": 29,
+      "start": 108781,
+      "end": 108790,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2327,
+      "column": 56,
+      "start": 108808,
+      "end": 108817,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2331,
+      "column": 33,
+      "start": 109018,
+      "end": 109022,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2333,
+      "column": 29,
+      "start": 109123,
+      "end": 109127,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2372,
+      "column": 17,
+      "start": 111159,
+      "end": 111163,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2372,
+      "column": 75,
+      "start": 111217,
+      "end": 111221,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2431,
+      "column": 29,
+      "start": 114488,
+      "end": 114497,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2438,
+      "column": 17,
+      "start": 114744,
+      "end": 114763,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2443,
+      "column": 48,
+      "start": 115006,
+      "end": 115015,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2449,
+      "column": 34,
+      "start": 115248,
+      "end": 115267,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2450,
+      "column": 22,
+      "start": 115307,
+      "end": 115326,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2451,
+      "column": 21,
+      "start": 115358,
+      "end": 115377,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2452,
+      "column": 41,
+      "start": 115449,
+      "end": 115468,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2454,
+      "column": 31,
+      "start": 115521,
+      "end": 115540,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2459,
+      "column": 14,
+      "start": 115686,
+      "end": 115704,
+      "binding": "src/compiler/binder.ts:17381:17454",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2462,
+      "column": 31,
+      "start": 115771,
+      "end": 115780,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2463,
+      "column": 35,
+      "start": 115817,
+      "end": 115830,
+      "binding": "src/compiler/binder.ts:17346:17370",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2464,
+      "column": 41,
+      "start": 115873,
+      "end": 115892,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2465,
+      "column": 28,
+      "start": 115922,
+      "end": 115928,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2466,
+      "column": 33,
+      "start": 115963,
+      "end": 115974,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2467,
+      "column": 33,
+      "start": 116009,
+      "end": 116027,
+      "binding": "src/compiler/binder.ts:17381:17454",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2469,
+      "column": 13,
+      "start": 116095,
+      "end": 116104,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2469,
+      "column": 85,
+      "start": 116167,
+      "end": 116171,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2470,
+      "column": 13,
+      "start": 116186,
+      "end": 116205,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2470,
+      "column": 116,
+      "start": 116289,
+      "end": 116293,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2471,
+      "column": 13,
+      "start": 116308,
+      "end": 116319,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2472,
+      "column": 13,
+      "start": 116414,
+      "end": 116420,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2479,
+      "column": 54,
+      "start": 116965,
+      "end": 116969,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2480,
+      "column": 42,
+      "start": 117178,
+      "end": 117187,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2484,
+      "column": 61,
+      "start": 117486,
+      "end": 117490,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2485,
+      "column": 33,
+      "start": 117528,
+      "end": 117537,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2488,
+      "column": 33,
+      "start": 117652,
+      "end": 117661,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2488,
+      "column": 45,
+      "start": 117664,
+      "end": 117668,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2492,
+      "column": 29,
+      "start": 117836,
+      "end": 117845,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2495,
+      "column": 29,
+      "start": 118016,
+      "end": 118025,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2498,
+      "column": 29,
+      "start": 118232,
+      "end": 118241,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2498,
+      "column": 73,
+      "start": 118276,
+      "end": 118280,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2498,
+      "column": 109,
+      "start": 118312,
+      "end": 118316,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2505,
+      "column": 25,
+      "start": 118771,
+      "end": 118780,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2508,
+      "column": 21,
+      "start": 118939,
+      "end": 118948,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2512,
+      "column": 17,
+      "start": 119143,
+      "end": 119149,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2519,
+      "column": 9,
+      "start": 119393,
+      "end": 119402,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2520,
+      "column": 9,
+      "start": 119429,
+      "end": 119442,
+      "binding": "src/compiler/binder.ts:17346:17370",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2521,
+      "column": 9,
+      "start": 119473,
+      "end": 119492,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2522,
+      "column": 9,
+      "start": 119529,
+      "end": 119535,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2523,
+      "column": 9,
+      "start": 119559,
+      "end": 119570,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2527,
+      "column": 13,
+      "start": 119647,
+      "end": 119659,
+      "binding": "src/compiler/binder.ts:17500:17530",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2531,
+      "column": 31,
+      "start": 119742,
+      "end": 119751,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2532,
+      "column": 35,
+      "start": 119788,
+      "end": 119801,
+      "binding": "src/compiler/binder.ts:17346:17370",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2533,
+      "column": 41,
+      "start": 119844,
+      "end": 119863,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2534,
+      "column": 28,
+      "start": 119893,
+      "end": 119899,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2535,
+      "column": 33,
+      "start": 119934,
+      "end": 119945,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2537,
+      "column": 38,
+      "start": 119987,
+      "end": 119999,
+      "binding": "src/compiler/binder.ts:17500:17530",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2541,
+      "column": 13,
+      "start": 120333,
+      "end": 120342,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2541,
+      "column": 47,
+      "start": 120367,
+      "end": 120371,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2542,
+      "column": 13,
+      "start": 120386,
+      "end": 120405,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2542,
+      "column": 67,
+      "start": 120440,
+      "end": 120444,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2543,
+      "column": 13,
+      "start": 120459,
+      "end": 120470,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2544,
+      "column": 13,
+      "start": 120565,
+      "end": 120571,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2548,
+      "column": 9,
+      "start": 120660,
+      "end": 120669,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2549,
+      "column": 9,
+      "start": 120696,
+      "end": 120709,
+      "binding": "src/compiler/binder.ts:17346:17370",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2550,
+      "column": 9,
+      "start": 120740,
+      "end": 120759,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2551,
+      "column": 9,
+      "start": 120796,
+      "end": 120802,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2552,
+      "column": 9,
+      "start": 120826,
+      "end": 120837,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2561,
+      "column": 14,
+      "start": 121293,
+      "end": 121297,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2577,
+      "column": 17,
+      "start": 121918,
+      "end": 121922,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2580,
+      "column": 38,
+      "start": 122171,
+      "end": 122175,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2581,
+      "column": 21,
+      "start": 122230,
+      "end": 122234,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2584,
+      "column": 21,
+      "start": 122507,
+      "end": 122511,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2588,
+      "column": 17,
+      "start": 122838,
+      "end": 122842,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2600,
+      "column": 13,
+      "start": 123425,
+      "end": 123429,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2612,
+      "column": 18,
+      "start": 124028,
+      "end": 124032,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2613,
+      "column": 17,
+      "start": 124077,
+      "end": 124081,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2639,
+      "column": 46,
+      "start": 125543,
+      "end": 125547,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2640,
+      "column": 13,
+      "start": 125580,
+      "end": 125584,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2640,
+      "column": 60,
+      "start": 125627,
+      "end": 125631,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2654,
+      "column": 50,
+      "start": 126424,
+      "end": 126428,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2655,
+      "column": 17,
+      "start": 126454,
+      "end": 126458,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2655,
+      "column": 64,
+      "start": 126501,
+      "end": 126505,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2667,
+      "column": 13,
+      "start": 127171,
+      "end": 127175,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2688,
+      "column": 13,
+      "start": 128209,
+      "end": 128213,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2696,
+      "column": 13,
+      "start": 128629,
+      "end": 128644,
+      "binding": "src/compiler/binder.ts:17081:17110",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2699,
+      "column": 17,
+      "start": 128784,
+      "end": 128803,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2700,
+      "column": 17,
+      "start": 128855,
+      "end": 128874,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2701,
+      "column": 62,
+      "start": 128978,
+      "end": 128997,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2705,
+      "column": 55,
+      "start": 129255,
+      "end": 129259,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2706,
+      "column": 17,
+      "start": 129285,
+      "end": 129289,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2706,
+      "column": 64,
+      "start": 129332,
+      "end": 129336,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2739,
+      "column": 49,
+      "start": 130797,
+      "end": 130804,
+      "binding": "src/compiler/binder.ts:17046:17070",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2747,
+      "column": 47,
+      "start": 131205,
+      "end": 131209,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2748,
+      "column": 9,
+      "start": 131231,
+      "end": 131235,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2748,
+      "column": 56,
+      "start": 131278,
+      "end": 131282,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2755,
+      "column": 25,
+      "start": 131468,
+      "end": 131474,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2756,
+      "column": 58,
+      "start": 131535,
+      "end": 131539,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2786,
+      "column": 32,
+      "start": 133336,
+      "end": 133342,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2787,
+      "column": 13,
+      "start": 133357,
+      "end": 133363,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2795,
+      "column": 13,
+      "start": 133667,
+      "end": 133673,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2798,
+      "column": 32,
+      "start": 133747,
+      "end": 133753,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2799,
+      "column": 58,
+      "start": 133813,
+      "end": 133819,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2801,
+      "column": 13,
+      "start": 133871,
+      "end": 133877,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2839,
+      "column": 60,
+      "start": 135124,
+      "end": 135128,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2867,
+      "column": 21,
+      "start": 136619,
+      "end": 136630,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2867,
+      "column": 59,
+      "start": 136657,
+      "end": 136663,
+      "binding": "src/compiler/binder.ts:17121:17133",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2868,
+      "column": 70,
+      "start": 136786,
+      "end": 136797,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2873,
+      "column": 21,
+      "start": 137042,
+      "end": 137053,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2874,
+      "column": 56,
+      "start": 137140,
+      "end": 137151,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2879,
+      "column": 69,
+      "start": 137351,
+      "end": 137362,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2886,
+      "column": 21,
+      "start": 137731,
+      "end": 137742,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2887,
+      "column": 37,
+      "start": 137814,
+      "end": 137825,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2894,
+      "column": 21,
+      "start": 138067,
+      "end": 138071,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2896,
+      "column": 42,
+      "start": 138203,
+      "end": 138222,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2898,
+      "column": 35,
+      "start": 138302,
+      "end": 138306,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2922,
+      "column": 64,
+      "start": 140028,
+      "end": 140047,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2961,
+      "column": 53,
+      "start": 142348,
+      "end": 142359,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3089,
+      "column": 25,
+      "start": 150391,
+      "end": 150409,
+      "binding": "src/compiler/binder.ts:17381:17454",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3089,
+      "column": 48,
+      "start": 150414,
+      "end": 150432,
+      "binding": "src/compiler/binder.ts:17381:17454",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3093,
+      "column": 25,
+      "start": 150695,
+      "end": 150707,
+      "binding": "src/compiler/binder.ts:17500:17530",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3093,
+      "column": 42,
+      "start": 150712,
+      "end": 150724,
+      "binding": "src/compiler/binder.ts:17500:17530",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3109,
+      "column": 30,
+      "start": 151577,
+      "end": 151581,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3110,
+      "column": 30,
+      "start": 151614,
+      "end": 151618,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3113,
+      "column": 35,
+      "start": 151716,
+      "end": 151720,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3116,
+      "column": 36,
+      "start": 151877,
+      "end": 151881,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3117,
+      "column": 27,
+      "start": 151917,
+      "end": 151921,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3117,
+      "column": 49,
+      "start": 151939,
+      "end": 151943,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3117,
+      "column": 62,
+      "start": 151952,
+      "end": 151956,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3118,
+      "column": 13,
+      "start": 152011,
+      "end": 152015,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3123,
+      "column": 34,
+      "start": 152144,
+      "end": 152148,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3123,
+      "column": 89,
+      "start": 152199,
+      "end": 152203,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3127,
+      "column": 14,
+      "start": 152315,
+      "end": 152324,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3127,
+      "column": 35,
+      "start": 152336,
+      "end": 152345,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3139,
+      "column": 42,
+      "start": 153201,
+      "end": 153210,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3139,
+      "column": 68,
+      "start": 153227,
+      "end": 153236,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3150,
+      "column": 13,
+      "start": 153672,
+      "end": 153676,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3157,
+      "column": 13,
+      "start": 154190,
+      "end": 154194,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3160,
+      "column": 13,
+      "start": 154294,
+      "end": 154298,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3160,
+      "column": 41,
+      "start": 154322,
+      "end": 154326,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3161,
+      "column": 27,
+      "start": 154399,
+      "end": 154403,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3161,
+      "column": 54,
+      "start": 154426,
+      "end": 154430,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3166,
+      "column": 14,
+      "start": 154589,
+      "end": 154598,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3166,
+      "column": 35,
+      "start": 154610,
+      "end": 154619,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3172,
+      "column": 27,
+      "start": 154947,
+      "end": 154956,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3172,
+      "column": 53,
+      "start": 154973,
+      "end": 154982,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3178,
+      "column": 27,
+      "start": 155362,
+      "end": 155371,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3178,
+      "column": 53,
+      "start": 155388,
+      "end": 155397,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3189,
+      "column": 13,
+      "start": 155758,
+      "end": 155762,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3189,
+      "column": 45,
+      "start": 155790,
+      "end": 155794,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3192,
+      "column": 14,
+      "start": 155883,
+      "end": 155887,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3193,
+      "column": 13,
+      "start": 155928,
+      "end": 155932,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3194,
+      "column": 18,
+      "start": 155983,
+      "end": 155987,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3246,
+      "column": 57,
+      "start": 158512,
+      "end": 158521,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3246,
+      "column": 71,
+      "start": 158526,
+      "end": 158530,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3246,
+      "column": 111,
+      "start": 158566,
+      "end": 158570,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3259,
+      "column": 38,
+      "start": 159259,
+      "end": 159263,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3259,
+      "column": 60,
+      "start": 159281,
+      "end": 159285,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3264,
+      "column": 23,
+      "start": 159514,
+      "end": 159518,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3264,
+      "column": 45,
+      "start": 159536,
+      "end": 159540,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3284,
+      "column": 100,
+      "start": 161075,
+      "end": 161094,
+      "binding": "src/compiler/binder.ts:17200:17255",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3407,
+      "column": 82,
+      "start": 168163,
+      "end": 168182,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3407,
+      "column": 158,
+      "start": 168239,
+      "end": 168248,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3412,
+      "column": 59,
+      "start": 168477,
+      "end": 168486,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3418,
+      "column": 51,
+      "start": 168796,
+      "end": 168805,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3418,
+      "column": 65,
+      "start": 168810,
+      "end": 168814,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3418,
+      "column": 105,
+      "start": 168850,
+      "end": 168854,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3459,
+      "column": 25,
+      "start": 171248,
+      "end": 171252,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3459,
+      "column": 56,
+      "start": 171279,
+      "end": 171283,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3526,
+      "column": 67,
+      "start": 174710,
+      "end": 174729,
+      "binding": "src/compiler/binder.ts:17292:17335",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3526,
+      "column": 127,
+      "start": 174770,
+      "end": 174779,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3570,
+      "column": 159,
+      "start": 177022,
+      "end": 177031,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3581,
+      "column": 45,
+      "start": 177671,
+      "end": 177675,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3582,
+      "column": 20,
+      "start": 177703,
+      "end": 177707,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3601,
+      "column": 14,
+      "start": 178502,
+      "end": 178506,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3636,
+      "column": 13,
+      "start": 180321,
+      "end": 180325,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3685,
+      "column": 59,
+      "start": 183277,
+      "end": 183286,
+      "binding": "src/compiler/binder.ts:17144:17189",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3710,
+      "column": 14,
+      "start": 184641,
+      "end": 184645,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3727,
+      "column": 14,
+      "start": 185307,
+      "end": 185311,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3732,
+      "column": 13,
+      "start": 185510,
+      "end": 185521,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3733,
+      "column": 29,
+      "start": 185554,
+      "end": 185565,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3741,
+      "column": 14,
+      "start": 185943,
+      "end": 185947,
+      "binding": "src/compiler/binder.ts:17019:17035",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3745,
+      "column": 13,
+      "start": 186112,
+      "end": 186123,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3746,
+      "column": 29,
+      "start": 186214,
+      "end": 186225,
+      "binding": "src/compiler/binder.ts:17587:17608",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1516,
+      "column": 41,
+      "start": 68174,
+      "end": 68193,
+      "binding": "src/compiler/program.ts:67931:67992",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1516,
+      "column": 91,
+      "start": 68224,
+      "end": 68243,
+      "binding": "src/compiler/program.ts:67931:67992",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1516,
+      "column": 176,
+      "start": 68309,
+      "end": 68328,
+      "binding": "src/compiler/program.ts:67931:67992",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1517,
+      "column": 136,
+      "start": 68484,
+      "end": 68505,
+      "binding": "src/compiler/program.ts:68142:68328",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1518,
+      "column": 26,
+      "start": 68533,
+      "end": 68554,
+      "binding": "src/compiler/program.ts:68142:68328",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1520,
+      "column": 5,
+      "start": 68628,
+      "end": 68649,
+      "binding": "src/compiler/program.ts:68142:68328",
+      "shorthand": false
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1521,
+      "column": 5,
+      "start": 68669,
+      "end": 68688,
+      "binding": "src/compiler/program.ts:67931:67992",
+      "shorthand": false
+    }
+  ]
+}
