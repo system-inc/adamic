@@ -37,7 +37,7 @@ export class Rule {
     }
     visit(index: number): void {
         const path = this.context.parser.path;
-        if(!path.endsWith('.ts') && !path.endsWith('.tsx')) { return; }
+        if(!path.endsWith('.a') && !path.endsWith('.ts') && !path.endsWith('.tsx')) { return; }
         if(this.context.node(index).kind !== 'TemplateExpression') { this.literal(index); return; }
         for(const child of this.context.node(index).children) {
             const node = this.context.node(child);

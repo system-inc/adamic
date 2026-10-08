@@ -1,0 +1,180 @@
+{
+  "w05-rules-final": {
+    "counts_including_subtests": {
+      "pass": 118,
+      "skip": 1,
+      "fail": 2
+    },
+    "top_level_counts": {
+      "pass": 32,
+      "skip": 1,
+      "fail": 2
+    },
+    "failed": [
+      "TestJsxLintReleaseAndThroughput",
+      "TestJsxLintTrees"
+    ],
+    "skipped": [
+      "TestCheckerBridgeRefusalPending"
+    ],
+    "wall_seconds": 2531.3673490829997,
+    "exit": 1,
+    "nproc": "5",
+    "load_first": [
+      2.505859375,
+      4.30859375,
+      5.21435546875
+    ],
+    "load_last": [
+      2.00732421875,
+      3.138671875,
+      4.044921875
+    ],
+    "load_peak": [
+      7.21826171875,
+      5.84423828125,
+      5.220703125
+    ],
+    "input_skips": 0,
+    "benchmark": [
+      "lint_test.go:676: best of 5 Go: 2.120785s, 13941.54 findings/s (77 files, 29567 findings)",
+      "lint_test.go:676: best of 5 native: 15.296514s, 1932.92 findings/s (77 files, 29567 findings)",
+      "lint_test.go:676: best of 5 Node: 7.914780s, 3735.67 findings/s (77 files, 29567 findings)"
+    ]
+  },
+  "owned_rules": [
+    {
+      "rule": "@eslint-community/eslint-comments/require-description",
+      "matched_upstream_combinations": 109,
+      "mutant": "reason ignored",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        113,
+        114,
+        115
+      ]
+    },
+    {
+      "rule": "structure/tailwind-no-physical-direction",
+      "matched_upstream_combinations": 56,
+      "mutant": "rtl exemption removed",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        22,
+        23,
+        24
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-asserted-optional-chain",
+      "matched_upstream_combinations": 24,
+      "mutant": "parenthesized chain missed",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        95,
+        96,
+        97
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/no-non-null-assertion",
+      "matched_upstream_combinations": 36,
+      "mutant": "postfix assignment suggestion",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        64,
+        65,
+        66
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-function-type",
+      "matched_upstream_combinations": 39,
+      "mutant": "array function type unwrapped",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        233,
+        234,
+        235
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/prefer-namespace-keyword",
+      "matched_upstream_combinations": 22,
+      "mutant": "export report span misplaced",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        224,
+        225,
+        226
+      ]
+    },
+    {
+      "rule": "@typescript-eslint/triple-slash-reference",
+      "matched_upstream_combinations": 70,
+      "mutant": "first repeated directive kept",
+      "mutant_result": [
+        "pass"
+      ],
+      "mutant_log_lines": [
+        242,
+        243,
+        244
+      ]
+    }
+  ],
+  "owned_matched_total": 356,
+  "w05-helpers": {
+    "counts_including_subtests": {
+      "pass": 113,
+      "skip": 1
+    },
+    "top_level_counts": {
+      "pass": 34,
+      "skip": 1
+    },
+    "failed": [],
+    "skipped": [
+      "TestCheckerBridgeRefusalPending"
+    ],
+    "wall_seconds": 3303.0864595380003,
+    "exit": 0,
+    "nproc": "5",
+    "load_first": [
+      8.75634765625,
+      10.44970703125,
+      5.7060546875
+    ],
+    "load_last": [
+      2.466796875,
+      3.5712890625,
+      4.26318359375
+    ],
+    "load_peak": [
+      9.74853515625,
+      10.6005859375,
+      6.3369140625
+    ],
+    "input_skips": 0,
+    "benchmark": [
+      "jsx_integration_test.go:132: best of 5 JSX Go: 0.016352s, 3608.02 findings/s (63 files, 59 findings)",
+      "jsx_integration_test.go:132: best of 5 JSX native: 0.017312s, 3407.96 findings/s (63 files, 59 findings)",
+      "jsx_integration_test.go:132: best of 5 JSX Node: 0.263034s, 224.31 findings/s (63 files, 59 findings)",
+      "lint_test.go:676: best of 5 Go: 1.595075s, 17749.64 findings/s (77 files, 28312 findings)",
+      "lint_test.go:676: best of 5 native: 12.581778s, 2250.24 findings/s (77 files, 28312 findings)",
+      "lint_test.go:676: best of 5 Node: 6.564899s, 4312.63 findings/s (77 files, 28312 findings)"
+    ]
+  }
+}
