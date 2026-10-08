@@ -1,0 +1,14 @@
+{
+  "class": {
+    "file": "/workspace/scratch/parser-front24-discovery3-slice/src/compiler/debug.ts",
+    "start": 26969,
+    "end": 28674,
+    "replacement": "export interface DebugTypeMapper { kind: TypeMapKind; __debugToString(): string; }\nexport const DebugTypeMapper: { prototype: DebugTypeMapper } = undefined!;\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+    "warning": "Artificial class shape and checked-undefined value stub; never run or treat as adaptation"
+  },
+  "callable_namespace": {
+    "file": "discovery3-slice/src/compiler/debug.ts",
+    "change": "Rename only the first export function log(s: string): void to parserProofLogStub; keep nested namespace log and its own log function.",
+    "evidence": "No Debug.log(...) call exists in the slice. This changes public names and AssertionKeys, and is never a proposed adaptation or proof input."
+  }
+}

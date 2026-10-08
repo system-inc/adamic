@@ -1,0 +1,541 @@
+[
+  {
+    "path": "internal/flow/build.go",
+    "old": "d978700a",
+    "new": "8dee1e65",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/flow/debugger_test.go",
+    "old": "00000000",
+    "new": "3625ad5d",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/fresh/fresh.go",
+    "old": "e45f584f",
+    "new": "ee1cd35a",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/ir/argument_slots.go",
+    "old": "00000000",
+    "new": "d5bcfd30",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/ir/argument_slots_test.go",
+    "old": "00000000",
+    "new": "c4220a58",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/ir/arguments_length_test.go",
+    "old": "00000000",
+    "new": "8a9638db",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/ir/call_targets.go",
+    "old": "4ac0ee93",
+    "new": "c8fdce57",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/ir/call_targets_guard_test.go",
+    "old": "8f26bb11",
+    "new": "cb8b2237",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/ir/debugger.go",
+    "old": "00000000",
+    "new": "41ec3074",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/ir/ir.go",
+    "old": "a7915809",
+    "new": "b2b1f3e3",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/javascript/arguments_length.go",
+    "old": "00000000",
+    "new": "a1fc9ac5",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/javascript/javascript.go",
+    "old": "57ede177",
+    "new": "9c482f48",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/lower/arguments_length.go",
+    "old": "00000000",
+    "new": "b803900a",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/arguments_length_test.go",
+    "old": "00000000",
+    "new": "1375ef2a",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/class.go",
+    "old": "4d2b8a5a",
+    "new": "805b92e0",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/lower/class_inheritance.go",
+    "old": "713c505c",
+    "new": "d4352ff4",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/class_static.go",
+    "old": "bea237a1",
+    "new": "4bd246c3",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/collections.go",
+    "old": "07b72a94",
+    "new": "58fdb05a",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/cycles.go",
+    "old": "08ba24ce",
+    "new": "016fb8a7",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/lower/expression.go",
+    "old": "a82b1b71",
+    "new": "f8952f91",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/lower/from.go",
+    "old": "b0e9a9e8",
+    "new": "d6194c5b",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/functions.go",
+    "old": "f4fc4187",
+    "new": "e7bb93a6",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/library_map_set.go",
+    "old": "537f2d3c",
+    "new": "ce30a508",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/lower_test.go",
+    "old": "b8afd3a1",
+    "new": "b9ae130b",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/object.go",
+    "old": "10fbd83a",
+    "new": "275468a3",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/lower/refusals.go",
+    "old": "27955fec",
+    "new": "58b45dcc",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/lower/statements.go",
+    "old": "a1589fbb",
+    "new": "67d9c6c4",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/lower/testdata/debugger/REPORT.md",
+    "old": "00000000",
+    "new": "835e59a3",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/testdata/debugger/mutants/debugger-refused.log",
+    "old": "00000000",
+    "new": "d23f4eb0",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/testdata/debugger/mutants/flow-instruction.log",
+    "old": "00000000",
+    "new": "e5b1ee8d",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/testdata/debugger/mutants/javascript-dropped.log",
+    "old": "00000000",
+    "new": "fbc03a73",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/testdata/debugger/mutants/lowering-dropped.log",
+    "old": "00000000",
+    "new": "50c59f0d",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/testdata/debugger/mutants/trap-artifact.log",
+    "old": "00000000",
+    "new": "2f28064e",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/testdata/debugger/mutants/trap-oracle.log",
+    "old": "00000000",
+    "new": "d18473e8",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/testdata/debugger/run-mutants.py",
+    "old": "00000000",
+    "new": "703f48a0",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/lower/testdata/debugger/verification.log",
+    "old": "00000000",
+    "new": "af8ba652",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/arguments_length.go",
+    "old": "00000000",
+    "new": "f6aac709",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/arguments_length_test.go",
+    "old": "00000000",
+    "new": "0c8085cb",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/class_accessors.go",
+    "old": "d49c451d",
+    "new": "129d88ac",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/class_inheritance.go",
+    "old": "5bf01212",
+    "new": "6cb75e4f",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/emit_arrays.go",
+    "old": "c803688b",
+    "new": "7b7871ea",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/emit_expressions.go",
+    "old": "da9ac976",
+    "new": "531d54a2",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/native/emit_functions.go",
+    "old": "fc6b74df",
+    "new": "6d27d8b6",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/native/emit_maps.go",
+    "old": "76f97527",
+    "new": "f371bfbe",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/emit_objects.go",
+    "old": "84007e30",
+    "new": "2eec3a39",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/emit_statements.go",
+    "old": "ea0b9eb1",
+    "new": "80148dc9",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/native/from.go",
+    "old": "02c3e8ff",
+    "new": "55d8d3bf",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/region.go",
+    "old": "662127c6",
+    "new": "f56dad77",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/reuse.go",
+    "old": "0dabb321",
+    "new": "73733bf8",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/testdata/arguments-length-final-five-runs.json",
+    "old": "00000000",
+    "new": "dc8719f4",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/testdata/arguments-length-five-runs.json",
+    "old": "00000000",
+    "new": "81246d70",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/testdata/arguments-length-report.txt",
+    "old": "00000000",
+    "new": "8b52a411",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/testdata/arguments-length-revision-report.txt",
+    "old": "00000000",
+    "new": "ad08115e",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/native/testdata/run-arguments-length-mutants.py",
+    "old": "00000000",
+    "new": "3b6f85fe",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/arguments_length_test.go",
+    "old": "00000000",
+    "new": "b1b8c272",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/counts.md",
+    "old": "aa4be3e9",
+    "new": "fc1914b2",
+    "old_recovered": false,
+    "new_recovered": false
+  },
+  {
+    "path": "internal/oracle/debugger_test.go",
+    "old": "00000000",
+    "new": "f2b4e809",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length.a",
+    "old": "00000000",
+    "new": "c606b01c",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_callbacks.a",
+    "old": "00000000",
+    "new": "824cf6de",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_extended.a",
+    "old": "00000000",
+    "new": "5a6fbce7",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_method.a",
+    "old": "00000000",
+    "new": "ac42776f",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_no_reader.a",
+    "old": "00000000",
+    "new": "0c3cf8b7",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_reduce_left.a",
+    "old": "00000000",
+    "new": "cc504f8c",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_refused/aliasing.a",
+    "old": "00000000",
+    "new": "16aef5ad",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_refused/arrow.a",
+    "old": "00000000",
+    "new": "84d75d18",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_refused/indexing.a",
+    "old": "00000000",
+    "new": "041cd2c8",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_refused/passing.a",
+    "old": "00000000",
+    "new": "347f1e06",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_refused/returning.a",
+    "old": "00000000",
+    "new": "7bfc5a5d",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_refused/spreading.a",
+    "old": "00000000",
+    "new": "7fd8bc67",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_refused/writing.a",
+    "old": "00000000",
+    "new": "876c1e44",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_spread.a",
+    "old": "00000000",
+    "new": "340a5fea",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_static.a",
+    "old": "00000000",
+    "new": "ef6bc395",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_static_constructor.a",
+    "old": "00000000",
+    "new": "48ccd582",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_unrelated_type.a",
+    "old": "00000000",
+    "new": "9950d445",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_value.a",
+    "old": "00000000",
+    "new": "b862e42f",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/arguments_length_value_count.a",
+    "old": "00000000",
+    "new": "e8dc6ea3",
+    "old_recovered": true,
+    "new_recovered": true
+  },
+  {
+    "path": "internal/oracle/testdata/debugger_fail.a",
+    "old": "00000000",
+    "new": "feade550",
+    "old_recovered": true,
+    "new_recovered": true
+  }
+]

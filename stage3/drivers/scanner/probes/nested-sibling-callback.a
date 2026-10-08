@@ -1,0 +1,8 @@
+// Reduced from TypeScript 6.0.3, src/compiler/scanner.ts:2187
+function invoke(callback: () => void): void { callback(); }
+function outer(): void {
+    function error(): void { console.log("x"); }
+    function scan(): void { invoke(error); }
+    scan();
+}
+outer();

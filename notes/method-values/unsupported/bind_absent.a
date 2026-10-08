@@ -1,0 +1,1 @@
+function text(): string | undefined { return undefined; } const bound = String.prototype.trim.bind(text()); console.log(bound());

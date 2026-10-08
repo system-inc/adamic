@@ -1,0 +1,8 @@
+// Reduced from TypeScript 6.0.3, src/compiler/core.ts, toSorted's conditional.
+// Isolate the empty-array branch from its separate SortedReadonlyArray cast.
+const emptyArray: readonly never[] = [];
+function sorted<T>(array: readonly T[]): readonly T[] {
+    return array.length === 0 ? emptyArray : array.slice();
+}
+console.log(`${sorted<number>([]).length}`);
+console.log(`${sorted<number>([1]).length}`);

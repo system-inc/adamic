@@ -1,0 +1,75 @@
+{
+  "probes": [
+    {
+      "file": "native-function-any-view-called-only.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-function-any-view-called-only.a"
+        ],
+        "exit": 0,
+        "stdout": "function view loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-function-any-view-called-only.a",
+          "-o",
+          "/workspace/scratch/parser-front27-callable-control/native-function-any-view-called-only.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "command": [
+          "/workspace/scratch/parser-front27-callable-control/native-function-any-view-called-only.a.bin"
+        ],
+        "exit": 0,
+        "stdout": "function view loaded\n",
+        "stderr": ""
+      },
+      "comparison": {
+        "stdout": 0,
+        "stderr": 0
+      },
+      "binary_bytes": 451568,
+      "native_byte_mutant_cmp": 1
+    },
+    {
+      "file": "native-enum-map.a",
+      "node": {
+        "command": [
+          "node",
+          "--disable-warning=ExperimentalWarning",
+          "oracle/node.mjs",
+          "/workspace/adamic/stage3/drivers/parser/native-enum-map.a"
+        ],
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "command": [
+          "/workspace/scratch/parser-front27-adamic",
+          "build",
+          "/workspace/adamic/stage3/drivers/parser/native-enum-map.a",
+          "-o",
+          "/workspace/scratch/parser-front27-callable-control/native-enum-map.a.bin"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-enum-map.a:3:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n"
+      },
+      "pass": false
+    }
+  ],
+  "passing": 1,
+  "total": 2,
+  "full_slice": "Five feature witnesses; arguments-length excluded"
+}
