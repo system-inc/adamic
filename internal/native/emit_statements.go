@@ -442,7 +442,12 @@ func (e *emitter) forOf(statement ir.ForOf) {
 		e.declareLocal(local, reading, false)
 	}
 	if overMap {
-		e.line("%s = adamic_map_read_key(%s,%s,%d);", entryKey, iterable, entryKey, statement.Key)
+		if statement.MapPart != "values" {
+			e.line("%s = adamic_map_read_key(%s,%s,%d);", entryKey, iterable, entryKey, statement.Key)
+			if statement.Key.IsReference() {
+				e.hold(entryKey + ".reference")
+			}
+		}
 		if statement.MapPart != "keys" {
 			e.line("%s = adamic_map_read_value(%s,%s,%d);", entryValue, iterable, entryValue, statement.Value)
 			if statement.Value.IsReference() {

@@ -7,7 +7,8 @@ import (
 )
 
 // newMap makes a map, or a Set's map, for its keys: strings by their text, numbers by
-// SameValueZero, booleans as booleans, and anything else held by reference by its identity.
+// SameValueZero and booleans as booleans. Constructor key_type selects packed or
+// boxed primitive semantics; other reference keys retain identity semantics.
 func newMap(key ir.Type, referenceValues bool) string {
 	if key == ir.MaybeNumber {
 		return fmt.Sprintf("adamic_map_new_maybe_numbers(%t)", referenceValues)
@@ -22,7 +23,8 @@ func newMap(key ir.Type, referenceValues bool) string {
 }
 
 // mapForEach emits map.forEach and set.forEach as for...of's loop over the map, live as it is. The key
-// is borrowed: closure parameters retain on entry, before user code can delete or clear it.
+// of a Map is an owned converted read; a Set key is borrowed. Closure parameters
+// retain on entry, before user code can delete or clear the source.
 // A named callback goes through an owned closure forwarder, which holds the key while the named
 // function borrows it; a reassigned parameter takes an additional count in that function.
 // After the callback returns (or throws), the loop never reads that key again. The iterator owns
@@ -54,6 +56,9 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 	call := fmt.Sprintf("%s->code(%s, (adamic_value[]){%s, %s, {.reference = %s}}, 3)", callback, callback, first, key, collection)
 	// A throw lets go of the value held across the call, and the iterator.
 	holds := []string{}
+	if !visit.Set && visit.Key.IsReference() {
+		holds = append(holds, key+".reference")
+	}
 	if !visit.Set && visit.Value.IsReference() {
 		holds = append(holds, value+".reference")
 	}
@@ -68,6 +73,7 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 		e.closureThrown(holds...)
 	}
 	if !visit.Set {
+		hold(key, visit.Key, "adamic_release")
 		hold(value, visit.Value, "adamic_release")
 	}
 	e.indent--

@@ -228,7 +228,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	items := node.AsArrayLiteralExpression().Elements.Nodes
 	if element == ir.Union || element == ir.MaybeBoolean {
 		for _, item := range items {
-			if item.Kind == ast.KindSpreadElement {
+			if item.Kind == ast.KindSpreadElement && l.checker.IsArrayType(l.checker.GetTypeAtLocation(item.AsSpreadElement().Expression)) {
 				return nil, l.notYet(item, "spreading a boxed or packed boolean array requiring storage conversion")
 			}
 		}
@@ -1468,7 +1468,15 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	}
 	key, keyKnown := l.representation(arguments[0])
 	value, valueKnown := l.kept(arguments[1])
-	if !keyKnown || !keyable(key) {
+	boxedKey := false
+	if keyKnown && (key == ir.Union || key == ir.MaybeBoolean) {
+		id, err := l.viewContract(node, arguments[0])
+		if err != nil {
+			return 0, 0, err
+		}
+		boxedKey = ir.PrimitiveArrayContract(l.result, id)
+	}
+	if !keyKnown || !keyable(key) && !boxedKey {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
 	// number | undefined is held in a value's one slot packed (native/slots.go).

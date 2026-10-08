@@ -682,3 +682,34 @@ The conservative inventory remains 2,018 pairs / 9,101 reads; exact remaining
 production pairs and reads are unmeasured. Reduced pending conversion groups are
 boxed key domains and nominal stores beneath entry aggregates. JSON remains a
 named consumer gap, and broader callable-bearing nominal stores stay with lane 5.
+
+### October 8: primitive boxed Map key domains
+
+Readonly Map certificates now admit numeric, boolean, string, packed optional numeric
+and packed optional boolean keys into complete primitive boxed unions. Boolean keys
+also widen to packed optional boolean. Lookup converts the query back to constructor
+storage; snapshots, callbacks, direct loops and stored iterators own converted key
+references. Mutable physical key storage remains invariant. Boxed primitive Maps use
+SameValueZero, including NaN, dynamic string equality and canonical positive zero;
+normalizing a key does not mutate the caller's original negative-zero box.
+
+Eight restored controls match Node in sanitized native, release native and JavaScript,
+with no leaks (8.289 seconds). The uncached Map/nullish/nullable-selection/JSON-boundary
+gate passed in 194.217 seconds. Touched-package checks passed (IR 0.013s, lower 5.448s,
+native 43.813s, JavaScript 0.933s), and go vet ./... passed. The full repository gate
+was not run; the scoped package command retained the documented Phantom exclusion.
+
+Seven independent implementation mutants were caught and restored: identity equality,
+NaN inequality, wrong numeric payload, missing reference retention (AddressSanitizer
+heap-use-after-free with dynamic strings), address-based key hashing, omitted negative
+zero normalization, and lost undefined-query decoding. An initial address hash mutant
+with only aligned low bits survived because all keys collided; the recorded mutant
+shifts the address so equal fresh boxes choose different buckets. Evidence is in
+map-boxed-keys-*.log.gz and map-boxed-key-mutants.json.
+
+The exact production reaching-view discharge remains unmeasured: the conservative
+inventory is still 2,018 pairs / 9,101 reads. Closing fixtures is not a production count.
+Nested nominal entry aggregates and boxed/packed JSON extraction remain named gaps;
+callable-bearing classes belong to lane 5. Required primitive brands remain refused
+by internal/lower/phantom_brands.go, (*lowering).phantomRefusal: a required brand member
+must be void (or optional and typed undefined). No primitive-brand rule changed.

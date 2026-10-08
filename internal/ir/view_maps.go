@@ -212,15 +212,17 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 	}
 	for _, pair := range program.MapCertificates {
 		key, value := pair[0], pair[1]
-		if (sameStorage(key, c.Key) || c.MapReadonly && program.ViewContracts[key-1].Of == Number && program.ViewContracts[c.Key-1].Of == MaybeNumber) && (sameStorage(value, c.Element) || c.MapReadonly && MapReadStorageCompatible(program.ViewContracts[value-1].Of, program.ViewContracts[c.Element-1].Of)) && accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
+		fromKey, toKey := program.ViewContracts[key-1].Of, program.ViewContracts[c.Key-1].Of
+		keyStorage := sameStorage(key, c.Key) || c.MapReadonly && (fromKey == Number && toKey == MaybeNumber || fromKey == Boolean && toKey == MaybeBoolean || PrimitiveArrayUnionStorage(program, key, c.Key))
+		if keyStorage && (sameStorage(value, c.Element) || c.MapReadonly && MapReadStorageCompatible(program.ViewContracts[value-1].Of, program.ViewContracts[c.Element-1].Of)) && accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
 			pairs = append(pairs, pair)
 		}
 	}
 	return pairs
 }
 
-// Only top-level readonly entries use these adapters. Keys and nested arrays keep
-// their original calling and storage conventions.
+// Readonly values use these adapters; key admission separately requires a complete
+// primitive target descriptor, and queries convert back to the original key storage.
 func MapReadStorageCompatible(source, target Type) bool {
 	return source == target || target == Union && (source == Number || source == Boolean || source == MaybeNumber || source == MaybeBoolean || source.IsReference() && source != Weak) || target == MaybeNumber && source == Number || target == MaybeBoolean && source == Boolean
 }

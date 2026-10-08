@@ -6,11 +6,6 @@
   "certified_remaining_reads": null,
   "fixture_gaps": [
     {
-      "family": "boxed key domain conversion",
-      "read": "node.value",
-      "outcome": "runtime exit 70"
-    },
-    {
       "family": "callable-bearing nominal class producer",
       "read": "node.value",
       "outcome": "named compile refusal",
@@ -42,6 +37,11 @@
     {
       "family": "nested packed boolean storage",
       "scope": "boolean to boolean|undefined; packed boolean to packed/boxed nullable boolean, helper extraction and scalar alias stores",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "primitive boxed and packed boolean Map key domains",
+      "scope": "readonly numeric, boolean, string, optional numeric and optional boolean keys widen to primitive boxed unions; boolean keys widen to packed optional boolean; mixed primitive constructor keys use SameValueZero; owned extraction and reverse lookup preserve source storage",
       "production_reaching_view_counts": "unmeasured"
     }
   ]

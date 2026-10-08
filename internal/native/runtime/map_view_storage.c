@@ -15,8 +15,7 @@ static _Noreturn void map_storage_failure(const char *part, unsigned char wanted
 }
 
 // References are returned owned, including freshly boxed scalar reads.
-adamic_value adamic_map_read_value(const adamic_map *map, adamic_value value, unsigned char wanted) {
- unsigned char source = map->value_type;
+static adamic_value map_read_slot(unsigned char source, adamic_value value, unsigned char wanted, const char *part) {
  if (source == 0 || source == wanted || (wanted == 10 && map_read_reference(source))) {
   if (map_read_reference(wanted)) { value.reference = adamic_retain(value.reference); }
   return value;
@@ -33,7 +32,11 @@ adamic_value adamic_map_read_value(const adamic_map *map, adamic_value value, un
  }
  if (wanted == 7 && source == 1) { return (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){true, value.number})}; }
  if (wanted == 9 && source == 2) { return (adamic_value){.maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){true, value.boolean})}; }
- map_storage_failure("value", wanted, source);
+ map_storage_failure(part, wanted, source);
+}
+
+adamic_value adamic_map_read_value(const adamic_map *map, adamic_value value, unsigned char wanted) {
+ return map_read_slot(map->value_type, value, wanted, "value");
 }
 
 adamic_array *adamic_map_values_as(const adamic_map *map, unsigned char wanted) {
@@ -55,7 +58,6 @@ adamic_array *adamic_map_entries_as(const adamic_map *map, const adamic_shape *s
   if (entry->deleted) { continue; }
   adamic_object *pair = adamic_object_new(shape);
   pair->slots[0] = adamic_map_read_key(map, entry->key, key);
-  if (map->reference_keys) { adamic_retain(entry->key.reference); }
   pair->slots[1] = adamic_map_read_value(map, entry->value, wanted);
   adamic_object_field_types(pair)[0] = key;
   adamic_object_field_types(pair)[1] = wanted;
@@ -65,12 +67,9 @@ adamic_array *adamic_map_entries_as(const adamic_map *map, const adamic_shape *s
  return entries;
 }
 
-// Numeric key widening preserves SameValueZero and the original hash domain.
-// Other keys keep their storage and borrowed ownership.
+// A converted key snapshot owns references just like a value snapshot.
 adamic_value adamic_map_read_key(const adamic_map *map, adamic_value key, unsigned char wanted) {
- if (map->key_type == 0 || map->key_type == wanted) { return key; }
- if (map->key_type == 1 && wanted == 7) { return (adamic_value){.number = adamic_maybe_number_pack((adamic_maybe_number){true, key.number})}; }
- map_storage_failure("key", wanted, map->key_type);
+ return map_read_slot(map->key_type, key, wanted, "key");
 }
 
 adamic_value *adamic_map_get_as(const adamic_map *map, adamic_value key, unsigned char supplied) {
@@ -80,16 +79,39 @@ adamic_value *adamic_map_get_as(const adamic_map *map, adamic_value key, unsigne
   if (!query.present) { return NULL; }
   return adamic_map_get(map, (adamic_value){.number = query.number});
  }
+ if (map->key_type == 2 && supplied == 9) {
+  adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(key.maybe_boolean);
+  if (!boolean.present) { return NULL; }
+  return adamic_map_get(map,(adamic_value){.boolean=boolean.boolean});
+ }
+ if (supplied == 10) {
+  const adamic_heap *reference = key.reference;
+  if (reference == NULL) {
+   if (map->key_type == 3) return adamic_map_get(map,key);
+   if (map->key_type == 7) return adamic_map_get(map,(adamic_value){.number=adamic_maybe_number_pack((adamic_maybe_number){false,0})});
+   if (map->key_type == 9) return adamic_map_get(map,(adamic_value){.maybe_boolean=2});
+   return NULL;
+  }
+  if (reference->kind == adamic_kind_number && (map->key_type == 1 || map->key_type == 7)) {
+   double number = ((const adamic_number_box *)reference)->number;
+   return adamic_map_get(map,(adamic_value){.number=map->key_type == 7 ? adamic_maybe_number_pack((adamic_maybe_number){true,number}) : number});
+  }
+  if (reference->kind == adamic_kind_boolean && (map->key_type == 2 || map->key_type == 9)) {
+   bool boolean = ((const adamic_boolean_box *)reference)->boolean;
+   return adamic_map_get(map,map->key_type == 9 ? (adamic_value){.maybe_boolean=adamic_maybe_boolean_pack((adamic_maybe_boolean){true,boolean})} : (adamic_value){.boolean=boolean});
+  }
+  if (reference->kind == adamic_kind_string && map->key_type == 3) return adamic_map_get(map,key);
+  if (map->key_type == 1 || map->key_type == 2 || map->key_type == 3 || map->key_type == 7 || map->key_type == 9) return NULL;
+ }
  map_storage_failure("key lookup", map->key_type, supplied);
 }
 
 adamic_array *adamic_map_keys_as(const adamic_map *map, unsigned char wanted) {
- adamic_array *keys = adamic_array_new(map->count, map->reference_keys);
+ adamic_array *keys = adamic_array_new(map->count, map_read_reference(wanted));
  adamic_array_view_storage(keys, wanted);
  for (size_t index = 0; index < map->used; index++) {
   if (map->entries[index].deleted) { continue; }
   adamic_value key = adamic_map_read_key(map, map->entries[index].key, wanted);
-  if (map->reference_keys) { key.reference = adamic_retain(key.reference); }
   adamic_array_push(keys, key);
  }
  return keys;
