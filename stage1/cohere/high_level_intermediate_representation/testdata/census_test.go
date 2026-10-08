@@ -24,17 +24,20 @@ import (
 )
 
 type constructionRecord struct {
-	Key       string   `json:"key"`
-	Source    string   `json:"source"`
-	Start     int      `json:"start"`
-	End       int      `json:"end"`
-	Checker   bool     `json:"checker"`
-	Dump      string   `json:"dump"`
-	Functions int      `json:"functions"`
-	Eligible  bool     `json:"eligible"`
-	Calls     []string `json:"calls"`
-	Symbols   string   `json:"symbols"`
-	Excluded  string   `json:"excluded"`
+	Key        string   `json:"key"`
+	Source     string   `json:"source"`
+	Start      int      `json:"start"`
+	End        int      `json:"end"`
+	Checker    bool     `json:"checker"`
+	Dump       string   `json:"dump"`
+	Functions  int      `json:"functions"`
+	Eligible   bool     `json:"eligible"`
+	Calls      []string `json:"calls"`
+	Symbols    string   `json:"symbols"`
+	RootStart  int      `json:"rootStart"`
+	RootEnd    int      `json:"rootEnd"`
+	NestedPath string   `json:"nestedPath"`
+	Excluded   string   `json:"excluded"`
 }
 
 var constructionRecords = map[string]*constructionRecord{}
@@ -45,6 +48,8 @@ func constructionExpression(n *ast.Node) bool {
 		return false
 	}
 	switch n.Kind {
+	case ast.KindFunctionExpression, ast.KindArrowFunction:
+		return constructionEligible(n)
 	case ast.KindIdentifier, ast.KindNumericLiteral, ast.KindStringLiteral, ast.KindBigIntLiteral, ast.KindNoSubstitutionTemplateLiteral, ast.KindTrueKeyword, ast.KindFalseKeyword, ast.KindNullKeyword:
 		return true
 	case ast.KindParenthesizedExpression:
@@ -141,6 +146,8 @@ func constructionStatement(statement *ast.Node) bool {
 		return false
 	}
 	switch statement.Kind {
+	case ast.KindFunctionDeclaration:
+		return constructionEligible(statement)
 	case ast.KindBlock:
 		if list := statement.AsBlock().Statements; list != nil {
 			for _, n := range list.Nodes {
@@ -194,9 +201,9 @@ func constructionObserve(f *Function, typeChecker *checker.Checker, caller strin
 	if !constructed {
 		Construct(clone)
 	}
-	constructionStore(clone, typeChecker != nil, constructionSymbols(source, typeChecker), caller)
+	constructionStore(clone, typeChecker != nil, constructionSymbols(source, typeChecker), caller, clone.Node, "")
 }
-func constructionStore(clone *Function, checked bool, symbols string, caller string) {
+func constructionStore(clone *Function, checked bool, symbols string, caller string, root *ast.Node, path string) {
 	source := ast.GetSourceFileOfNode(clone.Node)
 	if source == nil {
 		return
@@ -211,15 +218,31 @@ func constructionStore(clone *Function, checked bool, symbols string, caller str
 		panic("hir-v1 dump is nondeterministic")
 	}
 	key := fmt.Sprintf("%x", sha256.Sum256([]byte(fmt.Sprintf("%s:%d:%d:%t:%s", source.Text(), f.Node.Pos(), f.Node.End(), checked, dump))))
+	eligible := excluded == "" && constructionEligible(f.Node)
+	rootStart, rootEnd, nestedPath := f.Node.Pos(), f.Node.End(), ""
+	if len(f.Context) > 0 {
+		eligible = eligible && constructionEligible(root)
+		rootStart, rootEnd, nestedPath = root.Pos(), root.End(), path
+	}
 	constructionMutex.Lock()
 	if old := constructionRecords[key]; old != nil {
 		old.Calls = append(old.Calls, caller)
+		if eligible && !old.Eligible {
+			old.Eligible = true
+			old.RootStart = rootStart
+			old.RootEnd = rootEnd
+			old.NestedPath = nestedPath
+		}
 	} else {
-		constructionRecords[key] = &constructionRecord{Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: excluded == "" && constructionEligible(f.Node) && len(f.Context) == 0, Calls: []string{caller}, Symbols: symbols, Excluded: excluded}
+		constructionRecords[key] = &constructionRecord{Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: eligible, RootStart: rootStart, RootEnd: rootEnd, NestedPath: nestedPath, Calls: []string{caller}, Symbols: symbols, Excluded: excluded}
 	}
 	constructionMutex.Unlock()
-	for _, nested := range clone.Functions {
-		constructionStore(nested, checked, symbols, caller+"/nested")
+	for index, nested := range clone.Functions {
+		next := fmt.Sprint(index)
+		if path != "" {
+			next = path + "," + next
+		}
+		constructionStore(nested, checked, symbols, caller+"/nested", root, next)
 	}
 }
 
@@ -306,7 +329,7 @@ func TestMain(m *testing.M) {
 			if err := os.WriteFile(dumpPath, []byte(r.Dump), 0600); err != nil {
 				panic(err)
 			}
-			fmt.Fprintf(&manifest, "%s\t%s\t%d\t%d\t%t\t%s\t%d\t%t\t%s\t%s\n", key, sourcePath, r.Start, r.End, r.Checker, dumpPath, r.Functions, r.Eligible, symbolsPath, r.Excluded)
+			fmt.Fprintf(&manifest, "%s\t%s\t%d\t%d\t%t\t%s\t%d\t%t\t%s\t%s\t%d\t%d\t%s\n", key, sourcePath, r.Start, r.End, r.Checker, dumpPath, r.Functions, r.Eligible, symbolsPath, r.Excluded, r.RootStart, r.RootEnd, r.NestedPath)
 			total += r.Functions
 			if r.Eligible {
 				eligible += r.Functions
@@ -345,6 +368,12 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function Captures(x) { const f = () => x + x; return f; }",
+		"function Grandparent(x) { return () => () => x; }",
+		"function ContextWrites(flag) { let x = 1; const read = () => x; if (flag) x = 2; return read; }",
+		"function InnerWrite() { let x = 1; const write = () => { x = 2; return x; }; return write; }",
+		"function Declaration(x) { function Local() { return x; } return Local; }",
+		"function Shadow(x) { const read = (x) => x; return read; }",
 		"function Calls(fn, value) { fn?.(value); return fn(value, ...value); }",
 		"function Methods(obj, key) { obj.method(1); return obj[key](2); }",
 		"function Constructors(Ctor, value) { new Ctor; return new Ctor(value, ...value); }",

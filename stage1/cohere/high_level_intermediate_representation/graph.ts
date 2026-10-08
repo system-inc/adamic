@@ -35,24 +35,25 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
     eachInstructionPlace: function(fn, block, index, visit) {
         const instruction = fn.instructions[block.instructions[index] ?? panic('missing instruction id')] ?? panic('missing instruction');
         instruction.lvalue = visit(instruction.lvalue, 'Define');
-        if(instruction.value.kind === 'LoadLocal') { instruction.value.place = visit(instruction.value.place, 'Use'); }
+        if((instruction.value.kind === 'LoadLocal' || instruction.value.kind === 'LoadContext')) { instruction.value.place = visit(instruction.value.place, 'Use'); }
         if(instruction.value.kind === 'UnaryExpression') { instruction.value.value = visit(instruction.value.value, 'Use'); }
         if(instruction.value.kind === 'BinaryExpression') {
             instruction.value.left = visit(instruction.value.left, 'Use');
             instruction.value.right = visit(instruction.value.right, 'Use');
         }
         const value = instruction.value;
-        if(value.kind === 'StoreGlobal' || value.kind === 'StoreLocal' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate' || value.kind === 'PropertyStore' || value.kind === 'ComputedStore') { value.value = visit(value.value, 'Use'); }
+        if(value.kind === 'StoreGlobal' || value.kind === 'StoreLocal' || value.kind === 'StoreContext' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate' || value.kind === 'PropertyStore' || value.kind === 'ComputedStore') { value.value = visit(value.value, 'Use'); }
         if(value.kind === 'PropertyLoad' || value.kind === 'ComputedLoad' || value.kind === 'PropertyStore' || value.kind === 'ComputedStore') { value.object = visit(value.object, 'Use'); }
         if(value.kind === 'ComputedLoad' || value.kind === 'ComputedStore') { value.property = visit(value.property, 'Use'); }
         if(value.kind === 'CallExpression' || value.kind === 'NewExpression') { value.callee = visit(value.callee, 'Use'); }
         if(value.kind === 'MethodCall') { value.receiver = visit(value.receiver, 'Use'); value.property = visit(value.property, 'Use'); }
         if(value.kind === 'CallExpression' || value.kind === 'NewExpression' || value.kind === 'MethodCall') { for(const argument of value.args) { argument.place = visit(argument.place, 'Use'); } }
-        if(value.kind === 'DeclareLocal' || value.kind === 'StoreLocal' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { value.lvalue = visit(value.lvalue, 'Define'); }
+        if(value.kind === 'FunctionExpression') { for(let index = 0; index < value.captures.length; index++) { value.captures[index] = visit(value.captures[index] ?? panic('missing capture'), 'Use'); } }
+        if(value.kind === 'DeclareLocal' || value.kind === 'StoreLocal' || value.kind === 'StoreContext' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { value.lvalue = visit(value.lvalue, 'Define'); }
 
     },
-    isContextStore: (_fn, _block, _index) => false,
-    contextStoreDefines: (_fn, _block, _index, _place) => false,
+    isContextStore: (fn, block, index) => (fn.instructions[block.instructions[index] ?? -1] ?? panic('missing store')).value.kind === 'StoreContext',
+    contextStoreDefines: (fn, block, index, place) => place.identifier === (fn.instructions[block.instructions[index] ?? -1] ?? panic('missing store')).lvalue.identifier,
     setInstructionOrder: function(fn, block, index, order) {
         const instruction = fn.instructions[block.instructions[index] ?? panic('missing instruction id')] ?? panic('missing instruction');
         instruction.order = order;
@@ -67,7 +68,7 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
     returns: (fn) => fn.returns,
     setReturns: function(fn, place) { fn.returns = place; },
     declaration: (fn, id) => (fn.identifiers[id] ?? panic('missing identifier')).declaration,
-    contextual: (_fn, _declaration) => false,
+    contextual: (fn, declaration) => fn.contextDeclarations.has(declaration),
     mint: function(fn, original) {
         const old = fn.identifiers[original] ?? panic('missing identifier');
         const id = fn.identifiers.length;
@@ -84,4 +85,5 @@ export function constructHIR(fn: HIRFunction): void {
     markPredecessors(hirGraph, fn);
     markEvaluationOrder(hirGraph, fn);
     construct(hirGraph, fn);
+    for(const nested of fn.functions) { constructHIR(nested); }
 }

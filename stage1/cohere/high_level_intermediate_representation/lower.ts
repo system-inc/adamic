@@ -33,6 +33,7 @@ function supportedTarget(parser: Parser, id: number): boolean {
 }
 function supportedExpression(parser: Parser, id: number): boolean {
     const node = parser.node(id);
+    if(node.kind === 'FunctionExpression' || node.kind === 'ArrowFunction') { return supportedFunction(parser, id); }
     if(node.kind === 'Identifier' || literal(node.kind, node.text) !== undefined) { return true; }
     if(['ParenthesizedExpression', 'TypeOfExpression', 'VoidExpression'].includes(node.kind)) {
         return node.children.length === 1 && supportedExpression(parser, node.children[0] ?? -1);
@@ -64,6 +65,7 @@ function supportedExpression(parser: Parser, id: number): boolean {
 }
 function supportedStatement(parser: Parser, id: number): boolean {
     const statement = parser.node(id);
+    if(statement.kind === 'FunctionDeclaration') { return supportedFunction(parser, id); }
     if(statement.kind === 'Block') { return statement.children.every((child) => supportedStatement(parser, child)); }
     if(statement.kind === 'IfStatement') {
         return supportedExpression(parser, statement.children[0] ?? -1) && supportedStatement(parser, statement.children[1] ?? -1) && (statement.children[2] === undefined || supportedStatement(parser, statement.children[2] ?? -1));
@@ -83,6 +85,20 @@ function supportedStatement(parser: Parser, id: number): boolean {
     if(!['ExpressionStatement', 'ReturnStatement', 'ThrowStatement', 'EmptyStatement'].includes(statement.kind) || statement.children.length > 1) { return false; }
     return statement.children.every((child) => supportedExpression(parser, child));
 }
+function supportedFunction(parser: Parser, root: number): boolean {
+    const node = parser.node(root);
+    let body = false;
+    for(const id of node.children) {
+        const child = parser.node(id);
+        if(child.kind === 'Identifier' && node.kind !== 'ArrowFunction') { continue; }
+        if(child.kind === 'EqualsGreaterThanToken' && node.kind === 'ArrowFunction') { continue; }
+        if(child.kind === 'Parameter' && child.children.length === 1 && parser.node(child.children[0] ?? -1).kind === 'Identifier') { continue; }
+        if(child.kind === 'Block') { if(!supportedStatement(parser, id)) { return false; } body = true; }
+        else if(node.kind === 'ArrowFunction' && supportedExpression(parser, id)) { body = true; }
+        else { return false; }
+    }
+    return body;
+}
 class StraightLineBuilder {
     readonly parser: Parser;
     readonly source: string;
@@ -90,12 +106,65 @@ class StraightLineBuilder {
     current: BasicBlock | undefined;
     readonly jumps: { readonly breakBlock: number; readonly continueBlock: number }[] = [];
     readonly symbols: SymbolSnapshot | undefined;
+    readonly enclosing: StraightLineBuilder | undefined;
+    readonly captured: Map<number, PlaceInterface> = new Map<number, PlaceInterface>();
+    readonly captureSymbols: number[] = [];
+    readonly contextual: Set<number> = new Set<number>();
     readonly locals: Map<number, PlaceInterface> = new Map<number, PlaceInterface>();
-    constructor(parser: Parser, source: string, fn: HIRFunction, symbols: SymbolSnapshot | undefined) { this.parser = parser; this.source = source; this.fn = fn; this.symbols = symbols; this.current = fn.blocks[0]; }
+    constructor(parser: Parser, source: string, fn: HIRFunction, symbols: SymbolSnapshot | undefined, enclosing: StraightLineBuilder | undefined) { this.parser = parser; this.source = source; this.fn = fn; this.symbols = symbols; this.enclosing = enclosing; this.current = fn.blocks[0]; }
     identity(id: number): number {
         const node = this.parser.node(id);
         if(this.symbols === undefined) { return 0; }
         return this.symbols.read(this.byte(node.pos), this.byte(node.end)).identity;
+    }
+    findContext(root: number): void {
+        if(this.symbols === undefined) { return; }
+        const usage = new Map<number, { reassigned: boolean; referenced: boolean; innerWrite: boolean }>();
+        let walk: (id: number, depth: number) => void;
+        walk = (id: number, depth: number): void => {
+            const node = this.parser.node(id);
+            let target = -1;
+            if(node.kind === 'BinaryExpression' && (this.parser.node(node.children[1] ?? -1).kind === 'EqualsToken' || compounds.has(this.parser.node(node.children[1] ?? -1).kind))) { target = node.children[0] ?? -1; }
+            if((node.kind === 'PrefixUnaryExpression' || node.kind === 'PostfixUnaryExpression') && (node.operator === 'PlusPlusToken' || node.operator === 'MinusMinusToken')) { target = node.children[0] ?? -1; }
+            if(target >= 0 && this.parser.node(target).kind === 'Identifier') {
+                const symbol = this.identity(target);
+                const entry = usage.get(symbol) ?? { reassigned: false, referenced: false, innerWrite: false };
+                entry.reassigned = true; if(depth > 0) { entry.innerWrite = true; } usage.set(symbol, entry);
+            }
+            if(depth > 0 && node.kind === 'Identifier') {
+                const symbol = this.identity(id);
+                const entry = usage.get(symbol) ?? { reassigned: false, referenced: false, innerWrite: false };
+                entry.referenced = true; usage.set(symbol, entry);
+            }
+            const next = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(node.kind) ? depth + 1 : depth;
+            for(const child of node.children) { walk(child, next); }
+        };
+        walk(root, 0);
+        for(const [symbol, entry] of usage) { if(symbol !== 0 && (entry.innerWrite || (entry.reassigned && entry.referenced))) { this.contextual.add(symbol); } }
+    }
+    captureOf(symbol: number): PlaceInterface | undefined {
+        if(symbol === 0 || this.enclosing === undefined) { return undefined; }
+        const old = this.captured.get(symbol); if(old !== undefined) { return old; }
+        let scope: StraightLineBuilder | undefined = this.enclosing;
+        let found = false;
+        while(scope !== undefined) { if(scope.locals.has(symbol)) { found = true; break; } scope = scope.enclosing; }
+        if(!found) { return undefined; }
+        let name = '';
+        if(this.symbols !== undefined) { for(const facts of this.symbols.symbols.values()) { if(facts.identity === symbol) { name = facts.name; break; } } }
+        const place = this.fn.named(name, 0, 0);
+        this.captured.set(symbol, place); this.captureSymbols.push(symbol); this.fn.context.push(place);
+        return place;
+    }
+    nested(id: number): PlaceInterface {
+        const builder = lowerFunction(this.parser, id, this.source, this.symbols, this) ?? panic('supported nested function declined');
+        const captures: PlaceInterface[] = [];
+        for(const symbol of builder.captureSymbols) {
+            const place = this.locals.get(symbol) ?? this.captureOf(symbol);
+            captures.push(place === undefined ? { identifier: 0, effect: '<unknown>', reactive: false, start: 0, end: 0 } : { identifier: place.identifier, effect: '<unknown>', reactive: false, start: 0, end: 0 });
+        }
+        const functionId = this.fn.functions.length;
+        this.fn.functions.push(builder.fn);
+        return this.emit({ kind: 'FunctionExpression', functionId, captures }, id, undefined);
     }
     bind(id: number): PlaceInterface {
         const node = this.parser.node(id);
@@ -114,6 +183,8 @@ class StraightLineBuilder {
             const place: PlaceInterface = { identifier: local.identifier, effect: '<unknown>', reactive: false, start: this.byte(node.pos), end: this.byte(node.end) };
             return this.emit({ kind: 'LoadLocal', place }, id, undefined);
         }
+        const capture = this.captureOf(this.identity(id));
+        if(capture !== undefined) { return this.emit({ kind: 'LoadContext', place: { identifier: capture.identifier, effect: '<unknown>', reactive: false, start: this.byte(node.pos), end: this.byte(node.end) } }, id, undefined); }
         let bindingKind = 0; let source = ''; let imported = '';
         if(this.symbols !== undefined) {
             const symbol = this.symbols.read(this.byte(node.pos), this.byte(node.end));
@@ -136,8 +207,17 @@ class StraightLineBuilder {
         const node = this.parser.node(id);
         if(node.kind === 'ParenthesizedExpression') { return this.assign(node.children[0] ?? -1, value); }
         if(node.kind === 'Identifier') {
-            if(this.locals.has(this.identity(id))) { this.emit({ kind: 'StoreLocal', lvalue: this.bind(id), value, declarationKind: 2 }, id, undefined); }
-            else { this.emit({ kind: 'StoreGlobal', name: node.text, value }, id, undefined); }
+            const symbol = this.identity(id);
+            if(this.locals.has(symbol)) {
+                const place = this.bind(id);
+                if(this.contextual.has(symbol)) { this.fn.contextDeclarations.add((this.fn.identifiers[place.identifier] ?? panic('missing context identifier')).declaration); }
+                this.emit({ kind: this.contextual.has(symbol) ? 'StoreContext' : 'StoreLocal', lvalue: place, value, declarationKind: 2 }, id, undefined);
+            }
+            else {
+                const capture = this.captureOf(symbol);
+                if(capture === undefined) { this.emit({ kind: 'StoreGlobal', name: node.text, value }, id, undefined); }
+                else { this.emit({ kind: 'StoreContext', lvalue: { identifier: capture.identifier, effect: '<unknown>', reactive: false, start: this.byte(node.pos), end: this.byte(node.end) }, value, declarationKind: 2 }, id, undefined); }
+            }
         }
         else {
             const object = this.expression(node.children[0] ?? -1);
@@ -171,7 +251,12 @@ class StraightLineBuilder {
     statements(ids: readonly number[]): void { for(const id of ids) { this.statement(id); } }
     statement(id: number): void {
         const node = this.parser.node(id);
-        if(node.kind === 'Block') { this.statements(node.children); }
+        if(node.kind === 'FunctionDeclaration') {
+            const value = this.nested(id);
+            const nameId = node.children.find((child) => this.parser.node(child).kind === 'Identifier');
+            if(nameId !== undefined) { const binding = this.bind(nameId); const place: PlaceInterface = { identifier: binding.identifier, effect: '<unknown>', reactive: false, start: this.byte(node.pos), end: this.byte(node.end) }; this.emit({ kind: 'StoreLocal', lvalue: place, value, declarationKind: 6 }, id, undefined); }
+        }
+        else if(node.kind === 'Block') { this.statements(node.children); }
         else if(node.kind === 'VariableStatement') { this.declarations(id); }
         else if(node.kind === 'IfStatement') {
             const test = this.expression(node.children[0] ?? -1);
@@ -315,6 +400,7 @@ class StraightLineBuilder {
     }
     expression(id: number): PlaceInterface {
         const node = this.parser.node(id);
+        if(node.kind === 'FunctionExpression' || node.kind === 'ArrowFunction') { return this.nested(id); }
         const primitive = literal(node.kind, node.text);
         if(primitive !== undefined) { return this.emit({ kind: 'Primitive', literal: primitive }, id, undefined); }
         if(node.kind === 'CallExpression' || node.kind === 'NewExpression') { return this.call(id); }
@@ -354,16 +440,7 @@ class StraightLineBuilder {
         return this.emit({ kind: 'UnaryExpression', operator, value }, id, undefined);
     }
 }
-// Positions supplied by the corpus are byte offsets, as in Go. -1 chooses the first declaration.
-export function lowerSourceAt(source: string, start: number, end: number, symbols: SymbolSnapshot | undefined = undefined): HIRFunction | undefined {
-    const parser = new Parser(source, '/test.tsx');
-    parser.file();
-    let root = -1;
-    for(let index = 0; index < parser.nodes.length; index++) {
-        const candidate = parser.node(index);
-        if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(candidate.kind) && (start < 0 || (utf8Length(source.slice(0, candidate.pos)) === start && utf8Length(source.slice(0, candidate.end)) === end))) { root = index; break; }
-    }
-    if(root < 0) { return undefined; }
+function lowerFunction(parser: Parser, root: number, source: string, symbols: SymbolSnapshot | undefined, enclosing: StraightLineBuilder | undefined): StraightLineBuilder | undefined {
     const node = parser.node(root);
     let name = '';
     let bodyId = -1;
@@ -389,15 +466,31 @@ export function lowerSourceAt(source: string, start: number, end: number, symbol
     const statements: number[] = bodyId < 0 ? [] : parser.node(bodyId).children;
     for(const id of statements) { if(!supportedStatement(parser, id)) { return undefined; } }
     const fn = new HIRFunction(name);
-    const builder = new StraightLineBuilder(parser, source, fn, symbols);
+    const builder = new StraightLineBuilder(parser, source, fn, symbols, enclosing);
     for(const id of parameters) {
         const parameter = parser.node(id);
         fn.params.push(builder.bind(id));
     }
+    builder.findContext(bodyId >= 0 ? bodyId : conciseId);
     builder.statements(statements);
     if(conciseId >= 0) { builder.close({ kind: 'Return', value: builder.expression(conciseId) }); }
     else { builder.close({ kind: 'Return', value: fn.returns }); }
-    constructHIR(fn);
+    return builder;
+}
+// Corpus positions are UTF-8 offsets; path selects a nested graph constructed with its parent.
+export function lowerSourceAt(source: string, start: number, end: number, symbols: SymbolSnapshot | undefined = undefined, path: string = ''): HIRFunction | undefined {
+    const parser = new Parser(source, '/test.tsx'); parser.file();
+    let root = -1;
+    for(let index = 0; index < parser.nodes.length; index++) {
+        const candidate = parser.node(index);
+        if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(candidate.kind) && (start < 0 || (utf8Length(source.slice(0, candidate.pos)) === start && utf8Length(source.slice(0, candidate.end)) === end))) { root = index; break; }
+    }
+    if(root < 0 || !supportedFunction(parser, root)) { return undefined; }
+    const builder = lowerFunction(parser, root, source, symbols, undefined);
+    if(builder === undefined) { return undefined; }
+    constructHIR(builder.fn);
+    let fn = builder.fn;
+    if(path !== '') { for(const part of path.split(',')) { fn = fn.functions[Number.parseInt(part, 10)] ?? panic('missing nested path'); } }
     return fn;
 }
 export function lowerSource(source: string): HIRFunction | undefined { return lowerSourceAt(source, -1, -1); }

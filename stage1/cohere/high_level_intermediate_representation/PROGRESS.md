@@ -1,6 +1,20 @@
-# Unit 2 local checkpoint: calls and constructors
+# Unit 2 WIP: closure lowering blocked by native ownership analysis
 
 Unit 2 and static-components are **not complete**. This landing extends the first slice and builds the construction denominator from executed Go tests instead of a source-text sample. Static-components has not been registered or claimed green.
+
+## Current compiler blocker
+
+Closure lowering is WIP and cannot compile natively. The compiler rejects the nested
+function table append as `adamic/cycle-capable` (`lower.ts:166`, corresponding to Go
+`lower_expression.go:699` / `lower.go:1219`). Full diagnostic and reproduction are in
+EVIDENCE.md for @system_adamic. No Weak/readonly ownership workaround was introduced.
+The last cross-backend certified checkpoint is 9deb9cc33b1b1e10aa708af94052108940dcbd19.
+
+Current Node-only comparison: **280/1,465 corpus functions** and **37/37 probes**,
+317/1,502 including probes. These 58 additional corpus matches are provisional;
+**certified coverage remains 222/1,465**. Five new closure mutants execute and are
+caught on Node; native mutant execution is blocked by the production refusal. The
+checked-in construction-summary.json retains the last passing native certificate.
 
 ## Construction corpus and coverage
 
@@ -180,3 +194,39 @@ method receiver, substitute the constructor callee, clear React origins, and cle
 optional-call status. The retained 12-case regression and its return-store mutant
 pass. All 22 resident symbol selectors and the identity-collapse mutant also pass.
 No unit gate or push was initiated. This is a local partial checkpoint of unit 2.
+
+
+## Closure WIP details
+
+Nested functions retain separate tables; first-encounter captures map child Context
+places to parent FunctionExpression.Captures. Grandparent captures are re-captured
+through intermediate builders. Shadowed names use checker identities. Context analysis
+runs before lowering; outer reassignment shared with an inner reference registers
+ContextDeclarations and emits StoreContext. Captured writes also emit StoreContext.
+Function declarations use Go's HoistedFunction kind (6) and declaration-node ranges.
+The SSA adapter visits context reads/writes/captures, uses the imported contextual
+store predicates, and constructs every nested function recursively. No graph analysis
+was copied from SSA or mutation_aliasing.
+
+The census now records enclosing-root byte spans and a nested function-index path.
+A context-bearing child is admitted only when its enclosing root is also supported;
+the port constructs the whole root and selects that child's graph afterwards. A
+context-free child can still be lowered independently, including when its parent is
+outside the current grammar. This distinguishes standalone and captured lowerings
+without taking any identifier/capture answers from the Go dump. Deduplicated graph
+keys and the original 1,465-function denominator remain unchanged.
+
+Six new probe sources exercise repeated capture reads, grandparent capture forwarding,
+outer/context writes, inner captured writes, hoisted function declarations and shadowed
+parameters. Their recursively observed graphs raise probes from 24 to 37. New mutants
+change a capture read to a local read, substitute the capture pairing, change an outer
+context store to a local store, omit context declaration registration, and change a
+hoisted declaration to an ordinary let. All five execute and disagree on Node; none
+is counted as a caught native mutant. Existing 29 native witnesses remain certified
+at the previous checkpoint. Flow exclusions and private-corpus skip assignments stay
+unchanged.
+
+Next work remains closures once the native refusal is resolved, remaining flow and
+expression variants, JSX, full export provenance, ForFunction/cache/visitors/cloning,
+and static-components. This WIP is local and no unit gate has been triggered. The
+oldest unpushed checkpoint is about ten minutes old, below the 90-minute backup limit.

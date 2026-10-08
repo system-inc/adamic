@@ -69,6 +69,8 @@ remain part of the complete package test.
 
 ## Calls: compiler diagnostic in a test-only mutant
 
+Information for @system_adamic; this refusal does not block production lowering.
+
 The production constructor lowering compiles and compares exactly. The initial
 mutation that replaced its arguments with `[]` was rejected by native compilation.
 The corresponding production Go emission is
@@ -110,3 +112,55 @@ uses the corrected constructor mutation and final optional-call/typed-alias prob
 Five new lowering mutants were executed successfully on both backends and caught;
 no compilation failure contributes to the 29. No cohere source or gitlink changed.
 Per the new standing policy, this checkpoint is local until unit 2 is complete.
+
+
+## Blocking closure compiler refusal — @system_adamic
+
+Production Go:
+`cohere/internal/lint/ecmascript/high_level_intermediate_representation/lower_expression.go:699`
+(`b.function.Functions = append(b.function.Functions, nested)`), also `lower.go:1219`.
+
+Reproduction on this local WIP:
+
+```bash
+source /workspace/adamic-tools/env.sh
+go run ./cmd/adamic build stage1/cohere/high_level_intermediate_representation/main.ts -o /tmp/hir-closures-native
+```
+
+Exact compiler message:
+
+```text
+adamic: /workspace/adamic/stage1/cohere/high_level_intermediate_representation/core.ts:74:5: Adamic 0.1 refuses HIRFunction[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/high_level_intermediate_representation/lower.ts:166:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<HIRFunction>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly HIRFunction[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+```
+
+The table is the owned parent-to-child IR function tree. The enclosing builder is a
+lowering-time object; it is not stored in the HIR function. No ownership workaround
+has been applied. This is a production blocker, distinct from the earlier test-only
+Instruction[] mutant refusal, which remains information only for @system_adamic.
+
+The initial recursive AST walk also refused a self-capturing `const` initializer:
+`lower.ts:123:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet`.
+Go `context_identifiers.go:82–83` declares the walk before assigning the function;
+restoring that exact two-step form compiles past this refusal. No recursive-method
+replacement or compiler workaround was introduced.
+
+## Closure Node-only evidence (not a native certificate)
+
+The original tagged Go suite completed successfully and produced
+`/tmp/hir-closures-census/go-tests.log` and the complete 1,502-row manifest. It retains
+395 upstream fixture visits, 40 fixture-loader Flow exclusions, 23 excluded Flow
+corpus graphs, and all 45 original private-corpus skips. A first Node comparison
+found my hoisted-declaration enum error (3 rather than Go's 6); that was corrected.
+
+```text
+python3 /tmp/hir-check-node.py /tmp/hir-closures-census
+Mismatches: 0
+```
+
+Every admitted dump matches Go on Node: **280/1,465 corpus functions**, **37/37 probes**,
+317/1,502 with probes. Five new closure mutations execute successfully on Node and
+differ from the baseline; `/tmp/hir-closures-node-mutants.log` records their results.
+The same mutations are registered in construction_test.go for both-backend execution
+once the production compiler blocker is resolved. No refusal is counted as a caught
+mutant. **Native-certified coverage stays 222/1,465**, and the checked-in summary is
+unchanged. Unit 2 and static-components remain incomplete; nothing has been pushed.

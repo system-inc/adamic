@@ -21,7 +21,7 @@ export function constructionCoverage(path: string): void {
             if(facts.kind === 'Error') { panic(facts.message); }
             symbols = new SymbolSnapshot(facts.text);
         }
-        const fn = lowerSourceAt(source.text, Number.parseInt(fields[2] ?? '', 10), Number.parseInt(fields[3] ?? '', 10), symbols) ?? panic(`eligible construction declined: ${key}`);
+        const fn = lowerSourceAt(source.text, Number.parseInt(fields[10] ?? fields[2] ?? '', 10), Number.parseInt(fields[11] ?? fields[3] ?? '', 10), symbols, fields[12] ?? '') ?? panic(`eligible construction declined: ${key}`);
         console.log(dump(fn).trimEnd());
     }
 }

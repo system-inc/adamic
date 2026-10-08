@@ -16,13 +16,13 @@ export interface IdentifierInterface {
 // The slice admits only these variants; unsupported syntax is declined before lowering.
 export interface ArgumentInterface { place: PlaceInterface; readonly spread: boolean; }
 export interface ModuleExportOriginInterface { readonly module: string; readonly exported: string; }
-export type ValueType = { readonly kind: 'Primitive'; readonly literal: string } | { readonly kind: 'LoadLocal'; place: PlaceInterface }
+export type ValueType = { readonly kind: 'Primitive'; readonly literal: string } | { readonly kind: 'LoadLocal' | 'LoadContext'; place: PlaceInterface }
     | { readonly kind: 'UnaryExpression'; readonly operator: string; value: PlaceInterface }
     | { readonly kind: 'BinaryExpression'; left: PlaceInterface; readonly operator: string; right: PlaceInterface }
     | { readonly kind: 'LoadGlobal'; readonly name: string; readonly bindingKind: number; readonly source: string; readonly imported: string }
     | { readonly kind: 'StoreGlobal'; readonly name: string; value: PlaceInterface }
     | { readonly kind: 'DeclareLocal'; lvalue: PlaceInterface; readonly declarationKind: number }
-    | { readonly kind: 'StoreLocal'; lvalue: PlaceInterface; value: PlaceInterface; readonly declarationKind: number }
+    | { readonly kind: 'StoreLocal' | 'StoreContext'; lvalue: PlaceInterface; value: PlaceInterface; readonly declarationKind: number }
     | { readonly kind: 'PrefixUpdate' | 'PostfixUpdate'; lvalue: PlaceInterface; readonly operation: string; value: PlaceInterface }
     | { readonly kind: 'PropertyLoad'; object: PlaceInterface; readonly property: string }
     | { readonly kind: 'ComputedLoad'; object: PlaceInterface; property: PlaceInterface }
@@ -30,7 +30,8 @@ export type ValueType = { readonly kind: 'Primitive'; readonly literal: string }
     | { readonly kind: 'ComputedStore'; object: PlaceInterface; property: PlaceInterface; value: PlaceInterface }
     | { readonly kind: 'CallExpression'; callee: PlaceInterface; readonly args: ArgumentInterface[]; readonly optional: boolean; readonly origin: ModuleExportOriginInterface }
     | { readonly kind: 'MethodCall'; receiver: PlaceInterface; property: PlaceInterface; readonly args: ArgumentInterface[]; readonly optional: boolean; readonly origin: ModuleExportOriginInterface }
-    | { readonly kind: 'NewExpression'; callee: PlaceInterface; readonly args: ArgumentInterface[] };
+    | { readonly kind: 'NewExpression'; callee: PlaceInterface; readonly args: ArgumentInterface[] }
+    | { readonly kind: 'FunctionExpression'; readonly functionId: number; readonly captures: PlaceInterface[] };
 export class Instruction {
     readonly id: number;
     order: EvaluationOrderType = 0;
@@ -71,6 +72,7 @@ export class HIRFunction {
     readonly params: PlaceInterface[] = [];
     readonly context: PlaceInterface[] = [];
     readonly functions: HIRFunction[] = [];
+    readonly contextDeclarations: Set<number> = new Set<number>();
     returns: PlaceInterface;
     constructor(name: string) {
         this.name = name;

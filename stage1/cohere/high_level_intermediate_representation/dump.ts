@@ -23,6 +23,8 @@ export function dump(fn: HIRFunction): string {
         out += `terminal ${block.terminalOrder} ${block.terminal.kind} ${terminalText(block.terminal)}\n`;
     }
     for(const instruction of fn.instructions) { if(!seen.has(instruction.id)) { out += 'orphan ' + instructionText(instruction); } }
+    if(fn.contextDeclarations.size > 0) { out += `context-declarations [${[...fn.contextDeclarations].sort((a, b) => a - b).join(' ')}]\n`; }
+    for(let index = 0; index < fn.functions.length; index++) { out += `nested ${index}\n${dump(fn.functions[index] ?? panic('missing nested'))}`; }
     out += 'scopes -\nend\n';
     return out;
 }
@@ -55,7 +57,9 @@ function instructionText(instruction: Instruction): string {
     else if(value.kind === 'LoadGlobal') { payload = `{"BindingKind":${value.bindingKind},"Imported":${quote(value.imported)},"Name":${quote(value.name)},"Source":${quote(value.source)}}`; }
     else if(value.kind === 'StoreGlobal') { payload = `{"Name":${quote(value.name)},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'DeclareLocal') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))}}`; }
-    else if(value.kind === 'StoreLocal') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))},"Value":${quote(placeText(value.value))}}`; }
+    else if(value.kind === 'LoadContext') { payload = `{"Place":${quote(placeText(value.place))}}`; }
+    else if(value.kind === 'FunctionExpression') { payload = `{"Captures":[${value.captures.map((place) => quote(placeText(place))).join(',')}],"Function":${value.functionId}}`; }
+    else if(value.kind === 'StoreLocal' || value.kind === 'StoreContext') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { payload = `{"LValue":${quote(placeText(value.lvalue))},"Operation":${quote(value.operation)},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'PropertyLoad') { payload = `{"Object":${quote(placeText(value.object))},"Optional":false,"Property":${quote(value.property)}}`; }
     else if(value.kind === 'ComputedLoad') { payload = `{"Object":${quote(placeText(value.object))},"Optional":false,"Property":${quote(placeText(value.property))}}`; }

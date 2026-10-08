@@ -176,6 +176,12 @@ func compareConstructionCensus(t *testing.T, output []byte, manifest string, mut
 type constructionMutant struct{ name, file, from, to string }
 
 var constructionMutants = []constructionMutant{
+	{"capture read becomes local", "lower.ts", "kind: 'LoadContext', place:", "kind: 'LoadLocal', place:"},
+	{"capture pairing loses outer value", "lower.ts", "const place = this.locals.get(symbol) ?? this.captureOf(symbol);", "const place = this.fn.returns;"},
+	{"contextual outer writes become local", "lower.ts", "kind: this.contextual.has(symbol) ? 'StoreContext' : 'StoreLocal'", "kind: 'StoreLocal'"},
+	{"context declaration registration disappears", "lower.ts", "this.fn.contextDeclarations.add((this.fn.identifiers[place.identifier] ?? panic('missing context identifier')).declaration);", "this.fn.contextDeclarations.has((this.fn.identifiers[place.identifier] ?? panic('missing context identifier')).declaration);"},
+	{"hoisted function becomes ordinary let", "lower.ts", "value, declarationKind: 6 }, id, undefined);", "value, declarationKind: 1 }, id, undefined);"},
+
 	{"optional call becomes unconditional", "lower.ts", "const optional = node.children.some((child) => this.parser.node(child).kind === 'QuestionDotToken');", "const optional = false;"},
 	{"call arguments lose spread", "lower.ts", "spread: child.kind === 'SpreadElement'", "spread: false"},
 	{"method call loses receiver", "lower.ts", "kind: 'MethodCall', receiver, property, args", "kind: 'MethodCall', receiver: property, property, args"},
