@@ -6,7 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// checkedIndexedRead guards the lookup already emitted by ArrayIndex/StringIndex.
+// checkedIndexedRead guards the lookup already emitted by ArrayIndex/StringIndex/record MapGet.
 // Coalesce evaluates that lookup once and stops if its presence result is false;
 // it is shared by the native and JavaScript backends. Observations of undefined
 // retain their value. Migrated null sentinels are values, distinct from the
@@ -34,6 +34,11 @@ func (l *lowering) checkedIndexedRead(node *ast.Node, value ir.Expression) (ir.E
 			return nil, l.notYet(node, "an indexed presence check on tagged or weak array elements")
 		}
 		of = index.Element.Present()
+	case ir.MapGet:
+		if index.Map.Type() != ir.Record {
+			return nil, l.notYet(node, "an indexed presence check for this representation")
+		}
+		of = index.ValueType.Present()
 	case ir.StringIndex:
 		of = ir.String
 	default:
