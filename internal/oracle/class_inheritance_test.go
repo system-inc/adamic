@@ -4,6 +4,7 @@ package oracle
 // ASan/UBSan and the leak check. Register separately to avoid changing oracle_test.go's fixture list.
 func init() {
 	for _, path := range []string{
+		"internal/oracle/testdata/iterators_fields_empty_spread.a",
 		"internal/oracle/testdata/iterators_derived_symbol.a",
 		"internal/oracle/testdata/iterators_override_source.a",
 		"internal/oracle/testdata/iterators_sym_keys_view.a",
