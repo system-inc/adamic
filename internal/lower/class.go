@@ -39,8 +39,8 @@ type instance struct {
 	templates []template
 }
 
-// methodList is the instance's methods, static ones aside, by name in order, so the layouts made of them are the same
-// every time.
+// methodList is this side's methods by name in order, so its named dispatch map is stable.
+// Static instances keep a separate map; methods on the other side never enter it.
 func (lowered *instance) methodList() []ir.Method {
 	names := []string{}
 	for name := range lowered.methods {
@@ -328,9 +328,8 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 			method = actual
 		}
 	}
-	if len(l.staticGlobals) > 0 && method != nil && len(method.Declarations) > 0 && method.Declarations[0].Kind == ast.KindMethodSignature {
-		return nil, l.notYet(node, "a method call through a structural signature in a program with statics; use typeof the declaring class")
-	}
+	// A structural signature identifies neither the static side nor an instance.
+	// Leave it to callClosure's receiver lookup, using that object's named method map.
 	if method == nil || len(method.Declarations) == 0 || method.Declarations[0].Kind != ast.KindMethodDeclaration {
 		return l.call(node)
 	}
@@ -418,10 +417,8 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
 		return nil, l.notYet(target, "replacing a represented method at runtime")
 	}
-	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsOptional != 0 && !isClassInstance(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
-		if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
-			return nil, l.notYet(target, "writing a possibly absent optional own field")
-		}
+	if err := l.absentOptionalWrite(target); err != nil {
+		return nil, err
 	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
@@ -451,11 +448,188 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 }
 
+// absentOptionalWrite refuses a write to an optional own field of a plain object when some literal left
+// that field out: the literal's object has no slot for it, and the write would find none ('a field the
+// checker proved is there is missing'), whatever the field's representation. A field held in a Union is
+// refused wherever it's written, as before. A class instance declares every field, so it has the slot.
+// Optional presence lifts this (#r3chqza).
+func (l *lowering) absentOptionalWrite(target *ast.Node) error {
+	member := l.checker.GetSymbolAtLocation(target)
+	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
+		return nil
+	}
+	if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
+		return l.notYet(target, "writing a possibly absent optional own field")
+	}
+	if l.omittedOptionals[member] && !presentBeforeWrite(target) && !l.literalGivesField(target) {
+		return l.notYet(target, "writing a possibly absent optional own field")
+	}
+	return nil
+}
+
+// presentBeforeWrite is a write to object.name inside the then branch of an if that tested
+// object.name !== undefined (or != null), the same spelling, directly or as a term of &&: a value was
+// there, so the object has the slot.
+func presentBeforeWrite(target *ast.Node) bool {
+	spelled := accessPath(target)
+	if spelled == "" {
+		return false
+	}
+	for child, parent := target, target.Parent; parent != nil; child, parent = parent, parent.Parent {
+		if parent.Kind == ast.KindFunctionDeclaration || parent.Kind == ast.KindArrowFunction || parent.Kind == ast.KindFunctionExpression || parent.Kind == ast.KindMethodDeclaration {
+			return false
+		}
+		if parent.Kind != ast.KindIfStatement || parent.AsIfStatement().ThenStatement != child {
+			continue
+		}
+		if testsPresence(parent.AsIfStatement().Expression, spelled) {
+			return true
+		}
+	}
+	return false
+}
+
+func testsPresence(condition *ast.Node, spelled string) bool {
+	condition = ast.SkipParentheses(condition)
+	if condition.Kind != ast.KindBinaryExpression {
+		return false
+	}
+	binary := condition.AsBinaryExpression()
+	switch binary.OperatorToken.Kind {
+	case ast.KindAmpersandAmpersandToken:
+		return testsPresence(binary.Left, spelled) || testsPresence(binary.Right, spelled)
+	case ast.KindExclamationEqualsEqualsToken, ast.KindExclamationEqualsToken:
+		left, right := ast.SkipParentheses(binary.Left), ast.SkipParentheses(binary.Right)
+		absent := right.Kind == ast.KindUndefinedKeyword || right.Kind == ast.KindNullKeyword || (right.Kind == ast.KindIdentifier && right.Text() == "undefined")
+		return absent && accessPath(left) == spelled
+	}
+	return false
+}
+
+// plainPropertyName is a literal member's name when it's spelled as an identifier, a string or a
+// number, and "" for a computed name, which gives no field this can see.
+func plainPropertyName(property *ast.Node) string {
+	name := property.Name()
+	if name == nil {
+		return ""
+	}
+	switch name.Kind {
+	case ast.KindIdentifier, ast.KindStringLiteral, ast.KindNumericLiteral:
+		return name.Text()
+	}
+	return ""
+}
+
+// accessPath spells a chain of names (this.a.b, node.flow), and gives "" for anything else, which
+// matches nothing.
+func accessPath(node *ast.Node) string {
+	node = ast.SkipParentheses(node)
+	switch node.Kind {
+	case ast.KindIdentifier:
+		return node.Text()
+	case ast.KindThisKeyword:
+		return "this"
+	case ast.KindPropertyAccessExpression:
+		if inner := accessPath(node.AsPropertyAccessExpression().Expression); inner != "" {
+			return inner + "." + node.AsPropertyAccessExpression().Name().Text()
+		}
+	}
+	return ""
+}
+
+// literalGivesField is a write through a const whose initializer is an object literal naming the field.
+func (l *lowering) literalGivesField(target *ast.Node) bool {
+	receiver := ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
+	if receiver.Kind != ast.KindIdentifier {
+		return false
+	}
+	symbol := l.checker.GetSymbolAtLocation(receiver)
+	if symbol == nil || symbol.ValueDeclaration == nil || symbol.ValueDeclaration.Kind != ast.KindVariableDeclaration {
+		return false
+	}
+	declaration := symbol.ValueDeclaration
+	if declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		return false
+	}
+	initializer := declaration.AsVariableDeclaration().Initializer
+	if initializer == nil || ast.SkipParentheses(initializer).Kind != ast.KindObjectLiteralExpression {
+		return false
+	}
+	name := target.AsPropertyAccessExpression().Name().Text()
+	for _, property := range ast.SkipParentheses(initializer).AsObjectLiteralExpression().Properties.Nodes {
+		if property.Kind != ast.KindSpreadAssignment && plainPropertyName(property) == name {
+			return true
+		}
+	}
+	return false
+}
+
+// noteOmittedOptionals finds every object literal whose context types it and records the optional
+// properties of that type it leaves out. A spread counts as giving a property its source declares
+// required.
+func (l *lowering) noteOmittedOptionals(modules []*ast.SourceFile) {
+	l.omittedOptionals = map[*ast.Symbol]bool{}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindObjectLiteralExpression {
+			l.noteOmittedOptionalsOf(node)
+		}
+		return node.ForEachChild(visit)
+	}
+	for _, module := range modules {
+		module.AsNode().ForEachChild(visit)
+	}
+}
+
+func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
+	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	if contextual == nil {
+		return
+	}
+	given := map[string]bool{}
+	var spreads []*checker.Type
+	for _, property := range literal.AsObjectLiteralExpression().Properties.Nodes {
+		if property.Kind == ast.KindSpreadAssignment {
+			spreads = append(spreads, l.checker.GetTypeAtLocation(property.AsSpreadAssignment().Expression))
+			continue
+		}
+		if name := plainPropertyName(property); name != "" {
+			given[name] = true
+		}
+	}
+	members := []*checker.Type{contextual}
+	if contextual.Flags()&checker.TypeFlagsUnion != 0 {
+		members = contextual.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsObject == 0 {
+			continue
+		}
+		for _, property := range l.checker.GetPropertiesOfType(member) {
+			if property.Flags&ast.SymbolFlagsOptional == 0 || given[property.Name] {
+				continue
+			}
+			spread := false
+			for _, source := range spreads {
+				if inside := l.checker.GetPropertyOfType(source, property.Name); inside != nil && inside.Flags&ast.SymbolFlagsOptional == 0 {
+					spread = true
+				}
+			}
+			if !spread {
+				l.omittedOptionals[property] = true
+			}
+		}
+	}
+}
+
 // updateProperty lowers object.name op= value, and object.name++ and -- (a nil value, a step of 1).
 // JavaScript evaluates the object once, reads the field, then evaluates the value: a variable may be
 // read twice, since nothing runs between the two reads, and anything else is held in a local of its
 // own for the statement, so make().count++ makes one object.
 func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast.Kind, valueNode *ast.Node) ([]ir.Statement, error) {
+	if err := l.absentOptionalWrite(target); err != nil {
+		return nil, err
+	}
 	object, err := l.expression(target.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, err

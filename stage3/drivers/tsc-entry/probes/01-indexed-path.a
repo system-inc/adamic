@@ -1,0 +1,5 @@
+// a-check: type error TS2345
+type Path = string & { readonly pathBrand: unknown };
+function accept(path: string): void { console.log(String(path)); }
+const paths: readonly Path[] = [];
+accept(paths[0]);

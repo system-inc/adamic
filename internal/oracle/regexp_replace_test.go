@@ -3,6 +3,7 @@ package oracle
 import (
 	"bytes"
 	"errors"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
@@ -39,10 +40,10 @@ func TestRegExpReplacementNodeMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, mutant := range []struct{ name, old, new string }{
-		{"offset off by one", "value.number = (double)offset;", "value.number = (double)offset + 1;"},
-		{"groups wrong order", "value = match->elements[j];", "value = match->elements[j == 1 ? 2 : j == 2 ? 1 : j];"},
-		{"missing named groups argument", "adamic_object *groups = match->properties->slots[2].reference;", "adamic_object *groups = NULL;"},
+	for _, mutant := range []struct{ name, old, new, javascript string }{
+		{"offset off by one", "value.number = (double)offset;", "value.number = (double)offset + 1;", "values[values.length - (typeof values[values.length - 1] === 'object' ? 3 : 2)] += 1; "},
+		{"groups wrong order", "value = match->elements[j];", "value = match->elements[j == 1 ? 2 : j == 2 ? 1 : j];", "[values[1], values[2]] = [values[2], values[1]]; "},
+		{"missing named groups argument", "adamic_object *groups = match->properties->slots[2].reference;", "adamic_object *groups = NULL;", "if (typeof values[values.length - 1] === 'object') values.pop(); "},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
 			if bytes.Count(runtime, []byte(mutant.old)) != 1 {
@@ -59,10 +60,21 @@ func TestRegExpReplacementNodeMutants(t *testing.T) {
 			if actual.exitCode != 0 || len(actual.stderr) != 0 {
 				t.Fatalf("mutant failed before the Node comparison: %+v", actual)
 			}
-			if diff := disagreement(expected, actual); diff == "" {
-				t.Fatal("Node did not catch mutant")
-			} else {
-				t.Log(diff)
+			results := map[string]run{"native": actual}
+			if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+				results["WASI"] = onWASI(t, source)
+			}
+			js := javascript.JavaScript(program)
+			site := "return adamicCall(callback, values);"
+			if strings.Count(js, site) != 1 {
+				t.Fatal("JavaScript mutation site moved")
+			}
+			results["JavaScript"] = replacementJavaScriptMutant(t, strings.Replace(js, site, mutant.javascript+site, 1))
+			for backend, result := range results {
+				if result.exitCode != 0 || len(result.stderr) != 0 || disagreement(expected, result) != "stdout differs" {
+					t.Fatalf("%s: mutant must finish cleanly and differ only from Node: %+v", backend, result)
+				}
+				t.Logf("%s: Node alone caught stdout differs", backend)
 			}
 		})
 	}
@@ -106,6 +118,27 @@ func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
 			} else {
 				t.Log(diff)
 			}
+			js := javascript.JavaScript(program)
+			marker := "panic('RegExp replacement callback argument does not fit its declared type'); "
+			end := strings.Index(js, marker)
+			if end < 0 {
+				t.Fatal("JavaScript guard mutation site moved")
+			}
+			start := strings.LastIndex(js[:end], "if (!(")
+			if start < 0 {
+				t.Fatal("JavaScript guard condition missing")
+			}
+			result := replacementJavaScriptMutant(t, js[:start]+js[end+len(marker):])
+			if result.exitCode != 0 || len(result.stderr) != 0 || disagreement(expected, result) == "" {
+				t.Fatalf("JavaScript guard mutant escaped comparison: %+v", result)
+			}
+
+			if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+				result := onWASI(t, source)
+				if result.exitCode != 0 || len(result.stderr) != 0 || disagreement(expected, result) == "" {
+					t.Fatalf("WASI guard mutant escaped comparison: %+v", result)
+				}
+			}
 		})
 	}
 }
@@ -139,6 +172,12 @@ func TestRegExpReplacementDropCount(t *testing.T) {
 	if err == nil || !strings.Contains(err.Error(), "too few arguments to function call") || !strings.Contains(err.Error(), "expected 3, have 2") {
 		t.Fatalf("drop-count mutant escaped typed arity: %v", err)
 	}
+	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+		err = native.Build(changed, filepath.Join(t.TempDir(), "mutant.wasm"), native.Options{Target: "wasm32-wasi"})
+		if err == nil || !strings.Contains(err.Error(), "too few arguments to function call") || !strings.Contains(err.Error(), "expected 3, have 2") {
+			t.Fatalf("WASI drop-count mutant escaped typed arity: %v", err)
+		}
+	}
 	t.Log("runtime count-drop mutant rejected under -Werror: expected 3, have 2")
 }
 
@@ -171,6 +210,21 @@ func TestRegExpReplacementCountNodeMutant(t *testing.T) {
 	if bytes.Equal(expected.stdout, actual.stdout) {
 		t.Fatal("Node did not catch packed count replacing the logical count")
 	}
+	results := map[string]run{"native": actual}
+	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+		results["WASI"] = onWASI(t, source)
+	}
+	js := javascript.JavaScript(program)
+	site := "return adamicCall(callback, values);"
+	if !strings.Contains(js, site) {
+		t.Fatal("JavaScript count mutation site moved")
+	}
+	results["JavaScript"] = replacementJavaScriptMutant(t, strings.ReplaceAll(js, site, "values.length = 1; "+site))
+	for backend, result := range results {
+		if result.exitCode != 0 || len(result.stderr) != 0 || disagreement(expected, result) != "stdout differs" {
+			t.Fatalf("%s: count mutant escaped Node-only comparison: %+v", backend, result)
+		}
+	}
 	t.Log("Node caught physical packed count replacing logical callback count")
 }
 
@@ -194,4 +248,14 @@ func TestRegExpReplacementDynamicCandidate(t *testing.T) {
 			t.Fatalf("%s: %s", name, difference)
 		}
 	}
+}
+
+// Run the generated backend artifact after changing only its callback dispatch.
+func replacementJavaScriptMutant(t *testing.T, source string) run {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "mutant.mjs")
+	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+		t.Fatal(err)
+	}
+	return onNode(t, path)
 }

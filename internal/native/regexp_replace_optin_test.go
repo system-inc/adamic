@@ -29,13 +29,13 @@ func TestRegExpReplacementScoutOptInMutant(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	old := `strings.Contains(source, "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n")`
+	old := `strings.Contains(source, "#define "+feature+" 1\n")`
 	if strings.Count(string(source), old) != 1 {
 		t.Fatal("callback opt-in site moved")
 	}
 	directory := t.TempDir()
 	replacement := filepath.Join(directory, "library.go")
-	if err := os.WriteFile(replacement, []byte(strings.Replace(string(source), old, "true", 1)), 0600); err != nil {
+	if err := os.WriteFile(replacement, []byte(strings.Replace(string(source), old, `feature == "ADAMIC_REGEXP_REPLACE_CALLBACK" || `+old, 1)), 0600); err != nil {
 		t.Fatal(err)
 	}
 	original, _ := filepath.Abs("library.go")

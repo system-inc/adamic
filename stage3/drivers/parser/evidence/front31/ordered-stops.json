@@ -1,0 +1,368 @@
+{
+  "warning": "Discovery only; original validated tree unchanged. Original-source coordinates and edited diagnostic columns distinguished. Duplicate reintroduced enum stop and synthetic inference/syntax diagnostics excluded.",
+  "rows": [
+    {
+      "order": 1,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/debug.ts:113:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/debug.ts:114:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n",
+      "file": "src/compiler/debug.ts",
+      "line": 113,
+      "column": 19,
+      "message": "error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.",
+      "found_behind_stubs": false,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/debug.ts",
+        "line": 113,
+        "column": 19,
+        "name": "fail",
+        "edits": [
+          {
+            "start": 5170,
+            "end": 5468,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-error-capture-stack.a",
+      "coverage": "Error checker fact missing on observed main; no covering clean merge verified"
+    },
+    {
+      "order": 2,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts:11:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/core.ts",
+      "line": 11,
+      "column": 52,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts",
+        "line": 11,
+        "column": 52,
+        "name": "emptyMap",
+        "start": 386,
+        "end": 409,
+        "replacement": "parserProofMissingemptyMap()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-enum-map.a",
+      "coverage": "codex/enum-init-reach 2152fc3b, previously reported green; absent from main"
+    },
+    {
+      "order": 3,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/debug.ts:333:29: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/debug.ts",
+      "line": 333,
+      "column": 29,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/debug.ts",
+        "line": 333,
+        "column": 29,
+        "name": "enumMemberCache",
+        "start": 17501,
+        "end": 17600,
+        "replacement": "enumMemberCache: Map<Record<string, string | number>, ts.SortedReadonlyArray<[number, string]>> = parserProofMissingenumMemberCache()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-enum-map.a",
+      "coverage": "codex/enum-init-reach 2152fc3b, previously reported green; absent from main"
+    },
+    {
+      "order": 4,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performanceCore.ts:37:37: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performanceCore.ts",
+      "line": 37,
+      "column": 37,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performanceCore.ts",
+        "line": 37,
+        "column": 37,
+        "name": "tryGetPerformance",
+        "edits": [
+          {
+            "start": 987,
+            "end": 2025,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-call-before-enum.a",
+      "coverage": "codex/enum-init-reach 2152fc3b, previously reported green; absent from main"
+    },
+    {
+      "order": 5,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performance.ts:15:18: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 15,
+      "column": 18,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performance.ts",
+        "line": 15,
+        "column": 18,
+        "name": "timeorigin",
+        "start": 597,
+        "end": 621,
+        "replacement": "timeorigin: number = parserProofMissingtimeorigin()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-call-before-enum.a",
+      "coverage": "codex/enum-init-reach 2152fc3b, previously reported green; absent from main"
+    },
+    {
+      "order": 6,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performance.ts:16:15: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 16,
+      "column": 15,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performance.ts",
+        "line": 16,
+        "column": 15,
+        "name": "marks",
+        "start": 657,
+        "end": 690,
+        "replacement": "marks: Map<string, number> = parserProofMissingmarks()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-call-before-enum.a",
+      "coverage": "codex/enum-init-reach 2152fc3b, previously reported green; absent from main"
+    },
+    {
+      "order": 7,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performance.ts:17:16: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 17,
+      "column": 16,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performance.ts",
+        "line": 17,
+        "column": 16,
+        "name": "counts",
+        "start": 720,
+        "end": 754,
+        "replacement": "counts: Map<string, number> = parserProofMissingcounts()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-call-before-enum.a",
+      "coverage": "codex/enum-init-reach 2152fc3b, previously reported green; absent from main"
+    },
+    {
+      "order": 8,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performance.ts:18:19: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 18,
+      "column": 19,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/performance.ts",
+        "line": 18,
+        "column": 19,
+        "name": "durations",
+        "start": 785,
+        "end": 822,
+        "replacement": "durations: Map<string, number> = parserProofMissingdurations()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-call-before-enum.a",
+      "coverage": "codex/enum-init-reach 2152fc3b, previously reported green; absent from main"
+    },
+    {
+      "order": 9,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/corePublic.ts:9:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n",
+      "file": "src/compiler/corePublic.ts",
+      "line": 9,
+      "column": 5,
+      "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+      "found_behind_stubs": true,
+      "placeholder": "export type MapLike<T> = Record<string, T>;\nfunction parserProofMissingMapLike<T>(): Record<string, T> { throw \"discovery-only dictionary declaration\"; }\n",
+      "stub_exit": 0,
+      "minimal": "native-maplike-index.a",
+      "coverage": "codex/records-lowering 456c981b, absent from main"
+    },
+    {
+      "order": 10,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts:28:37: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "file": "src/compiler/core.ts",
+      "line": 28,
+      "column": 37,
+      "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts",
+        "line": 28,
+        "column": 37,
+        "name": "forEach",
+        "edits": [
+          {
+            "start": 994,
+            "end": 1247,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-nonnull.a",
+      "coverage": "codex/non-null-check a02613ef, absent from main"
+    },
+    {
+      "order": 11,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts:42:30: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n",
+      "file": "src/compiler/core.ts",
+      "line": 42,
+      "column": 30,
+      "message": "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts",
+        "line": 42,
+        "column": 30,
+        "name": "zipWith",
+        "edits": [
+          {
+            "start": 1191,
+            "end": 1411,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-nonnull.a",
+      "coverage": "codex/non-null-check a02613ef, absent from main"
+    },
+    {
+      "order": 12,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts:54:101: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/core.ts",
+      "line": 54,
+      "column": 101,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts",
+        "line": 54,
+        "column": 101,
+        "name": "every",
+        "edits": [
+          {
+            "start": 1629,
+            "end": 1641,
+            "replacement": "boolean"
+          },
+          {
+            "start": 1529,
+            "end": 1666,
+            "replacement": ""
+          }
+        ]
+      },
+      "placeholder": "All every callback predicate parameter types widened to boolean and the implementation made throwing. Return predicates retained until the two subsequent stops. Exact edits retained.",
+      "stub_exit": 0,
+      "minimal": "native-predicate-overload.a",
+      "coverage": "codex/notyet-predicates c191f97b, attempted merge conflicted and aborted"
+    },
+    {
+      "order": 13,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts:54:111: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/core.ts",
+      "line": 54,
+      "column": 116,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts",
+        "line": 54,
+        "column": 111,
+        "name": "every",
+        "edits": [
+          {
+            "start": 1529,
+            "end": 1661,
+            "replacement": ""
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-some-predicate-overload.a",
+      "observed_edited_column": 111,
+      "coordinate_note": "Original source coordinate; observed column shifted by five characters when the preceding callback predicate was widened to boolean.",
+      "coverage": "codex/notyet-predicates c191f97b, attempted merge conflicted and aborted"
+    },
+    {
+      "order": 14,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts:56:123: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "file": "src/compiler/core.ts",
+      "line": 56,
+      "column": 128,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts",
+        "line": 56,
+        "column": 123,
+        "name": "every",
+        "edits": [
+          {
+            "start": 1549,
+            "end": 1705,
+            "replacement": ""
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0,
+      "minimal": "native-some-predicate-overload.a",
+      "observed_edited_column": 123,
+      "coordinate_note": "Original source coordinate; observed column shifted by five characters when the preceding callback predicate was widened to boolean.",
+      "coverage": "codex/notyet-predicates c191f97b, attempted merge conflicted and aborted"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 76,
+      "column": 113,
+      "message": "Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front31-discovery-final2-slice/src/compiler/core.ts:76:113: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n",
+      "exit": 1,
+      "placeholder": "find overload predicate parameters widened to boolean and its implementation replaced by throw. Exact edits retained; no subsequent build after the fifteen-source-stop limit.",
+      "order": 15,
+      "minimal": "native-predicate-overload.a",
+      "found_behind_stubs": true,
+      "coverage": "codex/notyet-predicates c191f97b, attempted merge conflicted and aborted"
+    }
+  ]
+}

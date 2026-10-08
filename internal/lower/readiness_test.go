@@ -1,8 +1,10 @@
 package lower
 
 import (
-	"github.com/system-inc/adamic/internal/ir"
+	"errors"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 func TestReadinessElisionRequiresDominatingAssignment(t *testing.T) {
@@ -26,30 +28,35 @@ func TestReadinessElisionRequiresDominatingAssignment(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program, err := lowerTypeScriptSource(t, probe.source)
+			_, err := lowerSource(t, probe.source)
+			var refused *Refused
+			if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
+				t.Fatalf("want historical .a assertion refused, got %v", err)
+			}
+			// The same source remains a runnable checked TypeScript control.
+			program, err := lowerTypeScriptAssertionSource(t, probe.source)
 			if err != nil {
 				t.Fatal(err)
 			}
-			checked := 0
-			count := func(node any) bool {
+			if program.NonNullChecks.Checked != 1 {
+				t.Fatalf("want one eager assertion, got %#v", program.NonNullChecks)
+			}
+			check := func(node any) bool {
 				switch read := node.(type) {
 				case ir.Read:
 					if read.Readiness != "" {
-						checked++
+						t.Fatal("TypeScript assertion delayed until a local read")
 					}
 				case ir.Property:
 					if read.Readiness != "" {
-						checked++
+						t.Fatal("TypeScript assertion delayed until a field read")
 					}
 				}
 				return true
 			}
-			walk(program.Main, count)
+			walk(program.Main, check)
 			for _, function := range program.Functions {
-				walk(function.Body, count)
-			}
-			if checked != probe.checked {
-				t.Fatalf("%d readiness checks, want %d", checked, probe.checked)
+				walk(function.Body, check)
 			}
 		})
 	}

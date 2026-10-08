@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
@@ -65,6 +66,16 @@ static bool reentrant_test_mutant(adamic_object *regex,adamic_string *input) { (
 		if wasi.exitCode != 0 || len(wasi.stderr) != 0 || disagreement(expected, wasi) != "stdout differs" {
 			t.Fatalf("WASI reentrant mutant survived Node: %+v", wasi)
 		}
+	}
+	js := javascript.JavaScript(program)
+	if !strings.Contains(js, ".test(") {
+		t.Fatal("nested JavaScript test call missing")
+	}
+	js = strings.ReplaceAll(js, ".test(", ".reentrantTestMutant(")
+	js = "RegExp.prototype.reentrantTestMutant = function(input) { return false; };\n" + js
+	result := replacementJavaScriptMutant(t, js)
+	if result.exitCode != 0 || len(result.stderr) != 0 || disagreement(expected, result) != "stdout differs" {
+		t.Fatalf("JavaScript reentrant mutant escaped Node: %+v", result)
 	}
 	t.Log("nested regex test returning false: clean sanitizer exit, caught only by Node stdout")
 }

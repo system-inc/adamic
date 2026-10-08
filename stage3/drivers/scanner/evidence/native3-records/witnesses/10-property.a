@@ -1,0 +1,3 @@
+// a-check: refused the non-null assertion !
+const values = { Script_Extensions: undefined! as Set<string> };
+console.log("ok");

@@ -42,8 +42,9 @@ this slice adds no new interface-method workaround.
 
 ## 2. Optional indexed access on an optional value
 
-`gaps/2_optional_index.ts` prints `1` on Node. Stage 0 returns `lower.NotYet`:
-`?.[] on a value`. `TestOptionAndComparatorGaps` requires both observations.
+`gaps/2_optional_index.ts` prints `1` on Node. Stage 0 returned `lower.NotYet`:
+`?.[] on a value`. Closed by compiler/area-stack (views slice 1, Oct 8): it lowers, and
+native and the JavaScript backend print what Node prints (TestClosedComparatorGaps).
 The option reader initially used `this.values.get(name)?.[0] ?? fallback`.
 Workaround: bind the optional array, guard `undefined`, then index it.
 
@@ -54,6 +55,9 @@ Workaround: bind the optional array, guard `undefined`, then index it.
 The comparator initially used `startDifference || endDifference || ruleDifference`.
 Workaround: test each numeric difference against zero and return explicitly.
 This is a stage 0 lowering limit; it does not change sorting semantics.
+
+Closed by compiler/area-next: numeric `||` lowers with JavaScript's ToBoolean, and native and the
+JavaScript backend print what Node prints (TestClosedComparatorGaps). The workaround can go.
 
 ## Go regex and Unicode services
 
@@ -97,8 +101,8 @@ not live cohere filesystem integration.
 
 The method-signature fixer needs the last opening delimiter before the first
 parameter. `gaps/4_last_index_position.ts` prints `1` on Node; stage 0 refuses
-the two-argument `lastIndexOf` form. `TestOptionAndComparatorGaps` holds both
-observations. The port searches `source.slice(0, firstParameterStart)` using
+the two-argument `lastIndexOf` form. Closed by compiler/area-stack (views slice 1, Oct 8):
+it lowers, and TestClosedComparatorGaps holds native and the JavaScript backend to Node. The port searches `source.slice(0, firstParameterStart)` using
 the supported one-argument form. The three-way fixtures hold the resulting
 fixes to Go, including generic and commented signatures.
 
