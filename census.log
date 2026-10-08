@@ -1,0 +1,10 @@
+unknown	github.com/system-inc/adamic/internal/refusalprobe	TestUnsettledQuestions/any
+unknown	github.com/system-inc/adamic/internal/refusalprobe	TestUnsettledQuestions/expando
+unknown	github.com/system-inc/adamic/internal/refusalprobe	TestUnsettledQuestions/eval
+unknown	github.com/system-inc/adamic/internal/refusalprobe	TestUnsettledQuestions/function-type
+unknown	github.com/system-inc/adamic/internal/refusalprobe	TestUnsettledQuestions/new-function
+unknown	github.com/system-inc/adamic/internal/refusalprobe	TestUnsettledQuestions/record
+unknown	github.com/system-inc/adamic/internal/refusalprobe	TestUnsettledQuestions/merging
+skips=7 required-input=0 unknown=7
+gate skipped 0 required-input tests; 7 unclassified skips
+exit status 1
