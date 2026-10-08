@@ -88,7 +88,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if censusFieldSlotless(value.Type()) {
+			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && l.objectPrimitiveBoxedField(property)) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})

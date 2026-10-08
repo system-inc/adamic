@@ -1,7 +1,7 @@
 Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-58 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+70 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -347,3 +347,32 @@ implementation mutations rerun above. All source tests run in the filtered gate.
 
 Finite-literal owner gates pass: lower 9.476s, native 14.583s, JavaScript
 2.377s, full IR 3.172s, uncached filtered oracle 85.780s, vet exit 0.
+
+## Lane 4b array alternatives and boxed producers follow-up
+
+Tip f4e5993e3ed2817a9060ed53ca0b957ea5588c64 follows both priority owner
+merges. Three conflicted hunks in checked_views_object_primitive_unions_test.go
+are resolved separately: keep both optional and new comment/literal fixture
+rows, keep optional-policy rollbacks and new outer wrong-member mutations, and
+combine required-missing/literal-text-wrong exclusions for the nested mutant
+selector. No refusal or Node control is removed. Backend auto-merges retain
+Absent/Optional plumbing while accepting the shared ViewArray member adapter.
+The named objectPrimitiveBoxedField producer hook preserves real boxed storage;
+casts supply no producer kind. Shared array element and nested field obligations
+remain checked. Map/callable alternatives and true NodeArray metadata stay pending.
+
+New comment-good and literal-good controls execute both generated boxed producer
+branches. comment-boolean/literal-boolean hold outer refusal and independent
+wrong-member/removal mutants; comment-flags-wrong/literal-negative-wrong hold
+nested type and dropped-read mutants. literal-text-wrong pins nested string
+refusal. Earlier optional-absent/optional-receiver/required-missing and all their
+mutants remain in the same source test. The new group contributes 12 release
+backend implementation mutants, separate from payload mutants and previous runs.
+Original 42 candidate pairs / 181 reads still await original witnesses; reduced
+array aliases are not full upstream NodeArray certificates.
+
+Array/boxed gates pass: lower 8.606s, native 19.043s, JavaScript 2.071s,
+full IR 23.286s, uncached filtered oracle 107.157s, vet exit 0. The new twelve
+backend mutants and preserved sixteen earlier lane4b backend mutants all run
+in the gate; source controls include optional absence/receiver and required
+missing slots. Sole parent predicate-fixture exclusion remains unchanged.

@@ -6,6 +6,10 @@
   "candidate_reads": 181,
   "completed_pairs": 0,
   "completed_reads": 0,
+  "reduced_shape_candidate_pairs": 22,
+  "reduced_shape_candidate_reads": 103,
+  "candidate_pairs_without_shape_control": 20,
+  "candidate_reads_without_shape_control": 78,
   "rows": [
     {
       "type_id": 6998,
@@ -195,7 +199,8 @@
         }
       ],
       "rank": 1,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "node-indicator"
     },
     {
       "type_id": 9761,
@@ -351,7 +356,8 @@
         }
       ],
       "rank": 2,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "diagnostic"
     },
     {
       "type_id": 9474,
@@ -582,7 +588,8 @@
         }
       ],
       "rank": 4,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "literal"
     },
     {
       "type_id": 7642,
@@ -1096,7 +1103,8 @@
         }
       ],
       "rank": 9,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 8815,
@@ -1174,7 +1182,8 @@
         }
       ],
       "rank": 10,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 8901,
@@ -1252,7 +1261,8 @@
         }
       ],
       "rank": 11,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 9762,
@@ -1336,7 +1346,8 @@
         }
       ],
       "rank": 12,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "diagnostic"
     },
     {
       "type_id": 7615,
@@ -1460,7 +1471,8 @@
         }
       ],
       "rank": 14,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 8813,
@@ -1522,7 +1534,8 @@
         }
       ],
       "rank": 15,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 8875,
@@ -1584,7 +1597,8 @@
         }
       ],
       "rank": 16,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 9475,
@@ -1768,7 +1782,8 @@
         }
       ],
       "rank": 19,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 8883,
@@ -1822,7 +1837,8 @@
         }
       ],
       "rank": 20,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 11591,
@@ -1936,7 +1952,8 @@
         }
       ],
       "rank": 22,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 7638,
@@ -1982,7 +1999,8 @@
         }
       ],
       "rank": 23,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 8617,
@@ -2074,7 +2092,8 @@
         }
       ],
       "rank": 25,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 8900,
@@ -2120,7 +2139,8 @@
         }
       ],
       "rank": 26,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 37515,
@@ -2310,7 +2330,8 @@
         }
       ],
       "rank": 30,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 8878,
@@ -2348,7 +2369,8 @@
         }
       ],
       "rank": 31,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 8879,
@@ -2386,7 +2408,8 @@
         }
       ],
       "rank": 32,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 9760,
@@ -2430,7 +2453,8 @@
         }
       ],
       "rank": 33,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "diagnostic"
     },
     {
       "type_id": 11106,
@@ -2465,7 +2489,8 @@
         }
       ],
       "rank": 34,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "diagnostic"
     },
     {
       "type_id": 36241,
@@ -2578,7 +2603,8 @@
         }
       ],
       "rank": 37,
-      "status": "pending original-pair witness"
+      "status": "pending original-pair witness",
+      "reduced_shape_control": "comment"
     },
     {
       "type_id": 97913,

@@ -849,6 +849,33 @@ remaining member adapters and original-pair witnesses; exact reachability will
 still require the checker-clean program. Only integration is merged, and the
 lead forwards this lane's tip to the integrator for hunk reconciliation.
 
+### Lane 4b scalar and array union checkpoint, October 8
+
+The next direct shape is string|number|PseudoBigInt (rank 4, 10 candidate reads).
+Rank 3 is an object union with an intersection and remains uncovered. Array
+alternatives now dispatch through the existing shared lazy element contract;
+source controls model string|NodeArray<JSDocComment>|undefined using a readonly
+array alias. Full NodeArray inherited metadata is not certified by this alias.
+These two added shapes bring reduced controls to 22 candidate pairs / 103 reads;
+20 candidate pairs / 78 reads have no reduced shape control. Original-pair
+witnesses remain pending for all 42 pairs / 181 reads, and exact production
+reachability remains unmeasured.
+
+Minimal added shared hook: lower/object.go calls objectPrimitiveBoxedField for
+ir.Union property initializers. The helper admits physical boxed storage only
+for scalar unions or the supported single object/array alternative, preserving
+runtime tags and source slots. It does not widen writes or prove payload types.
+Both positive source controls exercise boxed union field producers and both
+backends check the member at the read. Native sanitized/leak-checked runs pass.
+Independent outer removal, wrong-member acceptance, wrong nested-shape acceptance
+and dropped nested checks all fail pinned refusals in executable release code.
+
+Revised working whole-family date: October 13, 2026, 23:00 UTC, brought forward
+from October 16 after this production checkpoint. Remaining risks include true
+NodeArray representation/metadata, object intersections and unions, dynamic
+keys, tuple/element reads, callable alternatives and original-pair context
+witnesses. This is a delivery estimate, not completed production reachability.
+
 ## Centralized checked-view integration
 
 The lead assigned Codex 01a11882-3830 on codex/views-integration to merge every

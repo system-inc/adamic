@@ -32,6 +32,8 @@ func (e *emitter) viewObjectPrimitive(property ir.Property) string {
 				}
 				tests = append(tests, "v === "+value)
 			}
+		} else if child.Kind == ir.ViewArray && child.Of == ir.Array {
+			tests = append(tests, "Array.isArray(v)")
 		} else if child.Kind == ir.ViewObject && child.Of == ir.Object {
 			tests = append(tests, "v !== null && typeof v === 'object' && !Array.isArray(v) && !(v instanceof Map)")
 		} else if child.Kind == ir.ViewScalar {
