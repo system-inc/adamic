@@ -213,6 +213,22 @@ git -C ~/fast-gate/tree${suffix} switch -q --detach "${sha}"
 git -C ~/fast-gate/tree${suffix} submodule update -q --init --recursive
 mkdir -p ~/"${out}"
 echo "slot=${slot} load_before=$(cut -d' ' -f1-3 /proc/loadavg)" > ~/"${out}"/box.txt
+# A slot checkout holding a nested copy of a slot directory (tools-3/tools-2 and tree-3/tree-3.partial on
+# Cloud, Oct 8) makes the census and every tree walk read a second tree, so the gate is void, naming box,
+# slot and paths, until a person moves it out. The repository has no top-level tools* or tree* of its own;
+# a tracked one would never match, since only untracked directories count.
+nested=""
+for checkout in ~/fast-gate/tools${suffix} ~/fast-gate/tree${suffix}; do
+  for candidate in "${checkout}"/tools* "${checkout}"/tree*; do
+    [ -d "${candidate}" ] || continue
+    if [ -n "$(git -C "${checkout}" ls-files -- "$(basename "${candidate}")" | head -1)" ]; then continue; fi
+    nested="${nested} ${candidate}"
+  done
+done
+if [ -n "${nested}" ]; then
+  echo "void: ${sha} fast gate, box $(hostname) slot ${slot} holds nested checkout copies:${nested}" > ~/"${out}"/status.txt
+  exit 0
+fi
 # A declared tool (cloud/fast-gate/tools.txt) the box lacks makes the gate void, naming the box: it says
 # nothing about the change, so the watcher gates it again elsewhere (@system_adamic, Oct 8 05:49).
 if ! lacks=$(bash ~/fast-gate/tools${suffix}/cloud/fast-gate/tools-check.sh); then
