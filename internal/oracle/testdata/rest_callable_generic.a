@@ -1,0 +1,7 @@
+// Generic named rest calls must use the current specialization's element storage.
+function count<Item>(...items: Item[]): number { return items.length; }
+function relay<Item>(...items: Item[]): number { return count(...items); }
+console.log(`${count('one', 'two')} ${count(4, 5, 6)}`);
+console.log(`${relay('a', 'b', 'c')} ${relay(1, 2)} ${count<string>()}`);
+const items = ['x', 'y'];
+console.log(`${relay(...items)} ${items.length}`);

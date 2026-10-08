@@ -232,6 +232,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	switch {
 	case len(fromSignatures) > 0 && len(toSignatures) > 0:
+		if !l.sameRestConvention(fromSignatures[0], toSignatures[0]) {
+			return false
+		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		if l.censusNeverRestSignature(toSignatures[0]) {
 			toParameters = nil
@@ -1155,12 +1158,19 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		closure = property
 	}
 	arguments := []ir.Expression{}
-	for _, argument := range node.AsCallExpression().Arguments.Nodes {
-		lowered, err := l.expression(argument)
+	if len(signatures) == 1 && restParameterIndex(signatures[0]) >= 0 {
+		arguments, err = l.packRestArguments(node.AsCallExpression(), l.checker.GetResolvedSignature(node))
 		if err != nil {
 			return nil, err
 		}
-		arguments = append(arguments, lowered)
+	} else {
+		for _, argument := range node.AsCallExpression().Arguments.Nodes {
+			lowered, err := l.expression(argument)
+			if err != nil {
+				return nil, err
+			}
+			arguments = append(arguments, lowered)
+		}
 	}
 	var returns ir.Type
 	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {

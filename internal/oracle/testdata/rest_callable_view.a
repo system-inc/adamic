@@ -1,0 +1,4 @@
+type Arg = string | readonly Arg[];
+const source = (...values: Arg[]): number => values.length;
+const fixed: (value: Arg[]) => number = source;
+console.log(`${fixed(['one', 'two'])}`);

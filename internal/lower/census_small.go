@@ -5,22 +5,30 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 )
 
 // censusRestParameter admits rest only where every call passes a freshly packed array.
-// Function values and methods have a different calling convention and remain NotYet.
+// Direct calls and callable values share the same packing convention; methods remain NotYet.
 func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
-	if declaration.Kind != ast.KindFunctionDeclaration || len(declaration.TypeParameters()) != 0 {
+	if declaration.Kind != ast.KindFunctionDeclaration && declaration.Kind != ast.KindArrowFunction && declaration.Kind != ast.KindFunctionExpression {
 		return l.notYet(parameter, "a rest parameter outside a nongeneric named function")
 	}
-	if l.result.Functions[l.functionIndex].Closure {
+	if declaration.Name() != nil && l.result.Functions[l.functionIndex].Closure {
 		return l.notYet(parameter, "a rest parameter in a named closure")
 	}
 	parameters := declaration.Parameters()
+	if contextual := l.checker.GetContextualType(declaration, checker.ContextFlagsNone); contextual != nil {
+		for _, signature := range l.checker.GetSignaturesOfType(contextual, checker.SignatureKindCall) {
+			if restParameterIndex(signature) != len(parameters)-1 {
+				return l.notYet(parameter, "a rest callable seen through a different calling convention")
+			}
+		}
+	}
 	if parameters[len(parameters)-1] != parameter {
 		return l.notYet(parameter, "a rest parameter before another parameter")
 	}
-	proven := l.checker.GetTypeAtLocation(parameter.Name())
+	proven := l.concrete(l.checker.GetTypeAtLocation(parameter.Name()))
 	if !l.checker.IsArrayType(proven) {
 		return l.notYet(parameter, "a rest parameter other than an array")
 	}
@@ -36,6 +44,17 @@ func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
 
 // censusRestDeclaration recovers the declaration without adding state to lower.go.
 func (l *lowering) censusRestDeclaration(function int) *ast.Node {
+	for _, declaration := range l.generics {
+		prefix := l.program.Where(declaration) + ","
+		for key, index := range l.genericInstances {
+			if index == function && strings.HasPrefix(key, prefix) {
+				parameters := declaration.Parameters()
+				if len(parameters) > 0 && parameters[len(parameters)-1].AsParameterDeclaration().DotDotDotToken != nil {
+					return declaration
+				}
+			}
+		}
+	}
 	for symbol, index := range l.functions {
 		if index != function {
 			continue
@@ -56,56 +75,15 @@ func (l *lowering) censusRestDeclaration(function int) *ast.Node {
 // censusRestCall evaluates fixed arguments before rest items, and copies each spread
 // when encountered. The array is new even when the only item is a spread.
 func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declaration *ast.Node) (ir.Expression, error) {
-	parameters := declaration.Parameters()
-	fixed := len(parameters) - 1
-	proven := l.checker.GetTypeAtLocation(parameters[fixed].Name())
-	element, _ := l.kept(l.checker.GetElementTypeOfArrayType(proven))
-	rest := ir.ArrayLiteral{Element: element}
-	arguments := []ir.Expression{}
-	for index, argument := range call.Arguments.Nodes {
-		spread := argument.Kind == ast.KindSpreadElement
-		valueNode := argument
-		if spread {
-			if index < fixed {
-				return nil, l.notYet(argument, "a spread filling fixed parameters before a rest parameter")
-			}
-			valueNode = argument.AsSpreadElement().Expression
-		}
-		value, err := l.expression(valueNode)
-		if err != nil {
-			return nil, err
-		}
-		if index < fixed {
-			arguments = append(arguments, value)
-			continue
-		}
-		if spread {
-			source := l.checker.GetTypeAtLocation(valueNode)
-			if !l.checker.IsArrayType(source) {
-				return nil, l.notYet(argument, "a rest spread other than an array")
-			}
-			held, known := l.kept(l.checker.GetElementTypeOfArrayType(source))
-			if !known || held != element {
-				return nil, l.notYet(argument, "a rest spread with differently held elements")
-			}
-		} else {
-			value = fit(value, element)
-			if value.Type() != element {
-				return nil, l.notYet(argument, "a rest argument with another representation")
-			}
-		}
-		rest.Elements = append(rest.Elements, value)
-		rest.Spread = append(rest.Spread, spread)
+	signature := l.checker.GetResolvedSignature(call.AsNode())
+	// An overload can expose fixed parameters while its implementation packs rest.
+	if restParameterIndex(signature) < 0 {
+		signature = l.checker.GetSignatureFromDeclaration(declaration)
 	}
-	// Missing fixed arguments must keep their positions before the rest array.
-	for len(arguments) < fixed {
-		of := l.result.Locals[l.result.Functions[function].Parameters[len(arguments)]].Type
-		if !of.IsMaybe() && !of.IsReference() {
-			return nil, l.notYet(parameters[len(arguments)], "a missing fixed argument before rest")
-		}
-		arguments = append(arguments, fit(ir.Undefined{}, of))
+	arguments, err := l.packRestArguments(call, signature)
+	if err != nil {
+		return nil, err
 	}
-	arguments = append(arguments, rest)
 	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
 }
 

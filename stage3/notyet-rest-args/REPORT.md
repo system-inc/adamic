@@ -63,3 +63,41 @@ Go 0.261, Node 0.308, clang 0.990, markdown 2.959, submodules 29.210,
 Go build 330.333, cache warm 330.689, done 330.881. nproc=5,
 cpu.max=400000 100000. /tmp/notyet-rest-setup.log contains the full output.
 No PR was opened and no whole package or full gate was run.
+
+## Function-value and generic rest step
+
+The six table roots have six raw observations. The supported rule now packs array
+rest arguments for arrows, ordinary function values, and specialized named generic
+functions. Both call paths share packing; fixed overloads retain implementation
+rest packing. Named closures remain reserved for the following step.
+
+Fixtures rest_callable_generic.a and rest_callable_write.a run through the existing
+Node, JavaScript, native release and sanitized native oracle. Source-only probes
+pin the existing captured-callable cycle Refused and two adapter NotYet boundaries.
+The reduced not wrapper is refused for a possible reference-counting cycle; changing
+that ownership ruling requires a cycle-safe captured callable contract.
+
+Exact replays use the same command above with core.ts:2480:13 and program.ts:582:43
+and reason 'a rest parameter outside a nongeneric named function'. Both reproduced
+the baseline. Afterwards core reaches 'a rest parameter other than an array' (its
+uninstantiated generic tuple constraint); program reaches 'a rest callable seen
+through a different calling convention' (optional fixed arguments in its contextual
+signature). These are next stops, not claims that the source bodies compile.
+
+Mutants, each restored: bypass closure packing makes writer forwarding stop at
+SpreadElement; remove generic declaration discovery makes generic relay forwarding
+stop at SpreadElement; bypass rest-convention equality accepts rest_callable_view.a
+and fails its expected adapter boundary; bypass lexical contextual-convention check
+makes rest_callable_context.a fail its expected named boundary. Logs are
+/tmp/rest-mutant-{closure-pack,generic-discovery,callable-view,context-view}.log.
+
+Focused commands: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'TestRestCallableViewsNeedAdapters|TestRestNotKeepsCycleRefusal|TestNativeAgreesWithNode/internal/oracle/testdata/(rest_(union|callable)_|census_overload_contracts)'
+-count=1 -timeout 10m; go test ./internal/lower -run
+'TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestCensus' -count=1 -timeout 10m.
+Counts: go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts.
+Logs /tmp/rest-callable-{final,lower,counts}.log. The first counts attempt exposed
+a fixed-overload packing regression; implementation-signature fallback corrected it.
+No IR, backend or runtime C changes were needed for array rest callable support.
+
+Callable restored validation: oracle ok 1.685s; lower ok 1.717s; counts ok 37.390s.
