@@ -1,0 +1,48 @@
+{
+  "status": "both requested runtime probes green; broader focused integration tests red",
+  "scratch_base": "42b2ee13",
+  "scratch_head": "e54b417988a8165a06ec21d5e8d746a719781320",
+  "inputs": [
+    {
+      "ref": "scratch base",
+      "sha": "42b2ee1363124ebe5c3f950be7568a28e4df14ac",
+      "scratch_contains": true
+    },
+    {
+      "ref": "codex/records-lowering",
+      "sha": "198ff780b594869165aa6d98b6d6f9ac1a410515",
+      "scratch_contains": true
+    },
+    {
+      "ref": "codex/namespaces-tsc",
+      "sha": "f893faf2aaf32eade0e689a626f4d3434369b0fd",
+      "scratch_contains": true
+    }
+  ],
+  "compiler_final_exit": 0,
+  "probes": "probes/report.json",
+  "mutants": "one byte flipped in each actual native stdout; both cmp exit 1",
+  "full_slice": "held as requested; core.ts:204:12 remains last observed first stop; no full-slice, eleven-probe or reference rerun",
+  "previous_probe_count": "6/11 from front15; rows 7 and 11 now separately green, not a fresh 8/11 run",
+  "tests": {
+    "broad": {
+      "command": "GOWORK=off go test ./internal/lower -run 'TestDetachedOwn|TestNamespace|TestParserFactoryBindingHoisting|TestTscNamespaceDeclarationShapes' -count=1",
+      "exit": 1,
+      "output": "--- FAIL: TestTscNamespaceDeclarationShapes (0.30s)\n    --- FAIL: TestTscNamespaceDeclarationShapes/IncrementalParser (0.03s)\n        namespaces_shapes_test.go:38: got <nil>, want NotYet function without a body\n--- FAIL: TestNamespaceLimitsStayLoud (0.78s)\n    --- FAIL: TestNamespaceLimitsStayLoud/computed_enum (0.08s)\n        namespaces_test.go:41: got /workspace/scratch/parser-build-tmp/TestNamespaceLimitsStayLoudcomputed_enum48704627/001/main.a:1:24: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet, want NotYet computed enum\n    --- FAIL: TestNamespaceLimitsStayLoud/early_enum (0.03s)\n        namespaces_test.go:41: got /workspace/scratch/parser-build-tmp/TestNamespaceLimitsStayLoudearly_enum2390306051/001/main.a:1:58: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet, want NotYet enum before\nFAIL\nFAIL\tgithub.com/system-inc/adamic/internal/lower\t1.177s\nFAIL\n"
+    },
+    "selected": {
+      "command": "GOWORK=off go test ./internal/lower -run 'TestDetachedOwn|TestNamespaceTypesErase|TestNamespaceReceiverRefusal|TestNamespaceReturnedAssignmentLimits|TestParserFactoryBindingHoisting' -count=1",
+      "exit": 0,
+      "output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.713s\n"
+    }
+  },
+  "merge_conflicts": [
+    "Records object.go: add detachedOwnCall without removing Buffer/fs/process dispatch. Refusals: add detachedOwnRefusal and method observation exception, preserving checked castProof preflight and Node/records/phantom/predicate checks.",
+    "Namespaces expression/module/local/assignment dispatch: add namespace state bindings while retaining assertion-var handling, hoisted globals and import-cycle readiness. Keep all existing Node, records, phantom and enum dispatch.",
+    "Namespace localRead helper retains prior checked-module reads and checked union narrowing; propagate its existing NotYet error through identifier, qualified namespace and namespace returned-assignment callers. Initial helper-signature build failure fixed in scratch, recorded in compiler.log.gz.",
+    "Readiness emission combines namespace initialized state with existing Uninitialized checks, preserving declared-slot bookkeeping and deinitializing assignments. Function defaults retain lazy/uninitialized handling and census optional-callable slots, adding parameter-property setup.",
+    "Enum conflicts retain current open numeric/flag enum semantics and module-init-order proofs, allowing namespace block enum declarations and parameter properties. Older incoming enum refusal/read-order algorithm not substituted.",
+    "Loader and tsconfig retain landed fallthrough/implicit-return options. Counts union incoming rows and preserve existing overlapping rows; no counts gate claimed."
+  ],
+  "limitations": "No full gate, counts gate, sanitizer or complete oracle run. Scratch compiler changes never pushed. No source adaptations or proof bypasses. Probe sources unchanged."
+}
