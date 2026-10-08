@@ -1,6 +1,6 @@
 Built shared array-binding guards for D071-D073 and preserved D037 overload attribution; all 27 minimal read shapes have runtime proof.
-Commits: af274a79 for destructuring; the following overload commit is pushed only to codex/stricter-indexed-a.
-Commands: destructuring gate 65.236s, third-binding probe 8.809s, D037 attribution/runtime gate 14.785s, lower package 36.790s, filtered oracle 1.537s: PASS.
+Commits: af274a79 for destructuring; 3d60b65e for overload attribution; both pushed only to codex/stricter-indexed-a.
+Commands: full witness package 197.769s, lower package 36.790s, filtered oracle 1.537s: PASS; vet and format checks pass.
 Mutants: three ledger binding guards, a supplemental third binding and D037 argument guard erased individually; exact named-site observations caught all five.
 Not covered: D069 initially absent optional own-field context, blocked on fixed-shape field addition owned by codex/stricter-records; full compiler/full gate/WASI/holes remain outside this proof.
 
@@ -243,4 +243,85 @@ binding similarly passes in 8.809s: its mutant prints undefined with exit 0.
 
 The whole lowering package passed in 36.790s. The four existing indexed/narrowing
 oracle fixtures passed in 1.537s, with the normal oracle cache, not an uncached
-integration gate. Complete witness-package verification is still running.
+integration gate. Complete witness-package verification subsequently passed in 197.769s.
+
+Follow-up: D069 initially absent optional-field context
+
+This context was rerun with the updated compiler. Node exits 0 with 7 when the
+array element is present and undefined when it is absent. Explain lists the
+correct array check at line 6, column 39 with indexed-presence=1 and trusted=0.
+Both native modes build successfully. With an absent array element both stop at
+that named indexed guard. With a present element both instead stop at the field
+write, exit 70, empty stdout and exact stderr:
+
+adamic: panic: compiler bug: a field the checker proved is there is missing
+
+That is an observed runtime failure on valid input, not a successful presence
+witness or a proper compile-time NotYet refusal. No new mutant claim is made for
+this context because its present case fails before a sound witness can be claimed.
+The existing already-present-field D069 witness and its mutant still prove the
+indexed read itself.
+
+Receiver: a plain fixed-shape object with an initially absent optional own field,
+receiving a readonly object-array element. The dependency is own-field storage
+addition/presence, assigned by the user to codex/stricter-records. It is not an
+array hole. Observed objectLiteral keeps only the source's actual fields;
+SetProperty asks writeFieldSlot for existing data storage; object_find panics when
+the shape has no such field. Inference: correct field addition needs the records
+worker's representation, including own-presence behavior and identity-preserving
+storage. Preallocating an undefined property here would change hasOwnProperty and
+would not prove the initially absent case. No representation workaround was built.
+Logs/absent-field-followup.txt retains Node, explain, build and runtime observations.
+
+Current requested row states:
+
+| Row | State |
+|---|---|
+| D071 | proven, yieldType binding; shared indexed guard helper; mutant caught at different next-binding site |
+| D072 | proven, returnType binding; first element present; shared helper; mutant caught at different next-binding site |
+| D073 | proven, single yieldType binding; shared helper; mutant prints undefined |
+| D037 | proven, overload attribution retained; direct argument guard; mutant prints undefined |
+| D069 | indexed read proven; initially absent optional own-field context blocked on codex/stricter-records storage; valid-input runtime bug pinned |
+
+The supplemental nextType binding proves the third guard independently: first two
+array elements present, third absent, exact third-site stop, erased third guard
+prints undefined. All successful new witnesses run source Node, backend Node,
+release native, sanitized native and actual CLI explain. No holes or record
+representation changes are included. No protected orchestration file was edited.
+
+Follow-up final gate
+
+The complete witness package passes in 197.769s. It proves 27 ledger read-shape
+rows with 26 ledger witness programs, plus one supplemental third-binding program.
+All 27 emitted-C single-site panic-erasure mutants build sanitized and are caught
+by exact indexed-site observations. D071/D072 stop at the next binding after the
+selected panic is erased; D069's already-present-field mutant hits its existing
+later generic narrowing panic; all remaining mutants exit 0 with changed output.
+This is minimal read-shape coverage; D069's newly requested initially absent field
+context remains blocked and is excluded from runtime-proof counts.
+
+Commands and output, written to files before inspection:
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./stage3/stricter-indexed-a -count=1 -timeout 10m -v > /tmp/indexed-a-followup-final.log 2>&1
+# PASS; 197.769s; logs/followup-final.txt
+go test ./internal/lower -count=1 -timeout 15m > /tmp/indexed-a-lower.log 2>&1
+# PASS; 36.790s; logs/followup-lower.txt
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|narrowed_reads|narrowed_numbers|string_index)\.a$' -count=1 -timeout 10m -v > /tmp/indexed-a-followup-oracle.log 2>&1
+# PASS; 1.537s; logs/followup-oracle.txt
+go vet ./internal/lower ./stage3/stricter-indexed-a > /tmp/indexed-a-followup-vet.log 2>&1
+# exit 0; empty log
+gofmt -l internal/lower stage3/stricter-indexed-a
+# exit 0; empty output
+git diff --check
+# exit 0; empty output
+```
+
+The full repository gate, WASI and whole-program compiler build were not run.
+The exact row-state table above is the final follow-up disposition. af274a79
+pushed the shared destructuring helper and witnesses; 3d60b65e pushed the overload
+registration/attribution fix, audit/refusal tests and D037 mutant. This report and
+D069 blocked-case evidence are committed and pushed afterward to the same branch.
+No PR, main/area push, history rewrite or representation-worker implementation
+is included.
