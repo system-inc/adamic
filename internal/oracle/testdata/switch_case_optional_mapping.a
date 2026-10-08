@@ -1,0 +1,16 @@
+enum Mapping { Upper, Lower, Capitalize }
+const mappings = new Map<string, Mapping>([['upper', Mapping.Upper], ['lower', Mapping.Lower], ['capitalize', Mapping.Capitalize]]);
+function map(name: string, text: string): string {
+    switch (mappings.get(name)) {
+        case Mapping.Upper:
+            return text.toUpperCase();
+        case Mapping.Lower:
+            return text.toLowerCase();
+        case Mapping.Capitalize:
+            return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+    return text;
+}
+for (const name of ['upper', 'lower', 'capitalize', 'missing']) {
+    console.log(map(name, 'hELLo'));
+}
