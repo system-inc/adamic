@@ -860,6 +860,73 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract and returned-array element mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "path-measure-binary",
+      "pairs": 3,
+      "candidateReads": 59,
+      "members": [
+        {
+          "receiver_type_id": 98911,
+          "type": "ResolutionCacheHost",
+          "field": "toPath",
+          "declared_types": [
+            "(fileName: string) => Path"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 20,
+          "witness": {
+            "file": "src/compiler/resolutionCache.ts",
+            "line": 631,
+            "column": 22
+          },
+          "rank": 85,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; callable contract and deferred payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 4163,
+          "type": "typeof import(\"/tmp/views-mixed-typescript/src/compiler/_namespaces/ts.performance\")",
+          "field": "measure",
+          "declared_types": [
+            "(measureName: string, startMarkName?: string | undefined, endMarkName?: string | undefined) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 20,
+          "witness": {
+            "file": "src/compiler/tracing.ts",
+            "line": 196,
+            "column": 9
+          },
+          "rank": 86,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; callable contract and deferred payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createBinaryExpression",
+          "declared_types": [
+            "(left: Expression, operator: BinaryOperator | BinaryOperatorToken, right: Expression) => BinaryExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 19,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 342,
+            "column": 17
+          },
+          "rank": 88,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; callable contract and deferred payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

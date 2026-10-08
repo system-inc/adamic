@@ -368,6 +368,71 @@
       "declarationFile": "src/compiler/types.ts",
       "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
       "declarationLine": 4713
+    },
+    {
+      "rank": 85,
+      "type": "ResolutionCacheHost",
+      "field": "toPath",
+      "candidateReads": 20,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 631,
+        "column": 22
+      },
+      "read": "resolutionHost.toPath",
+      "readKind": "property",
+      "call": "resolutionHost.toPath(rootDir)",
+      "utf16Start": 26894,
+      "utf16End": 26915,
+      "fileSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+      "declaration": "toPath(fileName: string): Path;",
+      "declarationFile": "src/compiler/resolutionCache.ts",
+      "declarationSha256": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+      "declarationLine": 185
+    },
+    {
+      "rank": 86,
+      "type": "typeof import(\"/tmp/views-mixed-typescript/src/compiler/_namespaces/ts.performance\")",
+      "field": "measure",
+      "candidateReads": 20,
+      "witness": {
+        "file": "src/compiler/tracing.ts",
+        "line": 196,
+        "column": 9
+      },
+      "read": "performance.measure",
+      "readKind": "property",
+      "call": "performance.measure(\"Tracing\", \"beginTracing\", \"endTracing\")",
+      "utf16Start": 7432,
+      "utf16End": 7451,
+      "fileSha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+      "declaration": "measure(measureName: string, startMarkName?: string, endMarkName?: string): void;",
+      "declarationFile": "src/compiler/performance.ts",
+      "declarationSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+      "declarationLine": 97,
+      "declarationHeader": "export function measure(measureName: string, startMarkName?: string, endMarkName?: string): void",
+      "declarationKind": "exported-function"
+    },
+    {
+      "rank": 88,
+      "type": "NodeFactory",
+      "field": "createBinaryExpression",
+      "candidateReads": 19,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 342,
+        "column": 17
+      },
+      "read": "factory.createBinaryExpression",
+      "readKind": "property",
+      "call": "factory.createBinaryExpression(\r\n                    propertyName,\r\n                    SyntaxKind.InKeyword,\r\n                    factory.createIdentifier(\"obj\"),\r\n                )",
+      "utf16Start": 13469,
+      "utf16End": 13499,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "createBinaryExpression(left: Expression, operator: BinaryOperator | BinaryOperatorToken, right: Expression): BinaryExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8981
     }
   ]
 }

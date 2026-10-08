@@ -2,7 +2,7 @@ const fs=require('fs');
 const path=require('path');
 const ts=require(path.join(process.argv[2],'lib/typescript.js'));
 const evidence=JSON.parse(fs.readFileSync(path.join(__dirname,'later-ranked-original-witnesses.json'),'utf8'));
-const directories=new Map([[61,'string-from-node'],[67,'local-name'],[68,'disallowed-comma'],[69,'token-start'],[70,'true'],[72,'system-exit'],[73,'if-statement'],[74,'null'],[75,'parenthesized'],[76,'type-reference'],[77,'program-options'],[78,'system-write'],[79,'context-options'],[81,'declaration-name'],[82,'lift-block'],[83,'left-access'],[84,'source-files']]);
+const directories=new Map([[61,'string-from-node'],[67,'local-name'],[68,'disallowed-comma'],[69,'token-start'],[70,'true'],[72,'system-exit'],[73,'if-statement'],[74,'null'],[75,'parenthesized'],[76,'type-reference'],[77,'program-options'],[78,'system-write'],[79,'context-options'],[81,'declaration-name'],[82,'lift-block'],[83,'left-access'],[84,'source-files'],[85,'resolution-path'],[86,'performance-measure'],[88,'binary']]);
 const ranks=new Set(process.argv[3].split(',').map(Number));
 const normalized=text=>text.replace(/\s+/g,'');
 if(evidence.members.filter(m=>ranks.has(m.rank)).length!==ranks.size)throw Error("missing requested original member");

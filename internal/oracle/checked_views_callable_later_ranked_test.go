@@ -8,6 +8,9 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"resolution-path", "toPath", "root/3\n", "", "0", "", "", "9\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members"},
+		{"performance-measure", "measure", "29\n", "7\n7\n19\n29\n", "0", "", "", "", "good,optional-values,wrong-value,wrong-arity,wrong-members"},
+		{"binary", "createBinaryExpression", "8\n", "8\n9\n", "0", "left.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"declaration-name", "getDeclarationName", "3\n", "0\n0\n3\n4\n6\n", "0", "node.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"left-access", "parenthesizeLeftSideOfAccess", "3\n", "3\n3\n3\n4\n", "0", "expression.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"source-files", "getSourceFiles", "3\n", "", "1", "sourceFile.value", "3\n", "0\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
@@ -121,5 +124,27 @@ func TestCheckedViewCallableLaterRankedMethodRefusal(t *testing.T) {
 	_, err = lowered(t, path)
 	if err == nil || !strings.Contains(err.Error(), "unbound-method") {
 		t.Fatalf("method refusal: %v", err)
+	}
+}
+
+func TestCheckedViewCallableLaterRankedIntrinsicSetRefusal(t *testing.T) {
+	for _, variant := range []string{"add", "has"} {
+		t.Run(variant, func(t *testing.T) {
+			program, path := interfaceFixture(t, "lane5/later-ranked-callables/set-intrinsic/"+variant)
+			truth := onNode(t, path)
+			want := "1\n"
+			if variant == "has" {
+				want = "true\n"
+			}
+			if truth.exitCode != 0 || string(truth.stdout) != want {
+				t.Fatalf("Node %#v", truth)
+			}
+			got := onJavaScriptBackend(t, program)
+			if got.exitCode != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "found function with unknown signature") {
+				t.Fatalf("intrinsic signature refusal: %#v", got)
+			}
+			// Native compilation is the separately logged representation-conversion
+			// frontier. This test pins the existing JavaScript refusal only.
+		})
 	}
 }
