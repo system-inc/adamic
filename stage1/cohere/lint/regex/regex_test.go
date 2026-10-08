@@ -123,11 +123,7 @@ func TestDynamicPatternGap(t *testing.T) {
 	}
 	lowered, e := lower.Lower(context.Background(), p)
 	if e != nil {
-		if !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
-			t.Fatalf("unexpected dynamic RegExp blocker: %v", e)
-		}
-		t.Logf("PENDING emitted JS and native on codex/regex-runtime-compiler: %v", e)
-		return
+		t.Fatalf("runtime RegExp acceptance blocked on merged area/library: %v", e)
 	}
 	directory := t.TempDir()
 	js := filepath.Join(directory, "dynamic.js")
@@ -194,4 +190,78 @@ func TestInventoryMatchesPinnedSource(t *testing.T) {
 	if !bytes.Equal(expected, actual) {
 		t.Fatal("regexp census drifted from pinned cohere AST; regenerate and review the table")
 	}
+}
+
+func TestOptionInventoryMatchesPinnedSource(t *testing.T) {
+	root, _ := filepath.Abs(".")
+	cohere, _ := filepath.Abs("../../../../cohere")
+	actual := run(t, cohere, "go", "run", filepath.Join(root, "testdata/inventory.go"), filepath.Join(cohere, "internal/lint/rules"), "--esregexp")
+	expected, err := os.ReadFile("option-sites.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(expected, actual) {
+		t.Fatal("esregexp option census drifted from pinned AST")
+	}
+	t.Log("34 esregexp sites retained separately from the 89 Go-regexp sites; unchanged JavaScript sources")
+}
+func TestCompiledOptionCaptureGap(t *testing.T) {
+	root, _ := filepath.Abs(".")
+	cohere, _ := filepath.Abs("../../../../cohere")
+	virtual := filepath.Join(cohere, "adamic_regex_capture_gap.go")
+	data, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(root, "testdata/esregexp_capture_gap.go")}})
+	overlay := filepath.Join(t.TempDir(), "overlay.json")
+	if err := os.WriteFile(overlay, data, 0644); err != nil {
+		t.Fatal(err)
+	}
+	actual := run(t, cohere, "go", "run", "-overlay="+overlay, virtual)
+	if string(actual) != "source=^_ captured=[{}]\n" {
+		t.Fatalf("compiled option capture gap changed: %q; remove named blocker and replay sources", actual)
+	}
+	t.Logf("shared cohere docs capture loses esregexp source: %s", actual)
+}
+
+func TestNativeSplitAttributeGap(t *testing.T) {
+	entry, _ := filepath.Abs("testdata/split_gap.a")
+	repository, _ := filepath.Abs("../../../..")
+	expected := run(t, ".", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), entry)
+	if string(expected) != "true\ntrue\n" {
+		t.Fatalf("shortest split witness: %q", expected)
+	}
+	program, err := load.Load([]string{entry})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := t.TempDir()
+	source := native.C(lowered)
+	if err := os.WriteFile(filepath.Join(directory, "split_gap.c"), []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	err = native.Build(source, filepath.Join(directory, "split-gap"), native.Options{Sanitize: true, Split: true, Jobs: 1})
+	if err == nil || !strings.Contains(err.Error(), "duplicate definition __attribute__") {
+		t.Fatalf("split attribute gap changed; remove blocker and require native finding legs: %v", err)
+	}
+	t.Logf("shortest native split gap: two RegExp literals: %v", err)
+}
+
+func TestNativeCheckerRegexLinkGap(t *testing.T) {
+	entry, _ := filepath.Abs("testdata/dynamic_gap.a")
+	repository, _ := filepath.Abs("../../../..")
+	program, err := load.Load([]string{entry})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = native.BuildTSGo(native.C(lowered), filepath.Join(t.TempDir(), "dynamic-with-checker"), regexCheckerArchive(t, repository), native.Options{Sanitize: true})
+	if err == nil || !strings.Contains(err.Error(), "undefined reference to `adamic_regex_new_owned'") {
+		t.Fatalf("checker runtime regex link gap changed; remove blocker and require complete native fixtures: %v", err)
+	}
+	t.Logf("dynamic_gap.a with canonical checker-linked native: %v", err)
 }

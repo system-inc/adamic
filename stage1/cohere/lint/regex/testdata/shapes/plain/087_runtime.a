@@ -1,4 +1,4 @@
-// tailwind/no_deprecated_classes.go:84; `^flex-grow$`
+// typescript/ban_tslint_comment.go:24; `^\s*tslint:(enable|disable)(?:-(line|next-line))?(:|\s|$)`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "flex-grow", 4);
-observe(regex, "xflex-grow", 5);
-observe(regex, "flex-grow\n", 6);
+observe(regex, "tslint:enable\t", 4);
+observe(regex, "xtslint:enable\t", 5);
+observe(regex, "tslint:enable\t\n", 6);

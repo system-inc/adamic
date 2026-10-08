@@ -165,10 +165,37 @@
     "file": "/repository/source/NoInlineComments.tsx",
     "findings": [],
     "options": {
+      "IgnorePattern": "(?<=Note: )This"
+    },
+    "rule": "no-inline-comments",
+    "source": "var foo = 2; // Note: This comment is legal."
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": "Note(?=:)"
+    },
+    "rule": "no-inline-comments",
+    "source": "var foo = 2; // Note: This comment is legal."
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
       "IgnorePattern": "Note: "
     },
     "rule": "no-inline-comments",
     "source": "var foo = 2; // Note: This comment is legal."
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [],
+    "options": {
+      "IgnorePattern": "^Note:\\sThis"
+    },
+    "rule": "no-inline-comments",
+    "source": "var foo = 2; // Note: This comment is legal."
   },
   {
     "file": "/repository/source/NoInlineComments.tsx",
@@ -399,6 +426,22 @@
     },
     "rule": "no-inline-comments",
     "source": "var a = 3; // other line comment"
+  },
+  {
+    "file": "/repository/source/NoInlineComments.tsx",
+    "findings": [
+      {
+        "end": 32,
+        "id": "unexpectedInlineComment",
+        "message": "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.",
+        "start": 13
+      }
+    ],
+    "options": {
+      "IgnorePattern": "Note(?=:)"
+    },
+    "rule": "no-inline-comments",
+    "source": "var foo = 2; // Notes are legal."
   },
   {
     "file": "/repository/source/NoInlineComments.tsx",

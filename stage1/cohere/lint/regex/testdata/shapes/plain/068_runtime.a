@@ -1,4 +1,4 @@
-// tailwind/collapse/utility_nodes.go:131; `\\\*`
+// tailwind/no_deprecated_classes.go:77; `^ring-opacity-(.*)$`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,7 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "\\*", 4);
-observe(regex, "x\\*", 5);
-observe(regex, "\\*\n", 6);
-observe(regex, "/*${token.value.slice(2).replace(/(\\*\\/|\\/\\*)/g, '*/", 7);
+observe(regex, "ring-opacity-", 4);
+observe(regex, "xring-opacity-", 5);
+observe(regex, "ring-opacity-\n", 6);

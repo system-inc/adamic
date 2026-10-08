@@ -2,6 +2,7 @@
 // Quoting counts UTF-8 bytes, as cohere does, rather than JS code units.
 import { utf8Length } from 'adamic';
 import { printable } from './unicode.ts';
+import { hasWarningRuleName } from './regex/no_warning_comments.a';
 
 export function word(character: string): boolean {
     return (
@@ -29,19 +30,7 @@ export function space(character: string): boolean {
     );
 }
 export function selfDirective(value: string): boolean {
-    const name = 'no-warning-comments';
-    let position = value.indexOf(name);
-    let named = false;
-    while(position >= 0) {
-        if(!word(value[position - 1] ?? '') && !word(value[position + name.length] ?? '')) {
-            named = true;
-            break;
-        }
-        position = value.indexOf(name, position + 1);
-    }
-    if(!named) {
-        return false;
-    }
+    if(!hasWarningRuleName(value)) return false;
     let start = 0;
     while(start < value.length && space(value[start] ?? '')) {
         start++;

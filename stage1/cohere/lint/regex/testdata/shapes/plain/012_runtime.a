@@ -1,4 +1,4 @@
-// core/no_warning_comments.go:378; `\bno-warning-comments\b`
+// next/no_html_link_for_pages_routes.go:281; "\\[[^\n\r\u2028\u2029]*\\]"
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,7 +9,9 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "no-warning-comments", 4);
-observe(regex, "xno-warning-comments", 5);
-observe(regex, "no-warning-comments\n", 6);
-observe(regex, "eslint-disable no-warning-comments", 7);
+observe(regex, "[]", 4);
+observe(regex, "x[]", 5);
+observe(regex, "[]\n", 6);
+observe(regex, "// > alphanumerics and hyphen [0-9A-Za-z-]. Identifiers MUST NOT be empty. Numeric identifiers", 7);
+observe(regex, "// > comprise only ASCII alphanumerics and hyphen [0-9A-Za-z-]. Identifiers MUST NOT be empty.", 8);
+observe(regex, "// Transforms `a[x] **= b` into `(_a = a)[_x = x] = Math.pow(_a[_x], b)`", 9);

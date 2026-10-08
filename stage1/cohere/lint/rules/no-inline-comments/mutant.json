@@ -1,0 +1,6 @@
+{
+  "name": "ignore regex result inverted",
+  "file": "rule.a",
+  "from": "this.ignore.ignores(body)",
+  "to": "!this.ignore.ignores(body)"
+}

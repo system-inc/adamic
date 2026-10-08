@@ -3,9 +3,8 @@ export function fixedPatterns(): RegExp[] {
     return [
         /PaginationInput(?![\s\S])/gu, // base/consistency_require_pagination_argument_name.go:27
         /Pagination(?![\s\S])/gu, // base/consistency_require_pagination_argument_name.go:30
-        /^no default(?![\s\S])/gui, // core/default_case.go:30
-        /^(?:eslint[- ]|(?:globals?|exported) )/gu, // core/no_inline_comments.go:39
-        /\bno-warning-comments\b/gu, // core/no_warning_comments.go:378
+        /^(?:eslint[- ]|(?:globals?|exported) )/gu, // core/no_inline_comments.go:40
+        /\bno-warning-comments\b/gu, // core/no_warning_comments.go:383
         /[\t\n\x0B\f\r \u{00A0}\u{1680}\u{2000}-\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}]-{2,}[\t\n\x0B\f\r \u{00A0}\u{1680}\u{2000}-\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}]/gu, // core/require_description.go:217
         /^(eslint(?:-env|-enable|-disable(?:(?:-next)?-line)?)?|exported|globals?)(?:[\t\n\x0B\f\r \u{00A0}\u{1680}\u{2000}-\u{200A}\u{2028}\u{2029}\u{202F}\u{205F}\u{3000}\u{FEFF}]|(?![\s\S]))/gu, // core/require_description.go:220
         /^eslint-disable-(next-)?line(?![\s\S])/gu, // core/require_description.go:225
@@ -39,14 +38,15 @@ export function fixedPatterns(): RegExp[] {
         /^@\w+/gu, // nexus/shouting.go:185
         /^[ \t\n\f\r]*(\$|ahra[ \t\n\f\r]|git[ \t\n\f\r]|pnpm[ \t\n\f\r]|npm[ \t\n\f\r]|sqlite3[ \t\n\f\r]|curl[ \t\n\f\r]|s[ \t\n\f\r]+c\b)/gu, // nexus/shouting.go:186
         /s[ \t\n\f\r]+c/gu, // nexus/shouting.go:466
-        /\{\{[ \t\n\f\r]*([A-Za-z_][A-Za-z0-9_]*)[ \t\n\f\r]*\}\}/gu, // react/boolean_prop_naming.go:621
+        /\{\{[ \t\n\f\r]*([A-Za-z_][A-Za-z0-9_]*)[ \t\n\f\r]*\}\}/gu, // react/boolean_prop_naming.go:627
         /(?:(?<=\n|^)|\n)[ \t\n\f\r]*import\b[^\n;]*?['"]react['"]|require\([ \t\n\f\r]*['"]react['"][ \t\n\f\r]*\)/gu, // react/conformance/classify.go:95
         /\buse[A-Z]\w*[ \t\n\f\r]*\(/gu, // react/conformance/classify.go:98
-        /Effect((?![\s\S])|[^a-z])/gu, // react/exhaustive_deps.go:451
+        /Effect((?![\s\S])|[^a-z])/gu, // react/exhaustive_deps.go:452
         /^use[A-Z0-9][^\n]*(?![\s\S])/gu, // react/no_unstable_nested_components.go:450
-        /\/([^\n]*)\/([gimsuy]*)/gu, // react/sort_comp.go:119
+        /\/([^\n]*)\/([gimsuy]*)/gu, // react/sort_comp.go:120
         /^(group|peer)(\/[^ \t\n\f\r]*)?(?![\s\S])/gu, // tailwind/class_existence.go:63
         /^\[[^\]]+:[^\]]*\](?![\s\S])/gu, // tailwind/class_existence.go:70
+        /^[A-Z_a-z][0-9A-Z_a-z]*(?![\s\S])/gu, // tailwind/class_matchers.go:783
         /^([^\n]*):/gu, // tailwind/class_order_strict.go:89
         /\\\*/gu, // tailwind/collapse/utility_nodes.go:131
         /--([^\n]*?)[ \t\n\f\r]--([^\n]*?)/gu, // tailwind/collapse/utility_nodes.go:138
@@ -83,7 +83,6 @@ export function fixedPatterns(): RegExp[] {
         /(?:class|className)[ \t\n\f\r]*=[ \t\n\f\r]*"([^"\n{}$]+)"/gu, // tailwind/tools/generate_variant/main.go:232
         /^[ \t\n\f\r]*tslint:(enable|disable)(?:-(line|next-line))?(:|[ \t\n\f\r]|(?![\s\S]))/gu, // typescript/ban_tslint_comment.go:24
         /\$(?![\s\S])/gu, // typescript/no_unnecessary_template_expression.go:575
-        /^no default(?![\s\S])/gui, // typescript/switch_exhaustiveness_check.go:382
     ];
 }
 export function inlineCommentDirective(): RegExp { return /^(?:eslint[- ]|(?:globals?|exported) )/u; }

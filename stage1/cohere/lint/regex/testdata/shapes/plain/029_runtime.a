@@ -1,4 +1,4 @@
-// nexus/consistency_no_abbreviated_identifier.go:50; `([a-z])Ms($|[A-Z])`
+// nexus/shouting.go:124; `[AEIOUY]`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,9 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "aMs", 4);
-observe(regex, "xaMs", 5);
-observe(regex, "aMs\n", 6);
+observe(regex, "A", 4);
+observe(regex, "xA", 5);
+observe(regex, "A\n", 6);
+observe(regex, "PaginationInput", 7);
+observe(regex, "TODO", 8);
+observe(regex, "🌍TODO", 9);

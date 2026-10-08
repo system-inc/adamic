@@ -1,15 +1,12 @@
-// nexus/localization_no_untranslated_value.go:408; `^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*$`
+// nexus/shouting.go:183; `^[ \t]*\*(?: |\t|$)`
 import { observe } from '../observe.a';
-const pattern = "^[a-z]{2,3}(?:[-_][A-Za-z0-9]+)*(?![\\s\\S])";
+const pattern = "^[ \\t]*\\*(?: |\\t|(?![\\s\\S]))";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "aa", 4);
-observe(regex, "xaa", 5);
-observe(regex, "aa\n", 6);
-observe(regex, "to", 7);
-observe(regex, "the", 8);
-observe(regex, "ts", 9);
+observe(regex, "*\t", 4);
+observe(regex, "x*\t", 5);
+observe(regex, "*\t\n", 6);

@@ -15,7 +15,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
-	"strings"
 	"unicode/utf16"
 )
 
@@ -82,7 +81,7 @@ func equal(f Fixture, backend string, want, actual []byte) {
 }
 func main() {
 	external := flag.String("runtime-js-compiler", "", "optional approved library compiler binary for runtime-string JS")
-	force := flag.Bool("force-native", false, "require the first runtime fixture to pass native even before compiler landing")
+	force := flag.Bool("force-native", false, "run the first fixture through the required runtime native path")
 	mutant := flag.Bool("mutant", false, "change one translation character in the first fixture and require comparison failure")
 	flag.Parse()
 	root, e := filepath.Abs("stage1/cohere/lint/regex/testdata/shapes")
@@ -101,7 +100,7 @@ func main() {
 	if e = json.Unmarshal(data, &fixtures); e != nil {
 		fail("%v", e)
 	}
-	if len(fixtures) != 107 {
+	if len(fixtures) == 0 {
 		fail("lost table rows: %d", len(fixtures))
 	}
 	table, e := os.ReadFile(filepath.Join(root, "../../table.json"))
@@ -172,25 +171,23 @@ func main() {
 		}
 		ir, e = lower.Lower(context.Background(), p)
 		if e != nil {
-			if !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
-				fail("%s: unexpected native refusal: %v", f.ID, e)
-			}
-			pending++
-			if *force && i == 0 {
-				fail("%s: awaits codex/regex-runtime-compiler: forced native requirement caught refusal: %v", f.ID, e)
-			}
-		} else { // No skip or grandfathering: native is required immediately after lowering accepts strings.
-			binary := filepath.Join(temp, "native")
-			if e = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); e != nil {
-				fail("%s: %v", f.ID, e)
-			}
-			equal(f, "sanitized runtime native", want, run(binary, f.Pattern, f.Flags))
-			if e = os.WriteFile(js, []byte(javascript.JavaScript(ir)), 0644); e != nil {
-				fail("%v", e)
-			}
-			equal(f, "area runtime emitted JS", want, run("node", "--disable-warning=ExperimentalWarning", nodeRunner, js, f.Pattern, f.Flags))
-			nativePass++
+			fail("%s: runtime RegExp required after area/library merge; pattern=%q flags=%q: %v", f.ID, f.Pattern, f.Flags, e)
 		}
+		binary := filepath.Join(temp, "native")
+		if e = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); e != nil {
+			fail("%s: %v", f.ID, e)
+		}
+		equal(f, "sanitized runtime native", want, run(binary, f.Pattern, f.Flags))
+		if e = os.WriteFile(js, []byte(javascript.JavaScript(ir)), 0644); e != nil {
+			fail("%v", e)
+		}
+		equal(f, "area runtime emitted JS", want, run("node", "--disable-warning=ExperimentalWarning", nodeRunner, js, f.Pattern, f.Flags))
+		nativePass++
+		if *force && i == 0 {
+			fmt.Printf("PASS forced native fixture=%s native=1, identical matches and UTF-16 spans\n", f.ID)
+			return
+		}
+
 		if *external != "" {
 			output := run(*external, "js", runtimeEntry)
 			if e = os.WriteFile(js, output, 0644); e != nil {

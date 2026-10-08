@@ -1,4 +1,4 @@
-"""Future esregexp option migration, through owned overlays, plus trace-only hooks."""
+"""Observe pinned upstream esregexp calls through trace-only overlays; never change semantics."""
 import json,pathlib,subprocess,tempfile,os,hashlib
 root=pathlib.Path(__file__).resolve().parents[1];repo=root.parents[3];cohere=repo/'cohere';pkg=cohere/'internal/lint/rules/core'
 def replace(text,old,new):
@@ -9,22 +9,15 @@ with tempfile.TemporaryDirectory(prefix='regex-capture-') as temporary:
  for name in ['id_length','no_inline_comments','no_warning_comments']:
   source=(pkg/(name+'.go')).read_text()
   if name=='id_length':
-   source=replace(source,'"regexp"','esregexp "github.com/system-inc/cohere/internal/lint/ecmascript/regexp"')
-   source=replace(source,'*regexp.Regexp','*esregexp.RegExp')
-   source=replace(source,'regexp.Compile(pattern)','esregexp.Compile(pattern, "u")')
-   source=replace(source,'pattern.MatchString(name)','waveRegexTest("id-length", pattern, name)')
+   source=replace(source,'pattern.TestOrTimeout(name)','waveRegexTest("id-length", pattern, name)')
+  elif name=='no_inline_comments':
+   source=replace(source,'var ignorePattern *esregexp.RegExp','var ignorePattern *esregexp.RegExp\n waveRawPattern := ""')
+   source=replace(source,'if compiled, err := esregexp.Compile(resolved.IgnorePattern, "u")','waveRawPattern = resolved.IgnorePattern; if compiled, err := esregexp.Compile(resolved.IgnorePattern, "u")')
+   source=replace(source,'ignorePattern.TestOrTimeout(body)','waveRegexTest("no-inline-comments", ignorePattern, body)')
+   source=replace(source,'fileComments := comments.ForFile(ctx)','fileComments := comments.ForFile(ctx)\n waveInlineGeometry(ctx,fileComments,waveRawPattern)')
   else:
-   source=replace(source,'"regexp"','"regexp"\n esregexp "github.com/system-inc/cohere/internal/lint/ecmascript/regexp"')
-   source=replace(source,'*regexp.Regexp','*esregexp.RegExp')
-   if name=='no_inline_comments':
-    source=replace(source,'var ignorePattern *esregexp.RegExp','var ignorePattern *esregexp.RegExp\n waveRawPattern := \"\"')
-    source=replace(source,'if compiled, err := regexp.Compile(resolved.IgnorePattern)','waveRawPattern = resolved.IgnorePattern; if compiled, err := regexp.Compile(resolved.IgnorePattern)')
-    source=replace(source,'regexp.Compile(resolved.IgnorePattern)','esregexp.Compile(resolved.IgnorePattern, "u")')
-    source=replace(source,'ignorePattern.MatchString(body)','waveRegexTest("no-inline-comments", ignorePattern, body)')
-    source=replace(source,'fileComments := comments.ForFile(ctx)','fileComments := comments.ForFile(ctx)\n waveInlineGeometry(ctx,fileComments,waveRawPattern)')
-   else:
-    source=replace(source,'regexp.Compile("(?i)" + prefix + escaped + suffix)','waveCompileWarning(prefix + escaped + suffix, term, location, decoration)')
-    source=replace(source,'matcher.MatchString(value)','waveWarningTest(matcher, value)')
+   source=replace(source,'esregexp.Compile(prefix+escaped+suffix, "iu")','waveCompileWarning(prefix+escaped+suffix, term, location, decoration)')
+   source=replace(source,'matcher.Test(value)','waveWarningTest(matcher, value)')
   path=temp/(name+'.go');path.write_text(source);mapping[str(pkg/(name+'.go'))]=str(path)
  mapping[str(pkg/'adamic_inline_geometry.go')]=str(root/'testdata/inline_geometry.go')
  mapping[str(pkg/'adamic_regex_capture.go')]=str(root/'testdata/migration_capture.go')
@@ -68,8 +61,9 @@ with tempfile.TemporaryDirectory(prefix='regex-capture-') as temporary:
  for row in inline_rows:
   opts=row['options']or{};pattern=opts.get('IgnorePattern')or''
   view=geometries[(row['source'],pattern)]
+  view['options']=json.dumps({'ignorePattern':pattern},ensure_ascii=False)
   inline_inputs.append(view)
- (root/'testdata/inline_fixtures.a').write_text("import type { InlineFileView } from '../inline_rule.a';\nexport interface InlineFixture extends InlineFileView { pattern: string; }\nexport function inlineFixtures(): InlineFixture[] {\n const cases: InlineFixture[] = [];\n"+''.join('cases.push('+json.dumps(r,ensure_ascii=False).replace('\u2028','\\u2028').replace('\u2029','\\u2029')+');\n'for r in inline_inputs)+' return cases; }\n')
+ (root/'testdata/inline_fixtures.a').write_text("import type { InlineFileView } from '../inline_rule.a';\nexport interface InlineFixture extends InlineFileView { pattern: string; options: string; }\nexport function inlineFixtures(): InlineFixture[] {\n const cases: InlineFixture[] = [];\n"+''.join('cases.push('+json.dumps(r,ensure_ascii=False).replace('\u2028','\\u2028').replace('\u2029','\\u2029')+');\n'for r in inline_inputs)+' return cases; }\n')
  print('projected inline fixtures',len(inline_rows))
 
  (root/'testdata/warning_fixtures.json').write_text(json.dumps(warning_rows,indent=2,ensure_ascii=False)+'\n')

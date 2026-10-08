@@ -1,12 +1,19 @@
-import { InlineCommentsRule, syntaxKinds } from '../inline_rule.a';
-import { inlineFixtures } from './inline_fixtures.a';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { Scanner } from '../../../../typescript/scanner/scanner.ts';
 import { written } from '../../../../typescript/parser/nodes.ts';
+import { Linter } from '../../lint.ts';
+import { Settings } from '../../settings.ts';
+import { inlineFixtures } from './inline_fixtures.a';
 const fixtures = inlineFixtures();
 for(let index = 0; index < fixtures.length; index++) {
- const fixture = fixtures[index];
- if(fixture === undefined || !syntaxKinds.includes(fixture.kind)) continue;
- const rule = new InlineCommentsRule(fixture.pattern);
- console.log(`case ${index}`);
- for(const finding of rule.visit(fixture)) console.log(`${finding.start}:${finding.end}:${finding.id}:${written(finding.message)}`);
- console.log(`fixed ${written(fixture.source)}`);
+    const fixture = fixtures[index];
+    if(fixture === undefined) continue;
+    const settings = new Settings();
+    settings.load(fixture.options);
+    const parser = new Parser(fixture.source, 'fixture.tsx');
+    const linter = new Linter(fixture.source, parser, new Scanner(fixture.source), 'no-inline-comments', '', '', false, settings);
+    linter.run();
+    console.log(`case ${index}`);
+    for(const finding of linter.findings) console.log(`${finding.start}:${finding.end}:${finding.id}:${written(finding.message)}`);
+    console.log(`fixed ${written(linter.fixed())}`);
 }

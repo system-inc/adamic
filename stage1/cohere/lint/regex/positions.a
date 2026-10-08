@@ -1,0 +1,24 @@
+import type { RuleContext } from '../context.ts';
+// The common reporting boundary owns Go-byte to UTF-16 conversion.
+export class BytePositions {
+    readonly units: number[] = [];
+    readonly bytes: number[] = [];
+    constructor(source: string) {
+        let byte = 0;
+        for(let unit = 0; unit < source.length;) {
+            const point = source.codePointAt(unit) ?? 0;
+            const width = point > 65535 ? 2 : 1;
+            const count = point <= 127 ? 1 : point <= 2047 ? 2 : point <= 65535 ? 3 : 4;
+            for(let part = 0; part < count; part++) this.units.push(unit);
+            for(let part = 0; part < width; part++) this.bytes.push(byte);
+            byte += count; unit += width;
+        }
+        this.units.push(source.length);
+        this.bytes.push(byte);
+    }
+    byteAt(unit: number): number { return this.bytes[unit] ?? -1; }
+    slice(source: string, start: number, end: number): string { return source.slice(this.units[start] ?? 0, this.units[end] ?? source.length); }
+    report(context: RuleContext, start: number, end: number, rule: string, id: string, message: string): void {
+        context.reportRange(this.units[start] ?? 0, this.units[end] ?? context.source.length, rule, id, message);
+    }
+}

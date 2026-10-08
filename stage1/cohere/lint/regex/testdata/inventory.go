@@ -16,17 +16,21 @@ import (
 )
 
 type Row struct {
-	Rule       string  `json:"rule"`
-	File       string  `json:"file"`
-	Line       int     `json:"line"`
-	Call       string  `json:"call"`
-	Expression string  `json:"expression"`
-	Pattern    *string `json:"go_pattern"`
-	Feature    string  `json:"feature"`
+	Rule            string  `json:"rule"`
+	File            string  `json:"file"`
+	Line            int     `json:"line"`
+	Call            string  `json:"call"`
+	Expression      string  `json:"expression"`
+	Pattern         *string `json:"go_pattern"`
+	Feature         string  `json:"feature"`
+	Engine          string  `json:"engine,omitempty"`
+	Flags           *string `json:"flags,omitempty"`
+	FlagsExpression string  `json:"flags_expression,omitempty"`
 }
 
 func main() {
 	root := os.Args[1]
+	javascriptOptions := len(os.Args) > 2 && os.Args[2] == "--esregexp"
 	rows := []Row{}
 	err := filepath.WalkDir(root, func(path string, d os.DirEntry, e error) error {
 		if e != nil {
@@ -42,7 +46,7 @@ func main() {
 		}
 		alias := ""
 		for _, im := range f.Imports {
-			if im.Path.Value == `"regexp"` {
+			if (!javascriptOptions && im.Path.Value == `"regexp"`) || (javascriptOptions && im.Path.Value == `"github.com/system-inc/cohere/internal/lint/ecmascript/regexp"`) {
 				alias = "regexp"
 				if im.Name != nil {
 					alias = im.Name.Name
@@ -99,7 +103,7 @@ func main() {
 				return true
 			}
 			id, ok := sel.X.(*ast.Ident)
-			if !ok || id.Name != alias || (sel.Sel.Name != "Compile" && sel.Sel.Name != "MustCompile") || len(c.Args) != 1 {
+			if !ok || id.Name != alias || (sel.Sel.Name != "Compile" && sel.Sel.Name != "MustCompile") || ((!javascriptOptions && len(c.Args) != 1) || (javascriptOptions && len(c.Args) != 2)) {
 				return true
 			}
 			rel, _ := filepath.Rel(root, path)
@@ -118,6 +122,15 @@ func main() {
 				if len(features) > 0 {
 					row.Feature = strings.Join(features, ",")
 				}
+			}
+			if javascriptOptions {
+				row.Engine = "cohere esregexp / JavaScript"
+				if flags, known := eval(c.Args[1], 0); known {
+					row.Flags = &flags
+				}
+				var flagsText bytes.Buffer
+				printer.Fprint(&flagsText, fs, c.Args[1])
+				row.FlagsExpression = flagsText.String()
 			}
 			rows = append(rows, row)
 			return true

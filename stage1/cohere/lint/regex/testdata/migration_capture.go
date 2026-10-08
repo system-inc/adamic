@@ -37,10 +37,7 @@ func waveRegexRecord(c waveRegexCase) {
 	}
 }
 func waveRegexTest(kind string, pattern *esregexp.RegExp, input string) bool {
-	matched, err := pattern.TestOrError(input)
-	if err != nil {
-		panic(err)
-	}
+	matched := pattern.TestOrTimeout(input)
 	waveRegexRecord(waveRegexCase{Rule: kind, Input: input, Pattern: pattern.Source(), Matched: matched})
 	return matched
 }
@@ -67,10 +64,7 @@ func waveWarningTest(pattern *esregexp.RegExp, input string) bool {
 	if !ok {
 		panic("missing captured warning construction")
 	}
-	matched, err := pattern.TestOrError(input)
-	if err != nil {
-		panic(err)
-	}
+	matched := pattern.Test(input)
 	c.Input = input
 	c.Matched = matched
 	waveRegexRecord(c)

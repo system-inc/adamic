@@ -28,7 +28,7 @@ const helper=`export function observe(regex: RegExp, text: string, input: number
 fs.writeFileSync(path.join(root,'observe.a'),helper);
 for(let index=0;index<fixtures.length;index++) {
  const f=fixtures[index];
- f.native_expectation='awaits codex/regex-runtime-compiler';
+ f.native_expectation='required sanitized native after area/library merge';
  f.native_when_accepted='required identical matches and spans';
  // All patterns and flags are strings; no literal or RegExp-object constructor argument.
  for(const sample of f.samples) {

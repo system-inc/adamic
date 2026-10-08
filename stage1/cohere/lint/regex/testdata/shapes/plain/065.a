@@ -1,12 +1,12 @@
-// tailwind/class_existence.go:63; `^(group|peer)(/\S*)?$`
+// tailwind/no_deprecated_classes.go:74; `^text-opacity-(.*)$`
 import { observe } from '../observe.a';
-const pattern = "^(group|peer)(/[^ \\t\\n\\f\\r]*)?(?![\\s\\S])";
+const pattern = "^text-opacity-([^\\n]*)(?![\\s\\S])";
 const flags = "gu";
 const regex = new RegExp(pattern, flags);
 observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "group", 4);
-observe(regex, "xgroup", 5);
-observe(regex, "group\n", 6);
+observe(regex, "text-opacity-", 4);
+observe(regex, "xtext-opacity-", 5);
+observe(regex, "text-opacity-\n", 6);

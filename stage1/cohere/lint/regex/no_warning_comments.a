@@ -1,7 +1,7 @@
 // no-warning-comments' convertToRegExp contract. Match only through RegExp.
 import { warningSelfDirective } from './patterns.a';
 function escaped(value: string): string {
-    return value.replace(/[\\^$.*+?()[\]{}|]/gu, '\\$&');
+    return value.replace(/[\\^$.*+?()[\]{}|]/gu, '\\$&').replace(/-/gu, '\\x2d');
 }
 export function warningPatternSource(term: string, location: string, decoration: readonly string[]): string {
     const prefix = location === 'start'

@@ -1,0 +1,45 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { forFile } from '../../helpers/comments/for_file.ts';
+import { BytePositions } from '../../regex/positions.a';
+import { InlineCommentIgnorePattern, inlineDirective } from '../../regex/no_inline_comments.a';
+export const syntaxKinds: readonly number[] = [307];
+export class Rule {
+    readonly context: RuleContext;
+    readonly ignore: InlineCommentIgnorePattern;
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.ignore = new InlineCommentIgnorePattern(context.settings.read('ignorepattern', ''));
+    }
+    emptyJsx(node: ParseNode, position: number, coordinates: BytePositions): boolean {
+        if(position < coordinates.byteAt(node.pos) || position >= coordinates.byteAt(node.end)) return false;
+        if(node.kind === 'JsxExpression' && node.children.length === 0) return true;
+        for(const child of node.children) if(this.emptyJsx(this.context.node(child), position, coordinates)) return true;
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        const lines = context.source.split('\n');
+        const coordinates = new BytePositions(context.source);
+        const starts: number[] = [0];
+        let offset = 0;
+        for(const line of lines) { offset += new BytePositions(line).bytes[line.length] ?? 0; offset++; starts.push(offset); }
+        for(const comment of forFile(context.parser, index, undefined)) {
+            if(comment.startLine < 0 || comment.endLine < 0 || comment.startLine >= lines.length || comment.endLine >= lines.length) continue;
+            const startLine = lines[comment.startLine] ?? '';
+            const endLine = lines[comment.endLine] ?? '';
+            const startPositions = new BytePositions(startLine);
+            const endPositions = new BytePositions(endLine);
+            const endColumn = comment.end - (starts[comment.endLine] ?? 0);
+            const preamble = comment.startColumn <= (startPositions.bytes[startLine.length] ?? 0) ? startPositions.slice(startLine, 0, comment.startColumn).trim() : '';
+            const postamble = endColumn >= 0 && endColumn <= (endPositions.bytes[endLine.length] ?? 0) ? endPositions.slice(endLine, endColumn, endPositions.bytes[endLine.length] ?? 0).trim() : '';
+            if(preamble === '' && postamble === '') continue;
+            const body = comment.text.slice(2, comment.isBlock && comment.text.endsWith('*/') ? comment.text.length - 2 : comment.text.length).trim();
+            if(this.ignore.ignores(body)) continue;
+            if((preamble === '' || preamble === '{') && (postamble === '' || postamble === '}') && this.emptyJsx(node, comment.start, coordinates)) continue;
+            if(inlineDirective(body, comment.isBlock)) continue;
+            coordinates.report(context, comment.start, comment.end, 'no-inline-comments', 'unexpectedInlineComment', "This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin.");
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

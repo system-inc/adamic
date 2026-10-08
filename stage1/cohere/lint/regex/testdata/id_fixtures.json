@@ -453,6 +453,22 @@
     "options": {
       "CheckProperties": true,
       "ExceptionPatterns": [
+        "(?<=_)send$"
+      ],
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function BEFORE_send() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": [
         "[x-z]"
       ],
       "Exceptions": null,
@@ -462,6 +478,22 @@
     },
     "rule": "id-length",
     "source": "var x = 1 ;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": [
+        "^(?=BEFORE_)"
+      ],
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function BEFORE_send() {};"
   },
   {
     "file": "/repository/source/IdLength.ts",

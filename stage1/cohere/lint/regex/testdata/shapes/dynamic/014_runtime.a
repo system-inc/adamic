@@ -1,4 +1,4 @@
-// core/object_shorthand.go:141; *wire.MethodsIgnorePattern
+// nexus/abbreviation_vocabulary.go:162; `^` + entry.Abbreviation + `[A-Z]`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,6 +9,6 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "ignore", 4);
-observe(regex, "xignore", 5);
-observe(regex, "ignore\n", 6);
+observe(regex, "cfgA", 4);
+observe(regex, "xcfgA", 5);
+observe(regex, "cfgA\n", 6);

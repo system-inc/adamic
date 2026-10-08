@@ -1,0 +1,13 @@
+{
+  "name": "no-inline-comments",
+  "kinds": [
+    "SourceFile"
+  ],
+  "node": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoInlineComments",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoInlineComments"
+}

@@ -1,4 +1,4 @@
-// nexus/shouting.go:466; `s\s+c`
+// tailwind/class_order_strict.go:89; `^(.*):`
 import { observe } from '../observe.a';
 import { programArguments } from 'adamic';
 const argumentsList = programArguments();
@@ -9,9 +9,9 @@ observe(regex, "", 0);
 observe(regex, "🌍", 1);
 observe(regex, "TODO\n", 2);
 observe(regex, " TODO", 3);
-observe(regex, "s\tc", 4);
-observe(regex, "xs\tc", 5);
-observe(regex, "s\tc\n", 6);
-observe(regex, "// 4. Export alias declarations pointing at only uninstantiated modules or things uninstantiated modules contain", 7);
-observe(regex, "// child is const enum only - record state and continue searching", 8);
-observe(regex, "// since they're ambiguous. This is consistent with", 9);
+observe(regex, ":", 4);
+observe(regex, "x:", 5);
+observe(regex, ":\n", 6);
+observe(regex, "var a = 1; // TODO: later", 7);
+observe(regex, "// Skip for invalid syntax like this: export { \"x\" }", 8);
+observe(regex, "// `export import x = mod.x` being treated as instantiated:", 9);

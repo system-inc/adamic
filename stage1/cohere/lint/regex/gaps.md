@@ -1,61 +1,31 @@
-# Regex blockers for @system_adamic_library
+# Scout regex gaps
 
-## Dynamic RegExp source is refused
+## Runtime constructor: closed
 
-Reproducer: `testdata/dynamic_gap.a`, unchanged on source Node:
+`testdata/dynamic_gap.a` with argument `TODO` prints `true` on source Node, emitted JavaScript and sanitized native after merging area/library. TestDynamicPatternGap now fails on any lowering refusal; the 89 shape fixtures require runtime native acceptance as well.
 
-```ts
-import { programArguments } from 'adamic';
-const pattern = programArguments()[0] ?? 'TODO';
-console.log(`${new RegExp(pattern, 'u').test('TODO')}`);
-```
+## Cohere esregexp Unicode script property
 
-Node prints `true` with argument `TODO`. Native lowering reports:
+At f5d1934a, Compile(`\p{Script=Greek}`, `u`) rejects with SyntaxError while Node new RegExp with the same source and flags accepts and matches `α`. Reproducer: testdata/option_property_gap.json, TestOptionPropertyGap. This is a Go-side esregexp gap; no translation or fallback is used. An inline comment `x; // α` with ignorePattern `\p{Script=Greek}` exposes the rule-level consequence: Go drops the invalid option, while JavaScript accepts it.
 
-```
-stage 0 can't lower RegExp with a nonconstant pattern yet
-```
+## Shared upstream capture loses compiled id-length sources
 
-`TestDynamicPatternGap` proves both observations. `options.a` preserves the requested
-constructor contract and is deliberately isolated from the supported literal module.
-The CSS printer's constructors use constant imported pattern data, so its success
-does not establish support for runtime rule options. No matcher fallback was added.
+The cohere docs capture calls encoding/json.Marshal on IdLengthSettings. esregexp.RegExp has unexported state and no JSON marshaler. Therefore ExceptionPatterns becomes `[{}]`, losing the source before the shared lint oracle or Node runner receives it. The owned oracle rejects this explicitly instead of constructing a zero-valued matcher or inventing a source.
 
-This prevents id-length's `exceptionPatterns`, no-inline-comments' `ignorePattern`,
-and no-warning-comments' generated configurable terms/decorations from following
-the required RegExp path on native. Their full finding migrations were not made.
+Shortest reproducer: testdata/esregexp_capture_gap.go, run through the cohere-module overlay in TestCompiledOptionCaptureGap. Observed output: `source=^_ captured=[{}]`. The trace-only regex fixture capture calls Source() before encoding and retains all actual upstream sources; it compares the three migrations independently. The shared harness is unchanged and its full package gate may fail on this named metadata gap.
 
-## Raw option dialect is not Go regexp
+## Quiet-hundred manifest unavailable
 
-Cohere commit c2e39b75 now compiles user-option patterns through JavaScript
-regexp. The old cohere RE2 option-dialect departure is closed; Adamic's dynamic
-RegExp lowering blocker above remains. This witness compares the two raw
-libraries, not the current cohere option implementation.
+No named quiet-hundred manifest exists on the fetched base or in this workspace. The recorded alternate 100-file corpus is explicit (77 pinned compiler files, 23 stage1 files, 2,104 strings) and is retained without representing it as the fleet's quiet hundred.
 
-Run `TestOptionDialectGap`. Every listed Go pattern is accepted by Go regexp.
+## Native split linker rejects generated attributes
 
-| Pattern | Input | Go | `new RegExp(pattern, 'u')` on Node |
-| --- | --- | --- | --- |
-| `\s` | U+00A0 | false | true |
-| `a$` | `a` followed by LF | false | false |
-| `(?i)todo` | `TODO` | true | SyntaxError |
-| `\p{Greek}` | `α` | true | SyntaxError |
-| `a\z` | `a` | true | SyntaxError |
-| `(?P<word>a)` | `a` | true | SyntaxError |
+All three production fixture graphs lower successfully with EnableTSGo, but BuildSplitTSGo rejects emitted declarations with `native: split: duplicate definition __attribute__`. This is the current shared lint driver's linking path. The regex-only matcher differential uses the existing single-unit native builder and passes; it does not establish split-linker compatibility.
 
-The last four have port-time JS spellings (`/todo/iu`, `/\p{Script=Greek}/u`,
-`/a(?![\s\S])/u`, `/(?<word>a)/u`). Raw arbitrary options cannot be translated
-once at port time: the source does not exist until configuration is read.
-A constructor implementation that disagrees with Node is not an acceptable fix.
-The fleet needs a decision on restricting options to a proven common dialect,
-or changing the requirement for runtime translation. This unit does neither.
+Reproducer for @system_adamic_library: testdata/split_gap.a and TestNativeSplitAttributeGap, building emitted C with Sanitize and Split enabled. No compiler, emitter, splitter or shared lint harness edit is made, The owned finding fixtures require the canonical BuildTSGo backend used by cmd/adamic; its separate unresolved constructor gap is recorded below. The package gate exercises its unchanged split backend. Neither native finding leg is skipped.
 
-## Harness integration, #zmh9v36
+## Canonical checker-linked native runtime has an unresolved regex constructor
 
-Current main has no directory registration foundation. Its lint tests copy a fixed
-`portFiles` list, which excludes `regex/patterns.a`. Adding a table import to the
-existing `comments.ts` would break those tests. No shared harness files were edited;
-the existing no-warning-comments matcher remains intact. The table exports the
-fixed `warningSelfDirective` and `inlineCommentDirective` literals for integration.
+BuildTSGo on the production fixture graphs fails to link regexp_compile_runtime.c: `undefined reference to adamic_regex_new_owned`. The standalone cached-runtime builder succeeds, including dynamic_gap and all shape/matcher tests; the checker-linked builder compiles the runtime as separate C units.
 
-The parked `codex/lint-wave1-06` branch was not changed by this unit.
+Shortest reproducer for @system_adamic_library: unchanged testdata/dynamic_gap.a linked via native.BuildTSGo with the current sanitized checker archive; TestNativeCheckerRegexLinkGap captures the exact linker error. No runtime linkage shim is added. The production finding tests require native, so they fail after proving Go, source Node and emitted JavaScript parity rather than skipping this leg.

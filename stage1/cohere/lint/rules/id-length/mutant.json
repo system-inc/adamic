@@ -1,0 +1,6 @@
+{
+  "name": "regex exceptions ignored",
+  "file": "rule.a",
+  "from": "this.exceptionPatterns.allows(text)",
+  "to": "false"
+}
