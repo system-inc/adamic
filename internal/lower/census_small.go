@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// censusRestParameter admits rest only where every call passes a freshly packed array.
+// censusRestParameter admits rest only with a proven packed-array or fixed-tuple convention.
 // Direct calls and callable values share the same packing convention; methods remain NotYet.
 func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
 	if declaration.Kind != ast.KindFunctionDeclaration && declaration.Kind != ast.KindArrowFunction && declaration.Kind != ast.KindFunctionExpression {
@@ -27,7 +27,10 @@ func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
 	}
 	proven := l.concrete(l.checker.GetTypeAtLocation(parameter.Name()))
 	if !l.checker.IsArrayType(proven) {
-		return l.notYet(parameter, "a rest parameter other than an array")
+		if _, known := l.fixedRestTuples(proven); !known {
+			return l.notYet(parameter, "a rest parameter other than an array")
+		}
+		return l.proveRestTupleUses(declaration, parameter)
 	}
 	element, known := l.kept(l.checker.GetElementTypeOfArrayType(proven))
 	// Rest calls fit every scalar to the element representation before packing.

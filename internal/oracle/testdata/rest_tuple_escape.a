@@ -1,0 +1,3 @@
+function escape(...args: [string, number]): [string, number] { return args; }
+const pair = escape('name', 7);
+console.log(String(pair.length));

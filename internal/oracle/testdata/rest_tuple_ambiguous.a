@@ -1,0 +1,2 @@
+function ambiguous(...args: [string, number] | [number, string]): number { return args.length; }
+console.log(`${ambiguous('name',7)} ${ambiguous(7,'name')}`);

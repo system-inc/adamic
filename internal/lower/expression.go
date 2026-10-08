@@ -987,6 +987,12 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 		return l.censusRestCall(call, function, rest)
 	}
 
+	if arguments, tuple, err := l.fixedTupleCallArguments(call); tuple {
+		if err != nil {
+			return nil, err
+		}
+		return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
+	}
 	arguments := []ir.Expression{}
 	for _, argument := range call.Arguments.Nodes {
 		lowered, err := l.expression(argument)

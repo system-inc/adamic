@@ -54,7 +54,7 @@ func (l *lowering) packRestArguments(call *ast.CallExpression, signature *checke
 	fixed := len(parameters) - 1
 	proven := l.concrete(l.checker.GetTypeOfSymbol(parameters[fixed]))
 	if !l.checker.IsArrayType(proven) {
-		return nil, l.notYet(call.AsNode(), "a rest call whose concrete parameter is not an array")
+		return l.packRestTuple(call, parameters, proven)
 	}
 	element, known := l.kept(l.checker.GetElementTypeOfArrayType(proven))
 	if !known || (slotless(element) && element != ir.Union) {

@@ -1,0 +1,2 @@
+function mutate(...args: [string, number] | [string, number, string]): number { args.length = 2; return args.length; }
+console.log(String(mutate('name', 7, 'extra')));

@@ -1,10 +1,10 @@
-# DiagnosticArguments rest arrays
+# Proven rest arguments
 
-Admit boxed union elements in named-function rest arrays through existing rest call packing.
-Commits: base b410340dc8f889b5799c3bc519117c63def3aa24, replay merge 8b0db31c, fixtures 74b2ad70; implementation follows this report.
-Focused uncached Node/backend/release/sanitized oracle passes; counts refresh passes, adding only two rows.
-Restoring the union refusal fails both fixtures; dropping rest items fails their stdout comparisons in both backends.
-General union-array indexing/methods, whole-program tsc compilation, and the full gate are not covered.
+Admit boxed union rest arrays, callable/generic rest, named closure expressions and proven fixed tuple dispatch.
+Commits: replay 8b0db31c, union acc99382, callable 6415c4cf, named 563fe969; tuple implementation carries this report.
+Focused Node, JavaScript, release native and sanitized native oracles pass; seven new positive count rows.
+Admission, packing, calling-convention, tuple length/shape/escape/forwarding mutants all fail their focused fixtures.
+Captured-callable cycle refusal is preserved; nested declarations need their existing frame prerequisite; no full gate or whole-project compilation.
 
 The unit-specific compiler-area base overrides the generic main-base instruction.
 The replay merge includes 9a1f14c5d994aa855625e7cfa295677060348fec.
@@ -122,3 +122,55 @@ environment prerequisite b15216da is on the table branch, outside this small res
 unit; the existing function-expression backend needs no change.
 Logs /tmp/rest-named-{before,after,counts}.log and
 /tmp/rest-mutant-named-closure.log; replay /tmp/rest-closure-{core,checker}-{before,after}.{json,log}.
+
+## Fixed tuple rest step
+
+Fixture commit c0f3182b reduces the two constructor-type dispatchers. Tuple rest
+is packed into the existing numbered-field object storage with an explicit length
+field. A source-use proof allows only length/constant-index reads and sole-spread
+forwarding; it refuses whole-tuple escape, writes and methods. Consequently the
+JavaScript object storage cannot expose a different array identity. Only distinct
+fixed arities with represented field types are admitted. Named fixed calls can
+forward a sole spread of a plain fixed tuple by reading its numbered fields.
+Optional, variadic, overlapping-arity shapes and spreads into tuple rest stay NotYet.
+No backend, IR or C runtime edits are needed.
+
+Both exact baseline replays reproduced 'a rest parameter other than an array'.
+Afterwards createConstructorTypeNode reaches 'a void call used as a value' at
+nodeFactory.ts:2366:13; updateConstructorTypeNode reaches the same stop at
+2402:13, both the Debug.fail fallback. Commands use the replay command above
+with factory/nodeFactory.ts:2363:40 and :2399:40 and the original reason.
+The raw CSV has two observations at two unique roots for this reason.
+
+Mutants restored after each run: restore tuple admission refusal (both positives
+fail lowering); increment stored length (JavaScript output/exit comparisons and
+native ASan fail); disable fixed tuple forwarding (SpreadElement stop); bypass
+source-use proof (mutation and escape boundary fixtures incorrectly lower); allow
+duplicate arities (ambiguous fixture reaches a different unsafe representation
+boundary); ignore fixed-length proof (optional fixture reaches a later tuple-length
+stop instead of the parameter guard). All final mutant runs build successfully.
+Logs /tmp/rest-mutant-tuple-{admission,length,forward,escape,shape,optional}.log.
+
+Restored all-rest oracle ok 2.881s; lower checks ok 3.110s; counts refresh ok
+44.506s. New rows create 12/12/2/12/6/0 and update 14/14/2/10/6/0.
+Commands: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'TestRestTupleStorageBoundaries|TestRestCallableViewsNeedAdapters|TestRestNotKeepsCycleRefusal|TestNativeAgreesWithNode/internal/oracle/testdata/(rest_|census_overload_contracts)'
+-count=1 -timeout 10m; lower and counts commands as above. Logs
+/tmp/rest-all-final.log, /tmp/rest-tuple-{lower,counts}.log; replays
+/tmp/rest-tuple-{create,update}-{before,after}.{json,log}.
+
+Final raw-table accounting: 46 DiagnosticArguments roots (353 observations),
+six outside-nongeneric roots, four named-closure roots, two nonarray roots.
+The last three reasons have respectively six, four and two observations.
+These 58 listed roots describe the admission families; the named-closure baseline
+was already past that stop, and next-stop advancement is not whole-project compilation.
+
+Final extraction regression mutants also run: original union admission restored
+fails both union fixtures; dropping scalar rest items fails stdout in JavaScript
+and native after successful compilation; outside-nongeneric admission restored
+fails writer and generic fixtures. Logs /tmp/rest-mutant-{reject-union-final,
+drop-rest-items-final,outside-admission}.log. All sources restored.
+Worker branch histories were checked across 20 codex/notyet-* refs before shared
+lowering edits. Other recent expression changes touched enumNeverValue, prefix
+updates, logical/equality combination and void-call handling, not the rest helpers,
+sameKeeping, callClosure or callFunction edited here.
