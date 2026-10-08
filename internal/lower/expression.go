@@ -163,7 +163,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
-	value, err := l.value(node)
+	var value ir.Expression
+	var err error
+	if node.Kind == ast.KindElementAccessExpression && node.Flags&ast.NodeFlagsOptionalChain != 0 && node.AsElementAccessExpression().QuestionDotToken == nil {
+		value, err = l.optionalPropertyChain(node)
+	} else {
+		value, err = l.value(node)
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the

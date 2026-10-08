@@ -1,0 +1,10 @@
+interface Root { items: readonly string[] | undefined; }
+function clear(value: Root): void { value.items = undefined; }
+function key(): number { console.log('key'); return 0; }
+function inspect(value: Root | undefined): void {
+    if (value !== undefined && value.items !== undefined) {
+        clear(value);
+        console.log(value?.items[key()] ?? 'missing');
+    }
+}
+inspect({ items: ['built'.repeat(2)] });

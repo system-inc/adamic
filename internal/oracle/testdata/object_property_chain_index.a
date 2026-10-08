@@ -1,0 +1,17 @@
+interface Item { readonly name: string; }
+interface Root { readonly items: readonly Item[]; }
+let keys = 0;
+function key(): number { keys += 1; return 0; }
+function read(value: Root | undefined): string {
+    return value?.items[key()]?.name ?? 'missing';
+}
+console.log(read(undefined));
+console.log(`${keys}`);
+console.log(read({ items: [{ name: 'built'.repeat(2) }] }));
+console.log(read({ items: [] }));
+console.log(`${keys}`);
+function captured(value: Root | undefined, index: number): string {
+    return value?.items[index]?.name ?? 'missing';
+}
+console.log(captured({ items: [{ name: 'capture' }] }, 0));
+console.log(captured(undefined, 0));
