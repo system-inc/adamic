@@ -1,0 +1,506 @@
+{
+  "internal/load/node_fs_file_system.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "5e98530a73de9324ac0e2c84986abfb6e9ea101f98c8b55f90e85db8cab41c69",
+    "reason": "adamic: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/lower/testdata/census_marker_live_boundary.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a type predicate whose return is not proven (there is no body proving this parameter)",
+    "body_sha256": "3565a22e7ddd81f9057190b8c1da4d5e04760e6c3077194f24edb7e8b299a652",
+    "reason": "adamic: /workspace/adamic/internal/lower/testdata/census_marker_live_boundary.a:3:53: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+  },
+  "internal/lower/testdata/input-spread/fileStatus_array.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2556",
+    "body_sha256": "db45efbe0e8738ee1aa27c180098374a648a07681064f8e6b417c5faf605040c",
+    "reason": "internal/lower/testdata/input-spread/fileStatus_array.a:3:12: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.\n"
+  },
+  "internal/lower/testdata/input-spread/programArguments_array.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2556",
+    "body_sha256": "a66feee873f76d794c52a112c1e3f06ed61a4353f7f95f1fd974858918b84c7d",
+    "reason": "internal/lower/testdata/input-spread/programArguments_array.a:3:18: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.\n"
+  },
+  "internal/lower/testdata/input-spread/readDirectory_array.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2556",
+    "body_sha256": "44da81b7725f1a5ea0fa924c86d6ed1dfb3c13b80304c0edcb9fcbe9be0905e0",
+    "reason": "internal/lower/testdata/input-spread/readDirectory_array.a:3:15: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.\n"
+  },
+  "internal/lower/testdata/input-spread/readTextFile_array.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2556",
+    "body_sha256": "0be332700c32f2ffbbc5251c0876eab6bf8926528309f3d8de8747cdda024371",
+    "reason": "internal/lower/testdata/input-spread/readTextFile_array.a:3:14: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.\n"
+  },
+  "internal/lower/testdata/input-spread/utf8At_array.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2556",
+    "body_sha256": "41b895c7ecf15d80aabccf4a8cc597be251dda6f12a70d206a22da66488ac3fe",
+    "reason": "internal/lower/testdata/input-spread/utf8At_array.a:3:8: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.\n"
+  },
+  "internal/lower/testdata/input-spread/utf8Length_array.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2556",
+    "body_sha256": "c147ddc0a9fc4eaf685b11b221c115ce2aee72413ef27737ec84677c969ce129",
+    "reason": "internal/lower/testdata/input-spread/utf8Length_array.a:3:12: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.\n"
+  },
+  "internal/lower/testdata/input-spread/writeTextFile_array.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2556",
+    "body_sha256": "87d5a91e9f2d1126c29d07aabc4f4fd95f3965893dc1ef2050050778b3255eb7",
+    "reason": "internal/lower/testdata/input-spread/writeTextFile_array.a:3:15: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.\n"
+  },
+  "internal/lower/testdata/predicates/every_alias.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a type predicate whose return is not proven (return paths through KindForStatement are not verified)",
+    "body_sha256": "1ed47ba68ab106ab992fe023cc7da62e4c4b06a5bc19e4dabe8ed0570da0cda0",
+    "reason": "adamic: /workspace/adamic/internal/lower/testdata/predicates/every_alias.a:4:9: Adamic 0.1 refuses a type predicate whose return is not proven (return paths through KindForStatement are not verified); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+  },
+  "internal/native/testdata/typed-arrays/node.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2322",
+    "body_sha256": "cd367b6106a2c4785a86f187839bd175018809ef2ee0c1890292c1429e729eba",
+    "reason": "internal/native/testdata/typed-arrays/node.a:17:49: error TS2322: Type 'undefined' is not assignable to type 'Float64Array<ArrayBuffer> | Int32Array<ArrayBuffer> | Uint8Array<ArrayBuffer>'.\ninternal/native/testdata/typed-arrays/node.a:17:67: error TS2322: Type 'undefined' is not assignable to type 'Float64Array<ArrayBuffer> | Int32Array<ArrayBuffer> | Uint8Array<ArrayBuffer>'.\ninternal/native/testdata/typed-arrays/node.a:30:20: error TS2322: Type 'undefined' is not assignable to type 'Float64Array<ArrayBuffer> | Int32Array<ArrayBuffer> | Uint8Array<ArrayBuffer>'.\ninternal/native/testdata/typed-arrays/node.a:30:2: error TS2322: Type 'undefined' is not assignable to type 'Float64Array<ArrayBuffer> | Int32Array<ArrayBuffer> | Uint8Array<ArrayBuffer>'.\ninternal/native/testdata/typed-arrays/node.a:31:49: error TS2322: Type 'undefined' is not assignable to type 'Float64Array<ArrayBuffer> | Int32Array<ArrayBuffer> | Uint8Array<ArrayBuffer>'.\ninternal/native/testdata/typed-arrays/node.a:4:17: error TS7006: Parameter 'value' implicitly has an 'any' type.\ninternal/native/testdata/typed-arrays/node.a:5:15: error TS7006: Parameter 'array' implicitly has an 'any' type.\ninternal/native/testdata/typed-arrays/node.a:6:19: error TS7006: Parameter 'Type' implicitly has an 'any' type.\ninternal/native/testdata/typed-arrays/node.a:9:55: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+  },
+  "internal/oracle/refusals/nested_cycle.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused 'saved', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+    "body_sha256": "4547f44659e146d23db8816f0a3707cf4d103264b5e15ee204587b43180ccb89",
+    "reason": "adamic: /workspace/adamic/internal/oracle/refusals/nested_cycle.a:2:6: Adamic 0.1 refuses 'saved', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+  },
+  "internal/oracle/refusals/nested_rebinding.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2630",
+    "body_sha256": "178876f21219a6b9d0ce4e638d3028d2efa274a1602ef53c09ee0112608e272a",
+    "reason": "internal/oracle/refusals/nested_rebinding.a:3:5: error TS2630: Cannot assign to 'inner' because it is a function.\n"
+  },
+  "internal/oracle/testdata/arguments_length_refused/aliasing.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused arguments other than a read of arguments.length",
+    "body_sha256": "dda63befc475f47cd0b6694e8535196e1160f9a4d4ab9443382f2d5ba0910d84",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/arguments_length_refused/aliasing.a:2:37: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read\n"
+  },
+  "internal/oracle/testdata/arguments_length_refused/arrow.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused arguments inside an arrow function",
+    "body_sha256": "33bf7e54e0064c03788c9743ae777ac69b4c411a20221891b274c4a22b1b269f",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/arguments_length_refused/arrow.a:2:42: Adamic 0.1 refuses arguments inside an arrow function; read arguments.length in the enclosing non-arrow function and capture that number\n"
+  },
+  "internal/oracle/testdata/arguments_length_refused/indexing.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused arguments other than a read of arguments.length",
+    "body_sha256": "9899d569706a0715a812491f709761981aa4accd8fdedcc2eb73fe73f7e8da84",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/arguments_length_refused/indexing.a:2:38: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read\n"
+  },
+  "internal/oracle/testdata/arguments_length_refused/passing.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused arguments other than a read of arguments.length",
+    "body_sha256": "35c90e7d4b0f98020da069d730549b5c68e6143df8e2832d32861425ca7335c5",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/arguments_length_refused/passing.a:2:28: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read\n"
+  },
+  "internal/oracle/testdata/arguments_length_refused/returning.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused arguments other than a read of arguments.length",
+    "body_sha256": "e17d8be5198961babfe797fa4a4e851a0dcea8b08adcba7f96a45ace483ddf2b",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/arguments_length_refused/returning.a:2:30: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read\n"
+  },
+  "internal/oracle/testdata/arguments_length_refused/spreading.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused arguments other than a read of arguments.length",
+    "body_sha256": "2d334dc4fa2e059b3caa5c6c6930fcca268767582ff8cf96ff139a7fc4c3bd80",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/arguments_length_refused/spreading.a:2:40: Adamic 0.1 refuses arguments other than a read of arguments.length; name the parameters, or take a rest parameter; only arguments.length may be read\n"
+  },
+  "internal/oracle/testdata/arguments_length_refused/writing.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused writing arguments.length",
+    "body_sha256": "ac2599ce20af85d47b2b5bbc0380762d8d04d20e8d6f3698a20d88309238e9a9",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/arguments_length_refused/writing.a:2:23: Adamic 0.1 refuses writing arguments.length; keep the count read-only; write an explicit local number instead\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "1e0264a3bec35fc8951bc74583da6654352a76e01ac8d845434b62f9f300b37b",
+    "reason": "adamic: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "faec8c31d6cb2e1c772b68d87a3c17024c06795529bccc9f1991658f0b9d1cb1",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_exists.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "f34a7c202550f90a9cf9e64be654e94fca7c2aab15f6d2cbf1a07bffb24ff599",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_mkdtemp.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "5e75525da172a69c756f1fed475695e48b69ff9b734ce723f1cdb1f4a8f3877f",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_open.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "4ef8e1849f7b89408643be0024fa05a409b3e86200cd74271aad9fc08b260e54",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_read.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "fcad9b2863b389a21b7fc5a33fb6caf9b63e8714ed1f52caffec2c65eb735cee",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_read_sync.a:6:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "cff8a8c1cd03c71fb907898388e8fe01c49ac3e459ed6fd14c05b64dc07eaee2",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_rm.a:5:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "349deaafae2412733bbfa7a342ca4d3f464942ac38c3fbff2b8e6375eac4ef3d",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_stat.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_system.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "5ff0197ed79bccb607363d700cc8c23e5f871ada54c9501ab7e43dfbe57a2a91",
+    "reason": "adamic: /workspace/adamic/internal/load/node_fs_file_system.a:37:88: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "088d77686dd6fcdf98600a89dba78ea97406fc490383b5ffc32666cec1e57161",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_unlink.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "f37cbca51db115ec568ab2fae99a276108fcef2cd0c64856921eed457547149b",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_utimes.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields",
+    "body_sha256": "ce0b16a3ec711cf6093245b1f782df69309dfddfe1bbf3c2352e2c68759e3179",
+    "reason": "adamic: /workspace/adamic/internal/oracle/testdata/optional_widening_refused/node_fs_file_write.a:4:42: Adamic 0.1 refuses optional property errno in ErrnoException absent from structural source Error, which can hide fields; declare errno on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\n"
+  },
+  "review/unknown-narrowing/require_pending.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2591",
+    "body_sha256": "84865c39c3294b681cbee678c90c4d9f0caf4a79ebbf596a8e88fe346ec24956",
+    "reason": "review/unknown-narrowing/require_pending.a:6:7: error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+  },
+  "stage3/adapt/76-truthful-casts/same-map-chain-boundary.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a value of type (T | DiagnosticMessageChain)[] | undefined seen as InternalNext | undefined, which can write ReusableDiagnosticMessageChain where T | DiagnosticMessageChain is read",
+    "body_sha256": "b3bcaa680cef251693edad17684ae3246850b5259229ac3c5b75f98502f933a3",
+    "reason": "adamic: /workspace/adamic/stage3/adapt/76-truthful-casts/same-map-chain-boundary.a:46:63: Adamic 0.1 refuses a value of type (T | DiagnosticMessageChain)[] | undefined seen as InternalNext | undefined, which can write ReusableDiagnosticMessageChain where T | DiagnosticMessageChain is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+  },
+  "stage3/census/tsc-closure/fixtures/src/compiler/entry.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2322",
+    "body_sha256": "c8e1cb637b0b459d9a5921c8ad4bed56de9cf5fb6ae09fa5cedda52ba8008491",
+    "reason": "stage3/census/tsc-closure/fixtures/src/outside.a:2:11: error TS2322: Type 'string' is not assignable to type 'number'.\n"
+  },
+  "stage3/census/tsc-closure/fixtures/src/outside.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2322",
+    "body_sha256": "3dd56bd5022ae53fd0f35f5f84a8da7cb3b640d37cdacce318133c077cfd272c",
+    "reason": "stage3/census/tsc-closure/fixtures/src/outside.a:2:11: error TS2322: Type 'string' is not assignable to type 'number'.\n"
+  },
+  "stage3/drivers/scanner/evidence/land-area-next/witnesses/01-index.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused an index signature",
+    "body_sha256": "55cc1a9824711d8bf900afdfabcb2a8e56a3c61f711f7fdfc39d194aff10aace",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/scanner/evidence/land-area-next/witnesses/01-index.a:1:31: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added\n"
+  },
+  "stage3/drivers/scanner/evidence/land-area-next/witnesses/03-error-cast.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a cast the runtime can't check",
+    "body_sha256": "c9b85e8189431b01a36d6ea08e6746bbcd296b539317f7042a30487d5697929c",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/scanner/evidence/land-area-next/witnesses/03-error-cast.a:2:6: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+  },
+  "stage3/drivers/scanner/evidence/land-area-next/witnesses/04-diagnostic-cast.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a cast the runtime can't check",
+    "body_sha256": "7f74d5dee8084f6e35fd56491b7d201e73321e7984d6eef33c713ed6ff6d2c3f",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/scanner/evidence/land-area-next/witnesses/04-diagnostic-cast.a:3:15: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+  },
+  "stage3/drivers/scanner/evidence/land-area-next/witnesses/06-enum-slot.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Identifier",
+    "body_sha256": "6c0f75cbabd185c4f65d5e7c26c5dd777dfc2407a270501c29ac6a87da5b3412",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/scanner/evidence/land-area-next/witnesses/06-enum-slot.a:3:38: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Identifier; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)\n"
+  },
+  "stage3/drivers/scanner/evidence/land-area-next/witnesses/07-string-cast.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a cast the runtime can't check",
+    "body_sha256": "71144887c66b28ab2fe132c190c9bbbc89cabdde7479d0b574b7a6372df22dc1",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/scanner/evidence/land-area-next/witnesses/07-string-cast.a:1:48: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+  },
+  "stage3/drivers/scanner/evidence/scratch-run/witnesses/witness-03-00.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a cast the runtime can't check",
+    "body_sha256": "7f74d5dee8084f6e35fd56491b7d201e73321e7984d6eef33c713ed6ff6d2c3f",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/scanner/evidence/scratch-run/witnesses/witness-03-00.a:3:15: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+  },
+  "stage3/drivers/scanner/evidence/scratch-run/witnesses/witness-08-00.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a cast the runtime can't check",
+    "body_sha256": "7f74d5dee8084f6e35fd56491b7d201e73321e7984d6eef33c713ed6ff6d2c3f",
+    "reason": "adamic: /workspace/adamic/stage3/drivers/scanner/evidence/scratch-run/witnesses/witness-08-00.a:3:15: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+  },
+  "stage3/drivers/scanner/main.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS7006",
+    "body_sha256": "0b7f3dd9ce37b00ba95dc5444110c5bdd9b4da6a6690db94e4e377f5da75d71f",
+    "reason": "stage3/drivers/scanner/main.a:54:25: error TS7006: Parameter 'message' implicitly has an 'any' type.\nstage3/drivers/scanner/main.a:54:34: error TS7006: Parameter 'length' implicitly has an 'any' type.\nstage3/drivers/scanner/main.a:5:31: error TS2307: Cannot find module './adapted/src/compiler/scanner.ts' or its corresponding type declarations.\nstage3/drivers/scanner/main.a:6:42: error TS2307: Cannot find module './adapted/src/compiler/types.ts' or its corresponding type declarations.\nstage3/drivers/scanner/main.a:7:28: error TS2307: Cannot find module './token-names.a' or its corresponding type declarations.\n"
+  },
+  "stage3/evidence/two-writes/typed-witness.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2307",
+    "body_sha256": "cc8f7b4afbe8a1447f056e550c57d318dcd2b9e52bb980bee117cafd7903e678",
+    "reason": "stage3/evidence/two-writes/typed-witness.a:1:75: error TS2307: Cannot find module '__TSC_PUBLIC__' or its corresponding type declarations.\n"
+  },
+  "stage3/fixtures/host/06_fileExists.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:fs.symlinkSync yet",
+    "body_sha256": "4e581ba515e177806693ba380d56b7a87ab333cce0dda12a558bdcf836595d67",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/06_fileExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+  },
+  "stage3/fixtures/host/07_directoryExists.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:fs.symlinkSync yet",
+    "body_sha256": "5cf5f8d9f32fa331f5de333c5f6c39793298fdd71db30cf122dc6232df706c98",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/07_directoryExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+  },
+  "stage3/fixtures/host/08_getDirectories.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:fs.readdirSync yet",
+    "body_sha256": "ceedbf24c6969fb1716871536dcf700871c91333c7f9634c411ab60fb93c8b74",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/08_getDirectories.a:187:25: stage 0 can't lower node:fs.readdirSync yet\n"
+  },
+  "stage3/fixtures/host/09_realpath.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:process.Process.platform yet",
+    "body_sha256": "b0b573efd444f66bfcc37e661dd9de3b4ef5a2475332adb11ac57deece1f4c06",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/09_realpath.a:17:17: stage 0 can't lower node:process.Process.platform yet\n"
+  },
+  "stage3/fixtures/host/10_getModifiedTime.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:fs.symlinkSync yet",
+    "body_sha256": "e94bcacb3cc5a5b3f55772d5a5d0c25befe8c602314c91cc0dd37a400d013676",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/10_getModifiedTime.a:37:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+  },
+  "stage3/fixtures/host/11_setModifiedTime.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "1daf88021eabd64dfba900964a04fbac4dac0b46aa94a1f76bc54517180be198",
+    "reason": ""
+  },
+  "stage3/fixtures/host/12_deleteFile.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:fs.symlinkSync yet",
+    "body_sha256": "c16dfdd302e883be9af603df92ef7325bbee42ea224e02906a8b89c1dd999987",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/12_deleteFile.a:23:5: stage 0 can't lower node:fs.symlinkSync yet\n"
+  },
+  "stage3/fixtures/host/13_createDirectory.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "f4e395e5d7fc3e6f6bdadb16e3886c2acba069be977426939026cd5571ac850e",
+    "reason": ""
+  },
+  "stage3/fixtures/host/14_getCurrentDirectory.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
+    "body_sha256": "ed7dbdcc0e962dbcff2ad051f9d70c8dd91f7fe839239c7d0021132175c7f2e3",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28: Adamic 0.1 refuses 'callback', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)\n"
+  },
+  "stage3/fixtures/host/15_getExecutingFilePath.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:path.dirname yet",
+    "body_sha256": "98fd1c6c5c02f134eddf1fb6e4823a9784cb20b062ab2f84d3be9aaae49e4f30",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/15_getExecutingFilePath.a:22:52: stage 0 can't lower node:path.dirname yet\n"
+  },
+  "stage3/fixtures/host/17_write.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:net.Socket.write yet",
+    "body_sha256": "f2a4e6d9c412448140e0d66afbda9b9a3d1f88705103d5d7c61e095ccd383fef",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/17_write.a:13:5: stage 0 can't lower node:net.Socket.write yet\n"
+  },
+  "stage3/fixtures/host/18_exit_0.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:process.Process.exit yet",
+    "body_sha256": "2510f2043d81d3d8b8be2326703e479e17169be28cb6f587231a19f536eeb342",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/18_exit_0.a:25:30: stage 0 can't lower node:process.Process.exit yet\n"
+  },
+  "stage3/fixtures/host/19_exit_1.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:process.Process.exit yet",
+    "body_sha256": "0d61764b8b800029443de01df0915cc40d339bfaafc244fca1c5f3bb48eeff85",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/19_exit_1.a:25:30: stage 0 can't lower node:process.Process.exit yet\n"
+  },
+  "stage3/fixtures/host/20_exit_2.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:process.Process.exit yet",
+    "body_sha256": "2ac78aac7d0d324a2a44554ff15dbb63b727d354e5d6092cb3fc455bee6c9ebf",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/20_exit_2.a:25:30: stage 0 can't lower node:process.Process.exit yet\n"
+  },
+  "stage3/fixtures/host/21_createHash.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: node:crypto.\"node:crypto\" read as a value yet",
+    "body_sha256": "da8a56eac760bcc8d058b728ff507fb3d7d4ae7c368a6c448dfc131eb4c8a66f",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/21_createHash.a:21:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet\n"
+  },
+  "stage3/fixtures/host/22_createHash_fallback.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a function without a body yet",
+    "body_sha256": "eec43d6c1c4d2d77c26bc71ae77f0665dd5d2db7be650672d527665b70aa978a",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/22_createHash_fallback.a:23:1: stage 0 can't lower a function without a body yet\n"
+  },
+  "stage3/fixtures/host/24_useCaseSensitiveFileNames.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "4a30cf39a2b30c91703baf39ba4f3574921f30cafedf1c91ee528499c2025159",
+    "reason": ""
+  },
+  "stage3/fixtures/host/25_readDirectory.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold",
+    "body_sha256": "b1b122e92b7987bb4736aa4233b680a73fb9d26000b9903e7da7a1e1206043d9",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:579:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n"
+  },
+  "stage3/fixtures/nested-functions/refused/01_scanner_frame.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused var",
+    "body_sha256": "1c473c312e5fb891299c939ed347a76541bd7610313af7cce286fbb35b5d46f1",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/nested-functions/refused/01_scanner_frame.a:72:5: Adamic 0.1 refuses var; use const or let\n"
+  },
+  "stage3/fixtures/real/bytes-revealed/escaped-string/main.a": {
+    "outcome": "checked",
+    "not_yet": true,
+    "header": "// a-check: checked NotYet: a value of type __String yet",
+    "body_sha256": "62d69a6d3df8327fbfb475f7000f4e04a505898b3c20e126c52bff00c3658843",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/real/bytes-revealed/escaped-string/main.a:10:31: stage 0 can't lower a value of type __String yet\n"
+  },
+  "stage3/fixtures/real/bytes-revealed/overload-binding-parameter/main.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused overload 1 of visitBindingElement parameter elem cannot be served by implementation parameter elem",
+    "body_sha256": "693b780e26b7d86f9dab85a4d8bed6c8855be0d5c2ef506a648c3141645c4241",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/real/bytes-revealed/overload-binding-parameter/main.a:17:46: Adamic 0.1 refuses overload 1 of visitBindingElement parameter elem cannot be served by implementation parameter elem; make the implementation accept every value admitted by this overload, without mutable widening or bivariance\n"
+  },
+  "stage3/fixtures/real/bytes-revealed/overload-body-result/main.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody",
+    "body_sha256": "8c7e414997ea8f3206f11bd78ff2d6e89d7ee9a8d32fe4c2ee72bbcb7df4a45f",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/real/bytes-revealed/overload-body-result/main.a:16:5: Adamic 0.1 refuses overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody; make the implementation result covariant with every overload result\n"
+  },
+  "stage3/fixtures/real/bytes-revealed/overload-void-result/main.a": {
+    "outcome": "refused",
+    "not_yet": false,
+    "header": "// a-check: refused overload 1 of writeTokenText result void cannot be served by implementation result number",
+    "body_sha256": "a175e5c8460f0d4cd6a89a11295f3211bb82a28d982751471624d068185cb2fc",
+    "reason": "adamic: /workspace/adamic/stage3/fixtures/real/bytes-revealed/overload-void-result/main.a:6:1: Adamic 0.1 refuses overload 1 of writeTokenText result void cannot be served by implementation result number; make the implementation result covariant with every overload result\n"
+  },
+  "stage3/fixtures/real/non-null-assertion/main.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "680bae985b3e94c2a0f8459b81d076b5e82864418b1756f7412f31ccc46b6aac",
+    "reason": ""
+  },
+  "stage3/fixtures/real/type-predicate/main.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "af3bc895080ccaa9f983bbe296d77ce2911f5d2d24214debc558650a31dbd9c9",
+    "reason": ""
+  },
+  "stage3/fixtures/real/value-condition/main.a": {
+    "outcome": "checked",
+    "not_yet": false,
+    "header": "// a-check: checked",
+    "body_sha256": "a63d4b9c9a12b77479ad60344a530829d85ca92000f0c4bb00c286f4e055b3a4",
+    "reason": ""
+  },
+  "stage3/meter/runs/20261008T035244Z.latent-full/tests/probe.a": {
+    "outcome": "type error",
+    "not_yet": false,
+    "header": "// a-check: type error TS2322",
+    "body_sha256": "64b854c90960b6617f2cc5b9d38a82c13a09a2e19ee237dbfd16f4afd7d00098",
+    "reason": "stage3/meter/runs/20261008T035244Z.latent-full/tests/probe.a:11:36: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/meter/runs/20261008T035244Z.latent-full/tests/probe.a:19:39: error TS2322: Type 'string' is not assignable to type 'number'.\nstage3/meter/runs/20261008T035244Z.latent-full/tests/probe.a:9:11: error TS2322: Type 'string' is not assignable to type 'number'.\n"
+  }
+}

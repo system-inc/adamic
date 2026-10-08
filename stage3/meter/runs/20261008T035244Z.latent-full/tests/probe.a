@@ -1,3 +1,4 @@
+// a-check: type error TS2322
 declare function external(): number;
 export function three(text: string, count: number): void {
     if (text) { }

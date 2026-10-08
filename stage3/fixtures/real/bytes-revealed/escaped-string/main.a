@@ -1,4 +1,4 @@
-// a-check: refused the non-null assertion !
+// a-check: checked NotYet: a value of type __String yet
 // From src/compiler/factory/nodeFactory.ts:1304 (TypeScript 6.0.3, ed6e2975 adaptations).
 
 type InternalSymbolName = '__call' | 'this';

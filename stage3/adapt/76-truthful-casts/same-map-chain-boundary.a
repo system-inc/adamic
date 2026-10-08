@@ -1,3 +1,4 @@
+// a-check: refused a value of type (T | DiagnosticMessageChain)[] | undefined seen as InternalNext | undefined, which can write ReusableDiagnosticMessageChain where T | DiagnosticMessageChain is read
 // From TypeScript 6.0.3, src/compiler/core.ts:342-366 (sameMap).
 // From TypeScript 6.0.3, src/compiler/builder.ts:545,551,555,558-564 (next construction and array helper).
 // Private type model: public DiagnosticMessageChain stays unchanged.

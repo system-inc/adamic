@@ -1,3 +1,4 @@
+// a-check: refused a type predicate whose return is not proven (return paths through KindForStatement are not verified)
 // A body-proven predicate does not by itself certify array-wide callback effects.
 function every(array: readonly (number | string)[] | undefined, callback: (element: number | string, index: number) => element is number): array is readonly number[] | undefined {
     if (array !== undefined) {

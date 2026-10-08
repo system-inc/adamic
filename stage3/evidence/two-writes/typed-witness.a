@@ -1,3 +1,4 @@
+// a-check: type error TS2307
 import type { Node, NodeFactory, NodeFlags, SourceFile, SyntaxKind } from "__TSC_PUBLIC__";
 declare const runtime: {
     factory: NodeFactory;

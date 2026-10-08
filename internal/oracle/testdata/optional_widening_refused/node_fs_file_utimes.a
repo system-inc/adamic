@@ -1,3 +1,4 @@
+// a-check: refused optional property errno in ErrnoException absent from structural source Error, which can hide fields
 import { programArguments } from 'adamic';
 const root = programArguments()[0] ?? '';
 function failure(error: Error): void {

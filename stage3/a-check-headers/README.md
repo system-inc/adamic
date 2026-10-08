@@ -17,3 +17,13 @@ replacing each reason/code is rejected: 226 catches. This proof exercises the
 header predicate; the ordinary scan separately invokes the real compiler on
 all 137 files. [batch4-header-mutants.json](batch4-header-mutants.json) records
 both mutants. Headers are restored after every experiment.
+
+Batch 5 checks all 529 added or modified programs in place, including 501 new
+files and 39 staged driver paths. All pass: 465 checked (including 114 NotYet),
+43 refused, and 21 checker errors. Only 72 headers changed: 37 refusal reasons,
+15 checker codes, and 20 accepted/NotYet expectations.
+[batch5-headers.json](batch5-headers.json) records unchanged body hashes and actual
+reasons. The unchanged pinned Gate.aCheck rejects all 72 wrong expectations and
+all 52 removed error headers against captured real diagnostics: 124 catches.
+The separate ordinary scan invokes the real compiler on every original path.
+[batch5-header-mutants.json](batch5-header-mutants.json) records that proof.

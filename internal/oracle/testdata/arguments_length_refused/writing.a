@@ -1,3 +1,4 @@
+// a-check: refused writing arguments.length
 function take(value: IArguments): void { console.log(`${value.length}`); }
 function rejected() { arguments.length = 1; }
 rejected();

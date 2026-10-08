@@ -1,3 +1,4 @@
+// a-check: type error TS2630
 function outer(): number {
     function inner(): number { return 1; }
     inner = () => 2;

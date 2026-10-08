@@ -1,4 +1,4 @@
-// a-check: refused a type predicate whose return is not proven
+// a-check: checked
 // From src/compiler/factory/nodeTests.ts:318 (TypeScript 6.0.3, main adaptations).
 
 const SyntaxKind = { Identifier: 80 } as const;

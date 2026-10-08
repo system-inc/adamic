@@ -1,4 +1,4 @@
-// a-check: refused the non-null assertion !
+// a-check: refused overload 1 of writeTokenText result void cannot be served by implementation result number
 // From src/compiler/emitter.ts:4949 (TypeScript 6.0.3, ed6e2975 adaptations).
 
 type SyntaxKind = 64;

@@ -1,2 +1,3 @@
+// a-check: refused an index signature
 export interface MapLike<T> { [index: string]: T; }
 console.log("ok");

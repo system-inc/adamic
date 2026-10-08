@@ -1,3 +1,4 @@
+// a-check: refused a cast the runtime can't check
 interface Message { flag?: boolean; }
 function diag(flag?: boolean) { return { flag }; }
 const value = diag() as Message;

@@ -1,3 +1,4 @@
+// a-check: type error TS2556
 import { programArguments } from 'adamic';
 const args: string[] = [];
 programArguments(...args);
