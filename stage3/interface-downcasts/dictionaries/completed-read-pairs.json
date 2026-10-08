@@ -1,0 +1,11 @@
+[
+  {
+    "type_id": 10957,
+    "field": "<dynamic-key>",
+    "type": "MapLike<string[]>",
+    "status": "checked source reads",
+    "tests": ["TestCheckedViewDictionaryArrays", "TestCheckedViewDictionaryPropagation"],
+    "fixtures": ["source/paths-good.a", "source/paths-wrong.a", "source/paths-element-wrong.a", "source/paths-key-missing.a"],
+    "scope": "Per-pair read contract and transitive array extraction in both compiler backends. Dynamic record producers and writes remain separate work."
+  }
+]

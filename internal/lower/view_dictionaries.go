@@ -112,3 +112,43 @@ func (l *lowering) dictionaryRead(node *ast.Node, object, key ir.Expression) (ir
 	}
 	return ir.Property{Object: object, DictionaryKey: key, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: l.viewLiterals(declared)}, nil
 }
+
+// Resolved string-index signatures carry generic arguments that have no named
+// parameter/property to infer from. Recursive dictionary graphs stay unmapped
+// here until their independent binder mapping is available.
+func (l *lowering) inferDictionaryIndexTypes(declared, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
+	if !l.stringDictionary(declared) || !l.stringDictionary(instantiated) {
+		return
+	}
+	wanted := l.checker.GetIndexInfosOfType(declared)[0].ValueType()
+	given := l.checker.GetIndexInfosOfType(instantiated)[0].ValueType()
+	if l.stringDictionary(l.checker.GetNonNullableType(wanted)) || wanted == declared {
+		return
+	}
+	l.inferTypes(wanted, given, into)
+}
+
+// Read descriptors cannot authorize a write into a differently represented
+// source slot. Until record production/write dispatch is available, refuse the
+// actual write rather than reinterpret a scalar table through its target type.
+func (l *lowering) dictionaryWriteRefusal(node *ast.Node) error {
+	if !ast.IsAssignmentTarget(node) {
+		return nil
+	}
+	var receiver *ast.Node
+	switch node.Kind {
+	case ast.KindPropertyAccessExpression:
+		receiver = node.AsPropertyAccessExpression().Expression
+	case ast.KindElementAccessExpression:
+		receiver = node.AsElementAccessExpression().Expression
+	default:
+		return nil
+	}
+	if l.processPath(receiver) == "process.env" {
+		return nil
+	}
+	if l.stringDictionary(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(receiver)))) {
+		return l.notYet(node, "a dictionary write without a producer storage certificate")
+	}
+	return nil
+}

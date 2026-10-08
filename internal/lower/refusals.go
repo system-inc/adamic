@@ -87,6 +87,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if err := l.dictionaryWriteRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.phantomArrayPresenceRefusal(node); err != nil {
 			found = err
 			return true

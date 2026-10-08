@@ -25,6 +25,8 @@ func DictionaryReadKinds(program *Program, id ViewContractID) ([]string, bool) {
 		default:
 			return nil, false
 		}
+	case ViewArray:
+		kinds = []string{"array"}
 	case ViewObject, ViewDictionary:
 		if contract.Nominal != "" {
 			return nil, false

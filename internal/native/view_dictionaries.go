@@ -14,7 +14,7 @@ func (e *emitter) dictionaryRead(property ir.Property) string {
 	}
 	mask := 0
 	for _, kind := range kinds {
-		mask |= 1 << map[string]int{"number": 1, "boolean": 2, "string": 3, "object": 4, "undefined": 9}[kind]
+		mask |= 1 << map[string]int{"number": 1, "boolean": 2, "string": 3, "object": 4, "array": 5, "undefined": 9}[kind]
 	}
 	object := e.value(property.Object)
 	key := e.value(property.DictionaryKey)

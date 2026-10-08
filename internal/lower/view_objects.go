@@ -86,9 +86,6 @@ func (l *lowering) structuralViewCast(node *ast.Node, value ir.Expression, sourc
 	if value.Type() != ir.Object || source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || !l.checker.IsTypeAssignableTo(target, source) {
 		return nil, nil
 	}
-	if len(l.checker.GetIndexInfosOfType(target)) != 0 {
-		return nil, l.notYet(node, "a dictionary checked view")
-	}
 	if err := l.widened(target, source, map[[2]*checker.Type]bool{}); err != nil {
 		return nil, l.notYet(node, "a writable-slot checked view requiring source contract certification")
 	}
