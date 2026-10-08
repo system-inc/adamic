@@ -476,6 +476,8 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.borrowedOwnCall(node); handled { return value, err }
+	if value, handled, err := l.borrowedOwnValue(node); handled { return value, err }
 	node = ast.SkipParentheses(node)
 	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
