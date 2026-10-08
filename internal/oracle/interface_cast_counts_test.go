@@ -58,5 +58,6 @@ func interfaceCastCounts(t *testing.T) []string {
 	for _, name := range []string{"identifier", "identifier-uninitialized", "number", "number-uninitialized"} {
 		rows = append(rows, counted(t, "stage3/interface-downcasts/readiness-"+name+".a", false, nil, false, false))
 	}
-	return append(rows, viewCallableCounts(t)...)
+	rows = append(rows, viewCallableCounts(t)...)
+	return append(rows, viewRankedArrayCounts(t)...)
 }

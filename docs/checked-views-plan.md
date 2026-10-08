@@ -1102,6 +1102,112 @@ Lane 5 next group adds known-void signature metadata at the owned read adapter
 and runtime shape selection, including native method producer certificates.
 Void remains distinct from unknown and discarded-result contracts. Original
 FileWatcher.close witnesses pin this fixed zero-argument shape.
+
+
+Lane 7 integrated-lazy checkpoint, October 7: integration ba59427c includes this
+lane's earlier tip and merges by fast-forward. Do not merge individual lanes.
+The newer lazy census lists 45 intersection candidates / 769 reads across owners;
+lazy/REPORT.md explicitly leaves allocation-exact reachability UNMEASURED.
+Do not report these candidate counts as exact or subtract component fixtures.
+
+Concrete shared-hook handoff is lane7/shared-hooks.patch, generated without
+editing shared files by lane7/make-integration-overlay.py. The integrator owns
+four small hooks: view_lazy.go recognizes structural intersections; view_contracts.go
+routes them to internStructuralViewIntersection; view_objects.go admits their data
+representation; expression.go selects object storage without the old scalar-only
+field restriction. The lane-owned builder uses ViewObject plus Members as a
+conjunction and checker-combined Fields for duplicate names. This representation
+supports lazy structural field reads, rather than eager payload certification.
+It excludes callable, indexed, array, tuple, nominal and primitive constituents;
+phantom-only arms contribute no runtime fields. Unsupported descendants retain
+lazy obligations. The component all-members matcher is not used by this path.
+
+Source tests enable the handoff via ADAMIC_INTERSECTION_HOOKS=1 with the generated
+Go overlay. They cover the first directly structural declared intersection,
+GeneratedIdentifier.emitNode (4 candidate reads), with reduced contract fragments,
+shared-helper reads, a wrong first-arm scalar, a wrong second-arm nested scalar,
+and optional absence. Generic Named & Counted controls remain separate. These
+fixtures do not certify the full upstream interface pair or exact reachability.
+Production completions remain zero pending integrator hooks. Revised whole-family
+working date: October 12, 2026, 23:00 UTC, conditional on hooks landing promptly
+and remaining compound families being supported. This is an estimate, not a
+promise established by measured throughput.
+
+Lane 7 correctness review: the four-hook patch is INCOMPLETE and must not enable
+production admission. Native and JavaScript viewObjectUnion currently ignore
+Members when Kind is ViewObject. Thus metadata preserves obligations on later
+field reads but does not check all members at an intersection-valued root read.
+RootConjunctionProbe is an explicit red probe for this gap. Required fifth/sixth
+shared seams are native/view_unions.go and javascript/view_unions.go: recognize
+the conjunctive descriptor and call lane-owned all-member snapshot matchers.
+Do not certify a shape with only the heap tag or flattened field registration.
+Until this dispatch exists, the original unsupported intersection refusal stays
+active in the production tree. The overlay is experimental evidence only.
+
+
+Lane 7 production hook group, October 8, authorized by the shared-hook rule:
+shared lower/expression.go, view_lazy.go, view_contracts.go and view_objects.go
+now call structuralViewIntersection and internStructuralViewIntersection.
+IR views.go adds the named Intersection discriminator; union selection is kept
+separate. Native/view_unions.go and javascript/view_unions.go dispatch this flag
+to lane-owned viewObjectIntersection methods. These use checker-combined Fields
+to check all nonphantom member obligations, including duplicate-name child
+intersections, and preserve one snapshot per projected field. The existing
+presence/readiness and expected-type diagnostics are reused. Deferred unsupported
+descendants retain lazy read obligations; a recursive backedge retains checks on
+subsequent projected reads. Native and JavaScript code generation lives in the
+lane's owned view_intersections files. These seven named hooks supersede the
+incomplete overlay handoff. Production tests no longer skip or need an overlay.
+
+Candidate queue remains the lazy inventory, labeled candidate, across all owners.
+No exact counts are inferred. First production group verifies GeneratedIdentifier
+emitNode shape fragments, root-only reads, helper reads, optional absence,
+object phantom brands and duplicate-field nested intersections. Full upstream
+pair certification remains distinct from reduced fragments. Revised whole-family
+working date: October 11, 2026, 23:00 UTC. This estimate now has no shared-hook
+handoff dependency; compound union, recursive, array and callable intersections
+still require additional implementation and validation.
+
+Lane 7 conservative scope hook: view_lazy.go also calls the named
+viewIntersectionReadFamily classifier after descriptor construction. Read demand
+refuses union selection containing intersections, deep recursive payloads and
+supported compound child families that the finite object/scalar matcher cannot
+validate yet. Casts stay lazy, and already-unsupported descendants keep their
+own read obligations. This prevents the new general intersection classification
+from accidentally admitting unwired compound runtime paths. Until those adapters
+are implemented, these are explicitly pending candidate families.
+
+Lane 7 scoped candidate accounting: the 45 / 769 shared queue separates into
+15 explicit object-intersection candidates / 64 reads, 23 primitive-brand
+candidates / 692 reads delegated outside this lane, and 7 private builder/array
+alias overlaps / 13 reads whose ownership/runtime classification is unresolved.
+This partitions the static candidates, not allocation-exact reachability and
+not phantom-brand proof from display text. The object keys are preserved in
+lane7/lazy-pair-progress.json. Full upstream pairs certified remain zero;
+reduced source shapes are not subtracted. Recursive checker-type traversal also
+prevents optional recursive descriptor copies with temporarily empty Fields
+from bypassing the demanded-read refusal.
+
+
+Lane 7 selected-arm hook group, October 8: IR IntersectionTag and the native /
+JavaScript view_unions dispatch call lane-owned viewIntersectionUnion methods.
+view_lazy calls viewIntersectionReadFamily with the checker type. A finite
+object union with intersection arms, or a previously refused enum-tag alias,
+can select disjoint literal-tag arms and validate every selected field with one
+tag snapshot. Equal field obligations may be coalesced; overlapping unequal
+arms, recursive union payloads and untagged selection remain refused at demand.
+Existing supported plain union dispatch keeps its diagnostics. No protected
+emit.go, lower.go, native.go or oracle_test.go edits are needed.
+
+Original source witness metadata verifies 22 candidate pairs / 77 reads against
+pinned TypeScript git objects without copying upstream files. Builder declaration
+spans classify five overlap pairs / 11 reads as numeric-brand or array work;
+two overlap pairs / 2 reads involve FileInfo object intersections behind callback
+unions and remain in lane 7. The revised queue is 17 object candidates / 66 reads,
+28 delegated candidates / 703 reads, zero unclassified overlaps. Full upstream
+certifications still zero: finite declaration fragments do not cover complete
+tsc interfaces. Original-read-witnesses.json preserves exact UTF-16 spans and
+source hashes; overlap-classification.json records the declaration evidence.
 ### Dictionary boxed-record helper checkpoint after ba59427c
 
 The dictionary lane supplies `runtime/view_dictionaries.c/.h` and
@@ -1150,6 +1256,30 @@ each overlapping hunk individually, preserving all refusals and Node agreements.
 Lanes still consume other lanes through codex/views-integration; a hook or
 component alone is not evidence of complete source admission.
 
+
+Lane 7 recursive hook group, October 8: IR IntersectionRecursive selects the
+lane-owned recursive object walker. ObjectPresent in optional descriptors points
+to their completed canonical object; view_contracts.go sets this link when copying
+a present object descriptor. Lane-owned IR RecursiveIntersectionObjects emits
+only the graph reachable from this read. Native/runtime/adamic.h includes the
+new owned view_intersections_recursive.h; its C walker reads each combined field
+through shared presence/readiness/physical-type validation, checks literals,
+recurses with a full field path and tracks (object, contract) active pairs.
+Paths are explicitly allocated and freed; successful native fixtures pass leak
+checks. JavaScript uses the same descriptor obligations and active-pair rule.
+
+Two further minimal shared hooks, native/view_nullish.go and
+javascript/view_nullish.go, call viewIntersectionNullishRead after physical
+nullish admission. A present optional or null-allowing intersection must retain
+its payload checks. The new optional-root test caught the former bypass in both
+backends. Null and undefined controls remain handled by their owning lane.
+
+Plain recursive object/scalar intersections are now supported. Recursive union,
+array, callable, nullable descendant and nominal payloads remain pending or lazy
+unsupported obligations at descendant reads. Cyclic allocated source programs
+are not claimed as covered. Reduced recursive fixtures do not decrement full
+upstream candidate counts: 17 pairs / 66 reads remain. Date remains October 11,
+2026, 23:00 UTC. Original leading tsc witness spans are in the prior group.
 ## Lane 2 native array hooks, October 8
 
 Under the lead's October 8 rule, lane 2 adds minimal shared hooks directly;
@@ -1318,3 +1448,315 @@ boxed Union reads in prepareViewCallableProperty. Otherwise the new same-name
 proof exemption would admit nullable function reads without a signature check.
 TestCheckedViewNullishCallableSignatureMutant now pins the runtime wrong-result
 refusal in both backends rather than the older compile-time refusal.
+
+## Lane 5 non-predicate scalar witnesses (October 8)
+
+Lane 5 adds internal/oracle/checked_views_callable_scalar_witness_test.go and
+fixtures under lane5/scanner and lane5/performance. These preserve original tsc
+member signatures and call expressions with reduced receivers and implementations.
+No shared production hook is needed for these fixed scalar signatures. The lane
+counts helper adds these directories; candidate counts remain separate by census.
+
+Lane 5 also pins gaps/mixed-scalar-boxed-result.a against Node. It reproduces
+the predicates worker ABI boundary: a number-returning producer needs a boxed
+union result adapter. This adds no blanket callable admission. Aggregate callable
+results also need field-demand propagation before their shapes can be admitted.
+
+Lane 7 latest integration reconciliation: viewDataType retains both structural
+intersection recognition and viewArrayBase ancestry recognition; plan appends
+from both lanes are preserved. Central tip d50c1d37 is merged, never a peer tip.
+
+
+Lane 7 original-certification group: new files are
+internal/oracle/checked_views_intersections_original_test.go and
+stage3/interface-downcasts/lane7/original/*.a, prepare.cjs and run-mutants.py.
+They reference complete declarations emitted outside Adamic from pristine
+microsoft/TypeScript at 050880ce, using the integrated lane4b emission adapter.
+All emitted files are hash checked; complete original receiver, component and
+combined intersection field sets are asserted. No cohere file is copied.
+
+Named minimal hooks for this group: the owned intersection classifier admits
+ViewCallable child kind checks, and both owned field walkers retain callable
+presence/kind checks. Shared javascript/readiness.go adamicViewField recognizes
+representation 8 as a real function or AdamicClosure. Signature/body proof stays
+at the owning callable read/call boundary; a function tag is never that proof.
+Shared lower/view_lazy.go consults viewIntersectionReadChecks before the
+field-name fallback. A resolved supported conjunctive read keeps its emitted
+checks instead of inheriting a different wider carrier's unsupported descriptor.
+Unsupported or unresolved reads retain the existing conservative fallback.
+The original missing-optional control caught that fallback collision.
+
+
+Intersection integration presence hook: native object_optional_view separates
+required property presence, optional receiver presence and permitted undefined
+payloads. The explicit adamic_object_optional_view_undefined entry point and
+native viewField preserve the lane 4 branded-string undefined member flag.
+Finite and recursive intersection walkers pass field.Optional independently of
+child.Undefined; JavaScript uses the existing ninth undefinedMember argument.
+RequiredUndefinedPresence source controls refuse absent required fields while
+permitting explicitly initialized undefined values. Recursive tables carry both
+flags. This fixes an observed all-backend root-read gap without weakening any
+callable signature, Map certificate or lazy descendant obligation. Nullable
+intersection hooks handle direct conjunctions; the lazy owner's union selector
+already validates tagged intersection arms, so that dispatch is not duplicated.
+
+### Lane 2 reference element writes
+
+Lane 2 adds the following named shared hooks for the flat required scalar-record
+subset. Callable declarations remain Lane 5's territory.
+
+- `viewArrayLiteralSourceContract` and `viewArrayObjectSourceContract` in
+  `internal/lower/view_array_writes.go` are called from array/object literal
+  production. They retain original allocation declarations, excluding nominal,
+  optional, nested and callable records. Contextual scalar slot declarations are
+  retained without trusting contextual readonly views as allocation evidence.
+- `markViewArrayScalarSlotWrite` is called from `setProperty` and
+  `updateProperty`; `prepareViewArrayReferenceWrites` runs first in readiness.
+  Together they preserve scalar RHS contracts and activate original-slot guards
+  for certified records, including alias writes discovered before array origins.
+- IR metadata: `ArrayLiteral.ElementContract`,
+  `ObjectLiteral.ArrayWriteContract`, `SetProperty.ArraySlotWriteContract`.
+  `FlatArrayRecordContract` and `ArrayRecordWritePairs` in a new IR file use the
+  shared `ScalarWriteContracts` structural and mutable-field invariant rule.
+- Native/JavaScript `viewArraySourceCertificate` is dispatched from their existing
+  array-view value hooks. Native `viewArrayReferenceWrite` and JavaScript
+  `adamicArrayReferenceWrite` are used by checked element replacement and push.
+  The existing emitters pass the already-evaluated incoming value to the named
+  mutation hook; verification precedes retaining and changing the array.
+- New native runtime files `view_array_writes.c/.h` provide certificate setters
+  and the compatibility guard. `adamic_array.element_contract` and
+  `adamic_object.array_write_contract` are unsigned IDs, separate from physical
+  `element_kind`. Constructors (including region objects) initialize zero.
+  Dense/checked sparse slice preserves the array ID; plain record copying
+  preserves its object ID. Source literal hooks establish certificates; zero
+  means unsupported production and refuses writes. No destructor ownership
+  change is introduced. JavaScript mirrors the IDs with WeakMaps.
+- Generated scalar-record verification checks incoming fields for presence,
+  readiness, scalar kind and finite literal constraints at the write. Array
+  field reads still do not scan elements. Unsupported original/incoming record
+  contracts remain named exit-70 refusals.
+
+Fixtures are `lane2/reference-array-*.a`, held by
+`TestCheckedViewArrayReferenceWrites`. This is a flat-record write foundation,
+not certification of complete tsc Type/Symbol/Diagnostic shapes, class elements,
+optional/nested record writes, array/map/function elements or every mutator.
+
+### Lane 2 readonly array unions
+
+- `viewReadonlyArrayUnionBase` in `internal/lower/view_array_unions.go` is called
+  from `viewArrayBaseSeen`. Every alternative must have valid, non-overridden
+  ReadonlyArray ancestry. The common base identifies array storage and intrinsic
+  names; it does not select an element alternative or inspect array contents.
+- `viewArrayUnionElementType` joins every alternative's declared element type
+  with the checker and is called from `viewArrayElementType`. Shared `elementType`
+  uses this named hook instead of replacing the type by the first array base.
+  `internArrayViewContract` and existing read/consumer metadata therefore retain
+  the union element descriptor, including its existing tagged object checks.
+- `viewMutableArrayUnion` is called from `unsupportedViewFamily`. Mutable array
+  unions remain a named lazy field-read refusal; an unread member does not block
+  cast admission. This checkpoint does not erase their distinct write contracts.
+- `adamic_object_view`'s existing diagnostic allocation accounts for both copies
+  of the expected type in its format string. BindingPattern's long array-union
+  name exposed the former out-of-bounds panic text read under ASan. Diagnostics
+  are unchanged; restoring the old sizing is an executed mutant witness.
+
+No new IR node, array header metadata, callable hook or element scan is added.
+The new oracle is TestCheckedViewRankedArrayUnionContracts, with Node controls,
+both backends and exact kind/tag failure pins. The separate
+TestCheckedViewMutableArrayUnionRefusal pins the unsupported read diagnostic.
+
+
+Array integration counts hook: interfaceCastCounts also records the measured
+ranked and reference-array source fixtures through viewRankedArrayCounts.
+The dedicated checked-view count test updates only those measured rows before
+the existing predicate direction table. The deliberately refused mutable array
+union read has no runtime artifact and therefore no runtime allocation row.
+These are runtime allocation counts for fixtures, not production read coverage.
+
+Object plus primitive lane, original LiteralType checkpoint (October 8):
+New owned witnesses: lane4b/original/literal-{good,boolean,negative-wrong,text-wrong}.a
+and bindable-expression-{unread,frontier}.a. Original LiteralType.value (10
+candidate reads) imports complete LiteralType and PseudoBigInt declarations.
+Minimal named shared hook: internal/lower/library_object.go objectIntersection
+calls objectPrimitiveIntersectionStorage in the lane-owned lower helper. This
+recognizes object-reference storage for plain structural unions/intersections
+with aggregate fields; it proves no conjunction or member contract. Existing
+lazy admission still refuses the unsupported bindable expression at its read.
+Cast-only original bindable witness admits in both backends; demanded read pins
+the named representation-conversion refusal. This pair remains uncertified.
+Existing intersection oracle checks are included in validation. No change to
+view_lazy.go or shared contract acceptance is included.
+
+Object plus primitive lane, next original batch (October 8):
+New owned .a witnesses in lane4b/original use complete upstream
+DiagnosticRelatedInformation, AutoGenerateInfo/GeneratedNamePart, ConditionalType/Type,
+DiagnosticWithLocation and DiagnosticWithDetachedLocation. Owned *-probe.a files
+record uncertified higher-ranked intersection, metadata-array and dictionary
+frontiers. No production or shared-hook changes are added in this batch.
+
+Dictionary handoff from ce4eeaa4 GROUP4.md is accepted: lane 4b owns object/array
+member selection inside CompilerOptionsValue and the TsConfigSourceFile
+alternative, with descendants retained as lazy checked reads. Lane 6 owns lookup,
+absence and enumeration; lane 4 owns scalar/nullish selection. Original candidate
+rows CompilerOptions dynamic-key (10, rank 6) and BuildOptions dynamic-key (1,
+rank 36) are already in our 42/181 inventory; they are not added or certified
+again. Owned resume/dictionary-member-handoff.json records this split and counts.
+Full dynamic lookup validation awaits lane 6's hooks in views-integration,
+currently ba59427c locally; no dictionary branch was merged.
+
+### Dictionary source hooks, October 8 rule change
+
+The user now authorizes minimal named shared hooks. This supersedes the waiting
+on owner handoffs above. Dictionary source read group owns these shared hunks:
+
+- `ir/views.go`: ViewDictionary, a read descriptor, never a writable-slot proof.
+- `ir/ir.go`: Property.DictionaryKey, evaluated after the receiver exactly once.
+- `ir/view_dictionaries.go`: DictionaryReadKinds, common fail-closed adapter boundary.
+- `lower/view_lazy.go`: stringDictionary dispatch to viewDictionaryContractHook.
+- `lower/refusals.go`: defer index-signature obligations to producer/read lowering.
+- `lower/object.go`: named and indexed dictionaryRead hooks before tuple dispatch.
+- `lower/readiness.go`: preserve DictionaryKey guards through final rewriting.
+- `lower/shape_conformance.go`: exclude dynamic dictionary reads from scalar erasure.
+- `lower/view_writes.go`: dictionary read descriptors cannot certify writes.
+- `flow/infer.go`: visit dictionary key effects after receiver effects.
+- `native/emit_expressions.go` and `javascript/javascript.go`: dictionaryRead dispatch.
+- JavaScript assembly includes DictionaryRuntime after shared readiness metadata.
+- `runtime/record.c` and `adamic.h`: adamic_record_is checks the actual producer
+  shape; adamic_record_check_missing_member reuses the existing own-key policy.
+
+The new native source adapter probes actual fixed-shape slot type/readiness before
+normalizing a selected value. It preserves identity and does not copy or reinterpret
+an ordinary object as a table. Actual record wrappers route through existing record.c
+and independently check the table's reference-value representation. No second record
+representation is introduced. Source dictionary literals currently retain their
+existing fixed shapes; dynamic record producers/writes are the next owned group.
+
+Seven compiler-source controls and six source semantic mutants supplement the
+original component tests. Rich element adapters remain demanded-read refusals.
+The accepted measurement is 29 pairs / 228 reads, labeled static candidates.
+No production candidate pair is credited from representative fixtures alone.
+
+### Dictionary shared storage and propagation hooks, October 8
+
+This lane merges records-lowering 456c981b at the user's explicit request. It
+supersedes the earlier handoff for record production; other lane changes still
+arrive through views-integration. No parallel table representation is introduced.
+
+Owned minimal shared hunks in this group:
+
+- `lower/generic.go`: inferDictionaryIndexTypes carries instantiated string-index
+  element arguments into generic helper bodies.
+- `lower/view_objects.go`: structural dictionary views use the existing view path.
+- `ir/ir.go`: Record uses storage tag 14, preserving reserved null/undefined tags
+  12 and 13 already used by checked field writes.
+- `ir/records.go`: read demand metadata and an optional DictionaryRead descriptor.
+- `lower/records.go`: prepare checked record reads, reuse finite-partial storage,
+  permit boxed primitive unions, and defer structural casts to checked admission.
+- `lower/view_dictionaries.go`: internDictionaryViewContract describes Record
+  producers; dictionaryProducerRefusal checks unsupported actual producers;
+  dictionaryWriteRefusal separates ordinary records from uncertified view writes;
+  regexDictionaryReceiver keeps named RegExp groups on their owning adapter.
+- `lower/view_lazy.go`: finite-partial dictionary descriptors, Record aggregate
+  reachability, and demanded refusals for unsupported reads/enumeration.
+- `lower/view_contracts.go` and `lower/interface_cast.go`: Record-valued optional
+  fields retain their dictionary contracts and lazy admission.
+- `native/emit_records.go` and `javascript/records.go`: select the checked read
+  descriptor conservatively when the program has view origins; plain programs
+  retain the original record operations. Native producers call record_new_typed.
+- `runtime/record.c` and `adamic.h`: record_new_typed stores an independent
+  element representation certificate in the existing wrapper's numeric slot 1;
+  record_storage_check rejects operations through mismatched storage.
+- `runtime/view_dictionaries.c`: scalar/maybe-number reads decode that source
+  certificate; reference tables still classify existing heap values and boxes.
+- `runtime/object.c`, `native/view_fields.go`, `javascript/readiness.go`: Record
+  container reads check the ordinary object heap kind before read dispatch.
+- `fresh/fresh.go`: dynamic dictionary reads use the existing element edge.
+- `lower/cycles.go`: unsafe writes into counted record tables retain cycle
+  refusals until the graph ownership lane supplies record cleanup.
+- Merge compatibility: callableDataDeclaration in `lower/view_callables.go`
+  prevents a destructuring BindingPattern from reaching Node.Text; the existing
+  flow oracle for require_node_perf_hooks exercises the repaired path.
+- `native/record_test.go`: preserve semantic mutants after the exported missing
+  member helper rename; `oracle/records_test.go`: use the current leak checker.
+
+Group 3's MapLike<string[]> candidate has source reads over both fixed objects
+and genuine record producers, with transitive array checks. It credits 1 pair / 6
+candidate reads; 28 pairs / 222 reads remain. Enumeration and uncertified writes
+remain demanded refusals. Rich CompilerOptions element unions are unfinished.
+
+### Dictionary group 4: lazy rich container read
+
+New lane files: `internal/oracle/checked_view_dictionary_container_test.go` and
+`dictionaries/source/command-options-{good,wrong,missing}.a`. No shared code hook
+was needed. The required ParsedCommandLine.options container read checks object
+kind and presence without demanding unread rich union elements. This credits
+the 111-read candidate container pair only, not CompilerOptions dynamic reads.
+
+Union selection overlap proposed to lane 4: scalar and nullish alternatives at
+dictionary element extraction. Lane 4b: object/array alternatives in
+CompilerOptionsValue and TsConfigSourceFile unions. Dictionary storage, lookup,
+absence and enumeration adapters remain this lane's responsibility.
+
+### Dictionary group 5: remaining direct container shapes
+
+Lane files: extend `internal/oracle/checked_view_dictionary_container_test.go`
+and `checked_view_dictionary_propagation_test.go`; new `.a` witnesses under
+`dictionaries/source/` named watch-options, wildcard-directories, version-paths,
+incremental-{multi-options,bundle-options,options}, {reusable,builder}-state-options,
+and compiler-paths, each with valid, wrong and absent cases. No shared hook
+changed. Parent container checks retain unsupported unread union descriptors;
+CompilerOptions.paths uses the mixed named/index-signature read dispatch and
+checks extracted arrays transitively. Container bypass is a semantic C/JS mutant.
+
+User accepted lane 4's primitive/nullish and lane 4b's object/array/TsConfigSourceFile
+element selection handoffs. Storage, lookup, absence and enumeration remain
+with dictionaries. Candidate string and Path dynamic rows are string indexing
+according to their census sites; counts stay pending until disposition evidence.
+
+### Dictionary group 6: optional receiver presence
+
+New lane files: `internal/oracle/checked_view_dictionary_optional_test.go` and
+`dictionaries/source/optional-{watch,options,wildcard}-{good,wrong,missing,receiver-missing}.a`.
+Minimal shared hooks: `native/runtime/object.c:adamic_object_optional_view`
+distinguishes an absent receiver from a missing required field on a present
+receiver; `javascript/readiness.go:adamicViewField` permits undefined because
+of optional chaining only when the receiver is absent. The compiling C/JS
+optional-absence mutant deliberately restores that conflation.
+
+### Dictionary group 7: erased-source lookup admission
+
+New lane files: `internal/oracle/checked_view_dictionary_lookup_test.go` and
+`dictionaries/source/{map-string,map-generic,package-paths}-*.a`. Named hook
+`lower/view_dictionaries.go:dictionaryCastNeedsView` is called minimally from
+`lower/cast_proof.go` before apparent upcast admission. An erased structural
+source declaring no keys cannot certify dictionary storage by assignability;
+its reads install the ordinary lazy dictionary view. Nominal and writable-slot
+restrictions remain required. Existing shared record storage is reused.
+
+Group 7 also adds the minimal dictionary-property pointer traversal in
+`lower/readiness.go:readinessStatement`. Its record read descriptor must receive
+the same parameter readiness facts as its enclosing operation; otherwise a
+generic dictionary helper emits a nonexistent parameter readiness flag.
+
+### Dictionary group 8: finite keys and optional named lookup
+
+New lane file: `lower/view_dictionary_lookup.go`, containing named hooks
+finiteDictionaryKeys and optionalDictionaryField. Minimal dispatch hooks in
+`lower/object.go` select these adapters; `lower/view_dictionaries.go` exposes
+dictionaryReadContract to preserve the selected declaration through an optional
+receiver. Finite string keys select ordinary own fields through the existing
+dictionary probe. Optional named lookup uses an ordinary IR conditional helper,
+evaluates the receiver once and distinguishes receiver absence from field absence.
+New source witnesses are optional-paths and finite-cache shapes; the propagation
+oracle gains the optional-paths controls. No record representation is added.
+
+Group 8 also owns `internal/oracle/checked_view_dictionary_finite_test.go`, finite-cache
+and enum-map source controls, optional required-field controls, and compiling C/JS
+finite-key and optional short-circuit mutants. Numeric enums use the existing adapter.
+
+Dictionary integration cleanup hook: native/view_callables_discard.go releases
+known Record producer results along with the existing reference result kinds.
+lane5/stored-marker/record.a exercises a dynamically allocated string in that
+record; TestCheckedViewStoredMarkerCalls pins Node agreement and native cleanup.
+The producer result certificate determines ownership; no valued callable shape
+is admitted by this discarded-result cleanup.

@@ -1,0 +1,22 @@
+--- FAIL: TestCensusQualifiedCast (0.03s)
+panic: Unhandled case in Node.Text: *ast.QualifiedName [recovered, repanicked]
+
+goroutine 8 [running]:
+testing.tRunner.func1.2({0x1b9dee8, 0x3ab864832000})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1b9dee8?, 0x3ab864832000?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x4ccb66?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).refuseWidening(0x3ab864c4fd08, 0x3ab8643268c0)
+	/workspace/adamic/internal/lower/invariance.go:407 +0x35e
+github.com/system-inc/adamic/internal/lower.TestCensusQualifiedCast(0x3ab8642f4d88)
+	/workspace/adamic/internal/lower/census_panics_test.go:58 +0x567
+testing.tRunner(0x3ab8642f4d88, 0x1c5e5e0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/lower	0.040s
+FAIL

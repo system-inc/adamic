@@ -1,0 +1,54 @@
+{
+  "basis": "lane4 Unknown-fallback candidate inventory; not exact reachability",
+  "priorCertifiedPairs": 4,
+  "priorCertifiedReads": 34,
+  "groups": [
+    {
+      "name": "scalar-witnesses",
+      "pairs": 2,
+      "candidateReads": 81,
+      "members": [
+        {
+          "receiver_type_id": 4163,
+          "type": "typeof import(\"/tmp/views-mixed-typescript/src/compiler/_namespaces/ts.performance\")",
+          "field": "mark",
+          "declared_types": [
+            "(markName: string) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 42,
+          "witness": {
+            "file": "src/compiler/tracing.ts",
+            "line": 190,
+            "column": 9
+          },
+          "rank": 38,
+          "certified": true,
+          "certification_basis": "reduced original member fixtures; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 28206,
+          "type": "Scanner",
+          "field": "hasPrecedingLineBreak",
+          "declared_types": [
+            "() => boolean"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 39,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 2455,
+            "column": 48
+          },
+          "rank": 42,
+          "certified": true,
+          "certification_basis": "reduced original member fixtures; production reachability unmeasured"
+        }
+      ]
+    }
+  ]
+}

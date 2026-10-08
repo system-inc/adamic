@@ -1,0 +1,8 @@
+// Original tsc member signature and read; receiver and implementation reduced.
+interface Base { readonly hasPrecedingLineBreak: unknown; }
+interface Target { hasPrecedingLineBreak(): boolean; }
+function probe(value:Base):void {
+    const scanner = value as Target;
+    console.log(`${scanner.hasPrecedingLineBreak()}`);
+}
+probe({hasPrecedingLineBreak: ():number => 7});

@@ -14,9 +14,9 @@ type Program struct {
 	ViewOrigins     []Expression
 	MapCertificates [][2]ViewContractID
 
-	// PredicateChecks counts overload-result directions, per emitted call site.
+	// PredicateChecks counts predicate directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
-	PredicateChecks struct{ Proven, Checked, Unobservable int }
+	PredicateChecks PredicateCheckCounts
 
 	// CheckedFields conservatively checks these field names at every object read.
 	OptionalViewFields map[string]bool
@@ -54,6 +54,23 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+}
+
+// PredicateCheckCounts counts emitted predicate directions. Unobservable
+// directions are proven and are also counted separately so erasure is visible.
+type PredicateCheckCounts struct {
+	Proven, Checked, Unobservable int
+	Sites                         []PredicateCallCheck
+}
+
+type PredicateCallCheck struct {
+	Where, Function string
+	Overload        int // Zero for an ordinary predicate call.
+	Directions      []PredicateDirectionCheck
+}
+
+type PredicateDirectionCheck struct {
+	Direction, Status, Reason string
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -154,6 +171,10 @@ const (
 	// A value of the type exists only where it's kept (a variable, a parameter, a field, an element,
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
+
+	// Record is a dictionary of own string entries, distinct from fixed object slots.
+	// 12 and 13 are reserved runtime slot tags for null and undefined.
+	Record Type = 14
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -186,7 +207,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak
+	return t == String || t == Object || t == Array || t == Map || t == Record || t == Closure || t == Union || t == Weak
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -316,9 +337,10 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
-		RealType        string
-		SpreadReadiness string
-		GraphTypes      []int
+		ArrayWriteContract ViewContractID
+		RealType           string
+		SpreadReadiness    string
+		GraphTypes         []int
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -341,6 +363,8 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// DictionaryKey selects an own string key; its read always validates storage.
+		DictionaryKey Expression
 		// View names a required field read whose presence, readiness and representation are checked.
 		Nullish            bool
 		NullAllowed        bool
@@ -376,10 +400,11 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
-		GraphTypes []int
-		Element    Type
-		Elements   []Expression
-		Spread     []bool
+		ElementContract ViewContractID
+		GraphTypes      []int
+		Element         Type
+		Elements        []Expression
+		Spread          []bool
 	}
 
 	// Length is array.length.
@@ -1149,14 +1174,15 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		WriteProven    bool
-		TargetContract ViewContractID
-		WriteContract  ViewContractID
-		WriteWhere     string
-		Uninitialized  bool
-		Object         Expression
-		Name           string
-		Value          Expression
+		ArraySlotWriteContract ViewContractID
+		WriteProven            bool
+		TargetContract         ViewContractID
+		WriteContract          ViewContractID
+		WriteWhere             string
+		Uninitialized          bool
+		Object                 Expression
+		Name                   string
+		Value                  Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of

@@ -18,7 +18,7 @@ func (e *emitter) viewField(property ir.Property) string {
 	}
 	object := e.value(property.Object)
 	slot := e.temporary()
-	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
+	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Record: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
 	name, supported := names[of]
 	if !supported || property.Method {
 		panic("compiler bug: incomplete checked field contract")
@@ -28,7 +28,7 @@ func (e *emitter) viewField(property ir.Property) string {
 	}
 	undefined := e.viewStringUndefined(property)
 	if property.Absent || property.Optional || undefined || of == ir.MaybeNumber || of == ir.MaybeBoolean {
-		e.line("adamic_value %s = adamic_object_optional_view(%s, %s, &%s, %d, %s, %s, %t, %t);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View), property.Absent, property.Optional)
+		e.line("adamic_value %s = adamic_object_optional_view_undefined(%s, %s, &%s, %d, %s, %s, %t, %t, %t);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View), property.Absent, property.Optional, undefined)
 	} else {
 		e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View))
 	}

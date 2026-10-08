@@ -1,0 +1,29 @@
+=== RUN   TestCheckedViewStoredMarkerCalls
+=== RUN   TestCheckedViewStoredMarkerCalls/record
+    checked_views_callable_source_test.go:198: gate cache node miss
+    checked_views_callable_source_test.go:213: gate cache node miss
+    checked_views_callable_source_test.go:225: exit 1
+        
+        =================================================================
+        ==429048==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 76 byte(s) in 1 object(s) allocated from:
+            #0 0x55bd9b928324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55bd9b984e5f in allocate_storage /home/agent/.cache/adamic/runtime/.build-1403550224/heap.c:198:10
+            #2 0x55bd9b984e5f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1403550224/heap.c:212:9
+        
+        Indirect leak of 265 byte(s) in 2 object(s) allocated from:
+            #0 0x55bd9b928324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55bd9b984e5f in allocate_storage /home/agent/.cache/adamic/runtime/.build-1403550224/heap.c:198:10
+            #2 0x55bd9b984e5f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1403550224/heap.c:212:9
+        
+        SUMMARY: AddressSanitizer: 341 byte(s) leaked in 3 allocation(s).
+        
+--- FAIL: TestCheckedViewStoredMarkerCalls (0.59s)
+    --- FAIL: TestCheckedViewStoredMarkerCalls/record (0.59s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.601s
+FAIL

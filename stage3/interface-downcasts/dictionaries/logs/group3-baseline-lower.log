@@ -1,0 +1,176 @@
+=== RUN   TestOverloadedShorthandFunctionValueStaysNotYet
+    census_optional_values_test.go:28: got <nil>, want overload-value diagnostic
+--- FAIL: TestOverloadedShorthandFunctionValueStaysNotYet (0.13s)
+=== RUN   TestCensusPredicateMarkerKeepsProofBoundaries
+    census_predicate_marker_test.go:19: unobservable marker exception escaped its boundary: /tmp/adamic-gate/TestCensusPredicateMarkerKeepsProofBoundaries75956755/002/main.a:1:88: stage 0 can't lower passing union of differently held members to a function value yet
+--- FAIL: TestCensusPredicateMarkerKeepsProofBoundaries (0.21s)
+=== RUN   TestCensusOverloadRelation
+=== RUN   TestCensusOverloadRelation/parameter_contravariance
+=== RUN   TestCensusOverloadRelation/generic_parameter_constraints
+=== RUN   TestCensusOverloadRelation/mutable_parameters
+=== RUN   TestCensusOverloadRelation/result_covariance
+    census_small_test.go:41: expected strict overload refusal naming "overload 1 of ensureTrailingDirectorySeparator result"; got /tmp/adamic-gate/TestCensusOverloadRelationresult_covariance453550286/001/main.a:1:13: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom
+--- FAIL: TestCensusOverloadRelation (0.20s)
+    --- PASS: TestCensusOverloadRelation/parameter_contravariance (0.08s)
+    --- PASS: TestCensusOverloadRelation/generic_parameter_constraints (0.06s)
+    --- PASS: TestCensusOverloadRelation/mutable_parameters (0.03s)
+    --- FAIL: TestCensusOverloadRelation/result_covariance (0.03s)
+=== RUN   TestNodeBufferRefusals
+=== PAUSE TestNodeBufferRefusals
+=== RUN   TestNestedFunctionGapsAreLoud
+=== PAUSE TestNestedFunctionGapsAreLoud
+=== RUN   TestPhantomArrayCastsAreErased
+=== PAUSE TestPhantomArrayCastsAreErased
+=== RUN   TestPhantomArrayProofs
+=== PAUSE TestPhantomArrayProofs
+=== RUN   TestPhantomArrayRequiredCastsAreErased
+=== PAUSE TestPhantomArrayRequiredCastsAreErased
+=== CONT  TestNodeBufferRefusals
+=== RUN   TestNodeBufferRefusals/buffer_alloc
+=== PAUSE TestNodeBufferRefusals/buffer_alloc
+=== CONT  TestPhantomArrayRequiredCastsAreErased
+=== CONT  TestPhantomArrayProofs
+=== CONT  TestPhantomArrayCastsAreErased
+=== CONT  TestNestedFunctionGapsAreLoud
+=== RUN   TestNodeBufferRefusals/buffer_read
+=== PAUSE TestNodeBufferRefusals/buffer_read
+=== RUN   TestPhantomArrayProofs/mutable_widening
+=== PAUSE TestPhantomArrayProofs/mutable_widening
+=== RUN   TestPhantomArrayProofs/interface_mutable_widening
+=== PAUSE TestPhantomArrayProofs/interface_mutable_widening
+=== RUN   TestNestedFunctionGapsAreLoud/optional
+=== RUN   TestNodeBufferRefusals/hash_inherited_read
+=== RUN   TestPhantomArrayProofs/tuple_representation
+=== PAUSE TestPhantomArrayProofs/tuple_representation
+=== RUN   TestPhantomArrayProofs/element_narrowing
+=== PAUSE TestPhantomArrayProofs/element_narrowing
+=== PAUSE TestNodeBufferRefusals/hash_inherited_read
+=== RUN   TestPhantomArrayProofs/readonly_removal
+=== PAUSE TestPhantomArrayProofs/readonly_removal
+=== RUN   TestPhantomArrayProofs/cycle
+=== PAUSE TestPhantomArrayProofs/cycle
+=== CONT  TestPhantomArrayProofs/mutable_widening
+=== RUN   TestNodeBufferRefusals/hash_copy
+=== PAUSE TestNodeBufferRefusals/hash_copy
+=== RUN   TestNodeBufferRefusals/crypto_random
+=== PAUSE TestNodeBufferRefusals/crypto_random
+=== RUN   TestNodeBufferRefusals/crypto_constructor
+=== PAUSE TestNodeBufferRefusals/crypto_constructor
+=== RUN   TestNodeBufferRefusals/buffer_isUtf8
+=== PAUSE TestNodeBufferRefusals/buffer_isUtf8
+=== RUN   TestNodeBufferRefusals/encoding
+=== PAUSE TestNodeBufferRefusals/encoding
+=== RUN   TestNodeBufferRefusals/algorithm
+=== PAUSE TestNodeBufferRefusals/algorithm
+=== RUN   TestNodeBufferRefusals/digest
+=== PAUSE TestNodeBufferRefusals/digest
+=== RUN   TestNodeBufferRefusals/catch
+=== PAUSE TestNodeBufferRefusals/catch
+=== RUN   TestNodeBufferRefusals/detached
+=== PAUSE TestNodeBufferRefusals/detached
+=== RUN   TestNodeBufferRefusals/typed_array_view
+=== PAUSE TestNodeBufferRefusals/typed_array_view
+=== RUN   TestNodeBufferRefusals/structural_hash_view
+=== PAUSE TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestPhantomArrayProofs/cycle
+=== CONT  TestPhantomArrayProofs/readonly_removal
+=== NAME  TestPhantomArrayProofs/cycle
+    phantom_array_brands_test.go:93: got <nil>, want refusal containing adamic/cycle-capable
+=== CONT  TestPhantomArrayProofs/element_narrowing
+=== NAME  TestNestedFunctionGapsAreLoud/optional
+    nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+=== RUN   TestNestedFunctionGapsAreLoud/default
+=== NAME  TestPhantomArrayCastsAreErased
+    phantom_array_brands_test.go:74: array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayCastsAreErased (0.20s)
+=== CONT  TestPhantomArrayProofs/tuple_representation
+=== CONT  TestPhantomArrayProofs/interface_mutable_widening
+=== CONT  TestNodeBufferRefusals/buffer_alloc
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/structural_hash_view
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/typed_array_view
+=== NAME  TestPhantomArrayRequiredCastsAreErased
+    phantom_array_brands_test.go:137: required undefined array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayRequiredCastsAreErased (0.27s)
+=== CONT  TestNodeBufferRefusals/detached
+=== NAME  TestNodeBufferRefusals/typed_array_view
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/catch
+=== NAME  TestNestedFunctionGapsAreLoud/default
+    nested_functions_test.go:28: want NotYet "function value with an optional parameter", got <nil>
+=== RUN   TestNestedFunctionGapsAreLoud/rest
+=== NAME  TestNodeBufferRefusals/catch
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/digest
+=== CONT  TestNodeBufferRefusals/algorithm
+--- FAIL: TestPhantomArrayProofs (0.00s)
+    --- PASS: TestPhantomArrayProofs/mutable_widening (0.09s)
+    --- FAIL: TestPhantomArrayProofs/cycle (0.12s)
+    --- PASS: TestPhantomArrayProofs/element_narrowing (0.08s)
+    --- PASS: TestPhantomArrayProofs/readonly_removal (0.16s)
+    --- PASS: TestPhantomArrayProofs/interface_mutable_widening (0.06s)
+    --- PASS: TestPhantomArrayProofs/tuple_representation (0.11s)
+=== CONT  TestNodeBufferRefusals/encoding
+=== NAME  TestNodeBufferRefusals/digest
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/buffer_isUtf8
+=== NAME  TestNodeBufferRefusals/encoding
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/crypto_constructor
+=== NAME  TestNodeBufferRefusals/algorithm
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/crypto_random
+=== NAME  TestNodeBufferRefusals/detached
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/hash_copy
+=== NAME  TestNodeBufferRefusals/crypto_random
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/hash_inherited_read
+=== NAME  TestNodeBufferRefusals/buffer_isUtf8
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/buffer_read
+=== NAME  TestNodeBufferRefusals/hash_copy
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== NAME  TestNodeBufferRefusals/crypto_constructor
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== NAME  TestNodeBufferRefusals/buffer_read
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== NAME  TestNodeBufferRefusals/hash_inherited_read
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeBufferRefusals (0.01s)
+    --- FAIL: TestNodeBufferRefusals/buffer_alloc (0.01s)
+    --- FAIL: TestNodeBufferRefusals/structural_hash_view (0.00s)
+    --- FAIL: TestNodeBufferRefusals/typed_array_view (0.01s)
+    --- FAIL: TestNodeBufferRefusals/catch (0.03s)
+    --- FAIL: TestNodeBufferRefusals/digest (0.03s)
+    --- FAIL: TestNodeBufferRefusals/encoding (0.02s)
+    --- FAIL: TestNodeBufferRefusals/algorithm (0.03s)
+    --- FAIL: TestNodeBufferRefusals/detached (0.07s)
+    --- FAIL: TestNodeBufferRefusals/crypto_random (0.01s)
+    --- FAIL: TestNodeBufferRefusals/buffer_isUtf8 (0.01s)
+    --- FAIL: TestNodeBufferRefusals/hash_copy (0.01s)
+    --- FAIL: TestNodeBufferRefusals/crypto_constructor (0.01s)
+    --- FAIL: TestNodeBufferRefusals/buffer_read (0.01s)
+    --- FAIL: TestNodeBufferRefusals/hash_inherited_read (0.02s)
+=== NAME  TestNestedFunctionGapsAreLoud/rest
+    nested_functions_test.go:28: want NotYet "parameter that isn't a plain name", got /tmp/adamic-gate/TestNestedFunctionGapsAreLoudrest3484272722/001/main.a:1:41: stage 0 can't lower a rest parameter in a named closure yet
+=== RUN   TestNestedFunctionGapsAreLoud/self_value
+=== RUN   TestNestedFunctionGapsAreLoud/block
+=== RUN   TestNestedFunctionGapsAreLoud/generic
+=== RUN   TestNestedFunctionGapsAreLoud/sibling_value
+=== RUN   TestNestedFunctionGapsAreLoud/ancestor_call
+=== RUN   TestNestedFunctionGapsAreLoud/dynamic_this
+--- FAIL: TestNestedFunctionGapsAreLoud (0.55s)
+    --- FAIL: TestNestedFunctionGapsAreLoud/optional (0.14s)
+    --- FAIL: TestNestedFunctionGapsAreLoud/default (0.13s)
+    --- FAIL: TestNestedFunctionGapsAreLoud/rest (0.09s)
+    --- PASS: TestNestedFunctionGapsAreLoud/self_value (0.03s)
+    --- PASS: TestNestedFunctionGapsAreLoud/block (0.03s)
+    --- PASS: TestNestedFunctionGapsAreLoud/generic (0.03s)
+    --- PASS: TestNestedFunctionGapsAreLoud/sibling_value (0.03s)
+    --- PASS: TestNestedFunctionGapsAreLoud/ancestor_call (0.03s)
+    --- PASS: TestNestedFunctionGapsAreLoud/dynamic_this (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.120s
+FAIL

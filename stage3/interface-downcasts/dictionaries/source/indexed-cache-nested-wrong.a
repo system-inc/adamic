@@ -1,0 +1,12 @@
+interface Type { readonly flags: number; readonly unread?: null; }
+interface Signature { readonly minArgumentCount: number; }
+interface IterationTypes { readonly nextType: Type; readonly yieldType: Type; readonly returnType: Type; }
+interface Base { readonly kind: 'Cache'; }
+interface IndexedAccessType extends Base { readonly anchor: number; readonly readCache?: Type; readonly writeCache?: Type; }
+function pick(first: boolean): 'readCache' | 'writeCache' { return first ? 'readCache' : 'writeCache'; }
+const payload = { kind: 'Cache' as const, anchor: 1, readCache: { flags: 'wrong' }, writeCache: { flags: 1 } };
+const base: Base = payload;
+const view = base as IndexedAccessType;
+const key = pick(true);
+const value = view[key];
+if (value !== undefined) console.log(`${value.flags}`);

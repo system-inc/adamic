@@ -1,0 +1,110 @@
+=== RUN   TestCheckedViewDictionaryProducerCertificateMutant
+    checked_view_dictionary_storage_test.go:83: wrong producer certificate caught only by record storage check, exit 70
+--- PASS: TestCheckedViewDictionaryProducerCertificateMutant (0.51s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_parser.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_parser.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_views.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_views.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_undefined.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_parser.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_undefined.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+    oracle_test.go:734: not yet: /workspace/adamic/internal/oracle/testdata/records_refuse/r24.a:4:20: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_views.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+--- PASS: TestNativeAgreesWithNode (0.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a (1.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a (1.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a (1.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a (1.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a (1.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a (0.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a (0.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a (1.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a (1.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a (1.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a (1.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a (1.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_parser.a (1.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a (0.14s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a (1.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a (1.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a (1.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_undefined.a (1.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a (1.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_partial_views.a (1.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a (1.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a (1.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a (1.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a (1.52s)
+PASS
+gate cache: native hits=0 misses=61
+gate cache: node hits=0 misses=47
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.075s

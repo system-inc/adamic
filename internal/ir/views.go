@@ -16,11 +16,20 @@ const (
 	ViewUndefined
 	ViewNullable
 	ViewMap
+	ViewDictionary
 )
 
 // Contracts describe declared logical types, independently of physical layout ids.
 // Readiness remains the shared non-null state and is never implied by a contract.
 type ViewContract struct {
+	// Intersection marks conjunctive object members, distinct from union selection.
+	Intersection bool
+	// IntersectionTag selects disjoint object arms before validating their fields.
+	IntersectionTag       string
+	IntersectionRecursive bool
+	// ObjectPresent retains the canonical descriptor behind optional copies.
+	ObjectPresent ViewContractID
+
 	// Unsupported records the member family that must fail at a demanded read.
 	Unsupported string
 

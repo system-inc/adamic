@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"reflect"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -43,6 +44,29 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if l.nodeBufferType(proven, "Buffer") {
 		return ir.Array, true
 	}
+	if l.finitePartialRecordElement(proven) != nil {
+		return ir.Record, true
+	}
+	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+		if l.recordElement(proven) != nil {
+			return ir.Record, true
+		}
+		regex := false
+		for _, info := range l.checker.GetIndexInfosOfType(proven) {
+			if declaration := info.Declaration(); declaration != nil {
+				file := ast.GetSourceFileOfNode(declaration)
+				if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
+					regex = true
+				}
+			}
+		}
+		if !regex {
+			if l.stringDictionary(proven) {
+				return ir.Object, true
+			}
+			return 0, false
+		}
+	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
@@ -58,6 +82,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				return ir.Object, true
 			}
 			return l.representation(primitive)
+		}
+		if l.structuralViewIntersection(proven) {
+			return ir.Object, true
 		}
 		return l.objectIntersection(proven)
 	}
@@ -194,6 +221,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	value, err := l.value(node)
 	if err == nil {
 		value = l.graphAllocation(value, node)
+		if node.Kind == ast.KindCallExpression {
+			l.recordOrdinaryPredicateChecks(node.AsCallExpression())
+		}
 	}
 	if l.isNever(node) {
 		return value, err
@@ -257,6 +287,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	visited[[2]*checker.Type{from, to}] = true
 	if !l.nodeBufferView(from, to) {
 		return false
+	}
+	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
+		return l.sameKeeping(a, b, visited)
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
@@ -455,6 +488,9 @@ func (l *lowering) uncheckedValue(node *ast.Node) (ir.Expression, error) {
 	}
 	if member, handled, err := l.phantomMember(node); handled {
 		return member, err
+	}
+	if value, handled, err := l.recordExpression(node); handled {
+		return value, err
 	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
@@ -798,7 +834,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			// Scalars cannot hold null. IsNull still evaluates its operand, and a
+			// generic reference must consult this instantiation before erasing the test.
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !value.Type().IsReference() || !l.includesNull(l.concrete(l.checker.GetTypeAtLocation(operand)))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
@@ -825,7 +863,8 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) && !l.includesUndefined(l.checker.GetTypeAtLocation(operand)) {
+			concrete := l.concrete(l.checker.GetTypeAtLocation(operand))
+			if l.includesNull(concrete) && !l.includesUndefined(concrete) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
