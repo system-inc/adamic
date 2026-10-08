@@ -43,7 +43,11 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 		{"overload_nominal", "called\ntrue\n", "", "", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs("testdata/predicates/" + probe.name + ".a")
+			extension := ".a"
+			if probe.name == "parser_every_result" || probe.name == "overload_every" {
+				extension = ".ts"
+			}
+			path, err := filepath.Abs("testdata/predicates/" + probe.name + extension)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -70,7 +74,11 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			program, err := lowerSource(t, string(source))
+			lowerInput := lowerSource
+			if extension == ".ts" {
+				lowerInput = lowerTypeScriptSource
+			}
+			program, err := lowerInput(t, string(source))
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -1,4 +1,3 @@
-// a-check: refused the non-null assertion !
 // From TypeScript 6.0.3, src/compiler/checker.ts:18832
 // From TypeScript 6.0.3, src/compiler/checker.ts:18838
 // Census reason: a function inside a function (a closure)

@@ -13,7 +13,7 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/non_null_" + name + ".a", true, name != "initialized" && name != "definite" && name != "static_initialized" && name != "lazy_initialized"})
+		}{"internal/oracle/testdata/non_null_" + name + ".ts", true, name != "initialized" && name != "definite" && name != "static_initialized" && name != "lazy_initialized"})
 	}
 }
 
@@ -32,7 +32,7 @@ func TestReadinessMutants(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".a"))
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".ts"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -108,7 +108,7 @@ func TestReadinessMutants(t *testing.T) {
 
 func TestUninitializedIsNotNullishMutant(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -182,7 +182,7 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 // Pin both observations, including this assertion's expression-specific native diagnostic.
 func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -222,7 +222,7 @@ func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 
 func TestLazyInitializerIsNotEagerMutant(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}

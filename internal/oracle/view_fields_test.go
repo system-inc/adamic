@@ -129,7 +129,7 @@ func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 		{"number-uninitialized", "value", "number\n", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/readiness-"+probe.name+".a"))
+			path, err := filepath.Abs(filepath.Join(repository, interfaceSource("readiness-"+probe.name)))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -203,7 +203,7 @@ func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 }
 
 func TestViewFieldInheritedStaticReadiness(t *testing.T) {
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_static_initialized.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_static_initialized.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}

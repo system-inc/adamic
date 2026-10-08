@@ -1,4 +1,3 @@
-// a-check: refused the non-null assertion !
 function locals(flag: boolean): void {
     let count: number = undefined!;
     let text: string = null!;
