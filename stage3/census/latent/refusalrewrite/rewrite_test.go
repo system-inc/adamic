@@ -48,8 +48,8 @@ func TestCompiler41231d51Shape(t *testing.T) {
 		}
 		return true
 	})
-	if count != 2 {
-		t.Fatalf("expected independently instrumented contracts and visit functions, got %d", count)
+	if count != 4 {
+		t.Fatalf("expected independently instrumented contracts and visit functions with scoped owners, got %d", count)
 	}
 }
 
@@ -149,6 +149,9 @@ func(*lowering) predicateArguments(n *ast.Node)error{if n.Diagnosed{panic("contr
 func(*lowering) nodeRefusal(n *ast.Node)error{if n.Diagnosed{panic("syntax visitor entered diagnosed body")};if n.Syntax{return fmt.Errorf("syntax:%s",n.Label)};return nil}
 var observations []string
 var latentFindingOwner string
+func(l *lowering) latentBodyDiagnostics(n *ast.Node)[]string{return l.program.LatentDiagnosticsIn(n)}
+func latentFullEnabled()bool{return false}
+func latentNestedDeclarations(body *ast.Node,visit ast.Visitor){}
 func latentRecord(err error){if err!=nil{observations=append(observations,err.Error())}}
 func TestBehavior(t *testing.T){
  root:=&ast.Node{Kind:ast.KindSourceFile}
