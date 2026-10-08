@@ -1,0 +1,10 @@
+# github.com/system-inc/adamic/bridge/tsgo/checker [github.com/system-inc/adamic/bridge/tsgo/checker.test]
+bridge/tsgo/checker/declaration_facts.go:17:11: cannot use source.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/declaration_facts.go:22:55: source.Path undefined (type *"github.com/microsoft/TypeScript/tsc/internal/ast".SourceFile has no field or method Path)
+bridge/tsgo/checker/facts.go:303:14: cannot use f.FileName() (value of string type "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath) as string value in argument to out.text
+bridge/tsgo/checker/callback_symbol_test.go:25:37: cannot use file (variable of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in argument to p.Compiler.GetSourceFile
+bridge/tsgo/checker/continuation_facts_test.go:25:37: cannot use file (variable of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in argument to p.Compiler.GetSourceFile
+bridge/tsgo/checker/coverage_facts_test.go:45:33: cannot use file (variable of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in argument to p.Compiler.GetSourceFile
+bridge/tsgo/checker/declaration_contract_test.go:31:37: cannot use file (variable of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in argument to p.Compiler.GetSourceFile
+bridge/tsgo/checker/leaked_facts_test.go:27:37: cannot use file (variable of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in argument to p.Compiler.GetSourceFile
+bridge/tsgo/checker/symbols_in_scope_test.go:25:37: cannot use file (variable of type string) as "github.com/microsoft/TypeScript/tsc/internal/tspath".RootedFilePath value in argument to p.Compiler.GetSourceFile
