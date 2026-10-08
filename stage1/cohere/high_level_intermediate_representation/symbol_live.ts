@@ -1,5 +1,6 @@
 import { panic } from 'adamic';
 import type { Checker } from '../lint/checker.a';
+import { SymbolGraph } from './export_origin.ts';
 import { SymbolFacts, SymbolSnapshot } from './symbol.ts';
 
 export function readSymbol(checker: Checker, node: number): SymbolFacts {
@@ -15,5 +16,7 @@ export function readSymbols(checker: Checker): SymbolSnapshot {
         const node = checker.parser.node(index);
         if(node.kind === 'Identifier') { snapshot.symbols.set(`${checker.offsets[node.pos]}:${checker.offsets[node.end]}`, readSymbol(checker, index)); }
     }
+    const graph = checker.ask(checker.root, 'symbol-graph');
+    snapshot.graph = new SymbolGraph(graph.value ?? panic(`symbol graph query refused: ${graph.reason}`));
     return snapshot;
 }

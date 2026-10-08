@@ -636,5 +636,5 @@ func constructionSymbols(source *ast.SourceFile, c *checker.Checker) string {
 		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
 	}
 	walk(source.AsNode())
-	return constructionFrame(fmt.Sprint(len(records))) + strings.Join(records, "")
+	return constructionFrame(fmt.Sprint(len(records))) + strings.Join(records, "") + constructionFrame(SymbolGraph(c, source, ids))
 }

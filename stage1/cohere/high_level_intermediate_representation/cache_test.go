@@ -21,6 +21,16 @@ func TestFileFunctionCacheOracle(t *testing.T) {
 	for _, name := range []string{"oracle", "census", "cache"} {
 		replacements[filepath.Join(upstream, "stage1_hir_"+name+"_test.go")] = filepath.Join(lane, "testdata", name+"_test.go")
 	}
+	provider, err := os.ReadFile(filepath.Join(root, "bridge/tsgo/checker/symbol_graph.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	providerPath := filepath.Join(temp, "symbol_graph_test.go")
+	if err := os.WriteFile(providerPath, []byte(strings.Replace(string(provider), "package checker", "package high_level_intermediate_representation", 1)), 0600); err != nil {
+		t.Fatal(err)
+	}
+	replacements[filepath.Join(upstream, "stage1_hir_symbol_graph_test.go")] = providerPath
+
 	data, err := json.Marshal(map[string]any{"Replace": replacements})
 	if err != nil {
 		t.Fatal(err)

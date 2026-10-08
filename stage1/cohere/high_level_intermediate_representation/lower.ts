@@ -1,10 +1,12 @@
 // Construction slice of lower.go / lower_expression.go. Other paths are explicit declines.
 import { panic, utf8Length } from 'adamic';
 import { HIRFunction, Instruction, BasicBlock, HIRArena, ConstructedHIR, blockIndex } from './core.ts';
+import { SymbolSnapshot } from './symbol.ts';
+import { ExportResolver, emptyOrigin } from './export_origin.ts';
+import type { OriginInterface } from './export_origin.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { written } from '../../typescript/parser/nodes.ts';
 import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface, JsxTagInterface, JsxAttributeInterface, ArrayElementInterface, ObjectPropertyInterface, FunctionIndex, BlockIndex } from './core.ts';
-import { SymbolSnapshot } from './symbol.ts';
 import { constructHIR } from './graph.ts';
 function literal(kind: string, text: string): string | undefined {
     if(['NumericLiteral', 'StringLiteral', 'BigIntLiteral', 'NoSubstitutionTemplateLiteral'].includes(kind)) { return `string:${written(text)}`; }
@@ -455,9 +457,23 @@ class StraightLineBuilder {
         this.fn.instructions.push(new Instruction(this.fn.instructions.length, place, value, start, end));
         return place;
     }
+    resolvedOrigin(id: number, resolver: ExportResolver): OriginInterface {
+        const node = this.parser.node(id);
+        if(['ParenthesizedExpression', 'AsExpression', 'TypeAssertionExpression', 'NonNullExpression', 'SatisfiesExpression'].includes(node.kind)) { return this.resolvedOrigin(node.children[0] ?? -1, resolver); }
+        if(node.kind === 'Identifier') { if(this.symbols === undefined) { return emptyOrigin; } const index = this.symbols.read(this.byte(node.pos), this.byte(node.end)).identity; return resolver.symbol(index); }
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
+            const receiver = this.resolvedOrigin(node.children[0] ?? -1, resolver); const property = this.parser.node(node.children[1] ?? -1);
+            if(receiver.module !== 0 && (receiver.name === '*' || receiver.name === 'default') && property.text !== '' && (node.kind === 'PropertyAccessExpression' || property.kind === 'StringLiteral' || property.kind === 'NoSubstitutionTemplateLiteral')) { return resolver.export(receiver.module, property.text); }
+        }
+        return emptyOrigin;
+    }
     // Resolve direct imports and same-file const aliases from compiler symbol identities.
     // Barrel export graphs remain a separate construction seam.
     exportOrigin(id: number, active: Set<number>): ModuleExportOriginInterface {
+        if(this.symbols?.graph !== undefined) {
+            const resolver = new ExportResolver(this.symbols.graph, 'react'); const origin = this.resolvedOrigin(id, resolver);
+            return origin.module !== 0 && resolver.graph.module(origin.module).name === 'react' ? { module: 'react', exported: origin.name } : { module: '', exported: '' };
+        }
         const empty: ModuleExportOriginInterface = { module: '', exported: '' };
         if(this.symbols === undefined) { return empty; }
         const node = this.parser.node(id);

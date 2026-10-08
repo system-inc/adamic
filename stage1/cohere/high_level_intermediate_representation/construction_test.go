@@ -73,6 +73,16 @@ func TestWholeConstructionCensus(t *testing.T) {
 		}
 		replacements[file] = copy
 	}
+	provider, err := os.ReadFile(filepath.Join(root, "bridge/tsgo/checker/symbol_graph.go"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	providerPath := filepath.Join(temp, "symbol_graph_test.go")
+	if err := os.WriteFile(providerPath, []byte(strings.Replace(string(provider), "package checker", "package high_level_intermediate_representation", 1)), 0600); err != nil {
+		t.Fatal(err)
+	}
+	replacements[filepath.Join(upstream, "stage1_hir_symbol_graph_test.go")] = providerPath
+
 	encoded, err := json.Marshal(map[string]any{"Replace": replacements})
 	if err != nil {
 		t.Fatal(err)
@@ -184,6 +194,14 @@ func compareConstructionCensus(t *testing.T, output []byte, manifest string, mut
 type constructionMutant struct{ name, file, from, to string }
 
 var constructionMutants = []constructionMutant{
+	{"array hole disappears", "lower.ts", "spread: false, hole: true", "spread: false, hole: false"},
+	{"array spread disappears", "lower.ts", "spread: element.kind === 'SpreadElement', hole: false", "spread: false, hole: false"},
+	{"object spread disappears", "lower.ts", "value: this.expression(member.children[0] ?? -1), spread: true", "value: this.expression(member.children[0] ?? -1), spread: false"},
+	{"object shorthand loses operand", "lower.ts", "const value = this.expression(member.kind === 'ShorthandPropertyAssignment' ? nameId : member.children[1] ?? -1);", "const value = member.kind === 'ShorthandPropertyAssignment' ? this.fn.returns : this.expression(member.children[1] ?? -1);"},
+	{"computed object key loses operand", "lower.ts", "properties.push({ key: computedKey === undefined ? name.text : '', computedKey, value, spread: false });", "properties.push({ key: computedKey === undefined ? name.text : '', computedKey: computedKey === undefined ? undefined : value, value, spread: false });"},
+	{"object key precedes initializer", "lower.ts", "const value = this.expression(member.kind === 'ShorthandPropertyAssignment' ? nameId : member.children[1] ?? -1);\n            const computedKey = name.kind === 'ComputedPropertyName' ? this.expression(name.children[0] ?? -1) : undefined;", "const computedKey = name.kind === 'ComputedPropertyName' ? this.expression(name.children[0] ?? -1) : undefined;\n            const value = this.expression(member.kind === 'ShorthandPropertyAssignment' ? nameId : member.children[1] ?? -1);"},
+	{"star export origin disappears", "export_origin.ts", "for(const star of this.graph.symbol(module.symbol).stars)", "for(const star of this.graph.symbol(module.symbol).stars.slice(0, 0))"},
+
 	{"jsx component tag loses value", "lower.ts", "tag = { name: '', place: this.loadIdentifier(tagId) };", "tag = { name: '', place: this.fn.returns };"},
 	{"jsx host tag becomes component", "lower.ts", "if(name.text !== '' && name.text.charAt(0) >= 'a' && name.text.charAt(0) <= 'z')", "if(false)"},
 	{"jsx bare prop becomes false", "lower.ts", "initializer === undefined ? this.emit({ kind: 'Primitive', literal: 'bool:true' }", "initializer === undefined ? this.emit({ kind: 'Primitive', literal: 'bool:false' }"},
@@ -231,7 +249,7 @@ var constructionMutants = []constructionMutant{
 	{"property load loses name", "lower.ts", "return this.emit({ kind: 'PropertyLoad', object, property: this.parser.node(node.children[1] ?? -1).text }", "return this.emit({ kind: 'PropertyLoad', object, property: '' }"},
 	{"computed load loses key", "lower.ts", "{ kind: 'ComputedLoad', object, property: this.expression(node.children[1] ?? -1) }", "{ kind: 'ComputedLoad', object, property: object }"},
 	{"if branch successors swap", "lower.ts", "kind: 'If', testPlace: test, consequent: consequent.id, alternate: alternate.id", "kind: 'If', testPlace: test, consequent: alternate.id, alternate: consequent.id"},
-	{"ternary true arm becomes false", "lower.ts", "logical === undefined ? 2 : 0", "logical === undefined ? 4 : 0"},
+	{"ternary true arm loses value", "lower.ts", "place: firstValue }, firstNode, firstPlace", "place: logical === undefined ? this.fn.returns : firstValue }, firstNode, firstPlace"},
 	{"logical short circuit chooses wrong arm", "lower.ts", "const swapped = logical === '||' || logical === '??';", "const swapped = logical === '&&';"},
 	{"while back edge exits loop", "lower.ts", "this.jumps.pop(); this.jump(test.id, 1);", "this.jumps.pop(); this.jump(fallthrough.id, 0);"},
 	{"continue uses break target", "lower.ts", "node.kind === 'BreakStatement' ? target.breakBlock : target.continueBlock", "target.breakBlock"},
@@ -241,6 +259,31 @@ var constructionMutants = []constructionMutant{
 }
 
 func checkConstructionMutants(t *testing.T, root, lane, input string, want []byte, census bool) {
+	checkConstructionMutantsOn(t, root, lane, input, want, census, true)
+}
+
+// The full census always requires native. This separate opt-in Node certificate is
+// useful while a documented native compiler gap is pending; it cannot green that gate.
+func TestNodeConstructionReplay(t *testing.T) {
+	manifest := os.Getenv("HIR_NODE_CENSUS")
+	if manifest == "" {
+		t.Skip("set HIR_NODE_CENSUS to the independently exported Go census")
+	}
+	root, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	lane := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation")
+	node := command(t, root, nil, "node", "--no-warnings", "oracle/node.mjs", filepath.Join(lane, "main.ts"), "--coverage", manifest)
+	matched, total := compareConstructionCensus(t, node, manifest, false)
+	cached := command(t, root, nil, "node", "--no-warnings", "oracle/node.mjs", filepath.Join(lane, "main.ts"), "--cached-coverage", manifest)
+	if !bytes.Equal(node, cached) {
+		t.Fatal("Node cached construction differs")
+	}
+	t.Logf("Node-only certificate: %d/%d including probes; native is not certified by this test", matched, total)
+	checkConstructionMutantsOn(t, root, lane, manifest, node, true, false)
+}
+func checkConstructionMutantsOn(t *testing.T, root, lane, input string, want []byte, census, native bool) {
 	t.Helper()
 	// The old corpus has no binary/unary/comma/parameter witnesses; the full census plus probes does.
 	for index, mutant := range constructionMutants {
@@ -280,6 +323,9 @@ func checkConstructionMutants(t *testing.T, root, lane, input string, want []byt
 			badNode := command(t, root, nil, args...)
 			if bytes.Equal(badNode, want) {
 				t.Fatal("semantic mutant survived on Node")
+			}
+			if !native {
+				return
 			}
 			binary := filepath.Join(t.TempDir(), fmt.Sprintf("mutant-%d", index))
 			command(t, root, nil, "go", "run", "./cmd/adamic", "build", filepath.Join(directory, "main.ts"), "-o", binary)

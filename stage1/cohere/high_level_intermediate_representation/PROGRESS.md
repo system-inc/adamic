@@ -1,4 +1,32 @@
-# Unit 2 local checkpoint: ForFunction cache foundation
+# Unit 2 checkpoint: aggregates and export provenance; native narrowing gap
+
+Node matches **748/1,465 corpus functions**, up **368**, and **56/56 probes**
+(804/1,521 raw total), through both direct construction and ForFunction cache calls.
+The full census retains every original function; only the admitted grammar is compared,
+with the other rows explicitly declined. Flow exclusions and skip classifications
+are unchanged. Arrays, holes, array/object spreads, object shorthand, ordinary and
+computed keys preserve Go ordering, including initializer-before-key evaluation.
+Generic resident checker graph facts now feed an Adamic import/alias/star-export
+resolver, which computes React callee origins locally using branded checked arenas.
+SSA and mutation_aliasing algorithms remain imported, never copied.
+
+Native compilation succeeds but the first full native execution stops on a valid
+SymbolIndex after an `index === 0` check. EVIDENCE.md contains the Go type/line,
+exact runtime message and six-line standalone reproducer for @system_adamic.
+No brand or check was removed to bypass it. **Native's last certificate remains
+380/1,465 originals and 50/50 probes at cee5281f**, not new-code coverage. All 56
+semantic witnesses pass on Node; seven are new and the old ternary-arm mutant was
+replaced because it aborts on a newly admitted nested graph. The current full native
+census gate remains red. This is a clean Node construction seam, not completed unit 2.
+
+Next: resolve native numeric-index narrowing, re-certify the entire admitted census
+and mutants on both backends, then remaining patterns, optional chains, templates,
+type/function/method forms; rule-owned ForFunction/compilation-unit/clone/visitor
+interfaces and static-components. The watched plan branch is not pushed before unit
+completion. The latest safety backup is fa891b36 on stage1-hir/wip (13:19 UTC).
+
+# Previous checkpoint: ForFunction cache foundation
+
 
 Both direct and cached construction match **380/1,465 corpus functions** on Node
 and native, with **50/50 probes** (430/1,515 overall). All 49 semantic lowering mutants, the cache identity mutant, arena bounds mutant,

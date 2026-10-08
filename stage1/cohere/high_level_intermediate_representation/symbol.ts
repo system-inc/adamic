@@ -1,4 +1,5 @@
 // Resident compiler facts needed by lower.go:1259; no lexical binding surrogate.
+import { SymbolGraph } from './export_origin.ts';
 import { panic } from 'adamic';
 import { Frames, header } from '../typeaware/frames.ts';
 
@@ -31,6 +32,7 @@ export class SymbolFacts {
     }
 }
 export class SymbolSnapshot {
+    graph: SymbolGraph | undefined = undefined;
     readonly symbols: Map<string, SymbolFacts> = new Map<string, SymbolFacts>();
     constructor(wire: string) {
         const frames = new Frames(wire);
@@ -39,6 +41,7 @@ export class SymbolSnapshot {
             const start = frames.natural(); const end = frames.natural();
             this.symbols.set(`${start}:${end}`, new SymbolFacts(frames.field()));
         }
+        if(frames.cursor < frames.text.length) { this.graph = new SymbolGraph(frames.field()); }
         frames.end();
     }
     read(start: number, end: number): SymbolFacts {

@@ -365,3 +365,69 @@ refusal. Named/star/namespace re-exports must be resolved from generic resident
 compiler facts; no HIR-derived callee answer will be supplied as oracle input.
 The last certified count remains 380/1,465 on both backends with 49 lowering
 mutants. No watched plan-branch push or unit-completion claim is made.
+
+## Numeric-index narrowing gap for @system_adamic (Oct 8)
+
+Go `cohere/internal/lint/rule/export_origin.go:106–110` accepts a `*ast.Symbol`,
+checks `symbol == nil`, then inserts that non-nil symbol into `map[*ast.Symbol]bool`.
+The arena port uses `enum SymbolIndex { Absent = 0 }` and
+`Set<SymbolIndex>` at `export_origin.ts:39–45`; symbol/module/expression nodes live
+in separate typed arrays and every read checks its branded index's bounds.
+At line 44, testing `index === 0` makes the native nonzero branch reject a valid
+numeric handle. It compiles without a diagnostic; the native runtime message is,
+verbatim (exit 70):
+
+```text
+adamic: panic: unreachable value 2 for numeric enum SymbolIndex
+```
+
+Smallest standalone reproducer, checked in as `testdata/index_narrow_repro.ts`:
+
+```typescript
+enum SymbolIndex { Absent = 0 }
+function visit(index: SymbolIndex): string {
+    if(index === 0) { return 'absent'; }
+    return `${index}`;
+}
+console.log(visit(Number.parseInt('2', 10)));
+```
+
+`go run ./cmd/adamic build stage1/cohere/high_level_intermediate_representation/testdata/index_narrow_repro.ts -o /tmp/hir-brand-narrow`
+succeeds; running the executable prints the message above. Expected output is
+`2`. An independent Set<SymbolIndex> insertion/read with dynamic value 2 works.
+Decoding the first full census SymbolSnapshot also works natively; invoking the
+resolver produces this exact failure. No brand was removed, no comparison was
+rewritten to evade narrowing, and no native corpus row was filtered to hide it.
+The full Node/native census test still fails at its first native execution; unit 2
+and static-components remain unfinished. The previous 380/1,465 native certificate
+is historical, not a claim that the new implementation runs that subset natively.
+
+## Aggregate and export-origin Node certificate (Oct 8)
+
+The expanded Go census contains all 1,465 original corpus functions and 56 probes.
+Node matches 748/1,465 originals (748/1,442 non-Flow) and 56/56 probes, 804/1,521
+raw total. Every admitted graph is compared, and all remaining rows explicitly
+decline; the 23 original Flow graphs and upstream fixture exclusions stay catalogued.
+Both direct construction and repeated ForFunction calls have byte-identical hir-v1
+output. The resident bridge exposes generic symbol identities, immediate/resolved
+aliases, declarations, const initializer expression links, module exports and star
+edges. The Adamic resolver follows this graph to compute the React callee origin;
+no Go HIR/effect/origin answer is supplied as an input. The test overlay reuses the
+same generic fact provider beside the unchanged Go IR package, with lintoracle.
+
+`HIR_NODE_CENSUS=/tmp/hir-origin-census/manifest.tsv go test -v -count=1 -timeout=10m
+./stage1/cohere/high_level_intermediate_representation -run '^TestNodeConstructionReplay$'`
+compares all admitted dumps and cached outputs, then runs all 56 semantic mutants
+on Node. The ordinary full census still requires native and cannot pass using this
+separate Node-only certificate. New witnesses corrupt array holes, array spreads,
+object spreads, shorthand values, computed keys, key/initializer order and star
+export traversal. The former ternary-arm duplication mutant aborted on a newly
+admitted nested graph because it removed the selected child. Its replacement
+changes the first-arm LoadLocal operand while preserving both constructed children;
+only successful execution with a wrong dump is accepted. None of the seven new
+mutants or the replacement is claimed caught natively while the gap is pending.
+
+Go checker bridge tests pass; native HIR compilation succeeds. The full construction
+run fails with the runtime message recorded above. The last all-backend certificate
+remains 380 originals, 50 probes and 49 lowering mutants at cee5281f; array/object
+work is backed up at fa891b36 on stage1-hir/wip. No finished-unit push is made.
