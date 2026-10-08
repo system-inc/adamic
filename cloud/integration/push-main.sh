@@ -135,6 +135,20 @@ for kind in ("unclassified_skips", "required_input_skips"):
         problems.append("%s: %s" % (kind.replace("_", " "), " ".join(fast[kind])))
 if fast.get("uncached_tests") is not True:
     problems.append("its tests weren't run uncached")
+# A green line alone isn't the verdict: an exception inside a stage once left failure unset and
+# published green (EMFILE under load, round 65's angel). Every planned stage must have run, and where
+# the log records each stage's exit, every one must be 0.
+planned = ("build", "vet", "tests", "smoke", "census")
+ran = fast.get("steps_seconds") or {}
+missing = [stage for stage in planned if stage not in ran]
+if missing:
+    problems.append("stages with no completion recorded: %s" % " ".join(missing))
+exits = fast.get("stages_exit") or fast.get("exit_codes") or {}
+nonzero = ["%s=%s" % (stage, code) for stage, code in exits.items() if code != 0]
+if nonzero:
+    problems.append("stages that exited nonzero: %s" % " ".join(nonzero))
+if fast.get("finished") is not True:
+    problems.append("the gate didn't record that it finished")
 if problems:
     print("; ".join(problems))
     sys.exit(1)
