@@ -47,22 +47,27 @@ func TestJsxHelpersAndMutants(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		binary := filepath.Join(t.TempDir(), "program")
-		if err = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
-			t.Fatal(err)
-		}
 		emitted := filepath.Join(t.TempDir(), "program.mjs")
 		if err = os.WriteFile(emitted, []byte(javascript.JavaScript(ir)), 0644); err != nil {
 			t.Fatal(err)
 		}
-		for _, backend := range []struct {
+		type backend struct {
 			name, exe string
 			args      []string
-		}{
+		}
+		backends := []backend{
 			{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, cases}},
 			{"emitted JavaScript", "node", []string{"--disable-warning=ExperimentalWarning", runner, emitted, cases}},
-			{"sanitized native", binary, []string{cases}},
-		} {
+		}
+		// The unmutated program is the native canary; semantic mutants exercise both JS backends.
+		if !mutant {
+			binary := filepath.Join(t.TempDir(), "program")
+			if err = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			backends = append(backends, backend{"sanitized native", binary, []string{cases}})
+		}
+		for _, backend := range backends {
 			got := run(t, "", backend.exe, backend.args...)
 			if mutant {
 				if bytes.Equal(got, want) {
