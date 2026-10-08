@@ -78,7 +78,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
 					}
 
-					if !l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
+					if (!l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean) && !l.objectPrimitiveViewType(l.checker.GetTypeOfSymbol(field)) || accessorSymbol(field) {
 						family := "representation conversion"
 						if accessorSymbol(field) {
 							family = "accessor"

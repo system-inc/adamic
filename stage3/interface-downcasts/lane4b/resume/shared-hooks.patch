@@ -1,0 +1,42 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -519,7 +519,7 @@
+ 				}
+ 			}
+ 		}
+-		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) {
++		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) && !l.objectPrimitiveViewType(l.checker.GetTypeAtLocation(node)) {
+ 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+ 		}
+ 		if of.IsMaybe() {
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -78,7 +78,7 @@
+ 						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
+ 					}
+ 
+-					if !l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean || accessorSymbol(field) {
++					if (!l.viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || (of < ir.Number || of > ir.Array) && of != ir.MaybeNumber && of != ir.MaybeBoolean) && !l.objectPrimitiveViewType(l.checker.GetTypeOfSymbol(field)) || accessorSymbol(field) {
+ 						family := "representation conversion"
+ 						if accessorSymbol(field) {
+ 							family = "accessor"
+--- a/internal/native/view_fields.go
++++ b/internal/native/view_fields.go
+@@ -10,6 +10,7 @@
+ // Lowering must supply a complete runtime contract before using this for an admitted cast.
+ func (e *emitter) viewField(property ir.Property) string {
+ 	of := property.Type()
++ if of == ir.Union { return e.viewObjectPrimitive(property) }
+ 	object := e.value(property.Object)
+ 	slot := e.temporary()
+ 	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.MaybeNumber: "number | undefined", ir.MaybeBoolean: "boolean | undefined"}
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -821,6 +821,7 @@
+ 		}
+ 		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
+ 	case ir.Property:
++		if expression.View != "" && expression.Of == ir.Union { return e.viewObjectPrimitive(expression) }
+ 		if expression.View != "" {
+ 			if expression.Of == ir.Closure {
+ 				return e.emitViewCallableProperty(expression)

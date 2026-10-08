@@ -519,7 +519,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) {
+		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) && !l.objectPrimitiveViewType(l.checker.GetTypeAtLocation(node)) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
 		if of.IsMaybe() {
