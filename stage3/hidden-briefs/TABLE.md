@@ -528,3 +528,21 @@ No new compiler fix or additional revealed byte is claimed in this measurement g
 Evidence: [region counts](../../docs/overload-results/groups/c68/regions.json),
 [replay commands](../../docs/overload-results/groups/c68/replays.json),
 [raw census](../../docs/overload-results/groups/c68/census.jsonl.gz).
+
+## Callback follow-up on 0c84ce9c
+
+Compiler `0c84ce9c93451b4e5aa7bbeb0d2fb2e38f8e7a9a` adds immediate callback
+arguments when the implementation directly serves the consumer's concrete
+parameters and result, with matching call and readonly scalar field storage.
+The original closure preserves identity and captures. Its new fixture agrees
+with Node in both backends, including sanitizers; four compiler mutants are caught.
+
+All seven intervals were measured again against the c68bf26c records with the
+same scope and all 82 source hashes verified. The counts above are unchanged:
+58,158 hidden bytes, zero revealed. This callback case does not establish the
+full visitor or structural result contracts. Hidden-06's unlanded TNode storage
+change remains separate. The structural result group is not delivered.
+
+Evidence: [counts](../../docs/overload-results/groups/callback/regions.json),
+[tests and limitations](../../docs/overload-results/groups/callback/REPORT.md),
+[compiler mutants](../../docs/overload-results/groups/callback/mutants.json).
