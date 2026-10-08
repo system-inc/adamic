@@ -13,3 +13,5 @@ github.com/system-inc/adamic/stage3/fixtures TestFixtures
         RuntimeError: oracle hook not prepared; run python3 stage3/fixtures/build-hook.py --prepare
 --- FAIL: TestFixtures (11.57s)
 
+red: b9e7ba163ff854a05b52eb1bc60946613f583dd4 full gate, first failure at tests after 38.0 s (coverage=0.0s build=9.5s tools=0.1s vet=1.3s stage3=76.7s wasi=135.5s catalog=136.2s tests=136.8s; 144 units over 30 s (6229 s, 65 on the burn-down, 79 drifted over)), 7 fail, 3648 pass
+stopped: stopped
