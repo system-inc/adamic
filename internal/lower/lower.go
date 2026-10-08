@@ -93,8 +93,10 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
-	if options.OwnershipQuery {
-		for _, transfer := range fresh.OwnershipTransfers(lowering.result) {
+	// Demand was recorded while emitting parallelMap; programs without moves
+	// must not pay for another walk over their IR.
+	if options.OwnershipQuery && lowering.hasMovedParallelMap {
+		for _, transfer := range fresh.QueryOwnershipTransfers(lowering.result) {
 			if transfer.Answer.Verdict != fresh.Proven {
 				where := lowering.moveSites[transfer.Site-1]
 				return nil, lowering.moveRefused(where, "cannot move "+movePath(where.AsCallExpression().Arguments.Nodes[0])+": whole reachable ownership is not proven (ownership query "+transfer.Answer.Verdict.String()+": "+fmt.Sprint(transfer.Answer.Evidence)+")")
@@ -107,11 +109,13 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 }
 
 type lowering struct {
-	moveSites     []*ast.Node
-	moveAgreement bool
-	program       *load.Program
-	checker       *checker.Checker
-	result        *ir.Program
+	parallelMoveDemand  map[parallelMoveSite]bool
+	hasMovedParallelMap bool
+	moveSites           []*ast.Node
+	moveAgreement       bool
+	program             *load.Program
+	checker             *checker.Checker
+	result              *ir.Program
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool

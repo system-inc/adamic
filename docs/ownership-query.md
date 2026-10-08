@@ -224,6 +224,19 @@ go test ./internal/oracle -run '^TestOwnershipQueryNodeShapes$' -v -count=1 -tim
 python3 internal/oracle/testdata/ownership-query/prove-mutant.py
 ```
 
+## Demand detection during lowering
+
+Lowering records whether it emitted a moved `parallelMap` while building IR.
+With no such boundary, enabling the query performs no IR discovery or heap
+preparation. Move classification examines only `parallelMap` arguments and is
+cached by source call and type mapper, so preflight, callback validation and
+emission reuse the result within each instantiation. Programs with move demand
+call `QueryOwnershipTransfers` directly. `OwnershipTransfers` retains automatic
+IR discovery for callers that did not construct the IR through lowering.
+
+The lint follow-up measurements and before/after CPU profiles are in
+[the lowering cost report](../cloud/reports/ownership-query-lint/REPORT.md).
+
 ## Preparation cost
 
 `BenchmarkOwnershipQueryLowering` measures actual lowering with and without the

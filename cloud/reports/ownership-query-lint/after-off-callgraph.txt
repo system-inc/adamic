@@ -1,0 +1,19 @@
+File: profile-after
+Build ID: 7eb219460f8f7271c86fefd18db4c35cf7fb2aab
+Type: cpu
+Time: 2026-10-08 10:49:51 UTC
+Duration: 6.87s, Total samples = 8.91s (129.65%)
+Showing nodes accounting for 8.91s, 100% of 8.91s total
+----------------------------------------------------------+-------------
+      flat  flat%   sum%        cum   cum%   calls calls% + context 	 	 
+----------------------------------------------------------+-------------
+                                             4.30s 99.77% |   main.main
+         0     0%     0%      4.31s 48.37%                | github.com/system-inc/adamic/internal/lower.LowerWithOptions
+                                             2.95s 68.45% |   github.com/system-inc/adamic/internal/lower.(*lowering).findCycles
+                                             0.64s 14.85% |   github.com/system-inc/adamic/internal/lower.(*lowering).refuse
+                                             0.48s 11.14% |   github.com/system-inc/adamic/internal/lower.(*lowering).declareModule
+                                             0.18s  4.18% |   github.com/system-inc/adamic/internal/lower.(*lowering).statements
+                                             0.02s  0.46% |   github.com/system-inc/adamic/internal/lower.(*lowering).exceptions
+                                             0.02s  0.46% |   github.com/system-inc/adamic/internal/lower.borrow
+                                             0.02s  0.46% |   github.com/system-inc/adamic/internal/lower.counters
+----------------------------------------------------------+-------------

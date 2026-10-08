@@ -286,6 +286,13 @@ func OwnershipTransfers(program *ir.Program) []TransferAnswer {
 			return nil
 		}
 	}
+	return QueryOwnershipTransfers(program)
+}
+
+// QueryOwnershipTransfers evaluates ownership at moved parallelMap boundaries.
+// Callers that already recorded move demand during IR construction can use this
+// entry directly, avoiding OwnershipTransfers' whole-IR discovery walk.
+func QueryOwnershipTransfers(program *ir.Program) []TransferAnswer {
 	return prepare(program, true).queries
 }
 func (a *analysis) transferAnswer(move ir.ParallelMap, items value) TransferAnswer {
