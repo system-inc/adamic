@@ -1,0 +1,50 @@
+[
+  {
+    "file": "host.a",
+    "exit": 0,
+    "stdout": "true\n",
+    "stderr": "",
+    "source_sha256": "e905c118137091df84e6cd2ab93211523ec646daed376f24787b4afa0a2ac6f2",
+    "source_commit": "e7f420293e94746095c2f1e2d14124484e1afb63"
+  },
+  {
+    "file": "nonconforming-property.a",
+    "exit": 0,
+    "stdout": "true\n0\n",
+    "stderr": "",
+    "source_sha256": "8a7faadda6e5e6bf4d801289d3cc42cf9d2e49b59d663f535358e355809fb5d8",
+    "source_commit": "e7f420293e94746095c2f1e2d14124484e1afb63"
+  },
+  {
+    "file": "nonconforming.a",
+    "exit": 0,
+    "stdout": "true\n0\n",
+    "stderr": "",
+    "source_sha256": "8d106718302c0575f1b12354e2d7eb229f11ae23a1c40d02f5ffac449d7edd44",
+    "source_commit": "e7f420293e94746095c2f1e2d14124484e1afb63"
+  },
+  {
+    "file": "proven-property.a",
+    "exit": 0,
+    "stdout": "hello\n",
+    "stderr": "",
+    "source_sha256": "b576a561c823e12ee04de2fd1c8127b525436ebe35d466ce2254e3ec200912bb",
+    "source_commit": "e7f420293e94746095c2f1e2d14124484e1afb63"
+  },
+  {
+    "file": "proven.a",
+    "exit": 0,
+    "stdout": "hello\n",
+    "stderr": "",
+    "source_sha256": "53e39c74f00104e4f91b85491956435bb7bd9bb444971d24904f0e31a464b7c8",
+    "source_commit": "e7f420293e94746095c2f1e2d14124484e1afb63"
+  },
+  {
+    "file": "uninitialized.a",
+    "exit": 0,
+    "stdout": "undefined\n",
+    "stderr": "",
+    "source_sha256": "4cd72da7e37de4658d2879302d87fe2710ec2219b46cb505119863df5fd266c4",
+    "source_commit": "e7f420293e94746095c2f1e2d14124484e1afb63"
+  }
+]
