@@ -1,0 +1,12 @@
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function spreadOne(value:Base):Ready {return value as Ready;}
+function spreadTwo(value:Base):Ready {return value as Ready;}
+function invoke(callback:(value:Base)=>Ready,value:Base):Ready {return callback(value);}
+function exercise(flag:boolean):void {
+ const raw={kind:'ok' as const,ready:true};
+ const supplied:[(value:Base)=>Ready,Base]=[flag?spreadOne:spreadTwo,raw];
+ invoke(...supplied);
+}
+exercise(true);

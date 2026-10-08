@@ -1,0 +1,8 @@
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function opaqueOne(value:Base):Ready {return value as Ready;}
+function opaqueTwo(value:Base):Ready {return value as Ready;}
+const sink=JSON.parse('null') as (callback:(value:Base)=>Ready)=>void;
+function exercise(flag:boolean):void {sink(flag?opaqueOne:opaqueTwo);}
+exercise(true);

@@ -1,0 +1,13 @@
+interface Base { readonly kind: 'identifier' | 'other'; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly ready: boolean; }
+const good = {kind: 'identifier' as const, ready: true};
+const wrong = {kind: 'identifier' as const, ready: 0};
+function first(value: Base): boolean { return (value as Identifier).ready; }
+function second(value: Base): boolean { return (value as Identifier).ready; }
+function invoke<T extends Base>(callback: (value: T) => boolean, value: T): boolean { return callback(value); }
+function choose(flag: boolean, value: Base): boolean {
+ const selected = flag ? first : second;
+ return invoke((selected as (value: Base) => boolean), value);
+}
+console.log(`${choose(true, good)}`);
+console.log(`${choose(false, wrong)}`);

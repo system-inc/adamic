@@ -923,6 +923,22 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 // Only syntax represented by this source adapter closes a callback reference.
 func (m *latentShapeMeter) closedCallbackReference(node *ast.Node) bool {
     parent := node.Parent
+    // These nodes preserve the represented value. A conditional contributes
+    // both arms to the shared graph; its condition is not a callable alias.
+    for parent != nil {
+        transparent := false
+        switch parent.Kind {
+        case ast.KindParenthesizedExpression:
+            transparent = parent.AsParenthesizedExpression().Expression == node
+        case ast.KindAsExpression:
+            transparent = parent.AsAsExpression().Expression == node
+        case ast.KindConditionalExpression:
+            conditional := parent.AsConditionalExpression()
+            transparent = conditional.WhenTrue == node || conditional.WhenFalse == node
+        }
+        if !transparent { break }
+        node, parent = parent, parent.Parent
+    }
     if parent == nil { return false }
     switch parent.Kind {
     case ast.KindVariableDeclaration:
@@ -935,10 +951,11 @@ func (m *latentShapeMeter) closedCallbackReference(node *ast.Node) bool {
     case ast.KindCallExpression:
         call := parent.AsCallExpression()
         if call.Expression == node { return true }
+        for _, argument := range call.Arguments.Nodes { if argument.Kind == ast.KindSpreadElement { return false } }
         symbol := m.Checker.GetSymbolAtLocation(call.Expression)
         if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 { symbol=m.Checker.GetAliasedSymbol(symbol) }
         if symbol != nil { for _, declaration := range symbol.Declarations {
-            if function,ok:=m.Functions[declaration];ok && declaration.Kind==ast.KindFunctionDeclaration && !function.Skipped && len(declaration.TypeParameters())==0 {
+            if function,ok:=m.Functions[declaration];ok && declaration.Kind==ast.KindFunctionDeclaration && !function.Skipped {
                 for _, parameter := range declaration.Parameters() { if parameter.AsParameterDeclaration().DotDotDotToken != nil { return false } }
                 return true
             }

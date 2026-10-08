@@ -1,0 +1,17 @@
+=== RUN   TestShapeCallbackJoinExecution
+=== RUN   TestShapeCallbackJoinExecution/proven-callback-join
+=== RUN   TestShapeCallbackJoinExecution/nonconforming-callback-join
+    shape_callback_joins_test.go:39: unsafe join-erasure mutant caught: exit=0 stdout="true\nfalse\n"
+    shape_callback_joins_test.go:39: unsafe join-erasure mutant caught: exit=0 stdout="true\n0\n"
+--- PASS: TestShapeCallbackJoinExecution (9.66s)
+    --- PASS: TestShapeCallbackJoinExecution/proven-callback-join (3.60s)
+    --- PASS: TestShapeCallbackJoinExecution/nonconforming-callback-join (6.05s)
+=== RUN   TestShapeCallbackJoinCountRows
+    shape_callback_joins_test.go:48: | stage3/interface-downcasts/lane3/proven-callback-join.a | 4 | 4 | 12 | 14 | 3 | 0 | 0 | 0 |
+    shape_callback_joins_test.go:48: | stage3/interface-downcasts/lane3/nonconforming-callback-join.a | 5 | 1 | 10 | 10 | 5 | 0 | 0 | 0 |
+--- PASS: TestShapeCallbackJoinCountRows (3.15s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=5
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.936s

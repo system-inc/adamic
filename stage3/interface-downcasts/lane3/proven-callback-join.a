@@ -1,0 +1,12 @@
+interface Base { readonly kind: 'identifier' | 'other'; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly name: string; }
+function create(): Identifier { return {kind: 'identifier', name: 'hello'}; }
+function first(value: Base): string { return (value as Identifier).name; }
+function second(value: Base): string { return (value as Identifier).name; }
+function invoke<T extends Base>(callback: (value: T) => string, value: T): string { return callback(value); }
+function choose(flag: boolean): string {
+ const selected = flag ? first : second;
+ return invoke((selected as (value: Base) => string), create());
+}
+console.log(choose(true));
+console.log(choose(false));

@@ -1,0 +1,24 @@
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function make():Ready {return {kind:'ok',ready:true};}
+function conditionalOne(value:Base):Ready {return value as Ready;}
+function conditionalTwo(value:Base):Ready {return value as Ready;}
+function genericOne(value:Base):Ready {return value as Ready;}
+function assertedOne(value:Base):Ready {return value as Ready;}
+function wrongOne(value:Base):Ready {return value as Ready;}
+function wrongTwo(value:Base):Ready {return value as Ready;}
+function conditionalInvoke(callback:(value:Base)=>Ready,value:Base):Ready {return callback(value);}
+function assertedInvoke(callback:(value:Base)=>Ready,value:Base):Ready {return callback(value);}
+function wrongInvoke(callback:(value:Base)=>Ready,value:Base):Ready {return callback(value);}
+function genericInvoke<T>(callback:(value:T)=>Ready,value:T):Ready {return callback(value);}
+function exercise(flag:boolean):void {
+ const selected = flag ? conditionalOne : conditionalTwo;
+ conditionalInvoke(selected,make());
+ genericInvoke(genericOne,make());
+ const asserted = (assertedOne as (value:Base)=>Ready);
+ assertedInvoke(asserted,make());
+ const wrong = flag ? wrongOne : wrongTwo;
+ const raw={kind:'ok' as const,ready:0}; wrongInvoke(wrong,raw);
+}
+exercise(true); exercise(false);

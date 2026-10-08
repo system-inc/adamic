@@ -1,0 +1,6 @@
+/tmp/shape-callback-join-mutants/drop-generic-reference/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/callback-joins/controls.py", line 16, in <module>
+    assert row['outcome']==expected[owner],(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('genericOne', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 389, 'end': 403, 'kind': 'tagged', 'text': 'value as Ready', 'adapted': {'start': 389, 'end': 403, 'owner': 'genericOne'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/clean/src/compiler/main.a:18:16'], 'allocation_sites': [-1], 'fields': [], 'host_values': [], 'diagnostic_causes': []})

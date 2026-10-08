@@ -22,3 +22,20 @@ go test ./internal/native -run 'TestGraphRegionsMillion|TestGraphLazyRegions|Tes
 ```
 
 Logs: overnight/views-packages.log, overnight/views-oracle.log, overnight/views-native-blockers.log. The workspace restart removed prior scratch censuses and adaptation worktrees; their committed evidence remains. The fixed 234ab1aa adaptation is being regenerated from its own detached worktree rather than using newer stage3 sources.
+
+## Represented callback references
+
+The first flow group closes references through parentheses, assertion operands and both conditional arms. It also admits function values supplied to clean statically resolved generic function declarations, whose runtime bodies and argument joins are already modeled. This only removes an artificial escape annotation; it does not infer an identity from an asserted signature. A conditional's condition is not traversed as an alias. Diagnosed calls, unknown sinks, rest mappings and spread arguments retain their Unknown frontiers. The assumption is the same as direct generic allocation flow: type arguments do not choose a different runtime body.
+
+Ten independent controls pass: four Free, two conforms-if with ready:number versus boolean, two host Unknown and two spread Unknown. All 35 previous latent controls and ten dynamic-key controls still pass. Four built mutants are semantically caught: drop-conditional-reference loses conditionalOne; drop-parenthesized-reference and drop-asserted-reference lose assertedOne; drop-generic-reference loses genericOne. Each mutant compiles and runs the measurement tool before the independent outcome assertion fails.
+
+Two production witnesses combine conditional, asserted and generic callback calls. The good program agrees with Node in release, ASan/UBSan and JavaScript and has no leaks. The bad program observes Node true then 0, while both checked backends stop at the second ready read with exit 70, expected boolean and found number. Removing the field checks makes valid native execution finish with true then false and JavaScript true then 0; both mutants are caught. The uncached new oracle and count-row tests pass in 12.936s. No emitter change is needed for these already supported runtime forms.
+
+The count-row handoff is:
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak | In regions | Graph regions | Graph merges |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| proven-callback-join.a | 4 | 4 | 12 | 14 | 3 | 0 | 0 | 0 |
+| nonconforming-callback-join.a | 5 | 1 | 10 | 10 | 5 | 0 | 0 | 0 |
+
+Full census before and after measurements are in progress. No corpus bucket improvement is claimed until both outputs finish and pass the independent audit. This checkpoint contains the passing rule, controls, witnesses, mutants and raw logs, so that completed work is available while the measurements run.

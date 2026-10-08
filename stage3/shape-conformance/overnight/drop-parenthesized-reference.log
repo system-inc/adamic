@@ -1,0 +1,6 @@
+/tmp/shape-callback-join-mutants/drop-parenthesized-reference/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/callback-joins/controls.py", line 16, in <module>
+    assert row['outcome']==expected[owner],(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('assertedOne', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 453, 'end': 467, 'kind': 'tagged', 'text': 'value as Ready', 'adapted': {'start': 453, 'end': 467, 'owner': 'assertedOne'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/clean/src/compiler/main.a:19:20'], 'allocation_sites': [-1], 'fields': [], 'host_values': [], 'diagnostic_causes': []})
