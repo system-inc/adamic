@@ -1,0 +1,4453 @@
+{
+  "samples": 11316,
+  "period_total": 22677354528,
+  "relocation_bias": "0x55f6f4f73000",
+  "split": {
+    "runtime": {
+      "percent": 65.20855425945564,
+      "samples": 7379,
+      "period": 14787575032
+    },
+    "external": {
+      "percent": 19.485683987274655,
+      "samples": 2205,
+      "period": 4418837640
+    },
+    "generated": {
+      "percent": 14.810887239307176,
+      "samples": 1676,
+      "period": 3358717408
+    },
+    "unresolved": {
+      "percent": 0.4948745139625309,
+      "samples": 56,
+      "period": 112224448
+    }
+  },
+  "functions": [
+    {
+      "group": "external",
+      "function": "[unknown]",
+      "percent": 17.338282078472957,
+      "period": 3931863696
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_at",
+      "percent": 11.028632025450689,
+      "period": 2501001984
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain",
+      "percent": 5.231530576175327,
+      "period": 1186372736
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "percent": 4.480381760339342,
+      "period": 1016032056
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_equal",
+      "percent": 3.7292329445033583,
+      "period": 845691376
+    },
+    {
+      "group": "runtime",
+      "function": "release_field",
+      "percent": 3.5790031813361614,
+      "period": 811623240
+    },
+    {
+      "group": "runtime",
+      "function": "counted_heap",
+      "percent": 3.2962177447861434,
+      "period": 747494984
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "percent": 3.0752916224814424,
+      "period": 697394784
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "percent": 2.2269353128313893,
+      "period": 505010016
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "percent": 1.9618239660657477,
+      "period": 444889776
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "percent": 1.855779427359491,
+      "period": 420841680
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "percent": 1.696712619300106,
+      "period": 384769536
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "percent": 1.6348533050547898,
+      "period": 370741480
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_split",
+      "percent": 1.5464828561329091,
+      "period": 350701400
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "percent": 1.4492753623188406,
+      "period": 328657312
+    },
+    {
+      "group": "runtime",
+      "function": "width",
+      "percent": 1.4492753623188406,
+      "period": 328657312
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_release",
+      "percent": 1.4139271827500883,
+      "period": 320641280
+    },
+    {
+      "group": "external",
+      "function": "cfree",
+      "percent": 1.4139271827500883,
+      "period": 320641280
+    },
+    {
+      "group": "runtime",
+      "function": "allocate_storage.llvm.14655642287224392841",
+      "percent": 1.2725344644750796,
+      "period": 288577152
+    },
+    {
+      "group": "runtime",
+      "function": "give_local",
+      "percent": 1.184164015553199,
+      "period": 268537072
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "percent": 1.175326970661011,
+      "period": 266533064
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units",
+      "percent": 1.1664899257688228,
+      "period": 264529056
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "percent": 1.1576528808766349,
+      "period": 262525048
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_length",
+      "percent": 1.1399787910922587,
+      "period": 258517032
+    },
+    {
+      "group": "runtime",
+      "function": "free_one",
+      "percent": 1.1223047013078826,
+      "period": 254509016
+    },
+    {
+      "group": "runtime",
+      "function": "thread_number",
+      "percent": 1.0957935666313185,
+      "period": 248496992
+    },
+    {
+      "group": "runtime",
+      "function": "deallocate.llvm.14655642287224392841",
+      "percent": 1.0957935666313185,
+      "period": 248496992
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "percent": 1.0604453870625663,
+      "period": 240480960
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_push",
+      "percent": 1.007423117709438,
+      "period": 228456912
+    },
+    {
+      "group": "runtime",
+      "function": "give",
+      "percent": 0.8925415341109932,
+      "period": 202404808
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_9_stringWidth",
+      "percent": 0.8837044892188052,
+      "period": 200400800
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "percent": 0.8041710851891127,
+      "period": 182364728
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "percent": 0.7599858607281725,
+      "period": 172344688
+    },
+    {
+      "group": "runtime",
+      "function": "release_last.llvm.14655642287224392841",
+      "percent": 0.7158006362672322,
+      "period": 162324648
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_graph_is",
+      "percent": 0.7069635913750442,
+      "period": 160320640
+    },
+    {
+      "group": "runtime",
+      "function": "clamp_index",
+      "percent": 0.6451042771297278,
+      "period": 146292584
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_1_whitespace",
+      "percent": 0.6097560975609756,
+      "period": 138276552
+    },
+    {
+      "group": "runtime",
+      "function": "find_chunk",
+      "percent": 0.5920820077765995,
+      "period": 134268536
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "percent": 0.5832449628844114,
+      "period": 132264528
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_8_wide",
+      "percent": 0.5744079179922233,
+      "period": 130260520
+    },
+    {
+      "group": "unresolved",
+      "function": "_fini",
+      "percent": 0.4948745139625309,
+      "period": 112224448
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "percent": 0.4860374690703429,
+      "period": 110220440
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_known_units",
+      "percent": 0.4860374690703429,
+      "period": 110220440
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_47_Documents_get",
+      "percent": 0.4860374690703429,
+      "period": 110220440
+    },
+    {
+      "group": "runtime",
+      "function": "decode_step",
+      "percent": 0.4595263343937787,
+      "period": 104208416
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "percent": 0.4330151997172146,
+      "period": 98196392
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_new",
+      "percent": 0.4330151997172146,
+      "period": 98196392
+    },
+    {
+      "group": "runtime",
+      "function": "drop_reference",
+      "percent": 0.4330151997172146,
+      "period": 98196392
+    },
+    {
+      "group": "runtime",
+      "function": "build.llvm.2698205985514066315",
+      "percent": 0.4330151997172146,
+      "period": 98196392
+    },
+    {
+      "group": "runtime",
+      "function": "write_text.llvm.106920639727422063",
+      "percent": 0.4241781548250265,
+      "period": 96192384
+    },
+    {
+      "group": "external",
+      "function": "malloc",
+      "percent": 0.4241781548250265,
+      "period": 96192384
+    },
+    {
+      "group": "runtime",
+      "function": "let_go",
+      "percent": 0.3711558854718982,
+      "period": 84168336
+    },
+    {
+      "group": "runtime",
+      "function": "allocate",
+      "percent": 0.30045952633439377,
+      "period": 68136272
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "percent": 0.30045952633439377,
+      "period": 68136272
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_free_children",
+      "percent": 0.30045952633439377,
+      "period": 68136272
+    },
+    {
+      "group": "external",
+      "function": "realloc",
+      "percent": 0.2916224814422057,
+      "period": 66132264
+    },
+    {
+      "group": "runtime",
+      "function": "decode.llvm.17993151124180700874",
+      "percent": 0.24743725698126545,
+      "period": 56112224
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain_slow",
+      "percent": 0.24743725698126545,
+      "period": 56112224
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_storage",
+      "percent": 0.22976316719688936,
+      "period": 52104208
+    },
+    {
+      "group": "runtime",
+      "function": "list",
+      "percent": 0.22976316719688936,
+      "period": 52104208
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_new",
+      "percent": 0.2209261223047013,
+      "period": 50100200
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_6_mapped",
+      "percent": 0.2209261223047013,
+      "period": 50100200
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_free_index",
+      "percent": 0.2209261223047013,
+      "period": 50100200
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_21_Reader_get",
+      "percent": 0.2032520325203252,
+      "period": 46092184
+    },
+    {
+      "group": "runtime",
+      "function": "encoded_size",
+      "percent": 0.15906680805938495,
+      "period": 36072144
+    },
+    {
+      "group": "runtime",
+      "function": "units_next.llvm.17083267337334775421",
+      "percent": 0.15906680805938495,
+      "period": 36072144
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_allocate",
+      "percent": 0.14139271827500885,
+      "period": 32064128
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "percent": 0.1325556733828208,
+      "period": 30060120
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_25_Reader_peek",
+      "percent": 0.1325556733828208,
+      "period": 30060120
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_join_halves",
+      "percent": 0.12371862849063273,
+      "period": 28056112
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_22_Reader_add",
+      "percent": 0.12371862849063273,
+      "period": 28056112
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_is_shared",
+      "percent": 0.11488158359844468,
+      "period": 26052104
+    },
+    {
+      "group": "runtime",
+      "function": "halves_pairs",
+      "percent": 0.11488158359844468,
+      "period": 26052104
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_weak_forget",
+      "percent": 0.10604453870625663,
+      "period": 24048096
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_29_Reader_number",
+      "percent": 0.09720749381406858,
+      "period": 22044088
+    },
+    {
+      "group": "runtime",
+      "function": "new_chunk",
+      "percent": 0.09720749381406858,
+      "period": 22044088
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_release_slow",
+      "percent": 0.09720749381406858,
+      "period": 22044088
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_48_Documents_fits",
+      "percent": 0.07953340402969247,
+      "period": 18036072
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_code_point_at",
+      "percent": 0.07953340402969247,
+      "period": 18036072
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_starts_with",
+      "percent": 0.07953340402969247,
+      "period": 18036072
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_reference_count",
+      "percent": 0.07069635913750442,
+      "period": 16032064
+    },
+    {
+      "group": "runtime",
+      "function": "convert.llvm.3115151813544909286",
+      "percent": 0.06185931424531636,
+      "period": 14028056
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_check_data_write",
+      "percent": 0.06185931424531636,
+      "period": 14028056
+    },
+    {
+      "group": "runtime",
+      "function": "sequence",
+      "percent": 0.06185931424531636,
+      "period": 14028056
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units_before",
+      "percent": 0.053022269353128315,
+      "period": 12024048
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_43_Documents_line",
+      "percent": 0.04418522446094026,
+      "period": 10020040
+    },
+    {
+      "group": "runtime",
+      "function": "list_chunk",
+      "percent": 0.04418522446094026,
+      "period": 10020040
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_19_unescaped",
+      "percent": 0.04418522446094026,
+      "period": 10020040
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_41_Documents_text",
+      "percent": 0.04418522446094026,
+      "period": 10020040
+    },
+    {
+      "group": "runtime",
+      "function": "usable.llvm.2698205985514066315",
+      "percent": 0.03534817956875221,
+      "period": 8016032
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_27_Reader_name",
+      "percent": 0.03534817956875221,
+      "period": 8016032
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_42_Documents_concat",
+      "percent": 0.03534817956875221,
+      "period": 8016032
+    },
+    {
+      "group": "runtime",
+      "function": "units_start",
+      "percent": 0.03534817956875221,
+      "period": 8016032
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_concat",
+      "percent": 0.03534817956875221,
+      "period": 8016032
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_data_field",
+      "percent": 0.03534817956875221,
+      "period": 8016032
+    },
+    {
+      "group": "runtime",
+      "function": "decode",
+      "percent": 0.026511134676564158,
+      "period": 6012024
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_compare",
+      "percent": 0.026511134676564158,
+      "period": 6012024
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_49_Documents_print",
+      "percent": 0.026511134676564158,
+      "period": 6012024
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_45_Documents_group",
+      "percent": 0.026511134676564158,
+      "period": 6012024
+    },
+    {
+      "group": "runtime",
+      "function": "unit_at",
+      "percent": 0.026511134676564158,
+      "period": 6012024
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_2_digit",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_40_Documents_add",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_37_Printer_print",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_31_Reader_value",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_trim_sides",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_26_Reader_expect",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_12_stringText",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "external",
+      "function": "brk",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "unlist_chunk",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_put",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_ends_with",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "drain_remote",
+      "percent": 0.017674089784376106,
+      "period": 4008016
+    },
+    {
+      "group": "runtime",
+      "function": "cached",
+      "percent": 0.008837044892188053,
+      "period": 2004008
+    },
+    {
+      "group": "generated",
+      "function": "adamic_string_known_units",
+      "percent": 0.008837044892188053,
+      "period": 2004008
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_30_Reader_string",
+      "percent": 0.008837044892188053,
+      "period": 2004008
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_44_Documents_indent",
+      "percent": 0.008837044892188053,
+      "period": 2004008
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_weak_held",
+      "percent": 0.008837044892188053,
+      "period": 2004008
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_47_Documents_get",
+      "percent": 0.008837044892188053,
+      "period": 2004008
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_number_parse_float",
+      "percent": 0.008837044892188053,
+      "period": 2004008
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_4_nameStart",
+      "percent": 0.008837044892188053,
+      "period": 2004008
+    }
+  ],
+  "locations": [
+    {
+      "group": "external",
+      "function": "[unknown]",
+      "file": "libc.so.6",
+      "line": 0,
+      "percent": 17.258748674443265
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_at",
+      "file": "adamic.h",
+      "line": 585,
+      "percent": 6.7073170731707314
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain",
+      "file": "adamic.h",
+      "line": 87,
+      "percent": 4.506892895015906
+    },
+    {
+      "group": "runtime",
+      "function": "release_field",
+      "file": "class_inheritance.c",
+      "line": 27,
+      "percent": 3.154825026511135
+    },
+    {
+      "group": "runtime",
+      "function": "counted_heap",
+      "file": "heap.c",
+      "line": 312,
+      "percent": 3.0841286673736303
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_equal",
+      "file": "string_build_impl.h",
+      "line": 127,
+      "percent": 2.704135737009544
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_at",
+      "file": "adamic.h",
+      "line": 581,
+      "percent": 2.6157652880876636
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 1.873453517143867
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_at",
+      "file": "adamic.h",
+      "line": 584,
+      "percent": 1.6613644397313538
+    },
+    {
+      "group": "runtime",
+      "function": "width",
+      "file": "string_index.c",
+      "line": 40,
+      "percent": 1.4227642276422765
+    },
+    {
+      "group": "external",
+      "function": "cfree",
+      "file": "libc.so.6",
+      "line": 0,
+      "percent": 1.4139271827500883
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 0,
+      "percent": 1.36090491339696
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 77,
+      "percent": 1.2106751502297632
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "file": "adamic.h",
+      "line": 732,
+      "percent": 1.1399787910922587
+    },
+    {
+      "group": "runtime",
+      "function": "thread_number",
+      "file": "heap_parallel.h",
+      "line": 18,
+      "percent": 1.0957935666313185
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "file": "adamic.h",
+      "line": 724,
+      "percent": 1.0339342523860022
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_length",
+      "file": "adamic.h",
+      "line": 721,
+      "percent": 1.016260162601626
+    },
+    {
+      "group": "runtime",
+      "function": "give",
+      "file": "heap.c",
+      "line": 221,
+      "percent": 0.8925415341109932
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_split",
+      "file": "string_split_impl.h",
+      "line": 46,
+      "percent": 0.8571933545422411
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_equal",
+      "file": "string_build_impl.h",
+      "line": 124,
+      "percent": 0.839519264757865
+    },
+    {
+      "group": "runtime",
+      "function": "deallocate.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 273,
+      "percent": 0.8041710851891127
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_graph_is",
+      "file": "graph_regions.h",
+      "line": 14,
+      "percent": 0.7069635913750442
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_split",
+      "file": "string_split_impl.h",
+      "line": 45,
+      "percent": 0.68045245669848
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 386,
+      "percent": 0.68045245669848
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_release",
+      "file": "adamic.h",
+      "line": 97,
+      "percent": 0.6274301873453517
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "file": "string_slice_impl.h",
+      "line": 24,
+      "percent": 0.6274301873453517
+    },
+    {
+      "group": "runtime",
+      "function": "free_one",
+      "file": "heap.c",
+      "line": 476,
+      "percent": 0.6185931424531637
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.6097560975609756
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_push",
+      "file": "array.c",
+      "line": 40,
+      "percent": 0.6097560975609756
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2568,
+      "percent": 0.5744079179922233
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_release",
+      "file": "adamic.h",
+      "line": 99,
+      "percent": 0.5744079179922233
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.5567338282078473
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5221,
+      "percent": 0.5302226935312832
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 65,
+      "percent": 0.5302226935312832
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 176,
+      "percent": 0.5302226935312832
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4812,
+      "percent": 0.512548603746907
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units",
+      "file": "string_index.c",
+      "line": 58,
+      "percent": 0.503711558854719
+    },
+    {
+      "group": "unresolved",
+      "function": "_fini",
+      "file": "weak.c",
+      "line": 0,
+      "percent": 0.4948745139625309
+    },
+    {
+      "group": "runtime",
+      "function": "find_chunk",
+      "file": "heap_parallel.h",
+      "line": 45,
+      "percent": 0.4860374690703429
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_9_stringWidth",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.4683633792859668
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units",
+      "file": "string_index.c",
+      "line": 0,
+      "percent": 0.4683633792859668
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 886,
+      "percent": 0.4595263343937787
+    },
+    {
+      "group": "runtime",
+      "function": "clamp_index",
+      "file": "string_slice_impl.h",
+      "line": 7,
+      "percent": 0.4595263343937787
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_known_units",
+      "file": "adamic.h",
+      "line": 712,
+      "percent": 0.4595263343937787
+    },
+    {
+      "group": "runtime",
+      "function": "allocate_storage.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 245,
+      "percent": 0.4595263343937787
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.45068928950159065
+    },
+    {
+      "group": "runtime",
+      "function": "decode_step",
+      "file": "input.c",
+      "line": 40,
+      "percent": 0.4418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "release_field",
+      "file": "class_inheritance.c",
+      "line": 25,
+      "percent": 0.4241781548250265
+    },
+    {
+      "group": "external",
+      "function": "malloc",
+      "file": "libc.so.6",
+      "line": 0,
+      "percent": 0.4241781548250265
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain",
+      "file": "adamic.h",
+      "line": 89,
+      "percent": 0.4241781548250265
+    },
+    {
+      "group": "runtime",
+      "function": "give_local",
+      "file": "heap.c",
+      "line": 202,
+      "percent": 0.4241781548250265
+    },
+    {
+      "group": "runtime",
+      "function": "write_text.llvm.106920639727422063",
+      "file": "adamic.c",
+      "line": 234,
+      "percent": 0.41534110993283846
+    },
+    {
+      "group": "runtime",
+      "function": "give_local",
+      "file": "heap.c",
+      "line": 203,
+      "percent": 0.41534110993283846
+    },
+    {
+      "group": "runtime",
+      "function": "allocate_storage.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 262,
+      "percent": 0.4065040650406504
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2775,
+      "percent": 0.39766702014846234
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 179,
+      "percent": 0.38882997525627433
+    },
+    {
+      "group": "runtime",
+      "function": "let_go",
+      "file": "heap.c",
+      "line": 382,
+      "percent": 0.3711558854718982
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_1_whitespace",
+      "file": "main.c",
+      "line": 667,
+      "percent": 0.36231884057971014
+    },
+    {
+      "group": "runtime",
+      "function": "release_last.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 494,
+      "percent": 0.36231884057971014
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "file": "string_slice_impl.h",
+      "line": 0,
+      "percent": 0.344644750795334
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_8_wide",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.32697066101095795
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 187,
+      "percent": 0.32697066101095795
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2603,
+      "percent": 0.3181336161187699
+    },
+    {
+      "group": "external",
+      "function": "realloc",
+      "file": "libc.so.6",
+      "line": 0,
+      "percent": 0.2916224814422057
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.2916224814422057
+    },
+    {
+      "group": "runtime",
+      "function": "free_one",
+      "file": "heap.c",
+      "line": 480,
+      "percent": 0.27394839165782964
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 384,
+      "percent": 0.27394839165782964
+    },
+    {
+      "group": "runtime",
+      "function": "deallocate.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 271,
+      "percent": 0.2651113467656416
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 810,
+      "percent": 0.2562743018734535
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "file": "string_slice_impl.h",
+      "line": 17,
+      "percent": 0.2562743018734535
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_1_whitespace",
+      "file": "main.c",
+      "line": 666,
+      "percent": 0.24743725698126545
+    },
+    {
+      "group": "runtime",
+      "function": "drop_reference",
+      "file": "heap.c",
+      "line": 368,
+      "percent": 0.23860021208907742
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2635,
+      "percent": 0.23860021208907742
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 0,
+      "percent": 0.23860021208907742
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain",
+      "file": "adamic.h",
+      "line": 88,
+      "percent": 0.22976316719688936
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2550,
+      "percent": 0.22976316719688936
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_free_index",
+      "file": "string_index.c",
+      "line": 261,
+      "percent": 0.2209261223047013
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_9_stringWidth",
+      "file": "main.c",
+      "line": 1017,
+      "percent": 0.21208907741251326
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2555,
+      "percent": 0.21208907741251326
+    },
+    {
+      "group": "runtime",
+      "function": "counted_heap",
+      "file": "heap.c",
+      "line": 379,
+      "percent": 0.21208907741251326
+    },
+    {
+      "group": "runtime",
+      "function": "decode.llvm.17993151124180700874",
+      "file": "input.c",
+      "line": 140,
+      "percent": 0.2032520325203252
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 172,
+      "percent": 0.2032520325203252
+    },
+    {
+      "group": "runtime",
+      "function": "allocate",
+      "file": "string_build_impl.h",
+      "line": 10,
+      "percent": 0.19441498762813716
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_push",
+      "file": "array.c",
+      "line": 30,
+      "percent": 0.19441498762813716
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_free_children",
+      "file": "class_inheritance.c",
+      "line": 32,
+      "percent": 0.19441498762813716
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_storage",
+      "file": "heap.c",
+      "line": 471,
+      "percent": 0.19441498762813716
+    },
+    {
+      "group": "runtime",
+      "function": "give_local",
+      "file": "heap.c",
+      "line": 206,
+      "percent": 0.1855779427359491
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_new",
+      "file": "object.c",
+      "line": 12,
+      "percent": 0.1855779427359491
+    },
+    {
+      "group": "runtime",
+      "function": "allocate_storage.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 260,
+      "percent": 0.1855779427359491
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 26,
+      "percent": 0.17674089784376104
+    },
+    {
+      "group": "runtime",
+      "function": "build.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 0,
+      "percent": 0.17674089784376104
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "file": "adamic.h",
+      "line": 725,
+      "percent": 0.17674089784376104
+    },
+    {
+      "group": "runtime",
+      "function": "free_one",
+      "file": "heap.c",
+      "line": 483,
+      "percent": 0.17674089784376104
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_push",
+      "file": "array.c",
+      "line": 0,
+      "percent": 0.17674089784376104
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_equal",
+      "file": "string_build_impl.h",
+      "line": 0,
+      "percent": 0.17674089784376104
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "file": "adamic.h",
+      "line": 730,
+      "percent": 0.167903852951573
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2630,
+      "percent": 0.167903852951573
+    },
+    {
+      "group": "runtime",
+      "function": "encoded_size",
+      "file": "input.c",
+      "line": 96,
+      "percent": 0.15906680805938495
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_47_Documents_get",
+      "file": "main.c",
+      "line": 4671,
+      "percent": 0.15906680805938495
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2141,
+      "percent": 0.15906680805938495
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "file": "string_slice_impl.h",
+      "line": 13,
+      "percent": 0.15906680805938495
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 185,
+      "percent": 0.15022976316719688
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_6_mapped",
+      "file": "main.c",
+      "line": 779,
+      "percent": 0.15022976316719688
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_release",
+      "file": "adamic.h",
+      "line": 98,
+      "percent": 0.15022976316719688
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 463,
+      "percent": 0.14139271827500885
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_allocate",
+      "file": "heap.c",
+      "line": 267,
+      "percent": 0.14139271827500885
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "file": "string_slice_impl.h",
+      "line": 26,
+      "percent": 0.14139271827500885
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 54,
+      "percent": 0.14139271827500885
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 94,
+      "percent": 0.1325556733828208
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_47_Documents_get",
+      "file": "main.c",
+      "line": 4682,
+      "percent": 0.1325556733828208
+    },
+    {
+      "group": "runtime",
+      "function": "list",
+      "file": "heap.c",
+      "line": 352,
+      "percent": 0.1325556733828208
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2035,
+      "percent": 0.1325556733828208
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 863,
+      "percent": 0.12371862849063273
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 870,
+      "percent": 0.12371862849063273
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_length",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.12371862849063273
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 784,
+      "percent": 0.11488158359844468
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 826,
+      "percent": 0.11488158359844468
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2563,
+      "percent": 0.11488158359844468
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_9_stringWidth",
+      "file": "main.c",
+      "line": 1011,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "file": "string_decode_impl.h",
+      "line": 57,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_new",
+      "file": "object.c",
+      "line": 10,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "release_last.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 490,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "file": "string_slice_impl.h",
+      "line": 56,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "find_chunk",
+      "file": "heap_parallel.h",
+      "line": 44,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_weak_forget",
+      "file": "weak.c",
+      "line": 157,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 170,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "clamp_index",
+      "file": "string_slice_impl.h",
+      "line": 6,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "file": "string_decode_impl.h",
+      "line": 53,
+      "percent": 0.10604453870625663
+    },
+    {
+      "group": "runtime",
+      "function": "release_last.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 488,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_new",
+      "file": "array.c",
+      "line": 15,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2018,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2031,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 406,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "runtime",
+      "function": "build.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 87,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 929,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_8_wide",
+      "file": "main.c",
+      "line": 943,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "runtime",
+      "function": "give_local",
+      "file": "heap.c",
+      "line": 195,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_47_Documents_get",
+      "file": "main.c",
+      "line": 4673,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_free_children",
+      "file": "class_inheritance.c",
+      "line": 31,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 55,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4593,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "runtime",
+      "function": "list",
+      "file": "heap.c",
+      "line": 342,
+      "percent": 0.09720749381406858
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units",
+      "file": "string_index.c",
+      "line": 51,
+      "percent": 0.08837044892188052
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 217,
+      "percent": 0.08837044892188052
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 0,
+      "percent": 0.08837044892188052
+    },
+    {
+      "group": "runtime",
+      "function": "new_chunk",
+      "file": "heap.c",
+      "line": 129,
+      "percent": 0.08837044892188052
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 65,
+      "percent": 0.08837044892188052
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_21_Reader_get",
+      "file": "main.c",
+      "line": 1963,
+      "percent": 0.08837044892188052
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 51,
+      "percent": 0.08837044892188052
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units",
+      "file": "string_index.c",
+      "line": 61,
+      "percent": 0.08837044892188052
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 0,
+      "percent": 0.08837044892188052
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_8_wide",
+      "file": "main.c",
+      "line": 965,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "external",
+      "function": "[unknown]",
+      "file": "libm.so.6",
+      "line": 0,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 186,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5045,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "runtime",
+      "function": "allocate_storage.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 261,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "runtime",
+      "function": "drop_reference",
+      "file": "heap.c",
+      "line": 366,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 49,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "runtime",
+      "function": "allocate_storage.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 250,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4565,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2149,
+      "percent": 0.07953340402969247
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_join_halves",
+      "file": "string_build_impl.h",
+      "line": 107,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "file": "string_decode_impl.h",
+      "line": 49,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "runtime",
+      "function": "build.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 117,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "file": "string_decode_impl.h",
+      "line": 52,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_47_Documents_get",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 83,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4609,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_starts_with",
+      "file": "string.c",
+      "line": 58,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "runtime",
+      "function": "allocate",
+      "file": "string_build_impl.h",
+      "line": 7,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2549,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3671,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_reference_count",
+      "file": "adamic.h",
+      "line": 70,
+      "percent": 0.07069635913750442
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 100,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2022,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_is_shared",
+      "file": "string_index.c",
+      "line": 69,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3600,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_21_Reader_get",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_check_data_write",
+      "file": "adamic.h",
+      "line": 375,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4572,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_25_Reader_peek",
+      "file": "main.c",
+      "line": 2177,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_new",
+      "file": "object.c",
+      "line": 11,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "runtime",
+      "function": "clamp_index",
+      "file": "string_slice_impl.h",
+      "line": 0,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain_slow",
+      "file": "heap.c",
+      "line": 330,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3640,
+      "percent": 0.06185931424531636
+    },
+    {
+      "group": "runtime",
+      "function": "free_one",
+      "file": "heap.c",
+      "line": 482,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_22_Reader_add",
+      "file": "main.c",
+      "line": 1978,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_8_wide",
+      "file": "main.c",
+      "line": 948,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 0,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_join_halves",
+      "file": "string_build_impl.h",
+      "line": 117,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_code_point_at",
+      "file": "string_slice_impl.h",
+      "line": 0,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "build.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 90,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 242,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 805,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_is_shared",
+      "file": "adamic.h",
+      "line": 67,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain_slow",
+      "file": "heap.c",
+      "line": 320,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 182,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_release_slow",
+      "file": "heap.c",
+      "line": 501,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 58,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "release_last.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 496,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 51,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 0,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "release_last.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 0,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain_slow",
+      "file": "heap.c",
+      "line": 318,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3952,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "units_next.llvm.17083267337334775421",
+      "file": "string_walk_impl.h",
+      "line": 30,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "halves_pairs",
+      "file": "string_search_impl.h",
+      "line": 8,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 404,
+      "percent": 0.053022269353128315
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4566,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_new",
+      "file": "array.c",
+      "line": 20,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "list_chunk",
+      "file": "heap.c",
+      "line": 109,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "release_last.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 493,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_9_stringWidth",
+      "file": "main.c",
+      "line": 1083,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 452,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 409,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_25_Reader_peek",
+      "file": "main.c",
+      "line": 2165,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_22_Reader_add",
+      "file": "main.c",
+      "line": 1997,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3961,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "drop_reference",
+      "file": "heap.c",
+      "line": 360,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 84,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 405,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "file": "string_slice_impl.h",
+      "line": 25,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_release",
+      "file": "adamic.h",
+      "line": 101,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2024,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3937,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 45,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "sequence",
+      "file": "string_decode_impl.h",
+      "line": 9,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_release_slow",
+      "file": "heap.c",
+      "line": 498,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "allocate_storage.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 259,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3843,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_new",
+      "file": "object.c",
+      "line": 0,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 100,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain_slow",
+      "file": "heap.c",
+      "line": 327,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "drop_reference",
+      "file": "heap.c",
+      "line": 367,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 42,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "runtime",
+      "function": "give_local",
+      "file": "heap.c",
+      "line": 197,
+      "percent": 0.04418522446094026
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 197,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 235,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 248,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "file": "string_decode_impl.h",
+      "line": 0,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 818,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_6_mapped",
+      "file": "main.c",
+      "line": 778,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_9_stringWidth",
+      "file": "main.c",
+      "line": 1082,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_6_mapped",
+      "file": "main.c",
+      "line": 780,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 236,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "units_next.llvm.17083267337334775421",
+      "file": "string_walk_impl.h",
+      "line": 44,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_new",
+      "file": "object.c",
+      "line": 9,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4568,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "units_next.llvm.17083267337334775421",
+      "file": "string_walk_impl.h",
+      "line": 21,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "take",
+      "file": "heap.c",
+      "line": 160,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 39,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain_slow",
+      "file": "heap.c",
+      "line": 328,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_new",
+      "file": "array.c",
+      "line": 18,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "halves_pairs",
+      "file": "string_search_impl.h",
+      "line": 0,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_41_Documents_text",
+      "file": "main.c",
+      "line": 4614,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 4888,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2547,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 55,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4703,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_21_Reader_get",
+      "file": "main.c",
+      "line": 1974,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3697,
+      "percent": 0.03534817956875221
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_43_Documents_line",
+      "file": "main.c",
+      "line": 4632,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 93,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "convert.llvm.3115151813544909286",
+      "file": "case.c",
+      "line": 189,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_retain",
+      "file": "adamic.h",
+      "line": 91,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 919,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 856,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "file": "adamic.h",
+      "line": 731,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "width",
+      "file": "string_index.c",
+      "line": 0,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 892,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 76,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_19_unescaped",
+      "file": "main.c",
+      "line": 1778,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5239,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_new",
+      "file": "array.c",
+      "line": 16,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4728,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 0,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3959,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "drop_reference",
+      "file": "heap.c",
+      "line": 370,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "allocate",
+      "file": "string_build_impl.h",
+      "line": 11,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_compare",
+      "file": "string_slice_impl.h",
+      "line": 158,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "units_next.llvm.17083267337334775421",
+      "file": "string_walk_impl.h",
+      "line": 29,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2542,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 34,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_49_Documents_print",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 3128,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_at",
+      "file": "adamic.h",
+      "line": 588,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3957,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "deallocate.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 290,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4602,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_known_units",
+      "file": "adamic.h",
+      "line": 713,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5237,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_data_field",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5225,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 30,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2605,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4515,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2560,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "unit_at",
+      "file": "string_decode_impl.h",
+      "line": 36,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "file": "adamic.h",
+      "line": 735,
+      "percent": 0.026511134676564158
+    },
+    {
+      "group": "runtime",
+      "function": "decode_step",
+      "file": "input.c",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "decode.llvm.17993151124180700874",
+      "file": "input.c",
+      "line": 136,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "decode",
+      "file": "string_decode_impl.h",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_release",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_storage",
+      "file": "heap.c",
+      "line": 470,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4182,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "file": "adamic.h",
+      "line": 729,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 834,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "file": "string_decode_impl.h",
+      "line": 62,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "usable.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 154,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_at",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 897,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_40_Documents_add",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_37_Printer_print",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 59,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 2795,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_27_Reader_name",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3666,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3644,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2538,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 2788,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_43_Documents_line",
+      "file": "main.c",
+      "line": 4634,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_47_Documents_get",
+      "file": "main.c",
+      "line": 4672,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_42_Documents_concat",
+      "file": "main.c",
+      "line": 4624,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_29_Reader_number",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "units_start",
+      "file": "string_walk_impl.h",
+      "line": 47,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_26_Reader_expect",
+      "file": "main.c",
+      "line": 2185,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "units_start",
+      "file": "string_walk_impl.h",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 81,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_45_Documents_group",
+      "file": "main.c",
+      "line": 4652,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_12_stringText",
+      "file": "main.c",
+      "line": 1257,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3668,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_new",
+      "file": "array.c",
+      "line": 21,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "external",
+      "function": "brk",
+      "file": "libc.so.6",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "give_local",
+      "file": "heap.c",
+      "line": 198,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4817,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4803,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4824,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4831,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5241,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 4897,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "convert.llvm.3115151813544909286",
+      "file": "case.c",
+      "line": 202,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2143,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units_before",
+      "file": "string_index.c",
+      "line": 164,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units_before",
+      "file": "string_index.c",
+      "line": 195,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4686,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 27,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3646,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4181,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4184,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "allocate_storage.llvm.14655642287224392841",
+      "file": "heap.c",
+      "line": 248,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 44,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "clamp_index",
+      "file": "string_slice_impl.h",
+      "line": 10,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2543,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 210,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_42_Documents_concat",
+      "file": "main.c",
+      "line": 4625,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3793,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3639,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 75,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "halves_pairs",
+      "file": "string_search_impl.h",
+      "line": 14,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 4881,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3592,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2786,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 95,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_storage",
+      "file": "heap.c",
+      "line": 467,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4360,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 234,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 913,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_put",
+      "file": "string_build_impl.h",
+      "line": 79,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_29_Reader_number",
+      "file": "main.c",
+      "line": 2304,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of",
+      "file": "string_search_impl.h",
+      "line": 51,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_heap_free_children",
+      "file": "heap.c",
+      "line": 395,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_9_stringWidth",
+      "file": "main.c",
+      "line": 1006,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_29_Reader_number",
+      "file": "main.c",
+      "line": 2335,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code_at",
+      "file": "adamic.h",
+      "line": 734,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "drain_remote",
+      "file": "heap.c",
+      "line": 0,
+      "percent": 0.017674089784376106
+    },
+    {
+      "group": "runtime",
+      "function": "decode.llvm.17993151124180700874",
+      "file": "input.c",
+      "line": 124,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "decode.llvm.17993151124180700874",
+      "file": "input.c",
+      "line": 123,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "decode.llvm.17993151124180700874",
+      "file": "input.c",
+      "line": 125,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4298,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_29_Reader_number",
+      "file": "main.c",
+      "line": 2382,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 199,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4698,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_2_digit",
+      "file": "main.c",
+      "line": 673,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_push",
+      "file": "array.c",
+      "line": 33,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 2919,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 873,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_8_wide",
+      "file": "main.c",
+      "line": 939,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "cached",
+      "file": "string_index.c",
+      "line": 47,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 812,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 785,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "build.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 111,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_code_point_at",
+      "file": "string_slice_impl.h",
+      "line": 114,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 899,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units",
+      "file": "string_index.c",
+      "line": 60,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 926,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "decode",
+      "file": "string_decode_impl.h",
+      "line": 29,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2150,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5066,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_41_Documents_text",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4130,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "file": "string_slice_impl.h",
+      "line": 36,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_string_known_units",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_split",
+      "file": "string_split_impl.h",
+      "line": 48,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_22_Reader_add",
+      "file": "main.c",
+      "line": 1981,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_30_Reader_string",
+      "file": "object.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_31_Reader_value",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 52,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_trim_sides",
+      "file": "string_trim_impl.h",
+      "line": 37,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_25_Reader_peek",
+      "file": "main.c",
+      "line": 2168,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_22_Reader_add",
+      "file": "main.c",
+      "line": 1980,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "convert.llvm.3115151813544909286",
+      "file": "case.c",
+      "line": 225,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_44_Documents_indent",
+      "file": "main.c",
+      "line": 4648,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "new_chunk",
+      "file": "heap.c",
+      "line": 144,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "halves_pairs",
+      "file": "string_search_impl.h",
+      "line": 21,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_21_Reader_get",
+      "file": "main.c",
+      "line": 1967,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_45_Documents_group",
+      "file": "main.c",
+      "line": 4659,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "allocate",
+      "file": "string_build_impl.h",
+      "line": 6,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_concat",
+      "file": "string_build_impl.h",
+      "line": 40,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_21_Reader_get",
+      "file": "main.c",
+      "line": 1964,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4261,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4337,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5240,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_weak_held",
+      "file": "weak.c",
+      "line": 197,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 212,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 2797,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2622,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2029,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3602,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3770,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "file": "string_decode_impl.h",
+      "line": 44,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5220,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2163,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 2907,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3599,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3683,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_47_Documents_get",
+      "file": "object.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "adamic.h",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_24_Reader_skip",
+      "file": "main.c",
+      "line": 2019,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 4893,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_code_point_at",
+      "file": "string_slice_impl.h",
+      "line": 122,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5211,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_29_Reader_number",
+      "file": "main.c",
+      "line": 2353,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_index_of_at",
+      "file": "string_search_impl.h",
+      "line": 64,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_function_31_Reader_value",
+      "file": "object.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_25_Reader_peek",
+      "file": "main.c",
+      "line": 2172,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_2_digit",
+      "file": "main.c",
+      "line": 674,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_trim_sides",
+      "file": "string_trim_impl.h",
+      "line": 19,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units_before",
+      "file": "string_index.c",
+      "line": 163,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_equal",
+      "file": "string_build_impl.h",
+      "line": 128,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4601,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4576,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4747,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5053,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3992,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "build.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 91,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5051,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "convert.llvm.3115151813544909286",
+      "file": "case.c",
+      "line": 199,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_29_Reader_number",
+      "file": "main.c",
+      "line": 2344,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 61,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_concat",
+      "file": "string_build_impl.h",
+      "line": 39,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_22_Reader_add",
+      "file": "main.c",
+      "line": 1987,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_number_parse_float",
+      "file": "parse.c",
+      "line": 232,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4832,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "unlist_chunk",
+      "file": "heap.c",
+      "line": 122,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_27_Reader_name",
+      "file": "main.c",
+      "line": 2208,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 101,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "unlist_chunk",
+      "file": "heap.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_25_Reader_peek",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "usable.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 145,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "write_text.llvm.106920639727422063",
+      "file": "adamic.c",
+      "line": 233,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_8_wide",
+      "file": "main.c",
+      "line": 978,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "file": "string_decode_impl.h",
+      "line": 60,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "usable.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 160,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "sequence",
+      "file": "string_decode_impl.h",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "sequence",
+      "file": "string_decode_impl.h",
+      "line": 12,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_code_point_at",
+      "file": "string_slice_impl.h",
+      "line": 129,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_19_unescaped",
+      "file": "main.c",
+      "line": 1815,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 44,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_locate",
+      "file": "string_index.c",
+      "line": 246,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_7_match",
+      "file": "main.c",
+      "line": 872,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "build.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 119,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "build.llvm.2698205985514066315",
+      "file": "string_index.c",
+      "line": 86,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 2991,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_data_field",
+      "file": "adamic.h",
+      "line": 353,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 2789,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_concat",
+      "file": "string_build_impl.h",
+      "line": 69,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4833,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 63,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 2989,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 58,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_36_Printer_blankAfter",
+      "file": "main.c",
+      "line": 3603,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_push",
+      "file": "array.c",
+      "line": 32,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_ends_with",
+      "file": "string.c",
+      "line": 61,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_join",
+      "file": "array.c",
+      "line": 95,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_ends_with",
+      "file": "string.c",
+      "line": 62,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_char_code",
+      "file": "string_decode_impl.h",
+      "line": 48,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_29_Reader_number",
+      "file": "main.c",
+      "line": 2446,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_19_unescaped",
+      "file": "main.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_slice",
+      "file": "string_slice_impl.h",
+      "line": 16,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_object_free_children",
+      "file": "class_inheritance.c",
+      "line": 0,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 4904,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_share",
+      "file": "string_share.c",
+      "line": 36,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_concat",
+      "file": "string_build_impl.h",
+      "line": 70,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3669,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_starts_with",
+      "file": "string.c",
+      "line": 54,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_48_Documents_fits",
+      "file": "main.c",
+      "line": 4687,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_47_Documents_get",
+      "file": "main.c",
+      "line": 4675,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_27_Reader_name",
+      "file": "main.c",
+      "line": 2268,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_4_nameStart",
+      "file": "main.c",
+      "line": 722,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 4193,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2779,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_37_Printer_print",
+      "file": "main.c",
+      "line": 3789,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 4901,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_49_Documents_print",
+      "file": "main.c",
+      "line": 5076,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_29_Reader_number",
+      "file": "main.c",
+      "line": 2472,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units",
+      "file": "string_index.c",
+      "line": 69,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_31_Reader_value",
+      "file": "main.c",
+      "line": 2889,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_30_Reader_string",
+      "file": "main.c",
+      "line": 2599,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_string_units_before",
+      "file": "string_index.c",
+      "line": 162,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "units_next.llvm.17083267337334775421",
+      "file": "string_walk_impl.h",
+      "line": 34,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "generated",
+      "function": "adamic_function_40_Documents_add",
+      "file": "main.c",
+      "line": 4574,
+      "percent": 0.008837044892188053
+    },
+    {
+      "group": "runtime",
+      "function": "adamic_array_push",
+      "file": "array.c",
+      "line": 31,
+      "percent": 0.008837044892188053
+    }
+  ]
+}
