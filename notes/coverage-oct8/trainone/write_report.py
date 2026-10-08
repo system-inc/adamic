@@ -10,7 +10,7 @@ results = json.loads((evidence / 'results.json').read_text())
 base = subprocess.check_output(['git', 'rev-parse', 'origin/main'], cwd=root, text=True).strip()
 lines = [
  'Built 13 .a coverage programs and reproducible four-way and mutation runners; 6 agree and 7 stop at compile time.',
- f'Commits: base {base}; reviewed range 54cbc125..9f16421c; delivery history is on codex/coverage-oct8-trainone.',
+ f'Commits: base {base}; reviewed range 54cbc125..9f16421c; programs/evidence commit 5ea8459c131a463688c16f14f83b15f6492dff96; report/cleanup follow-up is on codex/coverage-oct8-trainone.',
  'Commands and outputs: run.py records stdout, stderr and exit codes; setup took 210.148s on nproc=5; package logs are below.',
  'Mutants: numeric-index and structural-map guards caught by lowering assertions; missing substr operand caught by compiler panic; deleted-key filter caught by ASan; two-index sort and allocation-size guards survived focused native tests.',
  'Not covered: admitted source deletion/presence-slot enumeration or optional Record access, combined null/undefined receivers, allocation failure injection, 32-bit targets, and the full repository gate.',
