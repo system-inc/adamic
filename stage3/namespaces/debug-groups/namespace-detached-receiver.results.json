@@ -1,0 +1,42 @@
+{
+  "group": "namespace-detached-receiver",
+  "sites": [
+    "debug.ts:429 receiver proof pin"
+  ],
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/stage3/namespaces/debug-groups/namespace-detached-receiver.a"
+    ],
+    "stdout": "3:0\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "mutant": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/debug-groups/namespace-detached-receiver/mutant.a"
+    ],
+    "stdout": "3:3\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "build": {
+    "command": [
+      "/tmp/debug-groups-adamic",
+      "build",
+      "/workspace/adamic/stage3/namespaces/debug-groups/namespace-detached-receiver.a",
+      "-o",
+      "/tmp/debug-groups/namespace-detached-receiver/native",
+      "--sanitize"
+    ],
+    "stdout": "",
+    "stderr": "adamic: /workspace/adamic/stage3/namespaces/debug-groups/namespace-detached-receiver.a:4:43: Adamic 0.1 refuses a detached call to namespace function read; qualified and detached calls have different receivers; call it through its declaring namespace\n",
+    "exit": 1
+  },
+  "judgment": "The actual detached call has undefined this and prints 0, unlike a qualified receiver printing 3. Refuse that named call; qualified live export reads are accepted."
+}

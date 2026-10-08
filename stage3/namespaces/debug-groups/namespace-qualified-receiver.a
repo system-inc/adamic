@@ -1,0 +1,7 @@
+namespace Debug {
+ export let flags:number=3;
+ export function read(this:{flags:number}):number{return this.flags;}
+}
+console.log(`${Debug.read()}`);
+Debug.flags=7;
+console.log(`${Debug.read()}`);

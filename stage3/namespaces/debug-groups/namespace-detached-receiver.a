@@ -1,0 +1,6 @@
+namespace Debug {
+ export const flags:number=3;
+ export function read(this:{flags:number}|void):number{return this?.flags ?? 0;}
+ export function detached():number{return read();}
+}
+console.log(`${Debug.read()}:${Debug.detached()}`);

@@ -81,6 +81,9 @@ func (l *lowering) namespaceMember(node *ast.Node) bool {
 }
 
 func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.namespaceReceiverRead(node); handled {
+		return value, true, err
+	}
 	if node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression || !l.namespaceMember(node) {
 		return nil, false, nil
 	}
@@ -126,6 +129,20 @@ func (l *lowering) namespaceValueNode(node *ast.Node) bool {
 }
 
 func (l *lowering) namespaceRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindThisKeyword && namespaceReceiverOwner(node) != nil && l.namespaceValueNode(node) {
+		parent := node.Parent
+		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.Expression() != node {
+			return l.notYet(node, "observing a namespace receiver object; its identity is not represented")
+		}
+		if parent.AsPropertyAccessExpression().QuestionDotToken != nil {
+			return l.notYet(parent, "an optional namespace receiver read")
+		}
+		use := parent.Parent
+		if use != nil && (use.Kind == ast.KindBinaryExpression && use.AsBinaryExpression().Left == parent && ast.IsAssignmentOperator(use.AsBinaryExpression().OperatorToken.Kind) || use.Kind == ast.KindPostfixUnaryExpression || use.Kind == ast.KindPrefixUnaryExpression) {
+			return l.notYet(parent, "a write through a namespace receiver; use the qualified export")
+		}
+	}
+
 	if node.Kind == ast.KindModuleDeclaration {
 		if !ast.IsIdentifier(node.Name()) || ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
 			return l.notYet(node, "an ambient namespace or external module; use named file imports")
@@ -155,11 +172,13 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			case ast.KindExpressionStatement, ast.KindBlock, ast.KindIfStatement, ast.KindForStatement, ast.KindWhileStatement, ast.KindDoStatement, ast.KindForOfStatement, ast.KindSwitchStatement:
 				// Statement lowering keeps module evaluation order. Calls still pass preflight.
 			case ast.KindFunctionDeclaration:
-				if containsThis(member) {
-					return &Refused{Where: l.program.Where(member), What: "this in a namespace function; a qualified call and a detached call have different receivers", Fix: "pass the state as an explicit parameter instead of using this"}
+				if namespaceOwnThis(member) {
+					if err := l.namespaceReceiverProof(member); err != nil {
+						return err
+					}
 				}
 				for _, parameter := range member.Parameters() {
-					if parameter.Name().Kind == ast.KindThisKeyword || parameter.Name().Text() == "this" {
+					if (parameter.Name().Kind == ast.KindThisKeyword || parameter.Name().Text() == "this") && !namespaceOwnThis(member) {
 						return l.notYet(parameter, "an explicit namespace-function this parameter; pass state explicitly")
 					}
 				}

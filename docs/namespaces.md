@@ -347,3 +347,16 @@ Evidence and source are in `stage3/namespaces/debug-groups/local_const_enums.*`.
 A compiler glyph mutant fails both backend comparisons; removing the deferred
 body guard fails the refusal pin. This accepts the two enum declaration shapes
 at debug.ts:879 and :893, without claiming the entire formatter body lowers.
+
+## Debug receiver scopes
+
+`this` inside an object method returned by a namespace function belongs to that
+method. The namespace rule now skips independently bound nested receiver
+scopes, while arrows continue to inherit their enclosing receiver. The exact
+front24 declaration probe matches Node in both backends. Direct namespace
+receiver reads of represented export storage also lower when every reference
+is a qualified call on the declaring namespace. The export's declared type
+must equal the receiver property's type. Named detached calls are Refused;
+function-value escape, receiver identity, writes through this, optional reads
+and unrepresented properties remain explicit NotYet boundaries. This subset
+needs no runtime namespace container. See `debug-groups/RECEIVERS.md`.

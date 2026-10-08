@@ -44,7 +44,7 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 
 func TestNamespaceReceiverRefusal(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, "namespace N {export function read(this:{readonly x:number}):number{return this.x;}}")
+	_, err := lowerSource(t, "namespace N {export const x=1; export function read(this:{readonly x:number}|void):number{return this?.x ?? 0;} export function detached():number{return read();}}")
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "different receivers") {
 		t.Fatalf("got %v", err)
@@ -198,6 +198,30 @@ func TestDebugLocalConstEnums(t *testing.T) {
 		var notYet *NotYet
 		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
 			t.Fatalf("local enum boundary lost: %v", err)
+		}
+	}
+}
+
+func TestNamespaceNestedReceiver(t *testing.T) {
+	source, err := os.ReadFile("../../stage3/namespaces/debug-groups/native-namespace-object-receiver.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := lowerSource(t, string(source)); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestNamespaceReceiverLimits(t *testing.T) {
+	for _, test := range []struct{ source, reason string }{
+		{"namespace N {export const x=1;export function read(this:{x:number}):number{return this.x;}} const detached=N.read;", "closed-world receiver"},
+		{"namespace N {export const x=1;export function read(this:{x:number}):{x:number}{return this;}} console.log(`${N.read().x}`);", "receiver object"},
+		{"namespace N {export let x=1;export function write(this:{x:number}):void{this.x=2;}} N.write();", "write through a namespace receiver"},
+	} {
+		_, err := lowerSource(t, test.source)
+		var ny *NotYet
+		if !errors.As(err, &ny) || !strings.Contains(err.Error(), test.reason) {
+			t.Fatalf("receiver boundary lost: %v", err)
 		}
 	}
 }

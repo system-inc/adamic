@@ -1,0 +1,13 @@
+{
+  "sites": [
+    "debug.ts:429 receiver proof pin"
+  ],
+  "mutations": [
+    [
+      "return read();",
+      "return Debug.read();"
+    ]
+  ],
+  "boundary": "different receivers",
+  "judgment": "The actual detached call has undefined this and prints 0, unlike a qualified receiver printing 3. Refuse that named call; qualified live export reads are accepted."
+}
