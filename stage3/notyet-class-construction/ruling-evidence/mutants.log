@@ -1,0 +1,8 @@
+erase-inferred-origin: killed (exit 1, stdout differs); /tmp/class-interface-mutants/erase-inferred-origin.log
+static-value-dispatch: killed (exit 1, stdout differs); /tmp/class-interface-mutants/static-value-dispatch.log
+static-statement-dispatch: killed (exit 1, stdout differs); /tmp/class-interface-mutants/static-statement-dispatch.log
+refuse-structural-literal: killed (exit 1, nominal-class); /tmp/class-interface-mutants/refuse-structural-literal.log
+unchecked-contextual-class: killed (exit 1, want the inserted check to fire); /tmp/class-interface-mutants/unchecked-contextual-class.log
+unchecked-explicit-class: killed (exit 1, want the inserted check to fire); /tmp/class-interface-mutants/unchecked-explicit-class.log
+own-only-presence: killed (exit 1, stdout differs); /tmp/class-interface-mutants/own-only-presence.log
+invoke-getter-on-presence: killed (exit 1, stdout differs); /tmp/class-interface-mutants/invoke-getter-on-presence.log

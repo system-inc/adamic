@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_interface_literal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_interface_literal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_interface_literal.a
+    oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/class_interface_literal.a:3:27: Adamic 0.1 refuses a value without nominal ancestry seen as A; construct that class or a subclass; use an interface for structural values (adamic/nominal-class)
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_interface_literal.a (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.085s
+FAIL
