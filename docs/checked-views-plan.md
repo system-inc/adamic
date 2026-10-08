@@ -1603,3 +1603,23 @@ rank 36) are already in our 42/181 inventory; they are not added or certified
 again. Owned resume/dictionary-member-handoff.json records this split and counts.
 Full dynamic lookup validation awaits lane 6's hooks in views-integration,
 currently ba59427c locally; no dictionary branch was merged.
+
+## Tuple lane, October 7 reassignment
+
+Branch `codex/views-tuples` starts from integration `4e67894a`. Own new
+`internal/lower/view_tuples.go`, `internal/native/view_tuples.go`,
+`internal/javascript/view_tuples.go`, runtime `view_tuples.h/.c`, oracle
+`checked_views_tuples_original_test.go`, and `stage3/interface-downcasts/tuples/`.
+The lane 2 ranked census supplies six candidate pairs and nine candidate reads.
+These are candidate counts, not exact reachability or certified coverage.
+
+Minimal shared hooks: the existing array contract adapter delegates fixed tuples
+to per-position descriptors; lazy admission recognizes those descriptors; tuple
+index lowering records the same read metadata as object fields; object/primitive
+union selection recognizes the tuple member. Native object production retains
+tuple identity, with initialization in object and region allocation. The existing
+array read and object-union dispatch invoke tuple validation. JavaScript uses
+array identity for tuple descriptors at the same dispatch sites. No second array
+consumer or callable path is introduced. Original numeric brands retain their
+existing refusal unless their real contracts can be certified without rewriting
+tsc declarations.
