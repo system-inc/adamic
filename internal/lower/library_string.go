@@ -135,7 +135,7 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
 		switch name {
-		case "charAt", "substring", "substr", "concat", "toString", "valueOf":
+		case "charAt", "substring", "substr", "lastIndexOf", "concat", "toString", "valueOf":
 			value, err := l.expression(receiver)
 			if err != nil {
 				return nil, true, err
@@ -149,6 +149,10 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 }
 
 func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	if name == "lastIndexOf" {
+		value, err := l.stringLastIndexOf(node, value, written)
+		return value, true, err
+	}
 	if name == "substr" {
 		value, err := l.stringSubstr(node, value, written)
 		return value, true, err

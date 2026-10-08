@@ -1,0 +1,25 @@
+function find(text: string, search: string, position: number | undefined): void {
+    console.log(text.lastIndexOf(search, position).toString());
+}
+const text = "owned:" + "ababa";
+find(text, "aba", 7);
+find(text, "aba", 6.9);
+find(text, "aba", -1);
+find(text, "aba", NaN);
+find(text, "aba", Infinity);
+find(text, "aba", -Infinity);
+find(text, "aba", undefined);
+find(text, "", 7);
+find(text, "", 100);
+find(text, "", -100);
+find(text, "longer:" + text, 100);
+find("😀😀", "\uD83D", 1);
+find("😀😀", "\uDE00", 2);
+find("😀😀", "😀", 1);
+console.log(text.lastIndexOf("aba").toString());
+let events = "";
+function receiver(): string { events += "r"; return "owned:" + "ababa"; }
+function needle(): string { events += "s"; return "aba"; }
+function position(): number { events += "p"; return 6; }
+console.log(receiver().lastIndexOf(needle(), position()).toString());
+console.log(events);
