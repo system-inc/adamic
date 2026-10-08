@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -15,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -178,27 +178,14 @@ func compilerSource(t *testing.T) string {
 
 func sourceFiles(t *testing.T, directory string) []string {
 	t.Helper()
-	var paths []string
-	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-			absolute, err := filepath.Abs(path)
-			if err != nil {
-				return err
-			}
-			paths = append(paths, absolute)
-		}
-		return nil
-	})
+	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(paths) == 0 {
-		t.Fatalf("empty corpus: %s", directory)
+	if filepath.Clean(directory) == filepath.Join(root, "stage1") || filepath.Clean(directory) == filepath.Clean(filepath.Join(repository, "stage1")) {
+		return corpusfiles.Repository(t, root, []string{"stage1"}, []string{"*.ts"})
 	}
-	return paths
+	return corpusfiles.Upstream(t, filepath.Dir(filepath.Dir(directory)), compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
 }
 
 type corpus struct {
