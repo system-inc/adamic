@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """The fast gate, run on the gate box against a checkout of the candidate.
 
-It builds and vets the whole repository, tests every package the candidate touches (its diff
-against the base, by package), runs the oracle smoke set, and checks the skip census over the
+It builds and vets the whole repository, tests every package affected by the candidate (reverse imports and declared compiler
+dependencies, from its diff against the base), runs the oracle smoke set, and checks the skip census over the
 run's log. It stops at the first failure: the first failing test or package build is printed
 first, every other step is killed, and status.txt goes red naming it. Tests always run with
 -count=1; only compiles are reused, from Go's build cache.
@@ -843,22 +843,40 @@ class Gate:
     def touched(self, changed):
         """Each changed file's package: its own directory's, one that embeds it, or the nearest package
         directory above it (its testdata, a lint rule's directory, a fixture subdirectory: what lives in
-        a package's tree is that package's to test). Anything else is unowned and goes to cover()."""
-        listing = self.command(["go", "list", "-f", "{{.Dir}}\t{{.ImportPath}}\t{{join .EmbedFiles \",\"}}\t{{join .TestEmbedFiles \",\"}}\t{{join .XTestEmbedFiles \",\"}}", "./..."],
-                                 cwd=self.arguments.tree, capture_output=True, text=True)
+        a package's tree is that package's to test). Reverse imports and compiler declarations then
+        expand those owners to every affected package. Anything unowned goes to cover()."""
+        listing = self.command(["go", "list", "-deps", "-test", "-json", "./..."],
+                               cwd=self.arguments.tree, capture_output=True, text=True)
         if listing.returncode != 0:
             raise SystemExit("go list failed: " + listing.stderr)
-        directories, embedded = {}, {}
+        directories, embedded, reverse = {}, {}, {}
         self.packageDirectories = {}
         tree = os.path.realpath(self.arguments.tree)
-        for line in listing.stdout.splitlines():
-            directory, importPath, *embeds = line.split("\t")
+        decoder = json.JSONDecoder()
+        remaining = listing.stdout.strip()
+        while remaining:
+            package, end = decoder.raw_decode(remaining)
+            remaining = remaining[end:].lstrip()
+            # go list -test emits synthetic test binaries and annotated package variants.
+            # Their imports contribute edges, but only real packages can be passed to go test.
+            importPath = package.get("ForTest") or package["ImportPath"].split(" [", 1)[0]
+            if package.get("Name") == "main" and importPath.endswith(".test"):
+                continue
+            for dependency in set(package.get("Imports", []) + package.get("TestImports", []) + package.get("XTestImports", [])):
+                reverse.setdefault(dependency.split(" [", 1)[0], set()).add(importPath)
+            directory = package.get("Dir")
+            if not directory or not (importPath == module or importPath.startswith(module + "/")):
+                continue
             relative = os.path.relpath(os.path.realpath(directory), tree)
             directories[relative] = importPath
             self.packageDirectories[importPath] = directory
-            for files in embeds:
-                for name in filter(None, files.split(",")):
+            for field in ("EmbedFiles", "TestEmbedFiles", "XTestEmbedFiles"):
+                for name in package.get(field, []):
                     embedded[os.path.normpath(os.path.join(relative, name))] = importPath
+        dependencies = self.compilerDependencies(directories)
+        for package, inputs in dependencies.items():
+            for dependency in inputs:
+                reverse.setdefault(module + "/" + dependency, set()).add(module + "/" + package)
         packages, unowned = set(), []
         for path in changed:
             directory = os.path.dirname(path) or "."
@@ -871,10 +889,69 @@ class Gate:
                 unowned.append(path)
             else:
                 packages.add(owner)
+        if "cloud/fast-gate/compiler-dependencies.json" in changed:
+            packages.update(module + "/" + package for package in dependencies if package in directories)
+            unowned = [path for path in unowned if path != "cloud/fast-gate/compiler-dependencies.json"]
+        changedPackages = set(packages)
+        pending = list(packages)
+        while pending:
+            for dependent in reverse.get(pending.pop(), ()):
+                if dependent not in packages:
+                    packages.add(dependent)
+                    pending.append(dependent)
+        packages.intersection_update(self.packageDirectories)
+        compilerChanged = any(path.startswith(("internal/load/", "internal/lower/", "internal/native/", "internal/javascript/", "internal/ir/", "internal/flow/", "cmd/adamic/")) for path in changed)
+        if compilerChanged:
+            # No affected check is dropped to meet the fast gate's budget.
+            self.deferred = {}
         if oracle in packages:
-            self.oracleSelection = self.selectOracle()
+            self.oracleSelection = ({"whole": True, "reason": "compiler dependency changed"}
+                                    if compilerChanged or oracle not in changedPackages else self.selectOracle())
             self.result["oracle_selection"] = self.oracleSelection
+        self.result["direct_packages"] = sorted(changedPackages)
         return sorted(packages), unowned
+
+    def compilerDependencies(self, directories):
+        """Package-level declarations cover helpers as well as their callers.
+
+        The census scans tracked Go package sources for compiler imports and known invocation
+        literals. Standalone drivers are recorded separately; script dispatch is not covered here.
+        A missing package declaration fails selection before any tests start.
+        """
+        name = "cloud/fast-gate/compiler-dependencies.json"
+        root = self.arguments.tree
+        if not os.path.exists(os.path.join(root, name)):
+            root = self.arguments.tools
+        with open(os.path.join(root, name)) as handle:
+            declarations = json.load(handle)
+        if declarations.get("version") != 1 or not isinstance(declarations.get("packages"), dict):
+            raise ValueError("invalid compiler dependency map: " + name)
+        packages = declarations["packages"]
+        for package, inputs in packages.items():
+            if not isinstance(inputs, list) or not inputs or any(not isinstance(value, str) or value not in directories for value in inputs):
+                raise ValueError("invalid compiler dependencies for " + package)
+        marker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic|oracle/adamic|ADAMIC_(?:BIN|BINARY)')
+        missing = []
+        for path in self.git(self.arguments.tree, "ls-files", "stage1", "stage3", "internal/oracle").splitlines():
+            if not path.endswith(".go"):
+                continue
+            with open(os.path.join(self.arguments.tree, path)) as handle:
+                source = handle.read()
+            package = os.path.dirname(path)
+            while package and package not in directories:
+                package = os.path.dirname(package)
+            if not package:
+                if marker.search(source) and path.endswith("_test.go"):
+                    missing.append(path)
+                elif marker.search(source):
+                    self.result.setdefault("compiler_consumers_without_test_package", []).append(path)
+                continue
+            if marker.search(source) and package not in packages:
+                missing.append(path)
+        if missing:
+            raise ValueError("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
+        self.result["compiler_dependency_map"] = {"root": root, "path": name}
+        return packages
 
     def selectOracle(self):
         """What a change to internal/oracle has to run, when it only adds or edits fixtures: each changed

@@ -1,0 +1,352 @@
+{
+  "status": "partial; not canary shipped",
+  "base": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "candidate": "c7835cb3f1a0a9abb4f932d0353887dab1fbb907",
+  "tools_parent": "89cbe74a",
+  "instrument": "Python 3 time.perf_counter; subprocess.run wall time",
+  "gap_family": {
+    "instrument": "Python 3 time.perf_counter wall clock around subprocess.run",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-p",
+      "2",
+      "-timeout",
+      "10m",
+      "./stage1/cohere/css",
+      "./stage1/cohere/gitignore",
+      "./stage1/cohere/graphql",
+      "./stage1/cohere/json",
+      "./stage1/cohere/lint",
+      "./stage1/cohere/markdownblocks",
+      "./stage1/cohere/mediaquery",
+      "./stage1/cohere/selector",
+      "./stage1/cohere/static_single_assignment",
+      "./stage1/cohere/suppression",
+      "./stage1/cohere/tsprinter",
+      "./stage1/cohere/values",
+      "./stage1/cohere/yaml",
+      "-run",
+      "^(TestLexerGaps|TestCompilerGaps|TestOptionAndComparatorGaps|TestDocumentedStageZeroGaps|TestEachGapStandsWhereGapsMdSaysItDoes|TestParserRepresentationProbes)$"
+    ],
+    "elapsed_seconds": 17.09573396600001,
+    "exit": 1,
+    "cache": "warm Go build cache; uncached test results"
+  },
+  "broad_cold_gap_probe_run": {
+    "instrument": "Python 3 time.perf_counter wall clock around subprocess.run",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-p",
+      "2",
+      "-timeout",
+      "10m",
+      "./stage1/cohere/...",
+      "-run",
+      "Gap|Probe"
+    ],
+    "elapsed_seconds": 205.64167760600003,
+    "exit": 1
+  },
+  "selector_replay": {
+    "before": {
+      "selection_seconds": 0.15033127799995327,
+      "packages": [
+        "github.com/system-inc/adamic/cloud",
+        "github.com/system-inc/adamic/cmd/adamic",
+        "github.com/system-inc/adamic/internal/flow",
+        "github.com/system-inc/adamic/internal/fresh",
+        "github.com/system-inc/adamic/internal/ir",
+        "github.com/system-inc/adamic/internal/javascript",
+        "github.com/system-inc/adamic/internal/lower",
+        "github.com/system-inc/adamic/internal/native",
+        "github.com/system-inc/adamic/internal/oracle",
+        "github.com/system-inc/adamic/stage3/fixtures"
+      ],
+      "gap_tests": [
+        "github.com/system-inc/adamic/internal/lower TestIteratorGapsAreExplicit",
+        "github.com/system-inc/adamic/internal/lower TestLibraryMapSetGapsStayRefused",
+        "github.com/system-inc/adamic/internal/lower TestNestedFunctionGapsAreLoud",
+        "github.com/system-inc/adamic/internal/lower TestTypedArrayGaps",
+        "github.com/system-inc/adamic/internal/native TestMapHashProbeBound",
+        "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants",
+        "github.com/system-inc/adamic/internal/oracle TestFreshWriteProbesStayRefused",
+        "github.com/system-inc/adamic/internal/oracle TestOmittedOriginalProbePolicy"
+      ],
+      "result": {
+        "oracle_selection": {
+          "whole": true,
+          "reason": "internal/oracle/counts_test.go changes more than fixture entries"
+        }
+      }
+    },
+    "after": {
+      "selection_seconds": 0.4099430289999191,
+      "packages": [
+        "github.com/system-inc/adamic/bench/regex",
+        "github.com/system-inc/adamic/bridge/tsgo",
+        "github.com/system-inc/adamic/cloud",
+        "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+        "github.com/system-inc/adamic/cmd/adamic",
+        "github.com/system-inc/adamic/cmd/adamic-fuzz",
+        "github.com/system-inc/adamic/cmd/adamic-meter",
+        "github.com/system-inc/adamic/cmd/adamic-reduce",
+        "github.com/system-inc/adamic/cmd/adamic-test262",
+        "github.com/system-inc/adamic/internal/flow",
+        "github.com/system-inc/adamic/internal/fresh",
+        "github.com/system-inc/adamic/internal/fuzz",
+        "github.com/system-inc/adamic/internal/ir",
+        "github.com/system-inc/adamic/internal/javascript",
+        "github.com/system-inc/adamic/internal/lower",
+        "github.com/system-inc/adamic/internal/native",
+        "github.com/system-inc/adamic/internal/oracle",
+        "github.com/system-inc/adamic/stage1/cohere/css",
+        "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+        "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+        "github.com/system-inc/adamic/stage1/cohere/estree",
+        "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+        "github.com/system-inc/adamic/stage1/cohere/gitignore",
+        "github.com/system-inc/adamic/stage1/cohere/graphql",
+        "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+        "github.com/system-inc/adamic/stage1/cohere/json",
+        "github.com/system-inc/adamic/stage1/cohere/lint",
+        "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+        "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+        "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+        "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+        "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+        "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+        "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+        "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+        "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+        "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+        "github.com/system-inc/adamic/stage1/cohere/selector",
+        "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+        "github.com/system-inc/adamic/stage1/cohere/suppression",
+        "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+        "github.com/system-inc/adamic/stage1/cohere/typeaware",
+        "github.com/system-inc/adamic/stage1/cohere/values",
+        "github.com/system-inc/adamic/stage1/cohere/yaml",
+        "github.com/system-inc/adamic/stage1/typescript/parser",
+        "github.com/system-inc/adamic/stage1/typescript/scanner",
+        "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+        "github.com/system-inc/adamic/stage3/census/tool",
+        "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+        "github.com/system-inc/adamic/stage3/fixtures",
+        "github.com/system-inc/adamic/stage3/ledger/checker-259",
+        "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+      ],
+      "gap_tests": [
+        "github.com/system-inc/adamic/internal/lower TestIteratorGapsAreExplicit",
+        "github.com/system-inc/adamic/internal/lower TestLibraryMapSetGapsStayRefused",
+        "github.com/system-inc/adamic/internal/lower TestNestedFunctionGapsAreLoud",
+        "github.com/system-inc/adamic/internal/lower TestTypedArrayGaps",
+        "github.com/system-inc/adamic/internal/native TestMapHashProbeBound",
+        "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants",
+        "github.com/system-inc/adamic/internal/oracle TestFreshWriteProbesStayRefused",
+        "github.com/system-inc/adamic/internal/oracle TestOmittedOriginalProbePolicy",
+        "github.com/system-inc/adamic/stage1/cohere/css TestClosedOptionalBooleanConditionGap",
+        "github.com/system-inc/adamic/stage1/cohere/css TestClosedParserRegexGap",
+        "github.com/system-inc/adamic/stage1/cohere/css TestClosedPrinterRegexGap",
+        "github.com/system-inc/adamic/stage1/cohere/css TestEachGapStandsWhereGapsMdSaysItDoes",
+        "github.com/system-inc/adamic/stage1/cohere/cssstrings TestMultiPushGap",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestCookedSurrogateLibraryGap",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestInterfaceDefaultGap",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestInterfaceTypeMethodGap",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestMethodReplacementGap",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestParserRecoveryGap",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestPinnedNumericGaps",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestPostfixValueGap",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestRawInputGap",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestRecoveryLibraryGaps",
+        "github.com/system-inc/adamic/stage1/cohere/estree TestTypeMemberLibraryGap",
+        "github.com/system-inc/adamic/stage1/cohere/gitignore TestEachGapStandsWhereGapsMdSaysItDoes",
+        "github.com/system-inc/adamic/stage1/cohere/graphql TestEachGapStandsWhereGapsMdSaysItDoes",
+        "github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterConstructorGap",
+        "github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterWhitespaceGap",
+        "github.com/system-inc/adamic/stage1/cohere/json TestDocumentedStageZeroGaps",
+        "github.com/system-inc/adamic/stage1/cohere/json TestUpstreamNumericSeparatorGap",
+        "github.com/system-inc/adamic/stage1/cohere/lint TestClosedComparatorGaps",
+        "github.com/system-inc/adamic/stage1/cohere/lint TestNestedConstructorGap",
+        "github.com/system-inc/adamic/stage1/cohere/lint TestOptionAndComparatorGaps",
+        "github.com/system-inc/adamic/stage1/cohere/lint/helpers TestKnownGapsAreExplicit",
+        "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments TestJsxParserGapIsExplicit",
+        "github.com/system-inc/adamic/stage1/cohere/lint/regex TestDynamicPatternGap",
+        "github.com/system-inc/adamic/stage1/cohere/lint/regex TestOptionDialectGap",
+        "github.com/system-inc/adamic/stage1/cohere/markdownblocks TestParserRepresentationProbes",
+        "github.com/system-inc/adamic/stage1/cohere/mediaquery TestEachGapStandsWhereGapsMdSaysItDoes",
+        "github.com/system-inc/adamic/stage1/cohere/selector TestEachGapStandsWhereGapsMdSaysItDoes",
+        "github.com/system-inc/adamic/stage1/cohere/static_single_assignment TestEachGapStandsWhereGapsMdSaysItDoes",
+        "github.com/system-inc/adamic/stage1/cohere/suppression TestEachGapStandsWhereGapsMdSaysItDoes",
+        "github.com/system-inc/adamic/stage1/cohere/tsprinter TestClassInterfaceMethodGap",
+        "github.com/system-inc/adamic/stage1/cohere/tsprinter TestClosedOptionalBooleanFunctionGap",
+        "github.com/system-inc/adamic/stage1/cohere/tsprinter TestCompilerGaps",
+        "github.com/system-inc/adamic/stage1/cohere/values TestEachGapStandsWhereGapsMdSaysItDoes",
+        "github.com/system-inc/adamic/stage1/cohere/yaml TestClosedLexerGaps",
+        "github.com/system-inc/adamic/stage1/cohere/yaml TestClosedStringPresenceGap",
+        "github.com/system-inc/adamic/stage1/cohere/yaml TestClosedValuePresenceGap",
+        "github.com/system-inc/adamic/stage1/cohere/yaml TestLexerGaps",
+        "github.com/system-inc/adamic/stage1/cohere/yaml TestSpeedCostProbes",
+        "github.com/system-inc/adamic/stage1/typescript/parser TestClassMethodInterfaceGap",
+        "github.com/system-inc/adamic/stage1/typescript/parser TestClosedOptionalFunctionValueGap",
+        "github.com/system-inc/adamic/stage1/typescript/parser TestConditionalEmptyArrayGap",
+        "github.com/system-inc/adamic/stage1/typescript/parser TestPushSpreadGap",
+        "github.com/system-inc/adamic/stage1/typescript/parser TestStrongAstParentGap",
+        "github.com/system-inc/adamic/stage1/typescript/scanner TestBigintGapStandsWhereGapsMdSays",
+        "github.com/system-inc/adamic/stage1/typescript/scanner TestGapStandsWhereGapsMdSays"
+      ],
+      "result": {
+        "compiler_consumers_without_test_package": [
+          "stage3/drivers/parser/build-metrics/main.go",
+          "stage3/drivers/scanner/build-metrics.go"
+        ],
+        "compiler_dependency_map": {
+          "root": "/workspace/adamic",
+          "path": "cloud/fast-gate/compiler-dependencies.json"
+        },
+        "oracle_selection": {
+          "whole": true,
+          "reason": "compiler dependency changed"
+        },
+        "direct_packages": [
+          "github.com/system-inc/adamic/cloud",
+          "github.com/system-inc/adamic/cmd/adamic",
+          "github.com/system-inc/adamic/internal/ir",
+          "github.com/system-inc/adamic/internal/javascript",
+          "github.com/system-inc/adamic/internal/lower",
+          "github.com/system-inc/adamic/internal/native",
+          "github.com/system-inc/adamic/internal/oracle",
+          "github.com/system-inc/adamic/stage3/fixtures"
+        ]
+      }
+    }
+  },
+  "eight_replayed_failures": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_empty_array_union.ts",
+      "diagnostic": "gaps_test.go:34: gap closed: update GAPS.md and remove the workaround or unblock native composition"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps/emptyFallback.ts",
+      "diagnostic": "gaps_test.go:35: gap changed: <nil>; update GAPS.md"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestOptionAndComparatorGaps/2_optional_index.ts",
+      "diagnostic": "gaps_test.go:64: documented refusal absent: <nil>"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestOptionAndComparatorGaps/4_last_index_position.ts",
+      "diagnostic": "gaps_test.go:64: documented refusal absent: <nil>"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts",
+      "diagnostic": "gaps_test.go:50: NotYet gap changed: <nil>; update GAPS.md"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestCompilerGaps/prefixUpdateValue",
+      "diagnostic": "gaps_test.go:35: expected recorded gap \"stage 0 can't lower a PrefixUnaryExpression on a number yet\", got <nil>"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestLexerGaps/prefixIncrement.ts",
+      "diagnostic": "gaps_test.go:44: gap changed or closed: <nil>; update GAPS.md and remove its workaround"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestLexerGaps/emptyAlternative.ts",
+      "diagnostic": "gaps_test.go:44: gap changed or closed: <nil>; update GAPS.md and remove its workaround"
+    }
+  ],
+  "unit_tests": {
+    "tests": 52,
+    "exit": 0,
+    "seconds": 4.56,
+    "mutants": [
+      {
+        "name": "external test owner lost",
+        "test": "test_external_test_package_uses_its_real_owner",
+        "caught": true
+      },
+      {
+        "name": "test variants not normalized",
+        "test": "test_test_variants_normalize_to_real_packages",
+        "caught": true
+      },
+      {
+        "name": "synthetic test binary selected",
+        "test": "test_test_variants_normalize_to_real_packages",
+        "caught": true
+      },
+      {
+        "name": "ordinary imports omitted",
+        "test": "test_transitive_test_imports_and_unrelated_package",
+        "caught": true
+      },
+      {
+        "name": "test imports omitted",
+        "test": "test_transitive_test_imports_and_unrelated_package",
+        "caught": true
+      },
+      {
+        "name": "external test imports omitted",
+        "test": "test_transitive_test_imports_and_unrelated_package",
+        "caught": true
+      },
+      {
+        "name": "transitive walk removed",
+        "test": "test_transitive_test_imports_and_unrelated_package",
+        "caught": true
+      },
+      {
+        "name": "opaque dependencies ignored",
+        "test": "test_opaque_gap_and_whole_oracle_are_selected",
+        "caught": true
+      },
+      {
+        "name": "compiler oracle narrowed",
+        "test": "test_opaque_gap_and_whole_oracle_are_selected",
+        "caught": true
+      },
+      {
+        "name": "census disabled",
+        "test": "test_census_rejects_a_new_compiler_runner",
+        "caught": true
+      },
+      {
+        "name": "invalid dependencies accepted",
+        "test": "test_invalid_map_fails_closed",
+        "caught": true
+      },
+      {
+        "name": "affected tests deferred",
+        "test": "test_opaque_gap_and_whole_oracle_are_selected",
+        "caught": true
+      },
+      {
+        "name": "fixture ancestry removed",
+        "test": "test_embedding_and_fixture_ownership_survive",
+        "caught": true
+      }
+    ]
+  },
+  "complete_fast_gate_before_after_seconds": null,
+  "budget_overrun_seconds": null,
+  "limitations": [
+    "No clang in execution image; gap-family run includes additional native-tool failures.",
+    "Stage 3 standalone/script drivers are not dispatched by this change.",
+    "Census uses literal patterns in tracked Go sources in stage1, stage3 and internal/oracle; arbitrary wrappers and scripts are not proven covered.",
+    "Default gate host threadripper does not resolve; actual canary staging and promotion not performed.",
+    "No complete fast-gate benchmark or budget verdict."
+  ]
+}
