@@ -95,3 +95,85 @@ The supplied refusal table classifies writable collection widening as adaptation
 The frozen key-representation reason has 195 ranking roots and 2,391 hidden bytes; branded Sets add __String (19, 2,739), Path (12, 931), and ResolvedConfigFilePath (1, 309). These are not necessarily disjoint fixes: each actual key type and its construction proof must be audited. Object, array, Map and closure identity already have representation paths on the base. Mixed representations use ir.Union, which keyable currently excludes.
 
 The map-pair stop is `commandLineParser.ts:141:65`, `new Map(mapIterator(jsxOptionMap.entries(), ...))`: one ranking root, 188 hidden bytes. Generic MapLike<T> has three ranking roots and 725 bytes; its optional form has one and 234. Generic structural collection signatures, Map value representations and unsafe widening remain dependencies rather than promises to retire them with key equality.
+
+## Representation and lowering design
+
+This section is a proposal for @system_adamic wherever it changes the language's accepted or refused programs. It is not authorization to implement those changes. Existing representation and iterable support may be completed without weakening any proof. Follow `docs/0.1.md`, `docs/escape-hatches.md`, and the no-collector ownership model in `docs/memory.md`.
+
+| Shape | Representation and lowering | Admission boundary |
+|---|---|---|
+| string and string-literal unions | Existing string-key table, byte-content hashing and equality; retain keys | Already supported. Distinct allocated strings with equal content must match |
+| number and numeric enum/literal unions | Existing double slots; SameValueZero hash and equality; canonical +0 at insertion | Already supported. All NaN payloads equal, infinities distinct, -0 shares +0's hash |
+| boolean | Existing boolean-key flag, never read the slot as a double | Already supported |
+| number or undefined | Existing packed MaybeNumber slots, reserved undefined tag distinct from every present NaN; optional-number hash/equality | Already supported. Insertion and iteration must preserve the packed tag |
+| plain objects, tuples, classes and object-only unions | Existing identity-key table storing the original retained pointer; no structural hash, copy, coercion or field comparison | Already supported when represented as ir.Object and construction, mutable relations and cycle proofs hold |
+| arrays, maps, sets and closures | Existing identity-key table; retain the original array/map/closure pointer | Already supported for homogeneous representations; closure identity is the closure value, not its function index |
+| reference union mixing strings, arrays, objects, maps or closures | Proposed self-describing Union key, reference-kind discrimination; strings by content, other references by identity | NotYet until equality, hashing, boxing, iteration and ownership are validated together; never use box address as identity for a boxed primitive |
+| scalar/reference unions, unknown and object | Proposed tagged Union key using the same runtime-kind representation as ordinary unions; numeric hash normalizes NaNs and zero; null and undefined use distinct tags | Proposal only. Invariant key slots and unknown-boundary checks remain required |
+| boolean or undefined; nullish unions | Proposed explicit tags for absent values; no conflation of null with undefined or false | Proposal only; current single-null-pointer reference encoding cannot distinguish both nullish members |
+| branded primitives (__String, Path and ResolvedConfigFilePath) | Proposed erasure of a proven primitive-only phantom brand to its primitive representation, with unchanged primitive equality | Proposal only. Construction assertions and brand member reads need a ruling; mere TypeScript assignability is not proof that a phantom property exists |
+| iterable readonly pairs | Prove a fixed two-element tuple yield type; use the existing iterable plan to collect tuples, then existing MapNew/Pairs lowering | Compiler lesson under the existing iterator contract. Require exact slot representations or explicit checked conversions; preserve all existing iterator-origin checks |
+| MapLike<T> and optional MapLike<T> | The record's shape plus dictionary from `docs/index-signatures.md`; one shared identity, string key order and checked field conversions | Separate approved index-signature design, with remaining implementation dependencies. Never translate a record view to a copied Map |
+
+For proposed Union keys, add a dedicated key mode rather than treating ir.Union as an ordinary identity reference. Reuse the union's existing runtime tags and scalar boxes. Hash dispatch and equality dispatch must share one classification: string content; numeric SameValueZero; boolean value; null and undefined separately; other references by original identity. Canonicalize the numeric payload when retaining a new key. Equality must not invoke valueOf, toString, getters or user callbacks. Box allocation identity is never the identity of a numeric or boolean key.
+
+The table owns one strong key edge and one strong value edge per live Map entry; Sets own only their elements. Overwrite releases the incoming duplicate key and the old value while preserving the first key's position. Delete/clear/free release each live edge once. Copying keys, entries, iterator results and constructor pairs retains the references each result owns. Borrowed loop payloads remain alive across delete, clear, callback mutation and exception paths. A key or element reaching its holder is still subject to the existing fresh-write and cycle analysis. No collector, weak-key fallback or leak-tolerating acceptance is proposed.
+
+Live iteration continues through stable tombstones. Overwrite does not append; delete then reinsert does. A deletion before the next step is skipped; addition before exhaustion is visited; clear followed by add during iteration is visited. Exhaustion remains sticky. Retain the collection while its iterator exists; balance the active-iterator count on exhaustion and destruction. Never compact while any iterator needs its position. Snapshot-producing operations and live protocol iteration must stay distinct.
+
+### Programs requiring a ruling, not implementation in this unit
+
+These are reduced obligations, not trusted constructors:
+
+```a
+const mixed = new Map<string | number, string>();
+mixed.set(1, 'number');
+mixed.set('1', 'string');
+console.log(mixed.size, mixed.get(1), mixed.get('1'));
+
+const nullish = new Set<null | undefined>([null, undefined]);
+console.log(nullish.size, nullish.has(null), nullish.has(undefined));
+
+type Path = string & { readonly __pathBrand: unknown };
+function store(path: Path): boolean {
+    const paths = new Set<Path>();
+    paths.add(path);
+    return paths.has(path);
+}
+```
+
+The first requires content/value equality across tags. The second requires two distinct nullish tags rather than one NULL. The third asks only for a representation, but does not establish how a Path can be constructed soundly or what reading __pathBrand means. Do not admit `'a' as Path` merely because its machine payload could be a string. The proposed primitive-brand rule must identify erased phantom members, reject observable unproven member contracts, and leave unchecked assertions refused.
+
+The following must stay refused regardless of a key representation lesson:
+
+```a
+interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: () => string; }
+const dogs = new Map<string, Dog>();
+const animals: Map<string, Animal> = dogs;
+animals.set('x', { name: 'cat' });
+console.log(dogs.get('x')?.bark());
+
+function widen(values: Set<Dog>): Set<Animal> { return values; }
+
+const unrelated = 'wrong' as unknown as number;
+const unsafe = new Map<number, number>();
+unsafe.set(unrelated, 1);
+```
+
+Mutable key and value widening, unsafe callable variance, unrelated assertions, any, unproven runtime contracts and possible strong cycles remain refused with their existing reasons. Monomorphization failures, unresolved type parameters, iterator receiver-origin erasure, wrong tuple arity, optional/rest tuples and unsupported representations remain NotYet; never let a guessed slot layout reach clang.
+
+### Silent-miscompile audit
+
+1. Equal keys must hash alike: every NaN payload, both zero signs, distinct string allocations, absent packed numbers and reference identity. Different tags must not collapse 1, '1', true, null and undefined. Hash collisions must still compare the whole key.
+2. A boxed numeric key cannot compare its box address; a reference key cannot compare its fields. Views and aliases must preserve the same original object, array, Map and closure identity. Separate closures from one function body must remain distinct.
+3. Union fit/narrow conversions in literals, set/add/get/has/delete, constructor tuples, callback parameters, spread, keys/entries/values and iterator results must agree. Representation support in keyable alone is insufficient.
+4. Present undefined values must not become absence. get's nullable result and has must distinguish them; iteration must retain them. Packed undefined must remain distinct from present NaN. null must not silently become undefined.
+5. Evaluate receiver, key and value once, left to right. Callback and iterator protocol calls may mutate collections or throw. Constructor iteration must honor the existing done/value order and close semantics; tuple extraction must not re-evaluate the source.
+6. Mutation must preserve insertion order, tombstones, sticky exhaustion and active iterator accounting, including nested iterators, clear, reinsert, early break and exceptional exits.
+7. Ownership must survive overwrite with aliased key/value, runtime-built strings, deletion during callbacks, borrowed iterator payloads, copied entry tuples, growth and rehash. Sanitizers and leak checks need allocated inputs, not only immortal literals.
+8. Cycle and invariant-slot proofs must see key edges as well as values. New lowering must record writes. Hidden iterator-to-collection edges cannot escape the cycle finder.
+9. Maps and Sets share a native table but have different source contracts: add returns the Set, forEach receives value twice, and entries yields [value,value]. JavaScript lowering must use the actual collection kind.
+10. MapLike integer-key enumeration, inherited names, __proto__, own presence, deletion, static/dynamic aliases, freeze and checked named-slot conversions must not be replaced by Map behavior. Keep this dependency explicit at the #whkxbc7 map-pair stop.
+
+Acceptance requires original-source Node observations, both generated backends, native ASan/UBSan and leaks, recorded counts, and semantic mutants that emit valid code. A refusal mutant must be caught by a refused program becoming accepted, not by a C compile error. Historical hidden-byte credit is not a retirement claim: replay the exact original reason before and after the change, report any newly exposed blocker, and distinguish a diagnostic retired from a complete tsc root compiling.
