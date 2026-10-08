@@ -1,0 +1,12 @@
+=== RUN   TestOwnedWitnesses
+    registration_test.go:54: checker compilation phases: load=173.034877ms lower=2.929164081s C=493.218503ms JavaScript=23.843649ms
+    registration_test.go:54: native: compiling unit functions_0073.c: exit status 1
+        functions_0073.c:731:4: error: non-void function 'adamic_unit_adamic_function_621_Rule_new' should return a value [-Wreturn-mismatch]
+          731 |    return;
+              |    ^
+        1 error generated.
+        
+--- FAIL: TestOwnedWitnesses (212.88s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	212.921s
+FAIL

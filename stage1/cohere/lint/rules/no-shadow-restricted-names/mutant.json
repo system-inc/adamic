@@ -1,0 +1,5 @@
+{
+  "name": "written undefined carved out",
+  "from": "return !this.written.has(anchor);",
+  "to": "return true;"
+}

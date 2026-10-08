@@ -1,0 +1,24 @@
+{
+  "name": "no-shadow-restricted-names",
+  "typed": true,
+  "programReads": [],
+  "node": true,
+  "kinds": [
+    "VariableDeclaration",
+    "BindingElement",
+    "Parameter",
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "ClassDeclaration",
+    "ClassExpression",
+    "ImportClause",
+    "ImportSpecifier",
+    "NamespaceImport"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave29NoShadowRestrictedNames",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoShadowRestrictedNames"
+}

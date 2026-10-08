@@ -1,0 +1,26 @@
+{
+  "exit": 0,
+  "wall": 2111.718587788,
+  "nproc": 5,
+  "counts": {
+    "pass": 120,
+    "fail": 0,
+    "skip": 1
+  },
+  "top_level": {
+    "pass": 34,
+    "fail": 0,
+    "skip": 1
+  },
+  "failures": [],
+  "skipped": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "captured_unique": {
+    "id-denylist": 158,
+    "no-shadow-restricted-names": 69
+  },
+  "load_min": 0.267578125,
+  "load_median": 1.493896484375,
+  "load_max": 4.89501953125
+}

@@ -1,0 +1,5 @@
+{
+  "name": "denied names ignored",
+  "from": "if(!this.denied.includes(name) || !this.shouldCheck(index)) { return; }",
+  "to": "if(this.denied.includes(name) || !this.shouldCheck(index)) { return; }"
+}

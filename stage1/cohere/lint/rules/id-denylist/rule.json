@@ -1,0 +1,16 @@
+{
+  "name": "id-denylist",
+  "typed": true,
+  "programReads": [],
+  "node": true,
+  "kinds": [
+    "Identifier",
+    "PrivateIdentifier"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave29IdDenylist",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestIdDenylist"
+}

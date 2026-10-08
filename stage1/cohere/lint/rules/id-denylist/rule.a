@@ -1,0 +1,146 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Parser } from '../../../../typescript/parser/parser.ts';
+import { SymbolDetails } from '../../checker_declarations.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly denied: string[] = [];
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.load(context.settings.text);
+    }
+    load(raw: string): void {
+        if(raw === '' || raw === 'null') { return; }
+        const parser = new Parser(`(${raw});`, 'id-denylist options');
+        const root = parser.file();
+        const statement = parser.node(root).children[0] ?? -1;
+        const outer = parser.node(statement).children[0] ?? -1;
+        const value = parser.node(outer).children[0] ?? -1;
+        const node = parser.node(value);
+        if(node.kind === 'ArrayLiteralExpression') {
+            for(const child of node.children) { this.denied.push(parser.node(child).text); }
+        }
+        else if(node.kind === 'ObjectLiteralExpression') {
+            // Upstream capture serializes IdDenylistSettings, not the config tuple.
+            for(const property of node.children) {
+                const children = parser.node(property).children;
+                const key = parser.node(children[0] ?? -1).text;
+                if(key !== 'Denied') { continue; }
+                const entries = parser.node(children[1] ?? -1);
+                if(entries.kind !== 'ObjectLiteralExpression') { continue; }
+                for(const entry of entries.children) {
+                    const fields = parser.node(entry).children;
+                    if(parser.node(fields[1] ?? -1).kind === 'TrueKeyword') {
+                        this.denied.push(parser.node(fields[0] ?? -1).text);
+                    }
+                }
+            }
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const privateName = node.text.startsWith('#');
+        const name = privateName ? node.text.slice(1) : node.text;
+        if(!this.denied.includes(name) || !this.shouldCheck(index)) { return; }
+        const description = privateName
+            ? "This private field's name was denied by configuration. A denylist exists because the name says nothing about what the value holds, so the next reader has to reconstruct it from the surrounding code every time. Name it for what it is."
+            : 'This name was denied by configuration. A denylist exists because the name says nothing about what the value holds, so the next reader has to reconstruct it from the surrounding code every time. Name it for what it is.';
+        this.context.reportRange(this.context.start(index), node.end, 'id-denylist', privateName ? 'restrictedPrivate' : 'restricted', `Identifier '${privateName ? '#' : ''}${name}' is restricted. ${description}`);
+    }
+    parent(index: number): number { return this.context.parents[index] ?? -1; }
+    kind(index: number): string { return index < 0 ? '' : this.context.node(index).kind; }
+    child(index: number, at: number): number { return index < 0 ? -1 : this.context.node(index).children[at] ?? -1; }
+    global(index: number): boolean {
+        const checker = this.context.checker;
+        if(checker === undefined) { return false; }
+        const answer = checker.ask(index, 'node-symbol-details');
+        if(answer.value === undefined) { return false; }
+        const symbol = new SymbolDetails(answer.value);
+        return symbol.present && symbol.declarations.every((declaration) => declaration.declarationFile);
+    }
+    // A binding element has no named slots in the native parser. Its colon,
+    // scanned between complete children, distinguishes a rename from an initializer.
+    bindingName(element: number): number {
+        let at = this.kind(this.child(element, 0)) === 'DotDotDotToken' ? 1 : 0;
+        const first = this.child(element, at);
+        const next = this.child(element, at + 1);
+        if(first >= 0 && next >= 0) {
+            this.context.scanner.pos = this.context.node(first).end;
+            if(this.context.scanner.scan() === 'ColonToken') { at++; }
+        }
+        return this.child(element, at);
+    }
+    importOptions(index: number): boolean {
+        const parent = this.parent(index);
+        if(parent < 0) { return false; }
+        if(this.kind(parent) === 'CallExpression' && this.kind(this.child(parent, 0)) === 'ImportKeyword') {
+            return this.child(parent, 2) === index;
+        }
+        if(this.kind(parent) === 'PropertyAssignment' && this.child(parent, 1) === index) {
+            const outer = this.parent(parent);
+            return this.kind(outer) === 'ObjectLiteralExpression' && this.importOptions(outer);
+        }
+        return false;
+    }
+    importAttribute(index: number): boolean {
+        const parent = this.parent(index);
+        const kind = this.kind(parent);
+        if(kind === 'ImportAttribute') { return this.child(parent, 0) === index; }
+        if((kind === 'PropertyAssignment' || kind === 'ShorthandPropertyAssignment') && this.child(parent, 0) === index) {
+            const object = this.parent(parent);
+            return this.kind(object) === 'ObjectLiteralExpression' && this.importOptions(object);
+        }
+        return false;
+    }
+    destructuring(index: number): boolean {
+        let current = index;
+        while(current >= 0) {
+            const parent = this.parent(current);
+            const kind = this.kind(parent);
+            if(kind === 'BinaryExpression') {
+                return this.child(parent, 0) === current && this.kind(this.child(parent, 1)) === 'EqualsToken';
+            }
+            if(['ForOfStatement', 'ForInStatement', 'Parameter'].includes(kind)) { return true; }
+            if(!['PropertyAssignment', 'ShorthandPropertyAssignment', 'ObjectLiteralExpression', 'ArrayLiteralExpression',
+                'SpreadAssignment', 'SpreadElement', 'ParenthesizedExpression'].includes(kind)) { return false; }
+            current = parent;
+        }
+        return false;
+    }
+    assignmentTarget(index: number): boolean {
+        const parent = this.parent(index);
+        const kind = this.kind(parent);
+        if(kind === 'BinaryExpression') {
+            return this.child(parent, 0) === index && ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken',
+                'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken',
+                'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken',
+                'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken',
+                'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(this.kind(this.child(parent, 1)));
+        }
+        if(kind === 'ArrayLiteralExpression') { return this.destructuring(parent); }
+        if(kind === 'SpreadElement' || kind === 'SpreadAssignment') { return this.destructuring(this.parent(parent)); }
+        if(kind === 'PropertyAssignment' && this.child(parent, 1) === index) {
+            const object = this.parent(parent);
+            return this.kind(object) === 'ObjectLiteralExpression' && this.destructuring(object);
+        }
+        return false;
+    }
+    shouldCheck(index: number): boolean {
+        const parent = this.parent(index);
+        const kind = this.kind(parent);
+        if(parent < 0 || this.importAttribute(index) || kind === 'MetaProperty') { return false; }
+        if(kind === 'PropertyAccessExpression' && this.child(parent, 1) === index) { return this.assignmentTarget(parent); }
+        if((kind === 'CallExpression' || kind === 'NewExpression') && this.child(parent, 0) === index) { return false; }
+        if(kind === 'ImportSpecifier' && this.context.node(parent).children.length > 1 && this.child(parent, 0) === index) { return false; }
+        if(kind === 'ExportSpecifier' && this.context.node(parent).children.length > 1 && this.child(parent, 0) === index) {
+            const declaration = this.parent(this.parent(parent));
+            if(this.kind(declaration) === 'ExportDeclaration' && this.context.node(declaration).children.some(
+                (child) => this.kind(child) === 'StringLiteral')) { return false; }
+        }
+        if(kind === 'BindingElement' && this.bindingName(parent) !== this.child(parent, 0) && this.child(parent, 0) === index) { return false; }
+        if(kind === 'PropertyAssignment' && this.child(parent, 0) === index &&
+            this.kind(this.parent(parent)) === 'ObjectLiteralExpression' && this.destructuring(this.parent(parent))) { return false; }
+        return !this.global(index);
+    }
+}
+
+export function create(context: RuleContext): Rule { return new Rule(context); }

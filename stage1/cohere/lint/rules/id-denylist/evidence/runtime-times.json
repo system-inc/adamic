@@ -1,0 +1,14 @@
+{
+  "id-denylist": {
+    "cases": 158,
+    "go_program_and_lint_seconds": 8.774991572,
+    "native_program_lint_recording_seconds": 11.605707237,
+    "native_over_go": 1.322588989604559
+  },
+  "no-shadow-restricted-names": {
+    "cases": 69,
+    "go_program_and_lint_seconds": 3.685415981,
+    "native_program_lint_recording_seconds": 4.867051688,
+    "native_over_go": 1.3206247851238153
+  }
+}

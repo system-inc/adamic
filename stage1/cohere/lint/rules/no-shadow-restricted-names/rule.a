@@ -1,0 +1,64 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { writesToBinding } from '../../reference_writes.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+const message = 'This declares a binding named after a global the rest of the file assumes is the global. Every read of that name inside the new scope gets this binding instead, so a comparison against `undefined` compares against whatever was assigned here, `NaN` stops being the value no comparison equals, and `arguments` stops being the call\'s arguments. The damage is silent and it is not local to this line: the code that breaks is the code that never mentioned the shadow and reads the name expecting the global. Rename the binding.';
+export class Rule {
+    readonly context: RuleContext;
+    readonly written = new Set<string>();
+    scanned = false;
+    constructor(context: RuleContext) { this.context = context; }
+    // The first same-file declaration is the exact anchor used by cohere.
+    anchor(index: number): string {
+        const checker = this.context.checker;
+        if(checker === undefined) { return ''; }
+        const answer = checker.ask(index, 'binding-declarations');
+        if(answer.value === undefined) { return ''; }
+        const frames = new Frames(answer.value); header(frames, 'binding-declarations');
+        let first = '';
+        if(frames.yes()) {
+            frames.natural(); const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const path = frames.field(); frames.field();
+                const start = frames.natural(); const end = frames.natural();
+                if(first === '' && path === checker.path) { first = `${start}:${end}`; }
+            }
+        }
+        frames.end(); return first;
+    }
+    safe(name: number): boolean {
+        const context = this.context;
+        const parent = context.parent(name);
+        if(context.kind(parent) !== 'VariableDeclaration' || context.initializer(parent) >= 0 || context.kind(context.parent(parent)) !== 'VariableDeclarationList') { return false; }
+        const anchor = this.anchor(name);
+        if(anchor === '') { return false; }
+        if(!this.scanned) {
+            this.scanned = true;
+            for(let index = 0; index < context.parser.nodes.length; index++) {
+                const node = context.node(index);
+                if(node.kind === 'Identifier' && node.text === 'undefined' && writesToBinding(context, index)) {
+                    this.written.add(this.anchor(index));
+                }
+            }
+        }
+        return !this.written.has(anchor);
+    }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        let name = context.name(index);
+        if(node.kind === 'ImportSpecifier') { name = node.children[node.children.length - 1] ?? -1; }
+        if(node.kind === 'BindingElement') {
+            const firstAt = context.kind(node.children[0] ?? -1) === 'DotDotDotToken' ? 1 : 0;
+            name = node.children[firstAt] ?? -1;
+            const next = node.children[firstAt + 1] ?? -1;
+            if(name >= 0 && next >= 0 && context.scanAt(context.node(name).end) === 'ColonToken') { name = next; }
+        }
+        if(name < 0 || context.kind(name) !== 'Identifier') { return; }
+        const target = context.node(name);
+        const text = target.text;
+        if(!['undefined','NaN','Infinity','eval','arguments'].includes(text) && !(text === 'globalThis' && context.settings.read('reportglobalthis','true') !== 'false')) { return; }
+        if(text === 'undefined' && this.safe(name)) { return; }
+        context.reportRange(context.start(name), target.end, 'no-shadow-restricted-names', 'shadowingRestrictedName', message);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
