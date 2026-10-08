@@ -321,9 +321,6 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			if value.Iterable.Type() != ir.Array || value.RegexIterator || value.MapPart != "" || value.Pattern != nil {
 				return nil, fmt.Errorf("async for-of over this iterable or pattern is not yet proven")
 			}
-			if n.program.Locals[value.Local].Captured {
-				return nil, fmt.Errorf("async per-iteration captured cells are not yet represented")
-			}
 			var outerBreak bool
 			inspectAsyncIR(reflect.ValueOf(value.Body), func(node any) {
 				if jump, ok := node.(ir.Break); ok && jump.Depth > 0 {
@@ -345,6 +342,8 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 				// have their element representation, and maybe elements stay maybe.
 				element = ir.Unwrap{Value: element}
 			}
+			// Normalize the element declaration with the body so every captured
+			// binding gets a fresh iteration cell, including across suspension.
 			loop := ir.Loop{
 				Condition: ir.Binary{Operator: ir.Less, Left: position, Right: ir.Length{Array: array}},
 				Body:      append([]ir.Statement{ir.Declare{Local: value.Local, Value: element}}, value.Body...),
