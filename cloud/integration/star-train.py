@@ -295,6 +295,16 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
     chain.append((number, slug, source, owner, name, candidate, base, riders))
     base = candidate
 
+# Home takes the oldest request first, so the file is kept in train order: a slice rebuilt below its
+# neighbors would otherwise sit behind the slices stacked on it, and the bottom gates last.
+if chain and not dryRun and os.path.exists(requests):
+    lines = open(requests).read().split()
+    ordered = [entry[5] for entry in chain if entry[5] in lines]
+    rest = [line for line in lines if line not in ordered]
+    if ordered + rest != lines:
+        with open(requests, "w") as handle:
+            handle.write("\n".join(ordered + rest) + "\n")
+
 if not chain:
     sys.exit(0)
 
