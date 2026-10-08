@@ -12,3 +12,7 @@ Scoped rows measured from generated .a controls with complete pinned original de
 | original/9657-wrong.a | 9 | 0 | 16 | 9 | 9 | 0 | 0 | 0 |
 | original/9245-good.a | 8 | 8 | 14 | 17 | 8 | 0 | 0 | 0 |
 | original/9245-wrong.a | 7 | 0 | 14 | 7 | 7 | 0 | 0 | 0 |
+| original/8920-good.a | 7 | 7 | 12 | 15 | 7 | 0 | 0 | 0 |
+| original/8920-wrong.a | 6 | 0 | 12 | 6 | 6 | 0 | 0 | 0 |
+| original/40931-good.a | 7 | 7 | 12 | 15 | 7 | 0 | 0 | 0 |
+| original/40931-wrong.a | 6 | 0 | 12 | 6 | 6 | 0 | 0 | 0 |

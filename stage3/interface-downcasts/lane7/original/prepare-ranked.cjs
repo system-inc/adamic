@@ -18,21 +18,39 @@ const inventoryPath = path.resolve(__dirname, '../../lane4/read-demand-pairs.jso
 const sitePath = path.resolve(__dirname, '../../lane4/read-demand-sites.json.gz');
 const inventory = JSON.parse(zlib.gunzipSync(fs.readFileSync(inventoryPath)));
 const demand = JSON.parse(zlib.gunzipSync(fs.readFileSync(sitePath)));
-const pair = inventory.find(x => x.receiver_type_id === 9245 && x.field === 'argument');
-if (!pair || pair.reads !== 14 || pair.type !== 'LiteralImportTypeNode') throw Error('inventory drift');
-const sites = demand.filter(x => x.receiver_type_id === 9245 && x.field === 'argument').map(x => {
- const file = path.join(root,x.file), source = fs.readFileSync(file,'utf8');
- if (source.slice(x.start,x.end) !== x.text) throw Error('source span drift');
- return {file:x.file,start:x.start,end:x.end,text:x.text,line:x.line,column:x.column,source_sha256:hash(file)};
-});
-if (sites.length !== pair.reads) throw Error('site count drift');
-const file = path.join(root,'src/compiler/types.ts');
-const program = ts.createProgram([file], {target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,strict:true,types:[]});
+const sourceFile = path.join(root,'src/compiler/types.ts');
+const utilities = path.join(root,'src/compiler/utilities.ts');
+const program = ts.createProgram([sourceFile,utilities], {target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,strict:true,types:[]});
 const checker = program.getTypeChecker();
-const moduleExports = checker.getExportsOfModule(checker.getSymbolAtLocation(program.getSourceFile(file)));
-const receiver = checker.getDeclaredTypeOfSymbol(moduleExports.find(x => x.name === pair.type));
-const member = checker.getTypeOfSymbol(checker.getPropertyOfType(receiver,pair.field));
+const moduleExports = checker.getExportsOfModule(checker.getSymbolAtLocation(program.getSourceFile(sourceFile)));
 const fields = type => checker.getPropertiesOfType(type).map(x => x.name).sort();
-const result = {upstream_commit:pin,inventory_sha256:hash(inventoryPath),sites_sha256:hash(sitePath),type_id:9245,type:pair.type,field:pair.field,read_count:pair.reads,sites,receiver_fields:fields(receiver),present_fields:fields(member)};
-fs.writeFileSync(path.join(output,'ranked-intersection-manifest.json'),JSON.stringify(result,null,2)+'\n');
-console.log('9245.argument: 14 original spans; complete receiver and intersection member field sets; 78 declaration hashes verified');
+for (const [id,field,count] of [[9245,'argument',14],[8920,'operand',3],[40931,'operand',3]]) {
+ const pair = inventory.find(x => x.receiver_type_id === id && x.field === field);
+ if (!pair || pair.reads !== count) throw Error('inventory drift '+id);
+ const sites = demand.filter(x => x.receiver_type_id === id && x.field === field).map(x => {
+  const file = path.join(root,x.file), source = fs.readFileSync(file,'utf8');
+  if (source.slice(x.start,x.end) !== x.text) throw Error('source span drift');
+  return {file:x.file,start:x.start,end:x.end,text:x.text,line:x.line,column:x.column,source_sha256:hash(file)};
+ });
+ if (sites.length !== pair.reads) throw Error('site count drift');
+ let receiver;
+ if (id===9245) {
+  receiver=checker.getDeclaredTypeOfSymbol(moduleExports.find(x => x.name===pair.type));
+ } else {
+  const witness=sites[0], source=program.getSourceFile(path.join(root,witness.file));
+  let expression;
+  function visit(node) {
+   if (ts.isPropertyAccessExpression(node) && node.getStart(source)===witness.start && node.end===witness.end) expression=node;
+   ts.forEachChild(node,visit);
+  }
+  visit(source);
+  if (!expression || expression.name.text!==field) throw Error('original AST receiver missing '+id);
+  receiver=checker.getTypeAtLocation(expression.expression);
+  if (!checker.typeToString(receiver).includes('PrefixUnaryExpression')) throw Error('original receiver drift '+id);
+ }
+ const member=checker.getTypeOfSymbol(checker.getPropertyOfType(receiver,field));
+ const result={upstream_commit:pin,inventory_sha256:hash(inventoryPath),sites_sha256:hash(sitePath),type_id:id,type:pair.type,field,read_count:count,sites,receiver_fields:fields(receiver),present_fields:fields(member)};
+ const outputFile=id===9245?'ranked-intersection-manifest.json':`ranked-intersection-${id}-manifest.json`;
+ fs.writeFileSync(path.join(output,outputFile),JSON.stringify(result,null,2)+'\n');
+ console.log(`${id}.${field}: ${count} original spans; complete original receiver and member field sets; 78 declarations verified`);
+}
