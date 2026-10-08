@@ -1,0 +1,94 @@
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutFiresOnPhiSocialGenerator
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutFiresOnPhiSocialGenerator
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilentOnFixedPhiSocialGenerator
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilentOnFixedPhiSocialGenerator
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutFires
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutFires
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutRecognizesTheDomDeclaration
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutRecognizesTheDomDeclaration
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutFiresOnPhiSocialGenerator
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutRecognizesTheDomDeclaration
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_cleared_in_a_finally
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_cleared_in_a_finally
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilentOnFixedPhiSocialGenerator
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_const_handle_cleared_when_the_work_settles
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_const_handle_cleared_when_the_work_settles
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/an_unref'd_timer_that_cannot_hold_the_process
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/an_unref'd_timer_that_cannot_hold_the_process
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_stored_on_an_object
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_stored_on_an_object
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_handed_on
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_handed_on
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_timeout_built_by_a_helper,_not_followed
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_timeout_built_by_a_helper,_not_followed
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_timer_armed_in_a_callback_nested_in_the_executor
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_timer_armed_in_a_callback_nested_in_the_executor
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_lost_timer_outside_any_race
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_lost_timer_outside_any_race
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_race_method_that_is_not_the_Promise_constructor's
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_race_method_that_is_not_the_Promise_constructor's
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_local_function_named_setTimeout
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_local_function_named_setTimeout
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_promise_class_that_is_not_the_library's
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutFires
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutFires/an_arrow_executor_whose_expression_body_is_the_timer
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutFires/an_arrow_executor_whose_expression_body_is_the_timer
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutFires/the_timeout_promise_named_by_a_const
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutFires/the_timeout_promise_named_by_a_const
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutFires/a_handle_kept_in_a_const_nothing_reads
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutFires/a_handle_kept_in_a_const_nothing_reads
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutFires/a_handle_assigned_to_an_outer_binding_nothing_reads
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutFires/a_handle_assigned_to_an_outer_binding_nothing_reads
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutFires/the_timer_reached_through_globalThis
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutFires/the_timer_reached_through_globalThis
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutFires/a_timer_dropped_with_void
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutFires/a_timer_dropped_with_void
+=== RUN   TestCorrectnessNoUnclearedRaceTimeoutFires/two_racing_timeouts
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutFires/two_racing_timeouts
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutFires/an_arrow_executor_whose_expression_body_is_the_timer
+=== PAUSE TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_promise_class_that_is_not_the_library's
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutFires/the_timer_reached_through_globalThis
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutFires/two_racing_timeouts
+--- PASS: TestCorrectnessNoUnclearedRaceTimeoutFiresOnPhiSocialGenerator (0.02s)
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutFires/a_timer_dropped_with_void
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_cleared_in_a_finally
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutFires/a_handle_assigned_to_an_outer_binding_nothing_reads
+--- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilentOnFixedPhiSocialGenerator (0.02s)
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutFires/the_timeout_promise_named_by_a_const
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutFires/a_handle_kept_in_a_const_nothing_reads
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_timer_armed_in_a_callback_nested_in_the_executor
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_promise_class_that_is_not_the_library's
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_local_function_named_setTimeout
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_race_method_that_is_not_the_Promise_constructor's
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_lost_timer_outside_any_race
+--- PASS: TestCorrectnessNoUnclearedRaceTimeoutFires (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutFires/an_arrow_executor_whose_expression_body_is_the_timer (0.02s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutFires/the_timer_reached_through_globalThis (0.02s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutFires/a_timer_dropped_with_void (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutFires/two_racing_timeouts (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutFires/a_handle_assigned_to_an_outer_binding_nothing_reads (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutFires/the_timeout_promise_named_by_a_const (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutFires/a_handle_kept_in_a_const_nothing_reads (0.01s)
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_stored_on_an_object
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_handed_on
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_timeout_built_by_a_helper,_not_followed
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/an_unref'd_timer_that_cannot_hold_the_process
+=== CONT  TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_const_handle_cleared_when_the_work_settles
+--- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_cleared_in_a_finally (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_timer_armed_in_a_callback_nested_in_the_executor (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_promise_class_that_is_not_the_library's (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_race_method_that_is_not_the_Promise_constructor's (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_lost_timer_outside_any_race (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_local_function_named_setTimeout (0.01s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_handed_on (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/the_handle_stored_on_an_object (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_timeout_built_by_a_helper,_not_followed (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/an_unref'd_timer_that_cannot_hold_the_process (0.00s)
+    --- PASS: TestCorrectnessNoUnclearedRaceTimeoutStaysSilent/a_const_handle_cleared_when_the_work_settles (0.00s)
+--- PASS: TestCorrectnessNoUnclearedRaceTimeoutRecognizesTheDomDeclaration (0.06s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/rules/nexus	0.068s

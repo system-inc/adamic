@@ -1,0 +1,42 @@
+{
+  "TestRulesAgree": {
+    "status": "pass",
+    "go_elapsed_seconds": 209.55,
+    "event_wall_seconds": 209.55408
+  },
+  "TestCompilerAndStage1Agree": {
+    "status": "pass",
+    "go_elapsed_seconds": 417.45,
+    "event_wall_seconds": 417.451988
+  },
+  "TestShardsAgree": {
+    "status": "pass",
+    "go_elapsed_seconds": 147.01,
+    "event_wall_seconds": 147.008858
+  },
+  "TestMutants": {
+    "status": "pass",
+    "go_elapsed_seconds": 0.01,
+    "event_wall_seconds": 265.222209
+  },
+  "TestProfileArtifacts": {
+    "status": "pass",
+    "go_elapsed_seconds": 32.47,
+    "event_wall_seconds": 32.474497
+  },
+  "TestProfileCompilation": {
+    "status": "pass",
+    "go_elapsed_seconds": 33.5,
+    "event_wall_seconds": 33.495828
+  },
+  "TestProfileSnapshotsAgree": {
+    "status": "pass",
+    "go_elapsed_seconds": 183.9,
+    "event_wall_seconds": 183.896118
+  },
+  "TestOwnedWitnesses": {
+    "status": "pass",
+    "go_elapsed_seconds": 6.58,
+    "event_wall_seconds": 6.579976
+  }
+}

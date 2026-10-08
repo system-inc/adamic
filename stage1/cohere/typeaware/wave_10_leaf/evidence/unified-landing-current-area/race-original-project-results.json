@@ -1,0 +1,153 @@
+{
+  "cases": 21,
+  "findings": 10,
+  "wall_seconds": 8.682388231000004,
+  "config": {
+    "compilerOptions": {
+      "strict": true,
+      "target": "ES2022",
+      "lib": [
+        "ES2022"
+      ],
+      "moduleDetection": "force",
+      "types": []
+    },
+    "sourceExtensions": [
+      ".a"
+    ],
+    "include": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.a"
+    ]
+  },
+  "results": [
+    {
+      "case": 0,
+      "companion_files": 1,
+      "findings": 1,
+      "bytes_identical": 1173
+    },
+    {
+      "case": 1,
+      "companion_files": 1,
+      "findings": 1,
+      "bytes_identical": 1161
+    },
+    {
+      "case": 2,
+      "companion_files": 1,
+      "findings": 1,
+      "bytes_identical": 1734
+    },
+    {
+      "case": 3,
+      "companion_files": 1,
+      "findings": 1,
+      "bytes_identical": 1155
+    },
+    {
+      "case": 4,
+      "companion_files": 1,
+      "findings": 2,
+      "bytes_identical": 1953
+    },
+    {
+      "case": 5,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 1175
+    },
+    {
+      "case": 6,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 625
+    },
+    {
+      "case": 7,
+      "companion_files": 1,
+      "findings": 1,
+      "bytes_identical": 1200
+    },
+    {
+      "case": 8,
+      "companion_files": 1,
+      "findings": 1,
+      "bytes_identical": 1210
+    },
+    {
+      "case": 9,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 498
+    },
+    {
+      "case": 10,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 652
+    },
+    {
+      "case": 11,
+      "companion_files": 1,
+      "findings": 1,
+      "bytes_identical": 1186
+    },
+    {
+      "case": 12,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 516
+    },
+    {
+      "case": 13,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 459
+    },
+    {
+      "case": 14,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 600
+    },
+    {
+      "case": 15,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 474
+    },
+    {
+      "case": 16,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 516
+    },
+    {
+      "case": 17,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 416
+    },
+    {
+      "case": 18,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 477
+    },
+    {
+      "case": 19,
+      "companion_files": 1,
+      "findings": 0,
+      "bytes_identical": 566
+    },
+    {
+      "case": 20,
+      "companion_files": 0,
+      "findings": 1,
+      "bytes_identical": 937
+    }
+  ],
+  "note": "Reconstructs each original upstream Node timer declaration project, not the shared single-subject capture. Original captured finding counts independently prevent matching zero outputs from certifying a dropped companion."
+}

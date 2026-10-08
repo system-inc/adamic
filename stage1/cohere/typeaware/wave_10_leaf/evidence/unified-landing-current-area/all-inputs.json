@@ -1,0 +1,24 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=90m",
+    "./stage1/cohere/lint"
+  ],
+  "inputs": {
+    "GOMAXPROCS": "4",
+    "GOFLAGS": "-buildvcs=false",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/typescript-lint-landing",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/scratch/lint-wave10-profiles-l4anpbaz",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/scratch/lint-wave10-profiles-l4anpbaz"
+  },
+  "nproc": "5",
+  "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_status_before": "",
+  "branch_sha": "66172e948f6966cc472f6f923ea78f2f454fe4df",
+  "area_sha": "1f9e223d8ef6d0a914407d4b37d0e56568521f4d",
+  "tested_source_sha": "66172e948f6966cc472f6f923ea78f2f454fe4df"
+}
