@@ -1,0 +1,6 @@
+FIRST FAILURE (tests, at 70.6 s):
+github.com/system-inc/adamic/internal/lower TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+=== RUN   TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];
+    view_unions_mixed_test.go:45: /tmp/adamic-gate/TestMixedUnionContractGraphinterface_Node_{readonly_readyboole2495382186/001/contract.a:1:1: stage 0 can't lower an unavailable checked union member contract for readonly Node[] yet
+--- FAIL: TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[]; (0.07s)
+
