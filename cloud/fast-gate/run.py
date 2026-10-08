@@ -899,6 +899,11 @@ class Gate:
                 if dependent not in packages:
                     packages.add(dependent)
                     pending.append(dependent)
+        self.result["selected_compiler_drivers"] = sorted(
+            driver for driver, declaration in getattr(self, "compilerDrivers", {}).items()
+            if any(module + "/" + dependency in packages for dependency in declaration["dependencies"])
+            or any(path.startswith(driver + "/") for path in changed)
+            or "cloud/fast-gate/compiler-dependencies.json" in changed)
         packages.intersection_update(self.packageDirectories)
         compilerChanged = any(path.startswith(("internal/load/", "internal/lower/", "internal/native/", "internal/javascript/", "internal/ir/", "internal/flow/", "cmd/adamic/")) for path in changed)
         if compilerChanged:
@@ -914,8 +919,8 @@ class Gate:
     def compilerDependencies(self, directories):
         """Package-level declarations cover helpers as well as their callers.
 
-        The census scans tracked Go package sources for compiler imports and known invocation
-        literals. Standalone drivers are recorded separately; script dispatch is not covered here.
+        The census scans all tracked Go package sources. A process-launching package must
+        declare dependencies even when the executable name is computed: it may run the compiler.
         A missing package declaration fails selection before any tests start.
         """
         name = "cloud/fast-gate/compiler-dependencies.json"
@@ -930,15 +935,28 @@ class Gate:
         for package, inputs in packages.items():
             if not isinstance(inputs, list) or not inputs or any(not isinstance(value, str) or value not in directories for value in inputs):
                 raise ValueError("invalid compiler dependencies for " + package)
-        marker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic|oracle/adamic|ADAMIC_(?:BIN|BINARY)')
+        marker = re.compile(r'github\.com/system-inc/adamic/internal/(?:load|lower|native|javascript|ir|flow)|cmd/adamic|oracle/adamic|ADAMIC_(?:BIN|BINARY)|"adamic"|"os/exec"|os\.StartProcess|syscall\.Exec')
+        self.compilerDrivers = declarations.get("drivers", {})
+        if not isinstance(self.compilerDrivers, dict):
+            raise ValueError("invalid compiler driver declarations")
+        for driver, declaration in self.compilerDrivers.items():
+            inputs = declaration.get("dependencies") if isinstance(declaration, dict) else None
+            if not driver.startswith("stage3/drivers/") or not isinstance(inputs, list) or not inputs or any(value not in directories for value in inputs):
+                raise ValueError("invalid compiler driver dependencies for " + driver)
         missing = []
-        for path in self.git(self.arguments.tree, "ls-files", "stage1", "stage3", "internal/oracle").splitlines():
+        for path in self.git(self.arguments.tree, "ls-files").splitlines():
+            if path.startswith("stage3/drivers/") and path.endswith((".py", ".sh", ".cjs", ".mjs")):
+                with open(os.path.join(self.arguments.tree, path)) as handle:
+                    source = handle.read()
+                if re.search(r"subprocess|child_process|\badamic\b|\bcompiler\b|ADAMIC", source) and not any(path.startswith(driver + "/") for driver in self.compilerDrivers):
+                    missing.append(path)
+                continue
             if not path.endswith(".go"):
                 continue
             with open(os.path.join(self.arguments.tree, path)) as handle:
                 source = handle.read()
             package = os.path.dirname(path)
-            while package and package not in directories:
+            while package and package not in directories and package not in packages:
                 package = os.path.dirname(package)
             if not package:
                 if marker.search(source) and path.endswith("_test.go"):

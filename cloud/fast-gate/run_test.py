@@ -1024,6 +1024,55 @@ class ReverseDependencies(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "census.*stage1/new/probe_test.go"):
             self.gate.touched(["internal/load/load.go"])
 
+    def test_census_rejects_computed_compiler_outside_stage1(self):
+        path = os.path.join(self.tree, "cmd/new/probe_test.go")
+        os.makedirs(os.path.dirname(path))
+        with open(path, "w") as handle:
+            handle.write('package new\nimport "os/exec"\nfunc TestCompiler(t *testing.T) { exec.Command(binary(), "types", "input.a").Run() }\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        with self.assertRaisesRegex(ValueError, "census.*cmd/new/probe_test.go"):
+            self.gate.touched(["internal/load/load.go"])
+
+    def test_census_rejects_removed_declaration(self):
+        path = os.path.join(self.tree, "stage1/gaps/probe_test.go")
+        with open(path, "w") as handle:
+            handle.write('package gaps\nimport "os/exec"\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        self.declare({"internal/oracle": ["internal/load"]})
+        with self.assertRaisesRegex(ValueError, "census.*stage1/gaps/probe_test.go"):
+            self.gate.touched(["internal/load/load.go"])
+
+    def test_stage3_driver_declaration_and_selection(self):
+        path = os.path.join(self.tree, "cloud/fast-gate/compiler-dependencies.json")
+        with open(path) as handle:
+            declarations = json.load(handle)
+        declarations["drivers"] = {"stage3/drivers/parser": {"dependencies": ["middle"]}}
+        with open(path, "w") as handle:
+            json.dump(declarations, handle)
+        self.gate.touched(["internal/load/load.go"])
+        self.assertEqual(self.gate.result["selected_compiler_drivers"], ["stage3/drivers/parser"])
+        self.gate.touched(["unrelated/source.go"])
+        self.assertEqual(self.gate.result["selected_compiler_drivers"], [])
+
+    def test_invalid_driver_map_fails_closed(self):
+        path = os.path.join(self.tree, "cloud/fast-gate/compiler-dependencies.json")
+        with open(path) as handle:
+            declarations = json.load(handle)
+        declarations["drivers"] = {"stage3/drivers/parser": {"dependencies": ["internal/missing"]}}
+        with open(path, "w") as handle:
+            json.dump(declarations, handle)
+        with self.assertRaisesRegex(ValueError, "invalid compiler driver dependencies"):
+            self.gate.touched(["internal/load/load.go"])
+
+    def test_census_rejects_undeclared_script_driver(self):
+        path = os.path.join(self.tree, "stage3/drivers/new/run.py")
+        os.makedirs(os.path.dirname(path))
+        with open(path, "w") as handle:
+            handle.write('import subprocess\nsubprocess.run([compiler, "build", "input.a"])\n')
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        with self.assertRaisesRegex(ValueError, "census.*stage3/drivers/new/run.py"):
+            self.gate.touched(["internal/load/load.go"])
+
     def test_invalid_map_fails_closed(self):
         self.declare({"stage1/gaps": ["internal/missing"]})
         with self.assertRaisesRegex(ValueError, "invalid compiler dependencies"):
@@ -1051,6 +1100,12 @@ class ReverseDependencyMutants(unittest.TestCase):
             ("transitive walk removed", 'pending.append(dependent)', 'pass', "test_transitive_test_imports_and_unrelated_package"),
             ("opaque dependencies ignored", 'dependencies = self.compilerDependencies(directories)', 'dependencies = {}', "test_opaque_gap_and_whole_oracle_are_selected"),
             ("compiler oracle narrowed", 'if compilerChanged or oracle not in changedPackages else self.selectOracle()', 'if False else self.selectOracle()', "test_opaque_gap_and_whole_oracle_are_selected"),
+            ("computed invocation detection removed", '|"os/exec"|os\\.StartProcess|syscall\\.Exec', '', "test_census_rejects_computed_compiler_outside_stage1"),
+            ("census restricted to stage1", '"ls-files").splitlines()', '"ls-files", "--", "stage1").splitlines()', "test_census_rejects_computed_compiler_outside_stage1"),
+            ("removed map entry accepted", 'if missing:', 'if False:', "test_census_rejects_removed_declaration"),
+            ("driver dependencies not validated", 'any(value not in directories for value in inputs)', 'False', "test_invalid_driver_map_fails_closed"),
+            ("script census removed", 'if re.search(r"subprocess|child_process|', 'if False and re.search(r"subprocess|child_process|', "test_census_rejects_undeclared_script_driver"),
+            ("driver selection removed", 'self.result["selected_compiler_drivers"] = sorted(', 'self.result["selected_compiler_drivers"] = sorted([] if True else ', "test_stage3_driver_declaration_and_selection"),
             ("census disabled", 'if missing:', 'if False:', "test_census_rejects_a_new_compiler_runner"),
             ("invalid dependencies accepted", 'value not in directories', 'False', "test_invalid_map_fails_closed"),
             ("affected tests deferred", 'self.deferred = {}', 'pass', "test_opaque_gap_and_whole_oracle_are_selected"),
