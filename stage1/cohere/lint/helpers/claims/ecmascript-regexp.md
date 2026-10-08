@@ -15,4 +15,4 @@ Consumers:
 
 Claim pushed before implementation. Stop on an unexpressible compiler gap with the upstream Go line and fresh compiler diagnostic.
 
-Status: blocked at Compile, cohere/internal/lint/ecmascript/regexp/regexp.go:154. Fresh current-base compiler refusal and tests: ../regexp/REPORT.md. No helpers or rules delivered; claim remains marked blocked.
+Status: parked. Blocker: native runtime regex compiler on library's codex/regex-runtime-compiler, landing through library's area. Upstream operation: cohere/internal/lint/ecmascript/regexp/regexp.go:154 (Compile). Fresh current-base compiler refusal and tests: ../regexp/REPORT.md. No helpers or rules delivered; resume after that runtime support lands.
