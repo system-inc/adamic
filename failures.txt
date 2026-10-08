@@ -37,3 +37,8 @@ census: Set ADAMIC_GITIGNORE_LARGEST=1; test generates an ignore file of exactly
     optional_widening_census_test.go:28: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project
 --- SKIP: TestOptionalWideningCensus (0.00s)
 
+== github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterThroughput (skipped; no census row matches its name)
+=== RUN   TestPrinterThroughput
+    performance_test.go:17: set ADAMIC_GRAPHQL_PRINTER_BENCH=1 to measure verified throughput
+--- SKIP: TestPrinterThroughput (0.00s)
+
