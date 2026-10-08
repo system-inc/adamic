@@ -1,0 +1,29 @@
+File: markdownblocks.test
+Build ID: 4969b3899e588c266408cde8c75b57770347b00a
+Type: cpu
+Time: 2026-10-07 20:52:24 UTC
+Duration: 15.13s, Total samples = 16.96s (112.12%)
+Showing nodes accounting for 0.23s, 1.36% of 16.96s total
+Dropped 490 nodes (cum <= 0.08s)
+Showing top 20 nodes out of 220
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%     14.95s 88.15%  github.com/system-inc/adamic/stage1/cohere/markdownblocks.loweredResult
+         0     0%     0%     14.94s 88.09%  github.com/system-inc/adamic/stage1/cohere/markdownblocks.TestMeasureLoweringOnly
+         0     0%     0%     14.94s 88.09%  github.com/system-inc/adamic/stage1/cohere/markdownblocks.lowered
+         0     0%     0%     14.94s 88.09%  testing.tRunner
+         0     0%     0%     14.86s 87.62%  github.com/system-inc/adamic/internal/lower.Lower
+         0     0%     0%     14.51s 85.55%  github.com/system-inc/adamic/internal/lower.(*lowering).findCycles
+         0     0%     0%     14.48s 85.38%  github.com/system-inc/adamic/internal/lower.(*cycleFinder).slotsOf
+         0     0%     0%      8.84s 52.12%  github.com/system-inc/adamic/internal/fresh.(*freshness).analyze
+         0     0%     0%      8.84s 52.12%  github.com/system-inc/adamic/internal/fresh.ProveWrites
+         0     0%     0%      8.84s 52.12%  github.com/system-inc/adamic/internal/lower.(*cycleFinder).unproven
+         0     0%     0%      7.31s 43.10%  github.com/system-inc/adamic/internal/fresh.(*analysis).block
+     0.14s  0.83%  0.83%         6s 35.38%  github.com/system-inc/adamic/internal/fresh.(*state).copy
+     0.04s  0.24%  1.06%      5.63s 33.20%  github.com/system-inc/adamic/internal/lower.(*cycleFinder).reaches
+         0     0%  1.06%      5.44s 32.08%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).IsTypeAssignableTo
+         0     0%  1.06%      5.44s 32.08%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeAssignableTo (inline)
+     0.03s  0.18%  1.24%      5.44s 32.08%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeRelatedTo
+     0.01s 0.059%  1.30%      5.01s 29.54%  github.com/system-inc/adamic/internal/fresh.(*analysis).run
+     0.01s 0.059%  1.36%      4.58s 27.00%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeRelatedTo (inline)
+         0     0%  1.36%      4.57s 26.95%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeRelatedToEx
+         0     0%  1.36%      4.48s 26.42%  github.com/system-inc/adamic/internal/fresh.(*analysis).value

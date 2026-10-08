@@ -50,6 +50,114 @@
       "type": "DiagnosticWithDetachedLocation",
       "field": "messageText",
       "candidate_reads": 1
+    },
+    {
+      "type_id": 7642,
+      "type": "JSDoc",
+      "field": "comment",
+      "candidate_reads": 7
+    },
+    {
+      "type_id": 8815,
+      "type": "JSDocTypedefTag",
+      "field": "comment",
+      "candidate_reads": 6
+    },
+    {
+      "type_id": 8901,
+      "type": "JSDocImportTag",
+      "field": "comment",
+      "candidate_reads": 6
+    },
+    {
+      "type_id": 7637,
+      "type": "JSDocTemplateTag",
+      "field": "comment",
+      "candidate_reads": 4
+    },
+    {
+      "type_id": 8813,
+      "type": "JSDocCallbackTag",
+      "field": "comment",
+      "candidate_reads": 4
+    },
+    {
+      "type_id": 8875,
+      "type": "JSDocSeeTag",
+      "field": "comment",
+      "candidate_reads": 4
+    },
+    {
+      "type_id": 8882,
+      "type": "JSDocImplementsTag",
+      "field": "comment",
+      "candidate_reads": 3
+    },
+    {
+      "type_id": 8883,
+      "type": "JSDocAugmentsTag",
+      "field": "comment",
+      "candidate_reads": 3
+    },
+    {
+      "type_id": 36586,
+      "type": "JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag",
+      "field": "comment",
+      "candidate_reads": 3
+    },
+    {
+      "type_id": 7638,
+      "type": "JSDocTag",
+      "field": "comment",
+      "candidate_reads": 2
+    },
+    {
+      "type_id": 8880,
+      "type": "JSDocPropertyTag",
+      "field": "comment",
+      "candidate_reads": 2
+    },
+    {
+      "type_id": 8900,
+      "type": "JSDocOverloadTag",
+      "field": "comment",
+      "candidate_reads": 2
+    },
+    {
+      "type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "resolvedEntrypoints",
+      "candidate_reads": 2
+    },
+    {
+      "type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "versionPaths",
+      "candidate_reads": 2
+    },
+    {
+      "type_id": 8814,
+      "type": "JSDocEnumTag",
+      "field": "comment",
+      "candidate_reads": 1
+    },
+    {
+      "type_id": 8878,
+      "type": "JSDocParameterTag",
+      "field": "comment",
+      "candidate_reads": 1
+    },
+    {
+      "type_id": 8879,
+      "type": "JSDocPropertyLikeTag",
+      "field": "comment",
+      "candidate_reads": 1
+    },
+    {
+      "type_id": 92175,
+      "type": "JSDocImplementsTag | JSDocAugmentsTag",
+      "field": "comment",
+      "candidate_reads": 1
     }
   ],
   "fixtures": {
@@ -80,8 +188,64 @@
     "location-code-wrong.a": "e776bb5b70ceedb4e3351a76d187f44c784e878d05e6a97fcdd403b74f3aedb0",
     "detached-boolean.a": "f89a49812f4da292bf26cef32a2952faf5244e32b0248810e8173bccda24b51a",
     "detached-code-wrong.a": "0c564663c84705e39360323bb5b656f73cd8551626ef2435b4c670291d34d5da",
-    "detached-good.a": "2f9621bc7bef2fd346a4c4029d2cc272f328a379542041cbd1d8404eed40551d"
+    "detached-good.a": "2f9621bc7bef2fd346a4c4029d2cc272f328a379542041cbd1d8404eed40551d",
+    "jsdoc-36586-good.a": "6189c692db218f92abd671ca92a037cf5398f939239add5ea032ecb275f3d13c",
+    "jsdoc-36586-nested.a": "255f7415fcdcc2dd523c9c1a6b3c90db7e0944a1cd74b3adf02cb5e4e56f2fc0",
+    "jsdoc-36586-wrong.a": "87376d1de1607bc3f26e60b3c3c828ba6b35ef06fcfa20bfb13d001df0e05885",
+    "jsdoc-7637-good.a": "a8fb34ca77350ed8a75bc948631382d6a99be219368f86f14bd0db9c60b60e4b",
+    "jsdoc-7637-nested.a": "365a1c8a985ee09a40ef40f77b97b88b4f8391bf48016579174a59db3dee588c",
+    "jsdoc-7637-wrong.a": "99713402bfcaa05d0f4addf921f73f0b426af3b4c51693729b12c443117a0764",
+    "jsdoc-7638-good.a": "ea755fc5de1a39856ec992159f2c8a31672b1cb508a06d7c03bb77b16a390db8",
+    "jsdoc-7638-nested.a": "6279acb53bca6dc24407fc863162d6e1edb3c300eb4ba46689fa3b0a09fa2c37",
+    "jsdoc-7638-wrong.a": "9a76aa6e00441e8f251e72d995df13c0c2cbd66bf4b7a30be23fd4eb87379d2c",
+    "jsdoc-7642-good.a": "dc9d06f460b286f731042be7613daca9e49e59b9bbb185869e873a31cfb52c5a",
+    "jsdoc-7642-nested.a": "0f81b3f47f87fced315f97de3acd289b127057dfaf8bbf294bbb58fd4451845a",
+    "jsdoc-7642-wrong.a": "7df539db251177b0162159d53a7295d958b3cf9643130cdd3fc45e9fdfc9f519",
+    "jsdoc-8813-good.a": "f71085d5cc73cdd080ab34977495c04ea9bcac5457e3ecf4ab18746d36853622",
+    "jsdoc-8813-nested.a": "c5548bcc91493fda356f852a3e05aaa9d68da6f4b1c33efb157c56753ca47bc4",
+    "jsdoc-8813-wrong.a": "ed356ddc452d5b93e8f0b232426ae797563659931ecb9476f7728010a122196a",
+    "jsdoc-8814-good.a": "5d7948ac0c71b3da870c7a8768ffd30fd43d90a3048f36f4d6e117ec9993c853",
+    "jsdoc-8814-nested.a": "b79459e70ca6b8518adf01d6f79b4bd039e6b267094f89dc65cd22472b0a6e6c",
+    "jsdoc-8814-wrong.a": "dbc9e75214ccbf153a6e16d4508286445491e6a6634a631f74f029362c88eb5d",
+    "jsdoc-8815-good.a": "fe335fcc0ab152636bb4ebcc865df0fdbac7d68502f3a78d36f5b71ae93ac2b1",
+    "jsdoc-8815-nested.a": "108dec38b8e38280f968c6ed2dd26d45a20554c407cc0b446495a67752b3ed7e",
+    "jsdoc-8815-wrong.a": "a959289452fdcd3bfcae8a617240f83a939d14829275a98fa78dd3b7d22b8a0f",
+    "jsdoc-8875-good.a": "2f354d3855f9e12ac08be5c5c54e4a013b59fb8bb71f444a9c4be88214251fae",
+    "jsdoc-8875-nested.a": "11e9ec64e976158f7dcbdd486b4751e326e18fff471a5b2820123e45baddf4e4",
+    "jsdoc-8875-wrong.a": "7a8e7915fb38e064442c1d6c57a64e606e0292a6d8bf76d9abe2b37d00b1847b",
+    "jsdoc-8878-good.a": "fab185d250c45e4aadaacd487c64761ad8b6a1220acfa70f32344b6a486a6701",
+    "jsdoc-8878-nested.a": "3e67a91a05f3a8bb7682022e4d010746f2db6a2a3521c6239b08c2f57dc73bf1",
+    "jsdoc-8878-wrong.a": "f6bb6e3ad429adf813d1ba1cac5a9461f1a18a5ae7b221b6e4251bc22bca46c3",
+    "jsdoc-8879-good.a": "5442e6b9009b1a2b48a913c3147c9cb38f58ce58fcb33cd6581801d165a15093",
+    "jsdoc-8879-nested.a": "2702e06ca4e55de7c84ad3e47afbf4a0476194242f883d57347ec30b4bcdef48",
+    "jsdoc-8879-wrong.a": "94f37ef3cfbcba5c1ead200e57949d809d002467de10b5746975c896a1046ded",
+    "jsdoc-8880-good.a": "02651aa4e9d1e4b789cb99c7162ad1a59c915a15dfaa30c86af0b6b676390478",
+    "jsdoc-8880-nested.a": "6cb53b82e11526848a76fc3cb012b6259b8d332870f6ebc8f27a3f6c36147508",
+    "jsdoc-8880-wrong.a": "ec56feed9922a56d72d14696d735fbd234469a856bad29860b579f244d1853b3",
+    "jsdoc-8882-good.a": "3c5d46b32c4261b627feee3a159f586e1bfabeabc87893ed6f37292ff33486c0",
+    "jsdoc-8882-nested.a": "4488f39405470c1c2dfb0d9b7af031f2bd611ca8bf98a4969ed536635611b596",
+    "jsdoc-8882-wrong.a": "ee401790e59ccd4ca55b4dbc66920d7a82b3c223214f231fce059f47f51d539c",
+    "jsdoc-8883-good.a": "8619891752a9030720e6fbbb64f55a16de9a3ee8530ec32a54744d2d005260df",
+    "jsdoc-8883-nested.a": "42f5fadae458dc2219cfcc52286122817ab608f78785152578b7f5cb473a27ed",
+    "jsdoc-8883-wrong.a": "9f54da5c3d0a0e961d7aea816eed5163e32cf2aba68db24346074469de0cb45f",
+    "jsdoc-8900-good.a": "1daa11971e0028a65289928e6dfc25f9a8e434abbdcb5608b4712302799826f0",
+    "jsdoc-8900-nested.a": "94eaf17d3fedba55ef48b170cd15245b9e2824c40c3d1dc397a31aa64cb61690",
+    "jsdoc-8900-wrong.a": "79131407284a08db8a267f11760f7f37035c5e75f65ef0926094e09cef9ca44d",
+    "jsdoc-8901-good.a": "5be9b3a5f5dfc4da31b14104cea6d8c1191ede8b9f4307351e182e794d987345",
+    "jsdoc-8901-nested.a": "635770c0287f96d18a58955d1cb478c1ac012452ac4dac5115bcc49fe6724cb1",
+    "jsdoc-8901-wrong.a": "bbddfedd68b476398bb85e5bab544cc7ba8d4acbe789391f94bc074b14754e8a",
+    "jsdoc-92175-good.a": "bb295085337fac5bb34cf9612f4c71a84b1faabdf02a13ca9aee5e6920234f76",
+    "jsdoc-92175-nested.a": "3bd7c11e6036d149257c53589147cd0653616bd1493bd1a3dda036317f91426b",
+    "jsdoc-92175-wrong.a": "6db4020bfb40977ed1a08247084859ecbcf2bd410c0deeffce8772b8949bf04b",
+    "jsdoc-comment-probe.a": "cc833b3c869cd36043e611984c82522a1c6d9292487a57d1a4f288099c157b36",
+    "jsdoc-parent-probe.a": "0c90dcec0365c7cb1d64e274706668c6309afa8a6938ee4a159ef3a27853dcf1",
+    "package-resolvedEntrypoints-good.a": "69c1b8f63211de6bd94396f3c87afc4955aa78518f5de82f2f5fa90d667bb962",
+    "package-resolvedEntrypoints-nested.a": "1044476d2a827691414db79f99c390fcb024fcb2ee6d1a2642b814ac8225f526",
+    "package-resolvedEntrypoints-wrong.a": "56d3d3a44b7e62211cbc326d3ef612fe15c93edbb7b6270b712679b3aa94d756",
+    "package-versionPaths-good.a": "e31f371555aa6c9a30bca032b7baec1ad3c16cd138482fa6011944865c639720",
+    "package-versionPaths-nested.a": "e8f32e20f72fe388abfc1c1199260026a4c0fccd22bbbbde6b93488276b6d0a9",
+    "package-versionPaths-wrong.a": "1146ba997cb38abdbcdcb176c36aea83c3e28196ad6376aa861826d1479153e2"
   },
   "declaration_manifest": "declaration-manifest.json",
-  "runtime_gate": "logs/batch-original-final.log"
+  "runtime_gate": "../resume/logs/oct13-final-touched.log"
 }

@@ -1,0 +1,2 @@
+const f: () => number | string = (): number => 5;
+console.log(`${f()}`);

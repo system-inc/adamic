@@ -1,0 +1,55 @@
+=== RUN   TestCheckedViewPrimitiveArrayPairs
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-zero/number
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-zero/string
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-zero/wrong
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-zero/missing
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-one/number
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-one/string
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-one/wrong
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-one/missing
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-two/number
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-two/string
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-two/wrong
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+=== RUN   TestCheckedViewPrimitiveArrayPairs/array-two/missing
+=== RUN   TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/number
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+    checked_views_primitive_arrays_test.go:89: untested first-member mutant caught by Node control
+=== RUN   TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/string
+=== RUN   TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/wrong
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+    checked_views_primitive_arrays_test.go:78: actual-value member-check mutant caught by named refusal
+=== RUN   TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/missing
+--- PASS: TestCheckedViewPrimitiveArrayPairs (17.68s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-zero/number (2.06s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-zero/string (1.22s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-zero/wrong (1.03s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-zero/missing (0.66s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-one/number (1.40s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-one/string (0.94s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-one/wrong (0.80s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-one/missing (0.65s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-two/number (1.34s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-two/string (0.91s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-two/wrong (0.77s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/array-two/missing (0.60s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/number (1.67s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/string (1.64s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/wrong (1.13s)
+    --- PASS: TestCheckedViewPrimitiveArrayPairs/diagnostic-arguments/missing (0.84s)
+PASS
+gate cache: native hits=0 misses=8
+gate cache: node hits=0 misses=40
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	17.738s

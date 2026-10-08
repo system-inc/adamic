@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface CompilerOptions {readonly value:string;}
+interface Base {readonly getCompilationSettings:unknown;}
+interface Target {getCompilationSettings(): CompilerOptions;}
+function probe(value:Base):void {const resolutionHost=value as Target;console.log(`${resolutionHost.getCompilationSettings().value}`);}
+probe({getCompilationSettings:3});

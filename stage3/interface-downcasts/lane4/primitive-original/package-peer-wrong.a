@@ -1,0 +1,8 @@
+import type { PackageJsonInfoContents } from 'original-tsc-moduleNameResolver';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: PackageJsonInfoContents; }
+function helper(value: PackageJsonInfoContents): void { console.log(String(value.peerDependencies)); }
+const raw = {kind: 'box' as const, child: {peerDependencies: true}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

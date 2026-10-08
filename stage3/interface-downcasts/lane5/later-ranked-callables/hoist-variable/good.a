@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Identifier {readonly value:number;}
+interface Base {readonly hoistVariableDeclaration:unknown;}
+interface Target {hoistVariableDeclaration(node: Identifier): void;}
+function probe(value:Base):void {const context=value as Target;const temp:Identifier={value:3};context.hoistVariableDeclaration(temp);}
+probe({hoistVariableDeclaration:(node:Identifier):void=>{console.log(`${node.value}`);}});

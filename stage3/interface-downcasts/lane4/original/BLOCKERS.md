@@ -1,4 +1,4 @@
-# Remaining original __String admission blockers
+# Original __String blockers after scoped fallback certification
 
 The original table has 27 / 540 certified and 3 / 3 remaining. All five nullable
 brand fields / nine reads are certified. The fixtures import complete official
@@ -40,6 +40,16 @@ conditional on resolving these three blockers; October 13 at 17:00 MDT for mixed
 primitives. The other 32 branded pairs / 549 candidate reads are delivered now.
 Exact production allocation reachability and whole-tsc compilation are unclaimed.
 
+Current checkpoint supersedes the first two rows: ActiveLabel.name and the
+renamed-binding name are now runtime certified with complete original fields,
+Node controls, both backend pins and mutants. The observed collision source is
+ArrowFunction.name: never; the descriptor is retained, but its obligation follows
+actual target allocations rather than every matching field name. Unknown flows
+retain the original conservative refusal. Explicit nullish constants cannot be
+aggregate producers and do not manufacture uncertainty. Remaining: only
+9477:escapedText, one pair / one read, handed to lane 7. Lane 4 has no remaining
+owned branded pair. The original table is 29 / 542 plus 5 / 9 nullable fields.
+
 October 11 lane 7 continuation: original intersected Identifier now lowers with
 its complete recursive contract. Its former compile-gap row has moved from
 TestCheckedViewBrandsOriginalBlockedPairs to lane 7's
@@ -60,3 +70,8 @@ read prints uncheckedunchecked and exits zero in all three backends, killing the
 previously surviving mutant. Good control and leaks pass. Lane 4's original
 credit increases by one pair / one read; the two never-family gaps remain. See
 lane7/IDENTIFIER-REPORT.md and its own measured counts table.
+
+Integration continuation: both the scoped name fallback and the lane 7 Identifier
+certificate are present. All three former gaps have moved to original runtime
+controls with exact wrong-value checks and executable mutants. The historical
+two-never-gap wording above is superseded by this combined checkpoint.

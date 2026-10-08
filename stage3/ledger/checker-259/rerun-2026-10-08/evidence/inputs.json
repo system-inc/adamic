@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-08",
+  "area_stage3": "3b25512566206bc603b93264e8d072c55e075d64",
+  "library_fix": "24d980a7ef594cdf0b9c532f680d5b348c3a4b80",
+  "merged_loader": "8c50a0a97e4d3e8c7f838f1a200d7f52144df657",
+  "previous_ledger": "3f0926c0a55a7b5f64f037b1745e0e984e08c8be",
+  "node": "24.19.0",
+  "nproc": 5,
+  "project_strict_changes": [
+    "strictBindCallApply",
+    "useUnknownInCatchVariables",
+    "noUncheckedIndexedAccess",
+    "exactOptionalPropertyTypes"
+  ],
+  "project_strict_overlay": "read-only LoadOverlay of src/compiler/tsconfig.json; disk configuration unchanged",
+  "census_per_root": 79,
+  "census_diagnostics_distribution": {
+    "173": 77,
+    "0": 2
+  },
+  "clean_roots": [
+    "src/compiler/corePublic.ts",
+    "src/compiler/hostErrors.ts"
+  ],
+  "all_nonempty_per_root_sites_equal": true,
+  "roots_with_message_display_differences": [
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/types.ts"
+  ],
+  "project_strict_equals_census": true,
+  "project_single_root": {
+    "diagnostics": 251,
+    "additional_TS6307": 78,
+    "stock_sites_equal": true,
+    "root": "src/compiler/binder.ts"
+  }
+}

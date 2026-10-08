@@ -1,0 +1,12 @@
+=== RUN   TestCheckedViewRanked18OriginalArrays
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-join-bad
+    checked_views_original_ranked_arrays_test.go:116: exit codes differ; stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==36810==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x55841b9b7423 bp 0x7ffdcbeece20 sp 0x7ffdcbeecd70 T0)\n==36810==The signal is caused by a READ memory access.\n==36810==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x55841b9b7423 in adamic_retain /home/agent/.cache/adamic/runtime/.build-961006631/heap.c:242:28\n    #1 0x55841b99df95 in main /tmp/adamic-gate/adamic-build-1543203649/main.c:94:26\n    #2 0x7f1f851e0ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f1f851e0d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x55841b8b7510 in _start (/tmp/adamic-gate/TestCheckedViewRanked18OriginalArraysconfig-files-join-bad42759981/002/program+0x64510)\n\n==36810==Register values:\nrax = 0x401c000000000008  rbx = 0x00007ffdcbeecd80  rcx = 0x0803800000000001  rdx = 0x0000000000000001  \nrdi = 0x401c000000000000  rsi = 0x000055841ba9fde0  rbp = 0x00007ffdcbeece20  rsp = 0x00007ffdcbeecd70  \n r8 = 0x00007b7f843e0041   r9 = 0x00000f67f087c002  r10 = 0x00007b3f843e0010  r11 = 0x00000f6ff087c008  \nr12 = 0x00000f6ff087c006  r13 = 0x0000000000000000  r14 = 0x00007b7f843e0030  r15 = 0x00007b1f82f00060  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-961006631/heap.c:242:28 in adamic_retain\n==36810==ABORTING\n"; stdout ""; exit 1
+    checked_views_original_ranked_arrays_test.go:116: exit codes differ; stderr ""; stdout ""; exit -1
+--- FAIL: TestCheckedViewRanked18OriginalArrays (23.50s)
+    --- FAIL: TestCheckedViewRanked18OriginalArrays/config-files-join-bad (23.50s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	23.520s
+FAIL

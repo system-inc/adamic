@@ -1,14 +1,14 @@
 {
   "basis": "lazy static candidates; exact production reachability unmeasured",
-  "integration_sha": "ba59427ccc7afecae29a305c41e6e9c7867e5610",
+  "integration_sha": "213c43771bd2f3a3dd9abd69ea088bf13e4c629e",
   "source_sha256": "ff738cfeabeecad1dbf481ee7f2a8b0c68d34eee10ecec573d4daece72d2451c",
   "pairs": 42,
   "candidate_reads": 181,
-  "completed_pairs": 8,
-  "completed_reads": 59,
+  "completed_pairs": 26,
+  "completed_reads": 113,
   "completion_basis": "standalone source oracle using complete original declarations; all recorded sites audited against pinned upstream; whole-tsc execution reachability unmeasured",
-  "remaining_candidate_pairs": 34,
-  "remaining_candidate_reads": 122,
+  "remaining_candidate_pairs": 16,
+  "remaining_candidate_reads": 68,
   "reduced_shape_candidate_pairs": 22,
   "reduced_shape_candidate_reads": 103,
   "candidate_pairs_without_shape_control": 20,
@@ -1106,7 +1106,7 @@
         }
       ],
       "rank": 9,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -1185,7 +1185,7 @@
         }
       ],
       "rank": 10,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -1264,7 +1264,7 @@
         }
       ],
       "rank": 11,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -1474,7 +1474,7 @@
         }
       ],
       "rank": 14,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -1537,7 +1537,7 @@
         }
       ],
       "rank": 15,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -1600,7 +1600,7 @@
         }
       ],
       "rank": 16,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -1785,7 +1785,7 @@
         }
       ],
       "rank": 19,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -1840,7 +1840,7 @@
         }
       ],
       "rank": 20,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -1955,7 +1955,7 @@
         }
       ],
       "rank": 22,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -2002,7 +2002,7 @@
         }
       ],
       "rank": 23,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -2095,7 +2095,7 @@
         }
       ],
       "rank": 25,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -2142,7 +2142,7 @@
         }
       ],
       "rank": 26,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -2197,7 +2197,7 @@
         }
       ],
       "rank": 27,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 37515,
@@ -2251,7 +2251,7 @@
         }
       ],
       "rank": 28,
-      "status": "pending original-pair witness"
+      "status": "certified standalone original field contract; execution reachability unmeasured"
     },
     {
       "type_id": 7644,
@@ -2333,7 +2333,7 @@
         }
       ],
       "rank": 30,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -2372,7 +2372,7 @@
         }
       ],
       "rank": 31,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -2411,7 +2411,7 @@
         }
       ],
       "rank": 32,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {
@@ -2606,7 +2606,7 @@
         }
       ],
       "rank": 37,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "comment"
     },
     {

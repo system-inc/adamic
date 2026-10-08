@@ -50,14 +50,6 @@ func TestCheckedViewOriginalUnionTargets(t *testing.T) {
 					t.Fatal("Node: " + diff)
 				}
 				program, err := lowered(t, file)
-				if group.name == "class" {
-					suffix := "Adamic 0.1 refuses checked view read of field members with unsupported Map key/value certificate contract; prove or implement the Map key/value certificate contract before reading this field"
-					if err == nil || !strings.HasSuffix(err.Error(), suffix) {
-						t.Fatalf("expected original members fallback gap, got %v", err)
-					}
-					t.Log("original members read remains blocked by unrelated Map descriptor")
-					return
-				}
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -73,7 +65,11 @@ func TestCheckedViewOriginalUnionTargets(t *testing.T) {
 						if got.exitCode != 70 || !strings.Contains(string(got.stderr), "read failed:") {
 							t.Fatalf("expected named read refusal, got %#v", got)
 						}
-						pin := "adamic: panic: field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number\n"
+						element := "ParameterDeclaration"
+						if group.name == "class" {
+							element = "ClassElement"
+						}
+						pin := "adamic: panic: field read failed: viewed." + group.field + " is not a NodeArray<" + element + ">; expected NodeArray<" + element + ">, found number\n"
 						if string(got.stderr) != pin {
 							t.Fatalf("refusal drift: %q", got.stderr)
 						}
@@ -232,4 +228,46 @@ func verifyUnionTargetDeclarations(t *testing.T, directory string) {
 			t.Fatal("declaration drift: " + file)
 		}
 	}
+}
+
+// A supported wider string contract must not hide the viewed ArrowFunction's
+// impossible name: never obligation. The forged string passes a primitive tag
+// check, so only the retained target-family refusal can catch this mutant.
+func TestCheckedViewScopedNeverWiderHelper(t *testing.T) {
+	directory := os.Getenv("ADAMIC_BRAND_ORIGINAL_DECLS")
+	if directory == "" {
+		t.Skip("set original declarations")
+	}
+	verifyUnionTargetDeclarations(t, directory)
+	input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/union-targets/never-wider-helper.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	bound := strings.Replace(string(input), "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(directory, "compiler/types.d.ts"))), 1)
+	file := filepath.Join(t.TempDir(), "never-helper.a")
+	if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, file)
+	if diff := disagreement(run{stdout: []byte("ordinary\nforged\n")}, truth); diff != "" {
+		t.Fatal(diff)
+	}
+	program, err := lowered(t, file)
+	if os.Getenv("ADAMIC_NEVER_SCOPE_MUTANT") == "1" {
+		if err != nil {
+			t.Fatalf("fallback bypass must compile valid code: %v", err)
+		}
+		for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+			if diff := disagreement(truth, got); diff != "" {
+				t.Fatalf("mutant must run on: %s stderr %s", diff, got.stderr)
+			}
+			t.Log("scope-guard bypass caught: unsupported viewed name ran on through wider helper")
+		}
+		return
+	}
+	suffix := "Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field"
+	if err == nil || !strings.HasSuffix(err.Error(), suffix) || !strings.Contains(err.Error(), "never-helper.a:4:") {
+		t.Fatalf("wider helper lost original never guard: %v", err)
+	}
+	t.Log(err)
 }

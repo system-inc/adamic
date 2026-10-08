@@ -1,0 +1,31 @@
+{
+  "pairs": [
+    {
+      "type": "JsonSourceFile",
+      "field": "parseDiagnostics"
+    },
+    {
+      "type": "TsConfigSourceFile",
+      "field": "extendedSourceFiles"
+    },
+    {
+      "type": "TsConfigSourceFile",
+      "field": "parseDiagnostics"
+    },
+    {
+      "type": "ResolvedModuleWithFailedLookupLocations",
+      "field": "affectingLocations"
+    },
+    {
+      "type": "ResolvedModuleWithFailedLookupLocations",
+      "field": "failedLookupLocations"
+    }
+  ],
+  "fields": [
+    "DiagnosticWithLocation",
+    "JsonSourceFile",
+    "ResolvedModuleWithFailedLookupLocations",
+    "TsConfigSourceFile"
+  ],
+  "reads": 4
+}

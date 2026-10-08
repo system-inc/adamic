@@ -103,13 +103,21 @@ func (l *lowering) dictionaryReadContract(node *ast.Node, object, key ir.Express
 	if err != nil {
 		return nil, err
 	}
+	primitive := false
 	if _, ok := ir.DictionaryReadKinds(l.result, id); !ok {
-		return nil, l.lazyReadRefusal(node, sourceExpression(node), "dictionary element "+l.checker.TypeToString(declared))
+		if selected, supported := l.dictionaryPrimitiveReadContract(node, declared); supported {
+			id, primitive = selected, true
+		} else {
+			return nil, l.lazyReadRefusal(node, sourceExpression(node), "dictionary element "+l.checker.TypeToString(declared))
+		}
 	}
 	if l.includesUndefined(declared) && len(l.viewLiterals(declared)) != 0 && !dictionaryWholeBoolean(l.viewLiterals(declared)) {
 		return nil, l.lazyReadRefusal(node, sourceExpression(node), "optional finite dictionary element")
 	}
-	fields, err := l.viewSchema(node, declared)
+	fields := map[string]bool{}
+	if !primitive {
+		fields, err = l.viewSchema(node, declared)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +132,7 @@ func (l *lowering) dictionaryReadContract(node *ast.Node, object, key ir.Express
 	if err != nil {
 		return nil, err
 	}
-	return ir.Property{Object: object, DictionaryKey: key, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: dictionaryReadLiterals(l.viewLiterals(declared))}, nil
+	return ir.Property{Object: object, DictionaryKey: key, DictionaryPrimitive: primitive, Of: of, View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewContract: id, ViewTypeID: int(declared.Id()), ViewAllowed: dictionaryReadLiterals(l.viewLiterals(declared))}, nil
 }
 
 // Resolved string-index signatures carry generic arguments that have no named

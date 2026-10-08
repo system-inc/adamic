@@ -66,7 +66,7 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 	for _, pair := range []struct {
 		typ, field string
 		optional   bool
-	}{{"Identifier", "escapedText", false}, {"Symbol", "escapedName", false}, {"PrivateIdentifier", "escapedText", false}, {"Identifier | PrivateIdentifier", "escapedText", false}, {"TransientSymbol", "escapedName", false}, {"MemberName", "escapedText", false}, {"UnionType", "keyPropertyName", true}, {"SourceFile", "localJsxFragmentNamespace", true}, {"SourceFile", "localJsxNamespace", true}, {"SymbolLinks", "typeOnlyExportStarName", true}, {"WideningContext", "propertyName", true}, {"typeof JsxNames", "IntrinsicElements", false}, {"typeof JsxNames", "IntrinsicAttributes", false}, {"typeof JsxNames", "Element", false}, {"typeof JsxNames", "IntrinsicClassAttributes", false}, {"typeof JsxNames", "JSX", false}, {"typeof JsxNames", "ElementAttributesPropertyNameContainer", false}, {"typeof JsxNames", "ElementChildrenAttributeNameContainer", false}, {"typeof JsxNames", "ElementClass", false}, {"typeof JsxNames", "ElementType", false}, {"typeof JsxNames", "LibraryManagedAttributes", false}, {"typeof ReactNames", "Fragment", false}, {"UniqueESSymbolType", "escapedName", false}, {"GeneratedIdentifier", "escapedText", false}, {"GeneratedPrivateIdentifier", "escapedText", false}, {"Identifier | undefined", "escapedText", false}, {"Symbol | undefined", "escapedName", false}, {"Identifier@34691", "escapedText", false}, {"PrivateIdentifier@55713", "escapedText", false}, {"Identifier@46232", "escapedText", false}, {"Mutable<Identifier>", "escapedText", false}} {
+	}{{"Identifier", "escapedText", false}, {"Symbol", "escapedName", false}, {"PrivateIdentifier", "escapedText", false}, {"Identifier | PrivateIdentifier", "escapedText", false}, {"TransientSymbol", "escapedName", false}, {"MemberName", "escapedText", false}, {"UnionType", "keyPropertyName", true}, {"SourceFile", "localJsxFragmentNamespace", true}, {"SourceFile", "localJsxNamespace", true}, {"SymbolLinks", "typeOnlyExportStarName", true}, {"WideningContext", "propertyName", true}, {"typeof JsxNames", "IntrinsicElements", false}, {"typeof JsxNames", "IntrinsicAttributes", false}, {"typeof JsxNames", "Element", false}, {"typeof JsxNames", "IntrinsicClassAttributes", false}, {"typeof JsxNames", "JSX", false}, {"typeof JsxNames", "ElementAttributesPropertyNameContainer", false}, {"typeof JsxNames", "ElementChildrenAttributeNameContainer", false}, {"typeof JsxNames", "ElementClass", false}, {"typeof JsxNames", "ElementType", false}, {"typeof JsxNames", "LibraryManagedAttributes", false}, {"typeof ReactNames", "Fragment", false}, {"UniqueESSymbolType", "escapedName", false}, {"GeneratedIdentifier", "escapedText", false}, {"GeneratedPrivateIdentifier", "escapedText", false}, {"Identifier | undefined", "escapedText", false}, {"Symbol | undefined", "escapedName", false}, {"Identifier@34691", "escapedText", false}, {"PrivateIdentifier@55713", "escapedText", false}, {"Identifier@46232", "escapedText", false}, {"Mutable<Identifier>", "escapedText", false}, {"ActiveLabel", "name", false}, {"RenamedBinding", "name", false}} {
 		variants := []string{"good", "internal", "undefined", "wrong", "null", "missing"}
 		union := pair.typ == "Identifier | PrivateIdentifier" || pair.typ == "MemberName"
 		if union {
@@ -98,6 +98,23 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 				program, err := lowered(t, file)
 				if err != nil {
 					t.Fatal(err)
+				}
+				if pair.typ == "ActiveLabel" || pair.typ == "RenamedBinding" {
+					found := false
+					for _, parent := range program.ViewContracts {
+						if parent.Name != "ArrowFunction" {
+							continue
+						}
+						for _, field := range parent.Fields {
+							if field.Name == "name" && program.ViewContracts[field.Contract-1].Unsupported == "never" {
+								found = true
+							}
+						}
+					}
+					if !found {
+						t.Fatal("original ArrowFunction.name: never collision witness missing")
+					}
+					t.Log("original unrelated fallback source: ArrowFunction.name: never; supported helper read retains __String check")
 				}
 				roots := []string{strings.Split(strings.TrimSuffix(pair.typ, " | undefined"), "@")[0]}
 				if pair.typ == "Identifier | PrivateIdentifier" || pair.typ == "MemberName" {

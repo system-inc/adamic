@@ -1,0 +1,28 @@
+{
+  "apply_exit": 0,
+  "oracle_exit": 1,
+  "oracle_status": "fail",
+  "phase_exits": {
+    "install": 0,
+    "build": 0,
+    "tests": 1
+  },
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "platforms": {
+    "linux/x64/v24.19.0": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "darwin/arm64/v24.19.0": {
+      "passing": 106369,
+      "failing": 1,
+      "pending": 0
+    }
+  }
+}

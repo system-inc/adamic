@@ -91,11 +91,12 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if literal.Spread != nil && !l.hasProperty(node.AsObjectLiteralExpression().Properties.Nodes[0].AsSpreadAssignment().Expression, fieldName) {
 				return nil, l.notYet(property, "a spread that adds a field the source doesn't have")
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
+			boxedCallableField := l.viewCallableBoxedRecordField(node, fieldName)
+			if declared := l.declaredField(node, fieldName); declared != 0 && (!censusFieldSlotless(declared) || boxedCallableField) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && l.objectPrimitiveBoxedField(property)) {
+			if censusFieldSlotless(value.Type()) && !(value.Type() == ir.Union && (l.objectPrimitiveBoxedField(property) || boxedCallableField)) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
@@ -543,7 +544,14 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) && !(of == ir.Union && (l.includesNull(l.checker.GetTypeAtLocation(node)) || l.includesUndefined(l.checker.GetTypeAtLocation(node)))) && !l.objectPrimitiveViewType(l.checker.GetTypeAtLocation(node)) {
+		if of == ir.Union {
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && interfaceScalar(l.concrete(l.checker.GetTypeOfSymbol(field))) {
+				if _, err := l.viewContract(node, l.concrete(l.checker.GetTypeOfSymbol(field))); err != nil {
+					return nil, err
+				}
+			}
+		}
+		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) && !(of == ir.Union && (l.includesNull(l.checker.GetTypeAtLocation(node)) || l.includesUndefined(l.checker.GetTypeAtLocation(node)))) && !l.objectPrimitiveViewType(l.checker.GetTypeAtLocation(node)) && !l.viewPrimitiveUnionRead(l.checker.GetTypeAtLocation(node)) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
 		if of.IsMaybe() {
@@ -586,6 +594,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 			}
 		}
 		l.prepareViewCallableProperty(node, declared, &property)
+		l.preparePrimitivePropertyRead(declared, &property)
 		if property.Of == ir.Object && declared.Flags()&checker.TypeFlagsUnion != 0 {
 			l.prepareUntaggedStructuralRead(node, declared, map[*checker.Type]bool{})
 		}
@@ -1816,6 +1825,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return ir.StringIndex{Value: object, Index: position}, nil
 	}
 	if object.Type() == ir.Array {
+		if read, handled, err := l.primitiveArrayIndexRead(node, object); handled {
+			return read, err
+		}
 		element, err := l.elementType(access.Expression)
 		if err != nil {
 			return nil, err

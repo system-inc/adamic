@@ -5,7 +5,15 @@ import "fmt"
 // Producer metadata is an explicit argument until the closure owner wires its
 // immutable recorded signature. Never infer it from Function.length or a view.
 // Presence and initialization are checked by the shared field read first.
-const viewCallableShapeRuntime = `const adamicViewCallableSignaturesMatch = (recorded, expected) => recorded!==undefined && recorded!==null && expected!==undefined && expected!==null && recorded.result!==0 && expected.result!==0 && (expected.result===255 || recorded.result===expected.result) && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && expected.parameters[index]!==0 && value===expected.parameters[index]);
+const viewCallableShapeRuntime = `const adamicCallableRepresentationCompatible = (from, to, fromMembers = 0, toMembers = 0) => {
+    if (from === 0 || to === 0) return false;
+    if (from !== 10 && to !== 10 && from !== to) return false;
+    if (from !== 10 && to !== 10 && (fromMembers === 0 || toMembers === 0)) return from === to;
+    const given = fromMembers !== 0 || from === 10 ? fromMembers : (1 << from);
+    const wanted = toMembers !== 0 || to === 10 ? toMembers : (1 << to);
+    return given !== 0 && wanted !== 0 && (given & wanted) === given;
+};
+const adamicViewCallableSignaturesMatch = (recorded, expected) => recorded!==undefined && recorded!==null && expected!==undefined && expected!==null && recorded.result!==0 && expected.result!==0 && (expected.result===255 || adamicCallableRepresentationCompatible(recorded.result, expected.result, recorded.resultMask, expected.resultMask)) && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>adamicCallableRepresentationCompatible(expected.parameters[index], value, expected.parameterMasks?.[index], recorded.parameterMasks?.[index]));
 const adamicViewCallableShape = (value, recorded, expected, expression, optional = false) => {
     if (optional && value === undefined) return undefined;
     let found = value === null ? "null" : adamicTypeOf(value);
@@ -14,7 +22,7 @@ const adamicViewCallableShape = (value, recorded, expected, expression, optional
         if (recorded !== undefined && recorded !== null && expected !== undefined && expected !== null) {
             if (recorded.parameters.length !== expected.parameters.length) found = "function with arity " + recorded.parameters.length;
             else if (recorded.result === 0 || expected.result === 0) found = "function with unknown signature";
-            else if (expected.result !== 255 && recorded.result !== expected.result) found = "function with incompatible result representation";
+            else if (expected.result !== 255 && !adamicCallableRepresentationCompatible(recorded.result, expected.result, recorded.resultMask, expected.resultMask)) found = "function with incompatible result representation";
             else if (adamicViewCallableSignaturesMatch(recorded, expected)) return value;
             else found = "function with incompatible parameter representations";
         }

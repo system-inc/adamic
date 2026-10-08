@@ -1,0 +1,12 @@
+import type { PackageJsonInfoContents } from 'original-tsc-resolver';
+interface Base { readonly packageJsonContent: {}; }
+function read(info: PackageJsonInfoContents): string {
+ const member = info.versionPaths;
+ if (member === undefined) return 'absent';
+ if (typeof member === 'boolean') return `${member}`;
+ return `${member.version === undefined}`;
+}
+function wrongMember(): boolean | { version: string; paths: {}; } { return true; }
+const concrete: { readonly packageJsonContent: {}; readonly versionPaths: boolean | { version: string; paths: {}; } | undefined; } = { packageJsonContent: {}, versionPaths: wrongMember() };
+const base: Base = concrete;
+console.log(read(base as PackageJsonInfoContents));

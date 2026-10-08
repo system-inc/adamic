@@ -1,0 +1,5 @@
+{
+  "name": "nexus-stuttering-name-equality",
+  "from": "if(receiver.text !== property.text) { return; }",
+  "to": "if(false) { return; }"
+}

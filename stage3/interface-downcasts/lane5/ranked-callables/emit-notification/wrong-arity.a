@@ -1,0 +1,6 @@
+// Original tsc declaration/read, reduced enum members.
+enum SyntaxKind {ModuleDeclaration=5}
+interface Base {readonly enableEmitNotification:unknown;}
+interface Target {enableEmitNotification(kind: SyntaxKind): void;}
+function probe(value:Base):void {const context=value as Target;context.enableEmitNotification(SyntaxKind.ModuleDeclaration);}
+probe({enableEmitNotification:(kind:SyntaxKind,extra:number):void=>{console.log("9");}});

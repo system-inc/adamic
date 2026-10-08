@@ -19,6 +19,12 @@ func (l *lowering) objectPrimitiveViewType(target *checker.Type) bool {
 		if member.Flags()&checker.TypeFlagsUndefined != 0 {
 			continue
 		}
+		// Storage is an object reference; the lazy descriptor still refuses a
+		// demanded tuple union read with its named per-position obligation.
+		if checker.IsTupleType(member) {
+			objects++
+			continue
+		}
 		of, known := l.representation(member)
 		if !known {
 			return false
@@ -74,4 +80,18 @@ func (l *lowering) objectPrimitiveIntersectionStorage(target *checker.Type) bool
 		return len(target.Types()) != 0
 	}
 	return target.Flags()&checker.TypeFlagsObject != 0 && !l.checker.IsArrayType(target) && !checker.IsTupleType(target) && !isClassInstance(target) && !l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet") && len(l.checker.GetIndexInfosOfType(target)) == 0 && len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) == 0
+}
+
+// A tuple's object heap tag cannot certify its per-position contracts. Keep this
+// as a named lazy obligation even when another union member is primitive.
+func (l *lowering) objectPrimitiveTupleMember(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	for _, member := range target.Types() {
+		if checker.IsTupleType(member) {
+			return true
+		}
+	}
+	return false
 }

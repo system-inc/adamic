@@ -1,0 +1,27 @@
+{
+  "upstreamTest": "TestConsistencyNoLongLineComment",
+  "upstream_functions": [
+    "TestConsistencyNoLongLineCommentFires",
+    "TestConsistencyNoLongLineCommentStaysSilent",
+    "TestConsistencyNoLongLineCommentHoldsGeneratedFilesToTheRule",
+    "TestConsistencyNoLongLineCommentFixes",
+    "TestConsistencyNoLongLineCommentFixPreservesIndentation",
+    "TestConsistencyNoLongLineCommentWithholdsUnsafeFix"
+  ],
+  "combined_captured_cases": 2033,
+  "witnesses": {
+    "default.ts.txt": "4b7c15ad621c4bd7a89e4d7696289b2be04339ecd85d76cd46b6bbcc6362ba69",
+    "indented.ts.txt": "10e4460ba9efeed312843ba292e18194b7873d500d4818dc824ba41e5ed51dbd",
+    "threshold.options.json": "90c4480e22768e47e48bb43ba468a3bf19732450be77786161838da13c9eb53b",
+    "threshold.ts.txt": "958bd1a092224e8840ec8f32e8369ef137ccdfef269a9de93024b92013d6c8bd",
+    "unsafe.ts.txt": "880d84b31708f5a2a5ddc09b5028eeee54f1831c9436f13ef596f27f410a2b75"
+  },
+  "runtimes": [
+    "Go cohere",
+    "source Node",
+    "emitted JavaScript",
+    "ASan/UBSan native"
+  ],
+  "mutant": "configured threshold ignored",
+  "captured_rule_cases": 16
+}

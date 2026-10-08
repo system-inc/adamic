@@ -2159,6 +2159,229 @@ fixtures. The integrator reconciles this small cast-proof dispatch hook.
 The existing certifiedCheckedCast hook also retains the union target contract
 on cast.go's multi-tag IR node. The tag proof remains distinct from payload proof.
 
+### Lane 4 fallback collision cause and scoped demand
+
+Original ArrowFunction declares name: never. Interning the complete Node graph
+therefore creates that descriptor even for ActiveLabel and renamed bindings.
+The global field-name fallback previously applied that obligation to every
+viewed allocation named name; similarly a Map members descriptor blocked class
+array members. New lower/view_demand_scopes.go and tests attach existing
+CheckedCast.ViewContract targets to the actual origins, then query lane 3's
+allocation graph and projection index to carry target contracts over actual
+field/element producers and stores. No second allocation solver is introduced.
+The named scopedViewFieldFamilies hook in view_lazy.go scopes only the fallback;
+direct unsupported reads, wider helpers receiving a viewed unsupported member,
+unknown callbacks, untracked origins, opaque projections and mutations retain
+refusals. Cast.go uses existing certifiedCheckedCast for union target metadata.
+Primitive nullish payloads do not invent aggregate allocations. Original name
+oracles assert ArrowFunction.name: never is still in the complete descriptor
+graph and run field-check mutants. The wider-helper forged-string mutant must
+be caught by the never obligation despite passing the helper's primitive check.
+The intersected Identifier pair remains lane 7's work.
+
+### Lane 4 first nonbrand primitive certification
+
+Owned original primitive fixtures and declaration witness preparation live in
+stage3/interface-downcasts/lane4/primitive-original; oracle tests live in
+internal/oracle/checked_views_primitives_original_test.go. Four pairs / 69
+candidate reads are certified using existing integrated nullable selectors.
+EmitNode direct destructuring is explicitly not credited by a property fixture.
+No production hook is added in this checkpoint.
+
+### Lane 4 primitive destructuring hook
+
+New lower/view_primitive_reads.go names viewPrimitiveUnionRead and
+preparePrimitiveDestructuredRead. Minimal hooks in interface_cast.go and
+collections.go admit only complete declared primitive union descriptors and
+attach existing runtime selector metadata to object binding field reads.
+Unsupported, missing and recursive descriptors retain refusal; global unknown
+flow guard remains unchanged. No runtime ABI or emitter change.
+
+The original binding fixture also exposed a panic in view_callables.go: its
+producer scan called Text on an unrelated VariableDeclaration binding pattern.
+Named viewCallableProducerDeclaration limits producer-name extraction to the
+four existing producer declaration kinds; callable proofs remain unchanged.
+
+Ordinary binding control exposed an unsafe erasure of the primitive-to-box
+conversion. Named primitiveBindingConversion in readiness.go retains the
+existing selector only for union binding reads with complete primitive
+descriptors. This is representation conversion, necessary with or without a
+view; ordinary helpers are held to Node in native, JS and sanitizer runs.
+
+### Lane 4 pure primitive property selectors
+
+Named preparePrimitivePropertyRead reuses the existing nullable selector with
+no admitted nullish alternative for pure primitive unions. Minimal object.go
+and interface_cast.go hooks require complete primitive descriptors. Readiness
+retains primitive-to-box conversion for property reads as well as bindings,
+including ordinary values. No runtime layout or emitter change. Original
+StringLiteralType | NumberLiteralType.value is the next six-read candidate.
+
+The lower NotYet table drops only its now-supported primitive field-read row;
+union field writes, class fields and array/closure storage refusals remain.
+An ordinary pure-primitive field fixture supplies Node/backend coverage.
+The original union helper is tested with viewed values of each full member;
+direct untagged union admission remains lane 4c and is not credited here.
+
+### Lane 4 nullable finite-member diagnostic alignment
+
+Minimal hook in javascript/view_nullish.go: nullishMemberSelection names
+"matches no member of" the declared union, matching the native selector when a
+runtime kind exists but a finite literal member rejects it. Resolved.originalPath
+false versus its true-only member exposed the mismatch. No check is removed.
+Complete original Resolved is printed from its private source interface and
+hash-pinned separately; all five fields, including PackageId, are retained.
+
+### Lane 4 private primitive receiver certification
+
+Owned primitive-original/prepare.cjs now prints complete original FlowGraphNode,
+FlowGraphEdge and watch presence interfaces, retaining dependencies and hashing
+the generated declarations. No new production hook in this batch. Builder
+signature receiver intersection remains lane 7, with a named refusal pin.
+Owned measure-tuple-candidates.cjs verifies two scalar tuple census corrections
+for lane 1: two pairs / four candidate reads, no certification credit.
+## Lane 5 scalar and boxed callable adapters (October 8)
+
+Lane 5 owns new native/view_callables_boxing.go and lower/view_callables_boxing.go,
+plus oracle/checked_views_callable_boxing_test.go and lane5/boxing fixtures.
+Minimal shared hook: native/emit_functions.go routes closure invocation through
+the named boxed adapter. The existing callable slot guard already admits Union.
+The adapter selects actual producer code, converts borrowed parameters, releases
+new parameter boxes on normal and exceptional returns, and converts owned results.
+No closure calling convention or callable identity is replaced. Read certification
+will use independently recorded representation member masks for union variance.
+
+Callable union metadata hooks: ir.Function.CallableMasks is recorded by the
+function signature producer; ir.ViewContract.RepresentationMask records requested
+members. Native and JavaScript helpers compare result subsets and reversed
+parameter subsets before admitting a read. Scalars retain their previous checks.
+
+Callback adapter hooks use the same named helper in native emit_expressions.go,
+emit_arrays.go, emit_maps.go, from.go, library_array_holes.go, and reuse.go. Both
+normal and reused array maps, visits, reduce, from, Map/Set visits carry explicit
+runtime input and result representations. Sort's existing direct-function
+comparator is distinct and remains outside this closure adapter.
+
+Sort callback hooks: native/view_arrays.go and emit_expressions.go use the
+owned boxed comparator adapter; direct named-function comparators retain their
+existing exact-element admission. lower/expression.go copies producer masks into
+named function forwarders. The former mixed-result boundary is now an oracle
+positive in its existing lane-owned test; counts adds the boxing directory.
+
+JavaScript adds view_callables_boxing.go and a named call-dispatch hook in
+javascript.go. It shares native unknown-producer refusal when union conversion
+would require metadata; JavaScript otherwise preserves its normal values.
+
+## Lane 5 aggregate callable demand (October 8)
+
+New lower/view_callables_aggregate.go owns deferred payload schema collection and
+registration. Minimal shared hooks: lower.go stores checker payload references;
+view_callables_read.go records payload type IDs while comparing representations;
+functions.go records producer payload types; view_lazy.go completes aggregate
+schemas before demand and follows aggregate call results. interface_cast.go's
+schema visitor follows signature payloads, parameters and results. collections.go
+fills callable and type metadata on destructured reads. ir.ViewContract adds
+Payload/PayloadTypeID metadata. Payload schemas are descriptors and are built
+only when a checked callable can demand them, never as signature proof at cast.
+
+The named concrete-read predicate in view_lazy.go keeps a checked scalar or
+completed callable read from being poisoned by an unrelated wider producer member
+with the same name. Direct unsupported descriptors and unsupported receivers
+still refuse. Unknown nominal/dictionary producer parameters have no certificate.
+
+Class method certificates keep boxed result/parameter variance unsupported until
+their thunk invocation uses an adapter. Native view_callables_methods.go and
+JavaScript view_callables_signature.go preserve the same read refusal. Aggregate
+return demand reads evaluation operands via ir.ClosureOperands, and result targets
+remain resolved by the shared graph and ir.Program.ClosureTargets.
+
+Lane 5 optional callable hook: view_callables_contract.go and
+view_callables_read.go admit represented optional parameters while preserving
+exact recorded parameter count. Missing numeric optional arguments use the
+existing closure argument count and MaybeNumber representation. A producer
+requiring the omitted parameter still fails its representation/member check.
+
+Lane 5 long-signature refusal hook: native/runtime/object.c allocates space for
+both copies of the declared type in adamic_object_view's failure message. Rank 53's
+wrong-value fixture pins its complete long signature on sanitized and release
+native, preventing truncated diagnostics and reads beyond the message buffer.
+
+Lane 5 boxed argument field-production hook: lower/object.go calls the named
+viewCallableBoxedRecordField in view_callables_boxing.go. A supported contextual
+scalar/object union field stores the initializer in the declared boxed form.
+This fixes rank 50's scalar argument field being retained as a pointer before
+callable dispatch. Unknown, nominal and dictionary members remain unsupported.
+
+## Lane 5 callable array payloads (October 8)
+
+Owned hooks in lower/view_callables_boxing.go and view_callables_aggregate.go
+recognize represented array parameters/results and complete their deferred
+element schemas before lazy demand. Array extraction continues through lane 2's
+named metadata hooks; no callback ABI guard or owner-mutation refusal is removed.
+Schema creation certifies neither array contents nor descendant object fields.
+
+## Lane 2 group fifteen: complete original declarations
+
+FunctionExpression, GetAccessorDeclaration and SetAccessorDeclaration typeParameters
+are held by 15 probes importing complete original declarations at 050880ce. These
+three pairs account for twelve static candidate reads; production reachability is
+unmeasured. Both backends, sanitized/release native, finishing leak checks and two
+executed numeric-field mutants are covered. Cumulative fixture obligations are
+148 pairs / 2713 reads; remainder 186 / 476. See
+`stage3/interface-downcasts/lane2/RANKED15-ARRAYS-REPORT.md`. The required global
+counts refresh remains red in existing fixtures; two failures reproduce at merge
+baseline 0f47b23c. Fifteen group count rows were separately measured and recorded.
+
+### Lane 4 integration reconciliation after private primitive batch
+
+Merge d718a9ff retains both dictionary and primitive admission/readiness hooks,
+both untagged-object and primitive property preparation, and scoped fallback
+with integration callable exemptions. Global unknown fallback remains intact.
+Integration callable implementation-name validation supersedes the narrower
+producer-name helper, retaining computed-name refusal and binding-pattern safety.
+
+### Lane 4 read-only primitive array indexes
+
+Named primitiveArrayIndexRead in object.go recognizes only complete primitive
+member descriptors at an indexed read. elementType, producers, writes and other
+consumers stay unchanged. Owned view_array_primitives.go files in lower/native/
+javascript plus runtime/view_array_primitives.{h,c} retain the receiver before
+index evaluation, validate physical producer metadata, snapshot one slot, select
+its declared member, and return an owned scalar box. No allocation layout or ABI
+rewrite. Native evaluate and JS array-read dispatch are minimal named hooks.
+
+PrimitiveArrayReads IR metadata enables existing producer storage certificates
+for ordinary primitive array reads too. emit_slots.go's arrayIndexSlot uses the
+same selector and owned box for typeof, so typeof cannot bypass selection.
+
+### Lane 4 dictionary primitive and nullish selection
+
+Named DictionaryReadKinds ViewNull admission and native kind mask now retain
+null separately from undefined. The dictionary slot normalizers classify the
+existing adamic_null heap sentinel, and adamic_view_dictionary_box preserves
+that sentinel for both scalar null slots and boxed records. No lookup, absence,
+enumeration, allocation layout or ownership ABI is changed. Lane 6 owns those
+operations; lane 4 certifies only the scalar/nullish component of rich original
+CompilerOptions, OptionsBase and BuildOptions element unions.
+
+DictionaryReadKinds unwraps only supported nullable descriptors, preserving
+Unsupported, unknown and cycle refusals. Named primitiveDictionaryStringValue
+in library_string.go permits stringification only after a dictionary selector
+whose full admitted kind set is primitive/nullish. JS dictionary classification
+uses existing adamicTypeOf so AdamicClosure receives its function tag.
+Original rich dictionary candidates still refuse their unsupported reference
+member selection; generic selector controls earn no original-pair credit.
+
+Named dictionaryPrimitiveReadContract selects complete open string/number/boolean
+plus nullish arms from a rich original union without erasing its full descriptor.
+DictionaryPrimitive records a distinct read certificate; original ViewTypeID
+and cast contracts remain intact. records.go attaches it at get; readiness
+retains it; lazy admission uses it only after PrimitiveDictionaryReadCertificate
+proves every admitted runtime kind primitive/nullish. Unknown flow fallback is
+unchanged. Actual reference kinds are excluded and stop at this read until their
+owning lane provides selection, so unread reference alternatives cannot poison
+a selected scalar. Object and array alternatives receive no certification credit.
+
 ### Lane 7 approved deferred descendant selection
 
 Supported untagged object-union descendants in bounded intersections retain

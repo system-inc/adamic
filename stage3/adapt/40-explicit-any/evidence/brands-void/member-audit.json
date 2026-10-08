@@ -1,0 +1,528 @@
+[
+  {
+    "key": "__incrementalBuildInfoFileIdBrand",
+    "search": "/tmp/any-brands-before/src/compiler/builder.ts:1074:export type IncrementalBuildInfoFileId = number & { __incrementalBuildInfoFileIdBrand: any; };\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/builder.ts",
+        "key": "__incrementalBuildInfoFileIdBrand",
+        "owner": "IncrementalBuildInfoFileId",
+        "line": 1074
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "__incrementalBuildInfoFileIdListIdBrand",
+    "search": "/tmp/any-brands-before/src/compiler/builder.ts:1076:export type IncrementalBuildInfoFileIdListId = number & { __incrementalBuildInfoFileIdListIdBrand: any; };\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/builder.ts",
+        "key": "__incrementalBuildInfoFileIdListIdBrand",
+        "owner": "IncrementalBuildInfoFileIdListId",
+        "line": 1076
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_symbolLinksBrand",
+    "search": "/tmp/any-brands-before/src/compiler/checker.ts:1452:    declare _symbolLinksBrand: any;\r\n/tmp/any-brands-before/src/compiler/types.ts:6064:    _symbolLinksBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/checker.ts",
+        "key": "_symbolLinksBrand",
+        "owner": "SymbolLinks",
+        "line": 1452
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_symbolLinksBrand",
+        "owner": "SymbolLinks",
+        "line": 6064
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": " __sortedArrayBrand",
+    "search": "/tmp/any-brands-before/src/compiler/corePublic.ts:18:    \" __sortedArrayBrand\": any;\r\n/tmp/any-brands-before/src/compiler/corePublic.ts:22:    \" __sortedArrayBrand\": any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/corePublic.ts",
+        "key": " __sortedArrayBrand",
+        "owner": "SortedReadonlyArray",
+        "line": 18
+      },
+      {
+        "file": "src/compiler/corePublic.ts",
+        "key": " __sortedArrayBrand",
+        "owner": "SortedArray",
+        "line": 22
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "__compilerOptionsKey",
+    "search": "/tmp/any-brands-before/src/compiler/moduleNameResolver.ts:975:export type RedirectsCacheKey = string & { __compilerOptionsKey: any; };\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "key": "__compilerOptionsKey",
+        "owner": "RedirectsCacheKey",
+        "line": 975
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "__modeAwareCacheKey",
+    "search": "/tmp/any-brands-before/src/compiler/moduleNameResolver.ts:1113:export type ModeAwareCacheKey = string & { __modeAwareCacheKey: any; };\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "key": "__modeAwareCacheKey",
+        "owner": "ModeAwareCacheKey",
+        "line": 1113
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "__pathComponensBrand",
+    "search": "/tmp/any-brands-before/src/compiler/path.ts:457:export type PathPathComponents = Path[] & { __pathComponensBrand: any; };\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/path.ts",
+        "key": "__pathComponensBrand",
+        "owner": "PathPathComponents",
+        "line": 457
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_usingBrand",
+    "search": "/tmp/any-brands-before/src/compiler/transformers/esnext.ts:774:function isUsingVariableDeclarationList(node: Node): node is VariableDeclarationList & { _usingBrand: any; } {\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/transformers/esnext.ts",
+        "key": "_usingBrand",
+        "owner": "isUsingVariableDeclarationList",
+        "line": 774
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "__pathBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:23:export type Path = string & { __pathBrand: any; };\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "__pathBrand",
+        "owner": "Path",
+        "line": 23
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_jsdocContainerBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:958:    _jsdocContainerBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_jsdocContainerBrand",
+        "owner": "JSDocContainer",
+        "line": 958
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_localsContainerBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:968:    _localsContainerBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_localsContainerBrand",
+        "owner": "LocalsContainer",
+        "line": 968
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_flowContainerBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:974:    _flowContainerBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_flowContainerBrand",
+        "owner": "FlowContainer",
+        "line": 974
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_declarationBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:1757:    _declarationBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_declarationBrand",
+        "owner": "Declaration",
+        "line": 1757
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_autoAccessorBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:1944:    _autoAccessorBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_autoAccessorBrand",
+        "owner": "AutoAccessorPropertyDeclaration",
+        "line": 1944
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_objectLiteralBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:1981:    _objectLiteralBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_objectLiteralBrand",
+        "owner": "ObjectLiteralElement",
+        "line": 1981
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_functionLikeDeclarationBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2064:    _functionLikeDeclarationBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_functionLikeDeclarationBrand",
+        "owner": "FunctionLikeDeclarationBase",
+        "line": 2064
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_typeNodeBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2185:    _typeNodeBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_typeNodeBrand",
+        "owner": "TypeNode",
+        "line": 2185
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_expressionBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2397:    _expressionBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_expressionBrand",
+        "owner": "Expression",
+        "line": 2397
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_unaryExpressionBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2412:    _unaryExpressionBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_unaryExpressionBrand",
+        "owner": "UnaryExpression",
+        "line": 2412
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_updateExpressionBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2418:    _updateExpressionBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_updateExpressionBrand",
+        "owner": "UpdateExpression",
+        "line": 2418
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_leftHandSideExpressionBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2449:    _leftHandSideExpressionBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_leftHandSideExpressionBrand",
+        "owner": "LeftHandSideExpression",
+        "line": 2449
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_memberExpressionBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2453:    _memberExpressionBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_memberExpressionBrand",
+        "owner": "MemberExpression",
+        "line": 2453
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_primaryExpressionBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2457:    _primaryExpressionBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_primaryExpressionBrand",
+        "owner": "PrimaryExpression",
+        "line": 2457
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_literalExpressionBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2785:    _literalExpressionBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_literalExpressionBrand",
+        "owner": "LiteralExpression",
+        "line": 2785
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_optionalChainBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2982:    _optionalChainBrand: any;\r\n/tmp/any-brands-before/src/compiler/types.ts:3010:    _optionalChainBrand: any;\r\n/tmp/any-brands-before/src/compiler/types.ts:3034:    _optionalChainBrand: any;\r\n/tmp/any-brands-before/src/compiler/types.ts:3168:    _optionalChainBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_optionalChainBrand",
+        "owner": "PropertyAccessChain",
+        "line": 2982
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_optionalChainBrand",
+        "owner": "ElementAccessChain",
+        "line": 3010
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_optionalChainBrand",
+        "owner": "CallChain",
+        "line": 3034
+      },
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_optionalChainBrand",
+        "owner": "NonNullChain",
+        "line": 3168
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_propertyAccessExpressionLikeQualifiedNameBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:2997:    _propertyAccessExpressionLikeQualifiedNameBrand?: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_propertyAccessExpressionLikeQualifiedNameBrand",
+        "owner": "PropertyAccessEntityNameExpression",
+        "line": 2997
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_statementBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:3322:    _statementBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_statementBrand",
+        "owner": "Statement",
+        "line": 3322
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_classElementBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:3568:    _classElementBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_classElementBrand",
+        "owner": "ClassElement",
+        "line": 3568
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_typeElementBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:3573:    _typeElementBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_typeElementBrand",
+        "owner": "TypeElement",
+        "line": 3573
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_jsDocTypeBrand",
+    "search": "/tmp/any-brands-before/src/compiler/types.ts:3903:    _jsDocTypeBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/types.ts",
+        "key": "_jsDocTypeBrand",
+        "owner": "JSDocType",
+        "line": 3903
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  },
+  {
+    "key": "_prototypePropertyAssignmentBrand",
+    "search": "/tmp/any-brands-before/src/compiler/utilities.ts:4289:    _prototypePropertyAssignmentBrand: any;\r\n",
+    "declarations": [
+      {
+        "file": "src/compiler/utilities.ts",
+        "key": "_prototypePropertyAssignmentBrand",
+        "owner": "PrototypePropertyAssignment",
+        "line": 4289
+      }
+    ],
+    "reads": 0,
+    "writes": 0,
+    "tests": 0,
+    "decision": "void"
+  }
+]

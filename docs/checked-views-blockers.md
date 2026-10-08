@@ -288,3 +288,43 @@ Lane-4 primitive phantom scalar reads are reconciled with that lazy entry point;
 standalone selector evidence does not imply production union admission.
 See stage3/interface-downcasts/integration/REPORT.md for conflict choices,
 validation, reproduced baseline failures and mutants.
+
+## Continued integration checkpoint, October 8, 2026
+
+Continuation starts at d718a9ffa0432245b69a3545c3ca080db865e0bb on
+codex/views-integration. Optional boolean a2eb65ca76816f895f846f78a210bc1717a5f7c4
+and untagged unions cd32db4234fb0a65a6ad199474b802c9e7491054 are ancestors.
+
+The attempted owner merge d5b3c4a9bde6ee28fe38568ef4b720aa9c2b68e3 was
+aborted with 18 unresolved paths. The previous bd05075f rollback deleted Map
+storage adapters, tuple/callable entry descriptors and producer tests that the
+new nominal Map code depends on. Its incoming Map forEach calls closure code
+directly; integration dispatches through viewCallableBoxedInvokeTypes. Restoring
+the deleted adapters also requires reconciling ownership of converted keys and
+values with that dispatch. No whole-file conflict selection was used.
+
+This is an unresolved integration boundary, not a new runtime failure or a
+certification of the owner fixtures. The existing Union callback adapter and
+unknown-producer refusals are retained. Do not restore the general Union calling
+convention refusal to hide this boundary: entry-live-mutation.a then refuses
+lowering, and the boxed callback fixtures lose their supported behavior. The
+native and JavaScript TestViewCallableBoxingUnknownProducer tests and
+TestCheckedViewCallableRetainsNeverWiderHelper remain required boundary checks.
+See stage3/interface-downcasts/integration/CONTINUED-REPORT.md for the final
+merge ledger and validation results.
+
+
+## Tuple continuation dependency, October 8, 2026
+
+The attempted tuple merge 5c54e8c6583462ae061557d5fc4618deaf4b67ee was
+aborted after nine paths were individually reconciled. Nullish Map storage
+fixtures restored for measurement all refuse at Map admission; optional/rest
+Map tuple reads retain the unsupported Map key/value certificate contract
+refusal. They depend on the deferred owner storage/provenance changes above.
+A narrow supported-tuple routing retry also found a JavaScript/Node disagreement:
+original emit-tuple-good and emit-helper-good exit 70 with "a union value does
+not match its narrowed type" in JavaScript while the source Node controls succeed.
+Existing storage and callable refusals were kept. Exact logs and the attempted
+patch are in stage3/interface-downcasts/integration/logs/continued; the complete
+ledger and command outcomes are in CONTINUED-REPORT.md. The tuple item remains
+out of the branch; latest green compiler merge is 03aea1cbede84da46e84c78d599f287bc8585c1b.
