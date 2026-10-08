@@ -15,6 +15,8 @@ codex/scanner-	stage1-lint
 codex/parser-	hold	@system_cohere_adamic: the shared parser serves both stage 1 areas
 codex/realpath-	hold	@system_cohere_adamic
 codex/cohere-	hold	@system_cohere_adamic: a cohere pin moves the submodule every area and gate box reads
+codex/shared-ssa	stage1-lint	cohere's static_single_assignment port (#dnv6f2c)
+codex/tsgo-	stage1-lint	the checker bridge
 # Compiler (its lowering wall and the stricter checks, @system_adamic Oct 8)
 codex/compiler-	compiler
 codex/notyet-	compiler
@@ -25,10 +27,18 @@ codex/accessors	compiler
 codex/stdout-	compiler
 codex/optional-	compiler
 codex/method-	compiler	method values, notes/method-values
+codex/non-null	compiler	the checked non-null lowering
+codex/records-	compiler	records and named-index storage
+codex/census-	compiler	the refusal census replays
+codex/error-classes	compiler	error class lowering and the refusal-pass rulings
+codex/generic-function	compiler	generic function values
 # Runtime
 codex/runtime-	runtime
 codex/concurrency	runtime
 codex/typed-array	runtime
+codex/async-	runtime	native async and host promises
+codex/string-views	runtime	native string views
+codex/require-	hold	@system_adamic_typescript or @system_adamic_platforms: require builtins are stage 3 host-process work
 codex/host-	platforms
 codex/host-promises	runtime	census-owners.tsv
 # Library
