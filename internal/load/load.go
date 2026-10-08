@@ -149,13 +149,19 @@ func loadInput(paths []string, overlay map[string]string) (*Program, error) {
 		}
 	}
 	if projectConfig != nil && len(projectConfig.ProjectReferences()) != 0 {
-		projectRoots, owners, referenceError := projectSourceRoots(fs, projectConfig)
+		projectRoots, owners, types, referenceError := projectSourceRoots(fs, projectConfig)
 		if referenceError != nil {
 			return nil, referenceError
 		}
 		projectOwners = owners
 		checkRoots = append(projectRoots, roots...)
 		options = sourceProgramOptions(options, checkRoots)
+		options.Types = types
+		// The shared ambient scope must be checked even when separate projects
+		// skip their declaration files. Otherwise union conflicts disappear.
+		if len(types) != 0 {
+			options.SkipLibCheck = core.TSFalse
+		}
 	}
 	checkRoots = uniqueSourceRoots(fs, checkRoots)
 	checkRoots = append(checkRoots, preludePath)

@@ -85,7 +85,7 @@ func TestProjectReferencesDiamond(t *testing.T) {
 
 func TestProjectReferencesConflictingOptions(t *testing.T) {
 	t.Parallel()
-	for _, option := range []string{"strictNullChecks", "strictFunctionTypes", "strictBindCallApply", "strictPropertyInitialization", "strictBuiltinIteratorReturn", "useUnknownInCatchVariables", "noImplicitAny", "noImplicitThis", "noUncheckedIndexedAccess", "exactOptionalPropertyTypes", "target", "module", "types", "noUncheckedSideEffectImports", "forceConsistentCasingInFileNames", "deduplicatePackages"} {
+	for _, option := range []string{"strictNullChecks", "strictFunctionTypes", "strictBindCallApply", "strictPropertyInitialization", "strictBuiltinIteratorReturn", "useUnknownInCatchVariables", "noImplicitAny", "noImplicitThis", "noUncheckedIndexedAccess", "exactOptionalPropertyTypes", "target", "module", "lib", "paths", "noUncheckedSideEffectImports", "forceConsistentCasingInFileNames", "deduplicatePackages"} {
 		t.Run(option, func(t *testing.T) {
 			extra := fmt.Sprintf(`,"%s":false`, option)
 			if option == "noUncheckedIndexedAccess" || option == "exactOptionalPropertyTypes" {
@@ -97,8 +97,11 @@ func TestProjectReferencesConflictingOptions(t *testing.T) {
 			if option == "module" {
 				extra = `,"module":"commonjs"`
 			}
-			if option == "types" {
-				extra = `,"types":["node"]`
+			if option == "lib" {
+				extra = `,"lib":["es2024"]`
+			}
+			if option == "paths" {
+				extra = `,"paths":{"alias":["./value.ts"]}`
 			}
 			dir := projectFixture(t, map[string]string{
 				"app/main.ts":              `export const value: number = 7;`,
@@ -177,5 +180,83 @@ func TestProjectReferencesSharedPrelude(t *testing.T) {
 	}
 	if hasHostConsole(program.CompilerProgram().GetSourceFiles()) {
 		t.Fatal("physical prelude console replaced the embedded declaration used by lowering")
+	}
+}
+
+func TestProjectReferencesTypesUnion(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []struct {
+		name         string
+		duplicate    bool
+		skipLibCheck bool
+	}{
+		{"clean", false, false},
+		{"duplicate", true, false},
+		{"duplicate-skipped", true, true},
+	} {
+		t.Run(fixture.name, func(t *testing.T) {
+			duplicate := fixture.duplicate
+			entryDeclaration := "type EntryNumber = number;\n"
+			dependencyDeclaration := "type DependencyNumber = number;\n"
+			if duplicate {
+				entryDeclaration += "declare const sharedAmbient: number;\n"
+				dependencyDeclaration += "declare const sharedAmbient: number;\n"
+			}
+			dir := projectFixture(t, map[string]string{
+				"app/main.ts":                               `export const result: EntryNumber = 7;`,
+				"dependency/value.ts":                       `export const value: DependencyNumber = 7;`,
+				"app/tsconfig.json":                         referenceConfig(`["main.ts"]`, `[{"path":"../dependency"}]`, fmt.Sprintf(`,"types":["entry","entry"],"skipLibCheck":%t`, fixture.skipLibCheck)),
+				"dependency/tsconfig.json":                  referenceConfig(`["value.ts"]`, `[]`, fmt.Sprintf(`,"types":["dependency"],"skipLibCheck":%t`, fixture.skipLibCheck)),
+				"node_modules/@types/entry/index.d.ts":      entryDeclaration,
+				"node_modules/@types/dependency/index.d.ts": dependencyDeclaration,
+			})
+			program, err := Load([]string{filepath.Join(dir, "app/main.ts")})
+			if duplicate {
+				if err == nil || !strings.Contains(err.Error(), "error TS2451: Cannot redeclare block-scoped variable 'sharedAmbient'.") || !strings.Contains(err.Error(), "@types/entry/index.d.ts:2:15") || !strings.Contains(err.Error(), "@types/dependency/index.d.ts:2:15") {
+					t.Fatalf("want both checker duplicate declarations, got %v", err)
+				}
+			} else {
+				if err != nil {
+					t.Fatalf("ambient types union lost a project: %v", err)
+				}
+				types := program.CompilerProgram().Options().Types
+				if len(types) != 2 || types[0] != "entry" || types[1] != "dependency" {
+					t.Fatalf("want distinct ambient types union, got %v", types)
+				}
+			}
+			report, err := AuditProjectOptions(context.Background(), filepath.Join(dir, "app/tsconfig.json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if duplicate {
+				if len(report.ProjectErrors) != 2 || len(report.Sites) != 0 {
+					t.Fatalf("want ordinary duplicate declarations, got %+v", report)
+				}
+			} else if len(report.ProjectErrors) != 0 || len(report.Sites) != 0 {
+				t.Fatalf("audit lost ambient types union: %+v", report)
+			}
+		})
+	}
+}
+
+func TestProjectReferencesTransitiveTypes(t *testing.T) {
+	t.Parallel()
+	dir := projectFixture(t, map[string]string{
+		"app/main.ts":                           `export const result: EntryNumber = 7;`,
+		"middle/value.ts":                       `export const value: MiddleNumber = 7;`,
+		"leaf/value.ts":                         `export const value: LeafNumber = 7;`,
+		"app/tsconfig.json":                     referenceConfig(`["main.ts"]`, `[{"path":"../middle"}]`, `,"types":["entry"]`),
+		"middle/tsconfig.json":                  referenceConfig(`["value.ts"]`, `[{"path":"../leaf"}]`, `,"types":["middle"]`),
+		"leaf/tsconfig.json":                    referenceConfig(`["value.ts"]`, `[]`, `,"types":["leaf"]`),
+		"node_modules/@types/entry/index.d.ts":  `type EntryNumber = number;`,
+		"node_modules/@types/middle/index.d.ts": `type MiddleNumber = number;`,
+		"node_modules/@types/leaf/index.d.ts":   `type LeafNumber = number;`,
+	})
+	program, err := Load([]string{filepath.Join(dir, "app/main.ts")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if types := program.CompilerProgram().Options().Types; strings.Join(types, ",") != "entry,middle,leaf" {
+		t.Fatalf("want transitive types union, got %v", types)
 	}
 }
