@@ -18,7 +18,8 @@ func (e *emitter) adoptGraphObject(value string, literal ir.ObjectLiteral) {
 	if literal.Class != 0 {
 		graph = graph || e.program.Classes[literal.Class-1].Graph
 	}
-	e.adoptGraph(value, fmt.Sprintf("sizeof *%s + %s->shape->count * (sizeof(adamic_value) + 2)", value, value), graph)
+	// The whole object: its slots, readiness and representation bytes and its aligned slot contracts.
+	e.adoptGraph(value, fmt.Sprintf("adamic_object_size(%s->shape->count)", value), graph)
 }
 
 // The runtime decides boundary ownership from both actual allocations. This

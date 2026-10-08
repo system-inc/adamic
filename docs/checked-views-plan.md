@@ -1433,6 +1433,146 @@ is TestCheckedViewNodeArrayRecords. This checkpoint covers scalar own-field
 reads/writes and lazy object element reads. It does not certify reference element
 writes, arbitrary array shape mutation, all consumers, or whole-tsc compilation.
 
+### Lane 2 mutable, recursive and nullable ranked arrays
+
+The fourth ranked group (CaseBlock.clauses, ParsedCommandLine.fileNames,
+DiagnosticMessageChain.next, FlowLabel.antecedent, CommaListExpression.elements)
+needed no new hook. It merged views-integration for lane 1's nullish member
+reads and changed three shared places:
+
+- `arrayLiteralElement` in `internal/lower/graph_flow.go`, called from
+  `graphFlows` for array literals, joins the element types of a union slot's
+  array members instead of asking a union for type arguments, which panicked.
+- Native `adoptGraphObject` sizes graph adoption with `adamic_object_size`, so
+  the per-slot contract IDs are copied into graph storage.
+- Native checked view writes name object, array and Map types as the
+  JavaScript backend does.
+
+An array written into a slot made holding undefined, and pushes of records
+outside the flat scalar subset, remain named exit-70 refusals. Fixtures are
+`lane2/ranked4-*.a`, held by TestCheckedViewRanked4ArrayContracts; the report is
+`lane2/RANKED4_ARRAYS_REPORT.md`.
+
+### Lane 2 fifth ranked arrays
+
+The fifth ranked group (ResolvedType.constructSignatures, ClassDeclaration.modifiers,
+ExpressionWithTypeArguments.typeArguments, TupleTypeNode.elements, JSDoc.tags,
+FunctionLikeDeclaration.parameters) needed no new hook and changed no shared file.
+Whole-array assignment through a mutable field keeps the original alias checked:
+an assigned array whose elements break the alias's contract is refused at that
+alias's next read in both backends.
+
+FunctionLikeDeclaration.parameters is read through the union after member casts;
+a direct cast to the union is refused by cast_proof.go and pinned as a frontier
+until lane 4 routes union targets to the shared view entry. That pair is not
+credited. Tuples moved to lane 4c; TupleTypeNode.elements stays here because the
+census files it under array contracts. Fixtures are `lane2/ranked5-*.a`, held by
+TestCheckedViewRanked5ArrayContracts and TestCheckedViewRanked5UnionCastFrontier;
+the report is `lane2/RANKED5_ARRAYS_REPORT.md`.
+
+### Lane 2 sixth ranked arrays
+
+The sixth ranked group (ResolvedType.callSignatures, TemplateLiteralType.texts,
+TupleType.labeledElementDeclarations, ClassDeclaration.members, HasJSDoc.jsDoc,
+JsxAttributes.properties, and the `ClassDeclaration | ClassExpression` members
+read) changed one lane 2 runtime line: `adamic_view_array_at` names a present NULL
+reference `undefined`, as the JavaScript backend and the earlier array-undefined
+pin do. The union cast is a pinned frontier like FunctionLikeDeclaration's, and a
+JSDocArray built with its own jsDocCache field is a pinned NotYet. Fixtures are
+`lane2/ranked6-*.a`, held by TestCheckedViewRanked6ArrayContracts and
+TestCheckedViewRanked6Frontiers; the report is `lane2/RANKED6_ARRAYS_REPORT.md`.
+
+### Lane 2 seventh ranked arrays
+
+The seventh ranked group (ClassDeclaration.heritageClauses, HeritageClause.types,
+SetAccessorDeclaration and ConstructorDeclaration parameters, Type.aliasTypeArguments,
+TemplateLiteralType.types, SourceFile.bindDiagnostics, Diagnostic.relatedInformation,
+ParsedCommandLine.projectReferences) needed no new hook. Pushes of records with object
+or undefined-typed fields remain named runtime refusals, and assigning a fresh array to
+a field of a Diagnostic read from a viewed element is a pinned NotYet. Fixtures are
+`lane2/ranked7-*.a`, held by TestCheckedViewRanked7ArrayContracts and
+TestCheckedViewRanked7Frontiers; the report is `lane2/RANKED7_ARRAYS_REPORT.md`.
+
+### Lane 2 eighth ranked arrays
+
+The eighth ranked group (JsxElement.children, Method and Function declaration
+parameters, ParameterDeclaration.modifiers, EnumDeclaration.members,
+Bundle.sourceFiles, SourceFile.imports, Signature.compositeSignatures,
+GenericType.typeParameters) needed no new hook. A recursive union element type is
+read through its members, and a flat record push is checked against the original
+element contract. Fixtures are `lane2/ranked8-*.a`, held by
+TestCheckedViewRanked8ArrayContracts; the report is `lane2/RANKED8_ARRAYS_REPORT.md`.
+
+### Lane 2 ninth ranked arrays
+
+The ninth ranked group (fourteen pairs: HasType member parameters and modifiers,
+ImportDeclaration.modifiers, NamedImports.elements, ModuleBlock.statements,
+NewExpression.arguments, TemplateExpression.templateSpans,
+NodeBuilderContext.typeStack, ResolvedType.indexInfos and ResolvedType.properties)
+needed no new hook. Push, pop and searches on a mutable `number[]` go through the
+view's element contract. Fixtures are `lane2/ranked9-*.a`, held by
+TestCheckedViewRanked9ArrayContracts; the report is `lane2/RANKED9_ARRAYS_REPORT.md`.
+
+### Lane 2 tenth ranked arrays
+
+The tenth ranked group (fifteen pairs: ArrowFunction.typeParameters, accessor
+modifiers, NamedExports.elements, SourceFile reference arrays, binding pattern
+elements, CallExpression.typeArguments, ClassExpression heritage and members,
+JSDocTemplateTag and InterfaceType type parameters,
+TypeReference.resolvedTypeArguments, Symbol.declarations through `Symbol |
+undefined`) needed no new hook. Assigning an array to an optional array field
+through a view is refused before lowering because `slotContract`
+(internal/lower/view_writes.go) has no array certificate; it is pinned. Fixtures
+are `lane2/ranked10-*.a`, held by TestCheckedViewRanked10ArrayContracts and
+TestCheckedViewRanked10Frontiers; the report is `lane2/RANKED10_ARRAYS_REPORT.md`.
+
+### Lane 2 eleventh ranked arrays
+
+The eleventh ranked group (fourteen pairs: ClassDeclaration.typeParameters,
+declaration modifiers, FunctionExpression.parameters, ImportAttributes.elements,
+IndexInfo.components, InterfaceDeclaration heritage and members,
+SourceFile.libReferenceDirectives, NodeBuilderContext.reverseMappedStack) needed no
+new hook. Arrays of intersections check the intersection tag at the element read.
+CallExpression | NewExpression and HasDecorators are union-target casts for lane 4;
+CompilerOptions.lib sits on an index-signature declaration 0.1 refuses. Fixtures are
+`lane2/ranked11-*.a`, held by TestCheckedViewRanked11ArrayContracts; the report is
+`lane2/RANKED11_ARRAYS_REPORT.md`.
+
+### Lane 2 twelfth ranked arrays
+
+The twelfth ranked group (sixteen pairs: type parameters and modifiers of several
+declarations, JSDocFunctionType.parameters, ParsedCommandLine.errors, SourceFile
+moduleAugmentations and packageJsonLocations, JsonSourceFile.statements, template
+literal type spans, TypeLiteralNode.members, CaseClause.statements,
+NodeWithTypeArguments.typeArguments and JSDoc.comment as a string-or-array union)
+needed no new hook. Native checks a nullable union read twice (runtime mask, then
+emitted member selection). Fixtures are `lane2/ranked12-*.a`, held by
+TestCheckedViewRanked12ArrayContracts; the report is
+`lane2/RANKED12_ARRAYS_REPORT.md`.
+
+### Lane 2 thirteenth ranked arrays
+
+The thirteenth ranked group (seventeen pairs: type parameters, modifiers and type
+arguments of more declarations, MethodSignature.parameters, MappedTypeNode.members,
+JSDoc tag comments, ConditionalRoot type parameters, AnonymousType.aliasTypeArguments,
+SourceFile commentDirectives and parseDiagnostics) needed no new hook. Four casts to
+union aliases are lane 4's and MapLike's dynamic key is an index signature. Fixtures
+are `lane2/ranked13-*.a`, held by TestCheckedViewRanked13ArrayContracts; the report is
+`lane2/RANKED13_ARRAYS_REPORT.md`.
+
+### Lane 2 fourteenth ranked arrays
+
+The fourteenth ranked group (eighteen credited pairs: ConstructorTypeNode members,
+signature and declaration modifiers, JSDocSignature.parameters, JsxFragment.children,
+UnionTypeNode.types, DefaultClause.statements, EmitNode helpers and
+tokenSourceMapRanges, InterfaceType type parameters and declaredProperties,
+TransientSymbol.declarations, CircularBuildOrder.circularDiagnostics) needed no new
+hook. view_lazy.go's field-name fallback refuses any viewed `.text` read once an
+interface declares tsc's callable-or-string EmitHelper.text; that is pinned as a
+frontier for routing. Fixtures are `lane2/ranked14-*.a`, held by
+TestCheckedViewRanked14ArrayContracts and TestCheckedViewRanked14Frontiers; the report
+is `lane2/RANKED14_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
@@ -1642,6 +1782,7 @@ flags. This fixes an observed all-backend root-read gap without weakening any
 callable signature, Map certificate or lazy descendant obligation. Nullable
 intersection hooks handle direct conjunctions; the lazy owner's union selector
 already validates tagged intersection arms, so that dispatch is not duplicated.
+
 
 ### Lane 2 reference element writes
 

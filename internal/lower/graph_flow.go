@@ -66,6 +66,30 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 	return sites(value)
 }
 
+// arrayLiteralElement is the element type an array literal takes in a slot of the proven type. A
+// union slot, such as tsc's FlowNodeBase.antecedent (FlowNode | FlowNode[] | undefined), holds the
+// literal as one of its array members, so their element types are joined; members that are not
+// type references have no type arguments to ask for. Nil means no array member was found.
+func (f *cycleFinder) arrayLiteralElement(proven *checker.Type) *checker.Type {
+	alternatives := []*checker.Type{proven}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		alternatives = proven.Types()
+	}
+	elements := []*checker.Type{}
+	for _, alternative := range alternatives {
+		if alternative.Flags()&checker.TypeFlagsObject == 0 || alternative.ObjectFlags()&checker.ObjectFlagsReference == 0 {
+			continue
+		}
+		if arguments := f.l.checker.GetTypeArguments(alternative); len(arguments) > 0 {
+			elements = append(elements, arguments[0])
+		}
+	}
+	if len(elements) == 0 {
+		return nil
+	}
+	return f.l.checker.GetUnionType(elements)
+}
+
 // graphFlows works backwards from graph views to the allocations that can supply
 // them. Local assignments and function results are joined across all paths; this
 // is a may-flow proof, not an execution or a choice of one conditional branch.
@@ -168,10 +192,9 @@ func (f *cycleFinder) graphFlows() {
 				}
 			}
 		case ir.ArrayLiteral:
-			arguments := f.l.checker.GetTypeArguments(proven)
-			if len(arguments) > 0 {
-				for _, element := range value.Elements {
-					members(element, arguments[0])
+			if element := f.arrayLiteralElement(proven); element != nil {
+				for _, item := range value.Elements {
+					members(item, element)
 				}
 			}
 		case ir.Conditional:
