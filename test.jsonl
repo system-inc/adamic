@@ -98,3 +98,9 @@
 {"Time":"2026-10-08T01:24:58.675310146Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintReleaseAndThroughput","Elapsed":0}
 {"Time":"2026-10-08T01:24:58.675336886Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees"}
 {"Time":"2026-10-08T01:24:58.675355174Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Output":"=== RUN   TestJsxLintTrees\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:26:06.068283903Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Output":"    lint_test.go:413: cohere cases: 2017 unique source/rule/options combinations\n"}
+{"Time":"2026-10-08T01:26:21.186091465Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Output":"    jsx_integration_test.go:150: 54 captured cohere JSX sources: 45527 identical whole-tree bytes\n"}
+{"Time":"2026-10-08T01:26:21.280012757Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Output":"--- PASS: TestJsxLintTrees (82.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T01:26:21.280058917Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees","Elapsed":82.6}
+{"Time":"2026-10-08T01:26:21.280071586Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgree"}
+{"Time":"2026-10-08T01:26:21.28008088Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestRulesAgree","Output":"=== RUN   TestRulesAgree\n","OutputType":"frame"}
