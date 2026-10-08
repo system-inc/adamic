@@ -1,0 +1,2791 @@
+{
+  "sha": "9b3882f335bdc7e891feefa90722fd115ad5fcc9",
+  "branch": "codex/overload-results",
+  "branch_source": "given",
+  "session": "01a11518-9272-7587-b63e-db887c74f008",
+  "session_source": "ai.db reply naming the branch",
+  "base": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "base_name": "main",
+  "tools_sha": "19f0e3d2e5d226e43c01100a208bdeeb5aacbb1c",
+  "machine": {
+    "hostname": "Server",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "206c8891b3e22e6782b4d8eaa4bcad61ac833533",
+  "oracle_selection": {
+    "whole": true,
+    "reason": "not a registered fixture: internal/oracle/testdata/overload_results_binding.a, internal/oracle/testdata/overload_results_evaluate.a, internal/oracle/testdata/overload_results_parameter.a, internal/oracle/testdata/overload_results_scalar.a, internal/oracle/testdata/overload_results_transform.a, internal/oracle/testdata/overload_structural_block.a, internal/oracle/testdata/overload_structural_evaluator.a, internal/oracle/testdata/overload_structural_factory.a, internal/oracle/testdata/overload_structural_fields.a"
+  },
+  "reads": [
+    {
+      "line": 127,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode_mutation.a",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode_value.a",
+        "internal/oracle/testdata/overload_callback_served.a",
+        "internal/oracle/testdata/overload_results_binding.a",
+        "internal/oracle/testdata/overload_results_evaluate.a",
+        "internal/oracle/testdata/overload_results_parameter.a",
+        "internal/oracle/testdata/overload_results_scalar.a",
+        "internal/oracle/testdata/overload_results_transform.a",
+        "internal/oracle/testdata/overload_structural_block.a",
+        "internal/oracle/testdata/overload_structural_evaluator.a",
+        "internal/oracle/testdata/overload_structural_factory.a",
+        "internal/oracle/testdata/overload_structural_fields.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 151,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [
+        "internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode_mutation.a",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode_value.a",
+        "internal/oracle/testdata/overload_callback_served.a",
+        "internal/oracle/testdata/overload_results_binding.a",
+        "internal/oracle/testdata/overload_results_evaluate.a",
+        "internal/oracle/testdata/overload_results_parameter.a",
+        "internal/oracle/testdata/overload_results_scalar.a",
+        "internal/oracle/testdata/overload_results_transform.a",
+        "internal/oracle/testdata/overload_structural_block.a",
+        "internal/oracle/testdata/overload_structural_evaluator.a",
+        "internal/oracle/testdata/overload_structural_factory.a",
+        "internal/oracle/testdata/overload_structural_fields.a"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 175,
+      "package": "internal/ir",
+      "glob": "internal/lower/*.go",
+      "paths": [
+        "internal/lower/census_overload_proof.go",
+        "internal/lower/census_small.go",
+        "internal/lower/expression.go",
+        "internal/lower/generic_constraint_storage.go",
+        "internal/lower/hidden_boundary_generic_tnode_test.go",
+        "internal/lower/object.go",
+        "internal/lower/overload_callback.go",
+        "internal/lower/overload_callback_test.go",
+        "internal/lower/overload_relations.go",
+        "internal/lower/overload_result_fields.go",
+        "internal/lower/overload_results.go",
+        "internal/lower/overload_results_test.go",
+        "internal/lower/overload_return_call.go",
+        "internal/lower/overload_structural.go",
+        "internal/lower/overload_structural_test.go"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "docs/overload-results/REPORT.md",
+        "docs/overload-results/evidence/after-census.jsonl.gz",
+        "docs/overload-results/evidence/after-census.log",
+        "docs/overload-results/evidence/api-install.log",
+        "docs/overload-results/evidence/before-census.jsonl.gz",
+        "docs/overload-results/evidence/before-census.log",
+        "docs/overload-results/evidence/before.json",
+        "docs/overload-results/evidence/census-scope.patch.gz",
+        "docs/overload-results/evidence/counts.log",
+        "docs/overload-results/evidence/drop-parameter-check.log",
+        "docs/overload-results/evidence/drop-specialization.log",
+        "docs/overload-results/evidence/hidden06-after-census.jsonl.gz",
+        "docs/overload-results/evidence/hidden06-after-census.log",
+        "docs/overload-results/evidence/hidden06-after.json",
+        "docs/overload-results/evidence/hidden06-before-census.jsonl.gz",
+        "docs/overload-results/evidence/hidden06-before-census.log",
+        "docs/overload-results/evidence/hidden06-before.json",
+        "docs/overload-results/evidence/hidden06-dependency.patch.gz",
+        "docs/overload-results/evidence/lower.log",
+        "docs/overload-results/evidence/mutants.json",
+        "docs/overload-results/evidence/oracle.log",
+        "docs/overload-results/evidence/overlay.json",
+        "docs/overload-results/evidence/regions-with-hidden06-dependency.json",
+        "docs/overload-results/evidence/regions.json",
+        "docs/overload-results/evidence/regressions.log",
+        "docs/overload-results/evidence/setup.log",
+        "docs/overload-results/evidence/trust-optional-property.log",
+        "docs/overload-results/evidence/trust-result.log",
+        "docs/overload-results/evidence/trust-shared-result.log",
+        "docs/overload-results/groups/admission/REPORT.md",
+        "docs/overload-results/groups/admission/after.jsonl.gz",
+        "docs/overload-results/groups/admission/census-build.log.gz",
+        "docs/overload-results/groups/admission/census.log.gz",
+        "docs/overload-results/groups/admission/counts.log.gz",
+        "docs/overload-results/groups/admission/drop-fixed-return-proof.log.txt",
+        "docs/overload-results/groups/admission/drop-relation-diagnostic.log.txt",
+        "docs/overload-results/groups/admission/drop-return-storage.log.txt",
+        "docs/overload-results/groups/admission/lower.log.gz",
+        "docs/overload-results/groups/admission/measure.log.gz",
+        "docs/overload-results/groups/admission/mutants.json",
+        "docs/overload-results/groups/admission/mutants.log.gz",
+        "docs/overload-results/groups/admission/next-stops.json",
+        "docs/overload-results/groups/admission/oracle.log.gz",
+        "docs/overload-results/groups/admission/regions.json",
+        "docs/overload-results/groups/admission/reverse-result-covariance.log.txt",
+        "docs/overload-results/groups/admission/run-mutants.py",
+        "docs/overload-results/groups/admission/setup.log.gz",
+        "docs/overload-results/groups/admission/trust-visitor-input.log.txt",
+        "docs/overload-results/groups/admission/trust-writable-result.log.txt",
+        "docs/overload-results/groups/c68/REPORT.md",
+        "docs/overload-results/groups/c68/census-scope.patch.gz",
+        "docs/overload-results/groups/c68/census.jsonl.gz",
+        "docs/overload-results/groups/c68/census.log.txt",
+        "docs/overload-results/groups/c68/regions.json",
+        "docs/overload-results/groups/c68/replay-01.json",
+        "docs/overload-results/groups/c68/replay-01.log.txt",
+        "docs/overload-results/groups/c68/replay-05-optional.json",
+        "docs/overload-results/groups/c68/replay-05-optional.log.txt",
+        "docs/overload-results/groups/c68/replay-05.json",
+        "docs/overload-results/groups/c68/replay-05.log.txt",
+        "docs/overload-results/groups/c68/replay-06.json",
+        "docs/overload-results/groups/c68/replay-06.log.txt",
+        "docs/overload-results/groups/c68/replay-13.json",
+        "docs/overload-results/groups/c68/replay-13.log.txt",
+        "docs/overload-results/groups/c68/replay-14.json",
+        "docs/overload-results/groups/c68/replay-14.log.txt",
+        "docs/overload-results/groups/c68/replay-mutant.json",
+        "docs/overload-results/groups/c68/replay-mutant.log.txt",
+        "docs/overload-results/groups/c68/replays.json",
+        "docs/overload-results/groups/c68/validate.py",
+        "docs/overload-results/groups/c68/validation.log.txt",
+        "docs/overload-results/groups/callback/REPORT.md",
+        "docs/overload-results/groups/callback/census.jsonl.gz",
+        "docs/overload-results/groups/callback/census.log.txt",
+        "docs/overload-results/groups/callback/counts.log.txt",
+        "docs/overload-results/groups/callback/field-storage-mutant.log.txt",
+        "docs/overload-results/groups/callback/focused.log.txt",
+        "docs/overload-results/groups/callback/input-mutant.log.txt",
+        "docs/overload-results/groups/callback/lower.log.txt",
+        "docs/overload-results/groups/callback/mutants.json",
+        "docs/overload-results/groups/callback/mutants.log.txt",
+        "docs/overload-results/groups/callback/oracle.log.txt",
+        "docs/overload-results/groups/callback/regions.json",
+        "docs/overload-results/groups/callback/regions.log.txt",
+        "docs/overload-results/groups/callback/representation-mutant.log.txt",
+        "docs/overload-results/groups/callback/result-mutant.log.txt",
+        "docs/overload-results/groups/callback/run-mutants.py",
+        "docs/overload-results/groups/fields/REPORT.md",
+        "docs/overload-results/groups/fields/after.jsonl.gz",
+        "docs/overload-results/groups/fields/array-layout.log.txt",
+        "docs/overload-results/groups/fields/census-build.log.gz",
+        "docs/overload-results/groups/fields/census.log.gz",
+        "docs/overload-results/groups/fields/counts.log.gz",
+        "docs/overload-results/groups/fields/drop-constraint-storage.log.txt",
+        "docs/overload-results/groups/fields/drop-field-storage.log.txt",
+        "docs/overload-results/groups/fields/ignore-mapper.log.txt",
+        "docs/overload-results/groups/fields/ignore-substitution.log.txt",
+        "docs/overload-results/groups/fields/lower.log.gz",
+        "docs/overload-results/groups/fields/measure.log.gz",
+        "docs/overload-results/groups/fields/mutants.json",
+        "docs/overload-results/groups/fields/mutants.log.gz",
+        "docs/overload-results/groups/fields/next-stops.json",
+        "docs/overload-results/groups/fields/object-layout.log.txt",
+        "docs/overload-results/groups/fields/oracle.log.gz",
+        "docs/overload-results/groups/fields/record-stops.py",
+        "docs/overload-results/groups/fields/refusal-oracle.log.gz",
+        "docs/overload-results/groups/fields/regions.json",
+        "docs/overload-results/groups/fields/run-mutants.py",
+        "docs/overload-results/groups/fields/setup.log.gz",
+        "docs/overload-results/groups/fields/unconstrained-layout.log.txt",
+        "docs/overload-results/groups/structural/REPORT.md",
+        "docs/overload-results/groups/structural/after.jsonl.gz",
+        "docs/overload-results/groups/structural/after.log.txt",
+        "docs/overload-results/groups/structural/before.jsonl.gz",
+        "docs/overload-results/groups/structural/before.log.txt",
+        "docs/overload-results/groups/structural/cache-mutant.log.txt",
+        "docs/overload-results/groups/structural/cache-validation.log.txt",
+        "docs/overload-results/groups/structural/cache.log.txt",
+        "docs/overload-results/groups/structural/cache_test.go.txt",
+        "docs/overload-results/groups/structural/counts.log.txt",
+        "docs/overload-results/groups/structural/drop-proof.log.txt",
+        "docs/overload-results/groups/structural/focused.log.txt",
+        "docs/overload-results/groups/structural/lower.log.txt",
+        "docs/overload-results/groups/structural/mutable-variance.log.txt",
+        "docs/overload-results/groups/structural/mutants.json",
+        "docs/overload-results/groups/structural/mutants.log.txt",
+        "docs/overload-results/groups/structural/next-stops.json",
+        "docs/overload-results/groups/structural/oracle.log.txt",
+        "docs/overload-results/groups/structural/regions.json",
+        "docs/overload-results/groups/structural/regions.log.txt",
+        "docs/overload-results/groups/structural/reverse-covariance.log.txt",
+        "docs/overload-results/groups/structural/run-mutants.py",
+        "docs/overload-results/groups/structural/setup.log.txt",
+        "docs/overload-results/groups/structural/trust-shape.log.txt",
+        "docs/overload-results/groups/structural/validate-cache.py",
+        "docs/overload-results/measure-regions.py",
+        "docs/overload-results/run-mutants.py",
+        "internal/lower/generic_constraint_storage.go",
+        "internal/lower/hidden_boundary_generic_tnode_test.go",
+        "internal/lower/overload_callback.go",
+        "internal/lower/overload_callback_test.go",
+        "internal/lower/overload_relations.go",
+        "internal/lower/overload_result_fields.go",
+        "internal/lower/overload_results.go",
+        "internal/lower/overload_results_test.go",
+        "internal/lower/overload_return_call.go",
+        "internal/lower/overload_structural.go",
+        "internal/lower/overload_structural_test.go",
+        "internal/lower/testdata/overload-results/evaluate-liar.a",
+        "internal/lower/testdata/overload-results/liar.a",
+        "internal/lower/testdata/overload-results/parameter-liar.a",
+        "internal/lower/testdata/overload-structural/block-factory-liar.a",
+        "internal/lower/testdata/overload-structural/block-liar.a",
+        "internal/lower/testdata/overload-structural/evaluator-reverse-liar.a",
+        "internal/lower/testdata/overload-structural/evaluator-shared-liar.a",
+        "internal/lower/testdata/overload-structural/evaluator-writable.a",
+        "internal/lower/testdata/overload-structural/factory-liar.a",
+        "internal/lower/testdata/overload-structural/factory-literal-liar.a",
+        "internal/lower/testdata/overload-structural/factory-storage.a",
+        "internal/lower/testdata/overload-structural/factory-writable.a",
+        "internal/lower/testdata/overload-structural/fields-mixed.a",
+        "internal/lower/testdata/overload-structural/visitor-domain-liar.a",
+        "internal/lower/testdata/overload-structural/visitor-domain.a",
+        "internal/oracle/hidden_boundary_generic_tnode_test.go",
+        "internal/oracle/overload_callback_test.go",
+        "internal/oracle/overload_results_test.go",
+        "internal/oracle/overload_structural_test.go",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode_mutation.a",
+        "internal/oracle/testdata/hidden_boundary_generic_tnode_value.a",
+        "internal/oracle/testdata/overload_callback_served.a",
+        "internal/oracle/testdata/overload_results_binding.a",
+        "internal/oracle/testdata/overload_results_evaluate.a",
+        "internal/oracle/testdata/overload_results_parameter.a",
+        "internal/oracle/testdata/overload_results_scalar.a",
+        "internal/oracle/testdata/overload_results_transform.a",
+        "internal/oracle/testdata/overload_structural_block.a",
+        "internal/oracle/testdata/overload_structural_evaluator.a",
+        "internal/oracle/testdata/overload_structural_factory.a",
+        "internal/oracle/testdata/overload_structural_fields.a",
+        "stage3/hidden-briefs/OVERLOAD-STOPS.md",
+        "stage3/hidden-briefs/TABLE.md"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 622,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "docs/overload-results/evidence/before.json",
+        "docs/overload-results/evidence/hidden06-after.json",
+        "docs/overload-results/evidence/hidden06-before.json",
+        "docs/overload-results/evidence/mutants.json",
+        "docs/overload-results/evidence/overlay.json",
+        "docs/overload-results/evidence/regions-with-hidden06-dependency.json",
+        "docs/overload-results/evidence/regions.json",
+        "docs/overload-results/groups/admission/mutants.json",
+        "docs/overload-results/groups/admission/next-stops.json",
+        "docs/overload-results/groups/admission/regions.json",
+        "docs/overload-results/groups/c68/regions.json",
+        "docs/overload-results/groups/c68/replay-01.json",
+        "docs/overload-results/groups/c68/replay-05-optional.json",
+        "docs/overload-results/groups/c68/replay-05.json",
+        "docs/overload-results/groups/c68/replay-06.json",
+        "docs/overload-results/groups/c68/replay-13.json",
+        "docs/overload-results/groups/c68/replay-14.json",
+        "docs/overload-results/groups/c68/replay-mutant.json",
+        "docs/overload-results/groups/c68/replays.json",
+        "docs/overload-results/groups/callback/mutants.json",
+        "docs/overload-results/groups/callback/regions.json",
+        "docs/overload-results/groups/fields/mutants.json",
+        "docs/overload-results/groups/fields/next-stops.json",
+        "docs/overload-results/groups/fields/regions.json",
+        "docs/overload-results/groups/structural/mutants.json",
+        "docs/overload-results/groups/structural/next-stops.json",
+        "docs/overload-results/groups/structural/regions.json"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1166,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "docs/0.1.md",
+        "docs/overload-results/REPORT.md",
+        "docs/overload-results/groups/admission/REPORT.md",
+        "docs/overload-results/groups/c68/REPORT.md",
+        "docs/overload-results/groups/callback/REPORT.md",
+        "docs/overload-results/groups/fields/REPORT.md",
+        "docs/overload-results/groups/structural/REPORT.md",
+        "internal/oracle/counts.md",
+        "stage3/hidden-briefs/OVERLOAD-STOPS.md",
+        "stage3/hidden-briefs/TABLE.md"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {
+    "inert": 140,
+    "stage3": 1
+  },
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "docs/0.1.md",
+    "docs/overload-results/REPORT.md",
+    "docs/overload-results/evidence/after-census.jsonl.gz",
+    "docs/overload-results/evidence/after-census.log",
+    "docs/overload-results/evidence/api-install.log",
+    "docs/overload-results/evidence/before-census.jsonl.gz",
+    "docs/overload-results/evidence/before-census.log",
+    "docs/overload-results/evidence/before.json",
+    "docs/overload-results/evidence/census-scope.patch.gz",
+    "docs/overload-results/evidence/counts.log",
+    "docs/overload-results/evidence/drop-parameter-check.log",
+    "docs/overload-results/evidence/drop-specialization.log",
+    "docs/overload-results/evidence/hidden06-after-census.jsonl.gz",
+    "docs/overload-results/evidence/hidden06-after-census.log",
+    "docs/overload-results/evidence/hidden06-after.json",
+    "docs/overload-results/evidence/hidden06-before-census.jsonl.gz",
+    "docs/overload-results/evidence/hidden06-before-census.log",
+    "docs/overload-results/evidence/hidden06-before.json",
+    "docs/overload-results/evidence/hidden06-dependency.patch.gz",
+    "docs/overload-results/evidence/lower.log",
+    "docs/overload-results/evidence/mutants.json",
+    "docs/overload-results/evidence/oracle.log",
+    "docs/overload-results/evidence/overlay.json",
+    "docs/overload-results/evidence/regions-with-hidden06-dependency.json",
+    "docs/overload-results/evidence/regions.json",
+    "docs/overload-results/evidence/regressions.log",
+    "docs/overload-results/evidence/setup.log",
+    "docs/overload-results/evidence/trust-optional-property.log",
+    "docs/overload-results/evidence/trust-result.log",
+    "docs/overload-results/evidence/trust-shared-result.log",
+    "docs/overload-results/groups/admission/REPORT.md",
+    "docs/overload-results/groups/admission/after.jsonl.gz",
+    "docs/overload-results/groups/admission/census-build.log.gz",
+    "docs/overload-results/groups/admission/census.log.gz",
+    "docs/overload-results/groups/admission/counts.log.gz",
+    "docs/overload-results/groups/admission/drop-fixed-return-proof.log.txt",
+    "docs/overload-results/groups/admission/drop-relation-diagnostic.log.txt",
+    "docs/overload-results/groups/admission/drop-return-storage.log.txt",
+    "docs/overload-results/groups/admission/lower.log.gz",
+    "docs/overload-results/groups/admission/measure.log.gz",
+    "docs/overload-results/groups/admission/mutants.json",
+    "docs/overload-results/groups/admission/mutants.log.gz",
+    "docs/overload-results/groups/admission/next-stops.json",
+    "docs/overload-results/groups/admission/oracle.log.gz",
+    "docs/overload-results/groups/admission/regions.json",
+    "docs/overload-results/groups/admission/reverse-result-covariance.log.txt",
+    "docs/overload-results/groups/admission/run-mutants.py",
+    "docs/overload-results/groups/admission/setup.log.gz",
+    "docs/overload-results/groups/admission/trust-visitor-input.log.txt",
+    "docs/overload-results/groups/admission/trust-writable-result.log.txt",
+    "docs/overload-results/groups/c68/REPORT.md",
+    "docs/overload-results/groups/c68/census-scope.patch.gz",
+    "docs/overload-results/groups/c68/census.jsonl.gz",
+    "docs/overload-results/groups/c68/census.log.txt",
+    "docs/overload-results/groups/c68/regions.json",
+    "docs/overload-results/groups/c68/replay-01.json",
+    "docs/overload-results/groups/c68/replay-01.log.txt",
+    "docs/overload-results/groups/c68/replay-05-optional.json",
+    "docs/overload-results/groups/c68/replay-05-optional.log.txt",
+    "docs/overload-results/groups/c68/replay-05.json",
+    "docs/overload-results/groups/c68/replay-05.log.txt",
+    "docs/overload-results/groups/c68/replay-06.json",
+    "docs/overload-results/groups/c68/replay-06.log.txt",
+    "docs/overload-results/groups/c68/replay-13.json",
+    "docs/overload-results/groups/c68/replay-13.log.txt",
+    "docs/overload-results/groups/c68/replay-14.json",
+    "docs/overload-results/groups/c68/replay-14.log.txt",
+    "docs/overload-results/groups/c68/replay-mutant.json",
+    "docs/overload-results/groups/c68/replay-mutant.log.txt",
+    "docs/overload-results/groups/c68/replays.json",
+    "docs/overload-results/groups/c68/validate.py",
+    "docs/overload-results/groups/c68/validation.log.txt",
+    "docs/overload-results/groups/callback/REPORT.md",
+    "docs/overload-results/groups/callback/census.jsonl.gz",
+    "docs/overload-results/groups/callback/census.log.txt",
+    "docs/overload-results/groups/callback/counts.log.txt",
+    "docs/overload-results/groups/callback/field-storage-mutant.log.txt",
+    "docs/overload-results/groups/callback/focused.log.txt",
+    "docs/overload-results/groups/callback/input-mutant.log.txt",
+    "docs/overload-results/groups/callback/lower.log.txt",
+    "docs/overload-results/groups/callback/mutants.json",
+    "docs/overload-results/groups/callback/mutants.log.txt",
+    "docs/overload-results/groups/callback/oracle.log.txt",
+    "docs/overload-results/groups/callback/regions.json",
+    "docs/overload-results/groups/callback/regions.log.txt",
+    "docs/overload-results/groups/callback/representation-mutant.log.txt",
+    "docs/overload-results/groups/callback/result-mutant.log.txt",
+    "docs/overload-results/groups/callback/run-mutants.py",
+    "docs/overload-results/groups/fields/REPORT.md",
+    "docs/overload-results/groups/fields/after.jsonl.gz",
+    "docs/overload-results/groups/fields/array-layout.log.txt",
+    "docs/overload-results/groups/fields/census-build.log.gz",
+    "docs/overload-results/groups/fields/census.log.gz",
+    "docs/overload-results/groups/fields/counts.log.gz",
+    "docs/overload-results/groups/fields/drop-constraint-storage.log.txt",
+    "docs/overload-results/groups/fields/drop-field-storage.log.txt",
+    "docs/overload-results/groups/fields/ignore-mapper.log.txt",
+    "docs/overload-results/groups/fields/ignore-substitution.log.txt",
+    "docs/overload-results/groups/fields/lower.log.gz",
+    "docs/overload-results/groups/fields/measure.log.gz",
+    "docs/overload-results/groups/fields/mutants.json",
+    "docs/overload-results/groups/fields/mutants.log.gz",
+    "docs/overload-results/groups/fields/next-stops.json",
+    "docs/overload-results/groups/fields/object-layout.log.txt",
+    "docs/overload-results/groups/fields/oracle.log.gz",
+    "docs/overload-results/groups/fields/record-stops.py",
+    "docs/overload-results/groups/fields/refusal-oracle.log.gz",
+    "docs/overload-results/groups/fields/regions.json",
+    "docs/overload-results/groups/fields/run-mutants.py",
+    "docs/overload-results/groups/fields/setup.log.gz",
+    "docs/overload-results/groups/fields/unconstrained-layout.log.txt",
+    "docs/overload-results/groups/structural/REPORT.md",
+    "docs/overload-results/groups/structural/after.jsonl.gz",
+    "docs/overload-results/groups/structural/after.log.txt",
+    "docs/overload-results/groups/structural/before.jsonl.gz",
+    "docs/overload-results/groups/structural/before.log.txt",
+    "docs/overload-results/groups/structural/cache-mutant.log.txt",
+    "docs/overload-results/groups/structural/cache-validation.log.txt",
+    "docs/overload-results/groups/structural/cache.log.txt",
+    "docs/overload-results/groups/structural/cache_test.go.txt",
+    "docs/overload-results/groups/structural/counts.log.txt",
+    "docs/overload-results/groups/structural/drop-proof.log.txt",
+    "docs/overload-results/groups/structural/focused.log.txt",
+    "docs/overload-results/groups/structural/lower.log.txt",
+    "docs/overload-results/groups/structural/mutable-variance.log.txt",
+    "docs/overload-results/groups/structural/mutants.json",
+    "docs/overload-results/groups/structural/mutants.log.txt",
+    "docs/overload-results/groups/structural/next-stops.json",
+    "docs/overload-results/groups/structural/oracle.log.txt",
+    "docs/overload-results/groups/structural/regions.json",
+    "docs/overload-results/groups/structural/regions.log.txt",
+    "docs/overload-results/groups/structural/reverse-covariance.log.txt",
+    "docs/overload-results/groups/structural/run-mutants.py",
+    "docs/overload-results/groups/structural/setup.log.txt",
+    "docs/overload-results/groups/structural/trust-shape.log.txt",
+    "docs/overload-results/groups/structural/validate-cache.py",
+    "docs/overload-results/measure-regions.py",
+    "docs/overload-results/run-mutants.py",
+    "internal/lower/census_overload_proof.go",
+    "internal/lower/census_small.go",
+    "internal/lower/expression.go",
+    "internal/lower/generic_constraint_storage.go",
+    "internal/lower/hidden_boundary_generic_tnode_test.go",
+    "internal/lower/object.go",
+    "internal/lower/overload_callback.go",
+    "internal/lower/overload_callback_test.go",
+    "internal/lower/overload_relations.go",
+    "internal/lower/overload_result_fields.go",
+    "internal/lower/overload_results.go",
+    "internal/lower/overload_results_test.go",
+    "internal/lower/overload_return_call.go",
+    "internal/lower/overload_structural.go",
+    "internal/lower/overload_structural_test.go",
+    "internal/lower/testdata/overload-results/evaluate-liar.a",
+    "internal/lower/testdata/overload-results/liar.a",
+    "internal/lower/testdata/overload-results/parameter-liar.a",
+    "internal/lower/testdata/overload-structural/block-factory-liar.a",
+    "internal/lower/testdata/overload-structural/block-liar.a",
+    "internal/lower/testdata/overload-structural/evaluator-reverse-liar.a",
+    "internal/lower/testdata/overload-structural/evaluator-shared-liar.a",
+    "internal/lower/testdata/overload-structural/evaluator-writable.a",
+    "internal/lower/testdata/overload-structural/factory-liar.a",
+    "internal/lower/testdata/overload-structural/factory-literal-liar.a",
+    "internal/lower/testdata/overload-structural/factory-storage.a",
+    "internal/lower/testdata/overload-structural/factory-writable.a",
+    "internal/lower/testdata/overload-structural/fields-mixed.a",
+    "internal/lower/testdata/overload-structural/visitor-domain-liar.a",
+    "internal/lower/testdata/overload-structural/visitor-domain.a",
+    "internal/oracle/counts.md",
+    "internal/oracle/hidden_boundary_generic_tnode_test.go",
+    "internal/oracle/overload_callback_test.go",
+    "internal/oracle/overload_results_test.go",
+    "internal/oracle/overload_structural_test.go",
+    "internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+    "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+    "internal/oracle/testdata/hidden_boundary_generic_tnode_mutation.a",
+    "internal/oracle/testdata/hidden_boundary_generic_tnode_value.a",
+    "internal/oracle/testdata/overload_callback_served.a",
+    "internal/oracle/testdata/overload_results_binding.a",
+    "internal/oracle/testdata/overload_results_evaluate.a",
+    "internal/oracle/testdata/overload_results_parameter.a",
+    "internal/oracle/testdata/overload_results_scalar.a",
+    "internal/oracle/testdata/overload_results_transform.a",
+    "internal/oracle/testdata/overload_structural_block.a",
+    "internal/oracle/testdata/overload_structural_evaluator.a",
+    "internal/oracle/testdata/overload_structural_factory.a",
+    "internal/oracle/testdata/overload_structural_fields.a",
+    "stage3/census/latent/full.go.txt",
+    "stage3/hidden-briefs/OVERLOAD-STOPS.md",
+    "stage3/hidden-briefs/TABLE.md"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/internal/flow",
+    "github.com/system-inc/adamic/internal/fresh",
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/replay",
+    "github.com/system-inc/adamic/stage3/census/latent/replay/worker",
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/tool",
+    "github.com/system-inc/adamic/stage3/census/predicates/tools/tool",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "unowned_files": [
+    "docs/0.1.md",
+    "docs/overload-results/REPORT.md",
+    "docs/overload-results/evidence/after-census.jsonl.gz",
+    "docs/overload-results/evidence/after-census.log",
+    "docs/overload-results/evidence/api-install.log",
+    "docs/overload-results/evidence/before-census.jsonl.gz",
+    "docs/overload-results/evidence/before-census.log",
+    "docs/overload-results/evidence/before.json",
+    "docs/overload-results/evidence/census-scope.patch.gz",
+    "docs/overload-results/evidence/counts.log",
+    "docs/overload-results/evidence/drop-parameter-check.log",
+    "docs/overload-results/evidence/drop-specialization.log",
+    "docs/overload-results/evidence/hidden06-after-census.jsonl.gz",
+    "docs/overload-results/evidence/hidden06-after-census.log",
+    "docs/overload-results/evidence/hidden06-after.json",
+    "docs/overload-results/evidence/hidden06-before-census.jsonl.gz",
+    "docs/overload-results/evidence/hidden06-before-census.log",
+    "docs/overload-results/evidence/hidden06-before.json",
+    "docs/overload-results/evidence/hidden06-dependency.patch.gz",
+    "docs/overload-results/evidence/lower.log",
+    "docs/overload-results/evidence/mutants.json",
+    "docs/overload-results/evidence/oracle.log",
+    "docs/overload-results/evidence/overlay.json",
+    "docs/overload-results/evidence/regions-with-hidden06-dependency.json",
+    "docs/overload-results/evidence/regions.json",
+    "docs/overload-results/evidence/regressions.log",
+    "docs/overload-results/evidence/setup.log",
+    "docs/overload-results/evidence/trust-optional-property.log",
+    "docs/overload-results/evidence/trust-result.log",
+    "docs/overload-results/evidence/trust-shared-result.log",
+    "docs/overload-results/groups/admission/REPORT.md",
+    "docs/overload-results/groups/admission/after.jsonl.gz",
+    "docs/overload-results/groups/admission/census-build.log.gz",
+    "docs/overload-results/groups/admission/census.log.gz",
+    "docs/overload-results/groups/admission/counts.log.gz",
+    "docs/overload-results/groups/admission/drop-fixed-return-proof.log.txt",
+    "docs/overload-results/groups/admission/drop-relation-diagnostic.log.txt",
+    "docs/overload-results/groups/admission/drop-return-storage.log.txt",
+    "docs/overload-results/groups/admission/lower.log.gz",
+    "docs/overload-results/groups/admission/measure.log.gz",
+    "docs/overload-results/groups/admission/mutants.json",
+    "docs/overload-results/groups/admission/mutants.log.gz",
+    "docs/overload-results/groups/admission/next-stops.json",
+    "docs/overload-results/groups/admission/oracle.log.gz",
+    "docs/overload-results/groups/admission/regions.json",
+    "docs/overload-results/groups/admission/reverse-result-covariance.log.txt",
+    "docs/overload-results/groups/admission/run-mutants.py",
+    "docs/overload-results/groups/admission/setup.log.gz",
+    "docs/overload-results/groups/admission/trust-visitor-input.log.txt",
+    "docs/overload-results/groups/admission/trust-writable-result.log.txt",
+    "docs/overload-results/groups/c68/REPORT.md",
+    "docs/overload-results/groups/c68/census-scope.patch.gz",
+    "docs/overload-results/groups/c68/census.jsonl.gz",
+    "docs/overload-results/groups/c68/census.log.txt",
+    "docs/overload-results/groups/c68/regions.json",
+    "docs/overload-results/groups/c68/replay-01.json",
+    "docs/overload-results/groups/c68/replay-01.log.txt",
+    "docs/overload-results/groups/c68/replay-05-optional.json",
+    "docs/overload-results/groups/c68/replay-05-optional.log.txt",
+    "docs/overload-results/groups/c68/replay-05.json",
+    "docs/overload-results/groups/c68/replay-05.log.txt",
+    "docs/overload-results/groups/c68/replay-06.json",
+    "docs/overload-results/groups/c68/replay-06.log.txt",
+    "docs/overload-results/groups/c68/replay-13.json",
+    "docs/overload-results/groups/c68/replay-13.log.txt",
+    "docs/overload-results/groups/c68/replay-14.json",
+    "docs/overload-results/groups/c68/replay-14.log.txt",
+    "docs/overload-results/groups/c68/replay-mutant.json",
+    "docs/overload-results/groups/c68/replay-mutant.log.txt",
+    "docs/overload-results/groups/c68/replays.json",
+    "docs/overload-results/groups/c68/validate.py",
+    "docs/overload-results/groups/c68/validation.log.txt",
+    "docs/overload-results/groups/callback/REPORT.md",
+    "docs/overload-results/groups/callback/census.jsonl.gz",
+    "docs/overload-results/groups/callback/census.log.txt",
+    "docs/overload-results/groups/callback/counts.log.txt",
+    "docs/overload-results/groups/callback/field-storage-mutant.log.txt",
+    "docs/overload-results/groups/callback/focused.log.txt",
+    "docs/overload-results/groups/callback/input-mutant.log.txt",
+    "docs/overload-results/groups/callback/lower.log.txt",
+    "docs/overload-results/groups/callback/mutants.json",
+    "docs/overload-results/groups/callback/mutants.log.txt",
+    "docs/overload-results/groups/callback/oracle.log.txt",
+    "docs/overload-results/groups/callback/regions.json",
+    "docs/overload-results/groups/callback/regions.log.txt",
+    "docs/overload-results/groups/callback/representation-mutant.log.txt",
+    "docs/overload-results/groups/callback/result-mutant.log.txt",
+    "docs/overload-results/groups/callback/run-mutants.py",
+    "docs/overload-results/groups/fields/REPORT.md",
+    "docs/overload-results/groups/fields/after.jsonl.gz",
+    "docs/overload-results/groups/fields/array-layout.log.txt",
+    "docs/overload-results/groups/fields/census-build.log.gz",
+    "docs/overload-results/groups/fields/census.log.gz",
+    "docs/overload-results/groups/fields/counts.log.gz",
+    "docs/overload-results/groups/fields/drop-constraint-storage.log.txt",
+    "docs/overload-results/groups/fields/drop-field-storage.log.txt",
+    "docs/overload-results/groups/fields/ignore-mapper.log.txt",
+    "docs/overload-results/groups/fields/ignore-substitution.log.txt",
+    "docs/overload-results/groups/fields/lower.log.gz",
+    "docs/overload-results/groups/fields/measure.log.gz",
+    "docs/overload-results/groups/fields/mutants.json",
+    "docs/overload-results/groups/fields/mutants.log.gz",
+    "docs/overload-results/groups/fields/next-stops.json",
+    "docs/overload-results/groups/fields/object-layout.log.txt",
+    "docs/overload-results/groups/fields/oracle.log.gz",
+    "docs/overload-results/groups/fields/record-stops.py",
+    "docs/overload-results/groups/fields/refusal-oracle.log.gz",
+    "docs/overload-results/groups/fields/regions.json",
+    "docs/overload-results/groups/fields/run-mutants.py",
+    "docs/overload-results/groups/fields/setup.log.gz",
+    "docs/overload-results/groups/fields/unconstrained-layout.log.txt",
+    "docs/overload-results/groups/structural/REPORT.md",
+    "docs/overload-results/groups/structural/after.jsonl.gz",
+    "docs/overload-results/groups/structural/after.log.txt",
+    "docs/overload-results/groups/structural/before.jsonl.gz",
+    "docs/overload-results/groups/structural/before.log.txt",
+    "docs/overload-results/groups/structural/cache-mutant.log.txt",
+    "docs/overload-results/groups/structural/cache-validation.log.txt",
+    "docs/overload-results/groups/structural/cache.log.txt",
+    "docs/overload-results/groups/structural/cache_test.go.txt",
+    "docs/overload-results/groups/structural/counts.log.txt",
+    "docs/overload-results/groups/structural/drop-proof.log.txt",
+    "docs/overload-results/groups/structural/focused.log.txt",
+    "docs/overload-results/groups/structural/lower.log.txt",
+    "docs/overload-results/groups/structural/mutable-variance.log.txt",
+    "docs/overload-results/groups/structural/mutants.json",
+    "docs/overload-results/groups/structural/mutants.log.txt",
+    "docs/overload-results/groups/structural/next-stops.json",
+    "docs/overload-results/groups/structural/oracle.log.txt",
+    "docs/overload-results/groups/structural/regions.json",
+    "docs/overload-results/groups/structural/regions.log.txt",
+    "docs/overload-results/groups/structural/reverse-covariance.log.txt",
+    "docs/overload-results/groups/structural/run-mutants.py",
+    "docs/overload-results/groups/structural/setup.log.txt",
+    "docs/overload-results/groups/structural/trust-shape.log.txt",
+    "docs/overload-results/groups/structural/validate-cache.py",
+    "docs/overload-results/measure-regions.py",
+    "docs/overload-results/run-mutants.py",
+    "stage3/census/latent/full.go.txt",
+    "stage3/hidden-briefs/OVERLOAD-STOPS.md",
+    "stage3/hidden-briefs/TABLE.md"
+  ],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools-2",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestArgumentsLengthTypeScriptSource",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestArgumentsLengthWrongSlotMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheGeneratedC",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheToolchains",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheNodeInputs",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheAtomicEvidence",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestGateCacheUncached",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedCastFlushesOutput",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestUncheckableCastAdmission",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedCastRunsNoCatchOrFinally",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedCastFailureContract",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCheckedCastMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCensusAppendResultProof",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCensusOverloadResultStop",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCensusSmallStoppedSourceOnNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClassWrongOutput103",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClassWrongOutput107",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClassWrongOutput108",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClassWrongOutput106",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClosureMergeRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLoopCountersAgreeWithNode",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCountsAreRecorded",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNumericEnumNeverPathsPinned",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNumericEnumNeverPinned",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3EnumBoundaries",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3EnumSparseArrayBoundary",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestEnumNameEnumerationMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestEnumSemanticMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestEnumCleanupMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestFallthroughMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestFieldReadinessRepresentation",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestFreshWriteProbesStayRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestImportCycleRuntimeCalls",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestImportCycleLoadTimeReads",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestImportedNonliteralConstCaseIsNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInputAgreesWithNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastOracle",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastChecksMalformedRead",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastRuntimeMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastImportedConstruction",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInterfaceCastScalarTags",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestArrayFamilyMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestArrayWithBoundsMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestJSONStringifyRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestJSONStringifyResultMayBeUndefined",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestJSONStringifyOracleCatchesKeyOrder",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMapSetIteratorCopiesRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMapSetMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestMathNumberOracleCatchesMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryStringMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLiteralOptionalOracleCatchesMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLiteralUndefinedOracleCatchesMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMethodValueMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMethodOwnLoadMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMethodCaptureMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLibraryMethodAliasReadMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNamespaceSemanticMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNarrowedUnionMemberCheck",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNarrowedUnionObjectTagRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedSiblingCycleMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedCycleRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedRebindingCheckerRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedCallbackCarrierMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNodeFSFileAgreesWithNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNodeFSFileMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNonNullAdamicRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOct6InheritanceMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOct6ReleaseMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOmittedArgumentZeroMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOmittedOriginalProbePolicy",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOmittedReaderZeroMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTheOracleCatchesOneByte",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOneFileHoldsNodesOrder",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClosedStdoutEndsAsOnNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestFileWritesLandInNodesOrder",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestAPromptComesBeforeTheRead",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestASignalLeavesWhatWasPrinted",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestOverloadStructuralFieldRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestParameterPropertyMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestParameterPropertyOwnershipMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestPredicateDirectionCountsAreRecorded",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestInUnionNarrowingIsRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestPrivateGenericMethodOwnerMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestReadinessMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestUninitializedIsNotNullishMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNonNullWeakFreedNamesExpression",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLazyInitializerIsNotEagerMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestClosedNestedConstituentMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegexCycleFixtureHasItsNativeDependency",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpReplacementNodeMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRegExpReplacementTypeGuardMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRuntimeLastIndexOfMatchesNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestScannerNestedReferenceMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestScannerNestedReferences",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNestedReferenceIdentityMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLongArgumentsLeaveTheStackItsLimit",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSmallStacksStillPanic",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3EnumFallthrough",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestStage3FixtureHook",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSwitchCaseDeadZoneStop",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSwitchCaseDeclarationMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSwitchCaseOverloadIsNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestSwitchTrailingEmptyMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypedArrayWriteStopIsPinned",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypedArrayWorkersStatsMatchesPlatforms",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypeOfConstructorMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypeOfStringLiteralMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypeOfNullMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestTypeOfNullSlotPresenceMutant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestUnknownNarrowingMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRequiredViewFieldPrimitive",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestRequiredViewFieldOperandOnce",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNarrowedFieldUsesSharedReadiness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestViewFieldInheritedStaticReadiness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestDefaultTaggedSourceViews",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIAgreesWithNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIOracleCatchesMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIRunnerCatchesMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWASIEmission",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestWeakReadsUndefinedOnceFreed",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamNumericSeparatorGap",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestUpstreamRepositoryCorpusParity",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestExternalComparisonCatchesThreePrinterMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkPlan",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestNativeChunkDifferenceNamesCase",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestDocumentedStageZeroGaps",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProfileSnapshotsAgree",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCachedWidthMutantIsCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinDiagnostics",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestCorpusPinBeforeSampling",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestThreePortMutantsAreCaught",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "status": "passed"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProgressGuard",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryCorpusMutants",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryLandingWithoutPinEdit",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestRepositoryRequiresGit",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryFunctionIsInSingleAssignment",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryMutationIsInItsRange",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryPathNodeTakesIsInTheGraph",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestLivenessHoldsOnEveryPath",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestEveryWriteIsRecordedAndKnown",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeBufferHashUpdateKeepsAlias",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileOperationsAreKnown",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileOperandsStillJudgeWrites",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileDoesNotEscapeBorrowedObjects",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestNodeFSFileResultsAreFresh",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestRegexOperationsDoNotPoisonTreeWrites",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestRegexOperandsStillJudgeCycleWrites",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestFutureRegexMethodRemainsUnknown",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestArgumentLayouts",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestClosureArgumentsCountTargets",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestCallTargetReaders",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestCallTargetsIncludeEveryDescendant",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestClosureTargetsBoundOnlyProvenValues",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArgumentsLengthRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArgumentsLengthReadNeighbors",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArgumentsLengthRefusalFixtures",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicatePreservesDeclaredElementContract",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicateCannotInventAnElementContract",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestArrayPredicateCoexistsWithUnknownReflection",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUncheckableCastsStayRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCheckedCastProofAndElision",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusMarkerResultIsAssignable",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalFunctionValueRelation",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadedShorthandFunctionValueStaysNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusOverloadReturnProof",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateInteractionBoundary",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateInteractionEscapes",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusPredicateMarkerCallStaysNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusOverloadRelation",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusSmallFiniteKeyBoundary",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusRestMutableElements",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCensusBooleanDeadBranch",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCheckPragmasAreRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestCheckPragmaNeighborsCompile",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTsgoHonorsNoCheckInAdamicFiles",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesReadonlyChecker",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesPrivateChecker",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesPrivateStorage",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesAccessorRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticDeclarationsExecute",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticSoundness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesAccessorCaptureCycle",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesNarrowedAccessor",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticParentCycle",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassFeaturesStaticInterfaceCycle",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesUnsoundOverrides",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceKeepsCheckerConstructorRules",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceAllowsSoundOverrides",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceHasClassIdentity",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceCycleFinderIncludesInheritedFields",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRejectsUnsupportedConstructorShapes",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesFalseNominalViews",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesThisBeforeSuperReturns",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceKeepsNominalTupleDestructuring",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericMonomorphizations",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceRefusesGrowingGenericClasses",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericSoundness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceConditionalThisRules",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericViewsKeepNominalArguments",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericNominalConstraints",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceGenericFactoryLayouts",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceNativeSignatureNeighbors",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritanceNativeSignatureLimits",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassArgumentsUseCheckerIdentity",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassWrongOutputIteratorReceiver",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassWrongOutputKeysRepair",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClassWrongOutputPrivateRepair",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefiniteAssignmentUsesReadiness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefiniteAssignmentSoundNeighbors",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumsOpen",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumsDomain",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumNeverDefault",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumLiteralSpellings",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumMemberAliases",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumNameEnumeration",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumInlineIteration",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestFlagEnumAliasBoundaries",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNumericEnumsAreOpen",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestStringEnumsStayClosed",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNumericEnumNeverProof",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNumericEnumLiteralPromises",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumSlotViews",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumSwitchExhaustiveness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumLimitsStayLoud",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestConstEnumErasesRuntimeObject",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEnumIdentityAcrossModules",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericFunctionPolymorphicRecursionIsRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericUnionFixtureHasSeparateInstances",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericJSONUnionArrayIsNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestHiddenTNodeConstraintRepresentation",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestHiddenTNodeGenericValueRemainsNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestHiddenTNodeConstraintMutationRemainsNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOriginalCycleLedger",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUndecidedCycleReadsUseReadyChecks",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInputSpreadArgumentsAreNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInputSpreadCoverage",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefaultTaggedInterfaceAdmission",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorGapsAreExplicit",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorViewsCannotHideReturn",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorViewsCannotEraseReceivers",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGeneratorsAreRefusedEvenWithoutYield",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLiteralMethodCapturesCannotMakeCycles",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLiteralMethodViewsDoNotLoseThis",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorDescriptorReasons",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestRepresentedMethodReplacementIsNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestGenericIteratorViewsPreserveNativeArguments",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorMapperIndexHasNumberRepresentation",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIteratorSymbolKeysAreNotStringKeys",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryLanguageBoundaries",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMapSetGapsStayRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMapSetIteratorCopyTypesRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMethodValues",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMethodValueBoundaries",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryMethodValueSafety",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeBufferRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileOptionsBorrow",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileRefusesOptionEffects",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileRefusesVoidValues",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileNamespaceImport",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileQualifiedErrorType",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileKeepsDetachedMethodRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileBufferBorrow",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileScratchOptionsBorrow",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeFSFileScratchOverloadsAreNamed",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryNamesUnimplementedMembers",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryDistinguishesReceiverOwners",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNodeLibraryQualifiedTypeAssertion",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestObjectRefusalsExplainSoundness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestObjectUnprovenShapesStayNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestLibraryStringRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestConsoleLowersToWriteLine",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAMutableLocationSeenWiderIsRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAViewThatCantWriteIsNotRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestATupleSeenAsAnArrayIsNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAMethodReadAsAValueIsRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNamespaceLimitsStayLoud",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNamespaceReceiverRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNamespaceTypesErase",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedFunctionGapsAreLoud",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedFunctionCycleIsRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedEnvironmentHasOneAllocationSite",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedCapturedParametersAreOwned",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestClosedFrameInputRejectsMutation",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedRebindingNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedCallbackCycleIsRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedBodylessDeclarationsAreLoud",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNestedRestIsSupported",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNonNullAssertionLowersToNullishPanic",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNonNullAssertionOnPresentTypeIsErased",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningCensus",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningAllowed",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOptionalWideningSpreadOverwrite",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadCallbackServed",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadCallbackUnserved",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadCallbackFieldStorage",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadResultsFixtures",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadResultsLiarStops",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadResultsRefuses",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadStructuralResults",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverloadStructuralRefuses",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverrideOptionalNumberRefusesNativeSignature",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestOverrideOptionalRefusesNativeSignature",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestParameterPropertiesSoundness",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestParameterPropertyCheckerContracts",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestParameterPropertyCallbackReceiver",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateOverloadRuntime",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIndirectPredicateOverloadIsPending",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateBodyProof",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestConditionAssertionAdmission",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateCallbackContracts",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestEveryNeedsCallbackEffects",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateOverloadCallback",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateUseRegions",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateUsesBelongToEachCall",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnprovenPredicateReturnsAreRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPredicateBodiesAreProven",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPrimitiveAdmittingSlotsUseBoxes",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestInheritedLibraryReadsNeverLoadOwnFields",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPrototypeMethodsAreRefusedWithReasons",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestNullishPrototypeReadsAreRejectedByChecker",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestPrototypeHazardsBehindObjectViewsAreNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnrepresentedPrototypeCallsAreNotYet",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestIsPrototypeOfReadsExplainThePrototypeRefusal",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestProvenRelationsRefuse",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestProvenRelationsErase",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestReadinessElisionRequiresDominatingAssignment",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestRegExpNativeRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestRegExpSourceNode",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestSuppressionDirectivesAreRefused",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestSuppressionDirectiveSoundNeighbors",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTasteRepresentationLimitsStayExplicit",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTypedArraysLower",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTypedArrayGaps",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestTypedArrayViewsCannotChangeRepresentation",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "test": "TestUnknownReflectionRefusals",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestThePortAnswersAsGoCohereAndGitDo",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/gitignore",
+      "test": "TestPathAnswersAsGosPathPackage",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestCompiler41231d51Shape",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestMissingFunctionMutantFailsLoudly",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestChangedVisitorMutantFailsLoudly",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+      "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownMutableContainerFailsLoudly",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+      "test": "TestUnknownForeignPointerFailsLoudly",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+      "test": "TestMissingStatementFailsWithMethodName",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixtures",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestFixturePaths",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuardHook",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestTransformedNodeRunnerGuard",
+      "status": "not run"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestMarkdownInline",
+      "expected_seconds": 1089.9,
+      "slots": 4,
+      "after_seconds": 54.734
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestDelimiterExpressionMatchesNode",
+      "expected_seconds": 3.0464,
+      "slots": 1,
+      "after_seconds": 54.736
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCountsAreRecorded",
+      "expected_seconds": 228.72,
+      "slots": 1,
+      "after_seconds": 56.924
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestLoopCountersAgreeWithNode",
+      "expected_seconds": 93.272,
+      "slots": 1,
+      "after_seconds": 56.928
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestPortMatchesGoCohere",
+      "expected_seconds": 212.04,
+      "slots": 1,
+      "after_seconds": 153.783
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestAdditionalJSONBoundaries",
+      "expected_seconds": 181.37,
+      "slots": 1,
+      "after_seconds": 161.841
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestSingleFileStdoutDriver",
+      "expected_seconds": 162.34,
+      "slots": 1,
+      "after_seconds": 181.061
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestEveryMutationIsInItsRange",
+      "expected_seconds": 83.77,
+      "slots": 1,
+      "after_seconds": 192.159
+    }
+  ],
+  "undeclared_tools": [],
+  "catalog_apply": {
+    "checked": [
+      "08-narrowed-number-field.patch",
+      "09-literal-undefined-field.patch"
+    ],
+    "staled_by_this_change": [],
+    "already_stale": []
+  },
+  "split_tests": {
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline": 2,
+    "github.com/system-inc/adamic/internal/oracle": 122,
+    "github.com/system-inc/adamic/stage1/cohere/json": 19,
+    "github.com/system-inc/adamic/internal/flow": 4,
+    "github.com/system-inc/adamic/stage3/adapt/75-optional-widening/coverage": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/replay": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/replay/worker": 0,
+    "github.com/system-inc/adamic/stage3/census/latent/tool": 0,
+    "github.com/system-inc/adamic/stage3/census/predicates/tools/tool": 0,
+    "github.com/system-inc/adamic/stage3/census/tool": 0,
+    "github.com/system-inc/adamic/internal/fresh": 9,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259": 0,
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08": 0,
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe": 0,
+    "github.com/system-inc/adamic/internal/ir": 5,
+    "github.com/system-inc/adamic/internal/lower": 198,
+    "github.com/system-inc/adamic/stage1/cohere/gitignore": 3,
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite": 4,
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy": 2,
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite": 1,
+    "github.com/system-inc/adamic/stage3/fixtures": 4
+  },
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "gate_samples": [
+    "TestPortMatchesGoCohere 112/2703 files, stride 32, offset 5"
+  ],
+  "stage3_exits": {
+    "stage3-lane-tests": 0,
+    "stage3-lane": -9,
+    "stage3-apply-tests": -9
+  },
+  "split_tally": {
+    "packages": 22,
+    "planned": 373,
+    "passed": 5,
+    "touched": 22
+  },
+  "wall_seconds": 194.3,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "catalog-apply": 0.2,
+    "vet": 51.3,
+    "build": 57.0,
+    "smoke": 63.1,
+    "stage3": 192.7,
+    "tests": 193.1
+  },
+  "pass": 858,
+  "fail": 2,
+  "failed_tests": [
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/hidden_boundary_generic_tnode_value.a",
+    "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/hidden_boundary_generic_tnode_mutation.a"
+  ],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": {
+    "step": "tests",
+    "detail": "github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/hidden_boundary_generic_tnode_value.a\n=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/hidden_boundary_generic_tnode_value.a\n=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/hidden_boundary_generic_tnode_value.a\n=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/hidden_boundary_generic_tnode_value.a\n    ranges_test.go:28: Lower: /home/ahra/fast-gate/tree-2/internal/oracle/testdata/hidden_boundary_generic_tnode_value.a:3:36: stage 0 can't lower a generic function as a value yet\n--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/hidden_boundary_generic_tnode_value.a (0.07s)\n",
+    "after_seconds": 193.8
+  },
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "stage3",
+    "catalog-apply"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "catalog-apply": 0,
+    "vet": 0,
+    "build": 0,
+    "smoke": 0,
+    "stage3": 1,
+    "tests": 1
+  },
+  "finished": true,
+  "planned_test_counts": {
+    "passed": 5,
+    "failed": 0,
+    "not run": 368
+  }
+}
