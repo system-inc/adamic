@@ -77,8 +77,13 @@ func buildWithExports(path, output string, arguments []string, entryFunctions bo
 	var exports []native.ABIExport
 	if options.Target == "wasm32-wasi" {
 		program, exports, code = compileExportsWith(path, names, entryFunctions)
+		if program != nil && len(exports) == 0 && !reactor {
+			// An export alias is outside the per-function crossing set (docs/wasm-abi.md), but an
+			// aliased handleRequest still selects the request ABI, as it did before those exports.
+			program, handler, code = compileWASI(path)
+		}
 		reactor = reactor || len(exports) > 0
-		options.Request = reactor
+		options.Request = reactor || handler >= 0
 	} else {
 		program, code = compileLibrary(path, archive != "")
 	}
