@@ -9,6 +9,11 @@ first, every other step is killed, and status.txt goes red naming it. Tests alwa
 
 Usage: run.py --tree <checkout of the candidate> --sha <candidate> --base <main sha>
               --tools <tools checkout> --out <directory>
+
+With --full it is the whole uncached gate of main instead, run after landing: every package, the
+oracle whole, TestWASI with the WASI SDK's clang first. The first failure turns status.txt red at
+once (landings pause on it) and the rest keeps running for triage only; full.json is written when
+the run ends.
 """
 
 import argparse
@@ -22,6 +27,8 @@ import threading
 import time
 
 module = "github.com/system-inc/adamic"
+# What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
+gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1"}
 smokeTest = "TestNativeAgreesWithNode"
 
 
@@ -33,6 +40,8 @@ def main():
     parser.add_argument("--tools", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--parallel", type=int, default=os.cpu_count() or 8)
+    parser.add_argument("--full", action="store_true")
+    parser.add_argument("--weights", help="package seconds, longest first, to order the full gate's packages")
     arguments = parser.parse_args()
     os.makedirs(arguments.out, exist_ok=True)
     gate = Gate(arguments)
@@ -63,13 +72,17 @@ class Gate:
             "build_ok": False,
             "vet_ok": False,
         }
-        self.status("running: fast gate of %s against %s" % (arguments.sha, arguments.base))
+        self.kind = "full" if arguments.full else "fast"
+        self.status("running: %s gate of %s against %s" % (self.kind, arguments.sha, arguments.base))
 
     def run(self):
         tree = self.arguments.tree
         head = git(tree, "rev-parse", "HEAD")
         if head != self.arguments.sha:
             self.fail("setup", "the tree is at %s, not the candidate %s" % (head, self.arguments.sha))
+            return
+        if self.arguments.full:
+            self.runFull()
             return
         smoke, smokeSource = self.smokeList()
         changed = git(tree, "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
@@ -100,6 +113,30 @@ class Gate:
         log.close()
         if self.failure is not None:
             return
+        self.checkCensus()
+
+    def runFull(self):
+        listing = subprocess.run(["go", "list", "./..."], cwd=self.arguments.tree, capture_output=True, text=True, check=True).stdout.split()
+        order = []
+        if self.arguments.weights and os.path.exists(self.arguments.weights):
+            with open(self.arguments.weights) as handle:
+                weighed = [line.split() for line in handle if line.strip()]
+            order = [name for _, name in sorted(weighed, key=lambda row: -float(row[0])) if name in listing]
+        packages = order + [name for name in listing if name not in order]
+        self.result.update({"packages": "all", "package_list": packages})
+        self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
+        log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
+        wasi = None
+        if os.environ.get("WASI_SYSROOT"):
+            wasi = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
+        threads = [threading.Thread(target=self.vet),
+                   threading.Thread(target=self.test, args=("tests", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-p", str(self.arguments.parallel), "-skip", "^TestWASI$"] + packages, log)),
+                   threading.Thread(target=self.test, args=("wasi", ["go", "test", "-count=1", "-json", "-timeout", "60m", "-run", "^TestWASI$", "./internal/native"], log, wasi))]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        log.close()
         self.checkCensus()
 
     def smokeList(self):
@@ -212,9 +249,9 @@ class Gate:
             return None
         return output
 
-    def test(self, name, command, log):
+    def test(self, name, command, log, environment=None):
         started = time.monotonic()
-        self.stream(name, command, log)
+        self.stream(name, command, log, None, environment)
         self.steps[name] = round(time.monotonic() - started, 1)
 
     def stream(self, name, command, log, directory=None, environment=None):
@@ -249,7 +286,7 @@ class Gate:
         if code != 0 and self.failure is None:
             with open(stderrPath) as handle:
                 self.fail(name, "%s exited %d\n%s" % (" ".join(command[:4]), code, handle.read()[-4000:]))
-        return None if self.failure is not None else code
+        return None if self.failure is not None and not self.arguments.full else code
 
     def checkCensus(self):
         started = time.monotonic()
@@ -270,11 +307,11 @@ class Gate:
 
     def spawn(self, command, stdout, stderr=subprocess.STDOUT, directory=None, environment=None):
         with self.lock:
-            if self.failure is not None:
+            if self.failure is not None and not self.arguments.full:
                 raise SystemExit(1)
             # Uncached: the oracle's result caches would otherwise answer a test without running it.
             process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True,
-                                       env=dict(os.environ, ADAMIC_GATE_UNCACHED="1", **(environment or {})))
+                                       env=dict(os.environ, **gateEnvironment, **(environment or {})))
             self.processes.append(process)
         return process
 
@@ -284,6 +321,12 @@ class Gate:
                 return
             self.failure = {"step": step, "detail": detail, "after_seconds": round(time.monotonic() - self.started, 1)}
             print("FIRST FAILURE (%s, at %.1f s):\n%s" % (step, self.failure["after_seconds"], detail), flush=True)
+            if self.arguments.full:
+                # Landings pause on this line now; the rest of the run goes on for triage only.
+                with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
+                    handle.write(detail + "\n")
+                self.status("red: %s first failure at %s after %.1f s (still running for triage)" % (self.arguments.sha, step, self.failure["after_seconds"]))
+                return
             for process in self.processes:
                 if process.poll() is None:
                     try:
@@ -309,14 +352,14 @@ class Gate:
             "failure": self.failure,
             "finished": True,
         })
-        with open(os.path.join(self.arguments.out, "fast.json"), "w") as handle:
+        with open(os.path.join(self.arguments.out, self.kind + ".json"), "w") as handle:
             json.dump(self.result, handle, indent=2)
             handle.write("\n")
         steps = " ".join("%s=%.1fs" % item for item in self.steps.items())
         if green:
-            self.status("green: %s in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, wall, steps, len(self.result.get("packages", [])), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
+            self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
         else:
-            self.status("red: %s at %s after %.1f s (%s)" % (self.arguments.sha, self.failure["step"], self.failure["after_seconds"], steps))
+            self.status("red: %s %s gate, first failure at %s after %.1f s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], self.failure["after_seconds"], steps, self.counts["fail"], self.counts["pass"]))
         with open(os.path.join(self.arguments.out, "status.txt")) as handle:
             print(handle.read(), end="", flush=True)
 
