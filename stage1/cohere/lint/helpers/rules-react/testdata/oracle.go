@@ -1,7 +1,18 @@
 //go:build lintoracle
 
 package main
-import ("unicode";rules "github.com/system-inc/cohere/internal/lint/rules/react";"strings";"fmt";"encoding/json";"os";"unicode/utf16";"github.com/system-inc/cohere/internal/lint/ecmascript/comments")
+
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/system-inc/cohere/internal/lint/ecmascript/comments"
+	rules "github.com/system-inc/cohere/internal/lint/rules/react"
+	"os"
+	"strings"
+	"unicode"
+	"unicode/utf16"
+)
+
 func isComponentIdentifierName(name string) bool {
 	if name == "" {
 		return false
@@ -78,21 +89,56 @@ func jsxAnnotationIn(text string) (string, bool) {
 func isReactComponentBaseName(name string) bool {
 	return name == "Component" || name == "PureComponent"
 }
-func main(){
- var rows []struct{Name,Text string;Block bool};b,e:=os.ReadFile(os.Args[1]);if e!=nil{panic(e)};if e=json.Unmarshal(b,&rows);e!=nil{panic(e)}
- for _,r:=range rows{out:="";switch r.Name{
- case "DecodeCompilerRuleOptions":_,err:=rules.DecodeCompilerRuleOptions([]byte(r.Text));if err!=nil{out=err.Error()}
- case "DecodeNoMethodSetStateOptions":value,err:=rules.DecodeNoMethodSetStateOptions([]byte(r.Text));out=fmt.Sprint(value.(rules.NoMethodSetStateOptions).DisallowInFunc)+"|";if err!=nil{out+=err.Error()}
- case "isHookIdentifierName":out=fmt.Sprint(isHookIdentifierName(r.Text))
- case "isComponentIdentifierName":out=fmt.Sprint(isComponentIdentifierName(r.Text))
- case "mentionsRef":out=fmt.Sprint(mentionsRef(r.Text))
- case "isJavaScriptIdentifier":out=fmt.Sprint(isJavaScriptIdentifier(r.Text))
- case "commentValueOf":out=commentValueOf(comments.Comment{Text:r.Text,IsBlock:r.Block})
- case "jsxAnnotationIn":name,found:=jsxAnnotationIn(r.Text);out=fmt.Sprintf("%t|%s",found,name)
- case "isReactComponentBaseName":out=fmt.Sprint(isReactComponentBaseName(r.Text))
- default:panic(r.Name)}
- fmt.Printf("%s|",r.Name);for _,u:=range utf16.Encode([]rune(out)){fmt.Printf("%d,",u)};fmt.Println()
- }
+func main() {
+	var rows []struct {
+		Name, Text string
+		Block      bool
+	}
+	b, e := os.ReadFile(os.Args[1])
+	if e != nil {
+		panic(e)
+	}
+	if e = json.Unmarshal(b, &rows); e != nil {
+		panic(e)
+	}
+	for _, r := range rows {
+		out := ""
+		switch r.Name {
+		case "DecodeCompilerRuleOptions":
+			_, err := rules.DecodeCompilerRuleOptions([]byte(r.Text))
+			if err != nil {
+				out = err.Error()
+			}
+		case "DecodeNoMethodSetStateOptions":
+			value, err := rules.DecodeNoMethodSetStateOptions([]byte(r.Text))
+			out = fmt.Sprint(value.(rules.NoMethodSetStateOptions).DisallowInFunc) + "|"
+			if err != nil {
+				out += err.Error()
+			}
+		case "isHookIdentifierName":
+			out = fmt.Sprint(isHookIdentifierName(r.Text))
+		case "isComponentIdentifierName":
+			out = fmt.Sprint(isComponentIdentifierName(r.Text))
+		case "mentionsRef":
+			out = fmt.Sprint(mentionsRef(r.Text))
+		case "isJavaScriptIdentifier":
+			out = fmt.Sprint(isJavaScriptIdentifier(r.Text))
+		case "commentValueOf":
+			out = commentValueOf(comments.Comment{Text: r.Text, IsBlock: r.Block})
+		case "jsxAnnotationIn":
+			name, found := jsxAnnotationIn(r.Text)
+			out = fmt.Sprintf("%t|%s", found, name)
+		case "isReactComponentBaseName":
+			out = fmt.Sprint(isReactComponentBaseName(r.Text))
+		default:
+			panic(r.Name)
+		}
+		fmt.Printf("%s|", r.Name)
+		for _, u := range utf16.Encode([]rune(out)) {
+			fmt.Printf("%d,", u)
+		}
+		fmt.Println()
+	}
 }
 func isHookIdentifierName(name string) bool {
 	if !strings.HasPrefix(name, "use") {
