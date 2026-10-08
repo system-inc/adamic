@@ -89,9 +89,8 @@ class Gate:
         self.result["build_ok"] = True
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
         threads = [threading.Thread(target=self.vet)]
-        parallel = str(self.arguments.parallel)
         if packages:
-            threads.append(threading.Thread(target=self.test, args=("tests", ["go", "test", "-count=1", "-failfast", "-json", "-p", parallel, "-timeout", "30m"] + packages, log)))
+            threads.append(threading.Thread(target=self.testSplit, args=(packages, log)))
         if smoke and module + "/internal/oracle" not in packages:
             threads.append(threading.Thread(target=self.test, args=("smoke", ["go", "test", "-count=1", "-failfast", "-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)))
         for thread in threads:
@@ -121,11 +120,13 @@ class Gate:
         if listing.returncode != 0:
             raise SystemExit("go list failed: " + listing.stderr)
         directories, embedded = {}, {}
+        self.packageDirectories = {}
         tree = os.path.realpath(self.arguments.tree)
         for line in listing.stdout.splitlines():
             directory, importPath, *embeds = line.split("\t")
             relative = os.path.relpath(os.path.realpath(directory), tree)
             directories[relative] = importPath
+            self.packageDirectories[importPath] = directory
             for files in embeds:
                 for name in filter(None, files.split(",")):
                     embedded[os.path.normpath(os.path.join(relative, name))] = importPath
@@ -155,14 +156,78 @@ class Gate:
     def vet(self):
         self.result["vet_ok"] = self.step("vet", ["go", "vet", "./..."])
 
+    def testSplit(self, packages, log):
+        """Each touched package's tests: its test binary built once, then every top-level test run as
+        its own process, all of them side by side on the box's threads. One package's tests no longer
+        wait on each other in one process (round 59 proved the verdicts identical this way)."""
+        started = time.monotonic()
+        binaries = os.path.join(self.arguments.out, "binaries")
+        os.makedirs(binaries, exist_ok=True)
+        slots = threading.Semaphore(self.arguments.parallel)
+        threads = []
+
+        def runPackage(importPath):
+            binary = os.path.join(binaries, importPath.replace("/", "_") + ".test")
+            with slots:
+                if self.stream("tests", ["go", "test", "-c", "-o", binary, importPath], None) is None or not os.path.exists(binary):
+                    return
+                listing = self.capture([binary, "-test.list", "."], self.packageDirectories[importPath])
+            if listing is None:
+                return
+            names = [line for line in listing.splitlines() if line.startswith(("Test", "Example", "Fuzz"))]
+            self.result.setdefault("split_tests", {})[importPath] = len(names)
+            tests = []
+            for name in names:
+                command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
+                           "-test.count=1", "-test.failfast", "-test.timeout=30m", "-test.run", "^%s$" % name]
+                thread = threading.Thread(target=lambda command=command, name=name: self.slotted(slots, command, log, importPath, name))
+                thread.start()
+                tests.append(thread)
+            for thread in tests:
+                thread.join()
+
+        for importPath in packages:
+            thread = threading.Thread(target=runPackage, args=(importPath,))
+            thread.start()
+            threads.append(thread)
+        for thread in threads:
+            thread.join()
+        self.steps["tests"] = round(time.monotonic() - started, 1)
+
+    def slotted(self, slots, command, log, importPath, name):
+        with slots:
+            if self.failure is not None:
+                return
+            environment = None
+            if name == "TestWASI" and os.environ.get("WASI_SYSROOT"):
+                # As the whole gate runs it: the WASI SDK's clang first, so wasm-ld finds the wasm32 builtins.
+                environment = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
+            self.stream("tests", command, log, self.packageDirectories[importPath], environment)
+
+    def capture(self, command, directory):
+        process = self.spawn(command, subprocess.PIPE, subprocess.PIPE, directory)
+        output, errors = process.communicate()
+        if process.returncode != 0:
+            self.fail("tests", "%s exited %d\n%s" % (" ".join(command), process.returncode, (output + errors)[-4000:]))
+            return None
+        return output
+
     def test(self, name, command, log):
         started = time.monotonic()
-        stderr = open(os.path.join(self.arguments.out, name + ".stderr"), "w")
-        process = self.spawn(command, subprocess.PIPE, stderr)
+        self.stream(name, command, log)
+        self.steps[name] = round(time.monotonic() - started, 1)
+
+    def stream(self, name, command, log, directory=None, environment=None):
+        """Runs one go test (or test2json) process, copying its events to the log; the first failing
+        event fails the gate. Returns the exit code, or None if the gate failed."""
+        stderrPath = os.path.join(self.arguments.out, "%s-%d.stderr" % (name, threading.get_ident()))
+        stderr = open(stderrPath, "w")
+        process = self.spawn(command, subprocess.PIPE, stderr, directory, environment)
         output = {}
         for line in process.stdout:
-            with self.lock:
-                log.write(line)
+            if log is not None:
+                with self.lock:
+                    log.write(line)
             try:
                 event = json.loads(line)
             except ValueError:
@@ -181,10 +246,10 @@ class Gate:
                 self.fail(name, "%s %s\n%s" % (event.get("Package"), event.get("Test") or "(package)", text[-4000:]))
         code = process.wait()
         stderr.close()
-        self.steps[name] = round(time.monotonic() - started, 1)
         if code != 0 and self.failure is None:
-            with open(os.path.join(self.arguments.out, name + ".stderr")) as handle:
-                self.fail(name, "go test exited %d\n%s" % (code, handle.read()[-4000:]))
+            with open(stderrPath) as handle:
+                self.fail(name, "%s exited %d\n%s" % (" ".join(command[:4]), code, handle.read()[-4000:]))
+        return None if self.failure is not None else code
 
     def checkCensus(self):
         started = time.monotonic()
@@ -203,13 +268,13 @@ class Gate:
         if process.returncode != 0:
             self.fail("census", (process.stdout + process.stderr)[-4000:])
 
-    def spawn(self, command, stdout, stderr=subprocess.STDOUT):
+    def spawn(self, command, stdout, stderr=subprocess.STDOUT, directory=None, environment=None):
         with self.lock:
             if self.failure is not None:
                 raise SystemExit(1)
             # Uncached: the oracle's result caches would otherwise answer a test without running it.
-            process = subprocess.Popen(command, cwd=self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True,
-                                       env=dict(os.environ, ADAMIC_GATE_UNCACHED="1"))
+            process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True,
+                                       env=dict(os.environ, ADAMIC_GATE_UNCACHED="1", **(environment or {})))
             self.processes.append(process)
         return process
 
