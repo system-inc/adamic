@@ -219,12 +219,15 @@ scanner/parser base are recorded with standalone programs: these are not claims 
 | Program | Node | Stage 0/native observation | Port accommodation |
 |---|---|---|---|
 | [classInterfaceMethod.ts.txt](gaps/classInterfaceMethod.ts.txt) | `17` | Lowering and clang succeed; native exits 70, `compiler bug: a field the checker proved is there is missing` | Keep stateful methods on the concrete printer; the proving workaround constructs explicit function properties |
-| [optionalBooleanFunction.ts.txt](gaps/optionalBooleanFunction.ts.txt) | `absent` | `NotYet`: function value taking `boolean \| undefined` | The proving workaround uses a required boolean parameter; the final layout has no optional callback contract |
+| [optionalBooleanFunction.ts.txt](gaps/optionalBooleanFunction.ts.txt) | `absent` | Closed by `f69bf6082b6db19ec0037ef8d2a51a9a5d46a8d8` | Required-parameter proving workaround removed; the final layout has no optional callback contract |
 
-`TestClassInterfaceMethodGap` and `TestOptionalBooleanFunctionGap` copy these texts to scratch `.ts`
-files. They assert the Node result and the recorded failure; the working forms run byte-identically
-on Node, native and the JavaScript backend with no leaks. Substituting the working form is also the
-mutant that makes each failure check reject a successful normal run. The `.txt` programs are a
+`TestClassInterfaceMethodGap` still requires its recorded failure and checks the
+explicit-function-property workaround. `TestClosedOptionalBooleanFunctionGap`
+copies the unchanged boolean program to scratch `.a` and requires `absent`
+on source Node, native ASan/UBSan and the JavaScript backend, with a separate
+LeakSanitizer check. The required-boolean proving workaround is retired.
+The pure syntax-helper layout already removed the original callback contract;
+there is no stage 1 implementation workaround left to undo for this gap. The `.txt` programs are a
 separate execution-gap corpus, not formatted expression fragments.
 
 The class/interface panic is a compiler implementation bug. A compiler adapter could retain class method metadata through
@@ -368,3 +371,15 @@ macOS leak-check integration is waiting for internal/leakcheck to land on main f
 origin/devtools/stage1-leaks (f6eef5df). This branch does not merge that development branch or
 replace the helper with local ASan option switching. Named oracle skips now cite
 #xq2ecw6 (setup --gate-inputs), the work that installs the pins and removes the skips.
+
+## Optional boolean closure validation
+
+On compiler/area-gaps, `go test -v ./stage1/cohere/tsprinter -run
+'^(TestClosedOptionalBooleanFunctionGap|TestClassInterfaceMethodGap)$' -count=1
+-timeout 30m` passed (2.291s). The closed fixture agrees with Node in both backends
+and is leak-free. No implementation callback workaround remains in the final
+printer layout; the obsolete required-boolean proving workaround was removed
+from the gap test. No broader printer suite was run for this test-only retirement.
+Changing the fixture call from `show(undefined)` to `show(true)` made the closed
+regression fail on Node's normal `present` output; the fixture was restored.
+The existing class-interface successful-lowering mutant was also rejected.

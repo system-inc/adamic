@@ -1,0 +1,24 @@
+=== RUN   TestRequiredViewFieldPrimitive
+=== RUN   TestRequiredViewFieldPrimitive/number
+=== RUN   TestRequiredViewFieldPrimitive/boolean
+=== RUN   TestRequiredViewFieldPrimitive/string
+=== RUN   TestRequiredViewFieldPrimitive/wrong_string
+=== RUN   TestRequiredViewFieldPrimitive/missing
+=== RUN   TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:72: drop field check mutant caught by pinned exit/message, with valid C
+    view_fields_test.go:84: drop initialization tracking mutant caught by pinned exit/message
+=== RUN   TestRequiredViewFieldPrimitive/wrong_type
+    view_fields_test.go:72: drop field check mutant caught by pinned exit/message, with valid C
+--- PASS: TestRequiredViewFieldPrimitive (2.34s)
+    --- PASS: TestRequiredViewFieldPrimitive/number (0.38s)
+    --- PASS: TestRequiredViewFieldPrimitive/boolean (0.32s)
+    --- PASS: TestRequiredViewFieldPrimitive/string (0.34s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_string (0.24s)
+    --- PASS: TestRequiredViewFieldPrimitive/missing (0.23s)
+    --- PASS: TestRequiredViewFieldPrimitive/uninitialized (0.46s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_type (0.36s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=13
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.342s
