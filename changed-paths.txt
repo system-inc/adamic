@@ -1,0 +1,17 @@
+internal/lower/GENERIC_FUNCTION_VALUE.md
+internal/lower/GENERIC_FUNCTION_VALUE_ARMS.md
+internal/lower/expression.go
+internal/lower/generic.go
+internal/lower/generic_arms_context_test.go
+internal/lower/generic_function_value.go
+internal/lower/generic_function_value_test.go
+internal/lower/invariance.go
+internal/lower/lower_test.go
+internal/lower/statements.go
+internal/lower/testdata/run-generic-function-arm-mutants.py
+internal/lower/testdata/run-generic-function-value-mutants.py
+internal/oracle/counts.md
+internal/oracle/generic_function_value_arms_test.go
+internal/oracle/generic_function_value_test.go
+internal/oracle/testdata/generic_function_value.a
+internal/oracle/testdata/generic_function_value_arms.a
