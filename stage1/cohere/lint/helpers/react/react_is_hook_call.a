@@ -1,0 +1,8 @@
+export interface HookCall<N> {readonly expression: N | undefined;}
+export function isHookCall<N>(call: HookCall<N> | undefined,isIdentifier: (node: N) => boolean,isPropertyAccess: (node: N) => boolean,text: (node: N) => string,isHookName: (name: string) => boolean,isNamespacedMember: (node: N,isHookName: (name: string) => boolean) => boolean): boolean {
+ if(call === undefined || call.expression === undefined) {return false;}
+ const expression=call.expression;
+ if(isIdentifier(expression)) {return isHookName(text(expression));}
+ if(isPropertyAccess(expression)) {return isNamespacedMember(expression,isHookName);}
+ return false;
+}
