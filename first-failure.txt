@@ -1,0 +1,20 @@
+FIRST FAILURE (tests, at 1887.4 s):
+github.com/system-inc/adamic/stage1/cohere/tsprinter TestExpressionsAgainstGoAndPrettier
+=== RUN   TestExpressionsAgainstGoAndPrettier
+    expressions_test.go:61: corpus root bench: 6 git-tracked .ts files
+    expressions_test.go:61: corpus root bridge: 1 git-tracked .ts files
+    expressions_test.go:61: corpus root cmd: 5 git-tracked .ts files
+    expressions_test.go:61: corpus root internal: 18 git-tracked .ts files
+    expressions_test.go:61: corpus root stage1: 480 git-tracked .ts files
+    expressions_test.go:61: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+    expressions_test.go:61: corpus root src/compiler: 77 git-tracked .ts files
+    expressions_test.go:61: === RUN   TestAdamicExpressionCorpus
+            adamic_expressions_test.go:508: 887 files, 1 full-file parse refusals, 170994 supported maximal expression fragments
+        --- PASS: TestAdamicExpressionCorpus (7.34s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	7.401s
+        
+    expressions_test.go:61: cases: 170994 cases in 8 largest-first processes
+    expressions_test.go:65: Node exit 0 stderr  diff /home/ahra/fast-gate/tree-4/stage3/drivers/tsc/corpus/103_circularReferenceInReturnType2/circularReferenceInReturnType2.ts:1078:KindObjectLiteralExpression: line 1: "notyet\texpression-file", Go cohere "ok\t({\\n    name: 'A',\\n    fields: () => ({\\n        a: field({\\n            type: A,\\n            resolve() {\\n                return {\\n                    foo: 100,\\n                };\\n            },\\n        }),\\n    }),\\n});\\n"
+--- FAIL: TestExpressionsAgainstGoAndPrettier (16.59s)
+
