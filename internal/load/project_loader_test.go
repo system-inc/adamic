@@ -142,3 +142,17 @@ func TestProductionLiteralContractIsPending(t *testing.T) {
 		}
 	}
 }
+
+func TestProductionNullableCallbackContractStaysError(t *testing.T) {
+	paths := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"exactOptionalPropertyTypes":false,"lib":["ES2024"],"types":[],"noEmit":true},"files":["main.ts"]}`},
+		[2]string{"main.ts", `interface Source { slot?: number | undefined; }
+interface Target { slot?: number; }
+function choose(): (() => Source) | undefined { return undefined; }
+const callback: (() => Target) | undefined = choose();`})
+	_, err := Load(paths[1:])
+	var rejected *CheckError
+	if !errors.As(err, &rejected) || len(rejected.OptionSites) != 1 || len(rejected.ScheduledOptionSites) != 0 {
+		t.Fatalf("nullable callback must remain an explicit diagnostic, not a present-callback guard: %v", err)
+	}
+}

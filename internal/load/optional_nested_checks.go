@@ -113,6 +113,11 @@ func optionalObjectContract(checked *checker.Checker, source, target *checker.Ty
 	}
 	calls, targets := checked.GetSignaturesOfType(source, checker.SignatureKindCall), checked.GetSignaturesOfType(target, checker.SignatureKindCall)
 	if len(calls) == 1 && len(targets) > 0 {
+		// The closure ABI guard requires a present callback. Keep nullable callback
+		// values as diagnostics until their undefined branch has its own contract.
+		if original != source {
+			return nil
+		}
 		result := checked.GetReturnTypeOfSignature(calls[0])
 		if !optionalObjectReturn(checked, result) {
 			return nil

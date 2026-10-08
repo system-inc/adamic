@@ -211,6 +211,28 @@ static void mutant_optional_absent(adamic_object *object, const char *name, bool
 		t.Log("storage-kind mutant caught by runtime check, exit 70; lost optional-write presence mutant caught by Node observations, exit 0")
 		return
 	}
+	if fixtureName == "optional_array_guard.a" {
+		kind := strings.ReplaceAll(c, "adamic_optional_array_presence(", "mutant_array_storage(")
+		if kind == c {
+			t.Fatal("array storage mutant target absent")
+		}
+		helper := `#include "adamic.h"
+extern bool adamic_optional_array_presence(const adamic_array *, bool, const adamic_array *, bool, const char *);
+static bool mutant_array_storage(const adamic_array *array, bool nullable, const adamic_array *keys, bool element_nullable, const char *site) {
+ if (array != NULL) ((adamic_array *)array)->references = false;
+ return adamic_optional_array_presence(array,nullable,keys,element_nullable,site);
+}
+`
+		binary := filepath.Join(t.TempDir(), "array-storage-mutant")
+		if err := native.Build(helper+kind, binary, native.Options{Sanitize: true}); err != nil {
+			t.Fatal(err)
+		}
+		result := execute(t, binary)
+		if result.exitCode != 70 || !strings.Contains(string(result.stderr), "optional contract lacks object array storage") {
+			t.Fatalf("array storage mutant not caught: %d %s", result.exitCode, result.stderr)
+		}
+		t.Log("array reference-storage mutant caught before element reads, exit 70")
+	}
 	mutant := strings.ReplaceAll(c, "adamic_object_new(", "mutant_absent_literal(")
 	if mutant == c {
 		t.Fatal("mutant target absent")

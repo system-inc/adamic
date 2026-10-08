@@ -1,7 +1,7 @@
 Built Effects cleanup scopes and contracts for all 67 exact-only optional rows; 67 scheduled, zero emitted in production.
 Commits: cleanup a593d04e; required views 6db50e57; propagated results 4b1922bd; optional storage a022b1e1; final four-row group recorded in branch history.
 Focused final-family oracle passes in 9.028s; load/lower/commands in 3.796s, 0.704s, 0.010s; production retains 194 errors.
-28 run mutants: guards catch bad writes, undefined results and bad storage; Node catches representation mismatches; leaks and counts catch outer cleanup.
+29 run mutants: guards catch bad writes, undefined results and bad storage; Node catches representation mismatches; leaks and counts catch outer cleanup.
 Not covered: whole-program emitted checks, the 90 declaration contracts, the other worker's 104 flag contracts, and the full repository gate.
 
 Historical reports below retain the earlier batch observations; the latest production evidence and remaining.json supersede their counts.
@@ -431,3 +431,24 @@ Complete run mutant inventory (counts refer to distinct run mutations):
 | Mapped object array loses element field | Element presence guard, exit 70 |
 | Object-return callback has array storage | Closure ABI guard, exit 70 |
 | Callback return loses optional field presence | Node observations |
+
+Final review: synchronized merge 972eb47f is pushed. A 29th mutant changes
+the object array's reference-storage flag to false. The array ABI check stops
+before reading elements, exit 70. The existing leaf-absence array mutant still
+stops at the element presence guard. The present-callback contract now explicitly
+leaves nullable callback values as checker diagnostics outside this ledger; this
+avoids rejecting legitimate undefined callbacks with a present-closure check. A
+project-loader regression proves that boundary. All 67 ledger rows are unchanged.
+Final loader tests pass in 1.072s; every optional oracle, all 29 mutants and the
+registered count gate pass in 59.785s. Affected loader/oracle vet passes. The last
+production probe reports 171 sites, 67 scheduled, zero emitted and 194 errors.
+
+| Additional mutant | What catches it |
+| --- | --- |
+| Object array uses value-only element storage | Array ABI guard before element reads, exit 70 |
+
+All-67 contract implementation is October 8 UTC. Whole-program compilation
+remains blocked outside this unit by the listed 90 declaration diagnostics and
+the other worker's 104 flag sites. October 10 UTC is still only the provisional
+whole-program estimate, not a verified completion date. No production emitted
+check or trusted-site count is claimed.
