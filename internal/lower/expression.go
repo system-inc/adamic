@@ -33,6 +33,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if l.viewArrayBase(proven) != nil {
+		return ir.Array, true
+	}
 	if l.phantomArrayBase(proven) != nil {
 		return ir.Array, true
 	}

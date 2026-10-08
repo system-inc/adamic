@@ -46,6 +46,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	if base := l.phantomBase(target); base != nil && interfaceScalar(base) {
 		return ""
 	}
+	if l.viewArrayBase(target) != nil {
+		return ""
+	}
 	flags := target.Flags()
 	switch {
 	case flags&checker.TypeFlagsAny != 0:
@@ -167,6 +170,8 @@ func (l *lowering) checkLazyViewReads() error {
 		case ir.ArrayPop:
 			arrayRead(read.Array, read.ViewRead)
 		case ir.ArrayJoin:
+			arrayRead(read.Array, read.ViewRead)
+		case ir.ArraySearch:
 			arrayRead(read.Array, read.ViewRead)
 		case ir.ForOf:
 			arrayRead(read.Iterable, read.ViewRead)

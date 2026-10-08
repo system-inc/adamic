@@ -1,7 +1,7 @@
 Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-58 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+101 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -347,3 +347,121 @@ implementation mutations rerun above. All source tests run in the filtered gate.
 
 Finite-literal owner gates pass: lower 9.476s, native 14.583s, JavaScript
 2.377s, full IR 3.172s, uncached filtered oracle 85.780s, vet exit 0.
+
+## Lane 4b array alternatives and boxed producers follow-up
+
+Tip f4e5993e3ed2817a9060ed53ca0b957ea5588c64 follows both priority owner
+merges. Three conflicted hunks in checked_views_object_primitive_unions_test.go
+are resolved separately: keep both optional and new comment/literal fixture
+rows, keep optional-policy rollbacks and new outer wrong-member mutations, and
+combine required-missing/literal-text-wrong exclusions for the nested mutant
+selector. No refusal or Node control is removed. Backend auto-merges retain
+Absent/Optional plumbing while accepting the shared ViewArray member adapter.
+The named objectPrimitiveBoxedField producer hook preserves real boxed storage;
+casts supply no producer kind. Shared array element and nested field obligations
+remain checked. Map/callable alternatives and true NodeArray metadata stay pending.
+
+New comment-good and literal-good controls execute both generated boxed producer
+branches. comment-boolean/literal-boolean hold outer refusal and independent
+wrong-member/removal mutants; comment-flags-wrong/literal-negative-wrong hold
+nested type and dropped-read mutants. literal-text-wrong pins nested string
+refusal. Earlier optional-absent/optional-receiver/required-missing and all their
+mutants remain in the same source test. The new group contributes 12 release
+backend implementation mutants, separate from payload mutants and previous runs.
+Original 42 candidate pairs / 181 reads still await original witnesses; reduced
+array aliases are not full upstream NodeArray certificates.
+
+Array/boxed gates pass: lower 8.606s, native 19.043s, JavaScript 2.071s,
+full IR 23.286s, uncached filtered oracle 107.157s, vet exit 0. The new twelve
+backend mutants and preserved sixteen earlier lane4b backend mutants all run
+in the gate; source controls include optional absence/receiver and required
+missing slots. Sole parent predicate-fixture exclusion remains unchanged.
+
+## Lane 2 NodeArray and own-slot mutation follow-up
+
+Tip 3b1263b650b374183da1cd879b29a73dfb10135e follows lane4b 563a5bfc0
+locally. Publication of that predecessor failed twice: Git could not read an
+HTTPS username. The current environment reports no secret/outbound identity.
+Remote remains 1d165a7c9. A complete first-parent mail patch is at
+/tmp/views-integration-563a5bfc0.patch; no branch history was rewritten.
+
+The one plan conflict retains dictionary evidence/shared-hook amendment and
+the full new Lane2 hook list. Compiler hunks auto-merge without discarded
+behavior. Instantiated array ancestry retains own-field descriptors; fresh
+Object.assign array production copies scalar properties with original slot
+certificates. Own reads/mutation use existing readiness/literal/write checks.
+ArraySearch demand now participates in shared allocation flow.
+
+The overlap probe passed all NodeArray and lane4b source cases. Optional array
+wrong-kind still exits 70 with the field, declared type and found number; its
+incoming exact diagnostic pin used the older field reader. Updated only that
+pin to the owner nullish dispatcher message: matches no member of Declaration[]
+| undefined. This preserves the refusal and validates the actual shared path.
+Initial failure is saved as nodearray-overlap.log, not counted as a green gate.
+
+Landing hold from the user: integration must not be advertised ready to land
+until worker 01a115a4's optional-boolean storage check in view_writes.go is
+settled. codex/view-write-optional-boolean has no pushed ref at this check.
+Continue lane integration; merge its published fix before any pending lane
+and explicitly record the result. This hold is independent of publication auth.
+
+The first full filtered Node oracle exposed a new phantom-array regression:
+phantom_array_brands.a:9 .sort became an unsupported checked-array consumer.
+A restored diagnostic trace shows refuseOptionalWidening calls viewSchema for
+BrandedReadonly before lowering. The broadened strictViewContract dispatch
+registered ViewArray for the pure phantom intersection, activating global array
+consumer policy. Its old erased contract path never activated that policy.
+The array dispatch now excludes only phantomArrayBase-proven pure brands,
+preserving the prior path while real NodeArray scalar own fields use the new
+adapter. No consumer allowlist or original relation/presence proof is weakened.
+The initial full failure and descriptor trace are retained as failed evidence.
+The numeric wrong-element omission witness can reach an invalid pointer;
+added node-array-wrong-reference instead returns a real string heap payload
+through a root-only comparison. This mutant can finish valid sanitized code,
+so its catcher does not depend on a later dereference or sanitizer crash.
+
+Six NodeArray implementation mutants were executed and restored. Native and
+JavaScript element-kind omission use node-array-wrong-reference and each prints
+present with exit 0, caught by the exit-70 pin without sanitizer faults. Native
+and JavaScript own-kind omission fail node-array-wrong-own's pin; native property
+aliasing fails node-array-properties-copy's 3:12 Node output; omitting original
+slot certification fails node-array-write-literal's write-site refusal pin.
+A seventh rollback removes only the phantom dispatch exclusion and is caught
+by phantom_array_brands.a's previously valid Node control. Earlier five optional
+array mutants are carried lane evidence, not rerun against the changed owner
+nullish entry point. Their source wrong/lazy/transitive controls run normally.
+
+Final NodeArray gates pass: lower 14.534s, native 22.807s, JavaScript
+1.528s, full IR 21.224s, uncached filtered oracle 146.049s, vet exit 0.
+All seven implementation mutants were restored before this gate.
+
+Lane 4b original-contract witnesses, d70bc4ddb7d71fd900c3d7a8ec682f38a1608cc4
+
+Resolved two hunks individually. In internal/javascript/view_unions_object_primitive.go,
+kept the optional-receiver short circuit as well as separate Optional and Absent
+arguments. In internal/native/runtime/view_unions_object_primitive.c, kept
+optional null-receiver return independent of the field Undefined flag, and
+retained absent-slot permission only when both allow_absent and undefined hold.
+The incoming combined condition would refuse an optional receiver when its
+field type lacks undefined. optional-receiver, optional-absent, required-missing
+and the uninitialized source-file witness prove these distinctions. Other
+incoming code and witness additions merged unchanged.
+
+Original declaration generation used pristine TypeScript v6.0.3 commit
+050880ce59e30b356b686bd3144efe24f875ebc8. The adapter generated 78 declarations
+and matched 20 + 15 read sites. ADAMIC_OBJECT_PRIMITIVE_ORIGINAL_DECLS was set
+for the oracle, so all nine original-pair controls actually ran, with manifest
+and declaration validation. All 24 new backend mutants were caught: readiness
+loss (2), rejection of permitted absence (2), nested-shape omission and dropped
+transitive checks (8), wrong union member and outer-check omission (12).
+Mutation happens on independent backend test inputs; production remains intact.
+
+Gates: lower 12.136s, native 19.806s, JavaScript 2.223s, full IR 2.764s,
+uncached filtered Node oracle 124.131s, vet exit 0. Logs use original-pairs
+prefix; upstream setup and original declaration preparation are also retained.
+Only library_array_holes_callbacks.a is excluded for the recorded baseline
+no-type-predicate refusal. Full repository and production census were not run.
+These are original-contract witnesses for two pairs and 35 candidate reads;
+40 candidate pairs and 146 reads remain, with whole-program reachability
+unmeasured. The optional-boolean landing hold remains active; its branch had
+no published ref at this check.
