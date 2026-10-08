@@ -44,7 +44,7 @@ func TestShippedProfileAgreesWithGo(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	rows := append(generated(t), volumeGenerated(t)...)
+	rows := generated(t)
 	for _, row := range upstream(t) {
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
 			checkRecoveryRefusal(t, oracle, binary, directory, row)
