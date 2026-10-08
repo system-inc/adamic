@@ -151,7 +151,23 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}
 	// What's present is made what ?? makes: text ?? count boxes a present number into the union.
-	unwrapped, fresh := converted(coalesce.Value.Type().Present(), coalesce.Of, unwrapped)
+	fresh := false
+	if coalesce.Value.Type() == ir.Union && coalesce.Of != ir.Union {
+		switch coalesce.Of {
+		case ir.Number:
+			unwrapped = fmt.Sprintf("((const adamic_number_box *)%s)->number", value)
+		case ir.Boolean:
+			unwrapped = fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value)
+		case ir.MaybeNumber:
+			unwrapped = maybe(ir.MaybeNumber, fmt.Sprintf("((const adamic_number_box *)%s)->number", value))
+		case ir.MaybeBoolean:
+			unwrapped = maybe(ir.MaybeBoolean, fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value))
+		default:
+			unwrapped = fmt.Sprintf("((%s)%s)", cType(coalesce.Of), value)
+		}
+	} else {
+		unwrapped, fresh = converted(coalesce.Value.Type().Present(), coalesce.Of, unwrapped)
+	}
 	if coalesce.Panic != nil {
 		text, message, _ := e.aside(coalesce.Panic)
 		e.line("if (!(%s)) {", present)

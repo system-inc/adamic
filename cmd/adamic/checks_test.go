@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -58,4 +59,33 @@ func TestExplainChecksDriver(t *testing.T) {
 		}
 	}
 	t.Fatal("missing driver arguments")
+}
+
+// Placeholder checks share the public report in every compiler entry point.
+func TestPlaceholderExplainChecksOutput(t *testing.T) {
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, backend := range []string{"c", "js", "build"} {
+		t.Run(backend, func(t *testing.T) {
+			arguments := []string{backend, "internal/oracle/testdata/placeholder_nonnull_saved_leak.a", "--explain-checks"}
+			if backend == "build" {
+				arguments = append(arguments, "-o", filepath.Join(t.TempDir(), "program"), "--sanitize")
+			}
+			command := exec.Command(os.Args[0], append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, arguments...)...)
+			command.Dir = repository
+			command.Env = append(os.Environ(), "ADAMIC_EXPLAIN_TEST_DRIVER=1")
+			var output, diagnostic bytes.Buffer
+			command.Stdout, command.Stderr = &output, &diagnostic
+			if err := command.Run(); err != nil {
+				t.Fatalf("%v: %s", err, diagnostic.Bytes())
+			}
+			for _, want := range []string{"placeholder value: checked at argument via saved", "adamic: placeholder checks: proven 0 checked 1"} {
+				if !strings.Contains(diagnostic.String(), want) {
+					t.Fatalf("missing %q: %s", want, diagnostic.Bytes())
+				}
+			}
+		})
+	}
 }

@@ -1,9 +1,8 @@
 package lower
 
 import (
-	"testing"
-
 	"github.com/system-inc/adamic/internal/ir"
+	"testing"
 )
 
 func TestReadinessElisionRequiresDominatingAssignment(t *testing.T) {
@@ -36,7 +35,7 @@ func TestReadinessElisionRequiresDominatingAssignment(t *testing.T) {
 					t.Fatalf("literal placeholder asserted eagerly: %#v", program.NonNullChecks)
 				}
 				checked := 0
-				check := func(node any) bool {
+				count := func(node any) bool {
 					switch read := node.(type) {
 					case ir.Read:
 						if read.Readiness != "" {
@@ -49,12 +48,17 @@ func TestReadinessElisionRequiresDominatingAssignment(t *testing.T) {
 					}
 					return true
 				}
-				walk(program.Main, check)
+				walk(program.Main, count)
 				for _, function := range program.Functions {
-					walk(function.Body, check)
+					walk(function.Body, count)
+				}
+				for _, site := range program.PlaceholderChecks {
+					if site.Status == "checked" {
+						checked++
+					}
 				}
 				if checked != probe.checked {
-					t.Fatalf("readiness checks: got %d want %d", checked, probe.checked)
+					t.Fatalf("%d readiness checks, want %d", checked, probe.checked)
 				}
 			}
 		})

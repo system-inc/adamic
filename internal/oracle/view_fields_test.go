@@ -117,8 +117,7 @@ func TestRequiredViewFieldOperandOnce(t *testing.T) {
 	}
 }
 
-// Unchanged storage sources now run as checked TypeScript; their initializers
-// stop eagerly. The shared field readiness primitives remain exercised above.
+// Placeholder-backed fields share tagged storage across their narrowed views.
 func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 	for _, probe := range []struct {
 		name, field, stdout string
@@ -130,15 +129,26 @@ func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
 		{"number-uninitialized", "value", "number\n", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/readiness-"+probe.name+".ts"))
-			if err != nil {
-				t.Fatal(err)
+			program, path := interfaceFixture(t, "readiness-"+probe.name)
+			want := run{stdout: []byte(probe.stdout)}
+			if probe.initialized {
+				if difference := disagreement(want, onNode(t, path)); difference != "" {
+					t.Fatal(difference)
+				}
+			} else {
+				want.exitCode = 70
+				use := "argument"
+				if strings.HasPrefix(probe.name, "number") {
+					use = "use as T"
+				}
+				want.stderr = []byte("adamic: panic: placeholder '" + probe.field + "' is unset at " + use + " via node." + probe.field + "\n")
 			}
-			expression := "undefined!"
-			if strings.HasPrefix(probe.name, "number") {
-				expression = "null!"
+			native, _ := nativelyUncached(t, program)
+			for _, got := range []run{native, onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatal(difference)
+				}
 			}
-			assertMigratedNonNullCheck(t, path, expression, "", false)
 		})
 	}
 }
@@ -148,7 +158,17 @@ func TestViewFieldInheritedStaticReadiness(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assertMigratedNonNullCheck(t, path, "undefined!", "", false)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := onNode(t, path)
+	native, _ := nativelyUncached(t, program)
+	for _, got := range []run{native, onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Fatal(difference)
+		}
+	}
 }
 
 // These exercise real source casts and writes, without replacing any lowered IR.
@@ -161,17 +181,10 @@ func TestDefaultTaggedSourceViews(t *testing.T) {
 		{"default-wrong-type", "", "field read failed: (node as Identifier).name is not a string; expected string, found number"},
 		{"default-wrong-boolean", "", "field read failed: (node as Identifier).ready is not a boolean; expected boolean, found number"},
 		{"default-literal", "", "field read failed: (node as Identifier).name expected \"wanted\", found string other"},
-		{"default-read-before-set", "", "field read failed: (held as Identifier).escapedText is not initialized; expected string, found uninitialized"},
+		{"default-read-before-set", "", "placeholder 'escapedText' is unset at argument via (held as Identifier).escapedText"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			if probe.name == "default-staged" || probe.name == "default-boxed-write" || probe.name == "default-read-before-set" {
-				path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath(probe.name)))
-				if err != nil {
-					t.Fatal(err)
-				}
-				assertMigratedNonNullCheck(t, path, "undefined!", "", false)
-				return
-			}
+
 			program, path := interfaceFixture(t, probe.name)
 			want := run{stdout: []byte(probe.stdout)}
 			if probe.diagnostic == "" {

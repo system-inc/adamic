@@ -29,6 +29,9 @@ func (l *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	var value ir.Expression = ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}
+	if origin := l.result.Locals[local].Placeholder; origin != "" && !l.placeholderAllowsUnset(node) {
+		value = ir.PlaceholderUse{Value: value, Origin: origin, Use: "assignment result", Path: sourceExpression(node), Where: l.program.Where(node), Of: result}
+	}
 	if value.Type() == ir.Union && result != ir.Union {
 		value = ir.Narrow{Value: value, To: result}
 	} else {

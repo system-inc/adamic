@@ -262,9 +262,9 @@ func zeroValue(of ir.Type) ir.Expression {
 		return ir.NumberConstant{}
 	case ir.Boolean:
 		return ir.BooleanConstant{}
-	case ir.MaybeNumber:
+	case ir.MaybeNumber, ir.MaybeBoolean:
 		// A field of number | undefined left without a value is undefined, as JavaScript leaves it.
-		return ir.MaybeOf{Of: ir.MaybeNumber}
+		return ir.MaybeOf{Of: of}
 	}
 	return ir.Undefined{}
 }
@@ -435,7 +435,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		if err != nil || censusFieldSlotless(of) {
 			return nil, l.notYet(target, "resetting a placeholder field without supported storage")
 		}
-		return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: placeholderZero(of), Uninitialized: true, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+		return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: l.placeholderInitialValue(valueNode, of), Uninitialized: true, Unset: true, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 	}
 	if call, handled, err := l.superAccessor(target, valueNode); handled {
 		if err != nil {
