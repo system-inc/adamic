@@ -1,0 +1,14 @@
+{
+  "name": "@next/next/no-head-element",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNextNoHeadElement",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoHeadElement"
+}

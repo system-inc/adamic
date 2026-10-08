@@ -1,0 +1,1 @@
+export const message = "This is a raw <head> element. Use the `Head` component from `next/head`, which merges what every page contributes and deduplicates it, so two components asking for a title do not both emit one. A hand-written <head> is emitted as-is and silently competes with whatever the framework already put there.";
