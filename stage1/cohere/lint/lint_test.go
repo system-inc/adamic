@@ -387,7 +387,7 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 	}
 	patterns := []string{"*.ts", "*.a"}
 	rows := corpusfiles.Upstream(t, source, compilerCommit, []string{"src/compiler"}, patterns)
-	rows = append(rows, corpusfiles.Repository(t, repository, []string{"stage1"}, patterns)...)
+	rows = append(rows, compilerStage1Sources(t, repository)...)
 	// The old walk also included TestMain's generated dispatch. Preserve that
 	// coverage as an explicit generated input, independent of stray worktree files.
 	generatedRegistry, err := filepath.Abs(".generated/registry.ts")
