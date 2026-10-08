@@ -50,3 +50,35 @@ func NominalArrayUnionStorage(program *Program, source, target ViewContractID) b
 	from, to = present(from), present(to)
 	return from.NominalClass != 0 && to.NominalClass != 0 && from.Unsupported == "" && to.Unsupported == ""
 }
+
+// RecursiveNominalWitness requires the visited runtime adapter rather than
+// recursively expanding a producer graph into generated source.
+func RecursiveNominalWitness(program *Program, id ViewContractID) bool {
+	active, done := map[ViewContractID]bool{}, map[ViewContractID]bool{}
+	var visit func(ViewContractID) bool
+	visit = func(id ViewContractID) bool {
+		if id == 0 || !HasMapNominalWitness(program, id) {
+			return false
+		}
+		if active[id] {
+			return true
+		}
+		if done[id] {
+			return false
+		}
+		active[id] = true
+		c := program.ViewContracts[id-1]
+		if visit(c.Element) {
+			return true
+		}
+		for _, field := range c.Fields {
+			if visit(field.Contract) {
+				return true
+			}
+		}
+		delete(active, id)
+		done[id] = true
+		return false
+	}
+	return visit(id)
+}

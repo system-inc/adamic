@@ -2059,3 +2059,11 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/lower/testdata/predicates/overload_some_false_valid.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_objects.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_true_only.a | 1 | 1 | 1 | 1 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-undefined.a | 10 | 10 | 24 | 32 | 9 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-both.a | 10 | 10 | 24 | 32 | 9 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-read.a | 11 | 11 | 24 | 34 | 10 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-producer.a | 7 | 7 | 15 | 22 | 7 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-shared-schema.a | 4 | 4 | 11 | 16 | 4 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-control.a | 10 | 10 | 24 | 32 | 9 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-gap-recursive-read.a | 2 | 2 | 5 | 8 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-gap-recursive-unread.a | 2 | 2 | 5 | 8 | 2 | 0 | 0 | 0 |

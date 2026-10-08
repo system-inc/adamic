@@ -23,6 +23,10 @@ func mapNominalContract(program *ir.Program, id ir.ViewContractID) (ir.ViewContr
 }
 
 func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where string) {
+	if ir.RecursiveNominalWitness(e.program, id) {
+		e.mapNominalGraphCertificate(id, value, where)
+		return
+	}
 	contract, nullable, undefined := mapNominalContract(e.program, id)
 	if !ir.HasMapNominalWitness(e.program, id) {
 		return

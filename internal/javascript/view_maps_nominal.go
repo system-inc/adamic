@@ -7,6 +7,9 @@ import (
 )
 
 func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where string) string {
+	if ir.RecursiveNominalWitness(e.program, id) {
+		return e.mapNominalGraphCertificate(id, value, where)
+	}
 	if id == 0 {
 		return value
 	}

@@ -17,11 +17,6 @@
       "outcome": "existing language refusal: brand member must be void"
     },
     {
-      "family": "nominal class beneath a recursive aggregate entry",
-      "read": "node.value",
-      "outcome": "named compile refusal"
-    },
-    {
       "family": "nullable nominal unboxed callable boundary",
       "read": "nullable class source value at entry.child write",
       "outcome": "named compile refusal before ambiguous reference is stored",
@@ -33,6 +28,12 @@
       "outcome": "named compile refusal; integration boxed callback dispatch and producer refusals remain unchanged",
       "fixture_refusal_sites": 47,
       "storage_evidence": "46 separate iterator companions exercise storage without extending the callable ABI",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "recursive nominal arrays, mutable aggregate cycles and recursive class declarations",
+      "read": "node.value",
+      "outcome": "producer witness coverage not implemented; existing named refusals retained",
       "production_reaching_view_counts": "unmeasured"
     }
   ],
@@ -101,6 +102,11 @@
     {
       "family": "readonly nominal field reference-to-boxed widening",
       "scope": "direct and nested readonly class fields widen to null, undefined, and both; class/undefined sources widen to boxed both with later source-alias class and undefined writes; independent nullable field reads reject class lookalikes",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nominal class beneath recursive readonly object entries",
+      "scope": "readonly structural object cycles and null, undefined and combined-nullish links to finite data classes; iterative owned producer snapshots keyed by object and schema, independent escaped class read checks; eight Node controls and producer/read/null-root/shared-schema payload mutants",
       "production_reaching_view_counts": "unmeasured"
     }
   ],

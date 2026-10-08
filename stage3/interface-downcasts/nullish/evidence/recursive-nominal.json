@@ -1,0 +1,33 @@
+{
+  "base": "0f55d66409d9f06e65d628f3c4d02b26a327bc99",
+  "controls": 8,
+  "mutants": [
+    "producer nested class lookalike",
+    "escaped read nested class lookalike",
+    "undeclared null root",
+    "same object under a different class-bearing schema"
+  ],
+  "execution_modes": [
+    "native ASan/UBSan",
+    "released native",
+    "JavaScript backend"
+  ],
+  "valid_cycle": "terminates, cleanup releases references, leak check passes",
+  "counterfactuals": "same payloads run on with producer/read nominal checks omitted; address-only visitation independently misses shared-schema obligation in all modes",
+  "gate": "scoped compiler packages with -skip Phantom, vet, scoped oracle; no full repository gate",
+  "remaining_inventory": {
+    "pairs": 2018,
+    "reads": 9101,
+    "certified_remaining": "unmeasured"
+  },
+  "logs": [
+    "proof",
+    "matrix-and-counts",
+    "compiler",
+    "vet",
+    "retained-refusal",
+    "address-only-red",
+    "address-only-counterfactual",
+    "check-free-counterfactual"
+  ]
+}

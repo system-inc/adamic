@@ -27,8 +27,10 @@ type Program struct {
 	ViewContracts      []ViewContract
 	ViewContractTypes  map[int]ViewContractID
 	// NominalReadContracts are private Map producer witnesses, checked again at reads.
-	NominalReadContracts map[int]ViewContractID
-	GraphTypes           map[int]bool
+	// NominalEntryContracts intern private structural producer graphs, including back edges.
+	NominalEntryContracts map[int]ViewContractID
+	NominalReadContracts  map[int]ViewContractID
+	GraphTypes            map[int]bool
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string

@@ -214,6 +214,12 @@ func TestCheckedViewOptionalNominalMutants(t *testing.T) {
 				expected = "Map nominal producer failed:"
 			}
 			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if site == "cycle" {
+					if diff := disagreement(truth, got); diff != "" {
+						t.Fatal(diff)
+					}
+					continue
+				}
 				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
 					t.Fatalf("optional nominal lookalike ran on: %#v", got)
 				}
@@ -355,6 +361,12 @@ func TestCheckedViewOptionalMutableNominalMutants(t *testing.T) {
 				expected = "field read failed:"
 			}
 			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if site == "cycle" {
+					if diff := disagreement(truth, got); diff != "" {
+						t.Fatal(diff)
+					}
+					continue
+				}
 				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
 					t.Fatalf("optional mutable class lookalike ran on: %#v", got)
 				}
@@ -430,6 +442,12 @@ func TestCheckedViewNullableNominalSlotMutants(t *testing.T) {
 				expected = "field read failed:"
 			}
 			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if site == "cycle" {
+					if diff := disagreement(truth, got); diff != "" {
+						t.Fatal(diff)
+					}
+					continue
+				}
 				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
 					t.Fatalf("nullable mutable class lookalike ran on: %#v", got)
 				}
@@ -495,5 +513,125 @@ func TestCheckedViewNominalFieldWidenReadMutants(t *testing.T) {
 			}
 			t.Logf("Node=%q; original Object storage rechecks identity through nullable target", truth.stdout)
 		})
+	}
+}
+
+func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
+	for _, site := range []string{"producer", "read", "null", "shared-schema", "cycle"} {
+		t.Run(site, func(t *testing.T) {
+			fixture := site
+			if site == "null" || site == "cycle" {
+				fixture = "producer"
+			}
+			program, path := interfaceFixture(t, "nullish/maps/entry-nominal-recursive-"+fixture)
+			truth := onNode(t, path)
+			fake, leaf, item := -1, -1, -1
+			for i, local := range program.Locals {
+				switch local.Name {
+				case "fake":
+					fake = i
+				case "leaf":
+					leaf = i
+				case "item":
+					item = i
+				}
+			}
+			changed := false
+			for i, statement := range program.Main {
+				declaration, ok := statement.(ir.Declare)
+				if !ok {
+					continue
+				}
+				name := program.Locals[declaration.Local].Name
+				if site == "null" && name == "source" {
+					creation, ok := declaration.Value.(ir.MapNew)
+					if !ok {
+						t.Fatal("missing Map")
+					}
+					creation.Entries[0][1] = ir.Null{}
+					declaration.Value = creation
+					program.Main[i] = declaration
+					changed = true
+					break
+				}
+				if (site == "producer" && name == "item") || (site == "read" && name == "source") {
+					if fake < 0 || leaf < 0 {
+						t.Fatal("missing locals")
+					}
+					mutation := ir.SetProperty{Object: ir.Read{Local: leaf, Of: ir.Object}, Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}
+					remaining := append([]ir.Statement(nil), program.Main[i+1:]...)
+					program.Main = append(program.Main[:i+1], mutation)
+					program.Main = append(program.Main, remaining...)
+					changed = true
+					break
+				}
+				if site == "cycle" && name == "source" {
+					delete(program.CheckedFields, "next")
+					corruption := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "next", Define: true, Value: ir.Read{Local: item, Of: ir.Object}}
+					cleanup := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "next", Define: true, Value: ir.Read{Local: leaf, Of: ir.Object}}
+					remaining := append([]ir.Statement(nil), program.Main[i+1:]...)
+					program.Main = append(program.Main[:i], corruption, declaration, cleanup)
+					program.Main = append(program.Main, remaining...)
+					changed = true
+					break
+				}
+				if site == "shared-schema" && name == "source" {
+					if item < 0 {
+						t.Fatal("missing item")
+					}
+					// Bypass the physical tag guard only for this deliberately corrupt store.
+					delete(program.CheckedFields, "other")
+					corruption := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "other", Define: true, Value: ir.Read{Local: item, Of: ir.Object}}
+					cleanup := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "other", Define: true, Value: ir.Null{}}
+					remaining := append([]ir.Statement(nil), program.Main[i+1:]...)
+					program.Main = append(program.Main[:i], corruption, declaration, cleanup)
+					program.Main = append(program.Main, remaining...)
+					changed = true
+					break
+				}
+			}
+			if !changed {
+				t.Fatal("mutation missed")
+			}
+			native, binary := nativelyUncached(t, program)
+			expected := "Map nominal producer failed:"
+			if site == "read" {
+				expected = "field read failed:"
+			}
+			for backend, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				t.Logf("%s exit=%d stdout=%q stderr=%q", []string{"native", "released", "JavaScript"}[backend], got.exitCode, got.stdout, got.stderr)
+				if site == "cycle" {
+					if diff := disagreement(truth, got); diff != "" {
+						t.Fatal(diff)
+					}
+					continue
+				}
+				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
+					t.Fatalf("recursive nominal obligation ran on: %#v", got)
+				}
+			}
+			if site == "cycle" {
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+			t.Logf("Node=%q; isolated %s obligation tested", truth.stdout, site)
+		})
+	}
+}
+
+func recursiveNominalCounts(t *testing.T) []string {
+	t.Helper()
+	rows := []string{}
+	for _, name := range []string{"recursive-undefined", "recursive-both", "recursive-read", "recursive-producer", "recursive-shared-schema", "recursive-control", "gap-recursive-read", "gap-recursive-unread"} {
+		row := counted(t, "stage3/interface-downcasts/nullish/maps/entry-nominal-"+name+".a", false, nil, false, false)
+		rows = append(rows, row)
+	}
+	return rows
+}
+
+func TestCheckedViewRecursiveNominalCounts(t *testing.T) {
+	for _, row := range recursiveNominalCounts(t) {
+		t.Log(row)
 	}
 }

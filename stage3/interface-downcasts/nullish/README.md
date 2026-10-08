@@ -1167,3 +1167,37 @@ primitive-array gap expectation; their targeted controls and mutants pass.
 The definitive complete green log is evidence/merge-ffe428ab-final-green.log.gz.
 This finished merge unit is committed and pushed once under the standing rule;
 no additional worker branch was merged.
+
+
+October 8: recursive readonly nominal producer witnesses
+
+Readonly structural object cycles now admit finite nominal data-class leaves,
+with null, undefined, and combined-nullish links. Eight source controls match
+Node in native and JavaScript, with zero leaks and recorded allocation rows.
+Producer traversal uses owned snapshots and an iterative worklist, keyed by
+both object address and schema. A valid self-cycle terminates and releases its
+references after the test restores the acyclic payload.
+
+Four real payload mutants stop with exit 70: a nested class lookalike before
+Map construction, the same corruption after construction at an escaped class
+read, an undeclared null root, and one shared object reached under two different
+class-bearing schemas. Removing only producer/read nominal checks in a scratch
+worktree lets all four payloads run on in native, released native, and JavaScript.
+Changing visitation to address-only independently lets the shared-schema mutant
+run on in all three modes. Counterfactual logs record successful execution of
+corrupted payloads; the address-only red log is the original test catching that
+missing check. None of these counterfactual changes are on this branch.
+
+The final scoped oracle passes in 10.643s. Compiler packages pass: IR 0.012s,
+lower 5.074s, native 103.972s, JavaScript 0.876s; scoped vet passes. The inherited
+phantom failures remain excluded with -skip Phantom; no full repository gate
+is claimed. entry-live-mutation remains refused at 5:69 for its slotless Map
+callback value. Broader callable boundaries remain lane 5 dependencies.
+
+Recursive arrays, mutable aggregate cycles and recursive class declarations
+retain their existing refusals and need separate producer proofs. Required
+primitive brands remain refused in internal/lower/phantom_brands.go,
+(*lowering).phantomRefusal: "a primitive brand member brand whose type is not
+void". The conservative inventory remains 2,018 pairs / 9,101 reads; exact
+production reaching-view discharge is unmeasured. Evidence is in
+recursive-nominal.json and the corresponding compressed logs.

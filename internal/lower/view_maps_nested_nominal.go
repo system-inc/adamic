@@ -41,10 +41,16 @@ func (l *lowering) mapNestedNominalType(target *checker.Type, seen map[*checker.
 
 // Finite structural paths are certified at the producer. Every class field
 // read separately checks identity, including after mutation through an alias.
-// Fixed tuples use their existing adapter; recursive paths remain refused.
+// Fixed tuples use their existing adapter; readonly object cycles use a visited witness.
 func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
-	if !l.mapNominalPathAcyclic(target, map[*checker.Type]bool{}) {
+	if !l.mapNominalPathAcyclic(target, map[*checker.Type]bool{}) && !l.recursiveNominalObjectPath(target, map[*checker.Type]bool{}) {
 		return 0
+	}
+	if l.result.NominalEntryContracts == nil {
+		l.result.NominalEntryContracts = map[int]ir.ViewContractID{}
+	}
+	if id := l.result.NominalEntryContracts[int(target.Id())]; id != 0 {
+		return id
 	}
 	present := l.checker.GetNonNullableType(target)
 	if present != target {
@@ -65,7 +71,10 @@ func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Typ
 	if target.Flags()&checker.TypeFlagsObject == 0 || checker.IsTupleType(target) || len(l.checker.GetIndexInfosOfType(target)) != 0 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 {
 		return 0
 	}
-	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target)}
+	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target), Unsupported: "pending nominal producer graph"}
+	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+	l.result.ViewContracts = append(l.result.ViewContracts, contract)
+	l.result.NominalEntryContracts[int(target.Id())] = id
 	for _, field := range l.checker.GetPropertiesOfType(target) {
 		child := l.mapEntrySlot(node, l.concrete(l.checker.GetTypeOfSymbol(field)))
 		if child == 0 {
@@ -93,12 +102,13 @@ func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Typ
 		}
 		l.result.CheckedFields[field.Name] = true
 	}
-	l.result.ViewContracts = append(l.result.ViewContracts, contract)
-	return ir.ViewContractID(len(l.result.ViewContracts))
+	contract.Unsupported = ""
+	l.result.ViewContracts[id-1] = contract
+	return id
 }
 
-// Private producer descriptors are finite trees. Recursive aggregate paths must
-// acquire a runtime visited witness before they can certify a nested class.
+// Finite private producer paths keep their existing adapters. Readonly object
+// cycles separately require the runtime visited witness.
 func (l *lowering) mapNominalPathAcyclic(target *checker.Type, active map[*checker.Type]bool) bool {
 	if active[target] {
 		return false
@@ -163,4 +173,42 @@ func (l *lowering) mapNominalArrayEntrySlot(node *ast.Node, target *checker.Type
 	}
 	l.result.ViewContracts = append(l.result.ViewContracts, contract)
 	return ir.ViewContractID(len(l.result.ViewContracts))
+}
+
+// The visited-witness adapter currently covers recursive readonly object paths.
+// Recursive arrays, mutable aggregate edges and recursive class declarations
+// retain their existing refusals until their storage producers have this proof.
+func (l *lowering) recursiveNominalObjectPath(target *checker.Type, seen map[*checker.Type]bool) bool {
+	target = l.concrete(target)
+	if seen[target] {
+		return true
+	}
+	seen[target] = true
+	present := l.checker.GetNonNullableType(target)
+	if present != target {
+		return l.recursiveNominalObjectPath(present, seen)
+	}
+	if target.Flags()&checker.TypeFlagsObject == 0 {
+		return target.Flags()&checker.TypeFlagsUnion == 0
+	}
+	if l.viewArrayBase(target) != nil || checker.IsTupleType(target) {
+		return !l.mapNestedNominalType(target, map[*checker.Type]bool{})
+	}
+	if len(l.checker.GetIndexInfosOfType(target)) != 0 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 {
+		return false
+	}
+	nominal := isClassInstance(target)
+	if nominal && !l.mapNominalEntryTypeProven(target, map[*checker.Type]bool{}) {
+		return false
+	}
+	for _, field := range l.checker.GetPropertiesOfType(target) {
+		if !nominal && !l.checker.IsReadonlySymbol(field) {
+			return false
+		}
+		child := l.concrete(l.checker.GetTypeOfSymbol(field))
+		if !l.recursiveNominalObjectPath(child, seen) {
+			return false
+		}
+	}
+	return true
 }

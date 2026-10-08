@@ -23,7 +23,7 @@ func (l *lowering) mapViewContract(node *ast.Node, target *checker.Type) (ir.Vie
 		contract.Key = l.mapEntrySlot(node, l.concrete(args[0]))
 		contract.Element = l.mapEntrySlot(node, l.concrete(args[1]))
 		for _, child := range []ir.ViewContractID{contract.Key, contract.Element} {
-			if child == 0 || !mapEntryContract(l.result.ViewContracts[child-1]) {
+			if child == 0 || !mapEntryDescriptorProven(l.result, child, map[ir.ViewContractID]bool{}) {
 				contract.Unsupported = "Map key/value certificate"
 			}
 		}
@@ -38,7 +38,7 @@ func (l *lowering) mapProducer(node *ast.Node, value ir.MapNew) ir.MapNew {
 	}
 	key := l.mapEntrySlot(node, l.concrete(args[0]))
 	element := l.mapEntrySlot(node, l.concrete(args[1]))
-	if key != 0 && element != 0 && mapEntryContract(l.result.ViewContracts[key-1]) && mapEntryContract(l.result.ViewContracts[element-1]) {
+	if key != 0 && element != 0 && mapEntryDescriptorProven(l.result, key, map[ir.ViewContractID]bool{}) && mapEntryDescriptorProven(l.result, element, map[ir.ViewContractID]bool{}) {
 		l.result.MapCertificates = append(l.result.MapCertificates, [2]ir.ViewContractID{key, element})
 		value.KeyContract = key
 		value.ValueContract = element
