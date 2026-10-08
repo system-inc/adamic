@@ -1,0 +1,11 @@
+import type { RuleContext } from '../../context.ts';
+import { Build } from '../../helpers/control_flow_graph/build.a';
+import type { AstArena } from '../../helpers/control_flow_graph/ast.a';
+export function scope(c: RuleContext,i: number): boolean {return c.functionLike(i);}
+export function returnsIn(c: RuleContext,i: number,out: number[],stopStatic: boolean=false): void {for(const child of c.node(i).children){if(scope(c,child)||(stopStatic&&c.kind(child)==='ClassStaticBlockDeclaration'))continue;if(c.kind(child)==='ReturnStatement')out.push(child);returnsIn(c,child,out,stopStatic);}}
+export function fallsThrough(ast: AstArena,i: number): boolean {const g=Build(ast,ast.read(ast.indexAtSlot(i)),{Expression:undefined,Read:undefined,Write:undefined,Statement:undefined,Loop:undefined});const result=g.EndReachable;g.arena.dispose();return result;}
+export function body(c: RuleContext,i: number): number {const children=c.node(i).children;return children[children.length-1] ?? -1;}
+export function tokenEnd(c: RuleContext,i: number): number {return c.node(i).end;}
+export function arrow(c: RuleContext,i: number): number {for(const child of c.node(i).children)if(c.kind(child)==='EqualsGreaterThanToken')return child;return -1;}
+
+export function child(c: RuleContext,i: number,p: number): number {return i<0?-1:c.node(i).children[p] ?? -1;}
