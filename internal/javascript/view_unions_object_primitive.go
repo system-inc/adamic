@@ -43,5 +43,5 @@ func (e *emitter) viewObjectPrimitive(property ir.Property) string {
 			panic("compiler bug: unavailable object primitive member adapter")
 		}
 	}
-	return fmt.Sprintf("((o) => { const v = adamicReadField(o, %s, %s, false, false, %s); if (!(%s)) panic('field read failed: ' + %s + ' matches no member of ' + %s + '; expected ' + %s + ', found ' + (v === undefined ? 'undefined' : v === null ? 'null' : Array.isArray(v) ? 'array' : v instanceof Map ? 'Map' : typeof v)); return v; })(%s)", quote(property.Name), quote(property.View), quote(contract.Name), strings.Join(tests, " || "), quote(property.View), quote(contract.Name), quote(contract.Name), e.value(property.Object))
+	return fmt.Sprintf("((o) => { const v = adamicReadField(o, %s, %s, %t, %t, %s); if (!(%s)) panic('field read failed: ' + %s + ' matches no member of ' + %s + '; expected ' + %s + ', found ' + (v === undefined ? 'undefined' : v === null ? 'null' : Array.isArray(v) ? 'array' : v instanceof Map ? 'Map' : typeof v)); return v; })(%s)", quote(property.Name), quote(property.View), property.Optional, property.Absent, quote(contract.Name), strings.Join(tests, " || "), quote(property.View), quote(contract.Name), quote(contract.Name), e.value(property.Object))
 }

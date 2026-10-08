@@ -43,6 +43,6 @@ func (e *emitter) viewObjectPrimitive(property ir.Property) string {
 	}
 	e.declarations = append(e.declarations, "#include \"view_unions_object_primitive.h\"")
 	object := e.value(property.Object)
-	value := fmt.Sprintf("adamic_object_primitive_view(%s, %s, &%s, (const adamic_object_primitive_member[]){%s}, %d, %t, %s, %s)", object, cString(property.Name), e.cache(), strings.Join(members, ", "), len(members), undefined, cString(contract.Name), cString(property.View))
+	value := fmt.Sprintf("adamic_object_primitive_view(%s, %s, &%s, (const adamic_object_primitive_member[]){%s}, %d, %t, %t, %t, %s, %s)", object, cString(property.Name), e.cache(), strings.Join(members, ", "), len(members), undefined, property.Absent, property.Optional, cString(contract.Name), cString(property.View))
 	return e.own(ir.Union, value)
 }

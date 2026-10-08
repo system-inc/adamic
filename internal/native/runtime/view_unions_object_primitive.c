@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-adamic_heap *adamic_object_primitive_view(const adamic_object *object, const char *field, adamic_slot_cache *cache, const adamic_object_primitive_member *members, size_t count, bool undefined, const char *declared, const char *expression) {
+adamic_heap *adamic_object_primitive_view(const adamic_object *object, const char *field, adamic_slot_cache *cache, const adamic_object_primitive_member *members, size_t count, bool undefined, bool absentAllowed, bool optional, const char *declared, const char *expression) {
  adamic_value *raw = object == NULL ? NULL : adamic_object_optional_field(object, field, cache);
+ if (undefined && ((optional && object == NULL) || (absentAllowed && object != NULL && raw == NULL))) return NULL;
  // Force the common read to report presence and readiness before inspecting any
  // payload. Static inherited slots need the owner's normalized probe.
  if (raw == NULL || !adamic_object_initialized(object)[cache->index]) {

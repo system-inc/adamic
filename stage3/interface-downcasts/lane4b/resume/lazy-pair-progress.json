@@ -4,8 +4,11 @@
   "source_sha256": "ff738cfeabeecad1dbf481ee7f2a8b0c68d34eee10ecec573d4daece72d2451c",
   "pairs": 42,
   "candidate_reads": 181,
-  "completed_pairs": 0,
-  "completed_reads": 0,
+  "completed_pairs": 2,
+  "completed_reads": 35,
+  "completion_basis": "standalone source oracle using complete original declarations; all recorded sites audited against pinned upstream; whole-tsc execution reachability unmeasured",
+  "remaining_candidate_pairs": 40,
+  "remaining_candidate_reads": 146,
   "reduced_shape_candidate_pairs": 22,
   "reduced_shape_candidate_reads": 103,
   "candidate_pairs_without_shape_control": 20,
@@ -199,7 +202,7 @@
         }
       ],
       "rank": 1,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "node-indicator"
     },
     {
@@ -356,7 +359,7 @@
         }
       ],
       "rank": 2,
-      "status": "pending original-pair witness",
+      "status": "certified standalone original field contract; execution reachability unmeasured",
       "reduced_shape_control": "diagnostic"
     },
     {
