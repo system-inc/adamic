@@ -5,7 +5,7 @@ import { copyTerminalWithRemap } from '../../replay/index.ts';
 import { refreshPredecessors } from './graph_adapter.ts';
 export function mergeConsecutiveBlocks(fn: HIRFunction): number {
  const mergedInto = new Map<BlockIndex,BlockIndex>(); const fallthroughs = new Set<BlockIndex>(); const survivors: BlockIndex[] = []; let count = 0;
- const resolve = (id: BlockIndex): BlockIndex => { let current = id; while(true) { const next = mergedInto.get(current); if(next === undefined || next === current) { return current; } current = next; } };
+ const resolve = (id: BlockIndex): BlockIndex => resolveBlock(fn,mergedInto,id);
  for(const bid of fn.blockOrder) {
   const block = fn.block(bid); if(block.terminalPresent && block.terminal.fallthrough !== undefined) { fallthroughs.add(block.terminal.fallthrough); }
   const pred = block.predecessors[0];
@@ -31,4 +31,9 @@ export function mergeConsecutiveBlocks(fn: HIRFunction): number {
   if(block.terminalPresent) { block.terminal = copyTerminalWithRemap(block.terminal,(p) => p,resolve); }
  }
  fn.entry = resolve(fn.entry); refreshPredecessors(fn); return count;
+}
+
+function resolveBlock(fn: HIRFunction, mergedInto: Map<BlockIndex,BlockIndex>, id: BlockIndex): BlockIndex {
+ let slot = id.slot;
+ while(true) { const current = fn.blockAt(slot + 1); const next = mergedInto.get(current); if(next === undefined || next.slot === slot) { return fn.blockAt(slot + 1); } slot = next.slot; }
 }

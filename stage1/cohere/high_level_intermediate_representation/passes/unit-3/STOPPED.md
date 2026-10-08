@@ -1,85 +1,99 @@
-# Unit 3 — implementation present; full certificate stopped
+# Unit 3 — seven backend passes; memo dropping stopped
 
-Merged `9addb0e8` from `origin/stage1-hir/wip` without rebasing (merge
-`198eebb43a7a2078f44b936c4a8a0b5ffb6c59e2`). The earlier shared requests are
-answered. All implementation, adapters, fixtures, tests and mutants written by
-this lane remain in `passes/unit-3/`; no owner-owned file was edited.
+Merged the owner's replay framing at `9addb0e8` without rebasing (merge
+`198eebb43a7a2078f44b936c4a8a0b5ffb6c59e2`). All changes are lane-owned;
+shared replay, graph records, caches and arena classes remain untouched.
 
-## Raw byte agreement, with every input retained
+## Named oracle failures
 
-| Go subpass | Node original checkpoints | Node probes | Sanitized native | Emitted JavaScript |
+The five IncludingMemoCallbacks mismatches are parked individually under
+**#6d8y0pf** in `testdata/parked_oracle_failures.json`. Every raw comparison still
+runs. An unlisted mismatch fails the test; a repaired named case counts as a
+match automatically. `HIR_UNIT3_REQUIRE_CERTIFICATE=1` still fails on any raw
+mismatch, including a parked one. No IDs or output bytes are normalized.
+
+Go's allocating map range at `inline_iife.go:379` is confirmed nondeterministic;
+the upstream fix is an ordered walk in React Compiler's order plus an audit of
+other allocating map ranges. The minimum source and two Go outputs remain in
+`testdata/oracle_order_input.ts`, `oracle_order_before.dump`,
+`oracle_order_after_a.dump` and `oracle_order_after_b.dump`.
+`TestGoInlineOracleOrderGap` reproduces it from 128 identical prepass graphs.
+The fixture archive must be regenerated after #6d8y0pf lands before expecting
+all five old outputs to match the repaired oracle.
+
+## Raw Go agreement
+
+| Subpass | Node originals | Sanitized native originals | Emitted JavaScript originals | Probes per executed backend |
 | --- | ---: | ---: | ---: | ---: |
-| OutlineFunctions | 1,465 / 1,465 | 72 / 72 | 0 executed | 0 executed |
-| DropManualMemoization | 1,465 / 1,465 | 72 / 72 | 0 executed | 0 executed |
-| InlineImmediatelyInvokedFunctionExpressions | 1,465 / 1,465 | 72 / 72 | 0 executed | 0 executed |
-| IncludingMemoCallbacks | 1,460 / 1,465 | 72 / 72 | 0 executed | 0 executed |
-| CopyNestedBodyInto | 1,591 / 1,591 | 75 / 75 | 0 executed | 0 executed |
-| CollectAssumedInvokedFunctions | 1,465 / 1,465 | 72 / 72 | 0 executed | 0 executed |
-| EliminateDeadCode | 1,465 / 1,465 | 72 / 72 | 0 executed | 0 executed |
-| MergeConsecutiveBlocks | 1,465 / 1,465 | 72 / 72 | 0 executed | 0 executed |
+| OutlineFunctions | 1465/1465 | 1465/1465 | 1465/1465 | 72/72 |
+| DropManualMemoization | 1465/1465 | compile stopped | compile stopped | Node 72/72 |
+| InlineImmediatelyInvokedFunctionExpressions | 1465/1465 | 1465/1465 | 1465/1465 | 72/72 |
+| IncludingMemoCallbacks | 1460/1465 | 1460/1465 | 1460/1465 | 72/72 |
+| CopyNestedBodyInto | 1591/1591 | 1591/1591 | 1591/1591 | 75/75 |
+| CollectAssumedInvokedFunctions | 1465/1465 | 1465/1465 | 1465/1465 | 72/72 |
+| EliminateDeadCode | 1465/1465 | 1465/1465 | 1465/1465 | 72/72 |
+| MergeConsecutiveBlocks | 1465/1465 | 1465/1465 | 1465/1465 | 72/72 |
 
-Every subpass includes all 1,465 originals, all 23 Flow graphs, and 72 separately
-identified probes. Remapping additionally captures every remaining nested function:
-126 original and 3 probe remap inputs beyond the primary record, including 3 more
-Flow remaps. Absent nested functions and unsuccessful remaps remain outcomes.
-Overall Node: **12,420 / 12,425** raw checkpoint comparisons match. The five
-inclusive-inliner mismatches remain failures, never filtered or renumbered.
-`testdata/node_receipt.json` records separate per-pass counts and first failures.
-These observations are not a complete three-backend certificate.
+Node: **12420/12425** checkpoints. Sanitized native: **10883/10888**.
+Emitted JavaScript: **10883/10888**. Each executed subpass retains all 1465
+originals, all 23 Flow graphs and all 72 probes. Remapping additionally covers
+126 original and 3 probe nested functions, including 3 extra Flow remaps.
+Receipts are `testdata/node_receipt.json`, `native_receipt.json`,
+`native_merge_receipt.json`, `native_inliners_receipt.json`,
+`javascript_receipt.json` and `javascript_inliners_receipt.json`.
+The archive contains actual Go input/output checkpoints, not execution logs.
 
-`testdata/fixtures.json.gz` contains real Go before/after checkpoint bundles, not
-compressed execution logs. The adapter uses the owner's encoder and construction
-observation hook. Preservation's drop state is after Go outline and InferReactive;
-DCE's input retains the actual conditional merge. Each nested remap uses a fresh
-parent. AST cooked identifier text is a lane-owned syntax input; no hook answer or
-expected analysis result is used as input. SSA maintenance is imported by reference.
-This lane does not require mutation_aliasing, invent its API, or copy its algorithm.
+## Rulings applied and remaining stop
 
-## Exact stops and shortest inputs
+The graph's block type is now the lane-local `BasicBlockInterface` contract.
+The shared concrete `BasicBlock` supplies that contract; concrete arena index
+classes remain branded and checked. No nominal brand became an interface.
+`testdata/nominal_callback_gap.a` is retained as a correct nominal refusal,
+not a compiler gap, under `TestNativeNominalContractRefusal`.
 
-1. **Constructed nominal return in a generic graph callback.** Go
-   `graph.go:153-161` returns its newly allocated BasicBlock placeholder. The
-   corresponding `graph_adapter.ts:15` is refused with:
-   `Adamic 0.1 refuses a value without nominal ancestry seen as BasicBlock;
-   construct that class or a subclass; use an interface for structural values
-   (adamic/nominal-class)`.
-   Shortest retained input: `testdata/nominal_callback_gap.a` (five lines).
-   Node prints `1`; native refuses the actual `new Block` return. The full emitted
-   JavaScript compiler is refused at the same callback. No brand was weakened.
-2. **Local recursive closure initializer.** Go's lane-owned syntax encoder recurses
-   at `testdata/census_adapter_test.go:35`; its Adamic counterpart is
-   `facts.ts:24`. Native refuses it with:
-   `stage 0 can't lower a function value that captures the variable its own
-   initializer declares yet`.
-   Shortest retained input: `testdata/recursive_initializer_gap.a` (five lines).
-   Node prints `0`. No closure or graph representation workaround was applied.
-3. **Go's inliner has no single byte output for the same state.** Production
-   `cohere/internal/lint/ecmascript/high_level_intermediate_representation/inline_iife.go:379`
-   ranges over `remap.Blocks` while allocating return-rewrite instructions and
-   identifiers. `TestGoInlineOracleOrderGap` proves **two distinct byte outputs
-   from 128 identical prepass graphs**. The minimum source is
-   `testdata/oracle_order_input.ts`; the unchanged input and two outputs are
-   `oracle_order_before.dump`, `oracle_order_after_a.dump`, and
-   `oracle_order_after_b.dump`. No Go production file or oracle output was changed.
+Recursive source traversal, syntax traversal and liveness use ordinary module
+function declarations with explicit state. Candidate invalidation, dependency
+collection and marker allocation likewise use plain declarations. The original
+recursive initializer remains the compiler fixture
+`testdata/recursive_initializer_gap.a`; no cycle support is requested for it.
+SSA algorithms are imported by reference. mutation_aliasing is not needed here
+and its API was not copied or invented.
 
-Requests to relay: compiler support for the two retained repros; a deterministic
-Go traversal/allocation order at `inline_iife.go:379`. No additional shared record,
-variant or arena class is requested from hir-01. Native cache integration remains
-uncertified with the same program; its lane callbacks import the supplied public
-cache hook without copying keying or construction.
+**DropManualMemoization remains compile stopped**, independently of the other
+seven passes. Shortest retained entry: `testdata/memo_cycle_refusal.a` (seven
+lines). Both native and emitted JavaScript refuse the owner's
+`core.ts:144` instruction array, identifying the write in
+`replay/decode.ts:163:178`: `Adamic 0.1 refuses Instruction[], an array whose
+elements can reach back to an array like it` (`adamic/cycle-capable`).
+Its Go entry is `drop_manual_memoization.go:198`.
+`TestMemoInstructionCycleRefusal` checks both refusals. The lane has not edited
+owner files, weakened ownership, or added object-address/cycle links.
+Request to hir-01/compiler: resolve that instruction-array refusal using the
+retained entry. Cache integration through memo dropping stays uncertified.
+No new record, instruction variant or arena index class is requested.
 
-## Local checks and semantic mutants
+## Mutants and reproduction
 
-Seven semantic mutants change outlining, memo finish values, IIFE candidates,
-capture remapping, invocation facts, DCE retention and merge selection. **Node
-7 / 7 caught with changed answers and exact-byte baseline witnesses; native
-0 executed, 0 caught** because lowering is stopped. Compiler-refusal tests are
-not counted as native semantic mutant detections.
+Node catches **7/7** semantic mutants. Sanitized native catches **6/6** executed
+mutants (outline, inline, remap, invocation, DCE and merge); memo dropping's native
+mutant is compile stopped. Each detection changes an answer after a baseline
+matches Go exactly; compiler refusals are not mutant detections.
 
-Run `go test -v -count=1 -timeout=3h
-./stage1/cohere/high_level_intermediate_representation/passes/unit-3`.
-All new top-level Go tests call `t.Parallel`. The local suite checks adapter
-boundaries/failures, all-input Node accounting, semantic mutants, both native
-refusals and Go nondeterminism. Its report retains the known inliner failures;
-set `HIR_UNIT3_REQUIRE_CERTIFICATE=1` to make those five raw-byte mismatches fail
-the certificate check. No whole-lane certificate or native boxing count is claimed.
+Source Node, Go adapters, negative fixtures and oracle checks:
+
+```sh
+go test -v -count=1 -timeout=3h ./stage1/cohere/high_level_intermediate_representation/passes/unit-3
+```
+
+Build the seven available subpasses (ordinary alternative entry; same pass
+implementations and replay imports):
+
+```sh
+go run ./cmd/adamic build stage1/cohere/high_level_intermediate_representation/passes/unit-3/independent_main.ts -o /tmp/unit3 --sanitize
+go run ./cmd/adamic js stage1/cohere/high_level_intermediate_representation/passes/unit-3/independent_main.ts > /tmp/unit3.js
+HIR_UNIT3_NATIVE=/tmp/unit3 HIR_UNIT3_PASS_GROUP=available go test -v -count=1 -timeout=3h ./stage1/cohere/high_level_intermediate_representation/passes/unit-3 -run 'TestNode(Subpasses|SemanticMutants)$'
+HIR_UNIT3_JAVASCRIPT=/tmp/unit3.js HIR_UNIT3_PASS_GROUP=available go test -v -count=1 -timeout=3h ./stage1/cohere/high_level_intermediate_representation/passes/unit-3 -run '^TestNodeSubpasses$'
+```
+
+All new top-level Go tests call `t.Parallel`. No complete eight-pass certificate
+or native boxing count is claimed.

@@ -21,11 +21,12 @@ export class Unit3Facts {
  }
  rows(graph: ConstructedHIR): SidecarRow[] {
   const rows: SidecarRow[] = [];
-  const visit = (index: FunctionIndex,path: string): void => {
-   const fn = graph.arena.read(index);
-   for(const identifier of fn.identifiers) { const s = identifier.source; if(s === undefined || s.kind !== 'KindIdentifier') { continue; } rows.push({namespace: 'unit3.ast',functionPath: path,anchorKind: 'identifier',anchorId: identifier.id.slot,key: 'text',payload: this.texts.get(sourceKey(s)) ?? panic('missing source text for copied identifier')}); }
-   for(let i = 0; i < fn.functions.length; i++) { visit(fn.functions[i] ?? panic('missing child'),`${path}/${i}`); }
-  };
-  visit(graph.root,'$'); return rows;
+  visitFacts(graph,this.texts,rows,graph.root,'$'); return rows;
  }
+}
+// A plain module function carries the former closure's captured state explicitly.
+function visitFacts(graph: ConstructedHIR,texts: Map<string,string>,rows: SidecarRow[],index: FunctionIndex,path: string): void {
+   const fn = graph.arena.read(index);
+   for(const identifier of fn.identifiers) { const s = identifier.source; if(s === undefined || s.kind !== 'KindIdentifier') { continue; } rows.push({namespace: 'unit3.ast',functionPath: path,anchorKind: 'identifier',anchorId: identifier.id.slot,key: 'text',payload: texts.get(sourceKey(s)) ?? panic('missing source text for copied identifier')}); }
+   for(let i = 0; i < fn.functions.length; i++) { visitFacts(graph,texts,rows,fn.functions[i] ?? panic('missing child'),`${path}/${i}`); }
 }

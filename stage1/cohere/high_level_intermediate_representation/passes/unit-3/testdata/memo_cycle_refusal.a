@@ -1,0 +1,7 @@
+import { readTextFile, panic, programArguments } from 'adamic';
+import { readCheckpoint, decodeCheckpoint } from '../../../replay/index.ts';
+import { dropManualMemoization } from '../drop_manual_memoization.ts';
+const input = readTextFile(programArguments()[0] ?? panic('missing checkpoint'));
+if(input.kind === 'Error') { panic(input.message); }
+const graph = decodeCheckpoint(readCheckpoint(input.text));
+dropManualMemoization(graph.arena.read(graph.root));

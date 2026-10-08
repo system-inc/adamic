@@ -21,11 +21,26 @@ func TestNodeSemanticMutants(t *testing.T) {
 		{"drop_manual_memoization", "drop_manual_memoization.ts", "kind === 'useMemo' ? instruction.lvalue : first.place", "first.place"},
 		{"inline_iife_including_memo_callbacks", "inline_iife.ts", "functions.set(instruction.lvalue.identifier,iid);", "functions.delete(instruction.lvalue.identifier);"},
 		{"inline_remap", "inline_remap.ts", "identifiers.set(context.identifier,capture.identifier);", "identifiers.delete(context.identifier);"},
-		{"invoked_functions", "invoked_functions.ts", "const invoked = new Map<number,FunctionIndex>();", "const invoked = new Map<number,FunctionIndex>(); return invoked;"},
-		{"dead_code_elimination", "dead_code_elimination.ts", "const yes = live(fn.instruction(id).lvalue.identifier);", "const yes = true;"},
+		{"invoked_functions", "invoked_functions.ts", "if(!grew) { return invoked; }", "if(!grew) { return new Map<number,FunctionIndex>(); }"},
+		{"dead_code_elimination", "dead_code_elimination.ts", "const yes = liveIdentifier(fn,used,names,fn.instruction(id).lvalue.identifier);", "const yes = true;"},
 		{"merge_consecutive_blocks", "merge_consecutive_blocks.ts", "block.predecessors.length !== 1", "block.predecessors.length !== 0"},
 	}
+	native := os.Getenv("HIR_UNIT3_NATIVE")
+	buildSlots := make(chan struct{}, 1)
 	for _, mutant := range mutants {
+		if os.Getenv("HIR_UNIT3_PASS_GROUP") == "available" && mutant.pass == "drop_manual_memoization" {
+			continue
+		}
+		if selected := os.Getenv("HIR_UNIT3_MUTANT_PASS"); selected != "" && mutant.pass != selected {
+			continue
+		}
+		if native != "" && os.Getenv("HIR_UNIT3_PASS_GROUP") == "independent" {
+			switch mutant.pass {
+			case "outline_functions", "merge_consecutive_blocks", "inline_remap", "invoked_functions", "dead_code_elimination":
+			default:
+				continue
+			}
+		}
 		t.Run(mutant.pass, func(t *testing.T) {
 			t.Parallel()
 			temporary := t.TempDir()
@@ -35,10 +50,13 @@ func TestNodeSemanticMutants(t *testing.T) {
 			if err := os.MkdirAll(lane, 0755); err != nil {
 				t.Fatal(err)
 			}
-			for _, name := range []string{"arena", "static_single_assignment"} {
+			for _, name := range []string{"arena", "static_single_assignment", "typeaware"} {
 				if err := os.Symlink(filepath.Join(root, "stage1/cohere", name), filepath.Join(cohere, name)); err != nil {
 					t.Fatal(err)
 				}
+			}
+			if err := os.Symlink(filepath.Join(root, "stage1/typescript"), filepath.Join(temporary, "stage1/typescript")); err != nil {
+				t.Fatal(err)
 			}
 			shared, err := os.ReadDir(filepath.Join(root, "stage1/cohere/high_level_intermediate_representation"))
 			if err != nil {
@@ -70,6 +88,19 @@ func TestNodeSemanticMutants(t *testing.T) {
 				if err := os.WriteFile(filepath.Join(lane, filepath.Base(file)), data, 0600); err != nil {
 					t.Fatal(err)
 				}
+			}
+			var mutantBinary string
+			if native != "" {
+				mutantBinary = filepath.Join(temporary, "mutant")
+				entry := "main.ts"
+				if os.Getenv("HIR_UNIT3_PASS_GROUP") != "" {
+					entry = "independent_main.ts"
+				}
+				buildSlots <- struct{}{}
+				func() {
+					defer func() { <-buildSlots }()
+					unit3Command(t, root, nil, "go", "run", "./cmd/adamic", "build", filepath.Join(lane, entry), "-o", mutantBinary, "--sanitize")
+				}()
 			}
 			attempts := 0
 			for _, record := range records {
@@ -108,7 +139,12 @@ func TestNodeSemanticMutants(t *testing.T) {
 				if err := os.WriteFile(input, []byte(record.Before), 0600); err != nil {
 					t.Fatal(err)
 				}
-				baseline := unit3Command(t, root, nil, "node", "--no-warnings", "oracle/node.mjs", filepath.Join(own, "main.ts"), "--checkpoint", input)
+				var baseline []byte
+				if native != "" {
+					baseline = unit3Command(t, root, nil, native, "--checkpoint", input)
+				} else {
+					baseline = unit3Command(t, root, nil, "node", "--no-warnings", "oracle/node.mjs", filepath.Join(own, "main.ts"), "--checkpoint", input)
+				}
 				if !bytes.Equal(baseline, []byte(record.After)) {
 					if attempts >= 32 {
 						t.Fatal("no exact-byte baseline witness")
@@ -116,6 +152,9 @@ func TestNodeSemanticMutants(t *testing.T) {
 					continue
 				}
 				c := exec.Command("node", "--no-warnings", filepath.Join(root, "oracle/node.mjs"), filepath.Join(lane, "main.ts"), "--checkpoint", input)
+				if native != "" {
+					c = exec.Command(mutantBinary, "--checkpoint", input)
+				}
 				c.Dir = root
 				output, err := c.CombinedOutput()
 				if err != nil {
@@ -127,7 +166,11 @@ func TestNodeSemanticMutants(t *testing.T) {
 					}
 					continue
 				}
-				t.Logf("semantic mutant caught on Node: %s/%s; native execution stopped on compiler gaps", record.Key, record.Pass)
+				backend := "Node"
+				if native != "" {
+					backend = "sanitized native"
+				}
+				t.Logf("semantic mutant caught on %s: %s/%s", backend, record.Key, record.Pass)
 				return
 			}
 			t.Fatal("no semantic witness caught the mutant")

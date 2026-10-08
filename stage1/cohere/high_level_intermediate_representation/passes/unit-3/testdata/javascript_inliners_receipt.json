@@ -1,0 +1,24 @@
+{
+  "inline_iife": {
+    "OriginalTotal": 1465,
+    "OriginalMatched": 1465,
+    "ProbeTotal": 72,
+    "ProbeMatched": 72,
+    "FlowTotal": 23,
+    "FlowMatched": 23,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 1537,
+    "FirstMismatch": ""
+  },
+  "inline_iife_including_memo_callbacks": {
+    "OriginalTotal": 1465,
+    "OriginalMatched": 1460,
+    "ProbeTotal": 72,
+    "ProbeMatched": 72,
+    "FlowTotal": 23,
+    "FlowMatched": 23,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 1532,
+    "FirstMismatch": "68eecdd6fa096ab6498344cfebfe3c98cae405453f971ffd482bf7df2dc0f7cb/inline_iife_including_memo_callbacks"
+  }
+}

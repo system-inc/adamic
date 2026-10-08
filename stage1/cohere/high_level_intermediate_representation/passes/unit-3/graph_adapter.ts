@@ -3,9 +3,18 @@ import { panic } from 'adamic';
 import { reversePostorder, markPredecessors, markEvaluationOrder } from '../../../static_single_assignment/graph.ts';
 import type { GraphInterface } from '../../../static_single_assignment/static_single_assignment.ts';
 import { HIRFunction, BasicBlock, BlockIndex } from '../../core.ts';
-import type { PlaceInterface } from '../../core.ts';
+import type { PlaceInterface, TerminalType, InstructionIndex } from '../../core.ts';
 import { eachEdge } from './places.ts';
-function graphFor(owner: HIRFunction): GraphInterface<HIRFunction,BasicBlock,PlaceInterface> { return {
+import type { PhiInterface } from '../../../static_single_assignment/static_single_assignment.ts';
+// Step 08 ruling: the generic graph consumes a contract, not a nominal class.
+export interface BasicBlockInterface {
+ readonly arenaIndices: readonly BlockIndex[]; readonly id: BlockIndex;
+ readonly instructions: InstructionIndex[]; predecessors: readonly BlockIndex[];
+ phis: readonly PhiInterface<PlaceInterface>[]; terminal: TerminalType;
+ readonly kind: string; terminalOrder: number; terminalPresent: boolean;
+}
+
+function graphFor(owner: HIRFunction): GraphInterface<HIRFunction,BasicBlockInterface,PlaceInterface> { return {
  entry: (fn) => BlockIndex.read(fn.blockIndices,fn.entry) + 1,
  blockBound: (fn) => fn.nextBlock,
  block: (fn,id) => id > 0 && id < fn.nextBlock ? fn.blockOrUndefined(fn.blockAt(id)) : undefined,
@@ -15,7 +24,7 @@ function graphFor(owner: HIRFunction): GraphInterface<HIRFunction,BasicBlock,Pla
  placeholder: (fn,block) => { const b = new BasicBlock(fn.blockIndices,block.id,{kind: 'Unreachable'},block.kind); b.predecessors = [...block.predecessors]; fn.blockTable[block.id.slot] = b; return b; },
  id: (b) => BlockIndex.read(b.arenaIndices,b.id) + 1,
  predecessors: (b) => b.predecessors.map((id) => BlockIndex.read(b.arenaIndices,id) + 1),
- setPredecessors: (b: BasicBlock,ids: readonly number[]) => { b.predecessors = ids.map((id) => { const index = b.arenaIndices[id - 1] ?? panic('unknown predecessor'); BlockIndex.read(b.arenaIndices,index); return index; }); },
+ setPredecessors: (b: BasicBlockInterface,ids: readonly number[]) => { const indices: BlockIndex[] = []; for(const id of ids) { const index = owner.blockAt(id); BlockIndex.read(b.arenaIndices,index); indices.push(index); } b.predecessors = indices; },
  phis: (b) => b.phis, setPhis: (b,phis) => { b.phis = phis; },
  eachEdge: (b,visit) => { if(b.terminalPresent) { eachEdge(b.terminal,(id,kind) => visit(BlockIndex.read(b.arenaIndices,id) + 1,kind)); } },
  endsInReturn: (b) => b.terminal.kind === 'Return',

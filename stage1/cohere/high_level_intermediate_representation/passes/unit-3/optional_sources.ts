@@ -8,39 +8,7 @@ export function optionalJoins(fn: HIRFunction): Set<BlockIndex> { const joins = 
 export function optionalSources(fn: HIRFunction): Map<IdentifierIndex,OptionalSourceInterface> {
  const result = new Map<IdentifierIndex,OptionalSourceInterface>(); const seen = new Set<BlockIndex>();
  const lookup = (id: BlockIndex | undefined): BasicBlock | undefined => id === undefined ? undefined : fn.blockOrUndefined(id);
- const traverse = (block: BasicBlock,outerAlternate: BlockIndex | undefined): IdentifierIndex | undefined => {
-  seen.add(block.id); const optional = block.terminal; if(optional.kind !== 'Optional') { return undefined; }
-  const maybeTest = lookup(optional.testBlock); if(maybeTest === undefined) { return undefined; }
-  let base: OptionalSourceInterface; let test: TerminalType;
-  if(maybeTest.terminal.kind === 'Branch') {
-   const firstId = maybeTest.instructions[0]; if(firstId === undefined) { return undefined; }
-   const first = fn.instruction(firstId); const value = first.value;
-   if(value.kind !== 'LoadLocal' && value.kind !== 'LoadContext') { return undefined; }
-   const path: DependencyPathEntryInterface[] = [];
-   for(let i = 1; i < maybeTest.instructions.length; i++) {
-    const iid = maybeTest.instructions[i] ?? panic('missing property'); const previous = maybeTest.instructions[i - 1] ?? panic('missing previous'); const load = fn.instruction(iid).value;
-    if(load.kind !== 'PropertyLoad' || load.object.identifier !== fn.instruction(previous).lvalue.identifier) { return undefined; }
-    path.push({property: load.property,optional: false});
-   }
-   base = {place: value.place,path}; test = maybeTest.terminal;
-  } else if(maybeTest.terminal.kind === 'Optional') {
-   const testBlock = lookup(maybeTest.terminal.fallthrough); if(testBlock === undefined || testBlock.terminal.kind !== 'Branch') { return undefined; }
-   test = testBlock.terminal; const inner = traverse(maybeTest,test.alternate);
-   if(inner === undefined || inner.slot === 0 || test.testPlace?.identifier !== inner) { return undefined; }
-   const dependency = result.get(inner); if(dependency === undefined) { return undefined; } base = dependency;
-  } else { return undefined; }
-  if(outerAlternate !== undefined && test.alternate === outerAlternate && block.instructions.length !== 0) { return undefined; }
-  const consequent = lookup(test.consequent); const alternate = lookup(test.alternate);
-  if(consequent === undefined || alternate === undefined || consequent.instructions.length !== 2 || alternate.instructions.length !== 2) { return undefined; }
-  const load = fn.instruction(consequent.instructions[0] ?? panic('missing optional load'));
-  const store = fn.instruction(consequent.instructions[1] ?? panic('missing optional store')).value;
-  if(load.value.kind !== 'PropertyLoad' || store.kind !== 'StoreLocal' || load.value.object.identifier !== test.testPlace?.identifier || store.value.identifier !== load.lvalue.identifier) { return undefined; }
-  if(consequent.terminal.kind !== 'Goto' || consequent.terminal.variant !== 0 || consequent.terminal.block !== optional.fallthrough) { return undefined; }
-  if(fn.instruction(alternate.instructions[0] ?? panic('missing alternate primitive')).value.kind !== 'Primitive' || fn.instruction(alternate.instructions[1] ?? panic('missing alternate store')).value.kind !== 'StoreLocal') { return undefined; }
-  const dependency: OptionalSourceInterface = {place: {identifier: base.place.identifier,effect: '<unknown>',reactive: base.place.reactive,start: 0,end: 0},path: [...base.path,{property: load.value.property,optional: optional.optionalFlag?.value === true}]};
-  result.set(store.lvalue.identifier,dependency); result.set(load.lvalue.identifier,dependency); return store.lvalue.identifier;
- };
- for(const id of fn.blockOrder) { const b = fn.block(id); if(b.terminal.kind === 'Optional' && !seen.has(id)) { traverse(b,undefined); } }
+ for(const id of fn.blockOrder) { const b = fn.block(id); if(b.terminal.kind === 'Optional' && !seen.has(id)) { traverseSource(fn,seen,result,b,undefined); } }
  const joins = optionalJoins(fn);
  for(const id of fn.blockOrder) {
   if(!joins.has(id)) { continue; }
@@ -61,7 +29,7 @@ export function optionalPlaces(fn: HIRFunction): Set<IdentifierIndex> {
   while(test !== undefined && !seen.has(test.id)) {
    seen.add(test.id); const terminal = test.terminal;
    if(terminal.kind === 'Branch' && terminal.fallthrough === optional.fallthrough) {
-    const consequent = terminal.consequent === undefined ? undefined : fn.blockOrUndefined(terminal.consequent); const last = consequent?.instructions[consequent.instructions.length - 1];
+    const consequent = terminal.consequent === undefined ? undefined : fn.blockOrUndefined(terminal.consequent); const last = consequent === undefined ? undefined : consequent.instructions[consequent.instructions.length - 1];
     if(last !== undefined) { const v = fn.instruction(last).value; if(v.kind === 'StoreLocal') { result.add(v.value.identifier); } } break;
    }
    if(terminal.kind !== 'Branch' && terminal.kind !== 'Optional' && terminal.kind !== 'Logical' && terminal.kind !== 'Ternary') { break; }
@@ -69,4 +37,40 @@ export function optionalPlaces(fn: HIRFunction): Set<IdentifierIndex> {
   }
  }
  return result;
+}
+
+// Plain supported recursion with explicit traversal state.
+function traverseSource(fn: HIRFunction,seen: Set<BlockIndex>,result: Map<IdentifierIndex,OptionalSourceInterface>,block: BasicBlock,outerAlternate: BlockIndex | undefined): IdentifierIndex | undefined {
+ const lookup = (id: BlockIndex | undefined): BasicBlock | undefined => id === undefined ? undefined : fn.blockOrUndefined(id);
+  seen.add(block.id); const optional = block.terminal; if(optional.kind !== 'Optional') { return undefined; }
+  const maybeTest = lookup(optional.testBlock); if(maybeTest === undefined) { return undefined; }
+  let base: OptionalSourceInterface; let test: TerminalType;
+  if(maybeTest.terminal.kind === 'Branch') {
+   const firstId = maybeTest.instructions[0]; if(firstId === undefined) { return undefined; }
+   const first = fn.instruction(firstId); const value = first.value;
+   if(value.kind !== 'LoadLocal' && value.kind !== 'LoadContext') { return undefined; }
+   const path: DependencyPathEntryInterface[] = [];
+   for(let i = 1; i < maybeTest.instructions.length; i++) {
+    const iid = maybeTest.instructions[i] ?? panic('missing property'); const previous = maybeTest.instructions[i - 1] ?? panic('missing previous'); const load = fn.instruction(iid).value;
+    if(load.kind !== 'PropertyLoad' || load.object.identifier !== fn.instruction(previous).lvalue.identifier) { return undefined; }
+    path.push({property: load.property,optional: false});
+   }
+   base = {place: value.place,path}; test = maybeTest.terminal;
+  } else if(maybeTest.terminal.kind === 'Optional') {
+   const testBlock = lookup(maybeTest.terminal.fallthrough); if(testBlock === undefined || testBlock.terminal.kind !== 'Branch') { return undefined; }
+   test = testBlock.terminal; const inner = traverseSource(fn,seen,result,maybeTest,test.alternate);
+   if(inner === undefined || inner.slot === 0 || test.testPlace?.identifier !== inner) { return undefined; }
+   const dependency = result.get(inner); if(dependency === undefined) { return undefined; } base = dependency;
+  } else { return undefined; }
+  if(outerAlternate !== undefined && test.alternate === outerAlternate && block.instructions.length !== 0) { return undefined; }
+  const consequent = lookup(test.consequent); const alternate = lookup(test.alternate);
+  if(consequent === undefined || alternate === undefined || consequent.instructions.length !== 2 || alternate.instructions.length !== 2) { return undefined; }
+  const load = fn.instruction(consequent.instructions[0] ?? panic('missing optional load'));
+  const store = fn.instruction(consequent.instructions[1] ?? panic('missing optional store')).value;
+  if(load.value.kind !== 'PropertyLoad' || store.kind !== 'StoreLocal' || load.value.object.identifier !== test.testPlace?.identifier || store.value.identifier !== load.lvalue.identifier) { return undefined; }
+  if(consequent.terminal.kind !== 'Goto' || consequent.terminal.variant !== 0 || consequent.terminal.block !== optional.fallthrough) { return undefined; }
+  if(fn.instruction(alternate.instructions[0] ?? panic('missing alternate primitive')).value.kind !== 'Primitive' || fn.instruction(alternate.instructions[1] ?? panic('missing alternate store')).value.kind !== 'StoreLocal') { return undefined; }
+  const dependency: OptionalSourceInterface = {place: {identifier: base.place.identifier,effect: '<unknown>',reactive: base.place.reactive,start: 0,end: 0},path: [...base.path,{property: load.value.property,optional: optional.optionalFlag?.value === true}]};
+  result.set(store.lvalue.identifier,dependency); result.set(load.lvalue.identifier,dependency); return store.lvalue.identifier;
+
 }

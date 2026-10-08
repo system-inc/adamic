@@ -12,21 +12,21 @@ export function inlineIIFE(arena: HIRArena,fn: HIRFunction,includeMemoCallbacks:
  const spliced = new Set<IdentifierIndex>(); const queue = [...fn.blockOrder];
  // Candidate records are instruction handles, never references into graph nodes.
  const functions = new Map<IdentifierIndex,InstructionIndex>(); let count = 0;
- const forget = (iid: InstructionIndex): void => eachPlace(fn,fn.instruction(iid).value,(p) => { functions.delete(p.identifier); });
+
  for(let position = 0; position < queue.length; position++) {
   const block = fn.block(queue[position] ?? panic('missing queued block'));
   if(block.kind === 'value' || block.kind === 'sequence') { continue; }
   for(let i = 0; i < block.instructions.length; i++) {
    const iid = block.instructions[i] ?? panic('missing instruction'); const instruction = fn.instruction(iid); const value = instruction.value;
    if(value.kind === 'FunctionExpression') { if(fn.identifier(instruction.lvalue.identifier).name === '') { functions.set(instruction.lvalue.identifier,iid); } continue; }
-   if(value.kind !== 'CallExpression') { forget(iid); continue; }
+   if(value.kind !== 'CallExpression') { forgetCandidate(fn,functions,iid); continue; }
    const candidate = functions.get(value.callee.identifier);
-   if(candidate === undefined || memoized.has(instruction.lvalue.identifier) || value.args.length !== 0) { forget(iid); continue; }
+   if(candidate === undefined || memoized.has(instruction.lvalue.identifier) || value.args.length !== 0) { forgetCandidate(fn,functions,iid); continue; }
    const expression = fn.instruction(candidate).value; if(expression.kind !== 'FunctionExpression') { panic('candidate is not a function'); }
    const nested = arena.read(expression.functionReference.index);
-   if(nested.params.length !== 0 || nested.isAsync || nested.isGenerator) { forget(iid); continue; }
+   if(nested.params.length !== 0 || nested.isAsync || nested.isGenerator) { forgetCandidate(fn,functions,iid); continue; }
    const remap = copyNestedBodyInto(fn,nested,expression.captures);
-   if(remap === undefined || fn.blockOrUndefined(remap.entry) === undefined) { forget(iid); continue; }
+   if(remap === undefined || fn.blockOrUndefined(remap.entry) === undefined) { forgetCandidate(fn,functions,iid); continue; }
    const continuation = fn.newBlock(block.kind);
    for(const id of block.instructions.slice(i + 1)) { continuation.instructions.push(id); }
    continuation.terminal = block.terminal; continuation.terminalOrder = block.terminalOrder; continuation.terminalPresent = block.terminalPresent;
@@ -59,3 +59,5 @@ function singleReturnExit(fn: HIRFunction,remap: InlineRemapInterface): boolean 
 }
 import type { ValueType } from '../../core.ts';
 function append(fn: HIRFunction,b: BasicBlock,p: PlaceInterface,v: ValueType,source: SourceHandleInterface | undefined): void { const id = fn.emit(p,v,0,0); fn.instruction(id).source = source; b.instructions.push(id); }
+
+function forgetCandidate(fn: HIRFunction,functions: Map<IdentifierIndex,InstructionIndex>,iid: InstructionIndex): void { eachPlace(fn,fn.instruction(iid).value,(p) => { functions.delete(p.identifier); }); }

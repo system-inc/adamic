@@ -14,26 +14,6 @@ export function dropManualMemoization(fn: HIRFunction): ManualMemoizationInterfa
  const zero: PlaceInterface = {identifier: fn.identifierAt(0),effect: '<unknown>',reactive: false,start: 0,end: 0};
  const optionalDependencies = optionalSources(fn);
  for(const id of optionalDependencies.keys()) { const dep = optionalDependencies.get(id); if(dep !== undefined) { deps.set(id,{root: {isGlobal: false,name: '',place: dep.place},path: dep.path}); } }
- const propagate = (target: IdentifierIndex,source: PlaceInterface): void => {
-  const existing = deps.get(source.identifier); if(existing !== undefined) { deps.set(target,existing); }
-  else if(fn.identifier(source.identifier).name !== '') { deps.set(target,{root: {isGlobal: false,name: '',place: source},path: []}); }
- };
- const collect = (instruction: Instruction): void => {
-  const target = instruction.lvalue.identifier; const v = instruction.value; anchors.set(target,instruction.id);
-  if(v.kind === 'FunctionExpression') { functions.add(target); }
-  else if(v.kind === 'LoadGlobal') {
-   if(v.name === 'useMemo' || v.name === 'useCallback') { memos.set(target,v.name); }
-   else if(v.name === 'React') { react.add(target); }
-   else { deps.set(target,{root: {isGlobal: true,name: v.name,place: zero},path: []}); }
-  } else if(v.kind === 'Primitive') {
-   if(v.literal === 'string:useMemo' || v.literal === 'string:useCallback') { memos.set(target,v.literal === 'string:useMemo' ? 'useMemo' : 'useCallback'); }
-  } else if(v.kind === 'ArrayExpression') {
-   if(v.elements.every((e) => !e.hole && !e.spread)) { lists.set(target,v.elements.map((e) => e.place)); }
-  } else if(v.kind === 'PropertyLoad') {
-   const object = deps.get(v.object.identifier); if(object !== undefined) { deps.set(target,{root: object.root,path: [...object.path,{property: v.property,optional: v.optional || optionals.has(target)}]}); }
-  } else if(v.kind === 'LoadLocal' || v.kind === 'LoadContext') { propagate(target,v.place); }
-  else if(v.kind === 'StoreLocal') { const source = deps.get(v.value.identifier); if(source !== undefined && fn.identifier(v.lvalue.identifier).name === '') { deps.set(v.lvalue.identifier,source); } }
- };
  for(const bid of fn.blockOrder) {
   const block = fn.block(bid);
   if(joins.has(bid)) { for(const phi of block.phis) {
@@ -49,23 +29,22 @@ export function dropManualMemoization(fn: HIRFunction): ManualMemoizationInterfa
    let kind: string | undefined = undefined; let callee: IdentifierIndex | undefined = undefined;
    if(v.kind === 'CallExpression') { kind = memos.get(v.callee.identifier); callee = v.callee.identifier; }
    else if(v.kind === 'MethodCall' && react.has(v.receiver.identifier)) { kind = memos.get(v.property.identifier); callee = v.property.identifier; }
-   if(kind === undefined || callee === undefined || (v.kind !== 'CallExpression' && v.kind !== 'MethodCall')) { collect(instruction); continue; }
+   if(kind === undefined || callee === undefined || (v.kind !== 'CallExpression' && v.kind !== 'MethodCall')) { collectMemo(fn,deps,anchors,functions,memos,react,lists,zero,optionals,instruction); continue; }
    const first = v.args[0]; if(first === undefined || first.spread) { continue; }
    let dependencies: ManualMemoDependencyInterface[] | undefined = undefined;
    const second = v.args[1];
    if(second !== undefined && !second.spread) {
     const elements = lists.get(second.place.identifier);
     if(elements === undefined) { result.notAnArrayLiteral++; continue; }
-    dependencies = [];
+    const extracted: ManualMemoDependencyInterface[] = []; dependencies = extracted;
     for(const element of elements) { const dependency = deps.get(element.identifier); if(dependency === undefined) { result.unextractableDeps++; dependencies = undefined; break; } dependencies.push(dependency); }
    }
    result.recognised++;
    instruction.value = kind === 'useMemo' ? {kind: 'CallExpression',callee: first.place,args: [],optional: false,origin: {module: '',exported: ''}} : {kind: 'LoadLocal',place: first.place};
    if(!functions.has(first.place.identifier)) { result.notAnInlineFunction++; continue; }
    const memoId = result.marked; result.marked++;
-   const marker = (after: InstructionIndex,value: ValueType): void => { const p = fn.temporary(instruction.start,instruction.end); queued.push({after,lvalue: p,value,source: instruction.source,start: instruction.start,end: instruction.end}); };
-   marker(anchors.get(callee) ?? fn.instructionIndices[0] ?? panic('missing callee anchor'),{kind: 'StartMemoize',manualMemoId: memoId,deps: dependencies});
-   marker(iid,{kind: 'FinishMemoize',manualMemoId: memoId,value: kind === 'useMemo' ? instruction.lvalue : first.place,pruned: false});
+   queueMarker(fn,queued,instruction,anchors.get(callee) ?? fn.instructionIndices[0] ?? panic('missing callee anchor'),{kind: 'StartMemoize',manualMemoId: memoId,deps: dependencies});
+   queueMarker(fn,queued,instruction,iid,{kind: 'FinishMemoize',manualMemoId: memoId,value: kind === 'useMemo' ? instruction.lvalue : first.place,pruned: false});
    result.dependencies += dependencies?.length ?? 0; if(dependencies === undefined) { result.withoutDepsArray++; }
   }
  }
@@ -78,3 +57,25 @@ export function dropManualMemoization(fn: HIRFunction): ManualMemoizationInterfa
  }
  return result;
 }
+
+function propagateMemo(fn: HIRFunction,deps: Map<IdentifierIndex,ManualMemoDependencyInterface>,target: IdentifierIndex,source: PlaceInterface): void {
+  const existing = deps.get(source.identifier); if(existing !== undefined) { deps.set(target,existing); }
+  else if(fn.identifier(source.identifier).name !== '') { deps.set(target,{root: {isGlobal: false,name: '',place: source},path: []}); }
+}
+function collectMemo(fn: HIRFunction,deps: Map<IdentifierIndex,ManualMemoDependencyInterface>,anchors: Map<IdentifierIndex,InstructionIndex>,functions: Set<IdentifierIndex>,memos: Map<IdentifierIndex,string>,react: Set<IdentifierIndex>,lists: Map<IdentifierIndex,PlaceInterface[]>,zero: PlaceInterface,optionals: Set<IdentifierIndex>,instruction: Instruction): void {
+  const target = instruction.lvalue.identifier; const v = instruction.value; anchors.set(target,instruction.id);
+  if(v.kind === 'FunctionExpression') { functions.add(target); }
+  else if(v.kind === 'LoadGlobal') {
+   if(v.name === 'useMemo' || v.name === 'useCallback') { memos.set(target,v.name); }
+   else if(v.name === 'React') { react.add(target); }
+   else { deps.set(target,{root: {isGlobal: true,name: v.name,place: zero},path: []}); }
+  } else if(v.kind === 'Primitive') {
+   if(v.literal === 'string:useMemo' || v.literal === 'string:useCallback') { memos.set(target,v.literal === 'string:useMemo' ? 'useMemo' : 'useCallback'); }
+  } else if(v.kind === 'ArrayExpression') {
+   if(v.elements.every((e) => !e.hole && !e.spread)) { lists.set(target,v.elements.map((e) => e.place)); }
+  } else if(v.kind === 'PropertyLoad') {
+   const object = deps.get(v.object.identifier); if(object !== undefined) { deps.set(target,{root: object.root,path: [...object.path,{property: v.property,optional: v.optional || optionals.has(target)}]}); }
+  } else if(v.kind === 'LoadLocal' || v.kind === 'LoadContext') { propagateMemo(fn,deps,target,v.place); }
+  else if(v.kind === 'StoreLocal') { const source = deps.get(v.value.identifier); if(source !== undefined && fn.identifier(v.lvalue.identifier).name === '') { deps.set(v.lvalue.identifier,source); } }
+}
+function queueMarker(fn: HIRFunction,queued: QueuedMarkerInterface[],instruction: Instruction,after: InstructionIndex,value: ValueType): void { const p = fn.temporary(instruction.start,instruction.end); queued.push({after,lvalue: p,value,source: instruction.source,start: instruction.start,end: instruction.end}); }

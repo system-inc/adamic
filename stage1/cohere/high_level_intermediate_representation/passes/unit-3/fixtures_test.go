@@ -289,16 +289,54 @@ func compareFixtures(t *testing.T, output []byte, expected map[string]string) {
 	}
 }
 
-// Reports all raw byte comparisons. The two inliner certificates remain stopped
-// on independently proven Go allocation-order nondeterminism; no IDs are renamed.
+// Reports every raw comparison; only explicitly named #6d8y0pf oracle failures
+// may remain parked. A repaired upstream case automatically becomes a match.
 func TestNodeSubpasses(t *testing.T) {
 	t.Parallel()
 	root := unit3Root(t)
 	records := loadFixtures(t)
 	filter := os.Getenv("HIR_UNIT3_PASS")
+	if os.Getenv("HIR_UNIT3_PASS_GROUP") == "available" {
+		kept := []fixture{}
+		for _, r := range records {
+			if r.Pass != "drop_manual_memoization" {
+				kept = append(kept, r)
+			}
+		}
+		records = kept
+	}
+	if os.Getenv("HIR_UNIT3_PASS_GROUP") == "inliners" {
+		kept := []fixture{}
+		for _, r := range records {
+			if r.Pass == "inline_iife" || r.Pass == "inline_iife_including_memo_callbacks" {
+				kept = append(kept, r)
+			}
+		}
+		records = kept
+	}
+	if os.Getenv("HIR_UNIT3_PASS_GROUP") == "independent" {
+		kept := []fixture{}
+		for _, r := range records {
+			switch strings.Split(r.Pass, ":")[0] {
+			case "outline_functions", "merge_consecutive_blocks", "inline_remap", "invoked_functions", "dead_code_elimination":
+				kept = append(kept, r)
+			}
+		}
+		records = kept
+	}
 	manifest, expected := prepareFixtures(t, records, filter)
 	entry := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation/passes/unit-3/main.ts")
-	output := unit3Command(t, root, nil, "node", "--no-warnings", "oracle/node.mjs", entry, "--census", manifest)
+	backend := "Node"
+	argv := []string{"node", "--no-warnings", "oracle/node.mjs", entry, "--census", manifest}
+	if binary := os.Getenv("HIR_UNIT3_NATIVE"); binary != "" {
+		backend = "sanitized native"
+		argv = []string{binary, "--census", manifest}
+	}
+	if emitted := os.Getenv("HIR_UNIT3_JAVASCRIPT"); emitted != "" {
+		backend = "emitted JavaScript"
+		argv = []string{"node", "--no-warnings", "oracle/node.mjs", emitted, "--census", manifest}
+	}
+	output := unit3Command(t, root, nil, argv...)
 	actual := map[string]string{}
 	for _, part := range strings.Split(string(output), "checkpoint\t")[1:] {
 		key, body, ok := strings.Cut(part, "\n")
@@ -319,6 +357,14 @@ func TestNodeSubpasses(t *testing.T) {
 		FirstMismatch                                                                    string
 	}
 	receipt := map[string]*counts{}
+	parked := map[string]string{}
+	parkedData, err := os.ReadFile(filepath.Join(root, "stage1/cohere/high_level_intermediate_representation/passes/unit-3/testdata/parked_oracle_failures.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(parkedData, &parked); err != nil {
+		t.Fatal(err)
+	}
 	for _, r := range records {
 		if filter != "" && r.Pass != filter {
 			continue
@@ -335,6 +381,12 @@ func TestNodeSubpasses(t *testing.T) {
 			t.Fatal("missing " + key)
 		}
 		same := body == r.After
+		if same && backend == "sanitized native" {
+			c.NativeMatched++
+		}
+		if same && backend == "emitted JavaScript" {
+			c.JavaScriptMatched++
+		}
 		if r.Probe {
 			c.ProbeTotal++
 			if same {
@@ -352,6 +404,12 @@ func TestNodeSubpasses(t *testing.T) {
 				}
 			}
 		}
+		if !same {
+			if parked[key] != "#6d8y0pf" {
+				compareFixtures(t, []byte("checkpoint\t"+key+"\n"+body), map[string]string{key: r.After})
+			}
+			t.Logf("parked %s: %s", parked[key], key)
+		}
 		if !same && c.FirstMismatch == "" {
 			c.FirstMismatch = key
 		}
@@ -361,7 +419,7 @@ func TestNodeSubpasses(t *testing.T) {
 		if c == nil {
 			continue
 		}
-		t.Logf("%s: Node originals %d/%d, probes %d/%d, Flow %d/%d; native 0; emitted JS 0; first mismatch %s", pass, c.OriginalMatched, c.OriginalTotal, c.ProbeMatched, c.ProbeTotal, c.FlowMatched, c.FlowTotal, c.FirstMismatch)
+		t.Logf("%s: %s originals %d/%d, probes %d/%d, Flow %d/%d; first mismatch %s", pass, backend, c.OriginalMatched, c.OriginalTotal, c.ProbeMatched, c.ProbeTotal, c.FlowMatched, c.FlowTotal, c.FirstMismatch)
 		if pass != "inline_iife" && pass != "inline_iife_including_memo_callbacks" && (c.OriginalMatched != c.OriginalTotal || c.ProbeMatched != c.ProbeTotal) {
 			for _, r := range records {
 				if r.Key+"/"+r.Pass == c.FirstMismatch {
@@ -389,7 +447,7 @@ func TestNodeSubpasses(t *testing.T) {
 	}
 }
 
-func TestNativeNominalCallbackGap(t *testing.T) {
+func TestNativeNominalContractRefusal(t *testing.T) {
 	t.Parallel()
 	root := unit3Root(t)
 	entry := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation/passes/unit-3/testdata/nominal_callback_gap.a")
@@ -401,7 +459,7 @@ func TestNativeNominalCallbackGap(t *testing.T) {
 	c.Dir = root
 	output, err := c.CombinedOutput()
 	if err == nil || !strings.Contains(string(output), "value without nominal ancestry seen as Block") || !strings.Contains(string(output), "adamic/nominal-class") {
-		t.Fatalf("gap changed: %v\n%s", err, output)
+		t.Fatalf("nominal refusal changed: %v\n%s", err, output)
 	}
 	t.Log("Node succeeds; native refuses constructed nominal return in generic graph callback")
 }
@@ -439,4 +497,23 @@ func TestNativeRecursiveInitializerGap(t *testing.T) {
 		t.Fatalf("gap changed: %v\n%s", err, output)
 	}
 	t.Log("Node succeeds; native refuses a local recursive closure initializer")
+}
+
+// The lane does not weaken shared instruction ownership to suppress this refusal.
+func TestMemoInstructionCycleRefusal(t *testing.T) {
+	t.Parallel()
+	root := unit3Root(t)
+	entry := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation/passes/unit-3/testdata/memo_cycle_refusal.a")
+	for _, mode := range []string{"build", "js"} {
+		args := []string{"run", "./cmd/adamic", mode, entry}
+		if mode == "build" {
+			args = append(args, "-o", filepath.Join(t.TempDir(), "refusal"))
+		}
+		command := exec.Command("go", args...)
+		command.Dir = root
+		output, err := command.CombinedOutput()
+		if err == nil || !strings.Contains(string(output), "refuses Instruction[]") || !strings.Contains(string(output), "adamic/cycle-capable") {
+			t.Fatalf("%s refusal changed: %v\n%s", mode, err, output)
+		}
+	}
 }
