@@ -33,6 +33,17 @@ history and report every pushed SHA and all red checks. No whole rehearsal is a
 landing candidate. Keep the V4-before snapshot for per-result comparison even
 when later slices advance the rehearsal.
 
+The final V4 lane commit carries exactly the body trailer
+"Train-slice: views-v4". Earlier V4 commits carry no Train-slice trailer.
+Do not withhold the final marker when pushing the compiling slice. Integration
+uses the newest marked commit as the V4 source, stacked on the prior slice.
+A V4 fix before any later slice has applied is a new "views-v4 fix: " tip commit
+carrying the same trailer. A V4 fix after a later slice has applied has that subject
+prefix but no Train-slice trailer; report its SHA immediately for compiler and
+integration placement. Never mark a descendant containing later-slice commits
+as the new V4 source. Determine this from the fetched rehearsal log, not from a
+stale local branch or the wall clock.
+
 ## Current integration method
 
 The compiler's net-change ruling supersedes the historical cherry-pick method
