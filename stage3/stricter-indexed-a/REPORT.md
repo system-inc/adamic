@@ -65,3 +65,7 @@ Group 2 pushed as 59257d6a. Group 3 adds independently observable parameter-use
 variants D082 through D086; all five pass in 24.516s. Each variant has exactly one
 node.parameters[0] guard. These ledger rows diagnose later uses of the same
 original parameter read; they are not five different original indexed expressions.
+
+Group 3 pushed as 90342391. Group 4 proves D087 through D091 in 31.004s.
+All five erased-panic mutants run successfully and print undefined, losing the
+required named stop. The full observations are in logs/group4.txt.
