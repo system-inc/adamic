@@ -16,6 +16,7 @@ const (
 	ViewUndefined
 	ViewNullable
 	ViewMap
+	ViewDictionary
 )
 
 // Contracts describe declared logical types, independently of physical layout ids.
@@ -48,8 +49,10 @@ type ViewContract struct {
 	Element       ViewContractID
 	Tuple         []ViewContractID
 	Functions     []int
-	Parameters    []ViewContractID
-	Result        ViewContractID
+	// ProducerCertified requires immutable code identity in Functions, even when empty.
+	ProducerCertified bool
+	Parameters        []ViewContractID
+	Result            ViewContractID
 	// DiscardResult certifies an erased zero-argument marker; it cannot supply a valued result.
 	DiscardResult bool
 }

@@ -189,7 +189,7 @@ func TestCheckedViewCallableMethods(t *testing.T) {
 }
 
 func TestCheckedViewStoredMarkerCalls(t *testing.T) {
-	for _, name := range []string{"boolean", "number", "string", "object", "array", "void", "wrong-arity", "field-good", "observed"} {
+	for _, name := range []string{"boolean", "number", "string", "object", "array", "record", "void", "wrong-arity", "field-good", "observed"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane5/stored-marker", name+".a"))
 			if err != nil {

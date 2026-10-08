@@ -102,6 +102,334 @@
       "messageText",
       "next",
       "repopulateInfo"
+    ],
+    "BindableStaticPropertyAssignmentExpression": [
+      "_declarationBrand",
+      "_expressionBrand",
+      "_jsdocContainerBrand",
+      "emitNode",
+      "end",
+      "flags",
+      "id",
+      "jsDoc",
+      "kind",
+      "left",
+      "localSymbol",
+      "modifierFlagsCache",
+      "operatorToken",
+      "original",
+      "parent",
+      "pos",
+      "right",
+      "symbol",
+      "transformFlags"
+    ],
+    "BindableStaticAccessExpression": [
+      "_declarationBrand",
+      "_expressionBrand",
+      "_flowContainerBrand",
+      "_jsdocContainerBrand",
+      "_leftHandSideExpressionBrand",
+      "_memberExpressionBrand",
+      "_unaryExpressionBrand",
+      "_updateExpressionBrand",
+      "emitNode",
+      "end",
+      "expression",
+      "flags",
+      "flowNode",
+      "id",
+      "jsDoc",
+      "kind",
+      "localSymbol",
+      "modifierFlagsCache",
+      "original",
+      "parent",
+      "pos",
+      "questionDotToken",
+      "symbol",
+      "transformFlags"
+    ],
+    "LiteralType": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checker",
+      "flags",
+      "freshType",
+      "id",
+      "immediateBaseConstraint",
+      "pattern",
+      "permissiveInstantiation",
+      "regularType",
+      "restrictiveInstantiation",
+      "symbol",
+      "value",
+      "widened"
+    ],
+    "PseudoBigInt": [
+      "base10Value",
+      "negative"
+    ],
+    "JSDoc": [
+      "comment",
+      "emitNode",
+      "end",
+      "flags",
+      "id",
+      "kind",
+      "modifierFlagsCache",
+      "original",
+      "parent",
+      "pos",
+      "tags",
+      "transformFlags"
+    ],
+    "CompilerOptions": [
+      "all",
+      "allowArbitraryExtensions",
+      "allowImportingTsExtensions",
+      "allowJs",
+      "allowNonTsExtensions",
+      "allowSyntheticDefaultImports",
+      "allowUmdGlobalAccess",
+      "allowUnreachableCode",
+      "allowUnusedLabels",
+      "alwaysStrict",
+      "assumeChangesOnlyAffectDirectDependencies",
+      "baseUrl",
+      "build",
+      "charset",
+      "checkJs",
+      "composite",
+      "configFile",
+      "configFilePath",
+      "customConditions",
+      "declaration",
+      "declarationDir",
+      "declarationMap",
+      "diagnostics",
+      "disableReferencedProjectLoad",
+      "disableSizeLimit",
+      "disableSolutionSearching",
+      "disableSourceOfProjectReferenceRedirect",
+      "downlevelIteration",
+      "emitBOM",
+      "emitDeclarationOnly",
+      "emitDecoratorMetadata",
+      "erasableSyntaxOnly",
+      "esModuleInterop",
+      "exactOptionalPropertyTypes",
+      "experimentalDecorators",
+      "explainFiles",
+      "extendedDiagnostics",
+      "forceConsistentCasingInFileNames",
+      "generateCpuProfile",
+      "generateTrace",
+      "help",
+      "ignoreConfig",
+      "ignoreDeprecations",
+      "importHelpers",
+      "importsNotUsedAsValues",
+      "incremental",
+      "init",
+      "inlineSourceMap",
+      "inlineSources",
+      "isolatedDeclarations",
+      "isolatedModules",
+      "jsx",
+      "jsxFactory",
+      "jsxFragmentFactory",
+      "jsxImportSource",
+      "keyofStringsOnly",
+      "lib",
+      "libReplacement",
+      "listEmittedFiles",
+      "listFiles",
+      "listFilesOnly",
+      "locale",
+      "mapRoot",
+      "maxNodeModuleJsDepth",
+      "module",
+      "moduleDetection",
+      "moduleResolution",
+      "moduleSuffixes",
+      "newLine",
+      "noCheck",
+      "noDtsResolution",
+      "noEmit",
+      "noEmitForJsFiles",
+      "noEmitHelpers",
+      "noEmitOnError",
+      "noErrorTruncation",
+      "noFallthroughCasesInSwitch",
+      "noImplicitAny",
+      "noImplicitOverride",
+      "noImplicitReturns",
+      "noImplicitThis",
+      "noImplicitUseStrict",
+      "noLib",
+      "noPropertyAccessFromIndexSignature",
+      "noResolve",
+      "noStrictGenericChecks",
+      "noUncheckedIndexedAccess",
+      "noUncheckedSideEffectImports",
+      "noUnusedLocals",
+      "noUnusedParameters",
+      "out",
+      "outDir",
+      "outFile",
+      "paths",
+      "pathsBasePath",
+      "plugins",
+      "preserveConstEnums",
+      "preserveSymlinks",
+      "preserveValueImports",
+      "preserveWatchOutput",
+      "pretty",
+      "project",
+      "reactNamespace",
+      "removeComments",
+      "resolveJsonModule",
+      "resolvePackageJsonExports",
+      "resolvePackageJsonImports",
+      "rewriteRelativeImportExtensions",
+      "rootDir",
+      "rootDirs",
+      "showConfig",
+      "skipDefaultLibCheck",
+      "skipLibCheck",
+      "sourceMap",
+      "sourceRoot",
+      "stableTypeOrdering",
+      "strict",
+      "strictBindCallApply",
+      "strictBuiltinIteratorReturn",
+      "strictFunctionTypes",
+      "strictNullChecks",
+      "strictPropertyInitialization",
+      "stripInternal",
+      "suppressExcessPropertyErrors",
+      "suppressImplicitAnyIndexErrors",
+      "suppressOutputPathCheck",
+      "target",
+      "traceResolution",
+      "tsBuildInfoFile",
+      "tscBuild",
+      "typeRoots",
+      "types",
+      "useDefineForClassFields",
+      "useUnknownInCatchVariables",
+      "verbatimModuleSyntax",
+      "version",
+      "watch"
+    ],
+    "BindablePropertyAssignmentExpression": [
+      "_declarationBrand",
+      "_expressionBrand",
+      "_jsdocContainerBrand",
+      "emitNode",
+      "end",
+      "flags",
+      "id",
+      "jsDoc",
+      "kind",
+      "left",
+      "localSymbol",
+      "modifierFlagsCache",
+      "operatorToken",
+      "original",
+      "parent",
+      "pos",
+      "right",
+      "symbol",
+      "transformFlags"
+    ],
+    "DiagnosticRelatedInformation": [
+      "category",
+      "code",
+      "file",
+      "length",
+      "messageText",
+      "start"
+    ],
+    "AutoGenerateInfo": [
+      "flags",
+      "id",
+      "prefix",
+      "suffix"
+    ],
+    "GeneratedNamePart": [
+      "node",
+      "prefix",
+      "suffix"
+    ],
+    "ConditionalType": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checkType",
+      "checker",
+      "combinedMapper",
+      "extendsType",
+      "flags",
+      "id",
+      "immediateBaseConstraint",
+      "mapper",
+      "pattern",
+      "permissiveInstantiation",
+      "resolvedBaseConstraint",
+      "resolvedConstraintOfDistributive",
+      "resolvedDefaultConstraint",
+      "resolvedFalseType",
+      "resolvedIndexType",
+      "resolvedInferredTrueType",
+      "resolvedStringIndexType",
+      "resolvedTrueType",
+      "restrictiveInstantiation",
+      "root",
+      "symbol",
+      "widened"
+    ],
+    "Type": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checker",
+      "flags",
+      "id",
+      "immediateBaseConstraint",
+      "pattern",
+      "permissiveInstantiation",
+      "restrictiveInstantiation",
+      "symbol",
+      "widened"
+    ],
+    "DiagnosticWithLocation": [
+      "canonicalHead",
+      "category",
+      "code",
+      "file",
+      "length",
+      "messageText",
+      "relatedInformation",
+      "reportsDeprecated",
+      "reportsUnnecessary",
+      "skippedOn",
+      "source",
+      "start"
+    ],
+    "DiagnosticWithDetachedLocation": [
+      "canonicalHead",
+      "category",
+      "code",
+      "file",
+      "fileName",
+      "length",
+      "messageText",
+      "relatedInformation",
+      "reportsDeprecated",
+      "reportsUnnecessary",
+      "skippedOn",
+      "source",
+      "start"
     ]
   },
   "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
@@ -482,6 +810,1398 @@
           "column": 51,
           "start": 9901,
           "end": 9923,
+          "text": "diagnostic.messageText"
+        }
+      ]
+    },
+    {
+      "type_id": 9474,
+      "type": "BindableStaticAccessExpression",
+      "field": "expression",
+      "declared_type": "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)",
+      "read_count": 11,
+      "sites": [
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 1759,
+          "column": 79,
+          "start": 69549,
+          "end": 69564,
+          "text": "node.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3223,
+          "column": 54,
+          "start": 157159,
+          "end": 157179,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3230,
+          "column": 87,
+          "start": 157512,
+          "end": 157532,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3230,
+          "column": 144,
+          "start": 157569,
+          "end": 157589,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3283,
+          "column": 82,
+          "start": 160958,
+          "end": 160970,
+          "text": "l.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3284,
+          "column": 75,
+          "start": 161050,
+          "end": 161062,
+          "text": "l.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3355,
+          "column": 35,
+          "start": 165178,
+          "end": 165193,
+          "text": "node.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3368,
+          "column": 32,
+          "start": 165699,
+          "end": 165719,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3387,
+          "column": 32,
+          "start": 166905,
+          "end": 166919,
+          "text": "lhs.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3388,
+          "column": 37,
+          "start": 166992,
+          "end": 167017,
+          "text": "classPrototype.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3528,
+          "column": 77,
+          "start": 174934,
+          "end": 174959,
+          "text": "propertyAccess.expression"
+        }
+      ]
+    },
+    {
+      "type_id": 7536,
+      "type": "LiteralType",
+      "field": "value",
+      "declared_type": "string | number | PseudoBigInt",
+      "read_count": 10,
+      "sites": [
+        {
+          "file": "src/compiler/debug.ts",
+          "line": 644,
+          "column": 102,
+          "start": 28835,
+          "end": 28862,
+          "text": "(this as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20286,
+          "column": 65,
+          "start": 1185648,
+          "end": 1185675,
+          "text": "(type as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22256,
+          "column": 67,
+          "start": 1307463,
+          "end": 1307492,
+          "text": "(source as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22256,
+          "column": 101,
+          "start": 1307497,
+          "end": 1307526,
+          "text": "(target as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 45357,
+          "column": 84,
+          "start": 2657570,
+          "end": 2657597,
+          "text": "(type as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 51329,
+          "column": 30,
+          "start": 2980954,
+          "end": 2980981,
+          "text": "(type as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53970,
+          "column": 47,
+          "start": 3133145,
+          "end": 3133170,
+          "text": "(t1 as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53970,
+          "column": 84,
+          "start": 3133182,
+          "end": 3133207,
+          "text": "(t2 as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53977,
+          "column": 47,
+          "start": 3133471,
+          "end": 3133496,
+          "text": "(t1 as LiteralType).value"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 53977,
+          "column": 84,
+          "start": 3133508,
+          "end": 3133533,
+          "text": "(t2 as LiteralType).value"
+        }
+      ]
+    },
+    {
+      "type_id": 7642,
+      "type": "JSDoc",
+      "field": "parent",
+      "declared_type": "HasJSDoc",
+      "read_count": 10,
+      "sites": [
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 883,
+          "column": 22,
+          "start": 33549,
+          "end": 33574,
+          "text": "declaration.parent.parent"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4705,
+          "column": 39,
+          "start": 183612,
+          "end": 183629,
+          "text": "tag.parent.parent"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4706,
+          "column": 12,
+          "start": 183643,
+          "end": 183660,
+          "text": "tag.parent.parent"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4818,
+          "column": 18,
+          "start": 187723,
+          "end": 187735,
+          "text": "jsDoc.parent"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 11808,
+          "column": 36,
+          "start": 484807,
+          "end": 484818,
+          "text": "root.parent"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16519,
+          "column": 50,
+          "start": 959964,
+          "end": 959975,
+          "text": "root.parent"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16520,
+          "column": 75,
+          "start": 960068,
+          "end": 960079,
+          "text": "root.parent"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49435,
+          "column": 54,
+          "start": 2882283,
+          "end": 2882305,
+          "text": "paramTag.parent.parent"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49445,
+          "column": 40,
+          "start": 2882941,
+          "end": 2882963,
+          "text": "paramTag.parent.parent"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2468,
+          "column": 26,
+          "start": 116057,
+          "end": 116080,
+          "text": "typeAlias.parent.parent"
+        }
+      ]
+    },
+    {
+      "type_id": 9858,
+      "type": "CompilerOptions",
+      "field": "<dynamic-key>",
+      "declared_type": "TsConfigSourceFile | CompilerOptionsValue",
+      "read_count": 10,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 9370,
+          "column": 12,
+          "start": 368896,
+          "end": 368917,
+          "text": "compilerOptions[flag]"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 9370,
+          "column": 89,
+          "start": 368973,
+          "end": 368994,
+          "text": "compilerOptions[flag]"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 9402,
+          "column": 9,
+          "start": 370470,
+          "end": 370490,
+          "text": "options[option.name]"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2901,
+          "column": 42,
+          "start": 116876,
+          "end": 116901,
+          "text": "options[allSetOptions[0]]"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2933,
+          "column": 24,
+          "start": 117983,
+          "end": 117999,
+          "text": "options[setting]"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2979,
+          "column": 17,
+          "start": 119908,
+          "end": 119921,
+          "text": "options[name]"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 4269,
+          "column": 59,
+          "start": 182121,
+          "end": 182130,
+          "text": "opts[key]"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1525,
+          "column": 24,
+          "start": 68838,
+          "end": 68858,
+          "text": "options[option.name]"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 5099,
+          "column": 53,
+          "start": 265832,
+          "end": 265851,
+          "text": "option[d.skippedOn]"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1449,
+          "column": 21,
+          "start": 65977,
+          "end": 65990,
+          "text": "options[name]"
+        }
+      ]
+    },
+    {
+      "type_id": 9476,
+      "type": "BindableStaticPropertyAssignmentExpression",
+      "field": "left",
+      "declared_type": "BindableStaticAccessExpression",
+      "read_count": 9,
+      "sites": [
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2911,
+          "column": 57,
+          "start": 139223,
+          "end": 139280,
+          "text": "(node as BindableStaticPropertyAssignmentExpression).left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3223,
+          "column": 54,
+          "start": 157159,
+          "end": 157168,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3230,
+          "column": 87,
+          "start": 157512,
+          "end": 157521,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3230,
+          "column": 144,
+          "start": 157569,
+          "end": 157578,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3232,
+          "column": 23,
+          "start": 157721,
+          "end": 157730,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3233,
+          "column": 52,
+          "start": 157791,
+          "end": 157800,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3366,
+          "column": 19,
+          "start": 165611,
+          "end": 165620,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3368,
+          "column": 32,
+          "start": 165699,
+          "end": 165708,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3368,
+          "column": 54,
+          "start": 165721,
+          "end": 165730,
+          "text": "node.left"
+        }
+      ]
+    },
+    {
+      "type_id": 9485,
+      "type": "BindablePropertyAssignmentExpression",
+      "field": "left",
+      "declared_type": "BindableAccessExpression",
+      "read_count": 9,
+      "sites": [
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3270,
+          "column": 94,
+          "start": 159983,
+          "end": 159992,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3270,
+          "column": 128,
+          "start": 160017,
+          "end": 160026,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3407,
+          "column": 60,
+          "start": 168141,
+          "end": 168150,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3407,
+          "column": 136,
+          "start": 168217,
+          "end": 168226,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3411,
+          "column": 54,
+          "start": 168406,
+          "end": 168415,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3416,
+          "column": 19,
+          "start": 168689,
+          "end": 168698,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3418,
+          "column": 26,
+          "start": 168771,
+          "end": 168780,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3418,
+          "column": 111,
+          "start": 168856,
+          "end": 168865,
+          "text": "node.left"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3430,
+          "column": 47,
+          "start": 169669,
+          "end": 169678,
+          "text": "node.left"
+        }
+      ]
+    },
+    {
+      "type_id": 7642,
+      "type": "JSDoc",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 7,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5591,
+          "column": 16,
+          "start": 243680,
+          "end": 243692,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1054,
+          "column": 24,
+          "start": 56870,
+          "end": 56882,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1054,
+          "column": 92,
+          "start": 56938,
+          "end": 56950,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 9905,
+          "column": 102,
+          "start": 566030,
+          "end": 566059,
+          "text": "jsdocAliasDecl.parent.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4102,
+          "column": 13,
+          "start": 175182,
+          "end": 175194,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4103,
+          "column": 48,
+          "start": 175246,
+          "end": 175258,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4116,
+          "column": 93,
+          "start": 175732,
+          "end": 175744,
+          "text": "node.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 8815,
+      "type": "JSDocTypedefTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 6,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5248,
+          "column": 20,
+          "start": 227026,
+          "end": 227038,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1097,
+          "column": 29,
+          "start": 60402,
+          "end": 60414,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1097,
+          "column": 97,
+          "start": 60470,
+          "end": 60482,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1100,
+          "column": 29,
+          "start": 60632,
+          "end": 60644,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1100,
+          "column": 97,
+          "start": 60700,
+          "end": 60712,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4204,
+          "column": 26,
+          "start": 178532,
+          "end": 178543,
+          "text": "tag.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 8901,
+      "type": "JSDocImportTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 6,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5559,
+          "column": 20,
+          "start": 242463,
+          "end": 242475,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1229,
+          "column": 20,
+          "start": 69183,
+          "end": 69195,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1229,
+          "column": 88,
+          "start": 69251,
+          "end": 69263,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4156,
+          "column": 26,
+          "start": 176975,
+          "end": 176986,
+          "text": "tag.comment"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2140,
+          "column": 20,
+          "start": 99456,
+          "end": 99468,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2141,
+          "column": 22,
+          "start": 99507,
+          "end": 99519,
+          "text": "node.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 9762,
+      "type": "DiagnosticRelatedInformation",
+      "field": "messageText",
+      "declared_type": "string | DiagnosticMessageChain",
+      "read_count": 6,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2482,
+          "column": 19,
+          "start": 84738,
+          "end": 84760,
+          "text": "diagnostic.messageText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2485,
+          "column": 22,
+          "start": 84872,
+          "end": 84894,
+          "text": "diagnostic.messageText"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2487,
+          "column": 9,
+          "start": 84965,
+          "end": 84987,
+          "text": "diagnostic.messageText"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1529,
+          "column": 35,
+          "start": 69396,
+          "end": 69418,
+          "text": "diagnostic.messageText"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1529,
+          "column": 61,
+          "start": 69422,
+          "end": 69444,
+          "text": "diagnostic.messageText"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1529,
+          "column": 119,
+          "start": 69480,
+          "end": 69502,
+          "text": "diagnostic.messageText"
+        }
+      ]
+    },
+    {
+      "type_id": 7615,
+      "type": "AutoGenerateInfo",
+      "field": "prefix",
+      "declared_type": "string | GeneratedNamePart | undefined",
+      "read_count": 4,
+      "sites": [
+        {
+          "file": "src/compiler/transformers/utilities.ts",
+          "line": 427,
+          "column": 67,
+          "start": 17647,
+          "end": 17666,
+          "text": "autoGenerate.prefix"
+        },
+        {
+          "file": "src/compiler/transformers/utilities.ts",
+          "line": 431,
+          "column": 67,
+          "start": 17890,
+          "end": 17909,
+          "text": "autoGenerate.prefix"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 5461,
+          "column": 117,
+          "start": 232262,
+          "end": 232281,
+          "text": "autoGenerate.prefix"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 5770,
+          "column": 48,
+          "start": 246331,
+          "end": 246350,
+          "text": "autoGenerate.prefix"
+        }
+      ]
+    },
+    {
+      "type_id": 7637,
+      "type": "JSDocTemplateTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 4,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5226,
+          "column": 20,
+          "start": 225691,
+          "end": 225703,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1089,
+          "column": 21,
+          "start": 59785,
+          "end": 59797,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1089,
+          "column": 89,
+          "start": 59853,
+          "end": 59865,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4180,
+          "column": 26,
+          "start": 177741,
+          "end": 177752,
+          "text": "tag.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 8813,
+      "type": "JSDocCallbackTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 4,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5314,
+          "column": 20,
+          "start": 231008,
+          "end": 231020,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1106,
+          "column": 21,
+          "start": 61113,
+          "end": 61125,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1106,
+          "column": 89,
+          "start": 61181,
+          "end": 61193,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4216,
+          "column": 26,
+          "start": 178933,
+          "end": 178944,
+          "text": "tag.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 8875,
+      "type": "JSDocSeeTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 4,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5369,
+          "column": 20,
+          "start": 233959,
+          "end": 233971,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1060,
+          "column": 21,
+          "start": 57331,
+          "end": 57343,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1060,
+          "column": 89,
+          "start": 57399,
+          "end": 57411,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4137,
+          "column": 26,
+          "start": 176427,
+          "end": 176438,
+          "text": "tag.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 9475,
+      "type": "BindableAccessExpression",
+      "field": "expression",
+      "declared_type": "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)",
+      "read_count": 4,
+      "sites": [
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3407,
+          "column": 60,
+          "start": 168141,
+          "end": 168161,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3407,
+          "column": 136,
+          "start": 168217,
+          "end": 168237,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3418,
+          "column": 26,
+          "start": 168771,
+          "end": 168791,
+          "text": "node.left.expression"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3418,
+          "column": 111,
+          "start": 168856,
+          "end": 168876,
+          "text": "node.left.expression"
+        }
+      ]
+    },
+    {
+      "type_id": 97898,
+      "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+      "field": "<element>",
+      "declared_type": "[] | EmitSignature | IncrementalBuildInfoFileId",
+      "read_count": 4,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2299,
+          "column": 40,
+          "start": 108305,
+          "end": 108313,
+          "text": "value[0]"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2302,
+          "column": 31,
+          "start": 108411,
+          "end": 108419,
+          "text": "value[1]"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2302,
+          "column": 45,
+          "start": 108425,
+          "end": 108433,
+          "text": "value[1]"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2305,
+          "column": 25,
+          "start": 108613,
+          "end": 108621,
+          "text": "value[1]"
+        }
+      ]
+    },
+    {
+      "type_id": 8882,
+      "type": "JSDocImplementsTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 3,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5455,
+          "column": 20,
+          "start": 237302,
+          "end": 237314,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1078,
+          "column": 21,
+          "start": 58871,
+          "end": 58883,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1078,
+          "column": 89,
+          "start": 58939,
+          "end": 58951,
+          "text": "node.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 8883,
+      "type": "JSDocAugmentsTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 3,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5346,
+          "column": 20,
+          "start": 232772,
+          "end": 232784,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1083,
+          "column": 21,
+          "start": 59293,
+          "end": 59305,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1083,
+          "column": 89,
+          "start": 59361,
+          "end": 59373,
+          "text": "node.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 11591,
+      "type": "EmitHelper",
+      "field": "text",
+      "declared_type": "string | ((node: EmitHelperUniqueNameCallback) => string)",
+      "read_count": 3,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 2083,
+          "column": 32,
+          "start": 91781,
+          "end": 91792,
+          "text": "helper.text"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 2084,
+          "column": 36,
+          "start": 91845,
+          "end": 91856,
+          "text": "helper.text"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 2087,
+          "column": 36,
+          "start": 91946,
+          "end": 91957,
+          "text": "helper.text"
+        }
+      ]
+    },
+    {
+      "type_id": 36586,
+      "type": "JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 3,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 9905,
+          "column": 76,
+          "start": 566004,
+          "end": 566026,
+          "text": "jsdocAliasDecl.comment"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2121,
+          "column": 20,
+          "start": 98808,
+          "end": 98820,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2122,
+          "column": 22,
+          "start": 98859,
+          "end": 98871,
+          "text": "node.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 7638,
+      "type": "JSDocTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49073,
+          "column": 45,
+          "start": 2864573,
+          "end": 2864584,
+          "text": "tag.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4227,
+          "column": 26,
+          "start": 179279,
+          "end": 179290,
+          "text": "tag.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 8617,
+      "type": "ConditionalType",
+      "field": "resolvedConstraintOfDistributive",
+      "declared_type": "false | Type | undefined",
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15219,
+          "column": 13,
+          "start": 884084,
+          "end": 884121,
+          "text": "type.resolvedConstraintOfDistributive"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 15220,
+          "column": 20,
+          "start": 884159,
+          "end": 884196,
+          "text": "type.resolvedConstraintOfDistributive"
+        }
+      ]
+    },
+    {
+      "type_id": 8880,
+      "type": "JSDocPropertyTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5292,
+          "column": 20,
+          "start": 229668,
+          "end": 229680,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 7875,
+          "column": 63,
+          "start": 431899,
+          "end": 431923,
+          "text": "jsdocPropertyTag.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 8900,
+      "type": "JSDocOverloadTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5330,
+          "column": 20,
+          "start": 231903,
+          "end": 231915,
+          "text": "node.comment"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4221,
+          "column": 26,
+          "start": 179091,
+          "end": 179102,
+          "text": "tag.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "resolvedEntrypoints",
+      "declared_type": "false | string[] | undefined",
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2235,
+          "column": 23,
+          "start": 110422,
+          "end": 110466,
+          "text": "packageJsonInfo.contents.resolvedEntrypoints"
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2238,
+          "column": 16,
+          "start": 110631,
+          "end": 110675,
+          "text": "packageJsonInfo.contents.resolvedEntrypoints"
+        }
+      ]
+    },
+    {
+      "type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "versionPaths",
+      "declared_type": "false | VersionPaths | undefined",
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2408,
+          "column": 9,
+          "start": 117916,
+          "end": 117953,
+          "text": "packageJsonInfo.contents.versionPaths"
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2411,
+          "column": 12,
+          "start": 118134,
+          "end": 118171,
+          "text": "packageJsonInfo.contents.versionPaths"
+        }
+      ]
+    },
+    {
+      "type_id": 7644,
+      "type": "JSDoc | JSDocTypeLiteral",
+      "field": "parent",
+      "declared_type": "Node | HasJSDoc",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 4832,
+          "column": 32,
+          "start": 188215,
+          "end": 188240,
+          "text": "node.parent.parent.parent"
+        }
+      ]
+    },
+    {
+      "type_id": 8814,
+      "type": "JSDocEnumTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5542,
+          "column": 20,
+          "start": 241420,
+          "end": 241432,
+          "text": "node.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 8878,
+      "type": "JSDocParameterTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5270,
+          "column": 20,
+          "start": 228339,
+          "end": 228351,
+          "text": "node.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 8879,
+      "type": "JSDocPropertyLikeTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4261,
+          "column": 26,
+          "start": 180400,
+          "end": 180413,
+          "text": "param.comment"
+        }
+      ]
+    },
+    {
+      "type_id": 9760,
+      "type": "DiagnosticWithLocation",
+      "field": "messageText",
+      "declared_type": "string | DiagnosticMessageChain",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1631,
+          "column": 173,
+          "start": 74065,
+          "end": 74087,
+          "text": "diagnostic.messageText"
+        }
+      ]
+    },
+    {
+      "type_id": 11106,
+      "type": "DiagnosticWithDetachedLocation",
+      "field": "messageText",
+      "declared_type": "string | DiagnosticMessageChain",
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 8651,
+          "column": 22,
+          "start": 339508,
+          "end": 339530,
           "text": "diagnostic.messageText"
         }
       ]

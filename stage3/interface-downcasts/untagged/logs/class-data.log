@@ -1,0 +1,25 @@
+=== RUN   TestCheckedViewUntaggedOwnClassData
+=== RUN   TestCheckedViewUntaggedOwnClassData/good
+    checked_views_untagged_unions_test.go:349: gate cache node miss
+    checked_views_untagged_unions_test.go:357: gate cache node miss
+    checked_views_untagged_unions_test.go:358: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:358: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedOwnClassData/wrong
+    checked_views_untagged_unions_test.go:349: gate cache node miss
+    checked_views_untagged_unions_test.go:357: gate cache node miss
+    checked_views_untagged_unions_test.go:358: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:358: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedOwnClassData/getter
+    checked_views_untagged_unions_test.go:349: gate cache node miss
+    checked_views_untagged_unions_test.go:357: gate cache node miss
+    checked_views_untagged_unions_test.go:358: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:358: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedOwnClassData (0.77s)
+    --- PASS: TestCheckedViewUntaggedOwnClassData/good (0.30s)
+    --- PASS: TestCheckedViewUntaggedOwnClassData/wrong (0.25s)
+    --- PASS: TestCheckedViewUntaggedOwnClassData/getter (0.23s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.783s

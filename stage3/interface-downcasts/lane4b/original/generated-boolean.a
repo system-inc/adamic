@@ -1,0 +1,13 @@
+import type { AutoGenerateInfo } from 'original-tsc-types';
+interface Base { readonly id: number; }
+function read(info: AutoGenerateInfo): string {
+ const member = info.prefix;
+ if (member === undefined) return 'absent';
+ if (typeof member === 'boolean') return 'wrong';
+ if (typeof member === 'string') return member;
+ return `${member.prefix}`;
+}
+const poison = `${42}` === '42' ? false : 'plain';
+const concrete = { id: 1, prefix: poison };
+const base: Base = concrete;
+console.log(read(base as AutoGenerateInfo));

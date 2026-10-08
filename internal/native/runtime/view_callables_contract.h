@@ -14,6 +14,18 @@ typedef struct adamic_callable_signature {
     const char *name;
 } adamic_callable_signature;
 
+/* Shared pure predicate used by structural alternatives and the named read
+ * refusal. Producer signatures are immutable; zero remains unknown. */
+static inline bool adamic_view_callable_signatures_match(const adamic_callable_signature *recorded, const adamic_callable_signature *expected) {
+    if (recorded == NULL || expected == NULL || recorded->arity != expected->arity || recorded->result == 0 || expected->result == 0) { return false; }
+    if (expected->result != 255 && recorded->result != expected->result) { return false; }
+    if (recorded->arity != 0 && (recorded->parameters == NULL || expected->parameters == NULL)) { return false; }
+    for (size_t i = 0; i < recorded->arity; i++) {
+        if (recorded->parameters[i] == 0 || expected->parameters[i] == 0 || recorded->parameters[i] != expected->parameters[i]) { return false; }
+    }
+    return true;
+}
+
 static inline const adamic_heap *adamic_view_callable_shape(
     const adamic_heap *value, const adamic_callable_signature *recorded,
     const adamic_callable_signature *expected, const char *expression,
@@ -38,7 +50,7 @@ static inline const adamic_heap *adamic_view_callable_shape(
             for (size_t index = 0; compatible && index < recorded->arity; index++) {
                 compatible = recorded->parameters[index] != 0 && expected->parameters[index] != 0 && recorded->parameters[index] == expected->parameters[index];
             }
-            if (compatible) { return value; }
+            if (compatible && adamic_view_callable_signatures_match(recorded, expected)) { return value; }
             found = "function with incompatible parameter representations";
         }
     }

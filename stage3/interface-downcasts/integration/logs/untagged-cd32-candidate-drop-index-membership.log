@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewUntaggedCandidatePairs
+=== RUN   TestCheckedViewUntaggedCandidatePairs/133/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:344: javascript: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:344: native: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewUntaggedCandidatePairs (0.43s)
+    --- FAIL: TestCheckedViewUntaggedCandidatePairs/133/wrong (0.42s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.445s
+FAIL

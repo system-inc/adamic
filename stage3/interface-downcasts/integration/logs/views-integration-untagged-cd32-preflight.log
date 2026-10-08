@@ -1,0 +1,1328 @@
+=== RUN   TestCheckedViewRankedArrayUnionContracts
+=== PAUSE TestCheckedViewRankedArrayUnionContracts
+=== RUN   TestCheckedViewMutableArrayUnionRefusal
+=== PAUSE TestCheckedViewMutableArrayUnionRefusal
+=== RUN   TestCheckedViewUntaggedSelection
+=== RUN   TestCheckedViewUntaggedSelection/binding-name
+=== RUN   TestCheckedViewUntaggedSelection/option-element
+=== RUN   TestCheckedViewUntaggedSelection/structural
+--- PASS: TestCheckedViewUntaggedSelection (17.20s)
+    --- PASS: TestCheckedViewUntaggedSelection/binding-name (4.69s)
+    --- PASS: TestCheckedViewUntaggedSelection/option-element (0.81s)
+    --- PASS: TestCheckedViewUntaggedSelection/structural (0.83s)
+=== RUN   TestCheckedViewUntaggedSourceFrontier
+=== RUN   TestCheckedViewUntaggedSourceFrontier/binding-name
+    checked_views_untagged_unions_test.go:186: owner hooks installed; tested by SourceDispatch
+=== RUN   TestCheckedViewUntaggedSourceFrontier/option-element
+    checked_views_untagged_unions_test.go:186: owner hooks installed; tested by SourceDispatch
+=== RUN   TestCheckedViewUntaggedSourceFrontier/structural
+    checked_views_untagged_unions_test.go:186: owner hooks installed; tested by SourceDispatch
+--- PASS: TestCheckedViewUntaggedSourceFrontier (0.38s)
+    --- SKIP: TestCheckedViewUntaggedSourceFrontier/binding-name (0.13s)
+    --- SKIP: TestCheckedViewUntaggedSourceFrontier/option-element (0.12s)
+    --- SKIP: TestCheckedViewUntaggedSourceFrontier/structural (0.12s)
+=== RUN   TestCheckedViewUntaggedSourceDispatch
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/absent
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/wrong
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/absent
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\n" stderr=""
+--- PASS: TestCheckedViewUntaggedSourceDispatch (2.95s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/good (0.40s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/good (0.25s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/absent (0.21s)
+=== RUN   TestCheckedViewUntaggedSourceFlows
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedSourceFlows (1.80s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/wrong (0.23s)
+=== RUN   TestCheckedViewUntaggedCandidatePairs
+=== RUN   TestCheckedViewUntaggedCandidatePairs/8/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/8/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/8/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/8/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/11/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/11/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/11/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/11/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/13/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/13/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ModuleBody | undefined; expected ModuleBody | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ModuleBody | undefined; expected ModuleBody | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/13/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/13/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/19/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/19/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/19/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/20/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/20/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/20/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/20/empty
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/24/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/24/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.type matches no member of Type; expected Type, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.type matches no member of Type; expected Type, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/24/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.type matches no member of Type; expected Type, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.type matches no member of Type; expected Type, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/32/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/32/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/32/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/41/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/41/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody; expected ConciseBody, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody; expected ConciseBody, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/41/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/45/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/45/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.operand matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.operand matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/45/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/60/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/60/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/60/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/63/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/63/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.literal matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.literal matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/63/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/72/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/72/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of Type; expected Type, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of Type; expected Type, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/72/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of Type; expected Type, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of Type; expected Type, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/72/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/73/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/73/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/73/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/83/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/83/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/83/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/84/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/84/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/84/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/92/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/92/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/92/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/105/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/105/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/105/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/105/empty
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/108/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/108/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/108/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/109/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/109/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/109/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/114/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/114/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/114/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/116/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/116/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/116/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/117/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/117/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/117/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/124/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/124/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/124/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/126/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/126/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/126/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/126/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/130/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/130/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/130/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/130/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/133/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/133/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/133/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/138/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/138/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/138/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/140/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/140/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/140/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/141/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/141/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.node matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.node matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/141/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/142/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/142/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/142/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/143/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/143/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/143/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/145/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/145/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/145/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/145/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/147/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/147/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/147/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/147/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/155/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/155/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/155/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/155/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/164/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/164/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/164/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/166/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/166/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/166/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/170/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/170/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/170/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/170/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/175/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/175/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/175/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/175/empty
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/178/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/178/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/178/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/178/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/179/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/179/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/179/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/190/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/190/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/190/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/191/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/191/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.dotDotDotToken matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.dotDotDotToken matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/191/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/191/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/192/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/192/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/192/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/196/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/196/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/196/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/199/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/199/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/199/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/199/empty
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/204/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/204/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/204/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/205/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/205/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/205/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/206/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/206/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/206/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/206/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/210/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/210/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/210/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/211/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/211/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/211/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/213/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/213/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/213/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/213/empty
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/215/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/215/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/215/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/215/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/219/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/219/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/219/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/220/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/220/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/220/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/221/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/221/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/221/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/223/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/223/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/223/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/224/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/224/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/224/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/224/empty
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/225/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/225/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/225/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/225/absent
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/226/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/226/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.fileInfos is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.fileInfos is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/226/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/226/empty
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/227/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/227/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.forEach expected ForEach, found function with incompatible parameter representations\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.forEach expected ForEach, found function with incompatible parameter representations\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/227/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.holder.forEach expected ForEach, found function with incompatible parameter representations\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.holder.forEach expected ForEach, found function with incompatible parameter representations\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/227/logical
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.forEach expected ForEach, found function with unknown signature\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.forEach expected ForEach, found function with unknown signature\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/227/logical-nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.holder.forEach expected ForEach, found function with unknown signature\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.holder.forEach expected ForEach, found function with unknown signature\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/228/good
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/228/wrong
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/228/nested
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+--- PASS: TestCheckedViewUntaggedCandidatePairs (51.10s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/8/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/8/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/8/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/8/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/11/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/11/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/11/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/11/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/13/good (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/13/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/13/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/13/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/19/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/19/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/19/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/20/good (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/20/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/20/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/20/empty (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/24/good (0.25s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/24/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/24/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/32/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/32/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/32/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/41/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/41/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/41/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/45/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/45/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/45/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/60/good (0.25s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/60/wrong (0.32s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/60/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/63/good (0.25s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/63/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/63/nested (0.25s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/72/good (0.33s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/72/wrong (0.25s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/72/nested (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/72/absent (0.30s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/73/good (0.35s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/73/wrong (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/73/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/83/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/83/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/83/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/84/good (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/84/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/84/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/92/good (0.58s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/92/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/92/nested (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/105/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/105/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/105/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/105/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/108/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/108/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/108/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/109/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/109/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/109/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/114/good (0.27s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/114/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/114/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/116/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/116/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/116/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/117/good (0.83s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/117/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/117/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/124/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/124/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/124/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/126/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/126/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/126/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/126/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/130/good (0.28s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/130/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/130/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/130/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/133/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/133/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/133/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/138/good (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/138/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/138/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/140/good (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/140/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/140/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/141/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/141/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/141/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/142/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/142/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/142/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/143/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/143/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/143/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/145/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/145/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/145/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/145/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/147/good (0.44s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/147/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/147/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/147/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/155/good (0.44s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/155/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/155/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/155/absent (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/164/good (0.27s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/164/wrong (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/164/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/166/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/166/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/166/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/170/good (0.47s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/170/wrong (0.31s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/170/nested (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/170/absent (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/175/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/175/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/175/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/175/empty (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/178/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/178/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/178/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/178/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/179/good (0.28s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/179/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/179/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/190/good (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/190/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/190/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/191/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/191/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/191/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/191/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/192/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/192/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/192/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/196/good (0.27s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/196/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/196/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/199/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/199/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/199/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/199/empty (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/204/good (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/204/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/204/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/205/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/205/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/205/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/206/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/206/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/206/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/206/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/210/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/210/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/210/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/211/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/211/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/211/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/213/good (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/213/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/213/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/213/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/215/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/215/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/215/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/215/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/219/good (0.44s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/219/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/219/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/220/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/220/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/220/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/221/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/221/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/221/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/223/good (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/223/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/223/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/224/good (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/224/wrong (0.20s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/224/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/224/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/225/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/225/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/225/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/225/absent (0.20s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/226/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/226/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/226/nested (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/226/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/227/good (0.25s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/227/wrong (0.27s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/227/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/227/logical (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/227/logical-nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/228/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/228/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/228/nested (0.22s)
+=== RUN   TestCheckedViewUntaggedOwnClassData
+=== RUN   TestCheckedViewUntaggedOwnClassData/good
+    checked_views_untagged_unions_test.go:366: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:366: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedOwnClassData/wrong
+    checked_views_untagged_unions_test.go:366: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:366: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedOwnClassData/getter
+    checked_views_untagged_unions_test.go:366: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:366: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedOwnClassData (0.68s)
+    --- PASS: TestCheckedViewUntaggedOwnClassData/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedOwnClassData/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedOwnClassData/getter (0.23s)
+=== RUN   TestCheckedViewUntaggedRecursive
+=== RUN   TestCheckedViewUntaggedRecursive/good
+    checked_views_untagged_unions_test.go:402: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:402: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedRecursive/absent
+    checked_views_untagged_unions_test.go:402: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:402: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedRecursive/wrong
+    checked_views_untagged_unions_test.go:402: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:402: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedRecursive/nested
+    checked_views_untagged_unions_test.go:402: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:402: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedRecursive/cycle
+    checked_views_untagged_unions_test.go:402: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:402: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedRecursive/cycle-wrong
+    checked_views_untagged_unions_test.go:402: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:402: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedRecursive (1.36s)
+    --- PASS: TestCheckedViewUntaggedRecursive/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedRecursive/absent (0.23s)
+    --- PASS: TestCheckedViewUntaggedRecursive/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedRecursive/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedRecursive/cycle (0.24s)
+    --- PASS: TestCheckedViewUntaggedRecursive/cycle-wrong (0.22s)
+=== RUN   TestCheckedViewUntaggedArrayUnion
+=== RUN   TestCheckedViewUntaggedArrayUnion/good
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedArrayUnion/wrong
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.elements is not a readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found boolean\n"
+    checked_views_untagged_unions_test.go:419: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.elements is not a readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found boolean\n"
+=== RUN   TestCheckedViewUntaggedArrayUnion/nested
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item.payload matches no member of { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_untagged_unions_test.go:419: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item.payload matches no member of { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; }, found object\n"
+=== RUN   TestCheckedViewUntaggedArrayUnion/empty
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedArrayUnion/mixed
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:433: native: exit codes differ
+    checked_views_untagged_unions_test.go:419: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:433: javascript: exit codes differ
+=== RUN   TestCheckedViewUntaggedArrayUnion/unread
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: javascript: exit=0 stdout="true\n" stderr=""
+--- FAIL: TestCheckedViewUntaggedArrayUnion (1.30s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/empty (0.21s)
+    --- FAIL: TestCheckedViewUntaggedArrayUnion/mixed (0.22s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/unread (0.21s)
+=== RUN   TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_untagged_unions_test.go:450: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:450: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_untagged_unions_test.go:450: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:450: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_untagged_unions_test.go:450: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_untagged_unions_test.go:450: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+=== RUN   TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_untagged_unions_test.go:450: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_untagged_unions_test.go:450: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+--- PASS: TestCheckedViewUntaggedCallableUnion (0.92s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-number (0.23s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-string (0.23s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/nested (0.23s)
+=== RUN   TestCheckedViewUntaggedRemainingBoundaries
+=== RUN   TestCheckedViewUntaggedRemainingBoundaries/type-contract-boundary
+    checked_views_untagged_unions_test.go:491: lowering refusal: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/type-contract-boundary.a:10:13: Adamic 0.1 refuses checked view read of field value with unsupported untagged object union contract; prove or implement the untagged object union contract before reading this field
+=== RUN   TestCheckedViewUntaggedRemainingBoundaries/base-type-boundary
+    checked_views_untagged_unions_test.go:491: lowering refusal: view.items[0]: Adamic 0.1 refuses checked view read of field [element] with unsupported untagged object union contract; prove or implement the untagged object union contract before reading this field
+--- PASS: TestCheckedViewUntaggedRemainingBoundaries (0.26s)
+    --- PASS: TestCheckedViewUntaggedRemainingBoundaries/type-contract-boundary (0.13s)
+    --- PASS: TestCheckedViewUntaggedRemainingBoundaries/base-type-boundary (0.13s)
+=== RUN   TestCheckedViewUntaggedOptionalCallableControl
+--- PASS: TestCheckedViewUntaggedOptionalCallableControl (0.23s)
+=== CONT  TestCheckedViewRankedArrayUnionContracts
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-array
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-array
+=== CONT  TestCheckedViewMutableArrayUnionRefusal
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-types
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-types
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-types-wrong-array
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-types-wrong-array
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-signature
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-signature
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-signature-wrong-array
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-signature-wrong-array
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-class
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-class
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-class-wrong-array
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-class-wrong-array
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-reference
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-reference
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-reference-wrong-array
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-reference-wrong-array
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-lazy
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-lazy
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-element
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-element
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-tag
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-tag
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-mutable-array-unread
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-mutable-array-unread
+=== RUN   TestCheckedViewRankedArrayUnionContracts/ranked3-reference-absent
+=== PAUSE TestCheckedViewRankedArrayUnionContracts/ranked3-reference-absent
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-reference
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-tag
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-reference-absent
+--- PASS: TestCheckedViewMutableArrayUnionRefusal (0.22s)
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-element
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-class-wrong-array
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-lazy
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-class
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-mutable-array-unread
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-reference-wrong-array
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-types-wrong-array
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-signature-wrong-array
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-signature
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-types
+=== CONT  TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-array
+--- PASS: TestCheckedViewRankedArrayUnionContracts (0.00s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern (0.72s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-tag (0.75s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-reference-absent (0.75s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-reference (0.82s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-element (0.72s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-class-wrong-array (0.69s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-lazy (0.67s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-class (0.75s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-mutable-array-unread (0.69s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-reference-wrong-array (0.68s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-signature-wrong-array (0.58s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-types-wrong-array (0.69s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-types (0.66s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-signature (0.67s)
+    --- PASS: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-array (0.58s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=566
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	80.394s
+FAIL

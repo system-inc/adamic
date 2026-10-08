@@ -21,6 +21,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if l.isLibraryType(target, "Map", "ReadonlyMap") {
 		return l.mapViewContract(node, target)
 	}
+	if l.stringDictionary(target) || l.finitePartialRecordElement(target) != nil {
+		return viewDictionaryContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+	}
 	family := l.unsupportedViewFamily(target)
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
@@ -89,6 +92,10 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 // Demand uses the same allocations, joined arguments/results and projected
 // stores as shape certification. Unknown is never an empty proof of safety.
 func (l *lowering) checkLazyViewReads() error {
+	// Untagged recursive read hook: all reserved array/interface descendants
+	// are complete now; re-evaluate only this adapter's provisional refusal.
+	l.certifyUntaggedCallableProducers()
+	l.completeUntaggedRecursiveContracts()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
 		return nil
@@ -158,10 +165,25 @@ func (l *lowering) checkLazyViewReads() error {
 		var receiver ir.Expression
 		var typeID, receiverTypeID int
 		var field, where string
+		operationFamily := ""
 		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
 			receiver, typeID, field, where = array, read.ViewTypeID, "[element]", read.View
 		}
 		switch read := node.(type) {
+		case ir.RecordCall:
+			if read.Method != "get" && read.Method != "values" && read.Method != "entries" {
+				return true
+			}
+			receiver, typeID, field, where = read.Arguments[0], read.ViewTypeID, "[dictionary element]", read.ViewWhere
+			if read.Method == "values" || read.Method == "entries" {
+				operationFamily = "dictionary enumeration"
+			} else if read.DictionaryRead == nil {
+				operationFamily = "dictionary read without a supported contract"
+			} else if id := program.ViewContractTypes[typeID]; id != 0 {
+				if _, ok := ir.DictionaryReadKinds(program, id); !ok {
+					operationFamily = "dictionary element"
+				}
+			}
 		case ir.Property:
 			if !program.CheckedFields[read.Name] {
 				return true
@@ -188,14 +210,16 @@ func (l *lowering) checkLazyViewReads() error {
 			return true
 		}
 		contract := program.ViewContractTypes[typeID]
-		family := ""
+		family := operationFamily
 		if contract != 0 {
-			family = program.ViewContracts[contract-1].Unsupported
+			if unsupported := program.ViewContracts[contract-1].Unsupported; unsupported != "" {
+				family = unsupported
+			}
 		}
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" && !l.viewIntersectionReadChecks(contract) {
+		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) {
 			family = unsupportedFields[field]
 		}
 		if family == "" {
@@ -223,7 +247,7 @@ func viewAggregate(value ir.Expression) bool {
 		return false
 	}
 	switch value.Type() {
-	case ir.Object, ir.Array, ir.Map, ir.Union, ir.Closure:
+	case ir.Object, ir.Record, ir.Array, ir.Map, ir.Union, ir.Closure:
 		return true
 	}
 	return false

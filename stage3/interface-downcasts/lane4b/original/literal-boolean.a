@@ -1,0 +1,13 @@
+import type { LiteralType } from 'original-tsc-types';
+interface Base { readonly flags: number; }
+function read(type: LiteralType): string {
+ const member = type.value;
+ if (typeof member === 'string') return member;
+ if (typeof member === 'number') return `${member}`;
+ if (typeof member === 'boolean') return 'wrong';
+ return `${member.negative}:${member.base10Value}`;
+}
+const poison = `${42}` === '42' ? false : 'plain';
+const concrete = { flags: 1, value: poison };
+const base: Base = concrete;
+console.log(read(base as LiteralType));

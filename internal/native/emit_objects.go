@@ -139,7 +139,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			slot := e.temporary()
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldRepresentation(field.Value))
+			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, fieldInitialRepresentation(field))
 			e.line("adamic_object_contracts(%s)[%s.index] = %d;", object, cache, field.Contract)
 			e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
 			if field.Value.Type().IsReference() {
@@ -181,7 +181,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		e.line("%s->real_type = %s;", object, cString(e.program.Classes[literal.Class-1].Name))
 	}
 	for index, field := range literal.Fields {
-		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldRepresentation(field.Value))
+		e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
 		e.line("adamic_object_contracts(%s)[%d] = %d;", object, index, field.Contract)
 		if field.Uninitialized {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
@@ -347,6 +347,21 @@ func fieldRepresentation(value ir.Expression) int {
 	switch value.(type) {
 	case ir.Null:
 		return 12
+	case ir.Undefined:
+		// Untagged recursive producer hook: explicit reference undefined is
+		// initialized semantic undefined, distinct from null and absent slots.
+		if value.Type().IsReference() {
+			return 13
+		}
 	}
 	return int(value.Type())
+}
+
+// Reserved boxed union slots retain their physical write representation. Their
+// readiness bit refuses reads; there is no initialized undefined payload yet.
+func fieldInitialRepresentation(field ir.Field) int {
+	if field.Uninitialized && field.Value.Type() == ir.Union {
+		return int(ir.Union)
+	}
+	return fieldRepresentation(field.Value)
 }

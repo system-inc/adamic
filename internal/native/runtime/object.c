@@ -199,6 +199,7 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
 	const adamic_object *owner = NULL;
 	adamic_value *slot = adamic_object_read_mode(object, name, cache, expression, type, &owner);
+	if (wanted == 14) wanted = 4;
 	unsigned char actual = adamic_object_field_types(owner)[cache->index];
 	// Boxed unions and packed maybe-numbers have a real runtime tag. Convert only
 	// after that tag proves which payload is live; never interpret a pointer as a number.
@@ -215,13 +216,13 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		adamic_maybe_number unpacked = adamic_maybe_number_unpack(slot->number);
 		if (unpacked.present) { return (adamic_value){.number = unpacked.number}; }
 	}
-	if (actual == wanted && ((wanted >= 1 && wanted <= 6) || wanted == 8)) {
+	if ((actual == wanted || (actual == 14 && wanted == 4)) && ((wanted >= 1 && wanted <= 6) || wanted == 8)) {
 		if (wanted <= 2) { return *slot; }
 		const adamic_heap *reference = slot->reference;
 		enum adamic_kind kind = wanted == 3 ? adamic_kind_string : wanted == 4 ? adamic_kind_object : wanted == 5 ? adamic_kind_array : wanted == 8 ? adamic_kind_closure : adamic_kind_map;
 		if (reference != NULL && reference->kind == kind) { return *slot; }
 	}
-	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : actual == 4 ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : actual == 12 ? "null" : actual == 13 ? "nullish" : "unsupported representation";
+	const char *found = actual == 1 ? "number" : actual == 2 ? "boolean" : actual == 3 ? "string" : (actual == 4 || actual == 14) ? "object" : actual == 5 ? "array" : actual == 6 ? "Map" : actual == 7 ? "number" : actual == 8 ? "function" : actual == 11 ? "object" : actual == 12 ? "null" : actual == 13 ? "nullish" : "unsupported representation";
 	if (actual >= 3 && actual <= 6 && slot->reference == NULL) { found = "nullish"; }
 	if (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) { found = "nullish"; }
 	if (actual == 10) {
@@ -254,7 +255,10 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 	adamic_value *slot = adamic_object_optional_field(object, name, cache);
 	if (slot != NULL) {
 		unsigned char actual = adamic_object_field_types(object)[cache->index];
-		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
+		// Untagged explicit-undefined producer hook: semantic undefined still
+        // occupies a reference slot; replacing it with a reference is safe.
+        bool reference_write = (wanted >= 3 && wanted <= 6) || wanted == 8 || wanted == 10;
+        if (actual == wanted || (actual == 13 && reference_write && object->shape->references[cache->index]) || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);
 }
@@ -263,6 +267,7 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 // absent slot or undefined payload must never be interpreted as numeric bits.
 static adamic_value object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional, bool undefined_member) {
  adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+ // Optional chaining permits a missing receiver, not a missing required field.
  bool missing = (object == NULL && optional) || (object != NULL && slot == NULL && absent);
  if (slot != NULL && (absent || undefined_member || wanted == 7 || wanted == 9) && adamic_object_initialized(object)[cache->index]) {
   unsigned char actual = adamic_object_field_types(object)[cache->index];

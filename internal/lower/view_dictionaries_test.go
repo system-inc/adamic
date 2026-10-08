@@ -39,7 +39,7 @@ func TestViewDictionaryDescriptors(t *testing.T) {
 				t.Fatal(err)
 			}
 			descriptor := l.result.ViewContracts[id-1]
-			if descriptor.Element == 0 || descriptor.Unsupported != "dictionary source dispatch" {
+			if descriptor.Element == 0 || descriptor.Kind != ir.ViewDictionary {
 				t.Fatalf("missing obligation: %#v", descriptor)
 			}
 			if supportedSlotContract(l.result, id, map[ir.ViewContractID]bool{}) {
