@@ -1,0 +1,383 @@
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -224,6 +224,8 @@
+ 	adamic_heap heap;
+ 	const adamic_shape *shape;
+ 	const adamic_class *class;
++	// An ordinary counted graph edge; never exempt from ownership proofs.
++	adamic_object *prototype;
+ 	bool frozen;
+ 	bool sealed;
+ 	bool nonextensible;
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -8,6 +8,7 @@
+ 	adamic_object *object = adamic_allocate(sizeof *object + shape->count * sizeof object->slots[0], adamic_kind_object);
+ 	object->shape = shape;
+ 	object->class = NULL;
++	object->prototype = NULL;
+ 	object->frozen = false;
+ 	object->sealed = false;
+ 	object->nonextensible = false;
+--- a/internal/native/runtime/region.c
++++ b/internal/native/runtime/region.c
+@@ -63,6 +63,7 @@
+ 	object->heap.slab = ADAMIC_REGION_VALUE;
+ 	object->shape = shape;
+ 	object->class = NULL;
++	object->prototype = NULL;
+ 	object->frozen = false;
+ 	object->sealed = false;
+ 	object->nonextensible = false;
+--- a/internal/native/runtime/class_inheritance.c
++++ b/internal/native/runtime/class_inheritance.c
+@@ -28,6 +28,7 @@
+ }
+ 
+ void adamic_object_free_children(adamic_object *object, void (*release)(void *)) {
++	if (object->prototype != NULL && object->prototype->heap.references != 0) { release(object->prototype); }
+ 	if (object->has_captured_stack) {
+ 		adamic_heap *stack = object->captured_stack.reference;
+ 		if (stack != NULL && stack->references != 0) { release(stack); }
+--- a/internal/native/runtime/share.c
++++ b/internal/native/runtime/share.c
+@@ -76,6 +76,7 @@
+ 		case adamic_kind_string: append(&pending, ((adamic_string *)heap)->owner); break;
+ 		case adamic_kind_object: {
+ 			adamic_object *object = (adamic_object *)heap;
++			append(&pending, object->prototype);
+ 			for (size_t i = 0; i < object->shape->count; i++) {
+ 				if (object->shape->references[i]) { append(&pending, object->slots[i].reference); }
+ 			}
+--- /dev/null
++++ b/internal/native/runtime/library_prototypes.h
+@@ -0,0 +1,8 @@
++#ifndef ADAMIC_LIBRARY_PROTOTYPES_H
++#define ADAMIC_LIBRARY_PROTOTYPES_H
++#include "adamic.h"
++adamic_object *adamic_object_intrinsic_prototype(void);
++adamic_object *adamic_object_create_prototype(adamic_object *prototype);
++adamic_object *adamic_object_set_prototype(adamic_object *object, adamic_object *prototype);
++adamic_object *adamic_object_get_prototype(adamic_object *object);
++#endif
+--- /dev/null
++++ b/internal/native/runtime/library_prototypes.c
+@@ -0,0 +1,34 @@
++// Restricted V8 JSObject::SetPrototype, src/objects/js-objects.cc.
++// The initial proof admits only empty prototypes. Every link is counted.
++#include "library_prototypes.h"
++#include "library_errors.h"
++static const adamic_shape empty_shape = {0, NULL, NULL, NULL};
++// No source program may mutate this immortal intrinsic identity.
++static adamic_object object_prototype = {.heap = {.kind = adamic_kind_object}, .shape = &empty_shape};
++adamic_object *adamic_object_intrinsic_prototype(void) { return &object_prototype; }
++adamic_object *adamic_object_get_prototype(adamic_object *object) {
++ return adamic_retain(object->prototype != NULL ? object->prototype : &object_prototype);
++}
++adamic_object *adamic_object_create_prototype(adamic_object *prototype) {
++ adamic_object *object = adamic_object_new(&empty_shape);
++ object->prototype = adamic_retain(prototype);
++ return object;
++}
++adamic_object *adamic_object_set_prototype(adamic_object *object, adamic_object *prototype) {
++ adamic_object *previous = object->prototype != NULL ? object->prototype : &object_prototype;
++ if (previous == prototype) { return adamic_retain(object); }
++ if (object->nonextensible) {
++  adamic_library_throw("TypeError", "#<Object> is not extensible", sizeof "#<Object> is not extensible"-1);
++  return NULL;
++ }
++ for (adamic_object *cursor=prototype; cursor!=NULL; cursor=cursor->prototype) {
++  if (cursor==object) {
++   adamic_library_throw("TypeError", "Cyclic __proto__ value", sizeof "Cyclic __proto__ value"-1);
++   return NULL;
++  }
++ }
++ adamic_retain(prototype);
++ adamic_release(object->prototype);
++ object->prototype=prototype;
++ return adamic_retain(object);
++}
+--- /dev/null
++++ b/internal/lower/library_prototype_links.go
+@@ -0,0 +1,105 @@
++package lower
++
++import (
++	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"github.com/system-inc/adamic/internal/ir"
++	"strings"
++)
++
++// Empty complete shapes cannot contain a field back-edge. Prototype-only cycles
++// are rejected before retain. Nonempty prototypes require inherited field
++// dispatch and the compiler's ordinary graph-region ownership proof.
++func (l *lowering) objectPrototypeLink(node *ast.Node, name string) (ir.Expression, bool, error) {
++	fail := func(reason string) (ir.Expression, bool, error) {
++		return nil, true, l.notYet(node, "Object."+name+": "+reason)
++	}
++	args := node.AsCallExpression().Arguments.Nodes
++	if name == "setPrototypeOf" && strings.Contains(l.program.Where(node), ".a:") {
++		return fail("changing a prototype after creation is outside the .a sound subset; use a .ts program")
++	}
++	count := 1
++	if name == "setPrototypeOf" {
++		count = 2
++	}
++	if len(args) != count {
++		return fail("unproven argument count")
++	}
++	prototype := args[0]
++	if name == "setPrototypeOf" {
++		prototype = args[1]
++	}
++	if name == "getPrototypeOf" {
++		if !l.exactObject(args[0], 0) && !l.emptyPrototypeAllocation(args[0]) {
++			return fail("receiver identity and prototype provenance are unproven")
++		}
++	} else {
++		intrinsic := l.objectPrototypeObject(prototype)
++		if !intrinsic && (!l.exactObject(prototype, 0) || len(l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(prototype))) != 0) {
++			for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(prototype)) {
++				of, known := l.representation(l.checker.GetTypeOfSymbol(field))
++				if !known || of == ir.Object || of == ir.Array || of == ir.Map || of == ir.Closure || of == ir.Union {
++					return fail("field '" + field.Name + "' plus [[Prototype]] link can close a counted cycle; compiler graph-region proof is the way out")
++				}
++			}
++			return fail("prototype has inherited data, null identity, or hidden fields; inherited dispatch and compiler graph-region proof are required")
++		}
++		if name == "setPrototypeOf" && !l.exactObject(args[0], 0) && !l.emptyPrototypeAllocation(args[0]) {
++			return fail("receiver field '<hidden field>' plus [[Prototype]] link is unproven; compiler graph-region proof is the way out")
++		}
++		if name == "create" {
++			parent := node.Parent
++			if parent == nil || parent.Kind != ast.KindVariableDeclaration || parent.AsVariableDeclaration().Type == nil || len(l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(parent.Name()))) != 0 {
++				return fail("fresh result must have an explicit empty object view; inherited data fields are not implemented")
++			}
++		}
++	}
++	call := ir.ObjectCall{Method: name, Returns: ir.Object}
++	for _, arg := range args {
++		if l.objectPrototypeObject(arg) {
++			call.Arguments = append(call.Arguments, ir.ObjectCall{Method: "intrinsicObjectPrototype", Returns: ir.Object})
++			continue
++		}
++		value, err := l.expression(arg)
++		if err != nil {
++			return nil, true, err
++		}
++		if value.Type() != ir.Object {
++			return fail("receiver or prototype is not a proven plain object")
++		}
++		call.Arguments = append(call.Arguments, value)
++	}
++	return call, true, nil
++}
++func (l *lowering) emptyPrototypeAllocation(node *ast.Node) bool {
++	node = ast.SkipParentheses(node)
++	if !ast.IsIdentifier(node) {
++		return false
++	}
++	symbol := l.symbol(node)
++	if symbol == nil || len(symbol.Declarations) != 1 {
++		return false
++	}
++	declaration := symbol.Declarations[0]
++	if declaration.Kind != ast.KindVariableDeclaration {
++		return false
++	}
++	variable := declaration.AsVariableDeclaration()
++	if variable.Type == nil || variable.Initializer == nil || l.objectBindingAssigned(declaration, symbol) {
++		return false
++	}
++	if len(l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(node))) != 0 {
++		return false
++	}
++	initializer := ast.SkipParentheses(variable.Initializer)
++	if initializer.Kind != ast.KindCallExpression {
++		return false
++	}
++	call := initializer.AsCallExpression()
++	callee := ast.SkipParentheses(call.Expression)
++	return callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "create" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object")
++}
++
++func (l *lowering) objectPrototypeObject(node *ast.Node) bool {
++	node = ast.SkipParentheses(node)
++	return node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "prototype" && node.AsPropertyAccessExpression().QuestionDotToken == nil && l.isLibraryGlobal(node.AsPropertyAccessExpression().Expression, "Object")
++}
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@ -31,7 +31,7 @@
+ 				}
+ 			}
+ 		}
+-		return refused("prototypes expose or replace fields outside the declared shape; use a declared object or class with composition")
++		return l.objectPrototypeLink(node, name)
+ 	case "fromEntries":
+ 		return refused("tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map")
+ 	case "groupBy":
+--- a/internal/native/library_object.go
++++ b/internal/native/library_object.go
+@@ -2,6 +2,7 @@
+ 
+ import (
+ 	"fmt"
++	"strings"
+ 
+ 	"github.com/system-inc/adamic/internal/ir"
+ )
+@@ -12,6 +13,17 @@
+ 		arguments = append(arguments, e.value(argument))
+ 	}
+ 	switch call.Method {
++	case "intrinsicObjectPrototype":
++		e.declarations = append(e.declarations, "#include \"library_prototypes.h\"")
++		return e.own(ir.Object, "adamic_object_intrinsic_prototype()")
++	case "create", "setPrototypeOf", "getPrototypeOf":
++		e.declarations = append(e.declarations, "#include \"library_prototypes.h\"")
++		function := map[string]string{"create": "create", "setPrototypeOf": "set", "getPrototypeOf": "get"}[call.Method]
++		value := e.own(ir.Object, fmt.Sprintf("adamic_object_%s_prototype(%s)", function, strings.Join(arguments, ", ")))
++		if call.Method == "setPrototypeOf" {
++			e.checkThrown()
++		}
++		return value
+ 	case "errorIsType":
+ 		e.declarations = append(e.declarations, "#include \"library_errors.h\"")
+ 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_library_error_is_type(%s, %s)", arguments[0], arguments[1]))
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -749,6 +749,9 @@
+ 	case ir.NodeBufferCall:
+ 		return e.nodeBufferCall(expression)
+ 	case ir.ObjectCall:
++		if expression.Method == "intrinsicObjectPrototype" {
++			return "Object.prototype"
++		}
+ 		if expression.Method == "errorIsType" {
+ 			return "(" + e.value(expression.Arguments[0]) + " instanceof globalThis[" + e.value(expression.Arguments[1]) + "])"
+ 		}
+--- a/internal/ir/library_errors.go
++++ b/internal/ir/library_errors.go
+@@ -8,7 +8,7 @@
+ 	case StringCall:
+ 		return n.Method == "repeat" || n.Method == "padStart" || n.Method == "padEnd" || n.Method == "normalize"
+ 	case ObjectCall:
+-		return n.Method == "assign"
++		return n.Method == "assign" || n.Method == "setPrototypeOf"
+ 	}
+ 	return false
+ }
+--- a/docs/runtime-statics.md
++++ b/docs/runtime-statics.md
+@@ -476,3 +476,9 @@
+ `runtime-file:library_errors.h`. All error strings are automatic constants or
+ owned heap copies. There are no mutable statics or lazy registries; the pending
+ error uses the existing thread-local adamic_thrown protocol.
++
++
++Prototype files: `runtime-file:library_prototypes.c`, `runtime-file:library_prototypes.h`.
++`library_prototypes.c:object_prototype:1` is a statically initialized immortal
++empty intrinsic with no writers. Lowering prevents it from being a mutation
++receiver. `empty_shape` is const; all counted links live on heap or region objects.
+--- a/THIRD_PARTY_NOTICES.md
++++ b/THIRD_PARTY_NOTICES.md
+@@ -50,6 +50,9 @@
+     `string_repeat_impl.h`, `normalize.c`, `number.c`, `dtoa.c`, `radix.c`, after
+     src/builtins/builtins-number.cc, string-repeat.tq, string-pad.tq and
+     src/common/message-template.h, V8 13.6.233);
++  - Proven counted prototype links (`internal/native/runtime/library_prototypes.c`,
++    `library_prototypes.h`, `internal/lower/library_prototype_links.go`, after
++    JSObject::SetPrototype in src/objects/js-objects.cc, V8 13.6.233);
+   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
+     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
+     V8 13.6.233.17);
+--- /dev/null
++++ b/internal/oracle/testdata/scout22_prototype_create.a
+@@ -0,0 +1,4 @@
++
++const prototype = {};
++const child: {} = Object.create(prototype);
++console.log(`${Object.is(Object.getPrototypeOf(child),prototype)}`);
+--- /dev/null
++++ b/internal/oracle/testdata/scout22_prototype_links.a
+@@ -0,0 +1,11 @@
++
++// This file must be refused as .a. The dedicated oracle copies it to .ts.
++const first = {};
++const second = {};
++const fresh: {} = Object.create(first);
++console.log(`${Object.is(Object.getPrototypeOf(fresh),first)}`);
++Object.setPrototypeOf(first,second);
++console.log(`${Object.is(Object.getPrototypeOf(first),second)}`);
++try { Object.setPrototypeOf(second,first); console.log('cycle accepted'); }
++catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
++console.log(`${Object.is(Object.getPrototypeOf(fresh),first)}`);
+--- /dev/null
++++ b/internal/oracle/scout22_prototype_links_test.go
+@@ -0,0 +1,66 @@
++package oracle
++
++import (
++	"github.com/system-inc/adamic/internal/ir"
++	"github.com/system-inc/adamic/internal/native"
++	"os"
++	"path/filepath"
++	"reflect"
++	"testing"
++)
++
++func init() {
++	for _, fixture := range []struct {
++		path            string
++		lowers, checked bool
++	}{
++		{"internal/oracle/testdata/scout22_prototype_create.a", true, false},
++		{"internal/oracle/testdata/scout22_prototype_links.a", false, false},
++	} {
++		fixtures = append(fixtures, fixture)
++	}
++}
++func TestScout22PrototypeLinks(t *testing.T) {
++	original, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout22_prototype_links.a"))
++	source, err := os.ReadFile(original)
++	if err != nil {
++		t.Fatal(err)
++	}
++	path := filepath.Join(t.TempDir(), "main.ts")
++	if err = os.WriteFile(path, source, 0o644); err != nil {
++		t.Fatal(err)
++	}
++	program, err := lowered(t, path)
++	if err != nil {
++		t.Fatal(err)
++	}
++	expected := onNode(t, original)
++	result, binary := natively(t, program)
++	if difference := disagreement(expected, result); difference != "" {
++		t.Fatal(difference)
++	}
++	if report := leaks(t, program, binary); report != "" {
++		t.Fatal(report)
++	}
++	if difference := disagreement(expected, onJavaScriptBackend(t, program)); difference != "" {
++		t.Fatal(difference)
++	}
++	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
++		if difference := disagreement(expected, onWASI(t, native.C(program))); difference != "" {
++			t.Fatal(difference)
++		}
++	}
++	changed := false
++	mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), func(value ir.Expression) ir.Expression {
++		if call, ok := value.(ir.ObjectCall); ok && call.Method == "setPrototypeOf" && !changed {
++			call.Arguments[1] = ir.ObjectCall{Method: "intrinsicObjectPrototype", Returns: ir.Object}
++			changed = true
++			return call
++		}
++		return value
++	})
++	if !changed {
++		t.Fatal("no prototype link to mutate")
++	}
++	scout22MutantMatchesOnlyNode(t, original, program)
++}
