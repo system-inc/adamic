@@ -343,7 +343,12 @@ func (l *lowering) censusBooleanLogical(node *ast.Node, operator ast.Kind, left,
 	}
 	of, err := l.typeOf(node)
 	if err != nil || !boolean(of) {
-		return nil, false
+		// Two booleans give a boolean whatever the checker narrowed the whole to: a branch it
+		// knows is dead types the expression never, and that branch must still lower.
+		if left.Type() != ir.Boolean || right.Type() != ir.Boolean {
+			return nil, false
+		}
+		of = ir.Boolean
 	}
 	lowered := ir.And
 	if operator == ast.KindBarBarToken {
