@@ -317,7 +317,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/host/21_createHash.a:14:18: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/host/21_createHash.a:18:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet"}
   },
   {
     "file": "22_createHash_fallback.a",
