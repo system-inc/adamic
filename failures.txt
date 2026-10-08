@@ -181,6 +181,284 @@
 === RUN   TestWASIRequest
 --- FAIL: TestWASIRequest (0.86s)
 
+== github.com/system-inc/adamic/internal/worker TestWorkers/panic
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/panic (1.02s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers/compute
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/compute (1.09s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers/echo
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/echo (1.09s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers/routing
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/routing (1.01s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers/decode_json
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/decode_json (1.93s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers
+=== RUN   TestWorkers
+--- FAIL: TestWorkers (13.01s)
+
+== github.com/system-inc/adamic/internal/split TestFixtures/shapes.a
+        
+        want:
+        Box_new javascript signature: constructor not crossable
+        data wasm entry
+        tooDeep javascript signature: parameter 1 not crossable
+        classParameter javascript signature: parameter 1 not crossable
+        returnsClosure javascript signature: return not crossable
+        closure javascript too small to cross
+        unionParameter javascript signature: parameter 1 not crossable
+        tupleParameter javascript signature: parameter 1 not crossable
+        throughAlias wasm
+        closure wasm
+        mutationInCallee javascript writes parameter 1
+        writeItems javascript writes parameter 1
+        copiedArray wasm
+        passthrough javascript too small to cross
+        mutationThroughReturn javascript writes parameter 1
+        glue javascript impure: console
+        Box_new_initialize javascript signature: return not crossable
+--- FAIL: TestFixtures/shapes.a (0.29s)
+
+== github.com/system-inc/adamic/internal/split TestFixtures
+=== RUN   TestFixtures
+--- FAIL: TestFixtures (14.62s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmMultipleFunctions
+    wasm_test.go:207: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmMultipleFunctions (9.71s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/stats
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/stats (1.55s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/sieve
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/sieve (1.55s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/panic
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/panic (1.77s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/words
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/words (1.79s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/transform
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/transform (1.33s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers
+=== RUN   TestWasmWorkers
+=== PAUSE TestWasmWorkers
+=== CONT  TestWasmWorkers
+--- FAIL: TestWasmWorkers (10.33s)
+
 == github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (skipped; the census table classes it required-input)
 census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 === RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
@@ -259,4 +537,53 @@ census: Set ADAMIC_GITIGNORE_LARGEST=1; test generates an ignore file of exactly
 === RUN   TestOptionalWideningCensus
     optional_widening_census_test.go:28: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project
 --- SKIP: TestOptionalWideningCensus (0.00s)
+
+== github.com/system-inc/adamic/internal/split TestCodegenSnapshot (skipped; no census row matches its name)
+=== RUN   TestCodegenSnapshot
+    codegen_test.go:21: set ADAMIC_SPLIT_SNAPSHOT to record every oracle fixture
+--- SKIP: TestCodegenSnapshot (0.00s)
+
+== github.com/system-inc/adamic/internal/split TestAnalyzeOracleFixtures (skipped; no census row matches its name)
+=== RUN   TestAnalyzeOracleFixtures
+    codegen_test.go:83: set ADAMIC_SPLIT_SWEEP for the complete oracle IR sweep
+--- SKIP: TestAnalyzeOracleFixtures (0.00s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkerDecodeJSON (skipped; no census row matches its name)
+=== RUN   TestWorkerDecodeJSON
+    json_decode_test.go:17: set ADAMIC_TEST_WORKER_JSON=1 for native/Node/Worker JSON decoding comparisons
+--- SKIP: TestWorkerDecodeJSON (0.00s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkerEncodeJSON (skipped; no census row matches its name)
+=== RUN   TestWorkerEncodeJSON
+    json_encode_test.go:17: set ADAMIC_TEST_WORKER_JSON=1 for native/Node/Worker JSON encoding comparisons
+--- SKIP: TestWorkerEncodeJSON (0.00s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkerMutants (skipped; no census row matches its name)
+=== RUN   TestWorkerMutants
+    mutants_test.go:19: set ADAMIC_WORKER_MUTANTS=1 to run Worker mutants
+--- SKIP: TestWorkerMutants (0.00s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkerMutants (skipped; no census row matches its name)
+=== RUN   TestWasmWorkerMutants
+    wasm_mutants_test.go:12: set ADAMIC_WORKER_MUTANTS=1 to run Wasm Worker mutants
+--- SKIP: TestWasmWorkerMutants (0.00s)
+
+== github.com/system-inc/adamic/internal/worker/wasm TestGeneratedCrossing (skipped; no census row matches its name)
+=== RUN   TestGeneratedCrossing
+    crossing_test.go:44: missing usable WASI clang, linker, sysroot or builtins: exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- SKIP: TestGeneratedCrossing (0.37s)
+
+== github.com/system-inc/adamic/internal/worker/wasm TestWorkersWASM (skipped; no census row matches its name)
+=== RUN   TestWorkersWASM
+    wasm_test.go:45: missing usable WASI clang, linker, sysroot or builtins: exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- SKIP: TestWorkersWASM (0.50s)
+
+== github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterThroughput (skipped; no census row matches its name)
+=== RUN   TestPrinterThroughput
+    performance_test.go:17: set ADAMIC_GRAPHQL_PRINTER_BENCH=1 to measure verified throughput
+--- SKIP: TestPrinterThroughput (0.00s)
 
