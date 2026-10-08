@@ -41,6 +41,7 @@ void adamic_object_check_write(const adamic_object *object, const char *name) {
 }
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
+ if (object->has_captured_stack && key->length == 5 && memcmp(key->bytes, "stack", 5) == 0) return true;
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
   if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
@@ -100,7 +101,7 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  adamic_array *keys = adamic_array_new(object->shape->count, true);
  for (size_t at = 0; at < object->shape->count; at++) {
   const char *name = object->shape->names[indices[at]];
-  if (name[0] == '#') continue;
+  if (name[0] == '#' || (object->has_captured_stack && strcmp(name, "stack") == 0)) continue;
   adamic_array_push(keys, (adamic_value){.reference = key_string(name)});
  }
  free(indices);
@@ -118,7 +119,7 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
  for (size_t at = 0; at < object->shape->count; at++) {
   size_t index = indices[at];
   const char *name = object->shape->names[index];
-  if (name[0] == '#') continue;
+  if (name[0] == '#' || (object->has_captured_stack && strcmp(name, "stack") == 0)) continue;
   adamic_value value = object->slots[index];
   if (references) adamic_retain(value.reference);
   if (entries) {
@@ -138,6 +139,7 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
  for (size_t at = 0; at < source->shape->count; at++) {
   size_t index = indices[at];
   const char *name = source->shape->names[index];
+  if (source->has_captured_stack && strcmp(name, "stack") == 0) continue;
   adamic_object_check_write(target, name);
   adamic_slot_cache cache = {NULL, 0};
   adamic_value *slot = adamic_object_field(target, name, &cache);

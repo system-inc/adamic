@@ -16,6 +16,9 @@ import (
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
 // adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
 func (e *emitter) fieldSlot(object string, name string, class int) string {
+	if name == "stack" {
+		return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
+	}
 	// Uniform offsets describe own storage; static names may instead read live parent data.
 	if e.staticFieldName(name) {
 		return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
@@ -70,6 +73,9 @@ func (e *emitter) staticFieldName(name string) bool {
 // already has that guard. Unknown, absent and conflicting layouts keep checked lookup.
 // Frozen checks and value evaluation remain at the statement. Only C names may repeat.
 func (e *emitter) writeFieldSlot(object, name string, class int) string {
+	if name == "stack" {
+		return fmt.Sprintf("adamic_object_write_field(%s, %s, &%s)", object, cString(name), e.cache())
+	}
 	lookup := fmt.Sprintf("adamic_object_write_field(%s, %s, &%s)", object, cString(name), e.cache())
 	if !cName.MatchString(object) {
 		return lookup
