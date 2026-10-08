@@ -68,6 +68,10 @@ class FailClosed(unittest.TestCase):
             handle.write("internal/oracle/testdata/a.a\n")
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
             handle.write("inert *.md\nstage3 stage3/*\n")
+        # The full gate runs stage 3's lane on every main, so the tree has one.
+        os.makedirs(os.path.join(self.tree, "stage3/lane"))
+        with open(os.path.join(self.tree, "stage3/lane/run.sh"), "w") as handle:
+            handle.write("exit 0\n")
         for command in (["init", "-q"], ["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
             realRun(["git", "-C", self.tree] + command, check=True)
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
