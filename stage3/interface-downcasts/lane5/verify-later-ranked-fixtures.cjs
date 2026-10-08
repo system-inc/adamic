@@ -2,7 +2,7 @@ const fs=require('fs');
 const path=require('path');
 const ts=require(path.join(process.argv[2],'lib/typescript.js'));
 const evidence=JSON.parse(fs.readFileSync(path.join(__dirname,'later-ranked-original-witnesses.json'),'utf8'));
-const directories=new Map([[61,'string-from-node'],[67,'local-name'],[68,'disallowed-comma'],[69,'token-start'],[70,'true'],[73,'if-statement'],[74,'null'],[75,'parenthesized'],[76,'type-reference']]);
+const directories=new Map([[61,'string-from-node'],[67,'local-name'],[68,'disallowed-comma'],[69,'token-start'],[70,'true'],[72,'system-exit'],[73,'if-statement'],[74,'null'],[75,'parenthesized'],[76,'type-reference']]);
 const ranks=new Set(process.argv[3].split(',').map(Number));
 const normalized=text=>text.replace(/\s+/g,'');
 let count=0;

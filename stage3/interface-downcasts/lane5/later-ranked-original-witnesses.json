@@ -108,6 +108,27 @@
       "declarationLine": 8815
     },
     {
+      "rank": 72,
+      "type": "System",
+      "field": "exit",
+      "candidateReads": 22,
+      "witness": {
+        "file": "src/compiler/watch.ts",
+        "line": 900,
+        "column": 5
+      },
+      "read": "system.exit",
+      "readKind": "property",
+      "call": "system.exit(ExitStatus.DiagnosticsPresent_OutputsSkipped)",
+      "utf16Start": 41416,
+      "utf16End": 41427,
+      "fileSha256": "c9d074948345a04d85e87d3c4b3e1a2c8328422c20e0b36b3ee9ae1c7a7ad24e",
+      "declaration": "exit(exitCode?: number): void;",
+      "declarationFile": "src/compiler/sys.ts",
+      "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declarationLine": 1431
+    },
+    {
       "rank": 73,
       "type": "NodeFactory",
       "field": "createIfStatement",

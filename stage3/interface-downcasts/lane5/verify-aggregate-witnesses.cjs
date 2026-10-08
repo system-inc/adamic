@@ -10,7 +10,7 @@ const ranks = new Set(process.argv[3] ? process.argv[3].split(',').map(Number) :
 const pairs = JSON.parse(fs.readFileSync(path.join(__dirname,'unknown-callable-pairs-ranked.json'),'utf8')).filter(p=>ranks.has(p.rank));
 const rows = [];
 for (const pair of pairs) {
- const declarationFile=pair.type==='Scanner'?'src/compiler/scanner.ts':'src/compiler/types.ts';
+ const declarationFile=pair.type==='Scanner'?'src/compiler/scanner.ts':pair.type==='System'?'src/compiler/sys.ts':'src/compiler/types.ts';
  const declarationBytes=fs.readFileSync(path.join(pin,declarationFile));
  const types=ts.createSourceFile(declarationFile,declarationBytes.toString('utf8'),ts.ScriptTarget.Latest,true);
  const w = pair.witness;

@@ -8,6 +8,9 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"system-exit", "exit", "3\n", "3\n3\n7\n", "0", "", "", "", "good,optional-values,wrong-value,wrong-arity,wrong-members"},
+		{"null", "createNull", "3\n", "", "1", "", "", "undefined\n", "good,wrong-value,wrong-arity,wrong-result"},
+		{"parenthesized", "createParenthesizedExpression", "3\n", "", "0", "expression.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"disallowed-comma", "parenthesizeExpressionForDisallowedComma", "3\n", "", "2", "expression.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"token-start", "getTokenStart", "3\n", "", "1", "", "", "bad\n", "good,wrong-value,wrong-arity,wrong-result"},
 		{"true", "createTrue", "3\n", "", "1", "", "", "undefined\n", "good,wrong-value,wrong-arity,wrong-result"},
@@ -81,5 +84,20 @@ func TestCheckedViewCallableLaterRankedUnionRefusal(t *testing.T) {
 	_, err = lowered(t, path)
 	if err == nil || !strings.Contains(err.Error(), "unsupported untagged object union contract") {
 		t.Fatalf("union payload refusal: %v", err)
+	}
+}
+
+func TestCheckedViewCallableLaterRankedBindingRefusal(t *testing.T) {
+	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/good.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "7\n" {
+		t.Fatalf("Node %#v", truth)
+	}
+	_, err = lowered(t, path)
+	if err == nil || !strings.Contains(err.Error(), "unsupported destructuring representation conversion contract") {
+		t.Fatalf("binding refusal: %v", err)
 	}
 }

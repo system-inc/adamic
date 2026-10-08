@@ -639,6 +639,73 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "exit-null-parenthesized",
+      "pairs": 3,
+      "candidateReads": 64,
+      "members": [
+        {
+          "receiver_type_id": 8229,
+          "type": "System",
+          "field": "exit",
+          "declared_types": [
+            "(exitCode?: number | undefined) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 22,
+          "witness": {
+            "file": "src/compiler/watch.ts",
+            "line": 900,
+            "column": 5
+          },
+          "rank": 72,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createNull",
+          "declared_types": [
+            "() => NullLiteral"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 21,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 382,
+            "column": 25
+          },
+          "rank": 74,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createParenthesizedExpression",
+          "declared_types": [
+            "(expression: Expression) => ParenthesizedExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 21,
+          "witness": {
+            "file": "src/compiler/factory/parenthesizerRules.ts",
+            "line": 308,
+            "column": 15
+          },
+          "rank": 75,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
