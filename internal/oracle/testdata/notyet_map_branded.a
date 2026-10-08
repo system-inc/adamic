@@ -1,0 +1,7 @@
+enum InternalSymbolName { Call = "__call", New = "__new" }
+type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | InternalSymbolName;
+const symbols = new Map<__String, number>();
+symbols.set(InternalSymbolName.Call, 11);
+symbols.set(InternalSymbolName.New, 13);
+console.log(`${symbols.get(InternalSymbolName.Call)} ${symbols.get(InternalSymbolName.New)} ${symbols.size}`);
+console.log(`${symbols.delete(InternalSymbolName.Call)} ${symbols.has(InternalSymbolName.Call)} ${symbols.size}`);

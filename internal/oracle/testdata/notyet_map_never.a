@@ -1,0 +1,2 @@
+const empty: ReadonlyMap<never, never> = new Map<never, never>();
+console.log(`${empty.size} ${typeof empty}`);

@@ -1,0 +1,6 @@
+enum InternalSymbolName { Call = "__call" }
+type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | InternalSymbolName;
+function create<K>(): Map<K, number> { return new Map<K, number>(); }
+const branded = create<__String>();
+const unproven = create<any>();
+console.log(`${branded.size} ${unproven.size}`);

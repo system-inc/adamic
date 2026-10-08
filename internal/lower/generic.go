@@ -79,7 +79,9 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		}
 		held, hasRepresentation := l.representation(concrete)
 		if !hasRepresentation {
-			key += ",unread"
+			// Known checker types still distinguish instances. A Map key brand
+			// and any must not share an unread instance and bypass its proof.
+			key += "," + l.genericTypeKey(concrete)
 			name += "_unread"
 			continue
 		}
@@ -142,17 +144,18 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 // This is also where nullable representations can extend the key.
 func (l *lowering) genericTypeKey(proven *checker.Type) string {
 	held, known := l.representation(proven)
-	if !known {
-		return "unread"
+	name := "unrepresented"
+	if known {
+		name = typeName(held)
 	}
 	for index, representative := range l.instantiated {
 		if identicalTypes(l.checker, proven, representative) {
-			return typeName(held) + ":" + strconv.Itoa(index)
+			return name + ":" + strconv.Itoa(index)
 		}
 	}
 	index := len(l.instantiated)
 	l.instantiated = append(l.instantiated, proven)
-	return typeName(held) + ":" + strconv.Itoa(index)
+	return name + ":" + strconv.Itoa(index)
 }
 
 // refuseInstantiatedMutation checks writes whose safety depends on a type parameter's constraint.
