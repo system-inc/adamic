@@ -1,5 +1,5 @@
 Built transitive dictionary array/generic reads and merged finite partial records and MapLike onto the existing shared record table.
-Commits: 5029b110e5ce468ad90946745174e77394914dd2 plus this merge of records-lowering 456c981b1c108abae5f2c8d6ae665cfd6b92e2fe; integration base ba59427c.
+Commits: 5029b110e5ce468ad90946745174e77394914dd2 plus a0e54d22016a00565ee5b61e4b1a9037c92d4f0d merging records-lowering 456c981b1c108abae5f2c8d6ae665cfd6b92e2fe; integration base ba59427c.
 Checks: focused touched-package gate, 39 compiler-source controls, 24 existing record oracle cases, process environment oracle, vet and candidate reproduction pass.
 Mutants: skip-check, accept-wrong-shape and drop-transitive-check caught in C and JavaScript over both fixed and record producers; bad producer certificate and removed cycle check also caught.
 Not covered: rich CompilerOptions unions, enumeration and uncertified writes; 28 candidate pairs / 222 candidate reads remain, exact reachability unmeasured.
@@ -67,6 +67,8 @@ remaining. The first pending pair is ParsedCommandLine.options, 111 reads.
 ## Commands and observed results
 
 All output is retained in logs/group3-*.log; no test command was piped.
+Raw diagnostic logs preserve tool-emitted trailing whitespace; a scoped log
+attribute exempts that formatting from the code whitespace check.
 
 - `ADAMIC_GATE_UNCACHED=1 go test ./internal/ir ./internal/flow ./internal/fresh
   ./internal/lower ./internal/native ./internal/javascript ./internal/oracle
