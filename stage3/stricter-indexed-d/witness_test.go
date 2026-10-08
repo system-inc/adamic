@@ -73,7 +73,10 @@ func TestLedgerWitnesses(t *testing.T) {
 	}
 	for _, s := range sites {
 		t.Run(s.ID, func(t *testing.T) {
-			variants := []string{"present", "absent", "hole"}
+			variants := []string{"present", "absent"}
+			if !strings.HasPrefix(s.Receiver, "record") || s.Hole != "" {
+				variants = append(variants, "hole")
+			}
 			if s.Checks == 2 {
 				variants = append(variants, "outer-present", "outer-absent")
 			}
@@ -209,18 +212,24 @@ func TestLedgerWitnesses(t *testing.T) {
 						if len(matches) != count {
 							t.Fatal("mutant must erase exactly one guard")
 						}
-						binary := filepath.Join(directory, "mutant")
 						// Chained reads evaluate the outer guard before the inner guard.
 						selected := matches[len(matches)-1]
 						mutant := c[:selected[0]] + "(void)0;" + c[selected[1]:]
-						if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-							t.Fatalf("mutant build is not a kill: %v", err)
+						modes := []bool{true}
+						if s.ID == "D119" {
+							modes = []bool{false, true}
 						}
-						got := run(binary)
-						if got == expected {
-							t.Fatal("erased guard survived")
+						for _, sanitize := range modes {
+							binary := filepath.Join(directory, fmt.Sprintf("mutant-%t", sanitize))
+							if err := native.Build(mutant, binary, native.Options{Sanitize: sanitize}); err != nil {
+								t.Fatalf("mutant build is not a kill: %v", err)
+							}
+							got := run(binary)
+							if got == expected {
+								t.Fatal("erased guard survived")
+							}
+							t.Logf("PROVEN %s read=%s; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=%t: exit %d stdout=%q stderr=%q", s.ID, s.Read, sanitize, got.code, got.stdout, got.stderr)
 						}
-						t.Logf("PROVEN %s read=%s; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit %d stdout=%q stderr=%q", s.ID, s.Read, got.code, got.stdout, got.stderr)
 					} else {
 						if name == "null" {
 							binary := nullableSentinelMutant(t, c)

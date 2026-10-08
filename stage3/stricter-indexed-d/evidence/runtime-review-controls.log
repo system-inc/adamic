@@ -31,11 +31,11 @@
          stderr: code:0}
 === RUN   TestNullableRuntimeReview/narrow-slice
     runtime_review_test.go:57: native sanitize=false: {stdout:bc
-        
+
         ul
          stderr:adamic: panic: TypeError: Cannot read properties of null (reading 'slice')
          code:70}, want {stdout:bc
-        
+
         ul
          stderr: code:0}
 === RUN   TestNullableRuntimeReview/narrow-comparison
