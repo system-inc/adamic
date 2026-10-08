@@ -1,0 +1,427 @@
+{
+  "total": 459433440,
+  "inclusive": [
+    {
+      "function": "main",
+      "instructions": 454569330,
+      "percent": 98.9412808088153,
+      "self": 36231,
+      "inclusive": 454569330
+    },
+    {
+      "function": "adamic_function_372_run",
+      "instructions": 452974089,
+      "percent": 98.59406163382448,
+      "self": 13645278,
+      "inclusive": 452974089
+    },
+    {
+      "function": "adamic_function_558_Statements_statement'2",
+      "instructions": 332852475,
+      "percent": 72.44846500507234,
+      "self": 1968467,
+      "inclusive": 332852475
+    },
+    {
+      "function": "adamic_function_528_Statements_statementList'2",
+      "instructions": 242032094,
+      "percent": 52.68055673091624,
+      "self": 223763,
+      "inclusive": 242032094
+    },
+    {
+      "function": "adamic_function_1165_Linter_run",
+      "instructions": 222412578,
+      "percent": 48.410184944308796,
+      "self": 519424,
+      "inclusive": 222412578
+    },
+    {
+      "function": "adamic_function_529_Statements_block'2",
+      "instructions": 211276653,
+      "percent": 45.98634635737442,
+      "self": 90915,
+      "inclusive": 211276653
+    },
+    {
+      "function": "adamic_function_521_Parser_file",
+      "instructions": 189074826,
+      "percent": 41.1539103466217,
+      "self": 3958,
+      "inclusive": 189074826
+    },
+    {
+      "function": "adamic_function_558_Statements_statement",
+      "instructions": 188590418,
+      "percent": 41.04847439925139,
+      "self": 87196,
+      "inclusive": 188590418
+    },
+    {
+      "function": "adamic_function_0_written",
+      "instructions": 168846459,
+      "percent": 36.75101642579609,
+      "self": 18308247,
+      "inclusive": 168846459
+    },
+    {
+      "function": "adamic_function_517_Parser_assignment",
+      "instructions": 132205639,
+      "percent": 28.775798078607426,
+      "self": 282459,
+      "inclusive": 132205639
+    },
+    {
+      "function": "adamic_function_514_Parser_binary",
+      "instructions": 127113697,
+      "percent": 27.66748911441884,
+      "self": 261365,
+      "inclusive": 127113697
+    },
+    {
+      "function": "adamic_function_513_Parser_unary",
+      "instructions": 121478222,
+      "percent": 26.440875091721665,
+      "self": 448883,
+      "inclusive": 121478222
+    },
+    {
+      "function": "adamic_function_445_Parser_next",
+      "instructions": 107559284,
+      "percent": 23.411287606753223,
+      "self": 2350200,
+      "inclusive": 107559284
+    },
+    {
+      "function": "adamic_function_391_Scanner_scan",
+      "instructions": 105437388,
+      "percent": 22.949437028353877,
+      "self": 12525441,
+      "inclusive": 105437388
+    },
+    {
+      "function": "adamic_function_455_Parser_delimitedList",
+      "instructions": 104083133,
+      "percent": 22.654670717917266,
+      "self": 410778,
+      "inclusive": 104083133
+    },
+    {
+      "function": "adamic_function_546_Statements_functionDeclaration'2",
+      "instructions": 102857775,
+      "percent": 22.387960049229328,
+      "self": 50590,
+      "inclusive": 102857775
+    },
+    {
+      "function": "adamic_function_546_Statements_functionDeclaration",
+      "instructions": 99104981,
+      "percent": 21.57112921514812,
+      "self": 40730,
+      "inclusive": 99104981
+    },
+    {
+      "function": "adamic_function_464_Parser_primary",
+      "instructions": 97476049,
+      "percent": 21.216576877817165,
+      "self": 787530,
+      "inclusive": 97476049
+    },
+    {
+      "function": "adamic_function_529_Statements_block",
+      "instructions": 94586478,
+      "percent": 20.587634631036,
+      "self": 8086,
+      "inclusive": 94586478
+    },
+    {
+      "function": "adamic_function_533_Statements_variableList",
+      "instructions": 93882699,
+      "percent": 20.434450526718297,
+      "self": 103839,
+      "inclusive": 93882699
+    },
+    {
+      "function": "adamic_function_528_Statements_statementList",
+      "instructions": 93704585,
+      "percent": 20.395682343017956,
+      "self": 19287,
+      "inclusive": 93704585
+    },
+    {
+      "function": "adamic_function_534_Statements_variableDeclaration",
+      "instructions": 91750638,
+      "percent": 19.970387440670404,
+      "self": 67507,
+      "inclusive": 91750638
+    },
+    {
+      "function": "adamic_function_489_Parser_rootAssignment",
+      "instructions": 89496566,
+      "percent": 19.479767515398965,
+      "self": 18914,
+      "inclusive": 89496566
+    },
+    {
+      "function": "adamic_function_609_closure",
+      "instructions": 89468915,
+      "percent": 19.47374901574426,
+      "self": 5500,
+      "inclusive": 89468915
+    },
+    {
+      "function": "adamic_string_slice",
+      "instructions": 85012212,
+      "percent": 18.5037057816253,
+      "self": 28217474,
+      "inclusive": 85012212
+    },
+    {
+      "function": "adamic_function_508_Parser_array",
+      "instructions": 79816590,
+      "percent": 17.372829892399647,
+      "self": 3179,
+      "inclusive": 79816590
+    },
+    {
+      "function": "adamic_function_517_Parser_assignment'2",
+      "instructions": 61322332,
+      "percent": 13.347381070041397,
+      "self": 772356,
+      "inclusive": 61322332
+    },
+    {
+      "function": "adamic_release",
+      "instructions": 57452548,
+      "percent": 12.505086264508739,
+      "self": 17877834,
+      "inclusive": 57452548
+    },
+    {
+      "function": "adamic_function_514_Parser_binary'2",
+      "instructions": 53497149,
+      "percent": 11.64415655072909,
+      "self": 665293,
+      "inclusive": 53497149
+    },
+    {
+      "function": "adamic_string_append",
+      "instructions": 44864591,
+      "percent": 9.765199285450358,
+      "self": 24207051,
+      "inclusive": 44864591
+    }
+  ],
+  "self": [
+    {
+      "function": "adamic_string_equal",
+      "instructions": 31061536,
+      "percent": 6.760834822994164,
+      "self": 31061536,
+      "inclusive": 34992531
+    },
+    {
+      "function": "adamic_string_locate",
+      "instructions": 30312125,
+      "percent": 6.597718485620028,
+      "self": 30312125,
+      "inclusive": 30312125
+    },
+    {
+      "function": "release_last",
+      "instructions": 28278132,
+      "percent": 6.155000820140563,
+      "self": 28278132,
+      "inclusive": 39574714
+    },
+    {
+      "function": "adamic_string_slice",
+      "instructions": 28217474,
+      "percent": 6.141798037165079,
+      "self": 28217474,
+      "inclusive": 85012212
+    },
+    {
+      "function": "adamic_string_append",
+      "instructions": 24207051,
+      "percent": 5.268891833385049,
+      "self": 24207051,
+      "inclusive": 44864591
+    },
+    {
+      "function": "adamic_function_380_Scanner_code",
+      "instructions": 20100105,
+      "percent": 4.37497649278642,
+      "self": 20100105,
+      "inclusive": 28120778
+    },
+    {
+      "function": "adamic_function_0_written",
+      "instructions": 18308247,
+      "percent": 3.9849617824945436,
+      "self": 18308247,
+      "inclusive": 168846459
+    },
+    {
+      "function": "adamic_release",
+      "instructions": 17877834,
+      "percent": 3.8912783536174467,
+      "self": 17877834,
+      "inclusive": 57452548
+    },
+    {
+      "function": "adamic_allocate",
+      "instructions": 16264564,
+      "percent": 3.5401349975744036,
+      "self": 16264564,
+      "inclusive": 16308632
+    },
+    {
+      "function": "adamic_retain",
+      "instructions": 15075993,
+      "percent": 3.2814313646825535,
+      "self": 15075993,
+      "inclusive": 15075993
+    },
+    {
+      "function": "adamic_function_372_run",
+      "instructions": 13645278,
+      "percent": 2.9700228176686485,
+      "self": 13645278,
+      "inclusive": 452974089
+    },
+    {
+      "function": "adamic_function_391_Scanner_scan",
+      "instructions": 12525441,
+      "percent": 2.7262797849455627,
+      "self": 12525441,
+      "inclusive": 105437388
+    },
+    {
+      "function": "adamic_string_code_point_at",
+      "instructions": 12273296,
+      "percent": 2.671398059314098,
+      "self": 12273296,
+      "inclusive": 15341620
+    },
+    {
+      "function": "adamic_string_units",
+      "instructions": 10074188,
+      "percent": 2.1927415644799386,
+      "self": 10074188,
+      "inclusive": 10074188
+    },
+    {
+      "function": "adamic_string_share",
+      "instructions": 8847738,
+      "percent": 1.925793211743577,
+      "self": 8847738,
+      "inclusive": 25109035
+    },
+    {
+      "function": "adamic_function_1162_RuleSet_visit",
+      "instructions": 7034449,
+      "percent": 1.5311138431717117,
+      "self": 7034449,
+      "inclusive": 24016701
+    },
+    {
+      "function": "usable",
+      "instructions": 6047449,
+      "percent": 1.3162840301742076,
+      "self": 6047449,
+      "inclusive": 6048108
+    },
+    {
+      "function": "adamic_string_put",
+      "instructions": 5754216,
+      "percent": 1.2524591157317586,
+      "self": 5754216,
+      "inclusive": 9342335
+    },
+    {
+      "function": "adamic_function_456_Parser_node",
+      "instructions": 5717202,
+      "percent": 1.2444026712552747,
+      "self": 5717202,
+      "inclusive": 6726120
+    },
+    {
+      "function": "adamic_function_381_Scanner_advance",
+      "instructions": 5694732,
+      "percent": 1.2395118648742678,
+      "self": 5694732,
+      "inclusive": 5694732
+    },
+    {
+      "function": "decode",
+      "instructions": 5265523,
+      "percent": 1.146090497896714,
+      "self": 5265523,
+      "inclusive": 5266068
+    },
+    {
+      "function": "adamic_string_free_index",
+      "instructions": 5159133,
+      "percent": 1.122933715926294,
+      "self": 5159133,
+      "inclusive": 5159368
+    },
+    {
+      "function": "adamic_array_push",
+      "instructions": 5106706,
+      "percent": 1.111522487348766,
+      "self": 5106706,
+      "inclusive": 6547151
+    },
+    {
+      "function": "adamic_function_523_ParseNode_new",
+      "instructions": 4979394,
+      "percent": 1.0838118357253228,
+      "self": 4979394,
+      "inclusive": 8246390
+    },
+    {
+      "function": "adamic_string_allocate",
+      "instructions": 4437102,
+      "percent": 0.965776892513527,
+      "self": 4437102,
+      "inclusive": 14278491
+    },
+    {
+      "function": "adamic_string_concat",
+      "instructions": 4293847,
+      "percent": 0.9345960973149886,
+      "self": 4293847,
+      "inclusive": 9080949
+    },
+    {
+      "function": "adamic_object_free_children",
+      "instructions": 3472277,
+      "percent": 0.7557736763784543,
+      "self": 3472277,
+      "inclusive": 4325712
+    },
+    {
+      "function": "free",
+      "instructions": 3043250,
+      "percent": 0.6623919234089708,
+      "self": 3043250,
+      "inclusive": 4131829
+    },
+    {
+      "function": "adamic_function_503_Parser_suffix",
+      "instructions": 2797950,
+      "percent": 0.6090000762678485,
+      "self": 2797950,
+      "inclusive": 32274734
+    },
+    {
+      "function": "adamic_write_line",
+      "instructions": 2753890,
+      "percent": 0.5994100037646367,
+      "self": 2753890,
+      "inclusive": 2761299
+    }
+  ]
+}

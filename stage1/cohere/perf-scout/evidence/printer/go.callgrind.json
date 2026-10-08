@@ -1,0 +1,427 @@
+{
+  "total": 112306598,
+  "inclusive": [
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.callPluginPrintFunction[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node]",
+      "instructions": 387469396,
+      "percent": 345.01035816257206,
+      "self": 46090,
+      "inclusive": 387469396
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printEstree",
+      "instructions": 342748819,
+      "percent": 305.1902783129447,
+      "self": 188362,
+      "inclusive": 342748819
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printWithoutParentheses",
+      "instructions": 342317091,
+      "percent": 304.80585922476257,
+      "self": 15858,
+      "inclusive": 342317091
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printEstreeNode",
+      "instructions": 342260049,
+      "percent": 304.75506790794253,
+      "self": 88479,
+      "inclusive": 342260049
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.PrintAstToDoc[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node].func2",
+      "instructions": 339583615,
+      "percent": 302.37191852254307,
+      "self": 11703,
+      "inclusive": 339583615
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.PrintAstToDoc[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node].func1",
+      "instructions": 339570980,
+      "percent": 302.3606680704548,
+      "self": 49620,
+      "inclusive": 339570980
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.Call[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node,go.shape.interface { github.com/system-inc/cohere/internal/format/doc.isDoc() }]",
+      "instructions": 199985067,
+      "percent": 178.070630364923,
+      "self": 73201,
+      "inclusive": 199985067
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.PrintAstToDoc[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node].func2.3",
+      "instructions": 196339885,
+      "percent": 174.82488873895014,
+      "self": 8771,
+      "inclusive": 196339885
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.(*AstPath[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node]).Each",
+      "instructions": 162630814,
+      "percent": 144.80967004271645,
+      "self": 93990,
+      "inclusive": 162630814
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.each.func1",
+      "instructions": 161483648,
+      "percent": 143.7882109117044,
+      "self": 5792,
+      "inclusive": 161483648
+    },
+    {
+      "function": "main.main",
+      "instructions": 157245457,
+      "percent": 140.01444242839588,
+      "self": 33621,
+      "inclusive": 157245457
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.format",
+      "instructions": 134556014,
+      "percent": 119.8113168738314,
+      "self": 50731,
+      "inclusive": 134556014
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printToDoc",
+      "instructions": 108927182,
+      "percent": 96.99090163874432,
+      "self": 76224,
+      "inclusive": 108927182
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printCallExpression",
+      "instructions": 102832300,
+      "percent": 91.56389903289565,
+      "self": 109044,
+      "inclusive": 102832300
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printCallArguments",
+      "instructions": 97355523,
+      "percent": 86.68726925554276,
+      "self": 105350,
+      "inclusive": 97355523
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.iterateCallArgumentsPath",
+      "instructions": 94675022,
+      "percent": 84.30049853348777,
+      "self": 22940,
+      "inclusive": 94675022
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printCallArguments.func2",
+      "instructions": 94408963,
+      "percent": 84.06359437581753,
+      "self": 35494,
+      "inclusive": 94408963
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.PrintAstToDoc[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node]",
+      "instructions": 78070562,
+      "percent": 69.51556132080503,
+      "self": 86802,
+      "inclusive": 78070562
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printBlock",
+      "instructions": 74575440,
+      "percent": 66.40343606526127,
+      "self": 50208,
+      "inclusive": 74575440
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printBlockBody",
+      "instructions": 74153384,
+      "percent": 66.02762911578891,
+      "self": 142732,
+      "inclusive": 74153384
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printStatementSequence",
+      "instructions": 73669892,
+      "percent": 65.59711834562026,
+      "self": 75483,
+      "inclusive": 73669892
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printStatementSequence.func1",
+      "instructions": 72334592,
+      "percent": 64.40814100699586,
+      "self": 52604,
+      "inclusive": 72334592
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.callPluginPrintFunction[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node]'2",
+      "instructions": 71632279,
+      "percent": 63.78278772187543,
+      "self": 241271,
+      "inclusive": 71632279
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printEstree'2",
+      "instructions": 70250077,
+      "percent": 62.552047921529955,
+      "self": 809785,
+      "inclusive": 70250077
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printWithoutParentheses'2",
+      "instructions": 63968939,
+      "percent": 56.959199316143476,
+      "self": 83178,
+      "inclusive": 63968939
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printEstreeNode'2",
+      "instructions": 63417966,
+      "percent": 56.46860213858495,
+      "self": 572660,
+      "inclusive": 63417966
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printExpressionStatement",
+      "instructions": 55731616,
+      "percent": 49.62452517705149,
+      "self": 12130,
+      "inclusive": 55731616
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printMemberChain",
+      "instructions": 52761993,
+      "percent": 46.980314549284095,
+      "self": 212020,
+      "inclusive": 52761993
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printMemberExpression",
+      "instructions": 47664166,
+      "percent": 42.441109292616986,
+      "self": 44689,
+      "inclusive": 47664166
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.PrintAstToDoc[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node].func2'2",
+      "instructions": 47554927,
+      "percent": 42.34384074210849,
+      "self": 94636,
+      "inclusive": 47554927
+    }
+  ],
+  "self": [
+    {
+      "function": "runtime.tryDeferToSpanScan",
+      "instructions": 8182115,
+      "percent": 7.285515851882541,
+      "self": 8182115,
+      "inclusive": 8232262
+    },
+    {
+      "function": "runtime.typePointers.next",
+      "instructions": 6524554,
+      "percent": 5.8095909912612615,
+      "self": 6524554,
+      "inclusive": 6561716
+    },
+    {
+      "function": "runtime.wbBufFlush1",
+      "instructions": 5276230,
+      "percent": 4.698058790811205,
+      "self": 5276230,
+      "inclusive": 14900238
+    },
+    {
+      "function": "runtime.findObject",
+      "instructions": 4883356,
+      "percent": 4.348236067127597,
+      "self": 4883356,
+      "inclusive": 4883356
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/doc.traverse",
+      "instructions": 2931206,
+      "percent": 2.61000337664934,
+      "self": 2931206,
+      "inclusive": 10625440
+    },
+    {
+      "function": "runtime.scanObject",
+      "instructions": 2868721,
+      "percent": 2.5543655057559485,
+      "self": 2868721,
+      "inclusive": 7913318
+    },
+    {
+      "function": "runtime.scanblock",
+      "instructions": 2642216,
+      "percent": 2.352681006328764,
+      "self": 2642216,
+      "inclusive": 4520457
+    },
+    {
+      "function": "strings.makeGenericReplacer",
+      "instructions": 2322668,
+      "percent": 2.0681491928016555,
+      "self": 2322668,
+      "inclusive": 4233081
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.needsParentheses",
+      "instructions": 2242802,
+      "percent": 1.9970349382322132,
+      "self": 2242802,
+      "inclusive": 4619754
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/doc.Print",
+      "instructions": 2114871,
+      "percent": 1.8831226639061758,
+      "self": 2114871,
+      "inclusive": 21824043
+    },
+    {
+      "function": "runtime.growslice",
+      "instructions": 1982968,
+      "percent": 1.765673642789892,
+      "self": 1982968,
+      "inclusive": 15276819
+    },
+    {
+      "function": "runtime.mapaccess2_faststr",
+      "instructions": 1967719,
+      "percent": 1.7520956337756755,
+      "self": 1967719,
+      "inclusive": 2816004
+    },
+    {
+      "function": "runtime.(*mspan).writeHeapBitsSmall",
+      "instructions": 1935720,
+      "percent": 1.7236030958750972,
+      "self": 1935720,
+      "inclusive": 1935720
+    },
+    {
+      "function": "runtime.mallocgcSmallScanNoHeader",
+      "instructions": 1878727,
+      "percent": 1.6728554096171624,
+      "self": 1878727,
+      "inclusive": 5661906
+    },
+    {
+      "function": "runtime.bulkBarrierPreWrite",
+      "instructions": 1780417,
+      "percent": 1.5853182552996574,
+      "self": 1780417,
+      "inclusive": 9329063
+    },
+    {
+      "function": "runtime.mallocgcSmallScanSlowPath",
+      "instructions": 1723363,
+      "percent": 1.5345162534439873,
+      "self": 1723363,
+      "inclusive": 7578676
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/doc.fits",
+      "instructions": 1523147,
+      "percent": 1.3562399958014932,
+      "self": 1523147,
+      "inclusive": 2982760
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.isSlice",
+      "instructions": 1424838,
+      "percent": 1.2687037319036234,
+      "self": 1424838,
+      "inclusive": 1424838
+    },
+    {
+      "function": "runtime.mallocgc",
+      "instructions": 1374352,
+      "percent": 1.223750006210677,
+      "self": 1374352,
+      "inclusive": 28667858
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/estree.(*Arena).node",
+      "instructions": 1294252,
+      "percent": 1.1524273934466434,
+      "self": 1294252,
+      "inclusive": 3046565
+    },
+    {
+      "function": "gcWriteBarrier",
+      "instructions": 1226202,
+      "percent": 1.09183433728444,
+      "self": 1226202,
+      "inclusive": 9734387
+    },
+    {
+      "function": "runtime.gcmarknewobject",
+      "instructions": 1219476,
+      "percent": 1.085845374819385,
+      "self": 1219476,
+      "inclusive": 1219476
+    },
+    {
+      "function": "runtime.mallocgcSmallScanNoHeaderSC2",
+      "instructions": 1202660,
+      "percent": 1.070872078237113,
+      "self": 1202660,
+      "inclusive": 2714439
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/printing.(*AstPath[go.shape.*github.com/system-inc/cohere/internal/format/estree.Node]).nodeStackIndex",
+      "instructions": 1043808,
+      "percent": 0.9294271383770346,
+      "self": 1043808,
+      "inclusive": 2164838
+    },
+    {
+      "function": "runtime.memclrNoHeapPointers",
+      "instructions": 1003748,
+      "percent": 0.8937569277986677,
+      "self": 1003748,
+      "inclusive": 1003748
+    },
+    {
+      "function": "runtime.memmove",
+      "instructions": 860634,
+      "percent": 0.7663254121543241,
+      "self": 860634,
+      "inclusive": 860634
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.toDoc",
+      "instructions": 826037,
+      "percent": 0.7355195640419987,
+      "self": 826037,
+      "inclusive": 2370396
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/javascript.printEstree'2",
+      "instructions": 809785,
+      "percent": 0.7210484641338704,
+      "self": 809785,
+      "inclusive": 70250077
+    },
+    {
+      "function": "github.com/system-inc/cohere/internal/format/estree.(*postprocessor).visit'2",
+      "instructions": 796411,
+      "percent": 0.7091399919352913,
+      "self": 796411,
+      "inclusive": 2064939
+    },
+    {
+      "function": "runtime.scanObjectsSmall",
+      "instructions": 763987,
+      "percent": 0.6802690256898353,
+      "self": 763987,
+      "inclusive": 1292332
+    }
+  ]
+}

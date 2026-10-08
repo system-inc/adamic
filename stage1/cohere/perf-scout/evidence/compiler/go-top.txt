@@ -1,0 +1,262 @@
+File: oracle-profile
+Build ID: 4be3b8be8f146ee03adcea85173b30de0cc545c5
+Type: cpu
+Time: 2026-10-08 17:08:38 UTC
+Duration: 391.18ms, Total samples = 580ms (148.27%)
+Showing nodes accounting for 580ms, 100% of 580ms total
+      flat  flat%   sum%        cum   cum%
+      50ms  8.62%  8.62%      100ms 17.24%  main.written
+      40ms  6.90% 15.52%       40ms  6.90%  runtime.findObject
+      30ms  5.17% 20.69%       40ms  6.90%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewIdentifier
+      30ms  5.17% 25.86%      100ms 17.24%  github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan
+      30ms  5.17% 31.03%       30ms  5.17%  github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).char (inline)
+      30ms  5.17% 36.21%      100ms 17.24%  runtime.scanObject
+      30ms  5.17% 41.38%       30ms  5.17%  runtime.tryDeferToSpanScan
+      20ms  3.45% 44.83%       30ms  5.17%  github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanASCIIWhile (inline)
+      20ms  3.45% 48.28%       20ms  3.45%  runtime.heapSetTypeSmallHeader (inline)
+      20ms  3.45% 51.72%       20ms  3.45%  runtime.madvise
+      20ms  3.45% 55.17%       20ms  3.45%  runtime.memclrNoHeapPointers
+      10ms  1.72% 56.90%       10ms  1.72%  fmt.parsenum (inline)
+      10ms  1.72% 58.62%       20ms  3.45%  gcWriteBarrier
+      10ms  1.72% 60.34%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.newNode
+      10ms  1.72% 62.07%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+      10ms  1.72% 63.79%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.NodeBase }]).New
+      10ms  1.72% 65.52%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).jsdocScannerInfo (inline)
+      10ms  1.72% 67.24%       90ms 15.52%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseArgumentOrArrayLiteralElement
+      10ms  1.72% 68.97%      200ms 34.48%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionBlockOrSemicolon
+      10ms  1.72% 70.69%      190ms 32.76%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseUpdateExpression
+      10ms  1.72% 72.41%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).tryParseParenthesizedArrowFunctionExpression
+      10ms  1.72% 74.14%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan.func1 (inline)
+      10ms  1.72% 75.86%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanIdentifier
+      10ms  1.72% 77.59%       10ms  1.72%  internal/runtime/maps.memHashAES
+      10ms  1.72% 79.31%       10ms  1.72%  internal/runtime/syscall/linux.Syscall6
+      10ms  1.72% 81.03%       10ms  1.72%  runtime.(*spanSet).push
+      10ms  1.72% 82.76%       10ms  1.72%  runtime.(*sweepLocked).sweep
+      10ms  1.72% 84.48%       10ms  1.72%  runtime.arenaIndex (inline)
+      10ms  1.72% 86.21%       10ms  1.72%  runtime.futex
+      10ms  1.72% 87.93%       10ms  1.72%  runtime.gcFlushBgCredit
+      10ms  1.72% 89.66%       10ms  1.72%  runtime.greyobject
+      10ms  1.72% 91.38%       70ms 12.07%  runtime.growslice
+      10ms  1.72% 93.10%       10ms  1.72%  runtime.roundupsize (inline)
+      10ms  1.72% 94.83%       20ms  3.45%  runtime.scanSpan
+      10ms  1.72% 96.55%       10ms  1.72%  runtime.typePointers.next
+      10ms  1.72% 98.28%       10ms  1.72%  runtime.typePointers.nextFast (inline)
+      10ms  1.72%   100%       30ms  5.17%  strings.(*Builder).WriteRune
+         0     0%   100%       10ms  1.72%  bufio.(*Writer).Write
+         0     0%   100%       10ms  1.72%  fmt.(*pp).doPrintf
+         0     0%   100%       30ms  5.17%  fmt.Fprintf
+         0     0%   100%       10ms  1.72%  fmt.init.func1
+         0     0%   100%       10ms  1.72%  fmt.newPrinter
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*BinaryExpression).ForEachChild
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewCallExpression
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewNodeList
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewParameterDeclaration
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewPropertyAssignment
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewToken
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewTypeReferenceNode
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).NewVariableDeclaration
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*NodeFactory).newNode (inline)
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ParenthesizedExpression).ForEachChild (inline)
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild (inline)
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.NewDiagnostic
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.*uint8]).Clone
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.1aaa5b9e51eef8e715eb39ffa1350a170458f350000dd3ecff08046c73cf3d25]).New
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.acfa7505c71cd945f9727663c45a14db00279b3ebe757de1ad39eeaa96f262c7]).New
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.struct { Loc github.com/microsoft/TypeScript/tsc/internal/core.TextRange; Nodes []*github.com/microsoft/TypeScript/tsc/internal/ast.Node }]).New
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.LeftHandSideExpressionBase; github.com/microsoft/TypeScript/tsc/internal/ast.DeclarationBase; github.com/microsoft/TypeScript/tsc/internal/ast.CompositeBase; Expression *github.com/microsoft/TypeScript/tsc/internal/ast.Node; QuestionDotToken *github.com/microsoft/TypeScript/tsc/internal/ast.Node; TypeArguments *github.com/microsoft/TypeScript/tsc/internal/ast.NodeList; Arguments *github.com/microsoft/TypeScript/tsc/internal/ast.NodeList }]).New
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.NodeWithTypeArgumentsBase; TypeName *github.com/microsoft/TypeScript/tsc/internal/ast.Node }]).New
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/core.(*Arena[go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.ObjectLiteralElementBase; github.com/microsoft/TypeScript/tsc/internal/ast.NodeBase; github.com/microsoft/TypeScript/tsc/internal/ast.DeclarationBase; github.com/microsoft/TypeScript/tsc/internal/ast.NamedMemberBase; github.com/microsoft/TypeScript/tsc/internal/ast.CompositeBase; Type *github.com/microsoft/TypeScript/tsc/internal/ast.Node; Initializer *github.com/microsoft/TypeScript/tsc/internal/ast.Node }]).New
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).abortParsingListOrMoveToNextToken
+         0     0%   100%       70ms 12.07%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).createIdentifierWithDiagnostic
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).finishNode (inline)
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).finishNodeWithEnd
+         0     0%   100%       40ms  6.90%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).newIdentifier (inline)
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).newNodeList (inline)
+         0     0%   100%       70ms 12.07%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).nextToken
+         0     0%   100%       30ms  5.17%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).nextTokenWithoutCheck (inline)
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).overrideParentInImmediateChildren (inline)
+         0     0%   100%       90ms 15.52%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseArgumentExpression
+         0     0%   100%      120ms 20.69%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseArgumentList
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseArrayLiteralExpression
+         0     0%   100%       30ms  5.17%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseArrowFunctionExpressionBody
+         0     0%   100%      210ms 36.21%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseAssignmentExpressionOrHigher (inline)
+         0     0%   100%      210ms 36.21%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseAssignmentExpressionOrHigherWorker
+         0     0%   100%      190ms 32.76%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBinaryExpressionOrHigher
+         0     0%   100%       40ms  6.90%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBinaryExpressionRest
+         0     0%   100%      220ms 37.93%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBlock
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBracketedList
+         0     0%   100%      130ms 22.41%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseCallExpressionRest
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseCaseBlock
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseCaseClause
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseCaseOrDefaultClause
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseConditionalExpressionRest
+         0     0%   100%      220ms 37.93%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseDeclaration
+         0     0%   100%      220ms 37.93%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseDeclarationWorker
+         0     0%   100%      200ms 34.48%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseDelimitedList
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseEntityName
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseEntityNameOfTypeReference (inline)
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseEnumDeclaration
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseEnumMember
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseErrorAtCurrentToken
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseErrorAtRange
+         0     0%   100%       30ms  5.17%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseExpected (inline)
+         0     0%   100%       40ms  6.90%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseExpectedWithDiagnostic
+         0     0%   100%      130ms 22.41%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseExpression
+         0     0%   100%       80ms 13.79%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseExpressionAllowIn (inline)
+         0     0%   100%       50ms  8.62%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseExpressionOrLabeledStatement
+         0     0%   100%       30ms  5.17%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseForOrForInOrForOfStatement
+         0     0%   100%      220ms 37.93%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionBlock
+         0     0%   100%      220ms 37.93%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionDeclaration
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionOrConstructorType
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIdentifierName (inline)
+         0     0%   100%       30ms  5.17%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIdentifierNameWithDiagnostic (inline)
+         0     0%   100%       40ms  6.90%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIdentifierWithDiagnostic
+         0     0%   100%       70ms 12.07%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIfStatement
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseImportClause
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseImportDeclarationOrImportEqualsDeclaration
+         0     0%   100%       90ms 15.52%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseInitializer
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseInterfaceDeclaration
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseIntersectionTypeOrHigher
+         0     0%   100%      190ms 32.76%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseLeftHandSideExpressionOrHigher
+         0     0%   100%      230ms 39.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList
+         0     0%   100%      230ms 39.66%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList.func1
+         0     0%   100%      280ms 48.28%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseListIndex
+         0     0%   100%      100ms 17.24%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseMemberExpressionOrHigher
+         0     0%   100%       50ms  8.62%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseMemberExpressionRest
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseModuleBlock
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseModuleDeclaration
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseModuleOrNamespaceDeclaration
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseNamedImports
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseNewExpressionOrNewDotTarget
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseNonArrayType
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseObjectLiteralElement
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseObjectLiteralExpression
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseObjectTypeMembers
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseOptional (inline)
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParameterEx
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParameters
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParametersWorker
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParametersWorker.func1
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseParenthesizedExpression
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parsePostfixTypeOrHigher
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parsePrefixUnaryExpression
+         0     0%   100%       80ms 13.79%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parsePrimaryExpression
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parsePropertyAccessExpressionRest
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parsePropertyOrMethodSignature
+         0     0%   100%       50ms  8.62%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseReturnStatement
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseRightSideOfDot
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSemicolon
+         0     0%   100%       40ms  6.90%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSimpleArrowFunctionExpression
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSimpleUnaryExpression
+         0     0%   100%      220ms 37.93%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSourceFileWorker
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSpreadElement
+         0     0%   100%      280ms 48.28%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseStatement
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSwitchStatement
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTokenNode
+         0     0%   100%      240ms 41.38%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseToplevelStatement
+         0     0%   100%       40ms  6.90%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseType
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeAnnotation
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeMember
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeMemberSemicolon
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeOperatorOrHigher
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeParameters (inline)
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTypeReference
+         0     0%   100%      190ms 32.76%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseUnaryExpressionOrHigher
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseUnionOrIntersectionType
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseUnionTypeOrHigher (inline)
+         0     0%   100%       90ms 15.52%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseVariableDeclarationAllowExclamation
+         0     0%   100%       90ms 15.52%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseVariableDeclarationList
+         0     0%   100%       90ms 15.52%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseVariableDeclarationWorker
+         0     0%   100%       90ms 15.52%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseVariableStatement
+         0     0%   100%       20ms  3.45%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseWhileStatement
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parsingContextErrors
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).tryParseImportClause
+         0     0%   100%       10ms  1.72%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).tryParseSemicolon
+         0     0%   100%       30ms  5.17%  github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).tryParseTypeArgumentsInExpression
+         0     0%   100%      130ms 22.41%  github.com/microsoft/TypeScript/tsc/internal/parser..doInContext[go.shape.*uint8] (inline)
+         0     0%   100%      220ms 37.93%  github.com/microsoft/TypeScript/tsc/internal/parser.ParseSourceFile
+         0     0%   100%      220ms 37.93%  github.com/microsoft/TypeScript/tsc/shim/parser.ParseSourceFile (inline)
+         0     0%   100%       80ms 13.79%  github.com/system-inc/cohere/internal/edit.FixText (inline)
+         0     0%   100%       80ms 13.79%  github.com/system-inc/cohere/internal/edit.fixText
+         0     0%   100%       80ms 13.79%  github.com/system-inc/cohere/internal/edit.parseText
+         0     0%   100%       80ms 13.79%  github.com/system-inc/cohere/internal/edit.parsesWithTree
+         0     0%   100%       10ms  1.72%  internal/poll.(*FD).Write
+         0     0%   100%       10ms  1.72%  internal/poll.ignoringEINTRIO (inline)
+         0     0%   100%       10ms  1.72%  internal/runtime/maps.MemHash
+         0     0%   100%      150ms 25.86%  main.collect
+         0     0%   100%       10ms  1.72%  main.collect.func2
+         0     0%   100%       10ms  1.72%  main.collect.func2.1
+         0     0%   100%      340ms 58.62%  main.main
+         0     0%   100%      140ms 24.14%  main.parse
+         0     0%   100%      340ms 58.62%  main.run
+         0     0%   100%       10ms  1.72%  os.(*File).Write
+         0     0%   100%       10ms  1.72%  os.(*File).write (inline)
+         0     0%   100%       10ms  1.72%  runtime.(*gcControllerState).enlistWorker
+         0     0%   100%       30ms  5.17%  runtime.(*mcache).nextFree
+         0     0%   100%       30ms  5.17%  runtime.(*mcache).refill
+         0     0%   100%       20ms  3.45%  runtime.(*mcentral).cacheSpan
+         0     0%   100%       20ms  3.45%  runtime.(*mcentral).grow
+         0     0%   100%       10ms  1.72%  runtime.(*mcentral).uncacheSpan
+         0     0%   100%       10ms  1.72%  runtime.(*mheap).alloc
+         0     0%   100%       10ms  1.72%  runtime.(*mheap).alloc.func1
+         0     0%   100%       10ms  1.72%  runtime.(*mheap).allocNeedsZero
+         0     0%   100%       10ms  1.72%  runtime.(*mheap).allocSpan
+         0     0%   100%       10ms  1.72%  runtime.(*mheap).initSpan
+         0     0%   100%       10ms  1.72%  runtime.(*mspan).initHeapBits
+         0     0%   100%       20ms  3.45%  runtime.(*pageAlloc).scavenge
+         0     0%   100%       20ms  3.45%  runtime.(*pageAlloc).scavenge.func1
+         0     0%   100%       20ms  3.45%  runtime.(*pageAlloc).scavengeOne
+         0     0%   100%       20ms  3.45%  runtime.(*scavengerState).init.func2
+         0     0%   100%       20ms  3.45%  runtime.(*scavengerState).run
+         0     0%   100%       20ms  3.45%  runtime.bgscavenge
+         0     0%   100%       10ms  1.72%  runtime.bgsweep
+         0     0%   100%       10ms  1.72%  runtime.bulkBarrierPreWrite
+         0     0%   100%       10ms  1.72%  runtime.deductAssistCredit
+         0     0%   100%       10ms  1.72%  runtime.futexwakeup
+         0     0%   100%       10ms  1.72%  runtime.gcAssistAlloc
+         0     0%   100%       10ms  1.72%  runtime.gcAssistAlloc.func2
+         0     0%   100%       10ms  1.72%  runtime.gcAssistAlloc1
+         0     0%   100%      130ms 22.41%  runtime.gcBgMarkWorker
+         0     0%   100%      130ms 22.41%  runtime.gcBgMarkWorker.func2
+         0     0%   100%      130ms 22.41%  runtime.gcDrain
+         0     0%   100%       50ms  8.62%  runtime.gcDrainMarkWorkerDedicated (inline)
+         0     0%   100%       80ms 13.79%  runtime.gcDrainMarkWorkerIdle (inline)
+         0     0%   100%       10ms  1.72%  runtime.gcDrainN
+         0     0%   100%      340ms 58.62%  runtime.main
+         0     0%   100%       60ms 10.34%  runtime.mallocgc
+         0     0%   100%       40ms  6.90%  runtime.mallocgcSmallScanHeader
+         0     0%   100%       10ms  1.72%  runtime.mallocgcSmallScanNoHeader
+         0     0%   100%       10ms  1.72%  runtime.mapaccess1
+         0     0%   100%       10ms  1.72%  runtime.mapaccess2
+         0     0%   100%       10ms  1.72%  runtime.memhash (inline)
+         0     0%   100%       10ms  1.72%  runtime.memhash16
+         0     0%   100%       20ms  3.45%  runtime.newobject
+         0     0%   100%       10ms  1.72%  runtime.notewakeup
+         0     0%   100%       10ms  1.72%  runtime.startm
+         0     0%   100%       10ms  1.72%  runtime.sweepone
+         0     0%   100%       20ms  3.45%  runtime.sysUnused (inline)
+         0     0%   100%       20ms  3.45%  runtime.sysUnusedOS
+         0     0%   100%      180ms 31.03%  runtime.systemstack
+         0     0%   100%       10ms  1.72%  runtime.typedslicecopy
+         0     0%   100%       10ms  1.72%  runtime.wakep
+         0     0%   100%       10ms  1.72%  runtime.wbBufFlush
+         0     0%   100%       10ms  1.72%  runtime.wbBufFlush.func1
+         0     0%   100%       10ms  1.72%  runtime.wbBufFlush1
+         0     0%   100%       10ms  1.72%  slices.Grow[go.shape.34bdb7554df3d748b8e145d45cc2ff609a0eb238af04c84bcc187abefb2b0a08,go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.LeftHandSideExpressionBase; github.com/microsoft/TypeScript/tsc/internal/ast.DeclarationBase; github.com/microsoft/TypeScript/tsc/internal/ast.CompositeBase; Expression *github.com/microsoft/TypeScript/tsc/internal/ast.Node; QuestionDotToken *github.com/microsoft/TypeScript/tsc/internal/ast.Node; TypeArguments *github.com/microsoft/TypeScript/tsc/internal/ast.NodeList; Arguments *github.com/microsoft/TypeScript/tsc/internal/ast.NodeList }] (inline)
+         0     0%   100%       10ms  1.72%  slices.Grow[go.shape.[]go.shape.1aaa5b9e51eef8e715eb39ffa1350a170458f350000dd3ecff08046c73cf3d25,go.shape.1aaa5b9e51eef8e715eb39ffa1350a170458f350000dd3ecff08046c73cf3d25] (inline)
+         0     0%   100%       10ms  1.72%  slices.Grow[go.shape.[]go.shape.acfa7505c71cd945f9727663c45a14db00279b3ebe757de1ad39eeaa96f262c7,go.shape.acfa7505c71cd945f9727663c45a14db00279b3ebe757de1ad39eeaa96f262c7] (inline)
+         0     0%   100%       10ms  1.72%  slices.Grow[go.shape.[]go.shape.struct { Loc github.com/microsoft/TypeScript/tsc/internal/core.TextRange; Nodes []*github.com/microsoft/TypeScript/tsc/internal/ast.Node },go.shape.struct { Loc github.com/microsoft/TypeScript/tsc/internal/core.TextRange; Nodes []*github.com/microsoft/TypeScript/tsc/internal/ast.Node }] (inline)
+         0     0%   100%       10ms  1.72%  slices.Grow[go.shape.[]go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.NodeWithTypeArgumentsBase; TypeName *github.com/microsoft/TypeScript/tsc/internal/ast.Node },go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.NodeWithTypeArgumentsBase; TypeName *github.com/microsoft/TypeScript/tsc/internal/ast.Node }] (inline)
+         0     0%   100%       10ms  1.72%  slices.Grow[go.shape.[]go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.ObjectLiteralElementBase; github.com/microsoft/TypeScript/tsc/internal/ast.NodeBase; github.com/microsoft/TypeScript/tsc/internal/ast.DeclarationBase; github.com/microsoft/TypeScript/tsc/internal/ast.NamedMemberBase; github.com/microsoft/TypeScript/tsc/internal/ast.CompositeBase; Type *github.com/microsoft/TypeScript/tsc/internal/ast.Node; Initializer *github.com/microsoft/TypeScript/tsc/internal/ast.Node },go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/ast.ObjectLiteralElementBase; github.com/microsoft/TypeScript/tsc/internal/ast.NodeBase; github.com/microsoft/TypeScript/tsc/internal/ast.DeclarationBase; github.com/microsoft/TypeScript/tsc/internal/ast.NamedMemberBase; github.com/microsoft/TypeScript/tsc/internal/ast.CompositeBase; Type *github.com/microsoft/TypeScript/tsc/internal/ast.Node; Initializer *github.com/microsoft/TypeScript/tsc/internal/ast.Node }] (inline)
+         0     0%   100%       10ms  1.72%  sync.(*Pool).Get
+         0     0%   100%       10ms  1.72%  syscall.RawSyscall6
+         0     0%   100%       10ms  1.72%  syscall.Syscall
+         0     0%   100%       10ms  1.72%  syscall.Write (inline)
+         0     0%   100%       10ms  1.72%  syscall.write
+         0     0%   100%       10ms  1.72%  unicode/utf8.AppendRune (inline)

@@ -1,0 +1,427 @@
+{
+  "total": 108384700,
+  "inclusive": [
+    {
+      "function": "main",
+      "instructions": 108182142,
+      "percent": 99.8131119982802,
+      "self": 761973,
+      "inclusive": 108182142
+    },
+    {
+      "function": "adamic_function_81_formatFile",
+      "instructions": 99726325,
+      "percent": 92.01144165181987,
+      "self": 35564,
+      "inclusive": 99726325
+    },
+    {
+      "function": "adamic_function_80_formatProgram",
+      "instructions": 93596331,
+      "percent": 86.3556673589538,
+      "self": 49685,
+      "inclusive": 93596331
+    },
+    {
+      "function": "adamic_function_348_Expressions_statementDoc",
+      "instructions": 33838929,
+      "percent": 31.221130842268327,
+      "self": 31380,
+      "inclusive": 33838929
+    },
+    {
+      "function": "adamic_function_349_Expressions_statementBodyDoc",
+      "instructions": 33736287,
+      "percent": 31.126429283838032,
+      "self": 115592,
+      "inclusive": 33736287
+    },
+    {
+      "function": "adamic_function_348_Expressions_statementDoc'2",
+      "instructions": 32989117,
+      "percent": 30.43706076595682,
+      "self": 43932,
+      "inclusive": 32989117
+    },
+    {
+      "function": "adamic_function_349_Expressions_statementBodyDoc'2",
+      "instructions": 32911713,
+      "percent": 30.36564478196646,
+      "self": 96482,
+      "inclusive": 32911713
+    },
+    {
+      "function": "adamic_function_365_Expressions_print",
+      "instructions": 29025408,
+      "percent": 26.779986474105662,
+      "self": 198496,
+      "inclusive": 29025408
+    },
+    {
+      "function": "adamic_function_319_Documents_print",
+      "instructions": 28017950,
+      "percent": 25.85046597905424,
+      "self": 2653905,
+      "inclusive": 28017950
+    },
+    {
+      "function": "adamic_release",
+      "instructions": 22858746,
+      "percent": 21.09038083788579,
+      "self": 4770393,
+      "inclusive": 22858746
+    },
+    {
+      "function": "adamic_function_191_Parser_file",
+      "instructions": 20934117,
+      "percent": 19.31464219580808,
+      "self": 98324,
+      "inclusive": 20934117
+    },
+    {
+      "function": "adamic_function_365_Expressions_print'2",
+      "instructions": 20255846,
+      "percent": 18.688842613394694,
+      "self": 400819,
+      "inclusive": 20255846
+    },
+    {
+      "function": "release_last",
+      "instructions": 18088353,
+      "percent": 16.68902806392415,
+      "self": 8814279,
+      "inclusive": 18088353
+    },
+    {
+      "function": "adamic_function_362_Expressions_argumentsDoc",
+      "instructions": 15678042,
+      "percent": 14.465180048475476,
+      "self": 213535,
+      "inclusive": 15678042
+    },
+    {
+      "function": "adamic_function_228_Statements_statement",
+      "instructions": 15302499,
+      "percent": 14.118689261491705,
+      "self": 393082,
+      "inclusive": 15302499
+    },
+    {
+      "function": "adamic_function_361_Expressions_memberChainDoc",
+      "instructions": 12516526,
+      "percent": 11.548240664964704,
+      "self": 139486,
+      "inclusive": 12516526
+    },
+    {
+      "function": "adamic_function_302_Documents_add",
+      "instructions": 11772220,
+      "percent": 10.861514586468385,
+      "self": 2188761,
+      "inclusive": 11772220
+    },
+    {
+      "function": "adamic_array_search_from",
+      "instructions": 10632702,
+      "percent": 9.810150325645594,
+      "self": 4156394,
+      "inclusive": 10632702
+    },
+    {
+      "function": "adamic_function_351_Expressions_variableDoc",
+      "instructions": 10181634,
+      "percent": 9.393977194198074,
+      "self": 40004,
+      "inclusive": 10181634
+    },
+    {
+      "function": "adamic_function_187_Parser_assignment",
+      "instructions": 10095542,
+      "percent": 9.314545318665827,
+      "self": 60522,
+      "inclusive": 10095542
+    },
+    {
+      "function": "adamic_string_equal",
+      "instructions": 9565963,
+      "percent": 8.82593484135676,
+      "self": 8928222,
+      "inclusive": 9565963
+    },
+    {
+      "function": "adamic_function_184_Parser_binary",
+      "instructions": 9035720,
+      "percent": 8.336711731452871,
+      "self": 48334,
+      "inclusive": 9035720
+    },
+    {
+      "function": "adamic_function_183_Parser_unary",
+      "instructions": 8296679,
+      "percent": 7.654843349660976,
+      "self": 90483,
+      "inclusive": 8296679
+    },
+    {
+      "function": "adamic_function_190_Parser_expression",
+      "instructions": 8187650,
+      "percent": 7.55424889306332,
+      "self": 25172,
+      "inclusive": 8187650
+    },
+    {
+      "function": "adamic_function_280_closure",
+      "instructions": 8044817,
+      "percent": 7.422465532496745,
+      "self": 8778,
+      "inclusive": 8044817
+    },
+    {
+      "function": "adamic_function_160_Parser_rootExpression",
+      "instructions": 8028857,
+      "percent": 7.407740206874218,
+      "self": 23541,
+      "inclusive": 8028857
+    },
+    {
+      "function": "adamic_function_318_Documents_fits",
+      "instructions": 7842531,
+      "percent": 7.235828488707354,
+      "self": 2014211,
+      "inclusive": 7842531
+    },
+    {
+      "function": "adamic_array_index_of",
+      "instructions": 6476308,
+      "percent": 5.975297251364815,
+      "self": 4929971,
+      "inclusive": 6476308
+    },
+    {
+      "function": "adamic_function_317_Documents_propagate",
+      "instructions": 6238563,
+      "percent": 5.755944335316701,
+      "self": 1638845,
+      "inclusive": 6238563
+    },
+    {
+      "function": "adamic_array_push",
+      "instructions": 6154903,
+      "percent": 5.678756318926934,
+      "self": 2949122,
+      "inclusive": 6154903
+    }
+  ],
+  "self": [
+    {
+      "function": "adamic_string_equal",
+      "instructions": 8928222,
+      "percent": 8.237529835853216,
+      "self": 8928222,
+      "inclusive": 9565963
+    },
+    {
+      "function": "release_last",
+      "instructions": 8814279,
+      "percent": 8.132401528998097,
+      "self": 8814279,
+      "inclusive": 18088353
+    },
+    {
+      "function": "adamic_retain",
+      "instructions": 5269940,
+      "percent": 4.862254543307312,
+      "self": 5269940,
+      "inclusive": 5269940
+    },
+    {
+      "function": "adamic_allocate",
+      "instructions": 5100542,
+      "percent": 4.7059612657506085,
+      "self": 5100542,
+      "inclusive": 5133687
+    },
+    {
+      "function": "adamic_array_index_of",
+      "instructions": 4929971,
+      "percent": 4.548585732119017,
+      "self": 4929971,
+      "inclusive": 6476308
+    },
+    {
+      "function": "adamic_release",
+      "instructions": 4770393,
+      "percent": 4.401352773961639,
+      "self": 4770393,
+      "inclusive": 22858746
+    },
+    {
+      "function": "adamic_array_search_from",
+      "instructions": 4156394,
+      "percent": 3.8348530742807796,
+      "self": 4156394,
+      "inclusive": 10632702
+    },
+    {
+      "function": "adamic_object_free_children",
+      "instructions": 3807758,
+      "percent": 3.513187746979048,
+      "self": 3807758,
+      "inclusive": 5076473
+    },
+    {
+      "function": "adamic_array_push",
+      "instructions": 2949122,
+      "percent": 2.720976300160447,
+      "self": 2949122,
+      "inclusive": 6154903
+    },
+    {
+      "function": "adamic_function_301_Documents_get",
+      "instructions": 2782129,
+      "percent": 2.5669019704810734,
+      "self": 2782129,
+      "inclusive": 3254566
+    },
+    {
+      "function": "free",
+      "instructions": 2694995,
+      "percent": 2.486508704641891,
+      "self": 2694995,
+      "inclusive": 3698604
+    },
+    {
+      "function": "adamic_function_319_Documents_print",
+      "instructions": 2653905,
+      "percent": 2.4485974496400322,
+      "self": 2653905,
+      "inclusive": 28017950
+    },
+    {
+      "function": "adamic_function_323_Expressions_node",
+      "instructions": 2366208,
+      "percent": 2.183156847783866,
+      "self": 2366208,
+      "inclusive": 2775744
+    },
+    {
+      "function": "adamic_function_302_Documents_add",
+      "instructions": 2188761,
+      "percent": 2.019437245293847,
+      "self": 2188761,
+      "inclusive": 11772220
+    },
+    {
+      "function": "adamic_function_318_Documents_fits",
+      "instructions": 2014211,
+      "percent": 1.8583905292905734,
+      "self": 2014211,
+      "inclusive": 7842531
+    },
+    {
+      "function": "malloc",
+      "instructions": 1661689,
+      "percent": 1.533139825086013,
+      "self": 1661689,
+      "inclusive": 2313968
+    },
+    {
+      "function": "adamic_function_317_Documents_propagate",
+      "instructions": 1638845,
+      "percent": 1.5120630494894574,
+      "self": 1638845,
+      "inclusive": 6238563
+    },
+    {
+      "function": "adamic_string_split",
+      "instructions": 1583770,
+      "percent": 1.4612486817788857,
+      "self": 1583770,
+      "inclusive": 2848459
+    },
+    {
+      "function": "adamic_function_50_stringWidth",
+      "instructions": 1429876,
+      "percent": 1.3192600062554956,
+      "self": 1429876,
+      "inclusive": 1430347
+    },
+    {
+      "function": "adamic_function_90_Scanner_code",
+      "instructions": 1377038,
+      "percent": 1.2705095829946478,
+      "self": 1377038,
+      "inclusive": 1392728
+    },
+    {
+      "function": "let_go",
+      "instructions": 1274829,
+      "percent": 1.1762075274462171,
+      "self": 1274829,
+      "inclusive": 1274829
+    },
+    {
+      "function": "adamic_array_new",
+      "instructions": 1204123,
+      "percent": 1.1109713824921783,
+      "self": 1204123,
+      "inclusive": 4533688
+    },
+    {
+      "function": "adamic_object_new",
+      "instructions": 1132248,
+      "percent": 1.0446566720210508,
+      "self": 1132248,
+      "inclusive": 3514378
+    },
+    {
+      "function": "adamic_string_units",
+      "instructions": 999136,
+      "percent": 0.9218422895482481,
+      "self": 999136,
+      "inclusive": 999136
+    },
+    {
+      "function": "realloc",
+      "instructions": 991982,
+      "percent": 0.9152417269227114,
+      "self": 991982,
+      "inclusive": 3393441
+    },
+    {
+      "function": "adamic_string_index_of_at",
+      "instructions": 986737,
+      "percent": 0.9104024830072879,
+      "self": 986737,
+      "inclusive": 1860571
+    },
+    {
+      "function": "adamic_function_101_Scanner_scan",
+      "instructions": 979084,
+      "percent": 0.9033415232961848,
+      "self": 979084,
+      "inclusive": 5103410
+    },
+    {
+      "function": "adamic_function_193_ParseNode_new",
+      "instructions": 959353,
+      "percent": 0.8851369243075822,
+      "self": 959353,
+      "inclusive": 1557835
+    },
+    {
+      "function": "adamic_function_58_syntaxNode",
+      "instructions": 944625,
+      "percent": 0.871548290487495,
+      "self": 944625,
+      "inclusive": 1111499
+    },
+    {
+      "function": "main",
+      "instructions": 761973,
+      "percent": 0.7030263496600535,
+      "self": 761973,
+      "inclusive": 108182142
+    }
+  ]
+}

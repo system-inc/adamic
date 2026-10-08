@@ -1,0 +1,1119 @@
+{
+  "machine_before": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "1.48"
+  },
+  "profile_environment": {
+    "GOMAXPROCS": "1",
+    "GODEBUG": "asyncpreemptoff=1"
+  },
+  "Go": {
+    "total": 4920049900,
+    "inclusive": [
+      {
+        "function": "main.collect.func2",
+        "instructions": 59871585687,
+        "percent": 1216.8898060769668,
+        "self": 94909,
+        "inclusive": 59871585687
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild",
+        "instructions": 58039962201,
+        "percent": 1179.662064016871,
+        "self": 25560721,
+        "inclusive": 58039962201
+      },
+      {
+        "function": "main.collect.func2.1",
+        "instructions": 56890239948,
+        "percent": 1156.2939625470058,
+        "self": 3989,
+        "inclusive": 56890239948
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseListIndex",
+        "instructions": 14808220882,
+        "percent": 300.97704663523837,
+        "self": 537038,
+        "inclusive": 14808220882
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionEx",
+        "instructions": 13863284081,
+        "percent": 281.77120888550337,
+        "self": 1478,
+        "inclusive": 13863284081
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkExpressionWorker",
+        "instructions": 13863053702,
+        "percent": 281.7665264329941,
+        "self": 753,
+        "inclusive": 13863053702
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromTypes",
+        "instructions": 13837931590,
+        "percent": 281.25591957918965,
+        "self": 924,
+        "inclusive": 13837931590
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).invokeOnce",
+        "instructions": 13837688159,
+        "percent": 281.2509718448181,
+        "self": 1244,
+        "inclusive": 13837688159
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseStatement",
+        "instructions": 13678743640,
+        "percent": 278.02042495544606,
+        "self": 246318,
+        "inclusive": 13678743640
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList",
+        "instructions": 13441043549,
+        "percent": 273.18917129275457,
+        "self": 266788,
+        "inclusive": 13441043549
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList.func1",
+        "instructions": 13413144660,
+        "percent": 272.6221264544492,
+        "self": 372545,
+        "inclusive": 13413144660
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild'2",
+        "instructions": 11868714203,
+        "percent": 241.23158187887483,
+        "self": 28311099,
+        "inclusive": 11868714203
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild",
+        "instructions": 11580097102,
+        "percent": 235.36544013506855,
+        "self": 941606,
+        "inclusive": 11580097102
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).inferFromObjectTypes",
+        "instructions": 11070879264,
+        "percent": 225.01558904920861,
+        "self": 681,
+        "inclusive": 11070879264
+      },
+      {
+        "function": "main.collect.func2'2",
+        "instructions": 10343622604,
+        "percent": 210.2340995362669,
+        "self": 107159352,
+        "inclusive": 10343622604
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild",
+        "instructions": 9967676560,
+        "percent": 202.59299727834062,
+        "self": 1883407,
+        "inclusive": 9967676560
+      },
+      {
+        "function": "main.collect.func2.1'2",
+        "instructions": 9068388034,
+        "percent": 184.31496058607047,
+        "self": 875955,
+        "inclusive": 9068388034
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).isRelatedToEx",
+        "instructions": 8304500928,
+        "percent": 168.78895736402998,
+        "self": 1972,
+        "inclusive": 8304500928
+      },
+      {
+        "function": "main.collect",
+        "instructions": 6474079444,
+        "percent": 131.5856459911108,
+        "self": 51086,
+        "inclusive": 6474079444
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBlock",
+        "instructions": 6403937928,
+        "percent": 130.16001988109917,
+        "self": 245904,
+        "inclusive": 6403937928
+      }
+    ],
+    "self": [
+      {
+        "function": "runtime.scanObject",
+        "instructions": 530466728,
+        "percent": 10.781734713706866,
+        "self": 530466728,
+        "inclusive": 1598426035
+      },
+      {
+        "function": "runtime.findObject",
+        "instructions": 441920502,
+        "percent": 8.982032926129468,
+        "self": 441920502,
+        "inclusive": 441920502
+      },
+      {
+        "function": "runtime.tryDeferToSpanScan",
+        "instructions": 418380632,
+        "percent": 8.503585136402783,
+        "self": 418380632,
+        "inclusive": 420097542
+      },
+      {
+        "function": "runtime.greyobject",
+        "instructions": 258913942,
+        "percent": 5.262425122964708,
+        "self": 258913942,
+        "inclusive": 258915820
+      },
+      {
+        "function": "runtime.mapaccess2",
+        "instructions": 242131183,
+        "percent": 4.921315594786956,
+        "self": 242131183,
+        "inclusive": 675181202
+      },
+      {
+        "function": "runtime.typePointers.next",
+        "instructions": 234727114,
+        "percent": 4.770827913757541,
+        "self": 234727114,
+        "inclusive": 234766690
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan",
+        "instructions": 168272458,
+        "percent": 3.42013722259199,
+        "self": 168272458,
+        "inclusive": 402703907
+      },
+      {
+        "function": "internal/runtime/maps.memHashAES",
+        "instructions": 165705570,
+        "percent": 3.3679652314095434,
+        "self": 165705570,
+        "inclusive": 165705570
+      },
+      {
+        "function": "internal/runtime/maps.(*Map).getWithKeySmall",
+        "instructions": 165508517,
+        "percent": 3.3639601297539685,
+        "self": 165508517,
+        "inclusive": 166812607
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanIdentifier",
+        "instructions": 121673607,
+        "percent": 2.4730157106739914,
+        "self": 121673607,
+        "inclusive": 131932102
+      },
+      {
+        "function": "runtime.wbBufFlush1",
+        "instructions": 119198031,
+        "percent": 2.422699635627679,
+        "self": 119198031,
+        "inclusive": 320104187
+      },
+      {
+        "function": "main.collect.func2'2",
+        "instructions": 107159352,
+        "percent": 2.178013519740928,
+        "self": 107159352,
+        "inclusive": 10343622604
+      },
+      {
+        "function": "runtime.mapaccess2_faststr",
+        "instructions": 71277056,
+        "percent": 1.4487059572302305,
+        "self": 71277056,
+        "inclusive": 103443810
+      },
+      {
+        "function": "internal/runtime/maps.MemHash",
+        "instructions": 67492634,
+        "percent": 1.3717875910160993,
+        "self": 67492634,
+        "inclusive": 209013104
+      },
+      {
+        "function": "runtime.memhash16",
+        "instructions": 60433396,
+        "percent": 1.228308599065225,
+        "self": 60433396,
+        "inclusive": 265974601
+      },
+      {
+        "function": "runtime.scanObjectsSmall",
+        "instructions": 58713579,
+        "percent": 1.1933533235099911,
+        "self": 58713579,
+        "inclusive": 129050074
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/binder.(*Binder).bind'2",
+        "instructions": 57622351,
+        "percent": 1.17117411756332,
+        "self": 57622351,
+        "inclusive": 5428788187
+      },
+      {
+        "function": "runtime.mapaccess1",
+        "instructions": 55527312,
+        "percent": 1.1285924559423677,
+        "self": 55527312,
+        "inclusive": 729657436
+      },
+      {
+        "function": "github.com/system-inc/cohere/internal/lint/ecmascript/comments.All.func2",
+        "instructions": 44429025,
+        "percent": 0.9030198047381592,
+        "self": 44429025,
+        "inclusive": 339424764
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/ast.newNode",
+        "instructions": 38724025,
+        "percent": 0.7870656962239346,
+        "self": 38724025,
+        "inclusive": 57839533
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).finishNodeWithEnd",
+        "instructions": 37558918,
+        "percent": 0.7633848998157519,
+        "self": 37558918,
+        "inclusive": 140722381
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseMemberExpressionRest",
+        "instructions": 36925257,
+        "percent": 0.7505057418218462,
+        "self": 36925257,
+        "inclusive": 1273828502
+      },
+      {
+        "function": "gcWriteBarrier",
+        "instructions": 36406813,
+        "percent": 0.7399683690199972,
+        "self": 36406813,
+        "inclusive": 310104123
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild'2",
+        "instructions": 28311099,
+        "percent": 0.5754230053642342,
+        "self": 28311099,
+        "inclusive": 11868714203
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild",
+        "instructions": 25560721,
+        "percent": 0.5195215804620194,
+        "self": 25560721,
+        "inclusive": 58039962201
+      },
+      {
+        "function": "countbody",
+        "instructions": 25458887,
+        "percent": 0.5174518047062897,
+        "self": 25458887,
+        "inclusive": 25458887
+      },
+      {
+        "function": "runtime.bulkBarrierPreWrite",
+        "instructions": 22145294,
+        "percent": 0.4501030365566008,
+        "self": 22145294,
+        "inclusive": 82705652
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).createIdentifierWithDiagnostic",
+        "instructions": 21582972,
+        "percent": 0.4386738435315463,
+        "self": 21582972,
+        "inclusive": 175598393
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/binder.(*Binder).bindChildren'2",
+        "instructions": 20879383,
+        "percent": 0.424373399139712,
+        "self": 20879383,
+        "inclusive": 4749167462
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).nextToken",
+        "instructions": 19733556,
+        "percent": 0.40108446867581565,
+        "self": 19733556,
+        "inclusive": 390412478
+      }
+    ]
+  },
+  "before": {
+    "total": 10463526515,
+    "inclusive": [
+      {
+        "function": "adamic_function_1168_Linter_walk",
+        "instructions": 87708850556130,
+        "percent": 838234.1310111355,
+        "self": 13957,
+        "inclusive": 87708850556130
+      },
+      {
+        "function": "crosscall2",
+        "instructions": 384693119975,
+        "percent": 3676.5149820523966,
+        "self": 2450,
+        "inclusive": 384693119975
+      },
+      {
+        "function": "runtime.cgocallback.abi0",
+        "instructions": 384693117525,
+        "percent": 3676.5149586377283,
+        "self": 5402,
+        "inclusive": 384693117525
+      },
+      {
+        "function": "adamic_function_769_Checker_ask",
+        "instructions": 374016369360,
+        "percent": 3574.4771977576434,
+        "self": 22278,
+        "inclusive": 374016369360
+      },
+      {
+        "function": "adamic_tsgo_inspect",
+        "instructions": 374016295140,
+        "percent": 3574.4764884365563,
+        "self": 16320,
+        "inclusive": 374016295140
+      },
+      {
+        "function": "tsgo_inspect",
+        "instructions": 374013985837,
+        "percent": 3574.4544184107704,
+        "self": 15168,
+        "inclusive": 374013985837
+      },
+      {
+        "function": "tsgo_go_inspect",
+        "instructions": 374013936744,
+        "percent": 3574.4539492286076,
+        "self": 4800,
+        "inclusive": 374013936744
+      },
+      {
+        "function": "adamic_method_769",
+        "instructions": 371976134335,
+        "percent": 3554.978656591095,
+        "self": 570,
+        "inclusive": 371976134335
+      },
+      {
+        "function": "adamic_function_786_RedundantTypes_visit",
+        "instructions": 311675773916,
+        "percent": 2978.6876677685755,
+        "self": 195099,
+        "inclusive": 311675773916
+      },
+      {
+        "function": "adamic_function_783_RedundantTypes_parts",
+        "instructions": 311669344102,
+        "percent": 2978.626217988802,
+        "self": 169552,
+        "inclusive": 311669344102
+      },
+      {
+        "function": "adamic_function_760_Rules_ask",
+        "instructions": 311650055075,
+        "percent": 2978.44187261564,
+        "self": 6320,
+        "inclusive": 311650055075
+      },
+      {
+        "function": "adamic_function_1162_RuleSet_visit",
+        "instructions": 238466341301,
+        "percent": 2279.0245808537525,
+        "self": 30577096,
+        "inclusive": 238466341301
+      },
+      {
+        "function": "adamic_function_753_Rule_visit",
+        "instructions": 173663391695,
+        "percent": 1659.7023139956175,
+        "self": 4105,
+        "inclusive": 173663391695
+      },
+      {
+        "function": "adamic_function_831_Rule_visit",
+        "instructions": 60334053970,
+        "percent": 576.6129983376833,
+        "self": 79405,
+        "inclusive": 60334053970
+      },
+      {
+        "function": "adamic_function_827_Rule_constant",
+        "instructions": 60333425600,
+        "percent": 576.6069930009634,
+        "self": 4549,
+        "inclusive": 60333425600
+      },
+      {
+        "function": "main",
+        "instructions": 19854802232,
+        "percent": 189.75249122307977,
+        "self": 36584,
+        "inclusive": 19854802232
+      },
+      {
+        "function": "adamic_function_1165_Linter_run",
+        "instructions": 12217416314,
+        "percent": 116.76193773185082,
+        "self": 1632038,
+        "inclusive": 12217416314
+      },
+      {
+        "function": "adamic_function_372_run",
+        "instructions": 9143311453,
+        "percent": 87.38269492501018,
+        "self": 25184521,
+        "inclusive": 9143311453
+      },
+      {
+        "function": "adamic_tsgo_release",
+        "instructions": 8891043610,
+        "percent": 84.97176929072846,
+        "self": 48,
+        "inclusive": 8891043610
+      },
+      {
+        "function": "tsgo_go_release",
+        "instructions": 8891041808,
+        "percent": 84.97175206900118,
+        "self": 25,
+        "inclusive": 8891041808
+      }
+    ],
+    "self": [
+      {
+        "function": "adamic_string_equal",
+        "instructions": 637225964,
+        "percent": 6.089973233082595,
+        "self": 637225964,
+        "inclusive": 681873313
+      },
+      {
+        "function": "runtime.scanObject",
+        "instructions": 551877965,
+        "percent": 5.274301777788346,
+        "self": 551877965,
+        "inclusive": 1667244469
+      },
+      {
+        "function": "adamic_array_index_of",
+        "instructions": 451183677,
+        "percent": 4.311965725448348,
+        "self": 451183677,
+        "inclusive": 582931187
+      },
+      {
+        "function": "runtime.findObject",
+        "instructions": 429370568,
+        "percent": 4.103497682014523,
+        "self": 429370568,
+        "inclusive": 429370568
+      },
+      {
+        "function": "runtime.tryDeferToSpanScan",
+        "instructions": 396564270,
+        "percent": 3.789967650308955,
+        "self": 396564270,
+        "inclusive": 398471428
+      },
+      {
+        "function": "adamic_function_164_abbreviation",
+        "instructions": 345392504,
+        "percent": 3.3009187056090714,
+        "self": 345392504,
+        "inclusive": 1066309847
+      },
+      {
+        "function": "adamic_retain",
+        "instructions": 292049625,
+        "percent": 2.7911204179712445,
+        "self": 292049625,
+        "inclusive": 292049625
+      },
+      {
+        "function": "adamic_release",
+        "instructions": 285982203,
+        "percent": 2.733134021211968,
+        "self": 285982203,
+        "inclusive": 728990671
+      },
+      {
+        "function": "release_last",
+        "instructions": 278870663,
+        "percent": 2.665168981033542,
+        "self": 278870663,
+        "inclusive": 443008468
+      },
+      {
+        "function": "runtime.greyobject",
+        "instructions": 275125618,
+        "percent": 2.629377558374735,
+        "self": 275125618,
+        "inclusive": 275134659
+      },
+      {
+        "function": "adamic_array_search_from",
+        "instructions": 239656738,
+        "percent": 2.2904012108770386,
+        "self": 239656738,
+        "inclusive": 822587925
+      },
+      {
+        "function": "runtime.typePointers.next",
+        "instructions": 235562933,
+        "percent": 2.2512766863285383,
+        "self": 235562933,
+        "inclusive": 235605892
+      },
+      {
+        "function": "adamic_function_308_all",
+        "instructions": 229123653,
+        "percent": 2.1897364399233807,
+        "self": 229123653,
+        "inclusive": 1013006595
+      },
+      {
+        "function": "adamic_function_380_Scanner_code",
+        "instructions": 205580023,
+        "percent": 1.9647297945419313,
+        "self": 205580023,
+        "inclusive": 225723006
+      },
+      {
+        "function": "adamic_string_locate",
+        "instructions": 200611337,
+        "percent": 1.9172440258302341,
+        "self": 200611337,
+        "inclusive": 200613009
+      },
+      {
+        "function": "adamic_function_891_Rule_visit",
+        "instructions": 175292912,
+        "percent": 1.6752756515569456,
+        "self": 175292912,
+        "inclusive": 432311548
+      },
+      {
+        "function": "adamic_function_899_Rule_visit",
+        "instructions": 167889294,
+        "percent": 1.6045192197804643,
+        "self": 167889294,
+        "inclusive": 420675105
+      },
+      {
+        "function": "adamic_string_slice",
+        "instructions": 167436156,
+        "percent": 1.6001885765757053,
+        "self": 167436156,
+        "inclusive": 526091497
+      },
+      {
+        "function": "adamic_allocate",
+        "instructions": 159244772,
+        "percent": 1.5219034593328977,
+        "self": 159244772,
+        "inclusive": 160176046
+      },
+      {
+        "function": "adamic_array_set",
+        "instructions": 154879845,
+        "percent": 1.4801878198327478,
+        "self": 154879845,
+        "inclusive": 154966529
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan",
+        "instructions": 150151073,
+        "percent": 1.4349949109867572,
+        "self": 150151073,
+        "inclusive": 351235647
+      },
+      {
+        "function": "adamic_function_391_Scanner_scan",
+        "instructions": 129625682,
+        "percent": 1.238833597966947,
+        "self": 129625682,
+        "inclusive": 885548616
+      },
+      {
+        "function": "adamic_function_904_Rule_visit",
+        "instructions": 117554470,
+        "percent": 1.12346893594124,
+        "self": 117554470,
+        "inclusive": 373441763
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanIdentifier",
+        "instructions": 110436937,
+        "percent": 1.055446620617657,
+        "self": 110436937,
+        "inclusive": 124568132
+      },
+      {
+        "function": "adamic_function_456_Parser_node",
+        "instructions": 108797025,
+        "percent": 1.0397739695506472,
+        "self": 108797025,
+        "inclusive": 127996500
+      },
+      {
+        "function": "adamic_array_filled",
+        "instructions": 103798308,
+        "percent": 0.9920011943506792,
+        "self": 103798308,
+        "inclusive": 103822500
+      },
+      {
+        "function": "units_next",
+        "instructions": 102251502,
+        "percent": 0.9772183580116822,
+        "self": 102251502,
+        "inclusive": 102251502
+      },
+      {
+        "function": "adamic_function_1073_Rule_scanWarnings",
+        "instructions": 87350948,
+        "percent": 0.8348136536451449,
+        "self": 87350948,
+        "inclusive": 127205062
+      },
+      {
+        "function": "runtime.wbBufFlush1",
+        "instructions": 81035337,
+        "percent": 0.7744553127841909,
+        "self": 81035337,
+        "inclusive": 215534696
+      },
+      {
+        "function": "adamic_string_code_point_at",
+        "instructions": 76750169,
+        "percent": 0.733501930634712,
+        "self": 76750169,
+        "inclusive": 95303059
+      }
+    ]
+  },
+  "after": {
+    "total": 10220882446,
+    "inclusive": [
+      {
+        "function": "adamic_function_1169_Linter_walk",
+        "instructions": 101158878660362,
+        "percent": 989727.4447173697,
+        "self": 13957,
+        "inclusive": 101158878660362
+      },
+      {
+        "function": "crosscall2",
+        "instructions": 443904457511,
+        "percent": 4343.112836453026,
+        "self": 2450,
+        "inclusive": 443904457511
+      },
+      {
+        "function": "runtime.cgocallback.abi0",
+        "instructions": 443904455061,
+        "percent": 4343.112812482493,
+        "self": 5402,
+        "inclusive": 443904455061
+      },
+      {
+        "function": "adamic_function_770_Checker_ask",
+        "instructions": 432076741881,
+        "percent": 4227.39175569029,
+        "self": 22278,
+        "inclusive": 432076741881
+      },
+      {
+        "function": "adamic_tsgo_inspect",
+        "instructions": 432076667661,
+        "percent": 4227.391029529897,
+        "self": 16320,
+        "inclusive": 432076667661
+      },
+      {
+        "function": "tsgo_inspect",
+        "instructions": 432074358358,
+        "percent": 4227.368435561009,
+        "self": 15168,
+        "inclusive": 432074358358
+      },
+      {
+        "function": "tsgo_go_inspect",
+        "instructions": 432074309265,
+        "percent": 4227.367955240447,
+        "self": 4800,
+        "inclusive": 432074309265
+      },
+      {
+        "function": "adamic_method_770",
+        "instructions": 429325798318,
+        "percent": 4200.476823662316,
+        "self": 570,
+        "inclusive": 429325798318
+      },
+      {
+        "function": "adamic_function_787_RedundantTypes_visit",
+        "instructions": 359259685414,
+        "percent": 3514.9576106767404,
+        "self": 195099,
+        "inclusive": 359259685414
+      },
+      {
+        "function": "adamic_function_784_RedundantTypes_parts",
+        "instructions": 359256539743,
+        "percent": 3514.9268337744857,
+        "self": 169552,
+        "inclusive": 359256539743
+      },
+      {
+        "function": "adamic_function_761_Rules_ask",
+        "instructions": 359237250778,
+        "percent": 3514.738112642999,
+        "self": 6320,
+        "inclusive": 359237250778
+      },
+      {
+        "function": "adamic_function_1163_RuleSet_visit",
+        "instructions": 274758249716,
+        "percent": 2688.2047726077526,
+        "self": 30577096,
+        "inclusive": 274758249716
+      },
+      {
+        "function": "adamic_function_754_Rule_visit",
+        "instructions": 200192682683,
+        "percent": 1958.6633907657017,
+        "self": 4105,
+        "inclusive": 200192682683
+      },
+      {
+        "function": "adamic_function_832_Rule_visit",
+        "instructions": 70096522250,
+        "percent": 685.8167347128884,
+        "self": 79405,
+        "inclusive": 70096522250
+      },
+      {
+        "function": "adamic_function_828_Rule_constant",
+        "instructions": 70095893880,
+        "percent": 685.810586809287,
+        "self": 4549,
+        "inclusive": 70095893880
+      },
+      {
+        "function": "main",
+        "instructions": 21446066661,
+        "percent": 209.82597906106471,
+        "self": 36584,
+        "inclusive": 21446066661
+      },
+      {
+        "function": "adamic_function_1166_Linter_run",
+        "instructions": 13466997583,
+        "percent": 131.75963674516564,
+        "self": 1632038,
+        "inclusive": 13466997583
+      },
+      {
+        "function": "adamic_function_373_run",
+        "instructions": 9583609847,
+        "percent": 93.7649943400983,
+        "self": 25184521,
+        "inclusive": 9583609847
+      },
+      {
+        "function": "adamic_tsgo_release",
+        "instructions": 9331323034,
+        "percent": 91.29664765542691,
+        "self": 48,
+        "inclusive": 9331323034
+      },
+      {
+        "function": "tsgo_go_release",
+        "instructions": 9331321232,
+        "percent": 91.29663002485529,
+        "self": 25,
+        "inclusive": 9331321232
+      }
+    ],
+    "self": [
+      {
+        "function": "adamic_string_equal",
+        "instructions": 637225968,
+        "percent": 6.234549427279461,
+        "self": 637225968,
+        "inclusive": 681956993
+      },
+      {
+        "function": "adamic_array_index_of",
+        "instructions": 451183677,
+        "percent": 4.41433192665838,
+        "self": 451183677,
+        "inclusive": 582949348
+      },
+      {
+        "function": "runtime.findObject",
+        "instructions": 446732078,
+        "percent": 4.370777967168883,
+        "self": 446732078,
+        "inclusive": 446732078
+      },
+      {
+        "function": "runtime.scanObject",
+        "instructions": 402852686,
+        "percent": 3.94146677773071,
+        "self": 402852686,
+        "inclusive": 1222224969
+      },
+      {
+        "function": "runtime.tryDeferToSpanScan",
+        "instructions": 402694907,
+        "percent": 3.939923085189155,
+        "self": 402694907,
+        "inclusive": 403847852
+      },
+      {
+        "function": "adamic_function_165_abbreviation",
+        "instructions": 345392504,
+        "percent": 3.3792826189403176,
+        "self": 345392504,
+        "inclusive": 1066402187
+      },
+      {
+        "function": "adamic_retain",
+        "instructions": 289956909,
+        "percent": 2.836906798722416,
+        "self": 289956909,
+        "inclusive": 289956909
+      },
+      {
+        "function": "adamic_release",
+        "instructions": 281242887,
+        "percent": 2.751649757111393,
+        "self": 281242887,
+        "inclusive": 706167093
+      },
+      {
+        "function": "release_last",
+        "instructions": 263652772,
+        "percent": 2.579549988887525,
+        "self": 263652772,
+        "inclusive": 424924206
+      },
+      {
+        "function": "adamic_array_search_from",
+        "instructions": 239656738,
+        "percent": 2.344775407272109,
+        "self": 239656738,
+        "inclusive": 822606086
+      },
+      {
+        "function": "adamic_function_309_all",
+        "instructions": 229123653,
+        "percent": 2.2417208515069933,
+        "self": 229123653,
+        "inclusive": 1013006264
+      },
+      {
+        "function": "runtime.wbBufFlush1",
+        "instructions": 208817854,
+        "percent": 2.043051126977026,
+        "self": 208817854,
+        "inclusive": 552560904
+      },
+      {
+        "function": "adamic_function_381_Scanner_code",
+        "instructions": 205580023,
+        "percent": 2.0113725413254793,
+        "self": 205580023,
+        "inclusive": 225723013
+      },
+      {
+        "function": "runtime.greyobject",
+        "instructions": 201733380,
+        "percent": 1.9737374054130667,
+        "self": 201733380,
+        "inclusive": 201735190
+      },
+      {
+        "function": "runtime.typePointers.next",
+        "instructions": 178142981,
+        "percent": 1.7429315124323463,
+        "self": 178142981,
+        "inclusive": 178152416
+      },
+      {
+        "function": "adamic_string_locate",
+        "instructions": 175719864,
+        "percent": 1.7192239997708707,
+        "self": 175719864,
+        "inclusive": 175721536
+      },
+      {
+        "function": "adamic_function_892_Rule_visit",
+        "instructions": 175292912,
+        "percent": 1.7150467479312599,
+        "self": 175292912,
+        "inclusive": 432411534
+      },
+      {
+        "function": "adamic_function_900_Rule_visit",
+        "instructions": 167889294,
+        "percent": 1.642610556250986,
+        "self": 167889294,
+        "inclusive": 420570777
+      },
+      {
+        "function": "adamic_array_set",
+        "instructions": 154879845,
+        "percent": 1.515327524979148,
+        "self": 154879845,
+        "inclusive": 154966529
+      },
+      {
+        "function": "adamic_allocate",
+        "instructions": 151304747,
+        "percent": 1.4803491557542956,
+        "self": 151304747,
+        "inclusive": 152247985
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan",
+        "instructions": 150156340,
+        "percent": 1.4691132668174316,
+        "self": 150156340,
+        "inclusive": 363072433
+      },
+      {
+        "function": "adamic_string_slice",
+        "instructions": 141697542,
+        "percent": 1.3863533090085987,
+        "self": 141697542,
+        "inclusive": 451461544
+      },
+      {
+        "function": "adamic_function_392_Scanner_scan",
+        "instructions": 129625682,
+        "percent": 1.2682435463361557,
+        "self": 129625682,
+        "inclusive": 885548192
+      },
+      {
+        "function": "adamic_function_905_Rule_visit",
+        "instructions": 117554470,
+        "percent": 1.1501401236250948,
+        "self": 117554470,
+        "inclusive": 373451973
+      },
+      {
+        "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanIdentifier",
+        "instructions": 110787092,
+        "percent": 1.0839288347686373,
+        "self": 110787092,
+        "inclusive": 139973129
+      },
+      {
+        "function": "adamic_function_457_Parser_node",
+        "instructions": 108797025,
+        "percent": 1.0644582361142245,
+        "self": 108797025,
+        "inclusive": 127996500
+      },
+      {
+        "function": "adamic_array_filled",
+        "instructions": 103798308,
+        "percent": 1.0155513337365705,
+        "self": 103798308,
+        "inclusive": 103822439
+      },
+      {
+        "function": "units_next",
+        "instructions": 102251502,
+        "percent": 1.0004175524004457,
+        "self": 102251502,
+        "inclusive": 102251502
+      },
+      {
+        "function": "adamic_function_1074_Rule_scanWarnings",
+        "instructions": 87350948,
+        "percent": 0.8546321558975104,
+        "self": 87350948,
+        "inclusive": 127203672
+      },
+      {
+        "function": "adamic_string_code_point_at",
+        "instructions": 76750169,
+        "percent": 0.7509152894135537,
+        "self": 76750169,
+        "inclusive": 95303059
+      }
+    ]
+  },
+  "machine_after": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "1.04"
+  }
+}

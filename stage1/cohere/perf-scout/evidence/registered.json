@@ -1,0 +1,1328 @@
+[
+  {
+    "name": "adamic/no-type-predicate",
+    "kinds": [
+      "TypePredicate"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoTypePredicate",
+    "upstreamPackage": "adamic",
+    "upstreamTest": "TestNoTypePredicate",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "base/boundary-no-global-container",
+    "kinds": [
+      "Identifier"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleBaseBoundaryNoGlobalContainer",
+    "upstreamPackage": "base",
+    "upstreamTest": "TestNoGlobalContainer",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "base/consistency-no-console",
+    "kinds": [
+      "ElementAccessExpression",
+      "PropertyAccessExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleConsistencyNoConsole",
+    "upstreamPackage": "base",
+    "upstreamTest": "TestNoConsole",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "base/consistency-no-hand-built-declared-error",
+    "kinds": [
+      "NewExpression"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleConsistencyNoHandBuiltDeclaredError",
+    "upstreamPackage": "base",
+    "upstreamTest": "TestNoHandBuiltDeclaredError"
+  },
+  {
+    "name": "base/consistency-require-pagination-argument-name",
+    "kinds": [
+      "Decorator"
+    ],
+    "visit": "visit",
+    "node": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleRequirePaginationArgumentName",
+    "upstreamPackage": "base",
+    "upstreamTest": "TestPaginationDecorator"
+  },
+  {
+    "name": "eqeqeq",
+    "order": 3,
+    "kinds": [
+      "BinaryExpression"
+    ],
+    "visit": "visit",
+    "oracle": "oracleEqeqeq",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestEqeqeq",
+    "factory": "create",
+    "class": "Rule",
+    "parent": false
+  },
+  {
+    "name": "max-classes-per-file",
+    "kinds": [
+      "ClassDeclaration",
+      "ClassExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "parent": true,
+    "finish": "finish",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleMaxClassesPerFile",
+    "upstreamPackage": "core",
+    "upstreamTest": "Test"
+  },
+  {
+    "name": "max-depth",
+    "kinds": [
+      "IfStatement",
+      "SwitchStatement",
+      "TryStatement",
+      "DoStatement",
+      "WhileStatement",
+      "WithStatement",
+      "ForStatement",
+      "ForInStatement",
+      "ForOfStatement"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleMaxDepth",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestMaxDepth"
+  },
+  {
+    "name": "max-nested-callbacks",
+    "kinds": [
+      "FunctionExpression",
+      "ArrowFunction"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleMaxNestedCallbacks",
+    "upstreamPackage": "core",
+    "upstreamTest": "Test"
+  },
+  {
+    "name": "@next/next/no-sync-scripts",
+    "kinds": [
+      "JsxOpeningElement",
+      "JsxSelfClosingElement"
+    ],
+    "visit": "visit",
+    "prepare": "prepare",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNextNoSyncScripts",
+    "upstreamPackage": "next",
+    "upstreamTest": "TestNoSyncScripts"
+  },
+  {
+    "name": "@next/next/no-typos",
+    "kinds": [
+      "FunctionDeclaration",
+      "VariableStatement"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNextNoTypos",
+    "upstreamPackage": "next",
+    "upstreamTest": "TestNoTypos",
+    "parent": false,
+    "node": true
+  },
+  {
+    "name": "nexus/consistency-no-abbreviated-identifier",
+    "kinds": [
+      "Identifier"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleConsistencyNoAbbreviatedIdentifier",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyNoAbbreviatedIdentifier"
+  },
+  {
+    "name": "nexus/consistency-no-ambiguous-identifier",
+    "kinds": [
+      "Identifier"
+    ],
+    "visit": "visit",
+    "node": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNexusConsistencyNoAmbiguousIdentifier",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyNoAmbiguousIdentifier"
+  },
+  {
+    "name": "nexus/consistency-no-enum",
+    "kinds": [
+      "EnumDeclaration"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleConsistencyNoEnum",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyNoEnum",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "nexus/consistency-no-for-in",
+    "kinds": [
+      "ForInStatement"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNexusConsistencyNoForIn",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyNoForIn"
+  },
+  {
+    "name": "nexus/consistency-no-long-line-comment",
+    "kinds": [
+      "SourceFile"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNexusConsistencyNoLongLineComment",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyNoLongLineComment"
+  },
+  {
+    "name": "nexus/consistency-no-multiline-arrow-function",
+    "kinds": [
+      "CallExpression",
+      "ArrowFunction"
+    ],
+    "visit": "visit",
+    "node": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleConsistencyNoMultilineArrowFunction",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyNoMultilineArrowFunction"
+  },
+  {
+    "name": "nexus/consistency-no-shouting",
+    "kinds": [
+      "SourceFile"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNexusConsistencyNoShouting",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyNoShouting",
+    "node": true
+  },
+  {
+    "name": "nexus/consistency-no-single-line-jsdoc",
+    "kinds": [
+      "SourceFile"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNexusConsistencyNoSingleLineJsdoc",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyNoSingleLineJsDoc"
+  },
+  {
+    "name": "nexus/consistency-no-stuttering-name",
+    "kinds": [
+      "PropertyAccessExpression"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNexusNoStutteringName",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyNoStutteringName"
+  },
+  {
+    "name": "nexus/consistency-require-type-suffix",
+    "kinds": [
+      "InterfaceDeclaration",
+      "TypeAliasDeclaration",
+      "VariableDeclaration"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleConsistencyRequireTypeSuffix",
+    "upstreamPackage": "nexus",
+    "upstreamTest": "TestConsistencyRequireTypeSuffix",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-await-in-loop",
+    "kinds": [
+      "AwaitExpression",
+      "ForOfStatement",
+      "VariableDeclarationList"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoAwaitInLoop",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoAwaitInLoop",
+    "factory": "create",
+    "class": "Rule",
+    "parent": true
+  },
+  {
+    "name": "no-bitwise",
+    "kinds": [
+      "BinaryExpression",
+      "PrefixUnaryExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoBitwise",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoBitwise",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-caller",
+    "kinds": [
+      "PropertyAccessExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoCaller",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoCaller"
+  },
+  {
+    "name": "no-continue",
+    "kinds": [
+      "ContinueStatement"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoContinue",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoContinue",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-debugger",
+    "order": 1,
+    "kinds": [
+      "DebuggerStatement"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoDebugger",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoDebugger",
+    "factory": "create",
+    "class": "Rule",
+    "parent": true
+  },
+  {
+    "name": "no-div-regex",
+    "kinds": [
+      "RegularExpressionLiteral"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoDivRegex",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoDivRegex",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-dupe-else-if",
+    "kinds": [
+      "IfStatement"
+    ],
+    "node": true,
+    "visit": "visit",
+    "prepare": "prepare",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoDupeElseIf",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoDupeElseIf"
+  },
+  {
+    "name": "no-duplicate-case",
+    "order": 5,
+    "kinds": [
+      "SwitchStatement"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoDuplicateCase",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoDuplicateCase",
+    "factory": "create",
+    "class": "Rule",
+    "parent": false
+  },
+  {
+    "name": "no-empty",
+    "order": 2,
+    "kinds": [
+      "Block",
+      "SwitchStatement"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoEmpty",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoEmpty",
+    "factory": "create",
+    "class": "Rule",
+    "parent": true
+  },
+  {
+    "name": "no-empty-character-class",
+    "kinds": [
+      "RegularExpressionLiteral"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoEmptyCharacterClass",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoEmptyCharacterClass"
+  },
+  {
+    "name": "no-empty-pattern",
+    "kinds": [
+      "ObjectBindingPattern",
+      "ArrayBindingPattern"
+    ],
+    "visit": "visit",
+    "node": true,
+    "parent": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoEmptyPattern",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoEmptyPattern"
+  },
+  {
+    "name": "no-empty-static-block",
+    "kinds": [
+      "ClassStaticBlockDeclaration"
+    ],
+    "visit": "visit",
+    "node": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoEmptyStaticBlock",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoEmptyStaticBlock"
+  },
+  {
+    "name": "no-ex-assign",
+    "kinds": [
+      "CatchClause"
+    ],
+    "visit": "visit",
+    "node": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoExAssign",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoExAssign"
+  },
+  {
+    "name": "no-iterator",
+    "kinds": [
+      "PropertyAccessExpression",
+      "ElementAccessExpression"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoIterator",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoIterator"
+  },
+  {
+    "name": "no-labels",
+    "kinds": [
+      "SourceFile"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoLabels",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoLabels",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-multi-assign",
+    "kinds": [
+      "BinaryExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoMultiAssign",
+    "upstreamPackage": "core",
+    "upstreamTest": "Test",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-negated-condition",
+    "kinds": [
+      "ConditionalExpression",
+      "IfStatement"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoNegatedCondition",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoNegatedCondition",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-new",
+    "kinds": [
+      "ExpressionStatement"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoNew",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoNew",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-octal-escape",
+    "order": 6,
+    "kinds": [
+      "StringLiteral"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoOctalEscape",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoOctalEscape",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-plusplus",
+    "kinds": [
+      "PostfixUnaryExpression",
+      "PrefixUnaryExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoPlusplus",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoPlusplus",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-proto",
+    "kinds": [
+      "PropertyAccessExpression",
+      "ElementAccessExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoProto",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoProto",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-prototype-builtins",
+    "kinds": [
+      "CallExpression"
+    ],
+    "visit": "visit",
+    "prepare": "prepare",
+    "oracle": "oracleNoPrototypeBuiltins",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoPrototypeBuiltins",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "@typescript-eslint/no-redundant-type-constituents",
+    "typed": true,
+    "node": true,
+    "kinds": [
+      "UnionType",
+      "IntersectionType"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoRedundantTypeConstituents",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestNoRedundantTypeConstituents"
+  },
+  {
+    "name": "no-return-assign",
+    "kinds": [
+      "BinaryExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoReturnAssign",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoReturnAssign",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-script-url",
+    "kinds": [
+      "StringLiteral",
+      "NoSubstitutionTemplateLiteral"
+    ],
+    "node": true,
+    "parent": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoScriptUrl",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoScriptUrl"
+  },
+  {
+    "name": "no-self-compare",
+    "kinds": [
+      "BinaryExpression"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoSelfCompare",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoSelfCompare"
+  },
+  {
+    "name": "no-sequences",
+    "kinds": [
+      "BinaryExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoSequences",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoSequences",
+    "factory": "create",
+    "class": "Rule",
+    "parent": true
+  },
+  {
+    "name": "no-sparse-arrays",
+    "kinds": [
+      "ArrayLiteralExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoSparseArrays",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoSparseArrays",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-template-curly-in-string",
+    "kinds": [
+      "StringLiteral"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoTemplateCurlyInString",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoTemplateCurlyInString",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-underscore-dangle",
+    "kinds": [
+      "FunctionDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "VariableDeclaration",
+      "PropertyAccessExpression",
+      "MethodDeclaration",
+      "PropertyDeclaration"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUnderscoreDangle",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUnderscoreDangle",
+    "parent": false,
+    "node": true
+  },
+  {
+    "name": "no-unexpected-multiline",
+    "order": 7,
+    "kinds": [
+      "BinaryExpression",
+      "CallExpression",
+      "ElementAccessExpression",
+      "TaggedTemplateExpression"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoUnexpectedMultiline",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUnexpectedMultiline",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "@typescript-eslint/no-unnecessary-boolean-literal-compare",
+    "typed": true,
+    "programReads": [
+      "ReadsCompilerOptions"
+    ],
+    "node": true,
+    "kinds": [
+      "BinaryExpression"
+    ],
+    "visit": "visit",
+    "prepare": "prepare",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUnnecessaryBooleanLiteralCompare",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestNoUnnecessaryBooleanLiteralCompare"
+  },
+  {
+    "name": "no-unneeded-ternary",
+    "kinds": [
+      "ConditionalExpression"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoUnneededTernary",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUnneededTernary",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-unsafe-finally",
+    "kinds": [
+      "ReturnStatement",
+      "ThrowStatement",
+      "BreakStatement",
+      "ContinueStatement"
+    ],
+    "visit": "visit",
+    "node": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUnsafeFinally",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUnsafeFinally"
+  },
+  {
+    "name": "no-unsafe-negation",
+    "kinds": [
+      "BinaryExpression"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUnsafeNegation",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUnsafeNegation",
+    "parent": false,
+    "node": true
+  },
+  {
+    "name": "no-unsafe-optional-chaining",
+    "kinds": [
+      "PropertyAccessExpression",
+      "ElementAccessExpression",
+      "CallExpression",
+      "NewExpression",
+      "TaggedTemplateExpression",
+      "ForOfStatement",
+      "WithStatement",
+      "ClassDeclaration",
+      "ClassExpression",
+      "VariableDeclaration",
+      "Parameter",
+      "BindingElement",
+      "SpreadElement",
+      "BinaryExpression",
+      "PrefixUnaryExpression"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUnsafeOptionalChaining",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUnsafeOptionalChaining",
+    "parent": false,
+    "node": true
+  },
+  {
+    "name": "no-unused-labels",
+    "kinds": [
+      "SourceFile"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUnusedLabels",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUnusedLabels"
+  },
+  {
+    "name": "no-unused-private-class-members",
+    "order": 8,
+    "kinds": [
+      "ClassDeclaration",
+      "ClassExpression"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoUnusedPrivateClassMembers",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUnusedPrivateClassMembers",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-useless-catch",
+    "kinds": [
+      "CatchClause"
+    ],
+    "visit": "visit",
+    "node": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUselessCatch",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUselessCatch"
+  },
+  {
+    "name": "no-useless-concat",
+    "kinds": [
+      "BinaryExpression"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUselessConcat",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUselessConcat"
+  },
+  {
+    "name": "no-useless-constructor",
+    "order": 9,
+    "kinds": [
+      "Constructor",
+      "MethodDeclaration"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoUselessConstructor",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUselessConstructor",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-useless-rename",
+    "kinds": [
+      "ObjectBindingPattern",
+      "ObjectLiteralExpression",
+      "ImportSpecifier",
+      "ExportSpecifier"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUselessRename",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoUselessRename"
+  },
+  {
+    "name": "no-var",
+    "order": 4,
+    "kinds": [
+      "VariableStatement",
+      "ForStatement",
+      "ForInStatement",
+      "ForOfStatement"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoVar",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoVar",
+    "factory": "create",
+    "class": "Rule",
+    "parent": true
+  },
+  {
+    "name": "no-warning-comments",
+    "kinds": [
+      "SourceFile"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoWarningComments",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoWarningComments",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "no-with",
+    "kinds": [
+      "WithStatement"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleNoWith",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoWith",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "operator-assignment",
+    "kinds": [
+      "BinaryExpression"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleOperatorAssignment",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestOperatorAssignment",
+    "parent": false
+  },
+  {
+    "name": "prefer-destructuring",
+    "kinds": [
+      "VariableDeclaration",
+      "BinaryExpression"
+    ],
+    "node": true,
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oraclePreferDestructuring",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestPreferDestructuring"
+  },
+  {
+    "name": "@typescript-eslint/prefer-find",
+    "typed": true,
+    "node": true,
+    "kinds": [
+      "CallExpression",
+      "ElementAccessExpression"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oraclePreferFind",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestPreferFind"
+  },
+  {
+    "name": "prefer-template",
+    "order": 10,
+    "kinds": [
+      "BigIntLiteral",
+      "FalseKeyword",
+      "NoSubstitutionTemplateLiteral",
+      "NullKeyword",
+      "NumericLiteral",
+      "RegularExpressionLiteral",
+      "StringLiteral",
+      "TemplateExpression",
+      "TrueKeyword"
+    ],
+    "visit": "visit",
+    "oracle": "oraclePreferTemplate",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestPreferTemplate",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "react/forward-ref-uses-ref",
+    "order": 11,
+    "kinds": [
+      "CallExpression"
+    ],
+    "visit": "visit",
+    "oracle": "oracleForwardRefUsesRef",
+    "upstreamPackage": "react",
+    "upstreamTest": "TestForwardRefUsesRef",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "react-hooks/error-boundaries",
+    "kinds": [
+      "JsxElement",
+      "JsxSelfClosingElement",
+      "JsxFragment"
+    ],
+    "visit": "visit",
+    "parent": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleReactHooksErrorBoundaries",
+    "upstreamPackage": "react",
+    "upstreamTest": "TestErrorBoundaries"
+  },
+  {
+    "name": "react/jsx-curly-brace-presence",
+    "kinds": [
+      "JsxExpression",
+      "JsxText",
+      "StringLiteral",
+      "JsxSelfClosingElement",
+      "JsxElement"
+    ],
+    "visit": "visit",
+    "parent": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleJsxCurlyBracePresence",
+    "upstreamPackage": "react",
+    "upstreamTest": "TestJsxCurlyBracePresence"
+  },
+  {
+    "name": "react/jsx-no-comment-textnodes",
+    "order": 12,
+    "kinds": [
+      "JsxText"
+    ],
+    "visit": "visit",
+    "oracle": "oracleJsxNoCommentTextnodes",
+    "upstreamPackage": "react",
+    "upstreamTest": "TestJsxNoCommentTextnodes",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "react/no-find-dom-node",
+    "order": 13,
+    "kinds": [
+      "CallExpression"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoFindDOMNode",
+    "upstreamPackage": "react",
+    "upstreamTest": "TestNoFindDOMNode",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "react/no-is-mounted",
+    "order": 14,
+    "kinds": [
+      "CallExpression"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoIsMounted",
+    "upstreamPackage": "react",
+    "upstreamTest": "TestNoIsMounted",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "react/no-redundant-should-component-update",
+    "order": 15,
+    "kinds": [
+      "ClassDeclaration",
+      "ClassExpression"
+    ],
+    "visit": "visit",
+    "oracle": "oracleNoRedundantShouldComponentUpdate",
+    "upstreamPackage": "react",
+    "upstreamTest": "TestNoRedundantShouldComponentUpdate",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "react/require-optimization",
+    "kinds": [
+      "ClassDeclaration",
+      "CallExpression"
+    ],
+    "parent": true,
+    "visit": "visit",
+    "prepare": "prepare",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleReactRequireOptimization",
+    "upstreamPackage": "react",
+    "upstreamTest": "TestRequireOptimization",
+    "finish": "finish"
+  },
+  {
+    "name": "react/state-in-constructor",
+    "kinds": [
+      "PropertyDeclaration",
+      "BinaryExpression"
+    ],
+    "visit": "visit",
+    "prepare": "prepare",
+    "parent": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleReactStateInConstructor",
+    "upstreamPackage": "react",
+    "upstreamTest": "TestStateInConstructor"
+  },
+  {
+    "name": "require-yield",
+    "kinds": [
+      "FunctionDeclaration",
+      "FunctionExpression",
+      "MethodDeclaration"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleRequireYield",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestRequireYield",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "structure/network-no-direct-fetch",
+    "kinds": [
+      "CallExpression"
+    ],
+    "visit": "visit",
+    "oracle": "oracleStructureNetworkNoDirectFetch",
+    "upstreamPackage": "structure",
+    "upstreamTest": "TestNetworkNoDirectFetch",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "@typescript-eslint/adjacent-overload-signatures",
+    "kinds": [
+      "ClassDeclaration",
+      "ClassExpression",
+      "InterfaceDeclaration",
+      "TypeLiteral",
+      "SourceFile",
+      "Block",
+      "ModuleBlock"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleAdjacentOverloadSignatures",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestAdjacentOverloadSignatures",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "@typescript-eslint/consistent-type-definitions",
+    "kinds": [
+      "TypeAliasDeclaration",
+      "InterfaceDeclaration"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleConsistentTypeDefinitions",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestConsistentTypeDefinitions",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "@typescript-eslint/no-inferrable-types",
+    "kinds": [
+      "VariableDeclaration",
+      "PropertyDeclaration",
+      "Parameter"
+    ],
+    "node": true,
+    "visit": "visit",
+    "class": "Rule",
+    "factory": "create",
+    "oracle": "oracleNoInferrableTypes",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestNoInferrableTypes"
+  },
+  {
+    "name": "@typescript-eslint/init-declarations",
+    "kinds": [
+      "VariableDeclarationList"
+    ],
+    "visit": "visit",
+    "node": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleInitDeclarations",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestInitDeclarations"
+  },
+  {
+    "name": "@typescript-eslint/method-signature-style",
+    "kinds": [
+      "MethodSignature",
+      "PropertySignature"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleMethodSignatureStyle",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestMethodSignatureStyle",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "@typescript-eslint/no-import-type-side-effects",
+    "kinds": [
+      "ImportDeclaration"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoImportTypeSideEffects",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestNoImportTypeSideEffects"
+  },
+  {
+    "name": "@typescript-eslint/no-this-alias",
+    "kinds": [
+      "VariableDeclaration",
+      "BinaryExpression"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoThisAlias",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestNoThisAlias",
+    "parent": false,
+    "node": true
+  },
+  {
+    "name": "@typescript-eslint/no-useless-empty-export",
+    "kinds": [
+      "SourceFile"
+    ],
+    "visit": "visit",
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoUselessEmptyExport",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestNoUselessEmptyExport"
+  },
+  {
+    "name": "@typescript-eslint/no-wrapper-object-types",
+    "kinds": [
+      "TypeReference"
+    ],
+    "visit": "visit",
+    "node": true,
+    "prepare": "prepare",
+    "oracle": "oracleNoWrapperObjectTypes",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestNoWrapperObjectTypes",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "@typescript-eslint/prefer-literal-enum-member",
+    "kinds": [
+      "EnumMember"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oraclePreferLiteralEnumMember",
+    "upstreamPackage": "typescript",
+    "upstreamTest": "TestPreferLiteralEnumMember",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "unicode-bom",
+    "kinds": [
+      "SourceFile"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleUnicodeBom",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestUnicodeBom",
+    "factory": "create",
+    "class": "Rule"
+  },
+  {
+    "name": "vars-on-top",
+    "kinds": [
+      "VariableDeclarationList"
+    ],
+    "visit": "visit",
+    "node": true,
+    "oracle": "oracleVarsOnTop",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestVarsOnTop",
+    "factory": "create",
+    "class": "Rule",
+    "parent": true
+  }
+]

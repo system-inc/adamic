@@ -1,0 +1,49 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"github.com/system-inc/cohere/internal/format/formatoptions"
+	"github.com/system-inc/cohere/internal/format/javascript"
+	"os"
+	"runtime/pprof"
+	"strings"
+)
+
+func decode(text string) string {
+	return strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(text)
+}
+func encode(text string) string {
+	return strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`).Replace(text)
+}
+func main() {
+	if path := os.Getenv("SCOUT_PPROF"); path != "" {
+		f, err := os.Create(path)
+		if err != nil {
+			panic(err)
+		}
+		if err := pprof.StartCPUProfile(f); err != nil {
+			panic(err)
+		}
+		defer f.Close()
+		defer pprof.StopCPUProfile()
+	}
+	data, err := os.ReadFile(os.Args[2])
+	if err != nil {
+		panic(err)
+	}
+	options := formatoptions.Default()
+	options.PrintWidth = 80
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+	for _, line := range strings.Split(string(data), "\n") {
+		if line == "" {
+			continue
+		}
+		value, err := javascript.Format("statement.ts", decode(line[1:]), options, nil)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Fprintln(out, "ok\t"+encode(value))
+	}
+}

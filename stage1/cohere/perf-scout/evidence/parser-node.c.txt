@@ -1,0 +1,12 @@
+static adamic_object * adamic_function_456_Parser_node(adamic_object * adamic_local_1199_this, double adamic_local_1200_index) {
+	ADAMIC_CHECK_STACK();
+	adamic_array * adamic_temporary_12259 = ((adamic_array *)(adamic_local_1199_this->shape == &adamic_shape_14 ? &adamic_local_1199_this->slots[4] : adamic_object_data_field(adamic_local_1199_this, "nodes", &adamic_cache_12258))->reference);
+	adamic_value *adamic_temporary_12260 = adamic_array_at(adamic_temporary_12259, adamic_local_1200_index);
+	adamic_object * adamic_temporary_12261 = adamic_temporary_12260 == NULL ? NULL : (adamic_object *)adamic_retain(adamic_temporary_12260->reference);
+	if (!(adamic_temporary_12261 != NULL)) {
+		adamic_panic((&adamic_string_349)->bytes, (&adamic_string_349)->length);
+	}
+	adamic_object * adamic_temporary_12262 = adamic_temporary_12261;
+	return adamic_temporary_12262;
+	adamic_unreachable();
+}

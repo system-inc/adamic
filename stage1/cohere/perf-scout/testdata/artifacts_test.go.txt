@@ -1,0 +1,95 @@
+package lint
+
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// This overlay uses the area's artifact builder without editing its harness.
+func TestScoutArtifacts(t *testing.T) {
+	t.Parallel()
+	directory := os.Getenv("ADAMIC_SCOUT_OUTPUT")
+	if directory == "" {
+		t.Fatal("ADAMIC_SCOUT_OUTPUT is required")
+	}
+	if err := os.MkdirAll(directory, 0755); err != nil {
+		t.Fatal(err)
+	}
+	copyPort(t, directory, "", "")
+	prepareRegistry(t, directory)
+	if _, err := os.Stat(filepath.Join(directory, "profiled")); err != nil {
+		buildProfile(t, directory)
+	}
+	oracle := goOracle(t)
+	data, err := os.ReadFile(oracle)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(directory, "oracle"), data, 0755); err != nil {
+		t.Fatal(err)
+	}
+	rows := upstream(t)
+	if err := os.WriteFile(filepath.Join(directory, "upstream.txt"), []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	// Captured fixture files are run-owned; preserve them before cleanup.
+	var kept []string
+	for i, row := range rows {
+		fields := strings.Split(row, "\t")
+		source, err := os.ReadFile(fields[0])
+		if err != nil {
+			t.Fatal(err)
+		}
+		target := filepath.Join(directory, "fixtures", filepath.Base(fields[0]))
+		// Prefixes avoid collisions across capture directories.
+		target = filepath.Join(directory, "fixtures", fmtName(i)+"-"+filepath.Base(fields[0]))
+		if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(target, source, 0644); err != nil {
+			t.Fatal(err)
+		}
+		fields[0] = target
+		kept = append(kept, strings.Join(fields, "\t"))
+	}
+	if err := os.WriteFile(filepath.Join(directory, "upstream.txt"), []byte(strings.Join(kept, "\n")+"\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+}
+func fmtName(value int) string { return fmt.Sprintf("%06d", value) }
+
+func TestScoutEncoding(t *testing.T) {
+	t.Parallel()
+	directory := os.Getenv("ADAMIC_SCOUT_OUTPUT")
+	encoder := os.Getenv("ADAMIC_SCOUT_ENCODER")
+	if directory == "" || encoder == "" {
+		t.Fatal("ADAMIC_SCOUT_OUTPUT and ADAMIC_SCOUT_ENCODER required")
+	}
+	if err := os.MkdirAll(directory, 0755); err != nil {
+		t.Fatal(err)
+	}
+	copyPort(t, directory, "", "")
+	path := filepath.Join(directory, "main.ts")
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	lines := strings.Split(string(data), "\n")
+	changed := 0
+	for i, line := range lines {
+		if strings.HasPrefix(line, "import { written } from ") {
+			lines[i] = "import { written } from '" + encoder + "';"
+			changed++
+		}
+	}
+	if changed != 1 {
+		t.Fatalf("encoder import anchor count %d", changed)
+	}
+	if err := os.WriteFile(path, []byte(strings.Join(lines, "\n")), 0644); err != nil {
+		t.Fatal(err)
+	}
+	buildProfile(t, directory)
+}

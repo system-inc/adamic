@@ -1,0 +1,33 @@
+File: scanner
+Type: cpu
+Time: 2026-10-08 17:47:27 UTC
+Duration: 34.18s, Total samples = 31.75s (92.90%)
+Showing nodes accounting for 30.91s, 97.35% of 31.75s total
+Dropped 284 nodes (cum <= 0.16s)
+      flat  flat%   sum%        cum   cum%
+    21.34s 67.21% 67.21%     21.34s 67.21%  [scanner]
+     7.72s 24.31% 91.53%      7.72s 24.31%  runtime._LostExternalCode
+     1.73s  5.45% 96.98%      1.73s  5.45%  [libc.so.6]
+     0.06s  0.19% 97.17%      0.25s  0.79%  runtime.scanObject
+     0.02s 0.063% 97.23%      0.29s  0.91%  runtime.gcDrain
+     0.01s 0.031% 97.26%      0.18s  0.57%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+     0.01s 0.031% 97.29%      0.17s  0.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).typeToStringEx
+     0.01s 0.031% 97.32%      0.21s  0.66%  github.com/system-inc/adamic/bridge/tsgo/checker.(*Program).exact
+     0.01s 0.031% 97.35%      0.18s  0.57%  github.com/system-inc/adamic/bridge/tsgo/checker.(*Program).exact.func1
+         0     0% 97.35%      0.55s  1.73%  _cgoexp_415e5ec0ec16_tsgo_go_inspect
+         0     0% 97.35%      0.17s  0.54%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+         0     0% 97.35%      0.16s   0.5%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild
+         0     0% 97.35%      0.16s   0.5%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetTypeAtLocation
+         0     0% 97.35%      0.17s  0.54%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).TypeToString
+         0     0% 97.35%      0.16s   0.5%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfNode
+         0     0% 97.35%      0.55s  1.73%  github.com/system-inc/adamic/bridge/tsgo/checker.(*Program).Inspect
+         0     0% 97.35%      0.18s  0.57%  github.com/system-inc/adamic/bridge/tsgo/checker.(*Program).exact.func1.1
+         0     0% 97.35%      0.17s  0.54%  github.com/system-inc/adamic/bridge/tsgo/checker.(*graph).add
+         0     0% 97.35%      0.55s  1.73%  main.tsgo_go_inspect
+         0     0% 97.35%     30.80s 97.01%  runtime._ExternalCode
+         0     0% 97.35%      0.54s  1.70%  runtime.cgocallback
+         0     0% 97.35%      0.54s  1.70%  runtime.cgocallbackg
+         0     0% 97.35%      0.54s  1.70%  runtime.cgocallbackg1
+         0     0% 97.35%      0.29s  0.91%  runtime.gcBgMarkWorker
+         0     0% 97.35%      0.29s  0.91%  runtime.gcBgMarkWorker.func2
+         0     0% 97.35%      0.32s  1.01%  runtime.systemstack

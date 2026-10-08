@@ -1,0 +1,36 @@
+{
+  "base": "9156bf5c579a44d687c9955d13e44f9ad8bbb6f8",
+  "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "machine": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "1.08"
+  },
+  "native_flags": [
+    "-std=c11",
+    "-O2",
+    "-g",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-I/workspace/adamic/internal/native/runtime"
+  ],
+  "registered": 93,
+  "syntax_rules": 90
+}

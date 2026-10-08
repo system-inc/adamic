@@ -1,0 +1,427 @@
+{
+  "total": 193089571,
+  "inclusive": [
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseStatement'2",
+      "instructions": 251638256,
+      "percent": 130.32203380885858,
+      "self": 123310,
+      "inclusive": 251638256
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseListIndex'2",
+      "instructions": 214929807,
+      "percent": 111.31093506857499,
+      "self": 419788,
+      "inclusive": 214929807
+    },
+    {
+      "function": "main.run",
+      "instructions": 165630530,
+      "percent": 85.77911750604076,
+      "self": 6985,
+      "inclusive": 165630530
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList'2",
+      "instructions": 159900274,
+      "percent": 82.81145023622223,
+      "self": 58888,
+      "inclusive": 159900274
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList.func1'2",
+      "instructions": 157418103,
+      "percent": 81.52594787214065,
+      "self": 42768,
+      "inclusive": 157418103
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBlock'2",
+      "instructions": 116279357,
+      "percent": 60.220423297745064,
+      "self": 72732,
+      "inclusive": 116279357
+    },
+    {
+      "function": "runtime.systemstack.abi0",
+      "instructions": 84133106,
+      "percent": 43.57206117569136,
+      "self": 54963,
+      "inclusive": 84133106
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.ParseSourceFile",
+      "instructions": 82797495,
+      "percent": 42.88035577022438,
+      "self": 116,
+      "inclusive": 82797495
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseSourceFileWorker",
+      "instructions": 82754932,
+      "percent": 42.85831263253467,
+      "self": 234,
+      "inclusive": 82754932
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseListIndex",
+      "instructions": 82724411,
+      "percent": 42.84250597874082,
+      "self": 10552,
+      "inclusive": 82724411
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseToplevelStatement",
+      "instructions": 82635434,
+      "percent": 42.79642529217696,
+      "self": 2856,
+      "inclusive": 82635434
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseStatement",
+      "instructions": 82632578,
+      "percent": 42.794946185881784,
+      "self": 4920,
+      "inclusive": 82632578
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseDeclaration",
+      "instructions": 79822808,
+      "percent": 41.33978214701197,
+      "self": 6004,
+      "inclusive": 79822808
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseDeclarationWorker",
+      "instructions": 79649283,
+      "percent": 41.249914528009384,
+      "self": 3798,
+      "inclusive": 79649283
+    },
+    {
+      "function": "main.written",
+      "instructions": 72282535,
+      "percent": 37.434717279474405,
+      "self": 4702873,
+      "inclusive": 72282535
+    },
+    {
+      "function": "main.collect",
+      "instructions": 63284306,
+      "percent": 32.77458522086623,
+      "self": 5202,
+      "inclusive": 63284306
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionDeclaration'2",
+      "instructions": 60837200,
+      "percent": 31.507242822555135,
+      "self": 16712,
+      "inclusive": 60837200
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionBlock'2",
+      "instructions": 59599187,
+      "percent": 30.86608287093869,
+      "self": 5312,
+      "inclusive": 59599187
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionBlockOrSemicolon'2",
+      "instructions": 59227552,
+      "percent": 30.673615200066916,
+      "self": 1944,
+      "inclusive": 59227552
+    },
+    {
+      "function": "main.parse",
+      "instructions": 58474975,
+      "percent": 30.283859815505004,
+      "self": 64,
+      "inclusive": 58474975
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseAssignmentExpressionOrHigherWorker",
+      "instructions": 56259939,
+      "percent": 29.13670516156463,
+      "self": 224646,
+      "inclusive": 56259939
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionDeclaration",
+      "instructions": 56118599,
+      "percent": 29.0635059725727,
+      "self": 12996,
+      "inclusive": 56118599
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList",
+      "instructions": 55664638,
+      "percent": 28.828402130532467,
+      "self": 3400,
+      "inclusive": 55664638
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseList.func1",
+      "instructions": 55352087,
+      "percent": 28.66653373008944,
+      "self": 5192,
+      "inclusive": 55352087
+    },
+    {
+      "function": "gcWriteBarrier",
+      "instructions": 55066175,
+      "percent": 28.51846151753064,
+      "self": 4643586,
+      "inclusive": 55066175
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionBlockOrSemicolon",
+      "instructions": 54042379,
+      "percent": 27.988243342256947,
+      "self": 1464,
+      "inclusive": 54042379
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseFunctionBlock",
+      "instructions": 54029781,
+      "percent": 27.981718909096337,
+      "self": 3136,
+      "inclusive": 54029781
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBlock",
+      "instructions": 54026645,
+      "percent": 27.98009479238006,
+      "self": 6468,
+      "inclusive": 54026645
+    },
+    {
+      "function": "runtime.mallocgc",
+      "instructions": 53351856,
+      "percent": 27.630625374376123,
+      "self": 530989,
+      "inclusive": 53351856
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseBinaryExpressionOrHigher",
+      "instructions": 52636354,
+      "percent": 27.26007092325043,
+      "self": 106680,
+      "inclusive": 52636354
+    }
+  ],
+  "self": [
+    {
+      "function": "runtime.findObject",
+      "instructions": 22758158,
+      "percent": 11.78632169626603,
+      "self": 22758158,
+      "inclusive": 22758158
+    },
+    {
+      "function": "runtime.tryDeferToSpanScan",
+      "instructions": 21236199,
+      "percent": 10.998107712404623,
+      "self": 21236199,
+      "inclusive": 21349654
+    },
+    {
+      "function": "runtime.wbBufFlush1",
+      "instructions": 18235260,
+      "percent": 9.44393832642572,
+      "self": 18235260,
+      "inclusive": 51377307
+    },
+    {
+      "function": "strings.(*Builder).WriteRune",
+      "instructions": 8351904,
+      "percent": 4.3254039856973945,
+      "self": 8351904,
+      "inclusive": 52603634
+    },
+    {
+      "function": "runtime.scanObject",
+      "instructions": 7521113,
+      "percent": 3.895142011579693,
+      "self": 7521113,
+      "inclusive": 19729368
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).Scan",
+      "instructions": 5332696,
+      "percent": 2.7617731876363223,
+      "self": 5332696,
+      "inclusive": 22439654
+    },
+    {
+      "function": "main.written",
+      "instructions": 4702873,
+      "percent": 2.435591407471717,
+      "self": 4702873,
+      "inclusive": 72282535
+    },
+    {
+      "function": "gcWriteBarrier",
+      "instructions": 4643586,
+      "percent": 2.404887004487674,
+      "self": 4643586,
+      "inclusive": 55066175
+    },
+    {
+      "function": "runtime.typePointers.next",
+      "instructions": 4532631,
+      "percent": 2.347424035656488,
+      "self": 4532631,
+      "inclusive": 4534909
+    },
+    {
+      "function": "runtime.scanblock",
+      "instructions": 3682608,
+      "percent": 1.9072019171869206,
+      "self": 3682608,
+      "inclusive": 6438392
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanIdentifier",
+      "instructions": 3387909,
+      "percent": 1.7545789668775016,
+      "self": 3387909,
+      "inclusive": 4366686
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseMemberExpressionRest",
+      "instructions": 2383716,
+      "percent": 1.2345130747636288,
+      "self": 2383716,
+      "inclusive": 12288635
+    },
+    {
+      "function": "runtime.mapaccess2_faststr",
+      "instructions": 2214689,
+      "percent": 1.1469749445970854,
+      "self": 2214689,
+      "inclusive": 3382504
+    },
+    {
+      "function": "fmt.(*pp).doPrintf",
+      "instructions": 2193608,
+      "percent": 1.1360572135716227,
+      "self": 2193608,
+      "inclusive": 8596761
+    },
+    {
+      "function": "runtime.scanObjectsSmall",
+      "instructions": 2183195,
+      "percent": 1.1306643795899263,
+      "self": 2183195,
+      "inclusive": 3994363
+    },
+    {
+      "function": "internal/runtime/maps.memHashAES",
+      "instructions": 1648384,
+      "percent": 0.8536887784581592,
+      "self": 1648384,
+      "inclusive": 1648384
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/ast.newNode",
+      "instructions": 1514999,
+      "percent": 0.7846094391084436,
+      "self": 1514999,
+      "inclusive": 3878393
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).finishNodeWithEnd",
+      "instructions": 1506736,
+      "percent": 0.7803300780030217,
+      "self": 1506736,
+      "inclusive": 8738950
+    },
+    {
+      "function": "encoding/json/internal/jsonwire.ConsumeStringResumable",
+      "instructions": 1500443,
+      "percent": 0.777070968788884,
+      "self": 1500443,
+      "inclusive": 1500587
+    },
+    {
+      "function": "runtime.mapassign_faststr",
+      "instructions": 1418426,
+      "percent": 0.7345948269779935,
+      "self": 1418426,
+      "inclusive": 22383653
+    },
+    {
+      "function": "encoding/json/jsontext.(*decoderState).consumeValue'2",
+      "instructions": 1384415,
+      "percent": 0.7169807218640514,
+      "self": 1384415,
+      "inclusive": 10220227
+    },
+    {
+      "function": "runtime.greyobject",
+      "instructions": 1283790,
+      "percent": 0.6648676017825944,
+      "self": 1283790,
+      "inclusive": 1290457
+    },
+    {
+      "function": "runtime.memmove",
+      "instructions": 1241303,
+      "percent": 0.6428638240643251,
+      "self": 1241303,
+      "inclusive": 1241303
+    },
+    {
+      "function": "hash/crc32.castagnoliSSE42.abi0",
+      "instructions": 1212416,
+      "percent": 0.6279034096564439,
+      "self": 1212416,
+      "inclusive": 1212416
+    },
+    {
+      "function": "fmt.(*fmt).fmtInteger",
+      "instructions": 1113640,
+      "percent": 0.5767478762485831,
+      "self": 1113640,
+      "inclusive": 3809197
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanNumberFragment",
+      "instructions": 1103518,
+      "percent": 0.5715057495259545,
+      "self": 1103518,
+      "inclusive": 1103518
+    },
+    {
+      "function": "encoding/json/jsontext.(*decoderState).consumeValue",
+      "instructions": 1092603,
+      "percent": 0.5658529325750069,
+      "self": 1092603,
+      "inclusive": 5656884
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild",
+      "instructions": 1049529,
+      "percent": 0.5435451508667964,
+      "self": 1049529,
+      "inclusive": 9018448
+    },
+    {
+      "function": "github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).scanNumber",
+      "instructions": 1043020,
+      "percent": 0.5401741764706702,
+      "self": 1043020,
+      "inclusive": 10664697
+    },
+    {
+      "function": "encoding/json/jsontext.(*decoderState).consumeObject'2",
+      "instructions": 999347,
+      "percent": 0.517556176040186,
+      "self": 999347,
+      "inclusive": 6772470
+    }
+  ]
+}

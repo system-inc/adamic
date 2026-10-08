@@ -1,0 +1,263 @@
+{
+  "machine_before": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "0.81"
+  },
+  "files": 77,
+  "rules": 93,
+  "bytes": 24318733,
+  "findings": 28343,
+  "samples": {
+    "Go": [
+      {
+        "seconds": 7.265424655000061,
+        "max_rss_kib": 645372,
+        "user": 9.835078,
+        "system": 0.442178,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 7.805294032999882,
+        "max_rss_kib": 646452,
+        "user": 10.712635,
+        "system": 0.572475,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 7.182973872000275,
+        "max_rss_kib": 642604,
+        "user": 9.562014,
+        "system": 0.460585,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 6.930435751999994,
+        "max_rss_kib": 640712,
+        "user": 9.214069,
+        "system": 0.444815,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 7.2943835999999465,
+        "max_rss_kib": 630212,
+        "user": 9.670824,
+        "system": 0.449784,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    ],
+    "before": [
+      {
+        "seconds": 33.94742231100008,
+        "max_rss_kib": 1060944,
+        "user": 33.810814,
+        "system": 0.644745,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 35.0574650880003,
+        "max_rss_kib": 1052860,
+        "user": 34.904494,
+        "system": 0.851554,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 33.789407569000105,
+        "max_rss_kib": 1047096,
+        "user": 33.659961,
+        "system": 0.818667,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 32.8652007300002,
+        "max_rss_kib": 1061604,
+        "user": 32.829483,
+        "system": 0.72938,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 35.090336864000164,
+        "max_rss_kib": 1062184,
+        "user": 34.998526,
+        "system": 0.873572,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    ],
+    "after": [
+      {
+        "seconds": 33.27733827200018,
+        "max_rss_kib": 1046676,
+        "user": 33.267427,
+        "system": 0.60786,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 34.12218278799992,
+        "max_rss_kib": 1046972,
+        "user": 33.696921,
+        "system": 1.151788,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 34.881361393000134,
+        "max_rss_kib": 1046824,
+        "user": 34.724344,
+        "system": 0.860959,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 33.0882811309998,
+        "max_rss_kib": 1048352,
+        "user": 32.993277,
+        "system": 0.683417,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 33.640997122000044,
+        "max_rss_kib": 1046092,
+        "user": 33.490963,
+        "system": 0.809209,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    ],
+    "Node_before": [
+      {
+        "seconds": 17.1677310580003,
+        "max_rss_kib": 2127112,
+        "user": 22.28044,
+        "system": 2.296389,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 18.82432823599993,
+        "max_rss_kib": 2400656,
+        "user": 22.596834,
+        "system": 3.297621,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 18.181929174000288,
+        "max_rss_kib": 2301256,
+        "user": 22.244855,
+        "system": 2.828826,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 19.830791515999863,
+        "max_rss_kib": 2432096,
+        "user": 24.361001,
+        "system": 2.867958,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 17.27219918899982,
+        "max_rss_kib": 1919220,
+        "user": 21.624755,
+        "system": 2.327145,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    ],
+    "Node_after": [
+      {
+        "seconds": 18.192754461000277,
+        "max_rss_kib": 2203876,
+        "user": 22.81325,
+        "system": 2.550185,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 18.385903602000326,
+        "max_rss_kib": 2404516,
+        "user": 23.120528,
+        "system": 2.585117,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 17.254896612000266,
+        "max_rss_kib": 2267568,
+        "user": 21.524133,
+        "system": 2.369074,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 17.35216679699988,
+        "max_rss_kib": 2453372,
+        "user": 21.466088,
+        "system": 2.366867,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      },
+      {
+        "seconds": 17.73302301500007,
+        "max_rss_kib": 2398452,
+        "user": 22.444856,
+        "system": 2.279212,
+        "sha256": "2467d7084b692cecde6b2de7492088871c219f92d479351bca58d95b405d2fe9",
+        "bytes": 24318733
+      }
+    ]
+  },
+  "before_counts": "adamic: counts: allocations 147658681 frees 147658681 retains 1729382367 releases 1684385637 peak 6304948 regions 0\n",
+  "after_counts": "adamic: counts: allocations 137941751 frees 137941751 retains 1719099181 releases 1664385047 peak 6304948 regions 0\n",
+  "profile_counters": "tsgo_go_profile: inspect_ns=678919597 parts_ns=0 allocated_bytes=252210784 allocated_objects=1889396 collections=2\ntsgo_c_profile: input_ns=2946760 call_ns=696107393 output_ns=6022196 facts_bytes=2807768\ntsgo: load_ns=308311695 query_ns=707248316 queries=16723 first_query_ns=20491 run_ns=34175348792\n",
+  "machine_after": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "1.48"
+  }
+}

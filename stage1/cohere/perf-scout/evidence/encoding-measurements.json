@@ -1,0 +1,1598 @@
+{
+  "machine_before": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "0.58"
+  },
+  "workloads": {
+    "owned": {
+      "rows": 148,
+      "bytes": 177735,
+      "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+      "samples": {
+        "Go": [
+          {
+            "seconds": 0.022352649999902496,
+            "max_rss_kib": 32564,
+            "user": 0.025605,
+            "system": 0.005568,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.019506624000314332,
+            "max_rss_kib": 32180,
+            "user": 0.016026,
+            "system": 0.011167,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.019985969999652298,
+            "max_rss_kib": 32308,
+            "user": 0.005284,
+            "system": 0.022626,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.018133407999812334,
+            "max_rss_kib": 32436,
+            "user": 0.004055,
+            "system": 0.020271,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.021782172999792238,
+            "max_rss_kib": 32336,
+            "user": 0.023035,
+            "system": 0.007062,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          }
+        ],
+        "before": [
+          {
+            "seconds": 0.027840228000059142,
+            "max_rss_kib": 14504,
+            "user": 0.031231,
+            "system": 0.0,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.027021440000225994,
+            "max_rss_kib": 14480,
+            "user": 0.01859,
+            "system": 0.011474,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.030030981999971118,
+            "max_rss_kib": 14844,
+            "user": 0.017939,
+            "system": 0.014873,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.02537356600032581,
+            "max_rss_kib": 14916,
+            "user": 0.018244,
+            "system": 0.008952,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.026068570999996155,
+            "max_rss_kib": 14780,
+            "user": 0.017024,
+            "system": 0.010541,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          }
+        ],
+        "after": [
+          {
+            "seconds": 0.03529634000005899,
+            "max_rss_kib": 14380,
+            "user": 0.027021,
+            "system": 0.010425,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.025116489000083675,
+            "max_rss_kib": 14456,
+            "user": 0.022472,
+            "system": 0.004571,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.02689963099965098,
+            "max_rss_kib": 14660,
+            "user": 0.024764,
+            "system": 0.004224,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.024524678000034328,
+            "max_rss_kib": 14076,
+            "user": 0.015121,
+            "system": 0.01163,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.031608871999651456,
+            "max_rss_kib": 14660,
+            "user": 0.027809,
+            "system": 0.006991,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          }
+        ],
+        "Node_before": [
+          {
+            "seconds": 0.4624235620003674,
+            "max_rss_kib": 89980,
+            "user": 0.833028,
+            "system": 0.054717,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.3796634769996672,
+            "max_rss_kib": 88456,
+            "user": 0.673287,
+            "system": 0.074739,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.3520799449997867,
+            "max_rss_kib": 88596,
+            "user": 0.663539,
+            "system": 0.046147,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.38170299900002647,
+            "max_rss_kib": 87884,
+            "user": 0.695123,
+            "system": 0.034872,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.3831923299999289,
+            "max_rss_kib": 90248,
+            "user": 0.711844,
+            "system": 0.054369,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          }
+        ],
+        "Node_after": [
+          {
+            "seconds": 0.4071534659997269,
+            "max_rss_kib": 87028,
+            "user": 0.697862,
+            "system": 0.068411,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.3971971460000532,
+            "max_rss_kib": 88840,
+            "user": 0.691934,
+            "system": 0.07442,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.38790866599993024,
+            "max_rss_kib": 89252,
+            "user": 0.741584,
+            "system": 0.028548,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.3599875680001787,
+            "max_rss_kib": 89480,
+            "user": 0.676501,
+            "system": 0.049109,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          },
+          {
+            "seconds": 0.3652546930002245,
+            "max_rss_kib": 88588,
+            "user": 0.660915,
+            "system": 0.064164,
+            "sha256": "4dfb51965785717af949ceec86338bfbd5bacd44700a97abf9ce729df0703ed8",
+            "bytes": 177735
+          }
+        ]
+      },
+      "median": {
+        "Go": 0.019985969999652298,
+        "before": 0.027021440000225994,
+        "after": 0.02689963099965098,
+        "Node_before": 0.38170299900002647,
+        "Node_after": 0.38790866599993024
+      },
+      "allocation_counts": "adamic: counts: allocations 90054 frees 90054 retains 543461 releases 490552 peak 1219 regions 0\n"
+    },
+    "upstream": {
+      "rows": 4942,
+      "bytes": 13610492,
+      "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+      "samples": {
+        "Go": [
+          {
+            "seconds": 0.5209867430003214,
+            "max_rss_kib": 111104,
+            "user": 0.613541,
+            "system": 0.198658,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 0.5045060309998917,
+            "max_rss_kib": 106044,
+            "user": 0.560835,
+            "system": 0.212996,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 0.47164347499983705,
+            "max_rss_kib": 100672,
+            "user": 0.585794,
+            "system": 0.166761,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 0.4620215510003618,
+            "max_rss_kib": 96736,
+            "user": 0.554673,
+            "system": 0.161649,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 0.4795533810001871,
+            "max_rss_kib": 126808,
+            "user": 0.564489,
+            "system": 0.192562,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          }
+        ],
+        "before": [
+          {
+            "seconds": 1.0543028890001551,
+            "max_rss_kib": 125236,
+            "user": 0.969313,
+            "system": 0.083618,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.1704267820000496,
+            "max_rss_kib": 124900,
+            "user": 1.083056,
+            "system": 0.085102,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.0463108009998905,
+            "max_rss_kib": 125344,
+            "user": 0.944972,
+            "system": 0.100089,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.1953017509999881,
+            "max_rss_kib": 125344,
+            "user": 1.083608,
+            "system": 0.113375,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.0206312939999407,
+            "max_rss_kib": 125488,
+            "user": 0.937341,
+            "system": 0.082914,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          }
+        ],
+        "after": [
+          {
+            "seconds": 1.1121328330000324,
+            "max_rss_kib": 125192,
+            "user": 1.014908,
+            "system": 0.098671,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.0961847180001314,
+            "max_rss_kib": 125244,
+            "user": 1.007983,
+            "system": 0.089304,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.0604171059999317,
+            "max_rss_kib": 125364,
+            "user": 0.968842,
+            "system": 0.090705,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.064691633000166,
+            "max_rss_kib": 125064,
+            "user": 0.988208,
+            "system": 0.074081,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.1188983560000452,
+            "max_rss_kib": 125428,
+            "user": 1.023698,
+            "system": 0.09537,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          }
+        ],
+        "Node_before": [
+          {
+            "seconds": 1.1808937780001543,
+            "max_rss_kib": 321952,
+            "user": 1.958084,
+            "system": 0.21972,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.227602557999944,
+            "max_rss_kib": 323728,
+            "user": 1.992019,
+            "system": 0.274785,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.2036329590000605,
+            "max_rss_kib": 314308,
+            "user": 1.958774,
+            "system": 0.269196,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.1635598740003843,
+            "max_rss_kib": 350224,
+            "user": 1.881577,
+            "system": 0.262612,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.1835479410001426,
+            "max_rss_kib": 326688,
+            "user": 1.979323,
+            "system": 0.24029,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          }
+        ],
+        "Node_after": [
+          {
+            "seconds": 1.1685699800000293,
+            "max_rss_kib": 334844,
+            "user": 1.931505,
+            "system": 0.250959,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.200790999000219,
+            "max_rss_kib": 349160,
+            "user": 1.975986,
+            "system": 0.231488,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.1773787619999894,
+            "max_rss_kib": 330604,
+            "user": 1.860689,
+            "system": 0.280104,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.1897886520000611,
+            "max_rss_kib": 337988,
+            "user": 1.89274,
+            "system": 0.275591,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          },
+          {
+            "seconds": 1.1577289209999435,
+            "max_rss_kib": 324128,
+            "user": 1.869239,
+            "system": 0.246895,
+            "sha256": "1ecc0c7f446b9600071efb8121cfa5648253701321e1608409c27e4f8fef16bf",
+            "bytes": 13610492
+          }
+        ]
+      },
+      "median": {
+        "Go": 0.4795533810001871,
+        "before": 1.0543028890001551,
+        "after": 1.0961847180001314,
+        "Node_before": 1.1835479410001426,
+        "Node_after": 1.1773787619999894
+      },
+      "allocation_counts": "adamic: counts: allocations 17621556 frees 17621556 retains 14702061 releases 25745493 peak 1005423 regions 0\n"
+    },
+    "compiler": {
+      "rows": 77,
+      "bytes": 11618333,
+      "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+      "samples": {
+        "Go": [
+          {
+            "seconds": 0.43692866500032324,
+            "max_rss_kib": 87292,
+            "user": 0.557417,
+            "system": 0.095242,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 0.44768160200010243,
+            "max_rss_kib": 128404,
+            "user": 0.555867,
+            "system": 0.132437,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 0.4840118559995972,
+            "max_rss_kib": 88972,
+            "user": 0.602105,
+            "system": 0.126127,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 0.4611923049997131,
+            "max_rss_kib": 94120,
+            "user": 0.565857,
+            "system": 0.1636,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 0.45723962299962295,
+            "max_rss_kib": 124768,
+            "user": 0.55222,
+            "system": 0.17834,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          }
+        ],
+        "before": [
+          {
+            "seconds": 1.8244853490000423,
+            "max_rss_kib": 142072,
+            "user": 1.747628,
+            "system": 0.077054,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.8350890740002797,
+            "max_rss_kib": 142504,
+            "user": 1.76784,
+            "system": 0.066282,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.850593531999948,
+            "max_rss_kib": 142120,
+            "user": 1.782994,
+            "system": 0.067399,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.8523629390001588,
+            "max_rss_kib": 142240,
+            "user": 1.788472,
+            "system": 0.045936,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.8736203309999837,
+            "max_rss_kib": 142564,
+            "user": 1.792666,
+            "system": 0.084109,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          }
+        ],
+        "after": [
+          {
+            "seconds": 1.4029258180003126,
+            "max_rss_kib": 140296,
+            "user": 1.363685,
+            "system": 0.040558,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.4751204429999234,
+            "max_rss_kib": 139724,
+            "user": 1.419679,
+            "system": 0.05544,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.525867640999877,
+            "max_rss_kib": 140456,
+            "user": 1.482176,
+            "system": 0.043455,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.4948541399999158,
+            "max_rss_kib": 139984,
+            "user": 1.429698,
+            "system": 0.06599,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.4535710350000954,
+            "max_rss_kib": 140068,
+            "user": 1.392442,
+            "system": 0.062369,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          }
+        ],
+        "Node_before": [
+          {
+            "seconds": 1.6309923769999841,
+            "max_rss_kib": 484188,
+            "user": 2.512804,
+            "system": 0.334288,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.633142960999976,
+            "max_rss_kib": 494664,
+            "user": 2.592751,
+            "system": 0.283691,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.6647457099998064,
+            "max_rss_kib": 487492,
+            "user": 2.722985,
+            "system": 0.321974,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.6151652799999283,
+            "max_rss_kib": 485956,
+            "user": 2.639124,
+            "system": 0.342538,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.5569882889999462,
+            "max_rss_kib": 501796,
+            "user": 2.436228,
+            "system": 0.312424,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          }
+        ],
+        "Node_after": [
+          {
+            "seconds": 1.3684742099999312,
+            "max_rss_kib": 439184,
+            "user": 2.386751,
+            "system": 0.259413,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.506631128999743,
+            "max_rss_kib": 459824,
+            "user": 2.510854,
+            "system": 0.301078,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.6066455270001825,
+            "max_rss_kib": 460148,
+            "user": 2.729131,
+            "system": 0.348283,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.4631122530004177,
+            "max_rss_kib": 458184,
+            "user": 2.536455,
+            "system": 0.289941,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          },
+          {
+            "seconds": 1.3842845659996783,
+            "max_rss_kib": 439704,
+            "user": 2.348829,
+            "system": 0.26681,
+            "sha256": "6f0a6021f9096bbfc60f1a891bb9efde66264eab0b5ec60762759e11aab92332",
+            "bytes": 11618333
+          }
+        ]
+      },
+      "median": {
+        "Go": 0.45723962299962295,
+        "before": 1.850593531999948,
+        "after": 1.4751204429999234,
+        "Node_before": 1.6309923769999841,
+        "Node_after": 1.4631122530004177
+      },
+      "allocation_counts": "adamic: counts: allocations 5669095 frees 5669095 retains 58668536 releases 56802396 peak 731221 regions 0\n"
+    },
+    "public": {
+      "rows": 23,
+      "bytes": 8702,
+      "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+      "samples": {
+        "Go": [
+          {
+            "seconds": 0.009936480000305892,
+            "max_rss_kib": 30132,
+            "user": 0.008133,
+            "system": 0.004105,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.010702652999952988,
+            "max_rss_kib": 32116,
+            "user": 0.003492,
+            "system": 0.009927,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.012355959999695187,
+            "max_rss_kib": 31924,
+            "user": 0.0,
+            "system": 0.012989,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.0206418519996987,
+            "max_rss_kib": 30132,
+            "user": 0.017512,
+            "system": 0.010273,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.01010143000030439,
+            "max_rss_kib": 30132,
+            "user": 0.003883,
+            "system": 0.007749,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          }
+        ],
+        "before": [
+          {
+            "seconds": 0.007624381999903562,
+            "max_rss_kib": 14524,
+            "user": 0.0,
+            "system": 0.010109,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.007144758999857004,
+            "max_rss_kib": 14124,
+            "user": 0.004882,
+            "system": 0.004826,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.007419303000006039,
+            "max_rss_kib": 14484,
+            "user": 0.005173,
+            "system": 0.005173,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.013335283000287745,
+            "max_rss_kib": 14072,
+            "user": 0.01146,
+            "system": 0.005139,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.006979182000122819,
+            "max_rss_kib": 14240,
+            "user": 0.004238,
+            "system": 0.004476,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          }
+        ],
+        "after": [
+          {
+            "seconds": 0.006836675999693398,
+            "max_rss_kib": 14212,
+            "user": 0.004518,
+            "system": 0.004506,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.010959374000321986,
+            "max_rss_kib": 14636,
+            "user": 0.005192,
+            "system": 0.008204,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.006899760999658611,
+            "max_rss_kib": 14492,
+            "user": 0.004595,
+            "system": 0.004708,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.010635193999860348,
+            "max_rss_kib": 14188,
+            "user": 0.007636,
+            "system": 0.009944,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.006969807999666955,
+            "max_rss_kib": 14444,
+            "user": 0.00307,
+            "system": 0.006324,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          }
+        ],
+        "Node_before": [
+          {
+            "seconds": 0.3060858220001137,
+            "max_rss_kib": 81432,
+            "user": 0.601856,
+            "system": 0.051054,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.34158765199981644,
+            "max_rss_kib": 81556,
+            "user": 0.656182,
+            "system": 0.040844,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.31438945599984436,
+            "max_rss_kib": 81288,
+            "user": 0.604017,
+            "system": 0.044898,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.29000254699985817,
+            "max_rss_kib": 81668,
+            "user": 0.571149,
+            "system": 0.053293,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.3284224229996653,
+            "max_rss_kib": 81812,
+            "user": 0.632412,
+            "system": 0.044802,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          }
+        ],
+        "Node_after": [
+          {
+            "seconds": 0.31920977399977346,
+            "max_rss_kib": 81560,
+            "user": 0.619488,
+            "system": 0.04704,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.29617456100004347,
+            "max_rss_kib": 81944,
+            "user": 0.588518,
+            "system": 0.048305,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.3145522270001493,
+            "max_rss_kib": 81132,
+            "user": 0.616563,
+            "system": 0.041314,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.3198712989997148,
+            "max_rss_kib": 79128,
+            "user": 0.65652,
+            "system": 0.03601,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          },
+          {
+            "seconds": 0.3928714769999715,
+            "max_rss_kib": 82320,
+            "user": 0.750436,
+            "system": 0.060831,
+            "sha256": "56e6e16fc1a4cb5c1b3b3710422ceb22d94d3c7ee1089e2b30d44bf863ee9d47",
+            "bytes": 8702
+          }
+        ]
+      },
+      "median": {
+        "Go": 0.010702652999952988,
+        "before": 0.007419303000006039,
+        "after": 0.006969807999666955,
+        "Node_before": 0.31438945599984436,
+        "Node_after": 0.31920977399977346
+      },
+      "allocation_counts": "adamic: counts: allocations 9905 frees 9905 retains 66566 releases 59116 peak 598 regions 0\n"
+    },
+    "repository": {
+      "rows": 480,
+      "bytes": 3257764,
+      "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+      "samples": {
+        "Go": [
+          {
+            "seconds": 0.23372854700028256,
+            "max_rss_kib": 38064,
+            "user": 0.290053,
+            "system": 0.07275,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.23772942100004002,
+            "max_rss_kib": 37172,
+            "user": 0.320605,
+            "system": 0.059284,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.27436099799979274,
+            "max_rss_kib": 37744,
+            "user": 0.378747,
+            "system": 0.057484,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.23496239999985846,
+            "max_rss_kib": 37596,
+            "user": 0.301761,
+            "system": 0.066523,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.24591591100033838,
+            "max_rss_kib": 37700,
+            "user": 0.345403,
+            "system": 0.035008,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          }
+        ],
+        "before": [
+          {
+            "seconds": 0.7555286760002673,
+            "max_rss_kib": 24448,
+            "user": 0.738233,
+            "system": 0.017101,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7877355910000006,
+            "max_rss_kib": 24280,
+            "user": 0.780357,
+            "system": 0.008218,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.9528634339999371,
+            "max_rss_kib": 24568,
+            "user": 0.924866,
+            "system": 0.028531,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7721536630001538,
+            "max_rss_kib": 24512,
+            "user": 0.757389,
+            "system": 0.015695,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7553003699999863,
+            "max_rss_kib": 24388,
+            "user": 0.7447,
+            "system": 0.012128,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          }
+        ],
+        "after": [
+          {
+            "seconds": 0.6621587780000482,
+            "max_rss_kib": 24248,
+            "user": 0.644616,
+            "system": 0.012096,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.6578984550001223,
+            "max_rss_kib": 23972,
+            "user": 0.651613,
+            "system": 0.0084,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.6364610870000433,
+            "max_rss_kib": 24184,
+            "user": 0.633547,
+            "system": 0.00415,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.626929619999828,
+            "max_rss_kib": 24060,
+            "user": 0.608146,
+            "system": 0.019881,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.6744861580000361,
+            "max_rss_kib": 24116,
+            "user": 0.661521,
+            "system": 0.012814,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          }
+        ],
+        "Node_before": [
+          {
+            "seconds": 0.729534846000206,
+            "max_rss_kib": 175484,
+            "user": 1.436663,
+            "system": 0.11095,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7837159629998496,
+            "max_rss_kib": 170348,
+            "user": 1.463802,
+            "system": 0.119324,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7377478799999153,
+            "max_rss_kib": 140040,
+            "user": 1.413152,
+            "system": 0.134124,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.8068452210000032,
+            "max_rss_kib": 173960,
+            "user": 1.535094,
+            "system": 0.105988,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7057710670001143,
+            "max_rss_kib": 140420,
+            "user": 1.367109,
+            "system": 0.113471,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          }
+        ],
+        "Node_after": [
+          {
+            "seconds": 0.7107122460001847,
+            "max_rss_kib": 131380,
+            "user": 1.362468,
+            "system": 0.114879,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7076253899999756,
+            "max_rss_kib": 131076,
+            "user": 1.335881,
+            "system": 0.12757,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7341538199998467,
+            "max_rss_kib": 130280,
+            "user": 1.440593,
+            "system": 0.098232,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7403576310002791,
+            "max_rss_kib": 129576,
+            "user": 1.491968,
+            "system": 0.072692,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          },
+          {
+            "seconds": 0.7244659540001521,
+            "max_rss_kib": 129484,
+            "user": 1.397583,
+            "system": 0.10946,
+            "sha256": "e4b171efa112e25be9b7312d24077442fb0e634ef7049a9982136146ded917ad",
+            "bytes": 3257764
+          }
+        ]
+      },
+      "median": {
+        "Go": 0.23772942100004002,
+        "before": 0.7721536630001538,
+        "after": 0.6578984550001223,
+        "Node_before": 0.7377478799999153,
+        "Node_after": 0.7244659540001521
+      },
+      "allocation_counts": "adamic: counts: allocations 3206331 frees 3206331 retains 28917180 releases 28274225 peak 70614 regions 0\n"
+    }
+  },
+  "profile": {
+    "instructions": 325451611,
+    "self": [
+      {
+        "function": "adamic_string_equal",
+        "instructions": 31061540,
+        "percent": 9.54413465785548,
+        "self": 31061540,
+        "inclusive": 35012783
+      },
+      {
+        "function": "adamic_function_381_Scanner_code",
+        "instructions": 20100105,
+        "percent": 6.176065602575862,
+        "self": 20100105,
+        "inclusive": 28120778
+      },
+      {
+        "function": "release_last",
+        "instructions": 13994032,
+        "percent": 4.299881004429872,
+        "self": 13994032,
+        "inclusive": 22601651
+      },
+      {
+        "function": "adamic_function_373_run",
+        "instructions": 13645278,
+        "percent": 4.192720987944349,
+        "self": 13645278,
+        "inclusive": 318955792
+      },
+      {
+        "function": "adamic_function_0_written",
+        "instructions": 13533273,
+        "percent": 4.158305733505802,
+        "self": 13533273,
+        "inclusive": 34808921
+      },
+      {
+        "function": "adamic_release",
+        "instructions": 13421226,
+        "percent": 4.123877573922964,
+        "self": 13421226,
+        "inclusive": 36022877
+      },
+      {
+        "function": "adamic_retain",
+        "instructions": 13103553,
+        "percent": 4.026267671478818,
+        "self": 13103553,
+        "inclusive": 13103553
+      },
+      {
+        "function": "adamic_function_392_Scanner_scan",
+        "instructions": 12525441,
+        "percent": 3.8486338910763602,
+        "self": 12525441,
+        "inclusive": 105437186
+      },
+      {
+        "function": "adamic_string_code_point_at",
+        "instructions": 12273296,
+        "percent": 3.7711584718503666,
+        "self": 12273296,
+        "inclusive": 15341620
+      },
+      {
+        "function": "adamic_allocate",
+        "instructions": 8822118,
+        "percent": 2.710731089298556,
+        "self": 8822118,
+        "inclusive": 8870283
+      },
+      {
+        "function": "adamic_function_1163_RuleSet_visit",
+        "instructions": 7034449,
+        "percent": 2.1614423656977997,
+        "self": 7034449,
+        "inclusive": 24016995
+      },
+      {
+        "function": "usable",
+        "instructions": 6047449,
+        "percent": 1.858171474837161,
+        "self": 6047449,
+        "inclusive": 6048108
+      },
+      {
+        "function": "adamic_string_locate",
+        "instructions": 5986660,
+        "percent": 1.8394931220666166,
+        "self": 5986660,
+        "inclusive": 5986660
+      },
+      {
+        "function": "adamic_string_units",
+        "instructions": 5933948,
+        "percent": 1.8232965514495487,
+        "self": 5933948,
+        "inclusive": 5933948
+      },
+      {
+        "function": "adamic_function_457_Parser_node",
+        "instructions": 5717202,
+        "percent": 1.7566980180042802,
+        "self": 5717202,
+        "inclusive": 6726120
+      },
+      {
+        "function": "adamic_function_382_Scanner_advance",
+        "instructions": 5694732,
+        "percent": 1.7497937658080913,
+        "self": 5694732,
+        "inclusive": 5694732
+      },
+      {
+        "function": "decode",
+        "instructions": 5265523,
+        "percent": 1.617912716369992,
+        "self": 5265523,
+        "inclusive": 5266068
+      },
+      {
+        "function": "adamic_array_push",
+        "instructions": 5106706,
+        "percent": 1.5691137568220548,
+        "self": 5106706,
+        "inclusive": 6547151
+      },
+      {
+        "function": "adamic_function_524_ParseNode_new",
+        "instructions": 4979394,
+        "percent": 1.5299951918197756,
+        "self": 4979394,
+        "inclusive": 8246390
+      },
+      {
+        "function": "adamic_string_concat",
+        "instructions": 4293847,
+        "percent": 1.3193503595838707,
+        "self": 4293847,
+        "inclusive": 9080886
+      },
+      {
+        "function": "adamic_string_slice",
+        "instructions": 3997070,
+        "percent": 1.2281610736903066,
+        "self": 3997070,
+        "inclusive": 13931911
+      },
+      {
+        "function": "adamic_string_append",
+        "instructions": 3505817,
+        "percent": 1.0772160534796063,
+        "self": 3505817,
+        "inclusive": 10084182
+      },
+      {
+        "function": "adamic_object_free_children",
+        "instructions": 3472277,
+        "percent": 1.0669103739664696,
+        "self": 3472277,
+        "inclusive": 4325712
+      },
+      {
+        "function": "free",
+        "instructions": 3044529,
+        "percent": 0.935478239190526,
+        "self": 3044529,
+        "inclusive": 4132749
+      },
+      {
+        "function": "adamic_function_504_Parser_suffix",
+        "instructions": 2797950,
+        "percent": 0.8597130588485549,
+        "self": 2797950,
+        "inclusive": 32277104
+      },
+      {
+        "function": "adamic_write_line",
+        "instructions": 2753890,
+        "percent": 0.8461749479556271,
+        "self": 2753890,
+        "inclusive": 2761299
+      },
+      {
+        "function": "units_next",
+        "instructions": 2671175,
+        "percent": 0.8207594953340084,
+        "self": 2671175,
+        "inclusive": 2671175
+      },
+      {
+        "function": "adamic_string_unit_view",
+        "instructions": 2630011,
+        "percent": 0.808111224866544,
+        "self": 2630011,
+        "inclusive": 8678119
+      },
+      {
+        "function": "adamic_function_9_precedence",
+        "instructions": 2387092,
+        "percent": 0.7334706356700136,
+        "self": 2387092,
+        "inclusive": 8526510
+      },
+      {
+        "function": "find",
+        "instructions": 2383524,
+        "percent": 0.7323743129358791,
+        "self": 2383524,
+        "inclusive": 2899105
+      }
+    ],
+    "inclusive": [
+      {
+        "function": "adamic_function_559_Statements_statement'2",
+        "instructions": 332885373,
+        "percent": 102.28413741052276,
+        "self": 1968467,
+        "inclusive": 332885373
+      },
+      {
+        "function": "main",
+        "instructions": 320550459,
+        "percent": 98.49404586293475,
+        "self": 36231,
+        "inclusive": 320550459
+      },
+      {
+        "function": "adamic_function_373_run",
+        "instructions": 318955792,
+        "percent": 98.00405996453955,
+        "self": 13645278,
+        "inclusive": 318955792
+      },
+      {
+        "function": "adamic_function_529_Statements_statementList'2",
+        "instructions": 242056488,
+        "percent": 74.37556915335104,
+        "self": 223763,
+        "inclusive": 242056488
+      },
+      {
+        "function": "adamic_function_1166_Linter_run",
+        "instructions": 222431898,
+        "percent": 68.34561282906047,
+        "self": 519424,
+        "inclusive": 222431898
+      },
+      {
+        "function": "adamic_function_530_Statements_block'2",
+        "instructions": 211297067,
+        "percent": 64.92426519283691,
+        "self": 90915,
+        "inclusive": 211297067
+      },
+      {
+        "function": "adamic_function_522_Parser_file",
+        "instructions": 189093852,
+        "percent": 58.10198678045567,
+        "self": 3958,
+        "inclusive": 189093852
+      },
+      {
+        "function": "adamic_function_559_Statements_statement",
+        "instructions": 188609436,
+        "percent": 57.95314253337649,
+        "self": 87196,
+        "inclusive": 188609436
+      },
+      {
+        "function": "adamic_function_518_Parser_assignment",
+        "instructions": 132223442,
+        "percent": 40.627680899696024,
+        "self": 282459,
+        "inclusive": 132223442
+      },
+      {
+        "function": "adamic_function_515_Parser_binary",
+        "instructions": 127131607,
+        "percent": 39.06313648574934,
+        "self": 261365,
+        "inclusive": 127131607
+      },
+      {
+        "function": "adamic_function_514_Parser_unary",
+        "instructions": 121496153,
+        "percent": 37.33155679478262,
+        "self": 448883,
+        "inclusive": 121496153
+      },
+      {
+        "function": "adamic_function_446_Parser_next",
+        "instructions": 107559078,
+        "percent": 33.049176702339324,
+        "self": 2350200,
+        "inclusive": 107559078
+      },
+      {
+        "function": "adamic_function_392_Scanner_scan",
+        "instructions": 105437186,
+        "percent": 32.397192834912715,
+        "self": 12525441,
+        "inclusive": 105437186
+      },
+      {
+        "function": "adamic_function_456_Parser_delimitedList",
+        "instructions": 104095741,
+        "percent": 31.985013280514995,
+        "self": 410778,
+        "inclusive": 104095741
+      },
+      {
+        "function": "adamic_function_547_Statements_functionDeclaration'2",
+        "instructions": 102867341,
+        "percent": 31.607568536509717,
+        "self": 50590,
+        "inclusive": 102867341
+      },
+      {
+        "function": "adamic_function_547_Statements_functionDeclaration",
+        "instructions": 99114020,
+        "percent": 30.454303082248376,
+        "self": 40730,
+        "inclusive": 99114020
+      },
+      {
+        "function": "adamic_function_465_Parser_primary",
+        "instructions": 97486303,
+        "percent": 29.95416206435678,
+        "self": 787530,
+        "inclusive": 97486303
+      },
+      {
+        "function": "adamic_function_530_Statements_block",
+        "instructions": 94595437,
+        "percent": 29.065899139150368,
+        "self": 8086,
+        "inclusive": 94595437
+      },
+      {
+        "function": "adamic_function_534_Statements_variableList",
+        "instructions": 93893361,
+        "percent": 28.8501755181049,
+        "self": 103839,
+        "inclusive": 93893361
+      },
+      {
+        "function": "adamic_function_529_Statements_statementList",
+        "instructions": 93713584,
+        "percent": 28.794936277024604,
+        "self": 19287,
+        "inclusive": 93713584
+      },
+      {
+        "function": "adamic_function_535_Statements_variableDeclaration",
+        "instructions": 91761302,
+        "percent": 28.19506768396362,
+        "self": 67507,
+        "inclusive": 91761302
+      },
+      {
+        "function": "adamic_function_490_Parser_rootAssignment",
+        "instructions": 89507246,
+        "percent": 27.502474400103676,
+        "self": 18914,
+        "inclusive": 89507246
+      },
+      {
+        "function": "adamic_function_610_closure",
+        "instructions": 89479596,
+        "percent": 27.493978513444816,
+        "self": 5500,
+        "inclusive": 89479596
+      },
+      {
+        "function": "adamic_function_509_Parser_array",
+        "instructions": 79826574,
+        "percent": 24.527939423842643,
+        "self": 3179,
+        "inclusive": 79826574
+      },
+      {
+        "function": "adamic_function_518_Parser_assignment'2",
+        "instructions": 61329382,
+        "percent": 18.844393429657966,
+        "self": 772356,
+        "inclusive": 61329382
+      },
+      {
+        "function": "adamic_function_515_Parser_binary'2",
+        "instructions": 53504254,
+        "percent": 16.44000281196949,
+        "self": 665293,
+        "inclusive": 53504254
+      },
+      {
+        "function": "adamic_function_555_Statements_switchStatement",
+        "instructions": 43637964,
+        "percent": 13.408433857775558,
+        "self": 75332,
+        "inclusive": 43637964
+      },
+      {
+        "function": "adamic_function_521_Parser_expression",
+        "instructions": 43445042,
+        "percent": 13.349155613797222,
+        "self": 120228,
+        "inclusive": 43445042
+      },
+      {
+        "function": "adamic_function_611_closure",
+        "instructions": 43351023,
+        "percent": 13.320266833769029,
+        "self": 37334,
+        "inclusive": 43351023
+      },
+      {
+        "function": "adamic_function_491_Parser_rootExpression",
+        "instructions": 43297052,
+        "percent": 13.303683416088544,
+        "self": 123939,
+        "inclusive": 43297052
+      }
+    ]
+  },
+  "machine_after": {
+    "uname": {
+      "system": "Linux",
+      "node": "3b1b810b0b56",
+      "release": "6.18.44",
+      "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+      "machine": "x86_64",
+      "processor": ""
+    },
+    "cores": 5,
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "quota": "400000 100000",
+    "cpu": "model name\t: AMD EPYC 9V74 80-Core Processor",
+    "load_1m": "1.35"
+  }
+}

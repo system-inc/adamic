@@ -1,0 +1,42 @@
+=== RUN   TestMeasurements
+=== PAUSE TestMeasurements
+=== RUN   TestGuardsCatchMutants
+=== PAUSE TestGuardsCatchMutants
+=== RUN   TestEncodingAndMutant
+=== PAUSE TestEncodingAndMutant
+=== RUN   TestEncodingMeasurements
+=== PAUSE TestEncodingMeasurements
+=== RUN   TestFusedMeasurements
+=== PAUSE TestFusedMeasurements
+=== RUN   TestFusedInstructionProfiles
+=== PAUSE TestFusedInstructionProfiles
+=== CONT  TestMeasurements
+=== CONT  TestEncodingMeasurements
+=== CONT  TestEncodingAndMutant
+=== CONT  TestGuardsCatchMutants
+--- PASS: TestEncodingMeasurements (0.00s)
+=== CONT  TestFusedInstructionProfiles
+--- PASS: TestMeasurements (0.00s)
+=== CONT  TestFusedMeasurements
+--- PASS: TestFusedMeasurements (0.00s)
+--- PASS: TestFusedInstructionProfiles (0.36s)
+=== NAME  TestGuardsCatchMutants
+    scout_test.go:67: test_accounting_mutant (test_scout.Guards.test_accounting_mutant) ... ok
+        test_allocation_mutant (test_scout.Guards.test_allocation_mutant) ... ok
+        test_drop_row_mutant (test_scout.Guards.test_drop_row_mutant) ... ok
+        test_empty_input (test_scout.Guards.test_empty_input) ... ok
+        test_one_byte_mutant (test_scout.Guards.test_one_byte_mutant) ... ok
+        test_reorder_mutant (test_scout.Guards.test_reorder_mutant) ... ok
+        test_saved_answers (test_scout.Guards.test_saved_answers) ... ok
+        test_saved_counters (test_scout.Guards.test_saved_counters) ... ok
+        test_skipped_mutant (test_scout.Guards.test_skipped_mutant) ... ok
+
+        ----------------------------------------------------------------------
+        Ran 9 tests in 0.333s
+
+        OK
+
+--- PASS: TestGuardsCatchMutants (0.45s)
+--- PASS: TestEncodingAndMutant (0.73s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/perf-scout	0.743s

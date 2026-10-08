@@ -1,0 +1,52 @@
+{
+  "KindExpressionStatement": {
+    "Label": "/workspace/adamic/stage3/drivers/tsc/corpus/235_reachabilityChecks3/reachabilityChecks3.ts:205:KindExpressionStatement",
+    "Source": "1",
+    "Want": "1;\n"
+  },
+  "KindReturnStatement": {
+    "Label": "/workspace/adamic/stage3/drivers/tsc/corpus/099_untypedFunctionCallsWithTypeParameters1/untypedFunctionCallsWithTypeParameters1.ts:112:KindReturnStatement",
+    "Source": "return;",
+    "Want": "return;\n"
+  },
+  "KindThrowStatement": {
+    "Label": "/workspace/scratch/typescript-6.0.3/src/compiler/debug.ts:5716:KindThrowStatement",
+    "Source": "throw e;",
+    "Want": "throw e;\n"
+  },
+  "KindVariableStatement": {
+    "Label": "/workspace/adamic/stage3/drivers/tsc/corpus/007_nestedBlockScopedBindings15/nestedBlockScopedBindings15.ts:53:KindVariableStatement",
+    "Source": "let x;",
+    "Want": "let x;\n"
+  },
+  "KindBreakStatement": {
+    "Label": "/workspace/adamic/stage3/drivers/tsc/corpus/039_narrowByClauseExpressionInSwitchTrue2/narrowByClauseExpressionInSwitchTrue2.ts:220:KindBreakStatement",
+    "Source": "break",
+    "Want": "break;\n"
+  },
+  "KindBlock": {
+    "Label": "/workspace/adamic/stage3/drivers/tsc/corpus/114_truthinessPromiseCoercion/truthinessPromiseCoercion.ts:244:KindBlock",
+    "Source": "{}",
+    "Want": "{\n}\n"
+  },
+  "KindEmptyStatement": {
+    "Label": "/workspace/adamic/stage3/drivers/tsc/corpus/029_enumLiteralUnionNotWidened/enumLiteralUnionNotWidened.ts:77:KindEmptyStatement",
+    "Source": ";",
+    "Want": ""
+  },
+  "KindFunctionDeclaration": {
+    "Label": "/workspace/adamic/stage3/drivers/tsc/corpus/065_callOverloads2/callOverloads2.ts:211:KindFunctionDeclaration",
+    "Source": "function Foo();",
+    "Want": "function Foo();\n"
+  },
+  "KindContinueStatement": {
+    "Label": "/workspace/scratch/typescript-6.0.3/src/compiler/builder.ts:61084:KindContinueStatement",
+    "Source": "continue;",
+    "Want": "continue;\n"
+  },
+  "KindDebuggerStatement": {
+    "Label": "/workspace/scratch/typescript-6.0.3/src/compiler/debug.ts:5475:KindDebuggerStatement",
+    "Source": "debugger;",
+    "Want": "debugger;\n"
+  }
+}
