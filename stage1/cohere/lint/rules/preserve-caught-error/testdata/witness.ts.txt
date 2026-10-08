@@ -1,0 +1,3 @@
+try { work(); } catch(cause) { throw new Error("failed", { cause }); }
+try { work(); } catch(cause) { { const cause = 2; throw new Error("failed", { cause }); } }
+try { work(); } catch (err) { throw new Error("m", { *cause() {} }); }

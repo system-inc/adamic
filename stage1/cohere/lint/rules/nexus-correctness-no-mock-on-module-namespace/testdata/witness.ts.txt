@@ -1,0 +1,5 @@
+import { mock } from 'node:test';
+import * as Store from './Store';
+mock.method(Store, 'load');
+mock.method(Store as typeof Store, 'load');
+mock.method(Store!, 'load');

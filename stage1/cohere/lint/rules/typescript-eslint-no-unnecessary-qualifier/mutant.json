@@ -1,0 +1,5 @@
+{
+  "name": "qualifier-alias-target-ignored",
+  "from": "alias === 0 || alias === own",
+  "to": "alias >= 0 || alias === own"
+}

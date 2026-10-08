@@ -1,0 +1,44 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { LocalDeclaration, localDeclarations } from '../../checker_local_symbols.a';
+import { writesToBinding } from '../../reference_writes.a';
+const message = 'This declares a variable without a value and nothing ever assigns one, so every read of it is `undefined`. The code below it is written as though the value arrives from somewhere, which is what makes this hard to see in review: the comparison, the property access, the fallback all read as ordinary until you notice nothing on the other side ever writes. The usual cause is an assignment that was deleted, moved into a branch that no longer runs, or never written. Give it an initializer, assign it where the value is known, or delete the declaration.';
+export class Rule {
+    readonly context: RuleContext;
+    read = false;
+    write = false;
+    constructor(context: RuleContext) { this.context = context; }
+    exempt(index: number): boolean {
+        const c = this.context; const parent = c.parent(index);
+        if(c.kind(parent) === 'CatchClause') { return true; }
+        if(c.kind(parent) === 'VariableDeclarationList' && ['2','4','6'].includes(c.node(parent).semantic)) { return true; }
+        if(['ForStatement','ForInStatement','ForOfStatement'].includes(c.kind(c.parent(parent)))) { return true; }
+        for(let at = index; at >= 0; at = c.parent(at)) {
+            if(c.kind(at) === 'ModuleDeclaration' || c.has(at,'DeclareKeyword')) { return true; }
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+        const c = this.context; const checker = c.checker;
+        if(checker === undefined || c.initializer(index) >= 0 || this.exempt(index)) { return; }
+        const name = c.name(index); if(c.kind(name) !== 'Identifier') { return; }
+        const anchor = localDeclarations(checker,c.node(name))[0]; if(anchor === undefined) { return; }
+        this.read = false; this.write = false;
+        this.walk(c.root,name,anchor,c.node(name).text);
+        if(this.read && !this.write) { c.reportNode(name,'no-unassigned-vars','noUnassignedVars',message); }
+    }
+    walk(at: number, name: number, anchor: LocalDeclaration, text: string): void {
+        if(this.write) { return; }
+        const c = this.context; const checker = c.checker; if(checker === undefined) { return; }
+        const occurrence = c.node(at);
+        if(at !== name && occurrence.kind === 'Identifier' && occurrence.text === text) {
+            const declaration = localDeclarations(checker,occurrence)[0];
+            if(declaration !== undefined && declaration.start === anchor.start && declaration.end === anchor.end) {
+                if(writesToBinding(c,at)) { this.write = true; return; }
+                this.read = true;
+            }
+        }
+        for(const child of occurrence.children) { this.walk(child,name,anchor,text); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

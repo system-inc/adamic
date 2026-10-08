@@ -3134,7 +3134,9 @@
     {
       "api": "GetSymbolAtLocation",
       "rules": [
+        "@typescript-eslint/consistent-indexed-object-style",
         "@typescript-eslint/no-array-constructor",
+        "@typescript-eslint/prefer-for-of",
         "id-denylist",
         "id-match",
         "nexus/concurrency-no-check-then-write",
@@ -3165,6 +3167,7 @@
         "no-setter-return",
         "no-shadow-restricted-names",
         "no-throw-literal",
+        "no-undef-init",
         "no-useless-assignment",
         "prefer-arrow-callback",
         "prefer-exponentiation-operator",
@@ -3183,7 +3186,7 @@
         "use-isnan",
         "valid-typeof"
       ],
-      "count": 48
+      "count": 51
     },
     {
       "api": "GetShorthandAssignmentValueSymbol",
@@ -4368,8 +4371,17 @@
     "local_head": "9045ca18",
     "reported_rule_count": 5,
     "only_blocker": "unsupported checker question: node-symbol-details",
-    "names": "requested; local commit unavailable here; do not add five to the distinct named count yet",
-    "question_status": "implemented in this slice, adapted from wave 18; worker certification still required"
+    "names": [
+      "no-undef-init",
+      "prefer-rest-params",
+      "react/jsx-no-undef",
+      "@typescript-eslint/prefer-for-of",
+      "@typescript-eslint/consistent-indexed-object-style"
+    ],
+    "question_status": "implemented in this slice, adapted from wave 18; worker certification still required",
+    "additional_dependency": {
+      "@typescript-eslint/consistent-indexed-object-style": "type-reference-graph"
+    }
   },
   "wave16_input": {
     "reported_unparked_rules": 18,

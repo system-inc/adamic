@@ -1,0 +1,38 @@
+[
+  {
+    "label": "facts-ad7-area-final-r5",
+    "totals_seconds": {
+      "Go program and lint": 51.35540557399997,
+      "native program, lint and recording": 64.77569475299998,
+      "Node replay": 254.42944886900005,
+      "emitted JavaScript replay": 51.82274459700003
+    },
+    "samples": {
+      "Go program and lint": 263,
+      "native program, lint and recording": 263,
+      "Node replay": 263,
+      "emitted JavaScript replay": 263
+    },
+    "build_events": [
+      "lint_test.go:372: checker native build: 71.613952ms"
+    ]
+  },
+  {
+    "label": "facts-ad7-narrow-final-r5",
+    "totals_seconds": {
+      "Go program and lint": 64.64903278000003,
+      "native program, lint and recording": 99.454710699,
+      "Node replay": 787.8935762129996,
+      "emitted JavaScript replay": 152.71373105600017
+    },
+    "samples": {
+      "Go program and lint": 884,
+      "native program, lint and recording": 884,
+      "Node replay": 884,
+      "emitted JavaScript replay": 884
+    },
+    "build_events": [
+      "lint_test.go:372: checker native build: 42.430296ms"
+    ]
+  }
+]

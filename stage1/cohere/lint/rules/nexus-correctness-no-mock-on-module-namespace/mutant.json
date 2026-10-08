@@ -1,0 +1,5 @@
+{
+  "name": "resolved-signature-module-ignored",
+  "from": "(module === 'node:test' || module === 'test')",
+  "to": "(module === 'wrong:test' || module === 'wrong')"
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "name": "symbol-presence",
+    "test": "TestNarrowSymbolContracts",
+    "exit": 1,
+    "wall": 12.791756974009331,
+    "log": "/tmp/checker-narrow-mutant-symbol-presence.log"
+  },
+  {
+    "name": "shorthand-binding-identity",
+    "test": "TestNarrowSymbolContracts",
+    "exit": 1,
+    "wall": 9.0512556550093,
+    "log": "/tmp/checker-narrow-mutant-shorthand-binding-identity.log"
+  },
+  {
+    "name": "local-declaration-filter",
+    "test": "TestNarrowSymbolContracts",
+    "exit": 1,
+    "wall": 10.25344693599618,
+    "log": "/tmp/checker-narrow-mutant-local-declaration-filter.log"
+  },
+  {
+    "name": "first-declaration-file-flag",
+    "test": "TestNarrowSymbolContracts",
+    "exit": 1,
+    "wall": 10.526290645007975,
+    "log": "/tmp/checker-narrow-mutant-first-declaration-file-flag.log"
+  },
+  {
+    "name": "ordered-output-file-flags",
+    "test": "TestNarrowSymbolContracts",
+    "exit": 1,
+    "wall": 14.908979245985392,
+    "log": "/tmp/checker-narrow-mutant-ordered-output-file-flags.log"
+  },
+  {
+    "name": "library-member-provenance",
+    "test": "TestLibraryProvenanceMatchesChecker",
+    "exit": 1,
+    "wall": 9.027359127998352,
+    "log": "/tmp/checker-narrow-mutant-library-member-provenance.log"
+  },
+  {
+    "name": "symbol-default-library",
+    "test": "TestLibraryProvenanceMatchesChecker",
+    "exit": 1,
+    "wall": 10.729875303019071,
+    "log": "/tmp/checker-narrow-mutant-symbol-default-library.log"
+  },
+  {
+    "name": "narrow-alias-identity",
+    "test": "TestAliasFactsMatchChecker",
+    "exit": 1,
+    "wall": 8.939492322009755,
+    "log": "/tmp/checker-narrow-mutant-narrow-alias-identity.log"
+  },
+  {
+    "name": "local-skip-alias",
+    "test": "TestAliasFactsMatchChecker",
+    "exit": 1,
+    "wall": 9.275957025005482,
+    "log": "/tmp/checker-narrow-mutant-local-skip-alias.log"
+  },
+  {
+    "name": "skip-alias-identity",
+    "test": "TestAliasFactsMatchChecker",
+    "exit": 1,
+    "wall": 8.579985176998889,
+    "log": "/tmp/checker-narrow-mutant-skip-alias-identity.log"
+  },
+  {
+    "name": "skip-alias-target",
+    "test": "TestAliasFactsMatchChecker",
+    "exit": 1,
+    "wall": 12.474325959017733,
+    "log": "/tmp/checker-narrow-mutant-skip-alias-target.log"
+  },
+  {
+    "name": "resolved-signature-kind",
+    "test": "TestResolvedSignatureMatchesChecker",
+    "exit": 1,
+    "wall": 12.35326090399758,
+    "log": "/tmp/checker-narrow-mutant-resolved-signature-kind.log"
+  }
+]

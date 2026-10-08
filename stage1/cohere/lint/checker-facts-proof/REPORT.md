@@ -1,4 +1,8 @@
-# Shared checker facts proof
+# Current checker facts unit
+
+The current merged unit passed 167/0/1 in 1822.973s wall, against area 151/0/1 in 1329.393s on the same box. See NARROW_PROGRESS.md and PAIRED_BENCHMARK.md for the complete current proof, every top-level timing, named skip and archived logs. The material below is retained historical evidence from d845dccde before this merge; its old pending statuses and timings do not describe the current unit.
+
+# Historical shared checker facts proof (d845dccde)
 
 The complete lint package passed: 118 test/subtest passes, zero failures and one named pending skip. Its wall time is 3228.294s on this box. This exceeds the approximate 2700s seat target; the unchanged area baseline reaches its native 600s deadline on this box, so complete before/after budget comparison is blocked.
 

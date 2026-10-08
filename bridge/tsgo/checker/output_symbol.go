@@ -1,0 +1,86 @@
+package checker
+
+import (
+	"fmt"
+	"strings"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// outputSymbol returns binder facts only. Native rules decide platform identity.
+func (p *Program) outputSymbol(c *checker.Checker, node *ast.Node, question string) (string, error) {
+	if question != "output-symbol" && question != "output-symbol\nown" && question != "output-symbol\nfiles" {
+		return "", fmt.Errorf("unexpected output-symbol suffix")
+	}
+	s := c.GetSymbolAtLocation(node)
+	if s != nil && s.Flags&ast.SymbolFlagsAlias != 0 && question == "output-symbol" {
+		s = c.GetAliasedSymbol(s)
+	}
+	out := &fields{}
+	out.number(1)
+	out.text("output-symbol")
+	out.yes(s != nil)
+	if question == "output-symbol\nfiles" {
+		// A declaration-file flag is checker metadata, not a foreign body or a
+		// program/default-library read. Keep declaration ordering and own identity.
+		if s != nil {
+			out.number(uint64(len(s.Declarations)))
+			for _, declaration := range s.Declarations {
+				source := ast.GetSourceFileOfNode(declaration)
+				if source == nil {
+					return "", fmt.Errorf("symbol declaration has no source")
+				}
+				out.yes(source.IsDeclarationFile)
+			}
+		}
+		return out.String(), nil
+	}
+	if s != nil {
+		out.number(p.symbolID(s))
+		out.number(uint64(s.Flags))
+		out.number(uint64(len(s.Declarations)))
+		for _, d := range s.Declarations {
+			f := ast.GetSourceFileOfNode(d)
+			if f == nil {
+				return "", fmt.Errorf("symbol declaration has no source")
+			}
+			out.text(f.FileName().AsString())
+			out.text(strings.TrimPrefix(d.Kind.String(), "Kind"))
+			out.number(uint64(d.Pos()))
+			out.number(uint64(d.End()))
+			out.number(uint64(d.Flags))
+			out.yes(f.IsDeclarationFile)
+			out.yes(p.Compiler.IsSourceFileDefaultLibrary(f.PathKey()))
+			out.yes(ast.IsExternalModule(f))
+			var parents []*ast.Node
+			for parent := d.Parent; parent != nil; parent = parent.Parent {
+				parents = append(parents, parent)
+			}
+			out.number(uint64(len(parents)))
+			for _, parent := range parents {
+				out.text(strings.TrimPrefix(parent.Kind.String(), "Kind"))
+				name := ""
+				if n := parent.Name(); n != nil {
+					switch n.Kind {
+					case ast.KindIdentifier, ast.KindPrivateIdentifier, ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindBigIntLiteral, ast.KindNoSubstitutionTemplateLiteral:
+						name = n.Text()
+					}
+				}
+				out.text(name)
+				nameKind := ""
+				if n := parent.Name(); n != nil {
+					nameKind = strings.TrimPrefix(n.Kind.String(), "Kind")
+				}
+				out.text(nameKind)
+				out.number(uint64(parent.Flags))
+				keyword := ""
+				if parent.Kind == ast.KindModuleDeclaration {
+					keyword = strings.TrimPrefix(parent.AsModuleDeclaration().Keyword.String(), "Kind")
+				}
+				out.text(keyword)
+			}
+		}
+	}
+	return out.String(), nil
+}

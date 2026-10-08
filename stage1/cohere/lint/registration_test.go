@@ -46,11 +46,7 @@ func TestOwnedWitnesses(t *testing.T) {
 		for _, row := range ownedWitnessRows(t, directory, d) {
 			path := strings.SplitN(row, "\t", 2)[0]
 			if d.Typed {
-				config := filepath.Join(t.TempDir(), "tsconfig.json")
-				options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, path)
-				if err := os.WriteFile(config, []byte(options), 0644); err != nil {
-					t.Fatal(err)
-				}
+				config := typedConfigForRow(t, path)
 				projectManifest := manifest(t, []string{"program " + config, row, path + "\tall"})
 				compare(t, oracle, buildPort(t, directory, true), directory, projectManifest)
 				answer := execute(t, "", oracle, "--manifest", manifest(t, []string{"program " + config, row}), "--count")
@@ -195,6 +191,32 @@ func ownedWitnesses(t *testing.T, directory, slug string) []string {
 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
 				t.Fatal(err)
 			}
+		}
+		stem := strings.TrimSuffix(strings.TrimSuffix(path, ".txt"), filepath.Ext(strings.TrimSuffix(path, ".txt")))
+		if config, err := os.ReadFile(stem + ".tsconfig.json"); err == nil {
+			project := t.TempDir()
+			target = filepath.Join(project, filepath.Base(strings.TrimSuffix(path, ".txt")))
+			if err := os.WriteFile(filepath.Join(project, "tsconfig.json"), config, 0644); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(filepath.Join(project, ".adamic-typed-project"), []byte("tsconfig.json\n"), 0644); err != nil {
+				t.Fatal(err)
+			}
+			assets, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.asset"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			for _, asset := range assets {
+				contents, err := os.ReadFile(asset)
+				if err != nil {
+					t.Fatal(err)
+				}
+				if err := os.WriteFile(filepath.Join(project, strings.TrimSuffix(filepath.Base(asset), ".asset")), contents, 0644); err != nil {
+					t.Fatal(err)
+				}
+			}
+		} else if !os.IsNotExist(err) {
+			t.Fatal(err)
 		}
 		if err := os.WriteFile(target, data, 0644); err != nil {
 			t.Fatal(err)

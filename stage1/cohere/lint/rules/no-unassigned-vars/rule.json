@@ -1,0 +1,15 @@
+{
+  "name": "no-unassigned-vars",
+  "typed": true,
+  "node": true,
+  "programReads": [],
+  "kinds": [
+    "VariableDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleCheckerUnassigned",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUnassignedVars"
+}

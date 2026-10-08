@@ -1,8 +1,7 @@
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { declarationAnswer } from '../../checker_declarations.a';
+import { localDeclarations } from '../../checker_local_symbols.a';
 import { writesToBinding } from '../../reference_writes.a';
-import { Frames, header } from '../../../typeaware/frames.ts';
 const message = 'This assigns to a class binding. The binding is const-like inside the class body and the assignment throws in strict mode, which every module and every class body already is, so the line fails at runtime rather than rebinding anything. Where it does not throw it is worse: every later use of the name gets the new value instead of the class, so `new A()` constructs something else and `instanceof A` answers about something else. Use a separate variable for the new value.';
 export class Rule {
     readonly context: RuleContext;
@@ -11,21 +10,11 @@ export class Rule {
         const context = this.context;
         const checker = context.checker;
         if(checker === undefined || !writesToBinding(context, index)) { return; }
-        const answer = declarationAnswer(checker, node, 'binding-declarations');
-        if(answer.value === undefined) { return; }
-        const frames = new Frames(answer.value); header(frames, 'binding-declarations');
         let first = ''; let classes = 0;
-        if(frames.yes()) {
-            frames.natural(); const count = frames.natural();
-            for(let at = 0; at < count; at++) {
-                const path = frames.field(); const kind = frames.field(); frames.natural(); frames.natural();
-                if(path === checker.path) {
-                    if(first === '') { first = kind; }
-                    if(kind === 'ClassDeclaration' || kind === 'ClassExpression') { classes++; }
-                }
-            }
+        for(const declaration of localDeclarations(checker, node)) {
+            if(first === '') { first = declaration.kind; }
+            if(declaration.kind === 'ClassDeclaration' || declaration.kind === 'ClassExpression') { classes++; }
         }
-        frames.end();
         if(first === '' || classes === 0) { return; }
         for(let at = 0; at < classes; at++) {
             context.reportRange(context.start(index), node.end, 'no-class-assign', 'noClassAssign', message);

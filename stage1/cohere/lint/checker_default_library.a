@@ -1,0 +1,17 @@
+// Default-library membership is the shared cohere helper, never a rule verdict.
+import { panic } from 'adamic';
+import { Checker, FileQuestion } from './checker.a';
+import type { ParseNode } from '../../typescript/parser/nodes.ts';
+import { Frames, header } from '../typeaware/frames.ts';
+export function isSymbolFromDefaultLibrary(checker: Checker, node: ParseNode): boolean {
+    // Both program reads in cohere's helper must be declared even when the fast
+    // library membership branch returns before reading compiler options.
+    const options = checker.askFile(new FileQuestion('ReadsCompilerOptions', 'options'));
+    if(options.value === undefined) { return false; }
+    const first = checker.offsets[node.pos] ?? panic('library start outside source');
+    const last = checker.offsets[node.end] ?? panic('library end outside source');
+    const answer = checker.askFile(new FileQuestion('ReadsDefaultLibrary', `symbol-default-library\n${first}\n${last}\n${node.kind}`));
+    if(answer.value === undefined) { return false; }
+    const frames = new Frames(answer.value); header(frames, 'symbol-default-library');
+    const result = frames.yes(); frames.end(); return result;
+}

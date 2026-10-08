@@ -1,0 +1,5 @@
+{
+  "name": "caught-error-shorthand-identity-ignored",
+  "from": "symbolIdentity(checker, this.context.node(index), shorthand)",
+  "to": "symbolIdentity(checker, this.context.node(index), false)"
+}

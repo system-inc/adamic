@@ -1,0 +1,47 @@
+// Narrow checker answers: no foreign declaration record, body, or private parse.
+import { Checker } from './checker.a';
+import type { ParseNode } from '../../typescript/parser/nodes.ts';
+import { Frames, header } from '../typeaware/frames.ts';
+export function symbolIdentity(checker: Checker, node: ParseNode, shorthand: boolean): number {
+    const question = shorthand ? 'shorthand-value-identity' : 'symbol-identity';
+    const answer = checker.askNode(node,question); if(answer.value === undefined) { return 0; }
+    const frames = new Frames(answer.value); header(frames,question);
+    const id = frames.yes() ? frames.natural() : 0; frames.end(); return id;
+}
+export function firstDeclarationIsFile(checker: Checker, node: ParseNode): boolean {
+    const answer = checker.askNode(node,'first-declaration-file'); if(answer.value === undefined) { return false; }
+    const frames = new Frames(answer.value); header(frames,'first-declaration-file');
+    let result = false;
+    if(frames.yes() && frames.yes()) { result = frames.yes(); }
+    frames.end(); return result;
+}
+export class LocalDeclaration {
+    readonly kind: string;
+    readonly start: number;
+    readonly end: number;
+    constructor(frames: Frames) { this.kind = frames.field(); this.start = frames.natural(); this.end = frames.natural(); }
+}
+export function localDeclarations(checker: Checker, node: ParseNode): LocalDeclaration[] {
+    const answer = checker.askNode(node,'local-binding-declarations'); if(answer.value === undefined) { return []; }
+    const frames = new Frames(answer.value); header(frames,'local-binding-declarations'); const result: LocalDeclaration[] = [];
+    if(frames.yes()) { const count = frames.natural(); for(let at = 0; at < count; at++) { result.push(new LocalDeclaration(frames)); } }
+    frames.end(); return result;
+}
+
+export class LocalSymbolDetails {
+    readonly present: boolean;
+    readonly symbolId: number;
+    readonly symbolFlags: number;
+    readonly symbolName: string;
+    readonly totalDeclarations: number;
+    readonly declarations: LocalDeclaration[] = [];
+    constructor(value: string) {
+        const frames = new Frames(value); header(frames,'local-symbol-details'); this.present = frames.yes();
+        let id = 0; let flags = 0; let name = ''; let total = 0;
+        if(this.present) {
+            id = frames.natural(); flags = frames.natural(); name = frames.field(); total = frames.natural();
+            const count = frames.natural(); for(let at = 0; at < count; at++) { this.declarations.push(new LocalDeclaration(frames)); }
+        }
+        this.symbolId = id; this.symbolFlags = flags; this.symbolName = name; this.totalDeclarations = total; frames.end();
+    }
+}

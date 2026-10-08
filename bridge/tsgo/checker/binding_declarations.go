@@ -13,7 +13,7 @@ import (
 // enforce programReads through askFile without opening or parsing another file.
 func (p *Program) inspectDeclarations(source *ast.SourceFile, node *ast.Node, c *checker.Checker, out *fields, mode, question string) (bool, error) {
 	switch mode {
-	case "node-symbol-details", "binding-declarations", "symbol-provenance":
+	case "node-symbol-details", "binding-declarations", "alias-declarations", "symbol-provenance", "symbol-provenance-alias":
 	default:
 		return false, nil
 	}
@@ -33,7 +33,7 @@ func (p *Program) inspectDeclarations(source *ast.SourceFile, node *ast.Node, c 
 		}
 		node = selected
 	}
-	if mode == "symbol-provenance" {
+	if mode == "symbol-provenance" || mode == "symbol-provenance-alias" {
 		return true, p.symbolProvenance(out, c, node, mode)
 	}
 	if mode == "node-symbol-details" {
@@ -47,6 +47,9 @@ func (p *Program) inspectDeclarations(source *ast.SourceFile, node *ast.Node, c 
 		if value := c.GetShorthandAssignmentValueSymbol(node.Parent); value != nil {
 			symbol = value
 		}
+	}
+	if mode == "alias-declarations" && symbol != nil {
+		symbol = checker.SkipAlias(symbol, c)
 	}
 	out.yes(symbol != nil)
 	if symbol != nil {

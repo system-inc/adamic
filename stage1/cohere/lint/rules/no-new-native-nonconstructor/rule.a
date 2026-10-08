@@ -1,6 +1,6 @@
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { declarationAnswer, SymbolDetails } from '../../checker_declarations.a';
+import { firstDeclarationIsFile } from '../../checker_local_symbols.a';
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) { this.context = context; }
@@ -12,10 +12,7 @@ export class Rule {
         if(callee < 0) { return; }
         const target = context.node(callee);
         if(target.kind !== 'Identifier' || !["Symbol", "BigInt"].includes(target.text)) { return; }
-        const answer = declarationAnswer(checker, target, 'node-symbol-details');
-        if(answer.value === undefined) { return; }
-        const facts = new SymbolDetails(answer.value);
-        if(!facts.present || facts.declarations.length === 0 || facts.declarations[0]?.declarationFile !== true) { return; }
+        if(!firstDeclarationIsFile(checker, target)) { return; }
         const name = target.text;
         context.reportRange(context.start(callee), target.end, 'no-new-native-nonconstructor', 'noNewNativeNonconstructor', `This calls \`new ${name}()\`. ${name} is a function that returns a primitive and throws a TypeError when constructed, so this line fails at runtime every time it is reached. Call it without \`new\`.`);
     }

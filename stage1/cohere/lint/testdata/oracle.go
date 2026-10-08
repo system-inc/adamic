@@ -238,6 +238,12 @@ func main() {
 	}
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
+	if args[0] == "--program-reads" {
+		for _, item := range registeredRules() {
+			fmt.Fprintf(out, "%s\t%d\n", item.subject.Name, item.subject.ProgramReads)
+		}
+		return
+	}
 	if args[0] != "--manifest" {
 		run(args[0], false, out, nil)
 		return

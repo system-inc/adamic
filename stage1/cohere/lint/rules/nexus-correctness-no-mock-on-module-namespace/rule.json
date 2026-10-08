@@ -1,0 +1,17 @@
+{
+  "name": "nexus/correctness-no-mock-on-module-namespace",
+  "typed": true,
+  "node": true,
+  "programReads": [
+    "ReadsCompilerOptions"
+  ],
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleCheckerMockModule",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestCorrectnessNoMockOnModuleNamespace"
+}

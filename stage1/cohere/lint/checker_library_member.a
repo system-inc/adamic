@@ -1,0 +1,24 @@
+import { panic } from 'adamic';
+import { Checker, FileQuestion } from './checker.a';
+import type { ParseNode } from '../../typescript/parser/nodes.ts';
+import { Frames, header } from '../typeaware/frames.ts';
+export class LibraryDeclaration {
+    readonly library: boolean;
+    readonly kind: string;
+    readonly name: string;
+    readonly ownerKind: string;
+    readonly ownerName: string;
+    constructor(frames: Frames) {
+        this.library = frames.yes(); this.kind = frames.field(); this.name = frames.field();
+        this.ownerKind = frames.field(); this.ownerName = frames.field();
+    }
+}
+export function libraryDeclarations(checker: Checker, node: ParseNode): LibraryDeclaration[] {
+    const start = checker.offsets[node.pos] ?? panic('library start outside source');
+    const end = checker.offsets[node.end] ?? panic('library end outside source');
+    const answer = checker.askFile(new FileQuestion('ReadsDefaultLibrary', `library-member-provenance\n${start}\n${end}\n${node.kind}`));
+    if(answer.value === undefined) { return []; }
+    const frames = new Frames(answer.value); header(frames,'library-member-provenance'); const result: LibraryDeclaration[] = [];
+    if(frames.yes()) { const count = frames.natural(); for(let at = 0; at < count; at++) { result.push(new LibraryDeclaration(frames)); } }
+    frames.end(); return result;
+}

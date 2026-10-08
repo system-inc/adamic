@@ -1,0 +1,16 @@
+{
+  "name": "@typescript-eslint/no-unnecessary-qualifier",
+  "typed": true,
+  "node": true,
+  "programReads": [],
+  "kinds": [
+    "EnumDeclaration",
+    "ModuleDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleCheckerQualifier",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoUnnecessaryQualifier"
+}

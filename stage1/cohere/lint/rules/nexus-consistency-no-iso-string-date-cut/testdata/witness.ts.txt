@@ -1,0 +1,2 @@
+const datePart = new Date().toISOString().slice(0, 10);
+const [day = ''] = new Date().toISOString().split('T');

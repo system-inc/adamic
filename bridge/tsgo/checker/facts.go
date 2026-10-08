@@ -203,6 +203,20 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "library-member-provenance":
+		return p.libraryMemberProvenance(source, node, c, out, question)
+	case "local-symbol-details", "symbol-identity", "shorthand-value-identity", "first-declaration-file", "local-binding-declarations", "alias-target-identity", "skip-alias-identity", "local-alias-declarations":
+		return p.localSymbolFacts(source, node, c, out, question)
+	case "symbols-in-scope":
+		return p.scopeSymbols(out, c, node, question)
+	case "emit-module-kind":
+		return p.emitModuleKind(out, node, question)
+	case "resolved-signature":
+		return p.resolvedSignature(out, c, node, question)
+	case "symbol-default-library":
+		return p.symbolDefaultLibrary(source, node, c, out, question)
+	case "output-symbol":
+		return p.outputSymbol(c, node, question)
 	case "symbol-origin":
 		if question != mode {
 			return "", fmt.Errorf("unexpected symbol-origin suffix")

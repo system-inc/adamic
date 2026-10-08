@@ -1,7 +1,6 @@
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { declarationAnswer } from '../../checker_declarations.a';
-import { Frames, header } from '../../../typeaware/frames.ts';
+import { outputDeclarationFiles } from '../../checker_output_symbol.a';
 import { messageSymbolDescription } from './messages.a';
 export class Rule {
     readonly context: RuleContext;
@@ -18,18 +17,7 @@ export class Rule {
     origins(node: ParseNode): boolean[] {
         const checker = this.context.checker;
         if(checker === undefined) { return []; }
-        const answer = declarationAnswer(checker, node, 'symbol-provenance');
-        if(answer === undefined || answer.value === undefined) { return []; }
-        const frames = new Frames(answer.value); header(frames, 'symbol-provenance');
-        frames.natural(); frames.natural(); const count = frames.natural(); const result: boolean[] = [];
-        for(let at = 0; at < count; at++) {
-            frames.field(); result.push(frames.yes()); frames.yes(); frames.yes();
-            const ancestors = frames.natural();
-            for(let child = 0; child < ancestors; child++) {
-                frames.field(); frames.field(); frames.natural(); frames.natural(); frames.natural(); frames.yes();
-            }
-        }
-        frames.end(); return result;
+        return outputDeclarationFiles(checker, node);
     }
 }
 export function create(context: RuleContext): Rule { return new Rule(context); }

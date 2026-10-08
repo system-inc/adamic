@@ -121,8 +121,8 @@ export class RuleContext {
         if(this.checker === undefined) { this.skipped.push(`skipped ${name} no program`); return false; }
         return true;
     }
-    start(index: number): number {
-        const node = this.node(index);
+    start(index: number): number { return this.startNode(this.node(index)); }
+    startNode(node: ParseNode): number {
         this.scanner.pos = node.pos;
         this.scanner.scan();
         return this.scanner.start;

@@ -1,6 +1,6 @@
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { declarationAnswer, SymbolDetails } from '../../checker_declarations.a';
+import { firstDeclarationIsFile } from '../../checker_local_symbols.a';
 export class Rule {
     readonly context: RuleContext;
     constructor(context: RuleContext) { this.context = context; }
@@ -13,10 +13,7 @@ export class Rule {
         callee = context.unwrap(callee);
         const target = context.node(callee);
         if(target.kind !== 'Identifier' || !["String", "Number", "Boolean"].includes(target.text)) { return; }
-        const answer = declarationAnswer(checker, target, 'node-symbol-details');
-        if(answer.value === undefined) { return; }
-        const facts = new SymbolDetails(answer.value);
-        if(!facts.present || facts.declarations.length === 0 || facts.declarations[0]?.declarationFile !== true) { return; }
+        if(!firstDeclarationIsFile(checker, target)) { return; }
         const name = target.text;
         context.reportRange(context.start(index), node.end, 'no-new-wrappers', 'noNewWrappers', `This calls \`new ${name}()\`. Constructed, ${name} returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by \`===\`, and reports its \`typeof\` as "object". Drop the \`new\` and call ${name} directly.`);
     }

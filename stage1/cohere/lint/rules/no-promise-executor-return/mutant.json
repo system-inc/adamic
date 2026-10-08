@@ -1,0 +1,5 @@
+{
+  "name": "promise-first-declaration-flag-ignored",
+  "from": "firstDeclarationIsFile(checker,c.node(callee))",
+  "to": "!firstDeclarationIsFile(checker,c.node(callee))"
+}

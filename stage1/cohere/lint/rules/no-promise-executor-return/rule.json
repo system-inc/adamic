@@ -1,0 +1,16 @@
+{
+  "name": "no-promise-executor-return",
+  "typed": true,
+  "node": true,
+  "programReads": [],
+  "kinds": [
+    "ArrowFunction",
+    "ReturnStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleCheckerPromiseReturn",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoPromiseExecutorReturn"
+}

@@ -1,0 +1,87 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { LocalSymbolDetails } from '../../checker_local_symbols.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly scopes: number[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    unwrap(index: number): number {
+        while(this.context.kind(index) === 'ParenthesizedExpression') { index = this.context.node(index).children[0] ?? -1; }
+        return index;
+    }
+    entity(index: number): boolean {
+        const kind = this.context.kind(index);
+        return kind === 'Identifier' || (kind === 'PropertyAccessExpression' && this.entity(this.context.node(index).children[0] ?? -1));
+    }
+    matches(path: string, start: number, end: number, kind: string): boolean {
+        const checker = this.context.checker; if(checker === undefined || path !== checker.path) { return false; }
+        return this.scopes.some((scope) => {
+            const node = this.context.node(scope);
+            return node.kind === kind && checker.offsets[node.pos] === start && checker.offsets[node.end] === end;
+        });
+    }
+    inScope(index: number, facts: LocalSymbolDetails): boolean {
+        const checker = this.context.checker; if(checker === undefined) { return false; }
+        if(facts.declarations.some((d) => this.matches(checker.path,d.start,d.end,d.kind))) { return true; }
+        if((facts.symbolFlags & 2097152) === 0) { return false; }
+        const node = this.context.node(index);
+        const identities = checker.askNode(node,'alias-target-identity'); if(identities.value === undefined) { return false; }
+        const ids = new Frames(identities.value); header(ids,'alias-target-identity');
+        let alias = 0; if(ids.yes()) { alias = ids.natural(); ids.natural(); } ids.end(); const own = facts.symbolId;
+        if(alias === 0 || alias === own) { return false; }
+        const answer = checker.askNode(node,'local-alias-declarations'); if(answer.value === undefined) { return false; }
+        const frames = new Frames(answer.value); header(frames,'local-alias-declarations'); let matched = false;
+        if(frames.yes()) {
+            frames.natural(); const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const kind = frames.field(); const start = frames.natural(); const end = frames.natural();
+                matched = this.matches(checker.path,start,end,kind) || matched;
+            }
+        }
+        frames.end(); return matched;
+    }
+    report(qualifier: number, name: number): boolean {
+        const checker = this.context.checker; if(checker === undefined) { return false; }
+        const own = checker.askNode(this.context.node(qualifier),'local-symbol-details'); if(own.value === undefined) { return false; }
+        const namespace = new LocalSymbolDetails(own.value); if(!namespace.present || !this.inScope(qualifier,namespace)) { return false; }
+        const access = checker.askNode(this.context.node(name),'local-symbol-details'); if(access.value === undefined) { return false; }
+        const accessed = new LocalSymbolDetails(access.value); if(!accessed.present) { return false; }
+        const answer = checker.askNode(this.context.node(qualifier),`symbols-in-scope\n${accessed.symbolFlags}`); if(answer.value === undefined) { return false; }
+        const frames = new Frames(answer.value); header(frames,'symbols-in-scope'); const count = frames.natural(); let scoped = 0; let found = false;
+        const text = this.context.node(name).text;
+        for(let at = 0; at < count; at++) {
+            const candidate = frames.field(); frames.natural(); const exported = frames.natural();
+            if(!found && candidate === text) { scoped = exported; found = true; }
+        }
+        frames.end(); if(!found || scoped !== accessed.symbolId) { return false; }
+        const edits: SuggestionEdit[] = [];
+        if(this.context.kind(this.context.parents[qualifier] ?? -1) !== 'ParenthesizedExpression') {
+            edits.push(new SuggestionEdit(this.context.start(qualifier),this.context.start(name),''));
+        }
+        this.context.reportNode(qualifier,'@typescript-eslint/no-unnecessary-qualifier','unnecessaryQualifier',`Qualifier is unnecessary since '${text}' is in scope.`,edits);
+        return true;
+    }
+    walk(index: number): void {
+        const node = this.context.node(index); const scope = node.kind === 'EnumDeclaration' || node.kind === 'ModuleDeclaration';
+        if(scope) { this.scopes.push(index); }
+        else if(node.kind === 'QualifiedName') {
+            const left = node.children[0] ?? -1; const right = node.children[1] ?? -1;
+            if(left >= 0 && right >= 0 && this.report(left,right)) { return; }
+        }
+        else if(node.kind === 'PropertyAccessExpression') {
+            const left = this.unwrap(node.children[0] ?? -1); const right = node.children[1] ?? -1;
+            if(left >= 0 && right >= 0 && this.entity(left) && this.report(left,right)) { return; }
+        }
+        for(const child of node.children) { this.walk(child); }
+        if(scope) { this.scopes.pop(); }
+    }
+    visit(node: ParseNode, index: number): void {
+        for(let parent = this.context.parents[index] ?? -1; parent >= 0; parent = this.context.parents[parent] ?? -1) {
+            const kind = this.context.kind(parent); if(kind === 'EnumDeclaration' || kind === 'ModuleDeclaration') { return; }
+        }
+        this.walk(index);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

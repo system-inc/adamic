@@ -1,0 +1,16 @@
+// Narrow output-symbol file flags: no foreign declaration records or bodies.
+import { Checker } from './checker.a';
+import type { ParseNode } from '../../typescript/parser/nodes.ts';
+import { Frames, header } from '../typeaware/frames.ts';
+
+export function outputDeclarationFiles(checker: Checker, node: ParseNode): boolean[] {
+    const answer = checker.askNode(node, 'output-symbol\nfiles');
+    if(answer.value === undefined) { return []; }
+    const frames = new Frames(answer.value); header(frames, 'output-symbol');
+    const result: boolean[] = [];
+    if(frames.yes()) {
+        const count = frames.natural();
+        for(let at = 0; at < count; at++) { result.push(frames.yes()); }
+    }
+    frames.end(); return result;
+}

@@ -1,0 +1,76 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { FileQuestion } from '../../checker.a';
+import { LocalSymbolDetails } from '../../checker_local_symbols.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+const message = "This mocks a member of an `import * as` namespace with node:test. An ES module namespace is sealed: its properties cannot be redefined, so the mock throws `Cannot redefine property` every time and the test never runs its body. Mock the object the module really exports instead: for a node builtin, the CommonJS exports reached through `createRequire(import.meta.url)`, followed by `syncBuiltinESMExports()` so the namespace's live binding sees the mock.";
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    runsAsModule(): boolean {
+        const checker = this.context.checker; if(checker === undefined) { return false; }
+        if(checker.path.endsWith('.mts') || checker.path.endsWith('.mjs')) { return true; }
+        if(checker.path.endsWith('.cts') || checker.path.endsWith('.cjs')) { return false; }
+        const answer = checker.askFile(new FileQuestion('ReadsCompilerOptions', 'emit-module-kind'));
+        if(answer.value === undefined) { return false; }
+        const frames = new Frames(answer.value); header(frames, 'emit-module-kind');
+        const kind = frames.natural(); frames.end(); return (kind >= 5 && kind <= 99) || kind === 200;
+    }
+    namespace(index: number): boolean {
+        const checker = this.context.checker; if(checker === undefined) { return false; }
+        const answer = checker.askNode(this.context.node(index), 'local-symbol-details');
+        if(answer.value === undefined) { return false; }
+        const symbol = new LocalSymbolDetails(answer.value);
+        if(!symbol.present || (symbol.symbolFlags & 2097152) === 0) { return false; }
+        const declarations = symbol.declarations;
+        const declaration = declarations[0];
+        if(declarations.length !== 1 || declaration === undefined || declaration.kind !== 'NamespaceImport') { return false; }
+        const local = checker.localNode(declaration.start, declaration.end, declaration.kind);
+        if(local < 0) { return false; }
+        const parent = this.context.parents[local] ?? -1;
+        return parent >= 0 && this.context.kind(parent) === 'ImportClause' && this.context.node(parent).semantic !== 'TypeKeyword';
+    }
+    mockTracker(node: ParseNode): boolean {
+        const checker = this.context.checker; if(checker === undefined) { return false; }
+        const answer = checker.askNode(node, 'resolved-signature'); if(answer.value === undefined) { return false; }
+        const frames = new Frames(answer.value); header(frames, 'resolved-signature');
+        if(!frames.yes()) { frames.end(); return false; }
+        frames.natural(); if(!frames.yes()) { frames.end(); return false; }
+        frames.field(); const declarationKind = frames.field(); frames.natural(); frames.natural();
+        frames.natural(); frames.yes(); const parentKind = frames.field(); const parentName = frames.field();
+        frames.natural(); frames.natural(); const count = frames.natural();
+        let module = ''; let decided = false;
+        for(let at = 0; at < count; at++) {
+            const kind = frames.field(); const name = frames.field(); const nameKind = frames.field();
+            if(at > 0 && !decided) {
+                if(kind === 'SourceFile') { decided = true; }
+                else if(kind === 'ModuleDeclaration' && nameKind === 'StringLiteral') { module = name; decided = true; }
+            }
+        }
+        frames.end();
+        return ['MethodSignature', 'MethodDeclaration'].includes(declarationKind) &&
+            ['InterfaceDeclaration', 'ClassDeclaration'].includes(parentKind) && parentName === 'MockTracker' &&
+            (module === 'node:test' || module === 'test');
+    }
+    unwrapTarget(index: number): number {
+        while(index >= 0) {
+            const node = this.context.node(index);
+            if(node.kind === 'TypeAssertionExpression') { index = node.children[1] ?? -1; }
+            else if(['ParenthesizedExpression','NonNullExpression','AsExpression','SatisfiesExpression'].includes(node.kind)) { index = node.children[0] ?? -1; }
+            else { return index; }
+        }
+        return index;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(node.list === 0 || !this.runsAsModule()) { return; }
+        let callee = node.children[0] ?? -1;
+        while(this.context.kind(callee) === 'ParenthesizedExpression') { callee = this.context.node(callee).children[0] ?? -1; }
+        if(this.context.kind(callee) !== 'PropertyAccessExpression') { return; }
+        const name = this.context.node(callee).children[1] ?? -1;
+        if(this.context.kind(name) !== 'Identifier' || !['method','getter','setter','property'].includes(this.context.node(name).text)) { return; }
+        const target = this.unwrapTarget(node.children[node.children.length - node.list] ?? -1);
+        if(this.context.kind(target) !== 'Identifier' || !this.namespace(target) || !this.mockTracker(node)) { return; }
+        this.context.reportNode(index, 'nexus/correctness-no-mock-on-module-namespace', 'mockOnModuleNamespace', message);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

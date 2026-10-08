@@ -1,0 +1,246 @@
+{
+  "counts": {
+    "pass": 151,
+    "skip": 1
+  },
+  "skips": [
+    "checker_pending_test.go:51: awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer"
+  ],
+  "tests": {
+    "TestCheckerCacheSourceByte": {
+      "own_seconds": 61.949812173843384,
+      "status": "pass",
+      "start": null
+    },
+    "TestCheckerNoProgramCoverage": {
+      "own_seconds": 2.0428240299224854,
+      "status": "pass",
+      "start": null
+    },
+    "TestCheckerBridgeRefusalPending": {
+      "own_seconds": 2.4080276489257812e-05,
+      "status": "skip",
+      "start": null
+    },
+    "TestCheckerReplayEntryControl": {
+      "own_seconds": 6.30645489692688,
+      "status": "pass",
+      "start": null
+    },
+    "TestCheckerHashes": {
+      "own_seconds": 0.6972699165344238,
+      "status": "pass",
+      "start": null
+    },
+    "TestCommandDiagnosticsDropOnlyModuleDownloads": {
+      "own_seconds": 3.886222839355469e-05,
+      "status": "pass",
+      "start": null
+    },
+    "TestExecuteFailsOnStderrOtherThanModuleDownloads": {
+      "own_seconds": 0.5210769176483154,
+      "status": "pass",
+      "start": null
+    },
+    "TestCompilerCorpusSourcesExcludeOnlyNamedFolders": {
+      "own_seconds": 0.09124302864074707,
+      "status": "pass",
+      "start": null
+    },
+    "TestCompilerGuardBackend": {
+      "own_seconds": 1.4066696166992188e-05,
+      "status": "pass",
+      "start": null
+    },
+    "TestChildCPUHangGuard": {
+      "own_seconds": 1.1447701454162598,
+      "status": "pass",
+      "start": null
+    },
+    "TestChildWallBackstop": {
+      "own_seconds": 0.20558404922485352,
+      "status": "pass",
+      "start": null
+    },
+    "TestChildCPUWaitGuard": {
+      "own_seconds": 1.64683198928833,
+      "status": "pass",
+      "start": null
+    },
+    "TestNestedConstructorGap": {
+      "own_seconds": 0.26772499084472656,
+      "status": "pass",
+      "start": null
+    },
+    "TestOptionAndComparatorGaps": {
+      "own_seconds": 0.7137761116027832,
+      "status": "pass",
+      "start": null
+    },
+    "TestEmittedJavaScriptMismatch": {
+      "own_seconds": 42.72583985328674,
+      "status": "pass",
+      "start": null
+    },
+    "TestDotARename": {
+      "own_seconds": 15.957920789718628,
+      "status": "pass",
+      "start": null
+    },
+    "TestCompleteSuggestionSerialization": {
+      "own_seconds": 51.11913990974426,
+      "status": "pass",
+      "start": null
+    },
+    "TestSuggestionAlongsideAutomaticFix": {
+      "own_seconds": 48.925230979919434,
+      "status": "pass",
+      "start": null
+    },
+    "TestWitnessScriptKind": {
+      "own_seconds": 41.64465308189392,
+      "status": "pass",
+      "start": null
+    },
+    "TestJsxLintReleaseAndThroughput": {
+      "own_seconds": 117.24594497680664,
+      "status": "pass",
+      "start": null
+    },
+    "TestJsxLintTrees": {
+      "own_seconds": 214.93188905715942,
+      "status": "pass",
+      "start": null
+    },
+    "TestJsxInventoryDiscovery": {
+      "own_seconds": 0.0002899169921875,
+      "status": "pass",
+      "start": null
+    },
+    "TestRulesAgree": {
+      "own_seconds": 449.3620901107788,
+      "status": "pass",
+      "start": null
+    },
+    "TestCompilerAndStage1Agree": {
+      "own_seconds": 311.33552622795105,
+      "status": "pass",
+      "start": null
+    },
+    "TestLegacyMutants": {
+      "own_seconds": 25.298371076583862,
+      "status": "pass",
+      "start": null
+    },
+    "TestDecorationOptionMutant": {
+      "own_seconds": 25.10033631324768,
+      "status": "pass",
+      "start": null
+    },
+    "TestCountGuardMutant": {
+      "own_seconds": 21.689445972442627,
+      "status": "pass",
+      "start": null
+    },
+    "TestThroughput": {
+      "own_seconds": 119.7677640914917,
+      "status": "pass",
+      "start": null
+    },
+    "TestNodeTableIsLinkOnly": {
+      "own_seconds": 4.72077202796936,
+      "status": "pass",
+      "start": null
+    },
+    "TestShardsAgree": {
+      "own_seconds": 256.8445191383362,
+      "status": "pass",
+      "start": null
+    },
+    "TestMutants": {
+      "own_seconds": 550.9016668796539,
+      "status": "pass",
+      "start": null
+    },
+    "TestNonprogressingFix": {
+      "own_seconds": 29.511924028396606,
+      "status": "pass",
+      "start": null
+    },
+    "TestNonprogressingFixPanicMutant": {
+      "own_seconds": 14.821465969085693,
+      "status": "pass",
+      "start": null
+    },
+    "TestNonprogressingFixPlanOrder": {
+      "own_seconds": 20.617366075515747,
+      "status": "pass",
+      "start": null
+    },
+    "TestProfileArtifacts": {
+      "own_seconds": 49.6718430519104,
+      "status": "pass",
+      "start": null
+    },
+    "TestProfileCompilation": {
+      "own_seconds": 77.5550389289856,
+      "status": "pass",
+      "start": null
+    },
+    "TestProfileSnapshotsAgree": {
+      "own_seconds": 370.92873215675354,
+      "status": "pass",
+      "start": null
+    },
+    "TestCommentFoldMutant": {
+      "own_seconds": 32.50622081756592,
+      "status": "pass",
+      "start": null
+    },
+    "TestPositionIndexMutant": {
+      "own_seconds": 30.11103081703186,
+      "status": "pass",
+      "start": null
+    },
+    "TestCapturedOracleRecovery": {
+      "own_seconds": 0.19056320190429688,
+      "status": "pass",
+      "start": null
+    },
+    "TestUnmarkedMalformedOracleInputStillFails": {
+      "own_seconds": 0.014311790466308594,
+      "status": "pass",
+      "start": null
+    },
+    "TestRecoveryClassificationPreservesModes": {
+      "own_seconds": 2.288818359375e-05,
+      "status": "pass",
+      "start": null
+    },
+    "TestOwnedWitnesses": {
+      "own_seconds": 18.60385799407959,
+      "status": "pass",
+      "start": null
+    },
+    "TestRegistrationMutant": {
+      "own_seconds": 12.84676480293274,
+      "status": "pass",
+      "start": null
+    },
+    "TestFactoryHooks": {
+      "own_seconds": 36.23477005958557,
+      "status": "pass",
+      "start": null
+    },
+    "TestNestedOutsideModuleCopy": {
+      "own_seconds": 0.9896078109741211,
+      "status": "pass",
+      "start": null
+    },
+    "TestDecodedOptionsAndMutant": {
+      "own_seconds": 13.365939855575562,
+      "status": "pass",
+      "start": null
+    }
+  }
+}

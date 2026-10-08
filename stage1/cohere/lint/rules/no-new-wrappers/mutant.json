@@ -1,5 +1,5 @@
 {
   "name": "no-new-wrappers ignores local shadows",
-  "from": "facts.declarations[0]?.declarationFile !== true",
+  "from": "!firstDeclarationIsFile(checker, target)",
   "to": "false"
 }

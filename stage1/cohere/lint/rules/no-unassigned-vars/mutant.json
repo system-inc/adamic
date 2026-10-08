@@ -1,0 +1,5 @@
+{
+  "name": "local-binding-anchor-ignored",
+  "from": "declaration.start === anchor.start && declaration.end === anchor.end",
+  "to": "declaration.kind === anchor.kind"
+}

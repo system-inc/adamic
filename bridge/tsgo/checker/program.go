@@ -83,7 +83,12 @@ func Open(configPath string, files []string) (*Program, error) {
 			}
 		}
 		for _, declaration := range config.FileNames() {
-			if strings.HasSuffix(declaration.AsString(), ".d.ts") {
+			// Rows select files to lint, not a smaller program. Retain every root
+			// from the same tsconfig the Go oracle builds.
+			if declaration != "" {
+				if strings.HasSuffix(declaration.AsString(), ".a") {
+					config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
+				}
 				found := false
 				for _, root := range roots {
 					if root == declaration {

@@ -178,12 +178,17 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	if strings.Count(string(typedData), typedOriginal) != 1 {
 		return nil, fmt.Errorf("%v", "typed capture overlay anchor changed")
 	}
-	typedReplacement := "result := Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile: sourceFile,\n\t\tcapture: newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}\n\tRecordAssertedCase(t,result)\n\treturn result"
+	typedReplacement := "result := Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile: sourceFile,\n\t\tcapture: newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}\n\tRecordTypedProject(t,result,directory,files,setup != nil,verbatim)\n\tRecordAssertedCase(t,result)\n\treturn result"
 	typedSide := filepath.Join(directory, "program.go")
 	if err := os.WriteFile(typedSide, []byte(strings.Replace(string(typedData), typedOriginal, typedReplacement, 1)), 0644); err != nil {
 		return nil, fmt.Errorf("%v", err)
 	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side, typedHarness: typedSide}})
+	replacements, err := typedProjectCaptureOverlay(root, directory)
+	if err != nil {
+		return nil, err
+	}
+	replacements[harness], replacements[typedHarness] = side, typedSide
+	overlay, _ := json.Marshal(map[string]any{"Replace": replacements})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		return nil, err
@@ -195,9 +200,11 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 		return nil, err
 	}
 	discovered := map[string]bool{}
+	typedRules := map[string]bool{}
 	packages := map[string][]string{}
 	for _, d := range descriptors {
 		discovered[d.Name] = true
+		typedRules[d.Name] = d.Typed
 		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
 	}
 	var names []string
@@ -217,6 +224,8 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	type record struct {
 		Rule, File, Source, Outcome, FixedSource string
 		Options                                  json.RawMessage
+		Project                                  map[string]string
+		Findings                                 []json.RawMessage
 	}
 	unique := map[string]record{}
 	for _, path := range files {
@@ -235,7 +244,15 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 			if !discovered[row.Rule] {
 				continue
 			}
-			key := fmt.Sprintf("%s\t%s\t%+v\t%s", row.Rule, row.File, row.Options, row.Source)
+			row.Options, err = capturedSchemaOptions(row.Rule, row.Options)
+			if err != nil {
+				return nil, err
+			}
+			projectKey, err := json.Marshal(row.Project)
+			if err != nil {
+				return nil, err
+			}
+			key := fmt.Sprintf("%s\t%s\t%+v\t%s\t%s", row.Rule, row.File, row.Options, row.Source, projectKey)
 			unique[key] = row
 		}
 	}
@@ -257,12 +274,47 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 			name = "source.ts"
 		}
 		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
+		for relative, text := range row.Project {
+			clean := filepath.Clean(filepath.FromSlash(relative))
+			if filepath.IsAbs(clean) || clean == ".." || strings.HasPrefix(clean, ".."+string(filepath.Separator)) {
+				return nil, fmt.Errorf("typed project path escapes its fixture: %q", relative)
+			}
+			asset := filepath.Join(caseDirectory, clean)
+			if err := os.MkdirAll(filepath.Dir(asset), 0755); err != nil {
+				return nil, err
+			}
+			if err := os.WriteFile(asset, []byte(text), 0644); err != nil {
+				return nil, err
+			}
+		}
+		if len(row.Project) > 0 {
+			if _, ok := row.Project["tsconfig.json"]; !ok {
+				return nil, fmt.Errorf("typed project has no captured tsconfig: %s", row.Rule)
+			}
+			if err := os.WriteFile(filepath.Join(caseDirectory, ".adamic-typed-project"), []byte("tsconfig.json\n"), 0644); err != nil {
+				return nil, err
+			}
+		}
 		path := filepath.Join(caseDirectory, name)
 		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
 			return nil, err
 		}
 		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
 			return nil, err
+		}
+		if typedRules[row.Rule] && len(row.Project) == 0 {
+			if err := os.WriteFile(path+".capture-no-program", []byte("syntax-only\n"), 0644); err != nil {
+				return nil, err
+			}
+		}
+		if typedRules[row.Rule] {
+			expected, err := json.Marshal(row.Findings)
+			if err != nil {
+				return nil, err
+			}
+			if err := os.WriteFile(path+".capture-findings.json", expected, 0644); err != nil {
+				return nil, err
+			}
 		}
 		var legacy struct {
 			Mode, Null      string

@@ -1,0 +1,5 @@
+{
+  "name": "iso-default-library-ignored",
+  "from": "if(!isSymbolFromDefaultLibrary(checker, member))",
+  "to": "if(isSymbolFromDefaultLibrary(checker, member))"
+}

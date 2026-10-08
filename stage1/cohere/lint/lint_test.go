@@ -378,13 +378,12 @@ func TestRulesAgree(t *testing.T) {
 	}
 	for _, row := range upstream(t) {
 		fields := strings.Split(row, "\t")
-		if len(fields) > 1 && typed[fields[1]] {
-			config := filepath.Join(t.TempDir(), "tsconfig.json")
-			options := fmt.Sprintf(`{"compilerOptions":{"strict":true},"files":[%q]}`, fields[0])
-			if err := os.WriteFile(config, []byte(options), 0644); err != nil {
+		if len(fields) > 1 && typed[fields[1]] && !capturedWithoutProgram(t, fields[0]) {
+			config := typedConfigForRow(t, fields[0])
+			output := compareWithJavaScript(t, oracle, binary, directory, manifest(t, []string{"program " + config, row}), module)
+			if err := checkCapturedFindingCount(fields[0], output); err != nil {
 				t.Fatal(err)
 			}
-			compareWithJavaScript(t, oracle, binary, directory, manifest(t, []string{"program " + config, row}), module)
 		} else if strings.HasSuffix(row, "\tunsupported-recovery") {
 			t.Logf("EXPLICIT LIMIT: parser recovery is not ported for %s", row)
 			checkRecoveryRefusal(t, oracle, binary, directory, row)
@@ -956,12 +955,23 @@ func TestMutants(t *testing.T) {
 					files = append(files, strings.SplitN(row, "\t", 2)[0])
 				}
 				config := filepath.Join(t.TempDir(), "tsconfig.json")
-				options, err := json.Marshal(map[string]any{"compilerOptions": map[string]bool{"strict": true}, "files": files})
-				if err != nil {
-					t.Fatal(err)
-				}
-				if err := os.WriteFile(config, options, 0644); err != nil {
-					t.Fatal(err)
+				if len(files) == 1 {
+					config = typedConfigForRow(t, files[0])
+				} else {
+					for _, file := range files {
+						if _, err := os.Stat(filepath.Join(filepath.Dir(file), ".adamic-typed-project")); err == nil {
+							t.Fatal("multiple typed witness projects require separate mutant runs")
+						} else if !os.IsNotExist(err) {
+							t.Fatal(err)
+						}
+					}
+					options, err := json.Marshal(map[string]any{"compilerOptions": map[string]bool{"strict": true}, "files": files})
+					if err != nil {
+						t.Fatal(err)
+					}
+					if err := os.WriteFile(config, options, 0644); err != nil {
+						t.Fatal(err)
+					}
 				}
 				rows = append([]string{"program " + config}, rows...)
 			} else {

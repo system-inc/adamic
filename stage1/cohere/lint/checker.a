@@ -43,6 +43,8 @@ export class Checker {
     readonly recorded: string[] = [];
     readonly replay: Frames | undefined;
     readonly record: boolean;
+    readonly localLocations = new Map<string, number>();
+    locationsReady = false;
     root = -1;
     rule = '';
     reads: readonly string[] = [];
@@ -56,6 +58,21 @@ export class Checker {
             bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
             this.offsets.push(bytes);
         }
+    }
+    localNode(start: number, end: number, kind: string): number {
+        if(!this.locationsReady) {
+            this.indexLocations(this.root); this.locationsReady = true;
+        }
+        return this.localLocations.get(`${start}\n${end}\n${kind}`) ?? -1;
+    }
+    indexLocations(index: number): void {
+        if(index < 0) { return; }
+        const node = this.parser.node(index);
+        const first = this.offsets[node.pos] ?? panic('local start outside source');
+        const last = this.offsets[node.end] ?? panic('local end outside source');
+        const key = `${first}\n${last}\n${node.kind}`;
+        if(!this.localLocations.has(key)) { this.localLocations.set(key, index); }
+        for(const child of node.children) { this.indexLocations(child); }
     }
     enter(rule: string, reads: readonly string[]): void { this.rule = rule; this.reads = reads; }
     refuse(start: number, end: number, reason: string): Answer {
@@ -73,6 +90,19 @@ export class Checker {
         return this.askNode(this.parser.node(index), question);
     }
     askNode(node: ParseNode, question: string): Answer {
+        const mode = question.split('\n')[0] ?? '';
+        if(['node-symbol-details', 'type-symbol-details', 'property-declarations', 'binding-declarations', 'alias-declarations', 'symbol-provenance', 'symbol-provenance-alias'].includes(mode) || (mode === 'output-symbol' && question !== 'output-symbol\nfiles')) {
+            if(!this.reads.includes('ReadsOtherFiles')) {
+                return this.refuse(0, this.offsets[this.parser.scanner.text.length] ?? 0, 'undeclared program read ReadsOtherFiles');
+            }
+        }
+        const libraryRead = ['library-member-provenance', 'symbol-default-library', 'node-symbol-details', 'type-symbol-details', 'property-declarations', 'symbol-provenance', 'symbol-provenance-alias'].includes(mode) || (mode === 'output-symbol' && question !== 'output-symbol\nfiles');
+        if(libraryRead && !this.reads.includes('ReadsDefaultLibrary')) {
+            return this.refuse(0, this.offsets[this.parser.scanner.text.length] ?? 0, 'undeclared program read ReadsDefaultLibrary');
+        }
+        if(['options', 'emit-module-kind', 'symbol-default-library'].includes(mode) && !this.reads.includes('ReadsCompilerOptions')) {
+            return this.refuse(0, this.offsets[this.parser.scanner.text.length] ?? 0, 'undeclared program read ReadsCompilerOptions');
+        }
         const start = this.offsets[node.pos] ?? panic('checker span outside source');
         const end = this.offsets[node.end] ?? panic('checker span outside source');
         const key = this.record || this.replay !== undefined ? frame(this.path) + frame(`${start}`) + frame(`${end}`) + frame(node.kind) + frame(question) : '';

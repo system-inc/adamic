@@ -1,0 +1,56 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { firstDeclarationIsFile } from '../../checker_local_symbols.a';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+const message = 'This returns a value from a promise executor, and nothing can ever read it. The Promise constructor ignores whatever the executor returns, so a value here is either dead code or, more often, a missing `resolve` call the author believed was implicit. The usual cause is `return fetch(...)` where `resolve(fetch(...))` was meant, which leaves the promise pending forever.';
+const prepend = 'Prepend `void` to the expression, saying the value is deliberately discarded.';
+const wrap = 'Wrap the expression in `{}`, making the arrow body a statement rather than a return.';
+export class Rule {
+    readonly context: RuleContext;
+    readonly allowVoid: boolean;
+    constructor(context: RuleContext) { this.context = context; this.allowVoid = context.settings.read('allowvoid','false') === 'true'; }
+    unwrap(index: number): number {
+        while(this.context.kind(index) === 'ParenthesizedExpression') { index = this.context.node(index).children[0] ?? -1; }
+        return index;
+    }
+    executor(index: number): boolean {
+        const c = this.context; const checker = c.checker; const parent = c.parent(index);
+        if(checker === undefined || c.kind(parent) !== 'NewExpression') { return false; }
+        const call = c.node(parent);
+        if(call.list === 0 || call.children[call.children.length-call.list] !== index) { return false; }
+        const callee = call.children[0] ?? -1;
+        return c.kind(callee) === 'Identifier' && c.node(callee).text === 'Promise' && firstDeclarationIsFile(checker,c.node(callee));
+    }
+    voidSuggestion(index: number): Suggestion {
+        const c = this.context; const node = c.node(index); const start = c.start(index); const end = node.end;
+        const adjacent = c.kind(c.parent(index)) === 'ReturnStatement' && c.source.slice(start-6,start) === 'return';
+        const prefix = adjacent ? ' void ' : 'void '; const parens = ['BinaryExpression','ConditionalExpression','YieldExpression','ArrowFunction'].includes(node.kind);
+        const edits = [new SuggestionEdit(start,start,prefix + (parens ? '(' : ''))];
+        if(parens) { edits.push(new SuggestionEdit(end,end,')')); }
+        return new Suggestion('prependVoid',prepend,edits);
+    }
+    report(index: number, expression: number, arrow: boolean): void {
+        const c = this.context; const suggestions: Suggestion[] = [];
+        if(this.allowVoid) { suggestions.push(this.voidSuggestion(expression)); }
+        const kind = c.kind(expression);
+        if(arrow && (!['FunctionExpression','ClassExpression'].includes(kind) || c.name(expression) >= 0)) {
+            const node = c.node(expression); const start = c.start(expression); const end = node.end;
+            suggestions.push(new Suggestion('wrapBraces',wrap,[new SuggestionEdit(start,start,'{'),new SuggestionEdit(end,end,'}')]));
+        }
+        const edits: SuggestionEdit[] = [];
+        c.reportNode(index,'no-promise-executor-return','returnsValue',message,edits,suggestions);
+    }
+    visit(node: ParseNode, index: number): void {
+        const c = this.context;
+        if(node.kind === 'ArrowFunction') {
+            const body = node.children[node.children.length-1] ?? -1;
+            if(body >= 0 && c.kind(body) !== 'Block' && this.executor(index) && !(this.allowVoid && c.kind(this.unwrap(body)) === 'VoidExpression')) { this.report(this.unwrap(body),body,true); }
+        } else {
+            const expression = node.children[0] ?? -1; if(expression < 0) { return; }
+            let enclosing = c.parent(index);
+            while(enclosing >= 0 && !c.functionLike(enclosing) && c.kind(enclosing) !== 'SourceFile') { enclosing = c.parent(enclosing); }
+            if(enclosing >= 0 && this.executor(enclosing) && !(this.allowVoid && c.kind(this.unwrap(expression)) === 'VoidExpression')) { this.report(index,expression,false); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,10 +1,16 @@
 // Raw declaration facts are owned by the run's checker and never reopen a file.
-import { Checker, Answer } from './checker.a';
+import { Checker, Answer, FileQuestion } from './checker.a';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import { Frames, header } from '../typeaware/frames.ts';
 
 export function declarationAnswer(checker: Checker, node: ParseNode, question: string): Answer {
-    return checker.askNode(node, question);
+    const mode = question.split('\n')[0];
+    if(!['node-symbol-details', 'binding-declarations', 'alias-declarations', 'symbol-provenance', 'symbol-provenance-alias'].includes(mode)) {
+        return checker.askFile(new FileQuestion('ReadsOtherFiles', question));
+    }
+    const start = checker.offsets[node.pos]; const end = checker.offsets[node.end];
+    if(start === undefined || end === undefined) { return checker.refuse(0,0,'declaration span outside source'); }
+    return checker.askFile(new FileQuestion('ReadsOtherFiles', `${question}\n${start}\n${end}\n${node.kind}`));
 }
 export class DeclarationTag {
     readonly tagKind: string;
