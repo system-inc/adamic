@@ -42,3 +42,13 @@ census: Set ADAMIC_GITIGNORE_LARGEST=1; test generates an ignore file of exactly
     performance_test.go:17: set ADAMIC_GRAPHQL_PRINTER_BENCH=1 to measure verified throughput
 --- SKIP: TestPrinterThroughput (0.00s)
 
+== github.com/system-inc/adamic/stage1/cohere/estree TestRepositoryAgreement (skipped; no census row matches its name)
+=== RUN   TestRepositoryAgreement
+    corpus_test.go:18: set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory
+--- SKIP: TestRepositoryAgreement (0.00s)
+
+== github.com/system-inc/adamic/stage1/cohere/estree TestCorpusNativeRefusals (skipped; no census row matches its name)
+=== RUN   TestCorpusNativeRefusals
+    corpus_test.go:84: completed frozen corpus required
+--- SKIP: TestCorpusNativeRefusals (0.00s)
+
