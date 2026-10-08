@@ -12,3 +12,18 @@ try { pass('?'); } catch (error) {
  if (error instanceof Error) console.log(`${error.name} ${calls}`);
 }
 console.log(`${new RegExp(programArguments()[1] ?? '', 'u').source}`);
+
+let changedPattern = 'a';
+changedPattern = 'b';
+console.log(`${new RegExp(changedPattern).test('a')}`);
+let capturedPattern = 'a';
+function changePattern(): void { capturedPattern = 'b'; }
+changePattern();
+console.log(`${new RegExp(capturedPattern).test('a')}`);
+let changedFlags: string | undefined = undefined;
+function changeFlags(): void { changedFlags = 's'; }
+if (changedFlags === undefined) {
+ changeFlags();
+ console.log(`${new RegExp('.', changedFlags).test('\n')}`);
+}
+console.log(`${new RegExp('x' + undefined).test('x')}`);
