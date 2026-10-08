@@ -341,12 +341,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
 	if l.stringDictionary(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) {
-		if access.QuestionDotToken != nil {
-			return nil, l.notYet(node, "an optional dictionary receiver")
-		}
 		object, err := l.expression(access.Expression)
 		if err != nil {
 			return nil, err
+		}
+		if access.QuestionDotToken != nil {
+			return l.optionalDictionaryField(node, object, name)
 		}
 		return l.dictionaryRead(node, object, ir.StringConstant{Index: l.constant(name)})
 	}
@@ -418,6 +418,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "a prototype property on a RegExp")
 		}
 	}
+
 	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
 		of, err := l.typeOf(node)
 		if err != nil {
@@ -1742,6 +1743,13 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if optional {
 			return nil, l.notYet(node, "an optional dictionary receiver")
 		}
+		key, err := l.expression(access.ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		return l.dictionaryRead(node, object, key)
+	}
+	if object.Type() == ir.Object && !optional && l.finiteDictionaryKeys(l.checker.GetTypeAtLocation(access.Expression), l.checker.GetTypeAtLocation(access.ArgumentExpression)) {
 		key, err := l.expression(access.ArgumentExpression)
 		if err != nil {
 			return nil, err

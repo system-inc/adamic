@@ -92,10 +92,13 @@ func (l *lowering) stringDictionary(target *checker.Type) bool {
 }
 
 func (l *lowering) dictionaryRead(node *ast.Node, object, key ir.Expression) (ir.Expression, error) {
+	return l.dictionaryReadContract(node, object, key, l.concrete(l.checker.GetTypeAtLocation(node)))
+}
+
+func (l *lowering) dictionaryReadContract(node *ast.Node, object, key ir.Expression, declared *checker.Type) (ir.Expression, error) {
 	if key.Type() != ir.String {
 		return nil, l.notYet(node, "a dictionary key that is not a string")
 	}
-	declared := l.concrete(l.checker.GetTypeAtLocation(node))
 	id, err := l.viewContract(node, declared)
 	if err != nil {
 		return nil, err

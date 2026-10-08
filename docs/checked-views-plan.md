@@ -1183,3 +1183,19 @@ Group 7 also adds the minimal dictionary-property pointer traversal in
 `lower/readiness.go:readinessStatement`. Its record read descriptor must receive
 the same parameter readiness facts as its enclosing operation; otherwise a
 generic dictionary helper emits a nonexistent parameter readiness flag.
+
+### Dictionary group 8: finite keys and optional named lookup
+
+New lane file: `lower/view_dictionary_lookup.go`, containing named hooks
+finiteDictionaryKeys and optionalDictionaryField. Minimal dispatch hooks in
+`lower/object.go` select these adapters; `lower/view_dictionaries.go` exposes
+dictionaryReadContract to preserve the selected declaration through an optional
+receiver. Finite string keys select ordinary own fields through the existing
+dictionary probe. Optional named lookup uses an ordinary IR conditional helper,
+evaluates the receiver once and distinguishes receiver absence from field absence.
+New source witnesses are optional-paths and finite-cache shapes; the propagation
+oracle gains the optional-paths controls. No record representation is added.
+
+Group 8 also owns `internal/oracle/checked_view_dictionary_finite_test.go`, finite-cache
+and enum-map source controls, optional required-field controls, and compiling C/JS
+finite-key and optional short-circuit mutants. Numeric enums use the existing adapter.

@@ -311,5 +311,113 @@
       "source/package-paths-producer-nested-wrong.a"
     ],
     "scope": "Scalar and nested dictionary reads over fixed objects and genuine shared record producers. Generic MapLike<T> specializes T to string; existing generic object/array propagation controls supplement it. Unsupported unresolved/union element selection is not credited."
+  },
+  {
+    "type_id": 8590,
+    "field": "<dynamic-key>",
+    "type": "IndexedAccessType",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryFiniteKeys"
+    ],
+    "fixtures": [
+      "source/indexed-cache-good.a",
+      "source/indexed-cache-missing.a",
+      "source/indexed-cache-nested-wrong.a",
+      "source/indexed-cache-wrong-array.a",
+      "source/indexed-cache-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 10820,
+    "field": "<dynamic-key>",
+    "type": "IterationTypes",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryFiniteKeys"
+    ],
+    "fixtures": [
+      "source/iteration-cache-good.a",
+      "source/iteration-cache-missing.a",
+      "source/iteration-cache-nested-wrong.a",
+      "source/iteration-cache-wrong-array.a",
+      "source/iteration-cache-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 11225,
+    "field": "<dynamic-key>",
+    "type": "MapLike<WatchDirectoryFlags>",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryEnumMap"
+    ],
+    "fixtures": [
+      "source/enum-map-good.a",
+      "source/enum-map-missing.a",
+      "source/enum-map-open-number.a",
+      "source/enum-map-producer-good.a",
+      "source/enum-map-producer-missing.a",
+      "source/enum-map-producer-open-number.a",
+      "source/enum-map-producer-wrong.a",
+      "source/enum-map-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 10821,
+    "field": "<dynamic-key>",
+    "type": "IterableOrIteratorType",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryFiniteKeys"
+    ],
+    "fixtures": [
+      "source/iterable-cache-good.a",
+      "source/iterable-cache-missing.a",
+      "source/iterable-cache-nested-wrong.a",
+      "source/iterable-cache-wrong-array.a",
+      "source/iterable-cache-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 10863,
+    "field": "<dynamic-key>",
+    "type": "{ inner?: Signature | undefined; outer?: Signature | undefined; }",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryFiniteKeys"
+    ],
+    "fixtures": [
+      "source/signature-cache-good.a",
+      "source/signature-cache-missing.a",
+      "source/signature-cache-nested-wrong.a",
+      "source/signature-cache-wrong-array.a",
+      "source/signature-cache-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
+  },
+  {
+    "type_id": 42421,
+    "field": "paths",
+    "type": "CompilerOptions | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalPaths"
+    ],
+    "fixtures": [
+      "source/optional-paths-container-wrong.a",
+      "source/optional-paths-element-wrong.a",
+      "source/optional-paths-good.a",
+      "source/optional-paths-key-missing.a",
+      "source/optional-paths-missing.a",
+      "source/optional-paths-once.a",
+      "source/optional-paths-receiver-missing.a",
+      "source/optional-paths-wrong.a"
+    ],
+    "scope": "Original representative per-pair read contracts in sanitized C, release C and JavaScript held to Node. Named wrong-value refusals pinned. Finite-key reads retain transitive checks; optional receivers evaluate once and distinguish absent receiver from absent required field. Numeric enum maps reuse existing open numeric enum selection and shared record storage. Rich union selection and enumeration are not credited."
   }
 ]

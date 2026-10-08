@@ -172,3 +172,47 @@ func TestCheckedViewDictionaryCompilerPaths(t *testing.T) {
 		})
 	}
 }
+
+func TestCheckedViewDictionaryOptionalPaths(t *testing.T) {
+	for _, test := range []struct{ name, stdout, field, expected, found string }{
+		{"optional-paths-once", "missing\nname\n2\n", "", "", ""},
+		{"optional-paths-receiver-missing", "missing\n", "", "", ""},
+		{"optional-paths-good", "name\n", "", "", ""},
+		{"optional-paths-missing", "missing\n", "", "", ""},
+		{"optional-paths-container-wrong", "number\n", "view?.paths", "MapLike<string[]> | undefined", "number"},
+		{"optional-paths-wrong", "number\n", "table['item']", "string[] | undefined", "number"},
+		{"optional-paths-element-wrong", "42\n", "values[0]", "string", "number"},
+		{"optional-paths-key-missing", "undefined\n", "", "", ""},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			program, path := interfaceFixture(t, "dictionaries/source/"+test.name)
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || string(truth.stdout) != test.stdout {
+				t.Fatalf("source Node: %#v", truth)
+			}
+			sanitized, binary := nativelyUncached(t, program)
+			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if test.field == "" {
+					if difference := disagreement(truth, got); difference != "" {
+						t.Fatal(difference)
+					}
+				} else {
+					want := fmt.Sprintf("adamic: panic: field read failed: %s; expected %s, found %s\n", test.field, test.expected, test.found)
+					if test.name == "optional-paths-element-wrong" {
+						want = fmt.Sprintf("adamic: panic: element read failed: %s expected %s, found %s\n", test.field, test.expected, test.found)
+					}
+
+					if got.exitCode != 70 || string(got.stderr) != want {
+						t.Fatalf("pinned array dictionary check: %#v; want %q", got, want)
+					}
+					t.Logf("pinned exit 70: %s", got.stderr)
+				}
+			}
+			if test.field == "" {
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+		})
+	}
+}
