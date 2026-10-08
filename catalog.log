@@ -2,3 +2,52 @@ target c966d4c4509ecaf37ae275dbaafae33291367ac8
 logs /tmp/adamic-gate/adamic-catalog-logs-sa50b6o1
 build flags: commit=c966d4c4509ecaf37ae275dbaafae33291367ac8; nproc=64; cpu.max=max 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
 jobs 64; Go -trimpath shares only content-keyed build artifacts; test results uncached
+01 shared-slice-append: applies-and-fails-as-recorded
+01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+01 wall=117.365s setup=59.396s check=42.220s cleanup=12.167s load=4.84 8.64 19.20 7/830 2196460 -> 148.88 63.15 37.91 84/2692 2282452
+02 liveness-throw: applies-and-fails-as-recorded
+02 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+02 wall=110.330s setup=47.995s check=46.176s cleanup=8.357s load=4.84 8.64 19.20 6/832 2196462 -> 149.74 61.87 37.37 121/2662 2279986
+03 defined-lent: applies-and-fails-as-recorded
+03 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+03 wall=124.509s setup=58.610s check=44.897s cleanup=17.589s load=4.84 8.64 19.20 13/833 2196463 -> 142.73 64.62 38.66 135/2576 2284398
+04 borrowed-array-move: applies-and-fails-as-recorded
+04 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+04 wall=161.088s setup=88.343s check=39.721s cleanup=28.330s load=4.84 8.64 19.20 23/843 2196474 -> 137.78 72.12 42.13 115/2247 2298369
+05 spread-method-reuse: applies-and-fails-as-recorded
+05 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+05 wall=131.454s setup=62.657s check=43.547s cleanup=22.419s load=4.84 8.64 19.20 12/836 2196466 -> 141.87 65.74 39.16 125/2644 2286527
+06 constructor-capture-region: applies-and-fails-as-recorded
+06 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+06 wall=175.935s setup=109.186s check=32.162s cleanup=32.275s load=4.84 8.64 19.20 35/840 2196471 -> 134.43 74.61 43.43 105/2110 2306409
+07 borrowed-element-reads: applies-and-fails-as-recorded
+07 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965
+07 wall=146.273s setup=70.913s check=45.773s cleanup=28.010s load=4.84 8.64 19.20 8/838 2196469 -> 140.87 69.25 40.74 121/2451 2291668
+08 narrowed-number-field: no-longer-applies (needs a refresh)
+08 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+08 wall=140.525s setup=113.157s check=0.036s cleanup=25.145s load=4.84 8.64 19.20 37/842 2196474 -> 141.12 68.09 40.21 125/2595 2289991
+09 literal-undefined-field: applies-and-fails-as-recorded
+09 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+09 wall=182.502s setup=118.863s check=31.116s cleanup=30.012s load=4.84 8.64 19.20 8/846 2196477 -> 133.28 75.36 43.84 45/1986 2308812
+10 override-representation: skipped (Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.)
+10 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965
+10 wall=0.004s setup=0.000s check=0.000s cleanup=0.000s load=4.84 8.64 19.20 10/846 2196477 -> 4.84 8.64 19.20 8/850 2196482
+11 refuse-definite-assignment: no-longer-applies (needs a refresh)
+11 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965
+11 wall=153.959s setup=123.557s check=0.041s cleanup=28.280s load=4.84 8.64 19.20 10/848 2196480 -> 139.41 71.32 41.72 155/2310 2294764
+12 refuse-suppression-directives: no-longer-applies (needs a refresh)
+12 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965
+12 wall=169.054s setup=136.655s check=0.013s cleanup=29.590s load=4.84 8.64 19.20 8/849 2196481 -> 136.47 73.99 43.06 157/2383 2302571
+13 typeof-null: skipped (Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.)
+13 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+13 wall=0.007s setup=0.000s check=0.000s cleanup=0.000s load=4.84 8.64 19.20 9/851 2196483 -> 4.84 8.64 19.20 21/868 2196500
+14 constructor-arrow-this: skipped (Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.)
+14 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+14 wall=0.006s setup=0.000s check=0.000s cleanup=0.000s load=4.84 8.64 19.20 8/868 2196500 -> 4.84 8.64 19.20 8/847 2196500
+15 class-instance-key: skipped (Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.)
+15 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+15 wall=0.004s setup=0.000s check=0.000s cleanup=0.000s load=4.84 8.64 19.20 8/868 2196500 -> 4.84 8.64 19.20 13/868 2196500
+16 proven-guards-relations: skipped (Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.)
+16 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+16 wall=0.003s setup=0.000s check=0.000s cleanup=0.000s load=4.84 8.64 19.20 12/868 2196500 -> 4.84 8.64 19.20 9/848 2196501
+total wall=182.547s load=4.84 8.64 19.20 12/792 2196412 -> 133.28 75.36 43.84 41/1970 2308812
