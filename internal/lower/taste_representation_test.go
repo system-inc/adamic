@@ -9,7 +9,7 @@ import (
 func TestTasteRepresentationLimitsStayExplicit(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
-		{"union scalar field", `const box: {value: number | string} = {value: 1}; box.value = 3; console.log(String(box.value));`, "a narrowed scalar in a boxed union field"},
+		{"union scalar field", `const box: {value: number | string} = {value: 1}; box.value = 3; console.log(String(box.value));`, "storing string | number in a field"},
 		{"evolving different objects", `let value; value = {a: 1}; value = {b: "b"};`, "a value of type any"},
 		{"explicit any", `let value: any; value = {a: 1};`, "a value of type any"},
 		{"computed enum", `function next(): number { return 1; } enum Code {Value = next()}`, "a computed enum member"},

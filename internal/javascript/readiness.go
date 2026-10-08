@@ -38,7 +38,7 @@ const adamicViewField = (object, name, expression, type, expected = adamicViewTy
 const adamicLogicalKind = value => value === undefined ? adamicTags.UndefinedRepresentation : value === null ? adamicTags.NullRepresentation : typeof value === "number" ? adamicTags.Number : typeof value === "boolean" ? adamicTags.Boolean : typeof value === "string" ? adamicTags.String : value instanceof AdamicClosure ? adamicTags.Closure : Array.isArray(value) ? adamicTags.Array : value instanceof Map ? adamicTags.Map : typeof value === "object" ? adamicTags.Object : 0;
 const adamicNarrow = (value, wanted) => {
  const kind=adamicLogicalKind(value);
- if (wanted === adamicTags.Union || kind === wanted || (wanted === adamicTags.MaybeNumber && (kind === adamicTags.Number || kind === adamicTags.UndefinedRepresentation)) || (wanted === adamicTags.MaybeBoolean && (kind === adamicTags.Boolean || kind === adamicTags.UndefinedRepresentation))) return value;
+ if (wanted === adamicTags.Union || kind === wanted || (wanted === adamicTags.Record && kind === adamicTags.Object) || (wanted === adamicTags.MaybeNumber && (kind === adamicTags.Number || kind === adamicTags.UndefinedRepresentation)) || (wanted === adamicTags.MaybeBoolean && (kind === adamicTags.Boolean || kind === adamicTags.UndefinedRepresentation))) return value;
  panic("a union value does not match its narrowed type");
 };
 const adamicViewNullish = (object, name, expression, expected, kinds, nullAllowed, undefinedAllowed, allowed, absent, optional) => {

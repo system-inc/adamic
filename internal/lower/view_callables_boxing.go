@@ -8,6 +8,11 @@ import (
 
 // Bit zero is undefined. A zero mask is an unknown signature, never all members.
 func (l *lowering) viewCallableRepresentationMask(proven *checker.Type) uint16 {
+	if base := l.phantomBase(proven); base != nil {
+		proven = base
+	} else if base := l.phantomArrayBase(proven); base != nil {
+		proven = base
+	}
 	if isClassInstance(proven) || proven.Flags()&checker.TypeFlagsIntersection != 0 || proven.Flags()&checker.TypeFlagsObject != 0 && l.unsupportedViewFamily(proven) != "" {
 		return 0
 	}
@@ -104,4 +109,31 @@ func (l *lowering) viewCallableBoxedRecordField(literal *ast.Node, name string) 
 	declared := l.checker.GetTypeOfSymbol(field)
 	of, known := l.representation(declared)
 	return known && of == ir.Union && l.viewCallableAggregateType(declared) && l.viewCallableBoxedRepresentation(declared)
+}
+
+// The unknown-function exception belongs to a checked callable field boundary,
+// never an ordinary unknown parameter or dynamic function descriptor.
+func (l *lowering) viewCallableBoxingBoundary(node *ast.Node, proven *checker.Type) bool {
+	if !l.runtimeViewCallableShape(proven) || !l.viewCallableBody(node, map[*ast.Symbol]bool{}) {
+		return false
+	}
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	if parent == nil || parent.Kind != ast.KindPropertyAssignment && parent.Kind != ast.KindShorthandPropertyAssignment {
+		return false
+	}
+	name := parent.Name()
+	if name == nil || !ast.IsIdentifier(name) && name.Kind != ast.KindStringLiteral {
+		return false
+	}
+	for _, contract := range l.result.ViewContracts {
+		for _, field := range contract.Fields {
+			if field.Name == name.Text() && field.Contract > 0 && int(field.Contract) <= len(l.result.ViewContracts) && l.result.ViewContracts[field.Contract-1].Kind == ir.ViewCallable {
+				return true
+			}
+		}
+	}
+	return false
 }

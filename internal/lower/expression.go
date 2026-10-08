@@ -1391,7 +1391,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
-		return l.viewCallableStoredMarkerCall(node, signatures[0])
+		return nil, l.notYet(node, "a call through an erased never-rest callable marker")
 	}
 	closure, err := l.expression(node.AsCallExpression().Expression)
 	if err != nil {

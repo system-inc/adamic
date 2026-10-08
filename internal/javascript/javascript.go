@@ -234,7 +234,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicNodeFSFile.") {
 		code = "import * as adamicNodeFSFile from 'node:fs';\n" + code
 	}
-	for _, module := range []struct{ name, path string }{{"adamicNodePath", "node:path"}, {"adamicNodeOS", "node:os"}, {"adamicNodeProcess", "node:process"}} {
+	for _, module := range []struct{ name, path string }{{"adamicNodeOS", "node:os"}, {"adamicNodeProcess", "node:process"}} {
 		if strings.Contains(code, module.name+".") {
 			code = "import * as " + module.name + " from '" + module.path + "';\n" + code
 		}

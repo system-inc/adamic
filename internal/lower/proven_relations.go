@@ -23,7 +23,7 @@ func (l *lowering) provenTypesRelation(where, expression *ast.Node, source, targ
 		return l.wideningRefusal(where, source, target, found)
 	}
 	if field := l.optionalRelationFailure(source, target, expression, map[[2]*checker.Type]bool{}); field != "" {
-		if found := l.optionalWidened(source, target, nil, map[[2]*checker.Type]bool{}); found != nil {
+		if found := l.optionalWidened(source, target, nil, map[[2]*checker.Type]bool{}); found != nil && !l.isLibraryType(source, "Error") {
 			_, err := l.view(where, nil, found.target)
 			return err
 		}

@@ -118,7 +118,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// A function seen as another is handed the other's arguments, and its results are seen as
 		// the other's: each a view of its own.
 		if l.censusNeverRestSignature(toSignatures[0]) {
-			if l.viewCallableVoidMarker(toSignatures[0]) || l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
+			if l.censusDiscardedMarkerPredicate(fromSignatures[0], toSignatures[0]) {
 				return nil
 			}
 			source := l.checker.GetReturnTypeOfSignature(fromSignatures[0])

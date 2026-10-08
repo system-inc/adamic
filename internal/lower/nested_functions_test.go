@@ -32,31 +32,14 @@ func TestNestedFunctionGapsAreLoud(t *testing.T) {
 
 func TestNestedFunctionCycleUsesRegions(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function make(): () => number {
+	_, err := lowerSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  function read(): number { return saved === undefined ? 0 : saved(); }
  saved = read;
  return read;
 }
 console.log(String(make()()));`)
-	if err != nil {
-		t.Fatal(err)
-	}
-	cells, closures := 0, 0
-	for _, local := range program.Locals {
-		if local.GraphCell {
-			cells++
-		}
-	}
-	for _, function := range program.Functions {
-		if function.GraphClosure {
-			closures++
-		}
-	}
-	if cells == 0 || closures == 0 {
-		t.Fatal("cyclic environment has no graph cells or closures")
-	}
-
+	requireCycleRefusal(t, err)
 }
 
 func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
@@ -95,7 +78,7 @@ func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
 
 func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function make(): () => number {
+	_, err := lowerSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  let count = 1;
  function read(): number { return count; }
@@ -104,24 +87,7 @@ func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
  console.log(observe());
  return read;
 } const held = make(); console.log(String(held()));`)
-	if err != nil {
-		t.Fatal(err)
-	}
-	cells, closures := 0, 0
-	for _, local := range program.Locals {
-		if local.GraphCell {
-			cells++
-		}
-	}
-	for _, function := range program.Functions {
-		if function.GraphClosure {
-			closures++
-		}
-	}
-	if cells == 0 || closures == 0 {
-		t.Fatal("cyclic environment has no graph cells or closures")
-	}
-
+	requireCycleRefusal(t, err)
 }
 
 func TestNestedCapturedParametersAreOwned(t *testing.T) {

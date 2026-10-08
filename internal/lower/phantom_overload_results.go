@@ -124,12 +124,19 @@ func (l *lowering) overloadedCall(call *ast.CallExpression, value ir.Call) (ir.E
 // adapter proof; direct calls above fit against the real implementation instead.
 func (l *lowering) overloadedValue(node *ast.Node) error {
 	symbol := l.symbol(node)
+	if node.Kind == ast.KindShorthandPropertyAssignment {
+		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = l.checker.GetAliasedSymbol(symbol)
+		}
+		symbol = l.checker.GetExportSymbolOfSymbol(symbol)
+	}
 	if symbol == nil {
 		return nil
 	}
 	for _, declaration := range symbol.Declarations {
 		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil {
-			return l.notYet(node, "an overloaded function read as a value")
+			return l.notYet(node, "an overloaded function as a value")
 		}
 	}
 	return nil

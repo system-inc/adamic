@@ -1893,6 +1893,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return l.dictionaryRead(node, object, key)
 	}
 	if object.Type() == ir.Object && !optional && l.finiteDictionaryKeys(l.checker.GetTypeAtLocation(access.Expression), l.checker.GetTypeAtLocation(access.ArgumentExpression)) {
+		if id := l.result.ViewContractTypes[int(l.checker.GetTypeAtLocation(access.Expression).Id())]; id == 0 {
+			return nil, l.notYet(node, "an ElementAccessExpression")
+		}
 		key, err := l.expression(access.ArgumentExpression)
 		if err != nil {
 			return nil, err

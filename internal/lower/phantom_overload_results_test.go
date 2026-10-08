@@ -71,7 +71,7 @@ func TestPhantomOverloadFunctionValueNotYet(t *testing.T) {
 	t.Parallel()
 	_, err := lowerSource(t, `function value(text: string): string; function value(text: string): string {return text;} const read = value;`)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || notYet.What != "an overloaded function read as a value" {
+	if !errors.As(err, &notYet) || notYet.What != "an overloaded function as a value" {
 		t.Fatalf("got %v, want overload value not yet", err)
 	}
 }

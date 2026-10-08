@@ -51,7 +51,20 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 			return checked, err
 		}
 		if l.dictionaryCastNeedsView(source, target) {
-			return l.view(node, value, target)
+			checked, err := l.view(node, value, target)
+			if err != nil {
+				return nil, err
+			}
+			if checked.Type() == ir.Union {
+				// Records share Object heap identity. Check that identity before
+				// preserving the dictionary target and its checked read contract.
+				of, known := l.representation(target)
+				if !known || of != ir.Object && of != ir.Record {
+					return nil, refused
+				}
+				checked = ir.Narrow{Value: checked, To: of}
+			}
+			return checked, nil
 		}
 		return nil, refused
 	}

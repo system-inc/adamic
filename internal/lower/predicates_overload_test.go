@@ -2,6 +2,7 @@ package lower
 
 import (
 	"bytes"
+	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -49,7 +50,11 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 		{"overload_nominal", "called\ntrue\n", "", "", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs("testdata/predicates/" + probe.name + ".a")
+			extension := ".a"
+			if probe.name == "parser_every_result" || probe.name == "overload_every" {
+				extension = ".ts"
+			}
+			path, err := filepath.Abs("testdata/predicates/" + probe.name + extension)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -76,7 +81,14 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			program, err := lowerSource(t, string(source))
+			program, err := lowerSourceExtension(t, string(source), extension)
+			if probe.name == "parser_callback_parameter" {
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-type-predicate") {
+					t.Fatalf("want the retained bodyless predicate refusal, got %v", err)
+				}
+				return
+			}
 			if err != nil {
 				t.Fatal(err)
 			}

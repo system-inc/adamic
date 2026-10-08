@@ -154,6 +154,13 @@ func (l *lowering) resolveCountTypes(modules []*ast.SourceFile) {
 			}
 		}
 	}
+	// Empty target sets carry no dispatch information; their checker-local IDs
+	// must not make equivalent namespace imports produce different IR evidence.
+	for id, targets := range l.result.FunctionTypeTargets {
+		if len(targets) == 0 {
+			delete(l.result.FunctionTypeTargets, id)
+		}
+	}
 	// Reader facts must remain separate from padding a virtual C signature.
 	for changed := true; changed; {
 		changed = false

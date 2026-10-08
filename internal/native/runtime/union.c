@@ -163,9 +163,9 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
 		if (entry->shape != object->shape) continue;
 		// These are ir.Type's scalar representations, written by the emitter.
 		switch (entry->types[index]) {
-		case 1: return adamic_box_number(slot.number);
-		case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
-		case 7: {
+		case adamic_rep_number: return adamic_box_number(slot.number);
+		case adamic_rep_boolean: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+		case adamic_rep_maybe_number: {
 			adamic_maybe_number number = adamic_maybe_number_unpack(slot.number);
 			return number.present ? adamic_box_number(number.number) : NULL;
 		}
@@ -198,7 +198,7 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 adamic_heap *adamic_union_narrow(adamic_heap *value, unsigned char wanted) {
  if (wanted == adamic_rep_union) return value;
  if (value == NULL && (wanted == adamic_rep_maybe_number || wanted == adamic_rep_maybe_boolean)) return NULL;
- enum adamic_kind kind = wanted == adamic_rep_number || wanted == adamic_rep_maybe_number ? adamic_kind_number : wanted == adamic_rep_boolean || wanted == adamic_rep_maybe_boolean ? adamic_kind_boolean : wanted == adamic_rep_string ? adamic_kind_string : wanted == adamic_rep_object ? adamic_kind_object : wanted == adamic_rep_array ? adamic_kind_array : wanted == adamic_rep_map ? adamic_kind_map : adamic_kind_closure;
+ enum adamic_kind kind = wanted == adamic_rep_number || wanted == adamic_rep_maybe_number ? adamic_kind_number : wanted == adamic_rep_boolean || wanted == adamic_rep_maybe_boolean ? adamic_kind_boolean : wanted == adamic_rep_string ? adamic_kind_string : (wanted == adamic_rep_object || wanted == adamic_rep_record) ? adamic_kind_object : wanted == adamic_rep_array ? adamic_kind_array : wanted == adamic_rep_map ? adamic_kind_map : adamic_kind_closure;
  if (value != NULL && value->kind == kind) return value;
  static const char message[] = "a union value does not match its narrowed type";
  adamic_panic(message, sizeof message - 1);

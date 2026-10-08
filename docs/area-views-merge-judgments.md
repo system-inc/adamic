@@ -165,3 +165,169 @@ Native field-slot, Map hashing/storage, array storage and Error producer consume
 Preflight checked all eleven active undo patches. Nine applied unchanged. Patches 08 and 09 were refreshed against the resolved source, undoing the same narrowed-field read and literal-slot fixes; patch 09 keeps the independent boxed-callable-field exception. Both refreshed patches apply. Their exact uncached controls passed; both mutants failed on the required behavior: 08 loses the inserted narrowing check and prints NaN, 09 prints 0 instead of undefined. Both patches were reversed after the probes. Evidence: /tmp/area-views-catalog-preflight.json, /tmp/area-views-catalog-refreshed.json, /tmp/area-views-catalog-target-controls.json and /tmp/area-views-catalog-{08,09}-{control,mutant}.log. This is targeted working-tree evidence, not a completed check.sh run on a merge commit.
 
 Latest focused backend command: go test -p 1 ./internal/javascript ./internal/native -run 'Test.*(CheckedView|View|ClosureConvention|RepresentationTags|RuntimeKey)' -timeout 30m passed (javascript 0.629s, native 35.926s), /tmp/area-views-final-tag-callable-controls.log. All temporary mutations have been restored. No content-conflict index entries remain. Four new boundary proposals remain pending, and broader lower/flow/oracle/counts/a-check validation remains red.
+
+## Rulings 8 to 11, October 8 08:58
+
+All four new proposals were approved. Applied on compiler/area-views-wip after
+checkpoint 3d74d3b7: only producer-certified Union callable boxing escapes the
+unknown-function guard; dictionary proof now emits a counted Narrow retaining
+Object/Record target and checking Object heap identity; stored never-rest calls
+and result erasure keep area refusals; plain Error cannot acquire optional host
+fields through the lazy relation fallback. Validation and the dictionary
+primitive-source/check-removal mutant are still pending.
+
+### Further judgments held for ruling
+
+12. Overloaded shorthand values: area refuses erased overload implementation
+identity; views admits the source. Proposed area guard retained, witness
+TestOverloadedShorthandFunctionValueStaysNotYet.
+13. Computed finite-key access: area refuses unsupported field selection; views
+admits it. Proposed area guard retained, witness TestCensusSmallFiniteKeyBoundary.
+14. Nullable reference to unknown: area refuses the missing null/undefined tag
+proof; views admits the changed boxed representation. Proposed area refusal
+retained, witness TestUnknownReflectionRefusals. No changes applied.
+
+Stale cycle expectations changed beyond conflict resolution: lower_test.go
+TestWhatZeroOneRefusesIsRefusedWithAFix, class_inheritance_test.go inherited
+cycles, class_features_test.go static/accessor cycles, iteration_test.go literal
+method captures, and nested_functions_test.go saved-function environment cycles
+now require the approved area cycle refusal. These are test expectation changes,
+not new cycle admissions.
+
+15. Phantom callable certificate masks: area proves phantom primitive/array
+brands erase; views rejects all intersections before computing their mask.
+Proposed normalization only through existing phantomBase/phantomArrayBase
+proofs, with other intersection refusals retained. Witnesses
+TestPhantomCastsAreErased, TestPhantomArrayCastsAreErased,
+TestPhantomOverloadResultCastsAreErased. Awaiting ruling, unchanged.
+
+Metadata repair beyond conflicts removes empty FunctionTypeTargets sets only;
+their unstable checker IDs carried no dispatch targets and broke equivalent
+require/import IR comparisons. No nonempty target set changes. RegExp compound
+assignment expectations retain the existing RegExp write refusal now that
+logical assignment is admitted. The union-field taste test names the retained
+field-storage refusal rather than the old later narrowing diagnostic.
+
+The JavaScript emitter now emits node:path exactly once: its unconditional
+namespace import already exists, so the redundant conditional import was
+removed. This syntax failure prevented flow traces from being written for path
+fixtures. Generic inherited cycle expectations now retain the same ruled
+refusal. The obsolete array-of-union and array-of-boolean/undefined NotYet
+expectations are positive lowering controls for the landed array lanes.
+
+Additional assertion fixtures migrated byte-for-byte to .ts under ruling 7:
+internal/lower/testdata/predicates/parser_every_result.a and overload_every.a.
+Their runtime test now passes the matching extension into lowering. The
+parser_callback_parameter declaration retains its existing bodyless-predicate
+refusal; the runtime test pins that refusal after checking the original Node
+output, rather than claiming an admitted declaration without a proof body.
+
+All 47 callback refusal controls passed after ruling 8, including
+entry-live-mutation.a: /tmp/area-views-callback-refusals-after-rulings.log
+(9.486s). A trial exit-flag tracing change did not fix process_bad_code.a and was
+reverted. The actual missing flow exception edge is held as judgment 17.
+
+16. object.go Union field guard refuses the previously positive incidental
+arguments-name control whose {length:number} type also admits strings. Proposed
+retained refusal plus length:3 as const in that name-resolution control, keeping
+Node output and all field refusal boundaries. Witness
+TestArgumentsLengthReadNeighbors. Awaiting ruling, unchanged.
+17. flow.CanThrow lacks ir.ProcessCall exit/setExitCode exception facts already
+retained by ir/process.go and lower/exceptions.go. Proposed carry those same
+throwing operations into the graph, with process_bad_code.a and a removal
+mutant. This changes ownership-analysis graph edges, so awaits ruling.
+
+Additional refusal mutations were run through Go overlays, without modifying
+production: remove unknown-function guard, restore unconditional marker-result
+erasure, restore stored-marker dispatch, remove plain-Error relation guard.
+All four tests failed on lost semantic refusals, not build errors. Results:
+/tmp/area-views-ruling-mutant-results.json and matching *-mutant.log files.
+The ordinary unknown-function control passed after narrowing the boxing
+exception to actual checked callable field contracts, and the three approved
+boxing witnesses passed again (0.223s lower, 1.413s oracle).
+
+Pending judgment file locations: 12 is
+internal/lower/phantom_overload_results.go overloadedValue (called from
+expression.go functionValue), where shorthand assignment symbol lookup loses
+the area's overload guard; 13 is internal/lower/object.go finiteDictionaryKeys
+read dispatch; 14 is internal/lower/unknown.go nullable-reference proof; 15 is
+internal/lower/view_callables_boxing.go representation-mask intersection guard;
+16 is internal/lower/object.go censusFieldSlotless field-read guard; 17 is
+internal/flow/build.go CanThrow. None of these proposed behavior changes has
+been applied.
+
+Latest lower-wide run after named expectation repairs remains red on nine
+top-level tests (66.761s), /tmp/area-views-lower-after-stale.log. The subsequent
+ordinary function-descriptor refusal and stronger non-phantom brand diagnostic
+controls passed; the two migrated predicate runtime fixtures and retained
+bodyless predicate refusal passed with their full runtime suite (9.629s).
+Pinned declaration adapters were prepared from official TypeScript v6.0.3,
+commit 050880ce59e30b356b686bd3144efe24f875ebc8, using the repository's existing
+emitters. Standalone original-tsc aliases now refer to those complete generated
+declarations outside the repository. The full bound a-check and full oracle
+are running; neither has a completed green result.
+
+## Rulings 12 to 17, October 8 09:50
+
+All six proposals were approved and applied. Shorthand overload values keep
+the area symbol/body guard. Finite computed-key reads require an independently
+registered receiver view contract; ordinary unviewed objects keep the area
+refusal. Nullable reference views are judged from the non-null source
+representation, retaining the refusal. Callable masks normalize only existing
+phantomBase/phantomArrayBase proofs; other intersections remain unsupported.
+The incidental arguments-named control now uses length:3 as const, with the
+same Node output. This narrows one shape main accepts. Process exit and
+setExitCode exception facts now reach flow.CanThrow. Validation is pending.
+Remaining failures will be compared against 784b577a before further repairs.
+
+## Validation after rulings 12 to 17
+
+The process_bad_code.a flow trace passes (62 points, 83 events). The overlay
+mutant removing the ProcessCall CanThrow case fails five missing exception-edge
+observations. The overload-value diagnostic expectation now names the retained
+area boundary, an overloaded function as a value.
+
+The first declaration-bound a-check covered 2,980 changed files: 2,768 checked,
+174 refused and 38 type errors, with 212 expectation mismatches. These are
+observations before baseline classification, not a green gate. The previous
+full oracle timed out at 1,800 seconds and is red. Exact comparison base:
+784b577a7488ddd0ce4cb2b82a96fa6535395896.
+
+18. Native callable adapter packing, held for ruling: views adapts a caller-sized
+argument array; area packs the producer fixed/rest/count layout. Their combined
+code reads outside that array. Proposed producer-layout storage and packing,
+with missing optional slots, rest tails and original count preserved; use the
+existing typed code pointer, retaining every callable and callback refusal.
+Witnesses: TestCheckedViewCallableNumericLiteral/good (clang array bounds) and
+TestCheckedViewCallableLaterRankedFamilies/source-file-update (sanitizer stack
+buffer overflow). No production change applied.
+
+19. Phantom erase comparisons, held for ruling: runtime function bodies and
+callable masks match after the approved proof normalization, but area
+FunctionTypeTargets keeps checker-local IDs and branded assignability sets.
+Proposed compare executable IR and separately assert the existing dispatch/count
+facts, without broadening or deleting targets. The three approved erase tests
+and the required-array companion witness this. The base has no phantom support
+or these tests; this is not claimed as inherited. No test change applied.
+
+20. Void callable certificate masks, held for ruling: area represents void
+values through undefined tag 13; views uses sentinel 254 for void certificates.
+A nonzero member mask on that sentinel fails the retained runtime guard.
+Proposed zero void certificate masks, preserving tag 13 for actual undefined
+values and all unknown-signature refusals. Witnesses: lane5/performance/good.a
+and TestCheckedViewCallableScalarWitnesses/performance, plus wrong-result
+controls. No production change applied.
+
+The exact base lower and flow packages pass (93.243s and 104.150s) with the
+same pinned host declarations. The base oracle comparison controls pass
+(5.870s). Current dictionary/tuple tests pass (201.471s); native view, closure
+convention and tag controls pass (37.260s); rulings 12 to 14 and 16 controls
+pass (1.549s). The full count refresh is red, including retained cycle,
+namespace, never-rest/overload and Union-field boundaries plus native adapter
+errors. counts.md has not been claimed refreshed.
+
+Baseline compiler comparison of the 212 a-check mismatches on identical
+source: 102 refusals, 68 NotYet, 38 type errors, three other errors and one
+accepted nonvoid-brand negative control. 140 outcomes match the merge. These
+comparisons distinguish inherited boundary behavior from newly stale views
+expectations; they do not establish a green a-check.

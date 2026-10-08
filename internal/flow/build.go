@@ -475,6 +475,9 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			switch value.Type() {
 			case reflect.TypeOf(ir.ArrayHoles{}), reflect.TypeOf(ir.ArraySetLength{}):
 				throws = true
+			case reflect.TypeOf(ir.ProcessCall{}):
+				call := value.Interface().(ir.ProcessCall)
+				throws = throws || call.Operation == "exit" || call.Operation == "setExitCode"
 			case reflect.TypeOf(ir.NodeHostCall{}):
 				throws = throws || value.Interface().(ir.NodeHostCall).Throws
 			case reflect.TypeOf(ir.PhantomMember{}):

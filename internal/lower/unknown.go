@@ -139,12 +139,16 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 		}
 	}
 	if l.includesNull(own) && own.Flags()&checker.TypeFlagsNull == 0 {
-		if held, known := l.representation(own); known && held != ir.Union {
+		if held, known := l.representation(l.checker.GetNonNullableType(own)); known && held != ir.Union {
 			return l.notYet(node, "a nullable reference viewed as unknown or object (null and undefined slot tags)")
 		}
 	}
 	present := l.checker.GetNonNullableType(own)
 	if held, known := l.representation(present); known && held == ir.Closure {
+		// Only producer-certified callable boxing uses the checked Union boundary.
+		if target, known := l.representation(contextual); known && target == ir.Union && l.viewCallableBoxingBoundary(node, present) {
+			return nil
+		}
 		return l.notYet(node, "a function viewed as unknown or object (dynamic function descriptors)")
 	}
 	for _, name := range []string{"JSON", "Math", "Reflect"} {

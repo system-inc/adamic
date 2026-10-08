@@ -1,0 +1,4 @@
+interface MapLike<T> { [key: string]: T; }
+const base: {} = 42;
+const view = base as MapLike<string>;
+console.log(typeof view);

@@ -43,7 +43,7 @@ func TestArgumentsLengthReadNeighbors(t *testing.T) {
 	for _, source := range []string{
 		"function read(value?: number): number { return (arguments).length + (value ?? 0); } console.log(`${read()}`);",
 		"function read(): number { const count = arguments.length; const arrow = () => count; return arrow(); } console.log(`${read()}`);",
-		"const object = { arguments: { length: 3 } }; const arrow = () => object.arguments.length; console.log(`${arrow()}`);",
+		"const object = { arguments: { length: 3 as const } }; const arrow = () => object.arguments.length; console.log(`${arrow()}`);",
 		"function sum(...items: number[]): number { return items.length; } console.log(`${sum(1, 2)}`);",
 		"function greet(name: string, greeting?: string): string { return `${greeting ?? 'hi'} ${name}`; } const run: (name: string) => string = greet; console.log(run('a'));",
 	} {
