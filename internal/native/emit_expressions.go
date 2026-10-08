@@ -544,6 +544,12 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
 	case ir.ArrayLiteral:
+		if array, ok := e.constantRecords(expression); ok {
+			return array
+		}
+		if array, ok := e.constantArray(expression); ok {
+			return array
+		}
 		if spread, ok := e.spreadArray(expression); ok {
 			return spread
 		}

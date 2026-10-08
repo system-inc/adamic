@@ -12,6 +12,7 @@ type unitDefinition struct {
 	name, declaration, definition, owner string
 	references                           []string
 	function                             bool
+	initializationOwner                  string
 	source                               bool
 }
 
@@ -111,7 +112,13 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 		}
 		if old, ok := definitions[d.name]; ok {
 			if old.declaration != declaration {
-				return "", nil, fmt.Errorf("native: split: conflicting declaration %s", d.name)
+				// Outlined initializer prototypes retain noinline while their definitions
+				// use the C11-compatible unannotated spelling. Keep the prototype's ABI.
+				initializer := strings.HasPrefix(d.name, "adamic_initialize_") && d.function
+				unannotated := strings.TrimSuffix(old.declaration, " __attribute__((noinline));\n") + ";\n"
+				if !initializer || unannotated != declaration {
+					return "", nil, fmt.Errorf("native: split: conflicting declaration %s", d.name)
+				}
 			}
 			if !d.function && d.initializer < 0 && strings.HasPrefix(d.name, "adamic_class_") {
 				continue
@@ -135,6 +142,13 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 		} else if d.function && marked {
 			if module != "" {
 				item.owner = moduleUnit(module)
+				if strings.HasPrefix(d.name, "adamic_initialize_chunk_") {
+					// Fixed per-module buckets distribute large initialization without
+					// changing the source module that owns its global storage.
+					item.initializationOwner = item.owner
+					digest := sha256.Sum256([]byte(d.name))
+					item.owner = fmt.Sprintf("%s_initialize_%02d.c", strings.TrimSuffix(item.owner, ".c"), int(digest[0])%8)
+				}
 			} else {
 				digest := sha256.Sum256([]byte(d.name))
 				item.owner = fmt.Sprintf("helpers_%02d.c", int(digest[0])%16)
@@ -200,7 +214,17 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 			return "", nil, err
 		}
 		// Ready writes mark a global's declaration, rather than later assignments.
-		for _, helper := range helpers {
+		// The emitter may already have outlined initialization; keep its source ownership.
+		readiness := make(map[string]*unitDefinition, len(helpers))
+		for name, helper := range helpers {
+			readiness[name] = helper
+		}
+		for name, item := range definitions {
+			if item.source && strings.HasPrefix(name, "adamic_initialize_") {
+				readiness[name] = item
+			}
+		}
+		for _, helper := range readiness {
 			tokens, _ := cTokens(helper.definition)
 			for index, token := range tokens {
 				if !strings.HasPrefix(token.text, "adamic_unit_adamic_global_") || !strings.HasSuffix(token.text, "_ready") || index+2 >= len(tokens) || tokens[index+1].text != "=" || tokens[index+2].text != "true" {
@@ -210,6 +234,9 @@ func stableSplitC(source string) (string, []compilationUnit, error) {
 				for _, name := range []string{ready, strings.TrimSuffix(ready, "_ready")} {
 					if item, ok := definitions[name]; ok {
 						item.owner = helper.owner
+						if helper.initializationOwner != "" {
+							item.owner = helper.initializationOwner
+						}
 					}
 				}
 			}

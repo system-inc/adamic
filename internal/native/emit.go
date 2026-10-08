@@ -114,10 +114,14 @@ func cProgram(program *ir.Program, handler int) string {
 	}
 	emitter.inRegion = false
 	emitter.resetCounters()
-	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
 	emitter.indent = 1
 	emitter.asyncMain()
-	emitter.moduleMain()
+	// The async scheduler and its root stay in main, outside initializer chunks.
+	prefix := emitter.out.String()
+	emitter.out.Reset()
+	bodies.WriteString(emitter.moduleMain())
+	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
+	bodies.WriteString(prefix)
 	if program.HasPromises() && program.AsyncEntry == 0 {
 		emitter.line("adamic_async_run();")
 	}
@@ -286,41 +290,4 @@ func (e *emitter) resetCounters() {
 	e.caches = 0
 	// Region facts use C temporary names, whose lifetime now ends with this body.
 	e.regionValues = map[string]bool{}
-}
-
-// moduleMain retains one scope and the original initialization order. Module
-// boundaries only change the source of printed names, never cleanup behavior.
-func (e *emitter) moduleMain() {
-	if len(e.program.MainModules) == 0 {
-		e.block(e.program.Main, nil)
-		return
-	}
-	prefix := len(e.program.Main)
-	for _, module := range e.program.MainModules {
-		prefix -= module.Statements
-	}
-	starts := map[int]string{0: ""}
-	offset := prefix
-	for _, module := range e.program.MainModules {
-		if module.Statements > 0 {
-			starts[offset] = module.Module
-		}
-		offset += module.Statements
-	}
-	e.scopes = append(e.scopes, nil)
-	for index := range e.program.Main {
-		if module, ok := starts[index]; ok {
-			e.resetCounters()
-			readable := module
-			if len(readable) > 40 {
-				readable = readable[:40]
-			}
-			e.mainModule = stableName("module", readable, module)
-			e.line("// adamic-module %q", module)
-		}
-		e.statementAt(&e.program.Main[index])
-	}
-	e.releaseScopes(len(e.scopes) - 1)
-	e.scopes = e.scopes[:len(e.scopes)-1]
-	e.mainModule = ""
 }

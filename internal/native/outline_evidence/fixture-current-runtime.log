@@ -1,0 +1,7 @@
+=== RUN   TestOutlineFixtureCurrentRuntime
+    outline_fixture_parity_test.go:41: sanitized: 13029128 output bytes match Go and both Node observations; stderr empty
+    outline_fixture_parity_test.go:41: release: 13029128 output bytes match Go and both Node observations; stderr empty
+    outline_fixture_parity_test.go:41: line-tables: 13029128 output bytes match Go and both Node observations; stderr empty
+--- PASS: TestOutlineFixtureCurrentRuntime (146.87s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	146.888s

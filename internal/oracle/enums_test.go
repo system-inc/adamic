@@ -1,8 +1,8 @@
 package oracle
 
 import (
-	"fmt"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"testing"
@@ -127,12 +127,8 @@ func TestEnumCleanupMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	code := native.C(program)
-	release := ""
-	for index, local := range program.Locals {
-		if local.Global && local.Name == "Kind" {
-			release = fmt.Sprintf("adamic_release(adamic_global_%d_Kind);", index)
-		}
-	}
+	// Locate the emitted stable symbol without assuming a whole-program ordinal.
+	release := regexp.MustCompile(`adamic_release\(adamic_global_[A-Za-z0-9_]+_Kind\);`).FindString(code)
 	if release == "" || strings.Count(code, release) != 1 {
 		t.Fatal("enum cleanup site not unique")
 	}

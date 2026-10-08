@@ -4,7 +4,6 @@ import (
 	"context"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"testing"
 
@@ -78,16 +77,28 @@ func TestSourceNamesDoNotMove(t *testing.T) {
 		changed := namedProgram(t, entry, map[string]string{module: edit})
 		code := C(changed)
 		moduleBody := func(code, module string) string {
-			code = code[strings.Index(code, "int main("):]
-			start := strings.Index(code, "// adamic-module "+strconv.Quote(module))
-			if start < 0 {
-				t.Fatalf("missing main module %s", module)
+			declarations, err := splitDeclarations(code)
+			if err != nil {
+				t.Fatal(err)
 			}
-			code = code[start:]
-			if end := strings.Index(code[1:], "// adamic-module "); end >= 0 {
-				code = code[:end+1]
+			var body strings.Builder
+			previous := 0
+			for _, declaration := range declarations {
+				begin := declaration.tokens[0].start
+				owner, marked, err := moduleMarker(code[previous:begin])
+				if err != nil {
+					t.Fatal(err)
+				}
+				end := declaration.tokens[len(declaration.tokens)-1].end
+				if declaration.function && marked && owner == module && strings.HasPrefix(declaration.name, "adamic_initialize_") {
+					body.WriteString(code[begin:end])
+				}
+				previous = end
 			}
-			return code
+			if body.Len() == 0 {
+				t.Fatalf("missing module initializer %s", module)
+			}
+			return body.String()
 		}
 		if moduleBody(original, "a_b.a") != moduleBody(code, "a_b.a") {
 			t.Fatal("edit moved unrelated module-level code")
@@ -164,8 +175,8 @@ func TestImportedSpecializationsHaveSourceIdentity(t *testing.T) {
 	entry := filepath.Join(directory, "main.a")
 	sources := map[string]string{
 		entry:                           `import { Box as A } from './a.a'; import { Box as B } from './b.a'; class Holder<T> { readonly value: T; constructor(value: T) { this.value = value; } get(): T { return this.value; } } const first = new Holder<A>(new A(10)); const second = new Holder<B>(new B(10)); console.log(first.get().read().toString()); console.log(second.get().read().toString());`,
-		filepath.Join(directory, "a.a"): `export class Box { readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value; } }`,
-		filepath.Join(directory, "b.a"): `export class Box { readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value + 1; } }`,
+		filepath.Join(directory, "a.a"): `export class Box { private readonly first = 0; readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value; } }`,
+		filepath.Join(directory, "b.a"): `export class Box { private readonly second = 0; readonly value: number; constructor(value: number) { this.value = value; } read(): number { return this.value + 1; } }`,
 	}
 	for path, source := range sources {
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
