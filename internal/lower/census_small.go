@@ -224,6 +224,11 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			given = l.checker.GetUnionType([]*checker.Type{given, l.checker.GetUndefinedType()})
 		}
 		if !l.censusRelated(given, takes) && !l.overloadDeferredParameter(given, takes) && !l.overloadNullableParameter(given, takes) {
+			if admitted, err := l.admitOverloadVisitor(implementation, overload, index, ordinal); err != nil {
+				return err
+			} else if admitted {
+				continue
+			}
 			name := func(node *ast.Node) string {
 				if ast.IsIdentifier(node.Name()) {
 					return node.Name().Text()
