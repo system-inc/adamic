@@ -185,10 +185,10 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
-	if err := l.recordUse(node); err != nil {
+	if err := l.typedArrayExpression(node); err != nil {
 		return nil, err
 	}
-	if err := l.typedArrayExpression(node); err != nil {
+	if err := l.recordUse(node); err != nil {
 		return nil, err
 	}
 	if err := l.sparseExpression(node); err != nil {

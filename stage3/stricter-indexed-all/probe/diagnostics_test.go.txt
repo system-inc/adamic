@@ -1,0 +1,60 @@
+package load
+
+import (
+	"encoding/json"
+	"os"
+	"testing"
+)
+
+func TestIndexedLedgerProbePreservesOtherDiagnostics(t *testing.T) {
+	data, err := os.ReadFile(os.Getenv("ADAMIC_INDEXED_LEDGER_PROBE_RESULT"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var result struct {
+		OptionSites []OptionSite `json:"option_sites"`
+		Excluded    []struct {
+			Site OptionSite `json:"site"`
+		} `json:"excluded"`
+	}
+	if err := json.Unmarshal(data, &result); err != nil {
+		t.Fatal(err)
+	}
+	var exclusions []OptionSite
+	var diagnostics []string
+	for _, excluded := range result.Excluded {
+		exclusions = append(exclusions, excluded.Site)
+		found := false
+		for _, site := range result.OptionSites {
+			if site.File == excluded.Site.File && site.Line == excluded.Site.Line && site.Column == excluded.Site.Column && site.Code == excluded.Site.Code {
+				diagnostics = append(diagnostics, site.Message)
+				found = true
+				break
+			}
+		}
+		if !found {
+			t.Fatal("missing actual audit site")
+		}
+	}
+	const ordinary = "ordinary checker diagnostic outside the exact 72-row allowlist"
+	diagnostics = append(diagnostics, ordinary)
+	indexed := ""
+	for _, site := range result.OptionSites {
+		if len(site.Options) > 0 && site.Options[0] == "noUncheckedIndexedAccess" {
+			indexed = site.Message
+			break
+		}
+	}
+	if indexed == "" {
+		t.Fatal("indexed audit evidence missing")
+	}
+	diagnostics = append(diagnostics, indexed)
+	remaining, err := filterIndexedLedgerDiagnostics(diagnostics, result.OptionSites, exclusions)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(remaining) != 2 || remaining[0] != ordinary || remaining[1] != indexed {
+		t.Fatalf("must retain every unrelated and indexed diagnostic: %v", remaining)
+	}
+	t.Log("Removed the exact 72 audited optional/catch diagnostics; retained an ordinary and an indexed diagnostic unchanged")
+}

@@ -1,78 +1,164 @@
 package main
 
 import (
- "context"
- "encoding/json"
- "errors"
- "fmt"
- "os"
- "path/filepath"
- "sort"
- "strings"
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
 
- "github.com/system-inc/adamic/internal/ir"
- "github.com/system-inc/adamic/internal/load"
- "github.com/system-inc/adamic/internal/lower"
- "github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 type exclusion struct {
- ID string `json:"id"`
- Site load.OptionSite `json:"site"`
+	ID   string          `json:"id"`
+	Site load.OptionSite `json:"site"`
 }
 type attempt struct {
- Entry string `json:"entry"`
- Stage string `json:"stage"`
- Error string `json:"error,omitempty"`
- ErrorKind string `json:"error_kind,omitempty"`
- Checks []ir.InsertedCheck `json:"checks"`
- Binary string `json:"binary,omitempty"`
+	Entry     string             `json:"entry"`
+	Stage     string             `json:"stage"`
+	Error     string             `json:"error,omitempty"`
+	ErrorKind string             `json:"error_kind,omitempty"`
+	Checks    []ir.InsertedCheck `json:"checks"`
+	Binary    string             `json:"binary,omitempty"`
 }
+
 func main() {
- if len(os.Args)!=5 { panic("usage: production-probe <tree> <ledger-options> <exclusions> <output-dir>") }
- tree,err:=filepath.Abs(os.Args[1]); if err!=nil {panic(err)}
- data,err:=os.ReadFile(os.Args[2]); if err!=nil {panic(err)}
- var options map[string]struct{ Roots []string `json:"roots"` }; if err=json.Unmarshal(data,&options);err!=nil{panic(err)}
- var roots,paths []string
- for _,path:=range options["project-loader"].Roots {if !strings.HasSuffix(path,".d.ts"){roots=append(roots,path);paths=append(paths,filepath.Join(tree,path))}}
- if len(roots)!=79 {panic(fmt.Sprintf("want 79 dated compiler roots, got %d",len(roots)))}
- data,err=os.ReadFile(os.Args[3]);if err!=nil{panic(err)}
- var exclusions []exclusion;if err=json.Unmarshal(data,&exclusions);err!=nil{panic(err)}
- var sites []load.OptionSite;for _,excluded:=range exclusions{sites=append(sites,excluded.Site)}
- checked,err:=load.LoadIndexedLedgerProbe(paths,sites)
- result:=map[string]any{"mode":"production-project-options, exact 72 ledger diagnostic exclusions", "roots":roots,"excluded":exclusions,"diagnostics":[]string{},"attempts":[]attempt{}}
- if err!=nil {
-  result["stage"]="checker";result["error"]=err.Error()
-  var rejected *load.CheckError;if errors.As(err,&rejected){result["diagnostics"]=rejected.Diagnostics;result["option_sites"]=rejected.OptionSites}
- } else {
-  result["stage"]="lower";result["option_sites"]=checked.OptionSites();result["requires_indexed_presence"]=checked.RequiresIndexedPresenceChecks()
-  if !checked.RequiresIndexedPresenceChecks(){panic("probe lost production indexed presence mode")}
-  files:=map[string]bool{}
-  count:=0
-  for _,site:=range checked.OptionSites(){for _,option:=range site.Options{if option=="noUncheckedIndexedAccess" {count++;relative,e:=filepath.Rel(tree,site.File);if e!=nil{panic(e)};files[relative]=true;break}}}
-  result["indexed_audit_rows"]=count;if count!=99{panic(fmt.Sprintf("want 99 indexed audit rows, got %d",count))}
-  entries:=[]string{"src/compiler/_namespaces/ts.ts"}
-  var indexedFiles []string;for path:=range files{indexedFiles=append(indexedFiles,path)};sort.Strings(indexedFiles);entries=append(entries,indexedFiles...)
-  if err=os.MkdirAll(os.Args[4],0755);err!=nil{panic(err)}
-  var attempts []attempt
-  for index,entry:=range entries{
-   a:=attempt{Entry:entry,Stage:"lower",Checks:[]ir.InsertedCheck{}}
-   program,entryErr:=checked.IndexedLedgerEntry(filepath.Join(tree,entry));if entryErr!=nil{panic(entryErr)}
-   lowered,lowerErr:=lower.Lower(context.Background(),program)
-   if lowerErr!=nil{
-    a.Error=lowerErr.Error();var refusal *lower.Refused;var notYet *lower.NotYet
-    switch{case errors.As(lowerErr,&refusal):a.ErrorKind="Refused";case errors.As(lowerErr,&notYet):a.ErrorKind="NotYet";default:a.ErrorKind="lower error"}
-   }else{
-    a.Checks=ir.InsertedChecks(lowered);a.Stage="native"
-    binary:=filepath.Join(os.Args[4],fmt.Sprintf("entry-%02d",index))
-    if err=native.Build(native.C(lowered),binary,native.Options{});err!=nil{a.Error=err.Error();a.ErrorKind="native error"}else{a.Stage="built";a.Binary=binary}
-   }
-   attempts=append(attempts,a)
-  }
-  result["attempts"]=attempts
- }
- encoder:=json.NewEncoder(os.Stdout);encoder.SetIndent("","  ");if err=encoder.Encode(result);err!=nil{panic(err)}
- // The scoped probe is successful when it records every attempted entry. A
- // refusal is evidence, not a successful native artifact; inspect attempts.
- if result["stage"]=="checker"{os.Exit(1)}
+	if len(os.Args) != 5 {
+		panic("usage: production-probe <tree> <ledger-options> <exclusions> <output-dir>")
+	}
+	tree, err := filepath.Abs(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	data, err := os.ReadFile(os.Args[2])
+	if err != nil {
+		panic(err)
+	}
+	var options map[string]struct {
+		Roots []string `json:"roots"`
+	}
+	if err = json.Unmarshal(data, &options); err != nil {
+		panic(err)
+	}
+	var roots, paths []string
+	for _, path := range options["project-loader"].Roots {
+		if !strings.HasSuffix(path, ".d.ts") {
+			roots = append(roots, path)
+			paths = append(paths, filepath.Join(tree, path))
+		}
+	}
+	if len(roots) != 79 {
+		panic(fmt.Sprintf("want 79 dated compiler roots, got %d", len(roots)))
+	}
+	data, err = os.ReadFile(os.Args[3])
+	if err != nil {
+		panic(err)
+	}
+	var exclusions []exclusion
+	if err = json.Unmarshal(data, &exclusions); err != nil {
+		panic(err)
+	}
+	var sites []load.OptionSite
+	for _, excluded := range exclusions {
+		sites = append(sites, excluded.Site)
+	}
+	checked, err := load.LoadIndexedLedgerProbe(paths, sites)
+	result := map[string]any{"mode": "production-project-options, exact 72 ledger diagnostic exclusions", "roots": roots, "excluded": exclusions, "diagnostics": []string{}, "attempts": []attempt{}}
+	if err != nil {
+		result["stage"] = "checker"
+		result["error"] = err.Error()
+		var rejected *load.CheckError
+		if errors.As(err, &rejected) {
+			result["diagnostics"] = rejected.Diagnostics
+			result["option_sites"] = rejected.OptionSites
+		}
+	} else {
+		result["stage"] = "lower"
+		result["option_sites"] = checked.OptionSites()
+		result["requires_indexed_presence"] = checked.RequiresIndexedPresenceChecks()
+		if !checked.RequiresIndexedPresenceChecks() {
+			panic("probe lost production indexed presence mode")
+		}
+		files := map[string]bool{}
+		count := 0
+		for _, site := range checked.OptionSites() {
+			for _, option := range site.Options {
+				if option == "noUncheckedIndexedAccess" {
+					count++
+					relative, e := filepath.Rel(tree, site.File)
+					if e != nil {
+						panic(e)
+					}
+					files[relative] = true
+					break
+				}
+			}
+		}
+		result["indexed_audit_rows"] = count
+		if count != 99 {
+			panic(fmt.Sprintf("want 99 indexed audit rows, got %d", count))
+		}
+		entries := []string{"src/compiler/_namespaces/ts.ts"}
+		var indexedFiles []string
+		for path := range files {
+			indexedFiles = append(indexedFiles, path)
+		}
+		sort.Strings(indexedFiles)
+		entries = append(entries, indexedFiles...)
+		if err = os.MkdirAll(os.Args[4], 0755); err != nil {
+			panic(err)
+		}
+		var attempts []attempt
+		for index, entry := range entries {
+			a := attempt{Entry: entry, Stage: "lower", Checks: []ir.InsertedCheck{}}
+			program, entryErr := checked.IndexedLedgerEntry(filepath.Join(tree, entry))
+			if entryErr != nil {
+				panic(entryErr)
+			}
+			lowered, lowerErr := lower.Lower(context.Background(), program)
+			if lowerErr != nil {
+				a.Error = lowerErr.Error()
+				var refusal *lower.Refused
+				var notYet *lower.NotYet
+				switch {
+				case errors.As(lowerErr, &refusal):
+					a.ErrorKind = "Refused"
+				case errors.As(lowerErr, &notYet):
+					a.ErrorKind = "NotYet"
+				default:
+					a.ErrorKind = "lower error"
+				}
+			} else {
+				a.Checks = ir.InsertedChecks(lowered)
+				a.Stage = "native"
+				binary := filepath.Join(os.Args[4], fmt.Sprintf("entry-%02d", index))
+				if err = native.Build(native.C(lowered), binary, native.Options{}); err != nil {
+					a.Error = err.Error()
+					a.ErrorKind = "native error"
+				} else {
+					a.Stage = "built"
+					a.Binary = binary
+				}
+			}
+			attempts = append(attempts, a)
+		}
+		result["attempts"] = attempts
+	}
+	encoder := json.NewEncoder(os.Stdout)
+	encoder.SetIndent("", "  ")
+	if err = encoder.Encode(result); err != nil {
+		panic(err)
+	}
+	// The scoped probe is successful when it records every attempted entry. A
+	// refusal is evidence, not a successful native artifact; inspect attempts.
+	if result["stage"] == "checker" {
+		os.Exit(1)
+	}
 }
