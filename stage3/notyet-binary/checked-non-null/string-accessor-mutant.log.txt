@@ -1,0 +1,19 @@
+--- FAIL: TestNonNullAssignmentCompatibility (0.48s)
+    --- FAIL: TestNonNullAssignmentCompatibility/field_string_accessor (0.48s)
+        assignment_non_null_test.go:50: exit 1
+            
+            =================================================================
+            ==175201==ERROR: LeakSanitizer: detected memory leaks
+            
+            Direct leak of 220 byte(s) in 3 object(s) allocated from:
+                #0 0x55dc06403244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+                #1 0x55dc06459e0f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3752604298/heap.c:196:10
+            
+            SUMMARY: AddressSanitizer: 220 byte(s) leaked in 3 allocation(s).
+            
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.484s
+FAIL

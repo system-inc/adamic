@@ -10,7 +10,7 @@ import (
 // Keep new Adamic fixtures honest: their explicit nullish repair lowers as .a.
 // Generate temporary TypeScript controls for the newly admitted checked syntax.
 func TestNonNullAssignmentCompatibility(t *testing.T) {
-	for _, shape := range []string{"array_number", "array_string", "field_number", "field_string", "uint8array", "int32array", "float64array", "field_number_accessor"} {
+	for _, shape := range []string{"array_number", "array_string", "field_number", "field_string", "uint8array", "int32array", "float64array", "field_number_accessor", "field_string_accessor"} {
 		t.Run(shape, func(t *testing.T) {
 			fixture := filepath.Join(repository, "internal/oracle/testdata/assignment_non_null_"+shape+".a")
 			bytes, err := os.ReadFile(fixture)
@@ -21,7 +21,7 @@ func TestNonNullAssignmentCompatibility(t *testing.T) {
 			start := strings.Index(source, " const held = receiver();")
 			end := strings.Index(source[start:], "\n}") + start
 			target, operator := "receiver()[index()]!", "|="
-			if shape == "array_string" || shape == "field_string" {
+			if strings.Contains(shape, "string") {
 				operator = "+="
 			}
 			if strings.HasPrefix(shape, "field_") {

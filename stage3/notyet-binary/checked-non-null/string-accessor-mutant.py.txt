@@ -1,0 +1,9 @@
+from pathlib import Path
+import subprocess,os
+p=Path('internal/native/class_accessors.go');original=p.read_text();before='if call.Returns.IsReference() {';assert original.count(before)==1
+try:
+ p.write_text(original.replace(before,'if call.Returns.IsReference() && call.Returns != ir.String {'))
+ with open('/tmp/assignment-nonnull-string-accessor-mutant.log','w') as f:r=subprocess.run(['go','test','./internal/oracle','-run','TestNonNullAssignmentCompatibility/field_string_accessor','-count=1'],stdout=f,stderr=f,env=dict(os.environ,ADAMIC_GATE_UNCACHED='1'))
+ log=Path('/tmp/assignment-nonnull-string-accessor-mutant.log').read_text();assert r.returncode and 'LeakSanitizer' in log and 'clang failed' not in log and '[build failed]' not in log,log
+ print('discard getter result ownership caught by LeakSanitizer',flush=True)
+finally:p.write_text(original)
