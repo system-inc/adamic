@@ -437,3 +437,105 @@ console.log(plain.value.peer === holder ? 'yes' : 'no');
 	}
 	cyclesCompareEntry(t, path, true)
 }
+
+// These literals have the same stored value type. Their modifiers must survive
+// canonicalization even when fresh writes give their allocations different answers.
+func TestCyclesLiteralModifiers(t *testing.T) {
+	for _, modifier := range []string{"readonly", "optional"} {
+		t.Run(modifier, func(t *testing.T) {
+			for _, closes := range []bool{false, true} {
+				t.Run(fmt.Sprintf("closes=%t", closes), func(t *testing.T) {
+					closing := `{ peer: holder as Holder | undefined }`
+					other := `{ peer: new Holder() as Holder | undefined } as const`
+					if modifier == "optional" {
+						closing = `{ ...requiredSeed }`
+						other = `{ ...seed }`
+					}
+					write := `holder.item = safe;`
+					if closes {
+						write = `holder.item = closing;`
+					}
+					path := filepath.Join(t.TempDir(), "main.a")
+					source := `class Holder { item: { readonly peer?: Holder | undefined } | undefined = undefined; }
+function run(): void {
+ const holder = new Holder();
+ const seed: { peer?: Holder | undefined } = { peer: new Holder() };
+ const requiredSeed: { peer: Holder | undefined } = { peer: holder };
+ const closing = ` + closing + `;
+ const safe = ` + other + `;
+ ` + write + `
+ console.log(holder.item === undefined ? 'empty' : 'set');
+}
+run();
+`
+					if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+						t.Fatal(err)
+					}
+					program, err := load.Load([]string{path})
+					if err != nil {
+						t.Fatal(err)
+					}
+					_, err = cyclesProbeLower(context.Background(), program, func(l *lowering, modules []*ast.SourceFile) error {
+						var pair [2]*checker.Type
+						var holder *checker.Type
+						var visit ast.Visitor
+						visit = func(node *ast.Node) bool {
+							if node.Kind == ast.KindVariableDeclaration {
+								name := node.Name().Text()
+								if name == "holder" {
+									holder = l.checker.GetTypeAtLocation(node.Name())
+								}
+								if name == "closing" {
+									pair[0] = l.checker.GetTypeAtLocation(node.AsVariableDeclaration().Initializer)
+								}
+								if name == "safe" {
+									pair[1] = l.checker.GetTypeAtLocation(node.AsVariableDeclaration().Initializer)
+								}
+							}
+							return node.ForEachChild(visit)
+						}
+						modules[0].AsNode().ForEachChild(visit)
+						finder := l.cycleTypes(modules)
+						for _, shape := range pair {
+							if shape == nil {
+								t.Fatal("fixture is missing a literal type")
+							}
+							if shape.ObjectFlags()&checker.ObjectFlagsObjectLiteral == 0 {
+								t.Fatalf("fixture did not produce literal types: %s flags=%v", l.checker.TypeToString(shape), shape.ObjectFlags())
+							}
+						}
+						a, b := l.checker.GetPropertiesOfType(pair[0]), l.checker.GetPropertiesOfType(pair[1])
+						if len(a) != 1 || len(b) != 1 || a[0].Name != b[0].Name || l.checker.GetTypeOfSymbol(a[0]) != l.checker.GetTypeOfSymbol(b[0]) || pair[0].ObjectFlags() != pair[1].ObjectFlags() {
+							t.Fatal("fixture differs beyond property modifiers")
+						}
+						if modifier == "readonly" {
+							if a[0].Flags != b[0].Flags || l.checker.IsReadonlySymbol(a[0]) || !l.checker.IsReadonlySymbol(b[0]) {
+								t.Fatal("fixture must differ only in readonly")
+							}
+						} else if a[0].Flags^b[0].Flags != ast.SymbolFlagsOptional || l.checker.IsReadonlySymbol(a[0]) != l.checker.IsReadonlySymbol(b[0]) {
+							t.Fatalf("fixture must differ only in optionality: flags=%v/%v readonly=%t/%t", a[0].Flags, b[0].Flags, l.checker.IsReadonlySymbol(a[0]), l.checker.IsReadonlySymbol(b[0]))
+						}
+						if finder.literalType(pair[0]) == finder.literalType(pair[1]) {
+							t.Fatalf("%s literal shapes share a canonical type", modifier)
+						}
+						// Pin the Weak requirement before findCycles applies the existing
+						// graph-region relaxation to a cycle-capable allocation.
+						slotErr := finder.slotsOf(holder)
+						if closes {
+							refused, ok := slotErr.(*Refused)
+							if !ok || !strings.Contains(refused.Fix, "Weak<") {
+								t.Fatalf("want cycle-closing write to require Weak, got %v", slotErr)
+							}
+						} else if slotErr != nil {
+							t.Fatalf("independent shape refused: %v", slotErr)
+						}
+						return l.findCycles(modules)
+					})
+					if err != nil {
+						t.Fatal(err)
+					}
+				})
+			}
+		})
+	}
+}
