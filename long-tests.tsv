@@ -1,0 +1,20 @@
+github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintTrees	196.50	pass
+github.com/system-inc/adamic/internal/oracle	TestCountsAreRecorded (setup)	182.33	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline (setup)	158.21	pass
+github.com/system-inc/adamic/internal/oracle	TestLoopCountersAgreeWithNode	154.78	pass
+github.com/system-inc/adamic/internal/native	TestNormalizeMatchesNode/points	152.91	pass
+github.com/system-inc/adamic/internal/native	TestSplitTSGoAgrees	124.91	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere	89.79	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeRandomNode	70.82	pass
+github.com/system-inc/adamic/internal/native	TestWASI (setup)	69.73	pass
+github.com/system-inc/adamic/internal/native	TestCaseMappingMatchesNode/points	54.04	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeTest262	51.32	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity	47.78	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestSingleFileStdoutDriver	45.85	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestAdditionalJSONBoundaries	43.39	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/missing_final_newline	39.03	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/wrong_filename_parser	39.03	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/missing_colon_space	34.69	pass
+github.com/system-inc/adamic/internal/native	TestNormalizeRandomMatchesNode	33.20	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline/escaped_delimiter_parity	30.86	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestCachedWidthMutantIsCaught	30.82	pass
