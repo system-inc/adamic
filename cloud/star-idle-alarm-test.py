@@ -33,9 +33,10 @@ esac
                         ADAMIC_FAST_GATE_WATCH_STATE=str(self.root), ADAMIC_FAST_GATE_WATCH_LOG=str(self.root / 'watch.log'),
                         ADAMIC_FAST_GATE_AHRA_DIR=str(self.root), ADAMIC_FULL_GATE_LOG=str(self.root / 'full.log'),
                         ADAMIC_MAIN_REDS=str(self.root / 'main-reds.tsv'), ADAMIC_LANDED_SHAS=str(self.root / 'landed'),
-                        ADAMIC_MAIN_HEAD=str(self.root / 'main-head'), ADAMIC_FULL_GATE_RUNNING=str(self.root / 'full-running'))
+                        ADAMIC_MAIN_HEAD=str(self.root / 'main-head'), ADAMIC_FULL_GATE_RUNNING=str(self.root / 'full-running'),
+                        ADAMIC_BRANCH_COMMITS=str(self.root / 'branch-commits'))
         self.now = int(time.time())
-        for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running'):
+        for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running', 'branch-commits'):
             (self.root / name).write_text('')
 
     def check(self):
@@ -121,6 +122,28 @@ esac
         sends = self.check()
         self.assertIn('#v2 is on the critical path', sends[-2])
         self.assertIn('Last push: none seen', sends[-2])
+
+    def test_the_chain_reads_running_turns_through_the_star_s_probe_and_shared_branches_by_trailer(self):
+        # @system_adamic, Oct 8 22:38Z: two false pages. kvmcfr1's one-off full gate was running the whole time, and
+        # V2's work lands on compiler/views-rehearsal, a branch V1 to V6 all name, one slice per Train-slice trailer.
+        waterfall = {'nodes': [{'id': 'kvmcfr1', 'wave': 0}, {'id': 'v1', 'wave': 1}, {'id': 'v2', 'wave': 2}],
+                     'criticalPath': ['kvmcfr1', 'v1', 'v2']}
+        (self.root / 'waterfall.json').write_text(json.dumps(waterfall))
+        (self.root / 'show-v1').write_text('owner     @system_adamic_compiler (direct)\n    Branches: cloud/land-*views-v1* compiler/views-v1* compiler/views-rehearsal\n')
+        (self.root / 'show-v2').write_text('owner     @system_adamic_compiler (direct)\n    Branches: cloud/land-*views-v2* compiler/views-v2* compiler/views-rehearsal\n')
+        (self.root / 'chain-first-seen.json').write_text(json.dumps({'kvmcfr1': self.now - 3000, 'v1': self.now - 3000, 'v2': self.now - 3000}))
+        (self.root / 'seen').write_text('cloud/land-train-1r-views-slice1 %s\n' % star)
+        (self.root / 'full-running').write_text(star + '\n')
+        # One rehearsal push five minutes ago, V1's slice: V1 is alive, V2 isn't.
+        (self.root / 'branch-commits').write_text('%d compiler/views-rehearsal %s views-v1\n%d compiler/views-rehearsal %s\n' % (self.now - 300, other, self.now - 100, 'e' * 40))
+        sends = self.check()
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_compiler', 'system_adamic'])
+        self.assertIn('#v2 is on the critical path', sends[0])
+        # V2's own slice pushed: quiet ends.
+        with (self.root / 'branch-commits').open('a') as handle:
+            handle.write('%d compiler/views-rehearsal %s views-v2\n' % (self.now - 60, 'f' * 40))
+        self.assertEqual(len(self.check()), 2)
+        self.assertFalse((self.root / 'chain-quiet-alarmed-v2').exists())
 
     def clock(self, ago):
         return time.strftime('%H:%M:%S', time.gmtime(self.now - ago))

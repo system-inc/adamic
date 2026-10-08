@@ -103,15 +103,14 @@ def fullRuns():
     return re.findall(r'full-gate-main\.sh ([0-9a-f]{40})\b', listing)
 
 
-def check(step, now):
-    """The star's state and, when it has no live turn, the alarm's key and text."""
-    globs = step['globs']
+def runningTurn(globs):
+    """The one probe for a running turn, shared by the star and the chain's quiet check so they can't disagree
+    (@system_adamic, Oct 8): a fast gate on any of the branches, or a whole gate (cloud/full-gate-main.sh <sha>)
+    of one of their tips. None when neither runs."""
     for entry in sorted(state.glob('running/*')):
         fields = (lines(entry) or [''])[0].split()
         if fields and matches(fields[0], globs):
-            return 'running %s %s' % (fields[0], fields[1][:12]), None, None
-    # A whole gate of a star candidate is a live turn too (@system_adamic, Oct 8: the alarm called the star
-    # turn-less while its one-off full-main run on Home was 30 minutes in).
+            return 'running %s %s' % (fields[0], fields[1][:12])
     tips = {}
     for line in lines(state / 'seen'):
         fields = line.split()
@@ -119,7 +118,16 @@ def check(step, now):
             tips[fields[1]] = fields[0]
     for sha in fullRuns():
         if sha in tips:
-            return 'running full-main %s %s' % (tips[sha], sha[:12]), None, None
+            return 'running full-main %s %s' % (tips[sha], sha[:12])
+    return None
+
+
+def check(step, now):
+    """The star's state and, when it has no live turn, the alarm's key and text."""
+    globs = step['globs']
+    running = runningTurn(globs)
+    if running:
+        return running, None, None
     queued = [line.split() for line in lines(state / 'queue') if len(line.split()) >= 4 and matches(line.split()[2], globs)]
     if queued:
         _, since, branch, sha = min(queued, key=lambda fields: int(fields[1]))[:4]
@@ -174,32 +182,83 @@ def checkQuiet(chain, now):
         firstSeen = {}
     firstSeen = {entry['id']: firstSeen.get(entry['id'], now) for entry in chain}
     seenFile.write_text(json.dumps(firstSeen) + '\n')
-    running = [(lines(entry) or [''])[0].split()[:1] for entry in state.glob('running/*')]
     queued = [line.split()[2] for line in lines(state / 'queue') if len(line.split()) >= 4]
-    pushes = [found for found in map(pushLine.match, lines(watchLog)) if found]
+    pushes = [(now - ageOf(found.group(1), now), found.group(2), found.group(3)) for found in map(pushLine.match, lines(watchLog)) if found]
+    # Globs more than one chain step names (compiler/views-rehearsal for V1 to V6) count a push for a step only
+    # through commits whose Train-slice trailer names it.
+    counts = {}
+    for entry in chain:
+        for glob in entry['globs']:
+            counts[glob] = counts.get(glob, 0) + 1
     results = []
     for entry in chain:
         if not entry['globs']:
             results.append(('%s: no Branches' % entry['id'], None, None, []))
             continue
-        if any(fields and matches(fields[0], entry['globs']) for fields in running) or any(matches(branch, entry['globs']) for branch in queued):
+        if runningTurn(entry['globs']) or any(matches(branch, entry['globs']) for branch in queued):
             results.append(('%s: in the gate' % entry['id'], None, None, []))
             continue
-        last = [found for found in pushes if matches(found.group(2), entry['globs'])]
-        pushedAgo = ageOf(last[-1].group(1), now) if last else None
+        own = [glob for glob in entry['globs'] if counts[glob] == 1]
+        last = sorted([push for push in pushes if matches(push[1], own)] + unwatchedPushes(entry['globs'], own))
+        pushedAgo = now - last[-1][0] if last else None
         # Quiet since the later of its last push and its arrival on the chain.
         onChain = now - firstSeen[entry['id']]
         quiet = onChain if pushedAgo is None else min(pushedAgo, onChain)
         if quiet < quietLimit:
             results.append(('%s: pushed %s' % (entry['id'], '%d s ago' % pushedAgo if pushedAgo is not None else 'never, on the chain %d s' % quiet), None, None, []))
             continue
-        lastPush = '%s %s, %d min ago' % (last[-1].group(2), last[-1].group(3)[:12], pushedAgo // 60) if last else 'none seen'
+        lastPush = '%s %s, %d min ago' % (last[-1][1], last[-1][2][:12], pushedAgo // 60) if last else 'none seen'
         results.append(('%s: quiet %d min' % (entry['id'], quiet // 60),
-                        'quiet:%s:%s' % (entry['id'], last[-1].group(3) if last else 'none'),
+                        'quiet:%s:%s' % (entry['id'], last[-1][2] if last else 'none'),
                         '#%s is on the critical path and its worker is quiet: no push to its branches (%s) for %d minutes, and nothing of it '
                         'in the gate. Last push: %s.' % (entry['id'], ' '.join(entry['globs']), quiet // 60, lastPush),
                         [entry['owner']] if entry['owner'] else []))
     return results
+
+
+watchedPrefixes = ('codex/', 'area/', 'devtools/', 'cloud/land-')
+branchCache = {}
+
+
+def branchCommits(glob):
+    """Recent commits (committer time, branch, sha, Train-slice trailer) on origin's branches matching a glob the
+    watcher doesn't watch, read from git at most once a minute (ADAMIC_BRANCH_COMMITS stands in, in tests: one
+    'time branch sha slice' per line)."""
+    stand = os.environ.get('ADAMIC_BRANCH_COMMITS')
+    if stand is not None:
+        rows = [line.split() + [''] for line in lines(Path(stand)) if line.strip()]
+        return [(int(row[0]), row[1], row[2], row[3]) for row in rows if fnmatch.fnmatchcase(row[1], glob)]
+    cached = branchCache.get(glob)
+    if cached and time.time() - cached[0] < 60:
+        return cached[1]
+    repository = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    listing = subprocess.run(['git', '-C', repository, 'ls-remote', 'origin', 'refs/heads/' + glob], capture_output=True, text=True).stdout
+    rows = []
+    for line in listing.splitlines():
+        sha, ref = line.split()
+        branch = ref[len('refs/heads/'):]
+        subprocess.run(['git', '-C', repository, 'fetch', '-q', 'origin', sha], capture_output=True)
+        log = subprocess.run(['git', '-C', repository, 'log', sha, '--since=12 hours ago', '-n', '200',
+                              '--format=%ct %H %(trailers:key=Train-slice,valueonly,separator=%x2C)'], capture_output=True, text=True).stdout
+        for entry in log.splitlines():
+            fields = entry.split()
+            if len(fields) >= 2:
+                rows.append((int(fields[0]), branch, fields[1], fields[2] if len(fields) > 2 else ''))
+    branchCache[glob] = (time.time(), rows)
+    return rows
+
+
+def unwatchedPushes(globs, own):
+    """(time, branch, sha) pushes on a step's globs the watcher doesn't watch: every commit on a branch only this
+    step names, and on a shared one only commits whose Train-slice trailer the step's own globs name."""
+    pushes = []
+    for glob in globs:
+        if glob.startswith(watchedPrefixes):
+            continue
+        for when, branch, sha, slices in branchCommits(glob):
+            if glob in own or any(name and any(name in mine for mine in own) for name in slices.split(',')):
+                pushes.append((when, branch, sha))
+    return pushes
 
 
 mainHeadCache = {'checked': 0, 'sha': ''}
