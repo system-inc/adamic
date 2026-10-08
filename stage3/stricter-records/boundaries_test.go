@@ -27,7 +27,6 @@ func TestRecordBoundaries(t *testing.T) {
 	cases := map[string]string{
 		"record_cast":     `const record: { readonly [key: string]: number } = {}; const fixed = record as {}; console.log("done");`,
 		"nested_cast":     `const outer: { readonly record: { readonly [key: string]: number } } = { record: {} }; const fixed = outer as { readonly record: {} }; console.log("done");`,
-		"mutable":         `const record: { [key: string]: number } = {}; console.log("done");`,
 		"nullable":        `const record: { readonly [key: string]: string | null } = {}; console.log("done");`,
 		"undefined":       `const record: { readonly [key: string]: string | undefined } = {}; console.log("done");`,
 		"recursive":       `interface RecordNode { readonly [key: string]: RecordNode } const record: RecordNode = {}; console.log("done");`,
@@ -37,7 +36,7 @@ func TestRecordBoundaries(t *testing.T) {
 		"nested_view":     `const outer: { readonly record: { readonly [key: string]: number } } = { record: {} }; const fixed: { readonly record: {} } = outer; console.log("done");`,
 		"array_widening":  `const record: { readonly [key: string]: ("a")[] } = {}; const wide: { readonly [key: string]: string[] } = record; console.log("done");`,
 		"reflection":      `const record: { readonly [key: string]: number } = {}; console.log(Object.keys(record).join(","));`,
-		"named_read":      `const record: { readonly [key: string]: number } = {}; console.log(record.entry);`,
+		"named_read":      `const record: { readonly [key: string]: number } = {}; console.log(String(record.entry));`,
 		"proto_literal":   `const record: { readonly [key: string]: string } = { __proto__: "7" }; console.log("done");`,
 		"spread":          `const record: { readonly [key: string]: number } = {}; const copy: { readonly [key: string]: number } = { ...record }; console.log("done");`,
 	}

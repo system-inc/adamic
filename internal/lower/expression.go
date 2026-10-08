@@ -64,7 +64,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Array, true
 	}
 	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
-		if l.recordElement(proven) != nil {
+		if _, readonly := l.recordInfo(proven); readonly || l.recordElement(proven) != nil {
 			return ir.Record, true
 		}
 		regex := false
@@ -348,6 +348,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return false
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if !l.sameRecordView(from, to) {
+		return false
+	}
 	if !l.nodeBufferView(from, to) {
 		return false
 	}

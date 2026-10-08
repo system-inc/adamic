@@ -4,9 +4,9 @@ import (
 	"context"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 )
@@ -16,8 +16,8 @@ import (
 func TestReceiverAssertionRouting(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range []struct{ id, function, source string }{
-		{"D212", "transformGenerators.hasImmediateContainingLabeledBlock", `function hasImmediateContainingLabeledBlock(): number { const blockStack: number[] = [7]; const j = 0; const containingBlock: number = blockStack![j]; return containingBlock; } console.log(hasImmediateContainingLabeledBlock());`},
-		{"D220", "transformGenerators.tryEnterOrLeaveBlock", `function tryEnterOrLeaveBlock(): number { const blockOffsets: number[] = [7]; const blockIndex = 0; const offset: number = blockOffsets![blockIndex]; return offset; } console.log(tryEnterOrLeaveBlock());`},
+		{"D212", "transformGenerators.hasImmediateContainingLabeledBlock", `function hasImmediateContainingLabeledBlock(): number { const blockStack: number[] = [7]; const j = 0; const containingBlock: number = blockStack![j]; return containingBlock; } console.log(String(hasImmediateContainingLabeledBlock()));`},
+		{"D220", "transformGenerators.tryEnterOrLeaveBlock", `function tryEnterOrLeaveBlock(): number { const blockOffsets: number[] = [7]; const blockIndex = 0; const offset: number = blockOffsets![blockIndex]; return offset; } console.log(String(tryEnterOrLeaveBlock()));`},
 	} {
 		t.Run(fixture.id, func(t *testing.T) {
 			directory := t.TempDir()
@@ -31,12 +31,21 @@ func TestReceiverAssertionRouting(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lower.Lower(context.Background(), checked)
-			const message = "Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
-			if err == nil || !strings.Contains(err.Error(), message) {
-				t.Fatalf("want named assertion refusal, got %v", err)
+			lowered, err := lower.Lower(context.Background(), checked)
+			if err != nil {
+				t.Fatal(err)
 			}
-			t.Logf("ROUTE %s file=src/compiler/transformers/generators.ts function=%s reduction=%v", fixture.id, fixture.function, err)
+			checks := ir.InsertedChecks(lowered)
+			count := 0
+			for _, check := range checks {
+				if check.Kind == "indexed-presence" {
+					count++
+				}
+			}
+			if count != 1 {
+				t.Fatalf("want one indexed check after redundant assertion, got %+v", checks)
+			}
+			t.Logf("ROUTE %s file=src/compiler/transformers/generators.ts function=%s redundant assertion lowers; indexed-presence=%d", fixture.id, fixture.function, count)
 		})
 	}
 }

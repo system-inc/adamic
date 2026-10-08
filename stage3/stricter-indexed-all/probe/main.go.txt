@@ -69,8 +69,15 @@ func main() {
 	for _, excluded := range exclusions {
 		sites = append(sites, excluded.Site)
 	}
+	manifestFile, err := os.Open("stage3/stricter-indexed-all/evidence/ledger-rows.csv")
+	if err != nil { panic(err) }
+	manifest, err := load.ReadOptionLedger(manifestFile)
+	manifestFile.Close()
+	if err != nil { panic(err) }
+	_, census, censusErr := load.LoadOptionLedger(paths, tree, manifest)
+	if len(census.Rows) != 173 || len(census.OrdinaryErrors) != 0 { panic(fmt.Sprintf("invalid production census: %v", censusErr)) }
 	checked, err := load.LoadIndexedLedgerProbe(paths, sites)
-	result := map[string]any{"mode": "production-project-options, exact 72 ledger diagnostic exclusions", "roots": roots, "excluded": exclusions, "diagnostics": []string{}, "attempts": []attempt{}}
+	result := map[string]any{"census": census, "mode": "production-project-options, row keyed census, only remaining authorized diagnostics excluded", "roots": roots, "excluded": exclusions, "diagnostics": []string{}, "attempts": []attempt{}}
 	if err != nil {
 		result["stage"] = "checker"
 		result["error"] = err.Error()

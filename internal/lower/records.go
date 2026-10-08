@@ -370,6 +370,12 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if _, fromReadonly := l.recordInfo(from); fromReadonly {
+		return l.sameRecordView(from, to)
+	}
+	if _, toReadonly := l.recordInfo(to); toReadonly {
+		return l.sameRecordView(from, to)
+	}
 	inside, viewed := l.recordElement(from), l.recordElement(to)
 	if inside != nil || viewed != nil {
 		return inside != nil && viewed != nil && l.sameRecordStorage(inside, viewed, visited)
@@ -496,6 +502,9 @@ func (l *lowering) sameRecordView(from, to *checker.Type) bool {
 	}
 	f, fok := l.recordInfo(from)
 	t, tok := l.recordInfo(to)
+	if !fok && !tok && l.recordElement(from) != nil && l.recordElement(to) != nil {
+		return true
+	}
 	if !fok || !tok {
 		return false
 	}

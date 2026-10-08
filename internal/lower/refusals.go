@@ -347,7 +347,7 @@ func (l *lowering) refuseRecordDeclaration(node *ast.Node) error {
 		// Record<string, T> stays refused until #p9v82wa lowers own keys only,
 		// dynamic reads as T | undefined, and loudly stops prototype-name reads and in.
 		// A finite Record literal-key union is an ordinary checked object shape.
-		if l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(node)) != nil && l.recordElement(l.checker.GetTypeAtLocation(node)) == nil {
+		if _, readonly := l.recordInfo(l.checker.GetTypeAtLocation(node)); !readonly && l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(node)) != nil && l.recordElement(l.checker.GetTypeAtLocation(node)) == nil {
 			return &Refused{Where: l.program.Where(node), What: "Record<string, T> (an index signature without own-key record lowering)", Fix: "use Map<string, T> until records have own keys, T | undefined dynamic reads, and loud prototype-name checks (#p9v82wa)"}
 		}
 	}
@@ -359,7 +359,7 @@ func (l *lowering) refuseRecordDeclaration(node *ast.Node) error {
 func (l *lowering) recordOperationNotYet(node *ast.Node) error {
 	if node.Kind == ast.KindElementAccessExpression {
 		access := node.AsElementAccessExpression()
-		if l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(access.Expression)) != nil && l.recordElement(l.checker.GetTypeAtLocation(access.Expression)) == nil {
+		if _, readonly := l.recordInfo(l.checker.GetTypeAtLocation(access.Expression)); !readonly && l.checker.GetStringIndexType(l.checker.GetTypeAtLocation(access.Expression)) != nil && l.recordElement(l.checker.GetTypeAtLocation(access.Expression)) == nil {
 			parent := node.Parent
 			if parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == node && ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind) {
 				return l.notYet(node, "dynamic record writes (own-key record storage is not implemented; use Map.set)")

@@ -4,7 +4,7 @@ func LoadIndexedLedgerProbe(paths []string, exclusions []OptionSite) (*Program, 
 	return loadIndexedLedgerProbe(paths, nil, exclusions)
 }
 
-func filterIndexedLedgerDiagnostics(diagnostics []string, sites, exclusions []OptionSite) ([]string, error) {
+func filterIndexedLedgerDiagnostics(diagnostics []string, sites, exclusions []OptionSite, dispositions ...[]OptionDisposition) ([]string, error) {
 	if len(exclusions) != 72 {
 		return nil, fmt.Errorf("indexed ledger probe: want exactly 72 exclusions, got %d", len(exclusions))
 	}
@@ -22,13 +22,24 @@ func filterIndexedLedgerDiagnostics(diagnostics []string, sites, exclusions []Op
 	if counts["exactOptionalPropertyTypes"] != 67 || counts["useUnknownInCatchVariables"] != 5 {
 		return nil, fmt.Errorf("indexed ledger probe: expected 67 optional and 5 catch exclusions")
 	}
+	scheduled := map[string]bool{}
+	if len(dispositions) > 1 { return nil, fmt.Errorf("indexed ledger probe: duplicate census") }
+	if len(dispositions) == 1 {
+		for _, row := range dispositions[0] {
+			if row.State == OptionCheckScheduled { scheduled[key(row.Site)] = true }
+		}
+	}
+	alreadyScheduled := 0
 	messages := map[string]bool{}
 	for _, site := range sites {
 		if expected, match := wanted[key(site)]; match {
 			if len(site.Options) != 1 || site.Options[0] != expected.Options[0] {
 				return nil, fmt.Errorf("indexed ledger probe: exclusion attribution changed: %s", key(site))
 			}
-			messages[site.Message] = true
+			if scheduled[key(site)] {
+				if expected.Options[0] != "exactOptionalPropertyTypes" { return nil, fmt.Errorf("indexed ledger probe: catch admission changed; refresh exclusions") }
+				alreadyScheduled++
+			} else { messages[site.Message] = true }
 			delete(wanted, key(site))
 		}
 	}
@@ -41,7 +52,7 @@ func filterIndexedLedgerDiagnostics(diagnostics []string, sites, exclusions []Op
 			removed[message] = true
 		} else { remaining = append(remaining, message) }
 	}
-	if len(removed) != 72 { return nil, fmt.Errorf("indexed ledger probe: expected to remove exactly 72 diagnostics, removed %d", len(removed)) }
+	if len(removed) != 72-alreadyScheduled { return nil, fmt.Errorf("indexed ledger probe: expected to remove %d remaining authorized diagnostics, removed %d", 72-alreadyScheduled, len(removed)) }
 	return remaining, nil
 }
 
@@ -52,7 +63,7 @@ func (p *Program) IndexedLedgerEntry(path string) (*Program, error) {
 	if err != nil { return nil, err }
 	for _, source := range p.files {
 		if p.FileName(source) == absolute {
-			return &Program{compiler: p.compiler, fs: p.fs, projectOptions: p.projectOptions, optionSites: p.optionSites, files: []*ast.SourceFile{source}}, nil
+			return &Program{compiler: p.compiler, fs: p.fs, projectOptions: p.projectOptions, optionSites: p.optionSites, optionDispositions: p.optionDispositions, files: p.files, entries: []*ast.SourceFile{source}, optionalChecks: p.optionalChecks, optionalRelations: p.optionalRelations, optionalLiterals: p.optionalLiterals, optionalViews: p.optionalViews, checkedOptions: p.checkedOptions}, nil
 		}
 	}
 	return nil, fmt.Errorf("indexed ledger probe: entry was not an original checked root: %s", path)

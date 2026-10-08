@@ -26,12 +26,12 @@ manifest=[{'id':row['id'],'site':{'file':str(args.tree.resolve()/row['file']),'l
 (scratch/'exclusions.json').write_text(json.dumps(manifest,indent=2)+'\n')
 source=(repo/'internal/load/load.go').read_text()
 original=source
-needle='func load(paths []string, overlay map[string]string) (*Program, error) {'
+needle='func loadInput(paths []string, overlay map[string]string, requestedProject string) (*Program, error) {'
 assert source.count(needle)==1
-source=source.replace(needle,needle+'\n\treturn loadIndexedLedgerProbe(paths, overlay, nil)\n}\n\nfunc loadIndexedLedgerProbe(paths []string, overlay map[string]string, exclusions []OptionSite) (*Program, error) {')
+source=source.replace(needle,needle+'\n\treturn loadIndexedLedgerInput(paths, overlay, requestedProject, nil)\n}\n\nfunc loadIndexedLedgerProbe(paths []string, overlay map[string]string, exclusions []OptionSite) (*Program, error) { return loadIndexedLedgerInput(paths, overlay, "", exclusions) }\n\nfunc loadIndexedLedgerInput(paths []string, overlay map[string]string, requestedProject string, exclusions []OptionSite) (*Program, error) {')
 needle='\tif len(diagnostics) > 0 {\n\t\tsort.Strings(diagnostics)'
 assert source.count(needle)==1
-source=source.replace(needle,'\tif exclusions != nil {\n\t\tif !loaded.projectOptions { return nil, fmt.Errorf("indexed ledger probe requires project-owned .ts sources") }\n\t\tdiagnostics, err = filterIndexedLedgerDiagnostics(diagnostics, sites, exclusions)\n\t\tif err != nil { return nil, err }\n\t}\n'+needle)
+source=source.replace(needle,'\tif exclusions != nil {\n\t\tif !loaded.projectOptions { return nil, fmt.Errorf("indexed ledger probe requires project-owned .ts sources") }\n\t\tdiagnostics, err = filterIndexedLedgerDiagnostics(diagnostics, sites, exclusions, loaded.optionDispositions)\n\t\tif err != nil { return nil, err }\n\t}\n'+needle)
 source+='\n'+(root/'probe/loader.go.txt').read_text()
 (scratch/'load.go').write_text(source)
 # A generated main lives inside the module to permit internal package imports.

@@ -24,6 +24,7 @@ import (
 )
 
 const usage = `usage:
+  adamic --explain-checks <file.a|file.ts>...
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts>... [--explain-checks]
   adamic js <file.a|file.ts>... [--explain-checks]
@@ -38,6 +39,13 @@ func main() {
 // be compiled, 2 for a usage error.
 func run(arguments []string) int {
 	switch {
+	case len(arguments) >= 2 && arguments[0] == "--explain-checks":
+		lowered, code := compileInput(arguments[1:], "", false)
+		if lowered == nil {
+			return code
+		}
+		explainChecks(lowered, os.Stdout)
+		return 0
 	case len(arguments) >= 2 && arguments[0] == "types":
 		program, code := check(arguments[1:])
 		if program == nil {
