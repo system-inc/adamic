@@ -1,0 +1,15 @@
+interface Options {
+    target?: number;
+    name: string;
+    [option: string]: number | string | boolean | undefined;
+}
+function target(options: Options): number { return (options.target ?? 0) + 1; }
+const options: Options = { name: "start" };
+console.log(`${target(options)}:${options.name.length}`);
+console.log(`${"target" in options}:${Object.keys(options).join(",")}`);
+options.target = 6;
+options.name = "changed";
+options["dynamic"] = true;
+console.log(`${target(options)}:${options.name}:${options["dynamic"]}:${options["missing"]}`);
+console.log(`${"target" in options}:${"missing" in options}`);
+console.log(Object.keys(options).join(","));

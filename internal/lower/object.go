@@ -598,6 +598,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, handled, err := l.detachedOwnCall(node); handled {
 		return value, true, err
 	}
+	if value, handled, err := l.libraryMethodCall(node); handled {
+		return value, true, err
+	}
 	if value, handled, err := l.userMethodCall(node); handled {
 		return value, true, err
 	}

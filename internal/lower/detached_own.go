@@ -7,7 +7,8 @@ import (
 )
 
 // The library's own-property function has no receiver state. Only its explicit
-// .call idiom is represented; the function itself never escapes into user code.
+// record .call idiom uses a readiness marker; other proven receivers and dense
+// .apply calls retain the area's established library adapters.
 func (l *lowering) detachedOwnMethod(node *ast.Node) bool {
 	if node == nil {
 		return false
@@ -22,9 +23,11 @@ func (l *lowering) detachedOwnMethod(node *ast.Node) bool {
 }
 
 func (l *lowering) detachedOwnDeclaration(node *ast.Node) bool {
-	return node != nil && node.Kind == ast.KindVariableDeclaration && ast.IsIdentifier(node.Name()) &&
-		node.Parent != nil && node.Parent.Flags&ast.NodeFlagsConst != 0 &&
-		l.detachedOwnMethod(node.AsVariableDeclaration().Initializer)
+	if node == nil || node.Kind != ast.KindVariableDeclaration || !ast.IsIdentifier(node.Name()) || node.Parent == nil || node.Parent.Flags&ast.NodeFlagsConst == 0 || node.AsVariableDeclaration().Initializer == nil {
+		return false
+	}
+	method, known := l.libraryMethod(node.AsVariableDeclaration().Initializer, map[*ast.Symbol]bool{})
+	return known && method.family == "Object.prototype" && method.name == "hasOwnProperty"
 }
 
 func (l *lowering) detachedOwnAlias(node *ast.Node) *ast.Node {
@@ -114,7 +117,7 @@ func (l *lowering) detachedOwnRefusal(node *ast.Node) error {
 	for at.Parent != nil && at.Parent.Kind == ast.KindParenthesizedExpression {
 		at = at.Parent
 	}
-	if l.detachedOwnMethod(node) && at.Parent != nil && l.detachedOwnDeclaration(at.Parent) && at.Parent.AsVariableDeclaration().Initializer == at {
+	if at.Parent != nil && l.detachedOwnDeclaration(at.Parent) && at.Parent.AsVariableDeclaration().Initializer == at {
 		return nil
 	}
 	if declaration := l.detachedOwnAlias(node); declaration != nil && node == declaration.Name() {
@@ -122,6 +125,9 @@ func (l *lowering) detachedOwnRefusal(node *ast.Node) error {
 	}
 	if at.Parent != nil && at.Parent.Kind == ast.KindPropertyAccessExpression {
 		member := at.Parent
+		if member.AsPropertyAccessExpression().Expression == at && member.Name().Text() == "apply" && l.libraryMethodReadAllowed(node) {
+			return nil
+		}
 		if member.AsPropertyAccessExpression().Expression == at && member.Name().Text() == "call" {
 			call := member
 			for call.Parent != nil && call.Parent.Kind == ast.KindParenthesizedExpression {
@@ -157,6 +163,9 @@ func (l *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, error) 
 	of, known := l.representation(proven)
 	if l.detachedOwnObjectParameter(ast.SkipParentheses(args[0])) {
 		of, known = ir.Object, true
+	}
+	if known && of != ir.Record && of != ir.Object {
+		return nil, false, nil // Existing primitive, array and function adapters prove these descriptors.
 	}
 	if !known || l.includesUndefined(proven) || proven.Flags()&checker.TypeFlagsNull != 0 ||
 		(of != ir.Record && of != ir.Object) || checker.IsTupleType(proven) {
