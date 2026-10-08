@@ -100,32 +100,19 @@ OWNER BLANK rows go to @system_adamic. Counts are grouped by exact reason.
 | --- | --- | ---: | ---: | ---: | ---: |
 | a BinaryExpression with a value and a value | OWNER BLANK | 32 | 0 | 32 | 0 |
 | a value of type T | OWNER BLANK | 30 | 0 | 30 | 0 |
-| a value of type any | OWNER BLANK | 30 | 0 | 30 | 0 |
 | a field of type boolean &#124; undefined | OWNER BLANK | 25 | 0 | 25 | 0 |
-| a cast the runtime can&#x27;t check | OWNER BLANK | 0 | 23 | 0 | 23 |
 | a parameter that isn&#x27;t a plain name | OWNER BLANK | 22 | 0 | 22 | 0 |
-| reading ModifierFlags | OWNER BLANK | 22 | 0 | 22 | 0 |
-| reading Extension | OWNER BLANK | 20 | 0 | 21 | 0 |
-| reading NodeFlags | OWNER BLANK | 20 | 0 | 20 | 0 |
 | a value of type Path | OWNER BLANK | 19 | 0 | 19 | 0 |
 | a BinaryExpression with a value and a boolean | OWNER BLANK | 18 | 0 | 18 | 0 |
 | a value of type ResolvedConfigFilePath | OWNER BLANK | 18 | 0 | 18 | 0 |
 | a value of type __String | OWNER BLANK | 18 | 0 | 18 | 0 |
-| &#124;&#124;= | OWNER BLANK | 0 | 15 | 0 | 18 |
 | a function returning U &#124; undefined | OWNER BLANK | 16 | 0 | 16 | 0 |
-| a string as a condition | OWNER BLANK | 0 | 14 | 0 | 14 |
 | a generic function as a value | OWNER BLANK | 13 | 0 | 13 | 0 |
-| a value of type unknown | OWNER BLANK | 9 | 0 | 13 | 0 |
-| a boolean &#124; undefined as a condition | OWNER BLANK | 0 | 11 | 0 | 12 |
-| reading Comparison | OWNER BLANK | 12 | 0 | 12 | 0 |
-| a namespace | OWNER BLANK | 0 | 11 | 0 | 11 |
 | a value of type T &#124; undefined | OWNER BLANK | 11 | 0 | 11 | 0 |
-| an index signature | OWNER BLANK | 0 | 8 | 0 | 11 |
-| reading ModuleKind | OWNER BLANK | 11 | 0 | 11 | 0 |
 | a call through ?. (an optional call) | OWNER BLANK | 9 | 0 | 10 | 0 |
 | a function returning __String | OWNER BLANK | 10 | 0 | 10 | 0 |
 
-319 more unowned reasons, 1293 sites in all
+276 more unowned reasons, 1092 sites in all
 
 Latent lowering, main: measured on a checker-rejected program.
 NotYet: 2059; Refused: 2140.

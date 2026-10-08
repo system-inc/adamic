@@ -1,0 +1,41 @@
+{
+  "status": "pass",
+  "errors": [],
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "c1938019cbbc3b531f5ca2dd60cc4adb0fcdb190",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 494.923
+  },
+  "results": "/workspace/stage3-lane-method-revert-control",
+  "verdict": "PASS stage3 landing lane",
+  "control": "Checker-only control: restored exactly ten methods from the pinned API in an isolated snapshot; oracle counts and logs held fixed, upstream tests not rerun."
+}

@@ -1,0 +1,11 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const tree = path.resolve(process.argv[2]);
+if (!fs.existsSync(path.join(tree, 'slice.json'))) throw new Error('adaptation 55 requires a declaration slice');
+const file = path.join(tree, 'src/compiler/debug.ts');
+const before = fs.readFileSync(file, 'utf8');
+const after = before.replaceAll('stackCrawlMark?: AnyFunction', 'stackCrawlMark?: {}');
+const count = (before.match(/stackCrawlMark\?: AnyFunction/g) || []).length;
+if (count !== 0 && count !== 3) throw new Error(`unexpected marker count: ${count}`);
+if (count) fs.writeFileSync(file, after);
+console.log(JSON.stringify({opaqueMarkers: count}));

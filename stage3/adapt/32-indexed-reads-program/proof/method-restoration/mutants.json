@@ -1,0 +1,62 @@
+{
+  "status": "pass",
+  "proofs": [
+    {
+      "owner": "CompilerHost.getDefaultLibLocation",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "owner": "CompilerHost.createHash",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "owner": "CompilerHost.readDirectory",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "owner": "ModuleResolutionHost.trace",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "owner": "ModuleResolutionHost.directoryExists",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "owner": "ModuleResolutionHost.getDirectories",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "owner": "ModuleResolutionHost.realpath",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "owner": "ProgramHost.createHash",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "owner": "ProgramHost.realpath",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "owner": "ProgramHost.getEnvironmentVariable",
+      "mutant": "replace original method with prior property",
+      "caught": "public method restoration missing"
+    },
+    {
+      "file": "binder.ts",
+      "expression": "antecedents[0]",
+      "mutant": "required ! replaced with ?? 0",
+      "caught": "required read defaulted: binder.ts:1428:20",
+      "stock_emitter": "changed JavaScript detected"
+    }
+  ]
+}
