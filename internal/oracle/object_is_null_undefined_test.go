@@ -30,6 +30,17 @@ func TestObjectIsNullUndefinedMutant(t *testing.T) {
 	mutate := func(value ir.Expression) ir.Expression {
 		if conditional, ok := value.(ir.Conditional); ok {
 			if call, ok := conditional.Condition.(ir.ObjectCall); ok && call.Method == "is" {
+				// The area now boxes null with a distinct sentinel. Erase that
+				// tag too, so this still restores the erroneous null/undefined
+				// pointer comparison rather than a correct tagged SameValue.
+				call.Arguments = append([]ir.Expression(nil), call.Arguments...)
+				for index, argument := range call.Arguments {
+					if box, ok := argument.(ir.Box); ok {
+						if null, ok := box.Value.(ir.Null); ok {
+							call.Arguments[index] = ir.Box{Value: ir.Undefined{Of: null.Of}}
+						}
+					}
+				}
 				changed++
 				return call
 			}
