@@ -23,7 +23,7 @@ func TestStatementUpstreamDifferences(t *testing.T) {
 	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+path, "-run=^TestAdamicStatementUpstreamDifferences$", "./internal/format/javascript")
 	command.Dir = root + "/cohere"
 	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_UPSTREAM="+recordsPath)
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go: %v %s", err, output)
 	} else {
 		t.Log(string(output))

@@ -56,7 +56,7 @@ func TestPrinterThroughput(t *testing.T) {
 	goBinary := filepath.Join(directory, "cohere")
 	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, fake)
 	command.Dir = cohere
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go driver: %v\n%s", err, output)
 	}
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))

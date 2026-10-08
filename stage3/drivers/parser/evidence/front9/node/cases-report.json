@@ -1,0 +1,43 @@
+{
+  "summary": {
+    "parser": {
+      "cases": 800,
+      "diagnostic_rows": 245,
+      "jsdoc_diagnostic_rows": 0,
+      "node_count": 63183,
+      "cases_with_parse_diagnostics": 155
+    },
+    "jsx": {
+      "cases": 175,
+      "diagnostic_rows": 95,
+      "jsdoc_diagnostic_rows": 0,
+      "node_count": 18848,
+      "cases_with_parse_diagnostics": 12
+    },
+    "salsa": {
+      "cases": 108,
+      "diagnostic_rows": 0,
+      "jsdoc_diagnostic_rows": 0,
+      "node_count": 7706,
+      "cases_with_parse_diagnostics": 0
+    },
+    "remaining": {
+      "cases": 9323,
+      "diagnostic_rows": 1656,
+      "jsdoc_diagnostic_rows": 34,
+      "node_count": 1233374,
+      "cases_with_parse_diagnostics": 387
+    },
+    "all": {
+      "cases": 10406,
+      "diagnostic_rows": 1996,
+      "jsdoc_diagnostic_rows": 34,
+      "node_count": 1323111,
+      "cases_with_parse_diagnostics": 554
+    }
+  },
+  "full_tree_equals_slice_cases": 10406,
+  "committed_manifest_records_identical": true,
+  "manifest_sha256": "eaeca6000e53262767c67b9bedcb4ac94c4af1b5add518bd34b79b56cccaa6de",
+  "native_acceptance": "not run: no native binary; overload callback predicate refused before C emission"
+}

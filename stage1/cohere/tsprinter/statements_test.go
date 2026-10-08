@@ -28,7 +28,7 @@ func statementCorpus(t *testing.T) (string, string, string) {
 	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+directory+"/overlay.json", "-run=^TestAdamicStatementCorpus$", "./internal/format/javascript")
 	command.Dir = root + "/cohere"
 	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go statement corpus: %v\n%s", err, output)
 	} else {
 		t.Log(string(output))
@@ -51,6 +51,7 @@ func statementCorpus(t *testing.T) (string, string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	planCorpus(t, directory+"/cases.txt")
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
 }
 
@@ -60,7 +61,7 @@ func TestStatementsAgainstGoAndPrettier(t *testing.T) {
 	port, _ := filepath.Abs("statementsMain.ts")
 	compare := func(name string, result run) {
 		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != want {
-			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, firstDifference(string(result.stdout), want))
+			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, corpusDifference(t, cases, string(result.stdout), want))
 		}
 	}
 	compare("Node", onNode(t, port, "--cases", cases, "80"))

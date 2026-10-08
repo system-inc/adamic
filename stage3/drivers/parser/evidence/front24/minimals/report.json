@@ -1,0 +1,119 @@
+[
+  {
+    "file": "native-array-is-array-any.a",
+    "node": {
+      "exit": 0,
+      "stdout": "true\nfalse\n",
+      "stderr": ""
+    },
+    "emit": {
+      "exit": 1,
+      "stdout": "C retained in scratch only",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-array-is-array-any.a:3:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on value); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+    }
+  },
+  {
+    "file": "native-predicate-callback-parameter.a",
+    "node": {
+      "exit": 0,
+      "stdout": "callback declaration loaded\n",
+      "stderr": ""
+    },
+    "emit": {
+      "exit": 1,
+      "stdout": "C retained in scratch only",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-predicate-callback-parameter.a:2:90: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+    }
+  },
+  {
+    "file": "native-namespace-object-receiver.a",
+    "node": {
+      "exit": 0,
+      "stdout": "receiver declaration loaded\n",
+      "stderr": ""
+    },
+    "emit": {
+      "exit": 1,
+      "stdout": "C retained in scratch only",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-namespace-object-receiver.a:3:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this\n"
+    }
+  },
+  {
+    "file": "native-namespace-class.a",
+    "node": {
+      "exit": 0,
+      "stdout": "class declaration loaded\n",
+      "stderr": ""
+    },
+    "emit": {
+      "exit": 1,
+      "stdout": "C retained in scratch only",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-namespace-class.a:3:5: stage 0 can't lower a class inside a namespace; namespace constructor registration and initialization are not yet proven yet\n"
+    }
+  },
+  {
+    "file": "native-callable-namespace.a",
+    "node": {
+      "exit": 0,
+      "stdout": "callable namespace loaded\n",
+      "stderr": ""
+    },
+    "emit": {
+      "exit": 1,
+      "stdout": "C retained in scratch only",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-callable-namespace.a:4:5: stage 0 can't lower a namespace merged with a function; callable object properties, identity and receivers are not represented yet\n"
+    }
+  },
+  {
+    "file": "native-partial-record-view.a",
+    "node": {
+      "exit": 0,
+      "stdout": "0\n",
+      "stderr": ""
+    },
+    "emit": {
+      "exit": 1,
+      "stdout": "C retained in scratch only",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-partial-record-view.a:6:27: stage 0 can't lower a Partial<Record<AssertionKeys, number | undefined>> seen as MapLike<number | undefined> (fixed objects and records have different storage; copy explicitly) yet\n"
+    }
+  },
+  {
+    "file": "native-function-any-view.a",
+    "node": {
+      "exit": 0,
+      "stdout": "function view loaded\n",
+      "stderr": ""
+    },
+    "emit": {
+      "exit": 1,
+      "stdout": "C retained in scratch only",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-function-any-view.a:4:56: Adamic 0.1 refuses a value of type (level: number) => boolean seen as AnyFunction, which can write void where boolean is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    }
+  },
+  {
+    "file": "native-debugger-statement.a",
+    "node": {
+      "exit": 0,
+      "stdout": "fail declaration loaded\n",
+      "stderr": ""
+    },
+    "emit": {
+      "exit": 1,
+      "stdout": "C retained in scratch only",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-debugger-statement.a:2:26: Adamic 0.1 refuses debugger; remove it\n"
+    }
+  },
+  {
+    "file": "native-generic-assert-non-nullable.a",
+    "node": {
+      "exit": 0,
+      "stdout": "assertion declaration loaded\n",
+      "stderr": ""
+    },
+    "emit": {
+      "exit": 1,
+      "stdout": "C retained in scratch only",
+      "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-assert-non-nullable.a:3:90: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed value to NonNullable<T>); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+    }
+  }
+]
