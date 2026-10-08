@@ -9,7 +9,10 @@
 # branch isn't gated again), two at a time, one per slot on the box. The queue is by priority, decided
 # when a gate starts: what integration is landing first (area/*, and any branch named in the state
 # directory's priority file, one per line, such as a fix-forward), then devtools/*, then workers'
-# codex/*, newest first within each, and only a branch's newest tip. Each gate publishes gate-logs/<sha12>/<UTC stamp>/fast
+# codex/*, newest first within each, and only a branch's newest tip. Each tip is classed when queued:
+# big (an area, or more than two touched packages) or small. While a big gate runs and a small change
+# waits, the free slot takes the small one, so a worker's tip waits at most one small gate; with no
+# small change waiting, a second big gate may take it. The gating line names how long a tip waited. Each gate publishes gate-logs/<sha12>/<UTC stamp>/fast
 # like any other, with the branch and, when an ai.db reply names the branch, the worker's session.
 set -uo pipefail
 
@@ -20,6 +23,17 @@ slots=2
 git -C "${here}" fetch -q origin
 git -C "${here}" branch -r --contains "$(git -C "${here}" rev-parse HEAD)" | grep -q . || { echo "the gate's own commit is not on origin; push it first" >&2; exit 2; }
 export ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN=1
+
+# A tip's class for scheduling only (coverage is the gate's business): big for an area or more than two
+# touched packages (directories of changed Go files, a testdata path counting as its package).
+classify() {
+  local branch=$1 sha=$2 count
+  [[ ${branch} == area/* ]] && { echo B; return; }
+  git -C "${here}" fetch -q origin "${sha}" 2>/dev/null || { echo B; return; }
+  count=$(git -C "${here}" diff --name-only "$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)...${sha}" 2>/dev/null |
+    awk '/\/testdata\// {sub("/testdata/.*", ""); print; next} /\.go$/ {sub("/[^/]*$", ""); print}' | sort -u | wc -l)
+  [ "${count}" -gt 2 ] && echo B || echo S
+}
 
 tips() {
   git -C "${here}" ls-remote origin 'refs/heads/codex/*' 'refs/heads/area/*' 'refs/heads/devtools/*' |
@@ -36,37 +50,42 @@ while true; do
     # New or moved tips, queued by kind: workers' branches first.
     comm -13 "${state}/seen" "${state}/now.tmp" | while read -r branch sha; do
       grep -qx "${sha}" "${state}/gated" && continue
-      echo "0 $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
-      echo "$(date -u +%H:%M:%S) queued ${branch} ${sha}"
+      class=$(classify "${branch}" "${sha}")
+      echo "${class} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
+      echo "$(date -u +%H:%M:%S) queued ${branch} ${sha} (${class})"
     done
     mv "${state}/now.tmp" "${state}/seen"
   fi
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
-    read -r branch sha < "${file}"
+    read -r branch sha _ < "${file}"
     echo "$(date -u +%H:%M:%S) done ${branch}: $(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)"
     rm "${file}"
   done
   while [ "$(ls "${state}/running" | wc -l)" -lt "${slots}" ] && [ -s "${state}/queue" ]; do
     touch "${state}/priority"
-    next=$(while read -r rank queued branch sha; do
+    big=$(cat "${state}"/running/* 2>/dev/null | awk '$3 == "B"' | wc -l)
+    only=""
+    if [ "${big}" -ge 1 ] && awk '$1 == "S"' "${state}/queue" | grep -q .; then only=S; fi
+    next=$(while read -r class queued branch sha; do
+      [ -n "${only}" ] && [ "${class}" != "${only}" ] && continue
       if [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=1
       elif [[ ${branch} == devtools/* ]]; then rank=2
       else rank=3; fi
-      echo "${rank} ${queued} ${branch} ${sha}"
+      echo "${rank} ${queued} ${branch} ${sha} ${class}"
     done < "${state}/queue" | sort -k1,1n -k2,2nr | head -1)
     [ -n "${next}" ] || break
-    read -r _ queued branch sha <<< "${next}"
-    grep -v " ${queued} ${branch} ${sha}\$" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
+    read -r _ queued branch sha class <<< "${next}"
+    grep -vF " ${queued} ${branch} ${sha}" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
     grep -qx "${sha}" "${state}/gated" && continue
     # A tip its branch has already moved past is superseded: gate the branch's newest only.
     grep -qx "${branch} ${sha}" "${state}/seen" || { echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue; }
     echo "${sha}" >> "${state}/gated"
     log=${state}/logs/${sha:0:12}.log
     bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" > "${log}" 2>&1 &
-    echo "${branch} ${sha}" > "${state}/running/$!"
-    echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (log ${log})"
+    echo "${branch} ${sha} ${class}" > "${state}/running/$!"
+    echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}, waited $(( $(date -u +%s) - queued )) s, log ${log})"
   done
   sleep 15
 done
