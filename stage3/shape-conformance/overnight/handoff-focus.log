@@ -1,0 +1,51 @@
+=== RUN   TestShapeMissingValueProducers
+=== RUN   TestShapeMissingValueProducers/local
+=== RUN   TestShapeMissingValueProducers/result
+--- PASS: TestShapeMissingValueProducers (0.00s)
+    --- PASS: TestShapeMissingValueProducers/local (0.00s)
+    --- PASS: TestShapeMissingValueProducers/result (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.015s
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.010s [no tests to run]
+=== RUN   TestShapeGraphMapAdoption
+--- PASS: TestShapeGraphMapAdoption (0.35s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.360s
+=== RUN   TestShapeRecordedBlockedKinds
+    shape_blocked_kinds_test.go:12: gate cache node miss
+    shape_blocked_kinds_test.go:17: gate cache node miss
+    shape_blocked_kinds_test.go:44: gate cache node miss
+    shape_blocked_kinds_test.go:48: wrong-overload-result caught by Node stdout comparison: exit=0 stdout="2\nfalse\n3,1\n3,1\ntrue\n"
+    shape_blocked_kinds_test.go:48: wrong-overload-result caught by Node stdout comparison: exit=0 stdout="2\nfalse\n3,1\n3,1\ntrue\n"
+--- PASS: TestShapeRecordedBlockedKinds (0.72s)
+=== RUN   TestShapeRecordedOptionalKinds
+    shape_blocked_kinds_test.go:54: gate cache node miss
+    shape_blocked_kinds_test.go:59: gate cache node miss
+    shape_blocked_kinds_test.go:86: gate cache node miss
+    shape_blocked_kinds_test.go:90: wrong-optional-result caught by Node stdout comparison: exit=0 stdout="2\n1\n"
+    shape_blocked_kinds_test.go:90: wrong-optional-result caught by Node stdout comparison: exit=0 stdout="2\n1\n"
+--- PASS: TestShapeRecordedOptionalKinds (0.62s)
+=== RUN   TestShapeCallbackJoinExecution
+=== RUN   TestShapeCallbackJoinExecution/proven-callback-join
+    shape_callback_joins_test.go:12: gate cache node miss
+    shape_callback_joins_test.go:24: gate cache node miss
+=== RUN   TestShapeCallbackJoinExecution/nonconforming-callback-join
+    shape_callback_joins_test.go:12: gate cache node miss
+    shape_callback_joins_test.go:24: gate cache node miss
+    shape_callback_joins_test.go:35: gate cache node miss
+    shape_callback_joins_test.go:39: unsafe join-erasure mutant caught: exit=0 stdout="true\nfalse\n"
+    shape_callback_joins_test.go:39: unsafe join-erasure mutant caught: exit=0 stdout="true\n0\n"
+--- PASS: TestShapeCallbackJoinExecution (1.06s)
+    --- PASS: TestShapeCallbackJoinExecution/proven-callback-join (0.46s)
+    --- PASS: TestShapeCallbackJoinExecution/nonconforming-callback-join (0.59s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=11
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.406s
+
+real	0m7.610s
+user	0m10.222s
+sys	0m3.832s

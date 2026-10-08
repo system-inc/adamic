@@ -1,0 +1,15 @@
+Merge made by the 'ort' strategy.
+ documentation/velocity/landings.csv               |   1 +
+ stage1/cohere/tsprinter/SHARDING.md               | 135 +++++++++
+ stage1/cohere/tsprinter/doc_test.go               |   3 +-
+ stage1/cohere/tsprinter/expressions_test.go       |   3 +-
+ stage1/cohere/tsprinter/helpers_test.go           |   8 +
+ stage1/cohere/tsprinter/mutants_test.go           |   6 +-
+ stage1/cohere/tsprinter/results/shard-timing.json |  53 ++++
+ stage1/cohere/tsprinter/shards_test.go            | 322 ++++++++++++++++++++++
+ stage1/cohere/tsprinter/statements_test.go        |   3 +-
+ stage1/cohere/tsprinter/tsc_corpus_test.go        |   7 +
+ 10 files changed, 537 insertions(+), 4 deletions(-)
+ create mode 100644 stage1/cohere/tsprinter/SHARDING.md
+ create mode 100644 stage1/cohere/tsprinter/results/shard-timing.json
+ create mode 100644 stage1/cohere/tsprinter/shards_test.go

@@ -1,0 +1,30 @@
+{
+  "sha": "ca465c938a25986dccecffbc4650273a0b0427da",
+  "base": "89ac4a8c1de0b02d95965be72f7f8bf1c92433d2",
+  "tools_sha": "3403de86506d30676e46facd6ece97384307c26a",
+  "wall_seconds": 7.3,
+  "failure": {
+    "step": "tools",
+    "detail": "internal/oracle/array_holes_test.go:105 runs wasmtime, which cloud/fast-gate/tools.txt doesn't declare\ninternal/oracle/array_holes_test.go:149 runs wasmtime, which cloud/fast-gate/tools.txt doesn't declare\nDeclare each in cloud/fast-gate/tools.txt (devtools/fast-gate), with a check, and have setup provide it.",
+    "after_seconds": 2.8
+  },
+  "undeclared_tools": [
+    "internal/oracle/array_holes_test.go:105 runs wasmtime, which cloud/fast-gate/tools.txt doesn't declare",
+    "internal/oracle/array_holes_test.go:149 runs wasmtime, which cloud/fast-gate/tools.txt doesn't declare"
+  ],
+  "pass": 0,
+  "fail": 0,
+  "stages_exit": {
+    "coverage": 0,
+    "catalog": 0,
+    "tools": 1,
+    "a-check-build": -9,
+    "a-check": 1,
+    "vet": -9,
+    "smoke": 1,
+    "build": -9,
+    "tests": 1,
+    "stage3": 1
+  },
+  "finished": true
+}
