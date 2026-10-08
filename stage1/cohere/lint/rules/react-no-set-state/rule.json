@@ -1,0 +1,13 @@
+{
+  "name": "react/no-set-state",
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "parent": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactNoSetState",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoSetState"
+}
