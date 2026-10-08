@@ -166,6 +166,7 @@ message mutants retain exit70/empty stdout and are caught only by stderr bytes.
 - `gaps/15_string_or.ts`: Node prints `fallback` and `x`; string `||` is NotYet,
   `a BinaryExpression with a string and a string`. Production uses explicit
   comparisons/conditionals for truthy-string defaults.
+  Closed by compiler/area-next: string `||` lowers, and native and the JavaScript backend match Node.
 - `gaps/16_array_shift.ts`: Node prints `1` and `2`. Its direct receiver call
   now receives this exact Refused diagnostic (relative path shown):
 
@@ -254,6 +255,8 @@ Each numbered program is executable on source Node and covered by a test:
 - `gaps/9_mixed_path_names.ts`: Node prints `children,0`; an array of string or
   number is NotYet, `an array of string | number`. Production names are tagged
   property/index frames, with numeric IDs instead of owning graph edges.
+  On compiler/area-next the array of string or number lowers; it stops later, at join on an array of
+  objects, arrays, maps or functions.
 - `gaps/10_multiple_push.ts`: Node prints `1,2`; multiple push arguments are
   NotYet, `push with other than one value`. Production pushes one frame at a time.
 - `gaps/11_function_expression.ts` is closed: the unchanged direct function
@@ -359,6 +362,7 @@ Fixture transport initially repeated every parent token per whitespace, producin
 can contribute to CJ/non-CJK spacing counts, 43 MB; native still counts them.
 Superseded long runs were stopped. The final complete gate passes; no native
 printer decision was replaced by an oracle decision to reduce fixture size.
+Closed by compiler/area-next: reading panic lowers, and native and the JavaScript backend match Node.
 
 The native tokenizer/event engine, rollback/resolvers/subtokenization, mdast
 construction and printer AST path walker remain unfinished. AST preprocessing is
@@ -571,6 +575,8 @@ Adamic port, not evidence that Markdown cannot ever be implemented in Adamic:
 - `gaps/1_recursive_state.ts` prints `35` twice on Node. Stage 0 returns exactly
   `lower.NotYet("a function inside a function (a closure)")` for the nested
   function declaration corresponding to a state with its captured frame.
+  Closed by compiler/area-next: nested functions (closures) lower, and native and the JavaScript
+  backend match Node.
 - `gaps/2_state_arrow_cycle.ts` prints `35` twice on Node. Rewriting the nested
   declaration as a mutable arrow slot is refused by Adamic 0.1 as a closure/cell
   reference-counting cycle. This is a `Refused`, not a `NotYet`.

@@ -15,8 +15,8 @@ the compiler built from the current checkout.
 
 Set `STAGE3_METER_COMPILER=per-ref` to build both the ordinary census and latent
 census separately from each pinned ref's own compiler. Detached scratch worktrees
-initialize each ref's recorded submodules, and each ref supplies its own latent
-overlay builder. Build, checkout and submodule logs live under `main/` and `area/`.
+initialize each ref's recorded submodules, and the worker supplies the guarded latent
+overlay instrumentation applied to each ref's compiler sources. Build, checkout and submodule logs live under `main/` and `area/`.
 Scratch worktrees are retained for inspection, including on failure.
 `compiler-mode.json` records the selected mode and both compiler commits before
 building. Paired JSON records `compiler_mode` and each tree's `adamic_commit`;
@@ -54,8 +54,10 @@ For each checker-clean entry, a separate guarded measurement binary enumerates
 the checker's resolved implementation source files and applies the existing
 lowering census to that reach. It excludes declaration files and unrelated
 source files. Its top ten NotYet/Refused reasons include owners and are labeled
-**measured on a checker-clean entry-root program**. A checker failure blocks this
-lowering census. Errors and panics remain separate totals; this is an observation
+**measured on a checker-clean entry-root program**. In legacy latent mode a checker failure blocks this lowering census. Full mode
+measures eligible nested bodies even on a rejected entry-root program and labels
+that stream **measured on a checker-rejected entry-root program**. The entry
+checker result and diagnostic count remain unchanged. Errors and panics remain separate totals; this is an observation
 ledger and does not establish successful lowering or native output.
 
 The entry measurement extends the selected compiler's existing scratch overlay;
@@ -66,8 +68,8 @@ come from the selected ref. `trees.main.tsc_entry` and `trees.area.tsc_entry`
 record checker status, full diagnostics/count, and the optional `lowering_census`.
 Each `main/tsc/` and `area/tsc/` retains census and measurement JSONL (compressed
 and ignored by Git), logs, and the resolved reach in the measurement header.
-Missing entry roots, missing reachable records, inconsistent diagnostics, or a
-lowering stream on a checker-rejected entry fail loudly.
+Missing entry roots, missing reachable records, inconsistent diagnostics, or a lowering stream on a checker-rejected entry without an explicit full-mode
+header fail loudly.
 
 Each run creates `runs/<UTC timestamp>.<unique suffix>/` with report.json and
 report.md, fetch/build logs, and main/area subdirectories containing census.jsonl.gz,
@@ -100,9 +102,10 @@ The root's latent_lowering is the area observation, matching existing JSON field
 
 Counts deduplicate `(kind, where, reason, text)` across attempts, matching the
 latent census's count definition. SkippedDependency, error and panic totals are
-retained separately and excluded from the NotYet/Refused ranking. The measurement
-skips function bodies with checker diagnostics and can stop at the first error
-inside an attempted unit. It measures observed blockers, not exhaustive blockers
+retained separately and excluded from the NotYet/Refused ranking. Full measurement splits diagnosed containers into named nested declaration units,
+excludes only directly diagnosed bodies, and recovers at statement boundaries
+with state rollback. Unsafe child traversal and signature/prologue failures
+remain counted byte-span boundaries. It measures observed blockers, not exhaustive blockers
 or successful compilation. See ../census/latent/README.md for the tool's limits.
 
 Each main/area directory also retains latent.jsonl.gz and latent.log; overlay and
@@ -251,3 +254,15 @@ python3 stage3/meter/entry_roots_mutant.py entry-mutant-witness.log > entry-muta
 Commit every named proof output and comparison/mutant log with its run. The
 repository ignores `*.log`, so force-add retained evidence logs when publishing.
 Keep raw census and latent JSONL (including gzip files) excluded.
+
+Full latent mode is the default for both compiler-file roots and the tsc entry.
+`STAGE3_METER_LATENT=first-error` retains the historical body skips and first-error
+behavior for comparison. Unknown modes fail before making a run directory.
+`compiler-mode.json` records `latent_mode`; report generation checks it against
+both streams, so a stale overlay cannot silently claim full coverage. Compiler
+selection (`single` by default, or `per-ref`) remains independent of latent mode.
+The first two report lines and their checker arithmetic are unchanged.
+Each lowering summary retains `boundaries` and the complete
+`excluded_nested_functions` ledger (name, location, diagnostics, and bytes).
+Excluded parent/child byte spans can overlap; do not add them to claim unique
+unexamined bytes. This is partial observational measurement with explicit gaps.

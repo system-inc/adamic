@@ -1,4 +1,5 @@
 """Exercise compiler selection with real Git refs and small compiled Go drivers."""
+import gzip
 import json
 import os
 from pathlib import Path
@@ -32,11 +33,12 @@ func main() {
         diagnostics := []string{}
         if compiler.Name == "area" { diagnostics = append(diagnostics, dependency+":1:1: error TS2322: entry compiler witness") }
         if LATENT {
-            if len(diagnostics) > 0 {
+            if len(diagnostics) > 0 && os.Getenv("LATENT_FULL")!="1" {
                 encoder.Encode(map[string]any{"roots":[]string{entry}, "status":"blocked", "checker_rejected":true, "diagnostics":diagnostics})
             } else {
                 label := "measured on a checker-clean entry-root program"
-                encoder.Encode(map[string]any{"roots":[]string{entry}, "status":"measurement", "checker_rejected":false, "diagnostics":diagnostics, "measurement":label, "sources":[]string{entry,dependency}})
+                if len(diagnostics)>0 {label="measured on a checker-rejected entry-root program"}
+                encoder.Encode(map[string]any{"roots":[]string{entry}, "status":"measurement", "checker_rejected":len(diagnostics)>0, "latent_mode":map[bool]string{true:"full",false:"first-error"}[os.Getenv("LATENT_FULL")=="1"], "diagnostics":diagnostics, "measurement":label, "sources":[]string{entry,dependency}})
                 encoder.Encode(map[string]any{"file":entry, "measurement":label, "findings":[]any{}})
                 encoder.Encode(map[string]any{"file":dependency, "measurement":label, "findings":[]any{
                     map[string]any{"measurement":label, "kind":"NotYet", "where":dependency+":1:1", "reason":"compiled with "+compiler.Name, "text":"entry compiler provenance"},
@@ -50,7 +52,7 @@ func main() {
         return
     }
     if LATENT {
-        encoder.Encode(map[string]any{"measurement":"measured on a checker-rejected program", "status":"measurement", "checker_rejected":true})
+        encoder.Encode(map[string]any{"measurement":"measured on a checker-rejected program", "status":"measurement", "checker_rejected":true, "latent_mode":map[bool]string{true:"full",false:"first-error"}[os.Getenv("LATENT_FULL")=="1"]})
         encoder.Encode(map[string]any{"measurement":"measured on a checker-rejected program", "file":file, "findings":[]any{
             map[string]any{"measurement":"measured on a checker-rejected program", "kind":"NotYet", "where":file+":1:1", "reason":"compiled with "+compiler.Name, "text":"compiler provenance"},
         }})
@@ -91,6 +93,7 @@ class CompilerSelectionTests(unittest.TestCase):
         self.env.pop('STAGE3_METER_COMPILER', None)
         self.env.pop('STAGE3_METER_RUNS', None)
         self.env.pop('STAGE3_METER_MAIN_REF', None)
+        self.env.pop('STAGE3_METER_LATENT', None)
         self.command('git', 'init', '-b', 'main')
         source = Path(__file__).resolve().parent
         for name in ('report.py', 'owners.json', 'progress.py'):
@@ -100,8 +103,8 @@ class CompilerSelectionTests(unittest.TestCase):
         self.write('stage3/meter/twice-daily.sh', script.read_text())
         self.write('go.mod', 'module meterprobe\n\ngo 1.21\n')
         self.write('stage3/apply.sh', 'set -eu\nmkdir -p "$1/src/compiler" "$1/src/tsc"\nprintf "const x: number = 1;\\n" > "$1/src/compiler/input.a"\nprintf "const y: number = 2;\\n" > "$1/src/compiler/other.a"\nprintf "export {};\\n" > "$1/src/tsc/tsc.ts"\nprintf "export {};\\n" > "$1/src/executeCommandLine.a"\n')
-        self.write('stage3/census/tool/main.go', DRIVER.replace('LATENT', 'false'))
-        self.write('stage3/census/latent/tool/main.go', DRIVER.replace('LATENT', 'true'))
+        self.write('stage3/census/tool/main.go', DRIVER.replace('if LATENT {', 'if false {'))
+        self.write('stage3/census/latent/tool/main.go', DRIVER.replace('if LATENT {', 'if true {'))
         self.write('stage3/census/latent/make_overlay.py',
                    'import json, pathlib, sys\np=pathlib.Path(sys.argv[2]); p.mkdir(parents=True)\n'
                    '(p/"empty.go").write_text("package main\\n")\n'
@@ -110,7 +113,7 @@ class CompilerSelectionTests(unittest.TestCase):
         self.write('stage3/meter/entry_overlay.py',
                    'import json, pathlib, sys\ns=pathlib.Path(sys.argv[1]); p=pathlib.Path(sys.argv[2]); p.mkdir(parents=True)\n'
                    'metadata=json.loads((s/"overlay.json").read_text())\n'
-                   '(p/"entry.go").write_text(' + repr(DRIVER.replace('LATENT', 'true')) + ')\n'
+                   '(p/"entry.go").write_text(' + repr(DRIVER.replace('if LATENT {', 'if true {')) + ')\n'
                    '(p/"overlay.json").write_text(json.dumps({"Replace":{str(pathlib.Path(metadata["compiler_root"])/"stage3/census/latent/tool/main.go"):str(p/"entry.go")}}))\n')
         self.write('internal/compiler/name.go', 'package compiler\nconst Name = "main"\n')
         self.command('git', 'add', '.')
@@ -187,7 +190,8 @@ class CompilerSelectionTests(unittest.TestCase):
             if label == 'main':
                 self.assertEqual(entry['lowering_census']['source_files'], 2)
             else:
-                self.assertIsNone(entry['lowering_census'])
+                self.assertEqual(entry['lowering_census']['source_files'], 2)
+                self.assertEqual(entry['lowering_census']['measurement'], 'measured on a checker-rejected entry-root program')
             self.assertTrue((run / label / 'tsc/census.log').exists())
             self.assertIn('compiled with ' + label, (run / label / 'latent.log').read_text())
             self.assertTrue((run / label / 'build.log').exists())
@@ -205,6 +209,29 @@ class CompilerSelectionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'do not match source pins'):
             report_pair(Path(result['trees']['main']['adapted_tree']),
                         Path(result['trees']['area']['adapted_tree']), run, 'stamp', self.main, self.area)
+
+    def test_legacy_latent_mode_and_stale_full_claim(self):
+        self.env['STAGE3_METER_LATENT']='first-error'
+        run,result=self.measure('per-ref')
+        self.assertEqual(result['trees']['main']['latent_lowering']['latent_mode'],'first-error')
+        self.assertIsNone(result['trees']['area']['tsc_entry']['lowering_census'])
+        for path in run.rglob('*.jsonl.gz'):
+            path.with_suffix('').write_bytes(gzip.decompress(path.read_bytes()))
+        metadata=json.loads((run/'compiler-mode.json').read_text())
+        metadata['latent_mode']='full'
+        (run/'compiler-mode.json').write_text(json.dumps(metadata))
+        with self.assertRaisesRegex(ValueError,'latent overlay mode does not match requested mode'):
+            report_pair(Path(result['trees']['main']['adapted_tree']),
+                        Path(result['trees']['area']['adapted_tree']),run,'stamp',self.main,self.area)
+
+    def test_invalid_latent_mode_fails_before_creating_a_run(self):
+        self.env['STAGE3_METER_LATENT']='typo'
+        with (self.root/'invalid-latent.log').open('w') as log:
+            result=subprocess.run(['bash','stage3/meter/twice-daily.sh'],cwd=self.repository,
+                                  env=self.env,stdout=log,stderr=log,timeout=10)
+        self.assertEqual(result.returncode,2)
+        self.assertIn('invalid STAGE3_METER_LATENT',(self.root/'invalid-latent.log').read_text())
+        self.assertFalse((self.repository/'stage3/meter/runs').exists())
 
     def test_invalid_mode_fails_before_creating_a_run(self):
         self.env['STAGE3_METER_COMPILER'] = 'typo'
