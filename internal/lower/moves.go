@@ -8,11 +8,31 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
+type parallelMoveSite struct {
+	node   *ast.Node
+	mapper *typeMapper
+}
+
+// Preflight and callback validation may revisit a source call. Classify its
+// items argument once per instantiation, and allocate only for parallelMap sites.
+func (l *lowering) parallelMoves(node *ast.Node) bool {
+	site := parallelMoveSite{node: node, mapper: l.typeMapper}
+	if moved, known := l.parallelMoveDemand[site]; known {
+		return moved
+	}
+	moved := l.classifyParallelMove(node)
+	if l.parallelMoveDemand == nil {
+		l.parallelMoveDemand = map[parallelMoveSite]bool{}
+	}
+	l.parallelMoveDemand[site] = moved
+	return moved
+}
+
 // The prototype selects mutable arrays of records without recursively testing
 // their callback types. The construction proof below judges the actual graph.
 // The prototype proves exclusivity by construction. It does not mistake the
 // cycle proof's confinement, or reuse's root count, for whole-graph ownership.
-func (l *lowering) parallelMoves(node *ast.Node) bool {
+func (l *lowering) classifyParallelMove(node *ast.Node) bool {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	if len(arguments) != 2 {
 		return false
@@ -148,7 +168,11 @@ func (l *lowering) checkMove(node *ast.Node) error {
 		}
 		return child.ForEachChild(visit)
 	}
-	ast.GetSourceFileOfNode(node).AsNode().ForEachChild(visit)
+	// The private agreement harness independently asks the IR query about
+	// source ownership; production always runs this existing source proof.
+	if !l.moveAgreement {
+		ast.GetSourceFileOfNode(node).AsNode().ForEachChild(visit)
+	}
 	if found != nil {
 		return found
 	}
