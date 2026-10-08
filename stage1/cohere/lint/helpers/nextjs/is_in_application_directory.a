@@ -1,0 +1,1 @@
+export function isInApplicationDirectory(path: string): boolean { return path.includes('app/') || path.includes('app\\'); }

@@ -1,0 +1,6 @@
+=== RUN   TestJsxLintTrees
+    lint_test.go:276: cohere cases: 3913 unique source/rule/options combinations
+    jsx_integration_test.go:163: 74 captured cohere JSX sources: 62148 identical whole-tree bytes
+--- PASS: TestJsxLintTrees (79.95s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	80.103s

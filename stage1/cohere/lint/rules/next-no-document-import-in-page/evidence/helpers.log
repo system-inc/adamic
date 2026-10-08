@@ -1,0 +1,51 @@
+=== RUN   TestNextjsPackageAgreementAndMutants
+    nextjs_test.go:66: Go agreement inputs: 1832 calls, map[IsDocumentFile:138 IsDocumentPage:101 IsInApplicationDirectory:86 IsInPagesDirectory:101 RouteContractExports:389 buildRouteFileContracts:5 lastSeparator:338 splitPath:161 splitSegments:513]
+    nextjs_test.go:73: 1832 Go calls match Node, emitted JavaScript, ASan/UBSan native
+=== RUN   TestNextjsPackageAgreementAndMutants/last_separator.a
+    nextjs_test.go:119: semantic mutant caught on Node
+    nextjs_test.go:119: semantic mutant caught on emitted JavaScript
+    nextjs_test.go:119: semantic mutant caught on ASan/UBSan native
+=== RUN   TestNextjsPackageAgreementAndMutants/split_path.a
+    nextjs_test.go:119: semantic mutant caught on Node
+    nextjs_test.go:119: semantic mutant caught on emitted JavaScript
+    nextjs_test.go:119: semantic mutant caught on ASan/UBSan native
+=== RUN   TestNextjsPackageAgreementAndMutants/is_document_file.a
+    nextjs_test.go:119: semantic mutant caught on Node
+    nextjs_test.go:119: semantic mutant caught on emitted JavaScript
+    nextjs_test.go:119: semantic mutant caught on ASan/UBSan native
+=== RUN   TestNextjsPackageAgreementAndMutants/is_document_page.a
+    nextjs_test.go:119: semantic mutant caught on Node
+    nextjs_test.go:119: semantic mutant caught on emitted JavaScript
+    nextjs_test.go:119: semantic mutant caught on ASan/UBSan native
+=== RUN   TestNextjsPackageAgreementAndMutants/is_in_application_directory.a
+    nextjs_test.go:119: semantic mutant caught on Node
+    nextjs_test.go:119: semantic mutant caught on emitted JavaScript
+    nextjs_test.go:119: semantic mutant caught on ASan/UBSan native
+=== RUN   TestNextjsPackageAgreementAndMutants/split_segments.a
+    nextjs_test.go:119: semantic mutant caught on Node
+    nextjs_test.go:119: semantic mutant caught on emitted JavaScript
+    nextjs_test.go:119: semantic mutant caught on ASan/UBSan native
+=== RUN   TestNextjsPackageAgreementAndMutants/is_in_pages_directory.a
+    nextjs_test.go:119: semantic mutant caught on Node
+    nextjs_test.go:119: semantic mutant caught on emitted JavaScript
+    nextjs_test.go:119: semantic mutant caught on ASan/UBSan native
+=== RUN   TestNextjsPackageAgreementAndMutants/build_route_file_contracts.a
+    nextjs_test.go:119: semantic mutant caught on Node
+    nextjs_test.go:119: semantic mutant caught on emitted JavaScript
+    nextjs_test.go:119: semantic mutant caught on ASan/UBSan native
+=== RUN   TestNextjsPackageAgreementAndMutants/route_contract_exports.a
+    nextjs_test.go:119: semantic mutant caught on Node
+    nextjs_test.go:119: semantic mutant caught on emitted JavaScript
+    nextjs_test.go:119: semantic mutant caught on ASan/UBSan native
+--- PASS: TestNextjsPackageAgreementAndMutants (23.51s)
+    --- PASS: TestNextjsPackageAgreementAndMutants/last_separator.a (1.66s)
+    --- PASS: TestNextjsPackageAgreementAndMutants/split_path.a (1.63s)
+    --- PASS: TestNextjsPackageAgreementAndMutants/is_document_file.a (1.66s)
+    --- PASS: TestNextjsPackageAgreementAndMutants/is_document_page.a (1.75s)
+    --- PASS: TestNextjsPackageAgreementAndMutants/is_in_application_directory.a (1.61s)
+    --- PASS: TestNextjsPackageAgreementAndMutants/split_segments.a (1.64s)
+    --- PASS: TestNextjsPackageAgreementAndMutants/is_in_pages_directory.a (1.72s)
+    --- PASS: TestNextjsPackageAgreementAndMutants/build_route_file_contracts.a (1.62s)
+    --- PASS: TestNextjsPackageAgreementAndMutants/route_contract_exports.a (1.68s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	23.526s

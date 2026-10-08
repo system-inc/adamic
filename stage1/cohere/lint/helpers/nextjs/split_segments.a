@@ -1,0 +1,5 @@
+export function splitSegments(path: string): string[] {
+ const segments: string[]=[]; let start=0;
+ for(let i=0;i<=path.length;i++) { if(i===path.length || path.charCodeAt(i)===47 || path.charCodeAt(i)===92) { if(i>start) { segments.push(path.slice(start,i)); } start=i+1; } }
+ return segments;
+}

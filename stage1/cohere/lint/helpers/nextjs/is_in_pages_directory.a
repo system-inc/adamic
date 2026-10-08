@@ -1,0 +1,6 @@
+import { splitSegments } from './split_segments.a';
+export function isInPagesDirectory(path: string): boolean {
+ const segments=splitSegments(path);
+ for(let i=0;i<segments.length;i++) { if(segments[i]!=='pages') { continue; } if(i+1>=segments.length) { return false; } return segments[i+1]!=='api'; }
+ return false;
+}

@@ -1,0 +1,4 @@
+export function isDocumentPage(path: string): boolean {
+ const segments=path.split('pages'); const page=segments[segments.length-1] ?? '';
+ return page.startsWith('/_document') || page.startsWith('\\_document');
+}

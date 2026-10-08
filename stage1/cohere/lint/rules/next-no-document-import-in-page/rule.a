@@ -1,0 +1,13 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { RuleContext } from '../../context.ts';
+import { isDocumentPage } from '../../helpers/nextjs/is_document_page.a';
+import { message } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context=context; }
+ visit(node: ParseNode, index: number): void {
+  if(isDocumentPage(this.context.parser.path)) { return; }
+  for(const child of node.children) { const specifier=this.context.node(child); if((specifier.kind==='StringLiteral' || specifier.kind==='NoSubstitutionTemplateLiteral') && specifier.text==='next/document') { this.context.report(index,'@next/next/no-document-import-in-page','noDocumentImportInPage',message,'','',''); return; } }
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
