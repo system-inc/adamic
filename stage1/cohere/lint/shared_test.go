@@ -11,6 +11,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"testing"
 
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
@@ -27,14 +28,72 @@ import (
 var sharedDirectory string
 
 type sharedValue struct {
-	once   sync.Once
-	path   string
-	rows   []string
-	report string
-	err    error
+	once sync.Once
+	path string
+	rows []string
+	// configs is each typed upstream case's program, by its file's path (captureUpstream).
+	configs map[string]typedProgram
+	report  string
+	err     error
 }
 
 var sharedValues sync.Map
+
+// ruleScope is the rule directories ADAMIC_LINT_RULES names, comma-separated, or nil when it's unset and the
+// whole package runs (#60hxabf). A batch that only adds or changes rule directories gates on those rules: their
+// upstream agreement and mutants, the generated rows that run every rule together, every rule's witnesses, the
+// registry and the harness's own tests. The tests that run every rule over a whole corpus skip by name, and the
+// full package stays the gate to main. The seat sets the variable only when the batch's diff touches nothing
+// outside stage1/cohere/lint/rules/<slug>/.
+var ruleScope = func() map[string]bool {
+	named := os.Getenv("ADAMIC_LINT_RULES")
+	if named == "" {
+		return nil
+	}
+	scope := map[string]bool{}
+	for _, slug := range strings.Split(named, ",") {
+		if slug = strings.TrimSpace(slug); slug != "" {
+			scope[slug] = true
+		}
+	}
+	return scope
+}()
+
+// inRuleScope is whether a rule runs in this run's scope: every rule when the run isn't scoped.
+func inRuleScope(descriptor registry.Descriptor) bool {
+	return ruleScope == nil || ruleScope[descriptor.Slug]
+}
+
+// validateRuleScope refuses a scope naming a rule directory the registry doesn't hold, and one set but naming
+// none, such as "," or " ", so neither a typo nor a blank can scope a run down to nothing.
+func validateRuleScope(descriptors []registry.Descriptor) error {
+	if ruleScope != nil && len(ruleScope) == 0 {
+		return fmt.Errorf("ADAMIC_LINT_RULES is set and names no rule directory, so it would scope the run to no rules")
+	}
+	known := map[string]bool{}
+	for _, descriptor := range descriptors {
+		known[descriptor.Slug] = true
+	}
+	for slug := range ruleScope {
+		if !known[slug] {
+			return fmt.Errorf("ADAMIC_LINT_RULES names %s, which is no rule directory", slug)
+		}
+	}
+	return nil
+}
+
+// skipWhenRuleScoped skips a test that runs every rule over a whole corpus, saying so, when the run is scoped.
+func skipWhenRuleScoped(t *testing.T) {
+	t.Helper()
+	if ruleScope != nil {
+		var slugs []string
+		for slug := range ruleScope {
+			slugs = append(slugs, slug)
+		}
+		sort.Strings(slugs)
+		t.Skipf("scoped to %s by ADAMIC_LINT_RULES: this test runs every rule over a whole corpus, and the full package gates the merge to main", strings.Join(slugs, ", "))
+	}
+}
 
 // shared is the run's one value for key. Its maker never calls t.Fatal: a goroutine that exits inside a
 // sync.Once marks it done with nothing in it, and every later test would read an empty answer.
@@ -150,54 +209,68 @@ func goOracleIn(sourceRoot, directory string) (string, error) {
 // unique asserted case as a file under directory, returning one manifest row per case. Every Run is
 // captured, including tests that assert repair fields directly; the overlay changes no rule. The capture's
 // destination is passed in the subprocess's environment, so no test's process environment changes.
-func captureUpstream(sourceRoot, directory string) ([]string, error) {
+//
+// A typed case also returns its upstream program's compiler options, by the case file's path. Upstream's
+// typed tests build their own tsconfig, a JavaScript script program with allowJs for one, and the replay
+// used to rebuild it as strict alone, so a case needing any other option never reached the comparison
+// (#0jkpds7). The typed harness's overlay writes the tsconfig text each typed run was built from beside
+// the capture, keyed the way the capture keys its cases.
+func captureUpstream(sourceRoot, directory string) ([]string, map[string]typedProgram, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	harness := filepath.Join(root, "internal/lint/testing/rule_testing.go")
 	data, err := os.ReadFile(harness)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
 	replacement := "result := Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}\n RecordAssertedCase(t, result)\n return result"
 	if strings.Count(string(data), original) != 1 {
-		return nil, fmt.Errorf("capture overlay anchor changed")
+		return nil, nil, fmt.Errorf("capture overlay anchor changed")
 	}
 	side := filepath.Join(directory, "rule_testing.go")
 	if err := os.WriteFile(side, []byte(strings.Replace(string(data), original, replacement, 1)), 0644); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	typedHarness := filepath.Join(root, "internal/lint/testing/program.go")
 	typedData, err := os.ReadFile(typedHarness)
 	if err != nil {
-		return nil, fmt.Errorf("%v", err)
+		return nil, nil, fmt.Errorf("%v", err)
 	}
 	typedOriginal := "return Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile:  sourceFile,\n\t\tcapture:     newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}"
 	if strings.Count(string(typedData), typedOriginal) != 1 {
-		return nil, fmt.Errorf("%v", "typed capture overlay anchor changed")
+		return nil, nil, fmt.Errorf("%v", "typed capture overlay anchor changed")
 	}
-	typedReplacement := "result := Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile: sourceFile,\n\t\tcapture: newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}\n\tRecordAssertedCase(t,result)\n\treturn result"
+	typedReplacement := "result := Result{\n\t\tDiagnostics: diagnostics,\n\t\tSourceFile: sourceFile,\n\t\tcapture: newCapturedRun(subject, subjectFileName, len(files)-1, options),\n\t}\n\tRecordAssertedCase(t,result)\n" + typedConfigRecord + "\treturn result"
+	typedImports := "import (\n\t\"context\"\n"
+	if strings.Count(string(typedData), typedImports) != 1 {
+		return nil, nil, fmt.Errorf("%v", "typed capture overlay import anchor changed")
+	}
+	typedSource := strings.Replace(string(typedData), typedOriginal, typedReplacement, 1)
+	typedSource = strings.Replace(typedSource, typedImports, "import (\n\t\"context\"\n\t\"encoding/json\"\n", 1)
 	typedSide := filepath.Join(directory, "program.go")
-	if err := os.WriteFile(typedSide, []byte(strings.Replace(string(typedData), typedOriginal, typedReplacement, 1)), 0644); err != nil {
-		return nil, fmt.Errorf("%v", err)
+	if err := os.WriteFile(typedSide, []byte(typedSource), 0644); err != nil {
+		return nil, nil, fmt.Errorf("%v", err)
 	}
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{harness: side, typedHarness: typedSide}})
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	capture := filepath.Join(directory, "capture")
 	environment := []string{"COHERE_DOCS_CAPTURE=" + capture}
 	descriptors, err := registry.Generate(sourceRoot)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	discovered := map[string]bool{}
+	typedRules := map[string]bool{}
 	packages := map[string][]string{}
 	for _, d := range descriptors {
 		discovered[d.Name] = true
+		typedRules[d.Name] = d.Typed
 		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
 	}
 	var names []string
@@ -207,12 +280,12 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	sort.Strings(names)
 	for _, name := range names {
 		if _, err := run(root, environment, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0"); err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 	}
 	files, err := filepath.Glob(filepath.Join(capture, "*.jsonl"))
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	type record struct {
 		Rule, File, Source, Outcome, FixedSource string
@@ -222,7 +295,7 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	for _, path := range files {
 		data, err := os.ReadFile(path)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		for _, line := range bytes.Split(data, []byte("\n")) {
 			if len(line) == 0 {
@@ -230,7 +303,7 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 			}
 			var row record
 			if err := json.Unmarshal(line, &row); err != nil {
-				return nil, err
+				return nil, nil, err
 			}
 			if !discovered[row.Rule] {
 				continue
@@ -239,77 +312,200 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 			unique[key] = row
 		}
 	}
+	typedConfigs, err := readTypedConfigs(filepath.Join(capture, typedConfigFile))
+	if err != nil {
+		return nil, nil, err
+	}
 	var keys []string
 	for key := range unique {
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)
 	var rows []string
-	for i, key := range keys {
+	configs := map[string]typedProgram{}
+	// A typed rule's case built under several compiler option sets is one case per set: one source under
+	// strict and not under it is two different programs.
+	caseNumber := 0
+	for _, key := range keys {
 		row := unique[key]
-		// The case keeps its file name's directories, not only its base name: a rule that judges a
-		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
-		name := filepath.Clean(strings.TrimLeft(strings.ReplaceAll(row.File, "\\", "/"), "/"))
-		if name == "." || name == "" || strings.HasPrefix(name, "..") {
-			name = filepath.Base(name)
+		// Only a typed rule's case replays in a program, so only its programs make separate cases.
+		var variants []typedProgram
+		if typedRules[row.Rule] {
+			variants = typedConfigs[key]
 		}
-		if name == "." || name == "" || name == ".." {
-			name = "source.ts"
+		if len(variants) == 0 {
+			variants = []typedProgram{{}}
 		}
-		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
-		path := filepath.Join(caseDirectory, name)
-		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			return nil, err
-		}
-		if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
-			return nil, err
-		}
-		var legacy struct {
-			Mode, Null      string
-			AllowEmptyCatch bool
-		}
-		if len(row.Options) > 0 && row.Options[0] == '{' {
-			if err := json.Unmarshal(row.Options, &legacy); err != nil {
-				return nil, err
+		for _, variant := range variants {
+			i := caseNumber
+			caseNumber++
+			// The case keeps its file name's directories, not only its base name: a rule that judges a
+			// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
+			name := filepath.Clean(strings.TrimLeft(strings.ReplaceAll(row.File, "\\", "/"), "/"))
+			if name == "." || name == "" || strings.HasPrefix(name, "..") {
+				name = filepath.Base(name)
+			}
+			if name == "." || name == "" || name == ".." {
+				name = "source.ts"
+			}
+			caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
+			path := filepath.Join(caseDirectory, name)
+			if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+				return nil, nil, err
+			}
+			if err := os.WriteFile(path, []byte(row.Source), 0644); err != nil {
+				return nil, nil, err
+			}
+			var legacy struct {
+				Mode, Null      string
+				AllowEmptyCatch bool
+			}
+			if len(row.Options) > 0 && row.Options[0] == '{' {
+				if err := json.Unmarshal(row.Options, &legacy); err != nil {
+					return nil, nil, err
+				}
+			}
+			mode := ""
+			if row.Rule == "@typescript-eslint/method-signature-style" {
+				switch row.Source {
+				case "type T = { m: => void };":
+					mode = "recovery"
+				case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
+					mode = "recovery"
+				}
+			}
+			if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
+				mode = "recovery"
+			}
+			rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
+			if variant.CompilerOptions != "" {
+				configs[path] = variant
 			}
 		}
-		mode := ""
-		if row.Rule == "@typescript-eslint/method-signature-style" {
-			switch row.Source {
-			case "type T = { m: => void };":
-				mode = "recovery"
-			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
-				mode = "recovery"
-			}
-		}
-		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
-			mode = "recovery"
-		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
 	}
 	if len(rows) < 150 {
-		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
+		return nil, nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
 	// Captured fixtures are replayable inputs, including parser diagnostics that
 	// cohere's own rule tests deliberately run on recovered trees. Carry that
 	// boundary in the manifest rather than requiring every consumer to rediscover it.
 	oracleDirectory := filepath.Join(directory, "recovery-oracle")
 	if err := os.MkdirAll(oracleDirectory, 0755); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	oracle, err := goOracleIn(sourceRoot, oracleDirectory)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	manifest := filepath.Join(directory, "recovery-inputs.txt")
 	if err := os.WriteFile(manifest, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	flags, err := run("", nil, oracle, "--manifest", manifest, "--diagnostics")
 	if err != nil {
+		return nil, nil, err
+	}
+	classified, err := classifyRecoveryRows(rows, strings.Fields(string(flags)))
+	return classified, configs, err
+}
+
+// typedConfigFile is where the typed harness's overlay writes each typed run's tsconfig, one JSON line per
+// run, beside the capture's own records and outside its *.jsonl glob.
+const typedConfigFile = "typed-configs.txt"
+
+// typedConfigRecord is the code the overlay puts after a typed run's result: one line holding the case's key,
+// the capture's own rule, file, options and source, the tsconfig the run's program was built from, and how
+// many findings the rule reported there, which the replay must reproduce under the options it writes.
+// Options are encoded as the capture encodes them, absent when the run had none, so the keys match. A run
+// with a setup hook built from the tsconfig on disk, the hook's own or the default; a cached run built in
+// memory from defaultTsConfig and wrote none, so a missing file means that one.
+const typedConfigRecord = `	if captureDirectory := os.Getenv("COHERE_DOCS_CAPTURE"); captureDirectory != "" {
+		configText, err := os.ReadFile(filepath.Join(directory, "tsconfig.json"))
+		if err != nil {
+			configText = []byte(defaultTsConfig)
+		}
+		var encodedOptions json.RawMessage
+		if options != nil {
+			encodedOptions, _ = json.Marshal(options)
+		}
+		line, _ := json.Marshal(struct {
+			Rule, File, Source, TsConfig string
+			Findings, OtherFiles         int
+			Options                      json.RawMessage ` + "`json:\",omitempty\"`" + `
+		}{subject.Name, subjectFileName, sourceFile.Text(), string(configText), len(diagnostics), len(files) - 1, encodedOptions})
+		if file, err := os.OpenFile(filepath.Join(captureDirectory, "` + typedConfigFile + `"), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644); err == nil {
+			file.Write(append(line, '\n'))
+			file.Close()
+		}
+	}
+`
+
+// typedProgram is the program upstream's test built one typed case in: its compiler options, and how many
+// findings the rule reported there. Findings is -1 when that program held other fixture files: the replay lints
+// the case's file alone, so it can't reproduce that program's count.
+type typedProgram struct {
+	CompilerOptions string
+	Findings        int
+}
+
+// readTypedConfigs is the distinct programs each typed case was built in, by the capture's case key, sorted by
+// their compiler options so the case numbering is stable. A run whose tsconfig can't be read or parsed fails
+// here, and so do two single-file runs of one case under one program that reported different counts. A case
+// also run with other fixture files keeps its options, and its count is unknown (-1).
+func readTypedConfigs(path string) (map[string][]typedProgram, error) {
+	data, err := os.ReadFile(path)
+	if os.IsNotExist(err) {
+		return map[string][]typedProgram{}, nil
+	}
+	if err != nil {
 		return nil, err
 	}
-	return classifyRecoveryRows(rows, strings.Fields(string(flags)))
+	distinct := map[string]map[string]int{}
+	for _, line := range bytes.Split(data, []byte("\n")) {
+		if len(line) == 0 {
+			continue
+		}
+		var record struct {
+			Rule, File, Source, TsConfig string
+			Findings, OtherFiles         int
+			Options                      json.RawMessage
+		}
+		if err := json.Unmarshal(line, &record); err != nil {
+			return nil, fmt.Errorf("typed config record: %v", err)
+		}
+		var tsconfig struct {
+			CompilerOptions json.RawMessage `json:"compilerOptions"`
+		}
+		if err := json.Unmarshal([]byte(record.TsConfig), &tsconfig); err != nil || len(tsconfig.CompilerOptions) == 0 {
+			return nil, fmt.Errorf("%s %s: typed run's tsconfig has no readable compilerOptions (%v): %q", record.Rule, record.File, err, record.TsConfig)
+		}
+		key := fmt.Sprintf("%s\t%s\t%+v\t%s", record.Rule, record.File, record.Options, record.Source)
+		options := string(tsconfig.CompilerOptions)
+		if distinct[key] == nil {
+			distinct[key] = map[string]int{}
+		}
+		findings := record.Findings
+		if record.OtherFiles > 0 {
+			findings = -1
+		}
+		previous, seen := distinct[key][options]
+		switch {
+		case !seen:
+			distinct[key][options] = findings
+		case previous == -1 || findings == -1:
+			distinct[key][options] = -1
+		case previous != findings:
+			return nil, fmt.Errorf("%s %s: one case under one single-file program reported %d findings and %d", record.Rule, record.File, previous, findings)
+		}
+	}
+	programs := map[string][]typedProgram{}
+	for key, sets := range distinct {
+		for options, findings := range sets {
+			programs[key] = append(programs[key], typedProgram{options, findings})
+		}
+		sort.Slice(programs[key], func(i, j int) bool { return programs[key][i].CompilerOptions < programs[key][j].CompilerOptions })
+	}
+	return programs, nil
 }
 
 // A nonempty mode belongs to its caller. In particular, unsupported-recovery
