@@ -13,7 +13,7 @@ import (
 
 const step18Directory = "docs/step-18/fixtures/"
 
-var step18Supported = map[string]bool{"function.a": true, "method.a": true, "runtime-values.a": true, "runtime-order.a": true, "runtime-arguments.a": true, "runtime-return-descriptor.a": true}
+var step18Supported = map[string]bool{"function.a": true, "method.a": true, "runtime-values.a": true, "runtime-order.a": true, "runtime-arguments.a": true, "runtime-return-descriptor.a": true, "runtime-methods.a": true, "runtime-bound-methods.a": true, "runtime-bound-method-arguments.a": true, "runtime-bound-method-selection.a": true, "runtime-discarded-reference.a": true}
 
 func init() {
 	for _, name := range []string{"function.a", "method.a", "element.a", "call-result.a", "cross-call.a", "receiver-call.a", "two-guards.a", "size.a", "number.a"} {
@@ -23,7 +23,7 @@ func init() {
 			checked bool
 		}{step18Directory + name, step18Supported[name], false})
 	}
-	for _, name := range []string{"runtime-values.a", "runtime-order.a", "runtime-methods.a", "runtime-arguments.a", "runtime-cross-chain.a", "runtime-return-descriptor.a"} {
+	for _, name := range []string{"runtime-values.a", "runtime-order.a", "runtime-methods.a", "runtime-arguments.a", "runtime-cross-chain.a", "runtime-return-descriptor.a", "runtime-bound-methods.a", "runtime-bound-method-arguments.a", "runtime-bound-method-selection.a", "runtime-discarded-reference.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -80,7 +80,7 @@ func TestStep18SourceBaselines(t *testing.T) {
 
 func TestStep18RecordedGaps(t *testing.T) {
 	for _, observation := range step18Observations(t) {
-		if step18Supported[observation.File] {
+		if step18Supported[observation.File] || observation.File == "runtime-bound-method-replacement.a" {
 			continue
 		}
 		t.Run(observation.File, func(t *testing.T) {
@@ -95,5 +95,14 @@ func TestStep18RecordedGaps(t *testing.T) {
 				t.Fatalf("got %v, want NotYet %q at %s", err, observation.Reason, observation.Where)
 			}
 		})
+	}
+}
+
+func TestStep18MethodWritesStayRefused(t *testing.T) {
+	path := filepath.Join(repository, step18Directory, "runtime-bound-method-replacement.a")
+	_, err := lowered(t, path)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "method read as a value") {
+		t.Fatalf("got %v, want the existing unbound-method refusal", err)
 	}
 }

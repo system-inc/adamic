@@ -688,6 +688,10 @@ type (
 		Spread       []bool
 		FunctionType int
 		Returns      Type
+		// Optional tests the selected callable before arguments; OptionalResult is
+		// the widened result, or zero when discarded. Returns keeps the call ABI.
+		Optional       bool
+		OptionalResult Type
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
@@ -952,15 +956,20 @@ func (l StringLength) Type() Type {
 	}
 	return Number
 }
-func (CharCodeAt) Type() Type    { return Number }
-func (Trim) Type() Type          { return String }
-func (CodePoints) Type() Type    { return Array }
-func (StringIndex) Type() Type   { return String }
-func (MapEntries) Type() Type    { return Array }
-func (MakeClosure) Type() Type   { return Closure }
-func (CheckedCast) Type() Type   { return Object }
-func (c CallClosure) Type() Type { return c.Returns }
-func (ArrayMap) Type() Type      { return Array }
+func (CharCodeAt) Type() Type  { return Number }
+func (Trim) Type() Type        { return String }
+func (CodePoints) Type() Type  { return Array }
+func (StringIndex) Type() Type { return String }
+func (MapEntries) Type() Type  { return Array }
+func (MakeClosure) Type() Type { return Closure }
+func (CheckedCast) Type() Type { return Object }
+func (c CallClosure) Type() Type {
+	if c.Optional {
+		return c.OptionalResult
+	}
+	return c.Returns
+}
+func (ArrayMap) Type() Type { return Array }
 
 func (v ArrayVisit) Type() Type {
 	switch v.Method {

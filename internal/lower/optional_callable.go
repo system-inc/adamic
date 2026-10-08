@@ -14,11 +14,6 @@ func (l *lowering) optionalCallable(node *ast.Node) (ir.Expression, bool, error)
 	if written.QuestionDotToken == nil || callee.Flags&ast.NodeFlagsOptionalChain != 0 || callee.Kind == ast.KindElementAccessExpression || l.libraryMember(callee) {
 		return nil, false, nil
 	}
-	if receiver, err := l.optionalCallableReceiver(callee); err != nil {
-		return nil, true, err
-	} else if receiver {
-		return nil, true, l.notYet(node, "an optional method call requiring a saved receiver")
-	}
 	proven := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(written.Expression))
 	if len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 1 {
 		return nil, true, l.notYet(node, "an optional call without one represented callable signature")
@@ -56,6 +51,19 @@ func (l *lowering) optionalCallable(node *ast.Node) (ir.Expression, bool, error)
 			return nil, true, l.notYet(node, "an optional call whose scalar result lacks an undefined representation")
 		}
 	}
+	if receiver, err := l.optionalCallableReceiver(callee); err != nil {
+		return nil, true, err
+	} else if receiver {
+		property, known := call.Closure.(ir.Property)
+		if !known || l.result.CheckedFields[property.Name] || l.result.UninitializedFields[property.Name] {
+			return nil, true, l.notYet(node, "an optional method requiring a checked field contract")
+		}
+		call.Optional = true
+		if !discarded {
+			call.OptionalResult = of
+		}
+		return call, true, nil
+	}
 	function := -1
 	if l.function != nil {
 		function = l.functionIndex
@@ -77,7 +85,8 @@ func (l *lowering) optionalCallable(node *ast.Node) (ir.Expression, bool, error)
 
 // CallClosure's method path resolves a receiver when calling; a plain Property
 // read does not materialize a bound callable. Structural callback fields can
-// hide literal methods too. Keep those NotYet until both values can be saved.
+// hide literal methods too. Those invocations preserve the selection in the
+// optional CallClosure rather than materializing an unbound property value.
 func (l *lowering) optionalCallableReceiver(callee *ast.Node) (bool, error) {
 	if callee.Kind != ast.KindPropertyAccessExpression {
 		return false, nil
@@ -122,4 +131,17 @@ func (l *lowering) optionalCallableReceiver(callee *ast.Node) (bool, error) {
 		module.AsNode().ForEachChild(visit)
 	}
 	return found, nil
+}
+
+// Optional invocation keeps the runtime method entry and receiver together.
+// Reading the same member as an ordinary value still loses that representation.
+func optionalInvocationCallee(node *ast.Node) bool {
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	if node.Parent == nil || node.Parent.Kind != ast.KindCallExpression {
+		return false
+	}
+	call := node.Parent.AsCallExpression()
+	return call.Expression == node && call.QuestionDotToken != nil
 }

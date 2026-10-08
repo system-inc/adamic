@@ -395,3 +395,82 @@ Good run passed (0.675s); mutant failed (0.511s); restored scoped fixtures passe
 **zero additional census roots**; compiler lowering is unchanged. Setup succeeded,
 with `nproc=5`, submodules ready 0.100s, clang ready 0.258s, build ready 44.692s,
 test binaries deferred 44.816s, cache warm 44.817s, and done 44.847s.
+
+## Follow-up: receiver-bearing optional methods
+
+The saved-receiver barrier is now implemented for represented user methods,
+including class prototype entries, literal methods and callback fields behind
+readonly structural views. The earlier receiver deferral is superseded by this
+unit. `CallClosure.Optional` keeps its original `Returns` ABI separately from
+`OptionalResult`. Native selects the receiver and its own callback or prototype
+entry before evaluating arguments, retains the selected callback, and evaluates
+arguments only when the selected callable exists. An own undefined callback
+shadows prototype lookup. JavaScript snapshots the same object and function
+before arguments, then invokes a receiver-bearing function with that object.
+Missing optional methods short-circuit. Defaults, omitted arguments, rest
+arguments and argument counts retain the existing call ABI.
+
+The method fixtures reduce checker.ts:6910's report callback and existing tsc
+optional-call argument shapes. `runtime-bound-methods.a` alternates absent,
+class and literal methods. `runtime-bound-method-arguments.a` checks skipped
+spreads, defaults and `arguments.length`. `runtime-bound-method-selection.a`
+clears an own callback during argument evaluation and then calls a class method
+through the same readonly view. The existing `runtime-methods.a` replaces the
+receiver during an argument and must invoke the original receiver.
+
+`runtime-discarded-reference.a` exposed an additional leak: a void view may hide
+an owned reference return. Native now identifies the actual selected closure
+code or method thunk and releases its discarded reference result, while keeping
+numeric void-view results out of the release path. This uses the program's
+represented function set rather than treating every discarded packed slot as a
+pointer. Allocation and release counts are balanced in the required counts refresh;
+the counts table records each fixture separately.
+
+Language refusals are unchanged. `runtime-bound-method-replacement.a` contains
+`original.report = (value: string): string => ...` for a declared literal method.
+It remains Refused by the existing unbound-method rule; changing that is a
+proposal for @system_adamic, not part of this implementation. Checked or
+uninitialized field contracts without a represented invocation path remain
+NotYet. Detached methods, overloads, erased never-rest signatures, observed void
+results and optional results narrowed to present retain their earlier barriers.
+
+Six mutants were run and restored; each failed after clean C compilation:
+
+| Mutant | Fixture | Catcher |
+|---|---|---|
+| Pass NULL instead of the selected receiver | runtime-methods | UBSan null member access, native exit 1 versus Node 0 |
+| Ignore prototype entry presence | runtime-bound-methods | Native output differs from Node |
+| Reselect the callback after arguments | runtime-bound-method-selection | JavaScript TypeError, exit 70 versus Node 0 |
+| Evaluate spreads before the presence guard | runtime-bound-method-arguments | Native spread count and output differ |
+| Omit the selected callback retain | runtime-bound-method-selection | ASan heap use after free |
+| Drop discarded reference cleanup | runtime-discarded-reference | LeakSanitizer: 209 bytes in three allocations |
+
+Validation commands (all output redirected to the named logs):
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStep18|TestNativeAgreesWithNode/docs/step-18/fixtures' -count=1 > /tmp/scout-18-methods-final-oracle.log 2>&1
+go test ./internal/flow -run TestStep18OptionalMethodPaths -count=1 > /tmp/scout-18-methods-flow.log 2>&1
+go test ./internal/lower -run 'TestStep18OptionalCallableBoundaries|TestIteratorViewsCannotEraseReceivers|TestLiteralMethodViewsDoNotLoseThis|TestRepresentedMethodReplacementIsNotYet|TestDestructuredMethodsCannotLoadOwnSlots|TestOptionalFunctionValueRelation|TestAMethodReadAsAValueIsRefused' -count=1 > /tmp/scout-18-methods-lower-final.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts > /tmp/scout-18-methods-counts.log 2>&1
+```
+
+Oracle passed (4.464s), flow passed (0.308s), lower boundaries passed, counts
+refresh passed (53.050s). Every supported fixture is held to Node in both
+backends, native sanitizer and release builds, and the leak check. Mutant logs
+are `/tmp/scout-18-mutant-method-{binding,presence,selection,eager,retain,discard}.log`.
+
+The rebased before/after full census each contains 79 compiler files and identical
+checker-rejection metadata, and both no-output guards exit 0. Normalized exact
+roots are unchanged by the rebase: optional calls 103, longer chains 11, size 20,
+indexing 6, required numeric reads 3, saved-receiver methods 1. This method unit
+retires **one additional root**, `checker.ts:6910:21`, with no replacement barrier
+on that source line. It removes the saved-receiver group (1 to 0); the remaining
+103 optional-call roots are unchanged. See [receiver-roots.json](step-18/receiver-roots.json)
+for hashes and the exact comparison. No whole-file acceptance or hidden-byte
+retirement is claimed.
+
+```sh
+python3 stage3/census/latent/make_overlay.py "$PWD" /workspace/scratch/scout-18-method-overlay > /tmp/scout-18-method-overlay.log 2>&1
+go build -buildvcs=false -overlay=/workspace/scratch/scout-18-method-overlay/overlay.json -o /workspace/scratch/scout-18-method-census ./stage3/census/latent/tool > /tmp/scout-18-method-build.log 2>&1
+LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 /workspace/scratch/scout-18-method-census /workspace/scratch/scout-optional-adapted/src/compiler /workspace/scratch/scout-18-method.jsonl > /tmp/scout-18-method-census.log 2>&1
+```

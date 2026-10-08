@@ -89,7 +89,7 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
 							// Method calls preserve the existing class prototype dispatch. Arrow-field
 							// views and destructuring still erase the represented method origin.
 							member := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(view), name)
-							if isCallee(where) && (isClassInstance(l.checker.GetNonNullableType(view)) || (member != nil && member.Flags&ast.SymbolFlagsMethod != 0)) {
+							if isCallee(where) && (isClassInstance(l.checker.GetNonNullableType(view)) || (member != nil && member.Flags&ast.SymbolFlagsMethod != 0) || optionalInvocationCallee(where)) {
 								continue
 							}
 							found = l.notYet(where, "a class method through a view that erases its prototype origin")

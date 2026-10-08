@@ -19,9 +19,6 @@ func TestStep18OptionalCallableBoundaries(t *testing.T) {
 		{"reference narrowed to present", "const callback = (): string => `value${1}`; console.log(callback?.());", "an optional call whose result is narrowed to present"},
 		{"overloaded callable", `interface Callable { (n: number): number; (s: string): number } function run(callback: Callable | undefined): void { callback?.(1); }`, "an optional call without one represented callable signature"},
 		{"erased marker", `function run(callback: ((...items: never[]) => void) | undefined): void { callback?.(); }`, "a call through an erased never-rest callable marker"},
-		{"literal receiver", `const value = { n: 1, run(): number { return this.n; } }; value.run?.();`, "an optional method call requiring a saved receiver"},
-		{"literal receiver through view", `interface View { readonly run?: () => number } const original = { n: 1, run(): number { return this.n; } }; const value: View = original; value.run?.();`, "an optional method call requiring a saved receiver"},
-		{"erased prototype view", `class Counter { count = 0; add(n: number): number { this.count += n; return this.count; } } interface View { readonly add: (n: number) => number } const view: View = new Counter(); view.add?.(1);`, "an optional method call requiring a saved receiver"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)

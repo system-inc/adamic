@@ -20,12 +20,10 @@
       "stderr": ""
     },
     "compiler": {
-      "exit": 1,
-      "stderr": "adamic: docs/step-18/fixtures/runtime-methods.a:17:1: stage 0 can't lower an optional method call requiring a saved receiver yet\nexit status 1\n"
+      "exit": 0,
+      "stderr": ""
     },
-    "c_emitted": false,
-    "reason": "an optional method call requiring a saved receiver",
-    "where": "docs/step-18/fixtures/runtime-methods.a:17:1"
+    "c_emitted": true
   },
   {
     "file": "runtime-order.a",
@@ -73,6 +71,73 @@
     "node": {
       "exit": 0,
       "stdout": "2\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-bound-methods.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nclass1:1\nliteral2:2\nabsent\n2\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-bound-method-arguments.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nabsent\nreader1:4::0\nreader1:4:word1:2\n1\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-bound-method-replacement.a",
+    "node": {
+      "exit": 0,
+      "stdout": "original1:argument2\nreplacement:next\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/runtime-bound-method-replacement.a:8:2: Adamic 0.1 refuses a method read as a value (report would lose its object, and this with it); call it in an arrow that keeps the object: (value) => original.report(value) (unbound-method)\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "existing unbound-method refusal",
+    "where": "docs/step-18/fixtures/runtime-bound-method-replacement.a:8:2"
+  },
+  {
+    "file": "runtime-bound-method-selection.a",
+    "node": {
+      "exit": 0,
+      "stdout": "selected:argument1\nabsent\nmethod2:argument1\nmethod2:next\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-discarded-reference.a",
+    "node": {
+      "exit": 0,
+      "stdout": "3\n",
       "stderr": ""
     },
     "compiler": {
