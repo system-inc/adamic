@@ -1,0 +1,2 @@
+import type { Builder } from './builder.a';
+export function makeUnreachable(b: Builder): void { const next=b.newBlock(); b.appendSuccessor(b.cur,next); const barriers=b.block(b.cur).cycleBarrier; if(barriers !== undefined) barriers.push(false); b.cur=next; }

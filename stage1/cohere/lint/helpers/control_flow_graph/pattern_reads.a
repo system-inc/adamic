@@ -1,0 +1,50 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+import { isThrowableIdentifier } from './is_throwable_identifier.a';
+export function patternReads(b: Builder, node: AstNode | undefined): void {
+    if ((node === undefined)) {
+        return;
+    }
+    switch (needNode(node).Kind) {
+        case 'Identifier':
+        {
+            b.read(node);
+            if (isThrowableIdentifier(b.ast, node)) {
+                b.firstThrowableFork();
+            }
+            break;
+        }
+        case 'ParenthesizedExpression':
+        {
+            b.patternReads(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'NonNullExpression':
+        {
+            b.patternReads(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'AsExpression':
+        {
+            b.patternReads(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'SatisfiesExpression':
+        {
+            b.patternReads(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        case 'TypeAssertionExpression':
+        {
+            b.patternReads(b.ast.maybe(needNode(node).Expression));
+            break;
+        }
+        default:
+        {
+            b.expr(node);
+            break;
+        }
+    }
+}

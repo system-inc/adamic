@@ -1,0 +1,27 @@
+import { panic } from 'adamic';
+import { CfgNodeIndex as NodeIndex } from '../../../arena/arena_index.a';
+import type { CfgNode } from '../../../arena/arena_index.a';
+export type AstNode = CfgNode;
+export class AstArena {
+ private alive=true;
+ nodes: AstNode[]=[];
+ allocate(): NodeIndex {
+ if(!this.alive) panic('freed AST arena');
+ return NodeIndex.push(this.nodes);
+ }
+ indexAtSlot(slot: number): NodeIndex {
+ if(!this.alive) panic('freed AST arena');
+ if(slot < 0 || slot >= this.nodes.length || slot !== Math.floor(slot)) panic('invalid AST index');
+ return (this.nodes[slot] ?? panic('missing AST index')).index;
+ }
+ optionalIndexAtSlot(slot: number): NodeIndex | undefined {return slot===-1 ? undefined : this.indexAtSlot(slot);}
+ maybe(i: NodeIndex | undefined): AstNode | undefined {return i===undefined?undefined:this.read(i);}
+ list(indices: readonly NodeIndex[] | undefined): readonly AstNode[] | undefined {if(indices===undefined)return undefined;const nodes: AstNode[]=[];for(const index of indices)nodes.push(this.read(index));return nodes;}
+ read(index: NodeIndex | undefined): AstNode {
+ if(!this.alive) panic('freed AST arena');
+ if(index===undefined) panic('absent AST index');
+ const slot=NodeIndex.read(this.nodes,index);
+ return this.nodes[slot] ?? panic('missing AST node');
+ }
+ dispose(): void {this.nodes=[];this.alive=false;}
+}

@@ -1,0 +1,1 @@
+export function IsLogicalOrCoalescingAssignmentOperator(kind: string): boolean { return kind === 'AmpersandAmpersandEqualsToken' || kind === 'BarBarEqualsToken' || kind === 'QuestionQuestionEqualsToken'; }

@@ -1,0 +1,8 @@
+import type { AstNode } from './ast.a';
+export function runsInsideRoot(root: AstNode,child: AstNode,decorator: AstNode | undefined): boolean {
+ if(root.Kind==='PropertyDeclaration')return root.Initializer===child.index;
+ if(root.Kind==='ClassStaticBlockDeclaration')return root.Body===child.index;
+ if(root.Name===child.index)return false;
+ if(decorator!==undefined&&(decorator.Parent===root.index||decorator.Parent===child.index))return false;
+ return true;
+}

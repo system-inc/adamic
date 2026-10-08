@@ -1,0 +1,8 @@
+import { panic } from 'adamic';
+import type { AstNode } from './ast.a';
+export function needNode(node: AstNode | undefined): AstNode { return node ?? panic('nil CFG AST node'); }
+export function needList(nodes: readonly AstNode[] | undefined): readonly AstNode[] { return nodes ?? panic('nil CFG AST list'); }
+export function at<T>(values: readonly T[], index: number): T { if(index < 0 || index >= values.length || index !== Math.floor(index)) panic('CFG array index out of range'); let slot=0;for(const value of values){if(slot===index)return value;slot++;}return panic('CFG missing array element'); }
+export function filled(size: number, value: number): number[] { const result: number[] = []; for(let i=0;i<size;i++) result.push(value); return result; }
+export function append<T>(values: readonly T[], value: T): T[] { const result: T[]=[...values,value];return result; }
+export const emptyNodes: readonly AstNode[] = [];
