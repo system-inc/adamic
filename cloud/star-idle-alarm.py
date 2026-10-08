@@ -34,6 +34,16 @@ mainReds = os.environ.get('ADAMIC_MAIN_REDS', '')  # a file standing in for clou
 verdictLine = re.compile(r'^(\d\d:\d\d:\d\d) done (\S+): (green|red): ([0-9a-f]{40})\b(.*)$')
 pushLine = re.compile(r'^(\d\d:\d\d:\d\d) queued (\S+) ([0-9a-f]{40})\b')
 quietLimit = int(os.environ.get('ADAMIC_CHAIN_QUIET_SECONDS', '1200'))
+requestsFile = Path(os.environ.get('ADAMIC_FULL_GATE_REQUESTS', os.path.expanduser('~/.adamic-full-gate/requests')))
+
+
+def superseded(branch, sha):
+    """A train candidate integration has dropped from its requests file (cloud/integration/star-train.py: superseded
+    slices leave it). Its verdict is history, never the star's state (@system_adamic, Oct 8 23:20Z)."""
+    if not fnmatch.fnmatchcase(branch, 'cloud/land-train-*'):
+        return False
+    live = [line.strip() for line in lines(requestsFile) if line.strip()]
+    return bool(live) and sha not in live
 
 
 def ahra(*arguments):
@@ -147,7 +157,7 @@ def check(step, now):
     last = None
     for line in lines(watchLog):
         found = verdictLine.match(line)
-        if found and matches(found.group(2), globs):
+        if found and matches(found.group(2), globs) and not superseded(found.group(2), found.group(4)):
             last = found
     if last is None:
         return 'idle, no verdict on its branches', None, None
@@ -301,11 +311,14 @@ def checkConfirmation(now):
 
 
 def mainRed():
-    """Main's newest whole-gate verdict when it's red, from the full gate's log: (sha, step, gate-log ref)."""
+    """Main's newest whole-gate verdict when it's red, from the full gate's log: (sha, step, gate-log ref). Only main's
+    own head counts: the loop also gates the star's train candidates, whose verdicts are their slices' (Oct 8 23:19Z,
+    'Main 3e88a5766db1 is red' paged for a superseded train-2)."""
     verdict, published = None, {}
+    head = mainHead()
     for line in lines(fullLog):
         found = re.match(r'^\S+ (red|green): ([0-9a-f]{40})\b(.*)$', line)
-        if found:
+        if found and found.group(2) == head:
             verdict = found
         ref = re.match(r'^published (gate-logs/([0-9a-f]{12})/\S+/full-main)', line)
         if ref:

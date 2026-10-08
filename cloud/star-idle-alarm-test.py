@@ -34,9 +34,10 @@ esac
                         ADAMIC_FAST_GATE_AHRA_DIR=str(self.root), ADAMIC_FULL_GATE_LOG=str(self.root / 'full.log'),
                         ADAMIC_MAIN_REDS=str(self.root / 'main-reds.tsv'), ADAMIC_LANDED_SHAS=str(self.root / 'landed'),
                         ADAMIC_MAIN_HEAD=str(self.root / 'main-head'), ADAMIC_FULL_GATE_RUNNING=str(self.root / 'full-running'),
-                        ADAMIC_BRANCH_COMMITS=str(self.root / 'branch-commits'))
+                        ADAMIC_BRANCH_COMMITS=str(self.root / 'branch-commits'),
+                        ADAMIC_FULL_GATE_REQUESTS=str(self.root / 'requests'))
         self.now = int(time.time())
-        for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running', 'branch-commits'):
+        for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running', 'branch-commits', 'requests'):
             (self.root / name).write_text('')
 
     def check(self):
@@ -145,6 +146,25 @@ esac
         self.assertEqual(len(self.check()), 2)
         self.assertFalse((self.root / 'chain-quiet-alarmed-v2').exists())
 
+    def test_a_train_candidate_s_whole_gate_is_never_main_and_a_superseded_one_is_history(self):
+        # Oct 8 23:19Z: 'Main 3e88a5766db1 is red' (a superseded train-2, gated by the loop between mains), and a page
+        # for V1 off superseded 5b7bd612's red while the current candidate ran.
+        main, candidate, current = 'a' * 40, 'b' * 40, 'c' * 40
+        (self.root / 'main-head').write_text(main + '\n')
+        (self.root / 'full.log').write_text('22:00:00 full gate of main %s (tools t) on home\n22:40:00 green: %s full gate in 2400 s\n'
+                                            '23:18:00 red: %s first failure at tests after 87 s (still running for triage)\n' % (main, main, candidate))
+        (self.root / 'seen').write_text('cloud/land-train-2-views-slice1-old %s\ncloud/land-train-2-views-slice1-new %s\n' % (candidate, current))
+        (self.root / 'requests').write_text(current + '\n')
+        (self.root / 'watch.log').write_text('23:10:00 done cloud/land-train-2-views-slice1-old: red: %s fast gate, first failure at tests\n' % candidate)
+        self.assertEqual(self.check(), [], 'neither the candidate red nor the superseded one pages')
+        # The current candidate's own red still pages.
+        with (self.root / 'watch.log').open('a') as handle:
+            handle.write('23:20:00 done cloud/land-train-2-views-slice1-new: red: %s fast gate, first failure at tests\n' % current)
+        sends = self.check()
+        self.assertEqual(len(sends), 2)
+        self.assertIn(current[:12], sends[0])
+        self.assertNotIn('Main', sends[0])
+
     def clock(self, ago):
         return time.strftime('%H:%M:%S', time.gmtime(self.now - ago))
 
@@ -171,6 +191,7 @@ esac
         main = 'e' * 40
         (self.root / 'full.log').write_text('published gate-logs/eeeeeeeeeeee/20261008T202422Z/full-main (abc)\n'
                                             '20:35:28 red: %s first failure at tests after 597.9 s (still running for triage)\n' % main)
+        (self.root / 'main-head').write_text(main + '\n')
         return main
 
     def test_a_red_main_with_no_fix_forward_named_pages_integration_and_the_parent(self):
