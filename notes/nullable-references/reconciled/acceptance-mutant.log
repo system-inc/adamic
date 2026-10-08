@@ -1,0 +1,10 @@
+--- FAIL: TestNullableReferenceTypeOfKeepsLookupPresence (0.30s)
+    nullable_test.go:101: typeof found[0]: got /tmp/adamic-gate/TestNullableReferenceTypeOfKeepsLookupPresence906393465/001/main.a:1:122: stage 0 can't lower a reference with both null and undefined (nullable reference needs an empty-case tag) yet, want acceptance with lookup presence
+    nullable_test.go:101: typeof (found[3]): got /tmp/adamic-gate/TestNullableReferenceTypeOfKeepsLookupPresence906393465/002/main.a:1:122: stage 0 can't lower a reference with both null and undefined (nullable reference needs an empty-case tag) yet, want acceptance with lookup presence
+    nullable_test.go:101: typeof found.at(0): got /tmp/adamic-gate/TestNullableReferenceTypeOfKeepsLookupPresence906393465/003/main.a:1:122: stage 0 can't lower a reference with both null and undefined (nullable reference needs an empty-case tag) yet, want acceptance with lookup presence
+    nullable_test.go:101: typeof found.pop(): got /tmp/adamic-gate/TestNullableReferenceTypeOfKeepsLookupPresence906393465/004/main.a:1:122: stage 0 can't lower a reference with both null and undefined (nullable reference needs an empty-case tag) yet, want acceptance with lookup presence
+    nullable_test.go:101: typeof seen.get('miss'): got /tmp/adamic-gate/TestNullableReferenceTypeOfKeepsLookupPresence906393465/005/main.a:1:122: stage 0 can't lower a reference with both null and undefined (nullable reference needs an empty-case tag) yet, want acceptance with lookup presence
+    nullable_test.go:101: typeof (seen.get('absent')): got /tmp/adamic-gate/TestNullableReferenceTypeOfKeepsLookupPresence906393465/006/main.a:1:122: stage 0 can't lower a reference with both null and undefined (nullable reference needs an empty-case tag) yet, want acceptance with lookup presence
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.313s
+FAIL

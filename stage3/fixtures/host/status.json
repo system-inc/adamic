@@ -97,7 +97,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/06_fileExists.a:30:9: stage 0 can't lower a PrefixUnaryExpression on a value yet"
+      "what": "stage3/fixtures/host/06_fileExists.a:34:9: stage 0 can't lower a case that isn't a constant yet"
     }
   },
   {
@@ -117,7 +117,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/07_directoryExists.a:30:9: stage 0 can't lower a PrefixUnaryExpression on a value yet"
+      "what": "stage3/fixtures/host/07_directoryExists.a:34:9: stage 0 can't lower a case that isn't a constant yet"
     }
   },
   {
@@ -430,7 +430,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:33:9: stage 0 can't lower a PrefixUnaryExpression on a value yet"
+      "what": "stage3/fixtures/host/24_useCaseSensitiveFileNames.a:37:9: stage 0 can't lower a case that isn't a constant yet"
     }
   },
   {

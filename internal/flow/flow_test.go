@@ -53,6 +53,10 @@ func programs(t *testing.T) []string {
 	// the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
 		switch filepath.Base(path) {
+		case "library_object_replaced.a":
+			// The Object branch's negative replaced-binding probe has no accepted IR.
+			// Lowering tests verify refusal, and its Node mutant proves the guard.
+			return true
 		case "regexp_surrogate_limit_refused.a", "regexp_surrogate_nested_limit_refused.a", "regexp_native_write_groups_compound_missing.a",
 			"node_process_errors.a", "node_process_directory_mutation.a", "node_process_environment_mutation.a":
 			return true

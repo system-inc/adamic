@@ -450,6 +450,10 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.StringFromCodes{}):
+				if value.Interface().(ir.StringFromCodes).CodePoints {
+					throws = true
+				}
 			case reflect.TypeOf(ir.ProcessCall{}):
 				// Invalid exit codes and host failures throw before a valid exit
 				// can terminate the process; retain their catch/finally edges.

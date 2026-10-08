@@ -55,6 +55,23 @@ func processExitOutput(t *testing.T, destination string, shared, backpressure bo
 	return run{stdout: observed.Stdout, stderr: observed.Stderr, exitCode: observed.ExitCode}
 }
 
+// Exercise queued output independently of the shared panic runtime's blocking defaults.
+// Module imports run before these statements, so both the control and its exit mutant
+// use ordinary asynchronous Node pipes while retaining the real generated exit helper.
+func processAsyncScript(t *testing.T, script string) string {
+	t.Helper()
+	data, err := os.ReadFile(script)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "async.mjs")
+	prefix := "for (const stream of [process.stdout, process.stderr]) stream._handle?.setBlocking(false);\n"
+	if err := os.WriteFile(path, append([]byte(prefix), data...), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return path
+}
+
 // Runtime mutations are included in the generated translation unit with renamed public
 // symbols. This exercises the real output buffer, without editing the checkout or its cache.
 func processOutputProgram(t *testing.T, source, mutation string) (string, string, string) {
@@ -166,7 +183,8 @@ func TestProcessLargePipeExitPreservesOutput(t *testing.T) {
 				ending = "process.exit(37);"
 			}
 			path, binary, script := processOutputProgram(t, "const line = 'x'.repeat(1023); for (let index = 0; index < 200; index += 1) { console.log(line); } "+ending, "")
-			truth := processExitOutput(t, "pipe", false, true, "node", "--disable-warning=ExperimentalWarning", runner, path)
+			script = processAsyncScript(t, script)
+			truth := processExitOutput(t, "pipe", false, true, "node", "--disable-warning=ExperimentalWarning", path)
 			got := processExitOutput(t, "pipe", false, true, binary)
 			backend := processExitOutput(t, "pipe", false, true, "node", "--disable-warning=ExperimentalWarning", runner, script)
 			if truth.exitCode != 37 || got.exitCode != 37 || len(truth.stderr) != 0 || len(got.stderr) != 0 || !bytes.Equal(got.stdout, expected) {

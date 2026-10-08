@@ -1,8 +1,8 @@
 // Runtime facts shared with TypeScript projects, without adding newer Set methods.
 
 interface Console {
-	log(message: string): void;
-	error(message: string): void;
+	log(message: string | null | undefined): void;
+	error(message: string | null | undefined): void;
 }
 declare var console: Console;
 

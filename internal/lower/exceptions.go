@@ -157,6 +157,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
+		case ir.StringFromCodes:
+			found = node.CodePoints
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
 		case ir.Throw:

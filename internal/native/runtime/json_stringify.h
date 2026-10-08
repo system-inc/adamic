@@ -18,6 +18,7 @@ struct adamic_json_schema {
 	const adamic_json_schema *element;
 	size_t count;
 	const adamic_json_field *fields;
+	bool null_reference;
 };
 adamic_string *adamic_json_stringify(adamic_value value, const adamic_json_schema *schema,
 	adamic_value replacer, const adamic_json_schema *replacer_schema,

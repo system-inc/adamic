@@ -79,8 +79,8 @@ func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 			// Project console declarations can accept arbitrary data. This true
 			// runtime signature must not shadow an inherited Node console method
 			// with the narrower standalone Adamic signature.
-			text := strings.ReplaceAll(prelude, "log(message: string): void;", "log(...data: any[]): void;")
-			text = strings.ReplaceAll(text, "error(message: string): void;", "error(...data: any[]): void;")
+			text := strings.ReplaceAll(prelude, "log(message: string | null | undefined): void;", "log(...data: any[]): void;")
+			text = strings.ReplaceAll(text, "error(message: string | null | undefined): void;", "error(...data: any[]): void;")
 			return text, true
 		}
 		return prelude, true

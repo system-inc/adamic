@@ -1,0 +1,34 @@
+[
+  {
+    "mutant": "fround-negative-ulp",
+    "fixture": "math_edges",
+    "exit": 1,
+    "caughtBy": "Node stdout comparison only",
+    "killed": true,
+    "log": "/tmp/library-json-number-math-mutants/fround-negative-ulp.log"
+  },
+  {
+    "mutant": "epsilon-name",
+    "fixture": "own_names",
+    "exit": 1,
+    "caughtBy": "Node stdout comparison only",
+    "killed": true,
+    "log": "/tmp/library-json-number-math-mutants/epsilon-name.log"
+  },
+  {
+    "mutant": "octal-binary-prefixes",
+    "fixture": "convert_sources",
+    "exit": 1,
+    "caughtBy": "Node stdout comparison only",
+    "killed": true,
+    "log": "/tmp/library-json-number-math-mutants/octal-binary-prefixes.log"
+  },
+  {
+    "mutant": "null-string-zero",
+    "fixture": "convert_sources",
+    "exit": 1,
+    "caughtBy": "Node stdout comparison only",
+    "killed": true,
+    "log": "/tmp/library-json-number-math-mutants/null-string-zero.log"
+  }
+]

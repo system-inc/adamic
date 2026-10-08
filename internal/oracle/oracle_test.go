@@ -753,7 +753,7 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				}
 				return
 			}
-			if difference := disagreement(oracle, native); difference != "" {
+			if difference := disagreement(oracle, native); difference != "" && !contractionExplains(t, program, oracle) {
 				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
 					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
 			}

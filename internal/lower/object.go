@@ -51,6 +51,9 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			fieldName, known := l.methodName(property)
 			if !known {
+				fieldName, known = l.libraryArrayLikeFieldName(name)
+			}
+			if !known {
 				return nil, l.notYet(name, "a computed field name")
 			}
 			if property.Kind == ast.KindPropertyAssignment && fieldName == "__proto__" {
@@ -590,6 +593,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		return value, true, err
 	}
 	if value, handled, err := l.userMethodCall(node); handled {
+		return value, true, err
+	}
+	if value, known, err := l.libraryArrayGenericCall(node); known {
 		return value, true, err
 	}
 	if value, known, err := l.libraryMathNumberCall(node); known {
@@ -1354,6 +1360,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if value, found, err := l.nodeFSFileDate(node); found {
 		return value, err
+	}
+	if l.isLibraryGlobal(node.AsNewExpression().Expression, "String") {
+		return nil, l.notYet(node, "new String needs indexed exotic properties and String internal slots (a primitive or plain object is not a String box)")
 	}
 	if l.isLibraryGlobal(node.AsNewExpression().Expression, "RegExp") {
 		return l.regexConstant(node)

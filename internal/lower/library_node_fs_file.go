@@ -106,8 +106,13 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, l.notYet(node, memberName+": "+"fs void calls used as values")
 		}
 	}
-	for _, argument := range call.Arguments.Nodes {
-		value, err := l.expression(argument)
+	for index, argument := range call.Arguments.Nodes {
+		lowerArgument := l.expression
+		if operation == "write" && index == 2 && l.checker.GetTypeAtLocation(argument).Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+			// This intrinsic consumes an exact empty position as its existing sentinel; it stores no nullable view.
+			lowerArgument = l.value
+		}
+		value, err := lowerArgument(argument)
 		if err != nil {
 			if missing, ok := err.(*NotYet); ok {
 				err = l.notYet(node, "node:fs."+memberName+": "+missing.What)

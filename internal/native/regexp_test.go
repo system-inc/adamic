@@ -58,6 +58,8 @@ func runRegexCases(t *testing.T, cases []regexCase) {
 	var source, rows, units, spans strings.Builder
 	source.WriteString("#include \"adamic.h\"\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n")
 	programs := map[string]int{}
+	regularPrograms := map[int]bool{}
+	regularCases := 0
 	inputOffset, spanOffset := 0, 0
 	for index, c := range cases {
 		flags := c.Flags
@@ -87,6 +89,10 @@ func runRegexCases(t *testing.T, cases []regexCase) {
 				t.Fatalf("case %d encode: %v", index, err)
 			}
 			source.WriteString(text)
+			regularPrograms[id] = strings.Contains(text, "_regular_code[]")
+		}
+		if regularPrograms[id] {
+			regularCases++
 		}
 		fmt.Fprintf(&rows, "{&regex_%d,%d,%d,UINT64_C(%d),%d,%d,UINT64_C(%d)},\n", id, inputOffset, len(c.Input), c.LastIndex, spanOffset, len(c.Expected.Captures), c.Expected.LastIndex)
 		for _, unit := range c.Input {
@@ -125,7 +131,7 @@ static bool pair_equal(adamic_object *pair,const ptrdiff_t *expected) {
  return pair==NULL?expected[0]<0:expected[0]>=0 && pair->slots[0].number==(double)expected[0] && pair->slots[1].number==(double)expected[1];
 }
 int main(int argc,char **argv) {
- adamic_start(argc,argv);adamic_regex_set_step_limit(argc>1?0:10000000);size_t disagreements=0;
+ adamic_start(argc,argv);adamic_regex_set_step_limit(argc>1?0:10000000);adamic_regex_set_regular_mode(argc==2?2:argc>2?0:1);size_t disagreements=0;
  for(size_t index=0;index<sizeof probes/sizeof probes[0];index++) {
   const probe *p=&probes[index];double *codes=malloc((p->length+1)*sizeof *codes);if(codes==NULL) abort();
   for(size_t k=0;k<p->length;k++) codes[k]=input_units[p->input+k];
@@ -155,11 +161,11 @@ int main(int argc,char **argv) {
 }
 `)
 	binary := filepath.Join(t.TempDir(), "regex-probes")
-	t.Logf("compiling %d patterns, %d executions, %d C bytes", len(programs), len(cases), source.Len())
+	t.Logf("compiling %d patterns, %d executions, %d C bytes; regular eligible: %d patterns, %d executions", len(programs), len(cases), source.Len(), len(regularProgramsWithEngine(regularPrograms)), regularCases)
 	if err := Build(source.String(), binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	for _, arguments := range [][]string{nil, {"unlimited"}} {
+	for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
 		environment := ""
 		// LeakSanitizer is Linux's; macOS AddressSanitizer rejects this option.
 		if goruntime.GOOS == "linux" {
@@ -306,4 +312,14 @@ func TestRegExpBytecodePatternUnits(t *testing.T) {
 		cases = append(cases, c)
 	}
 	runRegexCases(t, cases)
+}
+
+func regularProgramsWithEngine(programs map[int]bool) []int {
+	var ids []int
+	for id, eligible := range programs {
+		if eligible {
+			ids = append(ids, id)
+		}
+	}
+	return ids
 }

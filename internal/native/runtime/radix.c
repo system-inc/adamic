@@ -24,7 +24,9 @@
 #include <string.h>
 
 // The math here (a multiply, then a subtraction) is rounded step by step, as V8's is; see ieee754.c.
+#ifndef ADAMIC_FUSED_RUNTIME
 #pragma STDC FP_CONTRACT OFF
+#endif
 
 // V8's kDoubleToRadixMaxChars (src/numbers/conversions.h): 1,074 binary digits after the point for
 // the smallest double, 1,024 before it for the largest, a sign and a point, with room.

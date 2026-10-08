@@ -21,6 +21,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 		}
 		return ir.Number, nil
 	}
+	if proven := l.checker.GetTypeAtLocation(node); l.includesNull(proven) && l.includesUndefined(proven) {
+		return 0, l.notYet(node, nullableTagReason)
+	}
 	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
 		return valueType, nil
 	}
@@ -28,6 +31,7 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 }
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+	parameter := proven.Flags()&checker.TypeFlagsTypeParameter != 0
 	proven = l.concrete(proven)
 	flags := proven.Flags()
 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
@@ -42,6 +46,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	}
 	if valueType, known := l.nodeBufferRepresentation(proven); known {
 		return valueType, true
+	}
+	if parameter && flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		return ir.Object, true
 	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
@@ -78,11 +85,18 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
+			var reference ir.Type
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
+				if member.Flags()&checker.TypeFlagsNull != 0 {
+					continue
+				}
+				held, known := l.representation(member)
+				if !known || !held.IsReference() || held == ir.Union || held == ir.Weak || (reference != 0 && (held != ir.String || reference != ir.String)) {
 					return 0, false
 				}
+				reference = held
 			}
+			return reference, reference != 0
 		}
 		var shared ir.Type
 		mixed, weak := false, false
@@ -141,6 +155,7 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 }
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsUndefined != 0
 	}
@@ -153,6 +168,7 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 }
 
 func (l *lowering) includesNull(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsNull != 0
 	}
@@ -169,6 +185,9 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if value, handled, err := l.methodObservation(node); handled {
 		return value, err
+	}
+	if err := l.nullableUse(node); err != nil {
+		return nil, err
 	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
@@ -703,6 +722,16 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 		return ir.Unary{Operator: ir.Negate, Operand: operand}, nil
 	case prefix.Operator == ast.KindPlusToken && operand.Type() == ir.Number:
 		return ir.Unary{Operator: ir.Plus, Operand: operand}, nil
+	case prefix.Operator == ast.KindExclamationToken && operand.Type().IsReference() && operand.Type() != ir.Union:
+		if operand.Type() == ir.String {
+			return l.nullableObservation("falsy", operand, ir.BooleanConstant{Value: true}, func(read ir.Expression) ir.Expression {
+				return ir.Binary{Operator: ir.Equal, Left: ir.StringLength{Value: read}, Right: ir.NumberConstant{}}
+			}), nil
+		}
+		if l.includesNull(l.checker.GetTypeAtLocation(prefix.Operand)) {
+			return ir.IsNull{Value: operand}, nil
+		}
+		return ir.IsUndefined{Value: operand}, nil
 	case prefix.Operator == ast.KindExclamationToken && operand.Type() == ir.Boolean:
 		return ir.Unary{Operator: ir.Not, Operand: operand}, nil
 	case prefix.Operator == ast.KindTildeToken && operand.Type() == ir.Number:
@@ -832,9 +861,20 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 	return nil, l.notYet(node, describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()))
 }
 
-// spelled is a string as + and a template write it: one that may be missing (a null reference) is
-// written "undefined", as JavaScript writes it.
+// spelled writes a missing string using the empty case of its instantiated static type.
 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
+	if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+		text := "undefined"
+		if proven.Flags()&checker.TypeFlagsNull != 0 {
+			text = "null"
+		}
+		constant := ir.StringConstant{Index: l.constant(text)}
+		return l.nullableObservation("spelling", value, constant, func(ir.Expression) ir.Expression { return constant })
+	}
+	if value.Type() == ir.String && l.includesNull(l.checker.GetTypeAtLocation(node)) {
+		return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant("null")}, Of: ir.String}
+	}
 	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
 		return value
 	}
@@ -868,6 +908,11 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		case ir.String:
 			value = l.spelled(span.AsTemplateSpan().Expression, value)
 		default:
+			proven := l.concrete(l.checker.GetTypeAtLocation(span.AsTemplateSpan().Expression))
+			if proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
+				value = l.spelled(span.AsTemplateSpan().Expression, value)
+				break
+			}
 			// JavaScript writes an object as "[object Object]", an array as its join, and a function as
 			// its source; 0.1 has no use for any of it.
 			return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")

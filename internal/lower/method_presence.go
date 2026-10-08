@@ -2,7 +2,6 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
@@ -187,12 +186,4 @@ func (l *lowering) methodComparisonUse(node *ast.Node) bool {
 		return false
 	}
 	return ast.SkipParentheses(other).Kind == ast.KindNullKeyword || l.intrinsicUndefined(other)
-}
-
-// A shadowed binding must still be read, including its temporal-dead-zone check.
-// Only the checker's intrinsic undefined can be observed without evaluating a binding.
-func (l *lowering) intrinsicUndefined(node *ast.Node) bool {
-	node = ast.SkipParentheses(node)
-	symbol := l.checker.GetSymbolAtLocation(node)
-	return symbol != nil && len(symbol.Declarations) == 0 && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0
 }

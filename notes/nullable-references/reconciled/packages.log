@@ -1,0 +1,381 @@
+ok  	github.com/system-inc/adamic/internal/lower	59.735s
+--- FAIL: TestRecordsAgainstNode (5.90s)
+    record_test.go:67: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3510159506/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+            9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+              |                                                                                   ^
+        /tmp/adamic-gate/adamic-build-3510159506/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+           10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+              |                                                                                   ^
+        /tmp/adamic-gate/adamic-build-3510159506/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+           11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+              |                                                                                             ^
+        /tmp/adamic-gate/adamic-build-3510159506/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+           12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+              |                                                                                             ^
+        /tmp/adamic-gate/adamic-build-3510159506/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+           44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+              |                                                                                          ^
+        5 errors generated.
+        
+--- FAIL: TestRecordReadMutants (69.79s)
+    --- FAIL: TestRecordReadMutants/prototype-membership-restored (27.08s)
+        record_test.go:237: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestRecordReadMutantsprototype-membership-restored3734919361/001/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordReadMutantsprototype-membership-restored3734919361/001/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordReadMutantsprototype-membership-restored3734919361/001/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordReadMutantsprototype-membership-restored3734919361/001/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordReadMutantsprototype-membership-restored3734919361/001/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+                  |                                                                                          ^
+            5 errors generated.
+    --- FAIL: TestRecordReadMutants/missing-read-silent (15.05s)
+        record_test.go:237: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestRecordReadMutantsmissing-read-silent1409490332/001/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordReadMutantsmissing-read-silent1409490332/001/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordReadMutantsmissing-read-silent1409490332/001/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordReadMutantsmissing-read-silent1409490332/001/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordReadMutantsmissing-read-silent1409490332/001/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+                  |                                                                                          ^
+            5 errors generated.
+    --- FAIL: TestRecordReadMutants/own-read-checked-as-missing (27.66s)
+        record_test.go:237: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestRecordReadMutantsown-read-checked-as-missing1408792945/001/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordReadMutantsown-read-checked-as-missing1408792945/001/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordReadMutantsown-read-checked-as-missing1408792945/001/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordReadMutantsown-read-checked-as-missing1408792945/001/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordReadMutantsown-read-checked-as-missing1408792945/001/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+                  |                                                                                          ^
+            5 errors generated.
+--- FAIL: TestRecordMutants (140.65s)
+    --- FAIL: TestRecordMutants/indices-in-insertion-order (23.52s)
+        record_test.go:207: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestRecordMutantsindices-in-insertion-order410301705/001/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsindices-in-insertion-order410301705/001/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsindices-in-insertion-order410301705/001/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsindices-in-insertion-order410301705/001/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsindices-in-insertion-order410301705/001/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+                  |                                                                                          ^
+            5 errors generated.
+    --- FAIL: TestRecordMutants/uint32-max-as-index (21.69s)
+        record_test.go:207: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestRecordMutantsuint32-max-as-index428532363/001/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsuint32-max-as-index428532363/001/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsuint32-max-as-index428532363/001/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsuint32-max-as-index428532363/001/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsuint32-max-as-index428532363/001/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+                  |                                                                                          ^
+            5 errors generated.
+    --- FAIL: TestRecordMutants/deleted-key-iterated (29.67s)
+        record_test.go:207: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestRecordMutantsdeleted-key-iterated37551941/001/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsdeleted-key-iterated37551941/001/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsdeleted-key-iterated37551941/001/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsdeleted-key-iterated37551941/001/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsdeleted-key-iterated37551941/001/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+                  |                                                                                          ^
+            5 errors generated.
+    --- FAIL: TestRecordMutants/overwrite-key-leaked (25.22s)
+        record_test.go:207: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestRecordMutantsoverwrite-key-leaked1102924114/001/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsoverwrite-key-leaked1102924114/001/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsoverwrite-key-leaked1102924114/001/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsoverwrite-key-leaked1102924114/001/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsoverwrite-key-leaked1102924114/001/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+                  |                                                                                          ^
+            5 errors generated.
+    --- FAIL: TestRecordMutants/stored-key-freed (27.01s)
+        record_test.go:207: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestRecordMutantsstored-key-freed3109796899/001/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsstored-key-freed3109796899/001/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsstored-key-freed3109796899/001/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsstored-key-freed3109796899/001/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsstored-key-freed3109796899/001/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+                  |                                                                                          ^
+            5 errors generated.
+    --- FAIL: TestRecordMutants/own-slot-null-read (13.55s)
+        record_test.go:207: mutant must compile: exit status 1
+            /tmp/adamic-gate/TestRecordMutantsown-slot-null-read1121923643/001/main.c:9:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+                9 | static const adamic_json_schema number_schema = {adamic_json_number, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsown-slot-null-read1121923643/001/main.c:10:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               10 | static const adamic_json_schema string_schema = {adamic_json_string, NULL, 0, NULL};
+                  |                                                                                   ^
+            /tmp/adamic-gate/TestRecordMutantsown-slot-null-read1121923643/001/main.c:11:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               11 | static const adamic_json_schema strings_schema = {adamic_json_array, &string_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsown-slot-null-read1121923643/001/main.c:12:93: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               12 | static const adamic_json_schema numbers_schema = {adamic_json_array, &number_schema, 0, NULL};
+                  |                                                                                             ^
+            /tmp/adamic-gate/TestRecordMutantsown-slot-null-read1121923643/001/main.c:44:83: error: missing field 'null_reference' initializer [-Werror,-Wmissing-field-initializers]
+               44 |         const adamic_json_schema schema = {adamic_json_object, NULL, keys->length, fields};
+                  |                                                                                          ^
+            5 errors generated.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	478.416s
+--- FAIL: TestParallelCachedMatchesSerial (47.53s)
+    cache_test.go:175: round 0 differs:
+        serial={
+          "test262": "",
+          "adapt": false,
+          "filters": [
+            {
+              "path": "",
+              "pass": 1,
+              "fail": 1,
+              "refused": 1,
+              "crashed": 1,
+              "skipped": 1,
+              "total": 5,
+              "directories": [
+                {
+                  "path": "crash",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 1,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "fail",
+                  "pass": 0,
+                  "fail": 1,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "pass",
+                  "pass": 1,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "refuse",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 1,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "skip",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 1,
+                  "total": 1
+                }
+              ],
+              "refusalReasons": [
+                {
+                  "reason": "refuses var",
+                  "count": 1
+                }
+              ],
+              "skipReasons": [
+                {
+                  "reason": "negative parse or early error",
+                  "count": 1
+                }
+              ],
+              "crashReasons": [
+                {
+                  "reason": "crash/stderr.js: native sanitizer",
+                  "count": 1
+                }
+              ],
+              "failReasons": [
+                {
+                  "reason": "exit 1 vs 70",
+                  "count": 1
+                }
+              ],
+              "passes": [
+                "pass/pad.js"
+              ]
+            }
+          ]
+        }
+        
+        parallel={
+          "test262": "",
+          "adapt": false,
+          "filters": [
+            {
+              "path": "",
+              "pass": 1,
+              "fail": 1,
+              "refused": 1,
+              "crashed": 1,
+              "skipped": 1,
+              "total": 5,
+              "directories": [
+                {
+                  "path": "crash",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 1,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "fail",
+                  "pass": 0,
+                  "fail": 1,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "pass",
+                  "pass": 1,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "refuse",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 1,
+                  "crashed": 0,
+                  "skipped": 0,
+                  "total": 1
+                },
+                {
+                  "path": "skip",
+                  "pass": 0,
+                  "fail": 0,
+                  "refused": 0,
+                  "crashed": 0,
+                  "skipped": 1,
+                  "total": 1
+                }
+              ],
+              "refusalReasons": [
+                {
+                  "reason": "refuses var",
+                  "count": 1
+                }
+              ],
+              "skipReasons": [
+                {
+                  "reason": "negative parse or early error",
+                  "count": 1
+                }
+              ],
+              "crashReasons": [
+                {
+                  "reason": "crash/stderr.js: native sanitizer",
+                  "count": 1
+                }
+              ],
+              "failReasons": [
+                {
+                  "reason": "exit 1 vs 70",
+                  "count": 1
+                }
+              ],
+              "passes": [
+                "pass/pad.js"
+              ]
+            }
+          ]
+        }
+pass 1/1 pass=1 fail=0 refused=0 crashed=0 skipped=0
+skip 1/1 pass=0 fail=0 refused=0 crashed=0 skipped=1
+refuse 1/1 pass=0 fail=0 refused=1 crashed=0 skipped=0
+large.js 1/1 pass=1 fail=0 refused=0 crashed=0 skipped=0
+built-ins/RegExp 3/3 pass=3 fail=0 refused=0 crashed=0 skipped=0
+built-ins/RegExp 3/3 pass=3 fail=0 refused=0 crashed=0 skipped=0
+built-ins/RegExp 3/3 pass=1 fail=0 refused=0 crashed=0 skipped=0
+built-ins/RegExp 3/3 pass=1 fail=0 refused=0 crashed=0 skipped=0
+built-ins/RegExp/wrong-capture.js: exit 1 vs 70; native stderr: adamic: panic: Error: Match entries; Node stderr: file:///home/agent/.cache/adamic/test262/programs/d7a7157b8ea24f1dc2dbbf01a231a58f8fb70d8d7b645e26c0251770f761aa69/program.mts:164
+input.js: exit 1 vs 0; native stderr: ; Node stderr: node:internal/modules/package_json_reader:301
+input.js: exit 1 vs 70; native stderr: adamic: panic: Error: changed; Node stderr: node:internal/modules/package_json_reader:301
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-test262	170.718s
+FAIL

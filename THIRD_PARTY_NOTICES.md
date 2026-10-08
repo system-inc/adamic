@@ -46,7 +46,19 @@ IN THE SOFTWARE.
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
+  - Object primitive own-name reflection (`runtime/object_names.c`, after
+    src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
+  - Object sealing and extensibility (`runtime/object_integrity.c`, after
+    src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
+  - positioned String affixes (`internal/lower/library_string.go`, after
+    src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
+  - String well-formed Unicode (`runtime/string_wellformed.c`, after
+    src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
+    adapted to canonical WTF-8 storage);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
+  - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
+    after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
+    GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);
@@ -205,6 +217,12 @@ SOFTWARE.
 ````
 
 ## In the compiler
+
+The test262 harness fixtures in `cmd/adamic-test262/testdata/regexp/harness/`
+are copied from tc39/test262 commit `7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd`.
+`cmd/adamic-test262/regexp_prelude.go` adapts that checkout's `regExpUtils.js`
+(Copyright (C) 2017 Mathias Bynens).
+Their BSD license is reproduced in that fixture directory's [LICENSE](cmd/adamic-test262/testdata/regexp/LICENSE).
 
 The `adamic` compiler (stage 0) is built on cohere and the TypeScript compiler it carries (typescript-go,
 Copyright (c) Microsoft Corporation, Apache License 2.0), and on the Go toolchain. Their notices are in

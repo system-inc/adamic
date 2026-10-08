@@ -178,6 +178,8 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	bool sealed;
+	bool nonextensible;
 	// captureStackTrace owns one non-enumerable string outside the fixed shape.
 	bool has_captured_stack;
 	adamic_value captured_stack;
@@ -282,6 +284,7 @@ static inline adamic_value *adamic_object_field(const adamic_object *object, con
 	if (object->class != NULL && object->class->is_static) { return adamic_static_field(object, name, cache); }
 	return adamic_object_data_field(object, name, cache);
 }
+#include "object_integrity.h"
 
 // Static Object methods (library_object.c). Returned collections and freeze own one reference.
 bool adamic_object_is(const adamic_heap *left, const adamic_heap *right);
@@ -590,6 +593,8 @@ bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean 
 // to adamic_string_char_code. A position in range truncates to its index as (size_t) does.
 size_t adamic_string_units(const adamic_string *string);
 double adamic_string_char_code(const adamic_string *string, double position);
+#include "string_wellformed.h"
+
 static inline double adamic_string_length(const adamic_string *string) {
 	return string->units != 0 ? (double)(string->units - 1) : (double)adamic_string_units(string);
 }

@@ -13,17 +13,21 @@ var harnessAdamicCanLoad = map[string]bool{
 	"assert.js":       true,
 	"sta.js":          true,
 	"compareArray.js": true,
+	"regExpUtils.js":  true,
 }
 
 // classified is one test, either skipped with a reason or ready to run.
 type classified struct {
-	Path          string
-	Directory     string
-	Skip          string
-	NegativePhase string
-	NegativeType  string
-	Program       string
-	Adaptations   map[string]int
+	Path                 string
+	Directory            string
+	Skip                 string
+	NegativePhase        string
+	NegativeType         string
+	Program              string
+	Adaptations          map[string]int
+	Original             string
+	Includes             []string
+	ConstructorAssertion bool
 }
 
 // classify decides whether a test is attempted. Skipped tests are the ones Adamic will not learn
@@ -45,6 +49,16 @@ func classify(path string, source string, adapt bool) classified {
 	}
 	result.NegativePhase = meta.NegativePhase
 	result.NegativeType = meta.NegativeType
+	if strings.HasPrefix(path, "built-ins/RegExp/") {
+		result.Original = bodyAfterFrontmatter(source)
+		result.Includes = meta.Includes
+		tokens := tokenize(result.Original)
+		for i := 0; i+3 < len(tokens); i++ {
+			if tokens[i].text == "assert" && tokens[i+1].text == "." && tokens[i+2].text == "throws" && tokens[i+3].text == "(" {
+				result.ConstructorAssertion = true
+			}
+		}
+	}
 	if reason := flagSkip(meta.Flags); reason != "" {
 		result.Skip = reason
 		return result
@@ -58,6 +72,11 @@ func classify(path string, source string, adapt bool) classified {
 		return result
 	}
 	body := bodyAfterFrontmatter(source)
+	if adapt && result.Original != "" {
+		literalAdapted := adaptRegExpLiterals(body)
+		body = literalAdapted.Source
+		result.Adaptations = literalAdapted.Counts
+	}
 	if reason := syntaxSkip(codeOnly(body)); reason != "" {
 		result.Skip = reason
 		return result
@@ -65,9 +84,30 @@ func classify(path string, source string, adapt bool) classified {
 	if adapt {
 		rewritten := adaptSource(body)
 		body = rewritten.Source
-		result.Adaptations = rewritten.Counts
+		if result.Adaptations == nil {
+			result.Adaptations = map[string]int{}
+		}
+		for kind, count := range rewritten.Counts {
+			result.Adaptations[kind] += count
+		}
+		if result.Original != "" {
+			regexAdapted := adaptRegExp(body)
+			body = regexAdapted.Source
+			if result.Adaptations == nil {
+				result.Adaptations = map[string]int{}
+			}
+			for kind, count := range regexAdapted.Counts {
+				result.Adaptations[kind] += count
+			}
+		}
 	}
 	result.Program = program(rewriteHarnessCalls(body))
+	for _, include := range meta.Includes {
+		if include == "regExpUtils.js" {
+			result.Program = regexpPrelude + "\n" + result.Program
+			break
+		}
+	}
 	return result
 }
 
@@ -162,9 +202,6 @@ func unsupportedFeature(feature string) (string, bool) {
 		return feature, true
 	}
 	if strings.HasPrefix(feature, "Symbol.") || strings.HasPrefix(feature, "Reflect.") {
-		return feature, true
-	}
-	if strings.HasPrefix(feature, "regexp") || strings.HasPrefix(feature, "RegExp") {
 		return feature, true
 	}
 	if strings.HasPrefix(feature, "async") {

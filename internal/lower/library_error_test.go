@@ -20,6 +20,8 @@ func TestErrorCaptureBoundaries(t *testing.T) {
 		{`Error.captureStackTrace([1]);`, "present native object"},
 		{`const target={stack:3}; Error.captureStackTrace(target);`, "non-string stack"},
 		{`const target={}; Object.freeze(target); Error.captureStackTrace(target);`, "freezes objects"},
+		{`const target={}; Object.seal(target); Error.captureStackTrace(target);`, "sealed/nonextensible"},
+		{`const target={}; Object.preventExtensions(target); Error.captureStackTrace(target);`, "sealed/nonextensible"},
 		{`import type {Stats} from 'node:fs'; const error=new Error('uncaptured'); console.log(typeof error.stack);`, "without a preceding captureStackTrace"},
 		{`import type {Stats} from 'node:fs'; const error=new Error('uncaptured'); console.log(Object.hasOwn(error,'stack')?'yes':'no');`, "without a preceding captureStackTrace"},
 	} {

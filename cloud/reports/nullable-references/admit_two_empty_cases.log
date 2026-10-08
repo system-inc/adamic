@@ -1,0 +1,10 @@
+--- FAIL: TestNullableReferencesNeedAnEmptyCaseTag (0.33s)
+    nullable_test.go:24: function f(v: string | null | undefined): string { return typeof v; }: got <nil>, want the named empty-case tag reason
+    nullable_test.go:24: function f(v?: string | null): string { return typeof v; }: got <nil>, want the named empty-case tag reason
+    nullable_test.go:24: function f(v: readonly string[] | null | undefined): string { return typeof v; }: got <nil>, want the named empty-case tag reason
+    nullable_test.go:24: function f(v: { readonly a: string } | null | undefined): string { return typeof v; }: got <nil>, want the named empty-case tag reason
+    nullable_test.go:24: class C { readonly a = 'a'; } function f(v: C | null | undefined): string { return typeof v; }: got <nil>, want the named empty-case tag reason
+    nullable_test.go:24: function f(v: Map<string,string> | null | undefined): string { return typeof v; }: got <nil>, want the named empty-case tag reason
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.337s
+FAIL

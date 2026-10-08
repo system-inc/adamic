@@ -176,7 +176,7 @@ func (l *lowering) libraryErrorValue(node *ast.Node) (ir.Expression, bool, error
 		return nil, false, nil
 	}
 	if l.errorCaptureFrozenProgram() {
-		return nil, true, l.notYet(node, "captureStackTrace in a program that freezes objects: defining the stack property needs catchable descriptor failures")
+		return nil, true, l.notYet(node, "captureStackTrace in a program that freezes objects or makes them sealed/nonextensible: defining the stack property needs catchable descriptor failures")
 	}
 	written := nodesOf(call.Arguments)
 	if len(written) < 1 || len(written) > 2 || hasSpread(node) {
@@ -391,7 +391,7 @@ func (l *lowering) errorCaptureFrozenProgram() bool {
 	visit = func(node *ast.Node) bool {
 		if node.Kind == ast.KindCallExpression {
 			callee := ast.SkipParentheses(node.AsCallExpression().Expression)
-			if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "freeze" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+			if callee.Kind == ast.KindPropertyAccessExpression && (callee.Name().Text() == "freeze" || callee.Name().Text() == "seal" || callee.Name().Text() == "preventExtensions") && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
 				found = true
 			}
 		}
