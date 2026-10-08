@@ -218,6 +218,11 @@ static void deallocate(adamic_heap *heap) {
 void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
+#endif
 	if (heap != NULL && heap->references != 0) {
 		heap->references++;
 	}
@@ -249,8 +254,13 @@ static void list(void *value) {
 // let_go drops one reference and lists the value if that was its last.
 static void let_go(void *value) {
 	adamic_heap *heap = value;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	if (heap != NULL && heap->kind == adamic_kind_cell && ((adamic_cell *)heap)->owner != NULL) {
+		heap = &((adamic_cell *)heap)->owner->heap;
+	}
+#endif
 	if (heap != NULL && heap->references != 0 && --heap->references == 0) {
-		list(value);
+		list(heap);
 	}
 }
 
@@ -278,6 +288,18 @@ static void free_one(void *value) {
 		free(array->elements);
 		break;
 	}
+	case adamic_kind_typed_array: {
+		adamic_typed_array *array = value;
+		if (array->owner != NULL) {
+			let_go(array->owner);
+		} else {
+			free(array->data);
+		}
+		break;
+	}
+	case adamic_kind_typed_array_iterator:
+		let_go(((adamic_typed_array_iterator *)value)->array);
+		break;
 	case adamic_kind_map:
 		adamic_map_free_children(value, let_go);
 		break;
@@ -288,8 +310,21 @@ static void free_one(void *value) {
 		}
 		break;
 	}
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	case adamic_kind_environment: {
+		adamic_environment *environment = value;
+		for (size_t index = 0; index < environment->count; index++) {
+			adamic_cell *cell = &environment->cells[index];
+			if (cell->references) { let_go(cell->value.reference); }
+		}
+		break;
+	}
+#endif
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
+#ifdef ADAMIC_CANONICAL_CLOSURES
+		adamic_closure_uncache(closure);
+#endif
 		for (size_t index = 0; index < closure->count; index++) {
 			let_go(closure->cells[index]);
 		}

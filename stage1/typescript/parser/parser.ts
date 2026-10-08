@@ -1037,11 +1037,11 @@ export class Parser {
                 this.expect(kind);
             },
             node: (index) => this.node(index),
-            make: (kind, pos, children) => this.make(kind, pos, children),
+            make: (kind, pos, children: number[] = []) => this.make(kind, pos, children),
             entityName: () => this.entityName(),
             identifier: () => this.identifier(),
             token: () => this.token(),
-            type: (minimum, conditional) => this.type(minimum, conditional),
+            type: (minimum = 0, conditional = true) => this.type(minimum, conditional),
             typeArguments: () => this.typeArguments(),
             typeParameters: () => this.typeParameters(),
             parameters: () => this.parameters(),

@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
 	"unicode/utf16"
 
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -54,18 +56,42 @@ func TestCSSPrinterAgreesWithGo(t *testing.T) {
 	cases, _ := askedCases(t)
 	directory := portDirectory(t, nil)
 	program := lowered(t, filepath.Join(directory, "print_main.ts"))
+
+	// C emission marks borrowing information in the IR. Finish both backends
+	// and builds before parallel readers share the immutable sources/binaries.
+	source := native.C(program)
+	sanitized := filepath.Join(t.TempDir(), "printer")
+	if err := native.Build(source, sanitized, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	backend := filepath.Join(t.TempDir(), "printer.mjs")
+	if err := os.WriteFile(backend, []byte(javascript.JavaScript(program)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	leakBinary := sanitized
+	if runtime.GOOS == "darwin" {
+		leakBinary = filepath.Join(t.TempDir(), "printer")
+		if err := native.Build(source, leakBinary, native.Options{}); err != nil {
+			t.Fatal(err)
+		}
+	}
 	for _, mode := range []string{"default", "narrow"} {
 		t.Run(mode, func(t *testing.T) {
+			t.Parallel()
 			expected := printerAnswers(t, cases, mode)
 			arguments := []string{cases, "output", "once", mode}
-			nativeRun, sanitized := natively(t, program, arguments...)
+			var environment []string
+			if runtime.GOOS == "linux" {
+				environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
+			}
+			nativeRun := execute(t, environment, sanitized, arguments...)
 			for _, side := range []struct {
 				name   string
 				result run
 			}{
 				{"native ASan/UBSan", nativeRun},
 				{"Node", onNode(t, filepath.Join(directory, "print_main.ts"), arguments...)},
-				{"JavaScript backend", onJavaScriptBackend(t, program, arguments...)},
+				{"JavaScript backend", onNode(t, backend, arguments...)},
 			} {
 				if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
 					t.Fatalf("%s: %d %s", side.name, side.result.exitCode, side.result.stderr)
@@ -74,13 +100,14 @@ func TestCSSPrinterAgreesWithGo(t *testing.T) {
 					t.Fatalf("%s: %s", side.name, difference)
 				}
 			}
-			if report := leaks(t, program, sanitized, arguments...); report != "" {
+			if report := printerLeaks(t, leakBinary, arguments...); report != "" {
 				t.Fatal(report)
 			}
 			t.Log("native ASan/UBSan, Node, JavaScript backend and separate LeakSanitizer pass")
 			t.Logf("%d stylesheet formats and refusals agree byte for byte", strings.Count(expected, "\n")/2)
 			for _, mutation := range printerMutants {
 				t.Run("catches "+mutation.name, func(t *testing.T) {
+					t.Parallel()
 					mutated := portDirectory(t, &mutation)
 					mutantProgram := lowered(t, filepath.Join(mutated, "print_main.ts"))
 					for _, side := range []struct {
@@ -325,4 +352,56 @@ func TestCSSPrinterBoundaryProofs(t *testing.T) {
 		t.Fatalf("Prettier proof: %d %s", result.exitCode, result.stderr)
 	}
 	t.Logf("original Prettier proofs:\n%s", result.stdout)
+}
+
+// printerLeaks runs the same platform leak check against a prebuilt printer.
+func printerLeaks(t *testing.T, binary string, arguments ...string) string {
+	t.Helper()
+	switch runtime.GOOS {
+	case "darwin":
+		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		if report.exitCode == 0 {
+			return ""
+		}
+		return string(report.stdout)
+	case "linux":
+		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, arguments...)
+		if report.exitCode == 0 {
+			return ""
+		}
+		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+	}
+	t.Fatalf("no leak check for %s", runtime.GOOS)
+	return ""
+}
+
+// This corpus isolates boolean flags and namespace choices without the full printer corpus.
+func TestOptionalBooleanPrinterMatchesGo(t *testing.T) {
+	cases := filepath.Join(t.TempDir(), "cases.txt")
+	inputs := ">Ca{b:c}\n>Ca{b:c!important}\n>C*|a{b:c}\n>C|a{b:c}\n>Csvg|a{b:c}\n>S$x:1!default;a{b:$x!important}\n"
+	if err := os.WriteFile(cases, []byte(inputs), 0644); err != nil {
+		t.Fatal(err)
+	}
+	expected := printerAnswers(t, cases, "default")
+	path, err := filepath.Abs("print_main.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program := lowered(t, path)
+	arguments := []string{cases, "output", "once", "default"}
+	nativeRun, binary := natively(t, program, arguments...)
+	for _, side := range []struct {
+		name   string
+		result run
+	}{
+		{"Node", onNode(t, path, arguments...)}, {"native ASan/UBSan", nativeRun}, {"JavaScript backend", onJavaScriptBackend(t, program, arguments...)},
+	} {
+		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != expected {
+			t.Fatalf("%s: %d %s %s", side.name, side.result.exitCode, side.result.stderr, firstDifference(string(side.result.stdout), expected))
+		}
+	}
+	if report := leaks(t, program, binary, arguments...); report != "" {
+		t.Fatal(report)
+	}
+	t.Log("six boolean-flag and namespace cases agree with Go, Node and both backends; leak clean")
 }
