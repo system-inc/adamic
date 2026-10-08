@@ -201,6 +201,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		if element == nil {
 			return nil, l.notYet(node, "JSON.stringify an array without a proven element type")
 		}
+		if storage, known := l.representation(element); known && (storage == ir.Union || storage == ir.MaybeBoolean) {
+			return nil, l.notYet(node, "JSON.stringify a boxed or packed boolean array requiring checked element conversion")
+		}
 		child, err := l.jsonType(node, element, depth+1)
 		return &ir.JSONSchema{Kind: "array", Element: child}, err
 	}

@@ -6,11 +6,6 @@
   "certified_remaining_reads": null,
   "fixture_gaps": [
     {
-      "family": "nested packed boolean storage",
-      "read": "node.value",
-      "outcome": "runtime exit 70"
-    },
-    {
       "family": "boxed key domain conversion",
       "read": "node.value",
       "outcome": "runtime exit 70"
@@ -30,6 +25,11 @@
       "family": "required primitive brand",
       "read": "type declaration, both read and unread controls",
       "outcome": "existing language refusal: brand member must be void"
+    },
+    {
+      "family": "JSON array extraction for boxed and packed boolean storage",
+      "read": "JSON.stringify(values)",
+      "outcome": "named compile refusal at consumer; runtime schema decoder does not use checked extraction"
     }
   ],
   "delegated": "optional and rest tuples belong to lane 4c; the inventory combines array and tuple rows and cannot isolate the tuple share",
@@ -37,6 +37,11 @@
     {
       "family": "nested primitive boxed union storage",
       "scope": "number, boolean, string, packed number and primitive boxed sources; scalar/null/undefined target members; finite literals checked at the element read",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nested packed boolean storage",
+      "scope": "boolean to boolean|undefined; packed boolean to packed/boxed nullable boolean, helper extraction and scalar alias stores",
       "production_reaching_view_counts": "unmeasured"
     }
   ]

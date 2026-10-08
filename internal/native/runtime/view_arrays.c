@@ -13,7 +13,7 @@ static void array_view_failure(const char *expression, const char *expected, con
 }
 
 static const char *array_storage_name(unsigned char storage) {
-    return storage == 1 || storage == 7 ? "number" : storage == 2 ? "boolean" : storage == 3 ? "string" : storage == 4 ? "object" : storage == 5 ? "array" : storage == 6 ? "Map" : storage == 8 ? "function" : storage == 10 ? "heap pointers" : "uncertified storage";
+    return storage == 1 || storage == 7 ? "number" : storage == 2 || storage == 9 ? "boolean" : storage == 3 ? "string" : storage == 4 ? "object" : storage == 5 ? "array" : storage == 6 ? "Map" : storage == 8 ? "function" : storage == 10 ? "heap pointers" : "uncertified storage";
 }
 
 void adamic_array_view_storage(adamic_array *array, unsigned char storage) {
@@ -27,7 +27,7 @@ void adamic_view_array_storage_check(const adamic_array *array, unsigned char st
     if (array->element_kind != physical) { array_view_failure(expression, array_storage_name(storage), array_storage_name(array->element_kind)); }
     // A pointer byte cannot certify the original object/class/map signature.
     // Keep reference writes closed until the source element contract is known.
-    if (storage == 4 || storage == 5 || storage == 6 || storage == 8 || storage == 9 || storage == 10) { array_view_failure(expression, array_storage_name(storage), "uncertified source element contract"); }
+    if (storage == 4 || storage == 5 || storage == 6 || storage == 8 || storage == 10) { array_view_failure(expression, array_storage_name(storage), "uncertified source element contract"); }
 }
 
 adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot, adamic_array *owner) {
@@ -47,6 +47,12 @@ adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool
         actual = 1;
         snapshot->number = number.number;
     }
+    if (actual == 9) {
+        adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+        if (!boolean.present) { if (!undefined_allowed) { array_view_failure(expression, expected, "undefined"); } return NULL; }
+        actual = 2;
+        snapshot->boolean = boolean.boolean;
+    }
     if (array->references) {
         const adamic_heap *reference = slot->reference;
         if (reference == NULL) { if (!undefined_allowed) { array_view_failure(expression, expected, "nullish"); } return NULL; }
@@ -54,8 +60,9 @@ adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool
         else if (reference->kind == adamic_kind_boolean) { actual = 2; snapshot->boolean = ((const adamic_boolean_box *)reference)->boolean; }
         else { actual = reference->kind == adamic_kind_string ? 3 : reference->kind == adamic_kind_object ? 4 : reference->kind == adamic_kind_array ? 5 : reference->kind == adamic_kind_map ? 6 : reference->kind == adamic_kind_closure ? 8 : 0; }
     }
-    if (actual != wanted && !(wanted == 7 && actual == 1) && !(wanted == 10 && (actual == 1 || actual == 2 || actual == 3 || (array->references && slot->reference == &adamic_null)))) { array_view_failure(expression, expected, array_storage_name(actual)); }
+    if (actual != wanted && !(wanted == 7 && actual == 1) && !(wanted == 9 && actual == 2) && !(wanted == 10 && (actual == 1 || actual == 2 || actual == 3 || (array->references && slot->reference == &adamic_null)))) { array_view_failure(expression, expected, array_storage_name(actual)); }
     if (wanted == 7 && actual == 1) { snapshot->number = adamic_maybe_number_pack((adamic_maybe_number){true, snapshot->number}); }
+    if (wanted == 9 && actual == 2) { snapshot->maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){true, snapshot->boolean}); }
     if (wanted == 10) {
         if (array->references) { *snapshot = *slot; }
         else {
@@ -85,7 +92,7 @@ adamic_string *adamic_view_array_string(const adamic_array *array, const adamic_
         if (slot != NULL && checked && allowed_count != 0) {
             bool accepted = false;
             for (size_t literal = 0; literal < allowed_count; literal++) {
-                accepted = accepted || (wanted == 1 ? slot->number == allowed[literal].number : wanted == 2 ? slot->boolean == allowed[literal].boolean : wanted == 3 && adamic_string_equal(slot->reference, allowed[literal].reference));
+                accepted = accepted || (wanted == 1 ? slot->number == allowed[literal].number : wanted == 2 ? slot->boolean == allowed[literal].boolean : wanted == 9 ? adamic_maybe_boolean_unpack(slot->maybe_boolean).boolean == allowed[literal].boolean : wanted == 3 && adamic_string_equal(slot->reference, allowed[literal].reference));
             }
             if (!accepted) adamic_view_literal_failure(expression, expected, wanted, *slot);
         }
@@ -95,8 +102,8 @@ adamic_string *adamic_view_array_string(const adamic_array *array, const adamic_
             if (number.present) text = adamic_string_from_number(number.number);
         } else if (slot != NULL && wanted == 1) text = adamic_string_from_number(slot->number);
         else if (slot != NULL && wanted == 3) text = adamic_retain(slot->reference);
-        else if (slot != NULL && wanted == 2) {
-            const char *word = slot->boolean ? "true" : "false";
+        else if (slot != NULL && (wanted == 2 || wanted == 9)) {
+            const char *word = (wanted == 9 ? adamic_maybe_boolean_unpack(slot->maybe_boolean).boolean : slot->boolean) ? "true" : "false";
             size_t size = strlen(word);
             text = adamic_string_allocate(size);
             memcpy((char *)text->bytes, word, size);

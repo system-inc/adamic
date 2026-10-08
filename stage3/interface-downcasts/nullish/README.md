@@ -639,3 +639,46 @@ repository gate and production reachability census were not rerun. Remaining
 conservative inventory is still 2,018 pairs / 9,101 reads, with exact remaining
 production pairs/reads unmeasured. Reduced pending groups are packed booleans,
 boxed key domains and nominal entries beneath aggregates.
+
+## October 8 packed boolean arrays
+
+Readonly Map certificates now admit boolean array elements widened to packed
+boolean|undefined, and packed boolean elements widened to boxed nullish unions.
+Array metadata records storage 9 separately from pointers. The shared decoder
+unpacks the byte before reading false/true/presence; absent snapshots use byte 2,
+and ordinary boolean reads widened to storage 9 are explicitly packed present.
+Scalar writes into the same packed representation are checked and permitted.
+Find unpacks the returned byte instead of interpreting its value as presence.
+
+Node controls cover true, false, stored undefined, alias pushes, identity, join,
+index, for-of, map, filter, forEach, at, find, some/every, reduce, includes, indexOf
+and lastIndexOf. The original unread-elements probe is admitted. Wrong element
+schema stops at node.value. A real string producer under the unchanged boolean
+certificate stops at helper values[element]; a false producer under declared
+true|undefined stops at values[0], both backends.
+
+Consumer audit: JSON.stringify bypasses checked array extraction and its runtime
+schema decoder cannot use a converted alias safely. Boxed/packed boolean array
+arguments now refuse by name at that consumer. Unwired array operations and
+spreads remain named consumer refusals. No primitive-brand rule or callable
+convention was changed.
+
+Five runtime implementation mutations were independently run and restored:
+drop the packed presence test, pack every boolean absent, use false for an absent
+callback/loop snapshot, and drop the native/JavaScript finite literal checks.
+Each loses Node behavior or lets the false payload mutant run on. A sixth,
+compile-admission counterfactual drops the JSON boundary and loses both required
+consumer refusals; it is not claimed as a native runtime kill.
+
+Validation: expanded Node controls/IR mutants/consumer refusals pass in 5.510s;
+uncached Map|Nullish|NullableSelection|TestCheckedViewArrayJSONStorageRefusal
+oracle passes in 173.183s; scoped IR/lower/native/JavaScript packages pass in
+.012s, 5.348s, 43.445s and 1.121s, with the previously recorded Phantom baseline
+exclusion; whole vet passes. Raw logs and all six counterfactual results are
+preserved in evidence/map-nested-packed-* and evidence/map-packed-*. No full
+repository gate or new production census is claimed.
+
+The conservative inventory remains 2,018 pairs / 9,101 reads; exact remaining
+production pairs and reads are unmeasured. Reduced pending conversion groups are
+boxed key domains and nominal stores beneath entry aggregates. JSON remains a
+named consumer gap, and broader callable-bearing nominal stores stay with lane 5.

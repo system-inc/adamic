@@ -61,6 +61,10 @@ func (e *emitter) emitViewArraySearch(search ir.ArraySearch) string {
 			equal += " || (" + value + ".present && isnan(" + present + ".number) && isnan(" + value + ".number))"
 		}
 		missing = "!" + value + ".present"
+	case ir.MaybeBoolean:
+		present := "adamic_maybe_boolean_unpack(" + slot + "->maybe_boolean)"
+		equal = "(" + value + ".present && " + present + ".boolean == " + value + ".boolean)"
+		missing = "!" + value + ".present"
 	case ir.Union:
 		equal = "adamic_union_equal(" + slot + "->reference, " + value + ")"
 		if search.Includes {

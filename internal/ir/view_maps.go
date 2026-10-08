@@ -200,7 +200,7 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 			}
 			// Shared array readers convert packed numbers and primitive boxes at
 			// each extraction, without rewriting the producer storage.
-			storage := sameStorage(source.Element, target.Element) || target.ArrayReadonly && (program.ViewContracts[source.Element-1].Of == Number && program.ViewContracts[target.Element-1].Of == MaybeNumber || PrimitiveArrayUnionStorage(program, source.Element, target.Element))
+			storage := sameStorage(source.Element, target.Element) || target.ArrayReadonly && ((program.ViewContracts[source.Element-1].Of == Number && program.ViewContracts[target.Element-1].Of == MaybeNumber || program.ViewContracts[source.Element-1].Of == Boolean && program.ViewContracts[target.Element-1].Of == MaybeBoolean) || PrimitiveArrayUnionStorage(program, source.Element, target.Element))
 			return storage && accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
 		}
 		for _, id := range ScalarWriteContracts(program, from) {
@@ -232,7 +232,7 @@ func PrimitiveArrayUnionStorage(program *Program, source, target ViewContractID)
 		return false
 	}
 	from, to := program.ViewContracts[source-1], program.ViewContracts[target-1]
-	if to.Of != Union || from.Of != Number && from.Of != Boolean && from.Of != String && from.Of != MaybeNumber && from.Of != Union {
+	if to.Of != Union || from.Of != Number && from.Of != Boolean && from.Of != String && from.Of != MaybeNumber && from.Of != MaybeBoolean && from.Of != Union {
 		return false
 	}
 	return PrimitiveArrayContract(program, target)

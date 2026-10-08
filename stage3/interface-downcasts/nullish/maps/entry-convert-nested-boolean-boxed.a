@@ -1,0 +1,7 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,readonly (boolean|null|undefined)[]>|null}
+const item:(boolean|undefined)[]=[true,false,undefined];const source=new Map<string,readonly (boolean|undefined)[]>([['key',item]]);
+const raw={kind:'box',value:source};const base:Base=raw;
+function inspect(values:readonly (boolean|null|undefined)[]):void{console.log(values.join(','));for(const value of values){console.log(typeof value+':'+String(value));}console.log(String(values[0]));console.log(values.map(value=>typeof value).join(','));console.log(values.filter(value=>value!==undefined).join(','));values.forEach(value=>{console.log('each:'+typeof value);});console.log(String(values.includes(undefined)));console.log(values.slice(0,2).join(','));console.log(String(values.at(-1)));console.log(String(values.find(value=>value===false)));console.log(String(values.some(value=>value===false)));console.log(String(values.every(value=>value!==null)));console.log(String(values.reduce((count,value)=>count+(value===false?1:0),0)));console.log(String(values.indexOf(false)));console.log(String(values.lastIndexOf(false)));console.log(String(values.includes(false)));}
+function read(node:Target):void{const map=node.value;if(map!==null){const values=map.get('key');if(values!==undefined){console.log(String(values===item));inspect(values);item.push(undefined);inspect(values);}}}
+read(base as Target);

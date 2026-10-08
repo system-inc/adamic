@@ -20,7 +20,7 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	if err != nil {
 		return nil, true, err
 	}
-	if element == ir.Union && name != "join" && name != "indexOf" && name != "includes" && name != "lastIndexOf" {
+	if (element == ir.Union || element == ir.MaybeBoolean) && name != "join" && name != "indexOf" && name != "includes" && name != "lastIndexOf" {
 		return nil, true, l.notYet(node, "boxed primitive array consumer ."+name+" requiring storage conversion")
 	}
 	if name == "join" && element != ir.Array {

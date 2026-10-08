@@ -226,10 +226,10 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	}
 	literal := ir.ArrayLiteral{Element: element}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
-	if element == ir.Union {
+	if element == ir.Union || element == ir.MaybeBoolean {
 		for _, item := range items {
 			if item.Kind == ast.KindSpreadElement {
-				return nil, l.notYet(item, "spreading a boxed primitive array requiring storage conversion")
+				return nil, l.notYet(item, "spreading a boxed or packed boolean array requiring storage conversion")
 			}
 		}
 	}
@@ -335,7 +335,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return of, nil
 	}
 	valueType, isKnown := l.kept(element)
-	if isKnown && valueType == ir.Union {
+	if isKnown && (valueType == ir.Union || valueType == ir.MaybeBoolean) {
 		id, err := l.viewContract(node, element)
 		if err != nil {
 			return 0, err
@@ -1210,7 +1210,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	if err != nil {
 		return nil, true, err
 	}
-	if element == ir.Union {
+	if element == ir.Union || element == ir.MaybeBoolean {
 		switch name {
 		case "join", "map", "forEach", "filter", "some", "every", "find", "findIndex", "reduce", "slice", "at", "push", "indexOf", "includes":
 		default:
@@ -1342,7 +1342,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		}
 		return ir.ArrayConcat{Array: array, Others: arguments}, true, nil
 	}
-	if element != ir.Number && element != ir.Boolean && element != ir.String && element != ir.MaybeNumber && element != ir.Union {
+	if element != ir.Number && element != ir.Boolean && element != ir.String && element != ir.MaybeNumber && element != ir.MaybeBoolean && element != ir.Union {
 		// JavaScript writes an object as "[object Object]", a function as its source, and an array as
 		// its own join, flattened; 0.1 has no use for any of that.
 		return nil, true, l.notYet(node, "join on an array of objects, arrays, maps or functions")

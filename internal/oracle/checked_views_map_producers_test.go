@@ -149,7 +149,7 @@ func TestCheckedViewMapUndefinedStorageMutant(t *testing.T) {
 }
 
 func TestCheckedViewMapNestedPayloadMutant(t *testing.T) {
-	for _, name := range []string{"entry-convert-nested-array", "entry-convert-nested-union"} {
+	for _, name := range []string{"entry-convert-nested-array", "entry-convert-nested-union", "entry-convert-nested-boolean-optional"} {
 		t.Run(name, func(t *testing.T) { checkedViewMapNestedPayloadMutant(t, name) })
 	}
 }
@@ -303,7 +303,13 @@ func TestCheckedViewMapNominalProducerMutants(t *testing.T) {
 }
 
 func TestCheckedViewMapNestedUnionLiteralMutant(t *testing.T) {
-	program, path := interfaceFixture(t, "nullish/maps/entry-convert-nested-union-finite")
+	for _, name := range []string{"entry-convert-nested-union-finite", "entry-convert-nested-boolean-finite"} {
+		t.Run(name, func(t *testing.T) { checkedViewMapNestedLiteralMutant(t, name) })
+	}
+}
+
+func checkedViewMapNestedLiteralMutant(t *testing.T, name string) {
+	program, path := interfaceFixture(t, "nullish/maps/"+name)
 	truth := onNode(t, path)
 	changed := false
 	for index, statement := range program.Main {
@@ -313,6 +319,9 @@ func TestCheckedViewMapNestedUnionLiteralMutant(t *testing.T) {
 				t.Fatal("array producer changed")
 			}
 			literal.Elements[0] = ir.NumberConstant{Value: 2}
+			if strings.Contains(name, "boolean") {
+				literal.Elements[0] = ir.BooleanConstant{Value: false}
+			}
 			declaration.Value = literal
 			program.Main[index] = declaration
 			changed = true
@@ -328,5 +337,5 @@ func TestCheckedViewMapNestedUnionLiteralMutant(t *testing.T) {
 			t.Fatalf("finite union helper trusted wrong number: %#v", got)
 		}
 	}
-	t.Logf("Node=%q; actual number 2 with declared literal 1 stopped at helper values[0]", truth.stdout)
+	t.Logf("Node=%q; nonmember payload with unchanged finite declaration stopped at helper values[0]", truth.stdout)
 }

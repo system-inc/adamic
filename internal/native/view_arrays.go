@@ -82,7 +82,11 @@ func (e *emitter) emitViewArrayReadWithOwner(read ir.ArrayIndex, array, index, o
 			case ir.Number:
 				tests = append(tests, fmt.Sprintf("%s.number == %s", snapshot, cNumber(literal.Number)))
 			case ir.Boolean:
-				tests = append(tests, fmt.Sprintf("%s.boolean == %t", snapshot, literal.Boolean))
+				actual := snapshot + ".boolean"
+				if read.Element == ir.MaybeBoolean {
+					actual = "adamic_maybe_boolean_unpack(" + snapshot + ".maybe_boolean).boolean"
+				}
+				tests = append(tests, fmt.Sprintf("%s == %t", actual, literal.Boolean))
 			case ir.String:
 				name := e.temporary()
 				e.declarations = append(e.declarations, fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(%s);", name, cString(literal.String)))
@@ -112,6 +116,9 @@ func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index, owne
 	fallback := "(adamic_value){.reference = NULL}"
 	if read.Element == ir.MaybeNumber {
 		fallback = "(adamic_value){.number = " + slotted(ir.MaybeNumber, zero(ir.MaybeNumber)) + "}"
+	}
+	if read.Element == ir.MaybeBoolean {
+		fallback = "(adamic_value){.maybe_boolean = 2}"
 	}
 	e.line("adamic_value %s = %s == NULL ? %s : *%s;", value, slot, fallback, slot)
 	return value
@@ -231,6 +238,8 @@ func (e *emitter) emitViewArrayJoinSource(join ir.ArrayJoin, array, separator st
 		value := e.temporary()
 		e.line("adamic_maybe_number %s = adamic_maybe_number_unpack(%s->number);", value, slot)
 		e.line("if (%s.present) %s = adamic_string_from_number(%s.number);", value, text, value)
+	case ir.MaybeBoolean:
+		e.line("%s = adamic_maybe_boolean_unpack(%s->maybe_boolean).boolean ? &%s : &%s;", text, slot, yes, no)
 	case ir.Boolean:
 		e.line("%s = %s->boolean ? &%s : &%s;", text, slot, yes, no)
 	case ir.String:
