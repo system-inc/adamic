@@ -1,0 +1,19 @@
+caught drop one cast
+caught move tagged example into other
+{"ledger_casts":3957,"node_goldens":20,"runtime_passed":2,"runtime_blocked":18,"observed_mutant_controls":21}
+/workspace/adamic/stage3/fixtures/checked-casts/verify.cjs:6
+function assert(ok, message) {if (!ok) throw Error(message);}
+                                       ^
+
+Error: checked-cast feature missing for 01_enum_declaration.a, 01_enum_declaration_fails.a, 03_chain_info.a, 03_chain_info_fails.a, 04_literal_payload.a, 04_literal_payload_fails.a, 05_extension.a, 05_extension_fails.a, 06_parser_keyword.a, 06_parser_keyword_fails.a, 07_generic_next.a, 07_generic_next_fails.a, 08_generic_node.a, 08_generic_node_fails.a, 09_primitive_string.a, 09_primitive_string_fails.a, 10_generator_label.a, 10_generator_label_fails.a
+    at assert (/workspace/adamic/stage3/fixtures/checked-casts/verify.cjs:6:46)
+    at Object.<anonymous> (/workspace/adamic/stage3/fixtures/checked-casts/verify.cjs:41:49)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.19.0
