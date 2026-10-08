@@ -1,0 +1,56 @@
+class Receiver {
+	count: number;
+	label: string;
+	constructor(seed: number) {
+		this.count = seed;
+		this.label = `receiver-${seed}`;
+	}
+	value(): number { return this.count; }
+	make(): (step: number) => string {
+		return (step: number): string => {
+			this.count += step;
+			this.label = `${this.label}/${this.count}`;
+			return `${this.label}:${this.value()}`;
+		};
+	}
+	nested(): () => (step: number) => string {
+		return (): ((step: number) => string) => (step: number): string => {
+			this.count += step;
+			return `${this.label}:${this.value()}`;
+		};
+	}
+}
+class DerivedReceiver extends Receiver {
+	value(): number { return this.count * 10; }
+}
+class CallbackHolder {
+	callback: (step: number) => string;
+	constructor(callback: (step: number) => string) { this.callback = callback; }
+}
+function escaped(seed: number): (step: number) => string {
+	return new Receiver(seed).make();
+}
+function inherited(seed: number): (step: number) => string {
+	return new DerivedReceiver(seed).make();
+}
+function nested(seed: number): () => (step: number) => string {
+	return new DerivedReceiver(seed).nested();
+}
+function stored(seed: number): CallbackHolder {
+	return new CallbackHolder(new Receiver(seed).make());
+}
+const first = escaped(2);
+const second = escaped(20);
+console.log(first(3));
+console.log(second(1));
+console.log(first(4));
+const holder = stored(30);
+console.log(holder.callback(2));
+console.log(holder.callback(3));
+const inheritedCallback = inherited(40);
+console.log(inheritedCallback(2));
+const outer = nested(50);
+const inner = outer();
+console.log(inner(3));
+console.log(outer()(4));
+console.log([1, 2, 3].map(escaped(60)).join('|'));
