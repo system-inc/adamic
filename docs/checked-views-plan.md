@@ -815,6 +815,40 @@ The initial October 9 estimate was revised after inspection of pending hooks.
 No integrated pair is complete at this territory checkpoint: 73 pairs and
 267 reads remain. Lazy-admission branch was not yet present on origin.
 
+### Lane 4b resumed on integrated lazy admission, October 7
+
+Merged integration ba59427ccc7afecae29a305c41e6e9c7867e5610. Superseding
+inventory: 42 candidate pairs / 181 candidate reads from lazy/census; exact
+production reachability remains unmeasured pending checker-clean TypeScript.
+The old 73/267 table remains historical. Ranked ledger and source controls are
+in lane4b/resume. No original tsc pair is yet marked complete.
+
+The lead now authorizes minimal shared hooks. This lane adds named dispatch to
+objectPrimitiveViewType in lower/object.go and lower/interface_cast.go, and
+viewObjectPrimitive in native/view_fields.go and javascript/javascript.go.
+The two admission guards allow one structural object plus scalar primitives
+and optional undefined; accessors remain refused. Backend dispatch preserves
+the shared union contract and descendant read obligations. New runtime files
+normalize concrete scalar and boxed slots, check presence/readiness, select
+literal primitive membership, and retain the single object alternative.
+Selection of that alternative is not a structural-conformance certificate:
+its fields remain lazy obligations and every reachable descendant read must
+use the shared view machinery. No object member is erased into Unknown.
+
+Production source controls cover reduced true|Node|undefined and string|Chain
+shapes, matching the first two ranked shapes (five candidate pairs / 43 reads).
+They are not original-pair coverage. Both backends pin outer and nested wrong
+values, and valid values; the optional shape also pins undefined. Independent
+release mutants remove outer selection, accept a wrong literal/nested scalar,
+and remove a transitive read check. Arrays, Map, callables, intersections,
+multiple object alternatives, indexed reads, inherited static slots and packed
+optional numeric/boolean storage remain outside this adapter checkpoint.
+
+Revised whole-family working date: October 16, 2026, 23:00 UTC. This includes
+remaining member adapters and original-pair witnesses; exact reachability will
+still require the checker-clean program. Only integration is merged, and the
+lead forwards this lane's tip to the integrator for hunk reconciliation.
+
 ## Centralized checked-view integration
 
 The lead assigned Codex 01a11882-3830 on codex/views-integration to merge every
