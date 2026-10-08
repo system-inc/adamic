@@ -1,3 +1,82 @@
+Built the merged slices and a row-keyed production census over all 173 dated ledger rows, with exact source and exclusion checks.
+Commits: enum merge c2acd9dc, census merge 67e27a37, slice d merge 5d80bb93, integration repairs 8d96e943, final slice a merge 9610256b; pushed only codex/stricter-indexed-all.
+Commands and outputs: seven witness suites, filtered oracle, scoped packages, vet and updated allocation counts pass; production schedules 168 contracts, retains 5 catch errors and 0 ordinary errors; all 99 indexed reads remain behind sys.ts namespace preflight.
+Mutants: eight census/exclusion mutants caught; native witness guard erasures and the ownership ASan mutant are recorded in the attached complete test logs.
+Not covered: 0 original-program checks emitted, 99 indexed read-local outcomes not reached; 5 catch-variable contracts pending; the unfiltered lower package has two namespace-preflight failures.
+
+## Current result after enum, census and final slice merges
+
+This section supersedes every historical result below. The enum initialization refusal at core.ts:19:52 is lifted. The final tree includes stricter-options-checks 51eab0da (and c132be26), records b150f83c (and 28d30cd3), slices a cf8048da, b 3ccc3268, c 00fa8dfc and d 1a83ba1a, and enum-init-reach 2152fc3b. All merge batches were pushed to this branch. Conflicts were inspected individually; newer census, namespace and finite readonly-record support were preserved alongside incoming optional-field proofs.
+
+| Original ledger group | Scheduled | Emitted as a check | Refused at checker | Read-local not reached |
+|---|---:|---:|---:|---:|
+| Indexed reads | 99 | 0 | 0 | 99 |
+| Optional writes | 67 | 0 | 0 | 67 |
+| JSON stringify | 2 | 0 | 0 | 2 |
+| Catch variables | 0 | 0 | 5 | 5 |
+| Total | 168 | 0 | 5 | 173 |
+
+[Every row by ID](evidence/census-row-outcomes.csv), [full row details](evidence/census-row-outcomes.json), [summary](evidence/census-summary.json) and [raw production output](evidence/census-production-result.json) distinguish census scheduling, emitted guards, pending checker errors and the common program blocker. The 99 indexed rows have zero measured read-local refusals and zero measured read-local checker errors because lowering has not reached them. Scheduling alone does not establish a native compilation date.
+
+The production loader uses each .ts file's owning project configuration and converts supported stricter diagnostics into scheduled contracts. It does not apply literal tsc strict options. All 79 dated source hashes match. The census retains all 173 IDs and their exact locations/codes/options, including indexed-owned D069's joint attribution.
+
+The unchanged whole compiler graph, entered through src/compiler/_namespaces/ts.ts, refuses at one of these two source locations (the preflight's traversal order varies):
+
+* src/compiler/sys.ts:1492:142, `_fs.realpathSync.native`.
+* src/compiler/sys.ts:1502:51, `memoize(() => process.cwd())`.
+
+Both messages are: `stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet`.
+
+All 16 entry attempts (the actual compiler namespace plus each of the 15 indexed-row source files) retain the complete checked graph and stop at that preflight. No native artifact or indexed IR guard is emitted. No lowering refusal is bypassed.
+
+Observation: both constructs resolve through pinned Node declarations; fs.d.ts declares namespace realpathSync and process.d.ts declares namespace process. Inference: the namespace initialization preflight treats these ambient declaration namespaces as pending executable initialization. Route to internal/lower/namespaces.go, namespaceInitialization / namespaceDeclaration / namespaceRuntime and its reachable-call graph. Origin branches namespaces-tsc 75a1d221, enum-tag-narrowing-2 64952252 and compiler/stage3-front-3 7a1fd0a9 were inspected; none contains a lift for this ambient namespace case. Their broader tips were therefore not imported as an unrelated workaround.
+
+## Exact diagnostic exclusions
+
+The authorized manifest remains exactly the dated 72 IDs: 67 primary optional-write rows and D108, D128, D132, D152, D153. The loader already schedules all 67 optional-write contracts, so those contracts and all their lowering maps remain active. The isolated probe removes only the five pending catch diagnostic messages. Normal production loading still reports those five checker errors. The probe overlay is confined to scratch files; source TypeScript, tsconfigs and the normal loader are not altered for this run.
+
+The policy checks every ID, absolute file, UTF-16 line/column, code and single-option attribution, rejects joint D069 as an exclusion, and requires exactly five actual removals given the census. It preserves ordinary and indexed diagnostics byte for byte. Source identity, the exact manifest and overlay hashes are attached with the production evidence.
+
+## Validation and mutants
+
+The final validation logs are in logs/census-final-*.txt. Full slice suites cover both native backends in release and sanitized builds, Node present/absent behavior, pinned stderr, explain counts and runtime guard-erasure mutants. All four slices, records, base stricter options and integration routing are run together after the final merge. Earlier failures and repair logs remain available separately; they are not counted as mutant catches.
+
+Eight probe mutants: omit one authorized exclusion; shift one exclusion location; disguise joint D069 as optional-only; drop one indexed audit; fabricate a built entry; substitute an excluded row ID; remove a census row; fabricate an emitted state. The first three must fail before lowering, and the other five must fail classification. Full output identifies each caught assertion. The ownership mutant builds successfully and ASan reports heap-use-after-free after removing standalone retains; a previous unused-variable compilation failure was rejected as inadequate evidence and the mutant was repaired.
+
+D212 and D220: generators.ts, transformGenerators.hasImmediateContainingLabeledBlock and transformGenerators.tryEnterOrLeaveBlock. Their redundant receiver `!` assertions now lower, with one indexed-presence guard each, so the old redundant-assertion refusal is no longer a routing blocker. Their original whole-program sites still have not been reached.
+
+The full lower gate's two node:fs.readFile subcases fail because the namespace preflight arrives before the expected unsupported-member diagnostic. They are reported, not silently made green. A separate lower run explicitly skips those named subcases to check the remaining package. No full repository gate is claimed. The filtered independent oracle, native package, loader/IR/CLI packages and vet commands and outputs are retained in logs. The setup run succeeded in 106.643 seconds with nproc=5 and CPU quota=4; timing lines: Go 0.204s, Node 0.213s, submodules 0.398s, markdown dependencies 0.464s, clang 0.948s, Go build 106.465s, warm cache 106.614s.
+
+## Final-tree verification results
+
+All seven witness packages pass on 9610256b: slice a 160.926s, b 157.739s, c 133.602s, d 240.248s, records 98.426s, stricter options 53.787s, integration routing 1.773s. Together the four slices cover all 99 minimal indexed witnesses, including D069 and nested D119. This minimal-program proof remains distinct from the blocked original whole program.
+
+The scoped package run passes: loader 24.067s, lower 80.894s with exactly the two known namespace subcases skipped, CLI 5.600s. Vet passes. The independent filtered oracle passes in 60.261s with zero cache hits, 114 native misses and 142 Node misses. All eight final-tree probe mutants are caught. The full native package passed in 256.135s before the final slice a merge; the final merge's native behavior is covered by the complete witnesses and filtered oracle, not a claimed repeated full native-package run.
+
+The allocation-count gate initially failed with stale recorded retain/release totals across 86 rows; full evidence is retained. The prescribed update-counts command passes in 32.578s and the verification passes in 12.935s. It measures the merged tree rather than changing compiler behavior; both outputs are attached separately. The earlier two unfiltered lower failures remain unresolved.
+
+## Reproduction commands
+
+With the toolchain environment sourced and GOPROXY=https://proxy.golang.org|direct, the final compiler revision is 9610256b. Test output is redirected to files.
+
+```sh
+python3 stage3/stricter-indexed-all/build-production-probe.py --tree /tmp/stricter-indexed-all-typescript --scratch /tmp/stricter-indexed-all-final-production
+/tmp/stricter-indexed-all-final-production/production-probe /tmp/stricter-indexed-all-typescript stage3/stricter-indexed-all/evidence/ledger-options.json /tmp/stricter-indexed-all-final-production/exclusions.json /tmp/stricter-indexed-all-final-production/native
+python3 stage3/stricter-indexed-all/classify-census.py --result /tmp/stricter-indexed-all-final-production/result.json --output stage3/stricter-indexed-all/evidence
+python3 stage3/stricter-indexed-all/probe-controls.py --scratch /tmp/stricter-indexed-all-final-production --tree /tmp/stricter-indexed-all-typescript
+ADAMIC_GATE_UNCACHED=1 go test ./stage3/stricter-indexed-a ./stage3/stricter-indexed-b ./stage3/stricter-indexed-c ./stage3/stricter-indexed-d ./stage3/stricter-records ./stage3/stricter-options ./stage3/stricter-indexed-all -count=1 -timeout 10m -v
+go test ./internal/load ./internal/lower ./cmd/adamic -skip 'TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile' -count=1 -timeout 10m
+go vet ./internal/load ./internal/lower ./internal/native ./cmd/adamic ./stage3/stricter-indexed-all
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestEnumInitialization|TestNamespace|TestParameterPropert|TestOptional.*Guard|TestOptionalImplementsRepresentation|TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|string_index|narrowed_reads|narrowed_numbers|records|catch_values|field_access_paths)' -count=1 -timeout 10m -v
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 10m
+```
+
+The original unfiltered lower run is retained in logs/census-full-lower-failures.txt. The final-tree package run names its two skipped subcases explicitly above. The standalone census probe and classifier exited zero because they recorded all attempts. Every lowering attempt refused; that evidence-collection success is not a successful native build.
+
+## Historical evidence before enum and census integration
+
+The following is retained for provenance only; its old counts and blockers are superseded above.
+
 Built the ruling-mode whole-program probe with exactly 72 authorized row exclusions, merged all current slices/records, and classified every indexed row.
 Commits: scoped probe 0820cc0a, newest base 4fe06650, final owner-fix merge 783509f4; all pushes go only to codex/stricter-indexed-all.
 Commands and outputs: seven merged witness packages, compiler package checks, filtered oracle and vet pass; 79 source hashes match; production checker succeeds; all 16 lowering entries refuse at core.ts:19:52.

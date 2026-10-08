@@ -1,0 +1,338 @@
+=== RUN   TestEnumInitializationNode
+=== RUN   TestEnumInitializationNode/native-enum-map
+=== RUN   TestEnumInitializationNode/native-call-before-enum
+=== RUN   TestEnumInitializationNode/safe-helper
+=== RUN   TestEnumInitializationNode/safe-constructor
+=== RUN   TestEnumInitializationNode/callable-selection
+=== RUN   TestEnumInitializationNode/call-graph-24
+=== RUN   TestEnumInitializationNode/unknown-after
+=== RUN   TestEnumInitializationNode/reaching-direct
+=== RUN   TestEnumInitializationNode/reaching-helper
+=== RUN   TestEnumInitializationNode/reaching-cycle
+=== RUN   TestEnumInitializationNode/reaching-constructor
+=== RUN   TestEnumInitializationNode/reaching-derived
+--- PASS: TestEnumInitializationNode (11.19s)
+    --- PASS: TestEnumInitializationNode/native-enum-map (1.40s)
+    --- PASS: TestEnumInitializationNode/native-call-before-enum (1.27s)
+    --- PASS: TestEnumInitializationNode/safe-helper (1.11s)
+    --- PASS: TestEnumInitializationNode/safe-constructor (1.13s)
+    --- PASS: TestEnumInitializationNode/callable-selection (1.26s)
+    --- PASS: TestEnumInitializationNode/call-graph-24 (1.23s)
+    --- PASS: TestEnumInitializationNode/unknown-after (1.39s)
+    --- PASS: TestEnumInitializationNode/reaching-direct (0.42s)
+    --- PASS: TestEnumInitializationNode/reaching-helper (0.53s)
+    --- PASS: TestEnumInitializationNode/reaching-cycle (0.48s)
+    --- PASS: TestEnumInitializationNode/reaching-constructor (0.49s)
+    --- PASS: TestEnumInitializationNode/reaching-derived (0.48s)
+=== RUN   TestEnumInitializationUnknownPinned
+=== RUN   TestEnumInitializationUnknownPinned/unknown-before
+=== RUN   TestEnumInitializationUnknownPinned/unknown-callback
+=== RUN   TestEnumInitializationUnknownPinned/unknown-property
+--- PASS: TestEnumInitializationUnknownPinned (3.68s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-before (1.32s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-callback (1.11s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-property (1.25s)
+=== RUN   TestNamespaceSemanticMutants
+=== RUN   TestNamespaceSemanticMutants/wrong_scoped_function
+=== PAUSE TestNamespaceSemanticMutants/wrong_scoped_function
+=== RUN   TestNamespaceSemanticMutants/wrong_scoped_constant
+=== PAUSE TestNamespaceSemanticMutants/wrong_scoped_constant
+=== RUN   TestNamespaceSemanticMutants/wrong_namespace_enum
+=== PAUSE TestNamespaceSemanticMutants/wrong_namespace_enum
+=== RUN   TestNamespaceSemanticMutants/wrong_body_order
+=== PAUSE TestNamespaceSemanticMutants/wrong_body_order
+=== RUN   TestNamespaceSemanticMutants/wrong_exported_state
+=== PAUSE TestNamespaceSemanticMutants/wrong_exported_state
+=== RUN   TestNamespaceSemanticMutants/wrong_debug_initialization
+=== PAUSE TestNamespaceSemanticMutants/wrong_debug_initialization
+=== RUN   TestNamespaceSemanticMutants/drop_returned_assignment
+=== PAUSE TestNamespaceSemanticMutants/drop_returned_assignment
+=== RUN   TestNamespaceSemanticMutants/wrong_factory_binding
+=== PAUSE TestNamespaceSemanticMutants/wrong_factory_binding
+=== CONT  TestNamespaceSemanticMutants/wrong_scoped_function
+=== CONT  TestNamespaceSemanticMutants/wrong_factory_binding
+=== CONT  TestNamespaceSemanticMutants/drop_returned_assignment
+=== CONT  TestNamespaceSemanticMutants/wrong_body_order
+=== CONT  TestNamespaceSemanticMutants/wrong_namespace_enum
+=== NAME  TestNamespaceSemanticMutants/wrong_factory_binding
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== CONT  TestNamespaceSemanticMutants/wrong_scoped_constant
+=== NAME  TestNamespaceSemanticMutants/wrong_body_order
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== CONT  TestNamespaceSemanticMutants/wrong_debug_initialization
+=== NAME  TestNamespaceSemanticMutants/drop_returned_assignment
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== CONT  TestNamespaceSemanticMutants/wrong_exported_state
+=== NAME  TestNamespaceSemanticMutants/wrong_namespace_enum
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_scoped_function
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_debug_initialization
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_scoped_constant
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestNamespaceSemanticMutants/wrong_exported_state
+    namespaces_test.go:198: caught by Node stdout; exit 0 with clean sanitizers
+--- PASS: TestNamespaceSemanticMutants (0.00s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_factory_binding (0.85s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_body_order (0.91s)
+    --- PASS: TestNamespaceSemanticMutants/drop_returned_assignment (1.05s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_namespace_enum (1.13s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_scoped_function (1.21s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_debug_initialization (0.79s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_scoped_constant (0.94s)
+    --- PASS: TestNamespaceSemanticMutants/wrong_exported_state (0.91s)
+=== RUN   TestNamespaceStateMutants
+=== RUN   TestNamespaceStateMutants/lose_assignment
+    namespaces_test.go:265: caught by Node comparison
+=== RUN   TestNamespaceStateMutants/lose_hoisting
+    namespaces_test.go:265: caught by Node comparison
+=== RUN   TestNamespaceStateMutants/skip_ready_check
+    namespaces_test.go:260: caught by checked JavaScript exit comparison
+--- PASS: TestNamespaceStateMutants (1.66s)
+    --- PASS: TestNamespaceStateMutants/lose_assignment (0.52s)
+    --- PASS: TestNamespaceStateMutants/lose_hoisting (0.48s)
+    --- PASS: TestNamespaceStateMutants/skip_ready_check (0.66s)
+=== RUN   TestOptionalLiteralGuard
+    optional_literal_guard_test.go:284: Node/native/JavaScript agree; absent-construction mutant caught by guard, exit 70; /tmp/adamic-gate/TestOptionalLiteralGuard3520726612/001/main.ts:2:24: checked TS2375 exactOptionalPropertyTypes: object construction preserves own presence
+--- PASS: TestOptionalLiteralGuard (1.93s)
+=== RUN   TestOptionalConditionalGuard
+    optional_literal_guard_test.go:115: conditional counts: adamic: counts: allocations 12 frees 12 retains 9 releases 21 peak 6 regions 0
+    optional_literal_guard_test.go:151: outer-scope cleanup mutant compiles and matches Node output; LeakSanitizer and allocation/free counts catch leaked earlier guard values
+    optional_literal_guard_test.go:284: Node/native/JavaScript agree; absent-construction mutant caught by guard, exit 70; /tmp/adamic-gate/TestOptionalConditionalGuard2040370039/001/main.ts:4:51: checked TS2322 exactOptionalPropertyTypes: object construction preserves own presence
+--- PASS: TestOptionalConditionalGuard (3.16s)
+=== RUN   TestOptionalDefinedGuard
+    optional_literal_guard_test.go:170: undefined producer-result mutant caught by required-result guard, exit 70; checks: [/tmp/adamic-gate/TestOptionalDefinedGuard2325788878/001/main.ts:5:14: checked TS2375 exactOptionalPropertyTypes: required fields preserve own presence through optional view /tmp/adamic-gate/TestOptionalDefinedGuard2325788878/001/main.ts:9:24: checked TS2345 exactOptionalPropertyTypes: optional relation result must be defined]
+    optional_literal_guard_test.go:284: Node/native/JavaScript agree; absent-construction mutant caught by guard, exit 70; /tmp/adamic-gate/TestOptionalDefinedGuard2325788878/001/main.ts:5:14: checked TS2375 exactOptionalPropertyTypes: required fields preserve own presence through optional view
+--- PASS: TestOptionalDefinedGuard (2.58s)
+=== RUN   TestOptionalArrayGuard
+    optional_literal_guard_test.go:284: Node/native/JavaScript agree; absent-construction mutant caught by guard, exit 70; /tmp/adamic-gate/TestOptionalArrayGuard4200557787/001/main.ts:5:48: checked TS2322 exactOptionalPropertyTypes: nested optional contract preserves own presence
+--- PASS: TestOptionalArrayGuard (2.21s)
+=== RUN   TestOptionalCallbackGuard
+    optional_literal_guard_test.go:269: callback result lost presence caught by Node; wrong closure storage caught by runtime ABI check, exit 70
+--- PASS: TestOptionalCallbackGuard (2.38s)
+=== RUN   TestOptionalNestedNullableGuard
+    optional_literal_guard_test.go:284: Node/native/JavaScript agree; absent-construction mutant caught by guard, exit 70; /tmp/adamic-gate/TestOptionalNestedNullableGuard912942643/001/main.ts:4:57: checked TS2322 exactOptionalPropertyTypes: nested optional contract preserves own presence
+--- PASS: TestOptionalNestedNullableGuard (1.60s)
+=== RUN   TestOptionalNestedAssignmentGuard
+    optional_literal_guard_test.go:284: Node/native/JavaScript agree; absent-construction mutant caught by guard, exit 70; /tmp/adamic-gate/TestOptionalNestedAssignmentGuard1784480477/001/main.ts:5:37: checked TS2322 exactOptionalPropertyTypes: nested optional contract preserves own presence
+--- PASS: TestOptionalNestedAssignmentGuard (1.77s)
+=== RUN   TestOptionalNestedGuard
+    optional_literal_guard_test.go:284: Node/native/JavaScript agree; absent-construction mutant caught by guard, exit 70; /tmp/adamic-gate/TestOptionalNestedGuard3355074627/001/main.ts:4:44: checked TS2322 exactOptionalPropertyTypes: nested optional contract preserves own presence
+--- PASS: TestOptionalNestedGuard (1.74s)
+=== RUN   TestOptionalNullableViewGuard
+    optional_literal_guard_test.go:211: storage-kind mutant caught by runtime check, exit 70; lost optional-write presence mutant caught by Node observations, exit 0
+--- PASS: TestOptionalNullableViewGuard (2.00s)
+=== RUN   TestOptionalRequiredViewGuard
+    optional_literal_guard_test.go:284: Node/native/JavaScript agree; absent-construction mutant caught by guard, exit 70; /tmp/adamic-gate/TestOptionalRequiredViewGuard3153496814/001/main.ts:4:21: checked TS2379 exactOptionalPropertyTypes: required fields preserve own presence through optional view
+--- PASS: TestOptionalRequiredViewGuard (1.66s)
+=== RUN   TestOptionalSpreadGuard
+    optional_literal_guard_test.go:284: Node/native/JavaScript agree; absent-construction mutant caught by guard, exit 70; /tmp/adamic-gate/TestOptionalSpreadGuard2044565871/001/main.ts:4:24: checked TS2375 exactOptionalPropertyTypes: object construction preserves own presence
+--- PASS: TestOptionalSpreadGuard (1.78s)
+=== RUN   TestOptionalWriteGuard
+=== RUN   TestOptionalWriteGuard/absent-slot
+    optional_write_guard_test.go:89: absent-store mutant slot caught by presence guard, exit 70
+=== RUN   TestOptionalWriteGuard/absent-text
+    optional_write_guard_test.go:89: absent-store mutant text caught by presence guard, exit 70
+=== RUN   TestOptionalWriteGuard/absent-classSlot
+    optional_write_guard_test.go:89: absent-store mutant classSlot caught by presence guard, exit 70
+=== NAME  TestOptionalWriteGuard
+    optional_write_guard_test.go:92: native and JavaScript match Node; emitted checks: [/tmp/adamic-gate/TestOptionalWriteGuard1025460346/001/main.ts:10:1: checked TS2412 exactOptionalPropertyTypes: optional write preserves own presence /tmp/adamic-gate/TestOptionalWriteGuard1025460346/001/main.ts:14:1: checked TS2412 exactOptionalPropertyTypes: optional write preserves own presence /tmp/adamic-gate/TestOptionalWriteGuard1025460346/001/main.ts:5:1: checked TS2412 exactOptionalPropertyTypes: optional write preserves own presence]
+--- PASS: TestOptionalWriteGuard (3.00s)
+    --- PASS: TestOptionalWriteGuard/absent-slot (0.30s)
+    --- PASS: TestOptionalWriteGuard/absent-text (0.41s)
+    --- PASS: TestOptionalWriteGuard/absent-classSlot (0.42s)
+=== RUN   TestOptionalImplementsRepresentation
+    optional_write_guard_test.go:157: Node caught required-field absence mutant: exit 0 stdout "false|moduleResolverHost|false|undefined\n" stderr ""; /tmp/adamic-gate/TestOptionalImplementsRepresentation2328173967/001/main.ts:2:1: checked TS2420 exactOptionalPropertyTypes: implements relation uses own-presence representation
+--- PASS: TestOptionalImplementsRepresentation (2.70s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestParameterPropertyMutants
+=== RUN   TestParameterPropertyMutants/missing_store
+=== PAUSE TestParameterPropertyMutants/missing_store
+=== RUN   TestParameterPropertyMutants/late_store
+=== PAUSE TestParameterPropertyMutants/late_store
+=== CONT  TestParameterPropertyMutants/missing_store
+=== CONT  TestParameterPropertyMutants/late_store
+=== NAME  TestParameterPropertyMutants/missing_store
+    parameter_properties_test.go:70: caught by Node stdout; exit 0 with clean sanitizers
+=== NAME  TestParameterPropertyMutants/late_store
+    parameter_properties_test.go:70: caught by Node stdout; exit 0 with clean sanitizers
+--- PASS: TestParameterPropertyMutants (0.00s)
+    --- PASS: TestParameterPropertyMutants/missing_store (1.28s)
+    --- PASS: TestParameterPropertyMutants/late_store (1.40s)
+=== RUN   TestParameterPropertyOwnershipMutant
+=== PAUSE TestParameterPropertyOwnershipMutant
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_calls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_calls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_evaluation.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_evaluation.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_nested_arrays.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_nested_arrays.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_coalesce_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_coalesce_scalars.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_iteration_edges.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_iteration_edges.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_json_options.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_json_options.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+=== CONT  TestParameterPropertyOwnershipMutant
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/catch_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/catch_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a
+=== NAME  TestParameterPropertyOwnershipMutant
+    parameter_properties_test.go:108: missing callback field retain caught by ASan heap-use-after-free
+--- PASS: TestParameterPropertyOwnershipMutant (0.99s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/catch_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_json_options.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_nested_arrays.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_values.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_iteration_edges.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_coalesce_scalars.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_evaluation.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a
+    oracle_test.go:751: not yet: /workspace/adamic/internal/oracle/testdata/records_refuse/r24.a:4:20: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) (format the needed scalar fields explicitly instead of relying on object coercion) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_calls.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a
+--- PASS: TestNativeAgreesWithNode (0.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_growth.a (1.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_scalars.a (1.37s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_guarded_snapshot.a (1.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_fresh.a (1.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_discarded.a (1.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_reads.a (1.09s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/catch_values.a (1.56s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_numbers.a (1.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/field_access_paths.a (1.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/string_index.a (1.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/indexing.a (1.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_inherited_signature.a (1.36s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_json_options.a (1.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_in.a (1.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_composition.a (1.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_value.a (1.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_type_only_scanner.a (1.38s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_set.a (1.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_nested_arrays.a (1.64s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_values.a (1.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_iteration_edges.a (1.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_prototype_own.a (1.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_coalesce_scalars.a (1.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_order_edges.a (1.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_reference.a (1.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_evaluation.a (1.55s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_key_forms.a (1.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_prototype_read.a (1.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_refuse/r24.a (0.18s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_narrowed_number.a (1.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_optional.a (1.43s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_ownership.a (1.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_for_in.a (1.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_census.a (1.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_operations.a (1.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_right.a (1.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_environment_boundary.a (1.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_coverage_calls.a (1.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_properties_left.a (1.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/records_compare_missing_scalar.a (0.97s)
+PASS
+gate cache: native hits=0 misses=114
+gate cache: node hits=0 misses=142
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	60.261s
