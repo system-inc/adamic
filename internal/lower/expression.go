@@ -544,6 +544,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindElementAccessExpression:
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
+		if err := l.genericFunctionIdentityNew(node); err != nil {
+			return nil, err
+		}
 		return l.newExpression(node)
 	case ast.KindThisKeyword:
 		if l.this < 0 {
@@ -768,7 +771,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		}
 	}
 	if (operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken) && left.Type() == right.Type() {
-		if both(ir.Closure) {
+		if l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Left)) || l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) {
 			// Specialized forwarders have different pointers although JavaScript has
 			// one generic function identity. Do not silently compare those pointers.
 			if l.hasGenericFunctionValues() {

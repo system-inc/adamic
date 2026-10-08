@@ -8,7 +8,9 @@ mutants = [
     ("erase-reference-identity", "internal/lower/generic.go", 'key += "," + l.genericTypeKey(concrete)', 'key += "," + typeName(held)', "TestGenericFunctionValueReferenceInstances", "got 1 instances for two reference types"),
     ("miss-earlier-comparison", "internal/lower/expression.go", "if l.hasGenericFunctionValues() {", "if len(l.forwarders) > 0 && l.hasGenericFunctionValues() {", "TestGenericFunctionValueEarlierIdentityComparisonIsNotYet", "want earlier identity comparison NotYet"),
     ("observe-specialized-pointers", "internal/lower/generic_function_value.go", "if observes && l.hasGenericFunctionValues() {", "if false && observes && l.hasGenericFunctionValues() {", "TestGenericFunctionValueIdentityCallsAreNotYet", "want identity observation NotYet"),
-    ("compare-specialized-pointers", "internal/lower/expression.go", "if both(ir.Closure) {", "if false && both(ir.Closure) {", "TestGenericFunctionValueIdentityComparisonIsNotYet", "want identity comparison NotYet"),
+    ("deduplicate-specialized-pointers", "internal/lower/generic_function_value.go", "if len(arguments) > 0 && l.functionIdentityType(arguments[0]) && l.hasGenericFunctionValues() {", "if false && len(arguments) > 0 && l.functionIdentityType(arguments[0]) && l.hasGenericFunctionValues() {", "TestGenericFunctionValueIdentityCallsAreNotYet", "want identity observation NotYet"),
+    ("compare-boxed-functions", "internal/lower/expression.go", "if l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Left)) || l.functionIdentityType(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) {", "if both(ir.Closure) {", "TestGenericFunctionValueUnionIdentityIsNotYet", "want union identity comparison NotYet"),
+    ("compare-specialized-pointers", "internal/lower/expression.go", "if l.hasGenericFunctionValues() {", "if false && l.hasGenericFunctionValues() {", "TestGenericFunctionValueIdentityComparisonIsNotYet", "want identity comparison NotYet"),
 ]
 for name, relative, old, new, test, catcher in mutants:
     source = root / relative

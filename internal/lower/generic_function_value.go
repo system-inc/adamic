@@ -82,22 +82,51 @@ func (l *lowering) genericFunctionIdentityCall(node *ast.Node) error {
 	observes := false
 	if callee.Name().Text() == "is" && l.isLibraryGlobal(property.Expression, "Object") {
 		for _, argument := range call.Arguments.Nodes {
-			held, _ := l.representation(l.checker.GetTypeAtLocation(argument))
-			observes = observes || held == ir.Closure
+			observes = observes || l.functionIdentityType(l.checker.GetTypeAtLocation(argument))
 		}
 	} else {
 		switch callee.Name().Text() {
-		case "includes", "indexOf", "lastIndexOf", "has", "add", "delete":
+		case "includes", "indexOf", "lastIndexOf", "has", "add", "delete", "get", "set":
 			receiver := l.concrete(l.checker.GetTypeAtLocation(property.Expression))
-			if l.checker.IsArrayType(receiver) || l.isLibraryType(receiver, "Set", "ReadonlySet") {
-				for _, argument := range l.typeArguments(receiver) {
-					held, _ := l.representation(argument)
-					observes = observes || held == ir.Closure
+			if l.checker.IsArrayType(receiver) || l.isLibraryType(receiver, "Set", "ReadonlySet", "Map", "ReadonlyMap") {
+				arguments := l.typeArguments(receiver)
+				if len(arguments) > 0 {
+					observes = l.functionIdentityType(arguments[0])
 				}
 			}
 		}
 	}
 	if observes && l.hasGenericFunctionValues() {
+		return l.notYet(node, "function identity observation in a program with specialized generic function values")
+	}
+	return nil
+}
+
+func (l *lowering) functionIdentityType(proven *checker.Type) bool {
+	proven = l.concrete(proven)
+	if proven == nil {
+		return false
+	}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if l.functionIdentityType(member) {
+				return true
+			}
+		}
+		return false
+	}
+	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0
+}
+
+// Constructing a collection already hashes and deduplicates its keys, before
+// any explicit has/get operation can be guarded.
+func (l *lowering) genericFunctionIdentityNew(node *ast.Node) error {
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
+	if !l.isLibraryType(proven, "Set", "Map") {
+		return nil
+	}
+	arguments := l.typeArguments(proven)
+	if len(arguments) > 0 && l.functionIdentityType(arguments[0]) && l.hasGenericFunctionValues() {
 		return l.notYet(node, "function identity observation in a program with specialized generic function values")
 	}
 	return nil

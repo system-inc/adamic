@@ -112,16 +112,29 @@ console.log(compare(first, second) ? 'same' : 'different');
 
 func TestGenericFunctionValueIdentityCallsAreNotYet(t *testing.T) {
 	t.Parallel()
-	for _, expression := range []string{"Object.is(first, second)", "[first].includes(second)", "[first].indexOf(second)"} {
+	for _, expression := range []string{"Object.is(first, second)", "[first].includes(second)", "[first].indexOf(second)", "new Set([first, second])", "new Map([[first, 1], [second, 2]])"} {
 		t.Run(expression, func(t *testing.T) {
 			_, err := lowerSource(t, `
 function identity<T>(x: T): T { return x; }
 const first: (x: string) => string = identity;
 const second: (x: string) => string = identity;
-`+expression+`;`)
+`+"const observed = "+expression+`;`)
 			if err == nil || !strings.Contains(err.Error(), "function identity observation") {
 				t.Fatalf("want identity observation NotYet, got %v", err)
 			}
 		})
+	}
+}
+
+func TestGenericFunctionValueUnionIdentityIsNotYet(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `
+function compare(a: ((x: string) => string) | string, b: ((x: string) => string) | string): boolean { return a === b; }
+function identity<T>(x: T): T { return x; }
+const first: (x: string) => string = identity;
+console.log(compare(first, first) ? 'same' : 'different');
+`)
+	if err == nil || !strings.Contains(err.Error(), "function identity comparison") {
+		t.Fatalf("want union identity comparison NotYet, got %v", err)
 	}
 }
