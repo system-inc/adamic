@@ -1,0 +1,6 @@
+=== RUN   TestRulesAgree
+    lint_test.go:428: /workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a:34:75: stage 0 can't lower an array of never yet
+--- FAIL: TestRulesAgree (5.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	5.081s
+FAIL

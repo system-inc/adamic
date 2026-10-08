@@ -1,0 +1,1413 @@
+{
+  "partition": {
+    "a": 2,
+    "b": 5,
+    "c": 17,
+    "rest": 76
+  },
+  "patterns_by_relation_site": {
+    "Array metadata": 1,
+    "Cache view": 2,
+    "Diagnostic enrichment": 2,
+    "Error or wildcard sentinel": 10,
+    "Factory or cached result": 6,
+    "Flag-selected operation": 4,
+    "Host enrichment": 1,
+    "Option-schema dispatch": 1,
+    "Reduced intersection component": 42,
+    "Union alternative or shared cache": 6,
+    "Unproved assertion": 1
+  },
+  "grouped_rows": 70,
+  "rows": [
+    {
+      "property": "all",
+      "source": "TypeAcquisition",
+      "target": "CompilerOptions",
+      "sites": [
+        "commandLineParser.ts:3767:87"
+      ],
+      "patterns": {
+        "Option-schema dispatch": 1
+      },
+      "checks": [
+        "commandLineParser.ts:3767 supplies the type-acquisition option map; :3783 looks up that map and :3784 tests opt before :3785 writes opt.name. No CompilerOptions subtype test; schema restricts keys, so the CompilerOptions union arm is not a runtime claim."
+      ],
+      "writers": [
+        "src/compiler/commandLineParser.ts:3785:13"
+      ]
+    },
+    {
+      "property": "callSignatures",
+      "source": "IntersectionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14567:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:14662:13",
+        "src/compiler/checker.ts:5652:9"
+      ]
+    },
+    {
+      "property": "callSignatures",
+      "source": "IntrinsicType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:20893:98"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 1
+      },
+      "checks": [
+        "checker.ts:20893 tests equality with wildcardType; :20896 excludes wildcardType and isErrorType(t) before object/tuple instantiation. No AnonymousType subtype is claimed for the wildcard. Later structured-cache writes use :15024/:15034 dispatch."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:14662:13",
+        "src/compiler/checker.ts:5652:9"
+      ]
+    },
+    {
+      "property": "callSignatures",
+      "source": "IntrinsicType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:20952:16",
+        "checker.ts:20952:43",
+        "checker.ts:32168:37",
+        "checker.ts:32169:17",
+        "checker.ts:32170:17",
+        "checker.ts:38334:16",
+        "checker.ts:38334:79"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 7
+      },
+      "checks": [
+        "checker.ts:20952 tests isErrorType(elementType), returning errorType instead of allocating an array. No ObjectType subtype is claimed for the sentinel. The structured resolver dispatches by flags at :15024-15046 before its common-cache writer(:5648).",
+        "checker.ts:32167 tests isImportCall and :32168-32170 selects stringType, import options or anyType by argument index. No ObjectType subtype test at these contextual-type results. Cache writers receive StructuredType(:5648); :15024-15046 dispatches actual structured kinds, while primitive apparent types need separate wrapper provenance.",
+        "checker.ts:38334 selects the meta-object or errorType by node.name.escapedText === \"meta\". The error arm is a sentinel, not ObjectType. No local subtype check; actual structured-cache resolution dispatch is :15024-15046. Alias reachability of sentinels remains unproved."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:14662:13",
+        "src/compiler/checker.ts:5652:9"
+      ]
+    },
+    {
+      "property": "callSignatures",
+      "source": "UnionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14505:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:14662:13",
+        "src/compiler/checker.ts:5652:9"
+      ]
+    },
+    {
+      "property": "constraint",
+      "source": "InterfaceType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:25200:31",
+        "checker.ts:31797:31"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 2
+      },
+      "checks": [
+        "checker.ts:13280 checks ClassOrInterface or Reference and :13285 checks Tuple before getTupleBaseType; :25199 and :31796 establish class/base-result provenance. No TypeParameter subtype test is appropriate for these base types. getConstraintOfType(:15149) dispatches TypeParameter before its cache write. The census selects a structurally compatible target union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:16845:17",
+        "src/compiler/checker.ts:16850:21",
+        "src/compiler/checker.ts:16859:21",
+        "src/compiler/checker.ts:20668:75"
+      ]
+    },
+    {
+      "property": "constraint",
+      "source": "IntrinsicType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:16961:69",
+        "checker.ts:16972:93"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 2
+      },
+      "checks": [
+        "checker.ts:16960 failed pushTypeResolution and :16971 failed popTypeResolution select errorType placeholders, not TypeParameter instances. No TypeParameter subtype check at these assignments; later constraint writes use the :15149 flag dispatcher. Graph witnesses do not prove sentinels reach every writer."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:16845:17",
+        "src/compiler/checker.ts:16850:21",
+        "src/compiler/checker.ts:16859:21",
+        "src/compiler/checker.ts:20668:75"
+      ]
+    },
+    {
+      "property": "constraint",
+      "source": "ObjectType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:13286:47"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:13280 checks ClassOrInterface or Reference and :13285 checks Tuple before getTupleBaseType; :25199 and :31796 establish class/base-result provenance. No TypeParameter subtype test is appropriate for these base types. getConstraintOfType(:15149) dispatches TypeParameter before its cache write. The census selects a structurally compatible target union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:16845:17",
+        "src/compiler/checker.ts:16850:21",
+        "src/compiler/checker.ts:16859:21",
+        "src/compiler/checker.ts:20668:75"
+      ]
+    },
+    {
+      "property": "constraint",
+      "source": "Type",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:5568:16",
+        "checker.ts:7122:128",
+        "checker.ts:7164:93",
+        "checker.ts:13602:16",
+        "checker.ts:19938:30",
+        "checker.ts:20668:76",
+        "checker.ts:23674:67",
+        "checker.ts:23680:71",
+        "checker.ts:23898:60"
+      ],
+      "patterns": {
+        "Factory or cached result": 4,
+        "Flag-selected operation": 4,
+        "Unproved assertion": 1
+      },
+      "checks": [
+        "checker.ts:5568 passes TypeFlags.TypeParameter to createTypeWithSymbol; :5525 forwards flags to createType. The resulting TypeParameter is constructed before its later cache writes; :15149 dispatches existing TypeParameter views by flag.",
+        "checker.ts:7122 tests getConstraintTypeFromMappedType(type).flags & TypeFlags.TypeParameter before passing the cached result to getConstraintOfTypeParameter. :14917-14919 stores and returns the same mapped-type constraint; call-result identity is not proved by the local census.",
+        "checker.ts:7163 checks isHomomorphicMappedTypeWithNonHomomorphicInstantiation. Its :7107 test proves homomorphism of type.target, while :20866 checks the target helper variable for TypeParameter. No same-result TypeParameter tag check at the :7164 cast was proved; keep refused.",
+        "checker.ts:13600 getDeclaredTypeOfTypeParameter returns either its symbol cache or createTypeParameter(:5567). The cached result contract is TypeParameter; :15149 is the flag dispatcher before constraint writes. Cache provenance needs symbol/alias proof.",
+        "checker.ts:19937 tests SymbolFlags.TypeParameter before getDeclaredTypeOfSymbol; its TypeParameter result comes from getDeclaredTypeOfTypeParameter(:13600), then createTypeParameter(:5567). Symbol-to-result provenance is outside the local census.",
+        "checker.ts:20668 immediately assigns createTypeParameter(tp.symbol) to restrictiveInstantiation before writing constraint on that same allocation. No separate subtype test; constructor uses TypeFlags.TypeParameter(:5568).",
+        "checker.ts:23671 relation === comparableRelation && sourceFlags & TypeFlags.TypeParameter dominates the call. sourceFlags is the flags alias the ruling did not prove immutable. Constraint writes are in getConstraintFromTypeParameter(:16841).",
+        "checker.ts:23676 someType(constraint, c => !!(c.flags & TypeFlags.TypeParameter)) dominates the loop call at :23680. For a union, this says some constituent, not the entire value; individual constraint/cache writes dispatch at :15149. Do not promote this to an all-members subtype proof.",
+        "checker.ts:23895 sourceFlags & TypeFlags.TypeVariable admits TypeParameter or IndexedAccess; getConstraintOfType(:15149-15152) dispatches those separately before the :16845 constraint write. Composite TypeVariable alone does not prove TypeParameter."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:13494:17",
+        "src/compiler/checker.ts:16845:17",
+        "src/compiler/checker.ts:16850:21",
+        "src/compiler/checker.ts:16859:21",
+        "src/compiler/checker.ts:17917:9",
+        "src/compiler/checker.ts:20668:75",
+        "src/compiler/checker.ts:2168:5",
+        "src/compiler/checker.ts:2173:5",
+        "src/compiler/checker.ts:22933:17"
+      ]
+    },
+    {
+      "property": "constructSignatures",
+      "source": "IntersectionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14567:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:14683:13",
+        "src/compiler/checker.ts:5653:9"
+      ]
+    },
+    {
+      "property": "constructSignatures",
+      "source": "IntrinsicType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:20893:98"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 1
+      },
+      "checks": [
+        "checker.ts:20893 tests equality with wildcardType; :20896 excludes wildcardType and isErrorType(t) before object/tuple instantiation. No AnonymousType subtype is claimed for the wildcard. Later structured-cache writes use :15024/:15034 dispatch."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:14683:13",
+        "src/compiler/checker.ts:5653:9"
+      ]
+    },
+    {
+      "property": "constructSignatures",
+      "source": "IntrinsicType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:20952:16",
+        "checker.ts:20952:43",
+        "checker.ts:32168:37",
+        "checker.ts:32169:17",
+        "checker.ts:32170:17",
+        "checker.ts:38334:16",
+        "checker.ts:38334:79"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 7
+      },
+      "checks": [
+        "checker.ts:20952 tests isErrorType(elementType), returning errorType instead of allocating an array. No ObjectType subtype is claimed for the sentinel. The structured resolver dispatches by flags at :15024-15046 before its common-cache writer(:5648).",
+        "checker.ts:32167 tests isImportCall and :32168-32170 selects stringType, import options or anyType by argument index. No ObjectType subtype test at these contextual-type results. Cache writers receive StructuredType(:5648); :15024-15046 dispatches actual structured kinds, while primitive apparent types need separate wrapper provenance.",
+        "checker.ts:38334 selects the meta-object or errorType by node.name.escapedText === \"meta\". The error arm is a sentinel, not ObjectType. No local subtype check; actual structured-cache resolution dispatch is :15024-15046. Alias reachability of sentinels remains unproved."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:14683:13",
+        "src/compiler/checker.ts:5653:9"
+      ]
+    },
+    {
+      "property": "constructSignatures",
+      "source": "UnionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14505:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:14683:13",
+        "src/compiler/checker.ts:5653:9"
+      ]
+    },
+    {
+      "property": "default",
+      "source": "IndexedAccessType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:25200:44"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:13280 checks ClassOrInterface or Reference and :13285 checks Tuple before getTupleBaseType; :25199 and :31796 establish class/base-result provenance. No TypeParameter subtype test is appropriate for these base types. getConstraintOfType(:15149) dispatches TypeParameter before its cache write. The census selects a structurally compatible target union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:15460:17",
+        "src/compiler/checker.ts:15464:17",
+        "src/compiler/checker.ts:15469:21",
+        "src/compiler/checker.ts:15475:13"
+      ]
+    },
+    {
+      "property": "default",
+      "source": "InterfaceType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:25200:31",
+        "checker.ts:31797:31"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 2
+      },
+      "checks": [
+        "checker.ts:13280 checks ClassOrInterface or Reference and :13285 checks Tuple before getTupleBaseType; :25199 and :31796 establish class/base-result provenance. No TypeParameter subtype test is appropriate for these base types. getConstraintOfType(:15149) dispatches TypeParameter before its cache write. The census selects a structurally compatible target union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:15460:17",
+        "src/compiler/checker.ts:15464:17",
+        "src/compiler/checker.ts:15469:21",
+        "src/compiler/checker.ts:15475:13"
+      ]
+    },
+    {
+      "property": "default",
+      "source": "IntrinsicType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:16961:69",
+        "checker.ts:16972:93"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 2
+      },
+      "checks": [
+        "checker.ts:16960 failed pushTypeResolution and :16971 failed popTypeResolution select errorType placeholders, not TypeParameter instances. No TypeParameter subtype check at these assignments; later constraint writes use the :15149 flag dispatcher. Graph witnesses do not prove sentinels reach every writer."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:15460:17",
+        "src/compiler/checker.ts:15464:17",
+        "src/compiler/checker.ts:15469:21",
+        "src/compiler/checker.ts:15475:13"
+      ]
+    },
+    {
+      "property": "default",
+      "source": "ObjectType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:13286:47"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:13280 checks ClassOrInterface or Reference and :13285 checks Tuple before getTupleBaseType; :25199 and :31796 establish class/base-result provenance. No TypeParameter subtype test is appropriate for these base types. getConstraintOfType(:15149) dispatches TypeParameter before its cache write. The census selects a structurally compatible target union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:15460:17",
+        "src/compiler/checker.ts:15464:17",
+        "src/compiler/checker.ts:15469:21",
+        "src/compiler/checker.ts:15475:13"
+      ]
+    },
+    {
+      "property": "default",
+      "source": "Type",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:5568:16",
+        "checker.ts:7122:128",
+        "checker.ts:7164:93",
+        "checker.ts:13602:16",
+        "checker.ts:19938:30",
+        "checker.ts:23674:67",
+        "checker.ts:23680:71",
+        "checker.ts:23898:60"
+      ],
+      "patterns": {
+        "Factory or cached result": 3,
+        "Flag-selected operation": 4,
+        "Unproved assertion": 1
+      },
+      "checks": [
+        "checker.ts:5568 passes TypeFlags.TypeParameter to createTypeWithSymbol; :5525 forwards flags to createType. The resulting TypeParameter is constructed before its later cache writes; :15149 dispatches existing TypeParameter views by flag.",
+        "checker.ts:7122 tests getConstraintTypeFromMappedType(type).flags & TypeFlags.TypeParameter before passing the cached result to getConstraintOfTypeParameter. :14917-14919 stores and returns the same mapped-type constraint; call-result identity is not proved by the local census.",
+        "checker.ts:7163 checks isHomomorphicMappedTypeWithNonHomomorphicInstantiation. Its :7107 test proves homomorphism of type.target, while :20866 checks the target helper variable for TypeParameter. No same-result TypeParameter tag check at the :7164 cast was proved; keep refused.",
+        "checker.ts:13600 getDeclaredTypeOfTypeParameter returns either its symbol cache or createTypeParameter(:5567). The cached result contract is TypeParameter; :15149 is the flag dispatcher before constraint writes. Cache provenance needs symbol/alias proof.",
+        "checker.ts:19937 tests SymbolFlags.TypeParameter before getDeclaredTypeOfSymbol; its TypeParameter result comes from getDeclaredTypeOfTypeParameter(:13600), then createTypeParameter(:5567). Symbol-to-result provenance is outside the local census.",
+        "checker.ts:23671 relation === comparableRelation && sourceFlags & TypeFlags.TypeParameter dominates the call. sourceFlags is the flags alias the ruling did not prove immutable. Constraint writes are in getConstraintFromTypeParameter(:16841).",
+        "checker.ts:23676 someType(constraint, c => !!(c.flags & TypeFlags.TypeParameter)) dominates the loop call at :23680. For a union, this says some constituent, not the entire value; individual constraint/cache writes dispatch at :15149. Do not promote this to an all-members subtype proof.",
+        "checker.ts:23895 sourceFlags & TypeFlags.TypeVariable admits TypeParameter or IndexedAccess; getConstraintOfType(:15149-15152) dispatches those separately before the :16845 constraint write. Composite TypeVariable alone does not prove TypeParameter."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:15460:17",
+        "src/compiler/checker.ts:15464:17",
+        "src/compiler/checker.ts:15469:21",
+        "src/compiler/checker.ts:15475:13"
+      ]
+    },
+    {
+      "property": "defaultOnlyType",
+      "source": "Type",
+      "target": "SyntheticDefaultModuleType",
+      "sites": [
+        "checker.ts:37997:31"
+      ],
+      "patterns": {
+        "Cache view": 1
+      },
+      "checks": [
+        "checker.ts:37996 hasDefaultOnly && type && !isErrorType(type), or :38008 allowSyntheticDefaultImports && type && !isErrorType(type), precedes the cache cast and absence test at :37998/:38010. No runtime SyntheticDefaultModuleType class exists; this is a lazy metadata view of the same Type object."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:38000:17"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "ArrayBindingPattern",
+      "sites": [
+        "checker.ts:33480:121",
+        "checker.ts:44963:183",
+        "transformers/classFields.ts:729:20",
+        "transformers/classFields.ts:753:20",
+        "transformers/classFields.ts:777:20",
+        "transformers/esDecorators.ts:1996:20",
+        "transformers/esDecorators.ts:2020:20",
+        "binder.ts:738:67"
+      ],
+      "patterns": {
+        "Reduced intersection component": 8
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at src/compiler/binder.ts:738:16 (true: isNamedDeclaration(node)); src/compiler/checker.ts:33480:16 (false: isNumericLiteralName(symbol.escapedName)); src/compiler/checker.ts:33480:61 (true: firstDecl && isNamedDeclaration(firstDecl)); src/compiler/checker.ts:44961:13 (true: hasCollision); src/compiler/transformers/classFields.ts:728:13 (true: isNamedEvaluation(node, isAnonymousClassNeedingAssignedName)); src/compiler/transformers/classFields.ts:752:13 (true: isNamedEvaluation(node, isAnonymousClassNeedingAssignedName)); src/compiler/transformers/classFields.ts:776:13 (true: isNamedEvaluation(node, isAnonymousClassNeedingAssignedName)); src/compiler/transformers/esDecorators.ts:1995:13 (true: isNamedEvaluation(node, isAnonymousClassNeedingAssignedName)); src/compiler/transformers/esDecorators.ts:2019:13 (true: isNamedEvaluation(node, isAnonymousClassNeedingAssignedName))."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "BigIntLiteral",
+      "sites": [
+        "transformers/classFields.ts:694:20",
+        "transformers/esDecorators.ts:1974:20"
+      ],
+      "patterns": {
+        "Reduced intersection component": 2
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at src/compiler/transformers/classFields.ts:693:13 (true: isNamedEvaluation(node, isAnonymousClassNeedingAssignedName)); src/compiler/transformers/esDecorators.ts:1973:13 (true: isNamedEvaluation(node, isAnonymousClassNeedingAssignedName))."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "ComputedPropertyName",
+      "sites": [
+        "checker.ts:33486:62"
+      ],
+      "patterns": {
+        "Reduced intersection component": 1
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at src/compiler/checker.ts:33485:16 (false: isKnownSymbol(symbol)); src/compiler/checker.ts:33485:42 (true: firstDecl && isNamedDeclaration(firstDecl) && isComputedPropertyName(firstDecl.name))."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "Expression",
+      "sites": [
+        "utilities.ts:4416:20",
+        "checker.ts:20007:71",
+        "binder.ts:3313:64",
+        "binder.ts:3427:55"
+      ],
+      "patterns": {
+        "Reduced intersection component": 4
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at src/compiler/binder.ts:3418:13 (false: isIdentifier(node.left.expression) && container === file && isExportsOrModuleExportsOrAlias(file, node.left.expression))."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "ExternalModuleReference",
+      "sites": [
+        "transformers/module/module.ts:1566:55",
+        "transformers/module/module.ts:1588:63",
+        "transformers/module/system.ts:775:73",
+        "transformers/module/esnextAnd2015.ts:277:55"
+      ],
+      "patterns": {
+        "Reduced intersection component": 4
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at the typed source/writer boundaries in guards.json."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "Identifier",
+      "sites": [
+        "transformers/ts.ts:1453:41"
+      ],
+      "patterns": {
+        "Reduced intersection component": 1
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at the typed source/writer boundaries in guards.json."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "LateBoundName",
+      "sites": [
+        "checker.ts:13970:83"
+      ],
+      "patterns": {
+        "Reduced intersection component": 1
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at src/compiler/checker.ts:13968:29 (true: isStatic === hasStaticModifier(member))."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "LiteralExpression & StringLiteral",
+      "sites": [
+        "utilities.ts:4416:52"
+      ],
+      "patterns": {
+        "Reduced intersection component": 1
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at src/compiler/utilities.ts:4416:20 (true: isLiteralImportTypeNode(node))."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "Node",
+      "sites": [
+        "checker.ts:47283:40",
+        "checker.ts:47284:36",
+        "checker.ts:47301:13",
+        "checker.ts:48433:60",
+        "checker.ts:48454:23",
+        "checker.ts:48459:100",
+        "checker.ts:48462:25",
+        "checker.ts:48521:72",
+        "checker.ts:48523:27",
+        "checker.ts:48523:69",
+        "checker.ts:48529:72",
+        "checker.ts:48535:27",
+        "checker.ts:48547:31",
+        "transformers/ts.ts:1069:52",
+        "transformers/ts.ts:1460:25",
+        "binder.ts:3705:86"
+      ],
+      "patterns": {
+        "Reduced intersection component": 16
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at src/compiler/binder.ts:3703:13 (true: isParameterPropertyDeclaration(node, node.parent)); src/compiler/checker.ts:48408:17 (true: isInJSFile(node) && !(target.flags & SymbolFlags.Value) && !isTypeOnlyImportOrExportDeclaration(node)); src/compiler/checker.ts:48414:21 (false: node.kind === SyntaxKind.ExportSpecifier); src/compiler/checker.ts:48456:22 (true: node.kind !== SyntaxKind.ExportSpecifier); src/compiler/checker.ts:48459:51 (true: compilerOptions.isolatedModules); src/compiler/checker.ts:48460:21 (true: appearsValueyToTranspiler && symbol.flags & (SymbolFlags.Value | SymbolFlags.ExportValue)); src/compiler/checker.ts:48471:17 (true: getIsolatedModules(compilerOptions)\r\n                && !isTypeOnlyImportOrExportDeclaration(node)\r\n                && !(node.flags & NodeFlags.Ambient)); src/compiler/checker.ts:48518:21 (true: compilerOptions.verbatimModuleSyntax &&\r\n                    node.kind !== SyntaxKind.ImportEqualsDeclaration &&\r\n                    !isInJSFile(node)); src/compiler/checker.ts:48526:21 (true: moduleKind === ModuleKind.Preserve &&\r\n                    node.kind !== SyntaxKind.ImportEqualsDeclaration &&\r\n                    node.kind !== SyntaxKind.VariableDeclaration); src/compiler/checker.ts:48546:25 (true: constEnumDeclaration.flags & NodeFlags.Ambient && (!redirect || !shouldPreserveConstEnums(redirect.commandLine.options)))."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "id",
+      "source": "never",
+      "target": "PrivateIdentifier",
+      "sites": [
+        "transformers/esDecorators.ts:1412:99",
+        "transformers/esDecorators.ts:1427:99",
+        "transformers/esDecorators.ts:1442:99"
+      ],
+      "patterns": {
+        "Reduced intersection component": 3
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at the typed source/writer boundaries in guards.json."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:1462:9"
+      ]
+    },
+    {
+      "property": "indexInfos",
+      "source": "IntersectionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14567:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5654:9"
+      ]
+    },
+    {
+      "property": "indexInfos",
+      "source": "IntrinsicType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:20893:98"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 1
+      },
+      "checks": [
+        "checker.ts:20893 tests equality with wildcardType; :20896 excludes wildcardType and isErrorType(t) before object/tuple instantiation. No AnonymousType subtype is claimed for the wildcard. Later structured-cache writes use :15024/:15034 dispatch."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5654:9"
+      ]
+    },
+    {
+      "property": "indexInfos",
+      "source": "IntrinsicType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:20952:16",
+        "checker.ts:20952:43",
+        "checker.ts:32168:37",
+        "checker.ts:32169:17",
+        "checker.ts:32170:17",
+        "checker.ts:38334:16",
+        "checker.ts:38334:79"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 7
+      },
+      "checks": [
+        "checker.ts:20952 tests isErrorType(elementType), returning errorType instead of allocating an array. No ObjectType subtype is claimed for the sentinel. The structured resolver dispatches by flags at :15024-15046 before its common-cache writer(:5648).",
+        "checker.ts:32167 tests isImportCall and :32168-32170 selects stringType, import options or anyType by argument index. No ObjectType subtype test at these contextual-type results. Cache writers receive StructuredType(:5648); :15024-15046 dispatches actual structured kinds, while primitive apparent types need separate wrapper provenance.",
+        "checker.ts:38334 selects the meta-object or errorType by node.name.escapedText === \"meta\". The error arm is a sentinel, not ObjectType. No local subtype check; actual structured-cache resolution dispatch is :15024-15046. Alias reachability of sentinels remains unproved."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5654:9"
+      ]
+    },
+    {
+      "property": "indexInfos",
+      "source": "UnionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14505:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5654:9"
+      ]
+    },
+    {
+      "property": "instantiations",
+      "source": "IntrinsicType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:20893:98"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 1
+      },
+      "checks": [
+        "checker.ts:20893 tests equality with wildcardType; :20896 excludes wildcardType and isErrorType(t) before object/tuple instantiation. No AnonymousType subtype is claimed for the wildcard. Later structured-cache writes use :15024/:15034 dispatch."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:20774:17",
+        "src/compiler/checker.ts:2155:5"
+      ]
+    },
+    {
+      "property": "instantiations",
+      "source": "ObjectType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:16568:39",
+        "checker.ts:20967:24"
+      ],
+      "patterns": {
+        "Factory or cached result": 2
+      },
+      "checks": [
+        "checker.ts:16664 getOrCreateTypeFromSignature creates ObjectFlags.Anonymous before returning its cached object; :16568 receives that object and :16569 writes mapper. No local tag test; signature-cache provenance establishes the shape.",
+        "checker.ts:20965 takes AnonymousType; :20967 preserves its object flags and adds Instantiated, then :20978 writes target. Caller dispatch at :15034 checks ObjectFlags.Anonymous; inherited flags/cache provenance is needed for this particular result."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:20774:17",
+        "src/compiler/checker.ts:2155:5"
+      ]
+    },
+    {
+      "property": "isThisType",
+      "source": "Type",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:5568:16"
+      ],
+      "patterns": {
+        "Factory or cached result": 1
+      },
+      "checks": [
+        "checker.ts:5568 passes TypeFlags.TypeParameter to createTypeWithSymbol; :5525 forwards flags to createType. The resulting TypeParameter is constructed before its later cache writes; :15149 dispatches existing TypeParameter views by flag."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:13493:17",
+        "src/compiler/checker.ts:17916:9"
+      ]
+    },
+    {
+      "property": "jsDocCache",
+      "source": "JSDoc[]",
+      "target": "JSDocArray",
+      "sites": [
+        "parser.ts:1854:40"
+      ],
+      "patterns": {
+        "Array metadata": 1
+      },
+      "checks": [
+        "parser.ts:1854 tests length, not JSDocArray subtype. utilitiesPublic.ts:1258 canHaveJSDoc and :1266 node.jsDoc ??= []; parser.ts:3171 canHaveJSDoc and cache presence precede writes. The array is enriched; no subtype tag."
+      ],
+      "writers": [
+        "src/compiler/parser.ts:3173:13",
+        "src/compiler/utilitiesPublic.ts:1267:13"
+      ]
+    },
+    {
+      "property": "localSymbol",
+      "source": "never",
+      "target": "Declaration",
+      "sites": [
+        "checker.ts:32496:51"
+      ],
+      "patterns": {
+        "Reduced intersection component": 1
+      },
+      "checks": [
+        "Impossible relation constituent; no executed value has this subtype. Whole-value predicates at the typed source/writer boundaries in guards.json."
+      ],
+      "writers": [
+        "src/compiler/binder.ts:922:17"
+      ]
+    },
+    {
+      "property": "mapper",
+      "source": "IndexedAccessType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:25200:44"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:13280 checks ClassOrInterface or Reference and :13285 checks Tuple before getTupleBaseType; :25199 and :31796 establish class/base-result provenance. No TypeParameter subtype test is appropriate for these base types. getConstraintOfType(:15149) dispatches TypeParameter before its cache write. The census selects a structurally compatible target union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:41643:17"
+      ]
+    },
+    {
+      "property": "mapper",
+      "source": "InterfaceType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:25200:31",
+        "checker.ts:31797:31"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 2
+      },
+      "checks": [
+        "checker.ts:13280 checks ClassOrInterface or Reference and :13285 checks Tuple before getTupleBaseType; :25199 and :31796 establish class/base-result provenance. No TypeParameter subtype test is appropriate for these base types. getConstraintOfType(:15149) dispatches TypeParameter before its cache write. The census selects a structurally compatible target union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:41643:17"
+      ]
+    },
+    {
+      "property": "mapper",
+      "source": "IntrinsicType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:16961:69",
+        "checker.ts:16972:93"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 2
+      },
+      "checks": [
+        "checker.ts:16960 failed pushTypeResolution and :16971 failed popTypeResolution select errorType placeholders, not TypeParameter instances. No TypeParameter subtype check at these assignments; later constraint writes use the :15149 flag dispatcher. Graph witnesses do not prove sentinels reach every writer."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:41643:17"
+      ]
+    },
+    {
+      "property": "mapper",
+      "source": "ObjectType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:16568:39",
+        "checker.ts:20967:24"
+      ],
+      "patterns": {
+        "Factory or cached result": 2
+      },
+      "checks": [
+        "checker.ts:16664 getOrCreateTypeFromSignature creates ObjectFlags.Anonymous before returning its cached object; :16568 receives that object and :16569 writes mapper. No local tag test; signature-cache provenance establishes the shape.",
+        "checker.ts:20965 takes AnonymousType; :20967 preserves its object flags and adds Instantiated, then :20978 writes target. Caller dispatch at :15034 checks ObjectFlags.Anonymous; inherited flags/cache provenance is needed for this particular result."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:16569:17",
+        "src/compiler/checker.ts:20981:9"
+      ]
+    },
+    {
+      "property": "mapper",
+      "source": "ObjectType",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:13286:47"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:13280 checks ClassOrInterface or Reference and :13285 checks Tuple before getTupleBaseType; :25199 and :31796 establish class/base-result provenance. No TypeParameter subtype test is appropriate for these base types. getConstraintOfType(:15149) dispatches TypeParameter before its cache write. The census selects a structurally compatible target union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:41643:17"
+      ]
+    },
+    {
+      "property": "mapper",
+      "source": "Type",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:5568:16",
+        "checker.ts:7122:128",
+        "checker.ts:7164:93",
+        "checker.ts:13602:16",
+        "checker.ts:19938:30",
+        "checker.ts:23674:67",
+        "checker.ts:23680:71",
+        "checker.ts:23898:60"
+      ],
+      "patterns": {
+        "Factory or cached result": 3,
+        "Flag-selected operation": 4,
+        "Unproved assertion": 1
+      },
+      "checks": [
+        "checker.ts:5568 passes TypeFlags.TypeParameter to createTypeWithSymbol; :5525 forwards flags to createType. The resulting TypeParameter is constructed before its later cache writes; :15149 dispatches existing TypeParameter views by flag.",
+        "checker.ts:7122 tests getConstraintTypeFromMappedType(type).flags & TypeFlags.TypeParameter before passing the cached result to getConstraintOfTypeParameter. :14917-14919 stores and returns the same mapped-type constraint; call-result identity is not proved by the local census.",
+        "checker.ts:7163 checks isHomomorphicMappedTypeWithNonHomomorphicInstantiation. Its :7107 test proves homomorphism of type.target, while :20866 checks the target helper variable for TypeParameter. No same-result TypeParameter tag check at the :7164 cast was proved; keep refused.",
+        "checker.ts:13600 getDeclaredTypeOfTypeParameter returns either its symbol cache or createTypeParameter(:5567). The cached result contract is TypeParameter; :15149 is the flag dispatcher before constraint writes. Cache provenance needs symbol/alias proof.",
+        "checker.ts:19937 tests SymbolFlags.TypeParameter before getDeclaredTypeOfSymbol; its TypeParameter result comes from getDeclaredTypeOfTypeParameter(:13600), then createTypeParameter(:5567). Symbol-to-result provenance is outside the local census.",
+        "checker.ts:23671 relation === comparableRelation && sourceFlags & TypeFlags.TypeParameter dominates the call. sourceFlags is the flags alias the ruling did not prove immutable. Constraint writes are in getConstraintFromTypeParameter(:16841).",
+        "checker.ts:23676 someType(constraint, c => !!(c.flags & TypeFlags.TypeParameter)) dominates the loop call at :23680. For a union, this says some constituent, not the entire value; individual constraint/cache writes dispatch at :15149. Do not promote this to an all-members subtype proof.",
+        "checker.ts:23895 sourceFlags & TypeFlags.TypeVariable admits TypeParameter or IndexedAccess; getConstraintOfType(:15149-15152) dispatches those separately before the :16845 constraint write. Composite TypeVariable alone does not prove TypeParameter."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:20975:13",
+        "src/compiler/checker.ts:41643:17"
+      ]
+    },
+    {
+      "property": "members",
+      "source": "IntersectionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14567:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:13369:13",
+        "src/compiler/checker.ts:5650:9"
+      ]
+    },
+    {
+      "property": "members",
+      "source": "IntrinsicType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:20893:98"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 1
+      },
+      "checks": [
+        "checker.ts:20893 tests equality with wildcardType; :20896 excludes wildcardType and isErrorType(t) before object/tuple instantiation. No AnonymousType subtype is claimed for the wildcard. Later structured-cache writes use :15024/:15034 dispatch."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:13369:13",
+        "src/compiler/checker.ts:5650:9"
+      ]
+    },
+    {
+      "property": "members",
+      "source": "IntrinsicType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:20952:16",
+        "checker.ts:20952:43",
+        "checker.ts:32168:37",
+        "checker.ts:32169:17",
+        "checker.ts:32170:17",
+        "checker.ts:38334:16",
+        "checker.ts:38334:79"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 7
+      },
+      "checks": [
+        "checker.ts:20952 tests isErrorType(elementType), returning errorType instead of allocating an array. No ObjectType subtype is claimed for the sentinel. The structured resolver dispatches by flags at :15024-15046 before its common-cache writer(:5648).",
+        "checker.ts:32167 tests isImportCall and :32168-32170 selects stringType, import options or anyType by argument index. No ObjectType subtype test at these contextual-type results. Cache writers receive StructuredType(:5648); :15024-15046 dispatches actual structured kinds, while primitive apparent types need separate wrapper provenance.",
+        "checker.ts:38334 selects the meta-object or errorType by node.name.escapedText === \"meta\". The error arm is a sentinel, not ObjectType. No local subtype check; actual structured-cache resolution dispatch is :15024-15046. Alias reachability of sentinels remains unproved."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:13369:13",
+        "src/compiler/checker.ts:5650:9"
+      ]
+    },
+    {
+      "property": "members",
+      "source": "UnionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14505:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:13369:13",
+        "src/compiler/checker.ts:5650:9"
+      ]
+    },
+    {
+      "property": "objectTypeWithoutAbstractConstructSignatures",
+      "source": "IntersectionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14567:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5676:9",
+        "src/compiler/checker.ts:5677:9"
+      ]
+    },
+    {
+      "property": "objectTypeWithoutAbstractConstructSignatures",
+      "source": "IntrinsicType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:20893:98"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 1
+      },
+      "checks": [
+        "checker.ts:20893 tests equality with wildcardType; :20896 excludes wildcardType and isErrorType(t) before object/tuple instantiation. No AnonymousType subtype is claimed for the wildcard. Later structured-cache writes use :15024/:15034 dispatch."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5676:9",
+        "src/compiler/checker.ts:5677:9"
+      ]
+    },
+    {
+      "property": "objectTypeWithoutAbstractConstructSignatures",
+      "source": "IntrinsicType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:20952:16",
+        "checker.ts:20952:43",
+        "checker.ts:32168:37",
+        "checker.ts:32169:17",
+        "checker.ts:32170:17",
+        "checker.ts:38334:16",
+        "checker.ts:38334:79"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 7
+      },
+      "checks": [
+        "checker.ts:20952 tests isErrorType(elementType), returning errorType instead of allocating an array. No ObjectType subtype is claimed for the sentinel. The structured resolver dispatches by flags at :15024-15046 before its common-cache writer(:5648).",
+        "checker.ts:32167 tests isImportCall and :32168-32170 selects stringType, import options or anyType by argument index. No ObjectType subtype test at these contextual-type results. Cache writers receive StructuredType(:5648); :15024-15046 dispatches actual structured kinds, while primitive apparent types need separate wrapper provenance.",
+        "checker.ts:38334 selects the meta-object or errorType by node.name.escapedText === \"meta\". The error arm is a sentinel, not ObjectType. No local subtype check; actual structured-cache resolution dispatch is :15024-15046. Alias reachability of sentinels remains unproved."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5676:9",
+        "src/compiler/checker.ts:5677:9"
+      ]
+    },
+    {
+      "property": "objectTypeWithoutAbstractConstructSignatures",
+      "source": "UnionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14505:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5676:9",
+        "src/compiler/checker.ts:5677:9"
+      ]
+    },
+    {
+      "property": "properties",
+      "source": "IntersectionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14567:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5651:9",
+        "src/compiler/checker.ts:5656:39"
+      ]
+    },
+    {
+      "property": "properties",
+      "source": "IntrinsicType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:20893:98"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 1
+      },
+      "checks": [
+        "checker.ts:20893 tests equality with wildcardType; :20896 excludes wildcardType and isErrorType(t) before object/tuple instantiation. No AnonymousType subtype is claimed for the wildcard. Later structured-cache writes use :15024/:15034 dispatch."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5651:9",
+        "src/compiler/checker.ts:5656:39"
+      ]
+    },
+    {
+      "property": "properties",
+      "source": "IntrinsicType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:20952:16",
+        "checker.ts:20952:43",
+        "checker.ts:32168:37",
+        "checker.ts:32169:17",
+        "checker.ts:32170:17",
+        "checker.ts:38334:16",
+        "checker.ts:38334:79"
+      ],
+      "patterns": {
+        "Error or wildcard sentinel": 7
+      },
+      "checks": [
+        "checker.ts:20952 tests isErrorType(elementType), returning errorType instead of allocating an array. No ObjectType subtype is claimed for the sentinel. The structured resolver dispatches by flags at :15024-15046 before its common-cache writer(:5648).",
+        "checker.ts:32167 tests isImportCall and :32168-32170 selects stringType, import options or anyType by argument index. No ObjectType subtype test at these contextual-type results. Cache writers receive StructuredType(:5648); :15024-15046 dispatches actual structured kinds, while primitive apparent types need separate wrapper provenance.",
+        "checker.ts:38334 selects the meta-object or errorType by node.name.escapedText === \"meta\". The error arm is a sentinel, not ObjectType. No local subtype check; actual structured-cache resolution dispatch is :15024-15046. Alias reachability of sentinels remains unproved."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5651:9",
+        "src/compiler/checker.ts:5656:39"
+      ]
+    },
+    {
+      "property": "properties",
+      "source": "UnionType",
+      "target": "ObjectType",
+      "sites": [
+        "checker.ts:14505:34"
+      ],
+      "patterns": {
+        "Union alternative or shared cache": 1
+      },
+      "checks": [
+        "checker.ts:15024 and :15042-15046 dispatch Object, Union and Intersection separately. Union/intersection resolvers call setStructuredTypeMembers(:5648) to initialize their common member caches. No ObjectType subtype is established or required; the target includes a shared-cache union alternative."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:5651:9",
+        "src/compiler/checker.ts:5656:39"
+      ]
+    },
+    {
+      "property": "relatedInformation",
+      "source": "DiagnosticRelatedInformation",
+      "target": "Diagnostic",
+      "sites": [
+        "builder.ts:575:36"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:605 returns a fresh object from convertToDiagnosticRelatedInformation, including a spread of the diagnostic; :575 binds it, and :576-581 immediately restores diagnostic-only metadata. No Diagnostic subtype tag; construction plus initialized writes, with spread/alias provenance requiring review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:581:9"
+      ]
+    },
+    {
+      "property": "relatedInformation",
+      "source": "ReusableDiagnosticRelatedInformation",
+      "target": "ReusableDiagnostic",
+      "sites": [
+        "builder.ts:1505:48"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:1522 returns a fresh object from toReusableDiagnosticRelatedInformation; :1505 binds it and :1506-1511 writes the reusable diagnostic metadata. No subtype test; allocation and immediate enrichment establish the intended shape, subject to spread/alias review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:1511:13"
+      ]
+    },
+    {
+      "property": "reportDeprecated",
+      "source": "ReusableDiagnosticRelatedInformation",
+      "target": "ReusableDiagnostic",
+      "sites": [
+        "builder.ts:1505:48"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:1522 returns a fresh object from toReusableDiagnosticRelatedInformation; :1505 binds it and :1506-1511 writes the reusable diagnostic metadata. No subtype test; allocation and immediate enrichment establish the intended shape, subject to spread/alias review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:1507:13"
+      ]
+    },
+    {
+      "property": "reportErrorSummary",
+      "source": "SolutionBuilderHostBase<T>",
+      "target": "SolutionBuilderHost<T>",
+      "sites": [
+        "tsbuildPublic.ts:313:18"
+      ],
+      "patterns": {
+        "Host enrichment": 1
+      },
+      "checks": [
+        "tsbuildPublic.ts:313 receives createSolutionBuilderHostBase, then :314 initializes reportErrorSummary before :315 returns the host. No subtype tag; constructor/result ownership and pre-return enrichment are the required proof."
+      ],
+      "writers": [
+        "src/compiler/tsbuildPublic.ts:314:5"
+      ]
+    },
+    {
+      "property": "reportsDeprecated",
+      "source": "DiagnosticRelatedInformation",
+      "target": "Diagnostic",
+      "sites": [
+        "builder.ts:575:36"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:605 returns a fresh object from convertToDiagnosticRelatedInformation, including a spread of the diagnostic; :575 binds it, and :576-581 immediately restores diagnostic-only metadata. No Diagnostic subtype tag; construction plus initialized writes, with spread/alias provenance requiring review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:577:9"
+      ]
+    },
+    {
+      "property": "reportsUnnecessary",
+      "source": "DiagnosticRelatedInformation",
+      "target": "Diagnostic",
+      "sites": [
+        "builder.ts:575:36"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:605 returns a fresh object from convertToDiagnosticRelatedInformation, including a spread of the diagnostic; :575 binds it, and :576-581 immediately restores diagnostic-only metadata. No Diagnostic subtype tag; construction plus initialized writes, with spread/alias provenance requiring review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:576:9"
+      ]
+    },
+    {
+      "property": "reportsUnnecessary",
+      "source": "ReusableDiagnosticRelatedInformation",
+      "target": "ReusableDiagnostic",
+      "sites": [
+        "builder.ts:1505:48"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:1522 returns a fresh object from toReusableDiagnosticRelatedInformation; :1505 binds it and :1506-1511 writes the reusable diagnostic metadata. No subtype test; allocation and immediate enrichment establish the intended shape, subject to spread/alias review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:1506:13"
+      ]
+    },
+    {
+      "property": "skippedOn",
+      "source": "DiagnosticRelatedInformation",
+      "target": "Diagnostic",
+      "sites": [
+        "builder.ts:575:36"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:605 returns a fresh object from convertToDiagnosticRelatedInformation, including a spread of the diagnostic; :575 binds it, and :576-581 immediately restores diagnostic-only metadata. No Diagnostic subtype tag; construction plus initialized writes, with spread/alias provenance requiring review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:579:9"
+      ]
+    },
+    {
+      "property": "skippedOn",
+      "source": "ReusableDiagnosticRelatedInformation",
+      "target": "ReusableDiagnostic",
+      "sites": [
+        "builder.ts:1505:48"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:1522 returns a fresh object from toReusableDiagnosticRelatedInformation; :1505 binds it and :1506-1511 writes the reusable diagnostic metadata. No subtype test; allocation and immediate enrichment establish the intended shape, subject to spread/alias review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:1509:13"
+      ]
+    },
+    {
+      "property": "source",
+      "source": "DiagnosticRelatedInformation",
+      "target": "Diagnostic",
+      "sites": [
+        "builder.ts:575:36"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:605 returns a fresh object from convertToDiagnosticRelatedInformation, including a spread of the diagnostic; :575 binds it, and :576-581 immediately restores diagnostic-only metadata. No Diagnostic subtype tag; construction plus initialized writes, with spread/alias provenance requiring review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:578:9"
+      ]
+    },
+    {
+      "property": "source",
+      "source": "ReusableDiagnosticRelatedInformation",
+      "target": "ReusableDiagnostic",
+      "sites": [
+        "builder.ts:1505:48"
+      ],
+      "patterns": {
+        "Diagnostic enrichment": 1
+      },
+      "checks": [
+        "builder.ts:1522 returns a fresh object from toReusableDiagnosticRelatedInformation; :1505 binds it and :1506-1511 writes the reusable diagnostic metadata. No subtype test; allocation and immediate enrichment establish the intended shape, subject to spread/alias review."
+      ],
+      "writers": [
+        "src/compiler/builder.ts:1508:13"
+      ]
+    },
+    {
+      "property": "syntheticType",
+      "source": "Type",
+      "target": "SyntheticDefaultModuleType",
+      "sites": [
+        "checker.ts:38009:31"
+      ],
+      "patterns": {
+        "Cache view": 1
+      },
+      "checks": [
+        "checker.ts:37996 hasDefaultOnly && type && !isErrorType(type), or :38008 allowSyntheticDefaultImports && type && !isErrorType(type), precedes the cache cast and absence test at :37998/:38010. No runtime SyntheticDefaultModuleType class exists; this is a lazy metadata view of the same Type object."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:38017:21",
+        "src/compiler/checker.ts:38020:21"
+      ]
+    },
+    {
+      "property": "target",
+      "source": "ObjectType",
+      "target": "AnonymousType",
+      "sites": [
+        "checker.ts:20967:24"
+      ],
+      "patterns": {
+        "Factory or cached result": 1
+      },
+      "checks": [
+        "checker.ts:20965 takes AnonymousType; :20967 preserves its object flags and adds Instantiated, then :20978 writes target. Caller dispatch at :15034 checks ObjectFlags.Anonymous; inherited flags/cache provenance is needed for this particular result."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:20980:9"
+      ]
+    },
+    {
+      "property": "target",
+      "source": "Type",
+      "target": "TypeParameter",
+      "sites": [
+        "checker.ts:5568:16"
+      ],
+      "patterns": {
+        "Factory or cached result": 1
+      },
+      "checks": [
+        "checker.ts:5568 passes TypeFlags.TypeParameter to createTypeWithSymbol; :5525 forwards flags to createType. The resulting TypeParameter is constructed before its later cache writes; :15149 dispatches existing TypeParameter views by flag."
+      ],
+      "writers": [
+        "src/compiler/checker.ts:20674:9",
+        "src/compiler/checker.ts:41631:17"
+      ]
+    }
+  ]
+}

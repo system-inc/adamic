@@ -1,0 +1,16 @@
+{
+  "schema": "parser-preorder-with-jsdoc-v2",
+  "files": 81,
+  "bytes": 36429231,
+  "sha256": "686a89adf8f215a92b3751b02b767fb062d6bc285d63bb4e363b60f16395d615",
+  "coverage": {
+    "jsdoc_nodes": 4149,
+    "tag_nodes": 3846,
+    "type_expressions": 5,
+    "links": 56,
+    "comment_parts": 36,
+    "diagnostic_headers": 81,
+    "diagnostic_rows": 0
+  },
+  "input_corpus": "Fixed full src/compiler corpus; .ts and .json parsed as TS; directed .js as JS"
+}

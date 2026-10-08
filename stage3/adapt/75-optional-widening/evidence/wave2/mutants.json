@@ -1,0 +1,20 @@
+{
+  "wrong_cache_type": {
+    "caught_by": "audit declaration compatibility",
+    "exit": 1
+  },
+  "wrong_json_type": {
+    "caught_by": "audit declaration compatibility",
+    "exit": 1
+  },
+  "drop_cache_owner": {
+    "adapted": 391,
+    "mutant": 405,
+    "caught_by": "refusal count"
+  },
+  "drop_json_owner": {
+    "adapted": 391,
+    "mutant": 399,
+    "caught_by": "refusal count"
+  }
+}

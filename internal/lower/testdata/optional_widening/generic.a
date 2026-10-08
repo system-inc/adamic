@@ -1,0 +1,5 @@
+const original = { x: 1, y: 'wrong' };
+const view: { x: number } = original;
+interface Slot<T> { readonly value: T; }
+const holder: Slot<{ x: number }> = { value: view };
+const wider: Slot<{ x: number; y?: number }> = holder;

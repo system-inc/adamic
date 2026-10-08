@@ -1,0 +1,3 @@
+PASS exactly 218 first-line removals; original SHA-256 matches; other 51 full files unchanged
+PASS current exact-gate failures equal 243 findings plus 218 awaiting a corpus exemption
+PASS report lists exactly 218 awaiting-exemption files; no rebasing or history edits

@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a
+=== PAUSE TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a
+=== RUN   TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a
+=== PAUSE TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a
+=== CONT  TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a
+=== CONT  TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a
+--- PASS: TestNativeAgreesWithNode (0.00s)
+    --- PASS: TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-premature-value/main.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/stage3/drivers/scanner/probes/cyclic-initialized-value/main.a (0.51s)
+PASS
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.518s

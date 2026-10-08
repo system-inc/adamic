@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"sort"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
 var volumeRules = []string{"no_unsafe_type_assertion", "no_unsafe_member_access", "prefer_nullish_coalescing", "no_shadow", "no_unsafe_enum_comparison", "no_unsafe_assignment", "no_confusing_void_expression", "consistent_return", "switch_exhaustiveness_check", "unbound_method"}
@@ -192,24 +192,7 @@ console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 		h.compare("repository-asan", oracle, asan, filepath.Join(repository, "tsconfig.json"), manifest)
 	}
 	if corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"); corpus != "" {
-		pin := h.must("compiler-pin", exec.Command("git", "-C", corpus, "rev-parse", "HEAD"))
-		if strings.TrimSpace(string(pin.stdout)) != compilerCommit {
-			t.Fatal("compiler pin differs")
-		}
-		paths = nil
-		err := filepath.WalkDir(filepath.Join(corpus, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-				paths = append(paths, path)
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-		sort.Strings(paths)
+		paths = corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
 		manifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
 		config := filepath.Join(corpus, "src/compiler/tsconfig.json")
 		h.compare("compiler", oracle, binary, config, manifest)
@@ -280,20 +263,7 @@ func TestVolumeConfigGuardAndMutant(t *testing.T) {
 		h.compare("repository-final-asan", oracle, asan, filepath.Join(repository, "tsconfig.json"), manifest)
 	}
 	if corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"); corpus != "" {
-		var paths []string
-		err := filepath.WalkDir(filepath.Join(corpus, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
-			if err != nil {
-				return err
-			}
-			if !entry.IsDir() && strings.HasSuffix(path, ".ts") {
-				paths = append(paths, path)
-			}
-			return nil
-		})
-		if err != nil {
-			t.Fatal(err)
-		}
-		sort.Strings(paths)
+		paths := corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
 		manifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
 		h.compare("compiler-final-asan", oracle, asan, filepath.Join(corpus, "src/compiler/tsconfig.json"), manifest)
 	}

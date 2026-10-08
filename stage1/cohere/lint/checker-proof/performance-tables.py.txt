@@ -1,0 +1,19 @@
+import json,re,statistics,subprocess,pathlib
+root=pathlib.Path('/workspace/adamic/stage1/cohere/lint/checker-proof')
+for label in ['area-detached','harness-after']:
+ out=pathlib.Path('/tmp/checker-'+label+'-tests.json')
+ with (root/('timing-'+label+'-table.txt')).open('w') as table:
+  subprocess.run(['python3','/tmp/checker-test-times.py','/tmp/checker-'+label+'.jsonl',str(out)],stdout=table,check=True)
+ data=json.loads(out.read_text());meta=json.loads(pathlib.Path('/tmp/checker-'+label+'-time.json').read_text())
+ children=[v['reported_seconds'] for k,v in data.items() if k.startswith('TestMutants/')]
+ summary={'wall_seconds':meta['wall_seconds'],'nproc':meta['nproc'],'exit':meta['exit'],'load_one_minute':{'min':min(s['load'][0] for s in meta['loads']),'median':statistics.median(s['load'][0] for s in meta['loads']),'max':max(s['load'][0] for s in meta['loads'])},'mutant_count':len(children),'mutant_mean_active_seconds':statistics.mean(children),'mutant_sum_active_seconds':sum(children),'mutant_span_seconds':data['TestMutants']['active_span_seconds']}
+ for l in pathlib.Path('/tmp/checker-'+label+'.jsonl').read_text().splitlines():
+  try:e=json.loads(l)
+  except:continue
+  if not e.get('Test') and e.get('Action') in ['pass','fail']:
+   summary['final_json_event_elapsed_seconds']=e.get('Elapsed')
+   summary.setdefault('package_seconds',e.get('Elapsed'))
+  printed=re.search(r'ok\s+\S+\s+([\d.]+)s',e.get('Output',''))
+  if not e.get('Test') and printed:summary['package_seconds']=float(printed[1])
+ (root/('timing-'+label+'-summary.txt')).write_text(json.dumps(summary,indent=2)+'\n')
+ print(label,summary)
