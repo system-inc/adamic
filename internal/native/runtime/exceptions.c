@@ -20,6 +20,18 @@ void adamic_error_tag(adamic_object *error) {
     static const adamic_class error_class = {NULL, 0, 3, NULL, 1u << 30, &error_shape, NULL, 0, false, 0, NULL};
     static const adamic_class type_error_class = {&error_class, 3, 3, NULL, (1u << 30) + 1, &error_shape, NULL, 0, false, 0, NULL};
     static const adamic_class range_error_class = {&error_class, 3, 3, NULL, (1u << 30) + 2, &error_shape, NULL, 0, false, 0, NULL};
+    static const char *const host_names[] = {"name", "message", "code", "errno", "syscall", "path"};
+    static const bool host_refs[] = {true, true, true, false, true, true};
+    static const adamic_shape host_fd_shape = {5, host_names, host_refs, NULL};
+    static const adamic_shape host_path_shape = {6, host_names, host_refs, NULL};
+    static const adamic_class host_fd_class = {&error_class, 3, 5, NULL, 1u << 30, &host_fd_shape, NULL, 0, false, 0, NULL};
+    static const adamic_class host_path_class = {&error_class, 3, 6, NULL, 1u << 30, &host_path_shape, NULL, 0, false, 0, NULL};
+    // Host errors share Error identity, but their extra owned fields must be
+    // visited by destruction and visible through the public class shape.
+    if ((error->shape->count == 5 || error->shape->count == 6) && strcmp(error->shape->names[3], "errno") == 0) {
+        error->class = error->shape->count == 5 ? &host_fd_class : &host_path_class;
+        return;
+    }
     const adamic_string *name = error->slots[0].reference;
     error->class = name->length == 9 && memcmp(name->bytes, "TypeError", 9) == 0 ? &type_error_class :
                    name->length == 10 && memcmp(name->bytes, "RangeError", 10) == 0 ? &range_error_class : &error_class;

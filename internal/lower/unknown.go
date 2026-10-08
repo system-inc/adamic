@@ -34,7 +34,7 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 	if checker.IsTupleType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Right))) {
 		return nil, l.notYet(binary.Right, "in on a tuple (array presence metadata)")
 	}
-	if key.Text() == "stack" || key.Text() == "cause" || key.Text() == "errno" || key.Text() == "syscall" || key.Text() == "path" {
+	if key.Text() == "stack" || key.Text() == "cause" {
 		return nil, l.notYet(key, "in on an Error internal or optional property (host descriptor metadata)")
 	}
 	if reason := l.presenceHazard(key.Text()); reason != "" {

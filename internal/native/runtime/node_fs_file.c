@@ -21,6 +21,13 @@
 static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
 static const adamic_shape error_shape = {3, error_fields, error_refs, NULL};
+static const char *const system_error_fields[] = {"name", "message", "code", "errno", "syscall", "path"};
+static const bool system_error_refs[] = {true, true, true, false, true, true};
+static const adamic_shape system_error_shape = {6, system_error_fields, system_error_refs, NULL};
+static const adamic_shape system_fd_error_shape = {5, system_error_fields, system_error_refs, NULL};
+static const int system_error_types[] = {3, 3, 3, 1, 3, 3};
+static adamic_shape_types system_error_metadata = {&system_error_shape, system_error_types, NULL};
+static adamic_shape_types system_fd_error_metadata = {&system_fd_error_shape, system_error_types, NULL};
 
 static adamic_string *text(const char *bytes) {
     return adamic_decode_utf8((const unsigned char *)bytes, strlen(bytes));
@@ -68,7 +75,16 @@ static void system_error(int error, const char *operation, const char *path) {
     if (message == NULL) { adamic_panic("out of memory", 13); }
     if (path == NULL) { snprintf(message, length, "%s: %s, %s", code, reason, operation); }
     else { snprintf(message, length, "%s: %s, %s '%s'", code, reason, operation, path); }
-    raise_error("Error", code, message);
+    adamic_register_shape_types(path == NULL ? &system_fd_error_metadata : &system_error_metadata);
+    adamic_object *thrown = adamic_object_new(path == NULL ? &system_fd_error_shape : &system_error_shape);
+    thrown->slots[0].reference = text("Error");
+    thrown->slots[1].reference = text(message);
+    thrown->slots[2].reference = text(code);
+    adamic_error_tag(thrown);
+    adamic_thrown = thrown;
+    adamic_thrown->slots[3].number = (double)adamic_node_fs_errno(error);
+    adamic_thrown->slots[4].reference = text(operation);
+    if (path != NULL) { adamic_thrown->slots[5].reference = text(path); }
     free(message);
 }
 
@@ -204,9 +220,41 @@ static int open_file(const adamic_string *path, const adamic_string *flag, doubl
     return descriptor;
 }
 
+// Public descriptors remain Node numbers. Only handles acquired by this host
+// may be released or used; unrelated runtime descriptors are never exposed.
+typedef struct fs_handle {
+    int descriptor;
+    struct fs_handle *next;
+    bool allocated;
+} fs_handle;
+// Node starts with three inherited standard descriptors. They participate in
+// close and stale-use checks just like descriptors returned by openSync.
+static fs_handle standard_error = {2, NULL, false};
+static fs_handle standard_output = {1, &standard_error, false};
+static fs_handle standard_input = {0, &standard_output, false};
+static fs_handle *fs_handles = &standard_input;
+static void own_handle(int descriptor) {
+    fs_handle *handle = malloc(sizeof *handle);
+    if (handle == NULL) { close(descriptor); adamic_panic("out of memory", 13); }
+    handle->descriptor = descriptor;
+    handle->allocated = true;
+    handle->next = fs_handles;
+    fs_handles = handle;
+}
+static bool owned_handle(double descriptor, const char *operation) {
+    if (!file_descriptor(descriptor)) { return false; }
+    for (fs_handle *handle = fs_handles; handle != NULL; handle = handle->next) {
+        if (handle->descriptor == (int)descriptor) { return true; }
+    }
+    system_error(EBADF, operation, NULL);
+    return false;
+}
+
 double adamic_fs_file_open(const adamic_string *path, const adamic_string *flag, double mode) {
     adamic_output_flush();
-    return (double)open_file(path, flag, mode);
+    int descriptor = open_file(path, flag, mode);
+    if (descriptor >= 0) { own_handle(descriptor); }
+    return (double)descriptor;
 }
 
 int adamic_fs_file_read_bytes(int descriptor, unsigned char **out, size_t *length) {
@@ -260,7 +308,7 @@ adamic_string *adamic_fs_file_read_file(const adamic_string *path, const adamic_
 adamic_string *adamic_fs_file_read_fd(double descriptor, const adamic_string *flag) {
     adamic_output_flush();
     (void)flag; // Node ignores the flag for an already-open descriptor.
-    if (!file_descriptor(descriptor)) { return NULL; }
+    if (!owned_handle(descriptor, "read")) { return NULL; }
     return read_file((int)descriptor, false);
 }
 
@@ -287,13 +335,18 @@ adamic_array *adamic_fs_file_read_buffer(const adamic_string *path, const adamic
 adamic_array *adamic_fs_file_read_buffer_fd(double descriptor, const adamic_string *flag) {
     adamic_output_flush();
     (void)flag;
-    if (!file_descriptor(descriptor)) { return NULL; }
+    if (!owned_handle(descriptor, "read")) { return NULL; }
     return read_buffer((int)descriptor, false);
 }
 
 double adamic_fs_file_close(double descriptor) {
     adamic_output_flush();
-    if (!file_descriptor(descriptor)) { return 0; }
+    if (!owned_handle(descriptor, "close")) { return 0; }
+    fs_handle **slot = &fs_handles;
+    while ((*slot)->descriptor != (int)descriptor) { slot = &(*slot)->next; }
+    fs_handle *handle = *slot;
+    *slot = handle->next;
+    if (handle->allocated) { free(handle); }
     if (close((int)descriptor) != 0 && errno != EINTR) { system_error(errno, "close", NULL); }
     return 0;
 }
@@ -313,7 +366,7 @@ double adamic_fs_file_read_sync(double descriptor, adamic_array *buffer, double 
         char range[80]; snprintf(range, sizeof range, "<= %.0f", (double)buffer->length - offset);
         read_range("length", range, length); return 0;
     }
-    if (!file_descriptor(descriptor)) { return 0; }
+    if (!owned_handle(descriptor, "read")) { return 0; }
     unsigned char *bytes = malloc((size_t)length);
     if (bytes == NULL) { adamic_panic("out of memory", 13); }
     ssize_t count;
@@ -326,7 +379,7 @@ double adamic_fs_file_read_sync(double descriptor, adamic_array *buffer, double 
 
 double adamic_fs_file_write(double descriptor, const adamic_string *string, double position) {
     adamic_output_flush();
-    if (!file_descriptor(descriptor)) { return 0; }
+    if (!owned_handle(descriptor, "write")) { return 0; }
     char *buffer = bytes(string);
     ssize_t count;
     // libuv treats a negative offset as the descriptor's current position.
@@ -383,7 +436,7 @@ double adamic_fs_file_write_buffer(const adamic_string *path, const adamic_array
 double adamic_fs_file_write_buffer_fd(double descriptor, const adamic_array *buffer, const adamic_string *flag, double mode, bool flush) {
     adamic_output_flush();
     (void)flag; (void)mode;
-    if (!file_descriptor(descriptor)) { return 0; }
+    if (!owned_handle(descriptor, "write")) { return 0; }
     return write_buffer((int)descriptor, buffer, false, flush);
 }
 
@@ -396,7 +449,7 @@ double adamic_fs_file_write_file(const adamic_string *path, const adamic_string 
 double adamic_fs_file_write_fd(double descriptor, const adamic_string *string, const adamic_string *flag, double mode, bool flush) {
     adamic_output_flush();
     (void)flag; (void)mode;
-    if (!file_descriptor(descriptor)) { return 0; }
+    if (!owned_handle(descriptor, "write")) { return 0; }
     return write_file((int)descriptor, string, false, flush);
 }
 

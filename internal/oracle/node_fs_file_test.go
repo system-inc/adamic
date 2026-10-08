@@ -14,7 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer", "mkdtemp", "rm"}
+var fsFileFixtures = []string{"read", "open", "write", "close", "write_file", "exists", "stat", "mkdir", "unlink", "utimes", "date", "system", "buffer", "read_sync", "write_buffer", "mkdtemp", "rm", "owned_errors"}
 
 func fsFilePrepare(t *testing.T, shared, name string) inputRun {
 	t.Helper()
@@ -155,6 +155,9 @@ func TestNodeFSFileAgreesWithNode(t *testing.T) {
 func TestNodeFSFileMutants(t *testing.T) {
 	t.Parallel()
 	cases := []struct{ name, fixture, operation, helper string }{
+		{"system error errno", "owned_errors", "unlink", `static double fs_file_mutant(const adamic_string *path) {double result=adamic_fs_file_unlink(path);if(adamic_thrown!=NULL)adamic_thrown->slots[3].number=0;return result;}`},
+		{"system error syscall", "owned_errors", "stat", `static adamic_object *fs_file_mutant(const adamic_string *path,bool throws) {adamic_object *result=adamic_fs_file_stat(path,throws);if(adamic_thrown!=NULL && adamic_thrown->shape->count>4){adamic_release(adamic_thrown->slots[4].reference);static adamic_string wrong=ADAMIC_STRING("wrong");adamic_thrown->slots[4].reference=&wrong;}return result;}`},
+		{"system error path", "owned_errors", "mkdir", `static adamic_string *fs_file_mutant(const adamic_string *path,bool recursive,double mode) {adamic_string *result=adamic_fs_file_mkdir(path,recursive,mode);if(adamic_thrown!=NULL){adamic_release(adamic_thrown->slots[5].reference);static adamic_string wrong=ADAMIC_STRING("wrong");adamic_thrown->slots[5].reference=&wrong;}return result;}`},
 		{"mkdtempSync suffix", "mkdtemp", "mkdtemp", `static adamic_string *fs_file_mutant(const adamic_string *prefix) {static adamic_string suffix=ADAMIC_STRING("!");adamic_string *changed=adamic_string_concat(2,(adamic_string *const[]){(adamic_string *)prefix,&suffix});adamic_string *result=adamic_fs_file_mkdtemp(changed);adamic_release(changed);return result;}`},
 		{"rmSync drop force", "rm", "rm", `static double fs_file_mutant(const adamic_string *path,bool recursive,bool force) {(void)force;return adamic_fs_file_rm(path,recursive,false);}`},
 		{"rmSync force", "rm", "rm", `static double fs_file_mutant(const adamic_string *path,bool recursive,bool force) {(void)force;return adamic_fs_file_rm(path,recursive,true);}`},

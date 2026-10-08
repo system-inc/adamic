@@ -2,6 +2,42 @@
 #define ADAMIC_NODE_FS_WASI_H
 
 #ifdef ADAMIC_TARGET_WASI
+// libuv exposes Linux system-error numbers even when libc uses WASI errno.
+static inline int adamic_node_fs_errno(int error) {
+    switch (error) {
+    case EPERM: return -1;
+    case ENOENT: return -2;
+    case EINTR: return -4;
+    case EIO: return -5;
+    case ENXIO: return -6;
+    case EBADF: return -9;
+    case EAGAIN: return -11;
+    case ENOMEM: return -12;
+    case EACCES: return -13;
+    case EFAULT: return -14;
+    case EEXIST: return -17;
+    case ENOTDIR: return -20;
+    case EISDIR: return -21;
+    case EINVAL: return -22;
+    case ENFILE: return -23;
+    case EMFILE: return -24;
+    case EFBIG: return -27;
+    case ENOSPC: return -28;
+    case EROFS: return -30;
+    case ENAMETOOLONG: return -36;
+    case ENOSYS: return -38;
+    case ENOTEMPTY: return -39;
+    case ELOOP: return -40;
+    case EOVERFLOW: return -75;
+    default: return -error;
+    }
+}
+
+#else
+static inline int adamic_node_fs_errno(int error) { return -error; }
+#endif
+
+#ifdef ADAMIC_TARGET_WASI
 #include <fcntl.h>
 #include <time.h>
 // wasi-libc normalizes dot components before looking up a path. Resolve the

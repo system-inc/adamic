@@ -14,7 +14,7 @@ func TestUnknownReflectionRefusals(t *testing.T) {
 		{`function has(pair: readonly [number]): boolean { return 'length' in pair; }`, "tuple"},
 		{`function read(value: unknown): unknown { return typeof value === 'object' && value !== null && '__proto__' in value ? value.__proto__ : undefined; }`, "dynamic prototype"},
 		{`function has(value: unknown): boolean { return typeof value === 'object' && value !== null && 'stack' in value; }`, "descriptor metadata"},
-		{`function has(value: unknown): boolean { return typeof value === 'object' && value !== null && 'errno' in value; }`, "descriptor metadata"},
+		{`function has(value: unknown): boolean { return typeof value === 'object' && value !== null && 'cause' in value; }`, "descriptor metadata"},
 		{`function box(value: unknown): unknown { return value; } box(new Map<string, number>());`, "opaque host"},
 		{`function box(value: unknown): unknown { return value; } box({code:null});`, "nullable field"},
 		{`class Code { get code(): string { return 'x'; } } function read(value: unknown): unknown { return typeof value === 'object' && value !== null && 'code' in value ? value.code : undefined; } read(new Code());`, "dynamic getter"},

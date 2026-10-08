@@ -20,6 +20,13 @@
 static const char *const error_names[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
 static const adamic_shape error_shape = {3, error_names, error_refs, NULL};
+static const char *const system_error_names[] = {"name", "message", "code", "errno", "syscall", "path"};
+static const bool system_error_refs[] = {true, true, true, false, true, true};
+static const adamic_shape system_error_shape = {6, system_error_names, system_error_refs, NULL};
+static const adamic_shape system_fd_error_shape = {5, system_error_names, system_error_refs, NULL};
+static const int system_error_types[] = {3, 3, 3, 1, 3, 3};
+static adamic_shape_types system_error_metadata = {&system_error_shape, system_error_types, NULL};
+static adamic_shape_types system_fd_error_metadata = {&system_fd_error_shape, system_error_types, NULL};
 static adamic_string error_name = ADAMIC_STRING("Error");
 static adamic_string type_error_name = ADAMIC_STRING("TypeError");
 static void *allocate(size_t size) {
@@ -115,7 +122,8 @@ void adamic_node_fs_raise(const adamic_string *path, int error,
 	static adamic_string colon = ADAMIC_STRING(": "),
 						 comma = ADAMIC_STRING(", "),
 						 quote = ADAMIC_STRING(" '"), end = ADAMIC_STRING("'");
-	adamic_object *thrown = adamic_object_new(&error_shape);
+	adamic_register_shape_types(path == NULL ? &system_fd_error_metadata : &system_error_metadata);
+	adamic_object *thrown = adamic_object_new(path == NULL ? &system_fd_error_shape : &system_error_shape);
 	thrown->slots[0].reference = &error_name;
 	thrown->slots[1].reference = adamic_string_concat(
 		path == NULL ? 5 : 8,
@@ -123,7 +131,9 @@ void adamic_node_fs_raise(const adamic_string *path, int error,
 								 &quote, (adamic_string *)path, &end});
 	thrown->slots[2].reference = before;
 	adamic_release(detail);
-	adamic_release(syscall);
+	thrown->slots[3].number = (double)adamic_node_fs_errno(error);
+	thrown->slots[4].reference = syscall;
+	if (path != NULL) { thrown->slots[5].reference = adamic_retain((void *)path); }
 	adamic_error_tag(thrown);
 	adamic_thrown = thrown;
 }
