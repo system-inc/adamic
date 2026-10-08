@@ -42,17 +42,20 @@
       "Adamic 0.1 refuses a type predicate; narrow where you use it, with ===, typeof or instanceof (adamic/no-type-predicate)"
     ],
     "predicate_arguments": [
+      "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"(n): n is Exclude<FunctionLikeDeclaration, ConstructorDeclaration> => isFunctionLikeDeclaration(n) && !isConstructorDeclaration(n)\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"(node): node is RequireOrImportCall => isRequireCall(node, /*requireStringLiteralLikeArgument*/ true)\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"decl => isVariableDeclarationInitializedToRequire(decl)\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isClassLike\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isFunctionLike\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isFunctionLikeDeclaration\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isFunctionLikeOrClassStaticBlockDeclaration\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isHeritageClause\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isImportDeclaration\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isJSDoc\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isJSDocTypeExpression\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isParameter\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isTypeOnlyImportOrExportDeclaration\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"n => isExportAssignment(n) || isStatement(n) || isVariableDeclaration(n) || isPropertyDeclaration(n) || isParameter(n)\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter f (argument \"helper => !helper.scoped\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter f (argument \"isDecorator\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
       "Adamic 0.1 refuses an unproven predicate argument for parameter f (argument \"isInitializedVariable\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
@@ -276,8 +279,8 @@
       "checked_view_fields": 0
     },
     "predicates": {
-      "predicate_declarations": 518,
-      "predicate_arguments": 451,
+      "predicate_declarations": 519,
+      "predicate_arguments": 454,
       "checked_view_fields": 246
     }
   },
@@ -302,8 +305,8 @@
         "checked_view_fields": 0
       },
       "predicates": {
-        "predicate_declarations": 517,
-        "predicate_arguments": 419,
+        "predicate_declarations": 518,
+        "predicate_arguments": 422,
         "checked_view_fields": 194
       }
     }
@@ -311,30 +314,8 @@
   "scope_limits": [
     "Checker-rejected programs only; no native compilation claim.",
     "The after configuration includes the feature branch and its main/dependency integrations.",
-    "The after refusal scans panic in builder.ts and transformers/declarations/diagnostics.ts; their later refusal syntax is not exhaustively scanned.",
+    "All 78 refusal scans and eligible lowering attempts completed without compiler panics.",
     "First lowering error per unit; generic declarations receive no invented specialization."
   ],
-  "after_panics": [
-    {
-      "measurement": "measured on a checker-rejected program",
-      "kind": "panic",
-      "where": "src/compiler/builder.ts:1:1",
-      "reason": "Unhandled case in Node.Text: *ast.QualifiedName",
-      "text": "Unhandled case in Node.Text: *ast.QualifiedName"
-    },
-    {
-      "measurement": "measured on a checker-rejected program",
-      "kind": "panic",
-      "where": "src/compiler/emitter.ts:685:1",
-      "reason": "runtime error: slice bounds out of range [:-1]",
-      "text": "runtime error: slice bounds out of range [:-1]"
-    },
-    {
-      "measurement": "measured on a checker-rejected program",
-      "kind": "panic",
-      "where": "src/compiler/transformers/declarations/diagnostics.ts:1:1",
-      "reason": "Unhandled case in Node.Text: *ast.ComputedPropertyName",
-      "text": "Unhandled case in Node.Text: *ast.ComputedPropertyName"
-    }
-  ]
+  "after_panics": []
 }
