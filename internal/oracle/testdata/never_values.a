@@ -1,0 +1,34 @@
+function stopped(label: string): never {
+    console.log(label);
+    throw new Error("placeholder");
+}
+export function numberValue(): number { return stopped("number"); }
+export function booleanValue(): boolean { return stopped("boolean"); }
+export function objectValue(): { readonly name: string } { return stopped("object"); }
+export function stringValue(): string | undefined { return stopped("string"); }
+export function maybeNumber(): number | undefined { return stopped("maybe number"); }
+export function maybeBoolean(): boolean | undefined { return stopped("maybe boolean"); }
+export function unionValue(): string | number { return stopped("union"); }
+function accept(value: string): void { console.log(value); }
+export function argument(): void { accept(stopped("argument")); }
+export function arm(selected: boolean): string { return selected ? stopped("arm") : "safe"; }
+const through: () => never = () => { throw new Error("closure"); };
+export function closureResult(): string { return through(); }
+try { numberValue(); } catch { console.log("caught number"); }
+try { booleanValue(); } catch { console.log("caught boolean"); }
+try { objectValue(); } catch { console.log("caught object"); }
+try { stringValue(); } catch { console.log("caught string"); }
+try { maybeNumber(); } catch { console.log("caught maybe number"); }
+try { maybeBoolean(); } catch { console.log("caught maybe boolean"); }
+try { unionValue(); } catch { console.log("caught union"); }
+try { argument(); } catch { console.log("caught argument"); }
+console.log(arm(false));
+try { arm(true); } catch { console.log("caught arm"); }
+try { closureResult(); } catch { console.log("caught closure"); }
+export function localValue(): void { const value: string = stopped("local"); console.log(value); }
+export function fieldValue(): void { const value: { readonly name: string } = { name: stopped("field") }; console.log(value.name); }
+export function arrayValue(): void { const value: string[] = [stopped("array")]; console.log(value.join("")); }
+try { localValue(); } catch { console.log("caught local"); }
+try { fieldValue(); } catch { console.log("caught field"); }
+try { arrayValue(); } catch { console.log("caught array"); }
+console.log("ok");

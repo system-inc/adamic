@@ -55,3 +55,14 @@ type Void struct {
 }
 
 func (v Void) Type() Type { return (Undefined{Of: v.Of}).Type() }
+
+// Unreachable marks the continuation of a proven never expression. Of is only
+// the destination ABI: there is no value to convert, retain or box.
+type Unreachable struct{ Of Type }
+
+func (u Unreachable) Type() Type {
+	if u.Of == 0 {
+		return Object
+	}
+	return u.Of
+}

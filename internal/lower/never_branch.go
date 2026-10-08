@@ -17,14 +17,7 @@ func (l *lowering) neverValue(node *ast.Node, of ir.Type) (ir.Expression, error)
 	if err != nil {
 		return nil, err
 	}
-	var unreachable ir.Expression = fit(ir.Undefined{}, of)
-	switch of {
-	case ir.Number:
-		unreachable = ir.NumberConstant{}
-	case ir.Boolean:
-		unreachable = ir.BooleanConstant{}
-	}
-	return ir.Comma{Left: effect, Right: unreachable}, nil
+	return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: effect}}, Result: ir.Unreachable{Of: of}}, nil
 }
 
 func (l *lowering) logicalNever(node *ast.Node) (ir.Expression, error) {

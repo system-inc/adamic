@@ -202,6 +202,21 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil && ast.SkipParentheses(node).Kind == ast.KindCallExpression && l.isNever(node) {
+		// The call ABI may be void, but its source result is never, not undefined.
+		if effects, ok := value.(ir.Effects); ok {
+			effects.Result = ir.Unreachable{}
+			value = effects
+		} else {
+			value = ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.Unreachable{}}
+		}
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if to, known := l.representation(contextual); known {
+				value = fit(value, to)
+			}
+		}
+		return value, nil
+	}
 	if err == nil {
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
 			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
@@ -715,6 +730,13 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 // number | undefined or boolean | undefined goes, since that is two words and they are one. It also
 // unwraps a maybe value the checker narrowed to its present type. Anything else is left as it is.
 func fit(value ir.Expression, to ir.Type) ir.Expression {
+	if effects, ok := value.(ir.Effects); ok {
+		if _, never := effects.Result.(ir.Unreachable); never {
+			effects.Result = ir.Unreachable{Of: to}
+			return effects
+		}
+	}
+
 	if discarded, ok := value.(ir.Void); ok && (to.IsMaybe() || to.IsReference()) {
 		discarded.Of = to
 		return discarded

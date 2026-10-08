@@ -58,6 +58,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.read(expression)
 	case ir.Truthy:
 		return e.toBoolean(expression.Value.Type(), e.value(expression.Value))
+	case ir.Unreachable:
+		e.line("__builtin_unreachable();")
+		return zero(expression.Type())
 	case ir.Void:
 		e.line("(void)%s;", e.value(expression.Value))
 		if expression.Type().IsMaybe() {

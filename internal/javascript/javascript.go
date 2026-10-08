@@ -748,6 +748,8 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.variable(expression.Local)
 	case ir.Truthy:
 		return "!!(" + e.value(expression.Value) + ")"
+	case ir.Unreachable:
+		return "(() => { throw new Error(\"unreachable after never\"); })()"
 	case ir.Void:
 		return "(void " + e.value(expression.Value) + ")"
 	case ir.Comma:
