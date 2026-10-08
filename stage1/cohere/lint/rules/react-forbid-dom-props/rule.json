@@ -1,0 +1,12 @@
+{
+  "name": "react/forbid-dom-props",
+  "kinds": [
+    "JsxAttribute"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleForbidDomProps",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestForbidDomProps"
+}

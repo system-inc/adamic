@@ -1,0 +1,5 @@
+{
+  "name": "forbidden-prop-restriction-inverted",
+  "from": "entry.restricted && !entry.tags.includes(tagName)",
+  "to": "entry.restricted && entry.tags.includes(tagName)"
+}

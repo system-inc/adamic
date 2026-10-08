@@ -1,0 +1,41 @@
+import type { RuleContext } from '../../context.ts';
+import { OptionsJson } from '../../helpers/options_json.ts';
+import { message } from './messages.a';
+export class Entry {
+ readonly name: string;readonly tags: readonly string[];readonly restricted: boolean;readonly message: string;
+ constructor(name: string,tags: readonly string[],restricted: boolean,message: string) {this.name=name;this.tags=tags;this.restricted=restricted;this.message=message;}
+}
+function field(json: OptionsJson,index: number,wanted: string): number {
+ const node=json.node(index);for(let i=0;i<node.keys.length;i++) {if((node.keys[i] ?? '').toLowerCase()===wanted) {return node.children[i] ?? -1;}}return -1;
+}
+export class Rule {
+ readonly context: RuleContext;readonly entries: Entry[]=[];
+ constructor(context: RuleContext) {
+  this.context=context;this.options();
+ }
+ options(): void {
+  const context=this.context;const json=new OptionsJson(context.settings.text==='' ? '{}' : context.settings.text);const root=json.parse();
+  if(root<0) {return;}const list=field(json,root,'forbid');if(list<0 || json.node(list).kind!=='array') {return;}
+  for(const index of json.node(list).children) {
+   const node=json.node(index);if(node.kind==='string') {this.entries.push(new Entry(node.text,[],false,''));continue;}
+   const ni=field(json,index,'propname');const ti=field(json,index,'disallowedfor');const mi=field(json,index,'message');const flag=field(json,index,'disallowedforwasgiven');
+   const tags: string[]=[];if(ti>=0 && json.node(ti).kind==='array') {for(const tag of json.node(ti).children) {tags.push(json.node(tag).text);}}
+   const restricted=flag>=0 ? json.node(flag).text==='true' : ti>=0 && json.node(ti).kind!=='null';
+   this.entries.push(new Entry(ni<0 ? '' : json.node(ni).text,tags,restricted,mi<0 ? '' : json.node(mi).text));
+  }
+ }
+ visit(index: number): void {
+  const ctx=this.context;const node=ctx.node(index);const ni=node.children[0] ?? -1;
+  if(ni<0 || ctx.node(ni).kind!=='Identifier') {return;}
+  const attrs=ctx.parents[index] ?? -1;const element=attrs<0 ? -1 : ctx.parents[attrs] ?? -1;const tag=element<0 ? -1 : ctx.node(element).children[0] ?? -1;
+  if(tag<0 || ctx.node(tag).kind!=='Identifier') {return;}
+  const tagName=ctx.node(tag).text;const first=tagName.charCodeAt(0);if(first<97 || first>122) {return;}
+  const name=ctx.node(ni).text;
+  for(let i=this.entries.length-1;i>=0;i--) {
+   const entry=this.entries[i];if(entry===undefined || entry.name!==name) {continue;}
+   if(entry.restricted && !entry.tags.includes(tagName)) {return;}
+   ctx.report(index,'react/forbid-dom-props','propIsForbidden',message(name,entry.message),'','','');return;
+  }
+ }
+}
+export function create(context: RuleContext): Rule {return new Rule(context);}
