@@ -1,0 +1,6 @@
+import { buildCounter } from './counter_state.a';
+// Process-local builds stay far below 2^53, so number preserves every counter value exactly.
+export function nextBuildCount(): number {
+    buildCounter.value++;
+    return buildCounter.value;
+}

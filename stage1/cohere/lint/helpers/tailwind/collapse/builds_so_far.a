@@ -1,0 +1,2 @@
+import { buildCounter } from './counter_state.a';
+export function BuildsSoFar(): number { return buildCounter.value; }

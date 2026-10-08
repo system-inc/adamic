@@ -7,7 +7,7 @@ Forecast: zero alone; six additional with earlier complete packages, cumulative 
 Consumers: better-tailwindcss/enforce-canonical-classes, enforce-consistent-class-order, enforce-consistent-variant-order, enforce-shorthand-classes, no-conflicting-classes, no-unknown-classes.
 First prerequisite audit: exact nextBuildCount and recursive node clone/remove; capture every consuming-rule call, three runtimes, Node/native semantic mutants and one rule proof if prerequisites permit.
 
-## Stopped on compiler prerequisite
+## Initial bigint probe (superseded by authorized number equivalent)
 
 The post-push fetch found no competing collapse package claim. Claim commit c386192b7 predates implementation; no complete package port exists in the audited sources.
 
@@ -18,4 +18,14 @@ The post-push fetch found no competing collapse package claim. Claim commit c386
 - Command: source /workspace/adamic-tools/env.sh; go run ./cmd/adamic build /tmp/tailwind-collapse-prerequisite/atomic-counter.a -o /tmp/tailwind-collapse-prerequisite/counter
 - Refusal: atomic-counter.a:4:10: stage 0 can't lower a function returning bigint yet
 
-No number-counter approximation is delivered: Number loses consecutive signed-64 values above 2^53. No helper is landed or certified, no mutant is claimed caught, no rule is ported and no newly unblocked rule is credited. Helpers/lint package gates were not run after this explicit compiler stop. The earlier rules/core race was won by remote 351d296c0d8f7718c21981c155894f14511dcef4 (10:58:56Z), before local f3bad7d2 (10:59:08Z); local withdrawal is 03d96ca6a. Strict-options claim was withdrawn by published 5a9399498 because README assigns its missing contracts to per-rule adapters.
+At that initial stop, no number-counter implementation was delivered: Number loses consecutive signed-64 values above 2^53. At that initial stop, no helper was landed or certified, no mutant was claimed caught, no rule was ported and no newly unblocked rule was credited. Helpers/lint package gates had not run after that compiler stop. The earlier rules/core race was won by remote 351d296c0d8f7718c21981c155894f14511dcef4 (10:58:56Z), before local f3bad7d2 (10:59:08Z); local withdrawal is 03d96ca6a. Strict-options claim was withdrawn by published 5a9399498 because README assigns its missing contracts to per-rule adapters.
+
+## Counter resumed; stylesheet byte-input boundary
+
+The user authorized a number counter on 2026-10-08: real process build counts remain far below 2^53. The signed-bigint-return refusal above is retained as a known stage 0 gap, not a blocker. No bytewise integer output discrepancy was found: counter values do not enter lint output; the oracle decimal test agrees on every observed count.
+
+Two fresh helpers now live in ../tailwind/collapse/: next_build_count.a (nextBuildCount) and builds_so_far.a (BuildsSoFar). They share counter_state.a and execute synchronously in a stage 1 process. Neither is a concurrent-worker primitive. Their tests capture actual upstream Tailwind test calls through a Go instrumentation overlay, replay those calls against the unchanged Go methods, and compare source Node, emitted JavaScript and sanitized native. Both semantic mutants compile, run and disagree on all three backends.
+
+Stopped helper: rules/tailwind/collapse.*stylesheetCollector.loadFile, cohere/internal/lint/rules/tailwind/collapse/design_system.go:597. Go os.ReadFile preserves arbitrary bytes; stage 1's only file-input primitive, readTextFile, decodes invalid UTF-8 irreversibly. The actual Go loadFile installs a theme value retaining byte 0xff, while all stage 1 backends produce bytes 0xef 0xbf 0xbd from the same file. ASCII and Unicode controls match; this is not a compile refusal, crash or skipped parity case. The missing byte-preserving-input API probe reports TS2305: Module '"adamic"' has no exported member 'readFileBytes'; see raw-file-input.compiler.txt. No private filesystem or byte-decoder substitute is supplied.
+
+This boundary prevents claiming complete collapse package parity and a full consuming-rule proof. No rule is ported and no newly unblocked rule is credited. The other retained package slices have not been landed. The complete-package forecast remains conditional, not achieved. See ../tailwind/collapse/REPORT.md for current gate counts and logs.

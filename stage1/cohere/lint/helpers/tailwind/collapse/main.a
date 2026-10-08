@@ -1,0 +1,12 @@
+import {panic, programArguments, readTextFile} from 'adamic';
+import {nextBuildCount} from './next_build_count.a';
+import {BuildsSoFar} from './builds_so_far.a';
+const path = programArguments()[0] ?? panic('counter input');
+const input = readTextFile(path);
+if(input.kind === 'Error') { panic(input.message); }
+else {
+    for(const action of input.text.trim().split('\n')) {
+        const value = action === 'build' ? nextBuildCount() : BuildsSoFar();
+        console.log(value.toString());
+    }
+}
