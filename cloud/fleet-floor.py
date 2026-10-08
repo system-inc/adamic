@@ -233,6 +233,35 @@ def number(value):
     return result
 
 
+def gate_backpressure(state, configured, dry, records):
+    """'gate_backpressure' while the fast gate's queue is deeper than BACKPRESSURE times its slots
+    (@system_adamic, Oct 8: 110 tips queued against 10 slots): new units would only wait. Each lane's owner
+    hears once when it starts and once when it ends. A queue the floor can't read holds nothing back."""
+    watch = Path(os.environ.get('ADAMIC_FAST_GATE_WATCH_STATE', str(Path.home() / '.adamic-fast-gate-watch')))
+    try:
+        depth = sum(1 for line in (watch / 'queue').read_text().splitlines() if line.strip())
+        slots = sum(1 for line in (watch / 'slots').read_text().splitlines() if line.strip())
+    except OSError:
+        return ''
+    factor = number(os.environ.get('ADAMIC_FLEET_FLOOR_BACKPRESSURE', '3'))
+    flag = state / 'backpressure'
+    holding = slots > 0 and depth > factor * slots
+    if holding != flag.exists() and not dry:
+        text = ('Fleet floor: the fast gate has %d tips queued against %d slots, so no new units start until it '
+                'drops to %d; running work goes on.' % (depth, slots, int(factor * slots)) if holding else
+                'Fleet floor: the gate queue is down to %d against %d slots; new units start again.' % (depth, slots))
+        for lane in configured:
+            try:
+                run('ahra', 'os', 'send', lane['owner'], text, '--from', 'system_adamic_developer_tools')
+            except (OSError, subprocess.SubprocessError) as error:
+                records.row(lane, '', '', outcome='notification_failed: ' + str(error))
+        if holding:
+            flag.touch()
+        else:
+            flag.unlink()
+    return 'gate_backpressure: %d queued, %d slots' % (depth, slots) if holding else ''
+
+
 def queue(state, lane):
     path = state / 'queues' / lane['lane']
     return sorted((p for p in path.iterdir() if p.is_file() and not p.is_symlink()),
@@ -287,6 +316,8 @@ def one_pass(state, configured, checkout, credit_floor, dry=False, records=None)
         blocked = credit_block(credit_floor)
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         blocked = 'usage_unavailable: ' + str(error)
+    pressure = gate_backpressure(state, configured, dry, records)
+    blocked = blocked or pressure
     listing = {}
     for lane in configured:
         briefs = queue(state, lane)

@@ -100,8 +100,11 @@ class DispatchTests(unittest.TestCase):
         binary.mkdir()
         (binary / 'ahra').write_text(STUB)
         (binary / 'ahra').chmod(0o755)
+        # The gate's queue and slots, read for backpressure: never the real watcher's.
+        self.watch = self.root / 'watch'
+        self.watch.mkdir()
         self.env = patch.dict(os.environ, {'PATH': str(binary) + os.pathsep + os.environ['PATH'],
-                                          'STUB_ROOT': str(self.root)})
+                                          'STUB_ROOT': str(self.root), 'ADAMIC_FAST_GATE_WATCH_STATE': str(self.watch)})
         self.env.start()
         self.addCleanup(self.env.stop)
         self.lane = {'lane': 'developer_tools', 'fleets': ['devtools', 'devtools-*'],
@@ -234,6 +237,21 @@ class DispatchTests(unittest.TestCase):
         self.step()
         self.assertEqual(len(self.calls(['os', 'send'])), 2)
         self.assertIn('empty', self.calls(['os', 'send'])[1][3])
+
+    def test_a_deep_gate_queue_holds_dispatch_and_tells_the_owner_once_each_way(self):
+        self.briefs(2)
+        (self.watch / 'slots').write_text('box B\nbox S\n')
+        (self.watch / 'queue').write_text('S 1 codex/a x\n' * 7)
+        self.step()
+        self.assertFalse(self.calls(['ai', 'start']))
+        self.assertTrue(any(r[-1].startswith('gate_backpressure: 7 queued, 2 slots') for r in self.rows()))
+        self.step()
+        sends = self.calls(['os', 'send'])
+        self.assertEqual(len([c for c in sends if 'no new units start' in c[3]]), 1)
+        (self.watch / 'queue').write_text('S 1 codex/a x\n' * 6)
+        self.step()
+        self.assertEqual(len(self.calls(['ai', 'start'])), 2)
+        self.assertEqual(len([c for c in self.calls(['os', 'send']) if 'start again' in c[3]]), 1)
 
     def test_off_records_without_dispatch(self):
         self.briefs(4)

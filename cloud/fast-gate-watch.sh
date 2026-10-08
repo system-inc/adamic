@@ -212,6 +212,9 @@ stopSkipped() {
       echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: on the skip list"
   done
 }
+# A reserved run stops the moment a newer candidate of its family is queued, red or still clean: the newer
+# one carries the older's commits and the fix, and main's full gate must never see a candidate it would
+# fail (@system_adamic, Oct 8; it first stopped only runs already red). Its stop publishes what it had.
 stopStaleRed() {
   local file pid branch sha slot box rest log failure started class queued newer newerSha reason
   for file in "${state}"/running/*; do
@@ -224,7 +227,6 @@ stopStaleRed() {
     reservedBranch "${branch}" && slotReserved "${branch}" "${box}" "${slot}" || continue
     log=${state}/logs/${sha:0:12}.log
     failure=$(sed -nE 's/^FIRST FAILURE \((.*), at ([0-9.]+) s\):.*/\1 at \2 s/p' "${log}" 2>/dev/null | head -1)
-    [ -n "${failure}" ] || continue
     # Older watcher versions have only the pid file; its mtime records dispatch.
     started=$(cat "${state}/running-started/${pid}" 2>/dev/null ||
       python3 -c 'import os, sys; print(int(os.stat(sys.argv[1]).st_mtime))' "${file}") || continue
@@ -232,19 +234,8 @@ stopStaleRed() {
       [ "${newerSha}" != "${sha}" ] && [ "${queued}" -gt "${started}" ] || continue
       reservedBranch "${newer}" && sameReservedFamily "${branch}" "${newer}" "${box}" "${slot}" || continue
       reason="superseded by ${newer} ${newerSha}"
-      # A sibling of the out directory survives SSH's environment boundary. Write before signaling.
-      if ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${reason}")" <<'STOP'
-set -eu
-sha=$1 reason=$2
-for out in ~/fast-gate/out/"${sha:0:12}"-*; do
-  [ -d "${out}" ] || continue
-  printf '%s\n' "${reason}" > "${out}.stop-reason"
-done
-pkill -TERM -f "run.py .*--sha ${sha}"
-STOP
-      then
-        touch "${state}/stopped-running/${pid}"
-        echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: ${reason}, red since ${failure}"
+      if stopGate "${pid}" "${branch}" "${sha}" "${box}" "${reason}"; then
+        echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: ${reason}, $([ -n "${failure}" ] && echo "red since ${failure}" || echo "clean so far")"
       fi
       break
     done < "${state}/queue"
@@ -279,6 +270,16 @@ publishEarlyRed() {
       rmdir "${out}"
     ) &
   done
+}
+# The position of the roadmap step whose Branches: globs name this branch (0 for the first ready step that
+# declares any), or 99: the queue is the waterfall, the star's work ahead of scouts and leaves
+# (@system_adamic, Oct 8). Within a step, the kinds keep their order (landings, areas, tools, workers).
+stepPosition() {
+  local branch=$1 position glob
+  while read -r position glob; do
+    [ -n "${glob}" ] && [[ ${branch} == ${glob} ]] && { echo "${position}"; return; }
+  done < "${state}/step-globs.poll"
+  echo 99
 }
 usableSlots() {
   local branch=$1 box slot b c glob allowed total used runningBranch runningSha runningSlot runningBox rest blocked reservation
@@ -381,11 +382,14 @@ while true; do
   if { [ -z "${firstStepRefresh:-}" ] || [ "$((now - firstStepRefresh))" -ge 300 ]; } &&
      { [ -z "${firstStepPid:-}" ] || ! kill -0 "${firstStepPid}" 2>/dev/null; }; then
     (bash "${here}/cloud/first-step-branches.sh" > "${state}/first-step-globs.tmp" &&
-      mv "${state}/first-step-globs.tmp" "${state}/first-step-globs") &
+      mv "${state}/first-step-globs.tmp" "${state}/first-step-globs"
+     bash "${here}/cloud/first-step-branches.sh" --all > "${state}/step-globs.tmp" &&
+      mv "${state}/step-globs.tmp" "${state}/step-globs") &
     firstStepPid=$!
     firstStepRefresh=${now}
   fi
   cat "${state}/first-step-globs" > "${state}/first-step-globs.poll" 2>/dev/null || true
+  cat "${state}/step-globs" > "${state}/step-globs.poll" 2>/dev/null || true
   currentHead=$(git -C "${here}" rev-parse HEAD)
   if [ "${currentHead}" != "${toolsHead}" ]; then
     toolsHead=${currentHead}
@@ -409,6 +413,8 @@ while true; do
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
+    stoppedOnPurpose=no
+    [ -f "${state}/stopped-running/$(basename "${file}")" ] && stoppedOnPurpose=yes
     rm -f "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")" "${state}/early-red/$(basename "${file}")"
     read -r branch sha class box original testedHead gateLog < "${file}"
     # Merge claims are not gate verdicts: a crashed dispatcher/SSH must never queue area-merge/*.
@@ -443,6 +449,12 @@ while true; do
         # Keep the completed gate available for reaping if durable enqueue fails.
         bash "${here}/cloud/auto-area-merge.sh" --enqueue "${branch}" "${sha}" || echo "${entry}" > "${file}"
       fi
+      continue
+    fi
+    # A gate the watcher stopped (stale red, skip list) that had no verdict yet isn't a box problem: no
+    # void count, no requeue. Counted as voids, two skip-list stops started a storm (Oct 8 18:21Z).
+    if [ "${stoppedOnPurpose}" = yes ]; then
+      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha} before a verdict, as asked: not a void"
       continue
     fi
     # A void gate (it died before a real verdict, like the 33 a WSL restart killed at 08:23Z on Oct 8)
@@ -509,12 +521,11 @@ while true; do
     # A tip takes a free slot of its class; a big tip may also take a free small slot, but only when
     # no small tip could have it (rank 10 and up): 74 big tips waited on two area slots while four small
     # slots sat idle (Oct 8 10:56Z). It then runs on the small slot's CPUs (12; Chonchon's 16).
-    # A small tip that has waited two minutes may take an idle area slot, and only while no big tip is
-    # queued, so it never holds an area slot a big tip wants (the witness, Oct 8: small changes waited
-    # 240 to 300 s on Cloud with 61 Codex running). The area slot has its own CPUs (cloud/fast-gate.sh's
-    # taskset), so it never runs beside a big gate on the same CPUs.
+    # A small tip that has waited two minutes may take an idle area slot, ranked after every big tip that
+    # could take it (the witness, Oct 8: small changes waited 240 to 300 s on Cloud with 61 Codex
+    # running). The area slot has its own CPUs (cloud/fast-gate.sh's taskset), so it never runs beside a
+    # big gate on the same CPUs.
     pollTime=$(date -u +%s)
-    bigQueued=$(awk '$1 == "B"' "${state}/queue" | wc -l | tr -d ' ')
     next=$(while read -r class queued branch sha; do
       eligible=$(usableSlots "${branch}")
       if reservedBranch "${branch}"; then
@@ -530,7 +541,7 @@ while true; do
       if [[ " ${classes}" != *" ${class} "* ]]; then
         # A landing candidate (Kirk's five, Oct 8) borrows ahead of small worker tips; any other big tip after them.
         if [ "${class}" = B ] && [ -n "${borrowable}" ]; then slot=S extra=10; [[ ${branch} == cloud/land-* ]] && extra=0
-        elif [ "${class}" = S ] && [[ " ${classes}" == *" B "* ]] && [ "${bigQueued}" = 0 ] && [ $(( pollTime - queued )) -ge 120 ]; then slot=B extra=10
+        elif [ "${class}" = S ] && [[ " ${classes}" == *" B "* ]] && [ $(( pollTime - queued )) -ge 120 ]; then slot=B extra=10
         else continue; fi
       fi
       if reservedBranch "${branch}"; then rank=0; extra=0
@@ -541,7 +552,9 @@ while true; do
       if [ "${slot}" = "${class}" ] || [ "${slot}" = B ]; then
         box=$(echo "${eligible}" | awk -v c="${slot}" '$2 == c && box == "" {box = $1} END {print box}')
       else box=${borrowable}; fi
-      echo "$(( rank + extra )) ${queued} ${branch} ${sha} ${class} ${slot} ${box}"
+      position=$(stepPosition "${branch}")
+      [ "${rank}" = 0 ] && position=0
+      echo "$(( position * 100 + rank + extra )) ${queued} ${branch} ${sha} ${class} ${slot} ${box}"
     done < "${state}/queue" | sort -k1,1n -k2,2nr | head -1)
     [ -n "${next}" ] || break
     read -r _ queued branch sha class slot box <<< "${next}"

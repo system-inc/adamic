@@ -168,6 +168,18 @@ class WatchTests(unittest.TestCase):
             w.put('initial', 'pass')
         return w
 
+    def stale_red_clean(self):
+        w = self.reservation('server B cloud/land-area-next*\n', [('cloud/land-area-next-11', 'B')], release=False)
+        w.put('initial', 'pass')
+        w.wait(lambda: len(w.read('starts').splitlines()) == 2)
+        old, newer = w.tips[0][1], 'b' * 40
+        w.put('clock', '1100')
+        w.tips.append(('cloud/land-area-next-12', newer))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        w.wait(lambda: f'stopped cloud/land-area-next-11 {old}: superseded by cloud/land-area-next-12 {newer}, clean so far' in w.read('output'))
+        self.assertEqual(len(w.read('stops').splitlines()), 1)
+        return w
+
     def stale_red(self, reserved=True, red=True):
         slots = 'server B' + (' cloud/land-area-next*' if reserved else '') + '\n'
         w = self.reservation(slots, [('cloud/land-area-next-11', 'B')], release=False)
@@ -199,8 +211,9 @@ class WatchTests(unittest.TestCase):
     def test_red_reserved_gate_stops_once_and_reaps_red(self):
         self.stale_red()
 
-    def test_reserved_gate_without_failure_keeps_running(self):
-        self.stale_red(red=False)
+    def test_reserved_gate_still_clean_is_stopped_too(self):
+        # The newer candidate carries the older's commits and the fix (@system_adamic, Oct 8).
+        w = self.stale_red_clean()
 
     def test_non_reserved_red_gate_keeps_running(self):
         self.stale_red(reserved=False)
@@ -412,6 +425,13 @@ class WatchTests(unittest.TestCase):
         time.sleep(.3)
         self.assertEqual(w.read('output').count('on the skip list'), 1)
         self.assertEqual(w.read('stops').split()[0], 'box0')
+        # Its end is no void: nothing counted toward a storm, nothing requeued.
+        (w.state / 'logs/old.log').write_text('void: %s stopped before a verdict: on the skip list\n' % sha)
+        holder.kill()
+        holder.wait()  # a zombie still answers kill -0
+        w.wait(lambda: 'before a verdict, as asked: not a void' in w.read('output'))
+        self.assertFalse((w.state / 'void-window').exists() and (w.state / 'void-window').read_text().strip())
+        self.assertNotIn(sha, (w.state / 'queue').read_text())
 
     def test_a_landing_borrows_a_small_slot_ahead_of_small_worker_tips(self):
         # No tips on origin, so the queue holds exactly these two; one small slot and no area slot.
@@ -428,6 +448,25 @@ class WatchTests(unittest.TestCase):
         (w.state / 'queue').write_text('S 800 codex/small %s\nB 900 cloud/land-x %s\n' % (small, landing))
         w.wait(lambda: len(w.read('starts').splitlines()) >= 2)
         self.assertTrue(w.read('starts').splitlines()[1].startswith('cloud/land-x %s S box' % landing), w.read('starts'))
+
+    def test_the_queue_runs_in_roadmap_step_order(self):
+        # Two steps declare branches (a first, b second); the oldest tip serves neither and goes last.
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        w.put('ready', ' 9  #aaaaaaa  Running  first\n 3  #bbbbbbb  Running  second\n')
+        w.put('task-aaaaaaa', 'Branches: codex/step-a*\n')
+        w.put('task-bbbbbbb', 'Branches: codex/step-b*\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        w.wait(lambda: (w.state / 'step-globs').exists() and 'codex/step-b*' in (w.state / 'step-globs').read_text())
+        w.put('mode', 'pass')
+        (w.state / 'slots').write_text('box S\n')
+        (w.state / 'queue').write_text('S 700 codex/other %s\nS 800 codex/step-b-x %s\nS 900 codex/step-a-x %s\n' % ('1' * 40, '2' * 40, '3' * 40))
+        (w.state / 'seen').write_text('codex/other %s\ncodex/step-a-x %s\ncodex/step-b-x %s\n' % ('1' * 40, '3' * 40, '2' * 40))
+        w.put('tips', '%s\trefs/heads/codex/other\n%s\trefs/heads/codex/step-a-x\n%s\trefs/heads/codex/step-b-x\n' % ('1' * 40, '3' * 40, '2' * 40))
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if x.startswith('codex/')]) == 3)
+        self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if x.startswith('codex/')],
+                         ['codex/step-a-x', 'codex/step-b-x', 'codex/other'])
 
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
@@ -447,7 +486,9 @@ class WatchTests(unittest.TestCase):
         w.put('task-bbbbbbb', 'Branches: codex/later\n')
         w.put('clock', '1300')
         w.wait(lambda: (w.state / 'first-step-globs').read_text() == 'codex/first\ncloud/land-area-next*\n')
-        self.assertNotIn('show bbbbbbb', w.read('task-calls'))
+        # The same refresh then reads every ready step for the queue's step order.
+        w.wait(lambda: (w.state / 'step-globs').exists() and (w.state / 'step-globs').read_text() ==
+               '0 codex/first\n0 cloud/land-area-next*\n1 codex/later\n')
         calls = w.read('task-calls')
         time.sleep(.15)
         self.assertEqual(w.read('task-calls'), calls)
