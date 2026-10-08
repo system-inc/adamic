@@ -18,6 +18,7 @@ import (
 	"regexp"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -130,11 +131,17 @@ func compile(t *testing.T, command string, arguments ...string) {
 	}
 }
 
+// deadline is how long a program may run: one waiting for a wake that never comes (an await Apple's
+// hooks never resume) fails here, rather than holding the test until go test's own timeout.
+const deadline = time.Minute
+
 // run runs a binary and returns its stdout, failing on any exit but 0 or anything on stderr.
 func run(t *testing.T, binary string, arguments ...string) []byte {
 	t.Helper()
 	var stdout, stderr bytes.Buffer
-	command := exec.Command(binary, arguments...)
+	ctx, cancel := context.WithTimeout(context.Background(), deadline)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary, arguments...)
 	command.Stdout, command.Stderr = &stdout, &stderr
 	if err := command.Run(); err != nil || stderr.Len() > 0 {
 		t.Fatalf("%s: %v\nstderr:\n%s", filepath.Base(binary), err, stderr.Bytes())
@@ -152,7 +159,9 @@ var (
 func counts(t *testing.T, binary string, arguments ...string) (int, int, int) {
 	t.Helper()
 	var stderr bytes.Buffer
-	command := exec.Command(binary, arguments...)
+	ctx, cancel := context.WithTimeout(context.Background(), deadline)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary, arguments...)
 	command.Stderr = &stderr
 	if err := command.Run(); err != nil {
 		t.Fatalf("%s: %v\n%s", filepath.Base(binary), err, stderr.Bytes())

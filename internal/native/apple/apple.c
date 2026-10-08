@@ -2,6 +2,7 @@
 // on either side of objc_msgSend (adamic_apple.h, docs/apple.md).
 
 #include "adamic_apple.h"
+#include "async.h"
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <dispatch/dispatch.h>
@@ -571,13 +572,111 @@ static void uncaught(id exception) {
 	panic_text("uncaught Objective-C exception ", detail);
 }
 
+// A promise Apple settles (async.h's host promises): the request is made on the main thread, the
+// main thread is the loop, and Apple completes it from whatever queue it likes. Completing only
+// copies what Apple handed it and wakes the main thread, which settles the promise and runs what
+// awaited it, so nothing of Adamic's is touched off the main thread.
+//
+// wake puts a drain on the main queue, which the main run loop serves, an app's or a waiting
+// program's. wait is reached only from main's end (adamic_async_run), once nothing is runnable and
+// a request is still out: it runs the main run loop until a source is handled, the drain among
+// them, and adamic_async_run looks again.
+static void drain_completions(void *context) {
+	(void)context;
+	adamic_host_process_completions();
+}
+
+static void wake(void) {
+	dispatch_async_f(dispatch_get_main_queue(), NULL, drain_completions);
+}
+
+static void wait_for_completion(void) {
+	CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0e10, true);
+}
+
+// The completion handler -[NSURLSession dataTaskWithURL:completionHandler:] takes, laid out by hand
+// as adamic_apple_block is. What it captures is the request, an identity async.h says stays safe to
+// complete from any thread, so it needs no copy or dispose: Apple's copy is the bytes.
+typedef struct data_block_descriptor {
+	unsigned long reserved;
+	unsigned long size;
+	const char *signature;
+} data_block_descriptor;
+
+typedef struct data_block {
+	void *isa;
+	int flags;
+	int reserved;
+	void (*invoke)(struct data_block *, id, id, id);
+	const data_block_descriptor *descriptor;
+	adamic_host_request *request;
+} data_block;
+
+static void data_completed(data_block *block, id data, id response, id error) {
+	static SEL localized, utf8, bytes, length, kind, status;
+	static Class http;
+	if (localized == NULL) {
+		localized = sel_registerName("localizedDescription");
+		utf8 = sel_registerName("UTF8String");
+		bytes = sel_registerName("bytes");
+		length = sel_registerName("length");
+		kind = sel_registerName("isKindOfClass:");
+		status = sel_registerName("statusCode");
+		http = objc_getClass("NSHTTPURLResponse");
+	}
+	if (error != nil) {
+		id description = ((message_object)objc_msgSend)(error, localized);
+		const char *text = description == nil ? NULL : ((const char *(*)(id, SEL))objc_msgSend)(description, utf8);
+		adamic_host_reject(block->request, text == NULL ? "the request failed" : text);
+		return;
+	}
+	// A response that isn't HTTP (a file: URL's) has no status: 0, as fetch gives an opaque one.
+	double code = 0;
+	if (response != nil && http != Nil && ((message_boolean_object)objc_msgSend)(response, kind, (id)http)) {
+		code = (double)((long (*)(id, SEL))objc_msgSend)(response, status);
+	}
+	const void *body = data == nil ? NULL : ((const void *(*)(id, SEL))objc_msgSend)(data, bytes);
+	unsigned long size = data == nil ? 0 : ((unsigned long (*)(id, SEL))objc_msgSend)(data, length);
+	adamic_host_resolve(block->request, size == 0 ? NULL : body, size, code);
+}
+
+static const data_block_descriptor data_descriptor = {0, sizeof(data_block), "v32@?0@8@16@24"};
+
+adamic_async_promise *adamic_apple_data(id session, id url) {
+	static bool hooked;
+	if (!hooked) {
+		hooked = true;
+		if (!adamic_host_set_loop_hooks(wake, wait_for_completion)) {
+			static const char message[] = "runtime bug: Apple's loop hooks came after a host request";
+			adamic_panic(message, sizeof message - 1);
+		}
+	}
+	static SEL task_selector, resume;
+	if (task_selector == NULL) {
+		task_selector = sel_registerName("dataTaskWithURL:completionHandler:");
+		resume = sel_registerName("resume");
+	}
+	adamic_async_promise *promise;
+	data_block block = {_NSConcreteStackBlock, block_has_signature, 0, data_completed, &data_descriptor, NULL};
+	block.request = adamic_host_promise_new(&promise);
+	// The task comes back autoreleased: a pool of its own lets it go once the session holds it,
+	// rather than at exit in main's.
+	void *local = objc_autoreleasePoolPush();
+	id task = ((id (*)(id, SEL, id, id))objc_msgSend)(session, task_selector, url, (id)&block);
+	((message_void)objc_msgSend)(task, resume);
+	objc_autoreleasePoolPop(local);
+	return promise;
+}
+
 // An app spends its life in the main run loop, and the program's output is written when the buffer
 // fills or the program exits, which an app may never do: so whatever it wrote is written each time
-// the run loop is about to wait.
+// the run loop is about to wait. Promise reactions run there too, as Node runs them before its loop
+// waits: one queued before an app's run (an await of a settled promise) has no completion to wake it.
 static void before_waiting(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *context) {
 	(void)observer;
 	(void)activity;
 	(void)context;
+	adamic_host_process_completions();
 	adamic_output_flush();
 }
 

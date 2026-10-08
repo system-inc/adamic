@@ -71,22 +71,23 @@ class SupplementsView implements View {
 	}
 }
 
-if (address !== undefined) {
-	UrlSession.shared
-		.dataTask({
-			with: new Url({ string: address }),
-			completionHandler: (data, response, error) => {
-				const decoded = decodeJson<Supplement[]>(data === undefined ? '' : (data.utf8Text() ?? ''));
-				if (error !== undefined) {
-					problem.set(error.localizedDescription);
-				} else if (decoded.kind === 'Error') {
-					problem.set(decoded.message);
-				} else {
-					supplements.set(decoded.value);
-				}
-			},
-		})
-		.resume();
+// Started before the app runs and awaited while it does: Apple settles the promise from its own
+// queue, and what follows the await runs on the main thread, where setting State renders again.
+async function load(from: string): Promise<void> {
+	try {
+		const response = await UrlSession.shared.data({ from: new Url({ string: from }) });
+		const decoded = decodeJson<Supplement[]>(response.body);
+		if (decoded.kind === 'Error') {
+			problem.set(decoded.message);
+		} else {
+			supplements.set(decoded.value);
+		}
+	} catch (error) {
+		problem.set(error instanceof Error ? error.message : 'the request failed');
+	}
 }
+
+// Kept, not awaited, so the app opens while it loads: Adamic refuses a task nothing holds.
+const loading = address === undefined ? undefined : load(address);
 
 run('Supplements', () => new SupplementsView(), {});

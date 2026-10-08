@@ -143,4 +143,8 @@ const (
 	// NativeDelegate is an object of one of the program's classes where Apple takes an object: Apple
 	// is handed an instance of Delegate's class, holding the object, whose methods call its methods.
 	NativeDelegate
+
+	// NativePromise is a result only: a promise the C function made as a host promise (async.h) and
+	// Apple settles from its own queue, handed back owned.
+	NativePromise
 )

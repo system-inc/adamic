@@ -1,0 +1,55 @@
+// await.a: requests through a session's data, each a promise Apple settles from a queue of its own
+// and the program awaits on the main thread: the server's JSON decoded into true types, a status that
+// isn't 200 from a request made before it and awaited after, and a refused one, caught. await.m
+// makes the same requests in Objective-C.
+
+import { decodeJson, programArguments } from 'adamic';
+import { Url } from 'apple/foundation/url';
+import { UrlSession } from 'apple/foundation/url-session';
+
+interface Stacked {
+	readonly identifier: string;
+	readonly name: string;
+	readonly milligrams: number;
+	readonly timing: 'Morning' | 'Evening';
+}
+
+const address = programArguments()[0] ?? 'http://127.0.0.1:1';
+
+// A loop is its own function: async unit 2 doesn't cut a for-of into an await's states yet.
+function report(stacked: readonly Stacked[]): void {
+	for (const one of stacked) {
+		console.log(`${one.name}: ${one.milligrams} mg, ${one.timing}`);
+	}
+}
+
+async function stack(): Promise<number> {
+	const response = await UrlSession.shared.data({ from: new Url({ string: `${address}/stack.json` }) });
+	console.log(`stack: ${response.status}, ${response.body.length} characters`);
+	const decoded = decodeJson<Stacked[]>(response.body);
+	if (decoded.kind === 'Error') {
+		console.log(`not a stack: ${decoded.message}`);
+		return 0;
+	}
+	report(decoded.value);
+	return decoded.value.length;
+}
+
+// Caught in a function: a top-level catch that binds an awaited rejection leaks it on area/runtime
+// 7c4dae85 (reported to runtime), and this fixture's counts are the bridge's to answer for.
+async function refused(): Promise<string> {
+	try {
+		const response = await UrlSession.shared.data({ from: new Url({ string: 'http://127.0.0.1:1/refused' }) });
+		return `${response.status}`;
+	} catch (error) {
+		return error instanceof Error ? error.message : 'not an error';
+	}
+}
+
+const missing = UrlSession.shared.data({ from: new Url({ string: `${address}/missing.json` }) });
+console.log('asked');
+const stacked = await stack();
+const absent = await missing;
+console.log(`missing: ${absent.status}, ${absent.body.length} characters`);
+console.log(`refused: ${await refused()}`);
+console.log(`stacked: ${stacked}`);

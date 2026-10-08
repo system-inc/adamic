@@ -1,0 +1,18 @@
+// settled.a: an await of a promise already settled, started before the main run loop runs. Nothing
+// Apple completes wakes it, so it resumes as the run loop is about to wait, where Node would run it
+// before its own loop waits, and it stops the loop. settled.m does the same in Objective-C.
+
+import { RunLoop } from 'apple/corefoundation/run-loop';
+
+async function settle(): Promise<void> {
+	await Promise.resolve();
+	console.log('settled');
+	RunLoop.main.stop();
+}
+
+console.log('started');
+// Kept, not awaited: Adamic refuses a task nothing holds.
+const settling = settle();
+console.log('running');
+RunLoop.run();
+console.log('stopped');

@@ -56,6 +56,7 @@ Each argument is `<source>:<type>`, in the selector's order. The source is the A
 | `options(Name=bit,...)` | a bit mask | a readonly array of the literals |
 | `action` | a target and its selector | a closure, `() => void` |
 | `block(type,...)` | a block returning nothing | a closure taking those parameters |
+| `promise` | a host promise, a result only | `Promise<T>`, to await (Awaiting Apple, below) |
 
 A result marked `-> new object` comes back retained (`alloc`, `new`, `copy`); any other object result is retained on its way into Adamic. A result Apple promises isn't `nil` (`object`, `string`), and whatever `new` makes, is checked: `nil` there panics, naming the selector, rather than reaching Adamic as a value its type says can't be. So `new Url({ string: 'not a url' })` panics, as Swift's `URL(string:)!` would.
 
@@ -99,6 +100,21 @@ class SupplementRow implements View {
 So ownership stays simple. SwiftUI holds only the shim's objects, by Objective-C's count, and never an object of the program's: no class of the program's is reached from native code, and none is kept alive by Swift past a render. A closure a button holds is the one thing of Adamic's SwiftUI keeps. It's a block holding the closure (as everywhere in the bridge), let go of when the shim forgets the button, at the latest as the program finishes. A view that captures its own model through a button's closure is the same cycle as an action's (below, Not yet).
 
 `examples/apple/counter.a` is the app.
+
+## Awaiting Apple
+
+A request Apple completes later is a promise the program awaits, as Swift's `async` methods are:
+
+```ts
+const response = await UrlSession.shared.data({ from: new Url({ string: address }) });
+const decoded = decodeJson<Supplement[]>(response.body);
+```
+
+`data` is Swift's `data(from:)`, added to the generated `UrlSession` by hand (`internal/load/apple/foundation/url-session.d.ts`): its tag, `@objc function adamic_apple_data 0.from:object -> promise`, names a C function in `apple.c` that makes a host promise (`runtime/async.h`), starts `dataTaskWithURL:completionHandler:` with a block of its own and hands the promise back. It resolves with the body as UTF-8 text and the HTTP status, `{ body, status }`, and rejects with Apple's description of the error, or where the body isn't UTF-8.
+
+Apple completes the task on a queue of its own, and the completion touches nothing of Adamic's: the runtime copies the bytes and wakes the main thread, where the promise settles and what awaited it runs. Apple's wake is a drain put on the main queue, which the main run loop serves, so in an app (`run`, which never returns) a completion runs as any event does. A program that reaches its end with a request still out waits in the main run loop until it's in. Reactions that need no completion (an await of a settled promise before `run`) run each time the main run loop is about to wait, as Node runs them before its loop waits.
+
+`internal/apple/testdata/await.a` is held to `await.m`: JSON decoded into true types, a request made before another and awaited after it, a 404, and a refused request caught. `supplements.a` awaits its list the same way.
 
 ## Delegates
 
@@ -199,7 +215,7 @@ The function's IR body only panics, so the JavaScript backend, which can't reach
 - **Actions.** A closure given as an action becomes an `AdamicAction`, an `NSObject` subclass made at runtime whose instance variable holds the closure (counted) and whose `adamicAct:` calls it. A control holds its target only weakly, so the action is kept by the object it was given to, as an associated object, and its `dealloc` releases the closure.
 - **Blocks.** A closure given as a block is a block laid out by hand as the block ABI lays one out, no `-fblocks` needed: it starts on the stack of the call it's given to, holds the closure through an object whose count is Objective-C's (safe on any thread), and Apple copies it if it keeps it. Apple calls a block on whatever queue it likes, and Adamic's counts aren't atomic, so the block's invoke only retains what it was given and hands it to the main thread; there the arguments become Adamic values and the closure runs. A block called on the main thread runs at once, so an enumeration finishes before the call that enumerates returns. Entering Adamic from a block off the main thread panics: that's a runtime bug, never a race.
 - **The pool.** `main` runs inside an autorelease pool, drained when the program finishes, after its globals are released, so whatever Apple held of Adamic's comes back and is freed before the counts are taken.
-- **Waiting.** A program that isn't an app waits for its callbacks in the main thread's run loop: `RunLoop.run()` until a callback calls `RunLoop.main.stop()`.
+- **Waiting.** A program that isn't an app waits for its callbacks in the main thread's run loop: `RunLoop.run()` until a callback calls `RunLoop.main.stop()`. A promise needs none of that: an await waits (Awaiting Apple, above).
 - **Exceptions.** An Objective-C exception nothing catches ends the program as a panic, with its name and reason, before anything unwinds through Adamic's frames. An Adamic throw out of an action is uncaught, since nothing in Objective-C can catch it.
 - **Output** is flushed each time the main run loop is about to wait, so an app that never exits still shows what it printed.
 

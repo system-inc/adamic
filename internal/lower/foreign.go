@@ -40,7 +40,7 @@ import (
 // no, or a number, const(4)). The types are ir.NativeKind's: double,
 // integer, unsigned, boolean, string, object (object? where nil is a value), rectangle,
 // enum(Name=1,...), options(Name=1,...), action, and block(type,...), a closure Apple calls with
-// those, and a result may be void. A result marked new
+// those, and a result may be void, or promise, a host promise the C function made, to await. A result marked new
 // comes back retained, as alloc, new and copy give it.
 //
 // A call lowers to an ordinary ir.Call of a function whose body is foreign (ir.Foreign), made once
@@ -67,9 +67,34 @@ type foreignSource struct {
 	native   ir.NativeType
 }
 
-// isForeign reports whether a symbol is declared in one of Apple's binding files.
+// isForeign reports whether a symbol is declared in one of Apple's binding files, as something of
+// Apple's: a record a binding declares for what it hands back ({ body, status }), an interface with
+// no @objc tag on it or its member, is the program's kind of value, read as any object is.
 func isForeign(symbol *ast.Symbol) bool {
-	return symbol != nil && len(symbol.Declarations) > 0 && load.IsApple(ast.GetSourceFileOfNode(symbol.Declarations[0]))
+	if symbol == nil || len(symbol.Declarations) == 0 || !load.IsApple(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		record := declaration
+		if declaration.Kind == ast.KindPropertySignature {
+			record = declaration.Parent
+		}
+		if record.Kind != ast.KindInterfaceDeclaration || objcTagged(declaration) || objcTagged(record) {
+			return true
+		}
+	}
+	return false
+}
+
+// objcTagged reports whether a declaration's doc comment carries an @objc tag.
+func objcTagged(declaration *ast.Node) bool {
+	sourceFile := ast.GetSourceFileOfNode(declaration)
+	for _, documentation := range declaration.JSDoc(sourceFile) {
+		if strings.Contains(sourceFile.Text()[documentation.Pos():documentation.End()], "@objc ") {
+			return true
+		}
+	}
+	return false
 }
 
 // foreignTags reads a declaration's @objc tags.
@@ -174,6 +199,9 @@ func parseForeignSource(text string) (foreignSource, error) {
 	if err != nil {
 		return source, err
 	}
+	if native.Kind == ir.NativePromise {
+		return source, fmt.Errorf("argument %s: a promise is a result only", text)
+	}
 	source.native = native
 	switch place {
 	case "nil", "yes", "no":
@@ -216,7 +244,7 @@ func parseNativeType(text string) (ir.NativeType, error) {
 				return native, fmt.Errorf("%s: %w", text, err)
 			}
 			switch parameter.Kind {
-			case ir.NativeVoid, ir.NativeAction, ir.NativeBlock, ir.NativeRectangle, ir.NativeEnumeration, ir.NativeOptions:
+			case ir.NativeVoid, ir.NativeAction, ir.NativeBlock, ir.NativeRectangle, ir.NativeEnumeration, ir.NativeOptions, ir.NativePromise:
 				return native, fmt.Errorf("%s: a block can't take a %s yet", text, member)
 			}
 			native.Parameters = append(native.Parameters, parameter)
@@ -251,7 +279,7 @@ func parseNativeType(text string) (ir.NativeType, error) {
 	kinds := map[string]ir.NativeKind{
 		"void": ir.NativeVoid, "double": ir.NativeDouble, "integer": ir.NativeInteger, "unsigned": ir.NativeUnsigned,
 		"boolean": ir.NativeBoolean, "string": ir.NativeString, "string?": ir.NativeString, "object": ir.NativeObject, "object?": ir.NativeObject,
-		"rectangle": ir.NativeRectangle, "action": ir.NativeAction, "objects": ir.NativeObjects,
+		"rectangle": ir.NativeRectangle, "action": ir.NativeAction, "objects": ir.NativeObjects, "promise": ir.NativePromise,
 	}
 	kind, isKind := kinds[text]
 	if !isKind {
@@ -274,6 +302,8 @@ func adamicType(native ir.NativeType) ir.Type {
 		return ir.Array
 	case ir.NativeAction, ir.NativeBlock:
 		return ir.Closure
+	case ir.NativePromise:
+		return ir.Promise
 	case ir.NativeVoid:
 		return 0
 	}
@@ -659,6 +689,8 @@ func (l *lowering) foreignFunction(foreign *ir.Foreign, types []ir.Type, returns
 		declared.Body = append(declared.Body, ir.Return{Value: ir.StringConstant{Index: l.constant("")}})
 	case ir.Object:
 		declared.Body = append(declared.Body, ir.Return{Value: ir.Undefined{Of: ir.Object}})
+	case ir.Promise:
+		declared.Body = append(declared.Body, ir.Return{Value: ir.PromiseValue{}})
 	}
 	l.result.Functions = append(l.result.Functions, declared)
 	l.foreignFunctions[key] = function

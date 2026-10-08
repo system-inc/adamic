@@ -1,12 +1,11 @@
 // supplements.a: day 6's app, held to its witness. A supplements list written in Adamic through
-// SwiftUI, its rows a class of their own, shows a progress view, fetches its list over URLSession,
+// SwiftUI, its rows a class of their own, shows a progress view, awaits its list from URLSession,
 // decodes it into true types with decodeJson, and renders it: what SwiftUI shows is printed. Then a
 // list drifted from its type ("Noon" isn't a timing) comes back as an error, a value, not a crash.
 // supplements.swift is the same app written in Swift: the two must agree (witness_test.go).
 
 import { decodeJson, programArguments } from 'adamic';
 import { Window } from 'apple/appkit/window';
-import { RunLoop } from 'apple/corefoundation/run-loop';
 import { Url } from 'apple/foundation/url';
 import { UrlSession } from 'apple/foundation/url-session';
 import { Host } from 'apple/swiftui/host';
@@ -56,32 +55,32 @@ window.contentView = host.view();
 console.log(`loading: rows ${host.listRows()}`);
 
 const address = programArguments()[0] ?? 'http://127.0.0.1:1';
-UrlSession.shared
-	.dataTask({
-		with: new Url({ string: `${address}/supplements.json` }),
-		completionHandler: (data, response, error) => {
-			const decoded = decodeJson<Supplement[]>(data === undefined ? '' : (data.utf8Text() ?? ''));
-			if (error !== undefined || decoded.kind === 'Error') {
-				console.log('supplements: failed');
-			} else {
-				supplements.set(decoded.value);
-				console.log(`supplements: ${supplements.value.length}, rows ${host.listRows()}`);
-				for (const supplement of supplements.value) {
-					console.log(`  ${supplement.timing}: ${supplement.name}, ${supplement.dose}`);
-				}
-			}
-			UrlSession.shared
-				.dataTask({
-					with: new Url({ string: `${address}/drifted.json` }),
-					completionHandler: (drifted) => {
-						const again = decodeJson<Supplement[]>(drifted === undefined ? '' : (drifted.utf8Text() ?? ''));
-						console.log(`drifted: ${again.kind === 'Error' ? 'refused' : 'accepted'}, rows ${host.listRows()}`);
-						RunLoop.main.stop();
-					},
-				})
-				.resume();
-		},
-	})
-	.resume();
-RunLoop.run();
+
+// A loop is its own function: async unit 2 doesn't cut a for-of into an await's states yet.
+function listed(): void {
+	console.log(`supplements: ${supplements.value.length}, rows ${host.listRows()}`);
+	for (const supplement of supplements.value) {
+		console.log(`  ${supplement.timing}: ${supplement.name}, ${supplement.dose}`);
+	}
+}
+
+// What the server has at a path, awaited: "" where the request fails, which decodes as an error.
+async function fetched(path: string): Promise<string> {
+	try {
+		const response = await UrlSession.shared.data({ from: new Url({ string: `${address}/${path}` }) });
+		return response.body;
+	} catch {
+		return '';
+	}
+}
+
+const decoded = decodeJson<Supplement[]>(await fetched('supplements.json'));
+if (decoded.kind === 'Error') {
+	console.log('supplements: failed');
+} else {
+	supplements.set(decoded.value);
+	listed();
+}
+const again = decodeJson<Supplement[]>(await fetched('drifted.json'));
+console.log(`drifted: ${again.kind === 'Error' ? 'refused' : 'accepted'}, rows ${host.listRows()}`);
 window.close();

@@ -53,6 +53,8 @@ func nativeCType(native ir.NativeType) string {
 		return "BOOL"
 	case ir.NativeRectangle:
 		return "adamic_apple_rectangle"
+	case ir.NativePromise:
+		return "adamic_async_promise *"
 	}
 	return "id"
 }
@@ -243,6 +245,9 @@ func (e *emitter) foreignReturn(function ir.Function, result string) {
 		e.line("return text;")
 	case foreign.Returns.Kind == ir.NativeBoolean:
 		e.line("return %s != NO;", result)
+	case foreign.Returns.Kind == ir.NativePromise:
+		// Made by the C function, owned: the caller holds the promise's one count.
+		e.line("return %s;", result)
 	default:
 		e.line("return (double)%s;", result)
 	}
@@ -461,6 +466,8 @@ func adamicTypeOf(native ir.NativeType) ir.Type {
 		return ir.Boolean
 	case ir.NativeString:
 		return ir.String
+	case ir.NativePromise:
+		return ir.Promise
 	}
 	return ir.Object
 }

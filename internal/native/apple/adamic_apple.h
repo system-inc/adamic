@@ -170,6 +170,11 @@ adamic_object *adamic_apple_delegate_object(id delegate, const adamic_apple_dele
 // nothing in Objective-C can catch it.
 void adamic_apple_delegate_returned(void);
 
+// adamic_apple_data is a session's data(from:): -[NSURLSession dataTaskWithURL:completionHandler:],
+// resumed, as a host promise (async.h) the caller owns, settled on the main thread with { body,
+// status } or an Error. A program declares it as the binding's C function (internal/native/foreign.go).
+struct adamic_async_promise *adamic_apple_data(id session, id url);
+
 // adamic_apple_give_back is an object a conversion made (adamic_apple_string), handed to Apple as a
 // method's result: autoreleased, as a method's result is, and no longer owed.
 id adamic_apple_give_back(id object);
