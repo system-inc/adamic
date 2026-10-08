@@ -809,3 +809,30 @@ composition depends on the earlier Adamic algorithms and native clone ruling.
 Static-components final certificate: **22/22 upstream cases + 3/3 owned witnesses**
 match Go on native, Node and emitted JavaScript. The creation-deletion mutant
 is caught on native and Node. Retained output: `validation/unit2-step28/static-components-final.txt`.
+
+## Shared replay bootstrap and native clone closure (Oct 8)
+
+Requests inspected: unit 3 STOPPED.md at 9cc68732; unit 4 REPORT.md at 9519c348.
+Public worker import: `../../replay/index.ts`. Shared framing/read/write, typed
+fresh-arena reconstruction and re-encoding match Go on native and Node for
+1,465/1,465 originals (including 23 Flow) plus 72 probes. Corrupt instruction-ID
+sidecar mutant fails loudly on both. Scope/reactive indices reject private
+minting, cross-brand misuse and out-of-range reads.
+
+The authorized gap 2 explicit-copy workaround closes native CloneFunction:
+1,442/1,442 non-Flow originals plus 72 probes; storage-alias mutant caught on
+native and Node. Exact shortest proving program and lower.NotYet.What remain
+in GAPS.md and gaps_test.go. Construction/direct/cache certificates agree;
+static-components is 22 upstream +3 owned on native/Node/emitted JS with its
+creation mutant caught. Fresh logs and hashed corpus receipt are retained in
+validation/replay-bootstrap/. Earlier 79-mutant full-matrix evidence remains
+in validation/unit2-step28/ and is not represented as rerun by this push.
+
+12-function native counts: allocations/frees 4164/4164; retains/releases
+16323/14901; peak 240, regions 0. Delta +952 from original 3212. Boxed indices,
+canonical handle tables, SSA callbacks and pattern arenas explain known growth;
+no isolated attribution of the new +3 versus 4161 is claimed.
+
+Declined inventing/landing mutation_aliasing: fetched area 6bf7bcec lacks the
+module. Existing analysis lane owns it; dependent workers must import its
+actual landed API. Pass-state sidecars and Go pass boundaries remain lane-owned.

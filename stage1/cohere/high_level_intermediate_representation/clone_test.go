@@ -8,11 +8,11 @@ import (
 	"testing"
 )
 
-// Native is blocked by GAPS.md gap 2, so this is explicitly a Node-only certificate.
-func TestCloneFunctionNodeOracle(t *testing.T) {
+// Gap 2 remains proven; the authorized explicit-record workaround restores native.
+func TestCloneFunctionOracle(t *testing.T) {
 	manifest := os.Getenv("HIR_CLONE_CENSUS")
 	if manifest == "" {
-		t.Skip("set HIR_CLONE_CENSUS to the complete construction manifest; native clone is pending gap 2")
+		manifest = filepath.Join(exportConstructionCensus(t, os.Getenv("HIR_CENSUS_EXPORT")), "manifest.tsv")
 	}
 	root, err := filepath.Abs("../../..")
 	if err != nil {
@@ -21,7 +21,13 @@ func TestCloneFunctionNodeOracle(t *testing.T) {
 	lane := filepath.Join(root, "stage1/cohere/high_level_intermediate_representation")
 	got := command(t, root, nil, "node", "--no-warnings", "oracle/node.mjs", filepath.Join(lane, "clone_main.ts"), manifest)
 	matched, total := compareConstructionCensus(t, got, manifest, false)
-	t.Logf("Node-only CloneFunction: %d/%d including probes; native blocked by gap 2", matched, total)
+	binary := filepath.Join(t.TempDir(), "clone")
+	command(t, root, nil, "go", "run", "./cmd/adamic", "build", filepath.Join(lane, "clone_main.ts"), "-o", binary)
+	native := command(t, root, nil, binary, manifest)
+	if string(native) != string(got) {
+		t.Fatal("native and Node clone differ")
+	}
+	t.Logf("CloneFunction native = Node: %d/%d including probes", matched, total)
 	dir, err := os.MkdirTemp(filepath.Dir(lane), "hir-clone-mutant-")
 	if err != nil {
 		t.Fatal(err)
@@ -47,11 +53,15 @@ func TestCloneFunctionNodeOracle(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	c := exec.Command("node", "--no-warnings", filepath.Join(root, "oracle/node.mjs"), filepath.Join(dir, "clone_main.ts"), manifest)
-	c.Dir = root
-	out, err := c.CombinedOutput()
-	if err == nil || !strings.Contains(string(out), "BlockIndex belongs to another arena") {
-		t.Fatalf("clone alias mutant survived: %v %s", err, out)
+	badBinary := filepath.Join(t.TempDir(), "bad-clone")
+	command(t, root, nil, "go", "run", "./cmd/adamic", "build", filepath.Join(dir, "clone_main.ts"), "-o", badBinary)
+	for _, args := range [][]string{{"node", "--no-warnings", filepath.Join(root, "oracle/node.mjs"), filepath.Join(dir, "clone_main.ts"), manifest}, {badBinary, manifest}} {
+		c := exec.Command(args[0], args[1:]...)
+		c.Dir = root
+		out, err := c.CombinedOutput()
+		if err == nil || !strings.Contains(string(out), "BlockIndex belongs to another arena") {
+			t.Fatalf("clone alias mutant survived: %v %s", err, out)
+		}
 	}
-	t.Log("Node catches clone storage alias at the checked block arena read")
+	t.Log("native and Node catch clone storage alias at the checked block arena read")
 }

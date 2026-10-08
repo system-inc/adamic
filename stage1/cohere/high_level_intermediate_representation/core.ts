@@ -1,8 +1,8 @@
 import { panic } from 'adamic';
 // Go high_level_intermediate_representation.go: owned tables and function-local IDs.
 import type { BlockIdType, IdentifierIdType, DeclarationIdType, EvaluationOrderType, PhiInterface } from '../static_single_assignment/static_single_assignment.ts';
-import { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex, PatternIndex } from '../arena/arena_index.a';
-export { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex, PatternIndex } from '../arena/arena_index.a';
+import { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex, PatternIndex, ScopeIndex, ReactiveIndex } from '../arena/arena_index.a';
+export { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex, PatternIndex, ScopeIndex, ReactiveIndex } from '../arena/arena_index.a';
 export type EffectType = '<unknown>' | 'freeze' | 'read' | 'capture' | 'mutate-iterator?' | 'mutate?' | 'mutate' | 'store';
 export interface PlaceInterface {
     readonly identifier: IdentifierIndex;
@@ -11,13 +11,15 @@ export interface PlaceInterface {
     readonly start: number;
     readonly end: number;
 }
+export interface SourceHandleInterface { readonly kind: string; readonly start: number; readonly end: number; }
 export interface IdentifierInterface {
+    source: SourceHandleInterface | undefined;
     nodeIndex: number;
     readonly id: IdentifierIndex;
     readonly declaration: DeclarationIndex;
     readonly name: string;
 }
-// The slice admits only these variants; unsupported syntax is declined before lowering.
+// All Go instruction variants, shared by construction and pass replay.
 export interface FunctionReferenceInterface { readonly index: FunctionIndex; readonly ordinal: number; }
 export interface ArgumentInterface { place: PlaceInterface; readonly spread: boolean; }
 export interface ArrayElementInterface { place: PlaceInterface; readonly spread: boolean; readonly hole: boolean; }
@@ -28,7 +30,13 @@ export interface ModuleExportOriginInterface { readonly module: string; readonly
 export interface PatternPropertyInterface { readonly key: string; computedKey: PlaceInterface | undefined; defaultValue: PlaceInterface | undefined; readonly value: PatternIndex; }
 export interface PatternElementInterface { readonly value: PatternIndex | undefined; defaultValue: PlaceInterface | undefined; }
 export type PatternType = { readonly kind: 'Place'; place: PlaceInterface } | { readonly kind: 'Object'; readonly properties: PatternPropertyInterface[]; rest: PlaceInterface | undefined } | { readonly kind: 'Array'; readonly elements: PatternElementInterface[]; rest: PlaceInterface | undefined };
-export type ValueType = { readonly kind: 'Destructure'; lvaluePattern: PatternIndex; readonly pattern: PatternIndex; value: PlaceInterface; readonly declarationKind: number }
+export interface DependencyPathEntryInterface { readonly property: string; readonly optional: boolean; }
+export interface ManualMemoRootInterface { readonly isGlobal: boolean; place: PlaceInterface; readonly name: string; }
+export interface ManualMemoDependencyInterface { readonly root: ManualMemoRootInterface; readonly path: DependencyPathEntryInterface[]; }
+export type ValueType = { readonly kind: 'DeclareContext'; lvalue: PlaceInterface; readonly declarationKind: number }
+    | { readonly kind: 'StartMemoize'; readonly manualMemoId: number; readonly deps: ManualMemoDependencyInterface[] | undefined }
+    | { readonly kind: 'FinishMemoize'; readonly manualMemoId: number; value: PlaceInterface; readonly pruned: boolean }
+    | { readonly kind: 'Destructure'; lvaluePattern: PatternIndex; readonly pattern: PatternIndex; value: PlaceInterface; readonly declarationKind: number }
     | { readonly kind: 'ObjectMethod'; readonly key: string; readonly functionReference: FunctionReferenceInterface }
     | { readonly kind: 'UnsupportedNode'; readonly nodeKind: string; readonly nodePos: number; readonly nodeEnd: number; readonly reason: string }
     | { readonly kind: 'Debugger' }
@@ -67,7 +75,8 @@ export class Instruction {
     readonly id: InstructionIndex;
     order: EvaluationOrderType = 0;
     lvalue: PlaceInterface;
-    readonly value: ValueType;
+    value: ValueType;
+    source: SourceHandleInterface | undefined = undefined;
     readonly start: number;
     readonly end: number;
     constructor(id: InstructionIndex, lvalue: PlaceInterface, value: ValueType, start: number, end: number) {
@@ -100,6 +109,8 @@ export interface TerminalType {
 export function testPlace(terminal: TerminalType): PlaceInterface { return terminal.testPlace ?? panic('terminal requires a test place'); }
 export function testBlock(terminal: TerminalType): BlockIndex { return terminal.testBlock ?? panic('terminal requires a test block'); }
 export class BasicBlock {
+    present = true;
+    terminalPresent = true;
     readonly arenaIndices: readonly BlockIndex[];
     readonly id: BlockIndex;
     readonly instructions: InstructionIndex[] = [];
@@ -112,10 +123,12 @@ export class BasicBlock {
 }
 export class HIRFunction {
     nodeIndex = -1;
+    source: SourceHandleInterface | undefined = undefined;
+    outlined: Map<IdentifierIndex,FunctionIndex> | undefined = undefined;
     isAsync = false;
     isGenerator = false;
     readonly name: string;
-    readonly kind: string;
+    kind: string;
     readonly blockIndices: BlockIndex[] = [];
     readonly patternIndices: PatternIndex[] = [];
     readonly patterns: PatternType[] = [];
@@ -124,7 +137,7 @@ export class HIRFunction {
     readonly instructionIndices: InstructionIndex[] = [];
     readonly identifierIndices: IdentifierIndex[] = [];
     readonly declarationIndices: DeclarationIndex[] = [];
-    readonly entry: BlockIndex;
+    entry: BlockIndex;
     readonly blockTable: BasicBlock[] = [];
     blockOrder: BlockIndex[] = [];
     readonly retained: Set<number> = new Set<number>();
@@ -143,7 +156,7 @@ export class HIRFunction {
         this.kind = first >= 65 && first <= 90 ? 'component' : name.startsWith('use') && ((next >= 65 && next <= 90) || (next >= 48 && next <= 57)) ? 'hook' : 'other';
         const identifier = IdentifierIndex.push(this.identifierIndices);
         const declaration = DeclarationIndex.push(this.declarationIndices);
-        this.identifiers.push({ id: identifier, declaration, nodeIndex: -1, name: '' });
+        this.identifiers.push({ id: identifier, declaration, nodeIndex: -1, source: undefined, name: '' });
         this.returns = { identifier, effect: '<unknown>', reactive: false, start: 0, end: 0 };
         this.entry = BlockIndex.push(this.blockIndices);
         this.blockTable.push(new BasicBlock(this.blockIndices, this.entry, { kind: 'Return', value: this.returns }));
@@ -151,10 +164,10 @@ export class HIRFunction {
     }
     named(name: string, start: number, end: number, declaration: DeclarationIndex | undefined = undefined): PlaceInterface {
         const id = IdentifierIndex.push(this.identifierIndices);
-        const fresh = DeclarationIndex.push(this.declarationIndices);
-        const declared = declaration ?? fresh;
+        if(declaration === undefined) { while(this.declarationIndices.length <= id.slot) { DeclarationIndex.push(this.declarationIndices); } }
+        const declared = declaration ?? this.declarationAt(id.slot + 1);
         DeclarationIndex.read(this.declarationIndices, declared);
-        this.identifiers.push({ id, declaration: declared, name, nodeIndex: -1 });
+        this.identifiers.push({ id, declaration: declared, name, nodeIndex: -1, source: undefined });
         return { identifier: id, effect: '<unknown>', reactive: false, start, end };
     }
     newBlock(kind: string): BasicBlock {
@@ -174,13 +187,14 @@ export class HIRFunction {
         if(!Number.isInteger(value) || value < 1) { panic('invalid SSA declaration id'); }
         const index = this.declarationIndices[value - 1] ?? panic('SSA declaration id out of range'); DeclarationIndex.read(this.declarationIndices, index); return index;
     }
+    blockOrUndefined(id: BlockIndex): BasicBlock | undefined { const block = this.blockTable[BlockIndex.read(this.blockIndices,id)]; return block !== undefined && block.present ? block : undefined; }
     block(id: BlockIndex): BasicBlock { return this.blockTable[BlockIndex.read(this.blockIndices, id)] ?? panic('missing arena block'); }
     identifier(id: IdentifierIndex): IdentifierInterface { return this.identifiers[IdentifierIndex.read(this.identifierIndices, id)] ?? panic('missing arena identifier'); }
     instruction(id: InstructionIndex): Instruction { return this.instructions[InstructionIndex.read(this.instructionIndices, id)] ?? panic('missing arena instruction'); }
     temporary(start: number, end: number, declaration: DeclarationIndex | undefined = undefined): PlaceInterface { return this.named('', start, end, declaration); }
     mint(original: IdentifierIndex): IdentifierIndex {
         const old = this.identifier(original); const id = IdentifierIndex.push(this.identifierIndices);
-        this.identifiers.push({ id, declaration: old.declaration, name: old.name, nodeIndex: old.nodeIndex }); return id;
+        this.identifiers.push({ id, declaration: old.declaration, name: old.name, nodeIndex: old.nodeIndex, source: old.source }); return id;
     }
     emit(place: PlaceInterface, value: ValueType, start: number, end: number): InstructionIndex {
         const id = InstructionIndex.push(this.instructionIndices);
@@ -194,6 +208,7 @@ export class HIRArena {
     private readonly nodes: HIRFunction[] = [];
     private readonly indices: FunctionIndex[] = [];
     create(name: string): FunctionIndex { const index = FunctionIndex.push(this.indices); this.nodes.push(new HIRFunction(name)); return index; }
+    indexAt(slot: number): FunctionIndex { const index = this.indices[slot] ?? panic("function slot out of range"); FunctionIndex.read(this.indices,index); return index; }
     read(index: FunctionIndex): HIRFunction { return this.nodes[FunctionIndex.read(this.indices, index)] ?? panic('missing arena function'); }
 
 }
@@ -202,3 +217,6 @@ export class ConstructedHIR {
     readonly root: FunctionIndex;
     constructor(arena: HIRArena, root: FunctionIndex) { this.arena = arena; this.root = root; }
 }
+
+// Unit 3 rewrites values in place while instruction identity/order/source stay fixed.
+export function replaceInstructionValue(fn: HIRFunction,index: InstructionIndex,value: ValueType): void { fn.instruction(index).value = value; }

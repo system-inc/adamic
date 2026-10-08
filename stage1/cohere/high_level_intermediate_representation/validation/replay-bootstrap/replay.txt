@@ -1,0 +1,8 @@
+=== RUN   TestCheckpointReplayOracle
+    replay_test.go:19: HIR construction census: 1537 context-distinct functions in 1537 records; 1514 eligible; 395 fixtures (40 Flow exclusions)
+    replay_test.go:97: Go checkpoint framing and fresh HIR replay: native = Node 1465/1465 originals including all 23 Flow graphs; 72 probes
+    replay_test.go:113: off-by-one instruction anchor mutant caught by identity reader on native and Node
+    replay_test.go:126: DeclareContext, absent/empty/local/global StartMemoize and FinishMemoize variants match Go; clone owns memo arrays
+--- PASS: TestCheckpointReplayOracle (47.89s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation	47.935s

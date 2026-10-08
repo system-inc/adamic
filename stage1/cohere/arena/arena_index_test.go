@@ -41,7 +41,7 @@ func TestConcreteIndices(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, indexName := range []string{"FunctionIndex", "PatternIndex"} {
+	for _, indexName := range []string{"FunctionIndex", "PatternIndex", "ScopeIndex", "ReactiveIndex"} {
 		bad := strings.Replace(string(data), "new "+indexName+"(arena.length)", "new "+indexName+"(arena.length + 1)", 1)
 		if bad == string(data) {
 			t.Fatal("mutant anchor moved")
@@ -71,13 +71,16 @@ func TestConcreteIndices(t *testing.T) {
 	}
 
 	for name, code := range map[string]string{
-		"private":         "new FunctionIndex(2);",
-		"pattern-private": "new PatternIndex(0);",
-		"pattern-brand":   "const patterns: PatternIndex[] = []; const functions: FunctionIndex[] = []; PatternIndex.read(patterns,FunctionIndex.push(functions));",
-		"brand":           "const functions: FunctionIndex[] = []; const blocks: BlockIndex[] = []; FunctionIndex.read(functions, BlockIndex.push(blocks));",
+		"private":              "new FunctionIndex(2);",
+		"scope-private":        "new ScopeIndex(0);",
+		"reactive-private":     "new ReactiveIndex(0);",
+		"scope-reactive-brand": "const scopes: ScopeIndex[] = []; const nodes: ReactiveIndex[] = []; ScopeIndex.read(scopes,ReactiveIndex.push(nodes));",
+		"pattern-private":      "new PatternIndex(0);",
+		"pattern-brand":        "const patterns: PatternIndex[] = []; const functions: FunctionIndex[] = []; PatternIndex.read(patterns,FunctionIndex.push(functions));",
+		"brand":                "const functions: FunctionIndex[] = []; const blocks: BlockIndex[] = []; FunctionIndex.read(functions, BlockIndex.push(blocks));",
 	} {
 		p := filepath.Join(lane, "testdata", name+"-generated.a")
-		text := "import { FunctionIndex, BlockIndex, PatternIndex } from '../arena_index.a';\n" + code
+		text := "import { FunctionIndex, BlockIndex, PatternIndex, ScopeIndex, ReactiveIndex } from '../arena_index.a';\n" + code
 		if err := os.WriteFile(p, []byte(text), 0600); err != nil {
 			t.Fatal(err)
 		}

@@ -1,0 +1,7 @@
+=== RUN   TestFileFunctionCacheOracle
+    cache_test.go:72: live native resident-checker ForFunction matches Go without a replay snapshot
+    cache_test.go:74: 3 function cache entries match Go, repeated identities and checker gating
+    cache_test.go:109: fresh-lowering cache-hit mutant executes and disagrees with Go on both backends
+--- PASS: TestFileFunctionCacheOracle (72.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation	72.019s
