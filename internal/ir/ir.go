@@ -196,6 +196,8 @@ const (
 	Uint8Array
 	Int32Array
 	Float64Array
+	// Record is a string-key table wrapped by the runtime record object.
+	Record
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -228,7 +230,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray()
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray() || t == Record
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -748,6 +750,8 @@ type (
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
+		// Record selects the existing own-key record runtime rather than a Map.
+		Record     bool
 		Key, Value Type
 		Entries    [][2]Expression
 
@@ -1026,7 +1030,12 @@ func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
 
-func (MapNew) Type() Type     { return Map }
+func (n MapNew) Type() Type {
+	if n.Record {
+		return Record
+	}
+	return Map
+}
 func (MapKeys) Type() Type    { return Array }
 func (MapValues) Type() Type  { return Array }
 func (MapClear) Type() Type   { return 0 }
