@@ -892,6 +892,12 @@ extern adamic_heap *adamic_thrown;
 extern bool adamic_exception_pending;
 extern const adamic_class adamic_error_class;
 extern const adamic_class adamic_host_error_class;
+extern const adamic_class adamic_host_type_error_class;
+extern const adamic_class adamic_host_range_error_class;
+extern const adamic_class adamic_range_error_class;
+extern const adamic_class adamic_type_error_class;
+adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind);
+adamic_object *adamic_error_new_code(adamic_string *message, adamic_string *code);
 adamic_object *adamic_error_new(adamic_string *message);
 _Noreturn void adamic_uncaught(void);
 

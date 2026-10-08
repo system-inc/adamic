@@ -23,7 +23,7 @@ type tryRecord struct {
 func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
 	// Saved Error origins are delivered after general Error identity is proven.
-	if ast.IsIdentifier(thrown) && !l.caught[l.symbol(thrown)] && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
+	if ast.IsIdentifier(thrown) && !l.caught[l.symbol(thrown)] && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error", "RangeError", "TypeError") {
 		return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
 	}
 	value, err := l.expression(thrown)
@@ -56,7 +56,8 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "new Error with a message that isn't a string")
 		}
 	}
-	return ir.MakeError{Message: message}, nil
+	constructor := ast.SkipParentheses(created.Expression).Text()
+	return ir.MakeError{Message: message, Constructor: constructor}, nil
 }
 
 // tryStatement lowers try, with catch, finally or both.
@@ -103,7 +104,13 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 // its nominal runtime identity, shared by native Error objects and host errors.
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
-	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !l.isLibraryGlobal(binary.Right, "Error") {
+	identity := 0
+	for index, name := range []string{"Error", "RangeError", "TypeError"} {
+		if l.isLibraryGlobal(binary.Right, name) {
+			identity = -index - 1
+		}
+	}
+	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || identity == 0 {
 		return nil, false
 	}
 	value, err := l.expression(binary.Left)
@@ -111,13 +118,14 @@ func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 		l.unlowerable = err
 		return nil, false
 	}
-	return ir.InstanceOf{Value: value, Class: -1}, true
+	return ir.InstanceOf{Value: value, Class: identity}, true
 }
 
 // exceptions works out which functions a throw can leave, once every function is lowered, and
 // refuses what can't be done yet: a try that can reach a library call whose failure is a panic
 // natively but a throw on Node.
 func (l *lowering) exceptions() error {
+	l.libraryExceptions()
 	functions := l.result.Functions
 	// A class's methods are reached through function values too: a call through an interface the
 	// class implements calls one where it would call the object's own function value (ir.Property's
@@ -166,6 +174,8 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			}
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
+		case ir.NodeBufferCall:
+			found = found || node.MayThrow()
 		case ir.Throw:
 			found = true
 		case ir.Call:
@@ -201,7 +211,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		switch node := node.(type) {
 		case ir.Call:
 			for _, target := range l.result.CallTargets(node) {
-				if !visited[target] {
+				if !visited[target] && !l.result.Functions[target].CheckedLibrary {
 					visited[target] = true
 					failing = l.libraryFailure(l.result.Functions[target].Body, visited)
 					if failing != "" {
@@ -221,10 +231,6 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 		case ir.SetProperty:
 			if l.objectCanFreeze() {
 				failing = "a write to a potentially frozen object"
-			}
-		case ir.NodeBufferCall:
-			if node.Function == "hash_update" || node.Function == "hash_digest" {
-				failing = "Hash finalization, whose catchable .code contract is not supported yet"
 			}
 		case ir.ObjectCall:
 			if node.Method == "assign" && l.objectCanFreeze() {

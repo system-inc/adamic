@@ -428,3 +428,20 @@ mutant files. New allocation/free rows are 65/65 (dynamic), 3/3 (region payload)
 0/0 (uncaught undefined) and 3/3 (uncaught object). Existing catches gain counted
 borrows for checked dynamic narrowing; the refreshed rows record those actual
 retains/releases. No full package test or full gate was run.
+
+## Adopted item 5: represented library failures
+
+Library argument validation now lowers to ordinary owned Throw IR before native primitives run. RangeError and TypeError have nominal identities below Error; filesystem errors retain their actual nominal ancestry and code, and Hash update/digest after finalization now throws Error with ERR_CRYPTO_HASH_FINALIZED. Names and messages agree with source Node. Existing compiler-inserted narrowing checks still call terminal panic and exit 70; no catch or finally executes after that exit.
+
+The added tsc recovery reductions extend utilities.ts:7810, program.ts:2844 and sys.ts:1549 with range validation, frozen writes, regexp global-flag validation and host callbacks. These extensions test represented library failures; they are not claims that tsc contains each invalid argument. Both backends, release native, sanitizers and leak checks pass. The pinned census retires **0 roots and 0 hidden bytes**: its exception buckets remain empty; the independent source witnesses justify acceptance coverage rather than invented census savings.
+
+Commands and observations:
+
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStep21|TestNativeAgreesWithNode/internal/oracle/testdata/step21_' -count=1 -v -timeout=10m`: PASS, 15.296s.
+- `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(step21_|number_formats|precision_range|radix_range|node_crypto|fs_file)' -count=1 -v -timeout=10m`: PASS, 2.478s.
+- `go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts`: PASS, 50.110s; counts refreshed.
+- Focused lower admission tests and `go vet ./internal/lower ./internal/ir ./internal/native ./internal/javascript`: PASS. No full package tests or full gate ran.
+
+`run-library-mutants.py` restores every mutation. Wrong RangeError identity, wrong range message, wrong TypeError identity and wrong filesystem TypeError ancestry each fail stdout comparison. Hash failures changed to panic fail exit-code comparison. A soundness check changed to a catchable throw fails the explicit exit-70 assertion (native 0). The runner initially used the wrong expected diagnostic string for that final mutant; the mutant itself failed correctly, and its rerun matches the assertion. Logs are in `docs/step-21-exceptions/evidence/library-*.log.txt` and each named mutant log.
+
+Coverage is the represented argument and state failures named above, including repeat, normalize, numeric formats, typed arrays, Array construction/from, frozen properties, regexp flags and filesystem/Hash errors. Allocation exhaustion, oversized concatenation/builders and unrepresented library APIs are not established by these fixtures. Error subclass construction and saved Error origins remain staged for the following deliveries; stack remains NotYet.
