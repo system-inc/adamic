@@ -2,6 +2,7 @@ package checker
 
 import (
 	"context"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -36,7 +37,7 @@ promise.catch((error: unknown) => {});
 	if err != nil {
 		t.Fatal(err)
 	}
-	sf := p.Compiler.GetSourceFile(file)
+	sf := p.Compiler.GetSourceFile(tspath.RootedFilePath(file))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), sf)
 	defer release()
 	var class, arrow, receiver *ast.Node

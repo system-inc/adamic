@@ -16,7 +16,7 @@ func (p *Program) programModuleEdges(out *fields, _ *checker.Checker, node *ast.
 	sources := p.Compiler.SourceFiles()
 	out.number(uint64(len(sources)))
 	for _, source := range sources {
-		out.text(source.FileName())
+		out.text(string(source.FileName()))
 		out.yes(source.IsDeclarationFile)
 		var edges []string
 		computed := false
@@ -28,9 +28,9 @@ func (p *Program) programModuleEdges(out *fields, _ *checker.Checker, node *ast.
 			if resolved == nil || !resolved.IsResolved() {
 				return
 			}
-			target := p.Compiler.GetSourceFileForResolvedModule(resolved.ResolvedFileName)
+			target := p.Compiler.GetSourceFileForResolvedModule(resolved)
 			if target != nil && target != source {
-				edges = append(edges, target.FileName())
+				edges = append(edges, string(target.FileName()))
 			}
 		}
 		if !source.IsDeclarationFile {

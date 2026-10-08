@@ -3,6 +3,7 @@ package checker
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strings"
@@ -26,7 +27,7 @@ func TestWave24NextRawQuestions(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	sf := program.Compiler.GetSourceFile(file)
+	sf := program.Compiler.GetSourceFile(tspath.RootedFilePath(file))
 	var name, call *ast.Node
 	var walk func(*ast.Node)
 	walk = func(node *ast.Node) {

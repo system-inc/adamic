@@ -1,5 +1,8 @@
 // Default production cohere judgments. The external library supplies facts only.
-import { panic, tsgoInspect } from 'adamic';
+import { panic } from 'adamic';
+import { Checker } from '../lint/checker.a';
+import { RuleContext } from '../lint/context.ts';
+import { Settings } from '../lint/settings.ts';
 import type { Parser } from '../../typescript/parser/parser.ts';
 import type { Scanner } from '../../typescript/scanner/scanner.ts';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
@@ -63,6 +66,7 @@ export function unsafeAssignment(
 }
 
 export class Rules {
+    readonly context: RuleContext;
     readonly program: number;
     readonly path: string;
     readonly parser: Parser;
@@ -80,6 +84,10 @@ export class Rules {
         offsets: readonly number[],
         unary: UnaryMinus,
     ) {
+        const checker = new Checker(program, path, parser, scanner.text, undefined, false);
+        const parents: number[] = [];
+        this.parents = parents;
+        this.context = new RuleContext(scanner.text, parser, scanner, 'all', '', '', false, parents, new Settings(), -1, checker);
         this.program = program;
         this.path = path;
         this.parser = parser;
@@ -99,9 +107,10 @@ export class Rules {
         return this.scanner.text.slice(this.start(node), node.end);
     }
     ask(index: number, question: string): string {
-        const node = this.parser.node(index);
         this.queries++;
-        return tsgoInspect(this.program, this.path, this.byte(node.pos), this.byte(node.end), node.kind, question);
+        const checker = this.context.checker ?? panic('type-aware rule requires the shared checker');
+        const answer = checker.ask(index, question);
+        return answer.value ?? panic(answer.reason);
     }
     name(type: TypeFact, index: number): string {
         const frames = new Frames(this.ask(index, `name\n${type.id}`));
@@ -127,6 +136,10 @@ export class Rules {
         return current;
     }
     links(index: number, parent: number): void {
+        if(parent < 0) {
+            const checker = this.context.checker ?? panic('missing shared checker');
+            checker.root = index;
+        }
         this.parents[index] = parent;
         for(const child of this.parser.node(index).children) {
             this.links(child, index);

@@ -2,6 +2,7 @@ package checker
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strings"
@@ -29,7 +30,7 @@ func TestRawSymbolDeclarationCount(t *testing.T) {
 		}
 		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
 	}
-	walk(program.Compiler.GetSourceFile(file).AsNode())
+	walk(program.Compiler.GetSourceFile(tspath.RootedFilePath(file)).AsNode())
 	if len(identifiers) != 3 {
 		t.Fatal("missing direct/shorthand controls", len(identifiers))
 	}
@@ -56,7 +57,7 @@ func TestRawSymbolDeclarationCount(t *testing.T) {
 	if _, err := program.InspectWave24(file, uint64(node.Pos()), uint64(node.End()), "Identifier", "raw-symbol-declaration-count\nwrong"); err == nil {
 		t.Fatal("accepted suffix")
 	}
-	root := program.Compiler.GetSourceFile(file).AsNode()
+	root := program.Compiler.GetSourceFile(tspath.RootedFilePath(file)).AsNode()
 	if _, err := program.InspectWave24(file, uint64(root.Pos()), uint64(root.End()), strings.TrimPrefix(root.Kind.String(), "Kind"), "raw-symbol-declaration-count"); err == nil {
 		t.Fatal("accepted wrong kind")
 	}

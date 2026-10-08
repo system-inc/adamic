@@ -1,0 +1,1 @@
+export const messageSymbolDescription = "This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one.";

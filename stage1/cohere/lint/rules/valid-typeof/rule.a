@@ -1,0 +1,54 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { invalidValue, nonString, notString } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const operator = this.context.kind(node.children[1] ?? -1);
+        if(!['EqualsEqualsToken','EqualsEqualsEqualsToken','ExclamationEqualsToken','ExclamationEqualsEqualsToken'].includes(operator)) { return; }
+        const left = this.context.unwrap(node.children[0] ?? -1);
+        const right = this.context.unwrap(node.children[2] ?? -1);
+        if(this.context.kind(left) === 'TypeOfExpression') { this.check(right); }
+        else if(this.context.kind(right) === 'TypeOfExpression') { this.check(left); }
+    }
+    check(index: number): void {
+        const operand = this.context.node(index);
+        if(['StringLiteral','NoSubstitutionTemplateLiteral'].includes(operand.kind)) {
+            if(!['undefined','object','boolean','number','string','function','symbol','bigint'].includes(operand.text)) {
+                this.context.reportNode(index, 'valid-typeof', 'invalidTypeofValue', invalidValue(operand.text));
+            }
+            return;
+        }
+        if(['NumericLiteral','BigIntLiteral','RegularExpressionLiteral','NullKeyword','TrueKeyword','FalseKeyword'].includes(operand.kind)) {
+            this.context.reportNode(index, 'valid-typeof', 'invalidTypeofValue', nonString(this.context.raw(index))); return;
+        }
+        const required = this.context.settings.read('requirestringliterals','false') === 'true';
+        const noEdits: readonly SuggestionEdit[] = [];
+        if(operand.kind === 'Identifier' && operand.text === 'undefined' && !this.origins(index).includes(false)) {
+            this.context.reportNode(index, 'valid-typeof', required ? 'notString' : 'invalidTypeofValue', required ? notString : nonString('undefined'), noEdits, [
+                new Suggestion('suggestString', 'Use `"undefined"` instead of `undefined`.', [new SuggestionEdit(this.context.start(index), operand.end, '"undefined"')]),
+            ]); return;
+        }
+        if(required && operand.kind !== 'TypeOfExpression') {
+            this.context.reportNode(index, 'valid-typeof', 'notString', notString);
+        }
+    }
+    origins(index: number): boolean[] {
+        const answer = this.context.checker?.ask(index, 'symbol-provenance');
+        if(answer === undefined || answer.value === undefined) { return []; }
+        const frames = new Frames(answer.value); header(frames, 'symbol-provenance');
+        frames.natural(); frames.natural(); const count = frames.natural(); const result: boolean[] = [];
+        for(let at = 0; at < count; at++) {
+            frames.field(); result.push(frames.yes()); frames.yes(); frames.yes();
+            const ancestors = frames.natural();
+            for(let child = 0; child < ancestors; child++) {
+                frames.field(); frames.field(); frames.natural(); frames.natural(); frames.natural(); frames.yes();
+            }
+        }
+        frames.end(); return result;
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

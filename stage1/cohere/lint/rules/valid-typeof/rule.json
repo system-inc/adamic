@@ -1,0 +1,14 @@
+{
+  "name": "valid-typeof",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "BinaryExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleValidTypeof",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestValidTypeof"
+}

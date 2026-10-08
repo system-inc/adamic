@@ -1,0 +1,14 @@
+case 0
+/tmp/unpark-witness-timing/valid-typeof/witness.ts:1:80
+  valid-typeof  A typeof expression can only produce one of eight strings, and "array" is not among them, so this comparison is always false and the branch behind it is dead. The eight are undefined, object, boolean, number, string, function, symbol and bigint. Almost every finding here is a typo or a guess at a type name that the language does not report: typeof null is "object", an array is "object", and there is no "array", "null" or "date".
+
+range 79 86 invalidTypeofValue 			79 86
+/tmp/unpark-witness-timing/valid-typeof/witness.ts:1:102
+  valid-typeof  Typeof comparisons should be to string literals. A literal is the one operand the rule can check against the eight strings typeof produces, so with requireStringLiterals on, anything else, a variable or a template with substitutions, is reported rather than trusted.
+
+range 101 110 notString suggestion	"undefined"	Use `"undefined"` instead of `undefined`.	101 110
+/tmp/unpark-witness-timing/valid-typeof/witness.ts:1:126
+  valid-typeof  Typeof comparisons should be to string literals. A literal is the one operand the rule can check against the eight strings typeof produces, so with requireStringLiterals on, anything else, a variable or a template with substitutions, is reported rather than trusted.
+
+range 125 129 notString 			125 129
+fixed	export function typeofWitness(x: unknown, name: string) { return [typeof x === 'array', typeof x === undefined, typeof x === name, typeof x === 'string']; }\u000a

@@ -2,6 +2,7 @@ package checker
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -32,7 +33,7 @@ func TestWave24FifthRawQuestions(t *testing.T) {
 		}
 		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
 	}
-	walk(program.Compiler.GetSourceFile(file).AsNode())
+	walk(program.Compiler.GetSourceFile(tspath.RootedFilePath(file)).AsNode())
 	if call == nil || class == nil {
 		t.Fatal("missing positive controls")
 	}

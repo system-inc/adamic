@@ -23,9 +23,9 @@ func (p *Program) writeProvenance(out *fields, symbol *ast.Symbol) {
 		if source == nil {
 			panic("declaration has no source")
 		}
-		out.text(source.FileName())
+		out.text(string(source.FileName()))
 		out.yes(source.IsDeclarationFile)
-		out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.Path()))
+		out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.PathKey()))
 		out.yes(ast.IsExternalModule(source))
 		var ancestors []*ast.Node
 		for node := declaration; node != nil; node = node.Parent {

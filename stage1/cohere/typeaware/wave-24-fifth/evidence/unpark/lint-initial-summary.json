@@ -1,0 +1,21 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "60m",
+    "./stage1/cohere/lint"
+  ],
+  "exit": 1,
+  "wall_seconds": 2.887612267999998,
+  "counts_including_subtests": {
+    "pass": 0,
+    "fail": 0,
+    "skip": 0
+  },
+  "skips": [],
+  "nproc": 5,
+  "load_samples": []
+}

@@ -1,0 +1,1 @@
+export function symbols() { const a = Symbol(); const b = (Symbol)(); return [a,b,Symbol('named'),globalThis.Symbol('named')]; }

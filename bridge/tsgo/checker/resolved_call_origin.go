@@ -27,7 +27,7 @@ func (p *Program) resolvedCallOrigin(out *fields, c *checker.Checker, node *ast.
 		if source == nil {
 			return fmt.Errorf("signature declaration has no source")
 		}
-		out.text(source.FileName())
+		out.text(string(source.FileName()))
 		out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
 		out.number(uint64(declaration.Pos()))
 		out.number(uint64(declaration.End()))

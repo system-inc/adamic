@@ -1,0 +1,7 @@
+export function invalidValue(found: string): string {
+    return 'A typeof expression can only produce one of eight strings, and "'+found+'" is not among them, so this comparison is always false and the branch behind it is dead. The eight are undefined, object, boolean, number, string, function, symbol and bigint. Almost every finding here is a typo or a guess at a type name that the language does not report: typeof null is "object", an array is "object", and there is no "array", "null" or "date".';
+}
+export function nonString(found: string): string {
+    return 'A typeof expression always produces a string, and `'+found+'` is not one, so this comparison is always false (always true for != and !==) and the branch behind it is dead or unconditional. Compare against the string instead: `typeof value === "undefined"`, not `typeof value === undefined`.';
+}
+export const notString = 'Typeof comparisons should be to string literals. A literal is the one operand the rule can check against the eight strings typeof produces, so with requireStringLiterals on, anything else, a variable or a template with substitutions, is reported rather than trusted.';

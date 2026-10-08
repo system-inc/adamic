@@ -1,0 +1,10 @@
+case 0
+/tmp/unpark-witness-timing/symbol-description/witness.ts:1:39
+  symbol-description  This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one.
+
+range 38 46 expected 			38 46
+/tmp/unpark-witness-timing/symbol-description/witness.ts:1:59
+  symbol-description  This creates a symbol with no description, so it prints as `Symbol()` in every stack trace, log line and debugger view, and two unrelated symbols are indistinguishable from each other. The description costs nothing and is the only label the value will ever carry. Pass one.
+
+range 58 68 expected 			58 68
+fixed	export function symbols() { const a = Symbol(); const b = (Symbol)(); return [a,b,Symbol('named'),globalThis.Symbol('named')]; }\u000a
