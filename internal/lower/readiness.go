@@ -18,7 +18,7 @@ func sourceExpression(node *ast.Node) string {
 // Literal placeholder initializers reserve the existing uninitialized slot.
 // An outer type annotation, as in scanner.ts Script_Extensions, carries no value.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
-	if node == nil {
+	if node == nil || l.checkedAssertionSource(node) {
 		return false
 	}
 	node = ast.SkipParentheses(node)
@@ -56,6 +56,26 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // assignments make slots ready; placeholder assignments reset their readiness.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	// A record's named fields live in a counted table, not inline slots.
+	// Retain their representation checks even through a narrower parameter view.
+	if program.CheckedFields == nil {
+		program.CheckedFields = map[string]bool{}
+	}
+	markRecord := func(node any) bool {
+		if literal, ok := node.(ir.ObjectLiteral); ok && literal.Record {
+			for _, field := range literal.Fields {
+				program.CheckedFields[field.Name] = true
+			}
+		}
+		if set, ok := node.(ir.SetProperty); ok && set.Record {
+			program.CheckedFields[set.Name] = true
+		}
+		return true
+	}
+	walk(program.Main, markRecord)
+	for _, function := range program.Functions {
+		walk(function.Body, markRecord)
+	}
 	names := map[string]bool{}
 	resettable := map[int]bool{}
 	walk(program.Main, func(node any) bool {
@@ -385,6 +405,11 @@ func readinessCalls(instruction *flow.Instruction) bool {
 // assertionInitializer recognizes syntax only; its operand is evaluated at the declaration.
 func assertionInitializer(node *ast.Node) bool {
 	return node != nil && ast.SkipParentheses(node).Kind == ast.KindNonNullExpression
+}
+
+// TypeScript assertions are eager checks, including in storage initializers.
+func (l *lowering) lazyAssertionInitializer(node *ast.Node) bool {
+	return assertionInitializer(node) && !l.checkedAssertionSource(node)
 }
 
 func assertionVarList(list *ast.Node) bool {

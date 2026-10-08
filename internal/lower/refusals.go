@@ -19,15 +19,14 @@ type refusal struct {
 // refusals by syntax kind. Each is checked before lowering, so a program learns it has written
 // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
 var refusals = map[ast.Kind]refusal{
+	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
-	ast.KindDebuggerStatement: {"debugger", "remove it"},
 	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
-	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
@@ -83,17 +82,27 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if branch := l.literalCallableBranch(node); branch != nil {
+			return visit(branch)
+		}
 		if node.Kind == ast.KindTypePredicate {
 			found = l.predicateRefusal(node)
 			return found != nil
+		}
+		if err := l.enumerationIndexedWriteRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.enumerationDescriptorRefusal(node); err != nil {
+			found = err
+			return true
 		}
 		if err := l.nodeLibraryRefusal(node); err != nil {
 			found = err
 			return true
 		}
-		// Literal placeholders are slot initialization, including in .a files.
-		// FileName restores the loader's .a alias; other .ts assertions stay checked.
-		if refused, isRefused := refusals[node.Kind]; isRefused && (node.Kind != ast.KindNonNullExpression || !l.placeholderDeclaration(node) && l.program.FileName(module) != module.FileName().AsString()) {
+		// Literal placeholders initialize slots; other assertions retain main's source policy.
+		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.placeholderDeclaration(node) && !l.checkedAssertionSource(node)) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}

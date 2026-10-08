@@ -90,7 +90,7 @@ The following remaining gaps are rechecked against main b6b1538b. `TestCompilerG
 
 | Program | Node output | Stage 0 | Port treatment |
 |---|---|---|---|
-| [prefixUpdateValue.ts](gaps/prefixUpdateValue.ts) | `2` | `NotYet`: numeric `PrefixUnaryExpression` | Decrement as its own statement, then read the resulting index |
+| [prefixUpdateValue.ts](gaps/prefixUpdateValue.ts) | `2` | Closed by compiler/area-stack (views slice 1); `TestClosedPrefixUpdateValueGap` holds native and the JavaScript backend to Node | Decrement as its own statement, then read the resulting index |
 | [defaultSort.ts](gaps/defaultSort.ts) | `im` | `Refused`: sort without comparator | Supply an explicit lexical comparator for regex flags |
 
 The last is an intentional 0.1 rule, not a compiler gap to relax. Logical assignment is intentionally
