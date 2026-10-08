@@ -1,0 +1,31 @@
+const emptyArray: never[] = [];
+function fallback<T>(values: readonly T[]): readonly T[] {
+    return values.length === 0 ? emptyArray : values;
+}
+function alias<T>(values: ReadonlyArray<T>): ReadonlyArray<T> {
+    return values.length === 0 ? emptyArray : values;
+}
+function asserted<T>(values: readonly T[]): readonly T[] {
+    return (values.length === 0 ? emptyArray : values.slice()) as readonly T[];
+}
+console.log(fallback<string>([]).length.toString());
+console.log(fallback<string>(["Kirk"]).join(","));
+console.log(alias<number>([]).length.toString());
+console.log(alias<number>([4, 5]).join(","));
+console.log(asserted<string>([]).length.toString());
+console.log(asserted<string>(["Ahra"]).join(","));
+console.log(emptyArray.length.toString());
+function built(value: string): string { return "owned:" + value; }
+const copy = fallback<string>([]).slice();
+copy.push(built("slice"));
+console.log(copy.join(","));
+const joined = fallback<string>([]).concat([built("concat")]);
+console.log(joined.join(","));
+const inserted = fallback<string>([]).slice();
+inserted.splice(0, 0, built("splice"));
+console.log(inserted.join(","));
+console.log(emptyArray.length.toString());
+function constrained<T extends { value: string }>(values: readonly T[]): readonly T[] {
+    return values.length === 0 ? emptyArray : values;
+}
+console.log(constrained<{ value: string }>([]).length.toString());

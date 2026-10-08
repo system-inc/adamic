@@ -395,7 +395,16 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
 	for (size_t which = 0; which < count; which++) {
 		length += arrays[which]->length;
 	}
-	adamic_array *joined = adamic_array_new(length, arrays[0]->references);
+	// A never[] prefix has no slots and therefore no ownership convention
+	// to lend. The first populated input determines what the result holds.
+	bool references = arrays[0]->references;
+	for (size_t which = 0; which < count; which++) {
+		if (arrays[which]->length > 0) {
+			references = arrays[which]->references;
+			break;
+		}
+	}
+	adamic_array *joined = adamic_array_new(length, references);
 	for (size_t which = 0; which < count; which++) {
 		for (size_t index = 0; index < arrays[which]->length; index++) {
 			adamic_value value = arrays[which]->elements[index];
