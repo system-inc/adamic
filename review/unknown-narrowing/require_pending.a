@@ -1,0 +1,12 @@
+// a-check: type error TS2591
+// Pending codex/require-builtins-2 and the oracle's CommonJS require bridge.
+// The import equivalent is internal/oracle/testdata/unknown_narrowing_host.a.
+export function errorCode(error: unknown): string | undefined {
+	return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+try { require('node:fs').readFileSync('/nonexistent'); }
+catch (error) {
+	console.log(errorCode(error) ?? 'none');
+	console.log(errorCode('x') ?? 'none');
+	console.log(errorCode(null) ?? 'none');
+}

@@ -1,0 +1,16 @@
+instructions:u: perf_event_open errno=2 No such file or directory
+cycles:u: perf_event_open errno=2 No such file or directory
+main48 db7646892bd85541e3ac2663e80056435de6262908fb34a49ed3031b8037eb6e
+enforcement 8dd60d220fb73218f2665f0b6cc2e3e399541cf05271b8013e34a7e994cea83d
+main48 1 35.25 ms 0 b'10523\n' b''
+enforcement 1 23.881 ms 0 b'10523\n' b''
+main48 2 14.934 ms 0 b'10523\n' b''
+enforcement 2 12.763 ms 0 b'10523\n' b''
+main48 3 12.316 ms 0 b'10523\n' b''
+enforcement 3 13.683 ms 0 b'10523\n' b''
+main48 4 12.009 ms 0 b'10523\n' b''
+enforcement 4 10.854 ms 0 b'10523\n' b''
+main48 5 10.208 ms 0 b'10523\n' b''
+enforcement 5 12.401 ms 0 b'10523\n' b''
+main48 best of five 10.208 ms
+enforcement best of five 10.854 ms

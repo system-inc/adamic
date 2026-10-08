@@ -1,0 +1,7 @@
+--- FAIL: TestTypedArrayViewsCannotChangeRepresentation (0.16s)
+    typed_arrays_test.go:69: representation change accepted: const narrow = new Uint8Array(2); const shape: {readonly length: number} = narrow;: <nil>
+    typed_arrays_test.go:69: representation change accepted: const narrow = new Uint8Array(2); const shape = narrow as {readonly length: number};: <nil>
+    typed_arrays_test.go:69: representation change accepted: const source = {data: new Uint8Array(2)}; const wide: {readonly data: {readonly length: number}} = source;: <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.162s
+FAIL
