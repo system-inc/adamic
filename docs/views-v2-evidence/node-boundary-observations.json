@@ -1,0 +1,30 @@
+[
+  {
+    "commit": "cf1765d11",
+    "source": "stage3/interface-downcasts/tuples/optional-map-present.a",
+    "stdout": "7\nstring\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "commit": "3dd953f75",
+    "source": "stage3/interface-downcasts/tuples/rest-map-many.a",
+    "stdout": "7\nstring\nstring\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "commit": "f426929a0",
+    "source": "stage3/interface-downcasts/untagged/fixtures/callable-union-good-number.a",
+    "stdout": "true\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "commit": "f426929a0",
+    "source": "stage3/interface-downcasts/untagged/fixtures/recursive-cycle.a",
+    "stdout": "true\n",
+    "stderr": "",
+    "exit": 0
+  }
+]

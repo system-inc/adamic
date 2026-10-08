@@ -1,0 +1,207 @@
+[
+  {
+    "file": "internal/ir/ir.go",
+    "hunk": 3,
+    "row": "| `internal/ir/ir.go` h3 (original line 223) | Typed arrays occupy representation tags 12, 13, 14 and are references. | Tags 12/13 describe null/undefined storage and Record is 14. | Keep views semantic slot tags and Record=14; move typed-array representations to distinct 15,16,17 and audit every numeric consumer. Retain both reference predicates. | `internal/oracle/testdata/typed_arrays_uint8array.a`<br>`internal/oracle/testdata/typed_arrays_float64array.a`<br>`stage3/interface-downcasts/dictionaries/source/values-fixed-object-good.a` |"
+  },
+  {
+    "file": "internal/ir/ir.go",
+    "hunk": 4,
+    "row": "| `internal/ir/ir.go` h4 (original line 265) | Typed arrays occupy representation tags 12, 13, 14 and are references. | Tags 12/13 describe null/undefined storage and Record is 14. | Keep views semantic slot tags and Record=14; move typed-array representations to distinct 15,16,17 and audit every numeric consumer. Retain both reference predicates. | `internal/oracle/testdata/typed_arrays_uint8array.a`<br>`internal/oracle/testdata/typed_arrays_float64array.a`<br>`stage3/interface-downcasts/dictionaries/source/values-fixed-object-good.a` |"
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "hunk": 1,
+    "row": "| `internal/javascript/javascript.go` h1 (original line 54) | Typed counted/uncounted code pointers, exact optional/rest/count layouts and host dispatch. | Boxed signature adaptation, checked callable reads/results and owned result disposal. | Keep area typed pointer shapes and argument layouts; adapt existing views certificates/boxed values around that dispatch, comparing the correct code-pointer member and never casting a function pointer. Keep owned key/value holds and all callback refusals. | `internal/oracle/testdata/closure_convention_host24.a`<br>`internal/oracle/testdata/closure_convention_receiver_rest.a`<br>`internal/oracle/testdata/arguments_length_callbacks.a`<br>`stage3/interface-downcasts/lane5/ranked-callables/return-statement/good.a`<br>`stage3/interface-downcasts/nullish/maps/entry-live-mutation.a` |"
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "hunk": 2,
+    "row": "| `internal/javascript/javascript.go` h2 (original line 200) | Reuse canonical interior environment cells and their readiness. | Emit readiness for noncaptured uninitialized parameters and skip interior capture allocation. | Retain both readiness cases and area interior-cell early return; no duplicate allocation or readiness variable. | `internal/oracle/testdata/non_null_uninitialized_capture.ts`<br>`internal/oracle/testdata/closure_convention_nested.a` |"
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "hunk": 3,
+    "row": "| `internal/javascript/javascript.go` h3 (original line 445) | Reuse canonical interior environment cells and their readiness. | Emit readiness for noncaptured uninitialized parameters and skip interior capture allocation. | Retain both readiness cases and area interior-cell early return; no duplicate allocation or readiness variable. | `internal/oracle/testdata/non_null_uninitialized_capture.ts`<br>`internal/oracle/testdata/closure_convention_nested.a` |"
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "hunk": 4,
+    "row": "| `internal/javascript/javascript.go` h4 (original line 1129) | Pass through proven Narrow values and emit Array.isArray. | Validate narrowed representation, undefined storage and tuple identity. | Keep views narrowing checks and the separate area ArrayIsArray case. | `stage3/interface-downcasts/tuples/emit-string-good.a`<br>`internal/oracle/testdata/regexp_null_narrowed.a` |"
+  },
+  {
+    "file": "internal/javascript/javascript.go",
+    "hunk": 5,
+    "row": "| `internal/javascript/javascript.go` h5 (original line 1279) | Typed counted/uncounted code pointers, exact optional/rest/count layouts and host dispatch. | Boxed signature adaptation, checked callable reads/results and owned result disposal. | Keep area typed pointer shapes and argument layouts; adapt existing views certificates/boxed values around that dispatch, comparing the correct code-pointer member and never casting a function pointer. Keep owned key/value holds and all callback refusals. | `internal/oracle/testdata/closure_convention_host24.a`<br>`internal/oracle/testdata/closure_convention_receiver_rest.a`<br>`internal/oracle/testdata/arguments_length_callbacks.a`<br>`stage3/interface-downcasts/lane5/ranked-callables/return-statement/good.a`<br>`stage3/interface-downcasts/nullish/maps/entry-live-mutation.a` |"
+  },
+  {
+    "file": "internal/lower/cast.go",
+    "hunk": 1,
+    "row": "| `internal/lower/cast.go` h1 (original line 33) | Dispatch interface view casts directly. | Dispatch classified deferred casts and preserve the deferred refusal when no plan applies. | Keep classified deferred dispatch and existing interface/class proofs without bypassing sameKeeping or a deferred refusal. | `stage3/interface-downcasts/lane1/unions-objects-good.a`<br>`stage3/interface-downcasts/lane1/unions-objects-wrong-payload.a` |"
+  },
+  {
+    "file": "internal/lower/cast_proof.go",
+    "hunk": 1,
+    "row": "| `internal/lower/cast_proof.go` h1 (original line 101) | No special discarded-marker shortcut. | Recognize independently checked discarded callable markers. | Keep shortcut only under the existing validated marker contract; retain ordinary cast proofs and qualified-name guard. | `internal/oracle/testdata/census_never_rest_marker.a` |"
+  },
+  {
+    "file": "internal/lower/collections.go",
+    "hunk": 1,
+    "row": "| `internal/lower/collections.go` h1 (original line 355) | Allow known writable Union slots in destructuring. | Require primitive-union read proof and build the view contract. | Keep view-contract construction and both storage safety requirements; refuse any unsupported overlap rather than interpreting a slot by its apparent type. | `internal/oracle/testdata/tuple_values.a`<br>`stage3/interface-downcasts/tuples/emit-string-good.a` |"
+  },
+  {
+    "file": "internal/lower/collections.go",
+    "hunk": 2,
+    "row": "| `internal/lower/collections.go` h2 (original line 375) | Initialize through readiness-aware initializeLocal. | Prepare primitive and intersection reads before a plain Declare. | Keep both read preparations and feed their result through the area readiness-aware initializer. | `internal/oracle/testdata/switch_case_declarations/shared.a`<br>`stage3/interface-downcasts/tuples/emit-string-good.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 1,
+    "row": "| `internal/lower/expression.go` h1 (original line 25) | Recognize exact plain objects, declared undefined field storage, void and observed array-predicate types. | Give never a storage representation whose evaluation traps. | Keep views never storage handling plus all area special cases and array-predicate observation. | `internal/oracle/testdata/never_reached.a`<br>`internal/oracle/testdata/taste_void.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 2,
+    "row": "| `internal/lower/expression.go` h2 (original line 54) | Recognize fixed-width typed arrays. | Recognize checked and phantom array bases. | Keep the typed-array recognition and both distinct views array recognizers. | `internal/oracle/testdata/typed_arrays_uint8array.a`<br>`internal/oracle/testdata/phantom_array_brands.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 3,
+    "row": "| `internal/lower/expression.go` h3 (original line 124) | Undefined/void share reference storage; most nullable references use NULL. | Null has distinct boxed identity; nullable views use Union, with specialized RegExp compatibility. | Keep area void support and views distinct null/undefined identities with the established RegExp exception; audit every nullable conversion. | `internal/oracle/testdata/typeof_null.a`<br>`internal/oracle/testdata/regexp_null_narrowed.a`<br>`internal/lower/testdata/optional_widening/storage_coherence/boolean-nullish.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 4,
+    "row": "| `internal/lower/expression.go` h4 (original line 153) | Undefined/void share reference storage; most nullable references use NULL. | Null has distinct boxed identity; nullable views use Union, with specialized RegExp compatibility. | Keep area void support and views distinct null/undefined identities with the established RegExp exception; audit every nullable conversion. | `internal/oracle/testdata/typeof_null.a`<br>`internal/oracle/testdata/regexp_null_narrowed.a`<br>`internal/lower/testdata/optional_widening/storage_coherence/boolean-nullish.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 5,
+    "row": "| `internal/lower/expression.go` h5 (original line 275) | Check contextual unknown views and preserve effects when adapting an undefined-only value. | Attach graph ownership, record predicate directions, and stop further conversion for never. | Preserve contextual checks and undefined effects, retain graph allocation and predicate bookkeeping, and retain never terminal behavior. | `internal/oracle/testdata/never_call.a`<br>`internal/oracle/testdata/graph_regions/classification_return.a`<br>`internal/oracle/testdata/undefined_references.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 6,
+    "row": "| `internal/lower/expression.go` h6 (original line 551) | Dispatch typed arrays, namespaces, library method values and arguments.length. | Separate never trapping from unchecked value lowering and recognize process values. | Keep never trapping outside uncheckedValue; retain all area dispatch helpers and views process recognition within uncheckedValue. | `internal/oracle/testdata/never_call.a`<br>`internal/oracle/testdata/arguments_length.a`<br>`internal/oracle/testdata/process_shadow.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 7,
+    "row": "| `internal/lower/expression.go` h7 (original line 678) | Mark synthetic checked union helpers for non-null operand recovery. | Mark tuple identity on the Narrow operation. | Keep both the checked-helper flag and tuple identity on that operation. | `internal/oracle/testdata/non_null_union.ts`<br>`stage3/interface-downcasts/tuples/emit-string-good.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 8,
+    "row": "| `internal/lower/expression.go` h8 (original line 963) | Use raw checker nullability and distinguish unboxed nullable reference checks. | Use concrete generic nullability and distinct null/undefined identities. | Use concrete generic evidence without erasing an observable null or undefined test, keeping sentinel-aware behavior. | `internal/oracle/testdata/typeof_null.a`<br>`internal/oracle/testdata/generic_values.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 9,
+    "row": "| `internal/lower/expression.go` h9 (original line 996) | Use raw checker nullability and distinguish unboxed nullable reference checks. | Use concrete generic nullability and distinct null/undefined identities. | Use concrete generic evidence without erasing an observable null or undefined test, keeping sentinel-aware behavior. | `internal/oracle/testdata/typeof_null.a`<br>`internal/oracle/testdata/generic_values.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 10,
+    "row": "| `internal/lower/expression.go` h10 (original line 1368) | Forward named function rest slots and arguments counts. | Forward callable producer masks. | Keep rest/count forwarding and producer masks on the same forwarder. | `internal/oracle/testdata/arguments_length_value_count.a`<br>`internal/oracle/testdata/census_never_rest_marker.a` |"
+  },
+  {
+    "file": "internal/lower/expression.go",
+    "hunk": 11,
+    "row": "| `internal/lower/expression.go` h11 (original line 1455) | Decide result storage from concrete generic type. | Decide from raw checker type. | Retain the area concrete result decision; keep views checked result adaptation around the resulting representation. | `internal/oracle/testdata/generic_values.a` |"
+  },
+  {
+    "file": "internal/lower/library_object.go",
+    "hunk": 1,
+    "row": "| `internal/lower/library_object.go` h1 (original line 12) | Route through explicit objectCallArguments for spread-aware calls. | Recognize dictionary values/keys, records and checked array-record production. | Keep the explicit-argument wrapper and views recognizers, requiring a supported written-argument plan before using a recognizer. | `stage3/interface-downcasts/dictionaries/source/values-fixed-object-good.a`<br>`internal/oracle/testdata/library_object_keys.a` |"
+  },
+  {
+    "file": "internal/lower/library_string.go",
+    "hunk": 1,
+    "row": "| `internal/lower/library_string.go` h1 (original line 74) | Evaluate void/undefined effects before spelling undefined. | Spell phantom members using their certified primitive value. | Keep both distinct spelling branches with effects evaluated once. | `internal/oracle/testdata/taste_void.a`<br>`internal/oracle/testdata/phantom_brands.a` |"
+  },
+  {
+    "file": "internal/lower/library_string.go",
+    "hunk": 2,
+    "row": "| `internal/lower/library_string.go` h2 (original line 92) | Allow writable types or proven dynamic scalar property. | Use the non-nullable type or proven primitive dictionary value. | Retain each existing certified scalar path and refuse unsupported reference members; preserve nullable spelling. | `internal/oracle/testdata/records_scalars.a`<br>`internal/oracle/testdata/library_string_conversion.a` |"
+  },
+  {
+    "file": "internal/lower/lower_test.go",
+    "hunk": 1,
+    "row": "| `internal/lower/lower_test.go` h1 (original line 71) | No old NotYet expectations for Union arrays/fields. | Pin both Union array and field NotYet refusals. | Keep the refusal expectations only where the ruled storage boundary still refuses; require Node control for any explicit admission ruling. | `internal/lower/testdata/optional_widening/checked_writes/stored.a` |"
+  },
+  {
+    "file": "internal/lower/object.go",
+    "hunk": 1,
+    "row": "| `internal/lower/object.go` h1 (original line 338) | Reject erased unknown array storage and allow packed Union elements. | Require primitive/nominal contracts or tuple-scalar union plans for slotless elements. | Keep erased-unknown refusal and views certified element plans; preserve Union storage only where the contract proves its representation. | `stage3/interface-downcasts/tuples/emit-string-good.a`<br>`internal/oracle/testdata/typed_arrays_uint8array.a` |"
+  },
+  {
+    "file": "internal/lower/object.go",
+    "hunk": 2,
+    "row": "| `internal/lower/object.go` h2 (original line 1318) | Record callback checker type for typed calling conventions. | Record checked element read plan. | Retain CallbackType and the original ViewRead on the same ArrayMap/ArrayVisit/ArrayReduce constructor. | `internal/oracle/testdata/arguments_length_callbacks.a`<br>`internal/oracle/testdata/library_array_holes_callbacks.a` |"
+  },
+  {
+    "file": "internal/lower/object.go",
+    "hunk": 3,
+    "row": "| `internal/lower/object.go` h3 (original line 1514) | Record callback checker type for typed calling conventions. | Record checked element read plan. | Retain CallbackType and the original ViewRead on the same ArrayMap/ArrayVisit/ArrayReduce constructor. | `internal/oracle/testdata/arguments_length_callbacks.a`<br>`internal/oracle/testdata/library_array_holes_callbacks.a` |"
+  },
+  {
+    "file": "internal/lower/object.go",
+    "hunk": 4,
+    "row": "| `internal/lower/object.go` h4 (original line 1550) | Record callback checker type for typed calling conventions. | Record checked element read plan. | Retain CallbackType and the original ViewRead on the same ArrayMap/ArrayVisit/ArrayReduce constructor. | `internal/oracle/testdata/arguments_length_callbacks.a`<br>`internal/oracle/testdata/library_array_holes_callbacks.a` |"
+  },
+  {
+    "file": "internal/lower/object.go",
+    "hunk": 5,
+    "row": "| `internal/lower/object.go` h5 (original line 1577) | Reject unsupported slotless Map values unless writable Union. | Reject only unknown representation at this point. | Retain the area unsupported-slot refusal unless an existing Map storage certificate proves the value; preserve all 47 callback refusal pins. | `stage3/interface-downcasts/nullish/maps/entry-live-mutation.a`<br>`internal/oracle/testdata/map_foreach_keys.a` |"
+  },
+  {
+    "file": "internal/lower/object.go",
+    "hunk": 6,
+    "row": "| `internal/lower/object.go` h6 (original line 1866) | Record comparator callback type. | Validate and record optional comparator behavior. | Keep callback type and the existing optional comparator proof on the same sort constructor. | `internal/oracle/testdata/arguments_length_callbacks.a`<br>`internal/oracle/testdata/library_array_holes_callbacks.a` |"
+  },
+  {
+    "file": "internal/lower/statements.go",
+    "hunk": 1,
+    "row": "| `internal/lower/statements.go` h1 (original line 230) | Normalize return parentheses and lower assignment returns before panic handling. | Treat process.exit alongside panic as terminal. | Keep normalized assignment-return lowering and both terminal builtin cases. | `internal/oracle/testdata/nested_assignment_return.a`<br>`internal/oracle/testdata/process_exit.a` |"
+  },
+  {
+    "file": "internal/native/emit_arrays.go",
+    "hunk": 1,
+    "row": "| `internal/native/emit_arrays.go` h1 (original line 72) | Typed counted/uncounted code pointers, exact optional/rest/count layouts and host dispatch. | Boxed signature adaptation, checked callable reads/results and owned result disposal. | Keep area typed pointer shapes and argument layouts; adapt existing views certificates/boxed values around that dispatch, comparing the correct code-pointer member and never casting a function pointer. Keep owned key/value holds and all callback refusals. | `internal/oracle/testdata/closure_convention_host24.a`<br>`internal/oracle/testdata/closure_convention_receiver_rest.a`<br>`internal/oracle/testdata/arguments_length_callbacks.a`<br>`stage3/interface-downcasts/lane5/ranked-callables/return-statement/good.a`<br>`stage3/interface-downcasts/nullish/maps/entry-live-mutation.a` |"
+  },
+  {
+    "file": "internal/native/emit_arrays.go",
+    "hunk": 2,
+    "row": "| `internal/native/emit_arrays.go` h2 (original line 189) | Typed counted/uncounted code pointers, exact optional/rest/count layouts and host dispatch. | Boxed signature adaptation, checked callable reads/results and owned result disposal. | Keep area typed pointer shapes and argument layouts; adapt existing views certificates/boxed values around that dispatch, comparing the correct code-pointer member and never casting a function pointer. Keep owned key/value holds and all callback refusals. | `internal/oracle/testdata/closure_convention_host24.a`<br>`internal/oracle/testdata/closure_convention_receiver_rest.a`<br>`internal/oracle/testdata/arguments_length_callbacks.a`<br>`stage3/interface-downcasts/lane5/ranked-callables/return-statement/good.a`<br>`stage3/interface-downcasts/nullish/maps/entry-live-mutation.a` |"
+  },
+  {
+    "file": "internal/native/emit_objects.go",
+    "hunk": 1,
+    "row": "| `internal/native/emit_objects.go` h1 (original line 142) | Conditional physical type/readiness metadata, dynamic shape registration and typed method-entry helpers. | Semantic null/undefined slot tags, immutable contracts, full readiness and original nominal names. | Keep area dynamic shape and typed method helpers plus views semantic representation/contract helpers; initialize required metadata for every checked layout and preserve original readiness and nominal identity. | `internal/lower/testdata/optional_widening/storage_coherence/boolean-nullish.a`<br>`internal/lower/testdata/optional_widening/checked_writes/uninitialized-slot.a`<br>`internal/oracle/testdata/non_null_uninitialized_field.ts` |"
+  },
+  {
+    "file": "internal/native/emit_objects.go",
+    "hunk": 2,
+    "row": "| `internal/native/emit_objects.go` h2 (original line 193) | Conditional physical type/readiness metadata, dynamic shape registration and typed method-entry helpers. | Semantic null/undefined slot tags, immutable contracts, full readiness and original nominal names. | Keep area dynamic shape and typed method helpers plus views semantic representation/contract helpers; initialize required metadata for every checked layout and preserve original readiness and nominal identity. | `internal/lower/testdata/optional_widening/storage_coherence/boolean-nullish.a`<br>`internal/lower/testdata/optional_widening/checked_writes/uninitialized-slot.a`<br>`internal/oracle/testdata/non_null_uninitialized_field.ts` |"
+  },
+  {
+    "file": "internal/native/emit_objects.go",
+    "hunk": 3,
+    "row": "| `internal/native/emit_objects.go` h3 (original line 439) | Conditional physical type/readiness metadata, dynamic shape registration and typed method-entry helpers. | Semantic null/undefined slot tags, immutable contracts, full readiness and original nominal names. | Keep area dynamic shape and typed method helpers plus views semantic representation/contract helpers; initialize required metadata for every checked layout and preserve original readiness and nominal identity. | `internal/lower/testdata/optional_widening/storage_coherence/boolean-nullish.a`<br>`internal/lower/testdata/optional_widening/checked_writes/uninitialized-slot.a`<br>`internal/oracle/testdata/non_null_uninitialized_field.ts` |"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "hunk": 1,
+    "row": "| `internal/native/runtime/adamic.h` h1 (original line 35) | Close conditional environment-kind enum block. | Add distinct null kind. | Keep conditional environment kind and one unconditional distinct null kind, paired with a single views null-sentinel definition. | `internal/oracle/testdata/typeof_null.a`<br>`internal/oracle/testdata/regexp_null_narrowed.a` |"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "hunk": 2,
+    "row": "| `internal/native/runtime/adamic.h` h2 (original line 97) | Cell owner pointer exists only with canonical closures. | Cell owner pointer always exists for graph ownership. | Keep owner storage where either canonical or graph ownership requires it; preserve ordinary layout when neither requires it if the graph ABI permits. | `internal/oracle/testdata/closure_convention_nested.a`<br>`internal/oracle/testdata/graph_regions_generic_capture.a` |"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "hunk": 3,
+    "row": "| `internal/native/runtime/adamic.h` h3 (original line 325) | Typed counted/uncounted code pointers, exact optional/rest/count layouts and host dispatch. | Boxed signature adaptation, checked callable reads/results and owned result disposal. | Keep area typed pointer shapes and argument layouts; adapt existing views certificates/boxed values around that dispatch, comparing the correct code-pointer member and never casting a function pointer. Keep owned key/value holds and all callback refusals. | `internal/oracle/testdata/closure_convention_host24.a`<br>`internal/oracle/testdata/closure_convention_receiver_rest.a`<br>`internal/oracle/testdata/arguments_length_callbacks.a`<br>`stage3/interface-downcasts/lane5/ranked-callables/return-statement/good.a`<br>`stage3/interface-downcasts/nullish/maps/entry-live-mutation.a` |"
+  }
+]

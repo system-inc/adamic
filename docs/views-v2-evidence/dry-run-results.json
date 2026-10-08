@@ -1,0 +1,1417 @@
+[
+  {
+    "lane": "mixed",
+    "sha": "bc83664cfe45479ccc3d620af62b8139a2652e68",
+    "subject": "Reserve lane 4 mixed union territory and request shared hooks",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "e9b5dce8d0ab9cb8c58401aad6291d9e4c7476d5",
+    "subject": "Measure all mixed union shapes and retain unresolved families",
+    "exit": 0,
+    "conflicts": [],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "dc5a6b8bbdb616a0a21fc16bd3de6cfe0850b61d",
+    "subject": "Build complete union metadata and keep admission closed pending shared checks",
+    "exit": 0,
+    "conflicts": [],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "ba8464fa9cde928850c5c218b912c8691311a4bb",
+    "subject": "Expose the lane 4 hook and report blocked admission and landing",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/view_unions_mixed.go",
+      "stage3/interface-downcasts/lane4/logs/contract-mutant-accept-unknown.log",
+      "stage3/interface-downcasts/lane4/logs/contract-mutant-keep-failed-graph.log",
+      "stage3/interface-downcasts/lane4/logs/contract-mutant-omit-member.log",
+      "stage3/interface-downcasts/lane4/logs/contracts.log"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "094030c4cb9fb98f7bca5a924ac4a4157a5216d9",
+    "subject": "Preserve exact merge conflict evidence as a compressed patch",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/lane4/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "ce2545e47778ca9f484d226dca20c84581e859bb",
+    "subject": "Measure explicit read demand with conservative unknown provenance",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-blockers.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "3f3cab739b328cddfd670409a851769c3d1b2318",
+    "subject": "Reuse shared graph for receiver demand and pin helper read guards",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-blockers.md",
+      "docs/checked-views-plan.md",
+      "stage3/interface-downcasts/lane4/audit-read-demand.py",
+      "stage3/interface-downcasts/lane4/read-demand-sites.json.gz",
+      "stage3/interface-downcasts/lane4/read-demand-summary.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "bc87b1036b8fd98cb76e4020a3421487d5b819b0",
+    "subject": "Pin unread contract refusal and report shared dispatch blockers",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-blockers.md",
+      "stage3/interface-downcasts/lane4/READ-DEMAND-REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "583d19b7f62e4062dec3218175d30e1179d83ff4",
+    "subject": "Build mixed union selectors and pin member admission checks",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/oracle/checked_views_mixed_unions_test.go"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "21f4c0ea466763aa0767885f1148a9e29eec4370",
+    "subject": "Check primitive phantom brand fields through their approved scalar base",
+    "exit": 1,
+    "conflicts": [
+      "internal/lower/interface_cast.go",
+      "internal/lower/view_contracts.go",
+      "internal/lower/view_objects.go",
+      "internal/lower/view_unions_mixed_test.go",
+      "internal/oracle/checked_views_mixed_unions_test.go"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "9a385606ec1ca739a642f13acfa8ae361739abf8",
+    "subject": "Record branded field oracle and dependency merge evidence",
+    "exit": 0,
+    "conflicts": [],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "8538b03cac2cb8cdbbd24f6f713ed04b08af907b",
+    "subject": "Rank primitive view work against the lazy candidate inventory",
+    "exit": 0,
+    "conflicts": [],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "2b767776278b36f8644257b443fbaabe164d2796",
+    "subject": "Check complete branded string fields lazily at required reads",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/javascript.go",
+      "internal/javascript/readiness.go",
+      "internal/javascript/view_unions_mixed.go",
+      "internal/lower/view_contracts.go",
+      "internal/lower/view_lazy.go",
+      "internal/lower/view_objects.go",
+      "internal/lower/view_unions_mixed_test.go",
+      "internal/native/view_fields.go",
+      "internal/oracle/checked_views_mixed_unions_test.go",
+      "stage3/interface-downcasts/lane4/LAZY-REPORT.md",
+      "stage3/interface-downcasts/lane4/lazy-pair-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "4ba489e505727e76b1d3ded79e26e6ce6ddefee6",
+    "subject": "Hold every branded candidate field read to both source backends",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/lane4/LAZY-REPORT.md",
+      "stage3/interface-downcasts/lane4/lazy-pair-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "0bae12f8a673aa3cec3b49798c3dce883f3a9607",
+    "subject": "Check finite string key union candidate pairs",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_primitive_pairs_test.go",
+      "stage3/interface-downcasts/lane4/LAZY-REPORT.md",
+      "stage3/interface-downcasts/lane4/lazy-pair-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "0af43ea7213a80b80193d885e25eb60c2ebb0cf3",
+    "subject": "Add primitive view probes and correct open key candidate counts",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/native/runtime/view_unions_mixed.c",
+      "internal/native/runtime/view_unions_mixed.h",
+      "internal/oracle/checked_views_primitive_pairs_test.go",
+      "stage3/interface-downcasts/lane4/LAZY-REPORT.md",
+      "stage3/interface-downcasts/lane4/lazy-pair-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "982cab33bf38a2eecfb925fa98594ac3fe62b932",
+    "subject": "Preserve formatting of raw lane evidence",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/lane4/LAZY-REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed",
+    "sha": "67d34f3cfbb92c21a0986933c70a529969736a51",
+    "subject": "Rank dictionary scalar and nullish selection candidates",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "stage3/interface-downcasts/lane4/lazy-pair-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "434e966748c21b7da8e488152b292a9f9f53e9fb",
+    "subject": "Certify leading branded reads against original tsc declarations",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "32b94760de7fbf48557e333e54d43ea7667ce45b",
+    "subject": "Certify original branded reads through both member union alternatives",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_brands_original_test.go",
+      "stage3/interface-downcasts/lane4/original/REPORT.md",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/original/declaration-manifest.json",
+      "stage3/interface-downcasts/lane4/original/prepare.cjs"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "8261687c4735eb5947f750ae09de14f9d82a3bbb",
+    "subject": "Certify all original optional branded field reads through viewed containers",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_brands_original_test.go",
+      "stage3/interface-downcasts/lane4/original/REPORT.md",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/original/declaration-manifest.json",
+      "stage3/interface-downcasts/lane4/original/prepare.cjs"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "94be6a4800af4cab80fa6552b0bb48253ea2e6f5",
+    "subject": "Certify original JSX and React branded namespace field reads",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_brands_original_test.go",
+      "stage3/interface-downcasts/lane4/original/REPORT.md",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/original/declaration-manifest.json",
+      "stage3/interface-downcasts/lane4/original/prepare.cjs"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "58b1993d01a59ff3d892a11d43afb782b0bc8318",
+    "subject": "Certify original branded string array element reads",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/lane4/original/REPORT.md",
+      "stage3/interface-downcasts/lane4/original/certification.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "c35885aeef5fedc4406de67615e89428e9f4858d",
+    "subject": "Certify original generated identifiers and nullable branded receivers",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_brands_original_test.go",
+      "stage3/interface-downcasts/lane4/original/REPORT.md",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/original/declaration-manifest.json",
+      "stage3/interface-downcasts/lane4/original/prepare.cjs"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "4e0316005721b1b232acbb5d1e9b94c96b46309b",
+    "subject": "Certify original mapped branded reads and pin remaining admission blockers",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/oracle/checked_views_brands_original_test.go",
+      "stage3/interface-downcasts/lane4/LAZY-REPORT.md",
+      "stage3/interface-downcasts/lane4/lazy-pair-progress.json",
+      "stage3/interface-downcasts/lane4/original/REPORT.md",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/original/declaration-manifest.json",
+      "stage3/interface-downcasts/lane4/original/prepare.cjs"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "6858d196802c9826a62188c8d4887fe0810e4700",
+    "subject": "Record combined branded read certification and remaining blockers",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/lane4/original/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "d5738b8e863f47ff798ea88fed8ae53901b5d84d",
+    "subject": "Admit broad object casts to uniquely tagged union targets",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/cast_proof.go"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "6ed3ced09f64164e724763939de2d0f3ff958884",
+    "subject": "Scope lazy fallback obligations to actual viewed allocations",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/view_lazy.go",
+      "internal/oracle/checked_views_brands_original_gaps_test.go",
+      "internal/oracle/checked_views_brands_original_test.go",
+      "internal/oracle/checked_views_union_targets_test.go",
+      "stage3/interface-downcasts/lane4/original/BLOCKERS.md",
+      "stage3/interface-downcasts/lane4/original/REPORT.md",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/union-targets/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "527b7557213f62184b26b57ef3d268d5b8909264",
+    "subject": "Certify original nullable primitive read pairs",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "stage3/interface-downcasts/lane4/original/certification.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "94b200ef805d5fab4d8990133d22b42a8ec22e5b",
+    "subject": "Check primitive union destructuring reads and retain boxing conversion",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/collections.go",
+      "internal/lower/interface_cast.go",
+      "internal/lower/readiness.go",
+      "internal/lower/view_callables.go",
+      "internal/oracle/checked_views_primitives_original_test.go",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md",
+      "stage3/interface-downcasts/lane4/primitive-original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/emit-node-missing.a",
+      "stage3/interface-downcasts/lane4/primitive-original/emit-node-null.a",
+      "stage3/interface-downcasts/lane4/primitive-original/emit-node-number.a",
+      "stage3/interface-downcasts/lane4/primitive-original/emit-node-string.a",
+      "stage3/interface-downcasts/lane4/primitive-original/emit-node-undefined.a",
+      "stage3/interface-downcasts/lane4/primitive-original/emit-node-wrong.a"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "f11e945d8af54fbcdd41e37df8f23e47c9c81005",
+    "subject": "Select complete primitive unions at property reads",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/interface_cast.go",
+      "internal/lower/lower_test.go",
+      "internal/lower/object.go",
+      "internal/lower/view_primitive_reads.go",
+      "internal/lower/view_primitive_reads_test.go",
+      "internal/oracle/checked_views_primitives_original_test.go",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md",
+      "stage3/interface-downcasts/lane4/primitive-original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/prepare.cjs"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "076295ed5ddefc42d027bf757be462ae800dc687",
+    "subject": "Keep pure primitive certification logs",
+    "exit": 0,
+    "conflicts": [],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "a4df9433fc51cda09fec804d77335e5211fdbf3c",
+    "subject": "Certify original nullable primitive members and exact check mutants",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_nullish.go",
+      "internal/oracle/checked_views_primitives_original_test.go",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md",
+      "stage3/interface-downcasts/lane4/primitive-original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/prepare.cjs"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "41cff4b0d8a0a51d8966970d62e45052fd10f132",
+    "subject": "Certify private primitive reads and correct scalar tuple candidates",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/oracle/checked_views_primitives_original_test.go",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md",
+      "stage3/interface-downcasts/lane4/primitive-original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/prepare.cjs"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "dca0b478e236c9ce0855e001191f55a14cb28941",
+    "subject": "Check primitive union array indexes without changing producer storage",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/ir/ir.go",
+      "internal/ir/view_arrays.go",
+      "internal/javascript/view_arrays.go",
+      "internal/native/view_arrays.go",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "c41eaf85f7417bf3d33532fce30457d70be1440e",
+    "subject": "Select primitive and nullish dictionary arms without erasing reference obligations",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/ir/ir.go",
+      "internal/ir/view_dictionaries.go",
+      "internal/javascript/view_dictionaries.go",
+      "internal/lower/library_string.go",
+      "internal/lower/readiness.go",
+      "internal/lower/records.go",
+      "internal/lower/view_dictionaries.go",
+      "internal/lower/view_lazy.go",
+      "internal/native/runtime/view_dictionaries.c",
+      "internal/native/view_dictionaries.go",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md",
+      "stage3/interface-downcasts/lane4/primitive-original/certification.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "37763565c317a80c3b362e475edab8b61ab0eafd",
+    "subject": "Correct quoting in the certified dictionary test command",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "96c9132d29ed3b3b522851f6d5a7fd337f3cb543",
+    "subject": "Reconcile original LiteralType certification and remaining lane 4 scope",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "48a7a9340e13ba42906fdf7a21718a8ba086217b",
+    "subject": "Certify original command option mixed primitive reads through union helpers",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/object.go",
+      "internal/lower/view_lazy.go",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md",
+      "stage3/interface-downcasts/lane4/primitive-original/remaining-certification.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "fc253f975efd3af4a6ad8bbb32bd463981b7f57a",
+    "subject": "Defer complete primitive intersection descendants and certify builder signatures",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/view_intersections.go",
+      "internal/oracle/checked_views_primitives_original_test.go",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md",
+      "stage3/interface-downcasts/lane4/primitive-original/builder-signature-false.a",
+      "stage3/interface-downcasts/lane4/primitive-original/builder-signature-missing.a",
+      "stage3/interface-downcasts/lane4/primitive-original/builder-signature-null.a",
+      "stage3/interface-downcasts/lane4/primitive-original/builder-signature-string.a",
+      "stage3/interface-downcasts/lane4/primitive-original/builder-signature-undefined.a",
+      "stage3/interface-downcasts/lane4/primitive-original/builder-signature-wrong-number.a",
+      "stage3/interface-downcasts/lane4/primitive-original/builder-signature-wrong.a",
+      "stage3/interface-downcasts/lane4/primitive-original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/remaining-certification.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "e286a95d933d372493d80a3c096177a6485be493",
+    "subject": "Certify intersected branded helper reads and pin the remaining tuple frontier",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/oracle/checked_views_brands_original_test.go",
+      "stage3/interface-downcasts/lane4/original/certification.json",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md",
+      "stage3/interface-downcasts/lane4/primitive-original/remaining-certification.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "07a7be02c6c8ac343f13908f5ac3cad9c08dfb9b",
+    "subject": "Record final remaining pair regression and tuple blocker",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "mixed-2",
+    "sha": "8fbc2e815285af2ba25662916033373b9b644b00",
+    "subject": "Certify final original tuple union reads with closed tuple narrowing",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/expression.go",
+      "internal/oracle/checked_views_primitive_remaining_frontier_test.go",
+      "stage3/interface-downcasts/lane4/primitive-original/REPORT.md",
+      "stage3/interface-downcasts/lane4/primitive-original/remaining-certification.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "cf48926bd47b91f5c4c843321805a7fb7c57d14b",
+    "subject": "Reserve object plus primitive union territory and required shared hooks",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "6f5b25d3f3ec7a36994a0bb37aa54e5869a859c9",
+    "subject": "Rank object plus primitive demand and record source compiler frontiers",
+    "exit": 0,
+    "conflicts": [],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "d11f3ae2afbcf7f8416539012429452589a44550",
+    "subject": "Report source union blockers and dependency merge conflicts",
+    "exit": 0,
+    "conflicts": [],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "dc5e5f26f0153896cae730d84c34a42054b02b0a",
+    "subject": "Check structural object and primitive view reads with lazy descendant obligations",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/interface_cast.go",
+      "internal/lower/object.go",
+      "internal/native/view_fields.go"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "f4e5993e3ed2817a9060ed53ca0b957ea5588c64",
+    "subject": "Check lazy array union members and preserve boxed field producers",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_unions_object_primitive.go",
+      "internal/lower/view_unions_object_primitive.go",
+      "internal/native/view_unions_object_primitive.go",
+      "internal/oracle/checked_views_object_primitive_unions_test.go",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct8-diff.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct8-production-gate.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct8-ranking.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct8-vet.log",
+      "stage3/interface-downcasts/lane4b/resume/lazy-pair-progress.json",
+      "stage3/interface-downcasts/lane4b/resume/rank-lazy-demand.py"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "d70bc4ddb7d71fd900c3d7a8ec682f38a1608cc4",
+    "subject": "Witness original SourceFile and Diagnostic union contracts with optional readiness checks",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_unions_object_primitive.go",
+      "internal/native/runtime/view_unions_object_primitive.c",
+      "internal/native/runtime/view_unions_object_primitive.h",
+      "internal/native/view_unions_object_primitive.go",
+      "internal/oracle/checked_views_object_primitive_unions_test.go",
+      "stage3/interface-downcasts/lane4b/resume/lazy-pair-progress.json",
+      "stage3/interface-downcasts/lane4b/resume/rank-lazy-demand.py"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "867bcef3d2ff2926a4d41f79b31730819b4b8573",
+    "subject": "Witness original LiteralType union and pin unsupported bindable read conservatively",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/view_unions_object_primitive.go",
+      "internal/oracle/checked_views_object_primitive_unions_test.go",
+      "stage3/interface-downcasts/lane4b/original/REPORT.md",
+      "stage3/interface-downcasts/lane4b/original/certification.json",
+      "stage3/interface-downcasts/lane4b/original/declaration-manifest.json",
+      "stage3/interface-downcasts/lane4b/original/prepare.cjs",
+      "stage3/interface-downcasts/lane4b/resume/lazy-pair-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "166cf41094cff4fad56d98afc9cb2cf4d41d3289",
+    "subject": "Retain original LiteralType checkpoint validation logs",
+    "exit": 1,
+    "conflicts": [
+      "stage3/drivers/parser/evidence/front16/next-diff-check.log",
+      "stage3/drivers/parser/evidence/front16/next-fetch.log",
+      "stage3/drivers/parser/evidence/front16/next-production-gate.log",
+      "stage3/drivers/parser/evidence/front16/next-vet.log"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "534b8c525de2624b938dd25dd3dc36f49ae51b25",
+    "subject": "Certify five more original union fields and retain conservative ranked frontiers",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/oracle/checked_views_object_primitive_unions_test.go",
+      "stage3/drivers/parser/evidence/front16/batch-diff.log",
+      "stage3/drivers/parser/evidence/front16/batch-integration-tip.log",
+      "stage3/drivers/parser/evidence/front16/batch-original-final.log",
+      "stage3/drivers/parser/evidence/front16/batch-prepare.log",
+      "stage3/drivers/parser/evidence/front16/batch-production.log",
+      "stage3/drivers/parser/evidence/front16/batch-vet.log",
+      "stage3/interface-downcasts/lane4b/original/REPORT.md",
+      "stage3/interface-downcasts/lane4b/original/certification.json",
+      "stage3/interface-downcasts/lane4b/original/declaration-manifest.json",
+      "stage3/interface-downcasts/lane4b/original/prepare.cjs",
+      "stage3/interface-downcasts/lane4b/resume/lazy-pair-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "d732e93978394206fbbe55fc0057b6fecc6d0cf6",
+    "subject": "Hold union defect fixes with witnesses and name tuple obligations",
+    "exit": 1,
+    "conflicts": [
+      "internal/lower/view_lazy.go",
+      "internal/lower/view_unions_object_primitive.go",
+      "internal/oracle/counts.md",
+      "internal/oracle/interface_cast_counts_test.go"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "c1e29126eaba14e21dd4415cf67d12fcbfdca9cd",
+    "subject": "Certify original comment and package union field contracts",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_object_primitive_unions_test.go",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct13-final-touched.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct13-fix-mutants.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct13-fixes.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct13-integration-counts-failures.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct13-original-counts.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct13-original-regression.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct13-prepare.log",
+      "stage3/adapt/48-memoize/evidence/p2-repeat/oct13-setup.log",
+      "stage3/interface-downcasts/lane4b/original/certification.json",
+      "stage3/interface-downcasts/lane4b/original/declaration-manifest.json",
+      "stage3/interface-downcasts/lane4b/original/prepare.cjs",
+      "stage3/interface-downcasts/lane4b/resume/lazy-pair-progress.json",
+      "stage3/interface-downcasts/lane4b/resume/rank-lazy-demand.py"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "8abb52a1518b9d8c3f0dbde993551d4f01ba10e2",
+    "subject": "Record original union dependency frontiers",
+    "exit": 1,
+    "conflicts": [],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "9cfb94badca86c8df68dd6642fb79be64ebdda1a",
+    "subject": "Refresh original frontier pins after views integration",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_object_primitive_unions_test.go",
+      "stage3/drivers/tsc-entry/evidence/oct13-integration-frontier-drift.log",
+      "stage3/drivers/tsc-entry/evidence/oct13-integration-own-regression.log",
+      "stage3/drivers/tsc-entry/evidence/oct13-integration-recheck.log",
+      "stage3/drivers/tsc-entry/evidence/oct13-resume-setup.log"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "8ccad7e196cbffd7358ea6e71e971c39451aa3e1",
+    "subject": "Adopt seven original intersection certificates with fresh evidence",
+    "exit": 1,
+    "conflicts": [
+      "stage3/drivers/tsc-entry/evidence/oct13-overlap-absorption-mutant.log",
+      "stage3/drivers/tsc-entry/evidence/oct13-overlap-adoption.log",
+      "stage3/drivers/tsc-entry/evidence/oct13-overlap-controls.log",
+      "stage3/drivers/tsc-entry/evidence/oct13-overlap-counts-check.log",
+      "stage3/drivers/tsc-entry/evidence/oct13-overlap-counts-update.log",
+      "stage3/drivers/tsc-entry/evidence/oct13-overlap-mutants-summary.log",
+      "stage3/drivers/tsc-entry/evidence/oct13-overlap-prepare.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/access-nested-bindable-access-left-symbol.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/access-shape-bindable-access-left-kind.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/access-skip-bindable-access-left-symbol.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/class-nested-class-augments-symbol.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/class-nested-class-implements-symbol.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/class-shape-class-augments-kind.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/class-shape-class-implements-kind.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/class-skip-class-augments-symbol.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/class-skip-class-implements-symbol.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/emit-nested-emit-original-range-wrong.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/emit-presence-emit-original-missing.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/emit-shape-emit-original-wrong.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/emit-skip-emit-original-range-wrong.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/expression-nested-bindable-access-expression-wrong.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/expression-nested-bindable-static-expression-wrong.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/expression-shape-bindable-access-expression-this.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/expression-shape-bindable-static-expression-this.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/expression-skip-bindable-access-expression-wrong.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/expression-skip-bindable-static-expression-wrong.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/jsdoc-nested-jsdoc-parent-parameters.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/jsdoc-shape-jsdoc-parent-kind.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/jsdoc-skip-jsdoc-parent-parameters.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/left-nested-bindable-static-left-wrong.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/left-shape-bindable-static-left-kind.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/left-skip-bindable-static-left-wrong.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/root-nested-jsdoc-root-symbol.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/root-shape-jsdoc-root-kind.log",
+      "stage3/drivers/tsc-entry/evidence/overlap-mutants/root-skip-jsdoc-root-symbol.log",
+      "stage3/interface-downcasts/lane4b/original/batch-counts.json",
+      "stage3/interface-downcasts/lane4b/original/certification.json",
+      "stage3/interface-downcasts/lane4b/resume/lazy-pair-progress.json",
+      "stage3/interface-downcasts/lane4b/resume/rank-lazy-demand.py",
+      "stage3/interface-downcasts/lane4b/resume/remaining-blockers.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "object-primitive",
+    "sha": "1771221bd232bd08618669e587e4566be8c252b9",
+    "subject": "Certify original tuple union overlaps after integration",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_object_primitive_counts_test.go",
+      "internal/oracle/checked_views_object_primitive_fixes_test.go",
+      "internal/oracle/checked_views_object_primitive_frontiers_test.go",
+      "internal/oracle/counts.md",
+      "internal/oracle/interface_cast_counts_test.go",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-adoption.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-final-count-update.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-final-verify.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-frontiers-counts.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-frontiers.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-general-counts.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-merge.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-own-regression.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-ranked-first.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-ranked.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-setup.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-tuple-controls.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-tuple-mutants.log",
+      "stage3/drivers/tsc-entry/evidence/lane4b-morning-tuple-prepare.log",
+      "stage3/interface-downcasts/lane4b/original/batch-counts.json",
+      "stage3/interface-downcasts/lane4b/original/certification.json",
+      "stage3/interface-downcasts/lane4b/resume/adopt-intersection-certificates.py",
+      "stage3/interface-downcasts/lane4b/resume/lazy-pair-progress.json",
+      "stage3/interface-downcasts/lane4b/resume/rank-lazy-demand.py",
+      "stage3/interface-downcasts/lane4b/resume/remaining-blockers.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "6c321f8ad98c373112f6b92f01d051cb4c1b2cb8",
+    "subject": "Reserve new files for untagged object union reads",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "566aad67eb26a218795c544507965a73935fbb48",
+    "subject": "Build untagged union selection components without claiming source admission",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "6b3fc480ae6713c634a574907e59708a01e56611",
+    "subject": "Record untagged selector mutants and shared admission blockers",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/untagged/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "55b3fdef017c37878ea2ca1d29af666c6657c20c",
+    "subject": "Validate untagged object source selectors with conservative owner hooks",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_unions_untagged.go",
+      "internal/lower/view_unions_untagged.go",
+      "internal/native/runtime/view_unions_untagged.c",
+      "internal/native/runtime/view_unions_untagged.h",
+      "internal/oracle/checked_views_untagged_unions_test.go",
+      "stage3/interface-downcasts/untagged/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "2bb00f0f0531544d454962d30271a64a6a046dad",
+    "subject": "Record source selector mutants and pending integration evidence",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/untagged/REPORT.md",
+      "stage3/lane/evidence/production-frontier.log",
+      "stage3/lane/evidence/resume-setup.log",
+      "stage3/lane/evidence/source-drop-transitive.log",
+      "stage3/lane/evidence/source-final.log",
+      "stage3/lane/evidence/source-mutants.log",
+      "stage3/lane/evidence/source-packages.log",
+      "stage3/lane/evidence/source-skip-javascript.log",
+      "stage3/lane/evidence/source-skip-native.log",
+      "stage3/lane/evidence/source-wrong-shape-javascript.log",
+      "stage3/lane/evidence/source-wrong-shape-native.log"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "1baa2640053571d369cde31fa4bf750d92d8806c",
+    "subject": "Wire named untagged object union hooks at demanded reads",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_unions.go",
+      "internal/lower/view_contracts.go",
+      "internal/native/view_unions.go",
+      "stage3/interface-downcasts/untagged/REPORT.md",
+      "stage3/interface-downcasts/untagged/logs/source-drop-transitive.log",
+      "stage3/interface-downcasts/untagged/logs/source-skip-javascript.log",
+      "stage3/interface-downcasts/untagged/logs/source-skip-native.log",
+      "stage3/interface-downcasts/untagged/logs/source-wrong-shape-javascript.log",
+      "stage3/interface-downcasts/untagged/logs/source-wrong-shape-native.log",
+      "stage3/interface-downcasts/untagged/source-overlay.py"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "4fb1c603e4494a0fad49858f56a835469eaa46f8",
+    "subject": "Check broad and overlapping object kinds for leading candidate reads",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_unions_untagged.go",
+      "internal/lower/view_contracts.go",
+      "internal/lower/view_unions_untagged.go",
+      "internal/native/runtime/view_unions_untagged.c",
+      "internal/native/runtime/view_unions_untagged.h",
+      "internal/native/view_unions_untagged.go",
+      "internal/oracle/checked_views_untagged_unions_test.go",
+      "stage3/interface-downcasts/untagged/REPORT.md",
+      "stage3/interface-downcasts/untagged/lazy-candidate-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "70d33dfd5f143ea8ebdf504b5ea69beffdd7c52c",
+    "subject": "Validate remaining own-kind candidate reads and indexed membership",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/oracle/checked_views_untagged_unions_test.go",
+      "stage3/interface-downcasts/untagged/REPORT.md",
+      "stage3/interface-downcasts/untagged/candidate-fixtures.json",
+      "stage3/interface-downcasts/untagged/candidate-refusals.json",
+      "stage3/interface-downcasts/untagged/generate-candidate-fixtures.py",
+      "stage3/interface-downcasts/untagged/lazy-candidate-progress.json",
+      "stage3/interface-downcasts/untagged/logs/candidate-drop-transitive.log",
+      "stage3/interface-downcasts/untagged/logs/candidate-ignore-overlap.log",
+      "stage3/interface-downcasts/untagged/logs/candidate-skip-javascript.log",
+      "stage3/interface-downcasts/untagged/logs/candidate-skip-native.log",
+      "stage3/interface-downcasts/untagged/logs/candidate-wrong-literal-javascript.log",
+      "stage3/interface-downcasts/untagged/logs/candidate-wrong-literal-native.log",
+      "stage3/interface-downcasts/untagged/logs/candidate-wrong-type-javascript.log",
+      "stage3/interface-downcasts/untagged/logs/candidate-wrong-type-native.log",
+      "stage3/interface-downcasts/untagged/run-candidate-mutants.py"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "e3be8faf54cfdb308b52838a56e028367f4548ae",
+    "subject": "Check recursive field-only and homogeneous array union projections",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_unions.go",
+      "internal/javascript/view_unions_untagged.go",
+      "internal/lower/object.go",
+      "internal/lower/view_arrays.go",
+      "internal/lower/view_contracts.go",
+      "internal/lower/view_unions_untagged.go",
+      "internal/native/runtime/view_unions_untagged.c",
+      "internal/native/runtime/view_unions_untagged.h",
+      "internal/native/view_fields.go",
+      "internal/native/view_unions.go",
+      "internal/native/view_unions_untagged.go",
+      "internal/oracle/checked_views_untagged_unions_test.go",
+      "stage3/interface-downcasts/untagged/REPORT.md",
+      "stage3/interface-downcasts/untagged/candidate-fixtures.json",
+      "stage3/interface-downcasts/untagged/candidate-refusals.json",
+      "stage3/interface-downcasts/untagged/lazy-candidate-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "f426929a0cf100ab74d6dde9f78b62a852008055",
+    "subject": "Check recursive flow projections and fixed callable unions at reads",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_callables.go",
+      "internal/javascript/view_callables_signature.go",
+      "internal/javascript/view_unions_untagged.go",
+      "internal/lower/object.go",
+      "internal/lower/view_callables_read.go",
+      "internal/lower/view_lazy.go",
+      "internal/lower/view_unions_untagged.go",
+      "internal/native/emit_objects.go",
+      "internal/native/runtime/view_unions_untagged.c",
+      "internal/native/view_callables_signature.go",
+      "internal/native/view_fields.go",
+      "internal/native/view_unions_untagged.go",
+      "internal/oracle/checked_views_untagged_unions_test.go",
+      "stage3/interface-downcasts/untagged/REPORT.md",
+      "stage3/interface-downcasts/untagged/candidate-fixtures.json",
+      "stage3/interface-downcasts/untagged/candidate-refusals.json",
+      "stage3/interface-downcasts/untagged/lazy-candidate-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "8de074ccbce2c7470fe46980ff23c30d82d0c373",
+    "subject": "Reuse callable producer contracts in nested union projections",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/ir/views.go",
+      "internal/javascript/view_callables_contract.go",
+      "internal/javascript/view_callables_signature.go",
+      "internal/javascript/view_unions_untagged.go",
+      "internal/lower/object.go",
+      "internal/lower/view_arrays.go",
+      "internal/lower/view_callables_contract.go",
+      "internal/lower/view_callables_contract_test.go",
+      "internal/lower/view_lazy.go",
+      "internal/lower/view_unions_untagged.go",
+      "internal/native/runtime/view_callables_contract.h",
+      "internal/native/runtime/view_unions_untagged.c",
+      "internal/native/runtime/view_unions_untagged.h",
+      "internal/native/view_callables_signature.go",
+      "internal/native/view_unions_untagged.go",
+      "internal/oracle/checked_views_untagged_unions_test.go",
+      "stage3/interface-downcasts/untagged/REPORT.md",
+      "stage3/interface-downcasts/untagged/candidate-fixtures.json",
+      "stage3/interface-downcasts/untagged/candidate-refusals.json",
+      "stage3/interface-downcasts/untagged/lazy-candidate-progress.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "untagged",
+    "sha": "cd32db4234fb0a65a6ad199474b802c9e7491054",
+    "subject": "Preserve recursive array contracts and callable mismatch diagnostics",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_callables_signature.go",
+      "internal/javascript/view_unions_untagged.go",
+      "internal/lower/view_array_adapter.go",
+      "internal/lower/view_unions_untagged.go",
+      "internal/native/view_callables_signature.go",
+      "internal/native/view_unions_untagged.go",
+      "stage3/interface-downcasts/untagged/REPORT.md",
+      "stage3/interface-downcasts/untagged/candidate-refusals.json",
+      "stage3/interface-downcasts/untagged/run-nested-callable-mutants.py"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "b3bc7138d8a5c024dfed37584ba1c3cbe3ace2c6",
+    "subject": "Register the tuple lane and six candidate obligations",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "f753567dd8837e90914e7c229df88d8536a3bf8b",
+    "subject": "Check original EmitSignature tuple reads using the shared certificates",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/ir/view_maps.go",
+      "internal/ir/views.go",
+      "internal/javascript/javascript.go",
+      "internal/javascript/view_arrays.go",
+      "internal/javascript/view_unions.go",
+      "internal/javascript/view_unions_object_primitive.go",
+      "internal/lower/view_array_adapter.go",
+      "internal/lower/view_lazy.go",
+      "internal/lower/view_maps_tuples.go",
+      "internal/lower/view_unions_object_primitive.go",
+      "internal/native/runtime/adamic.h",
+      "internal/native/runtime/object.c",
+      "internal/native/runtime/region.c",
+      "internal/native/view_arrays.go",
+      "internal/native/view_unions.go",
+      "internal/native/view_unions_object_primitive.go"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "6b58eb3c02d57ea341985643ae9528b5597115ac",
+    "subject": "Certify original TrackedSymbol tuple consumers",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/oracle/checked_views_tuples_original_test.go",
+      "internal/oracle/counts.md",
+      "internal/oracle/interface_cast_counts_test.go"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "49647618880c8953cbb0328044247a0d28f53345",
+    "subject": "Report tuple consumer certification and counts blockers",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "0a6edef2d89f5241f7dbeb392b607fec9fc4acff",
+    "subject": "Certify original referenced-map tuple IDs",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/phantom_brands.go",
+      "internal/lower/view_tuples.go",
+      "internal/lower/view_unions_object_primitive.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "6fefeeeea61c9e433604855645a86d43b4d2b7a5",
+    "subject": "Stage validated tuple union probes and lane 4b handoff",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/native/runtime/view_tuples.c",
+      "internal/native/runtime/view_tuples.h",
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "f1f6355adf5cfb4a48e766b9d575c0c7386dfe5f",
+    "subject": "Certify original Root indices with explicit tuple union dispatch",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/ir/ir.go",
+      "internal/javascript/view_arrays.go",
+      "internal/lower/object.go",
+      "internal/lower/view_arrays.go",
+      "internal/lower/view_tuples.go",
+      "internal/native/view_arrays.go",
+      "internal/native/view_tuples_array_union.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "3c143841114922f672fad316938fa7ac383b9bd5",
+    "subject": "Certify original emit signature tuple positions",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/javascript/view_unions_object_primitive.go",
+      "internal/lower/view_unions_object_primitive.go",
+      "internal/native/view_unions_object_primitive.go",
+      "internal/oracle/checked_views_tuples_numeric_test.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "799433e037670cf854bdf9fa6a225c1dbf6f5f2a",
+    "subject": "Preserve optional tuple source arity and prepare shared contract review",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/view_maps_tuples.go",
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "64cc98b8af19c74667b988ac9b359f9350218514",
+    "subject": "Transfer flagged tuple forEach snapshots through callback cleanup",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/ir/view_arrays.go",
+      "internal/javascript/view_arrays.go",
+      "internal/lower/view_arrays.go",
+      "internal/lower/view_tuples_optional_call.go",
+      "internal/native/emit_arrays.go",
+      "internal/native/view_arrays.go",
+      "internal/native/view_tuples_array_union.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "8b37f903a7621a964bab2eb7e9b2a15813d4563d",
+    "subject": "Add shared tuple arity plan validators before source admission",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/ir/view_maps.go",
+      "internal/ir/views.go",
+      "internal/javascript/view_tuples.go",
+      "internal/javascript/view_tuples_array_union.go",
+      "internal/native/runtime/view_tuples.c",
+      "internal/native/runtime/view_tuples.h",
+      "internal/native/view_tuples.go",
+      "internal/native/view_tuples_array_union.go",
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "cf1765d1172bafe7ca65b58b01aecaa9ffa005e0",
+    "subject": "Certify optional tuple arity through the shared view constructor",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/lower/view_lazy.go",
+      "internal/lower/view_maps_tuples.go",
+      "internal/lower/view_tuples.go",
+      "internal/lower/view_tuples_layout_probe_test.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md",
+      "stage3/interface-downcasts/tuples/certifications.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "3dd953f759c912177f197ff1499e5515d34bac53",
+    "subject": "Certify trailing rest tuples with complete positional and Map contracts",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/ir/view_maps.go",
+      "internal/lower/view_maps_tuples.go",
+      "internal/lower/view_tuples.go",
+      "internal/lower/view_tuples_layout_probe_test.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md",
+      "stage3/interface-downcasts/tuples/certifications.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "19418766cc313c0dc2d4fcb4fe26a7da248609e1",
+    "subject": "Certify original emit signature tuple union forEach pair",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md",
+      "stage3/interface-downcasts/tuples/certifications.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "21fd3587d6a32fef3f195a31be84605c02f58953",
+    "subject": "Certify original watcher event tuple alternatives through one read path",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/ir/views.go",
+      "internal/javascript/view_tuples.go",
+      "internal/javascript/view_unions.go",
+      "internal/lower/object.go",
+      "internal/lower/view_contracts.go",
+      "internal/lower/view_maps_tuples.go",
+      "internal/lower/view_tuples.go",
+      "internal/native/view_unions.go",
+      "internal/oracle/checked_views_tuples_original_test.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md",
+      "stage3/interface-downcasts/tuples/certifications.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "cd2500f87ea9d532b029c5cac7348a6692342a93",
+    "subject": "Certify original watcher filename tuple position pair",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_tuples_watch_test.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md",
+      "stage3/interface-downcasts/tuples/certifications.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "f1f41adaa37b3173a9b085fee0999bc91fc609b3",
+    "subject": "Certify original private module specifier tuple position pair",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "internal/oracle/checked_views_tuples_original_test.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md",
+      "stage3/interface-downcasts/tuples/certifications.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "3c32b869f9a53a357e0de9074948f7ee194d52c9",
+    "subject": "Certify original module kind tuple position pair",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_tuples_module_test.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md",
+      "stage3/interface-downcasts/tuples/certifications.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "75c9ef060a0c853e69f74cfec781fe6785908c64",
+    "subject": "Refresh optional and rest tuple Map admission witnesses",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_map_certificates_test.go",
+      "internal/oracle/checked_views_tuples_counts_test.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "348c4d74e5f3faacac80efe6e570f7ab4b7e9f8d",
+    "subject": "Pin remaining direct array to original tuple cast frontier",
+    "exit": 1,
+    "conflicts": [
+      "docs/checked-views-plan.md",
+      "stage3/interface-downcasts/tuples/REPORT.md",
+      "stage3/interface-downcasts/tuples/lane4b-handoff.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "fc21dde4f9445f6250d5311fb2d679254b1e4a80",
+    "subject": "Certify original lane 4b out signature tuple union frontier",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_tuples_frontiers_test.go",
+      "internal/oracle/counts.md",
+      "stage3/interface-downcasts/tuples/REPORT.md",
+      "stage3/interface-downcasts/tuples/certifications.json",
+      "stage3/interface-downcasts/tuples/lane4b-handoff.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "eeab7e67200b98aaafe669ba933fa9cdfd451de8",
+    "subject": "Make tuple mutant runners fail only at their oracles",
+    "exit": 1,
+    "conflicts": [
+      "internal/oracle/checked_views_tuples_map_admission_test.go",
+      "internal/oracle/checked_views_tuples_module_test.go",
+      "internal/oracle/checked_views_tuples_optional_contract_test.go",
+      "internal/oracle/checked_views_tuples_rest_contract_test.go",
+      "internal/oracle/checked_views_tuples_signature_foreach_test.go",
+      "internal/oracle/checked_views_tuples_transfer_test.go",
+      "internal/oracle/checked_views_tuples_watch_test.go",
+      "stage3/interface-downcasts/tuples/REPORT.md"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  },
+  {
+    "lane": "tuples",
+    "sha": "5c54e8c6583462ae061557d5fc4618deaf4b67ee",
+    "subject": "Report completed tuple certifications and remaining cast frontier",
+    "exit": 1,
+    "conflicts": [
+      "stage3/interface-downcasts/tuples/certifications.json"
+    ],
+    "scope": "independent main-based cherry-pick; prerequisite commits absent"
+  }
+]
