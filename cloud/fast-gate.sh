@@ -57,6 +57,14 @@ stamp=$(date -u +%Y%m%dT%H%M%SZ)
 out=fast-gate/out/${sha:0:12}-${stamp}
 
 echo "fast gate: ${sha} against main ${base}, tools ${tools}, on ${box}, class ${class}"
+# Landings and areas also compile on macOS (cloud/darwin-leg.sh), beside the box's gate: a Darwin-only
+# compile break (area-next 517cb633, st_atimespec) got through when nothing on macOS gated (Oct 8).
+darwinLog=""
+if [[ ${branch} == cloud/land-* || ${branch} == area/* ]]; then
+  darwinLog=$(mktemp)
+  bash "${here}/cloud/darwin-leg.sh" "${sha}" > "${darwinLog}" 2>&1 &
+  darwinPid=$!
+fi
 set +e
 # ssh joins its arguments into one remote command line, so each is quoted for the remote shell.
 ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" "${cpus:-}" "${class}")" <<'BOX'
@@ -259,6 +267,33 @@ set -e
 
 local=$(mktemp -d)
 scp -q -r "${box}:${out}" "${local}/fast"
+if [ -n "${darwinLog}" ]; then
+  # Under set -e here: capture the leg's code, never let a red or void leg end the gate before it publishes.
+  darwinCode=0
+  wait "${darwinPid}" || darwinCode=$?
+  cp "${darwinLog}" "${local}/fast/darwin-compile.log" 2> /dev/null
+  # Red if macOS can't compile it (unless the box already failed first); void if no Mac answered.
+  python3 - "${local}/fast" "${darwinCode}" "${sha}" <<'DARWIN'
+import json, os, sys
+directory, code, sha = sys.argv[1], int(sys.argv[2]), sys.argv[3]
+log = open(os.path.join(directory, "darwin-compile.log")).read()
+verdict = next((line for line in log.splitlines() if line.startswith(("green:", "red:", "void:"))), "void: no verdict from the darwin leg")
+path = os.path.join(directory, "fast.json")
+result = json.load(open(path)) if os.path.exists(path) else {}
+result.setdefault("stages_exit", {})["darwin-compile"] = code
+result["darwin_compile"] = verdict
+status = os.path.join(directory, "status.txt")
+first = open(status).read().splitlines()[0] if os.path.exists(status) else ""
+if code == 1 and first.startswith("green:"):
+    result["status"] = "red"
+    result["failure"] = {"step": "darwin-compile", "detail": log[-4000:]}
+    open(status, "w").write("red: %s fast gate, first failure at darwin-compile (%s)\n" % (sha, verdict[:200]))
+elif code == 2 and first.startswith("green:"):
+    open(status, "w").write("void: %s fast gate, darwin leg %s\n" % (sha, verdict[len("void: "):]))
+json.dump(result, open(path, "w"), indent=2)
+DARWIN
+  echo "darwin leg: $(head -1 "${local}/fast/darwin-compile.log" | cut -c1-200)"
+fi
 # A log over 5 MB (test.jsonl on a whole run) is published gzipped; anything else that size (a binary
 # that strayed in) never is. Names go to stderr, never stdout, which a caller may be capturing.
 find "${local}/fast" -type f -size +5M \( -name '*.jsonl' -o -name '*.log' -o -name '*.txt' \) -exec gzip -9 {} \;
