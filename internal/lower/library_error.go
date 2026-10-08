@@ -143,15 +143,18 @@ func (l *lowering) libraryErrorValue(node *ast.Node) (ir.Expression, bool, error
 		}
 	}
 	if receiver != nil {
+		// Ordinary fields may also be named stack (for example YAML's parser
+		// holds a number array). Only string reads belong to the captured Error
+		// path; leave other representations to ordinary property lowering.
+		of, known := l.representation(l.checker.GetTypeAtLocation(node))
+		if !known || of != ir.String {
+			return nil, false, nil
+		}
 		if l.isLibraryType(l.checker.GetTypeAtLocation(receiver), "Error") && !l.errorCapturedBefore(node, receiver) {
 			return nil, true, l.notYet(node, "Error.stack without a preceding captureStackTrace: native frames have no JavaScript source stack")
 		}
 		if !l.errorPlainTarget(receiver) && !l.errorCapturedBefore(node, receiver) {
 			return nil, true, l.notYet(node, "stack receiver must be a known plain object or previously captured Error")
-		}
-		of, known := l.representation(l.checker.GetTypeAtLocation(node))
-		if !known || of != ir.String {
-			return nil, false, nil
 		}
 		object, err := l.expression(receiver)
 		if err != nil {

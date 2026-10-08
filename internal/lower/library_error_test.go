@@ -33,3 +33,18 @@ func TestErrorCaptureBoundaries(t *testing.T) {
 		})
 	}
 }
+
+func TestOrdinaryNonStringStackReads(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		`class Parser { stack:number[]=[]; peek():number { return this.stack[this.stack.length-1] ?? -1; } } const parser=new Parser(); parser.stack.push(7); console.log(parser.peek().toString());`,
+		`class Parser { stack:number=7; peek():number { return this.stack; } } const parser=new Parser(); console.log(parser.peek().toString());`,
+	} {
+		t.Run(source, func(t *testing.T) {
+			t.Parallel()
+			if _, err := lowerSource(t, source); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}
