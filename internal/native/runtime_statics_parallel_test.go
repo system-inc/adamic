@@ -41,6 +41,7 @@ func TestRuntimeStaticsProtectionMutants(t *testing.T) {
 		t.Skip("concurrency-area has not been merged; parallel.c is absent")
 	}
 	mutants := []struct{ name, file, old, changed, fixture string }{
+		{"shared_map_compaction", "map.c", "adamic_is_shared(&map->heap) || ", "", "map"},
 		{"regex_budget", "regexp.c", "static _Atomic uint64_t regex_step_limit;", "static uint64_t regex_step_limit;", "regex"},
 		{"checker_profiling", "tsgo.c", "static _Atomic", "static", "profiling"},
 		{"packed_field_cache", "object.c", "__atomic_store_n(&cache->packed, packed, __ATOMIC_RELAXED);", "cache->packed = packed;", "field_cache"},
@@ -102,7 +103,11 @@ func TestRuntimeStaticsSignalAndExit(t *testing.T) {
 
 func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.Signal, mutant bool) {
 	t.Helper()
-	for attempt := 0; attempt < 3; attempt++ {
+	attempts := 3
+	if mutant {
+		attempts = 10
+	}
+	for attempt := 0; attempt < attempts; attempt++ {
 		ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 		command := exec.CommandContext(ctx, binary)
 		command.Env = append(os.Environ(), "ADAMIC_THREADS=4", "TSAN_OPTIONS=halt_on_error=1", fmt.Sprintf("ADAMIC_STOP_SIGNAL=%d", signal))
@@ -114,13 +119,22 @@ func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.S
 		cancel()
 		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
 		if mutant {
-			if err == nil || timedOut || !race {
-				t.Fatalf("signal mutant not caught: %v\n%s", err, output)
+			if timedOut {
+				t.Fatalf("signal mutant timed out: %v\n%s", err, output)
 			}
-			for _, line := range strings.Split(string(output), "\n") {
-				if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
-					t.Log(line)
+			if race && err != nil {
+				for _, line := range strings.Split(string(output), "\n") {
+					if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
+						t.Log(line)
+					}
 				}
+				return
+			}
+			// Delivery can fall between writers. Retry only the expected signal exit;
+			// the mutant passes solely after a real ThreadSanitizer race report.
+			status, ok := command.ProcessState.Sys().(syscall.WaitStatus)
+			if err == nil || !ok || !status.Signaled() || status.Signal() != signal || !strings.Contains(string(output), "signal worker line\n") {
+				t.Fatalf("signal mutant failed without its race witness: %v\n%s", err, output)
 			}
 			continue
 		}
@@ -137,6 +151,9 @@ func staticsSignalRun(t *testing.T, binary string, worker bool, signal syscall.S
 				t.Fatalf("wanted signal %d, got %v\n%s", signal, err, output)
 			}
 		}
+	}
+	if mutant {
+		t.Fatalf("signal mutant not caught after %d deliveries", attempts)
 	}
 }
 
