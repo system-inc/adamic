@@ -1318,3 +1318,16 @@ boxed Union reads in prepareViewCallableProperty. Otherwise the new same-name
 proof exemption would admit nullable function reads without a signature check.
 TestCheckedViewNullishCallableSignatureMutant now pins the runtime wrong-result
 refusal in both backends rather than the older compile-time refusal.
+
+## Lane 5 non-predicate scalar witnesses (October 8)
+
+Lane 5 adds internal/oracle/checked_views_callable_scalar_witness_test.go and
+fixtures under lane5/scanner and lane5/performance. These preserve original tsc
+member signatures and call expressions with reduced receivers and implementations.
+No shared production hook is needed for these fixed scalar signatures. The lane
+counts helper adds these directories; candidate counts remain separate by census.
+
+Lane 5 also pins gaps/mixed-scalar-boxed-result.a against Node. It reproduces
+the predicates worker ABI boundary: a number-returning producer needs a boxed
+union result adapter. This adds no blanket callable admission. Aggregate callable
+results also need field-demand propagation before their shapes can be admitted.
