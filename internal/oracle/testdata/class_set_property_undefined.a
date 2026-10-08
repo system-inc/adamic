@@ -1,0 +1,7 @@
+interface Holder { member: undefined; }
+const holder: Holder = { member: undefined };
+const source: Holder = { member: undefined };
+holder.member = source.member;
+console.log(`${holder.member === undefined}`);
+holder.member = undefined;
+console.log(`${holder.member === undefined}`);

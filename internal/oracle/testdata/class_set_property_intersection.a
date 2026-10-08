@@ -1,0 +1,14 @@
+interface Identifier { readonly kind: 'identifier'; readonly text: string; }
+interface Pattern { readonly kind: 'pattern'; readonly entries: string[]; }
+interface VariableDeclaration { readonly name: Identifier | Pattern; readonly value: string; readonly _brand?: any; readonly flagged?: boolean; readonly pos?: number; }
+type NamedDeclaration = VariableDeclaration & { readonly name: Identifier; };
+interface Holder { declaration: NamedDeclaration | undefined; }
+function put(holder: Holder, declaration: NamedDeclaration): void { holder.declaration = declaration; }
+function show(holder: Holder): void { const declaration = holder.declaration; if (declaration !== undefined) console.log(`${declaration.name.text}: ${declaration.value}`); }
+const holder: Holder = { declaration: undefined };
+put(holder, { name: { kind: 'identifier', text: 'owned'.repeat(2) }, value: 'first', flagged: true, pos: 1 });
+show(holder);
+put(holder, { name: { kind: 'identifier', text: 'next' }, value: 'last'.repeat(2) });
+show(holder);
+holder.declaration = undefined;
+console.log(`${holder.declaration === undefined}`);

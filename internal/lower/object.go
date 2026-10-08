@@ -123,6 +123,9 @@ func (l *lowering) emptySpread(node *ast.Node, own []ir.Field) ([]ir.Field, erro
 // typeOfSymbol is what's left at runtime of a symbol's declared type, or NotYet at node.
 func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, error) {
 	declared := l.checker.GetTypeOfSymbol(symbol)
+	if declared.Flags()&checker.TypeFlagsUndefined != 0 {
+		return ir.Object, nil
+	}
 	if valueType, isKnown := l.representation(declared); isKnown {
 		return valueType, nil
 	}

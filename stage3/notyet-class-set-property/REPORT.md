@@ -62,3 +62,11 @@ Array length decrement removes exactly the last element and releases it using ex
 any (2 roots) remains refused for a language ruling: docs require proven types, and an any field has no storage proof. A reduced source fixture runs on Node and pins the exact existing `storing any in a field` stop. tsbuildPublic.ts:2080 retains that stop; 2068 reaches earlier any and structural-call stops. This does not claim to lower any.
 
 Five mutants fail: force any to a number slot (boundary assertion fails); remove the empty-array RangeError (stdout differs); omit decrement (stdout differs); omit clearing (stdout differs); evaluate the receiver twice (stdout differs). Array fixtures agree with Node in JavaScript/native, sanitizers/release and ownership checks. Focused lower class/rest checks pass; merged counts refresh passed in 52.567s. This commit adds no runtime C changes.
+
+Intersection and undefined field follow-up:
+
+Consistently represented reference slots and optional scalar pairs now survive plain object intersections. Unused unrepresented phantom members do not prevent carrying an object pointer; accessing those members still needs its own representation proof. The JSX replay now retains only the structural call at 113:29 and the unchecked cast at 114:48. Intersections that refine a boxed union into a plain object remain stopped. The first agreement mutant survived an earlier expression stop; a direct slot proof check using the same Node fixture now kills it.
+
+A field declared exactly undefined keeps an object slot containing the existing null representation. Reads and writes retain normal property effects, including a TypeError on a frozen object. The factory replay no longer reports this storage stop; readonly TextRange upcast refusals in dependencies remain.
+
+The reduced positive fixtures pass against Node in both backends with sanitizers, release and ownership checks. Removing undefined slot support, eliding undefined writes, removing intersection references, removing packed optional slots and restoring phantom-member refusal each fails its fixture. Ignoring constituent slot agreement fails TestClassSetPropertyIntersectionSlotAgreement.
