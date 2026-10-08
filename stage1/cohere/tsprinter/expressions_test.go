@@ -52,6 +52,7 @@ func expressionCorpus(t *testing.T) (string, string, string) {
 			}
 		}
 	}
+	planCorpus(t, directory+"/cases.txt")
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
 }
 
@@ -61,7 +62,7 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	port, _ := filepath.Abs("main.ts")
 	compare := func(name string, result run) {
 		if result.exitCode != 0 || len(result.stderr) > 0 || string(result.stdout) != want {
-			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, firstDifference(string(result.stdout), want))
+			t.Fatalf("%s exit %d stderr %s diff %s", name, result.exitCode, result.stderr, corpusDifference(t, cases, string(result.stdout), want))
 		}
 	}
 	compare("Node", onNode(t, port, "--cases", cases, "80"))
