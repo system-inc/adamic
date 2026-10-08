@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly close:unknown;}
+interface Target {close(): void;}
+function probe(value:Base):void {const watcher=value as Target;watcher.close();}
+probe({close:(extra:number):void=>{}});

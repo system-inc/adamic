@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Program { readonly value: number; }
+interface Base {readonly getProgram:unknown;}
+interface Target {getProgram(): Program;}
+function probe(value:Base):void {const oldProgram=value as Target;console.log(`${oldProgram.getProgram().value}`);}
+probe({getProgram:7});

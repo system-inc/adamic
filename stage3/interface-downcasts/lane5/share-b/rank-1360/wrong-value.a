@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SourceFile { readonly value: number; }
+interface Base {readonly transformSourceFile:unknown;}
+interface Target {transformSourceFile(node: SourceFile): SourceFile;}
+function probe(value:Base):void {const transformer=value as Target;console.log(`${transformer.transformSourceFile({value:3}).value}`);}
+probe({transformSourceFile:7});

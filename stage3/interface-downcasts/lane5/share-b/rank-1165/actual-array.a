@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent elements reduced.
+
+interface Base {readonly lastIndexOf:unknown;}
+interface Target<T> {lastIndexOf(searchElement: T, fromIndex?: number): number;}
+function probe(value:Base):void {const awaitedTypeStack=value as Target<number>;awaitedTypeStack.lastIndexOf(3,0);console.log("called");}
+probe([3,4]);

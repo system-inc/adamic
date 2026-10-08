@@ -1,0 +1,282 @@
+[
+  {
+    "rank": 1102,
+    "receiver_type_id": 10136,
+    "type": "Symbol[]",
+    "field": "filter",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 24926,
+      "column": 16
+    },
+    "read": "getPropertiesOfType(target)\r\n            .filter",
+    "call": "getPropertiesOfType(target)\r\n            .filter(targetProp => isExactOptionalPropertyMismatch(getTypeOfPropertyOfType(source, targetProp.escapedName), getTypeOfSymbol(targetProp)))",
+    "utf16Start": 1487204,
+    "utf16End": 1487252,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];\nfilter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-1102/contract-probe.a",
+    "output": "",
+    "refusal": "adamic/no-type-predicate"
+  },
+  {
+    "rank": 1150,
+    "receiver_type_id": 10562,
+    "type": "TypeParameter[] | undefined",
+    "field": "map",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 16961,
+      "column": 69
+    },
+    "read": "type.target.localTypeParameters?.map",
+    "call": "type.target.localTypeParameters?.map(() => errorType)",
+    "utf16Start": 987200,
+    "utf16End": 987236,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-1150/contract-probe.a",
+    "output": "",
+    "refusal": "checked view read of field map with unsupported callable contract"
+  },
+  {
+    "rank": 1168,
+    "receiver_type_id": 37370,
+    "type": "readonly CommandLineOption[]",
+    "field": "filter",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 491,
+      "column": 25
+    },
+    "read": "simpleOptions.filter",
+    "call": "simpleOptions.filter(opt => opt.isCommandLineOnly || opt.category === Diagnostics.Command_line_Options)",
+    "utf16Start": 18302,
+    "utf16End": 18322,
+    "fileSha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf",
+    "declaration": "filter<S extends T>(predicate: (value: T, index: number, array: readonly T[]) => value is S, thisArg?: any): S[];\nfilter(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): T[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ReadonlyArray"
+    ],
+    "filename": "rank-1168/contract-probe.a",
+    "output": "",
+    "refusal": "adamic/no-type-predicate"
+  },
+  {
+    "rank": 1174,
+    "receiver_type_id": 7103,
+    "type": "readonly Type[] | undefined",
+    "field": "map",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/tracing.ts",
+      "line": 259,
+      "column": 36
+    },
+    "read": "referenceType.resolvedTypeArguments?.map",
+    "call": "referenceType.resolvedTypeArguments?.map(t => t.id)",
+    "utf16Start": 9949,
+    "utf16End": 9989,
+    "fileSha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+    "declaration": "map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ReadonlyArray"
+    ],
+    "filename": "rank-1174/contract-probe.a",
+    "output": "",
+    "refusal": "checked view read of field map with unsupported callable contract"
+  },
+  {
+    "rank": 1177,
+    "receiver_type_id": 680,
+    "type": "readonly unknown[]",
+    "field": "map",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/core.ts",
+      "line": 684,
+      "column": 12
+    },
+    "read": "array.map",
+    "call": "array.map(selectIndex)",
+    "utf16Start": 23395,
+    "utf16End": 23404,
+    "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "declaration": "map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ReadonlyArray"
+    ],
+    "filename": "rank-1177/contract-probe.a",
+    "output": "",
+    "refusal": "stage 0 can't lower a value of type unknown yet"
+  },
+  {
+    "rank": 1306,
+    "receiver_type_id": 11270,
+    "type": "CommandLineOption[]",
+    "field": "forEach",
+    "candidateReads": 1,
+    "witness": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 333,
+      "column": 5
+    },
+    "read": "commonOptionsWithBuild.forEach",
+    "call": "commonOptionsWithBuild.forEach(option => {\r\n        if (hasProperty(buildOptions, option.name)) result[option.name] = buildOptions[option.name];\r\n    })",
+    "utf16Start": 12280,
+    "utf16End": 12310,
+    "fileSha256": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+    "declaration": "forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-1306/contract-probe.a",
+    "output": "",
+    "refusal": "checked view read of field forEach with unsupported callable contract"
+  },
+  {
+    "rank": 1309,
+    "receiver_type_id": 9773,
+    "type": "CommentDirective[]",
+    "field": "push",
+    "candidateReads": 1,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 10080,
+      "column": 17
+    },
+    "read": "commentDirectives.push",
+    "call": "commentDirectives.push(...newDirectives)",
+    "utf16Start": 504260,
+    "utf16End": 504282,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "push(...items: T[]): number;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-1309/contract-probe.a",
+    "output": "",
+    "refusal": "checked view read of field push with unsupported callable contract"
+  },
+  {
+    "rank": 1366,
+    "receiver_type_id": 6830,
+    "type": "Declaration[] | undefined",
+    "field": "filter",
+    "candidateReads": 1,
+    "witness": {
+      "file": "src/compiler/transformers/declarations.ts",
+      "line": 752,
+      "column": 36
+    },
+    "read": "input.symbol.declarations?.filter",
+    "call": "input.symbol.declarations?.filter(decl => isFunctionDeclaration(decl) && !decl.body)",
+    "utf16Start": 34058,
+    "utf16End": 34091,
+    "fileSha256": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e",
+    "declaration": "filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];\nfilter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-1366/contract-probe.a",
+    "output": "",
+    "refusal": "adamic/no-type-predicate"
+  },
+  {
+    "rank": 1372,
+    "receiver_type_id": 10955,
+    "type": "DiagnosticRelatedInformation[]",
+    "field": "map",
+    "candidateReads": 1,
+    "witness": {
+      "file": "src/compiler/builder.ts",
+      "line": 1513,
+      "column": 21
+    },
+    "read": "relatedInformation.map",
+    "call": "relatedInformation.map(r => toReusableDiagnosticRelatedInformation(r, diagnosticFilePath))",
+    "utf16Start": 68714,
+    "utf16End": 68736,
+    "fileSha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+    "declaration": "map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-1372/contract-probe.a",
+    "output": "",
+    "refusal": "checked view read of field map with unsupported callable contract"
+  },
+  {
+    "rank": 1105,
+    "receiver_type_id": 11561,
+    "type": "SymlinkCache",
+    "field": "getSymlinkedDirectories",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 5001,
+      "column": 13
+    },
+    "read": "symlinkCache.getSymlinkedDirectories",
+    "call": "symlinkCache.getSymlinkedDirectories()",
+    "utf16Start": 261151,
+    "utf16End": 261187,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "getSymlinkedDirectories(): ReadonlyMap<Path, SymlinkedDirectory | false> | undefined;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/compiler/utilities.ts",
+    "declarationSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "inheritancePath": [
+      "SymlinkCache"
+    ],
+    "filename": "rank-1105/contract-probe.a",
+    "output": "",
+    "refusal": "a primitive brand member __pathBrand whose type is not void",
+    "carrierDeclarations": [
+      "type Path = string & { __pathBrand: any; };"
+    ],
+    "carrierEvidence": [
+      {
+        "declaration": "type Path = string & { __pathBrand: any; };",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  }
+]

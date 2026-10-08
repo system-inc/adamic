@@ -1,0 +1,10 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SignatureDeclaration { readonly value: number; }
+interface JSDocSignature { readonly value: number; }
+interface Symbol { readonly value: number; }
+interface SyntacticTypeNodeBuilderContext { readonly value: number; }
+interface TypeNode { readonly value: number; }
+interface Base {readonly serializeReturnTypeForSignature:unknown;}
+interface Target {serializeReturnTypeForSignature: (signature: SignatureDeclaration | JSDocSignature, symbol: Symbol, context: SyntacticTypeNodeBuilderContext) => TypeNode | undefined;}
+function probe(value:Base):void {const syntacticNodeBuilder=value as Target;const result=syntacticNodeBuilder.serializeReturnTypeForSignature({value:3},{value:3},{value:3});if (result !== undefined) {console.log(`${result.value}`);}}
+probe({serializeReturnTypeForSignature:(signature: SignatureDeclaration | JSDocSignature, symbol: Symbol, context: SyntacticTypeNodeBuilderContext):TypeNode | undefined=>{console.log(`${signature.value}`);console.log(`${symbol.value}`);console.log(`${context.value}`);return {value:3};}});

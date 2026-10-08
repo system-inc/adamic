@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly clearCache:unknown;}
+interface Target {clearCache(): void;}
+function probe(value:Base):void {const cachedDirectoryStructureHost=value as Target;cachedDirectoryStructureHost.clearCache();}
+probe({clearCache:(extra:number):void=>{}});

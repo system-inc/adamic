@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent elements reduced.
+interface DiagnosticRelatedInformation {readonly value:number;}
+interface Base {readonly map:unknown;}
+interface Target<T> {map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];}
+function probe(value:Base):void {const relatedInformation=value as Target<DiagnosticRelatedInformation>;relatedInformation.map((item:DiagnosticRelatedInformation,index:number,array:DiagnosticRelatedInformation[]):number=>3);console.log("called");}
+probe({map:7});

@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly reportCyclicStructureError:unknown;}
+interface Target {reportCyclicStructureError(): void;}
+function probe(value:Base):void {const context={tracker:value as Target};context.tracker?.reportCyclicStructureError();}
+probe({reportCyclicStructureError:7});

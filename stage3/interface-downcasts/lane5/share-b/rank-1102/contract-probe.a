@@ -1,0 +1,8 @@
+// Original array declaration/read; adjacent elements reduced.
+interface Symbol {readonly value:number;}
+interface Base {readonly filter:unknown;}
+interface Target<T> {filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];
+filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];}
+function probe(value:Base):void {const target={value:3};function getPropertiesOfType(target:Symbol):Target<Symbol> {return value as Target<Symbol>;}getPropertiesOfType(target)
+            .filter((item:Symbol):boolean=>true);console.log("called");}
+probe({filter:7});

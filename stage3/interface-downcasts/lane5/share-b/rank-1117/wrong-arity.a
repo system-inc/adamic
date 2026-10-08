@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly getDirectories:unknown;}
+interface Target {getDirectories(path: string): string[];}
+function probe(value:Base):void {const system=value as Target;const result=system.getDirectories("value3");if (result !== undefined) {for (const element of result) {console.log(element);}}}
+probe({getDirectories:():string[]=>{return ["answer3"];}});

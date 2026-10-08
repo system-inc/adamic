@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent elements reduced.
+interface Diagnostic {readonly value:number;}
+interface Base {readonly slice:unknown;}
+interface Target<T> {slice(start?: number, end?: number): T[];}
+function probe(value:Base):void {const checker={getGlobalDiagnostics:():Target<Diagnostic>=>value as Target<Diagnostic>};function getTypeChecker():typeof checker {return checker;}getTypeChecker().getGlobalDiagnostics().slice(0,1);console.log("called");}
+probe([{value:3},{value:4}]);

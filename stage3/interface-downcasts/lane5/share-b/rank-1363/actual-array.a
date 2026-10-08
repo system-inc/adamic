@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent elements reduced.
+interface Declaration {readonly value:number;}
+interface Base {readonly indexOf:unknown;}
+interface Target<T> {indexOf(searchElement: T, fromIndex?: number): number;}
+function probe(value:Base):void {const overloadSignatures=value as Target<Declaration>;overloadSignatures.indexOf({value:3});console.log("called");}
+probe([{value:3},{value:4}]);

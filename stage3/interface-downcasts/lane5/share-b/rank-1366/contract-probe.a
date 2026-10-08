@@ -1,0 +1,7 @@
+// Original array declaration/read; adjacent elements reduced.
+interface Declaration {readonly value:number;}
+interface Base {readonly filter:unknown;}
+interface Target<T> {filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];
+filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];}
+function probe(value:Base):void {const input={symbol:{declarations:value as Target<Declaration>}};input.symbol.declarations?.filter((item:Declaration):boolean=>true);console.log("called");}
+probe({filter:7});

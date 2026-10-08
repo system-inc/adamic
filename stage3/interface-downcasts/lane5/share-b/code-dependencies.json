@@ -1112,6 +1112,150 @@
     "basis": "user-provided dependency; no branch merge or certification claimed"
   },
   {
+    "rank": 1102,
+    "pair": "Symbol[].filter",
+    "reads": 2,
+    "read": "getPropertiesOfType(target)\r\n            .filter",
+    "stop": "adamic/no-type-predicate",
+    "needed": "original predicate callable contracts with a proven predicate return",
+    "fixture": "rank-1102/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1105,
+    "pair": "SymlinkCache.getSymlinkedDirectories",
+    "reads": 2,
+    "read": "symlinkCache.getSymlinkedDirectories",
+    "stop": "a primitive brand member __pathBrand whose type is not void",
+    "needed": "original Path brand admission preserving __pathBrand: any",
+    "fixture": "rank-1105/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1150,
+    "pair": "TypeParameter[] | undefined.map",
+    "reads": 2,
+    "read": "type.target.localTypeParameters?.map",
+    "stop": "checked view read of field map with unsupported callable contract",
+    "needed": "original rest parameter or generic callback callable contracts",
+    "fixture": "rank-1150/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1165,
+    "pair": "number[].lastIndexOf",
+    "reads": 2,
+    "read": "awaitedTypeStack.lastIndexOf",
+    "stop": "native array-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "array receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-1165/actual-array.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe",
+    "expectedJavaScript": "adamic: panic: field read failed: awaitedTypeStack.lastIndexOf expected (searchElement: number, fromIndex?: number | undefined) => number, found function with unknown signature\n"
+  },
+  {
+    "rank": 1168,
+    "pair": "readonly CommandLineOption[].filter",
+    "reads": 2,
+    "read": "simpleOptions.filter",
+    "stop": "adamic/no-type-predicate",
+    "needed": "original predicate callable contracts with a proven predicate return",
+    "fixture": "rank-1168/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1171,
+    "pair": "readonly SourceFile[].indexOf",
+    "reads": 2,
+    "read": "sourceFiles.indexOf",
+    "stop": "native array-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "array receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-1171/actual-array.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe",
+    "expectedJavaScript": "adamic: panic: field read failed: sourceFiles.indexOf expected (searchElement: SourceFile, fromIndex?: number | undefined) => number, found function with unknown signature\n"
+  },
+  {
+    "rank": 1174,
+    "pair": "readonly Type[] | undefined.map",
+    "reads": 2,
+    "read": "referenceType.resolvedTypeArguments?.map",
+    "stop": "checked view read of field map with unsupported callable contract",
+    "needed": "original rest parameter or generic callback callable contracts",
+    "fixture": "rank-1174/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1177,
+    "pair": "readonly unknown[].map",
+    "reads": 2,
+    "read": "array.map",
+    "stop": "stage 0 can't lower a value of type unknown yet",
+    "needed": "original unknown-valued callback parameter lowering",
+    "fixture": "rank-1177/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1306,
+    "pair": "CommandLineOption[].forEach",
+    "reads": 1,
+    "read": "commonOptionsWithBuild.forEach",
+    "stop": "checked view read of field forEach with unsupported callable contract",
+    "needed": "original rest parameter or generic callback callable contracts",
+    "fixture": "rank-1306/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1309,
+    "pair": "CommentDirective[].push",
+    "reads": 1,
+    "read": "commentDirectives.push",
+    "stop": "checked view read of field push with unsupported callable contract",
+    "needed": "original rest parameter or generic callback callable contracts",
+    "fixture": "rank-1309/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1363,
+    "pair": "Declaration[].indexOf",
+    "reads": 1,
+    "read": "overloadSignatures.indexOf",
+    "stop": "native array-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "array receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-1363/actual-array.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe",
+    "expectedJavaScript": "adamic: panic: field read failed: overloadSignatures.indexOf expected (searchElement: Declaration, fromIndex?: number | undefined) => number, found function with unknown signature\n"
+  },
+  {
+    "rank": 1366,
+    "pair": "Declaration[] | undefined.filter",
+    "reads": 1,
+    "read": "input.symbol.declarations?.filter",
+    "stop": "adamic/no-type-predicate",
+    "needed": "original predicate callable contracts with a proven predicate return",
+    "fixture": "rank-1366/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1372,
+    "pair": "DiagnosticRelatedInformation[].map",
+    "reads": 1,
+    "read": "relatedInformation.map",
+    "stop": "checked view read of field map with unsupported callable contract",
+    "needed": "original rest parameter or generic callback callable contracts",
+    "fixture": "rank-1372/contract-probe.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe"
+  },
+  {
+    "rank": 1375,
+    "pair": "Diagnostic[].slice",
+    "reads": 1,
+    "read": "getTypeChecker().getGlobalDiagnostics().slice",
+    "stop": "native array-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "array receiver conversion, immutable intrinsic callable metadata and receiver-preserving checked calls",
+    "fixture": "rank-1375/actual-array.a",
+    "basis": "original generic array or collection-result declaration/read; actual receiver or admission probe",
+    "expectedJavaScript": "adamic: panic: field read failed: getTypeChecker().getGlobalDiagnostics().slice expected (start?: number | undefined, end?: number | undefined) => Diagnostic[], found function with unknown signature\n"
+  },
+  {
     "rank": 2221,
     "pair": "ReadonlyMap<K, U> | ReadonlySet<K> | undefined.has",
     "reads": 1,

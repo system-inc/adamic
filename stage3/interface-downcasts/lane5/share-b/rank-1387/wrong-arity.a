@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface FunctionExpression { readonly value: number; }
+interface Expression { readonly value: number; }
+interface Base {readonly createGeneratorHelper:unknown;}
+interface Target {createGeneratorHelper(body: FunctionExpression): Expression;}
+function probe(value:Base):void {function emitHelpers():Target {return value as Target;}console.log(`${emitHelpers().createGeneratorHelper({value:3}).value}`);}
+probe({createGeneratorHelper:():Expression=>{return {value:3};}});

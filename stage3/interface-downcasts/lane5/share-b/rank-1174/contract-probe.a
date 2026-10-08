@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent elements reduced.
+interface Type {readonly value:number;}
+interface Base {readonly map:unknown;}
+interface Target<T> {map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[];}
+function probe(value:Base):void {const referenceType={resolvedTypeArguments:value as Target<Type>};referenceType.resolvedTypeArguments?.map((item:Type,index:number,array:readonly Type[]):number=>3);console.log("called");}
+probe({map:7});

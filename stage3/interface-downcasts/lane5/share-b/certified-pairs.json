@@ -1198,5 +1198,205 @@
     "directory": "rank-1093",
     "certified": true,
     "basis": "original declaration/read; array representations retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1099,
+    "receiver_type_id": 68704,
+    "type": "SymbolTrackerImpl",
+    "field": "reportCyclicStructureError",
+    "candidateReads": 2,
+    "directory": "rank-1099",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1108,
+    "receiver_type_id": 13389,
+    "type": "SyntacticNodeBuilder",
+    "field": "serializeReturnTypeForSignature",
+    "candidateReads": 2,
+    "directory": "rank-1108",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1111,
+    "receiver_type_id": 13377,
+    "type": "SyntacticTypeNodeBuilderResolver",
+    "field": "serializeTypeName",
+    "candidateReads": 2,
+    "directory": "rank-1111",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1114,
+    "receiver_type_id": 59698,
+    "type": "SyntaxCursor",
+    "field": "currentNode",
+    "candidateReads": 2,
+    "directory": "rank-1114",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1117,
+    "receiver_type_id": 8229,
+    "type": "System",
+    "field": "getDirectories",
+    "candidateReads": 2,
+    "directory": "rank-1117",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1135,
+    "receiver_type_id": 10108,
+    "type": "TransformationContext",
+    "field": "suspendLexicalEnvironment",
+    "candidateReads": 2,
+    "directory": "rank-1135",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1141,
+    "receiver_type_id": 7601,
+    "type": "TypeChecker",
+    "field": "getEmitResolver",
+    "candidateReads": 2,
+    "directory": "rank-1141",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1144,
+    "receiver_type_id": 9940,
+    "type": "TypeCheckerHost",
+    "field": "getCompilerOptions",
+    "candidateReads": 2,
+    "directory": "rank-1144",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1288,
+    "receiver_type_id": 94191,
+    "type": "BuilderProgram",
+    "field": "getProgram",
+    "candidateReads": 1,
+    "directory": "rank-1288",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1297,
+    "receiver_type_id": 93560,
+    "type": "CachedDirectoryStructureHost",
+    "field": "clearCache",
+    "candidateReads": 1,
+    "directory": "rank-1297",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1315,
+    "receiver_type_id": 11233,
+    "type": "CompilerHost",
+    "field": "getDefaultLibFileName",
+    "candidateReads": 1,
+    "directory": "rank-1315",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1360,
+    "receiver_type_id": 10110,
+    "type": "CustomTransformer",
+    "field": "transformSourceFile",
+    "candidateReads": 1,
+    "directory": "rank-1360",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1378,
+    "receiver_type_id": 13731,
+    "type": "DirectoryWatcher",
+    "field": "close",
+    "candidateReads": 1,
+    "directory": "rank-1378",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1381,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createAddDisposableResourceHelper",
+    "candidateReads": 1,
+    "directory": "rank-1381",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1384,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createClassPrivateFieldInHelper",
+    "candidateReads": 1,
+    "directory": "rank-1384",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1387,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createGeneratorHelper",
+    "candidateReads": 1,
+    "directory": "rank-1387",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1390,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createRestHelper",
+    "candidateReads": 1,
+    "directory": "rank-1390",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1393,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "getUnscopedHelperName",
+    "candidateReads": 1,
+    "directory": "rank-1393",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1405,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "getJsxFragmentFactoryEntity",
+    "candidateReads": 1,
+    "directory": "rank-1405",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
+  },
+  {
+    "rank": 1417,
+    "receiver_type_id": 10351,
+    "type": "EmitTextWriter",
+    "field": "getColumn",
+    "candidateReads": 1,
+    "directory": "rank-1417",
+    "certified": true,
+    "basis": "original declaration/read; scalar array representation retained; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and arity mutant"
   }
 ]

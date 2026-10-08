@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent elements reduced.
+interface CommandLineOption {readonly value:number;}
+interface Base {readonly forEach:unknown;}
+interface Target<T> {forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;}
+function probe(value:Base):void {const commonOptionsWithBuild=value as Target<CommandLineOption>;commonOptionsWithBuild.forEach((item:CommandLineOption,index:number,array:CommandLineOption[]):void=>{});console.log("called");}
+probe({forEach:7});

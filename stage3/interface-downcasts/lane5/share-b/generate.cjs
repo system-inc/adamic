@@ -48,13 +48,15 @@ for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
   if (t.includes('string')) {const observation=`if (typeof ${n} === \"string\") {console.log(${n});} else {console.log(\`\${${n}.value}\`);}`;return p.questionToken || t.includes('undefined') ? `if (${n} !== undefined) {${observation}}` : observation;}
   return t.includes('undefined') || p.questionToken ? `if (${n} !== undefined) {console.log(\`\${${n}.value}\`);}` : `console.log(\`\${${n}.value}\`);`;
  }).join('');
+ const scalarArrayResult=/^(readonly )?(string|number|boolean)\[\]/.test(resultType);
  const arrayResult = resultType.includes('[]') || preserveArrayCarriers && resultType.includes('NodeArray<');
- const result = arrayResult ? (resultType.includes('| undefined)[]') ? 'return [{value:3},undefined];' : 'return [{value:3}];') : resultType === 'void' ? '' : resultType === 'string' ? 'return "answer3";' : resultType === 'boolean' ? 'return true;' : resultType === 'number' ? 'return 3;' : enumDeclarations.has(resultType) ? 'return '+resultType+'.'+enumMembers.get(resultType)+';' : member.rank===658 ? 'return ModuleKind.ESNext;' : 'return {value:3};';
+ const result = arrayResult ? (scalarArrayResult ? (resultType.includes('string')?'return ["answer3"];':'return [3];') : resultType.includes('| undefined)[]') ? 'return [{value:3},undefined];' : 'return [{value:3}];') : resultType === 'void' ? '' : resultType === 'string' ? 'return "answer3";' : resultType === 'boolean' ? 'return true;' : resultType === 'number' ? 'return 3;' : enumDeclarations.has(resultType) ? 'return '+resultType+'.'+enumMembers.get(resultType)+';' : member.rank===658 ? 'return ModuleKind.ESNext;' : 'return {value:3};';
  const invocation = member.read + '(' + args.join(',') + ')';
  let call = resultType === 'void' ? invocation + ';' : resultType === 'string' ? 'console.log(' + invocation + ');' : resultType === 'boolean' || resultType === 'number' ? 'console.log(`${' + invocation + '}`);' : 'console.log(`${' + invocation + '.value}`);';
  if (resultType.includes('undefined')) call = 'const result=' + invocation + ';if (result !== undefined) {console.log(`${result.value}`);}' ;
  if (enumDeclarations.has(resultType) || member.rank===658) call = 'console.log(`${'+invocation+'}`);';
  if (arrayResult) call = 'const result=' + invocation + ';if (result !== undefined) {for (const element of result) {if (element !== undefined) {console.log(`${element.value}`);}}}';
+ if (scalarArrayResult) call='const result='+invocation+';if (result !== undefined) {for (const element of result) {console.log(element);}}';
  let receiver;
  if (member.read.startsWith('context.factory.converters.')) receiver = 'const context = {factory:{converters:value as Target}};';
  else if (member.read.startsWith('context.factory.')) receiver = 'const context = {factory:value as Target};';
@@ -62,6 +64,7 @@ for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
  else if (member.read.startsWith('emitHelpers().')) receiver = 'function emitHelpers():Target {return value as Target;}';
  else if (member.read.startsWith('(host as Program).')) receiver = 'const host = value;';
  else if (/^[A-Za-z_$][\w$]*\(\)\./.test(member.read)) receiver = 'function ' + member.read.slice(0,member.read.indexOf('(')) + '():Target {return value as Target;}';
+ else if (/^[\w$.]+\(\)$/.test(member.read.slice(0,member.read.lastIndexOf('.')))) {const parts=member.read.slice(0,member.read.lastIndexOf('.')).slice(0,-2).split('.');const method=parts.pop();let holder='{'+method+':():Target=>value as Target}';for(const part of parts.slice(1).reverse())holder='{'+part+':'+holder+'}';receiver='const '+parts[0]+'='+holder+';';}
  else {const parts=member.read.slice(0,member.read.lastIndexOf('.')).replace(/[?!]$/,'').split('.');let holder='value as Target';for(const part of parts.slice(1).reverse()) holder='{'+part+':'+holder+'}';receiver='const '+parts[0]+'='+holder+';'}
  let prefix = '// Original declaration and read; adjacent data carriers reduced.\n' + carriers + '\ninterface Base {readonly ' + member.field + ':unknown;}\ninterface Target {' + member.declaration + '}\n' + (member.rank === 622 ? 'interface Program extends Target {}\n' : '') + 'function probe(value:Base):void {' + receiver + call + '}\n';
  if ([268,739].includes(member.rank)) {

@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent elements reduced.
+interface CommentDirective {readonly value:number;}
+interface Base {readonly push:unknown;}
+interface Target<T> {push(...items: T[]): number;}
+function probe(value:Base):void {const commentDirectives=value as Target<CommentDirective>;commentDirectives.push({value:3});console.log("called");}
+probe({push:7});

@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface CompilerOptions { readonly value: number; }
+interface Base {readonly getCompilerOptions:unknown;}
+interface Target {getCompilerOptions(): CompilerOptions;}
+function probe(value:Base):void {const host=value as Target;console.log(`${host.getCompilerOptions().value}`);}
+probe({getCompilerOptions:(extra:number):CompilerOptions=>{return {value:3};}});

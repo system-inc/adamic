@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent elements reduced.
+interface TypeParameter {readonly value:number;}
+interface Base {readonly map:unknown;}
+interface Target<T> {map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];}
+function probe(value:Base):void {const type={target:{localTypeParameters:value as Target<TypeParameter>}};type.target.localTypeParameters?.map((item:TypeParameter,index:number,array:TypeParameter[]):number=>3);console.log("called");}
+probe({map:7});

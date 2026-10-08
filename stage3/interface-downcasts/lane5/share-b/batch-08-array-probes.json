@@ -1,0 +1,114 @@
+[
+  {
+    "rank": 1165,
+    "receiver_type_id": 1086,
+    "type": "number[]",
+    "field": "lastIndexOf",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 43718,
+      "column": 17
+    },
+    "read": "awaitedTypeStack.lastIndexOf",
+    "call": "awaitedTypeStack.lastIndexOf(type.id)",
+    "utf16Start": 2569454,
+    "utf16End": 2569482,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "lastIndexOf(searchElement: T, fromIndex?: number): number;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-1165/actual-array.a",
+    "output": "called\n",
+    "refusal": "",
+    "expected": "adamic: panic: field read failed: awaitedTypeStack.lastIndexOf expected (searchElement: number, fromIndex?: number | undefined) => number, found function with unknown signature\n"
+  },
+  {
+    "rank": 1171,
+    "receiver_type_id": 9845,
+    "type": "readonly SourceFile[]",
+    "field": "indexOf",
+    "candidateReads": 2,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 3002,
+      "column": 20
+    },
+    "read": "sourceFiles.indexOf",
+    "call": "sourceFiles.indexOf(declarationFile)",
+    "utf16Start": 128130,
+    "utf16End": 128149,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declaration": "indexOf(searchElement: T, fromIndex?: number): number;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ReadonlyArray"
+    ],
+    "filename": "rank-1171/actual-array.a",
+    "output": "called\n",
+    "refusal": "",
+    "expected": "adamic: panic: field read failed: sourceFiles.indexOf expected (searchElement: SourceFile, fromIndex?: number | undefined) => number, found function with unknown signature\n"
+  },
+  {
+    "rank": 1363,
+    "receiver_type_id": 6829,
+    "type": "Declaration[]",
+    "field": "indexOf",
+    "candidateReads": 1,
+    "witness": {
+      "file": "src/compiler/transformers/declarations.ts",
+      "line": 753,
+      "column": 39
+    },
+    "read": "overloadSignatures.indexOf",
+    "call": "overloadSignatures.indexOf(input)",
+    "utf16Start": 34183,
+    "utf16End": 34209,
+    "fileSha256": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e",
+    "declaration": "indexOf(searchElement: T, fromIndex?: number): number;",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-1363/actual-array.a",
+    "output": "called\n",
+    "refusal": "",
+    "expected": "adamic: panic: field read failed: overloadSignatures.indexOf expected (searchElement: Declaration, fromIndex?: number | undefined) => number, found function with unknown signature\n"
+  },
+  {
+    "rank": 1375,
+    "receiver_type_id": 10400,
+    "type": "Diagnostic[]",
+    "field": "slice",
+    "candidateReads": 1,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 3284,
+      "column": 65
+    },
+    "read": "getTypeChecker().getGlobalDiagnostics().slice",
+    "call": "getTypeChecker().getGlobalDiagnostics().slice()",
+    "utf16Start": 163240,
+    "utf16End": 163285,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "slice(start?: number, end?: number): T[];",
+    "originalFunctionHeaders": [],
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-1375/actual-array.a",
+    "output": "called\n",
+    "refusal": "",
+    "expected": "adamic: panic: field read failed: getTypeChecker().getGlobalDiagnostics().slice expected (start?: number | undefined, end?: number | undefined) => Diagnostic[], found function with unknown signature\n"
+  }
+]

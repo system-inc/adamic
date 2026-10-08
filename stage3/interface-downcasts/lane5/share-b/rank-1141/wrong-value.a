@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SourceFile { readonly value: number; }
+interface CancellationToken { readonly value: number; }
+interface EmitResolver { readonly value: number; }
+interface Base {readonly getEmitResolver:unknown;}
+interface Target {getEmitResolver(sourceFile?: SourceFile, cancellationToken?: CancellationToken, forceDts?: boolean): EmitResolver;}
+function probe(value:Base):void {const typeChecker=value as Target;console.log(`${typeChecker.getEmitResolver({value:3},{value:3},true).value}`);}
+probe({getEmitResolver:7});

@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly getColumn:unknown;}
+interface Target {getColumn(): number;}
+function probe(value:Base):void {const writer=value as Target;console.log(`${writer.getColumn()}`);}
+probe({getColumn:():string=>"wrong"});

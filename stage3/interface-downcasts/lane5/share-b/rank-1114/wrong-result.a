@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Node { readonly value: number; }
+interface Base {readonly currentNode:unknown;}
+interface Target {currentNode(position: number): Node;}
+function probe(value:Base):void {const baseSyntaxCursor=value as Target;console.log(`${baseSyntaxCursor.currentNode(3).value}`);}
+probe({currentNode:(position: number):number=>9});

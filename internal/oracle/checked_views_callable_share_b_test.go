@@ -265,7 +265,7 @@ func callableShareBArityMutant(t *testing.T, program *ir.Program, family callabl
 // Not parallel: ordered admission evidence is collected for this share's ledger.
 func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
 	var data []byte
-	for _, filename := range []string{"batch-02-probes.json", "batch-03-debug-probes.json", "batch-03-signature-probes.json", "batch-04-tracing-probes.json", "batch-04-fs-probes.json", "batch-05-cast-probes.json", "batch-05-signature-probes.json", "batch-06-signature-probes.json", "batch-07-signature-probes.json"} {
+	for _, filename := range []string{"batch-02-probes.json", "batch-03-debug-probes.json", "batch-03-signature-probes.json", "batch-04-tracing-probes.json", "batch-04-fs-probes.json", "batch-05-cast-probes.json", "batch-05-signature-probes.json", "batch-06-signature-probes.json", "batch-07-signature-probes.json", "batch-08-signature-probes.json"} {
 		contents, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", filename))
 		if err != nil {
 			t.Fatal(err)
@@ -310,7 +310,7 @@ func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
 
 // Not parallel: ordered original-receiver gap observations share their ledger.
 func TestCheckedViewCallableShareBCollectionReceivers(t *testing.T) {
-	for _, group := range []struct{ Filename, NativeType string }{{"batch-03-map-probes.json", "map"}, {"batch-03-array-probes.json", "array"}, {"batch-04-map-probes.json", "map"}, {"batch-05-map-probes.json", "map"}, {"batch-05-array-probes.json", "array"}, {"batch-06-map-probes.json", "map"}, {"batch-06-array-probes.json", "array"}} {
+	for _, group := range []struct{ Filename, NativeType string }{{"batch-03-map-probes.json", "map"}, {"batch-03-array-probes.json", "array"}, {"batch-04-map-probes.json", "map"}, {"batch-05-map-probes.json", "map"}, {"batch-05-array-probes.json", "array"}, {"batch-06-map-probes.json", "map"}, {"batch-06-array-probes.json", "array"}, {"batch-08-array-probes.json", "array"}} {
 		data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", group.Filename))
 		if err != nil {
 			t.Fatal(err)

@@ -1,0 +1,7 @@
+// Original callable declaration/read; original ReadonlyMap and Path retained.
+type Path = string & { __pathBrand: any; };
+interface SymlinkedDirectory {readonly value:number;}
+interface Base {readonly getSymlinkedDirectories:unknown;}
+interface Target {getSymlinkedDirectories(): ReadonlyMap<Path, SymlinkedDirectory | false> | undefined;}
+function probe(value:Base):void {const symlinkCache=value as Target;symlinkCache.getSymlinkedDirectories();}
+probe({getSymlinkedDirectories:7});

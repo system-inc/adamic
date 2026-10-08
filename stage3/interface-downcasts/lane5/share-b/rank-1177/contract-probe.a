@@ -1,0 +1,6 @@
+// Original array declaration/read; adjacent elements reduced.
+
+interface Base {readonly map:unknown;}
+interface Target<T> {map<U>(callbackfn: (value: T, index: number, array: readonly T[]) => U, thisArg?: any): U[];}
+function probe(value:Base):void {const array=value as Target<unknown>;array.map((item:unknown,index:number,array:readonly unknown[]):number=>3);console.log("called");}
+probe({map:7});

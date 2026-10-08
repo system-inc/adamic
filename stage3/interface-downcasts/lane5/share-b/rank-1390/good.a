@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface BindingOrAssignmentElement { readonly value: number; }
+interface TextRange { readonly value: number; }
+interface Base {readonly createRestHelper:unknown;}
+interface Target {createRestHelper(value: Expression, elements: readonly BindingOrAssignmentElement[], computedTempVariables: readonly Expression[] | undefined, location: TextRange): Expression;}
+function probe(value:Base):void {const flattenContext={context:{getEmitHelperFactory:():Target=>value as Target}};console.log(`${flattenContext.context.getEmitHelperFactory().createRestHelper({value:3},[{value:3}],[{value:3}],{value:3}).value}`);}
+probe({createRestHelper:(value: Expression, elements: readonly BindingOrAssignmentElement[], computedTempVariables: readonly Expression[] | undefined, location: TextRange):Expression=>{console.log(`${value.value}`);for (const element of elements) {console.log(`${element.value}`);}if (computedTempVariables !== undefined) {for (const element of computedTempVariables) {console.log(`${element.value}`);}}console.log(`${location.value}`);return {value:3};}});

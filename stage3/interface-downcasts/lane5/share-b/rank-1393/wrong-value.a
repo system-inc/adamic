@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Identifier { readonly value: number; }
+interface Base {readonly getUnscopedHelperName:unknown;}
+interface Target {getUnscopedHelperName(name: string): Identifier;}
+function probe(value:Base):void {const helperFactory=value as Target;console.log(`${helperFactory.getUnscopedHelperName("value3").value}`);}
+probe({getUnscopedHelperName:7});

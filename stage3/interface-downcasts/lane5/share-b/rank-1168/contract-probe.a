@@ -1,0 +1,7 @@
+// Original array declaration/read; adjacent elements reduced.
+interface CommandLineOption {readonly value:number;}
+interface Base {readonly filter:unknown;}
+interface Target<T> {filter<S extends T>(predicate: (value: T, index: number, array: readonly T[]) => value is S, thisArg?: any): S[];
+filter(predicate: (value: T, index: number, array: readonly T[]) => unknown, thisArg?: any): T[];}
+function probe(value:Base):void {const simpleOptions=value as Target<CommandLineOption>;simpleOptions.filter((item:CommandLineOption):boolean=>true);console.log("called");}
+probe({filter:7});

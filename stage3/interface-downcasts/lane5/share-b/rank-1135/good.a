@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly suspendLexicalEnvironment:unknown;}
+interface Target {suspendLexicalEnvironment(): void;}
+function probe(value:Base):void {const context=value as Target;context.suspendLexicalEnvironment();}
+probe({suspendLexicalEnvironment:():void=>{}});
