@@ -146,7 +146,7 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, 
 	return "(" + strings.Join(choices, "") + first + ")"
 }
 
-func (e *emitter) certifyUntaggedCallableRecorded(property ir.Property, value, recorded string) {
+func (e *emitter) certifyUntaggedCallableRecorded(property ir.Property, value, recorded, expected string) {
 	id := property.ViewContract
 	if id <= 0 || int(id) > len(e.program.ViewContracts) {
 		return
@@ -171,5 +171,5 @@ func (e *emitter) certifyUntaggedCallableRecorded(property ir.Property, value, r
 	if len(tests) > 0 {
 		allowed = "(" + strings.Join(tests, " || ") + ")"
 	}
-	e.line("if (%s != NULL && !%s) %s = NULL;", recorded, allowed, recorded)
+	e.line("if (%s != NULL && adamic_view_callable_signatures_match(%s, %s) && !%s) %s = NULL;", recorded, recorded, expected, allowed, recorded)
 }

@@ -138,7 +138,7 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, 
 	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>recorded!==undefined && recorded.result===expected.result && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && value===expected.parameters[index])) || choices[0];})(" + recorded + ")"
 }
 
-func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded string) string {
+func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expected string) string {
 	id := property.ViewContract
 	if id <= 0 || int(id) > len(e.program.ViewContracts) {
 		return recorded
@@ -158,5 +158,5 @@ func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded string
 		return recorded
 	}
 	encoded, _ := json.Marshal(functions)
-	return "((recorded)=>" + string(encoded) + ".includes(recorded?.function) ? recorded : undefined)(" + recorded + ")"
+	return "((recorded)=>!adamicViewCallableSignaturesMatch(recorded," + expected + ") || " + string(encoded) + ".includes(recorded?.function) ? recorded : undefined)(" + recorded + ")"
 }

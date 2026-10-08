@@ -168,6 +168,17 @@ func (l *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
 }
 
 func (l *lowering) completeUntaggedRecursiveContracts() {
+	// Optional array descriptors may be copied while their element is reserved.
+	// Only a completed canonical descriptor can supply the missing element.
+	for index, contract := range l.result.ViewContracts {
+		if contract.Kind == ir.ViewArray && contract.Element == 0 && contract.ObjectPresent > 0 {
+			canonical := l.result.ViewContracts[contract.ObjectPresent-1]
+			if canonical.Kind == ir.ViewArray && canonical.Element > 0 {
+				l.result.ViewContracts[index].Element = canonical.Element
+			}
+		}
+	}
+
 	for index, contract := range l.result.ViewContracts {
 		if contract.Unsupported == "untagged object union" && l.supportsUntaggedRead(contract) {
 			l.result.ViewContracts[index].Unsupported = ""

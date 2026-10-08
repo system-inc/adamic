@@ -1,6 +1,6 @@
 Built: final three candidate projections (Type ranks 24/72 and optional forEach rank 227), reusing lane 5 producer certificates and adding exact logical producer membership.
-Commits: integration merge 976f8bc6; final group follows in Git history.
-Commands: final three Node/native/JS controls and remaining-boundary receipts passed 1.802s; shipping gate follows integration refresh. Setup done 214.165s, nproc 5.
+Commits: callable projection group 8de074cc; integration refresh cf4abe26 (80a6921c); shipping repair/report commit follows in Git history.
+Commands: final shipping view packages passed (IR 0.012s, lower 4.492s, native 6.587s, JS 0.981s); selected Node oracle passed 119.633s with 963 Node checks; vet passed. Setup done 214.165s, nproc 5.
 Mutants: skip nested callable checks native/JS; accept wrong results native/JS; drop nested Symbol checks native/JS; drop logical certificates native/JS; erase checker identity proof. All nine caught semantic pinned refusal failures and restored.
 Uncovered: zero reduced candidate projections remain; original TypeChecker and intrinsic forEach contracts, full compiler interfaces, and exact reachability are not certified.
 
@@ -41,6 +41,46 @@ The first mutation run corrected a JavaScript whitespace anchor; that failed
 harness assertion is not counted as a caught mutant. The corrected eight runtime
 mutants and separately added checker-proof mutant all fail semantically with
 successfully executed binaries. Every mutation is restored in finally.
+
+Shipping integration refresh consumed 80a6921c with four conflicts, resolved
+hunk by hunk: preserve both plan sections; run intersection dispatch before
+untagged object/array selection; preserve both proven lazy-read exemptions.
+Required undefined presence metadata is retained. The first broader oracle run
+exposed a recursive optional array clone with its element still reserved (rank
+92) and changed physical callable diagnostic pins. Both were fixed and rechecked:
+viewOptionalArrayContract preserves ObjectPresent; the owned completion hook
+fills only a missing element from its completed canonical array. Existing
+physical callable mismatch diagnostics remain pinned, while a physically
+compatible but logically unproved callback produces the new named unknown
+signature refusal. The targeted repair oracle passed 3.352s. All three logical
+certificate/checker-proof mutants were rerun against the final repair and caught.
+
+The full touched-package attempt is not green. Its nine lower test groups fail
+identically on isolated integration 80a6921c, referencing the existing cohere
+submodule through a symlink, with no copied code. Confirmed baseline comparison
+passed as evidence: same nine failing roots, zero additional failing roots.
+Those groups are CensusMarkerResultIsAssignable, CensusMarkerZeroCallIsNotAssumedSafe,
+OverloadedShorthandFunctionValueStaysNotYet, CensusPredicateMarkerKeepsProofBoundaries,
+CensusOverloadRelation, PhantomArrayRequiredCastsAreErased, PhantomArrayCastsAreErased,
+PhantomArrayProofs and NestedFunctionGapsAreLoud. The broad package attempt was
+stopped after over six minutes in the unrelated exhaustive native decoder corpus.
+The final shipping gate is the focused view-package gate and the selected broader
+oracle gate below, plus vet. No full repository, full native-package, or current
+main landing is claimed. This is the lane tip for the designated integrator.
+
+Final shipping commands, all outputs directly to files:
+```
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Untagged' -count=1 > /tmp/untagged-shipping-packages.log 2>&1
+go vet ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle > /tmp/untagged-shipping-vet.log 2>&1
+go test ./internal/oracle -run 'TestCheckedViewUntagged|TestCheckedViewLazy|TestCheckedViewObjects|TestCheckedViewInterfaces|TestCheckedViewObjectUnions|TestCheckedViewCallable|TestCheckedViewIntersection|TestCheckedViewNullish' -count=1 -v -timeout 20m > /tmp/untagged-shipping-oracles.log 2>&1
+python3 stage3/interface-downcasts/untagged/run-nested-callable-mutants.py nested-callable-drop-logical-native nested-callable-drop-logical-js nested-callable-drop-checker-proof > /tmp/untagged-repaired-logical-mutants.log 2>&1
+```
+After publication: 61 candidate projections/434 candidate reads represented,
+zero reduced projection pairs/reads remaining. Production completions and exact
+reachability remain unmeasured/uncertified as recorded in the ledger. Original
+TypeChecker generic/rest/overloaded methods and intrinsic forEach contracts need
+additional callable-family support; the projection completion date does not
+promise a completion date for those unchanged original interfaces.
 
 Built: fifteen recursive FlowNode projections plus fixed-signature callable union selection with direct and nested source controls.
 Commits: previous group e3be8faf; this group's commit follows in Git history.

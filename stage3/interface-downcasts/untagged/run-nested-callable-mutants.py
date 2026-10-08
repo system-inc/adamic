@@ -14,8 +14,8 @@ mutants=[
  ('nested-callable-wrong-result-js','internal/javascript/view_callables_contract.go','(expected.result===255 || recorded.result===expected.result)','true','24/wrong'),
  ('nested-callable-drop-transitive-native','internal/native/runtime/view_unions_untagged.c','if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path)) { return false; }','if (strcmp(field->name,"symbol") == 0) { continue; }\n        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path)) { return false; }','24/nested'),
  ('nested-callable-drop-transitive-js','internal/javascript/view_unions_untagged.go','return fields.every(field=>{const actual=slot(value,field.Name);','return fields.every(field=>{if(field.Name===\'symbol\')return true;const actual=slot(value,field.Name);','24/nested'),
- ('nested-callable-drop-logical-native','internal/native/view_callables_signature.go','e.certifyUntaggedCallableRecorded(property, value, recorded)','// mutant trusts physical signature alone','227/logical'),
- ('nested-callable-drop-logical-js','internal/javascript/view_callables_signature.go','recorded = e.untaggedCallableRecorded(property, recorded)','// mutant trusts physical signature alone','227/logical'),
+ ('nested-callable-drop-logical-native','internal/native/view_callables_signature.go','e.certifyUntaggedCallableRecorded(property, value, recorded, expected)','// mutant trusts physical signature alone','227/logical'),
+ ('nested-callable-drop-logical-js','internal/javascript/view_callables_signature.go','recorded = e.untaggedCallableRecorded(property, recorded, expected)','// mutant trusts physical signature alone','227/logical'),
  ('nested-callable-drop-checker-proof','internal/lower/view_unions_untagged.go','if checker.Checker_isTypeIdenticalTo(l.checker, producer.proven, target) {','if target != nil {','227/logical'),
 ]
 if len(sys.argv)>1:mutants=[m for m in mutants if m[0] in sys.argv[1:]]

@@ -10,7 +10,7 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 	expected := e.viewCallableExpected(property)
 	recorded := e.viewCallableRecorded("value")
 	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
-	recorded = e.untaggedCallableRecorded(property, recorded)
+	recorded = e.untaggedCallableRecorded(property, recorded, expected)
 	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent || property.Optional || property.UndefinedAllowed) + ")(" + value + ")"
 }
 

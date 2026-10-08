@@ -1650,3 +1650,12 @@ is skipped when either intersection read checks or producer-certified callable
 read checks prove a runtime obligation, while explicit receiver/member refusals
 still apply. Preserve incoming required-undefined presence metadata and owned
 callable ProducerCertified metadata in the merged IR descriptor.
+
+Post-refresh untagged repair: viewOptionalArrayContract in view_array_adapter.go
+retains the canonical array ID in ObjectPresent. completeUntaggedRecursiveContracts
+fills an optional array's missing element only from that completed canonical
+array descriptor. The incoming intersection hook changed recursive construction
+order and exposed the formerly copied unfinished element in candidate 92; no
+unsupported element is certified by this repair. Callable read emitters retain
+physical mismatch diagnostics and require logical membership whenever the
+physical signature otherwise matches. Logical mismatches remain named refusals.
