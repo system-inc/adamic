@@ -3,7 +3,6 @@ package oracle
 import (
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 	"syscall"
 	"testing"
@@ -31,8 +30,7 @@ process.exitCode = wasi.start(instance);`, binary, "root", filepath.Dir(binary)}
 	return executeInput(t, how, nil, "node", append(arguments, how.arguments...)...)
 }
 
-// Exact named observations, never a blanket permission to disagree. Walk's two
-// empty-path errors are a runtime bug pending codex/wasi-empty-path.
+// Exact named observations, never a blanket permission to disagree.
 func expectedEngineBehavior(t *testing.T, path string, expected run, how inputRun, wasmtime bool) (run, bool) {
 	t.Helper()
 	name := filepath.Base(path)
@@ -45,20 +43,8 @@ func expectedEngineBehavior(t *testing.T, path string, expected run, how inputRu
 		expected.stdout = []byte(strings.Replace(string(expected.stdout), old, changed, 1))
 	}
 	if name == "walk.a" {
-		entries, err := os.ReadDir(how.directory)
-		if err != nil {
-			t.Fatal(err)
-		}
-		names := make([]string, len(entries))
-		for i, entry := range entries {
-			names[i] = entry.Name()
-		}
-		sort.Strings(names)
-		replace("cannot read directory : no such directory\n", "listed "+strings.Join(names, ",")+"\n")
-		replace("cannot read status of : no such file\n", "directory false\n")
-		t.Log("KNOWN RUNTIME BUG walk.a: empty directory/status paths resolve to cwd; pending codex/wasi-empty-path")
-		limited = true
 		if wasmtime {
+			limited = true
 			replace("<dir>: 4 names, bad� name closed locked unlisted\n  bad� name: not looked up\n  closed: directory, true\n    cannot read directory <dir>/closed: permission denied\n  locked: directory, true\n    <dir>/locked: 0 names, \n  unlisted: directory, true\n    cannot read directory <dir>/unlisted: permission denied\n", "cannot read directory <dir>: failed\n")
 			t.Log("HOST LIMIT walk.a: wasmtime rejects directory entries with non-UTF-8 filenames")
 		}
