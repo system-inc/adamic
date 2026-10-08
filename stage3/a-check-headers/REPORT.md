@@ -2,7 +2,7 @@ Renamed 300 corpus inputs with git mv to exact upstream .ts names; bytes and has
 Retained the other 51 headers; added 17 host TS2591 headers: 68 total, 13 refusal and 55 type-error.
 Node tsc goldens pass 301/301; corpus audit passes; a-check scans 375 inputs, accepts 201 and lists 174 findings.
 Driver output/provenance mutants, 34 host-header mutants and the host source-span mutant are caught.
-Host check.py fails on recorded diagnostic provenance; source-audit.cjs passes. No full repository/native tsc gate.
+Host check.py now passes all 25 records and 100 mutants; Go normalization parity and source-span audit pass.
 
 # Stage 3 a-check headers
 
@@ -59,46 +59,19 @@ The driver mutant suite exits 0 and catches three independent golden mutants (di
 
 All 17 new host headers were separately mutated to TS999999 and removed, for **34/34** catches by the unchanged gate. Each was restored in a finally block. [host-header-mutants.json](host-header-mutants.json) records every exact catcher. Earlier header-mutant logs remain historical evidence; no corpus header remains in the current tree.
 
-## Host source audits and provenance failures
+## Host source audits and refreshed compiler records
 
-Both audit programs and status.json were left unchanged. The actual source-span audit was run before and after the headers:
+The earlier commit 5fdbe538 reported check.py's CLI trailer and header line-provenance mismatches without editing the audit. The user then authorized the fix and refresh. check.py now matches fixtures_test.go's inline repository/fixture-root path normalization and strips the leading CLI label and trailing go-run status/newline. Comparison remains exact after normalization. The new --update-stage0 mode requires unchanged Node oracle observations and replaces only stage0 values, preserving all other status.json bytes.
 
-```sh
-NODE_PATH=/workspace/adamic/stage3/api/node_modules node stage3/fixtures/host/source-audit.cjs /tmp/stage3-ruling/upstream > /tmp/stage3-ruling/host-source-audit-after.log 2>&1
-python3 stage3/fixtures/host/check.py --mutants --logs /tmp/stage3-ruling/host-check-after > /tmp/stage3-ruling/host-check-after.log 2>&1
-```
+All **25** records were refreshed from this branch's main compiler with headers in place: 17 changed for the header line offsets and eight are identical. All Node goldens remain unchanged. The complete before/after for every record is in [HOST-RECORDS.md](HOST-RECORDS.md) and [host-record-refresh.json](host-record-refresh.json). The former audit-failure captures remain historical evidence in the logs and host-audit-details.json.
 
-source-audit.cjs exits **0** both times: `pass: 124 upstream function and method spans retain their tokens`; its SHA256-to-SHA1 mutant is caught. It compares parsed syntax without comments, so the new first line does not break its spans. Original upstream `From ...` provenance comments are unchanged below each header.
-
-check.py exits **1** before and after this change at `AssertionError: 01_readFile_utf8.a stage0: exact observation differs`. That fixture has no new header. The recorded diagnostic lacks the final newline and `exit status 1` emitted by the current `go run` invocation; the before-header diff proves this existing failure. The stop prevents check.py from reaching later fixtures and its --mutants phase, so that phase is not claimed to have passed.
-
-The 17 new headers additionally move source diagnostic lines by one, which breaks check.py's exact recorded stage0 provenance if it reaches those fixtures. For example, 06_fileExists.a's first TS2591 moves from **10:24 to 11:24**; its node:fs import moves from **8:22 to 9:22**. The affected files are listed below. A supplemental run applied the same exact recorded comparisons to all 25 files without modifying the audit: all **25 Node goldens match**, but all 25 current stage0 records differ, including the existing go-run trailer mismatch and the added host line shifts. [host-audit-details.json](host-audit-details.json) retains each complete diagnostic diff. These are reported failures, not refreshed expectations or weakened checks.
-
-| New host header | First diagnostic line before | After |
-| --- | --- | --- |
-| stage3/fixtures/host/06_fileExists.a | 10:24 | 10:24 |
-| stage3/fixtures/host/07_directoryExists.a | 10:24 | 10:24 |
-| stage3/fixtures/host/08_getDirectories.a | 18:22 | 19:22 |
-| stage3/fixtures/host/09_realpath.a | 6:22 | 10:21 |
-| stage3/fixtures/host/10_getModifiedTime.a | 12:41 | 10:21 |
-| stage3/fixtures/host/11_setModifiedTime.a | 4:22 | 5:22 |
-| stage3/fixtures/host/12_deleteFile.a | 4:22 | 5:22 |
-| stage3/fixtures/host/13_createDirectory.a | 10:24 | 10:22 |
-| stage3/fixtures/host/14_getCurrentDirectory.a | 5:22 | 6:22 |
-| stage3/fixtures/host/15_getExecutingFilePath.a | 5:22 | 6:22 |
-| stage3/fixtures/host/17_write.a | 4:22 | 5:22 |
-| stage3/fixtures/host/18_exit_0.a | 5:22 | 6:22 |
-| stage3/fixtures/host/19_exit_1.a | 5:22 | 6:22 |
-| stage3/fixtures/host/20_exit_2.a | 5:22 | 6:22 |
-| stage3/fixtures/host/21_createHash.a | 11:26 | 10:21 |
-| stage3/fixtures/host/22_createHash_fallback.a | 5:22 | 6:22 |
-| stage3/fixtures/host/24_useCaseSensitiveFileNames.a | 11:22 | 12:22 |
+The full `check.py --mutants` exits **0**, completing all 25 fixture observations and catching **25** Node source mutants plus **75** diagnostic/line/code mutants after normalization. The untouched Go fixture runner also passes all 25 host Node and stage0 comparisons, independently confirming exact normalization parity. source-audit.cjs remains unchanged and its earlier 124-span check and SHA256 mutant still hold because no fixture source was edited in this refresh. No native host compilation is claimed: all 25 outcomes remain Checker.
 
 ## Scope, setup and history
 
 Fetched current main and created the requested branch. Read CLAUDE.md and its prerequisite documents, then the fast-gate implementation at fbac28c6 before the scan. Setup used `export GOPROXY='https://proxy.golang.org|direct'`, `bash cloud/setup.sh > /tmp/stage3-a-setup.log 2>&1`, and `source /workspace/adamic-tools/env.sh`. Setup succeeded without a workaround. `nproc=5`, CPU quota four, Go 1.27.1, Node 24.19.0, clang 20.1.8. Complete timing lines are in [logs/setup.log](logs/setup.log): Node 0.021s; Go 0.032s; clang 0.228s; markdown install step 1.660s, ready 1.732s; submodules 317.574s; Go build 479.572s; tests deferred 479.676s; cache warm 479.678s; done 479.714s.
 
-This ruling is delivered as a new descendant commit after e1fe34ce, without rebasing or rewriting history. Changes are restricted to the tsc driver, host first lines, and this report/evidence. The corpus golden streams and host audits are unchanged. Earlier scans and the initial corpus-header mistake are retained in Git history and old logs; they are not the current findings or an exemption request. No full repository gate, full upstream compiler suite, native tsc implementation run, or full host check.py mutant pass is claimed. `git diff --check` passes.
+These changes are delivered as descendant commits after e1fe34ce and 5fdbe538, without rebasing or rewriting history. The corpus golden streams and host source-span audit are unchanged; the latest authorized refresh edits host check.py and only the compiler observation values in status.json. Earlier scans and the initial corpus-header mistake are retained in Git history and old logs; they are not the current findings or an exemption request. No full repository gate, full upstream compiler suite or native tsc implementation run is claimed; the host check.py mutant run now completes and passes. `git diff --check` passes.
 
 ## Reproduce a-check
 
