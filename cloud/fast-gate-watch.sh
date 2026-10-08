@@ -13,7 +13,7 @@
 # big (an area, a stage3/ change, which runs the stage 3 lane, or more than two touched packages) or
 # small. A big gate runs in an area slot (24 CPUs), a small one in a small slot (12 each), so a
 # worker's tip never waits behind an area. The slot table (${state}/slots, one "box class" per line,
-# re-read every poll) says which boxes serve and how many slots of each class each has; a tip goes to
+# re-read every poll, with an optional third-field branch glob) says which boxes serve and how many slots of each class each has; a tip goes to
 # the first box in the table with a free slot of its class, and the box picks the slot itself
 # (cloud/fast-gate.sh). The gating line names the box and how long a tip waited. Each gate publishes
 # gate-logs/<sha12>/<UTC stamp>/fast like any other, with the branch and, when an ai.db reply names
@@ -113,13 +113,83 @@ countVoid() {
 dispatch() {
   local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6
   ADAMIC_FAST_GATE_BOX=${box} bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" --class "${slot}" > "${log}" 2>&1 &
-  echo "${branch} ${sha} ${slot} ${box} ${class} ${canaryToken} ${log}" > "${state}/running/$!"
+  local pid=$!
+  echo "${branch} ${sha} ${slot} ${box} ${class} ${canaryToken} ${log}" > "${state}/running/${pid}"
+  if slotReserved "${branch}" "${box}" "${slot}"; then
+    echo "${box}" > "${state}/reserved-running/${pid}"
+  fi
 }
 freeSlots() {
   cat "${state}"/running/* 2>/dev/null > "${state}/running.tmp"
   awk 'FILENAME == ARGV[1] { total[$1 " " $2]++; if (!($1 " " $2 in order)) { order[$1 " " $2] = ++n; keys[n] = $1 " " $2 }; next }
        { used[($4 == "" ? "threadripper" : $4) " " $3]++ }
        END { for (i = 1; i <= n; i++) if (total[keys[i]] > used[keys[i]]) print keys[i] }' "${state}/slots" "${state}/running.tmp"
+}
+
+# The first-step file reserves Server's B slots dynamically; explicit third-field
+# globs reserve individual slots on any box. Other slots stay available when the
+# reserved candidate is absent. A running reservation owns its box until reaped.
+# Explicit table reservations plus the current roadmap's Server area reservation.
+# Snapshot once per poll; the refresh publishes atomically in the background.
+reservationGlobs() {
+  awk 'NF >= 3 {print $3}' "${state}/slots"
+  cat "${state}/first-step-globs.poll" 2>/dev/null || true
+}
+reservedBranch() {
+  local branch=$1 glob
+  while read -r glob; do
+    [ -n "${glob}" ] && [[ ${branch} == ${glob} ]] && return 0
+  done <<< "$(reservationGlobs)"
+  return 1
+}
+slotReserved() {
+  local branch=$1 box=$2 slot=$3 b c glob
+  while read -r b c glob; do
+    [ "${b}" = "${box}" ] && [ "${c}" = "${slot}" ] || continue
+    if [ -n "${glob}" ]; then
+      [[ ${branch} == ${glob} ]] && return 0
+    elif [ "${b}" = server ] && [ "${c}" = B ]; then
+      while read -r glob; do
+        [ -n "${glob}" ] && [[ ${branch} == ${glob} ]] && return 0
+      done < "${state}/first-step-globs.poll"
+    fi
+  done < "${state}/slots"
+  return 1
+}
+usableSlots() {
+  local branch=$1 box slot b c glob allowed total used runningBranch runningSha runningSlot runningBox rest blocked reservation
+  while read -r box slot; do
+    blocked=no
+    for reservation in "${state}"/reserved-running/*; do
+      [ -f "${reservation}" ] || continue
+      [ "$(cat "${reservation}")" = "${box}" ] && blocked=yes
+    done
+    while read -r runningBranch runningSha runningSlot runningBox rest; do
+      [ "${runningBox:-threadripper}" = "${box}" ] || continue
+      slotReserved "${runningBranch}" "${box}" "${runningSlot}" && blocked=yes
+    done < "${state}/running.tmp"
+    [ "${blocked}" = no ] || continue
+    total=0
+    while read -r b c glob; do
+      [ "${b}" = "${box}" ] && [ "${c}" = "${slot}" ] || continue
+      allowed=no
+      if [ -n "${glob}" ]; then
+        [[ ${branch} == ${glob} ]] && allowed=yes
+      elif [ "${b}" = server ] && [ "${c}" = B ] && [ -s "${state}/first-step-globs.poll" ]; then
+        while read -r glob; do
+          [[ ${branch} == ${glob} ]] && allowed=yes
+        done < "${state}/first-step-globs.poll"
+      else allowed=yes; fi
+      [ "${allowed}" = yes ] && total=$((total + 1))
+    done < "${state}/slots"
+    used=$(awk -v b="${box}" -v c="${slot}" '($4 == "" ? "threadripper" : $4) == b && $3 == c {n++} END {print n+0}' "${state}/running.tmp")
+    [ "${total}" -gt "${used}" ] || continue
+    # A reserved gate starts only on an empty box, so it has the whole box.
+    if slotReserved "${branch}" "${box}" "${slot}"; then
+      awk -v b="${box}" '($4 == "" ? "threadripper" : $4) == b {found=1} END {exit found ? 0 : 1}' "${state}/running.tmp" && continue
+    fi
+    echo "${box} ${slot}"
+  done <<< "${free}"
 }
 
 tips() {
@@ -130,12 +200,21 @@ tips() {
 [ -s "${state}/seen" ] || tips > "${state}/seen"
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
-mkdir -p "${state}/running" "${state}/logs"
+mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running"
 echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
 canaryRequired=1
 while true; do
+  now=$(date -u +%s)
+  if { [ -z "${firstStepRefresh:-}" ] || [ "$((now - firstStepRefresh))" -ge 300 ]; } &&
+     { [ -z "${firstStepPid:-}" ] || ! kill -0 "${firstStepPid}" 2>/dev/null; }; then
+    (bash "${here}/cloud/first-step-branches.sh" > "${state}/first-step-globs.tmp" &&
+      mv "${state}/first-step-globs.tmp" "${state}/first-step-globs") &
+    firstStepPid=$!
+    firstStepRefresh=${now}
+  fi
+  cat "${state}/first-step-globs" > "${state}/first-step-globs.poll" 2>/dev/null || true
   currentHead=$(git -C "${here}" rev-parse HEAD)
   if [ "${currentHead}" != "${toolsHead}" ]; then
     toolsHead=${currentHead}
@@ -156,6 +235,7 @@ while true; do
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
+    rm -f "${state}/reserved-running/$(basename "${file}")"
     read -r branch sha class box original testedHead gateLog < "${file}"
     # Merge claims are not gate verdicts: a crashed dispatcher/SSH must never queue area-merge/*.
     if [[ ${branch} == area-merge/* ]]; then rm "${file}"; continue; fi
@@ -222,7 +302,8 @@ while true; do
     last=$(cat "${state}/canary-started" 2>/dev/null || echo 0)
     if ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null &&
        { [ ! -f "${state}/storm" ] || [ "$((now - last))" -ge 600 ]; }; then
-      box=$(freeSlots | awk '$2 == "S" {print $1; exit}')
+      free=$(freeSlots)
+      box=$(usableSlots canary/main | awk '$2 == "S" {print $1; exit}')
       sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
       if [ -n "${box}" ] && [ -n "${sha}" ]; then
         log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
@@ -238,34 +319,39 @@ while true; do
     # before the table names no box: it was Cloud's).
     free=$(freeSlots)
     [ -n "${free}" ] || break
-    classes=$(echo "${free}" | awk '{print $2}' | sort -u | tr '\n' ' ')
     # Boxes where a big tip may borrow a small slot: a free small slot, and fewer than two big gates there
     # already (its area slot and one borrowed). Three big gates borrowing on one box stacked hundreds of
     # compiles and took Cloud and Workshop down (Oct 8 11:2xZ).
     # The limit is ${state}/big-per-box, read every poll so it moves by measurement: a bare number is the
     # default (2 without the file), and a "box N" line overrides it for that box (Cloud stays at 2 until
     # its memory is understood, @system_adamic, Oct 8 06:28).
-    borrowable=$(echo "${free}" | awk '$2 == "S" {print $1}' | while read -r b; do
-      limit=$(awk -v b="${b}" 'NF == 1 && $1 ~ /^[0-9]+$/ { fallback = $1 } NF == 2 && $1 == b { own = $2 } END { print (own != "" ? own : (fallback != "" ? fallback : 2)) }' "${state}/big-per-box" 2>/dev/null || echo 2)
-      [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt "${limit}" ] && echo "${b}"
-    done | head -1)
     # A tip takes a free slot of its class; a big tip may also take a free small slot, but only when
     # no small tip could have it (rank 10 and up): 74 big tips waited on two area slots while four small
     # slots sat idle (Oct 8 10:56Z). It then runs on the small slot's CPUs (12; Chonchon's 16).
     next=$(while read -r class queued branch sha; do
+      eligible=$(usableSlots "${branch}")
+      classes=$(echo "${eligible}" | awk '{print $2}' | sort -u | tr '\n' ' ')
+      borrowable=$(echo "${eligible}" | awk '$2 == "S" {print $1}' | while read -r b; do
+        limit=$(awk -v b="${b}" 'NF == 1 && $1 ~ /^[0-9]+$/ { fallback = $1 } NF == 2 && $1 == b { own = $2 } END { print (own != "" ? own : (fallback != "" ? fallback : 2)) }' "${state}/big-per-box" 2>/dev/null || echo 2)
+        [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt "${limit}" ] && echo "${b}"
+      done | head -1)
       slot=${class} extra=0
       if [[ " ${classes}" != *" ${class} "* ]]; then
         [ "${class}" = B ] && [ -n "${borrowable}" ] || continue
         slot=S extra=10
       fi
-      if [[ ${branch} == cloud/land-* ]]; then rank=0
-      elif [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=1
-      elif [[ ${branch} == devtools/* ]]; then rank=2
-      else rank=3; fi
-      echo "$(( rank + extra )) ${queued} ${branch} ${sha} ${class} ${slot}"
+      if reservedBranch "${branch}"; then rank=0; extra=0
+      elif [[ ${branch} == cloud/land-* ]]; then rank=1
+      elif [[ ${branch} == area/* ]] || grep -qxF "${branch}" "${state}/priority"; then rank=2
+      elif [[ ${branch} == devtools/* ]]; then rank=3
+      else rank=4; fi
+      if [ "${slot}" = "${class}" ]; then
+        box=$(echo "${eligible}" | awk -v c="${slot}" '$2 == c {print $1; exit}')
+      else box=${borrowable}; fi
+      echo "$(( rank + extra )) ${queued} ${branch} ${sha} ${class} ${slot} ${box}"
     done < "${state}/queue" | sort -k1,1n -k2,2nr | head -1)
     [ -n "${next}" ] || break
-    read -r _ queued branch sha class slot <<< "${next}"
+    read -r _ queued branch sha class slot box <<< "${next}"
     grep -vF " ${queued} ${branch} ${sha}" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
     grep -qx "${sha}" "${state}/gated" && continue
     # The skip file ("branch sha" per line) takes a tip out by hand: a stale landing candidate, say.
@@ -280,11 +366,6 @@ while true; do
       continue
     fi
     echo "${sha}" >> "${state}/gated"
-    if [ "${slot}" = "${class}" ]; then
-      box=$(echo "${free}" | awk -v class="${slot}" '$2 == class {print $1; exit}')
-    else
-      box=${borrowable}
-    fi
     log=${state}/logs/${sha:0:12}.log
     dispatch "${branch}" "${sha}" "${slot}" "${box}" "${class}" "${log}"
     now=$(date -u +%s)

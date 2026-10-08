@@ -20,7 +20,7 @@ class Watcher:
         self.repo = self.root / 'repo'
         cloud = self.repo / 'cloud'
         cloud.mkdir(parents=True)
-        for name in ('fast-gate-watch.sh', 'fast-gate-classify.sh'):
+        for name in ('fast-gate-watch.sh', 'fast-gate-classify.sh', 'first-step-branches.sh'):
             shutil.copy(ROOT / 'cloud' / name, cloud / name)
         self.state = self.root / 'state'
         self.state.mkdir()
@@ -44,7 +44,12 @@ class Watcher:
 *merge-base*) exit 1 ;;
 esac
 ''')
-        self.script(self.bin / 'ahra', '''text=$(printf '%s' "$4" | tr '\\n' ' ')
+        self.script(self.bin / 'ahra', '''if [ "$1" = tasks ]; then
+  printf '%s\\n' "$*" >> "$TEST_ROOT/task-calls"
+  if [ "$2" = ready ]; then cat "$TEST_ROOT/ready" 2>/dev/null; else cat "$TEST_ROOT/task-$3" 2>/dev/null; fi
+  exit 0
+fi
+text=$(printf '%s' "$4" | tr '\\n' ' ')
 printf '%s|%s|%s|%s\\n' "$3" "$text" "$5" "$6" >> "$TEST_ROOT/messages"
 ''')
         self.script(self.bin / 'date', '''case "$*" in
@@ -71,6 +76,7 @@ else
     awk -v step="$(cat "$TEST_ROOT/step")" '{print $1 + step}' "$TEST_ROOT/clock" > "$TEST_ROOT/clock.next"
     mv "$TEST_ROOT/clock.next" "$TEST_ROOT/clock"
   fi
+  while [ "$(cat "$TEST_ROOT/mode")" = hold ]; do /bin/sleep 0.01; done
   mode=$(cat "$TEST_ROOT/mode")
 fi
 if [ "$mode" = pass ]; then echo "green: $sha passed"
@@ -83,7 +89,7 @@ fi
                    TEST_ROOT=str(self.root), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state),
                    ADAMIC_FAST_GATE_AHRA_DIR=str(self.root))
         self.output = open(self.root / 'output', 'w')
-        self.proc = subprocess.Popen(['bash', str(cloud / 'fast-gate-watch.sh')], env=env,
+        self.proc = subprocess.Popen([os.environ.get('WATCH_TEST_BASH', 'bash'), str(cloud / 'fast-gate-watch.sh')], env=env,
                                      stdout=self.output, stderr=self.output, start_new_session=True)
 
     def put(self, name, text):
@@ -128,6 +134,103 @@ class WatchTests(unittest.TestCase):
         self.assertEqual(len(w.read('starts').splitlines()), 1)
         self.assertFalse((w.state / 'gated').read_text())
         return w
+
+    def reservation(self, slots, branches, release=True):
+        w = self.start(0)
+        (w.state / 'slots').write_text(slots)
+        w.tips = [(b, f'{i+1:040x}') for i, (b, c) in enumerate(branches)]
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        (w.state / 'seen').write_text(''.join(f'{b} {sha}\n' for b, sha in w.tips))
+        (w.state / 'queue').write_text(''.join(f'{c} {900+i} {b} {sha}\n' for i, ((b, c), (_, sha)) in enumerate(zip(branches, w.tips))))
+        w.put('mode', 'hold')
+        if release:
+            w.put('initial', 'pass')
+        return w
+
+    def test_reserved_priority_and_whole_box(self):
+        w = self.reservation('server B cloud/land-area-next*\nserver S\nother S\n',
+                             [('cloud/land-area-next1', 'B'), ('cloud/land-other', 'B'),
+                              ('codex/small', 'S')])
+        w.wait(lambda: len(w.read('starts').splitlines()) >= 3)
+        starts = w.read('starts').splitlines()[1:]
+        self.assertTrue(starts[0].startswith('cloud/land-area-next1 '))
+        self.assertEqual(starts[0].split()[-1], 'server')
+        self.assertEqual(len([x for x in starts if x.endswith(' server')]), 1)
+        self.assertTrue(any(x.startswith('codex/small ') and x.endswith(' other') for x in starts))
+        time.sleep(.15)
+        self.assertEqual(len(w.read('starts').splitlines()), 3)
+        w.put('mode', 'pass')
+        w.wait(lambda: 'done cloud/land-other' in w.read('output'))
+
+    def test_reserved_slot_rejects_other_tip_but_box_serves_small(self):
+        w = self.reservation('server B cloud/land-area-next*\nserver S\n',
+                             [('cloud/land-other', 'B'), ('codex/small', 'S')])
+        w.wait(lambda: len(w.read('starts').splitlines()) == 2)
+        self.assertTrue(w.read('starts').splitlines()[1].startswith('codex/small '))
+        self.assertTrue(w.read('starts').splitlines()[1].endswith(' server'))
+        time.sleep(.15)
+        self.assertEqual(len(w.read('starts').splitlines()), 2)
+        w.put('mode', 'pass')
+        w.wait(lambda: 'done cloud/land-other' in w.read('output'))
+        self.assertIn('cloud/land-other ' + w.tips[0][1] + ' S server', w.read('starts'))
+
+    def test_big_borrowing_obeys_globs_and_limit(self):
+        w = self.reservation('server S cloud/land-area-next*\nother S\n',
+                             [('cloud/land-other', 'B')], release=False)
+        (w.state / 'big-per-box').write_text('other 0\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        time.sleep(.15)
+        self.assertEqual(len(w.read('starts').splitlines()), 1)
+        (w.state / 'big-per-box').write_text('other 1\n')
+        w.wait(lambda: len(w.read('starts').splitlines()) == 2)
+        self.assertTrue(w.read('starts').splitlines()[1].endswith(' S other'))
+
+    def test_running_reservation_survives_table_change(self):
+        w = self.reservation('server B cloud/land-area-next*\nserver S\n',
+                             [('cloud/land-area-next1', 'B'), ('codex/small', 'S')])
+        w.wait(lambda: len(w.read('starts').splitlines()) == 2)
+        (w.state / 'slots').write_text('server B\nserver S\n')
+        time.sleep(.15)
+        self.assertEqual(len(w.read('starts').splitlines()), 2)
+        w.put('mode', 'pass')
+        w.wait(lambda: 'done codex/small' in w.read('output'))
+
+    def test_control_without_globs(self):
+        w = self.reservation('server B\nserver S\n',
+                             [('cloud/land-other', 'B'), ('codex/small', 'S')])
+        w.wait(lambda: len(w.read('starts').splitlines()) == 3)
+        self.assertEqual([x.split()[2:] for x in w.read('starts').splitlines()[1:]],
+                         [['B', 'server'], ['S', 'server']])
+
+    def test_roadmap_refresh_and_file_reservation(self):
+        w = self.reservation('server B\nserver S\nother B\n',
+                             [('codex/first', 'B'), ('cloud/land-other', 'B')], release=False)
+        # Hold the deploy canary while the next five-minute refresh arrives.
+        w.put('initial', 'hold')
+        w.put('ready', '#aaaaaaa no branches\n#2s8kq6y first\n#bbbbbbb later\n')
+        w.put('task-aaaaaaa', 'No branch declaration\n')
+        w.put('task-2s8kq6y', 'Branches: codex/first cloud/land-area-next*\n')
+        w.put('task-bbbbbbb', 'Branches: codex/later\n')
+        w.put('clock', '1300')
+        w.wait(lambda: (w.state / 'first-step-globs').read_text() == 'codex/first\ncloud/land-area-next*\n')
+        self.assertNotIn('show bbbbbbb', w.read('task-calls'))
+        calls = w.read('task-calls')
+        time.sleep(.15)
+        self.assertEqual(w.read('task-calls'), calls)
+        w.put('initial', 'pass')
+        w.wait(lambda: len(w.read('starts').splitlines()) == 3)
+        self.assertTrue(w.read('starts').splitlines()[1].startswith('codex/first '))
+        self.assertTrue(w.read('starts').splitlines()[1].endswith(' server'))
+
+    def test_no_branch_line_clears_roadmap_reservation(self):
+        w = self.start(0)
+        w.put('ready', '#2s8kq6y first\n')
+        w.put('task-2s8kq6y', 'No candidates yet\n')
+        (w.state / 'first-step-globs').write_text('cloud/land-old*\n')
+        w.put('clock', '1300')
+        w.wait(lambda: 'show 2s8kq6y' in w.read('task-calls'))
+        w.wait(lambda: (w.state / 'first-step-globs').read_text() == '')
 
     def test_storm_hold_recovery(self):
         w = self.start()
