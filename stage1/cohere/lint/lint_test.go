@@ -313,13 +313,16 @@ func sharedUpstream() *sharedValue {
 // it, so a capture that stopped carrying options would move every typed case here, which is #0jkpds7's bug;
 // TestRulesAgree fails on any case here that isn't listed, and on a listed one that's gone.
 var strictAloneTypedCases = map[string]bool{
+	// TestNoThrowLiteralNeedsTheTypedHarness deliberately uses Run, which captures no program.
+	"no-throw-literal\tthrow 'error';": true,
 	"@typescript-eslint/no-unnecessary-boolean-literal-compare\tdeclare const b: boolean;\nconst z = b === true;": true,
 	"@typescript-eslint/prefer-find\tdeclare const arr: string[];\narr.filter(item => item === 'a')[0];":          true,
 }
 
 // capturedTypedCases is how many typed upstream cases replay under their captured programs. A new typed rule
 // changes it on purpose; a drop means the capture lost programs.
-const capturedTypedCases = 261
+// no-throw-literal adds 47 captured programs; its plain-harness guard is listed above.
+const capturedTypedCases = 308
 
 // typedReplayConfig is the tsconfig a typed upstream case is replayed under: upstream's own compiler options
 // when the capture carried them, and strict alone for a typed rule's case upstream ran without a program.
