@@ -49,9 +49,9 @@ def main():
     parser.add_argument("--base", required=True)
     parser.add_argument("--tools", required=True)
     parser.add_argument("--out", required=True)
-    # A slot owns half the box's CPUs (cloud/fast-gate.sh pins it); half of those again run test
-    # processes, since each also runs parallel subtests, clang and Node: a timing-sensitive test's
-    # verdict shouldn't depend on what else runs.
+    # The gate's CPUs come from its affinity (cloud/fast-gate.sh pins a slot, full-gate-main.sh the full
+    # gate). Half of them run test processes, each at most two parallel subtests, since each subtest
+    # also runs clang and Node: a slot that oversubscribed itself sent a 150 s node deadline red.
     parser.add_argument("--parallel", type=int, default=max(1, len(os.sched_getaffinity(0)) // 2))
     parser.add_argument("--full", action="store_true")
     parser.add_argument("--branch", default="")
@@ -634,7 +634,7 @@ class Gate:
             tests = []
             for name in names:
                 command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
-                           "-test.count=1", "-test.failfast", "-test.timeout=30m", "-test.run", patterns.get(name, "^%s$" % name)]
+                           "-test.count=1", "-test.failfast", "-test.timeout=30m", "-test.parallel=2", "-test.run", patterns.get(name, "^%s$" % name)]
                 thread = self.guarded("tests", self.slotted, slots, command, log, importPath, name, tally)
                 thread.start()
                 tests.append(thread)

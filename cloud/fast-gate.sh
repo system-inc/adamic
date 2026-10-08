@@ -83,13 +83,14 @@ git -C ~/fast-gate/tree${suffix} switch -q --detach "${sha}"
 git -C ~/fast-gate/tree${suffix} submodule update -q --init --recursive
 mkdir -p ~/"${out}"
 echo "slot=${slot} load_before=$(cut -d' ' -f1-3 /proc/loadavg)" > ~/"${out}"/box.txt
-# The box's thread budget: each slot owns half the CPUs (Go sizes GOMAXPROCS from the affinity),
-# so two gates never contend with each other; the full gate and any other long job run idle-scheduled
-# (cloud/box-run.sh idle), so they only get cycles the slots leave.
+# The box is partitioned, not time-shared: each slot owns three eighths of the CPUs (24 of 64; Go
+# sizes GOMAXPROCS from the affinity) and the full gate the last quarter (cloud/full-gate-main.sh), all
+# at normal priority, so no side's timing can starve another's (a shared box decided verdicts tonight).
 cpus=$(nproc --all)
-first=$([ "${slot}" = 1 ] && echo 0 || echo $((cpus / 2)))
+share=$((cpus * 3 / 8))
+first=$([ "${slot}" = 1 ] && echo 0 || echo "${share}")
 # --cpus N narrows the gate to the first N CPUs of its slot (to size slots by measurement).
-range="${first}-$((first + ${width:-$((cpus / 2))} - 1))"
+range="${first}-$((first + ${width:-${share}} - 1))"
 echo "cpus=${range}" >> ~/"${out}"/box.txt
 taskset -c "${range}" python3 ~/fast-gate/tools${suffix}/cloud/fast-gate/run.py --tree ~/fast-gate/tree${suffix} --sha "${sha}" --base "${base}" --tools ~/fast-gate/tools${suffix} --out ~/"${out}" --branch "${branch}" --branch-source "${branchSource}" --session "${session}" --session-source "${sessionSource}"
 BOX

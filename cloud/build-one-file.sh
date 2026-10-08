@@ -27,7 +27,7 @@ sha=$1
 exec 9> ~/fast-gate/lock-2
 flock 9
 cpus=$(nproc --all)
-taskset -c "$((cpus / 2))-$((cpus - 1))" bash ~/fast-gate/build-one-file-box.sh "${sha}"
+taskset -c "$((cpus * 3 / 8))-$((cpus * 3 / 4 - 1))" bash ~/fast-gate/build-one-file-box.sh "${sha}"
 BOX
 )
   records=${state}/records

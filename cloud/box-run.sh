@@ -11,6 +11,8 @@ set -euo pipefail
 class=${1:?usage: box-run.sh idle <command...>}
 shift
 case ${class} in
-  idle) exec chrt --idle 0 ionice -c3 nice -n 19 "$@" ;;
+  # On the full gate's quarter of the CPUs at low priority: never the fast gate's slots, and never the
+  # idle class, whose children (Node references) starve under load.
+  idle) cpus=$(nproc --all); exec taskset -c "$((cpus * 3 / 4))-$((cpus - 1))" nice -n 10 "$@" ;;
   *) echo "unknown class ${class}; the fast gate's slots are taken only through cloud/fast-gate.sh" >&2; exit 2 ;;
 esac
