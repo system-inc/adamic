@@ -47,7 +47,7 @@ assert json.loads((out / 'counts.json').read_text())['ran'] == 42
 shutil.copytree(out / 'tree/src', out / 'control/src')
 (out / 'control/node_modules').symlink_to(out / 'tree/node_modules')
 run('restore', ['node', str(unit / 'restore.cjs'), str(out / 'tree'), str(out / 'control'), str(unit / 'sites.json')])
-config = {'extends':'./src/compiler/tsconfig.json','compilerOptions':{'strict':True,'exactOptionalPropertyTypes':True,'noUncheckedIndexedAccess':True,'verbatimModuleSyntax':True,'erasableSyntaxOnly':True,'noImplicitReturns':True,'noFallthroughCasesInSwitch':True,'strictBindCallApply':True,'useUnknownInCatchVariables':True,'allowImportingTsExtensions':True,'noEmit':True,'module':'ESNext','moduleDetection':'force','moduleResolution':'bundler','target':'ES2024','lib':['es2024'],'types':[]}}
+config = {'extends':'./src/compiler/tsconfig.json','compilerOptions':{'strict':True,'exactOptionalPropertyTypes':True,'noUncheckedIndexedAccess':True,'verbatimModuleSyntax':True,'erasableSyntaxOnly':False,'strictBindCallApply':True,'useUnknownInCatchVariables':True,'allowImportingTsExtensions':True,'noEmit':True,'module':'ESNext','moduleDetection':'force','moduleResolution':'bundler','target':'ES2024','lib':['es2024'],'types':[]}}
 (out / 'control/checker-config.json').write_text(json.dumps(config,indent=2)+'\n')
 run('checker-build', ['go', 'build', '-o', str(out / 'checker'), str(unit / 'checker.go'), str(unit / 'relation.go')])
 run('checker', [str(out / 'checker'), str(out / 'control/checker-config.json'), str(unit / 'sites.json'), str(out / 'checker.json')])

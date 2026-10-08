@@ -12,7 +12,7 @@ const report = JSON.parse(zlib.gunzipSync(fs.readFileSync(input)));
 const configFile = path.join(tree, 'src/compiler/tsconfig.json');
 const config = ts.readConfigFile(configFile, ts.sys.readFile);
 const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, path.dirname(configFile), {}, configFile);
-const program = ts.createProgram(parsed.fileNames, {...parsed.options, strict:true, exactOptionalPropertyTypes:true, noUncheckedIndexedAccess:true, verbatimModuleSyntax:true, erasableSyntaxOnly:true});
+const program = ts.createProgram(parsed.fileNames, {...parsed.options, strict:true, exactOptionalPropertyTypes:true, noUncheckedIndexedAccess:true, verbatimModuleSyntax:true, erasableSyntaxOnly: false});
 const checker = program.getTypeChecker();
 function unwrap(n) { while (ts.isParenthesizedExpression(n) || ts.isAsExpression(n) || ts.isNonNullExpression(n)) n = n.expression; return n; }
 function symbol(n) { return checker.getSymbolAtLocation(n); }

@@ -13,7 +13,7 @@ const configPath = path.join(tree, 'src/compiler/tsconfig.json');
 const config = ts.readConfigFile(configPath, ts.sys.readFile);
 assert(!config.error);
 const configOptions = ts.parseJsonConfigFileContent(config.config, ts.sys, path.dirname(configPath), {}, configPath);
-const analysisOptions = {...configOptions.options, strict:true, exactOptionalPropertyTypes:true, noUncheckedIndexedAccess:true, verbatimModuleSyntax:true, erasableSyntaxOnly:true};
+const analysisOptions = {...configOptions.options, strict:true, exactOptionalPropertyTypes:true, noUncheckedIndexedAccess:true, verbatimModuleSyntax:true, erasableSyntaxOnly: false};
 if (mode === '--fixture') analysisOptions.allowNonTsExtensions = true;
 const rootNames = mode === '--fixture' ? config.config.files.map(f => path.resolve(path.dirname(configPath), f)) : configOptions.fileNames;
 const program = ts.createProgram(rootNames, analysisOptions);

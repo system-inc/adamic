@@ -58,7 +58,7 @@ lines = [
     '## Symbol and alias method', '',
     'The analyzer loads the actual compiler config path, including Node declarations, and',
     'retains strict, exactOptionalPropertyTypes, noUncheckedIndexedAccess,',
-    'verbatimModuleSyntax and erasableSyntaxOnly. It examines diagnosed bodies too.',
+    'verbatimModuleSyntax, with erasableSyntaxOnly false and no house-style return or fallthrough options. It examines diagnosed bodies too.',
     'It locates each inventory AST node by file, position and kind, then resolves the',
     'source, contextual target and target member with the checker. Variable, parameter,',
     'import and member identities come from checker symbols and getRootSymbols.',

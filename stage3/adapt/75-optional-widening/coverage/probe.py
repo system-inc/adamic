@@ -18,7 +18,7 @@ source = (unit / 'reduced-union.a').read_text()
 line = source.splitlines()[2]
 sites = [{'File':'probe.ts','Line':3,'Column':line.index('narrow')+1,'Kind':'KindIdentifier','Text':'narrow','Source':'never','Target':'{ id?: number }'}]
 (out / 'sites.json').write_text(json.dumps(sites,indent=2)+'\n')
-options = {'strict':True,'exactOptionalPropertyTypes':True,'noUncheckedIndexedAccess':True,'verbatimModuleSyntax':True,'erasableSyntaxOnly':True,'noImplicitReturns':True,'noFallthroughCasesInSwitch':True,'target':'es2024','module':'esnext','moduleResolution':'bundler','types':[],'noEmit':True,'allowImportingTsExtensions':True,'moduleDetection':'force','lib':['es2024']}
+options = {'strict':True,'exactOptionalPropertyTypes':True,'noUncheckedIndexedAccess':True,'verbatimModuleSyntax':True,'erasableSyntaxOnly':False,'target':'es2024','module':'esnext','moduleResolution':'bundler','types':[],'noEmit':True,'allowImportingTsExtensions':True,'moduleDetection':'force','lib':['es2024']}
 variants = {'adamic':{},'no-exact':{'exactOptionalPropertyTypes':False},'no-indexed':{'noUncheckedIndexedAccess':False},'no-extra':{'exactOptionalPropertyTypes':False,'noUncheckedIndexedAccess':False,'verbatimModuleSyntax':False,'erasableSyntaxOnly':False},'non-strict':{'strict':False,'exactOptionalPropertyTypes':False,'noUncheckedIndexedAccess':False}}
 report = {}
 for name, override in variants.items():

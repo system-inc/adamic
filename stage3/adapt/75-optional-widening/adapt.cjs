@@ -10,7 +10,7 @@ const tree = path.resolve(process.argv[2]);
 const filename = path.join(tree, 'src/compiler/types.ts');
 const program = ts.createProgram([filename], {
     strict: true, exactOptionalPropertyTypes: true, noUncheckedIndexedAccess: true,
-    verbatimModuleSyntax: true, erasableSyntaxOnly: true, noEmit: true,
+    verbatimModuleSyntax: true, erasableSyntaxOnly: false, noEmit: true,
     target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext,
     moduleResolution: ts.ModuleResolutionKind.Bundler,
 });

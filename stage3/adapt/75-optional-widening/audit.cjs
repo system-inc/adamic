@@ -11,7 +11,7 @@ const config = ts.readConfigFile(configPath, ts.sys.readFile);
 assert(!config.error);
 const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, path.dirname(configPath));
 const options = { ...parsed.options, strict: true, exactOptionalPropertyTypes: true,
-    noUncheckedIndexedAccess: true, verbatimModuleSyntax: true, erasableSyntaxOnly: true, noEmit: true };
+    noUncheckedIndexedAccess: true, verbatimModuleSyntax: true, erasableSyntaxOnly: false, noEmit: true };
 const program = ts.createProgram(parsed.fileNames, options);
 const checker = program.getTypeChecker();
 const source = program.getSourceFile(path.join(tree, 'src/compiler/types.ts'));
