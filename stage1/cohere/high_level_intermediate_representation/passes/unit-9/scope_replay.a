@@ -1,0 +1,5 @@
+// Smallest shared-decoder boundary needed by Go flatten_reactive_loops.go:100.
+import { readTerminal } from '../../replay/index.ts';
+import { HIRFunction } from '../../core.ts';
+const fn = new HIRFunction('scopeWitness');
+readTerminal(fn, '0 Scope {"Scope":7,"Block":1,"Fallthrough":2,"Order":0}');

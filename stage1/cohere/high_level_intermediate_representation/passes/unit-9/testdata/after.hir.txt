@@ -1,0 +1,13 @@
+hir-v1
+function scopeWitness other entry=1 async=0 generator=0
+params 
+context 
+returns 0:<unknown>:0:0:0
+block 1 block predecessors=
+terminal 0 While {"Fallthrough":3,"Loop":2,"Test":2}
+block 2 block predecessors=
+terminal 0 Scope {"Block":2,"Fallthrough":3,"Scope":7}
+block 3 block predecessors=
+terminal 0 Unreachable {}
+scopes -
+end
