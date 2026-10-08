@@ -61,9 +61,14 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
-		// Reflection cannot use a widened view: a hidden field can have another representation.
-		// A plain const's literal initializer proves the complete shape, including field presence.
-		if !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		// Assignment and freezing retain their existing exact-shape requirement.
+		// Enumeration preserves the actual shape and checks unproven value contracts.
+		if name == "keys" || name == "values" || name == "entries" {
+			if err := l.enumerationDescriptors(node, false); err != nil {
+				return nil, true, err
+			}
+		}
+		if name != "keys" && name != "values" && name != "entries" && !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])
@@ -122,6 +127,20 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				of, known := l.representation(l.checker.GetTypeOfSymbol(field))
 				if !known || of != call.Element || field.Flags&ast.SymbolFlagsOptional != 0 {
 					return refused("every present field must have tsc's result element representation; optional or heterogeneous fields cannot be read soundly")
+				}
+			}
+			call.Checked = !l.enumerationProven(written[0], element, 0)
+			call.ElementName = l.checker.TypeToString(element)
+			call.Allowed = l.viewLiterals(element)
+			if l.openNumericEnumType(element) {
+				call.Allowed = nil
+			}
+			if call.Checked && !interfaceScalar(element) {
+				return nil, true, l.notYet(node, "checked Object enumeration of a non-primitive value contract")
+			}
+			if call.Checked {
+				if err := l.enumerationDescriptors(node, true); err != nil {
+					return nil, true, err
 				}
 			}
 			call.Returns = ir.Array
