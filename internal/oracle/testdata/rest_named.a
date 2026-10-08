@@ -1,0 +1,13 @@
+// Named closure reductions of enqueue and reportIncompatibleError.
+type DiagnosticArguments = (string | number | undefined)[];
+function make(label: string): (message: string, ...args: DiagnosticArguments) => string {
+    return function report(message: string, ...args: DiagnosticArguments): string {
+        return `${label}:${message}:${args.length}`;
+    };
+}
+const report = make('captured'.repeat(2));
+console.log(report('empty'));
+console.log(report('mixed', 'text'.repeat(2), 7, undefined));
+const queued = function enqueue(...items: number[]): number { return items.length; };
+const numbers = [1, 2, 3];
+console.log(`${queued()} ${queued(1)} ${queued(...numbers)}`);
