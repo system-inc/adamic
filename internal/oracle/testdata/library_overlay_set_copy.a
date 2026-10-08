@@ -1,0 +1,6 @@
+const source = new Set<string>(['alpha', 'beta', 'alpha']);
+const result: Set<string> = new Set(source);
+const iteratorCopy: Set<string> = new Set(source.values());
+source.add('later');
+console.log([...result].join('|'));
+console.log([...iteratorCopy].join('|'));

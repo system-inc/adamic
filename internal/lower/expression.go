@@ -783,7 +783,7 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	if prefix.Operator == ast.KindExclamationToken {
-		return ir.Unary{Operator: ir.Not, Operand: censusCondition(operand)}, nil
+		return ir.Unary{Operator: ir.Not, Operand: censusCondition(libraryIteratorDoneTruth(operand))}, nil
 	}
 	return nil, l.notYet(node, describe(node)+" on a "+typeName(operand.Type()))
 }
