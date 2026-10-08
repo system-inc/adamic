@@ -60,6 +60,8 @@ while true; do
     grep -vxF "${next}" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
     read -r _ _ branch sha <<< "${next}"
     grep -qx "${sha}" "${state}/gated" && continue
+    # A tip its branch has already moved past is superseded: gate the branch's newest only.
+    grep -qx "${branch} ${sha}" "${state}/seen" || { echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue; }
     echo "${sha}" >> "${state}/gated"
     log=${state}/logs/${sha:0:12}.log
     bash "${here}/cloud/fast-gate.sh" "${sha}" --branch "${branch}" > "${log}" 2>&1 &
