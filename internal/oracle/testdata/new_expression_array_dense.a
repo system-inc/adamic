@@ -1,0 +1,18 @@
+function item(value: number): number {
+    console.log(`item ${value}`);
+    return value;
+}
+const empty = new Array<number>();
+console.log(empty.length.toString());
+empty.push(7);
+console.log(empty.join(","));
+const numbers = new Array<number>(item(1), item(2), item(3));
+console.log(numbers.join(","));
+const single = new Array<string>("hello");
+console.log(single.length.toString());
+console.log(single.join(","));
+const words = new Array<string>("one", "two");
+console.log(words.join("/"));
+const objects = new Array<{ readonly value: number }>({ value: 8 }, { value: 9 });
+console.log((objects[0]?.value ?? 0).toString());
+console.log((objects[1]?.value ?? 0).toString());

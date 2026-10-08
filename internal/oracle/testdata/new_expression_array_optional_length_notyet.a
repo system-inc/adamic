@@ -1,0 +1,4 @@
+function length(): number | undefined { return 2; }
+const holes = new Array<number | undefined>(length());
+console.log(holes.length.toString());
+console.log(holes.join(","));

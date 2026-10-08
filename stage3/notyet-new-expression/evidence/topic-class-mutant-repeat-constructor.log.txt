@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.05s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_value.a (1.20s)
+        oracle_test.go:750: stdout differs
+            node:   exit 0, stdout "argument\nbase 7\nfirst 7\nbase 108\nderived 8\nsecond 108\nbase 9\nparameter 9\nbase 110\nderived 10\nparameter 110\nchoose\nbase 111\nderived 11\nchosen 111\nbase 12\nconditional 12\nargument\nbase 7\nproperty 7\nholder\nbase 113\nderived 13\nholder 113\nbase 114\nderived 14\nstructural 114\nchoose\nbase 115\nderived 15\nbase 116\nderived 16\ncached 115 116\n", stderr ""
+            native: exit 0, stdout "argument\nbase 7\nfirst 7\nbase 108\nderived 8\nsecond 108\nbase 9\nparameter 9\nbase 110\nderived 10\nparameter 110\nchoose\nchoose\nbase 111\nderived 11\nchosen 111\nbase 12\nconditional 12\nargument\nbase 7\nproperty 7\nholder\nbase 113\nderived 13\nholder 113\nbase 114\nderived 14\nstructural 114\nchoose\nbase 115\nderived 15\nbase 116\nderived 16\ncached 115 116\n", stderr ""
+        oracle_test.go:756: JavaScript backend: stdout differs
+            node:    exit 0, stdout "argument\nbase 7\nfirst 7\nbase 108\nderived 8\nsecond 108\nbase 9\nparameter 9\nbase 110\nderived 10\nparameter 110\nchoose\nbase 111\nderived 11\nchosen 111\nbase 12\nconditional 12\nargument\nbase 7\nproperty 7\nholder\nbase 113\nderived 13\nholder 113\nbase 114\nderived 14\nstructural 114\nchoose\nbase 115\nderived 15\nbase 116\nderived 16\ncached 115 116\n", stderr ""
+            backend: exit 0, stdout "argument\nbase 7\nfirst 7\nbase 108\nderived 8\nsecond 108\nbase 9\nparameter 9\nbase 110\nderived 10\nparameter 110\nchoose\nchoose\nbase 111\nderived 11\nchosen 111\nbase 12\nconditional 12\nargument\nbase 7\nproperty 7\nholder\nbase 113\nderived 13\nholder 113\nbase 114\nderived 14\nstructural 114\nchoose\nbase 115\nderived 15\nbase 116\nderived 16\ncached 115 116\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.269s
+FAIL

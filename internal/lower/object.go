@@ -1338,6 +1338,12 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 		return l.regexConstant(node)
 	}
 	created := node.AsNewExpression()
+	if l.isLibraryGlobal(created.Expression, "Uint16Array") {
+		return nil, l.notYet(node, "typed array element type Uint16Array")
+	}
+	if l.isLibraryGlobal(created.Expression, "Array") {
+		return l.newDenseArray(node)
+	}
 	if declaration, isClass := l.classes[l.symbol(ast.SkipParentheses(created.Expression))]; isClass {
 		return l.construct(node, declaration)
 	}

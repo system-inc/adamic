@@ -2,6 +2,8 @@
 """Run constructor dispatch/order mutants and restore the lowering helper."""
 from pathlib import Path
 import os
+import json
+import tempfile
 import subprocess
 
 root = Path(__file__).resolve().parents[2]
@@ -34,14 +36,17 @@ command = ['go', 'test', './internal/oracle', '-run',
            'TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_class_value',
            '-count=1', '-timeout', '10m']
 env = dict(os.environ, ADAMIC_GATE_UNCACHED='1')
+original = path.read_text()
 for name, before, after in mutants:
-    original = path.read_bytes()
-    source = original.decode()
-    assert source.count(before) == 1, (name, 'mutant anchor changed')
-    try:
-        path.write_text(source.replace(before, after))
+    assert original.count(before) == 1, (name, 'mutant anchor changed')
+    with tempfile.TemporaryDirectory(prefix='class-value-mutant-') as scratch:
+        mutated = Path(scratch) / 'new_class_value.go'
+        mutated.write_text(original.replace(before, after))
+        overlay = Path(scratch) / 'overlay.json'
+        overlay.write_text(json.dumps({'Replace': {str(path): str(mutated)}}))
+        mutated_command = command[:2] + ['-overlay=' + str(overlay)] + command[2:]
         with (logs / (name + '.log')).open('w') as output:
-            result = subprocess.run(command, cwd=root, env=env, stdout=output, stderr=subprocess.STDOUT)
+            result = subprocess.run(mutated_command, cwd=root, env=env, stdout=output, stderr=subprocess.STDOUT)
         log = (logs / (name + '.log')).read_text()
         assert result.returncode != 0, (name, 'survived')
         if name == 'cache-do-not-store':
@@ -51,5 +56,4 @@ for name, before, after in mutants:
         assert 'clang failed' not in log, (name, 'invalid build kill', log)
         catcher = 'registered allocator trap and Node exit comparison' if name == 'cache-do-not-store' else 'Node stdout comparison'
         print(name + ': killed by ' + catcher, flush=True)
-    finally:
-        path.write_bytes(original)
+assert path.read_text() == original

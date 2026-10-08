@@ -1,0 +1,6 @@
+const holes = new Array<number>(3);
+console.log(holes.length.toString());
+let visits = 0;
+holes.forEach((value: number): void => { visits++; });
+console.log(visits.toString());
+console.log(holes.join(","));

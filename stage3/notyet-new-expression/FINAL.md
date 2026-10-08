@@ -1,3 +1,5 @@
+Historical area-based report. The current topic-only main-based continuation is [TOPIC.md](TOPIC.md).
+
 Built exact class-value constructor dispatch and lazy global/lexical caches; kept unsupported constructor lessons explicit.
 Commits: 974c2bc2 class values; 6b0d705e Uint16 withdrawal; 968172dc global ||; final lexical-cache SHA accompanies the push.
 Node/backend/sanitizer fixtures and touched-package tests are recorded in evidence; counts refreshed with one new row.

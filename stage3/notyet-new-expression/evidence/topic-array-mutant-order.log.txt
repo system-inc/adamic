@@ -1,0 +1,19 @@
+--- FAIL: TestNativeAgreesWithNode (0.06s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_array_dense.a (1.28s)
+        oracle_test.go:729: gate cache node miss
+        oracle_test.go:729: gate cache node miss
+        oracle_test.go:576: gate cache native miss
+        oracle_test.go:569: gate cache native miss
+        oracle_test.go:750: stdout differs
+            node:   exit 0, stdout "0\n7\nitem 1\nitem 2\nitem 3\n1,2,3\n1\nhello\none/two\n8\n9\n", stderr ""
+            native: exit 0, stdout "0\n7\nitem 3\nitem 2\nitem 1\n3,2,1\n1\nhello\ntwo/one\n9\n8\n", stderr ""
+        oracle_test.go:756: JavaScript backend: stdout differs
+            node:    exit 0, stdout "0\n7\nitem 1\nitem 2\nitem 3\n1,2,3\n1\nhello\none/two\n8\n9\n", stderr ""
+            backend: exit 0, stdout "0\n7\nitem 3\nitem 2\nitem 1\n3,2,1\n1\nhello\ntwo/one\n9\n8\n", stderr ""
+        oracle_test.go:583: gate cache native hit
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.355s
+FAIL

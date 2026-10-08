@@ -1,0 +1,9 @@
+--- FAIL: TestNewExpressionArrayHolesRemainNotYet (0.81s)
+    new_expression_array_test.go:27: gate cache node miss
+    new_expression_array_test.go:34: want array-hole NotYet, got <nil>
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.845s
+FAIL
