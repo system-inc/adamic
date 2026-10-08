@@ -1,8 +1,8 @@
-Certified original Identifier.escapedText and Symbol.escapedName, with full inherited fields and full __String declaration.
-Commits: first certified group on codex/views-mixed-unions-2, based directly on integration 4e67894a.
-Checks: uncached TestCheckedViewBrandsOriginalPairs passed, 12 cases, 48.827s; Node, release C, sanitized C with leak checks, JavaScript.
-Mutants: one helper member-check bypass per pair, caught by both backend refusal pins; all four mutant runs exit 0 with uncheckedunchecked instead of exit 70.
-Uncovered: 28 of the original 30 candidate pairs / 95 of 543 reads; __String | undefined pairs tracked separately; whole-program reachability unmeasured.
+Certified: 27 original __String pairs / 540 reads and all 5 nullable-field pairs / 9 reads, with full upstream declarations.
+Commits: seven green groups, 434e9667 through 4e031600, pushed only to codex/views-mixed-unions-2 from integration 4e67894a.
+Checks: per-group uncached Node, release C, JavaScript and sanitized/leak-checked C passed; final combined regression is recorded below.
+Mutants: 34 member-read bypass cases, each caught in C and JavaScript by a named refusal pin, including both union receiver alternatives.
+Uncovered: 3 original pairs / 3 reads are named admission gaps; original mixed column remains 31 / 141, with shared dictionary selection tracked separately.
 
 The first group certifies two candidate pairs / 448 reads against all 78 emitted
 declaration files from pristine official tsc 050880ce. Receiver fields are compared
@@ -129,3 +129,17 @@ remains the mixed primitive working target. In the original mixed column, the
 32 certified brand pairs cover 549 of 690 candidate reads; 31 pairs / 141 reads
 remain, including the three blocked brands. These are candidate counts, not
 checker-clean whole-program reachability or whole-tsc compilation.
+
+Final combined gate: ADAMIC_BRAND_ORIGINAL_DECLS set to the pinned generated
+declarations, ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedView(BrandsOriginal(Pairs|BlockedPairs)|BrandArrayOriginalPair|CompleteBrand|BrandCandidatePairs)$'
+-count=1 -v -timeout 15m passed in 415.876s. All five suites passed: original
+array 8.14s, original gaps 13.21s, original receiver groups 347.00s, existing
+complete brand 7.93s, existing candidate components 39.57s. The combined log
+contains all 68 original C/JS member-check bypass kills (34 cases per backend).
+An earlier combined run was interrupted by an environment restart, retained as
+combined-interrupted.log; no pass was inferred from it. The complete rerun exits
+0 and is retained as combined-oracle.log. go vet ./internal/oracle passed;
+formatting and whitespace checks are clean. No full repository gate or native
+graph-regions package gate is claimed. Working tree changes are documentation
+and tests only; integration supplies the previously built branded read hooks.
