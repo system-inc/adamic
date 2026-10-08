@@ -229,8 +229,10 @@ func TestFileWritesLandInNodesOrder(t *testing.T) {
 }
 
 // A prompt, then a read of stdin: a driver waits to see the prompt before it answers, so the prompt
-// has to be out before the read waits. Each run is answered only once its first line has come, or
-// after ten seconds without it, which is the failure.
+// has to be out before the read waits. Each run is answered once its first line has come, or once it
+// has printed nothing and sat blocked for a second, asleep with its CPU time unchanged, which is the
+// failure: it's waiting for the read. A process starved by load is runnable, not asleep, so load
+// can't fake it, and a real hang still ends at bounded's deadline with no prompt.
 func TestAPromptComesBeforeTheRead(t *testing.T) {
 	t.Parallel()
 	cacheProbe(t, "internal/oracle/testdata/prompt_then_read.a", nil, "", func() {
@@ -259,16 +261,26 @@ func TestAPromptComesBeforeTheRead(t *testing.T) {
 				line, _ := reader.ReadString('\n')
 				first <- line
 			}()
-			prompted := false
+			prompted, received := false, false
 			var prompt string
-			select {
-			case prompt = <-first:
-				prompted = true
-			case <-time.After(10 * time.Second):
+			for idle, spent := 0, -1.0; !received && idle < 20; {
+				select {
+				case prompt = <-first:
+					// A whole line; at an exit without one there's no prompt.
+					prompted, received = strings.HasSuffix(prompt, "\n"), true
+				case <-time.After(50 * time.Millisecond):
+					now := cpuSeconds(t, command.Process.Pid)
+					if now == spent && asleep(t, command.Process.Pid) {
+						idle++
+					} else {
+						idle = 0
+					}
+					spent = now
+				}
 			}
 			stdin.Write([]byte("yes\n"))
 			stdin.Close()
-			if !prompted {
+			if !received {
 				prompt = <-first
 			}
 			rest, _ := io.ReadAll(reader)
@@ -385,6 +397,26 @@ func (b *lockedBuffer) Bytes() []byte {
 }
 
 func (b *lockedBuffer) String() string { return string(b.Bytes()) }
+
+// asleep reports whether a running process is blocked, every thread waiting (state S on Linux; S or
+// I, idle, from ps on macOS), rather than running or waiting to run.
+func asleep(t *testing.T, pid int) bool {
+	t.Helper()
+	if runtime.GOOS == "linux" {
+		data, err := os.ReadFile(fmt.Sprintf("/proc/%d/stat", pid))
+		if err != nil {
+			return false
+		}
+		fields := strings.Fields(string(data[bytes.LastIndexByte(data, ')')+1:]))
+		return fields[0] == "S"
+	}
+	output, err := exec.Command("ps", "-o", "state=", "-p", strconv.Itoa(pid)).Output()
+	if err != nil {
+		return false
+	}
+	state := strings.TrimSpace(string(output))
+	return strings.HasPrefix(state, "S") || strings.HasPrefix(state, "I")
+}
 
 // cpuSeconds is the user and system CPU time a running process has spent, from /proc on Linux
 // (in clock ticks of 1/100 s) and ps elsewhere. A process that has ended reads as 0.
