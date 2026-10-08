@@ -1,6 +1,6 @@
 Merged lazy checked views and lowered enum-tagged structured, optional and undefined payloads through their read contracts.
-Implementation: branch codex/enum-tag-narrowing from b2be5147, merging views-integration d1937df86e4ec710e200ac592ce27b6b346dc436; implementation SHA recorded below.
-Verification: uncached enum/checked-view oracle PASS 41.432s; twelve fixture counts PASS 1.832s; enum lowering pins PASS 0.424s; complete paired census results recorded below.
+Implementation: branch codex/enum-tag-narrowing from b2be5147, first merging views-integration d1937df8 in 2fb22170, then newest e555d67e in a9bfbc6f and main f4efdd23 in a36d2960.
+Verification on the final merge: uncached enum/checked-view oracle PASS 76.009s; twelve fixture counts PASS 1.682s; enum and optional-view lowering pins PASS 1.598s; paired census 90 to 0 in each input, 79/79 files, zero errors or panics.
 Mutants: transitive read erasure, undefined admission in both backends, callable/binding name guards, packed-false admission, nullable receiver bypass, and existing open-tag/remainder mutants are caught.
 Not covered: full compiler compilation or a green repository gate; merged upstream has reproduced lower/native failures and the full counts update fails.
 
@@ -78,9 +78,11 @@ in the fixture oracle. Twelve allocation rows were measured with counted via a
 scratch Go overlay and recorded in internal/oracle/counts.md.
 
 Additional checks: lower excluding the seven reproduced upstream failing roots
-PASS 97.850s; JavaScript and IR packages PASS 2.048s and 30.932s; native Field|View|Object
-PASS 40.868s; touched package vet passes. These broader checks preceded the final
-nullable adjustment, which the final enum lowering/oracle pins cover.
+PASS 97.850s at the first checkpoint and 49.467s on the final merge; JavaScript and IR packages PASS 2.048s and 30.932s; native Field|View|Object
+PASS 40.868s; touched package vet passes. These initial broader checks preceded the final
+nullable adjustment. Final merged native Field|View|Object passes 9.075s, full
+JavaScript 0.985s and full IR 18.155s; final vet passes. The final enum
+lowering/oracle pins cover the nullable adjustment.
 
 The full touched-package run has seven lower failing roots and five native graph
 failing roots. The exact failures reproduce in an unmodified d1937df8 snapshot.
@@ -97,7 +99,7 @@ stage3/api lockfile. Test output went to log files.
 
 ## Scope
 
-Manual integration/implementation edits:
+Manual integration/implementation edits (the incoming merge imports additional files):
 internal/ir/ir.go;
 internal/javascript/javascript.go, readiness.go;
 internal/lower/cast.go, cast_proof.go, invariance.go, expression.go, enums.go,
@@ -106,6 +108,7 @@ internal/native/emit_expressions.go, emit_objects.go, view_fields.go, runtime/ob
 New pins: internal/lower/enums_views_test.go, internal/oracle/enums_views_test.go,
 and twelve stage3/fixtures/enum-views/*.a files. Records: internal/oracle/counts.md,
 docs/enums.md and this report with its shape/meter artifacts.
+The final main merge preserves the views branch versions of internal/lower/optional_widening_census_test.go, internal/lower/optional_widening_test.go, internal/oracle/counts.md and internal/oracle/testdata/field_access_paths.a to retain lazy admission and its census evidence. These are merge resolutions, not new widening implementation.
 The four prohibited files were not manually edited; their incoming integration
 changes are part of the requested merge. cast_proof.go and invariance.go conflicts
 were comment integration only. No pull request is opened.
@@ -123,3 +126,38 @@ found/visit symbols. The scratch generator preserves the preflight and applies
 that rewrite only after `var found error`. It makes no production loader or
 output changes. The correction is archived alongside this report; build with
 its generated overlay and run stage3/census/latent/tool on each src/compiler tree.
+
+Commands for the pinned final compiler:
+
+```bash
+source /workspace/adamic-tools/env.sh
+python3 docs/verification/enum-tag-views-overlay.py "$PWD" /tmp/enum-views-landing-overlay
+go build -overlay /tmp/enum-views-landing-overlay/overlay.json -o /tmp/enum-views-landing-meter ./stage3/census/latent/tool
+/tmp/enum-views-landing-meter /tmp/adamic-gate/stage3-meter.RLIiIU/main-adapted/src/compiler /tmp/enum-views-landing-run/main/latent.jsonl
+/tmp/enum-views-landing-meter /tmp/adamic-gate/stage3-meter.RLIiIU/area-adapted/src/compiler /tmp/enum-views-landing-run/area/latent.jsonl
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestEnumTag|TestCheckedView' -count=1
+go test ./internal/lower -run 'TestEnumTag|TestOptionalWidening' -count=1
+go vet ./internal/lower ./internal/native ./internal/javascript ./internal/ir ./internal/oracle
+```
+
+Every run above redirects stdout/stderr to the corresponding /tmp/enum-views-landing-*.log in the actual execution. Binary measurement is equivalent to go run of the overlaid tool; no normal loader is relaxed. Final census comes after the newest views/main merges. Earlier incomplete runs are excluded.
+
+## Final census and push
+
+[The complete meter ledger](enum-tag-views-meter.json) records the final compiler,
+views/main tips, input hashes, binary hash, unique sites and every reason row.
+The display row groups raw reasons by the prefix
+`a checked numeric enum object view with an incompatible structured or optional payload field `;
+the final word is the field name.
+
+| Input | Payload NotYet before | After | Files | NotYet total after | Refused total after | Skipped dependencies | Errors | Panics |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| main | 90 | 0 | 79/79 | 1050 | 708 | 4 | 0 | 0 |
+| area | 90 | 0 | 79/79 | 1052 | 706 | 4 | 0 | 0 |
+
+Coverage and row assertions pass via stage3/meter/report.py latent_summary.
+Other totals include the effects of all merged view families and are not
+attributed solely to enum payload lowering. This is one push after implementation,
+latest views/main integration and the final report: the row is 0 on both inputs
+at that push. The implementation merge is 2fb22170, newest views merge a9bfbc6f,
+and main merge a36d2960; the report commit is the pushed branch tip.

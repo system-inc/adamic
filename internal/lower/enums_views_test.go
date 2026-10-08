@@ -34,13 +34,18 @@ func TestEnumTagLazyPayloadAdmission(t *testing.T) {
 }
 
 func TestEnumTagMissingViewFamilyAtRead(t *testing.T) {
-	source := `enum AKind { A } enum BKind { B = 1 } interface Wide { readonly kind: AKind; readonly opaque: string } interface Narrow { readonly kind: BKind; readonly opaque: never } function show(v: Wide | Narrow): void { if (v.kind === BKind.B) { console.log('narrowed'); READ } }`
+	source := `enum AKind { A } enum BKind { B = 1 } interface Wide { readonly kind: AKind; readonly opaque: string } interface Narrow { readonly kind: BKind; readonly opaque: never } function show(v: Wide | Narrow): void {
+ if (v.kind === BKind.B) {
+  console.log('narrowed');
+  READ
+ }
+}`
 	if _, err := lowerSource(t, strings.Replace(source, "READ", "", 1)); err != nil {
 		t.Fatal(err)
 	}
 	_, err := lowerSource(t, strings.Replace(source, "READ", "const value = v.opaque;", 1))
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "field opaque") || !strings.Contains(refused.What, "never") {
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "field opaque") || !strings.Contains(refused.What, "never") || !strings.Contains(refused.Where, ":4:") {
 		t.Fatalf("want named never refusal at read, got %v", err)
 	}
 }
