@@ -11,6 +11,7 @@ import (
 func build(path, output string, arguments []string) int {
 	options := native.Options{}
 	archive := ""
+	explain := false
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
 		case "--target":
