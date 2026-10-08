@@ -1,4 +1,7 @@
 const ts = require(process.argv[2]);
+// Report the version before using APIs an older compiler may not have.
+console.log(JSON.stringify(ts.version));
+if (ts.version !== '6.0.3') return;
 const prelude = process.argv[3];
 // Kept identical to internal/load/load.go, including the declaration prelude.
 const options = {
@@ -19,7 +22,6 @@ host.getSourceFile = (name, version, onError) => {
   if (!libraries.has(name)) libraries.set(name, original(name, version, onError));
   return libraries.get(name);
 };
-console.log(JSON.stringify(ts.version));
 require('node:readline').createInterface({input: process.stdin}).on('line', line => {
   source = JSON.parse(line);
   const program = ts.createProgram([file, prelude], options, host);

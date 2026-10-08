@@ -37,13 +37,16 @@ type oracleStats struct {
 }
 
 func startTypescript(root, work string) (*typescriptOracle, error) {
-	executable, err := exec.LookPath("tsc")
-	if err != nil {
-		return nil, fmt.Errorf("TypeScript oracle requires stock tsc on PATH: %w", err)
+	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+	if source == "" {
+		return nil, fmt.Errorf("TypeScript oracle requires ADAMIC_TYPESCRIPT_SOURCE set to the pinned TypeScript 6.0.3 checkout")
 	}
-	executable, err = filepath.EvalSymlinks(executable)
+	module, err := filepath.Abs(filepath.Join(source, "lib/typescript.js"))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("TypeScript oracle ADAMIC_TYPESCRIPT_SOURCE: %w", err)
+	}
+	if _, err := os.Stat(module); err != nil {
+		return nil, fmt.Errorf("TypeScript oracle requires lib/typescript.js in ADAMIC_TYPESCRIPT_SOURCE (%s): %w", module, err)
 	}
 	helper := filepath.Join(work, "typescript.cjs")
 	if err := os.WriteFile(helper, []byte(typescriptHelper), 0644); err != nil {
@@ -57,7 +60,7 @@ func startTypescript(root, work string) (*typescriptOracle, error) {
 	if err != nil {
 		return nil, err
 	}
-	command := exec.Command("node", helper, filepath.Join(filepath.Dir(executable), "../lib/typescript.js"), prelude, programPath)
+	command := exec.Command("node", helper, module, prelude, programPath)
 	input, err := command.StdinPipe()
 	if err != nil {
 		return nil, err
@@ -79,6 +82,10 @@ func startTypescript(root, work string) (*typescriptOracle, error) {
 	if err := json.Unmarshal(line, &oracle.stats.Version); err != nil {
 		oracle.close()
 		return nil, err
+	}
+	if oracle.stats.Version != "6.0.3" {
+		oracle.close()
+		return nil, fmt.Errorf("TypeScript oracle requires version 6.0.3 from ADAMIC_TYPESCRIPT_SOURCE; %s reports %q", module, oracle.stats.Version)
 	}
 	return oracle, nil
 }

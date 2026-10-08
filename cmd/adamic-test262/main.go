@@ -14,7 +14,8 @@
 // Node passed. refused means stage 0 or the checker said no, the reason normalized the way a meter
 // groups them (cmd/adamic-meter is not on main; see reason.go). not-typescript means the
 // checker refused and stock tsc rejected the exact adapted source with the same TS code.
-// Stock TypeScript must be installed with tsc on PATH. crashed means a signal, a
+// ADAMIC_TYPESCRIPT_SOURCE must name the pinned TypeScript 6.0.3 checkout; its
+// lib/typescript.js supplies the stock oracle. crashed means a signal, a
 // sanitizer, a timeout, or the compiler itself failing. The crash record names the test file.
 //
 // --adapt rewrites test262's spelling in memory only, and counts each rewrite: var to let where
