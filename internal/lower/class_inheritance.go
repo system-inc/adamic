@@ -3,6 +3,7 @@ package lower
 import (
 	"slices"
 	"strconv"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -600,23 +601,59 @@ func (l *lowering) nominalAncestor(source, target *checker.Type, seen map[[2]*ch
 // Initializers may read fields already initialized, including the base's after super. A future
 // field would hold undefined despite its declared type; a method may read future derived fields.
 func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) error {
-	var refused error
-	var visit ast.Visitor
-	visit = func(node *ast.Node) bool {
-		if refused != nil {
-			return true
+	seen := map[*ast.Node]bool{}
+	var examine func(*ast.Node, []string) error
+	examine = func(body *ast.Node, path []string) error {
+		if body == nil || seen[body] {
+			return nil
 		}
-		if node.Kind == ast.KindThisKeyword {
-			parent := node.Parent
-			if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || !available[l.fieldName(parent.Name())] {
-				refused = &Refused{Where: l.program.Where(node), What: "this in a field initializer before the fields it reads are initialized", Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+		seen[body] = true
+		var refused error
+		var visit ast.Visitor
+		visit = func(child *ast.Node) bool {
+			if refused != nil {
 				return true
 			}
+			if ast.IsPartOfTypeNode(child) {
+				return false
+			}
+			if child.Kind == ast.KindPropertyAccessExpression {
+				object := ast.SkipParentheses(child.AsPropertyAccessExpression().Expression)
+				if object.Kind == ast.KindThisKeyword || object.Kind == ast.KindSuperKeyword {
+					symbol := l.checker.GetSymbolAtLocation(child.Name())
+					if object.Kind == ast.KindThisKeyword && child.Name().Kind != ast.KindPrivateIdentifier {
+						symbol = l.checker.GetPropertyOfType(l.classType, child.Name().Text())
+					}
+					if symbol != nil {
+						for _, member := range symbol.Declarations {
+							step := child.Name().Text()
+							if member.Parent != nil && member.Parent.Name() != nil {
+								step = member.Parent.Name().Text() + "." + step
+							}
+							next := append(append([]string{}, path...), step)
+							if member.Kind == ast.KindMethodDeclaration || member.Kind == ast.KindGetAccessor {
+								refused = examine(member.Body(), next)
+							} else if (member.Kind == ast.KindPropertyDeclaration || parameterProperty(member)) && !available[l.fieldName(child.Name())] {
+								refused = &Refused{Where: l.program.Where(child), What: "a field initializer reading an uninitialized field through " + strings.Join(next, " -> "), Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+							}
+							if refused != nil {
+								return true
+							}
+						}
+						return false
+					}
+				}
+			}
+			if child.Kind == ast.KindThisKeyword || child.Kind == ast.KindSuperKeyword {
+				refused = &Refused{Where: l.program.Where(child), What: "this in a field initializer before the fields it reads are initialized", Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
+				return true
+			}
+			return child.ForEachChild(visit)
 		}
-		return node.ForEachChild(visit)
+		visit(body)
+		return refused
 	}
-	visit(node)
-	return refused
+	return examine(node, nil)
 }
 
 // Private names with the same spelling in a base and a derived class are separate JavaScript slots.

@@ -286,6 +286,12 @@ func refusedNonNullFixture(path string) bool {
 		return true
 	}
 	switch name {
+	// Main's exact wrong-output probes are now compile-time refusals, pinned with
+	// their original Node observations and repairs by TestClassWrongOutput.
+	case "classfeat_init_super.a", "classfeat_init_super_getter.a", "classfeat_init_super_number.a",
+		"classfeat_static_private_instance.a", "classfeat_static_private_method.a",
+		"iterators_override_this.a", "iterators_hidden_return.a", "iterators_sym_keys_view.a":
+		return true
 	// These original generic memoize probes intentionally have no IR. Their Node
 	// output and cycle-capable refusal stay pinned by the dedicated oracle test.
 	case "optional_function_memoize_a.a", "optional_function_memoize_b.a":

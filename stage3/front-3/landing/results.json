@@ -1,0 +1,37 @@
+[
+  {
+    "name": "initializer-proof-removed",
+    "status": "caught",
+    "test": "^TestClassWrongOutput103$",
+    "catcher": "want path and repair",
+    "log": "/tmp/stage3-front-3-landing-mutants/initializer-proof-removed.log"
+  },
+  {
+    "name": "iterator-receiver-proof-disabled",
+    "status": "caught",
+    "test": "^TestClassWrongOutput107$",
+    "catcher": "want pinned receiver-origin refusal",
+    "log": "/tmp/stage3-front-3-landing-mutants/iterator-receiver-proof-disabled.log"
+  },
+  {
+    "name": "symbol-view-proof-disabled",
+    "status": "caught",
+    "test": "^TestClassWrongOutput108$",
+    "catcher": "want pinned symbol-key-view refusal",
+    "log": "/tmp/stage3-front-3-landing-mutants/symbol-view-proof-disabled.log"
+  },
+  {
+    "name": "static-private-proof-disabled",
+    "status": "caught",
+    "test": "^TestClassWrongOutput106$",
+    "catcher": "want pinned private-instance-from-static refusal",
+    "log": "/tmp/stage3-front-3-landing-mutants/static-private-proof-disabled.log"
+  },
+  {
+    "name": "parameter-property-proof-removed",
+    "status": "caught",
+    "test": "^TestParameterPropertiesSoundness$",
+    "catcher": "want refusal initialized",
+    "log": "/tmp/stage3-front-3-landing-parameter-mutant/parameter-property-proof-removed.log"
+  }
+]

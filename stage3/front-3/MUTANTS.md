@@ -1005,3 +1005,16 @@ All six debugger controls were rerun through Go source overlays with ADAMIC_GATE
 | lowering-dropped | JavaScript kept 0 debugger statements | caught |
 | debugger-refused | refuses debugger | caught |
 | flow-instruction | debugger changed the flow: 2 instructions | caught |
+
+## Current-main landing controls
+
+Four source-overlay controls compile and fail the pinned refusal checks. Node source observations remain unchanged. These intentional mutation failures are not unmodified compiler findings. Raw evidence is in landing/.
+
+| Mutant | Catcher | Result |
+| --- | --- | --- |
+| initializer-proof-removed | want path and repair | caught |
+| iterator-receiver-proof-disabled | want pinned receiver-origin refusal | caught |
+| symbol-view-proof-disabled | want pinned symbol-key-view refusal | caught |
+| static-private-proof-disabled | want pinned private-instance-from-static refusal | caught |
+
+Landing repair control: removing parameterProperty(member) from the initializer field check reproduces all three TestParameterPropertiesSoundness early-read refusal failures. Raw log: landing/parameter-property-proof-removed.log. The repair composes incoming ordinary-field read paths with existing parameter-property proofs.

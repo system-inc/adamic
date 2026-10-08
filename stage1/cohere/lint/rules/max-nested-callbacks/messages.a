@@ -1,0 +1,6 @@
+export const messageExceed =
+    'Too many nested callbacks (%d). Maximum allowed is %d. Each layer of callback moves the code that runs later further from the code that decided to run it, so by this depth the order of execution can no longer be read off the page. Name the inner functions and call them by name, or move to promises.';
+
+export function exceedMessage(depth: number, maximum: number): string {
+    return messageExceed.replace('%d', `${depth}`).replace('%d', `${maximum}`);
+}
