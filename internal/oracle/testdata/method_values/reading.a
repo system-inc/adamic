@@ -1,0 +1,13 @@
+// The test materializes this source as .ts; .a must refuse the same extraction.
+class Counter {
+ value = 7;
+ read(): number { console.log('entered'); return this.value; }
+ arrow(): number { const later = () => this.value; console.log('before arrow'); return later(); }
+}
+const counter = new Counter();
+console.log(`${counter.read()}`);
+const read = counter.read;
+try { console.log(`${read()}`); } catch (error) { if (error instanceof Error) { console.log(`${error.name}: ${error.message}`); } }
+const arrow = counter.arrow;
+try { console.log(`${arrow()}`); } catch (error) { if (error instanceof Error) { console.log(`${error.name}: ${error.message}`); } }
+console.log('caught');

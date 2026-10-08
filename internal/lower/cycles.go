@@ -56,6 +56,7 @@ type cycleFinder struct {
 	writes []fresh.Write
 
 	libraryIterators []libraryIteratorCapture
+	boundMethods     []struct{ callable, receiver *checker.Type }
 }
 
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
@@ -69,6 +70,15 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 				return false
 			}
 			finder.libraryIteratorMade(node)
+			if node.Kind == ast.KindCallExpression {
+				callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+				if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "bind" && len(node.AsCallExpression().Arguments.Nodes) == 1 {
+					method := ast.SkipParentheses(callee.AsPropertyAccessExpression().Expression)
+					if method.Kind == ast.KindPropertyAccessExpression && !l.libraryMember(method) {
+						finder.boundMethods = append(finder.boundMethods, struct{ callable, receiver *checker.Type }{l.checker.GetTypeAtLocation(node), l.checker.GetTypeAtLocation(node.AsCallExpression().Arguments.Nodes[0])})
+					}
+				}
+			}
 			switch {
 			case node.Kind == ast.KindObjectLiteralExpression:
 				// A literal is what a value may really be, and nothing is written through its own
@@ -393,6 +403,11 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
 			queue = append(queue, f.libraryIteratorCaptures(proven)...)
 		case f.isFunction(proven):
+			for _, bound := range f.boundMethods {
+				if f.l.checker.IsTypeAssignableTo(bound.callable, proven) {
+					queue = append(queue, cycleNode{proven: bound.receiver})
+				}
+			}
 			// Construct signatures can hide constructor objects behind an interface.
 			if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 				for symbol := range f.l.statics {

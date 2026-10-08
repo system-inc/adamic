@@ -236,19 +236,23 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	name := fmt.Sprintf("adamic_shape_%d", len(e.shapes))
 	e.shapes[key] = name
 	table := "NULL"
-	methodNames, thunks := []string{}, []string{}
+	methodNames, thunks, values := []string{}, []string{}, []string{}
 	for _, method := range methods {
 		if !e.dispatchable(method.Function) {
 			continue
 		}
 		methodNames = append(methodNames, cString(method.Name))
-		thunks = append(thunks, e.methodThunk(method.Function))
+		thunk := e.methodThunk(method.Function)
+		thunks = append(thunks, thunk)
+		value := thunk + "_value"
+		values = append(values, "&"+value)
 	}
 	if len(thunks) > 0 {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const char *const %s_method_names[] = {%s};", name, strings.Join(methodNames, ", ")),
 			fmt.Sprintf("static const adamic_method %s_method_code[] = {%s};", name, strings.Join(thunks, ", ")),
-			fmt.Sprintf("static const adamic_methods %s_methods = {%d, %s_method_names, %s_method_code};", name, len(thunks), name, name))
+			fmt.Sprintf("static adamic_closure *const %s_method_values[] = {%s};", name, strings.Join(values, ", ")),
+			fmt.Sprintf("static const adamic_methods %s_methods = {%d, %s_method_names, %s_method_code, %s_method_values};", name, len(thunks), name, name, name))
 		table = "&" + name + "_methods"
 	}
 	if len(fields) == 0 {
@@ -314,7 +318,7 @@ func (e *emitter) methodThunk(function int) string {
 		lines = append(lines, fmt.Sprintf("\treturn (adamic_value){.%s = %s};", member(method.Returns), slotted(method.Returns, call)))
 	}
 	lines = append(lines, "}")
-	e.declarations = append(e.declarations, strings.Join(lines, "\n"))
+	e.declarations = append(e.declarations, strings.Join(lines, "\n"), fmt.Sprintf("static adamic_closure %s_value = {.heap = {0, adamic_kind_closure, 0}, .code = adamic_method_value_call, .method = %s};", name, name))
 	return name
 }
 

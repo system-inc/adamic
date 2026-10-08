@@ -1,0 +1,194 @@
+[
+  {
+    "file": "notes/method-values/unsupported/absent_array.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/absent_array.a:1:127: stage 0 can't lower an Array method receiver that may be undefined yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/alias_field.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/alias_field.a:1:50: stage 0 can't lower a library method value outside a const alias (an object field erases its receiver and callable ABI); use an arrow yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/alias_identity.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/alias_identity.a:1:48: stage 0 can't lower a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/alias_return.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/alias_return.a:1:57: stage 0 can't lower a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/apply_hole.a",
+    "exit": 1,
+    "header": "// a-check: type error TS2345",
+    "diagnostic": "notes/method-values/unsupported/apply_hole.a:2:74: error TS2345: Argument of type '[never?]' is not assignable to parameter of type '[searchElement: any, fromIndex?: number | undefined]'.\n  Source provides no match for required element at position 0 in target.\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/apply_spread.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/apply_spread.a:1:56: stage 0 can't lower apply with holes or spread (argument presence is not proven) yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/apply_tuple.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/apply_tuple.a:1:93: stage 0 can't lower apply without a dense argument literal (length, presence and argument representations must be proven) yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/array_element_erasure.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/array_element_erasure.a:1:64: stage 0 can't lower a delayed Array result with an erased or different element type; preserve the receiver's exact element type yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/array_like.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/array_like.a:1:68: stage 0 can't lower an Array method receiver whose dense array representation is not proven yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/bind_absent.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/bind_absent.a:1:73: stage 0 can't lower bind without a proven present primitive string receiver yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/bind_arguments.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/bind_arguments.a:1:58: stage 0 can't lower bind without a supported captured receiver and fixed argument ABI (only zero-argument String methods are lowered); use an arrow yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/bind_array.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/bind_array.a:1:55: stage 0 can't lower bind without a supported captured receiver and fixed argument ABI (only zero-argument String methods are lowered); use an arrow yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/boxed_string.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/boxed_string.a:1:63: stage 0 can't lower a String method receiver whose primitive string representation is not proven yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/call_spread.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/call_spread.a:1:48: stage 0 can't lower spread into a delayed library call (argument arity is not proven) yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/delayed_fill_holes.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/delayed_fill_holes.a:1:63: stage 0 can't lower delayed fill of an array with holes; write the direct filled construction yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/instance_method.a",
+    "exit": 1,
+    "header": "// a-check: refused a method read as a value (get would lose its object, and this with it)",
+    "diagnostic": "adamic: notes/method-values/unsupported/instance_method.a:2:83: Adamic 0.1 refuses a method read as a value (get would lose its object, and this with it); call it in an arrow that keeps the object: () => object.get() or bind it: object.get.bind(object) (unbound-method)\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/map_numeric_parser.a",
+    "exit": 1,
+    "header": "// a-check: type error TS2345",
+    "diagnostic": "notes/method-values/unsupported/map_numeric_parser.a:2:26: error TS2345: Argument of type '(string: string) => number' is not assignable to parameter of type '(value: number, index: number, array: number[]) => number'.\n  Types of parameters 'string' and 'value' are incompatible.\n    Type 'number' is not assignable to type 'string'.\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/map_object.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/map_object.a:1:32: stage 0 can't lower a library map callback without a proven primitive adapter (map supplies value, index and array); use an arrow yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/map_other_callback.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/map_other_callback.a:1:63: stage 0 can't lower a library map callback without a proven primitive adapter (map supplies value, index and array); use an arrow yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/map_union.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/map_union.a:1:37: stage 0 can't lower an array of string | number yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/math_new_statics.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/math_new_statics.a:1:42: stage 0 can't lower a delayed Math call without a proven fixed argument count yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/math_variadic.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/math_variadic.a:1:41: stage 0 can't lower a delayed Math call without a proven fixed argument count yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/mutable_alias.a",
+    "exit": 1,
+    "header": "// a-check: refused a method read as a value (abs would lose its object, and this with it)",
+    "diagnostic": "adamic: notes/method-values/unsupported/mutable_alias.a:2:14: Adamic 0.1 refuses a method read as a value (abs would lose its object, and this with it); call it in an arrow that keeps the object: (x) => Math.abs(x) or bind it: Math.abs.bind(Math) (unbound-method)\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/number_receiver.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/number_receiver.a:1:67: stage 0 can't lower a Number method receiver without a proven number internal slot yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/object_mutation.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/object_mutation.a:1:46: stage 0 can't lower delayed Object mutation with an erased result shape; use a direct call yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/object_prototype_test.a",
+    "exit": 1,
+    "header": "// a-check: refused isPrototypeOf",
+    "diagnostic": "adamic: notes/method-values/unsupported/object_prototype_test.a:2:63: Adamic 0.1 refuses isPrototypeOf; Adamic has no observable prototype chain; use instanceof for class identity or an explicit discriminant\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/object_undefined_tag.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/object_undefined_tag.a:1:55: stage 0 can't lower Object.prototype.toString with arguments or a possibly undefined receiver yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/object_valueof.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/object_valueof.a:1:57: stage 0 can't lower delayed Object.prototype.valueOf (no adapter proves this receiver and argument ABI); use an arrow yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/optional_chain_alias.a",
+    "exit": 1,
+    "header": "// a-check: refused a method read as a value (indexOf would lose its object, and this with it)",
+    "diagnostic": "adamic: notes/method-values/unsupported/optional_chain_alias.a:2:16: Adamic 0.1 refuses a method read as a value (indexOf would lose its object, and this with it); call it in an arrow that keeps the object: (searchElement, fromIndex) => its object.indexOf(searchElement, fromIndex) or bind it: its object.indexOf.bind(its object) (unbound-method)\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/string_instance_method.a",
+    "exit": 1,
+    "header": "// a-check: refused a method read as a value (trim would lose its object, and this with it)",
+    "diagnostic": "adamic: notes/method-values/unsupported/string_instance_method.a:3:16: Adamic 0.1 refuses a method read as a value (trim would lose its object, and this with it); call it in an arrow that keeps the object: () => text.trim() or bind it: text.trim.bind(text) (unbound-method)\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/unbound_array.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/unbound_array.a:1:56: stage 0 can't lower an unbound Array method call (this is undefined); supply an array to call/apply yet\n"
+  },
+  {
+    "file": "notes/method-values/unsupported/zero_conversion.a",
+    "exit": 1,
+    "header": null,
+    "diagnostic": "adamic: notes/method-values/unsupported/zero_conversion.a:1:36: stage 0 can't lower delayed String with other than one argument yet\n"
+  }
+]

@@ -146,8 +146,7 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		{"!", "const map = new Map<string, number>();\nconst value = map.get('a')!;\n", "main.a:2:15: Adamic 0.1 refuses the non-null assertion !;"},
 		{"Math.random", "const roll = Math.random();\n", "main.a:1:14: Adamic 0.1 refuses Math.random;"},
 		{"Math.random, not called", "const roll = Math.random;\n", "main.a:1:14: Adamic 0.1 refuses Math.random;"},
-		{"a method read off its object", "class Counter {\n\tcount = 0;\n\tincrement(): number {\n\t\tthis.count += 1;\n\t\treturn this.count;\n\t}\n}\nconst counter = new Counter();\nconst detached: () => number = counter.increment;\n", "main.a:9:32: Adamic 0.1 refuses a method read as a value (increment would lose its object, and this with it); call it in an arrow that keeps the object: () => counter.increment() (unbound-method)"},
-		{"this.method read as a value", "class Counter {\n\tcount = 0;\n\tincrement(): number {\n\t\treturn 1;\n\t}\n\tsteps(): number[] {\n\t\treturn [1, 2].map(this.increment);\n\t}\n}\nconsole.log(new Counter().steps().join(','));\n", "main.a:7:21: Adamic 0.1 refuses a method read as a value (increment would lose its object, and this with it); call it in an arrow that keeps the object: () => this.increment() (unbound-method)"},
+		{"a method read off its object", "class Counter {\n\tcount = 0;\n\tincrement(): number {\n\t\tthis.count += 1;\n\t\treturn this.count;\n\t}\n}\nconst counter = new Counter();\nconst detached: () => number = counter.increment;\n", "main.a:9:32: Adamic 0.1 refuses a method read as a value (increment would lose its object, and this with it); call it in an arrow that keeps the object: () => counter.increment() or bind it: counter.increment.bind(counter) (unbound-method)"},
 		{"an unchecked cast", "type Pet = { readonly kind: 'Cat' } | { readonly kind: 'Dog' };\ninterface Named {\n\treadonly name: string;\n}\nconst pets: readonly Pet[] = [{ kind: 'Cat' }];\nfor (const pet of pets) {\n\tconst named = pet as unknown as Named;\n}\n", "main.a:7:16: Adamic 0.1 refuses a cast the runtime can't check;"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -625,7 +624,7 @@ func TestAMethodReadAsAValueIsRefused(t *testing.T) {
 		source string
 		want   string
 	}{
-		{"held in a variable", "const admit = shelter.admit;\n", "main.a:11:15: Adamic 0.1 refuses a method read as a value (admit would lose its object, and this with it); call it in an arrow that keeps the object: (pet) => shelter.admit(pet) (unbound-method)"},
+		{"held in a variable", "const admit = shelter.admit;\n", "main.a:11:15: Adamic 0.1 refuses a method read as a value (admit would lose its object, and this with it); call it in an arrow that keeps the object: (pet) => shelter.admit(pet) or bind it: shelter.admit.bind(shelter) (unbound-method)"},
 		{"passed as a callback", "console.log(['Rex'].map(shelter.admit).join());\n", "main.a:11:25: Adamic 0.1 refuses a method read as a value (admit would lose its object"},
 		{"in parentheses", "const admit = (shelter.admit);\n", "main.a:11:16: Adamic 0.1 refuses a method read as a value (admit would lose its object"},
 		{"read through this", "class Desk {\n\treadonly greeting: string = 'hi';\n\tgreet(): string {\n\t\treturn this.greeting;\n\t}\n\tlater(): () => string {\n\t\treturn this.greet;\n\t}\n}\n", "main.a:17:10: Adamic 0.1 refuses a method read as a value (greet would lose its object, and this with it); call it in an arrow that keeps the object: () => this.greet()"},

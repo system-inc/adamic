@@ -165,7 +165,7 @@ func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
 func chainRoot(expression ir.Expression, names map[string]bool) (int, bool) {
 	switch expression := expression.(type) {
 	case ir.Property:
-		if expression.Method || expression.Optional || expression.Object.Type() == ir.Weak {
+		if expression.Method || expression.Extracted || expression.Optional || expression.Object.Type() == ir.Weak {
 			return 0, false
 		}
 		names[expression.Name] = true

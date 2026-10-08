@@ -401,6 +401,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	node = ast.SkipParentheses(node)
+	if value, handled, err := l.userMethodValue(node); handled {
+		return value, err
+	}
 	if value, handled, err := l.typedArrayExpression(node); handled {
 		return value, err
 	}
@@ -577,7 +580,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		l.touch(l.this)
-		return ir.Read{Local: l.this, Of: ir.Object}, nil
+		return l.extractedThisRead(node, ir.Read{Local: l.this, Of: ir.Object})
 	case ast.KindArrowFunction:
 		return l.closure(node)
 	case ast.KindAsExpression:

@@ -1,0 +1,14 @@
+class Counter {
+ value = 7;
+ read(add: number): number { return this.value + add; }
+ arrow(): number { const later = () => this.value; return later(); }
+}
+function bound(): (add: number) => number { const counter = new Counter(); return counter.read.bind(counter); }
+const read = bound();
+console.log(`${read(2)} ${[1, 2].map(read).join(',')}`);
+const counter = new Counter();
+const arrow = counter.arrow.bind(counter);
+console.log(`${arrow()}`);
+const object = { value: 20, read(add: number): number { return this.value + add; } };
+const literal = object.read.bind(object);
+console.log(`${literal(3)} ${[1, 2].map(literal).join(',')} ${literal === object.read.bind(object)}`);

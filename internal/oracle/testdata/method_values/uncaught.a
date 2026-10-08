@@ -1,0 +1,4 @@
+// The test materializes this source as .ts; .a must refuse the same extraction.
+const object = { value: 1, read(): number { console.log('entered'); return this.value; } };
+const read = object.read;
+console.log(`${read()}`);

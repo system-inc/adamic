@@ -176,7 +176,7 @@ func (plan *regionPlan) escaping(body []ir.Statement, parameter int) bool {
 		case ir.Read:
 			return expression.Local == parameter
 		case ir.Property:
-			return derived(expression.Object)
+			return derived(expression.Object) || derived(expression.Bound)
 		case ir.Narrow:
 			return derived(expression.Value)
 		case ir.Defined:

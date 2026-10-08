@@ -302,6 +302,11 @@ static void free_one(void *value) {
 	}
 	case adamic_kind_closure: {
 		adamic_closure *closure = value;
+		if (closure->original != NULL && closure->original->unbound == closure) {
+			closure->original->unbound = NULL;
+		}
+		let_go(closure->original);
+		let_go(closure->bound);
 		for (size_t index = 0; index < closure->count; index++) {
 			let_go(closure->cells[index]);
 		}

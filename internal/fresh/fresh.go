@@ -1304,6 +1304,11 @@ func (a *analysis) value(expression ir.Expression) value {
 		a.value(expression.Object)
 		return value{}
 	case ir.Property:
+		if expression.Bound != nil {
+			original := a.load(a.value(expression.Object), expression.Name)
+			original.merge(a.value(expression.Bound))
+			return a.fresh("bound receiver", original)
+		}
 		return a.load(a.value(expression.Object), expression.Name)
 	case ir.ArrayIndex:
 		array := a.value(expression.Array)

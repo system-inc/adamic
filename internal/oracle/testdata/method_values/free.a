@@ -1,0 +1,21 @@
+class Free {
+ twice(value: number): number { return value * 2; }
+ arrow(value: number): number { const later = () => value + 3; return later(); }
+}
+const left = new Free();
+const right = new Free();
+const twice = left.twice;
+const arrow = left.arrow;
+console.log(`${arrow(4)}`);
+console.log(`${twice(4)} ${[1, 2].map(left.twice).join(',')} ${left.arrow(4)}`);
+console.log(`${twice === left.twice} ${twice === right.twice}`);
+const object = { offset: 10, plus(value: number): number { return value + 1; } };
+const plus = object.plus;
+console.log(`${plus(8)} ${[3, 4].map(object.plus).join(',')} ${plus === object.plus}`);
+const fresh = { again(value: number): number { return value + 4; } };
+function invoke(): number { const saved = fresh.again; return saved(1); }
+console.log(`${invoke()} ${invoke()}`);
+interface Reader { read(): number; }
+const reader: Reader = { read(): number { return 42; } };
+const read = reader.read;
+console.log(`${read()}`);

@@ -114,6 +114,15 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
+		if expression.Extracted {
+			object := e.value(expression.Object)
+			value := e.own(ir.Closure, fmt.Sprintf("adamic_object_method_value(%s, %s, &%s)", object, cString(expression.Name), e.cache()))
+			if expression.Bound != nil {
+				receiver := e.value(expression.Bound)
+				return e.own(ir.Closure, fmt.Sprintf("adamic_method_bind(%s, %s)", value, receiver))
+			}
+			return value
+		}
 		if taken, ok := e.take(expression); ok {
 			return taken
 		}

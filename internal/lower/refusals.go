@@ -161,7 +161,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			}
 			// Math.random has its own refusal, called or not.
 			isRandom := l.isLibraryGlobal(access.Expression, "Math") && access.Name().Text() == "random"
-			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom {
+			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0 && !isRandom && !l.methodValueAllowed(node, symbol) {
 				object := "its object"
 				if ast.IsIdentifier(access.Expression) || access.Expression.Kind == ast.KindThisKeyword {
 					object = scannedText(access.Expression)
@@ -174,7 +174,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 					}
 					parameters = strings.Join(names, ", ")
 				}
-				found = &Refused{Where: l.program.Where(node), What: "a method read as a value (" + symbol.Name + " would lose its object, and this with it)", Fix: "call it in an arrow that keeps the object: (" + parameters + ") => " + object + "." + symbol.Name + "(" + parameters + ") (unbound-method)"}
+				found = &Refused{Where: l.program.Where(node), What: "a method read as a value (" + symbol.Name + " would lose its object, and this with it)", Fix: "call it in an arrow that keeps the object: (" + parameters + ") => " + object + "." + symbol.Name + "(" + parameters + ") or bind it: " + object + "." + symbol.Name + ".bind(" + object + ") (unbound-method)"}
 				return true
 			}
 		}

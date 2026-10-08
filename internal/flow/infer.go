@@ -368,6 +368,13 @@ func (n *inference) value(expression ir.Expression) shape {
 		}
 		return result
 	case ir.Property:
+		if expression.Extracted {
+			holds := n.value(expression.Object).roots()
+			if expression.Bound != nil {
+				holds = append(holds, n.value(expression.Bound).roots()...)
+			}
+			return shape{fresh: true, holds: holds}
+		}
 		return shape{part: n.value(expression.Object).roots()}
 	case ir.ArrayIndex:
 		array := n.value(expression.Array)

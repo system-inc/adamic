@@ -320,6 +320,9 @@ type (
 		// class's method, called with the object as this. A method can't be read any other way
 		// (docs/0.1.md), so only a callee is one.
 		Method bool
+		// Extracted reads the callable without its receiver. Bound optionally supplies a receiver.
+		Extracted bool
+		Bound     Expression
 	}
 
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
