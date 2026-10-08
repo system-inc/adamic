@@ -1,5 +1,5 @@
 function lengthAfterClear(callback: ((value: number) => number) | undefined): number {
-    if (callback) {
+    if (callback !== undefined) {
         const clear = (): void => { callback = undefined; };
         clear();
         return callback.length;

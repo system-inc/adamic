@@ -1,0 +1,1804 @@
+{
+  "branch": "codex/notyet-object-property-topic",
+  "main": "6998ebc24ae353193cb1495d3d51308131a4b5c7",
+  "morning_census": "e8c283b5ed32477805357b652a170b85a04b2469",
+  "source_manifest_verified_files": 81,
+  "implementation_source_commits": [
+    "1caa348a",
+    "5a870515",
+    "e14ac01e",
+    "5414f776",
+    "20c552cd"
+  ],
+  "carried_commits": [
+    "72f42c6b6ca3656e374b0c1d971305f2783426b3",
+    "59f637a4f43664af3b2f5467498122f50328b0e3",
+    "7dc8d06e2c443a199c3b1484f5f82959ec75a0cf",
+    "0172b6559deaea2862ac1777955bbe7c139a7871",
+    "f77f6b70149fdd8ce6c7f813cb23ec49565cc0da"
+  ],
+  "no_feature_merges": true,
+  "measurement": "Checker-rejected entry-root program; no backend execution in replay. Earlier main blockers can prevent reaching a morning census site. An absent signature is not full compilation certification.",
+  "kinds": [
+    {
+      "kind": "optional chaining to .size on a value",
+      "morning_root_sites": 17,
+      "status": "lowered rule, held to Node by carried fixtures"
+    },
+    {
+      "kind": "an optional chain longer than one step",
+      "morning_root_sites": 14,
+      "status": "lowered rule, held to Node by carried fixtures"
+    },
+    {
+      "kind": "?. to a number, which would be number | undefined",
+      "morning_root_sites": 2,
+      "status": "lowered rule, held to Node by carried fixtures"
+    },
+    {
+      "kind": ".length on a value",
+      "morning_root_sites": 1,
+      "status": "lowered rule, held to Node by carried fixtures"
+    }
+  ],
+  "checked_view_chain_skip": {
+    "where": "src/compiler/checker.ts:36469:31",
+    "status": "skipped pending checked views",
+    "next_stop": "an optional property chain through an unrepresented field"
+  },
+  "other_property_skips": [
+    {
+      "kind": "a field of type string | NodeArray<JSDocComment> | undefined",
+      "root_sites": 24,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type true | Node | undefined",
+      "root_sites": 11,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type string | DiagnosticMessageChain",
+      "root_sites": 10,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type string | number | undefined",
+      "root_sites": 7,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]",
+      "root_sites": 4,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type false | Symbol | undefined",
+      "root_sites": 4,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>",
+      "root_sites": 4,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type string | number | boolean | DiagnosticMessage | undefined",
+      "root_sites": 2,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type boolean | (() => boolean) | undefined",
+      "root_sites": 2,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type EmitSignature | undefined",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type false | Type | undefined",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": ".length on a union of differently held members",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "NodeArray branding is held as an object on main, while plain arrays are held as arrays. Checked views are required to make these reads compatible."
+    },
+    {
+      "kind": "a field of type 0 | boolean | undefined",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type \"boolean\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type \"circularity\" | boolean",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type \"boolean\" | \"list\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": ".hasTrailingComma on a value",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "NodeArray branding is held as an object on main, while plain arrays are held as arrays. Checked views are required to make these reads compatible."
+    },
+    {
+      "kind": "a field of type false | string[] | undefined",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type false | VersionPaths | undefined",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type false | VersionPaths",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type string | false | undefined",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type string | false",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type string | true | undefined",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type AnyBuildOrder | undefined",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    },
+    {
+      "kind": "a field of type boolean | (() => boolean)",
+      "root_sites": 1,
+      "status": "skipped",
+      "why": "Main refuses boxed union field storage and reads. Completing these needs the field representation and checked-view integration, including objectLiteral/class lowering owned by other workers."
+    }
+  ],
+  "fixture_adaptations": [
+    "Use supported fixed-arity callbacks on main; retain direct declaration default/optional/erased-this/destructuring length witnesses.",
+    "Rest and optional/default callback lowering remain unavailable on main; their former runtime probes are deferred.",
+    "Use an explicit undefined comparison for the callback-cleared fixture because main refuses non-boolean conditions.",
+    "Replace the census-only field helper with main slotless in optional_property_chain."
+  ],
+  "baseline_reproduced": [
+    {
+      "where": "src/compiler/emitter.ts:6375:12",
+      "reason": ".length on a value",
+      "exit": 0,
+      "reproduced": true
+    },
+    {
+      "where": "src/compiler/builder.ts:705:10",
+      "reason": "optional chaining to .size on a value",
+      "exit": 0
+    },
+    {
+      "where": "src/compiler/program.ts:4862:13",
+      "reason": "an optional chain longer than one step",
+      "exit": 0
+    },
+    {
+      "where": "src/compiler/utilities.ts:8102:13",
+      "reason": "?. to a number, which would be number | undefined",
+      "exit": 0
+    }
+  ],
+  "verification": [
+    {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestObjectPropertyFunctionLengthNodeWitness|TestNativeAgreesWithNode/internal/oracle/testdata/object_property_' -count=1 -timeout 10m",
+      "output": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.351s"
+    },
+    {
+      "command": "go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts",
+      "output": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t21.574s"
+    }
+  ],
+  "focused_package_test_output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t1.868s\nok  \tgithub.com/system-inc/adamic/internal/ir\t14.096s\nok  \tgithub.com/system-inc/adamic/internal/native\t0.176s\n?   \tgithub.com/system-inc/adamic/internal/javascript\t[no test files]\nok  \tgithub.com/system-inc/adamic/internal/fresh\t0.023s",
+  "focused_package_command": "go test ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./internal/fresh -run 'TestConsoleLowersToWriteLine|TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestWhatZeroOneRefusesIsRefusedWithAFix|TestATupleSeenAsAnArrayIsNotYet|TestAMethodReadAsAValueIsRefused|TestLibraryMethodValueBoundaries|TestCallTargetReaders|TestCEndsInNewline|TestCallTargetsElementBorrowPlan|TestInheritanceMemoryPlans|TestBorrowChainTargets|TestFunctionLengthReceiverStillJudgesCycleWrites|TestRegexOperationsDoNotPoisonTreeWrites|TestRegexOperandsStillJudgeCycleWrites' -count=1",
+  "mutants": [
+    {
+      "mutant": "size-missing-zero",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "oracle_test.go:750: stdout differs"
+    },
+    {
+      "mutant": "chain-no-short-circuit",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "Node exit/output mismatch"
+    },
+    {
+      "mutant": "chain-ordinary-dot-optional",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "Node exit/output mismatch"
+    },
+    {
+      "mutant": "index-disable-guard",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "sanitized: exit 1, stdout \"\", stderr \"/tmp/adamic-gate/adamic-build-1291744004/main.c:151:85: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-1291744004/main.c:151:85 \\n\""
+    },
+    {
+      "mutant": "length-default-count",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "oracle_test.go:750: stdout differs"
+    },
+    {
+      "mutant": "length-optional-count",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "oracle_test.go:750: stdout differs"
+    },
+    {
+      "mutant": "length-erased-this-count",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "oracle_test.go:750: stdout differs"
+    },
+    {
+      "mutant": "length-binding-pattern",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "panic: Unhandled case in Node.Text: *ast.BindingPattern [recovered, repanicked]"
+    },
+    {
+      "mutant": "length-js-zero",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "oracle_test.go:756: JavaScript backend: stdout differs"
+    },
+    {
+      "mutant": "length-repeat-receiver",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "oracle_test.go:750: stdout differs"
+    },
+    {
+      "mutant": "length-drop-optional",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "sanitized: exit 1, stdout \"\", stderr \"/tmp/adamic-gate/adamic-build-2193319096/main.c:38:13: runtime error: member access within null pointer of type 'adamic_closure' (aka 'struct adamic_closure')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-2193319096/main.c:38:13 \\n\""
+    },
+    {
+      "mutant": "number-drop-optional",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "sanitized: exit 1, stdout \"\", stderr \"/tmp/adamic-gate/adamic-build-1366835076/main.c:129:56: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-1366835076/main.c:129:56 \\n\""
+    },
+    {
+      "mutant": "length-fresh-operand",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/fresh",
+        "-run",
+        "TestFunctionLengthReceiverStillJudgesCycleWrites",
+        "-count=1"
+      ],
+      "catcher": "function_length_test.go:27: function length lost its receiver's cycle-closing write"
+    },
+    {
+      "mutant": "index-eager-key",
+      "exit": 1,
+      "status": "caught",
+      "command": [
+        "go",
+        "test",
+        "./internal/oracle",
+        "-run",
+        "TestNativeAgreesWithNode/internal/oracle/testdata/object_property_",
+        "-count=1",
+        "-timeout",
+        "10m"
+      ],
+      "catcher": "oracle_test.go:750: stdout differs"
+    }
+  ],
+  "invalid_mutant_attempts_not_credited": [
+    "An initial numeric mutant caused a Go unused-variable error; replaced with a compiling semantic mutant.",
+    "The initial freshness mutation pattern did not match; replaced with the actual operand-walker mutation."
+  ],
+  "replays": [
+    {
+      "where": "src/compiler/builder.ts:1796:34",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/builder.ts:1748:9",
+          "kind": "NotYet",
+          "reason": "reading Debug"
+        },
+        {
+          "where": "src/compiler/builder.ts:1752:13",
+          "kind": "Refused",
+          "reason": "a boolean | undefined as a condition"
+        },
+        {
+          "where": "src/compiler/builder.ts:1756:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "where": "src/compiler/builder.ts:1824:13",
+          "kind": "NotYet",
+          "reason": "reading emitKind"
+        },
+        {
+          "where": "src/compiler/builder.ts:1825:13",
+          "kind": "NotYet",
+          "reason": "reading emitKind"
+        },
+        {
+          "where": "src/compiler/builder.ts:1828:13",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/builder.ts:1846:40",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "src/compiler/builder.ts:1847:13",
+          "kind": "NotYet",
+          "reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+        },
+        {
+          "where": "src/compiler/builder.ts:1852:30",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "src/compiler/builder.ts:1853:13",
+          "kind": "NotYet",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "where": "src/compiler/builder.ts:1854:37",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "src/compiler/builder.ts:1855:52",
+          "kind": "NotYet",
+          "reason": "reading existingPending"
+        },
+        {
+          "where": "src/compiler/builder.ts:1856:17",
+          "kind": "NotYet",
+          "reason": "reading pendingKind"
+        },
+        {
+          "where": "src/compiler/builder.ts:1858:17",
+          "kind": "NotYet",
+          "reason": "reading result"
+        },
+        {
+          "where": "src/compiler/builder.ts:1862:13",
+          "kind": "NotYet",
+          "reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+        },
+        {
+          "where": "src/compiler/builder.ts:1864:40",
+          "kind": "Refused",
+          "reason": "a number as a condition"
+        },
+        {
+          "where": "src/compiler/builder.ts:1869:37",
+          "kind": "NotYet",
+          "reason": "reading emitKind"
+        },
+        {
+          "where": "src/compiler/builder.ts:1870:39",
+          "kind": "NotYet",
+          "reason": "reading result"
+        },
+        {
+          "where": "src/compiler/builder.ts:1873:18",
+          "kind": "NotYet",
+          "reason": "reading result"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/builder.ts:705:10",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/builder.ts:705:9",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number | undefined"
+        },
+        {
+          "where": "src/compiler/builder.ts:706:9",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a boolean | undefined"
+        },
+        {
+          "where": "src/compiler/builder.ts:710:5",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "src/compiler/builder.ts:719:9",
+          "kind": "Refused",
+          "reason": "a number | undefined as a condition"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/builder.ts:756:10",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/builder.ts:756:9",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number | undefined"
+        },
+        {
+          "where": "src/compiler/utilities.ts:746:17",
+          "kind": "NotYet",
+          "reason": "a function returning U | undefined"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/builder.ts:778:10",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/builder.ts:778:9",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number | undefined"
+        },
+        {
+          "where": "src/compiler/utilities.ts:746:17",
+          "kind": "NotYet",
+          "reason": "a function returning U | undefined"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:12166:17",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:12160:34",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:12166:17",
+          "kind": "Refused",
+          "reason": "a number | undefined as a condition"
+        },
+        {
+          "where": "src/compiler/checker.ts:12172:13",
+          "kind": "Refused",
+          "reason": "a number | undefined as a condition"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:12172:13",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:12160:34",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:12166:17",
+          "kind": "Refused",
+          "reason": "a number | undefined as a condition"
+        },
+        {
+          "where": "src/compiler/checker.ts:12172:13",
+          "kind": "Refused",
+          "reason": "a number | undefined as a condition"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:2821:14",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:2821:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number | undefined"
+        },
+        {
+          "where": "src/compiler/checker.ts:2822:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number | undefined"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:2822:14",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:2821:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number | undefined"
+        },
+        {
+          "where": "src/compiler/checker.ts:2822:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number | undefined"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:36290:43",
+      "reason": ".length on a union of differently held members",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/core.ts:33:17",
+          "kind": "NotYet",
+          "reason": "a function returning U | undefined"
+        },
+        {
+          "where": "src/compiler/checker.ts:36285:22",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:36286:52",
+          "kind": "NotYet",
+          "reason": "reading args"
+        },
+        {
+          "where": "src/compiler/checker.ts:36287:13",
+          "kind": "NotYet",
+          "reason": "reading spreadIndex"
+        },
+        {
+          "where": "src/compiler/checker.ts:36307:16",
+          "kind": "NotYet",
+          "reason": "reading args"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:36469:31",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/utilities.ts:2416:81",
+          "kind": "NotYet",
+          "reason": "a parameter that isn't a plain name"
+        },
+        {
+          "where": "src/compiler/core.ts:622:31",
+          "kind": "NotYet",
+          "reason": "a NonNullExpression"
+        },
+        {
+          "where": "src/compiler/checker.ts:36436:27",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a number and a string"
+        },
+        {
+          "where": "src/compiler/checker.ts:36438:57",
+          "kind": "NotYet",
+          "reason": "reading parameterRange"
+        },
+        {
+          "where": "src/compiler/checker.ts:36439:13",
+          "kind": "NotYet",
+          "reason": "reading isVoidPromiseError"
+        },
+        {
+          "where": "src/compiler/checker.ts:36446:13",
+          "kind": "NotYet",
+          "reason": "reading isVoidPromiseError"
+        },
+        {
+          "where": "src/compiler/utilities.ts:8751:141",
+          "kind": "NotYet",
+          "reason": "a parameter that isn't a plain name"
+        },
+        {
+          "where": "src/compiler/checker.ts:36453:17",
+          "kind": "NotYet",
+          "reason": "assigning to an Identifier"
+        },
+        {
+          "where": "src/compiler/checker.ts:36365:118",
+          "kind": "NotYet",
+          "reason": "a parameter that isn't a plain name"
+        },
+        {
+          "where": "src/compiler/checker.ts:36463:17",
+          "kind": "NotYet",
+          "reason": "assigning to an Identifier"
+        },
+        {
+          "where": "src/compiler/checker.ts:36469:31",
+          "kind": "NotYet",
+          "reason": "an optional property chain through an unrepresented field"
+        },
+        {
+          "where": "src/compiler/checker.ts:36470:17",
+          "kind": "NotYet",
+          "reason": "reading parameter"
+        },
+        {
+          "where": "src/compiler/checker.ts:36481:31",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/core.ts:1099:5",
+          "kind": "NotYet",
+          "reason": "reading Debug"
+        },
+        {
+          "where": "src/compiler/core.ts:1100:12",
+          "kind": "NotYet",
+          "reason": "a NonNullExpression"
+        },
+        {
+          "where": "src/compiler/checker.ts:36482:31",
+          "kind": "NotYet",
+          "reason": "reading errorSpan"
+        },
+        {
+          "where": "src/compiler/core.ts:1122:5",
+          "kind": "NotYet",
+          "reason": "reading Debug"
+        },
+        {
+          "where": "src/compiler/core.ts:1123:12",
+          "kind": "NotYet",
+          "reason": "a NonNullExpression"
+        },
+        {
+          "where": "src/compiler/checker.ts:36483:28",
+          "kind": "NotYet",
+          "reason": "reading errorSpan"
+        },
+        {
+          "where": "src/compiler/checker.ts:36484:17",
+          "kind": "NotYet",
+          "reason": "reading end"
+        },
+        {
+          "where": "src/compiler/utilities.ts:10655:6",
+          "kind": "Refused",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "where": "src/compiler/utilities.ts:10645:6",
+          "kind": "Refused",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "where": "src/compiler/checker.ts:36487:32",
+          "kind": "NotYet",
+          "reason": "reading errorSpan"
+        },
+        {
+          "where": "src/compiler/checker.ts:36490:17",
+          "kind": "NotYet",
+          "reason": "assigning to an Identifier"
+        },
+        {
+          "where": "src/compiler/checker.ts:36491:96",
+          "kind": "NotYet",
+          "reason": "reading errorSpan"
+        },
+        {
+          "where": "src/compiler/utilities.ts:2422:122",
+          "kind": "NotYet",
+          "reason": "a parameter that isn't a plain name"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:37712:22",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:37697:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:37701:13",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a boolean and a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:37703:13",
+          "kind": "NotYet",
+          "reason": "reading func"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:37725:21",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:37720:17",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:37728:21",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:37720:17",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:37872:17",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:37830:17",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:37848:55",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "src/compiler/checker.ts:37854:13",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a number and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:37858:56",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:37872:17",
+          "kind": "Refused",
+          "reason": "a number | undefined as a condition"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:45184:23",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:45064:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:45074:17",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a boolean and a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:45081:17",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:45094:17",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a boolean and a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:45098:17",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:45106:26",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:45107:49",
+          "kind": "NotYet",
+          "reason": "reading name"
+        },
+        {
+          "where": "src/compiler/checker.ts:45122:136",
+          "kind": "NotYet",
+          "reason": "a field of type boolean | undefined"
+        },
+        {
+          "where": "src/compiler/core.ts:33:17",
+          "kind": "NotYet",
+          "reason": "a function returning U | undefined"
+        },
+        {
+          "where": "src/compiler/checker.ts:45129:13",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:45138:42",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a boolean and a value"
+        },
+        {
+          "where": "src/compiler/core.ts:622:31",
+          "kind": "NotYet",
+          "reason": "a NonNullExpression"
+        },
+        {
+          "where": "src/compiler/core.ts:2480:13",
+          "kind": "NotYet",
+          "reason": "a parameter that isn't a plain name"
+        },
+        {
+          "where": "src/compiler/checker.ts:45139:72",
+          "kind": "NotYet",
+          "reason": "a [node: Node] seen as a Node (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])"
+        },
+        {
+          "where": "src/compiler/checker.ts:45140:17",
+          "kind": "NotYet",
+          "reason": "reading needCheckInitializer"
+        },
+        {
+          "where": "src/compiler/checker.ts:45166:13",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a number and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:2539:76",
+          "kind": "NotYet",
+          "reason": "a parameter that isn't a plain name"
+        },
+        {
+          "where": "src/compiler/checker.ts:45179:33",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a boolean and a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:45180:17",
+          "kind": "NotYet",
+          "reason": "reading initializer"
+        },
+        {
+          "where": "src/compiler/checker.ts:45206:17",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:45220:17",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number"
+        },
+        {
+          "where": "src/compiler/checker.ts:45224:17",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a boolean and a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:45227:17",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:44984:14",
+          "kind": "NotYet",
+          "reason": "a function returning undefined"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:4745:17",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:4731:13",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:4744:59",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/checker.ts:4750:22",
+          "kind": "NotYet",
+          "reason": "reading contextSpecifier"
+        },
+        {
+          "where": "src/compiler/checker.ts:4754:32",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/checker.ts:4755:51",
+          "kind": "NotYet",
+          "reason": "reading resolvedModule"
+        },
+        {
+          "where": "src/compiler/checker.ts:4756:28",
+          "kind": "NotYet",
+          "reason": "reading resolvedModule"
+        },
+        {
+          "where": "src/compiler/checker.ts:4759:13",
+          "kind": "NotYet",
+          "reason": "reading sourceFile"
+        },
+        {
+          "where": "src/compiler/checker.ts:4867:13",
+          "kind": "Refused",
+          "reason": "a value as a condition"
+        },
+        {
+          "where": "src/compiler/checker.ts:4882:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "where": "src/compiler/checker.ts:4887:13",
+          "kind": "NotYet",
+          "reason": "reading resolvedModule"
+        },
+        {
+          "where": "src/compiler/checker.ts:4901:17",
+          "kind": "NotYet",
+          "reason": "reading resolvedModule"
+        },
+        {
+          "where": "src/compiler/checker.ts:4909:17",
+          "kind": "NotYet",
+          "reason": "reading resolutionDiagnostic"
+        },
+        {
+          "where": "src/compiler/checker.ts:4947:9",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/checker.ts:53798:27",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/checker.ts:53797:32",
+          "kind": "NotYet",
+          "reason": "a field of type boolean | undefined"
+        },
+        {
+          "where": "src/compiler/checker.ts:53798:41",
+          "kind": "NotYet",
+          "reason": "reading jsxImportIndex"
+        },
+        {
+          "where": "src/compiler/checker.ts:53799:13",
+          "kind": "NotYet",
+          "reason": "reading specifier"
+        },
+        {
+          "where": "src/compiler/checker.ts:53802:16",
+          "kind": "NotYet",
+          "reason": "reading specifier"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/emitter.ts:6375:12",
+      "reason": ".length on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/emitter.ts:6375:32",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:2519:13",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/moduleNameResolver.ts:2490:26",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "where": "src/compiler/moduleNameResolver.ts:2492:9",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/moduleNameResolver.ts:2528:46",
+          "kind": "Refused",
+          "reason": "a string as a condition"
+        },
+        {
+          "where": "src/compiler/moduleNameResolver.ts:2529:64",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "src/compiler/path.ts:579:44",
+          "kind": "NotYet",
+          "reason": "a parameter that isn't a plain name"
+        },
+        {
+          "where": "src/compiler/moduleNameResolver.ts:2532:9",
+          "kind": "NotYet",
+          "reason": "reading versionPaths"
+        },
+        {
+          "where": "src/compiler/moduleNameResolver.ts:2545:101",
+          "kind": "NotYet",
+          "reason": "a NonNullExpression"
+        },
+        {
+          "where": "src/compiler/moduleNameResolver.ts:2546:9",
+          "kind": "NotYet",
+          "reason": "reading packageFileResult"
+        },
+        {
+          "where": "src/compiler/moduleNameResolver.ts:2549:9",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/parser.ts:6176:20",
+      "reason": "?. to a number, which would be number | undefined",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/parser.ts:6165:22",
+          "kind": "NotYet",
+          "reason": "an array of never"
+        },
+        {
+          "where": "src/compiler/parser.ts:6171:68",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/parser.ts:6172:18",
+          "kind": "NotYet",
+          "reason": "reading child"
+        },
+        {
+          "where": "src/compiler/parser.ts:6173:13",
+          "kind": "NotYet",
+          "reason": "an array of any"
+        },
+        {
+          "where": "src/compiler/parser.ts:6176:20",
+          "kind": "NotYet",
+          "reason": "reading child"
+        },
+        {
+          "where": "src/compiler/parser.ts:2595:23",
+          "kind": "NotYet",
+          "reason": "passing boolean | undefined to a function value"
+        },
+        {
+          "where": "src/compiler/parser.ts:2596:9",
+          "kind": "panic",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "where": "",
+          "kind": "error",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "where": "src/compiler/parser.ts:2597:16",
+          "kind": "NotYet",
+          "reason": "reading array"
+        },
+        {
+          "where": "src/compiler/parser.ts:6186:32",
+          "kind": "NotYet",
+          "reason": "reading list"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/program.ts:1365:35",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": false,
+      "findings": []
+    },
+    {
+      "where": "src/compiler/program.ts:3791:16",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/program.ts:3791:16",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a value"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/program.ts:4862:13",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": false,
+      "findings": []
+    },
+    {
+      "where": "src/compiler/program.ts:4869:13",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": false,
+      "findings": []
+    },
+    {
+      "where": "src/compiler/programDiagnostics.ts:233:38",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/programDiagnostics.ts:214:33",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:216:35",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:217:13",
+          "kind": "NotYet",
+          "reason": "reading cachedChain"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:233:60",
+          "kind": "NotYet",
+          "reason": "reading reasons"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:236:13",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:238:28",
+          "kind": "NotYet",
+          "reason": "reading cachedChain"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:262:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:281:17",
+          "kind": "NotYet",
+          "reason": "reading cachedChain"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:292:18",
+          "kind": "NotYet",
+          "reason": "reading cachedChain"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:295:26",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:296:16",
+          "kind": "NotYet",
+          "reason": "reading location"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:300:9",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:307:9",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:317:9",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/programDiagnostics.ts:236:31",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/programDiagnostics.ts:214:33",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:216:35",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:217:13",
+          "kind": "NotYet",
+          "reason": "reading cachedChain"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:233:60",
+          "kind": "NotYet",
+          "reason": "reading reasons"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:236:13",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:238:28",
+          "kind": "NotYet",
+          "reason": "reading cachedChain"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:262:13",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:281:17",
+          "kind": "NotYet",
+          "reason": "reading cachedChain"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:292:18",
+          "kind": "NotYet",
+          "reason": "reading cachedChain"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:295:26",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:296:16",
+          "kind": "NotYet",
+          "reason": "reading location"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:300:9",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:307:9",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "where": "src/compiler/programDiagnostics.ts:317:9",
+          "kind": "NotYet",
+          "reason": "a function inside a function (a closure)"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/resolutionCache.ts:838:66",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/resolutionCache.ts:838:65",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number | undefined"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:2464:24",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/transformers/module/module.ts:2462:39",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2463:17",
+          "kind": "NotYet",
+          "reason": "reading importDeclaration"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2470:34",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2471:17",
+          "kind": "NotYet",
+          "reason": "reading declarations"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2486:38",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2487:17",
+          "kind": "NotYet",
+          "reason": "reading exportSpecifiers"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/transformers/module/module.ts:2473:38",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/transformers/module/module.ts:2462:39",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2463:17",
+          "kind": "NotYet",
+          "reason": "reading importDeclaration"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2470:34",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2471:17",
+          "kind": "NotYet",
+          "reason": "reading declarations"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2486:38",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "src/compiler/transformers/module/module.ts:2487:17",
+          "kind": "NotYet",
+          "reason": "reading exportSpecifiers"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:2016:37",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/transformers/module/system.ts:2012:39",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2013:17",
+          "kind": "NotYet",
+          "reason": "reading importDeclaration"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2015:38",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2016:17",
+          "kind": "NotYet",
+          "reason": "reading valueDeclaration"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2020:34",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2021:17",
+          "kind": "NotYet",
+          "reason": "reading declarations"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2027:20",
+          "kind": "NotYet",
+          "reason": "reading valueDeclaration"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/transformers/module/system.ts:2023:61",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/transformers/module/system.ts:2012:39",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2013:17",
+          "kind": "NotYet",
+          "reason": "reading importDeclaration"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2015:38",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2016:17",
+          "kind": "NotYet",
+          "reason": "reading valueDeclaration"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2020:34",
+          "kind": "NotYet",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2021:17",
+          "kind": "NotYet",
+          "reason": "reading declarations"
+        },
+        {
+          "where": "src/compiler/transformers/module/system.ts:2027:20",
+          "kind": "NotYet",
+          "reason": "reading valueDeclaration"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:10095:28",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/utilities.ts:10095:28",
+          "kind": "Refused",
+          "reason": "a number | undefined as a condition"
+        },
+        {
+          "where": "src/compiler/utilities.ts:10098:33",
+          "kind": "NotYet",
+          "reason": "reading specifiers"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:8102:13",
+      "reason": "?. to a number, which would be number | undefined",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/utilities.ts:8107:13",
+          "kind": "NotYet",
+          "reason": "a declaration directly in a case (wrap the case in a block)"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:9417:9",
+      "reason": "an optional chain longer than one step",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/utilities.ts:9413:36",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "src/compiler/core.ts:1750:25",
+          "kind": "NotYet",
+          "reason": "a value of type unknown"
+        },
+        {
+          "where": "src/compiler/utilities.ts:9415:31",
+          "kind": "NotYet",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "where": "src/compiler/utilities.ts:9417:9",
+          "kind": "NotYet",
+          "reason": "reading jsxRuntimePragma"
+        },
+        {
+          "where": "src/compiler/utilities.ts:9420:12",
+          "kind": "NotYet",
+          "reason": "a BinaryExpression with a boolean and a string"
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:9538:18",
+      "reason": "optional chaining to .size on a value",
+      "exit": 1,
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true,
+      "findings": [
+        {
+          "where": "src/compiler/utilities.ts:9538:17",
+          "kind": "NotYet",
+          "reason": "a PrefixUnaryExpression on a number | undefined"
+        }
+      ]
+    }
+  ]
+}

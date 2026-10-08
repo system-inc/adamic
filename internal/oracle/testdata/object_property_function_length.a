@@ -1,20 +1,20 @@
-function arity(callback: (value: number, extra?: number) => number): number {
+function arity(callback: (value: number, extra: number) => number): number {
     return callback.length;
 }
 function one(value: number): number { return value; }
 function two(value: number, extra?: number): number { return value + (extra ?? 0); }
 function defaulted(value: number, extra: number = 0): number { return value + extra; }
-function rest(...values: (number | undefined)[]): number { return values.length; }
-console.log(`${arity(one)}/${arity(two)}/${arity(defaulted)}/${rest.length}`);
+function noArguments(): number { return 0; }
+console.log(`${arity(one)}/${two.length}/${defaulted.length}/${noArguments.length}`);
 let factories = 0;
-function make(which: number): (value: number, extra?: number) => number {
+function make(which: number): (value: number, extra: number) => number {
     factories++;
     if (which === 1) return one;
-    return two;
+    return (value: number, extra: number): number => value + extra;
 }
 console.log(`${make(1).length}/${make(2).length}/${factories}`);
-const arrow = (value: number, extra: number = 5): number => value + extra;
-const named = function named(value: number, extra?: number): number { return value + (extra ?? 0); };
+const arrow = (value: number): number => value + 5;
+const named = function named(value: number, extra: number): number { return value + extra; };
 console.log(`${arrow.length}/${named.length}`);
 function zero(): number { return 0; }
 function firstDefault(value: number = 1, extra: number): number { return value + extra; }

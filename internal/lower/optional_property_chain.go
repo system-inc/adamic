@@ -122,7 +122,7 @@ func (l *lowering) optionalPropertyChain(node *ast.Node) (ir.Expression, error) 
 				return nil, l.notYet(step, "an optional property chain through a non-own data field")
 			}
 			stored, known := l.representation(l.checker.GetTypeOfSymbol(field))
-			if !known || censusFieldSlotless(stored) || stored == ir.Weak || l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+			if !known || slotless(stored) || stored == ir.Weak || l.includesNull(l.checker.GetTypeOfSymbol(field)) {
 				return nil, l.notYet(step, "an optional property chain through an unrepresented field")
 			}
 			next = l.readObjectField(step, ir.Property{Object: read, Name: part, Of: stored, Class: l.classOf(step)})
