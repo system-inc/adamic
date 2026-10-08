@@ -1,0 +1,58 @@
+{
+  "stock_files": 80,
+  "adapted_files": 81,
+  "stock_kinds": {
+    "as_cast": 6231,
+    "any_declaration": 214,
+    "explicit_any": 210
+  },
+  "dispositions": {
+    "open": 4228,
+    "proven_safe_upcast": 2266,
+    "rewritten": 161
+  },
+  "by_kind": {
+    "any_declaration": {
+      "rewritten": 55,
+      "open": 159
+    },
+    "as_cast": {
+      "open": 3957,
+      "proven_safe_upcast": 2266,
+      "rewritten": 8
+    },
+    "explicit_any": {
+      "rewritten": 98,
+      "open": 112
+    }
+  },
+  "by_adaptation": {
+    "40-explicit-any": 125,
+    "43-any-returns": 11,
+    "41-explicit-any-remaining": 24,
+    "32-indexed-reads-program": 1
+  },
+  "adapted_additions": {
+    "proven_safe_upcast": 30,
+    "open": 33
+  },
+  "open_casts": {
+    "total": 3988,
+    "unchecked_refusal": 3757,
+    "other_observed": 228,
+    "unresolved": 3,
+    "states": {
+      "refused": 3875,
+      "runtime_check": 108,
+      "unresolved": 3,
+      "upcast": 2
+    }
+  },
+  "outside_compiler": {
+    "src/tsc/_namespaces/ts.ts": {},
+    "src/tsc/tsc.ts": {}
+  },
+  "source_files_added": [
+    "src/compiler/hostErrors.ts"
+  ]
+}

@@ -1,30 +1,33 @@
 {
-  "base_sha": "3ffb1a835184713998a34874e86326cd21db971f",
-  "typescript": "6.0.3",
+  "repository_sha": "b7e1c193e6f6f34264e31a39a270726b83c6ece4",
   "source": {
     "repository": "https://github.com/microsoft/TypeScript.git",
     "tag": "v6.0.3",
     "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
   },
-  "extra_adaptations": [
+  "extras": [
     {
-      "name": "43-any-returns",
-      "branch": "codex/stage3-real-any",
-      "sha": "643639ea30051875d2ba1a133866081bc8999e2a"
+      "adaptation": "43-any-returns",
+      "sha": "643639ea30051875d2ba1a133866081bc8999e2a",
+      "source": "stage3/adapt/43-any-returns"
     }
   ],
-  "missing_requested_adaptations": [
-    "41",
-    "42"
-  ],
-  "status": "pending required adaptation refs; not published",
+  "node_types": "25.3.3",
+  "lock_sha256": "e85be648176ba25eaa38f9c1b7b7ca9bab782b0c448fb15fc44c355c40ef9a4b",
+  "preparation": "canonical CLI through 70; resume at atomic 71 rejection with the documented signature-only composition",
+  "base_sha": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "typescript": "6.0.3",
+  "status": "complete main plus 43 with documented scratch compositions",
+  "scanner_provenance": "main contains scanner rules in 41-explicit-any-remaining; no separate 42-scanner-any directory",
   "semantic_diagnostics": {
     "stock": 0,
     "adapted": 0,
-    "40_before": 0,
-    "40_after": 0,
-    "43_before": 0,
-    "43_after": 0
+    "40-explicit-any_before": 0,
+    "40-explicit-any_after": 0,
+    "41-explicit-any-remaining_before": 0,
+    "41-explicit-any-remaining_after": 0,
+    "43-any-returns_before": 0,
+    "43-any-returns_after": 0
   },
   "compiler_proof_sha256": {
     "internal/load/load.go": "696744f1f05fbf6607a6a35d1b8bc54c2cb669f4319d09b7c6c49df5806f7839",

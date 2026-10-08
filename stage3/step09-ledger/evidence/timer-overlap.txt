@@ -1,0 +1,50 @@
+{
+  "stock_return_site": "src/compiler/sys.ts:50:82:explicit_any",
+  "disposition": "rewritten",
+  "owner": "41-explicit-any-remaining",
+  "count": 1,
+  "duplicate_credit_mutant_caught": true,
+  "json_contract_mutant_caught": true,
+  "composition": [
+    {
+      "stock": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
+      "retained": "declare function setTimeout(handler: () => void, timeout: number): NodeJS.Timeout;",
+      "skipped": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): ReturnType<typeof globalThis.setTimeout>;",
+      "owner": "41-explicit-any-remaining",
+      "skipped_rule": "43-any-returns:setTimeout",
+      "reason": "same stock return site already rewritten by main"
+    },
+    {
+      "owner": "43-any-returns",
+      "composition": "71-writable-views",
+      "function": "convertConfigFileToObject",
+      "original": {
+        "file": "src/compiler/commandLineParser.ts",
+        "before": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Diagnostic[],\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any ",
+        "after": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any "
+      },
+      "composed": {
+        "file": "src/compiler/commandLineParser.ts",
+        "before": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Diagnostic[],\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryObject ",
+        "after": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryObject "
+      },
+      "reason": "71 changes parameter type; retain earlier 43 return type"
+    },
+    {
+      "owner": "43-any-returns",
+      "composition": "71-writable-views",
+      "function": "convertToJson",
+      "original": {
+        "file": "src/compiler/commandLineParser.ts",
+        "before": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Diagnostic[],\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any ",
+        "after": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any "
+      },
+      "composed": {
+        "file": "src/compiler/commandLineParser.ts",
+        "before": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Diagnostic[],\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryValue | undefined ",
+        "after": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryValue | undefined "
+      },
+      "reason": "71 changes parameter type; retain earlier 43 return type"
+    }
+  ]
+}

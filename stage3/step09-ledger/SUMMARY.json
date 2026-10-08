@@ -7,28 +7,29 @@
     "explicit_any": 210
   },
   "dispositions": {
-    "open": 4257,
-    "proven_safe_upcast": 2260,
-    "rewritten": 138
+    "open": 4228,
+    "proven_safe_upcast": 2266,
+    "rewritten": 161
   },
   "by_kind": {
     "any_declaration": {
-      "rewritten": 53,
-      "open": 161
+      "rewritten": 55,
+      "open": 159
     },
     "as_cast": {
-      "open": 3967,
-      "proven_safe_upcast": 2260,
-      "rewritten": 4
+      "open": 3957,
+      "proven_safe_upcast": 2266,
+      "rewritten": 8
     },
     "explicit_any": {
-      "rewritten": 81,
-      "open": 129
+      "rewritten": 98,
+      "open": 112
     }
   },
   "by_adaptation": {
     "40-explicit-any": 125,
-    "43-any-returns": 12,
+    "43-any-returns": 11,
+    "41-explicit-any-remaining": 24,
     "32-indexed-reads-program": 1
   },
   "by_file": {
@@ -51,10 +52,10 @@
     },
     "src/compiler/builderStatePublic.ts": {},
     "src/compiler/checker.ts": {
-      "as_cast:open": 2130,
+      "as_cast:open": 2124,
       "any_declaration:rewritten": 2,
       "explicit_any:rewritten": 1,
-      "as_cast:proven_safe_upcast": 44,
+      "as_cast:proven_safe_upcast": 50,
       "explicit_any:open": 4,
       "any_declaration:open": 29
     },
@@ -80,10 +81,10 @@
       "explicit_any:rewritten": 2
     },
     "src/compiler/debug.ts": {
-      "as_cast:open": 48,
-      "explicit_any:open": 3,
-      "as_cast:rewritten": 2,
-      "explicit_any:rewritten": 23,
+      "as_cast:open": 47,
+      "explicit_any:open": 2,
+      "as_cast:rewritten": 3,
+      "explicit_any:rewritten": 24,
       "as_cast:proven_safe_upcast": 3,
       "any_declaration:open": 1,
       "any_declaration:rewritten": 3
@@ -164,12 +165,12 @@
       "as_cast:open": 1
     },
     "src/compiler/program.ts": {
-      "explicit_any:open": 3,
+      "explicit_any:rewritten": 2,
       "any_declaration:open": 9,
       "as_cast:open": 34,
       "as_cast:proven_safe_upcast": 3,
-      "any_declaration:rewritten": 1,
-      "explicit_any:rewritten": 1
+      "explicit_any:open": 2,
+      "any_declaration:rewritten": 1
     },
     "src/compiler/programDiagnostics.ts": {
       "as_cast:open": 2
@@ -181,11 +182,9 @@
       "as_cast:proven_safe_upcast": 1
     },
     "src/compiler/scanner.ts": {
-      "any_declaration:rewritten": 3,
-      "explicit_any:rewritten": 3,
-      "any_declaration:open": 1,
-      "explicit_any:open": 3,
-      "as_cast:open": 2,
+      "any_declaration:rewritten": 4,
+      "explicit_any:rewritten": 6,
+      "as_cast:rewritten": 2,
       "as_cast:proven_safe_upcast": 2
     },
     "src/compiler/semver.ts": {},
@@ -198,13 +197,13 @@
       "explicit_any:open": 3
     },
     "src/compiler/sys.ts": {
-      "explicit_any:open": 12,
-      "explicit_any:rewritten": 4,
-      "any_declaration:open": 15,
+      "explicit_any:rewritten": 6,
+      "any_declaration:rewritten": 2,
       "as_cast:rewritten": 2,
       "as_cast:open": 9,
       "as_cast:proven_safe_upcast": 2,
-      "any_declaration:rewritten": 1
+      "any_declaration:open": 14,
+      "explicit_any:open": 10
     },
     "src/compiler/tracing.ts": {
       "any_declaration:open": 3,
@@ -311,18 +310,19 @@
     },
     "src/compiler/types.ts": {
       "any_declaration:rewritten": 26,
-      "explicit_any:rewritten": 26,
+      "explicit_any:rewritten": 30,
       "any_declaration:open": 1,
-      "explicit_any:open": 6,
+      "explicit_any:open": 2,
       "as_cast:proven_safe_upcast": 1
     },
     "src/compiler/utilities.ts": {
-      "as_cast:open": 281,
+      "as_cast:open": 280,
       "as_cast:proven_safe_upcast": 10,
       "any_declaration:rewritten": 1,
-      "explicit_any:rewritten": 1,
+      "explicit_any:rewritten": 6,
       "any_declaration:open": 4,
-      "explicit_any:open": 14
+      "explicit_any:open": 9,
+      "as_cast:rewritten": 1
     },
     "src/compiler/utilitiesPublic.ts": {
       "as_cast:open": 46,
@@ -335,8 +335,9 @@
     },
     "src/compiler/watch.ts": {
       "as_cast:open": 8,
-      "explicit_any:open": 3,
+      "explicit_any:open": 2,
       "as_cast:proven_safe_upcast": 1,
+      "explicit_any:rewritten": 1,
       "any_declaration:open": 1
     },
     "src/compiler/watchPublic.ts": {
@@ -353,15 +354,16 @@
     "src/tsc/tsc.ts": {}
   },
   "adapted_additions": {
-    "open": 30
+    "proven_safe_upcast": 30,
+    "open": 33
   },
   "open_casts": {
-    "total": 3997,
-    "unchecked_refusal": 3764,
-    "other_observed": 230,
+    "total": 3988,
+    "unchecked_refusal": 3757,
+    "other_observed": 228,
     "unresolved": 3,
     "states": {
-      "refused": 3884,
+      "refused": 3875,
       "runtime_check": 108,
       "unresolved": 3,
       "upcast": 2
@@ -371,12 +373,17 @@
     "src/compiler/_namespaces/ts.moduleSpecifiers.ts": {},
     "src/compiler/_namespaces/ts.performance.ts": {},
     "src/compiler/_namespaces/ts.ts": {},
-    "src/compiler/binder.ts": {},
+    "src/compiler/binder.ts": {
+      "as_cast:proven_safe_upcast": 3
+    },
     "src/compiler/builder.ts": {},
     "src/compiler/builderPublic.ts": {},
     "src/compiler/builderState.ts": {},
     "src/compiler/builderStatePublic.ts": {},
-    "src/compiler/checker.ts": {},
+    "src/compiler/checker.ts": {
+      "as_cast:proven_safe_upcast": 21,
+      "as_cast:open": 1
+    },
     "src/compiler/commandLineParser.ts": {
       "as_cast:open": 2
     },
@@ -385,6 +392,7 @@
     "src/compiler/debug.ts": {},
     "src/compiler/diagnosticInformationMap.generated.ts": {},
     "src/compiler/emitter.ts": {
+      "as_cast:proven_safe_upcast": 1,
       "as_cast:open": 2
     },
     "src/compiler/executeCommandLine.ts": {},
@@ -413,8 +421,12 @@
     },
     "src/compiler/path.ts": {},
     "src/compiler/performance.ts": {},
-    "src/compiler/performanceCore.ts": {},
-    "src/compiler/program.ts": {},
+    "src/compiler/performanceCore.ts": {
+      "explicit_any:open": 1
+    },
+    "src/compiler/program.ts": {
+      "as_cast:proven_safe_upcast": 2
+    },
     "src/compiler/programDiagnostics.ts": {},
     "src/compiler/resolutionCache.ts": {},
     "src/compiler/scanner.ts": {},
@@ -425,7 +437,8 @@
     "src/compiler/symbolWalker.ts": {},
     "src/compiler/sys.ts": {},
     "src/compiler/tracing.ts": {
-      "as_cast:open": 2
+      "as_cast:open": 2,
+      "explicit_any:open": 1
     },
     "src/compiler/transformer.ts": {},
     "src/compiler/transformers/classFields.ts": {},
@@ -433,7 +446,9 @@
     "src/compiler/transformers/declarations.ts": {},
     "src/compiler/transformers/declarations/diagnostics.ts": {},
     "src/compiler/transformers/destructuring.ts": {},
-    "src/compiler/transformers/es2015.ts": {},
+    "src/compiler/transformers/es2015.ts": {
+      "as_cast:proven_safe_upcast": 2
+    },
     "src/compiler/transformers/es2016.ts": {},
     "src/compiler/transformers/es2017.ts": {},
     "src/compiler/transformers/es2018.ts": {},
@@ -455,7 +470,9 @@
     "src/compiler/transformers/typeSerializer.ts": {},
     "src/compiler/transformers/utilities.ts": {},
     "src/compiler/tsbuild.ts": {},
-    "src/compiler/tsbuildPublic.ts": {},
+    "src/compiler/tsbuildPublic.ts": {
+      "as_cast:proven_safe_upcast": 1
+    },
     "src/compiler/types.ts": {},
     "src/compiler/utilities.ts": {},
     "src/compiler/utilitiesPublic.ts": {},

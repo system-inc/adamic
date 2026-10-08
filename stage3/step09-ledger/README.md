@@ -1,8 +1,8 @@
 Step 09 ledger of TypeScript 6.0.3's tsc source closure, measured with the compiler API.
-Topic base: origin/main 3ffb1a835184713998a34874e86326cd21db971f; no compiler or adaptation merges.
+Merged topic base: origin/main 45487a809f89885a3fc651cd590e7dabf31362dc; extra adaptation 43 stays in scratch.
 Stock inventory: 210 explicit any tokens, 214 any-typed declarations and 6,231 as expressions.
 The one-of-each fixture passes; the mutant which leaves rewritten sites open is caught.
-Publication is pending the branch references for adaptations 41 and 42; adaptation 43 is included.
+Main plus adaptation 43 is measured; the shared setTimeout return site is counted once.
 
 Coverage and definitions
 
@@ -42,7 +42,7 @@ snapshots proving the type changed from any. An edit that leaves a cast in sourc
 does not by itself clear that cast. New adapted casts are inventoried separately
 and are included in open.json when unresolved.
 
-A safe upcast needs both stock checker assignability and Adamic's actual castProof
+A safe upcast needs both the stock compiler API's assignability on the adapted site and Adamic's actual castProof
 acceptance without a runtime-check plan. as const uses Adamic's explicit literal
 assertion exemption and is identified separately by proof_kind. Runtime-checked
 casts remain source-open: the probe reports that a check is available, without
@@ -52,7 +52,7 @@ other unresolved probe stays open with an unknown unchecked-refusal result.
 The cast probe is a Go overlay, not a compiler change. It disables the ordinary
 loader output path, preserves the populated checker despite diagnostics, and calls
 main's castProof independently at every adapted as expression. Its checker uses
-main's Adamic defaults plus Node declarations. Those options differ from stock's
+main's Adamic defaults plus Node declarations. Those options differ from the compiler API's
 project options; the safe category therefore requires both observations. Generic
 casts are observed in their uninstantiated source context. Future concrete generic
 instantiations are outside this census's claim. Every open cast carries its observed
@@ -66,11 +66,33 @@ Main supplies 40-explicit-any and the rest of its numeric pipeline. Adaptation
 43-any-returns comes from codex/stage3-real-any at
 643639ea30051875d2ba1a133866081bc8999e2a and runs before 45 in numeric order.
 Its README and rules were read; its source is extracted into scratch only.
-The branch's six return-contract changes can also change inferred declarations;
-those receive immediate semantic evidence rather than token-only credit. Its three
+The branch's return-contract changes can also change inferred declarations;
+those receive immediate semantic evidence rather than token-only credit. Its two
 new object-view assertions are counted, rather than assumed safe from the rewrite.
-No branch containing adaptations 41 or 42 was found in the inspected remote refs.
-Their references have been requested; they are required before publication.
+Main at 45487a80 contains 41-explicit-any-remaining, including scanner rules 1
+and 4. There is no separate 42-scanner-any directory in that tree; scanner sites
+are credited to the adaptation which actually edits them, 41. No missing adapter
+is invented or credited.
+
+41 rule 13 and 43's setTimeout rule replace the same stock return token.
+Their complete declarations differ: main uses a parameterless handler and
+NodeJS.Timeout, while 43 uses any[] and ReturnType<typeof globalThis.setTimeout>.
+Preparation retains main's reviewed declaration and removes only the overlapping
+43 timer rule from the extracted scratch rules. It checks that 41 has already
+applied before running the remaining 43 rules. The original branch files stay
+unchanged. composition.json records both alternatives. The API-based overlap
+fixture finds the stock function's return token, requires exactly one ledger
+entry credited to 41, and catches a mutant which appends a second credit to 43.
+
+71-writable-views also matches the two JSON converters' complete signatures,
+including their old any return annotations. Applying 43 first makes those exact
+anchors fail. The initial run caught that mismatch before 71 wrote any files.
+Preparation copies 71 into scratch and updates only its before/after return
+annotations to 43's concrete types. Its parameter edits, audits and runtime
+fingerprint checks are unchanged. The compiler API verifies both final return
+contracts and both parameter types; a mutant restoring convertToJson's any
+return is caught by that contract check. The two composed patterns are recorded in
+composition.json; the repository's adaptation files remain untouched.
 
 Reproduction
 
@@ -85,20 +107,10 @@ bash cloud/setup.sh > /tmp/step09-setup.txt 2>&1
 source /workspace/adamic-tools/env.sh
 export NODE_PATH=/path/to/stock-typescript-6.0.3/node_modules
 python3 stage3/step09-ledger/prepare.py /tmp/step09-new --node-modules /path/to/upstream/node_modules --extra 643639ea:stage3/adapt/43-any-returns > /tmp/step09-prepare.txt 2>&1
-node stage3/step09-ledger/enumerate.cjs /tmp/step09-new/stock /tmp/step09-new/stock.json > /tmp/step09-stock.txt 2>&1
-node stage3/step09-ledger/enumerate.cjs /tmp/step09-new/adapted /tmp/step09-new/adapted.json > /tmp/step09-adapted.txt 2>&1
-python3 stage3/step09-ledger/make_overlay.py /tmp/step09-overlay > /tmp/step09-overlay.txt 2>&1
-go build -overlay /tmp/step09-overlay/overlay.json -o /tmp/step09-probe ./stage3/step09-ledger/probe > /tmp/step09-build.txt 2>&1
-```
-
-Pass all adapted closure paths and node_modules/@types/node/index.d.ts as arguments
-to the probe, storing its stdout JSON and stderr in separate files. Then:
-
-```
-python3 stage3/step09-ledger/ledger.py /tmp/step09-new/stock.json /tmp/step09-new/adapted.json /tmp/step09-new/transitions.json /tmp/step09-casts.json /tmp/step09-result > /tmp/step09-summary.txt 2>&1
-STEP09_CAST_PROBE=/tmp/step09-probe python3 stage3/step09-ledger/test_fixture.py > /tmp/step09-fixture.txt 2>&1
-go vet -overlay /tmp/step09-overlay/overlay.json ./stage3/step09-ledger/probe > /tmp/step09-probe-vet.txt 2>&1
+python3 stage3/step09-ledger/run.py /tmp/step09-new /tmp/step09-output > /tmp/step09-run.txt 2>&1
 go vet ./... > /tmp/step09-vet.txt 2>&1
+go test ./internal/load -count=1 > /tmp/step09-loader-tests.txt 2>&1
+go test ./internal/oracle -count=1 -timeout 30m -run '^TestNativeAgreesWithNode/dedication/dedication.a$' > /tmp/step09-oracle.txt 2>&1
 ```
 
 The fixture's single authored main.a has exactly one explicit any, one declaration
@@ -108,29 +120,39 @@ transpiled source runs and reports value=1 widened=1. The real classification mu
 suppresses rewrite dispositions; it reports two open sites and is caught by that
 independent expected answer, rather than a parser or build failure.
 
-Setup: Node 0.033s, Go 0.034s, submodules 0.090s, markdown 0.092s, clang 0.171s,
-build 11.900s, cache 12.076s, total 12.157s. nproc is 5; CPU quota is 4.
+Refresh setup: Node 0.052s, Go 0.038s, submodules 0.182s, markdown 0.130s, clang 0.465s,
+build 39.785s, cache 39.967s, total 40.052s. nproc is 5; CPU quota is 4.
 The initial full scratch copy exhausted disk space; only newly created upstream
 test copies were removed and the run resumed with source-only snapshots and the
 single API baseline required by adaptation 40. The complete Go gate, native tsc
 execution, and oracle/lane comparisons of the adaptations are not claimed by this
 ledger unit. No production compiler or adaptation file is changed.
 
-Current measured counts, pending adaptations 41 and 42
+Current measured counts against main plus 43
 
 | Kind | Stock sites | Rewritten | Safe upcast | Open |
 | --- | ---: | ---: | ---: | ---: |
-| Explicit any | 210 | 81 | 0 | 129 |
-| Any-typed declarations | 214 | 53 | 0 | 161 |
-| As casts | 6,231 | 4 | 2,260 | 3,967 |
-| Total | 6,655 | 138 | 2,260 | 4,257 |
+| Explicit any | 210 | 98 | 0 | 112 |
+| Any-typed declarations | 214 | 55 | 0 | 159 |
+| As casts | 6,231 | 8 | 2,266 | 3,957 |
+| Total | 6,655 | 161 | 2,266 | 4,228 |
 
-Adaptation 40 clears 125 ledger entries, 43 clears 12, and 32 clears one.
-These are overlapping syntactic/declaration inventories, not 138 independent
-runtime obligations. Thirty additional adapted casts are open. All 3,997 open
-casts have a full-span Adamic probe: 3,764 receive the unchecked-cast refusal,
-120 receive another refusal, 108 have a runtime-check proof, two differ from the
-stock assignability result and remain open, and three panic and remain unresolved.
+Adaptation 40 clears 125 stock ledger entries, 41 clears 24, 43 clears 11,
+and 32 clears one. These are overlapping syntactic/declaration inventories,
+not 161 independent runtime obligations. Relative to the earlier main-plus-43
+measurement, 23 more stock sites are rewritten, six more are safe, and 29 fewer
+are open. Scanner sites are credited to 41's actual rules, not to a missing
+42 directory. The shared timer return contributes one entry to 41's 24.
+
+The final tree adds 61 casts: 30 safe upcasts and 31 open. It also adds two
+explicit-any tokens in 65's local ambient require return declarations; these
+are open. open.json therefore contains 4,261 current open obligations.
+All 3,988 open casts have a full-span Adamic probe: 3,757 receive the unchecked
+cast refusal, 118 receive another refusal, 108 have a runtime-check plan,
+two differ from the adapted API assignability result and remain open, and
+three panic and remain unresolved. The complete adapted cast probe covers
+6,284 casts with no missing spans.
+
 Both tsc files outside compiler have zero sites of all three kinds. Per-file
 counts including the added helper are in FILES.md and SUMMARY.json; complete stock
 entries are in ledger.json; all current open obligations are in open.json.
@@ -139,12 +161,16 @@ The nested regression fixture gives one safe upcast and one unchecked refusal
 for 1 as unknown as number. Their expression starts are identical; their end
 positions differ. Probe matching therefore uses both start and end, and duplicate
 proof spans fail the ledger rather than overwrite a result. The complete runner
-also passes on the miniature fixture. The touched measurement fixture, rewrite
-mutant, overlay vet, repository vet, internal/load tests and the filtered
-TestNativeAgreesWithNode/dedication/dedication.a oracle pass. Output is in evidence/.
-The preparation CLI is a packaged equivalent of the source-only preparation
-commands used for this run; a second full preparation was not run. Use run.py to
-execute the measurement and fixture over its prepared tree in one fail-fast call.
+passes on the refreshed full closure. The touched measurement fixture, rewrite
+mutant, duplicate-credit mutant, JSON-return mutant, overlay vet, repository vet,
+internal/load tests and the filtered
+TestNativeAgreesWithNode/dedication/dedication.a oracle pass. Output is in evidence/. runner-fixture.txt retains the pre-refresh miniature
+runner receipt; run.txt records the current full-closure run.
+The canonical preparation CLI ran through 70, then caught the original 71
+signature mismatch. After the documented scratch-only composition, preparation
+resumed from that atomic rejection; the complete run.py measures the resulting
+full closure. The preparation CLI includes that composition for future fresh
+runs. Its immutable snapshots hard-link identical contents to save scratch disk.
 
 Source excerpts in the JSON data come from Microsoft TypeScript 6.0.3,
 copyright Microsoft Corporation, under Apache-2.0. Upstream trees are external

@@ -27,6 +27,7 @@ def main():
     with (out/'casts.json').open('w') as result,(out/'casts-errors.txt').open('w') as error:
         subprocess.run([str(probe),*roots],cwd=ROOT,stdout=result,stderr=error,check=True)
     run(['python3',str(HERE/'ledger.py'),str(out/'stock.json'),str(out/'adapted.json'),str(prepared/'transitions.json'),str(out/'casts.json'),str(out/'result')],'reconcile.txt')
+    run(['node',str(HERE/'test_overlap.cjs'),str(prepared),str(out/'result')],'timer-overlap.txt')
     run(['python3',str(HERE/'test_fixture.py')],'fixture.txt',dict(os.environ,STEP09_CAST_PROBE=str(probe)))
     run(['go','vet','-overlay',str(overlay/'overlay.json'),'./stage3/step09-ledger/probe'],'probe-vet.txt')
     print(json.dumps(json.loads((out/'result/SUMMARY.json').read_text())['dispositions'],indent=2))
