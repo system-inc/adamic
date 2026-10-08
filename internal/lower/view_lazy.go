@@ -171,6 +171,7 @@ func (l *lowering) checkLazyViewReads() error {
 		}
 		var receiver ir.Expression
 		var typeID, receiverTypeID int
+		var selectedContract ir.ViewContractID
 		var field, where string
 		operationFamily := ""
 		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
@@ -186,6 +187,8 @@ func (l *lowering) checkLazyViewReads() error {
 				operationFamily = "dictionary enumeration"
 			} else if read.DictionaryRead == nil {
 				operationFamily = "dictionary read without a supported contract"
+			} else if read.DictionaryRead.DictionaryPrimitive && ir.PrimitiveDictionaryReadCertificate(program, *read.DictionaryRead) {
+				selectedContract = read.DictionaryRead.ViewContract
 			} else if id := program.ViewContractTypes[typeID]; id != 0 {
 				if _, ok := ir.DictionaryReadKinds(program, id); !ok {
 					operationFamily = "dictionary element"
@@ -217,6 +220,9 @@ func (l *lowering) checkLazyViewReads() error {
 			return true
 		}
 		contract := program.ViewContractTypes[typeID]
+		if selectedContract != 0 {
+			contract = selectedContract
+		}
 		family := operationFamily
 		if contract != 0 {
 			if unsupported := program.ViewContracts[contract-1].Unsupported; unsupported != "" {

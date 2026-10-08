@@ -1,8 +1,8 @@
-Certified fourteen original primitive pairs, 91 candidate reads, including private graph and watch receivers.
-Commit: this checkpoint on codex/views-mixed-unions-2, after a4df9433.
-Checks: private receiver oracle PASS 47.782s; extra exact-member mutants PASS 14.800s; vet passed; prior twelve-group suite PASS 299.401s.
-Mutants: cumulative 42 backend kills of actual-value member-check removal and 28 of untested first-member substitution.
-Uncovered: intersection receivers, primitive arrays and shared dictionary alternatives; candidate counts only.
+Certified the remaining four array pairs / nine reads and three original dictionary scalar/nullish components / fourteen reads.
+Commits: dca0b478 for arrays; this dictionary checkpoint on codex/views-mixed-unions-2.
+Checks: final original + component + array-safety oracle PASS 107.925s; lower/ir/JS PASS 1.502s / 0.083s / 2.233s; proof tests and vet PASS.
+Mutants: arrays eight member, eight first-member and one metadata kills; dictionaries eight member, eight first-member and eight null-erasure backend kills.
+Uncovered: original rich dictionary reference alternatives, other lanes' families and exact whole-tsc reachability; no full-gate claim.
 
 | Original pair | Candidate reads | Status |
 | --- | ---: | --- |
@@ -212,3 +212,57 @@ Corrected candidate column: 52 pairs / 651 reads certified; 9 / 35 remaining.
 Raw column: 11 / 39 remaining, including two scalar tuple false positives.
 Owned remaining: three shared rich dictionary selector components / fourteen
 reads. Dictionary null hooks are in progress and receive no credit in this batch.
+
+Original dictionary scalar/nullish batch:
+
+| Original receiver | Candidate reads | Certified component |
+| --- | ---: | --- |
+| CompilerOptions | 10 | string, number, boolean, null, undefined and missing lookup |
+| OptionsBase | 3 | same scalar/nullish selection |
+| BuildOptions | 1 | same scalar/nullish selection |
+
+Stock source witnesses, original index types and whole receiver field sets are
+recorded in dictionary-candidates.json. Fixtures import full hash-pinned original
+modules, verify all original receiver fields, and assert the original unsupported
+reference descriptor remains present. Helpers retain the exact original types.
+Ordinary boxed records and viewed fixed objects use the same generic helper.
+
+Read admission previously consulted the whole nullable descriptor, so unread
+dictionary objects and multiple array alternatives poisoned a selected scalar.
+Named dictionaryPrimitiveReadContract creates a distinct complete primitive
+certificate. It preserves the original full contract and type ID. The get/read
+dispatch uses that certificate only after PrimitiveDictionaryReadCertificate
+proves all admitted kinds scalar/nullish. Runtime source tags and storage are
+checked at every read, including unknown flow. Global unknown fallback and
+unsupported descriptors remain intact. Reference values are excluded and stop
+with named exit-70 pins until their owners implement those alternatives.
+
+Null is classified and boxed with the existing adamic_null sentinel rather than
+undefined. Stringification is admitted only after a complete scalar/nullish
+dictionary selection, including record get. JS uses its existing closure type
+tag with a fallback for standalone kernel probes. No lookup, absence, enumeration,
+storage layout or ownership ABI is replaced.
+
+Every valid primitive member matches Node in both backends with sanitizers and
+leak checks. Wrong function values have exact named refusal pins. Each original
+receiver has actual-value member-admission, first-member and null-erasure mutants;
+all execute valid release code and are caught. Generic selector controls repeat
+these mutations. Existing dictionary skip-check, wrong-shape and transitive
+contract mutants also pass their regression gate. Reference-arm refusal controls
+earn no reference certification credit.
+
+Final command: ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-brand2-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+''^TestCheckedView(OriginalDictionaryPrimitiveComponents|PrimitiveDictionarySelector|DictionaryComponents|DictionaryComponentMutants|PrimitiveArraySafety)$''
+-count=1 -v -timeout 10m. PASS 107.925s; native misses 31, Node misses 115,
+zero hits. Proof tests PASS lower 0.687s / ir 0.016s. Final focused lower/ir/JS
+PASS 1.502s / 0.083s / 2.233s; vet PASS. Earlier diagnostic and conversion seams
+are retained in logs; none are counted as green.
+
+Owned candidate work now has zero pairs / zero reads remaining: all seven /
+twenty-three components are delivered ahead of October 13. Full-union column
+credit remains 52 / 651, with corrected 9 / 35 remaining. That remaining scope
+contains the three dictionary reference components / fourteen reads, lane 4b
+object alternatives four / eighteen, and lane 7 intersections two / three.
+Raw remaining is eleven / thirty-nine, including two tuple scalar false positives.
+Exact whole-tsc reachability still requires a checker-clean program.

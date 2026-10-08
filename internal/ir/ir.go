@@ -370,6 +370,8 @@ type (
 	Property struct {
 		// DictionaryKey selects an own string key; its read always validates storage.
 		DictionaryKey Expression
+		// DictionaryPrimitive retains the original type ID but checks only scalar/nullish arms; reference arms stop at this read.
+		DictionaryPrimitive bool
 		// View names a required field read whose presence, readiness and representation are checked.
 		Nullish            bool
 		NullAllowed        bool

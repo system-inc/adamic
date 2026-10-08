@@ -2306,3 +2306,21 @@ that sentinel for both scalar null slots and boxed records. No lookup, absence,
 enumeration, allocation layout or ownership ABI is changed. Lane 6 owns those
 operations; lane 4 certifies only the scalar/nullish component of rich original
 CompilerOptions, OptionsBase and BuildOptions element unions.
+
+DictionaryReadKinds unwraps only supported nullable descriptors, preserving
+Unsupported, unknown and cycle refusals. Named primitiveDictionaryStringValue
+in library_string.go permits stringification only after a dictionary selector
+whose full admitted kind set is primitive/nullish. JS dictionary classification
+uses existing adamicTypeOf so AdamicClosure receives its function tag.
+Original rich dictionary candidates still refuse their unsupported reference
+member selection; generic selector controls earn no original-pair credit.
+
+Named dictionaryPrimitiveReadContract selects complete open string/number/boolean
+plus nullish arms from a rich original union without erasing its full descriptor.
+DictionaryPrimitive records a distinct read certificate; original ViewTypeID
+and cast contracts remain intact. records.go attaches it at get; readiness
+retains it; lazy admission uses it only after PrimitiveDictionaryReadCertificate
+proves every admitted runtime kind primitive/nullish. Unknown flow fallback is
+unchanged. Actual reference kinds are excluded and stop at this read until their
+owning lane provides selection, so unread reference alternatives cannot poison
+a selected scalar. Object and array alternatives receive no certification credit.
