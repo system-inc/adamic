@@ -1,3 +1,33 @@
+# Group 3 ruled delivery
+
+Built boxed callable unions, registered class constructor values and closed lexical constructor caches, and library-small operations through the existing regex callback protocol.
+Commits: own function-values, new-expression and library-small commits replayed individually after 0a167e089; the void-value topic was withdrawn after a base-fixture regression.
+Checks: required package results and refreshed counts are in evidence/group3-ruled; the focused Node oracle passed in both backends (9.263s), and counts refreshed successfully (75.720s).
+Mutants: five function boundary/source mutants, eleven constructor mutants and thirteen library proof/runtime/IR checks were caught; catches and commands follow.
+Not delivered: topics failing a retained refusal, checked-view dependencies, and resolutions held by automatic approval review.
+
+Function-values preserves the current Map union fixtures and drops the topic's reinstated Map-union refusal witness. The five mutants cover return/argument union fitting, invariant reference views and call/return boxing. Both native and JavaScript are compared with Node; the view controls require a loud stop.
+
+New-expression uses CallTargets for the lexical initializer and requires every known target to have no closure or environment. Zero arguments and additional-capture rules remain. Six class-value mutants cover eager caching, missing cache storage, static allocators, callee re-read, repeated construction and repeated arguments. Three local-cache mutants cover eager initialization, missing storage and extra captures; the cache-or eager-init and Uint16 admission mutants complete eleven catches. Uint16 stays withdrawn pending its runtime representation. Its two deliberate refusal controls and the extra-capture control are excluded from flow's runnable program list by exact filenames, while their explicit refusal tests stay registered.
+
+Library-small retains regexReplacement's runtime callback protocol. Seven runtime mutations cover match content, literal replacement, Unicode, global iteration, offset, lastIndex reset and collection order; two offset/input controls, three string bound/position mutations and the capture-free proof mutation complete thirteen checks. Both script entry points invoke these current runtime checks. Literal object-entry inference uses the topic's const-assertion proof. No native runtime ABI was changed by this delivery.
+
+Void-value is skipped: its new helper refuses the existing positive stage3/fixtures/taste/13_void_callback.a:6:16 callable result. Its own three positives and seven mutants passed before withdrawal, but that does not justify regressing the stack. The final oracle includes the preserved taste fixture.
+
+Optional-call is skipped: optional_call_collections.a:18:17 hits the retained single-intrinsic-operand receiver refusal. Its seven other positive fixtures passed, including the preserved literal receiver behavior.
+
+Element-type is skipped: element_type_array_unions.a:8:32 reaches the retained uncheckable object-tag refusal; element_type_unions.a:14:16 reaches the template object/array/map/function/undefined boundary.
+
+Rest-args is skipped: rest_tuple_create.a:4:17 and rest_tuple_update.a:4:17 retain the non-array rest refusal; rest_union_token.a:8:62, rest_union_diagnostic.a:7:60 and rest_callable_write.a:10:27 retain the unpackable-spread refusal. A review-only signature fix turns the checker panic into the exact named stop; neither the topic nor that fix is delivered.
+
+This-outside is skipped: union_object_kind.a:3:13 and union_object_kind_stale.a:5:13 retain the uncheckable object-tag refusal; the five generic receiver positives passed.
+
+Generic-returns-t is skipped: notyet_signature_object.a:4:28 needs the opaque host collection/object checked-view proof; eleven other positive reductions passed.
+
+Case-declaration, void-or-undefined and for-in remain held by automatic approval review. File-by-file stack and topic behaviors and concrete proposals are in REMAINING-PROPOSALS.md. No rejected edit ran. Method-values and binary remain held by the earlier proposals. For-of-object, class-construction, class-set-property, object-property, destructuring, object-small and representations remain skipped for checked views as ruled. Overloads, statements-small, element-access and syntax-kinds were delivered at e0e234ea and stay in the stack.
+
+Commands: go test ./internal/lower ./internal/ir ./internal/flow ./internal/javascript; the exact focused oracle and counts commands are recorded in COMMANDS.md. Mutation scripts: run-function-values-mutants.py, run-function-values-boundary-mutants.py, run-class-value-mutants.py, run-cache-local-mutants.py, run-cache-or-mutant.py, run-uint16-notyet-mutant.py, run-library-small-regex-mutants.py, the library runtime and IR mutation tests, and the capture-proof source overlay. The withdrawn void-value script was also run and caught seven mutants. All retained logs are compressed without changing their content.
+
 # Group 2 ruled statics delivery
 
 Catalog on 7941cee0fcc51626e00b11ac761d071bb2c31122: exit 0, 255.426s, all 11 applicable undo patches applied and were caught; five recorded nonapplicable entries stayed skipped. Command: `bash verify/catalog/check.sh HEAD --jobs 2`. No undo patch needed refresh.
