@@ -254,6 +254,17 @@ maintenance from cohere's high-level IR (`cohere/internal/lint/ecmascript/high_l
 which follows the React Compiler's (Copyright (c) Meta Platforms, Inc. and affiliates, MIT); that notice is in
 cohere's THIRD_PARTY_NOTICES.md.
 
+The runtime-constructor fixtures in `internal/oracle/testdata/regexp_runtime_constructors/`
+adapt the constructor expressions in TypeScript's `tools/scripts/tsc/generate-enums.ts`,
+`options.test.ts`, `options-schema.ts`, and compiler test cases
+`duplicateLocalVariable1.ts` and `fixSignatureCaching.ts` at cohere commit
+`7945d102a6c18dd36adf9114a758ce646e8b2359`. TypeScript's Apache-2.0 license is
+reproduced in `cohere/TypeScript/tsc/LICENSE`. Their input generator reads the original
+Go enum definitions and JSON schema. The emoji witness adapts cohere's
+`stage1/cohere/css/print_doc.ts` surrogate mapping and consumes
+`print_width_data.ts` under cohere's MIT OR Apache-2.0 license.
+The native failure-policy change does not introduce a V8 or Node algorithm port.
+
 ### @types/node
 
 - Source: https://registry.npmjs.org/@types/node

@@ -54,19 +54,20 @@ func TestDynamicRegExpRuntimeRefusals(t *testing.T) {
 		t.Fatal("expected counter-width refusal")
 	}
 	expected.WriteString("Error: " + err.Error() + "\n")
-	actual, binary := natively(t, program)
-	if actual.exitCode != 0 || string(actual.stdout) != expected.String() || len(actual.stderr) != 0 {
-		t.Fatalf("runtime refusal differs: %+v want=%q", actual, expected.String())
+	actual, _ := natively(t, program)
+	firstReason := strings.TrimPrefix(strings.Split(expected.String(), "\n")[0], "SyntaxError: ")
+	if actual.exitCode != 70 || len(actual.stdout) != 0 || !bytes.Contains(actual.stderr, []byte("for /[\\q{a}]/iv: ")) || !bytes.Contains(actual.stderr, []byte(firstReason)) {
+		t.Fatalf("Node-valid refusal became catchable or lost its reason: %+v", actual)
 	}
-	if failure := leaks(t, program, binary); failure != "" {
-		t.Fatal(failure)
-	}
-	if os.Getenv("WASI_SYSROOT") != "" {
-		actual = onWASI(t, native.C(program))
-		if actual.exitCode != 0 || string(actual.stdout) != expected.String() {
-			t.Fatalf("WASI refusal differs: %+v", actual)
+	// The first refusal stops execution. TestRuntimeConstructorFailureSplit
+	// runs all five independently, including on WASI.
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "" {
+		wasm := onWASI(t, native.C(program))
+		if diff := disagreement(actual, wasm); diff != "" {
+			t.Fatal(diff)
 		}
 	}
+
 }
 
 func TestDynamicRegExpConstructionMutants(t *testing.T) {
