@@ -1,0 +1,7 @@
+=== RUN   TestParameterPropertyOwnershipMutant
+=== PAUSE TestParameterPropertyOwnershipMutant
+=== CONT  TestParameterPropertyOwnershipMutant
+    parameter_properties_test.go:108: missing callback field retain caught by ASan heap-use-after-free
+--- PASS: TestParameterPropertyOwnershipMutant (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.281s

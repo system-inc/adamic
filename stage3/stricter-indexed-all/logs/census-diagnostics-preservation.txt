@@ -1,0 +1,5 @@
+=== RUN   TestIndexedLedgerProbePreservesOtherDiagnostics
+    indexed_ledger_probe_controls_test.go:62: Removed only five pending catch diagnostics, retained 67 scheduled optional contracts, and preserved ordinary/indexed diagnostics unchanged
+--- PASS: TestIndexedLedgerProbePreservesOtherDiagnostics (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	0.006s

@@ -1,0 +1,28 @@
+missing-exclusion: caught before lowering: indexed ledger probe: want exactly 72 exclusions, got 71
+wrong-row-identity: caught before lowering: indexed ledger probe: 1 exclusions lack exact option audit evidence
+exclude-joint-indexed-row: caught before lowering: indexed ledger probe: exclusion attribution changed: /tmp/stricter-indexed-all-typescript/src/compiler/checker.ts:43517:20:TS2412
+missing-indexed-audit: caught by classifier: Traceback (most recent call last):
+  File "/workspace/adamic/stage3/stricter-indexed-all/classify-census.py", line 31, in <module>
+    assert {identity(site) for site in result['option_sites']} == {identity(row['site']) for row in census['rows'].values()}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+fabricated-built-entry: caught by classifier: Traceback (most recent call last):
+  File "/workspace/adamic/stage3/stricter-indexed-all/classify-census.py", line 42, in <module>
+    assert attempt['stage'] == 'lower' and attempt['error_kind'] in ('NotYet', 'Refused'), 'new lowering outcome requires source-to-guard attribution'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: new lowering outcome requires source-to-guard attribution
+wrong-excluded-id: caught by classifier: Traceback (most recent call last):
+  File "/workspace/adamic/stage3/stricter-indexed-all/classify-census.py", line 35, in <module>
+    assert {row['id'] for row in result['excluded']} == expected_exclusions
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+missing-census-row: caught by classifier: Traceback (most recent call last):
+  File "/workspace/adamic/stage3/stricter-indexed-all/classify-census.py", line 18, in <module>
+    assert len(manifest) == len(census['rows']) == 173
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+fabricated-emitted-state: caught by classifier: Traceback (most recent call last):
+  File "/workspace/adamic/stage3/stricter-indexed-all/classify-census.py", line 25, in <module>
+    assert dict(observed_counts) == census['counts']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
