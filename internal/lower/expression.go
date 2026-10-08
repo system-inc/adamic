@@ -1217,7 +1217,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	if symbol != nil {
 		for _, declaration := range symbol.Declarations {
 			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
-				if !l.overloadCallbackServed(node, l.censusImplementation(declaration)) {
+				if !l.overloadCallbackServed(node, l.censusImplementation(declaration)) && !l.overloadValueUse(node, l.censusImplementation(declaration), map[*ast.Node]bool{}) {
 					return nil, l.notYet(node, "an overloaded function as a value")
 				}
 			}
@@ -1308,6 +1308,9 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
 	if err != nil {
 		return nil, err
+	}
+	if implementation := l.overloadValueTarget(node.AsCallExpression().Expression, map[*ast.Node]bool{}); implementation != nil {
+		return l.callOverloadValue(node.AsCallExpression(), closure, arguments, spread, implementation)
 	}
 	// A named nested overload retains its implementation ABI until the
 	// resolved overload boundary has checked and converted the result.

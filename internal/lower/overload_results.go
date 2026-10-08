@@ -267,11 +267,11 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 		key += fmt.Sprintf(":%d", argument.Type())
 	}
 	if existing, known := l.genericInstances[key]; known {
-		for i, parameter := range l.result.Functions[existing].Parameters[:len(invoked.Arguments)] {
+		for i, parameter := range l.result.Functions[existing].Parameters[len(l.result.Functions[existing].Parameters)-len(invoked.Arguments):] {
 			invoked.Arguments[i] = fit(invoked.Arguments[i], l.result.Locals[parameter].Type)
 		}
 		if closure != nil {
-			invoked.Arguments = append(invoked.Arguments, closure.Closure)
+			invoked.Arguments = append([]ir.Expression{closure.Closure}, invoked.Arguments...)
 		}
 		return ir.Call{Function: existing, Arguments: invoked.Arguments, Returns: of}, nil
 	}
@@ -321,8 +321,8 @@ func (l *lowering) overloadSpecialization(call *ast.CallExpression, value ir.Exp
 	var implementationCall ir.Expression = checked
 	if closure != nil {
 		carrier := local("callee", ir.Closure)
-		l.result.Functions[wrapper].Parameters = append(l.result.Functions[wrapper].Parameters, carrier)
-		invoked.Arguments = append(invoked.Arguments, closure.Closure)
+		l.result.Functions[wrapper].Parameters = append([]int{carrier}, l.result.Functions[wrapper].Parameters...)
+		invoked.Arguments = append([]ir.Expression{closure.Closure}, invoked.Arguments...)
 		implementationCall = ir.CallClosure{Closure: ir.Read{Local: carrier, Of: ir.Closure}, Direct: closure.Direct, Arguments: checked.Arguments, Returns: checked.Returns, FunctionType: closure.FunctionType}
 	}
 	body = append(body, ir.Declare{Local: result, Value: implementationCall})
@@ -400,6 +400,10 @@ func (l *lowering) overloadDirectUses(implementation *ast.Node) error {
 			if parent.Kind != ast.KindCallExpression || ast.SkipParentheses(parent.AsCallExpression().Expression) != node {
 				if l.overloadCallbackServed(node, implementation) {
 					return false
+				}
+				if l.overloadValueUse(node, implementation, map[*ast.Node]bool{}) {
+					refused = l.overloadValueProof(node, implementation)
+					return refused != nil
 				}
 				switch parent.Kind {
 				case ast.KindImportSpecifier, ast.KindExportSpecifier, ast.KindImportClause:
