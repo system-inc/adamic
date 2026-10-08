@@ -1,0 +1,128 @@
+[
+  {
+    "package": "bridge/tsgo",
+    "test": "TestBridge",
+    "seconds": 207.15,
+    "invocation_seconds": 207.157,
+    "wall_seconds": 209.02034850899872,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-run",
+      "^TestBridge$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "log": "/tmp/test-split-bridge/before/bridge-tsgo-TestBridge.jsonl"
+  },
+  {
+    "package": "bridge/tsgo",
+    "test": "TestTSGoRequiresLink",
+    "seconds": 0.04,
+    "invocation_seconds": 0.055,
+    "wall_seconds": 1.9120989139992162,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-run",
+      "^TestTSGoRequiresLink$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "log": "/tmp/test-split-bridge/before/bridge-tsgo-TestTSGoRequiresLink.jsonl"
+  },
+  {
+    "package": "bridge/tsgo/checker",
+    "test": "TestFactEncoding",
+    "seconds": 0,
+    "invocation_seconds": 0.004,
+    "wall_seconds": 1.2474916400024085,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-json",
+      "-run",
+      "^TestFactEncoding$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "log": "/tmp/test-split-bridge/before/bridge-tsgo-checker-TestFactEncoding.jsonl"
+  },
+  {
+    "package": "bridge/tsgo/checker",
+    "test": "TestShapeAndNameFacts",
+    "seconds": 0.01,
+    "invocation_seconds": 0.015,
+    "wall_seconds": 1.243080252999789,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-json",
+      "-run",
+      "^TestShapeAndNameFacts$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "log": "/tmp/test-split-bridge/before/bridge-tsgo-checker-TestShapeAndNameFacts.jsonl"
+  },
+  {
+    "package": "bridge/tsgo/checker",
+    "test": "TestExactIndexMatchesCompilerNodes",
+    "seconds": 0.05,
+    "invocation_seconds": 0.06,
+    "wall_seconds": 1.3049273020005785,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-json",
+      "-run",
+      "^TestExactIndexMatchesCompilerNodes$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "log": "/tmp/test-split-bridge/before/bridge-tsgo-checker-TestExactIndexMatchesCompilerNodes.jsonl"
+  },
+  {
+    "package": "bridge/tsgo/checker",
+    "test": "TestAdamicRootKeepsConfigDeclarations",
+    "seconds": 0.05,
+    "invocation_seconds": 0.054,
+    "wall_seconds": 1.3018302480013517,
+    "action": "pass",
+    "exit": 0,
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo/checker",
+      "-json",
+      "-run",
+      "^TestAdamicRootKeepsConfigDeclarations$",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=30m"
+    ],
+    "log": "/tmp/test-split-bridge/before/bridge-tsgo-checker-TestAdamicRootKeepsConfigDeclarations.jsonl"
+  }
+]
