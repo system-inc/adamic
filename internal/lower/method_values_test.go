@@ -83,3 +83,47 @@ func TestMethodBindCycleIsRefused(t *testing.T) {
 		t.Fatalf("want bound receiver cycle refusal, got %v", err)
 	}
 }
+
+func TestMethodReceiverUnsupportedConsumers(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		`class Counter { #value=1; read(): number { const self=this; return self.#value; } } const counter = new Counter(); const read = counter.read; console.log(String(read()));`,
+		`class Counter { value=1; mapped(): number[] { return [this].map(value => value.value); } } const counter = new Counter(); const mapped = counter.mapped; console.log(mapped().join(","));`,
+		`class Counter { keys(): string[] { return Object.keys(this); } } const counter = new Counter(); const keys = counter.keys; console.log(keys().join(","));`,
+		`const maximum: (value: number) => number = Math.max; console.log([1,2].map(maximum).join(","));`,
+	} {
+		path := filepath.Join(t.TempDir(), "main.ts")
+		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+			t.Fatal(err)
+		}
+		loaded, err := load.Load([]string{path})
+		if err != nil {
+			t.Fatal(err)
+		}
+		_, err = Lower(context.Background(), loaded)
+		if err == nil || (!strings.Contains(err.Error(), "without an undefined adapter") && !strings.Contains(err.Error(), "a function taking number[] seen as one taking number")) {
+			t.Fatalf("want unsupported receiver or rest ABI refusal, got %v", err)
+		}
+	}
+}
+
+func TestMethodReceiverRepresentationRefusals(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ source, reason string }{
+		{`class Counter { value=1; read(): number { return this?.value; } } const counter=new Counter(); const read=counter.read; console.log(String(read()));`, "undefined-compatible result"},
+		{`class A { value=1; read(): number { return this.value; } } class B { pad=9; value=2; read(): number { return this.value; } } const a=new A(); const b=new B(); const read=a.read.bind(b); console.log(String(read()));`, "outside its method's represented object type"},
+	} {
+		path := filepath.Join(t.TempDir(), "main.ts")
+		if err := os.WriteFile(path, []byte(probe.source), 0600); err != nil {
+			t.Fatal(err)
+		}
+		loaded, err := load.Load([]string{path})
+		if err != nil {
+			t.Fatal(err)
+		}
+		_, err = Lower(context.Background(), loaded)
+		if err == nil || !strings.Contains(err.Error(), probe.reason) {
+			t.Fatalf("want receiver representation refusal %q, got %v", probe.reason, err)
+		}
+	}
+}

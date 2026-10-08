@@ -65,7 +65,8 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
-	Name string
+	Name      string
+	Intrinsic string // stable library callable identity
 
 	// Parameters are locals, in order.
 	Parameters []int
@@ -81,8 +82,9 @@ type Function struct {
 	Environment []int
 
 	// Receiver marks a literal method closure whose first parameter receives the calling object.
-	Receiver bool
-	Rest     Type // element type of the final rest array, zero for fixed parameters
+	Receiver   bool
+	MethodName string // source property name for receiver reads
+	Rest       Type   // element type of the final rest array, zero for fixed parameters
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -171,8 +173,10 @@ func (t Type) IsReference() bool {
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
-	Name string
-	Type Type
+	NullableReceiver bool // an unbound extracted method supplies undefined here
+	MethodValue      bool // this belongs to a method read as a value somewhere
+	Name             string
+	Type             Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool

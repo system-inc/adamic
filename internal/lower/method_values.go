@@ -151,7 +151,7 @@ func (l *lowering) userMethodValue(node *ast.Node) (ir.Expression, bool, error) 
 	if bound != nil {
 		receiverType := l.checker.GetTypeAtLocation(receiver)
 		boundType := l.checker.GetTypeAtLocation(bound)
-		if !l.checker.IsTypeAssignableTo(boundType, receiverType) || (isClassInstance(receiverType) && !isClassInstance(boundType)) {
+		if !l.classAssignable(boundType, receiverType) || (isClassInstance(receiverType) && !isClassInstance(boundType)) {
 			return nil, true, l.notYet(bound, "a bound receiver outside its method's represented object type")
 		}
 		if l.includesUndefined(boundType) {
@@ -199,8 +199,11 @@ func (l *lowering) extractedThisRead(node *ast.Node, value ir.Expression) (ir.Ex
 	for _, module := range l.program.Files() {
 		var visit ast.Visitor
 		visit = func(candidate *ast.Node) bool {
-			if candidate.Kind == ast.KindPropertyAccessExpression && !called(candidate) && !methodBindRead(candidate) && candidate.Name().Text() == methodSymbol.Name && l.methodMayReach(candidate, method) && !l.libraryMember(candidate) {
-				extracted = true
+			if candidate.Kind == ast.KindPropertyAccessExpression && !called(candidate) && candidate.Name().Text() == methodSymbol.Name && l.methodMayReach(candidate, method) && !l.libraryMember(candidate) {
+				l.result.Locals[l.this].MethodValue = true
+				if !methodBindRead(candidate) {
+					extracted = true
+				}
 			}
 			candidate.ForEachChild(visit)
 			return false
@@ -210,14 +213,12 @@ func (l *lowering) extractedThisRead(node *ast.Node, value ir.Expression) (ir.Ex
 	if !extracted {
 		return value, nil
 	}
-	if parent.Kind != ast.KindPropertyAccessExpression {
-		return nil, l.notYet(node, "an extracted receiver escaping before its property read; read its property in the method")
-	}
-	if parent.AsPropertyAccessExpression().QuestionDotToken != nil {
-		return nil, l.notYet(node, "an optional property read through an extracted receiver")
+	l.result.Locals[l.this].NullableReceiver = true
+	if parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().QuestionDotToken != nil {
+		return value, nil
 	}
 	if write := parent.Parent; write != nil && write.Kind == ast.KindBinaryExpression && write.AsBinaryExpression().Left == parent && write.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
-		return nil, l.notYet(node, "an extracted receiver used for a plain property write; its receiver check must follow the right-hand side")
+		return value, nil
 	}
 	message := "Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
 	b := l.libraryArrayBuilder([]ir.Expression{value})

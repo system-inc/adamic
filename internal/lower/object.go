@@ -489,7 +489,10 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 		}
 		if optional && !of.IsReference() {
-			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
+			if !l.acceptsUndefined(node) {
+				return nil, l.notYet(node, "an optional scalar receiver read without an undefined-compatible result")
+			}
+			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: true, Class: l.classOf(node)}), nil
 		}
 		return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
 	}

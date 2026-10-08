@@ -69,8 +69,12 @@ func constMethodInitializer(node *ast.Node) bool {
 }
 
 func (l *lowering) libraryMethodReadAllowed(node *ast.Node) bool {
-	if _, known := l.libraryMethod(node, map[*ast.Symbol]bool{}); !known {
+	method, known := l.libraryMethod(node, map[*ast.Symbol]bool{})
+	if !known {
 		return false
+	}
+	if _, pure := methodMathArity(method.name); method.family == "Math" && pure {
+		return true
 	}
 	if constMethodInitializer(node) {
 		return true
@@ -104,7 +108,7 @@ func (l *lowering) libraryMapArgument(node *ast.Node) bool {
 }
 
 func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, error) {
-	_, known := l.libraryMethod(node, map[*ast.Symbol]bool{})
+	method, known := l.libraryMethod(node, map[*ast.Symbol]bool{})
 	if !known {
 		return nil, false, nil
 	}
@@ -120,6 +124,19 @@ func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, erro
 				return nil, false, nil
 			}
 		}
+	}
+	if _, pure := methodMathArity(method.name); method.family == "Math" && pure {
+		if ast.IsIdentifier(node) {
+			// Alias reads retain their own initialization check.
+			if local, known := l.local(node); known && l.checked(local) {
+				return l.checkedMathAlias(local), true, nil
+			}
+			return nil, false, nil
+		}
+		if called(node) {
+			return nil, false, nil
+		}
+		return l.mathMethodValue(node, method), true, nil
 	}
 	if called(node) {
 		return nil, false, nil
@@ -154,6 +171,11 @@ func (l *lowering) methodAliasRead(node *ast.Node) (ir.Expression, error) {
 		return nil, nil
 	}
 	if local, known := l.local(ast.SkipParentheses(node)); known {
+		if method, known := l.libraryMethod(node, map[*ast.Symbol]bool{}); known && method.family == "Math" && l.checked(local) {
+			if _, pure := methodMathArity(method.name); pure {
+				return l.checkedMathAlias(local), nil
+			}
+		}
 		return ir.Read{Local: local, Of: ir.Closure, Checked: l.checked(local)}, nil
 	}
 	return nil, nil
@@ -182,6 +204,10 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 	}
 	if mode == "direct" && method.source == target {
 		return nil, false, nil
+	}
+	if _, pure := methodMathArity(method.name); mode == "direct" && method.family == "Math" && pure {
+		value, err := l.callClosure(node)
+		return value, true, err
 	}
 	if mode == "bind" {
 		value, err := l.libraryMethodBind(node, target, method)
@@ -269,7 +295,7 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
 		value, err = l.delayedNumberMethod(node, receiver, method.name, written)
 		handled = true
 	case "Math":
-		count, supported := mathFunctions[method.name]
+		count, supported := methodMathArity(method.name)
 		if !supported || count < 0 || len(written) != count {
 			return nil, true, l.notYet(node, "a delayed Math call without a proven fixed argument count")
 		}
@@ -398,6 +424,10 @@ func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type)
 	method, known := l.libraryMethod(node, map[*ast.Symbol]bool{})
 	if !known {
 		return nil, false, nil
+	}
+	if count, pure := methodMathArity(method.name); method.family == "Math" && pure && count > 0 && element == ir.Number {
+		value, err := l.expression(node)
+		return value, true, err
 	}
 	index := len(l.result.Functions)
 	function := ir.Function{Name: "library_map_" + method.name, Closure: true}

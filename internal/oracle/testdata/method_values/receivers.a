@@ -1,0 +1,42 @@
+// Materialized as .ts; these this-reading .a extractions remain refused.
+function read(value: Counter): number { console.log('helper'); return value.value; }
+function right(): number { console.log('right'); return 10; }
+class Counter {
+ value=3;
+ observe(): string { return `${typeof this} ${this === undefined}`; }
+ optional(): number | undefined { return this?.value; }
+ alias(): number { const self = this; console.log('alias'); return self.value; }
+ forward(): number { return read(this); }
+ returnThis(): Counter { return this; }
+ throughField(): number { const holder = { self: this }; return holder.self.value; }
+ throughArray(): number { const values = [this]; const first = values[0]; if (first === undefined) return 0; return first.value; }
+ invoke(): number { const self = this; return self.alias(); }
+ write(): void { this.value = right(); }
+ compound(): void { const self = this; self.value += right(); }
+}
+const counter = new Counter();
+const observe = counter.observe;
+const optional = counter.optional;
+console.log(observe());
+console.log(`${optional() === undefined}`);
+const alias = counter.alias;
+const forward = counter.forward;
+const self = counter.returnThis;
+const write = counter.write;
+const compound = counter.compound;
+try { console.log(`${alias()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { console.log(`${forward()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+console.log(`${typeof self()}`);
+try { console.log(`${self().value}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { write(); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { compound(); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+console.log(counter.observe());
+counter.write();
+console.log(`${counter.value}`);
+
+const field = counter.throughField;
+const array = counter.throughArray;
+const invoke = counter.invoke;
+try { console.log(`${field()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { console.log(`${array()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { console.log(`${invoke()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }

@@ -34,6 +34,11 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	}
 	flags := proven.Flags()
 	if flags&checker.TypeFlagsTypeParameter != 0 {
+		if proven.AsTypeParameter().IsThisType() {
+			if constraint := l.checker.GetBaseConstraintOfType(proven); constraint != nil && constraint != proven {
+				return l.representation(constraint)
+			}
+		}
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
 		return substituted, isKnown

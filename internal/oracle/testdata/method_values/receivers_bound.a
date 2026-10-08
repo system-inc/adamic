@@ -1,0 +1,42 @@
+// Bound receiver forms obey the same property and evaluation order in .a and .ts.
+function read(value: Counter): number { console.log('helper'); return value.value; }
+function right(): number { console.log('right'); return 10; }
+class Counter {
+ value=3;
+ observe(): string { return `${typeof this} ${this === undefined}`; }
+ optional(): number | undefined { return this?.value; }
+ alias(): number { const self = this; console.log('alias'); return self.value; }
+ forward(): number { return read(this); }
+ returnThis(): Counter { return this; }
+ throughField(): number { const holder = { self: this }; return holder.self.value; }
+ throughArray(): number { const values = [this]; const first = values[0]; if (first === undefined) return 0; return first.value; }
+ invoke(): number { const self = this; return self.alias(); }
+ write(): void { this.value = right(); }
+ compound(): void { const self = this; self.value += right(); }
+}
+const counter = new Counter();
+const observe = counter.observe.bind(counter);
+const optional = counter.optional.bind(counter);
+console.log(observe());
+console.log(`${optional() === undefined}`);
+const alias = counter.alias.bind(counter);
+const forward = counter.forward.bind(counter);
+const self = counter.returnThis.bind(counter);
+const write = counter.write.bind(counter);
+const compound = counter.compound.bind(counter);
+try { console.log(`${alias()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { console.log(`${forward()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+console.log(`${typeof self()}`);
+try { console.log(`${self().value}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { write(); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { compound(); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+console.log(counter.observe());
+counter.write();
+console.log(`${counter.value}`);
+
+const field = counter.throughField.bind(counter);
+const array = counter.throughArray.bind(counter);
+const invoke = counter.invoke.bind(counter);
+try { console.log(`${field()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { console.log(`${array()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { console.log(`${invoke()}`); } catch(error) { if(error instanceof Error) console.log(`${error.name}: ${error.message}`); }

@@ -1,0 +1,30 @@
+let absolute = Math.abs;
+console.log(`${absolute(-3)} ${absolute === Math.abs}`);
+absolute = Math.floor;
+console.log(`${absolute(3.8)} ${absolute === Math.floor}`);
+const maximum = Math.max;
+const minimum = Math.min;
+const hypot = Math.hypot;
+console.log(`${maximum()} ${minimum()} ${hypot()}`);
+const values = [3, -4, 12];
+console.log(`${maximum(...values)} ${hypot(...values)} ${minimum(...values)}`);
+const holder = { run: Math.sqrt };
+console.log(`${holder.run(9)}`);
+function choose(): (value: number) => number { return Math.ceil; }
+console.log(`${choose()(3.2)}`);
+console.log(`${[-1, -2, -3].map(Math.abs).join(',')}`);
+
+const imul = Math.imul;
+const clz = Math.clz32;
+const fround = Math.fround;
+console.log(`${imul(4294967295, 5)} ${clz(8)} ${fround(1.337)}`);
+console.log(`${[2, 3].map(Math.imul).join(',')}`);
+
+function callDelayed(): number { return delayed(-2); }
+function observeIdentity(): boolean { return delayed === Math.abs; }
+try { console.log(observeIdentity() ? 'same' : 'different'); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+try { console.log(`${callDelayed()}`); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+const delayed = Math.abs;
+console.log(observeIdentity() ? 'same' : 'different');

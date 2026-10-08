@@ -1,0 +1,1536 @@
+[
+  {
+    "file": "checker.ts",
+    "line": 6770,
+    "column": 38,
+    "expression": "cancellationToken.throwIfCancellationRequested",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 4592,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "checker.ts",
+        "line": 1505,
+        "kind": "VariableDeclaration"
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "checker.ts",
+    "line": 8071,
+    "column": 38,
+    "expression": "cancellationToken.throwIfCancellationRequested",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 4592,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "checker.ts",
+        "line": 1505,
+        "kind": "VariableDeclaration"
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "checker.ts",
+    "line": 9386,
+    "column": 30,
+    "expression": "oldcontext.tracker.inner?.trackSymbol",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 10048,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "checker.ts",
+        "line": 8102,
+        "this": false
+      },
+      {
+        "file": "checker.ts",
+        "line": 54348,
+        "this": true
+      },
+      {
+        "file": "transformers/declarations.ts",
+        "line": 369,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "checker.ts",
+    "line": 51508,
+    "column": 26,
+    "expression": "tracker.trackSymbol",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 10048,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "checker.ts",
+        "line": 51461,
+        "kind": "Parameter"
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "checker.ts",
+        "line": 8102,
+        "this": false
+      },
+      {
+        "file": "checker.ts",
+        "line": 54348,
+        "this": true
+      },
+      {
+        "file": "transformers/declarations.ts",
+        "line": 369,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "emitter.ts",
+    "line": 4911,
+    "column": 13,
+    "expression": "writer.nonEscapingWrite",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 9973,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "emitter.ts",
+        "line": 1252,
+        "kind": "VariableDeclaration"
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "emitter.ts",
+        "line": 4909,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1581,
+    "column": 32,
+    "expression": "host.getDefaultLibLocation",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8135,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "program.ts",
+        "line": 466,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1602,
+    "column": 39,
+    "expression": "host.hasInvalidatedResolutions",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8194,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1603,
+    "column": 9,
+    "expression": "host.resolveModuleNameLiterals",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8162,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 1011,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1604,
+    "column": 42,
+    "expression": "host.resolveModuleNameLiterals",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8162,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 1011,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1607,
+    "column": 14,
+    "expression": "host.resolveModuleNames",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8151,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1609,
+    "column": 13,
+    "expression": "host.resolveModuleNames",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8151,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1649,
+    "column": 9,
+    "expression": "host.resolveTypeReferenceDirectiveReferences",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8170,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 982,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1650,
+    "column": 58,
+    "expression": "host.resolveTypeReferenceDirectiveReferences",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8170,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 982,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1652,
+    "column": 14,
+    "expression": "host.resolveTypeReferenceDirectives",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8161,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1654,
+    "column": 13,
+    "expression": "host.resolveTypeReferenceDirectives",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8161,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1683,
+    "column": 42,
+    "expression": "host.hasInvalidatedLibResolutions",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8189,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1685,
+    "column": 9,
+    "expression": "host.resolveLibrary",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8179,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "moduleNameResolver.ts",
+        "line": 1397,
+        "this": false
+      },
+      {
+        "file": "resolutionCache.ts",
+        "line": 1041,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1686,
+    "column": 32,
+    "expression": "host.resolveLibrary",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8179,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "moduleNameResolver.ts",
+        "line": 1397,
+        "this": false
+      },
+      {
+        "file": "resolutionCache.ts",
+        "line": 1041,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1734,
+    "column": 22,
+    "expression": "host.readFile",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 7987,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "sys.ts",
+        "line": 1787,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1834,
+    "column": 23,
+    "expression": "host.onReleaseOldSourceFile",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8191,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 822,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1846,
+    "column": 14,
+    "expression": "host.getParsedCommandLine",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8197,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 983,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1849,
+    "column": 21,
+    "expression": "host.onReleaseOldSourceFile",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8191,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 822,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1856,
+    "column": 23,
+    "expression": "host.onReleaseParsedCommandLine",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8192,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 1034,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1864,
+    "column": 21,
+    "expression": "host.onReleaseParsedCommandLine",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8192,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 1034,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1950,
+    "column": 19,
+    "expression": "host.realpath",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 7994,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "sys.ts",
+        "line": 1917,
+        "this": false
+      },
+      {
+        "file": "watchUtilities.ts",
+        "line": 291,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 1956,
+    "column": 56,
+    "expression": "host.getGlobalTypingsCacheLocation",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 7998,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 2045,
+    "column": 13,
+    "expression": "host.resolveModuleNameLiterals",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8162,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "resolutionCache.ts",
+        "line": 1011,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 2045,
+    "column": 48,
+    "expression": "host.resolveModuleNames",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8151,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 2119,
+    "column": 14,
+    "expression": "host.realpath",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 7994,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "sys.ts",
+        "line": 1917,
+        "this": false
+      },
+      {
+        "file": "watchUtilities.ts",
+        "line": 291,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 2392,
+    "column": 33,
+    "expression": "host.getSourceFileByPath",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8132,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "program.ts",
+        "line": 2774,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 2601,
+    "column": 39,
+    "expression": "program.getCommonSourceDirectory",
+    "observation": "local object initializer bodies",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 4784,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1876,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1876,
+          "kind": "ObjectLiteralExpression"
+        }
+      }
+    ],
+    "initialBodies": [
+      {
+        "file": "program.ts",
+        "line": 2143,
+        "kind": "FunctionDeclaration",
+        "readsThis": false
+      }
+    ],
+    "namedCandidates": [
+      {
+        "file": "emitter.ts",
+        "line": 636,
+        "this": false
+      },
+      {
+        "file": "program.ts",
+        "line": 2143,
+        "this": false
+      },
+      {
+        "file": "programDiagnostics.ts",
+        "line": 141,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Initial bodies are this-free, but the program object escapes; no whole-program nonreplacement proof is claimed."
+  },
+  {
+    "file": "program.ts",
+    "line": 2602,
+    "column": 33,
+    "expression": "program.getCompilerOptions",
+    "observation": "local object initializer bodies",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 4531,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1876,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1876,
+          "kind": "ObjectLiteralExpression"
+        }
+      }
+    ],
+    "initialBodies": [
+      {
+        "file": "program.ts",
+        "line": 1884,
+        "kind": "ArrowFunction",
+        "readsThis": false
+      }
+    ],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Initial bodies are this-free, but the program object escapes; no whole-program nonreplacement proof is claimed."
+  },
+  {
+    "file": "program.ts",
+    "line": 2604,
+    "column": 28,
+    "expression": "program.getSourceFile",
+    "observation": "local object initializer bodies",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 4532,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1876,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1876,
+          "kind": "ObjectLiteralExpression"
+        }
+      }
+    ],
+    "initialBodies": [
+      {
+        "file": "program.ts",
+        "line": 2770,
+        "kind": "FunctionDeclaration",
+        "readsThis": false
+      }
+    ],
+    "namedCandidates": [
+      {
+        "file": "program.ts",
+        "line": 2770,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Initial bodies are this-free, but the program object escapes; no whole-program nonreplacement proof is claimed."
+  },
+  {
+    "file": "program.ts",
+    "line": 2605,
+    "column": 34,
+    "expression": "program.getSourceFileByPath",
+    "observation": "local object initializer bodies",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 4533,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1876,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1876,
+          "kind": "ObjectLiteralExpression"
+        }
+      }
+    ],
+    "initialBodies": [
+      {
+        "file": "program.ts",
+        "line": 2774,
+        "kind": "FunctionDeclaration",
+        "readsThis": false
+      }
+    ],
+    "namedCandidates": [
+      {
+        "file": "program.ts",
+        "line": 2774,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Initial bodies are this-free, but the program object escapes; no whole-program nonreplacement proof is claimed."
+  },
+  {
+    "file": "program.ts",
+    "line": 2606,
+    "column": 29,
+    "expression": "program.getSourceFiles",
+    "observation": "local object initializer bodies",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 4713,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1876,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1876,
+          "kind": "ObjectLiteralExpression"
+        }
+      }
+    ],
+    "initialBodies": [
+      {
+        "file": "program.ts",
+        "line": 1880,
+        "kind": "ArrowFunction",
+        "readsThis": false
+      }
+    ],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Initial bodies are this-free, but the program object escapes; no whole-program nonreplacement proof is claimed."
+  },
+  {
+    "file": "program.ts",
+    "line": 2626,
+    "column": 39,
+    "expression": "host.realpath",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 7994,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "sys.ts",
+        "line": 1917,
+        "this": false
+      },
+      {
+        "file": "watchUtilities.ts",
+        "line": 291,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 2631,
+    "column": 36,
+    "expression": "program.getFileIncludeReasons",
+    "observation": "local object initializer bodies",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 4918,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1876,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1876,
+          "kind": "ObjectLiteralExpression"
+        }
+      }
+    ],
+    "initialBodies": [
+      {
+        "file": "program.ts",
+        "line": 1953,
+        "kind": "ArrowFunction",
+        "readsThis": false
+      }
+    ],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Initial bodies are this-free, but the program object escapes; no whole-program nonreplacement proof is claimed."
+  },
+  {
+    "file": "program.ts",
+    "line": 2632,
+    "column": 41,
+    "expression": "host.createHash",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8196,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 2634,
+    "column": 36,
+    "expression": "host.trace",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 7988,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "debug.ts",
+        "line": 150,
+        "this": false
+      },
+      {
+        "file": "moduleNameResolver.ts",
+        "line": 118,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 2635,
+    "column": 44,
+    "expression": "program.getGlobalTypingsCacheLocation",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 9996,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1876,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1876,
+          "kind": "ObjectLiteralExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 3555,
+    "column": 17,
+    "expression": "host.realpath",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 7994,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "sys.ts",
+        "line": 1917,
+        "this": false
+      },
+      {
+        "file": "watchUtilities.ts",
+        "line": 291,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 4014,
+    "column": 13,
+    "expression": "host.getParsedCommandLine",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8197,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "watchPublic.ts",
+        "line": 983,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  },
+  {
+    "file": "program.ts",
+    "line": 4798,
+    "column": 13,
+    "expression": "host.getSymlinkCache",
+    "observation": "runtime contract without a closed initializer",
+    "propertyDeclarations": [
+      {
+        "file": "types.ts",
+        "line": 8202,
+        "kind": "MethodSignature"
+      }
+    ],
+    "receiverDeclarations": [
+      {
+        "file": "program.ts",
+        "line": 1577,
+        "kind": "VariableDeclaration",
+        "initializer": {
+          "file": "program.ts",
+          "line": 1577,
+          "kind": "BinaryExpression"
+        }
+      }
+    ],
+    "initialBodies": [],
+    "namedCandidates": [
+      {
+        "file": "program.ts",
+        "line": 4797,
+        "this": false
+      }
+    ],
+    "provenRuntimeThisFree": false,
+    "limitation": "Interface contracts and named candidates do not determine every supplied implementation. Preserve the .a refusal unless the actual program closes the origin."
+  }
+]

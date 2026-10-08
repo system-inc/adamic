@@ -111,6 +111,9 @@ func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 // refuses what can't be done yet: a try that can reach a library call whose failure is a panic
 // natively but a throw on Node.
 func (l *lowering) exceptions() error {
+	if err := l.finishReceiverValues(); err != nil {
+		return err
+	}
 	functions := l.result.Functions
 	// A class's methods are reached through function values too: a call through an interface the
 	// class implements calls one where it would call the object's own function value (ir.Property's
