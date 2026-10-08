@@ -1,0 +1,46 @@
+
+> typescript@6.0.3 test
+> hereby runtests-parallel --light=false --workers=8 --lint=false --no-colors
+
+Using ~/fast-gate/tree-2-stage3-lane/adapted-tree/Herebyfile.mjs to run runtests-parallel
+Starting lib
+Starting generate-diagnostics
+> /home/ahra/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting generate-types-map
+Finished generate-types-map in 11ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 149ms
+Starting bundle-tests
+Starting build-tests
+Starting build-services
+Finished lib in 327ms
+Finished build-tests in 443ms
+Finished build-services in 443ms
+Starting dts-services
+Finished dts-services in 1ms
+Starting dts-lssl
+Finished dts-lssl in 2ms
+Finished bundle-tests in 1.1s
+Starting do-runtests-parallel
+Running tests with config: {"light":false,"workerCount":8,"taskConfigsFolder":"/tmp/adamic-gate/ts-tests30","noColor":true,"timeout":40000,"keepFailed":false}
+> /home/ahra/adamic-tools/bin/node ./built/local/run.js
+Discovered 327 unittest suites.
+Discovering runner-based tests...
+Discovered 19676 test files in 237ms.
+Starting to run tests using 8 threads...
+Batching initial test lists...
+Suboptimal packing detected: no tests remain to be stolen. Reduce packing fraction from 0.9 to fix.
+Batched into 8 groups with approximate total file sizes of 2556828 bytes in each group. (100.0% of total tests batched)
+
+Stacktrace:
+    ptr0=0x4f52c578ed1
+    ptr1=0x1b013d980071
+    ptr2=0xd7
+    ptr3=(nil)
+    ptr4=(nil)
+    ptr5=(nil)
+    failure_message_object=0x7e30fd2e3590
+Error in do-runtests-parallel in 5m 27.8s
+Error: Process exited with code: null
+Completed runtests-parallel with errors in 5m 29.1s
+Failed tasks: do-runtests-parallel

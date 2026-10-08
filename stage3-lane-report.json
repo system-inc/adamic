@@ -1,0 +1,19 @@
+{
+  "status": "fail",
+  "errors": [
+    "missing or invalid lane evidence: [Errno 2] No such file or directory: '/home/ahra/fast-gate/tree-2-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+  ],
+  "execution": {
+    "commit": "f84d5e450c80a67aca3e8513d34d5b82dcdca4b7",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 750.636
+  },
+  "results": "/home/ahra/fast-gate/tree-2-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/home/ahra/fast-gate/tree-2-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+}
