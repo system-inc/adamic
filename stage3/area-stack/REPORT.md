@@ -1,3 +1,25 @@
+# Optional indexing delivery, group 3
+
+Group 1 entries was pushed at 57f78208c61ff0a22ab37510ee15982c44368d09. This follow-up replays only optional-indexing's own non-merge commits 2011e1f016 and 1cb073974, as cfa294609 and 99d9f66d1. The stack already includes fixture candidate f0c6e6fc. Count refresh is 3083e42b8. No worker branch was merged.
+
+Optional array, string and typed-array indexing saves the receiver once, tests null and undefined, and evaluates the index only in the present arm. Required-field indexing continuations retain the existing field layout and readiness proofs. Genuine Map get evaluates its key only after the receiver guard. Sparse arrays, structural Map receivers, string-valued indices and unsupported ordinary continuations retain explicit refusals. Existing Map-union storage is kept and its three fixtures pass.
+
+The object.go conflict keeps every existing object/storage boundary and adds only the numeric array/string/typed-array guard. The lower_test.go conflict removes only the obsolete optional-string refusal. An unrelated obsolete destructured-default refusal from the incoming context was not reinstated. The positive string-gap fixture fails when the former string refusal is restored; no unrelated positive admission was removed.
+
+Validation, with direct log output:
+
+* ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run 'TestOptionalIndexing|TestWhatStageZeroCannotLower|^TestNativeAgreesWithNode$/internal/oracle/testdata/optional_indexing_' -count=1 -v: passed on the delivery branch, oracle 1.940s. All six own fixtures agree with Node in JavaScript and native release, ASan/UBSan and leak checks; boundary pins pass.
+* python3 review/optional-indexing/run-mutants.py: all eleven implementation mutants caught on the same compiler source. Absent array/Map index evaluation and receiver reselection fail Node stdout; absent continuation and omitted Map/index null guards fail backend exit comparisons; omitted array range checking fails ASan; omitted typed continuation fails UBSan; ordinary typed property, structural Map and numeric-key boundary removals fail explicit NotYet assertions. python3 review/optional-indexing/run-string-gap-mutant.py: the restored former string refusal fails its own positive fixture. Every production source was restored after mutation.
+* ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestEntries|Namespace|EnumInitialization|NonNull|MapUnion' -count=1 -v: passed, 33.901s. Map union fixture validation separately used '^TestNativeAgreesWithNode$/internal/oracle/testdata/host_map_(generic_union|iterator_union|union)': all three passed, 2.564s, with both backends and native sanitizers.
+* ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/element_access_optional.a$' -count=1 -v: passed, 0.773s.
+* go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts: passed, 96.574s. Six new fixture rows were already supplied by the topic. The existing optional-element fixture changes from 22/51 to 50/79 expressions/statements because it now uses explicit guards; its Node differential passes. Other generated values are unchanged.
+
+Required group packages: go test ./internal/lower ./internal/ir ./internal/flow ./internal/javascript passed: lower 54.385s, IR 24.716s, flow 206.472s; JavaScript has no package tests. Catalog: bash verify/catalog/check.sh 99d9f66d129d44180d91dad9a6fdd7463c76ee88 --jobs 2 passed: eleven active undo mutants caught and five historical entries skipped. total wall=255.282s load=3.69 1.82 1.50 4/1220 539485 -> 3.15 3.14 2.17 2/1243 562009. No undo patch needed another refresh.
+
+The supplied topic census records optional index roots 6 to 0 and chain roots 11 to 9. Its before/after raw hashes and six compiler hashes were verified against the original topic commit. This is the topic worker's measurement on 79 adapted compiler files, not a new census on this stack. Its 28 changed optional-call roots still have a structural-Map refusal on the same line; they are not 28 compiled sites. The original audit needs that worker's adapted inputs and exact compiler bytes; it was not rerun against different stack bytes. No full TypeScript compilation or stricter-options 173/0 result is claimed.
+
+Method-values, binary, case-declaration, void-or-undefined and for-in remain absent for the own-positive failures or surviving mutant recorded below. All ruled checked-view dependencies remain skipped. This group adds only optional indexing; it does not weaken those guards to admit other topics. Logs are retained in evidence/oct8-optional-indexing.
+
 # Object.entries delivery on the current fixture candidate
 
 Merged origin/compiler/area-next-fixtures f0c6e6fc2, with merge commit 36fdd7cfd. Replayed only entries-provenance's two own non-merge commits fa8c6a754 and 05a600669, as be3565374 and 8c962b67d. The count refresh is 9272c54ea9c122cd49f6890066552953a949b4cd. The earlier namespace and enum delivery remains 88deff034bba044711e98fd394bf940f65925620.
