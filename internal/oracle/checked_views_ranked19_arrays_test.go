@@ -17,7 +17,7 @@ func TestCheckedViewRanked19ArrayCounts(t *testing.T) {
 	originalRankedArrayCountTest(t, "19")
 }
 
-// The next four-read candidate stops at union admission before its array field is selected.
+// Preserve the handed-off four-read candidate after lazy common-array admission.
 func TestCheckedViewRanked19NextFrontier(t *testing.T) {
 	declarations, directory, _ := originalArrayInputs(t, "19")
 	if declarations == "" {
@@ -35,10 +35,18 @@ func TestCheckedViewRanked19NextFrontier(t *testing.T) {
 	if diff := disagreement(run{stdout: []byte("a;b\n")}, onNode(t, file)); diff != "" {
 		t.Fatal("Node: " + diff)
 	}
-	_, err = lowered(t, file)
-	suffix := "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
-	if err == nil || !strings.HasSuffix(err.Error(), suffix) {
-		t.Fatalf("union admission frontier changed: %v", err)
+	program, err := lowered(t, file)
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Log(err)
+	want := run{stdout: []byte("a;b\n")}
+	actual, binary := nativelyUncached(t, program)
+	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if diff := disagreement(want, got); diff != "" {
+			t.Fatal(diff)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
 }

@@ -2745,3 +2745,7 @@ See `stage3/interface-downcasts/lane2/joints/MIXED-ARRAYS-REPORT.md`.
 ### Lane 2 array-to-tuple storage joint
 
 The original four-read lane 4c cast frontier is certified against Node in sanitized native, release native and JavaScript. Casts preserve live scalar source arrays; positional reads and lengths check live arity. Source writes preserve original primitive-union contracts. Five executed mutants fail exact stopping oracles and finish with Node output and no leaks. See stage3/interface-downcasts/lane2/joints/ARRAY-TUPLE-REPORT.md. Tuple frontier credit is separate; lane 2 remains 182 pairs / 2895 reads, remaining 152 / 294. fileNames and ranked callbacks are next.
+
+### Lane 2 IncrementalBuildInfo fileNames joint
+
+All four original fileNames reads are certified with complete union declarations against Node in both native modes and JavaScript. Common-array admission preserves aliases and checks source writable slots in every arm. Four mutants fail exact stopping oracles and finish with Node output without leaks. See stage3/interface-downcasts/lane2/joints/FILE-NAMES-REPORT.md. Lane 2 now has 183 pairs / 2899 reads certified, remaining 151 / 290; own fields remain 3 / 26 of 30 / 72. Ranked callbacks are next.

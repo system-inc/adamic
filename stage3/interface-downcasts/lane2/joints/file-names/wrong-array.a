@@ -1,0 +1,6 @@
+import type { IncrementalBuildInfo } from 'original-tsc-builder';
+interface Base { readonly version: string; }
+function read(node: IncrementalBuildInfo): string { return typeof node.fileNames; }
+const raw = {version: '1', fileNames: 'wrong'};
+const base: Base = raw;
+console.log(read(base as IncrementalBuildInfo));
