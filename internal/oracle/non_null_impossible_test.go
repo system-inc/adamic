@@ -52,18 +52,41 @@ func TestImpossibleNonNullFixturesAreRefused(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			_, err = lowered(t, path)
+			program, err := lowered(t, path)
+			if filepath.Ext(path) == ".ts" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				if program.NonNullChecks.Proven != 0 || program.NonNullChecks.Checked != 1 {
+					t.Fatalf("want proven 0 checked 1, got %#v", program.NonNullChecks)
+				}
+				expression := "undefined!"
+				if strings.Contains(name, "null.ts") {
+					expression = "null!"
+				}
+				if difference := disagreement(run{stdout: []byte(strings.TrimSuffix(expression, "!") + "\n")}, onNode(t, path)); difference != "" {
+					t.Fatal("source Node: " + difference)
+				}
+				want := run{stderr: []byte("adamic: panic: non-null assertion failed at " + path + ":1:13: " + expression + " is null or undefined\n"), exitCode: 70}
+				native, _ := nativelyUncached(t, program)
+				for _, got := range []run{native, onJavaScriptBackend(t, program)} {
+					if difference := disagreement(want, got); difference != "" {
+						t.Fatalf("%s: %#v", difference, got)
+					}
+				}
+				return
+			}
 			var refused *lower.Refused
 			if !errors.As(err, &refused) {
 				t.Fatalf("want impossible assertion Refused, got %v", err)
 			}
-			if refused.What != "a non-null assertion whose operand is exactly undefined" && refused.What != "a non-null assertion whose operand is exactly null" {
+			if refused.What != "the non-null assertion !" {
 				t.Fatalf("wrong refusal: %v", err)
 			}
-			if refused.Fix != "declare the variable optional and assign undefined" {
+			if refused.Fix != "write ?? panic(...)" {
 				t.Fatalf("wrong fix: %v", err)
 			}
-			if !strings.HasSuffix(refused.Error(), ": Adamic 0.1 refuses "+refused.What+"; declare the variable optional and assign undefined") {
+			if !strings.HasSuffix(refused.Error(), ": Adamic 0.1 refuses "+refused.What+"; write ?? panic(...)") {
 				t.Fatalf("wrong diagnostic: %v", err)
 			}
 		})
