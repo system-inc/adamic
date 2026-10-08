@@ -24,9 +24,7 @@ func renderWithChecks(backend, path string) int {
 		}
 		return 1
 	}
-	if len(program.NonNullChecks.Sites) == 0 || len(program.PredicateChecks.Sites) != 0 {
-		explainPredicateChecks(os.Stderr, program)
-	}
+	explainPredicateChecks(os.Stderr, program)
 	explainNonNullChecks(os.Stderr, program)
 	if backend == "js" {
 		fmt.Print(javascript.JavaScript(program))

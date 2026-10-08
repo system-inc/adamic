@@ -499,8 +499,6 @@ func (l *lowering) lazyAssertion(node *ast.Node, to ir.Type) ([]ir.Statement, ir
 	if err != nil {
 		return nil, nil, nil, err
 	}
-	// Initializer assertions use deferred readiness checks, but still belong in the check report.
-	l.recordNonNullCheck(node, !value.Type().IsMaybe() && !l.includesUndefined(l.checker.GetTypeAtLocation(operand)) && !l.includesNull(l.checker.GetTypeAtLocation(operand)))
 	for {
 		switch narrowed := value.(type) {
 		case ir.Unwrap:

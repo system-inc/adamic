@@ -51,3 +51,15 @@ func TestNonNullExplainChecks(t *testing.T) {
 		})
 	}
 }
+
+func TestExplainChecksDriver(t *testing.T) {
+	if os.Getenv("ADAMIC_EXPLAIN_TEST_DRIVER") != "1" {
+		return
+	}
+	for index, argument := range os.Args {
+		if argument == "--" {
+			os.Exit(run(os.Args[index+1:]))
+		}
+	}
+	t.Fatal("missing driver arguments")
+}
