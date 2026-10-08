@@ -157,6 +157,52 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	operand = ast.SkipParentheses(operand)
+	if operand.Kind == ast.KindNonNullExpression {
+		assertion := operand
+		target := ast.SkipParentheses(assertion.AsNonNullExpression().Expression)
+		step := ir.Add
+		if operator == ast.KindMinusMinusToken {
+			step = ir.Subtract
+		}
+		if target.Kind != ast.KindPropertyAccessExpression {
+			return nil, l.notYet(target, "incrementing a non-null target other than a stored numeric field")
+		}
+		object, err := l.expression(target.AsPropertyAccessExpression().Expression)
+		if err != nil {
+			return nil, err
+		}
+		if object.Type() != ir.Object {
+			return nil, l.notYet(target, "incrementing a non-null field of a "+typeName(object.Type()))
+		}
+		field := l.checker.GetSymbolAtLocation(target.Name())
+		if field == nil || accessorSymbol(field) {
+			return nil, l.notYet(target, "incrementing a non-null accessor field")
+		}
+		of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+		if !known || (of != ir.Number && of != ir.MaybeNumber) {
+			return nil, l.notYet(target, "incrementing a non-null field without numeric storage")
+		}
+		// Hold the receiver once. Check the stored value before updating the slot.
+		held := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "increment_object", Type: ir.Object, Function: l.functionIndex})
+		l.noteLocal(held, l.concrete(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)), target)
+		object = l.privateStaticReceiver(target.Name(), object, false)
+		read := ir.Read{Local: held, Of: ir.Object}
+		name := l.fieldName(target.Name())
+		current := l.readObjectField(target, ir.Property{Object: read, Name: name, Of: of, Class: l.classOf(target)})
+		current, err = l.nonNullValue(assertion, current)
+		if err != nil {
+			return nil, err
+		}
+		if current.Type() != ir.Number {
+			return nil, l.notYet(target, "incrementing a non-null field whose checked value is not a number")
+		}
+		updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}
+		return []ir.Statement{ir.Block{Body: []ir.Statement{
+			ir.Declare{Local: held, Value: object},
+			ir.SetProperty{Object: read, Name: name, Value: fit(updated, of), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)},
+		}}}, nil
+	}
 	if l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {
 		value, err := l.expression(operand)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err

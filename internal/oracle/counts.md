@@ -896,3 +896,6 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/lower/testdata/predicates/overload_some_false_valid.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_objects.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_true_only.a | 1 | 1 | 1 | 1 |
+| internal/oracle/testdata/statements_small_typescript/nonnull.a | 12 | 12 | 8 | 21 | 4 | 0 |
+| internal/oracle/testdata/statements_small_typescript/missing.a | 1 | 0 | 1 | 1 | 1 | 0 |
+| internal/oracle/testdata/statements_small_typescript/absent.a | 1 | 0 | 1 | 1 | 1 | 0 |
