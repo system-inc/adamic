@@ -419,7 +419,7 @@ closed gap requires updating the workaround.
 | --- | --- | --- | --- |
 | [prefixIncrement.ts](gaps/prefixIncrement.ts) | `1` | `a PrefixUnaryExpression on a number` | Increment in a separate statement |
 | [assignmentValue.ts](gaps/assignmentValue.ts) | `1` | `a BinaryExpression with a number and a number` | Assign before reading the result |
-| [stringPresence.ts](gaps/stringPresence.ts) | `false` | `a PrefixUnaryExpression on a string` | Compare the character sentinel with the empty string |
+| [stringPresence.ts](gaps/stringPresence.ts) | `false` | Closed by `cdddfee346e70a5cba3e982f808b9ebe426a6dfb` | Lexer sentinel tests use native string truthiness and negation |
 
 Labels and logical assignment operators are explicit 0.1 refusals, not newly
 observed language gaps. The port uses ordinary loop control and assignments.
@@ -552,3 +552,25 @@ Adamic gap claims or proving programs. No file-formatting driver,
 Adamic corpus comparison, native sanitizers, Go/Node/native texts-per-second
 measurements, three port mutants, filtered Adamic oracle or full repository
 gate was run. This audit must not be treated as a merge-ready YAML port.
+
+## String presence: closed on the compiler area
+
+`TestClosedStringPresenceGap` keeps the original proving program and requires
+`false` from source Node, native ASan/UBSan/LeakSanitizer and emitted JavaScript.
+`git log -S censusBooleanCondition -- internal/lower` identifies
+`cdddfee346e70a5cba3e982f808b9ebe426a6dfb` as the ToBoolean/negation change.
+The lexer now tests its empty-string sentinels directly or with `!`.
+Numeric code-unit scanning is retained as an optimization, and `member` keeps
+its explicit nonempty boolean operand because mixed string/boolean `&&` is
+outside this gap (see `valueConjunction.ts`).
+
+String closure validation: `ADAMIC_YAML_LIBRARY=/tmp/area-gaps-yaml-library
+go test -v ./stage1/cohere/yaml -run
+'^(TestClosedStringPresenceGap|TestLexerMatchesGo|TestLexerMutants)$' -count=1
+-timeout 30m` passed (35.223s). The 8,732 complete/chunked cases from 36
+repository files agree byte-for-byte with Go, source Node, both backends and
+yaml 2.9.0, including sanitizer/leak checks. Five existing lexer mutants
+(keep chomping, tab whitespace, BOM splitting, cached NUL, numeric whitespace)
+execute successfully with wrong bytes and are caught on native and Node.
+Changing the closed fixture from a nonempty to an empty string made its
+normal Node `true` output fail the expected `false` check; it was restored.

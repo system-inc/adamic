@@ -1,14 +1,18 @@
 package yaml
 
 import (
+	"bytes"
 	"context"
 	"errors"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestLexerGaps(t *testing.T) {
@@ -19,7 +23,6 @@ func TestLexerGaps(t *testing.T) {
 	for _, gap := range []struct{ file, output, diagnostic string }{
 		{"prefixIncrement.ts", "1\n", "a PrefixUnaryExpression on a number"},
 		{"assignmentValue.ts", "1\n", "a BinaryExpression with a number and a number"},
-		{"stringPresence.ts", "false\n", "a PrefixUnaryExpression on a string"},
 		{"emptyAlternative.ts", "1\n", "an array of never"},
 		{"dynamicCase.ts", "1\n", "a case that isn't a constant"},
 		{"negativeCase.ts", "1\n", "a case that isn't a constant"},
@@ -73,4 +76,50 @@ func TestStructuralPositionRefusal(t *testing.T) {
 		t.Fatalf("refusal changed or closed: %v", err)
 	}
 	t.Log(err)
+}
+
+func TestClosedStringPresenceGap(t *testing.T) {
+	closedPresenceGap(t, "gaps/stringPresence.ts")
+}
+
+func closedPresenceGap(t *testing.T, file string) {
+	t.Helper()
+	path, err := filepath.Abs(file)
+	if err != nil {
+		t.Fatal(err)
+	}
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, path)
+	if string(expected) != "false\n" {
+		t.Fatalf("Node presence result %q", expected)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "presence")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	actual := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	emitted := filepath.Join(t.TempDir(), "presence.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	backend := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted)
+	for _, side := range []struct {
+		name   string
+		output []byte
+	}{{"native ASan/UBSan/LSan", actual}, {"JavaScript backend", backend}} {
+		if !bytes.Equal(side.output, expected) {
+			t.Fatalf("%s: %q, Node %q", side.name, side.output, expected)
+		}
+	}
 }
