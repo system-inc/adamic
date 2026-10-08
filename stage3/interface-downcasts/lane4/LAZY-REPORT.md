@@ -134,3 +134,29 @@ No production code changed in this fixture-only group. The prior uncached
 checked-view oracle, scoped lowering and backend undefined-admission overlay
 mutants cover the unchanged implementation; the new pair oracle and vet cover
 this group's additions. Test outputs are preserved in logs/brand-candidate-pairs*.
+
+## Finite string-key unions
+
+Built: Diagnostic.skippedOn and ReusableDiagnostic.skippedOn, two candidate pairs / four reads.
+Commits: builds on 4ba489e5; this source fixture group.
+Checks: TestCheckedViewPrimitiveKeyPairs passes 6.307s, with Node controls, native release, JavaScript and sanitized native positives.
+Mutants: bypassing either helper literal-member read runs valid release code and violates the wrong-value pin in both backends.
+Uncovered: seven mixed-family candidate pairs / 23 reads; production tsc reachability remains unmeasured.
+
+Each reduced CompilerOptions preserves a finite keyof union with undefined.
+Fixtures read both string members, explicit undefined and optional absence.
+An unknown string, number and null each refuse at the helper read with the field,
+declared union and found value/category pinned. No compiler changes were needed;
+this group exercises the implemented finite-string and undefined-member path.
+
+| Family | Remaining candidate pairs | Remaining candidate reads |
+| --- | ---: | ---: |
+| __String | 0 | 0 |
+| Mixed primitive union | 7 | 23 |
+
+The mixed-family working target remains October 9, 2026, 17:00 MDT (23:00 UTC).
+Automatic approval review rejected the proposed broad boxed-union rewrite across
+lowering, slot probing and emitters because its single component test did not
+establish freedom from silent miscompiles or memory-safety failures. None of that
+rewrite ran. These independent fixtures complete unaffected work; a narrower
+runtime probe with dedicated tests is the next step before enabling dispatch.

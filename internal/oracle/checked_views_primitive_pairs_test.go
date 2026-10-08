@@ -73,3 +73,54 @@ func TestCheckedViewBrandCandidatePairs(t *testing.T) {
 		}
 	}
 }
+
+func TestCheckedViewPrimitiveKeyPairs(t *testing.T) {
+	for _, pair := range []string{"9761", "97180"} {
+		for _, variant := range []string{"target", "strict", "undefined", "missing", "wrong", "number", "null"} {
+			t.Run(pair+"/"+variant, func(t *testing.T) {
+				program, path := interfaceFixture(t, "lane4/primitive-pairs/"+pair+"-skippedOn-"+variant)
+				text := map[string]string{"target": "target", "strict": "strict", "undefined": "undefined", "missing": "undefined", "wrong": "notAnOption", "number": "42", "null": "null"}[variant]
+				if difference := disagreement(run{stdout: []byte(text + "\n")}, onNode(t, path)); difference != "" {
+					t.Fatal("source Node: " + difference)
+				}
+				want := run{stdout: []byte(text + "\n")}
+				declared := "keyof CompilerOptions | undefined"
+				if variant == "wrong" {
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.skippedOn expected " + declared + ", found string notAnOption\n")}
+				}
+				if variant == "number" || variant == "null" {
+					found := map[string]string{"number": "number", "null": "null"}[variant]
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.skippedOn is not a " + declared + "; expected " + declared + ", found " + found + "\n")}
+				}
+				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if difference := disagreement(want, got); difference != "" {
+						t.Fatalf("%s; got %#v", difference, got)
+					}
+				}
+				if want.exitCode == 0 {
+					got, _ := nativelyUncached(t, program)
+					if difference := disagreement(want, got); difference != "" {
+						t.Fatal(difference)
+					}
+				}
+				if variant == "wrong" {
+					index := len(program.Strings)
+					program.Strings = append(program.Strings, "unchecked")
+					replacement := ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: index}, ir.StringConstant{Index: index}}}
+					if count := dropLane4NamedHelperView(program, "skippedOn", replacement); count != 1 {
+						t.Fatalf("want one mutated helper field, got %d", count)
+					}
+					for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+						if got.exitCode != 0 {
+							t.Fatalf("mutant must run valid release code: %#v", got)
+						}
+						if disagreement(want, got) == "" {
+							t.Fatal("literal-member read bypass escaped pin")
+						}
+						t.Logf("literal-member bypass caught: exit %d stdout %q", got.exitCode, got.stdout)
+					}
+				}
+			})
+		}
+	}
+}
