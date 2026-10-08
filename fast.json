@@ -1,0 +1,2628 @@
+{
+  "sha": "4b31cffea788744292dc27f969db4f590ba0bb28",
+  "branch": "devtools/fast-gate",
+  "branch_source": "given",
+  "session": "01a11428-2ea6-72f1-8d60-4253ea0c0024",
+  "session_source": "ai.db reply naming the branch",
+  "base": "efe9f4042049234e5a52639fe77b47c311fd530c",
+  "tools_sha": "4b31cffea788744292dc27f969db4f590ba0bb28",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "reads": [
+    {
+      "line": 77,
+      "package": "bridge/tsgo",
+      "glob": "internal/lower/tsgo.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 79,
+      "package": "bridge/tsgo",
+      "glob": "internal/native/runtime/tsgo.c",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 81,
+      "package": "cmd/adamic-gate",
+      "glob": "stage1/cohere/typeaware/volume_test.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 94,
+      "package": "cmd/adamic-test262",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 107,
+      "package": "cmd/adamic-test262",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 109,
+      "package": "internal/flow",
+      "glob": "dedication/dedication.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 111,
+      "package": "internal/flow",
+      "glob": "internal/load/testdata/0.1/compile/*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 113,
+      "package": "internal/flow",
+      "glob": "internal/load/testdata/0.1/compile/07_modules/geometry.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 115,
+      "package": "internal/flow",
+      "glob": "internal/load/testdata/0.1/compile/07_modules/main.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 117,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 119,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/modules/counter.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 121,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/modules/format.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 123,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/modules/main.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 125,
+      "package": "internal/flow",
+      "glob": "internal/oracle/testdata/reading/*",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 127,
+      "package": "internal/flow",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 129,
+      "package": "internal/flow",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 131,
+      "package": "internal/fresh",
+      "glob": "dedication/dedication.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 133,
+      "package": "internal/fresh",
+      "glob": "internal/flow/testdata/*.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 135,
+      "package": "internal/fresh",
+      "glob": "internal/load/testdata/0.1/compile/*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 137,
+      "package": "internal/fresh",
+      "glob": "internal/load/testdata/0.1/compile/07_modules/geometry.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 139,
+      "package": "internal/fresh",
+      "glob": "internal/load/testdata/0.1/compile/07_modules/main.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 141,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/*.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 143,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/modules/counter.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 145,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/modules/format.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 147,
+      "package": "internal/fresh",
+      "glob": "internal/oracle/testdata/modules/main.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 150,
+      "package": "internal/fuzz",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 153,
+      "package": "internal/fuzz",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 156,
+      "package": "internal/fuzz",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 159,
+      "package": "internal/fuzz",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 161,
+      "package": "internal/ir",
+      "glob": "internal/flow/*.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 163,
+      "package": "internal/ir",
+      "glob": "internal/fresh/*.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 165,
+      "package": "internal/ir",
+      "glob": "internal/lower/*.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 167,
+      "package": "internal/ir",
+      "glob": "internal/native/*.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 169,
+      "package": "internal/load",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 171,
+      "package": "internal/lower",
+      "glob": "internal/oracle/testdata/class_features_private.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 173,
+      "package": "internal/lower",
+      "glob": "internal/oracle/testdata/generic_instance_key_typeof.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 175,
+      "package": "internal/lower",
+      "glob": "internal/oracle/testdata/iterators_override_this.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 177,
+      "package": "internal/lower",
+      "glob": "internal/oracle/testdata/iterators_sym_keys_view.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 179,
+      "package": "internal/lower",
+      "glob": "internal/oracle/testdata/optional_widening_*.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 181,
+      "package": "internal/lower",
+      "glob": "internal/oracle/testdata/reland_refused/generic_instance_key_json.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 183,
+      "package": "internal/lower",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 185,
+      "package": "internal/lower",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 187,
+      "package": "internal/lower",
+      "glob": "stage3/fixtures/cycles/ledger.json",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 189,
+      "package": "internal/lower",
+      "glob": "stage3/fixtures/cycles/order.json",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 191,
+      "package": "internal/lower",
+      "glob": "stage3/fixtures/cycles/trace.json.gz",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 195,
+      "package": "internal/native",
+      "glob": "bench/nbody.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 197,
+      "package": "internal/native",
+      "glob": "bench/regex/cases.json",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 199,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/01_hello.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 201,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 203,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/03_shapes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 205,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/04_closures.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 207,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/05_wordcount.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 209,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/06_stack.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 211,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/07_modules/geometry.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 213,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/07_modules/main.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 215,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/08_results.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 217,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/09_tree.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 219,
+      "package": "internal/native",
+      "glob": "internal/load/testdata/0.1/compile/10_unicode.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 221,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/bitwise_sweep.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 223,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/borrow_chain_*.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 225,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/borrow_element_throw.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 227,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/borrow_global_call.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 230,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/borrow_loop.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 232,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/borrow_loop_calls.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 234,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/call_targets_element.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 236,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/class_inheritance_memory.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 238,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/closures_throw.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 240,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/devirtualize.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 242,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/functions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 244,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/json_stringify_numbers.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 246,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/library_array_flat.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 248,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/library_object_keys.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 250,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/maps_and_text.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 252,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/normalize.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 254,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/numbers.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 256,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/panic.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 258,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/read_files.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 260,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/reading/*",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 262,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/regexp_cycle_collections.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 264,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/regions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 266,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/regions_throw.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 268,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/reuse_weak_after_reuse.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 270,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/reuse_weak_during_spread.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 272,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/stack_forever.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 274,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/stack_overflow.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 276,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/stack_tail_call.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 278,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/strings.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 280,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/weak_narrowed.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 282,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/weak_parent.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 284,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/write_stderr_order.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 286,
+      "package": "internal/native",
+      "glob": "internal/oracle/testdata/write_stdout_order.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 288,
+      "package": "internal/native",
+      "glob": "internal/regexp/testdata/matches.json.gz",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 290,
+      "package": "internal/native",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 292,
+      "package": "internal/native",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 295,
+      "package": "internal/native",
+      "glob": "stage1/cohere/lint/finding.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 298,
+      "package": "internal/native",
+      "glob": "stage1/cohere/lint/suggestions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 300,
+      "package": "internal/native",
+      "glob": "stage1/cohere/typeaware/main.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 303,
+      "package": "internal/native",
+      "glob": "stage1/cohere/typeaware/unary_minus.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 306,
+      "package": "internal/native",
+      "glob": "stage1/typescript/parser/grammar.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 309,
+      "package": "internal/native",
+      "glob": "stage1/typescript/parser/jsx.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 312,
+      "package": "internal/native",
+      "glob": "stage1/typescript/parser/lookahead.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 315,
+      "package": "internal/native",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 318,
+      "package": "internal/native",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 321,
+      "package": "internal/native",
+      "glob": "stage1/typescript/parser/statements.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 324,
+      "package": "internal/native",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 327,
+      "package": "internal/native",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 330,
+      "package": "internal/native",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 342,
+      "package": "internal/oracle",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 354,
+      "package": "internal/oracle",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 357,
+      "package": "internal/oracle",
+      "glob": "oracle/wasi.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 359,
+      "package": "stage1/cohere/css",
+      "glob": "*.[cC][sS][sS]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 361,
+      "package": "stage1/cohere/css",
+      "glob": "*.[lL][eE][sS][sS]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 363,
+      "package": "stage1/cohere/css",
+      "glob": "*.[sS][cC][sS][sS]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 378,
+      "package": "stage1/cohere/css",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 380,
+      "package": "stage1/cohere/css",
+      "glob": "cohere/internal/format/css/*_test.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 382,
+      "package": "stage1/cohere/css",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 384,
+      "package": "stage1/cohere/css",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 388,
+      "package": "stage1/cohere/css",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 392,
+      "package": "stage1/cohere/css",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 394,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/cssnumbers/*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 396,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/cssnumbers/numbers.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 398,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/cssstrings/*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 402,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/cssstrings/strings.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 404,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/mediaquery/*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 406,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/mediaquery/index.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 410,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/mediaquery/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 413,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/mediaquery/parsers.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 417,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/mediaquery/whitespace.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 419,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/selector/*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 422,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/selector/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 424,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/selector/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 427,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/selector/source.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 430,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/selector/tokenize.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 432,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/values/*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 435,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/values/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 438,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/values/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 441,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/values/tokenize.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 443,
+      "package": "stage1/cohere/css",
+      "glob": "stage1/cohere/values/values.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 445,
+      "package": "stage1/cohere/cssnumbers",
+      "glob": "*.[cC][sS][sS]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 447,
+      "package": "stage1/cohere/cssnumbers",
+      "glob": "*.[lL][eE][sS][sS]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 449,
+      "package": "stage1/cohere/cssnumbers",
+      "glob": "*.[sS][cC][sS][sS]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 454,
+      "package": "stage1/cohere/cssnumbers",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 457,
+      "package": "stage1/cohere/cssnumbers",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 460,
+      "package": "stage1/cohere/cssnumbers",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 463,
+      "package": "stage1/cohere/cssnumbers",
+      "glob": "stage1/cohere/cssstrings/strings.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 465,
+      "package": "stage1/cohere/cssstrings",
+      "glob": "*.[cC][sS][sS]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 467,
+      "package": "stage1/cohere/cssstrings",
+      "glob": "*.[lL][eE][sS][sS]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 469,
+      "package": "stage1/cohere/cssstrings",
+      "glob": "*.[sS][cC][sS][sS]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 474,
+      "package": "stage1/cohere/cssstrings",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 477,
+      "package": "stage1/cohere/cssstrings",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 480,
+      "package": "stage1/cohere/cssstrings",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 483,
+      "package": "stage1/cohere/estree",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 494,
+      "package": "stage1/cohere/estree",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 505,
+      "package": "stage1/cohere/estree",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 507,
+      "package": "stage1/cohere/estree",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 510,
+      "package": "stage1/cohere/estree",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 512,
+      "package": "stage1/cohere/estree",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 515,
+      "package": "stage1/cohere/estree",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 519,
+      "package": "stage1/cohere/formatfiles",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 521,
+      "package": "stage1/cohere/formatfiles",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 523,
+      "package": "stage1/cohere/formatfiles",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 526,
+      "package": "stage1/cohere/formatfiles",
+      "glob": "stage1/cohere/gitignore/gitignore.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 531,
+      "package": "stage1/cohere/formatfiles",
+      "glob": "stage1/cohere/gitignore/glob.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 536,
+      "package": "stage1/cohere/formatfiles",
+      "glob": "stage1/cohere/gitignore/path.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 540,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "cloud/box-run.sh",
+        "cloud/build-cache-worker/README.md",
+        "cloud/build-cache-worker/worker.js",
+        "cloud/build-cache-worker/wrangler.toml",
+        "cloud/build-one-file-box.sh",
+        "cloud/build-one-file.sh",
+        "cloud/contribution-clock.sh",
+        "cloud/contribution-clock/01-self-comparison-c.md",
+        "cloud/contribution-clock/02-super-in-arrow.md",
+        "cloud/contribution-clock/03-global-isnan-isfinite.md",
+        "cloud/contribution-clock/04-split-limit.md",
+        "cloud/contribution-clock/05-starts-ends-with-position.md",
+        "cloud/contribution-clock/06-lastindexof-position.md",
+        "cloud/contribution-clock/90-test262-deadline-cpu.md",
+        "cloud/contribution-clock/91-fuzz-deadline-cpu.md",
+        "cloud/fast-gate-classify.sh",
+        "cloud/fast-gate-watch.sh",
+        "cloud/fast-gate.sh",
+        "cloud/fast-gate/.gitignore",
+        "cloud/fast-gate/census-extra.json",
+        "cloud/fast-gate/deferred.txt",
+        "cloud/fast-gate/executors.txt",
+        "cloud/fast-gate/rewritten-logs.tsv",
+        "cloud/fast-gate/run.py",
+        "cloud/fast-gate/run_test.py",
+        "cloud/fast-gate/smoke.txt",
+        "cloud/full-gate-main.sh",
+        "cloud/submodule-cache.sh",
+        "internal/skipcensus/README.md",
+        "internal/skipcensus/census.go",
+        "internal/skipcensus/census_test.go",
+        "internal/skipcensus/cmd/main.go",
+        "internal/skipcensus/log.go",
+        "internal/skipcensus/optin.go",
+        "internal/skipcensus/testdata/plain-skips.jsonl",
+        "internal/skipcensus/testdata/proofs.py",
+        "internal/skipcensus/testdata/provided-historical-rows.json",
+        "internal/skipcensus/testdata/provided-plain-skips.jsonl",
+        "internal/skipcensus/testdata/skips.json"
+      ],
+      "map_changed": true
+    },
+    {
+      "line": 541,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*.gitignore",
+      "paths": [
+        "cloud/fast-gate/.gitignore"
+      ],
+      "map_changed": true
+    },
+    {
+      "line": 546,
+      "package": "stage1/cohere/gitignore",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 548,
+      "package": "stage1/cohere/gitignore",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 554,
+      "package": "stage1/cohere/graphql",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 556,
+      "package": "stage1/cohere/graphql",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 558,
+      "package": "stage1/cohere/graphql",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 560,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "*.graphql",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 571,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 574,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 577,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 582,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "stage1/cohere/graphql/blockString.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 587,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "stage1/cohere/graphql/characterClasses.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 592,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "stage1/cohere/graphql/lexer.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 595,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "stage1/cohere/graphql/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 597,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "stage1/cohere/graphql/testdata/cohere_side_test.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 602,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "stage1/cohere/graphql/token.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 605,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "stage1/cohere/json/width.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 610,
+      "package": "stage1/cohere/graphql/printer",
+      "glob": "stage1/cohere/json/widthTables.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 612,
+      "package": "stage1/cohere/json",
+      "glob": "*.json",
+      "paths": [
+        "cloud/fast-gate/census-extra.json",
+        "internal/skipcensus/testdata/provided-historical-rows.json",
+        "internal/skipcensus/testdata/skips.json"
+      ],
+      "map_changed": true
+    },
+    {
+      "line": 622,
+      "package": "stage1/cohere/json",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 624,
+      "package": "stage1/cohere/json",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 626,
+      "package": "stage1/cohere/json",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 631,
+      "package": "stage1/cohere/lint",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 639,
+      "package": "stage1/cohere/lint",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 647,
+      "package": "stage1/cohere/lint",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 649,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/*.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 652,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 657,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/parser/grammar.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 662,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/parser/jsx.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 667,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/parser/lookahead.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 674,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 677,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 682,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/parser/statements.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 684,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/parser/testdata/oracle.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 693,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 700,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 709,
+      "package": "stage1/cohere/lint",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 711,
+      "package": "stage1/cohere/lint/helpers",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 715,
+      "package": "stage1/cohere/lint/helpers",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 719,
+      "package": "stage1/cohere/lint/helpers",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 721,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 725,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 729,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 731,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/cohere/lint/helpers/options_json.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 734,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/parser/grammar.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 737,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/parser/jsx.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 740,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/parser/lookahead.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 744,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 746,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 749,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/parser/statements.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 754,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 758,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 763,
+      "package": "stage1/cohere/lint/helpers/comments",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 768,
+      "package": "stage1/cohere/lint/inventory",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 775,
+      "package": "stage1/cohere/lint/regex",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 778,
+      "package": "stage1/cohere/lint/regex",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 781,
+      "package": "stage1/cohere/lint/regex",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 783,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/comment_ranges.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 785,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/comments.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 787,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 789,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/finding.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 791,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/rules/*",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 793,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/settings.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 795,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/suggestions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 797,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/cohere/lint/unicode.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 799,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/parser/grammar.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 801,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/parser/jsx.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 803,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/parser/lookahead.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 805,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 807,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 809,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/parser/statements.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 811,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 813,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 815,
+      "package": "stage1/cohere/lint/registry",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 817,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 820,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/cohere/lint/finding.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 823,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/cohere/lint/settings.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 827,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/cohere/lint/suggestions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 832,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/parser/grammar.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 837,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/parser/jsx.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 842,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/parser/lookahead.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 848,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 852,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 857,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/parser/statements.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 864,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 870,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 877,
+      "package": "stage1/cohere/lint/rules/no-underscore-dangle",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 879,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 882,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/cohere/lint/finding.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 885,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/cohere/lint/settings.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 889,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/cohere/lint/suggestions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 894,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/parser/grammar.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 899,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/parser/jsx.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 904,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/parser/lookahead.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 910,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 914,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 919,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/parser/statements.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 926,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 932,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 939,
+      "package": "stage1/cohere/lint/rules/no-unsafe-negation",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 941,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 944,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/cohere/lint/finding.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 947,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/cohere/lint/settings.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 951,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/cohere/lint/suggestions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 956,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/parser/grammar.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 961,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/parser/jsx.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 966,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/parser/lookahead.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 972,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 976,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 981,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/parser/statements.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 988,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 994,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1001,
+      "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1003,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/cohere/lint/context.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1006,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/cohere/lint/finding.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1009,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/cohere/lint/settings.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1013,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/cohere/lint/suggestions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1018,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/parser/grammar.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1023,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/parser/jsx.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1028,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/parser/lookahead.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1034,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1038,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1043,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/parser/statements.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1050,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1056,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1063,
+      "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1134,
+      "package": "stage1/cohere/markdownblocks",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1139,
+      "package": "stage1/cohere/markdownblocks",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1144,
+      "package": "stage1/cohere/markdownblocks",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1149,
+      "package": "stage1/cohere/markdownblocks",
+      "glob": "stage1/cohere/markdowninline/classes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1152,
+      "package": "stage1/cohere/markdownblocks",
+      "glob": "stage1/cohere/markdowninline/inline.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1154,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][aA][rR][kK][dD][oO][wW][nN]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1156,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD]",
+      "paths": [
+        "cloud/build-cache-worker/README.md",
+        "cloud/contribution-clock/01-self-comparison-c.md",
+        "cloud/contribution-clock/02-super-in-arrow.md",
+        "cloud/contribution-clock/03-global-isnan-isfinite.md",
+        "cloud/contribution-clock/04-split-limit.md",
+        "cloud/contribution-clock/05-starts-ends-with-position.md",
+        "cloud/contribution-clock/06-lastindexof-position.md",
+        "cloud/contribution-clock/90-test262-deadline-cpu.md",
+        "cloud/contribution-clock/91-fuzz-deadline-cpu.md",
+        "internal/skipcensus/README.md"
+      ],
+      "map_changed": true
+    },
+    {
+      "line": 1158,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][dD][oO][wW][nN]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1160,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "*.[mM][kK][dD]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1165,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1168,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1171,
+      "package": "stage1/cohere/markdowninline",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1175,
+      "package": "stage1/cohere/mediaquery",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1177,
+      "package": "stage1/cohere/mediaquery",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1179,
+      "package": "stage1/cohere/mediaquery",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1184,
+      "package": "stage1/cohere/selector",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1186,
+      "package": "stage1/cohere/selector",
+      "glob": "cohere/internal/format/css/*_test.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1189,
+      "package": "stage1/cohere/selector",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1192,
+      "package": "stage1/cohere/selector",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1195,
+      "package": "stage1/cohere/static_single_assignment",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1197,
+      "package": "stage1/cohere/static_single_assignment",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1199,
+      "package": "stage1/cohere/static_single_assignment",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1203,
+      "package": "stage1/cohere/suppression",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1205,
+      "package": "stage1/cohere/suppression",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1207,
+      "package": "stage1/cohere/suppression",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1210,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1216,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1218,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1220,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1223,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/cohere/lint/suggestions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1226,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/parser/grammar.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1229,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/parser/jsx.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1232,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/parser/lookahead.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1236,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/parser/nodes.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1238,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/parser/parser.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1241,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/parser/statements.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1246,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1250,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1255,
+      "package": "stage1/cohere/tsprinter",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1262,
+      "package": "stage1/cohere/typeaware",
+      "glob": "bridge/tsgo/archive/main.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1268,
+      "package": "stage1/cohere/typeaware",
+      "glob": "bridge/tsgo/checker/facts.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1270,
+      "package": "stage1/cohere/typeaware",
+      "glob": "bridge/tsgo/checker/program.go",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1310,
+      "package": "stage1/cohere/typeaware",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1315,
+      "package": "stage1/cohere/typeaware",
+      "glob": "tsconfig.json",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1319,
+      "package": "stage1/cohere/values",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1321,
+      "package": "stage1/cohere/values",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1323,
+      "package": "stage1/cohere/values",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1325,
+      "package": "stage1/cohere/yaml",
+      "glob": "*.[yY][aA][mM][lL]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1327,
+      "package": "stage1/cohere/yaml",
+      "glob": "*.[yY][mM][lL]",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1349,
+      "package": "stage1/cohere/yaml",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1373,
+      "package": "stage1/cohere/yaml",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1397,
+      "package": "stage1/cohere/yaml",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1399,
+      "package": "stage1/typescript/parser",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1411,
+      "package": "stage1/typescript/parser",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1423,
+      "package": "stage1/typescript/parser",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1429,
+      "package": "stage1/typescript/parser",
+      "glob": "stage1/typescript/scanner/characters.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1433,
+      "package": "stage1/typescript/parser",
+      "glob": "stage1/typescript/scanner/scanner.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1439,
+      "package": "stage1/typescript/parser",
+      "glob": "stage1/typescript/scanner/tokens.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1443,
+      "package": "stage1/typescript/scanner",
+      "glob": "cohere",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1445,
+      "package": "stage1/typescript/scanner",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1447,
+      "package": "stage1/typescript/scanner",
+      "glob": "internal/native/runtime/*.h",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1451,
+      "package": "stage1/typescript/scanner",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1455,
+      "package": "stage1/typescript/scanner",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1457,
+      "package": "stage1/typescript/scanner",
+      "glob": "stage1/*.ts",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1459,
+      "package": "stage1/typescript/scanner",
+      "glob": "stage1/cohere/lint/suggestions.a",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1463,
+      "package": "stage3/fixtures",
+      "glob": "oracle/adamic.mjs",
+      "paths": [],
+      "map_changed": true
+    },
+    {
+      "line": 1467,
+      "package": "stage3/fixtures",
+      "glob": "oracle/node.mjs",
+      "paths": [],
+      "map_changed": true
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "wall_seconds": 0.7,
+  "steps_seconds": {
+    "coverage": 0.0
+  },
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": {
+    "step": "darwin",
+    "detail": "needs darwin leg: go test ./internal/apple/... on Kirk's Mac, for the executor map's change",
+    "after_seconds": 0.7
+  },
+  "planned_stages": [
+    "coverage",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census",
+    "darwin"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "darwin": 1
+  },
+  "finished": true
+}
