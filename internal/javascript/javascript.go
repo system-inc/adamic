@@ -396,7 +396,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.tracedAwait(at, wait, statement.Local)
 			return
 		}
-		if statement.Uninitialized {
+		if statement.Uninitialized && (e.program.Locals[statement.Local].Captured || e.program.Locals[statement.Local].Preallocated) {
 			if e.program.Locals[statement.Local].EnvironmentCell {
 				return
 			}

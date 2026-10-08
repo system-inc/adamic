@@ -76,7 +76,7 @@ func (e *emitter) statement(statement ir.Statement) {
 	case ir.AllocateEnvironment:
 		// Emitted at function entry before captured parameters are initialized.
 	case ir.Declare:
-		if statement.Uninitialized {
+		if statement.Uninitialized && (e.program.Locals[statement.Local].Captured || e.program.Locals[statement.Local].Preallocated) {
 			if e.program.Locals[statement.Local].EnvironmentCell {
 				return
 			}
