@@ -1,0 +1,50 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D107
+=== RUN   TestLedgerWitnesses/D107/present
+    witness_test.go:185: PRESENT D107 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D107/absent
+    witness_test.go:183: PROVEN D107 read=args[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1
+=== RUN   TestLedgerWitnesses/D107/hole
+    witness_test.go:111: HOLE BLOCKED D107 array of string: /tmp/adamic-gate/TestLedgerWitnessesD107hole2092128945/001/D107.ts:1:24: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D129
+=== RUN   TestLedgerWitnesses/D129/present
+    witness_test.go:118: BLOCKED D129 record of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD129present1647751436/001/D129.ts:1:36: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added; Node "7\n"
+=== RUN   TestLedgerWitnesses/D129/absent
+    witness_test.go:118: BLOCKED D129 record of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD129absent1455327347/001/D129.ts:1:36: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D130
+=== RUN   TestLedgerWitnesses/D130/present
+    witness_test.go:118: BLOCKED D130 record of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD130present3387013277/001/D130.ts:1:36: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added; Node "7\n"
+=== RUN   TestLedgerWitnesses/D130/absent
+    witness_test.go:118: BLOCKED D130 record of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD130absent2164552878/001/D130.ts:1:36: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D131
+=== RUN   TestLedgerWitnesses/D131/present
+    witness_test.go:118: BLOCKED D131 record of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD131present3239693963/001/D131.ts:1:36: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added; Node "7\n"
+=== RUN   TestLedgerWitnesses/D131/absent
+    witness_test.go:118: BLOCKED D131 record of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD131absent999796460/001/D131.ts:1:36: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D171
+=== RUN   TestLedgerWitnesses/D171/present
+    witness_test.go:185: PRESENT D171 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D171/absent
+    witness_test.go:183: PROVEN D171 read=node.declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0
+=== RUN   TestLedgerWitnesses/D171/hole
+    witness_test.go:111: HOLE BLOCKED D171 NodeArray of object: /tmp/adamic-gate/TestLedgerWitnessesD171hole1826226735/001/D171.ts:2:74: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+--- PASS: TestLedgerWitnesses (6.64s)
+    --- PASS: TestLedgerWitnesses/D107 (1.61s)
+        --- PASS: TestLedgerWitnesses/D107/present (0.63s)
+        --- PASS: TestLedgerWitnesses/D107/absent (0.76s)
+        --- PASS: TestLedgerWitnesses/D107/hole (0.22s)
+    --- PASS: TestLedgerWitnesses/D129 (0.43s)
+        --- PASS: TestLedgerWitnesses/D129/present (0.21s)
+        --- PASS: TestLedgerWitnesses/D129/absent (0.22s)
+    --- PASS: TestLedgerWitnesses/D130 (0.47s)
+        --- PASS: TestLedgerWitnesses/D130/present (0.23s)
+        --- PASS: TestLedgerWitnesses/D130/absent (0.24s)
+    --- PASS: TestLedgerWitnesses/D131 (0.43s)
+        --- PASS: TestLedgerWitnesses/D131/present (0.21s)
+        --- PASS: TestLedgerWitnesses/D131/absent (0.22s)
+    --- PASS: TestLedgerWitnesses/D171 (1.60s)
+        --- PASS: TestLedgerWitnesses/D171/present (0.62s)
+        --- PASS: TestLedgerWitnesses/D171/absent (0.76s)
+        --- PASS: TestLedgerWitnesses/D171/hole (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	6.652s
