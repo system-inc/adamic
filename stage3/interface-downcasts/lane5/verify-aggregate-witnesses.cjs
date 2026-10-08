@@ -17,7 +17,7 @@ for (const pair of pairs) {
  const source = ts.createSourceFile(w.file,bytes.toString('utf8'),ts.ScriptTarget.Latest,true);
  let read,decl;
  function visit(node) {
-  if (ts.isPropertyAccessExpression(node) && node.name.text === pair.field) {
+  if (ts.isPropertyAccessExpression(node) && node.name.text === pair.field || ts.isBindingElement(node) && node.propertyName && node.propertyName.getText(source) === pair.field) {
    const lc=source.getLineAndCharacterOfPosition(node.getStart(source));
    if (lc.line+1===w.line && lc.character+1===w.column) read=node;
   }
@@ -29,7 +29,7 @@ for (const pair of pairs) {
  }
  visit(source);declaration(types);
  if (!read || !decl) throw Error('missing original witness '+pair.type+'.'+pair.field);
- rows.push({rank:pair.rank,type:pair.type,field:pair.field,candidateReads:pair.reads,witness:w,read:read.getText(source),call:read.parent.getText(source),utf16Start:read.getStart(source),utf16End:read.end,fileSha256:crypto.createHash('sha256').update(bytes).digest('hex'),declaration:decl.getText(types),declarationLine:types.getLineAndCharacterOfPosition(decl.getStart(types)).line+1});
+ rows.push({rank:pair.rank,type:pair.type,field:pair.field,candidateReads:pair.reads,witness:w,read:read.getText(source),readKind:ts.isBindingElement(read)?"binding":"property",call:ts.isBindingElement(read)?read.getText(source):read.parent.getText(source),utf16Start:read.getStart(source),utf16End:read.end,fileSha256:crypto.createHash('sha256').update(bytes).digest('hex'),declaration:decl.getText(types),declarationLine:types.getLineAndCharacterOfPosition(decl.getStart(types)).line+1});
 }
 fs.writeFileSync(path.join(__dirname,process.argv[4] || 'aggregate-original-witnesses.json'),JSON.stringify({sourceSha:sha,basis:'original declarations and read spans; reduced adjacent helpers and data carriers',members:rows},null,2)+'\n');
 console.log('Verified '+rows.length+' original declarations/read spans, '+rows.reduce((n,p)=>n+p.candidateReads,0)+' conservative candidate reads.');

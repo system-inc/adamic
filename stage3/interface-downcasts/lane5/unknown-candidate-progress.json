@@ -317,6 +317,53 @@
           "certification_basis": "original declaration/read spans; reduced adjacent helpers/data carriers; Node and both backends; array payload and arity mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "direct-optional-aggregate-members",
+      "pairs": 2,
+      "candidateReads": 105,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createVariableStatement",
+          "declared_types": [
+            "(modifiers: readonly ModifierLike[] | undefined, declarationList: VariableDeclarationList | readonly VariableDeclaration[]) => VariableStatement"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 60,
+          "witness": {
+            "file": "src/compiler/factory/utilities.ts",
+            "line": 320,
+            "column": 13
+          },
+          "rank": 21,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans retained in fixtures; reduced adjacent helpers/data carriers; Node and both backends; directional signature and deferred payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createParameterDeclaration",
+          "declared_types": [
+            "(modifiers: readonly ModifierLike[] | undefined, dotDotDotToken: DotDotDotToken | undefined, name: string | BindingName, questionToken?: QuestionToken | undefined, type?: TypeNode | undefined, initializer?: Expression | undefined) => ParameterDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 45,
+          "witness": {
+            "file": "src/compiler/factory/emitHelpers.ts",
+            "line": 277,
+            "column": 18
+          },
+          "rank": 32,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans retained in fixtures; reduced adjacent helpers/data carriers; Node and both backends; directional signature and deferred payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

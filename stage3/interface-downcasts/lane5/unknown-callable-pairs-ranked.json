@@ -323,7 +323,8 @@
       "column": 9
     },
     "rank": 17,
-    "certified": false
+    "certified": false,
+    "certification_blocker": "original destructuring binding is refused as unsupported checked-view destructuring representation conversion; method-detachment guard also remains; direct property substitution would change the original witness"
   },
   {
     "receiver_type_id": 11739,
@@ -342,7 +343,8 @@
       "column": 9
     },
     "rank": 18,
-    "certified": false
+    "certified": false,
+    "certification_blocker": "original destructuring binding is refused as unsupported checked-view destructuring representation conversion; method-detachment guard also remains; direct property substitution would change the original witness"
   },
   {
     "receiver_type_id": 420,
@@ -399,7 +401,8 @@
       "column": 13
     },
     "rank": 21,
-    "certified": false
+    "certified": true,
+    "certification_basis": "complete original declaration/read spans retained in fixtures; reduced adjacent helpers/data carriers; Node and both backends; directional signature and deferred payload mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 12312,
@@ -611,7 +614,8 @@
       "column": 18
     },
     "rank": 32,
-    "certified": false
+    "certified": true,
+    "certification_basis": "complete original declaration/read spans retained in fixtures; reduced adjacent helpers/data carriers; Node and both backends; directional signature and deferred payload mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 73,
