@@ -423,9 +423,17 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Pairs != nil {
 			pairs = e.value(expression.Pairs)
 		}
-		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
+		creation := newMap(expression.Key, expression.Value.IsReference())
+		if expression.Record {
+			creation = fmt.Sprintf("adamic_record_new(%t)", expression.Value.IsReference())
+		}
+		created := e.own(expression.Type(), creation)
 		for _, entry := range entries {
-			e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
+			if expression.Record {
+				e.line("adamic_record_define(%s, %s, %s);", created, retained(entry[0]), held(expression.Value, entry[1]))
+			} else {
+				e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
+			}
 		}
 		if expression.Pairs != nil {
 			e.line("adamic_map_add_pairs(%s, %s);", created, pairs)

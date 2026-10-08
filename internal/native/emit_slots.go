@@ -26,7 +26,11 @@ func (e *emitter) mapGetSlot(expression ir.MapGet) string {
 	object := e.value(expression.Map)
 	key := e.value(expression.Key)
 	slot := e.temporary()
-	e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
+	if expression.Map.Type() == ir.Record {
+		e.line("adamic_value *%s = adamic_record_get(%s, %s);", slot, object, key)
+	} else {
+		e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
+	}
 	return slot
 }
 
