@@ -1,0 +1,584 @@
+reason,baseline,remaining,delta
+a cast the runtime can't check,2617,466,-2151
+"an unproven predicate argument for parameter test (argument ""isExpression"")",0,80,80
+"a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",77,77,0
+||=,64,64,0
+"a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read",57,57,0
+the comma operator,41,41,0
+"a value of type TupleTypeReference seen as TypeReference, which can write GenericType where TupleType is read",26,26,0
+a type predicate whose return is not proven (return expression is not a trusted check on node),23,23,0
+"a value of type FlowNode seen as FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",19,19,0
+"an unproven predicate argument for parameter test (argument ""isStatement"")",0,19,19
+"a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read",17,17,0
+"a value of type Node seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",14,14,0
+"a value of type never[] seen as BaseType[], which can write BaseType where never is read",14,14,0
+"a value of type never[] seen as Signature[], which can write Signature where never is read",15,13,-2
+"a method read as a value (parenthesizeExpressionForDisallowedComma would lose its object, and this with it)",12,12,0
+"a value of type Node[] seen as unknown[], which can write unknown where Node is read",12,12,0
+"a value of type never[] seen as Symbol[], which can write Symbol where never is read",12,12,0
+"a value of type NodeBuilderContext seen as SyntacticTypeNodeBuilderContext, which can write Required<Pick<SymbolTracker, ""reportInferenceFallback"">> where SymbolTrackerImpl is read",11,11,0
+"a value of type never[] seen as IndexInfo[], which can write IndexInfo where never is read",12,11,-1
+"a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",10,10,0
+"a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read",10,10,0
+the void operator,9,9,0
+"a function taking Node seen as one taking [node: Node] (tsc relates a method's parameters both ways), so it can be handed what it can't take",8,8,0
+"a value of type never[] seen as Type[], which can write Type where never is read",8,8,0
+"an unproven predicate argument for parameter nodeTest (argument ""isIdentifier"")",0,8,8
+"an unproven predicate argument for parameter test (argument ""isModifier"")",0,8,8
+"an unproven predicate argument for parameter test (argument ""isPropertyName"")",0,8,8
+yield (generators),8,8,0
+"a method read as a value (parenthesizeLeftSideOfAccess would lose its object, and this with it)",7,7,0
+a type predicate whose return is not proven (return expression is not a trusted check on type),7,7,0
+"a value of type Declaration[] seen as Node[], which can write Node where Declaration is read",6,7,1
+"a value of type FlowNode seen as FlowNode[] | FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",7,7,0
+"a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",7,7,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.JSDocTypeExpression,7,7,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.SourceFile,7,7,0
+in,7,7,0
+a generator function,6,6,0
+"a method read as a value (parenthesizeOperandOfPrefixUnary would lose its object, and this with it)",6,6,0
+a type predicate whose return is not proven (branch is not a trusted parameter check),6,6,0
+"a value of type Declaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",6,6,0
+"a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read",6,6,0
+"a value of type FlowNode | undefined seen as false | FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",6,6,0
+"a value of type SourceFile seen as SourceFileLike, which can write readonly number[] | undefined where readonly number[] is read",6,6,0
+"a method read as a value (liftToBlock would lose its object, and this with it)",5,5,0
+"a value of type Expression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",5,5,0
+"a value of type FlowArrayMutation | FlowAssignment seen as FlowNode, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",5,5,0
+"a value of type Symbol | undefined seen as Declaration | undefined, which can write number | undefined where number is read",5,5,0
+"a value of type T seen as Mutable<T>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of T[""pos""] would replace",5,5,0
+an arbitrary number or a value from another enum assigned to InternalSymbolName.Call; its members are a closed union,5,5,0
+"an unproven predicate argument for parameter predicate (argument ""isDecorator"")",0,5,5
+"an unproven predicate argument for parameter test (argument ""isForInitializer"")",0,5,5
+"an unproven predicate argument for parameter test (argument ""isIdentifier"")",0,5,5
+an unproven value assigned to a numeric literal or enum member slot ModifierFlags.None,5,5,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.TypeKeyword,5,5,0
+"a function taking readonly Modifier[] | undefined seen as one taking readonly ModifierLike[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",4,4,0
+"a method read as a value (realpath would lose its object, and this with it)",4,4,0
+"a value of type Mutable<GeneratedIdentifier> seen as Identifier, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read",4,4,0
+"a value of type SyntheticSuper seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",4,4,0
+"a value of type Type | undefined seen as Symbol | undefined, which can write SymbolFlags where TypeFlags is read",4,4,0
+"a value of type never[] seen as DiagnosticWithLocation[], which can write DiagnosticWithLocation where never is read",4,4,0
+"a value of type never[] seen as Node[], which can write Node where never is read",4,4,0
+"an unproven predicate argument for parameter predicate (argument ""isModifier"")",0,4,4
+"an unproven predicate argument for parameter predicate (argument ""isSourceFile"")",0,4,4
+"a function taking () => T seen as one taking () => T (tsc relates a method's parameters both ways), so it can be handed what it can't take",3,3,0
+"a method read as a value (resolveModuleNameLiterals would lose its object, and this with it)",3,3,0
+"a method read as a value (resolveModuleNames would lose its object, and this with it)",3,3,0
+a type predicate whose return is not proven (return expression is not a trusted check on d),3,3,0
+"a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",3,3,0
+"a value of type GenericType | ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read",3,3,0
+"a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",3,3,0
+"a value of type Signature | undefined seen as Type | undefined, which can write TypeFlags where SignatureFlags is read",3,3,0
+"a value of type Type | undefined seen as TypeNode | undefined, which can write number | undefined where number is read",3,3,0
+"a value of type never[] seen as Declaration[], which can write Declaration where never is read",3,3,0
+"a value of type never[] seen as TypeParameter[], which can write TypeParameter where never is read",3,3,0
+"a value of type never[] seen as string[], which can write string where never is read",3,3,0
+"an unproven predicate argument for parameter callback (argument ""isBindingElement"")",0,3,3
+"an unproven predicate argument for parameter callback (argument ""isFunctionOrSourceFile"")",0,3,3
+"an unproven predicate argument for parameter callback (argument ""isImportCall"")",0,3,3
+"an unproven predicate argument for parameter nodeTest (argument ""isExpression"")",0,3,3
+"an unproven predicate argument for parameter nodeTest (argument ""isFunctionLike"")",0,3,3
+"an unproven predicate argument for parameter test (argument ""isBlock"")",0,3,3
+"a function taking ((node: Node) => VisitResult<Node>) | undefined seen as one taking ((node: Node) => VisitResult<Node | undefined>) | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",2,2,0
+"a function taking (resolvedProjectReference: ResolvedProjectReference) => T | undefined seen as one taking (resolvedProjectReference: ResolvedProjectReference) => T | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",2,2,0
+"a function taking JSDocTypeExpression | undefined seen as one taking JSDocTypeExpression | JSDocTypeLiteral | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,2,1
+"a function taking Node seen as one taking Node | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",2,2,0
+"a function taking SourceFile seen as one taking SourceFile | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",2,2,0
+"a function taking [node: Node] seen as one taking Declaration (tsc relates a method's parameters both ways), so it can be handed what it can't take",2,2,0
+"a method read as a value (getGlobalTypingsCacheLocation would lose its object, and this with it)",2,2,0
+"a method read as a value (getParsedCommandLine would lose its object, and this with it)",2,2,0
+"a method read as a value (getSourceFileByPath would lose its object, and this with it)",2,2,0
+"a method read as a value (onReleaseOldSourceFile would lose its object, and this with it)",2,2,0
+"a method read as a value (onReleaseParsedCommandLine would lose its object, and this with it)",2,2,0
+"a method read as a value (parenthesizeBranchOfConditionalExpression would lose its object, and this with it)",2,2,0
+"a method read as a value (parenthesizeConstituentTypesOfIntersectionType would lose its object, and this with it)",2,2,0
+"a method read as a value (parenthesizeConstituentTypesOfUnionType would lose its object, and this with it)",2,2,0
+"a method read as a value (parenthesizeNonArrayTypeOfPostfixType would lose its object, and this with it)",2,2,0
+"a method read as a value (reportLikelyUnsafeImportRequiredError would lose its object, and this with it)",2,2,0
+"a method read as a value (reportPrivateInBaseOfClassExpression would lose its object, and this with it)",2,2,0
+"a method read as a value (resolveLibrary would lose its object, and this with it)",2,2,0
+"a method read as a value (resolveTypeReferenceDirectiveReferences would lose its object, and this with it)",2,2,0
+"a method read as a value (resolveTypeReferenceDirectives would lose its object, and this with it)",2,2,0
+"a method read as a value (throwIfCancellationRequested would lose its object, and this with it)",2,2,0
+"a method read as a value (trackSymbol would lose its object, and this with it)",2,2,0
+a type predicate whose return is not proven (return expression is not a trusted check on n),2,2,0
+"a value of type (identifierOrPrivateName: Identifier | PrivateIdentifier) => string seen as (name: GeneratedIdentifier | GeneratedPrivateIdentifier) => string, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",2,2,0
+"a value of type (readonly [() => IntrinsicType, __String])[] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where readonly [() => IntrinsicType, __String] is read",2,2,0
+"a value of type BindingElement[] seen as unknown[], which can write unknown where BindingElement is read",2,2,0
+"a value of type BlockLike seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",2,2,0
+"a value of type CapturedThis seen as Expression | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",2,2,0
+"a value of type CapturedThis seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",2,2,0
+"a value of type ClassStaticBlockDeclaration | PropertyDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",2,2,0
+"a value of type Expression seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",2,2,0
+"a value of type Expression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,2,1
+"a value of type FlowCall seen as FlowNode, which can write BinaryExpression | CallExpression where CallExpression is read",2,2,0
+"a value of type GeneratedIdentifier seen as Expression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",2,2,0
+"a value of type GeneratedIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",2,2,0
+"a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",2,2,0
+"a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",2,2,0
+"a value of type IndexSignatureDeclaration seen as Mutable<IndexSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",2,2,0
+"a value of type MethodDeclaration seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",2,2,0
+"a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",2,2,0
+"a value of type Node | undefined seen as NodeLinks | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of NodeCheckFlags would replace",2,2,0
+"a value of type PropertyName seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",2,2,0
+"a value of type Symbol seen as Declaration | undefined, which can write number | undefined where number is read",2,2,0
+"a value of type Symbol[] seen as (Symbol | undefined)[], which can write Symbol | undefined where Symbol is read",2,2,0
+"a value of type false | FlowNode | undefined seen as false | FlowAssignment | FlowLabel | FlowReduceLabel | FlowStart | FlowSwitchClause | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read",2,2,0
+"a value of type never[] seen as (Identifier | StringLiteral)[], which can write Identifier | StringLiteral where never is read",2,2,0
+"a value of type never[] seen as (Symbol | undefined)[], which can write Symbol | undefined where never is read",2,2,0
+"a value of type never[] seen as VariableDeclaration[], which can write VariableDeclaration where never is read",2,2,0
+"a value of type undefined seen as T, a type parameter whose constraint Type can be written, so it can write what undefined can't hold",2,2,0
+"an unproven predicate argument for parameter callback (argument ""isCallLikeOrFunctionLikeExpression"")",0,2,2
+"an unproven predicate argument for parameter callback (argument ""isImportDeclaration"")",0,2,2
+"an unproven predicate argument for parameter callback (argument ""isImportEqualsDeclaration"")",0,2,2
+"an unproven predicate argument for parameter callback (argument ""or(isImportEqualsDeclaration, isExportDeclaration)"")",0,2,2
+"an unproven predicate argument for parameter f (argument ""isClassStaticBlockDeclaration"")",0,2,2
+"an unproven predicate argument for parameter f (argument ""isIdentifierAndNotUndefined"")",0,2,2
+"an unproven predicate argument for parameter f1 (argument ""isImportDeclaration"")",0,2,2
+"an unproven predicate argument for parameter f1 (argument ""isImportEqualsDeclaration"")",0,2,2
+"an unproven predicate argument for parameter nodeTest (argument ""canHaveConstantValue"")",0,2,2
+"an unproven predicate argument for parameter nodeTest (argument ""isCallLikeExpression"")",0,2,2
+"an unproven predicate argument for parameter nodeTest (argument ""isDeclaration"")",0,2,2
+"an unproven predicate argument for parameter nodeTest (argument ""isParameter"")",0,2,2
+"an unproven predicate argument for parameter nodeTest (argument ""isTypeNode"")",0,2,2
+"an unproven predicate argument for parameter predicate (argument ""isTypeAlias"")",0,2,2
+"an unproven predicate argument for parameter predicate (argument ""isTypeOnlyImportOrExportDeclaration"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""canHaveLocals"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isAccessExpression"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isAssignmentExpression"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isAutoAccessorPropertyDeclaration"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isBindingElement"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isClassElement"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isEntityName"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isHeritageClause"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isNamedExports"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isObjectLiteralElementLike"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isObjectLiteralExpression"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isParameter"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isStringLiteral"")",0,2,2
+"an unproven predicate argument for parameter test (argument ""isTemplateLiteral"")",0,2,2
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ExpressionWithTypeArguments,2,2,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Identifier,1,2,1
+an unproven value assigned to a numeric literal or enum member slot Ternary,2,2,0
+checked view read of field [element] with unsupported array spread storage conversion contract,0,2,2
+&&=,1,1,0
+"a function taking BinaryOperatorToken seen as one taking BinaryOperatorToken | BinaryOperator (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking CancellationToken seen as one taking CancellationToken | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking Expression seen as one taking Expression | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking IndexSignatureDeclaration | undefined seen as one taking SignatureDeclaration | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking NodeArray<T> seen as one taking NodeArray<T> (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking NodeArray<T> seen as one taking NodeArray<T> | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking SymbolFlags seen as one taking SymbolFlags | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking SyntaxKind.MethodSignature | SyntaxKind.MethodDeclaration | SyntaxKind.Constructor | SyntaxKind.GetAccessor | SyntaxKind.SetAccessor | SyntaxKind.CallSignature | SyntaxKind.ConstructSignature | ... 6 more ... | SyntaxKind.JSDocFunctionType seen as one taking SyntaxKind (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking TypeFacts.None seen as one taking number (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking TypeNode seen as one taking Node (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking Visitor seen as one taking Visitor<TIn, Node | undefined> (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking [data: string] seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking [node: ConstructorTypeNode, typeParameters: NodeArray<TypeParameterDeclaration> | undefined, parameters: NodeArray<ParameterDeclaration>, type: TypeNode] | ... seen as one taking ConstructorTypeNode (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking [node: Node] seen as one taking BindingElement | OmittedExpression (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking [path: string] seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking [s: string] seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking [typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode] | [modifiers: readonly Modifier[] | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode] seen as one taking readonly Modifier[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking __String seen as one taking __String | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",0,1,1
+"a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",8,1,-7
+"a function taking readonly T[] | undefined seen as one taking readonly T[] | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a function taking string seen as one taking string | MemberName (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,1,0
+"a method read as a value (cloneNode would lose its object, and this with it)",1,1,0
+"a method read as a value (createComma would lose its object, and this with it)",1,1,0
+"a method read as a value (createExpressionStatement would lose its object, and this with it)",1,1,0
+"a method read as a value (createHash would lose its object, and this with it)",1,1,0
+"a method read as a value (createPropertyDeclaration would lose its object, and this with it)",1,1,0
+"a method read as a value (createTemplateMiddle would lose its object, and this with it)",1,1,0
+"a method read as a value (createTemplateTail would lose its object, and this with it)",1,1,0
+"a method read as a value (getCommonSourceDirectory would lose its object, and this with it)",1,1,0
+"a method read as a value (getCompilerOptions would lose its object, and this with it)",1,1,0
+"a method read as a value (getDefaultLibLocation would lose its object, and this with it)",1,1,0
+"a method read as a value (getFileIncludeReasons would lose its object, and this with it)",1,1,0
+"a method read as a value (getSourceFile would lose its object, and this with it)",1,1,0
+"a method read as a value (getSourceFiles would lose its object, and this with it)",1,1,0
+"a method read as a value (getSymlinkCache would lose its object, and this with it)",1,1,0
+"a method read as a value (hasInvalidatedLibResolutions would lose its object, and this with it)",1,1,0
+"a method read as a value (hasInvalidatedResolutions would lose its object, and this with it)",1,1,0
+"a method read as a value (nonEscapingWrite would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeCheckTypeOfConditionalType would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeConciseBodyOfArrowFunction would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeConditionOfConditionalExpression would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeConstituentTypeOfIntersectionType would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeConstituentTypeOfUnionType would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeElementTypeOfTupleType would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeExpressionOfComputedPropertyName would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeExpressionOfExportDefault would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeExpressionOfExpressionStatement would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeExpressionOfNew would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeExtendsTypeOfConditionalType would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeLeadingTypeArgument would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeOperandOfPostfixUnary would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeOperandOfReadonlyTypeOperator would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeOperandOfTypeOperator would lose its object, and this with it)",1,1,0
+"a method read as a value (parenthesizeTypeOfOptionalType would lose its object, and this with it)",1,1,0
+"a method read as a value (readFile would lose its object, and this with it)",1,1,0
+"a method read as a value (reportInaccessibleUniqueSymbolError would lose its object, and this with it)",1,1,0
+"a method read as a value (trace would lose its object, and this with it)",1,1,0
+a type predicate whose return is not proven (return expression is not a trusted check on arg),1,1,0
+a type predicate whose return is not proven (return expression is not a trusted check on func),1,1,0
+a type predicate whose return is not proven (return expression is not a trusted check on m),1,1,0
+a type predicate whose return is not proven (return expression is not a trusted check on nodeIn),1,1,0
+a type predicate whose return is not proven (return expression is not a trusted check on t),1,1,0
+a type predicate whose return is not proven (return expression is not a trusted check on tagName),1,1,0
+a type predicate whose return is not proven (return paths through KindSwitchStatement are not verified),1,1,0
+"a value of type (ClassDeclaration | EnumDeclaration | ExportAssignment | ExportDeclaration | FunctionDeclaration | ... 5 more ... | VariableStatement)[] seen as Statement[], which can write Statement where ClassDeclaration | EnumDeclaration | ExportAssignment | ExportDeclaration | FunctionDeclaration | ... 5 more ... | VariableStatement is read",1,1,0
+"a value of type (node: CommentRange) => boolean seen as (value: SynthesizedComment) => boolean, which can write number where -1 is read",1,1,0
+"a value of type (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined) => GeneratedIdentifier seen as { (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined): Identifier; (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifi..., whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type (resolution: ResolvedModuleWithFailedLookupLocations) => ResolvedModuleFull | undefined seen as (oldResolution: ResolvedModuleWithFailedLookupLocations) => ResolutionWithResolvedFileName | undefined, which can write string | undefined where string is read",1,1,0
+"a value of type AccessorDeclaration[] seen as T | (T | AccessorDeclaration)[] | AccessorDeclaration, which can write T | AccessorDeclaration where AccessorDeclaration is read",1,1,0
+"a value of type AnonymousType seen as AnonymousType, which can write AnonymousType | undefined where GenericType is read",1,1,0
+"a value of type AnonymousType | DeferredTypeReference seen as AnonymousType, which can write AnonymousType | undefined where GenericType is read",1,1,0
+"a value of type AnonymousType | GenericType seen as AnonymousType, which can write AnonymousType | undefined where GenericType is read",0,1,1
+"a value of type AssertClause seen as Mutable<AssertClause>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type AssertEntry seen as Mutable<AssertEntry>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type AssignmentPattern | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type AutoAccessorPropertyDeclaration | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type AwaitedTypeInstantiation seen as Type | undefined, which can write Symbol | undefined where Symbol is read",1,1,0
+"a value of type AwaitedTypeInstantiation | Type seen as Type, which can write Symbol | undefined where Symbol is read",1,1,0
+"a value of type BigIntLiteral | ComputedPropertyName | Identifier | JsxNamespacedName | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral seen as Type, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type BigIntLiteral | ComputedPropertyName | Identifier | JsxNamespacedName | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type BigIntLiteral | ComputedPropertyName | Identifier | NoSubstitutionTemplateLiteral | NumericLiteral | PrivateIdentifier | StringLiteral | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type Block seen as Mutable<Block>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Block | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type BreakStatement seen as Mutable<BreakStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type CallExpression | undefined seen as NodeArray<Expression> | undefined, whose readonly field transformFlags becomes writable: a readonly field may hold something narrower than TransformFlags, which a write of TransformFlags would replace",1,1,0
+"a value of type CallLikeExpression | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type CallSignatureDeclaration seen as Mutable<CallSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type CapturedThis seen as PrimaryExpression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type CapturedThis seen as string | BindingName, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type CaseBlock seen as Mutable<CaseBlock>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Children seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ClassDeclaration | ClassExpression | InferTypeNode | InterfaceDeclaration | JSDocCallbackTag | ... 4 more ... | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type ClassStaticBlockDeclaration seen as Mutable<ClassStaticBlockDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ConstructSignatureDeclaration seen as Mutable<ConstructSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ConstructorTypeNode seen as Mutable<ConstructorTypeNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ContinueStatement seen as Mutable<ContinueStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Declaration seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type Declaration | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type Declaration[] seen as (ArrayTypeNode | Declaration | NodeWithTypeArguments | TupleTypeNode)[], which can write ArrayTypeNode | Declaration | NodeWithTypeArguments | TupleTypeNode where Declaration is read",0,1,1
+"a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",1,1,0
+"a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read",1,1,0
+"a value of type DiagnosticWithLocation seen as Diagnostic | undefined, which can write SourceFile | undefined where SourceFile is read",1,1,0
+"a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation | undefined, which can write SourceFile | undefined where SourceFile is read",1,1,0
+"a value of type DiagnosticWithLocation | undefined seen as Diagnostic | undefined, which can write SourceFile | undefined where SourceFile is read",1,1,0
+"a value of type DiagnosticWithLocation[] seen as readonly Diagnostic[] | undefined, which can write SourceFile | undefined where SourceFile is read",1,1,0
+"a value of type DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read",1,1,0
+"a value of type DiagnosticWithLocation[] | undefined seen as readonly Diagnostic[] | undefined, which can write SourceFile | undefined where SourceFile is read",1,1,0
+"a value of type DiagnosticWithLocation[] | undefined seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read",0,1,1
+"a value of type EntityNameExpression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type EqualsGreaterThanToken seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ExportDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type Expression seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",0,1,1
+"a value of type Expression | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type ExpressionStatement seen as Mutable<ExpressionStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type FunctionTypeNode seen as Mutable<FunctionTypeNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type GeneratedIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type GeneratedIdentifier | GeneratedPrivateIdentifier | Node seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type GeneratedPrivateIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type Identifier & GeneratedIdentifier & { readonly escapedText: { __escapedIdentifier: void; } & ""__this""; } seen as BindingName, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read",1,1,0
+"a value of type Identifier seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Identifier seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Identifier | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type ImportAttribute seen as Mutable<ImportAttribute>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ImportAttributes seen as Mutable<ImportAttributes>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ImportClause seen as Mutable<ImportClause>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ImportDeclaration seen as Mutable<ImportDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ImportDeclaration seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ImportTypeNode seen as Mutable<ImportTypeNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type IndexInfo | undefined seen as IndexSignatureDeclaration | undefined, which can write number | undefined where number is read",1,1,0
+"a value of type IndexInfo[] seen as IndexInfo[], which can write IndexInfo where never is read",1,1,0
+"a value of type IndexSignatureDeclaration[] seen as Declaration[] | undefined, which can write Declaration where IndexSignatureDeclaration is read",1,1,0
+"a value of type IntrinsicType[] seen as TypeParameter[], which can write TypeParameter where IntrinsicType is read",1,1,0
+"a value of type IntrinsicType[] | undefined seen as TypeParameter[] | undefined, which can write TypeParameter where IntrinsicType is read",1,1,0
+"a value of type IterationTypes[] seen as (IterationTypes | undefined)[], which can write IterationTypes | undefined where IterationTypes is read",1,1,0
+"a value of type JSDocAugmentsTag seen as Mutable<JSDocAugmentsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocCallbackTag seen as Mutable<JSDocCallbackTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocFunctionType seen as Mutable<JSDocFunctionType>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocImplementsTag seen as Mutable<JSDocImplementsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocImportTag seen as Mutable<JSDocImportTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocLink seen as Mutable<JSDocLink>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocLinkCode seen as Mutable<JSDocLinkCode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocLinkPlain seen as Mutable<JSDocLinkPlain>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocNameReference seen as Mutable<JSDocNameReference>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocOverloadTag seen as Mutable<JSDocOverloadTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocParameterTag seen as Mutable<JSDocParameterTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocPropertyTag seen as Mutable<JSDocPropertyTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocSeeTag seen as Mutable<JSDocSeeTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocSignature seen as Mutable<JSDocSignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocSignature | SignatureDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type JSDocTemplateTag seen as Mutable<JSDocTemplateTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocText seen as Mutable<JSDocText>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocTypeExpression seen as Mutable<JSDocTypeExpression>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocTypeExpression | undefined seen as Signature | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SignatureFlags would replace",1,1,0
+"a value of type JSDocTypeLiteral seen as Mutable<JSDocTypeLiteral>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocTypedefTag seen as Mutable<JSDocTypedefTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JSDocUnknownTag seen as Mutable<JSDocUnknownTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type JsxAttributeLike | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type LeftHandSideExpression & GeneratedIdentifier seen as Expression, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read",1,1,0
+"a value of type Map<__String, TransientSymbol> seen as SymbolTable | undefined, which can write Symbol where TransientSymbol is read",1,1,0
+"a value of type Map<string, [VariableDeclarationList, VariableDeclaration[]]> seen as Map<string, [CatchClause | VariableDeclarationList, VariableDeclaration[]]>, which can write [CatchClause | VariableDeclarationList, VariableDeclaration[]] where [VariableDeclarationList, VariableDeclaration[]] is read",1,1,0
+"a value of type MappedTypeNode seen as Mutable<MappedTypeNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type MemberName | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type ModuleDeclaration seen as Mutable<ModuleDeclaration | SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ModuleName seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Mutable<NoSubstitutionTemplateLiteral> seen as Mutable<TemplateLiteralLikeNode>, which can write SyntaxKind where SyntaxKind.NoSubstitutionTemplateLiteral is read",1,1,0
+"a value of type Mutable<T> seen as T, a type parameter whose constraint JSDocType & { readonly type: TypeNode | undefined; readonly postfix: boolean; } can be written, so it can write what Mutable<T> can't hold",1,1,0
+"a value of type Mutable<T> seen as T, a type parameter whose constraint JSDocType & { readonly type: TypeNode | undefined; } can be written, so it can write what Mutable<T> can't hold",1,1,0
+"a value of type Mutable<T> seen as T, a type parameter whose constraint Node can be written, so it can write what Mutable<T> can't hold",1,1,0
+"a value of type NamedImports seen as Mutable<NamedImports>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type NamespaceExport seen as Mutable<NamespaceExport>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type NamespaceImport seen as Mutable<NamespaceImport>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Node seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Node | undefined seen as EmitNode | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of EmitFlags would replace",1,1,0
+"a value of type Node | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type Node | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace",1,1,0
+"a value of type NodeArray<Statement> seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type NumberLiteralType seen as LiteralType, which can write string | number | PseudoBigInt where number is read",1,1,0
+"a value of type ParameterDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type PropertyAccessExpression | SyntheticSuper seen as LeftHandSideExpression, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type PropertyAccessExpression | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type PropertyDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type PropertyName | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type PropertySignature seen as Mutable<PropertySignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type ResolvedType | TypeReference seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read",1,1,0
+"a value of type ReturnStatement seen as Mutable<ReturnStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Set<__String> seen as Set<__String | undefined>, which can write __String | undefined where __String is read",1,1,0
+"a value of type SourceFile seen as Mutable<ModuleDeclaration | SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type SourceFile seen as Mutable<SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type SourceFile seen as SourceFileLike | undefined, which can write readonly number[] | undefined where readonly number[] is read",1,1,0
+"a value of type SourceFile | undefined seen as NodeLinks | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of NodeCheckFlags would replace",1,1,0
+"a value of type SourceFile | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type SourceMapSource seen as SourceFileLike, which can write readonly number[] | undefined where readonly number[] is read",1,1,0
+"a value of type Statement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",0,1,1
+"a value of type StringLiteral seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type StringLiteralType seen as LiteralType, which can write string | number | PseudoBigInt where string is read",1,1,0
+"a value of type StringLiteralType[] seen as Type[], which can write Type where StringLiteralType is read",1,1,0
+"a value of type SuperExpression seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type SuperExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type SwitchStatement seen as Mutable<SwitchStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type Symbol seen as Type | undefined, which can write TypeFlags where SymbolFlags is read",1,1,0
+"a value of type Symbol seen as Type, which can write TypeFlags where SymbolFlags is read",1,1,0
+"a value of type Symbol | undefined seen as GenericType | undefined, which can write TypeFlags where SymbolFlags is read",1,1,0
+"a value of type Symbol | undefined seen as Node | undefined, which can write number | undefined where number is read",1,1,0
+"a value of type Symbol | undefined seen as SourceFile | undefined, which can write number | undefined where number is read",1,1,0
+"a value of type Symbol[] seen as Symbol[], which can write Symbol where never is read",1,1,0
+"a value of type SyntheticSuper seen as string | BindingName, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace",1,1,0
+"a value of type T seen as T, a type parameter whose constraint ClassDeclaration | ClassExpression | GetAccessorDeclaration | MethodDeclaration | ParameterDeclaration | PropertyDeclaration | SetAccessorDeclaration can be written, so it can write what T can't hold",1,1,0
+"a value of type T seen as T, a type parameter whose constraint EntityNameOrEntityNameExpression can be written, so it can write what T can't hold",1,1,0
+"a value of type T seen as T, a type parameter whose constraint HasModifiers can be written, so it can write what T can't hold",1,1,0
+"a value of type T seen as T, a type parameter whose constraint MethodDeclaration | MethodSignature | PropertyAssignment | PropertyDeclaration | PropertySignature | AccessorDeclaration can be written, so it can write what T can't hold",1,1,0
+"a value of type T seen as T, a type parameter whose constraint ModifierSyntaxKind can be written, so it can write what T can't hold",1,1,0
+"a value of type T seen as T, a type parameter whose constraint Node can be written, so it can write what T can't hold",1,1,0
+"a value of type T seen as T, a type parameter whose constraint Node | undefined can be written, so it can write what T can't hold",1,1,0
+"a value of type TKind seen as TKind, a type parameter whose constraint KeywordTypeSyntaxKind can be written, so it can write what TKind can't hold",1,1,0
+"a value of type ThisCapturingVariableDeclaration seen as VariableDeclaration, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read",1,1,0
+"a value of type TransientSymbol[] seen as Symbol[], which can write Symbol where TransientSymbol is read",1,1,0
+"a value of type Type seen as TypeNode, which can write number | undefined where number is read",1,1,0
+"a value of type Type | undefined seen as Expression | undefined, which can write number | undefined where number is read",1,1,0
+"a value of type Type | undefined seen as JSDocTypeExpression | undefined, which can write number | undefined where number is read",1,1,0
+"a value of type Type | undefined seen as Signature | undefined, which can write SignatureFlags where TypeFlags is read",1,1,0
+"a value of type TypeNode seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type TypeOperatorNode seen as Mutable<TypeOperatorNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type TypeParameterDeclaration seen as Mutable<TypeParameterDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type TypeParameterDeclaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace",1,1,0
+"a value of type TypeVariable[] seen as (Type | undefined)[], which can write Type | undefined where TypeVariable is read",1,1,0
+"a value of type Type[] seen as (Type | undefined)[], which can write Type | undefined where Type is read",1,1,0
+"a value of type VariableDeclarationList seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type YieldExpression seen as Mutable<YieldExpression>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",1,1,0
+"a value of type [() => Type, __String][] seen as (readonly [() => Type, __String])[], which can write readonly [() => Type, __String] where [() => Type, __String] is read",1,1,0
+"a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",1,1,0
+"a value of type never[] seen as (JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag)[], which can write JSDocCallbackTag | JSDocEnumTag | JSDocTypedefTag where never is read",1,1,0
+"a value of type never[] seen as (readonly (Identifier | StringLiteral)[])[], which can write readonly (Identifier | StringLiteral)[] where never is read",1,1,0
+"a value of type never[] seen as BindingElement[], which can write BindingElement where never is read",1,1,0
+"a value of type never[] seen as ClassElement[], which can write ClassElement where never is read",1,1,0
+"a value of type never[] seen as FlowNode[], which can write FlowNode where never is read",1,1,0
+"a value of type never[] seen as IntrinsicType[], which can write IntrinsicType where never is read",1,1,0
+"a value of type never[] seen as JSDocImportTag[], which can write JSDocImportTag where never is read",1,1,0
+"a value of type never[] seen as PotentiallyUnusedIdentifier[], which can write PotentiallyUnusedIdentifier where never is read",1,1,0
+"a value of type never[] seen as StringLiteralLike[], which can write StringLiteralLike where never is read",1,1,0
+"a value of type never[] seen as SymbolTable[], which can write SymbolTable where never is read",1,1,0
+"a value of type never[] seen as Symbol[] | undefined, which can write Symbol where never is read",1,1,0
+"a value of type never[] seen as VarianceFlags[], which can write VarianceFlags where never is read",1,1,0
+"a value of type readonly TypeParameter[] | undefined seen as TypeParameterDeclaration[] | undefined, which can write TypeParameterDeclaration where TypeParameter is read",1,1,0
+"a value of type string[] seen as DiagnosticArguments, which can write string | number | boolean | readonly string[] | SourceFile | undefined where string is read",1,1,0
+"a value of type typeof import(""/tmp/refusal-table-adapted/src/compiler/_namespaces/ts"") seen as Record<""GeneratedIdentifierFlags"", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read",1,1,0
+"a value of type { introducesError: boolean; node: Identifier | PropertyAccessEntityNameExpression; sym?: never; } | { introducesError: boolean; node: Identifier | PropertyAccessEntityNameExpression; sym: Symbol | undefined; } seen as { introducesError: boolean; node: LeftHandSideExpression; }, which can write LeftHandSideExpression where Identifier | PropertyAccessEntityNameExpression is read",1,1,0
+"a value of type { noInferenceFallback?: boolean | undefined; enclosingDeclaration: ModuleDeclaration; enclosingFile: SourceFile | undefined; flags: NodeBuilderFlags; ... 28 more ...; out: WriterContextOut; } seen as NodeBuilderContext, which can write Node | undefined where ModuleDeclaration is read",1,1,0
+"an unproven predicate argument for parameter callback (argument ""(n): n is ModuleDeclaration | EnumDeclaration => isModuleOrEnumDeclaration(n) && getSymbolOfDeclaration(n) === parentSymbol"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""(t): t is Type => !!t"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isAmbientModule"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isArrayOrTupleType"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isCallLikeExpression"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isDecorator"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isExportDeclaration"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isExternalModuleImportEqualsDeclaration"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isFunctionLikeDeclaration"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isImportTypeNode"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isModifier"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isShorthandPropertyAssignment"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isStatementOrBlock"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isTupleType"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isTypeOnlyImportOrExportDeclaration"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""isValidBaseType"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""l => isImportTypeNode(l) || isExportDeclaration(l) || isImportDeclaration(l) || isJSDocImportTag(l)"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""n => isInterfaceDeclaration(n) || isTypeAliasDeclaration(n) || isTypeLiteralNode(n)"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""or(isClassLike, isInterfaceDeclaration)"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""or(isImportDeclaration, isImportEqualsDeclaration)"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""or(isImportDeclaration, isJSDocImportTag, isExportDeclaration)"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""or(isJSDocLinkLike, isJSDocNameReference, isJSDocMemberName)"")",0,1,1
+"an unproven predicate argument for parameter callback (argument ""t => t === \""\"""")",0,1,1
+"an unproven predicate argument for parameter f (argument ""(d: Declaration): d is ClassDeclaration | InterfaceDeclaration => d.kind === SyntaxKind.ClassDeclaration || d.kind === SyntaxKind.InterfaceDeclaration"")",0,1,1
+"an unproven predicate argument for parameter f (argument ""(m): m is Modifier => isModifier(m) && !isStaticModifier(m) && !isAccessorModifier(m)"")",0,1,1
+"an unproven predicate argument for parameter f (argument ""(p): p is PropertyAssignment | ShorthandPropertyAssignment => {\r\n                            if (!p.symbol) {\r\n                                return false;\r\n                            }\r\n                            if (p.kind === SyntaxKind.PropertyAssignment) {\r\n                                return isPossiblyDiscriminantValue(p.initializer) && isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            if (p.kind === SyntaxKind.ShorthandPropertyAssignment) {\r\n                                return isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            return false;\r\n                        }"")",0,1,1
+"an unproven predicate argument for parameter f (argument ""d => isClassDeclaration(d) || isClassExpression(d)"")",0,1,1
+"an unproven predicate argument for parameter f (argument ""isClassLike"")",0,1,1
+"an unproven predicate argument for parameter f (argument ""isHashPrivate"")",0,1,1
+"an unproven predicate argument for parameter f (argument ""isJSDocParameterTag"")",0,1,1
+"an unproven predicate argument for parameter f (argument ""isNonStaticMethodOrAccessorWithPrivateName"")",0,1,1
+"an unproven predicate argument for parameter f (argument ""isTypeParameterDeclaration"")",0,1,1
+"an unproven predicate argument for parameter f1 (argument ""isClassLike"")",0,1,1
+"an unproven predicate argument for parameter f1 (argument ""isJSDocLinkLike"")",0,1,1
+"an unproven predicate argument for parameter f1 (argument ""isPropertyDeclaration"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""(n): n is FunctionDeclaration | VariableDeclaration => isFunctionDeclaration(n) || isVariableDeclaration(n)"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""hasInferredType"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""hasPossibleExternalModuleReference"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isAssignmentPattern"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isEntityName"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isEnumMember"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isExportSpecifier"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isFunctionDeclaration"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isGetOrSetAccessorDeclaration"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isImportEqualsDeclaration"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isJsxAttributeLike"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isObjectLiteralElementLike"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isPropertyAccessExpression"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isPropertyAccessOrQualifiedNameOrImportTypeNode"")",0,1,1
+"an unproven predicate argument for parameter nodeTest (argument ""isSourceFile"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""(d): d is JSDocPropertyTag => d.kind === SyntaxKind.JSDocPropertyTag"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""(type): type is StringLiteralType => !!(type.flags & TypeFlags.StringLiteral)"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""d => isVariableDeclaration(d)"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isAccessorModifier"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isClassLike"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isClassNamedEvaluationHelperBlock"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isClassThisAssignmentBlock"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isExportAssignment"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isFunctionLikeDeclaration"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isGetAccessor"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isJSDocAugmentsTag"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isJSDocParameterTag"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isJSDocSatisfiesTag"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isJSDocTypeAlias"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isJSDocTypedefTag"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isPropertyAccessExpression"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isSetAccessor"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isSetAccessorDeclaration"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isSpreadElement"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""isTypeAliasDeclaration"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""m => m.kind === SyntaxKind.ExportKeyword"")",0,1,1
+"an unproven predicate argument for parameter predicate (argument ""or(isPropertyDeclaration, isVariableDeclaration)"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""canHaveFlowNode"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isArrayLiteralExpression"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isArrowFunction"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isAssignmentPattern"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isBindableStaticNameExpression"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isCallExpression"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isCatchClause"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isConstructorDeclaration"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isDecorator"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isExpressionStatement"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isFunctionExpression"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isImportAttributes"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isModifierLike"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isModuleBlock"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isNamedDeclaration"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isPropertyDeclaration"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isReturnStatement"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isSourceFile"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isStringLiteralLike"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isTransientSymbol"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isTypeParameterDeclaration"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isVariableDeclaration"")",0,1,1
+"an unproven predicate argument for parameter test (argument ""isVariableStatement"")",0,1,1
+an unproven relation from NodeArray<BindingElement> | NodeArray<Expression> | NodeArray<ArrayBindingElement> to NodeArray<Node>: optional field concat.parameter.element.slice.element.propertyName has no proven compatible presence/type,1,1,0
+an unproven relation from NodeArray<ModifierLike> & readonly Decorator[] to NodeArray<Decorator>: optional field concat.parameter.element.slice.element.parent.name has no proven compatible presence/type,1,1,0
+an unproven value assigned to a numeric literal or enum member slot ElementFlags.Optional,0,1,1
+an unproven value assigned to a numeric literal or enum member slot NodeFlags.Const,1,1,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Block,1,1,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ConditionalType,1,1,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.DotDotDotToken,1,1,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ExportAssignment,1,1,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ImportAttributes,1,1,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.MethodSignature | SyntaxKind.MethodDeclaration | SyntaxKind.Constructor | SyntaxKind.GetAccessor | SyntaxKind.SetAccessor | SyntaxKind.CallSignature | SyntaxKind.ConstructSignature | ... 6 more ... | SyntaxKind.JSDocFunctionType,1,1,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.Parameter,1,1,0
+an unproven value assigned to a numeric literal or enum member slot SyntaxKind.QuestionToken,1,1,0
+an unproven value assigned to a numeric literal or enum member slot TempFlags,1,1,0
+an unproven value assigned to a numeric literal or enum member slot Ternary.False,1,1,0
+an unproven value assigned to a numeric literal or enum member slot VarianceFlags.Contravariant,1,1,0
+checked view read of field [computed or nested binding] with unsupported destructuring contract,0,1,1
+a definite assignment assertion !,2,0,-2
+"a function taking GeneratedIdentifierFlags seen as one taking GeneratedIdentifierFlags | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",2,0,-2
+"a function taking Identifier seen as one taking Identifier | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",9,0,-9
+"a function taking NodeFlags seen as one taking NodeFlags | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",2,0,-2
+"a function taking OuterExpressionKinds seen as one taking OuterExpressionKinds | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,0,-1
+"a function taking TokenFlags seen as one taking TokenFlags | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,0,-1
+"a function taking UnionReduction seen as one taking UnionReduction | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,0,-1
+"a function taking number seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",1,0,-1
+"a value of type never seen as T, a type parameter whose constraint Node can be written, so it can write what never can't hold",2,0,-2
+"a value of type never[] seen as JsxAttributes[], which can write JsxAttributes where never is read",1,0,-1
+"a value of type string[] seen as (string | undefined)[], which can write string | undefined where string is read",1,0,-1
+an object refinement using an open numeric enum as a literal tag,1778,0,-1778
+an unproven relation from Declaration to NamedDeclaration: optional field name has no proven compatible presence/type,2,0,-2
+an unproven relation from DiagnosticRelatedInformation to Diagnostic: optional field reportsUnnecessary has no proven compatible presence/type,1,0,-1
+an unproven relation from InstantiableType | UnionOrIntersectionType to TypeParameter: optional field constraint has no proven compatible presence/type,1,0,-1
+an unproven relation from ObjectType to AnonymousType: optional field target has no proven compatible presence/type,2,0,-2
+an unproven relation from StructuredType to AnonymousType: optional field target has no proven compatible presence/type,1,0,-1
+an unproven relation from StructuredType to ObjectType: optional field members has no proven compatible presence/type,3,0,-3
+an unproven relation from Type to SyntheticDefaultModuleType: optional field syntheticType has no proven compatible presence/type,2,0,-2
+an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type,24,0,-24
+an unproven relation from Type to TypeVariable: optional field constraint has no proven compatible presence/type,2,0,-2
+an unproven relation from UnionOrIntersectionType to UnionType: optional field resolvedReducedType has no proven compatible presence/type,1,0,-1
+"optional property _propertyAccessExpressionLikeQualifiedNameBrand in PropertyAccessEntityNameExpression absent from structural source never, which can hide fields",1,0,-1
+"optional property constraint in TypeParameter absent from structural source InterfaceType, which can hide fields",2,0,-2
+"optional property constraint in TypeParameter absent from structural source ObjectType, which can hide fields",1,0,-1
+"optional property constraint in TypeParameter absent from structural source Type, which can hide fields",10,0,-10
+"optional property default in TypeParameter absent from structural source IndexedAccessType, which can hide fields",1,0,-1
+"optional property equalsToken in ShorthandPropertyAssignment absent from structural source never, which can hide fields",1,0,-1
+"optional property failedLookupLocations in ResolvedModuleWithFailedLookupLocations absent from structural source { resolvedModule: ResolvedModuleFull; }, which can hide fields",2,0,-2
+"optional property failedLookupLocations in ResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source { resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; }, which can hide fields",1,0,-1
+"optional property id in ArrayBindingPattern absent from structural source never, which can hide fields",8,0,-8
+"optional property id in BigIntLiteral absent from structural source never, which can hide fields",3,0,-3
+"optional property id in ComputedPropertyName absent from structural source never, which can hide fields",1,0,-1
+"optional property id in Expression absent from structural source never, which can hide fields",4,0,-4
+"optional property id in Identifier absent from structural source never, which can hide fields",1,0,-1
+"optional property id in JSDocThisTag absent from structural source never, which can hide fields",1,0,-1
+"optional property id in LateBoundName absent from structural source never, which can hide fields",1,0,-1
+"optional property id in NamedExports absent from structural source never, which can hide fields",2,0,-2
+"optional property id in Node absent from structural source never, which can hide fields",48,0,-48
+"optional property id in PrivateIdentifier absent from structural source never, which can hide fields",1,0,-1
+"optional property localSymbol in Declaration absent from structural source never, which can hide fields",1,0,-1
+"optional property members in ObjectType absent from structural source IntersectionType, which can hide fields",1,0,-1
+"optional property members in ObjectType absent from structural source IntrinsicType, which can hide fields",7,0,-7
+"optional property members in ObjectType absent from structural source UnionType, which can hide fields",1,0,-1
+"optional property modifiers in ParameterDeclaration absent from structural source never, which can hide fields",1,0,-1
+"optional property onUnRecoverableConfigFileDiagnostic in CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source CompilerHost, which can hide fields",1,0,-1
+"optional property outputDts in ResolvedRefAndOutputDts absent from structural source ResolvedRefAndSource, which can hide fields",1,0,-1
+"optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields",2,0,-2
+"optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields",5,0,-5
+"optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[]; }, which can hide fields",1,0,-1
+"optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields",1,0,-1
+"optional property source in ResolvedRefAndSource absent from structural source ResolvedRefAndOutputDts, which can hide fields",1,0,-1
+"optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",5,0,-5
+"optional property target in AnonymousType absent from structural source IntrinsicType, which can hide fields",1,0,-1
+the non-null assertion !,1106,0,-1106
+??=,0,0,0

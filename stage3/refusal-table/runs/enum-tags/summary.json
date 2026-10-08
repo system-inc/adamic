@@ -1,0 +1,168 @@
+{
+  "compiler_sha": "b924a5c061f23464f8868a13d0e8c0afcbb9ff44",
+  "run": "enum-tags",
+  "total": 1836,
+  "baseline_total": 6730,
+  "delta": -4894,
+  "reasons": 527,
+  "fewer_than_5": 473,
+  "coverage": {
+    "5": {
+      "count": 744,
+      "share": 0.40522875816993464
+    },
+    "10": {
+      "count": 872,
+      "share": 0.4749455337690632
+    },
+    "20": {
+      "count": 998,
+      "share": 0.5435729847494554
+    }
+  },
+  "bodies": [
+    {
+      "file": "checker.ts",
+      "function": "createTypeChecker",
+      "where": "/tmp/refusal-table-adapted/src/compiler/checker.ts:1486:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/checker.ts:1486:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 46466,
+        "body_end": 3144000,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
+      "refusals": 1147,
+      "raw_observations": 1147
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "function": "createNodeFactory",
+      "where": "/tmp/refusal-table-adapted/src/compiler/factory/nodeFactory.ts:492:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/factory/nodeFactory.ts:492:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 13349,
+        "body_end": 322874,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
+      "refusals": 122,
+      "raw_observations": 122
+    },
+    {
+      "file": "emitter.ts",
+      "function": "createPrinter",
+      "where": "/tmp/refusal-table-adapted/src/compiler/emitter.ts:1211:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/emitter.ts:1211:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 48931,
+        "body_end": 272222,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19",
+      "refusals": 109,
+      "raw_observations": 109
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "function": "transformES2015",
+      "where": "/tmp/refusal-table-adapted/src/compiler/transformers/es2015.ts:488:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/transformers/es2015.ts:488:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 16600,
+        "body_end": 231787,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4",
+      "refusals": 139,
+      "raw_observations": 139
+    },
+    {
+      "file": "program.ts",
+      "function": "createProgram",
+      "where": "/tmp/refusal-table-adapted/src/compiler/program.ts:1515:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/program.ts:1515:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 68631,
+        "body_end": 253523,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "7aaf5804093401db924e8278b142db40fcb2b14cef0566081cfaf870477b5284",
+      "refusals": 93,
+      "raw_observations": 93
+    },
+    {
+      "file": "binder.ts",
+      "function": "createBinder",
+      "where": "/tmp/refusal-table-adapted/src/compiler/binder.ts:509:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/binder.ts:509:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 17474,
+        "body_end": 188866,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "8ff0292668cdbe20584f06f5ca54c0a9ae419b16bc099c8d6261b1bd595a2d39",
+      "refusals": 94,
+      "raw_observations": 94
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "function": "transformClassFields",
+      "where": "/tmp/refusal-table-adapted/src/compiler/transformers/classFields.ts:354:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/transformers/classFields.ts:354:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10532,
+        "body_end": 154733,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "b25a7f871bb61b1031a2c3af24f0fefd5efd134ebe8fb566d50a108f7588b16c",
+      "refusals": 99,
+      "raw_observations": 99
+    },
+    {
+      "file": "scanner.ts",
+      "function": "createScanner",
+      "where": "/tmp/refusal-table-adapted/src/compiler/scanner.ts:1023:1",
+      "unit": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/tmp/refusal-table-adapted/src/compiler/scanner.ts:1023:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 70970,
+        "body_end": 211074,
+        "status": "attempted",
+        "checker_diagnostics": []
+      },
+      "sha256": "2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750",
+      "refusals": 37,
+      "raw_observations": 37
+    }
+  ],
+  "ruled_reasons": {
+    "the non-null assertion !": 0,
+    "||=": 64,
+    "&&=": 1,
+    "??=": 0,
+    "the comma operator": 41
+  }
+}

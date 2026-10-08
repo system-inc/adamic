@@ -1,0 +1,69 @@
+setup
+go version go1.27.1 linux/amd64
+setup: go ready (0.034s)
+v24.19.0
+setup: node ready (0.037s)
+setup: submodules ready (0.058s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.006s
+setup: markdown dependencies ready (0.084s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.163s)
+setup: go build ready (52.118s)
+setup: test binaries deferred (use --warm-tests) (52.226s)
+setup: build cache warm (52.228s)
+setup: build-flags commit=b924a5c061f23464f8868a13d0e8c0afcbb9ff44 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.11 0.92 1.46 1/148 5139 load-after=8.37 3.09 2.17 1/148 6203
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (52.253s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.e2XoqX
+
+
+enum-audit
+signature/body range mutant caught
+{
+  "continuation": "pass",
+  "all_refusal_sites": "pass",
+  "no_IR_output": "pass",
+  "production_loader_disabled": "pass",
+  "body_skip": "pass",
+  "signature_eligible": "pass",
+  "same_line_ranges": "pass",
+  "measurement": "measured on a checker-rejected program",
+  "mutant": {
+    "one.a_delta": 1,
+    "two.a_delta": 0,
+    "location": "one.a:3:1"
+  },
+  "misattribution_mutant": "caught"
+}
+
+
+enum-rewrite
+=== RUN   TestCompiler41231d51Shape
+--- PASS: TestCompiler41231d51Shape (0.01s)
+=== RUN   TestMissingFunctionMutantFailsLoudly
+--- PASS: TestMissingFunctionMutantFailsLoudly (0.00s)
+=== RUN   TestChangedVisitorMutantFailsLoudly
+--- PASS: TestChangedVisitorMutantFailsLoudly (0.00s)
+=== RUN   TestVisitorsCollectContinueAndSkipDiagnosedBodies
+--- PASS: TestVisitorsCollectContinueAndSkipDiagnosedBodies (0.69s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/latent/refusalrewrite	0.706s
+
+
+enum-accounting
+drop-site caught: raw observations or attribution differ
+duplicate-site caught: duplicate
+file-attribution caught: raw observations or attribution differ
+reason-count caught: count/rank
+coverage caught: coverage
+tail caught: tail
+disposition caught: 
+baseline-delta caught: baseline/delta
+PASS: raw sites, deduplication, eight source hashes/body spans, exact rankings, file counts, examples, dispositions, coverage and tail
+Raw body diagnostic counts: {'createTypeChecker': 86, 'createNodeFactory': 0, 'createPrinter': 0, 'transformES2015': 5, 'createProgram': 5, 'createBinder': 0, 'transformClassFields': 9, 'createScanner': 0}
+
+
+enum-reasons-audit
+missing-zero-reason caught
+remaining-count caught
+PASS: every baseline/new reason, zeros, remaining counts and deltas
