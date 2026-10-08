@@ -23,8 +23,49 @@ The Go TypeScript gitlink is d92d9bfee114c80be2c375d72edae966176e3a4f at both co
 
 The new provenance guard passes its git-repository fixture. Replacing its capture-pin comparison with false is caught by TestCaptureAndCheckoutMustMatchGitlink with stale capture accepted. Checkout drift is tested independently. Logs: /tmp/pin-land2/pin-test.log and /tmp/pin-land2/pin-mutant.log.
 
-All requested packages run with -count=1 -timeout 3h -p 1 -parallel 4. Test output goes directly to log files. Package results and wall times will be recorded below after the gate finishes. The environment restart interrupted an earlier attempt; those partial results are excluded and retained under /tmp/pin-land2/interrupted/.
+All requested packages run with -count=1 -timeout 3h -p 1 -parallel 4. Test output goes directly to log files. The environment restart interrupted an earlier attempt; those partial results are excluded and retained under /tmp/pin-land2/interrupted/.
 
-Input configuration: /tmp/pin-land2/gate-env.sh. External oracles: pinned TypeScript 6.0.3, Prettier 3.9.6, typescript-estree 8.65.0, and the setup-provided markdown width packages. ESTree's completed Go/Node audit covers every eligible source under stage1 plus TypeScript src/compiler: 1,115 files, 1,111 identical and four separately recorded port refusals. Its manifest, Go answers and port records are in /tmp/pin-land2/estree/. JSON's -O2 -g profile binary is freshly compiled from this merged tree.
+Input configuration: /tmp/pin-land2/gate-env.sh. External oracles: pinned TypeScript 6.0.3, Prettier 3.9.6, typescript-estree 8.65.0, and the setup-provided markdown width packages. ESTree's completed Go/Node audit covers every eligible tracked source under stage1 plus pinned TypeScript src/compiler: 1,114 files, 1,110 identical and four separately recorded port refusals. Its manifest, Go answers and port records are in /tmp/pin-land2/estree/. JSON's -O2 -g profile binary is freshly compiled from this merged tree.
 
 Toolchain setup succeeded in 46.724 seconds. nproc: 5, CPU quota: 4. Commands and package logs: /tmp/pin-land2/gate/; recapture/comparison logs: /tmp/pin-land2/.
+
+The first lint run rejected the uncommitted generated kind table through its immutable-source guard. Committing the recapture restored that guard; the entire lint package then passed. JSON initially lacked 18 locked stage3/api dependency inputs; npm ci supplied them and the entire JSON package passed on rerun. No guard was relaxed.
+
+ESTree initially failed TestRepositoryAgreement because its capture included ignored lint/.generated/registry.ts, which lint regenerated during the gate. The reproducer and original records are retained in /tmp/pin-land2/volatile-estree-audit/. Recapturing git ls-files stage1 plus the pinned compiler corpus excludes this volatile build output. Both corpus-dependent tests passed on retry in 286.032 seconds: /tmp/pin-land2/estree-corpus-retry.jsonl. The other 62 passing checks, including mutants, were retained; the full ESTree package was not rerun after the corrected corpus.
+
+The only remaining skip is lint TestCheckerBridgeRefusalPending (stage1/cohere/lint/checker_pending_test.go:51). It awaits tsgoInspect returning TSGoError from the C error buffer; internal/load/prelude.d.ts:17 currently declares a string return. All external inputs were supplied. This bridge language gap is outside the helper-pin unit and was left intact.
+
+Gofmt and vet are clean: /tmp/pin-land2/gofmt.log and /tmp/pin-land2/vet.log. The generated kind table also reproduces byte-for-byte: /tmp/pin-land2/kinds-verify.log.
+
+## Package gate results
+
+Counts include named subtests. Wall times are seconds, including go test startup. Every invocation used go test -json -count=1 -timeout 3h -p 1 -parallel 4.
+
+| Package | Pass | Fail | Skip | Wall seconds |
+| --- | ---: | ---: | ---: | ---: |
+| internal/coherepin | 1 | 0 | 0 | 0.199 |
+| stage1/cohere/lint/helpers | 30 | 0 | 0 | 440.419 |
+| stage1/cohere/lint/helpers/comments | 10 | 0 | 0 | 140.878 |
+| stage1/cohere/lint/helpers/core | 19 | 0 | 0 | 161.491 |
+| stage1/cohere/lint/helpers/ecmascript/text | 24 | 0 | 0 | 242.693 |
+| stage1/cohere/lint/helpers/from_wave1_11 | 1 | 0 | 0 | 30.501 |
+| stage1/cohere/lint/helpers/module | 11 | 0 | 0 | 12.703 |
+| stage1/cohere/lint/helpers/react | 1 | 0 | 0 | 148.255 |
+| stage1/cohere/lint/helpers/rules-react | 42 | 0 | 0 | 863.207 |
+| stage1/cohere/lint/helpers/slot03/batch3 | 1 | 0 | 0 | 14.105 |
+| stage1/cohere/lint/helpers/slot04_wave20 | 8 | 0 | 0 | 25.879 |
+| stage1/cohere/lint/helpers/slot05/batch32 | 3 | 0 | 0 | 27.852 |
+| stage1/cohere/lint/helpers/slot05/batch33 | 3 | 0 | 0 | 32.147 |
+| stage1/cohere/lint | 154 | 0 | 1 | 873.361 |
+| stage1/cohere/json | 44 | 0 | 0 | 516.200 |
+| stage1/cohere/estree | 62 | 1 | 0 | 985.355 |
+| stage1/cohere/markdownblocks | 118 | 0 | 0 | 234.476 |
+| stage1/cohere/tsprinter | 51 | 0 | 0 | 811.060 |
+| stage1/typescript/parser | 178 | 0 | 0 | 859.087 |
+| stage1/cohere/estree corpus retry (two tests) | 2 | 0 | 0 | 286.032 |
+
+ESTree's initial failure is the volatile-corpus input described above; its corrected corpus tests pass, and all other package tests passed in the original run. Lint's one skip is named above. No other package skipped a test. The interrupted parser run is excluded from these counts and retained in /tmp/pin-land2/interrupted-parser/.
+
+Final machine observation: nproc 5; CPU quota 4; load averages 6.40, 6.74, 6.53. No Go helper answer changed on an existing input, so no port implementation needed changing. Nothing else was stopped on.
+
+Package JSON logs and summary: /tmp/pin-land2/gate/. Individual comparison records include /tmp/pin-land2/imports-old-comparison.log, /tmp/pin-land2/react-old-comparison.log, /tmp/pin-land2/batch-comparison.json and /tmp/pin-land2/react-delta.json. The actual JSX and React captures, with capture-pin.json, are in /tmp/pin-land2/jsx/ and /tmp/pin-land2/react/.
