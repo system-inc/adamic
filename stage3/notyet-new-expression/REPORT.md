@@ -1,3 +1,5 @@
+Historical initial investigation. For the final implementation and disposition, see [FINAL.md](FINAL.md).
+
 Investigated all 22 assigned new-expression roots; no lowering change is claimed.
 Base b410340dc8f889b5799c3bc519117c63def3aa24; replay 9a1f14c5d994aa855625e7cfa295677060348fec; merge 915bfb9ef2063f3e9300c4469919c33dcbdfdbd0.
 Five census replays: two exact reproductions, three earlier stops; setup succeeded in 231.369s, nproc 5.
