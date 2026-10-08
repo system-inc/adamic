@@ -78,7 +78,7 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		return "collection"
 	case checker.IsTupleType(target):
-		if fixedViewTuple(target) {
+		if supportedTupleArity(target) {
 			return ""
 		}
 		return "tuple"

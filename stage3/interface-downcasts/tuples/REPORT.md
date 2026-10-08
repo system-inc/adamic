@@ -1,3 +1,24 @@
+Built: optional tuple view arity contracts and optional Map tuple forms, through the existing constructor.
+Commits: optional admission is a separate patch following 8b37f903 arity foundation.
+Checks: six Node/JavaScript/native release/sanitized/leak witnesses PASS 2.520s; layout probe PASS 0.319s; scoped counts PASS 27.497s; lane 2/lane 4 regressions PASS 24.436s.
+Mutants: absent-as-present compiles, returns string rather than undefined, and fails stdout oracle (FAIL 0.226s).
+Remaining: rest admission, five primary pairs / seven reads, and two overlapping lane 4b checks.
+
+Commands: TestCheckedViewTupleOptionalContract and
+TestTupleOptionalRestOriginalLayoutProbe scoped go tests with -count=1 -v
+(/tmp/views-tuples-optional-contract-final.log);
+ADAMIC_TUPLE_OPTIONAL_CONTRACT_MUTANT=present on
+TestCheckedViewTupleOptionalAbsentMutant
+(/tmp/views-tuples-optional-contract-mutant.log). The initial run refused at
+the old admission guard and is not a successful mutant witness. Final native
+mutant reaches exit zero with incorrect output. TestCheckedViewTupleOriginalCounts
+-args -update-counts refreshed 44 owned rows
+(/tmp/views-tuples-optional-contract-counts-final.log). Same ten scoped lane
+2/lane 4 array and union tests as the transfer patch pass, with 221 uncached
+Node observations (/tmp/views-tuples-optional-contract-regressions-final.log).
+
+---
+
 Built: shared tuple arity metadata and validators, independently of optional/rest source admission.
 Commits: arity foundation follows the separately pushed forEach transfer patch.
 Checks: runtime release/sanitized/leak probe PASS 0.613s; JavaScript IR probe PASS 0.331s; original tuple and transfer regressions PASS 19.893s.

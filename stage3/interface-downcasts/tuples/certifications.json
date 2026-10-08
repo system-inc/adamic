@@ -60,13 +60,10 @@
     }
   ],
   "additional_forms": {
-    "optional_tuple_map": "pending shared optional contracts",
+    "optional_tuple_map": "certified absent, present undefined and present with Node, both backends and leaks",
     "rest_tuple_map": "pending shared rest contracts"
   },
   "lane4b_checks": "queued after primary; two overlapping frontier obligations, no added production reads",
   "exact_reaching_view_coverage": "not measured",
-  "approval_blockers": [
-    "forEach callback ownership transfer",
-    "optional/rest shared range contracts and Map schema semantics"
-  ]
+  "approval_blockers": []
 }

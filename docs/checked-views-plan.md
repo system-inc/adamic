@@ -1715,3 +1715,9 @@ and TupleRest. Native and JavaScript predicates consume these only through
 the tuple contract path; Map schema matching preserves the complete domain.
 The producer ABI stays unchanged. Runtime and IR probes certify optional
 intervals and unbounded rest intervals; source admission is a separate patch.
+
+Optional arity admission: supportedTupleArity gates the existing tuple adapter,
+which marks the single tupleViewSlot plan variable with its required prefix.
+Optional fields retain Absent read policy and complete Map schemas preserve
+that same arity domain. Array tuple-union dispatch remains fixed-only.
+Six object/Map forms and the absent-as-present mutant certify this boundary.

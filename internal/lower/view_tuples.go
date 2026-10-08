@@ -63,3 +63,20 @@ func (l *lowering) tupleScalarUnionType(target *checker.Type) bool {
 	}
 	return tuples > 0
 }
+
+// Source admission for the single tuple constructor. Array union dispatch keeps
+// its separate fixed-only predicate; this does not widen any array consumer.
+func supportedTupleArity(target *checker.Type) bool {
+	if !checker.IsTupleType(target) {
+		return false
+	}
+	optional := false
+	for _, flag := range target.TargetTupleType().ElementFlags() {
+		if flag == checker.ElementFlagsOptional {
+			optional = true
+		} else if flag != checker.ElementFlagsRequired || optional {
+			return false
+		}
+	}
+	return true
+}
