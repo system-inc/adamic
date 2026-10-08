@@ -576,7 +576,14 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 		}
 		if optional && !of.IsReference() {
-			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
+			// A redundant ?. on a declared present receiver has a scalar result. A narrowed
+			// nullable receiver still needs the optional read: a call can restore undefined.
+			receiver := l.checker.GetTypeAtLocation(access.Expression)
+			if symbol := l.symbol(access.Expression); symbol != nil {
+				receiver = l.checker.GetTypeOfSymbol(symbol)
+			}
+			optional = l.includesUndefined(receiver) || l.includesNull(receiver)
+			return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)}), nil
 		}
 		return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
 	}
