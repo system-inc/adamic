@@ -42,13 +42,19 @@ func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
 	return nil
 }
 
-// Literal methods receive this as an argument, rather than capturing their owner. Their ordinary
-// lexical captures still use the existing cycle analysis and reference-counted closure environment.
+// Receiver-dependent literal methods receive this as an argument, rather than capturing their
+// owner. Proven independent methods use the ordinary closure ABI, so extraction preserves identity.
+// Lexical captures still use the existing cycle analysis and counted closure environment.
 func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
 	index := len(l.result.Functions)
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: true})
-	this := l.iterationLocal("this", ir.Object, index)
-	l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
+	this := -1
+	if !receiverIndependentMethod(node) {
+		this = l.iterationLocal("this", ir.Object, index)
+		l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
+	} else {
+		l.result.Functions[index].Receiver = false
+	}
 	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})
 	l.closures = append(l.closures, index)
 	err := l.lowerFunction(index, node, this)
@@ -78,6 +84,9 @@ func (l *lowering) memberReceiver(where *ast.Node, member *ast.Symbol) (bool, er
 			switch declaration.Kind {
 			case ast.KindMethodDeclaration:
 				current = 1
+				if receiverIndependentMethod(declaration) {
+					current = 0
+				}
 			case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindPropertyDeclaration:
 				if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAmbient) {
 					return false, l.notYet(where, "a declared iterator method with no runtime field")
