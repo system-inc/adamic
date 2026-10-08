@@ -34,5 +34,151 @@
       "source/command-options-missing.a"
     ],
     "scope": "Required dictionary container read with unread rich union elements, including null and object/array alternatives. Representative read-contract fixture, not a copied CompilerOptions definition or certification of its dynamic element reads."
+  },
+  {
+    "type_id": 10107,
+    "field": "watchOptions",
+    "type": "ParsedCommandLine",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/watch-options-good.a",
+      "source/watch-options-wrong.a",
+      "source/watch-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 65886,
+    "field": "paths",
+    "type": "VersionPaths",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/version-paths-good.a",
+      "source/version-paths-wrong.a",
+      "source/version-paths-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 97922,
+    "field": "options",
+    "type": "IncrementalMultiFileEmitBuildInfo",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/incremental-multi-options-good.a",
+      "source/incremental-multi-options-wrong.a",
+      "source/incremental-multi-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 97934,
+    "field": "options",
+    "type": "IncrementalBundleEmitBuildInfo",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/incremental-bundle-options-good.a",
+      "source/incremental-bundle-options-wrong.a",
+      "source/incremental-bundle-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 97937,
+    "field": "options",
+    "type": "IncrementalBuildInfo",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/incremental-options-good.a",
+      "source/incremental-options-wrong.a",
+      "source/incremental-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 94257,
+    "field": "compilerOptions",
+    "type": "ReusableBuilderProgramState",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/reusable-state-options-good.a",
+      "source/reusable-state-options-wrong.a",
+      "source/reusable-state-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 97245,
+    "field": "compilerOptions",
+    "type": "BuilderProgramState",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/builder-state-options-good.a",
+      "source/builder-state-options-wrong.a",
+      "source/builder-state-options-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 10107,
+    "field": "wildcardDirectories",
+    "type": "ParsedCommandLine",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryContainerBatch",
+      "TestCheckedViewDictionaryContainerMutant"
+    ],
+    "fixtures": [
+      "source/wildcard-directories-good.a",
+      "source/wildcard-directories-wrong.a",
+      "source/wildcard-directories-missing.a"
+    ],
+    "scope": "Representative field read-contract fixtures: container kind, presence, optional absence and lazy unread child contracts. Does not certify rich element union selection."
+  },
+  {
+    "type_id": 9858,
+    "field": "paths",
+    "type": "CompilerOptions",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryCompilerPaths"
+    ],
+    "fixtures": [
+      "source/compiler-paths-good.a",
+      "source/compiler-paths-missing.a",
+      "source/compiler-paths-container-wrong.a",
+      "source/compiler-paths-wrong.a",
+      "source/compiler-paths-element-wrong.a",
+      "source/compiler-paths-key-missing.a"
+    ],
+    "scope": "Mixed named fields and string index signature: optional MapLike<string[]> container, absent key and transitive array-element checks. No rich dynamic element union reads credited."
   }
 ]

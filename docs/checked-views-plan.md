@@ -1142,3 +1142,19 @@ Union selection overlap proposed to lane 4: scalar and nullish alternatives at
 dictionary element extraction. Lane 4b: object/array alternatives in
 CompilerOptionsValue and TsConfigSourceFile unions. Dictionary storage, lookup,
 absence and enumeration adapters remain this lane's responsibility.
+
+### Dictionary group 5: remaining direct container shapes
+
+Lane files: extend `internal/oracle/checked_view_dictionary_container_test.go`
+and `checked_view_dictionary_propagation_test.go`; new `.a` witnesses under
+`dictionaries/source/` named watch-options, wildcard-directories, version-paths,
+incremental-{multi-options,bundle-options,options}, {reusable,builder}-state-options,
+and compiler-paths, each with valid, wrong and absent cases. No shared hook
+changed. Parent container checks retain unsupported unread union descriptors;
+CompilerOptions.paths uses the mixed named/index-signature read dispatch and
+checks extracted arrays transitively. Container bypass is a semantic C/JS mutant.
+
+User accepted lane 4's primitive/nullish and lane 4b's object/array/TsConfigSourceFile
+element selection handoffs. Storage, lookup, absence and enumeration remain
+with dictionaries. Candidate string and Path dynamic rows are string indexing
+according to their census sites; counts stay pending until disposition evidence.
