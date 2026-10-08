@@ -35,11 +35,11 @@ export class Rule {
   }
   return info;
  }
- judge(index: number,frame: Frame): void{
-  const t=this.tree;const node=t.rules.parser.node(index);
+ judge(node: ParseNode,index: number,frame: Frame): void{
+  const t=this.tree;
   if(this.allowNamed && t.name(index)>=0 || node.children.some((child)=>t.kind(child)==='AsteriskToken') || this.self(index) || frame.usesArguments){return;}
   const callback=this.info(index);if(!callback.callback || this.allowUnbound && frame.usesThis && !callback.lexical || frame.usesSuper || frame.usesNewTarget){return;}
-  const fixes=this.fix(index,frame,callback);t.rules.context.reportNode(index,'prefer-arrow-callback','preferArrowCallback',MESSAGE,fixes);
+  const fixes=this.fix(node,index,frame,callback);t.rules.context.reportNode(index,'prefer-arrow-callback','preferArrowCallback',MESSAGE,fixes);
  }
  comment(text: string,start: number,end: number): boolean{
   if(start<0 || end>text.length || start>=end){return false;}
@@ -49,8 +49,8 @@ export class Rule {
  parenthesized(index: number): boolean{
   const t=this.tree;if(t.kind(t.parent(index))==='ParenthesizedExpression'){return true;}const node=t.rules.parser.node(index);const text=t.rules.parser.scanner.text;let before=node.pos-1;while(before>=0 && [' ','\t','\n','\r'].includes(text[before]??'')){before--;}let after=node.end;while(after<text.length && [' ','\t','\n','\r'].includes(text[after]??'')){after++;}return before>=0 && after<text.length && text[before]==='(' && text[after]===')';
  }
- fix(index: number,frame: Frame,callback: Callback): Repair[]{
-  const t=this.tree;const node=t.rules.parser.node(index);const empty: Repair[]=[];if(!callback.lexical && frame.usesThis){return empty;}
+ fix(node: ParseNode,index: number,frame: Frame,callback: Callback): Repair[]{
+  const t=this.tree;const empty: Repair[]=[];if(!callback.lexical && frame.usesThis){return empty;}
   const parameters=node.children.filter((child)=>t.kind(child)==='Parameter');const seen=new Set<string>();
   for(const parameter of parameters){const name=t.name(parameter);if(t.kind(name)!=='Identifier'){break;}const text=t.rules.parser.node(name).text;if(seen.has(text)){return empty;}seen.add(text);}
   const first=t.name(parameters[0]??-1);if(t.kind(first)==='Identifier' && t.rules.parser.node(first).text==='this'){return empty;}
@@ -69,7 +69,7 @@ export class Rule {
   if(parent>=0 && !['CallExpression','NewExpression','ConditionalExpression'].includes(t.kind(parent)) && !this.parenthesized(replaced) && !this.parenthesized(index)){const replacement=t.rules.parser.node(replaced);fixes.push(new Repair(t.rules.byte(t.rules.start(replacement)),t.rules.byte(t.rules.start(replacement)),'('));fixes.push(new Repair(t.rules.byte(replacement.end),t.rules.byte(replacement.end),')'));}
   return fixes;
  }
- visit(node: ParseNode,index: number): void { const frame=new Frame(); for(const child of node.children) {this.collect(child,frame);} this.judge(index,frame); }
+ visit(node: ParseNode,index: number): void { const frame=new Frame(); for(const child of node.children) {this.collect(child,frame);} this.judge(node,index,frame); }
 }
 const MESSAGE='An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.';
 
