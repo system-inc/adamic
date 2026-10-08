@@ -1,0 +1,18 @@
+function reference(kind: number): object {
+    if (kind === 0) return { name: ["own", "ed"].join("") };
+    if (kind === 1) return ["array"];
+    if (kind === 2) return new Map<string, number>([["key", 12]]);
+    return () => 14;
+}
+for (let i = 0; i < 4; i++) console.log(`${i} ${typeof reference(i)}`);
+
+function optional(present: boolean): object | undefined {
+    if (present) return ["present"];
+    return undefined;
+}
+function textOrObject(text: boolean): string | object {
+    if (text) return ["built", "text"].join(" ");
+    return () => 23;
+}
+console.log(`${typeof optional(true)} ${typeof optional(false)}`);
+console.log(`${typeof textOrObject(true)} ${typeof textOrObject(false)}`);
