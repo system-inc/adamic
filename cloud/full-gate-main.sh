@@ -92,8 +92,10 @@ BOX
       parent=$(publish "${sha}" "${stamp}" "${out}" "${parent}")
       final=$(ssh "${box}" "head -1 ~/${out}/status.txt")
       echo "$(date -u +%H:%M:%S) finished: ${final}"
-      [[ ${final} == green:* ]] && echo "${sha}" > "${state}/last-green"
-      return
+      if [[ ${final} == green:* ]]; then echo "${sha}" > "${state}/last-green"; fi
+      # Explicitly 0: a bare return took the status of the green test above, so after every red run
+      # (06:55Z and 08:30Z on Oct 8) set -e ended the loop and no main got a whole gate.
+      return 0
     fi
   done
 }
@@ -103,10 +105,10 @@ if [ -n "${once}" ]; then
   exit
 fi
 while true; do
-  git -C "${here}" fetch -q origin
-  main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
-  if ! git -C "${here}" ls-remote origin "refs/heads/gate-logs/${main:0:12}/*" | grep -q '/full-main$'; then
-    run "${main}"
+  # A network blip or one failed run never ends the loop: it says so and tries again next minute.
+  main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1) || main=""
+  if [ -n "${main}" ] && ! git -C "${here}" ls-remote origin "refs/heads/gate-logs/${main:0:12}/*" | grep -q '/full-main$'; then
+    run "${main}" || echo "$(date -u +%H:%M:%S) run of ${main} failed (exit $?); trying again next minute"
   fi
   sleep 60
 done
