@@ -22,7 +22,6 @@ func TestObjectRefusalsExplainSoundness(t *testing.T) {
 		{`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.assign({value:1},view);`, "widened source"},
 		{`Object.values({number:1, text:'wrong'});`, "homogeneous"},
 		{`Object.entries({number:1, text:'wrong'});`, "homogeneous"},
-		{`Object.hasOwn({value:1}, 'notDeclared');`, "declared public field"},
 	} {
 		t.Run(probe.reason+probe.source, func(t *testing.T) {
 			t.Parallel()

@@ -91,13 +91,16 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		call.Arguments = []ir.Expression{value}
 		switch name {
 		case "hasOwn":
-			key := ast.SkipParentheses(written[1])
-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
-				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
-			}
-			keyValue, err := l.expression(key)
+			keyValue, err := l.expression(written[1])
 			if err != nil {
 				return nil, true, err
+			}
+			switch keyValue.Type() {
+			case ir.String:
+			case ir.Number:
+				keyValue = ir.NumberToString{Value: keyValue}
+			default:
+				return nil, true, l.notYet(written[1], "Object.hasOwn with a key requiring unrepresented ToPropertyKey coercion")
 			}
 			call.Arguments = append(call.Arguments, keyValue)
 		case "freeze":
@@ -191,7 +194,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 			if field.Kind != ast.KindPropertyAssignment && field.Kind != ast.KindShorthandPropertyAssignment {
 				return false
 			}
-			if field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral {
+			if field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral && field.Name().Kind != ast.KindNumericLiteral {
 				return false
 			}
 			if strings.ContainsRune(field.Name().Text(), 0) || field.Name().Text() == "__proto__" || len(field.Name().Text()) > 0 && field.Name().Text()[0] == '#' {

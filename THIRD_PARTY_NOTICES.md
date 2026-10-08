@@ -55,6 +55,8 @@ IN THE SOFTWARE.
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
+  - Object primitive conversion (`internal/lower/library_object_coercion.go`, after
+    JSReceiver::OrdinaryToPrimitive in src/objects/js-objects.cc, Node 24.19.0);
   - Object primitive own-name reflection (`runtime/object_names.c`, after
     src/builtins/builtins-object.cc, V8 13.6.233; fixed-shape keys reuse the existing Object ordering);
   - Object sealing and extensibility (`runtime/object_integrity.c`, after

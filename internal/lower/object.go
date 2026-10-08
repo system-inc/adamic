@@ -592,6 +592,15 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	if value, known, err := l.libraryDateCall(node); known {
 		return value, true, err
 	}
+	if value, handled, err := l.libraryObjectStaticCall(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.libraryObjectCoercionCall(node); handled {
+		return value, true, err
+	}
+	if value, handled, err := l.libraryObjectIntrinsicCall(node); handled {
+		return value, true, err
+	}
 	if value, handled, err := l.libraryNodeBuffer(node); handled {
 		return value, true, err
 	}
