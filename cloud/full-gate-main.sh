@@ -96,6 +96,9 @@ set -u
 exec 9> ~/full-gate/lock
 flock 9
 source ~/adamic-tools/env.sh
+# Stock tsc is the gates' pinned TypeScript 6.0.3 (the LKG checkout setup provides), for oracles that
+# take it from PATH (cmd/adamic-test262's stock-rejection check). No box had a tsc on PATH.
+export PATH="\${ADAMIC_TYPESCRIPT_SOURCE}/bin:\${PATH}"
 # env.sh points TMPDIR into /tmp, which a WSL restart empties: every gate failed in 1 s on 'go:
 # creating work dir: stat /tmp/adamic-gate' after Cloud's restart (Oct 8). Each gate makes it, world-traversable.
 mkdir -p -m 1777 "\${TMPDIR:-/tmp}"
