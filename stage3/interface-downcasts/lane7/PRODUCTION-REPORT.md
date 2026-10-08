@@ -78,3 +78,66 @@ Production fixture families demonstrated: four (EmitNode fragment, Named &
 Counted, object brand and duplicate-field intersection). Primitive brands are
 not lane 7 completions. The historical 198 / 1,145 counts are not used as exact
 remaining work. No cohere code copied, no PR, only own branch pushed.
+
+October 8 production follow-up:
+
+The production group was pushed at 593db75392fd5f1cdaf356325c5ef9bfad42c42e
+(implementation 47c6c23a), after merging integration 566c1ec0 cleanly. Its
+post-merge uncached checked-view oracle rerun passed in 34.299s.
+
+The follow-up adds a named viewIntersectionReadFamily call in view_lazy.go.
+Until their dispatch is implemented, union selection containing intersections,
+compound supported children and recursive payloads refuse at demanded reads.
+Unsupported descendants remain their own lazy obligations, and casts do not
+refuse just because their descriptors are unsupported. Checker-type recursion
+is inspected as well as the descriptor graph: optional recursive descriptors
+can be copied before canonical Fields finish construction. The type walk
+prevents those temporary empty copies from silently certifying a recursive
+intersection. Complete recursive membership remains pending.
+
+New Node controls show unread union-intersection and recursive casts print ok in
+both backends. The read counterparts refuse compilation with field value and
+unsupported union intersection / recursive intersection payload. Both bypass
+mutants compile valid Go and fail those independent demanded-read assertions
+with got <nil>. This is a deliberate refusal for unfinished families, not a
+runtime implementation claim.
+
+Candidate ownership accounting, using the published static queue:
+
+- 15 explicit object-intersection candidates / 64 reads remain in lane 7's queue.
+- 23 primitive-brand candidates / 692 reads belong outside this lane.
+- 7 private builder/array alias overlaps / 13 reads remain unclassified; do not
+  assume these are phantom or primitive merely from their display.
+- Total remains 45 / 769. Newly certified complete upstream pairs remain 0.
+  The EmitNode fixtures omit upstream internalFlags and AutoGenerateInfo.flags,
+  among other declarations; the pinned original definition confirms that they
+  are reduced fragments and must not be counted as a completed full pair.
+
+The original type definitions were read through the existing submodule's git
+objects at 050880ce59e30b356b686bd3144efe24f875ebc8 and cross-checked against the
+same public commit. No source file was copied into this repository.
+
+Leak checks are asserted on successful fixtures. An initial broader follow-up
+run wrongly invoked the leak runner on intentional fatal refusals; it reported
+exit 70. The harness was corrected to the existing successful-program convention
+and rerun. Fatal refusals still run sanitized native, release native and JS with
+verbatim output/exit pins.
+
+Additional evidence:
+
+- Compound demand control .376s PASS; bypass mutant .187s expected FAIL.
+- Recursive demand bypass mutant .325s expected FAIL, got <nil>.
+- Final scoped lower/oracle gate: lower .557s, oracle 11.543s PASS before the
+  recursive payload was changed to a wrong value beyond the optional backedge.
+- Final package filter: lower 4.448s, JavaScript .662s, native 3.913s PASS;
+  IR has no tests selected by this filter. Touched-package vet PASS.
+- Uncached checked-view oracle is rerun after final guard/leak changes; its final
+  log is retained with the follow-up evidence. No full repository gate claimed.
+
+Working whole-family date stays October 11, 2026, 23:00 UTC. No external hook
+handoff is blocking further implementation. Compound selection and canonical
+recursive runtime descriptors remain the next implementation work.
+
+Final uncached checked-view oracle rerun: PASS, 34.669s. Final candidate object
+queue still 15 pairs / 64 reads, plus 7 overlaps / 13 reads unresolved; no
+complete upstream pair is subtracted by this follow-up.

@@ -1075,3 +1075,23 @@ pair certification remains distinct from reduced fragments. Revised whole-family
 working date: October 11, 2026, 23:00 UTC. This estimate now has no shared-hook
 handoff dependency; compound union, recursive, array and callable intersections
 still require additional implementation and validation.
+
+Lane 7 conservative scope hook: view_lazy.go also calls the named
+viewIntersectionReadFamily classifier after descriptor construction. Read demand
+refuses union selection containing intersections, deep recursive payloads and
+supported compound child families that the finite object/scalar matcher cannot
+validate yet. Casts stay lazy, and already-unsupported descendants keep their
+own read obligations. This prevents the new general intersection classification
+from accidentally admitting unwired compound runtime paths. Until those adapters
+are implemented, these are explicitly pending candidate families.
+
+Lane 7 scoped candidate accounting: the 45 / 769 shared queue separates into
+15 explicit object-intersection candidates / 64 reads, 23 primitive-brand
+candidates / 692 reads delegated outside this lane, and 7 private builder/array
+alias overlaps / 13 reads whose ownership/runtime classification is unresolved.
+This partitions the static candidates, not allocation-exact reachability and
+not phantom-brand proof from display text. The object keys are preserved in
+lane7/lazy-pair-progress.json. Full upstream pairs certified remain zero;
+reduced source shapes are not subtracted. Recursive checker-type traversal also
+prevents optional recursive descriptor copies with temporarily empty Fields
+from bypassing the demanded-read refusal.

@@ -7384,5 +7384,87 @@
         }
       ]
     }
+  ],
+  "lane7_object_candidate_pairs": 15,
+  "lane7_object_candidate_reads": 64,
+  "builder_array_overlap_pairs": 7,
+  "builder_array_overlap_reads": 13,
+  "ownership_basis": "Explicit object alias queue; primitive brand displays (__String, Path, BuildOrder/ResolvedConfigFileName) delegated; private builder/array alias overlaps not classified as phantom from display alone.",
+  "lane7_object_candidate_keys": [
+    {
+      "type_id": 9474,
+      "field": "expression",
+      "read_count": 11
+    },
+    {
+      "type_id": 7642,
+      "field": "parent",
+      "read_count": 10
+    },
+    {
+      "type_id": 9476,
+      "field": "left",
+      "read_count": 9
+    },
+    {
+      "type_id": 9485,
+      "field": "left",
+      "read_count": 9
+    },
+    {
+      "type_id": 7612,
+      "field": "emitNode",
+      "read_count": 4
+    },
+    {
+      "type_id": 8883,
+      "field": "class",
+      "read_count": 4
+    },
+    {
+      "type_id": 9475,
+      "field": "expression",
+      "read_count": 4
+    },
+    {
+      "type_id": 68704,
+      "field": "moduleResolverHost",
+      "read_count": 4
+    },
+    {
+      "type_id": 8882,
+      "field": "class",
+      "read_count": 3
+    },
+    {
+      "type_id": 7644,
+      "field": "parent",
+      "read_count": 1
+    },
+    {
+      "type_id": 9454,
+      "field": "argumentExpression",
+      "read_count": 1
+    },
+    {
+      "type_id": 9657,
+      "field": "expression",
+      "read_count": 1
+    },
+    {
+      "type_id": 10236,
+      "field": "moduleResolverHost",
+      "read_count": 1
+    },
+    {
+      "type_id": 36241,
+      "field": "parent",
+      "read_count": 1
+    },
+    {
+      "type_id": 92175,
+      "field": "class",
+      "read_count": 1
+    }
   ]
 }

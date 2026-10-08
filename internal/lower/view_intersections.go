@@ -113,6 +113,87 @@ func (l *lowering) internStructuralViewIntersection(node *ast.Node, target *chec
 		}
 		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: child, Optional: field.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(field)})
 	}
+	if l.recursiveIntersectionPayload(target) {
+		contract.Unsupported = "recursive intersection payload"
+	}
 	l.result.ViewContracts[id-1] = contract
 	return id, nil
+}
+
+// Do not admit combinations the production matcher cannot validate yet. This
+// metadata is consumed by lazy demand, so unread casts still remain admitted.
+func (l *lowering) viewIntersectionReadFamily(id ir.ViewContractID) string {
+	root := l.result.ViewContracts[id-1]
+	if root.Kind == ir.ViewUnion {
+		for _, member := range root.Members {
+			if l.result.ViewContracts[member-1].Intersection {
+				return "union intersection"
+			}
+		}
+	}
+	if !root.Intersection {
+		return ""
+	}
+	active := map[ir.ViewContractID]bool{}
+	var visit func(ir.ViewContractID) string
+	visit = func(id ir.ViewContractID) string {
+		contract := l.result.ViewContracts[id-1]
+		// Descendant unsupported families keep their own read-site obligations.
+		if contract.Unsupported != "" {
+			return ""
+		}
+		if active[id] {
+			return "recursive intersection payload"
+		}
+		active[id] = true
+		defer delete(active, id)
+		switch contract.Kind {
+		case ir.ViewScalar:
+			if contract.Of == ir.Union {
+				return "mixed intersection payload"
+			}
+		case ir.ViewObject:
+			for _, field := range contract.Fields {
+				if family := visit(field.Contract); family != "" {
+					return family
+				}
+			}
+		case ir.ViewUnknown:
+			return "" // Lazy demand never treats Unknown as a read certificate.
+		default:
+			return "compound intersection payload"
+		}
+		return ""
+	}
+	return visit(id)
+}
+
+// Inspect checker types too: an optional recursive descriptor can be copied
+// while its canonical parent is still being reserved, before Fields are filled.
+func (l *lowering) recursiveIntersectionPayload(target *checker.Type) bool {
+	active := map[*checker.Type]bool{}
+	complete := map[*checker.Type]bool{}
+	var visit func(*checker.Type) bool
+	visit = func(target *checker.Type) bool {
+		target = l.checker.GetNonNullableType(target)
+		if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 || l.checker.IsArrayType(target) || l.callableViewContract(target) {
+			return false
+		}
+		if active[target] {
+			return true
+		}
+		if complete[target] {
+			return false
+		}
+		active[target] = true
+		defer delete(active, target)
+		for _, field := range l.checker.GetPropertiesOfType(target) {
+			if visit(l.checker.GetTypeOfSymbol(field)) {
+				return true
+			}
+		}
+		complete[target] = true
+		return false
+	}
+	return visit(target)
 }

@@ -149,7 +149,11 @@ func TestCheckedViewIntersectionSource(t *testing.T) {
 				want = run{exitCode: 70, stderr: []byte("adamic: panic: " + probe.diagnostic + "\n")}
 			}
 			actual, binary := nativelyUncached(t, program)
-			leaks(t, program, binary)
+			if want.exitCode == 0 {
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
 			for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if difference := disagreement(want, got); difference != "" {
 					t.Errorf("%s; got %#v", difference, got)
@@ -223,5 +227,47 @@ func TestCheckedViewIntersectionRootConjunctionProbe(t *testing.T) {
 		if difference := disagreement(want, got); difference != "" {
 			t.Errorf("%s; got %#v", difference, got)
 		}
+	}
+}
+
+// Lazy admission must stay intact while compound runtime selection is unwired.
+func TestCheckedViewIntersectionCompoundDemand(t *testing.T) {
+	program, path := interfaceFixture(t, "lane7/compound-unread")
+	want := run{stdout: []byte("ok\n")}
+	for _, got := range []run{onNode(t, path), releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Fatal(difference)
+		}
+	}
+	readPath, pathErr := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane7/compound-read.a"))
+	if pathErr != nil {
+		t.Fatal(pathErr)
+	}
+	_, err := lowered(t, readPath)
+	if err == nil || !strings.Contains(err.Error(), "field value with unsupported union intersection") {
+		t.Fatalf("compound demand must refuse, got %v", err)
+	}
+	// The runtime control is valid JavaScript; the compiler's refusal prevents a
+	// silent success until selection validates the matching intersection arm.
+	if got := onNode(t, readPath); got.exitCode != 0 || string(got.stdout) != "true\n" {
+		t.Fatalf("Node: %#v", got)
+	}
+}
+
+func TestCheckedViewIntersectionRecursiveDemand(t *testing.T) {
+	program, path := interfaceFixture(t, "lane7/recursive-unread")
+	want := run{stdout: []byte("ok\n")}
+	for _, got := range []run{onNode(t, path), releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Fatal(difference)
+		}
+	}
+	readPath, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane7/recursive-read.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowered(t, readPath)
+	if err == nil || !strings.Contains(err.Error(), "field value with unsupported recursive intersection payload") {
+		t.Fatalf("recursive demand must refuse, got %v", err)
 	}
 }
