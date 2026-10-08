@@ -14,10 +14,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/01_call_time/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "02_reverse_barrel/main.a",
@@ -34,10 +31,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/02_reverse_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "03_extensions/main.a",
@@ -55,10 +49,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/03_extensions/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "04_directory_callback/main.a",
@@ -76,8 +67,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/04_directory_callback/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/cycles/04_directory_callback/main.a:9:71: stage 0 can't lower a generic function as a value yet"
     }
   },
   {
@@ -130,8 +121,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/07_namespace_barrel/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/cycles/07_namespace_barrel/main.a:8:16: stage 0 can't lower reading path yet"
     }
   },
   {
@@ -149,10 +140,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/cycles/08_named_reexports/core.a:10:9: Adamic 0.1 refuses a boolean | undefined as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "09_function_value_load/main.a",
@@ -168,7 +156,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/09_function_value_load/performance.a:5:42: stage 0 can't lower a function with an optional or rest parameter, as a value yet"
+      "what": "stage3/fixtures/cycles/09_function_value_load/main.a:4:1: stage 0 can't lower reading performance yet"
     }
   },
   {
@@ -185,7 +173,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/cycles/10_hoisted_before_body/performance.a:5:42: stage 0 can't lower a function with an optional or rest parameter, as a value yet"
+      "what": "stage3/fixtures/cycles/10_hoisted_before_body/main.a:4:1: stage 0 can't lower reading performance yet"
     }
   }
 ]

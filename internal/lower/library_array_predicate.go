@@ -135,7 +135,7 @@ func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error) {
 	of, represented := l.representation(proven)
 	// Keep the library's effect-preserving static facts, including empty literals
 	// and intrinsic identities. Mixed slots use the compiler's runtime brand test.
-	static := represented && of != ir.Union && proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) == 0 && !isClassInstance(proven)
+	static := represented && of != ir.Union && proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsUnknown|checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) == 0 && !isClassInstance(proven) && !checker.IsTupleType(proven)
 	plain := ast.SkipParentheses(argument)
 	if plain.Kind == ast.KindArrayLiteralExpression && len(plain.AsArrayLiteralExpression().Elements.Nodes) == 0 {
 		static = true

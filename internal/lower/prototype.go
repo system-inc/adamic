@@ -88,7 +88,7 @@ func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name s
 	default:
 		return nil, false, nil
 	}
-	if value, handled, err := l.objectDescriptorPrototypeCall(node, receiver, name); handled {
+	if value, handled, err := l.objectDescriptorPrototypeCallArguments(node, receiver, name, written); handled {
 		return value, handled, err
 	}
 	if name == "isPrototypeOf" {

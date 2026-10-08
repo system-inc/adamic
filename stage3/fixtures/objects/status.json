@@ -166,10 +166,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/14_comment_pending.a:10:19: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "15_accessor_absence.a",

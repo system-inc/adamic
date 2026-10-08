@@ -61,10 +61,18 @@ static const char *const iterator_method_names[] = {"next", "__adamic_symbol_ite
 static adamic_value array_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
 static adamic_value set_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
 static adamic_value string_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
-static const adamic_method iterator_method_code[][2] = {
-	{iterator_next, iterator_identity}, {set_iterator_next, iterator_identity},
-	{array_iterator_next, iterator_identity}, {string_iterator_next, iterator_identity}
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define ITERATOR_METHOD(function) {.counted = false, .code = function}
+#else
+#define ITERATOR_METHOD(function) function
+#endif
+static const adamic_method_entry iterator_method_code[][2] = {
+	{ITERATOR_METHOD(iterator_next), ITERATOR_METHOD(iterator_identity)},
+	{ITERATOR_METHOD(set_iterator_next), ITERATOR_METHOD(iterator_identity)},
+	{ITERATOR_METHOD(array_iterator_next), ITERATOR_METHOD(iterator_identity)},
+	{ITERATOR_METHOD(string_iterator_next), ITERATOR_METHOD(iterator_identity)}
 };
+#undef ITERATOR_METHOD
 static const adamic_methods iterator_prototypes[] = {
 	{2, iterator_method_names, iterator_method_code[0]}, {2, iterator_method_names, iterator_method_code[1]},
 	{2, iterator_method_names, iterator_method_code[2]}, {2, iterator_method_names, iterator_method_code[3]}
