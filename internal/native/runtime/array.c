@@ -36,6 +36,7 @@ void adamic_array_push(adamic_array *array, adamic_value value) {
 		array->elements = grown;
 		array->capacity = capacity;
 	}
+	adamic_array_mark_index(array, array->length);
 	array->elements[array->length++] = value;
 }
 
@@ -209,6 +210,7 @@ adamic_value *adamic_array_at_relative(const adamic_array *array, double index) 
 	if (!(index >= 0) || index >= (double)array->length) {
 		return NULL;
 	}
+	if (array->properties != NULL && !adamic_array_has_index(array, (size_t)index)) return NULL;
 	return &array->elements[(size_t)index];
 }
 
@@ -284,6 +286,7 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 			adamic_release(array->elements[index].reference);
 		}
 		array->elements[index] = value;
+		adamic_array_mark_index(array, index);
 	}
 	return array;
 }
@@ -389,9 +392,10 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
 }
 
 void adamic_array_set(adamic_array *array, double index, adamic_value value) {
-	// 0.1 writes only at an index the array has: JavaScript would grow the array, or leave a hole, and
-	// a hole is something 0.1 can't hold. push is how to append.
-	adamic_value *slot = adamic_array_at(array, index);
+	// Writes within the current length create presence, including through aliases.
+	// Extending by assignment remains unsupported; push is how to append.
+	adamic_value *slot = NULL;
+	if (index >= 0 && index < (double)array->length && index == trunc(index)) slot = &array->elements[(size_t)index];
 	if (slot == NULL) {
 		char number[ADAMIC_NUMBER_FORMAT_MAX], length[ADAMIC_NUMBER_FORMAT_MAX], message[128];
 		size_t number_size = adamic_number_format(index, number);
@@ -399,6 +403,7 @@ void adamic_array_set(adamic_array *array, double index, adamic_value value) {
 		int written = snprintf(message, sizeof message, "index %.*s is outside an array of length %.*s", (int)number_size, number, (int)length_size, length);
 		adamic_panic(message, (size_t)written);
 	}
+	adamic_array_mark_index(array, (size_t)index);
 	if (array->references) {
 		void *old = slot->reference;
 		slot->reference = value.reference;

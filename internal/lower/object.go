@@ -571,6 +571,9 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if err := l.sparseCall(node); err != nil {
+		return nil, true, err
+	}
 	if value, handled, err := l.userMethodCall(node); handled {
 		return value, true, err
 	}
@@ -797,6 +800,15 @@ var numberConstants = map[string]float64{
 
 // forOf lowers for (const element of array).
 func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
+	if l.program.ContainsSparseArrays() && l.checker.IsArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsForInOrOfStatement().Expression))) {
+		return nil, l.notYet(node, "for...of over arrays in a program with sparse arrays")
+	}
+	iterated := ast.SkipParentheses(node.AsForInOrOfStatement().Expression)
+	if iterated.Kind == ast.KindCallExpression {
+		if err := l.sparseCall(iterated); err != nil {
+			return nil, err
+		}
+	}
 	if statements, known, err := l.libraryArrayForOf(node); known {
 		return statements, err
 	}
@@ -1968,7 +1980,14 @@ func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Ki
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "element", Type: ir.Number, Function: l.functionIndex})
 	arrayRead := ir.Read{Local: arrayLocal, Of: ir.Array}
 	indexRead := ir.Read{Local: indexLocal, Of: ir.Number}
-	current := ir.Unwrap{Value: ir.ArrayIndex{Array: arrayRead, Index: indexRead, Element: ir.Number}}
+	lookup := ir.ArrayIndex{Array: arrayRead, Index: indexRead, Element: ir.Number}
+	var current ir.Expression = ir.Unwrap{Value: lookup}
+	if l.program.RequiresIndexedPresenceChecks() {
+		current, err = l.checkedIndexedRead(target, lookup)
+		if err != nil {
+			return nil, err
+		}
+	}
 	right, err := l.expression(valueNode)
 	if err != nil {
 		return nil, err
