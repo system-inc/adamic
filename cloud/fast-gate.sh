@@ -83,6 +83,10 @@ while [ -z "${slot}" ]; do
   done
   [ -n "${slot}" ] || sleep 1
 done
+# How long stopping idle work took, and how many marked processes it found, for the measurement that
+# decides whether idle work may share a gate box (@system_adamic, Oct 8 07:01).
+idleFound=$(for p in /proc/[0-9]*; do [ -O "${p}" ] && { tr '\0' '\n' < "${p}/environ"; } 2>/dev/null | grep -qx 'ADAMIC_IDLE_JOB=1' && echo x; done | wc -l)
+preemptStarted=$(date +%s%N)
 # BEGIN idle preemption (keep identical to cloud/idle-preempt.sh)
 python3 - <<'IDLE_PREEMPT'
 import os, signal, time
@@ -120,6 +124,7 @@ while True:
     time.sleep(.05)
 IDLE_PREEMPT
 # END idle preemption
+echo "idle preemption: ${idleFound} marked processes, $(( ($(date +%s%N) - preemptStarted) / 1000000 )) ms"
 suffix=$([ "${slot}" = 1 ] && echo "" || echo "-${slot}")
 source ~/adamic-tools/env.sh
 # Stock tsc is the gates' pinned TypeScript 6.0.3 (the LKG checkout setup provides), for oracles that
