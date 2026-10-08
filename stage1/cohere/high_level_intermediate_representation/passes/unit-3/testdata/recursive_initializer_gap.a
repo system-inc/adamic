@@ -1,0 +1,5 @@
+function run(): number {
+ const visit = (depth: number): number => depth === 0 ? 0 : visit(depth - 1);
+ return visit(1);
+}
+console.log(String(run()));

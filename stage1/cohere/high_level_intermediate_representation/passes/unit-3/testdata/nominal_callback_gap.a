@@ -1,0 +1,5 @@
+class Block { readonly id: number; constructor(id: number) { this.id = id; } }
+interface Graph<T> { readonly placeholder: (block: T) => T; }
+function graph(): Graph<Block> { return { placeholder: (block) => { const copy = new Block(block.id); return copy; } }; }
+const block = new Block(1);
+console.log(String(graph().placeholder(block).id));

@@ -1,0 +1,90 @@
+{
+  "dead_code_elimination": {
+    "OriginalTotal": 1465,
+    "OriginalMatched": 1465,
+    "ProbeTotal": 72,
+    "ProbeMatched": 72,
+    "FlowTotal": 23,
+    "FlowMatched": 23,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 0,
+    "FirstMismatch": ""
+  },
+  "drop_manual_memoization": {
+    "OriginalTotal": 1465,
+    "OriginalMatched": 1465,
+    "ProbeTotal": 72,
+    "ProbeMatched": 72,
+    "FlowTotal": 23,
+    "FlowMatched": 23,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 0,
+    "FirstMismatch": ""
+  },
+  "inline_iife": {
+    "OriginalTotal": 1465,
+    "OriginalMatched": 1465,
+    "ProbeTotal": 72,
+    "ProbeMatched": 72,
+    "FlowTotal": 23,
+    "FlowMatched": 23,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 0,
+    "FirstMismatch": ""
+  },
+  "inline_iife_including_memo_callbacks": {
+    "OriginalTotal": 1465,
+    "OriginalMatched": 1460,
+    "ProbeTotal": 72,
+    "ProbeMatched": 72,
+    "FlowTotal": 23,
+    "FlowMatched": 23,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 0,
+    "FirstMismatch": "68eecdd6fa096ab6498344cfebfe3c98cae405453f971ffd482bf7df2dc0f7cb/inline_iife_including_memo_callbacks"
+  },
+  "inline_remap": {
+    "OriginalTotal": 1591,
+    "OriginalMatched": 1591,
+    "ProbeTotal": 75,
+    "ProbeMatched": 75,
+    "FlowTotal": 26,
+    "FlowMatched": 26,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 0,
+    "FirstMismatch": ""
+  },
+  "invoked_functions": {
+    "OriginalTotal": 1465,
+    "OriginalMatched": 1465,
+    "ProbeTotal": 72,
+    "ProbeMatched": 72,
+    "FlowTotal": 23,
+    "FlowMatched": 23,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 0,
+    "FirstMismatch": ""
+  },
+  "merge_consecutive_blocks": {
+    "OriginalTotal": 1465,
+    "OriginalMatched": 1465,
+    "ProbeTotal": 72,
+    "ProbeMatched": 72,
+    "FlowTotal": 23,
+    "FlowMatched": 23,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 0,
+    "FirstMismatch": ""
+  },
+  "outline_functions": {
+    "OriginalTotal": 1465,
+    "OriginalMatched": 1465,
+    "ProbeTotal": 72,
+    "ProbeMatched": 72,
+    "FlowTotal": 23,
+    "FlowMatched": 23,
+    "NativeMatched": 0,
+    "JavaScriptMatched": 0,
+    "FirstMismatch": ""
+  }
+}

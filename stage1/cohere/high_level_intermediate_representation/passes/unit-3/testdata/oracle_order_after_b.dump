@@ -1,0 +1,77 @@
+hir-v1
+function C component entry=1 async=0 generator=0
+params 4:<unknown>:0:11:12
+context 
+returns 7:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 p
+identifier 2 3 
+identifier 3 4 
+identifier 4 2 p
+identifier 5 3 
+identifier 6 4 
+identifier 7 1 
+identifier 8 9 
+identifier 9 10 
+identifier 10 11 
+identifier 11 12 
+identifier 12 10 
+identifier 13 11 
+identifier 14 9 
+identifier 15 12 
+identifier 16 9 
+identifier 17 18 
+identifier 18 19 
+identifier 19 20 
+block 1 block predecessors=
+instruction 8 1 17:<unknown>:0:0:0 0:0 DeclareLocal {"Kind":1,"LValue":"6:\u003cunknown\u003e:0:31:72"}
+terminal 2 Label {"Block":2,"Fallthrough":5}
+block 2 block predecessors=1
+instruction 3 3 12:<unknown>:0:45:46 45:46 LoadContext {"Place":"4:\u003cunknown\u003e:0:45:46"}
+terminal 4 If {"Alternate":4,"Consequent":3,"Fallthrough":4,"Test":"12:\u003cunknown\u003e:0:45:46"}
+block 3 block predecessors=2
+instruction 4 5 13:<unknown>:0:54:56 54:56 Primitive string:1
+instruction 5 6 14:<unknown>:0:0:0 47:57 LoadLocal 13:<unknown>:0:54:56
+instruction 9 7 18:<unknown>:0:0:0 0:0 StoreLocal {"Kind":2,"LValue":"6:\u003cunknown\u003e:0:31:72","Value":"13:\u003cunknown\u003e:0:54:56"}
+terminal 8 Goto {"Block":5,"Variant":0}
+block 4 block predecessors=2
+instruction 6 9 15:<unknown>:0:64:66 64:66 Primitive string:2
+instruction 7 10 16:<unknown>:0:0:0 57:67 LoadLocal 15:<unknown>:0:64:66
+instruction 10 11 19:<unknown>:0:0:0 0:0 StoreLocal {"Kind":2,"LValue":"6:\u003cunknown\u003e:0:31:72","Value":"15:\u003cunknown\u003e:0:64:66"}
+terminal 12 Goto {"Block":5,"Variant":0}
+block 5 block predecessors=3,4
+instruction 2 13 7:<unknown>:0:0:0 24:73 LoadLocal 6:<unknown>:0:31:72
+terminal 14 Return 7:<unknown>:0:0:0
+orphan instruction 0 1 5:<unknown>:0:33:69 33:69 FunctionExpression {"Captures":["4:\u003cunknown\u003e:0:0:0"],"Function":0}
+orphan instruction 1 2 6:<unknown>:0:31:72 31:72 CallExpression {"Args":[],"Callee":"5:\u003cunknown\u003e:0:33:69","CalleeOrigin":{"Export":"","Module":""},"Optional":false}
+nested 0
+hir-v1
+function  other entry=1 async=0 generator=0
+params 
+context 1:<unknown>:0:0:0
+returns 7:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 p
+identifier 2 3 
+identifier 3 4 
+identifier 4 5 
+identifier 5 3 
+identifier 6 4 
+identifier 7 1 
+identifier 8 5 
+identifier 9 1 
+block 1 block predecessors=
+instruction 0 1 5:<unknown>:0:45:46 45:46 LoadContext {"Place":"1:\u003cunknown\u003e:0:45:46"}
+terminal 2 If {"Alternate":3,"Consequent":2,"Fallthrough":3,"Test":"5:\u003cunknown\u003e:0:45:46"}
+block 2 block predecessors=1
+instruction 1 3 6:<unknown>:0:54:56 54:56 Primitive string:1
+instruction 2 4 7:<unknown>:0:0:0 47:57 LoadLocal 6:<unknown>:0:54:56
+terminal 5 Return 7:<unknown>:0:0:0
+block 3 block predecessors=1
+instruction 3 6 8:<unknown>:0:64:66 64:66 Primitive string:2
+instruction 4 7 9:<unknown>:0:0:0 57:67 LoadLocal 8:<unknown>:0:64:66
+terminal 8 Return 9:<unknown>:0:0:0
+scopes -
+end
+scopes -
+end

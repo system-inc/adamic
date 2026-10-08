@@ -1,0 +1,49 @@
+hir-v1
+function C component entry=1 async=0 generator=0
+params 4:<unknown>:0:11:12
+context 
+returns 7:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 p
+identifier 2 3 
+identifier 3 4 
+identifier 4 2 p
+identifier 5 3 
+identifier 6 4 
+identifier 7 1 
+block 1 block predecessors=
+instruction 0 1 5:<unknown>:0:33:69 33:69 FunctionExpression {"Captures":["4:\u003cunknown\u003e:0:0:0"],"Function":0}
+instruction 1 2 6:<unknown>:0:31:72 31:72 CallExpression {"Args":[],"Callee":"5:\u003cunknown\u003e:0:33:69","CalleeOrigin":{"Export":"","Module":""},"Optional":false}
+instruction 2 3 7:<unknown>:0:0:0 24:73 LoadLocal 6:<unknown>:0:31:72
+terminal 4 Return 7:<unknown>:0:0:0
+nested 0
+hir-v1
+function  other entry=1 async=0 generator=0
+params 
+context 1:<unknown>:0:0:0
+returns 7:<unknown>:0:0:0
+identifier 0 1 
+identifier 1 2 p
+identifier 2 3 
+identifier 3 4 
+identifier 4 5 
+identifier 5 3 
+identifier 6 4 
+identifier 7 1 
+identifier 8 5 
+identifier 9 1 
+block 1 block predecessors=
+instruction 0 1 5:<unknown>:0:45:46 45:46 LoadContext {"Place":"1:\u003cunknown\u003e:0:45:46"}
+terminal 2 If {"Alternate":3,"Consequent":2,"Fallthrough":3,"Test":"5:\u003cunknown\u003e:0:45:46"}
+block 2 block predecessors=1
+instruction 1 3 6:<unknown>:0:54:56 54:56 Primitive string:1
+instruction 2 4 7:<unknown>:0:0:0 47:57 LoadLocal 6:<unknown>:0:54:56
+terminal 5 Return 7:<unknown>:0:0:0
+block 3 block predecessors=1
+instruction 3 6 8:<unknown>:0:64:66 64:66 Primitive string:2
+instruction 4 7 9:<unknown>:0:0:0 57:67 LoadLocal 8:<unknown>:0:64:66
+terminal 8 Return 9:<unknown>:0:0:0
+scopes -
+end
+scopes -
+end

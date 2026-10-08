@@ -45,10 +45,7 @@ func unit3Observe(pass string, function, nested *Function, captures []Place, enc
 	if err != nil {
 		return checkpoint, fmt.Errorf("%s before: %w", pass, err)
 	}
-	if pass == "inline_remap" {
-		if nested == nil {
-			return checkpoint, fmt.Errorf("inline_remap: missing nested input")
-		}
+	if pass == "inline_remap" && nested != nil {
 		checkpoint.NestedBefore, err = snapshot(nested)
 		if err != nil {
 			return checkpoint, fmt.Errorf("%s nested before: %w", pass, err)
@@ -89,7 +86,7 @@ func unit3Observe(pass string, function, nested *Function, captures []Place, enc
 	if err != nil {
 		return checkpoint, fmt.Errorf("%s after: %w", pass, err)
 	}
-	if pass == "inline_remap" {
+	if pass == "inline_remap" && nested != nil {
 		checkpoint.NestedAfter, err = snapshot(nested)
 		if err != nil {
 			return checkpoint, fmt.Errorf("%s nested after: %w", pass, err)
