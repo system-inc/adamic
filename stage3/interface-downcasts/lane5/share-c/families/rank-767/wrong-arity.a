@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly hasGlobalName:unknown;}
+interface Target {hasGlobalName(name: string): boolean;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.hasGlobalName("abc");console.log("completed");}
+probe({hasGlobalName:(): boolean=>(true)});

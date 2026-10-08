@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SymlinkedDirectory {readonly value:number;}
+interface Base {readonly setSymlinkedDirectory:unknown;}
+interface Target {setSymlinkedDirectory(symlink: string, real: SymlinkedDirectory | false): void;}
+function probe(value:Base):void {const cache=value as Target;cache.setSymlinkedDirectory("abc",{value:3});console.log("completed");}
+probe({setSymlinkedDirectory:(): void=>{}});

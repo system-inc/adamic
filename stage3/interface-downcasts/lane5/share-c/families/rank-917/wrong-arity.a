@@ -1,0 +1,9 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface TypeNode {readonly value:number;}
+interface CallSignatureDeclaration {readonly value:number;readonly kind:180;}
+interface Base {readonly createCallSignature:unknown;}
+interface Target {createCallSignature(typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined): CallSignatureDeclaration;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createCallSignature([{value:3,kind:169}],[{value:3,kind:170}],{value:3});console.log("completed");}
+probe({createCallSignature:(): CallSignatureDeclaration=>({value:3,kind:180})});

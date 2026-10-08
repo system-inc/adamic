@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly writeTrailingSemicolon:unknown;}
+interface Target {writeTrailingSemicolon(text: string): void;}
+function probe(value:Base):void {const writer=value as Target;writer.writeTrailingSemicolon("abc");console.log("completed");}
+probe({writeTrailingSemicolon:(): void=>{}});

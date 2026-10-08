@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly getCanonicalFileName:unknown;}
+interface Target {getCanonicalFileName(path: string): string;}
+function probe(value:Base):void {const host=value as Target;const result=host.getCanonicalFileName("abc");console.log("completed");}
+probe({getCanonicalFileName:(path: string):string=>("abc")});

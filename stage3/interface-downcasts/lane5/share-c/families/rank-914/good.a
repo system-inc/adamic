@@ -1,0 +1,9 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+type ArrayBindingElement = BindingElement | OmittedExpression;
+interface BindingElement {readonly value:number;readonly kind:209;}
+interface OmittedExpression {readonly value:number;readonly kind:233;}
+interface ArrayBindingPattern {readonly value:number;readonly kind:208;}
+interface Base {readonly createArrayBindingPattern:unknown;}
+interface Target {createArrayBindingPattern(elements: readonly ArrayBindingElement[]): ArrayBindingPattern;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createArrayBindingPattern([{value:3,kind:209}]);console.log("completed");}
+probe({createArrayBindingPattern:(elements: readonly ArrayBindingElement[]):ArrayBindingPattern=>({value:3,kind:208})});

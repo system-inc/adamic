@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly reportInaccessibleThisError:unknown;}
+interface Target {reportInaccessibleThisError(): void;}
+function probe(value:Base):void {const context={tracker:value as Target};context.tracker.reportInaccessibleThisError();console.log("completed");}
+probe({reportInaccessibleThisError:():void=>{}});

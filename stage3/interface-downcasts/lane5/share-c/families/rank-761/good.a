@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface EnumMember {readonly value:number;readonly kind:307;}
+interface EvaluatorResult {readonly value:number;}
+interface Base {readonly getEnumMemberValue:unknown;}
+interface Target {getEnumMemberValue(node: EnumMember): EvaluatorResult | undefined;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.getEnumMemberValue({value:3,kind:307});console.log("completed");}
+probe({getEnumMemberValue:(node: EnumMember):EvaluatorResult | undefined=>({value:3})});

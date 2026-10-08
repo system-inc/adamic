@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface SourceFile {readonly value:number;readonly kind:308;}
+interface Base {readonly getSourceFiles:unknown;}
+interface Target {getSourceFiles(): readonly SourceFile[];}
+function probe(value:Base):void {const host=value as Target;const result=host.getSourceFiles();console.log("completed");}
+probe({getSourceFiles:(extra:number): readonly SourceFile[]=>([{value:3,kind:308}])});

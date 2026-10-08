@@ -958,5 +958,485 @@
       }
     ],
     "diagnostic": "adamic: panic: field read failed: programDiagnostics.addFileProcessingDiagnostic expected (diag: FilePreprocessingDiagnostics) => void, found function with arity 0\n"
+  },
+  {
+    "rank": 644,
+    "reads": 3,
+    "type": "SymbolTrackerImpl",
+    "field": "reportInaccessibleThisError",
+    "read": "context.tracker.reportInaccessibleThisError",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "reportInaccessibleThisError(): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/644-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/644-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: context.tracker.reportInaccessibleThisError expected () => void, found function with arity 1\n"
+  },
+  {
+    "rank": 647,
+    "reads": 3,
+    "type": "SymlinkCache",
+    "field": "setSymlinkedDirectory",
+    "read": "cache.setSymlinkedDirectory",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "setSymlinkedDirectory(symlink: string, real: SymlinkedDirectory | false): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/647-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/647-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: cache.setSymlinkedDirectory expected (symlink: string, real: false | SymlinkedDirectory) => void, found function with arity 0\n"
+  },
+  {
+    "rank": 716,
+    "reads": 2,
+    "type": "BuilderProgram",
+    "field": "getProgramOrUndefined",
+    "read": "program.getProgramOrUndefined",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getProgramOrUndefined(): Program | undefined;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/716-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/716-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: program.getProgramOrUndefined expected () => Program | undefined, found function with arity 1\n"
+  },
+  {
+    "rank": 719,
+    "reads": 2,
+    "type": "ChildDirectoryWatcher",
+    "field": "close",
+    "read": "childWatcher.close",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "close(): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/719-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/719-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: childWatcher.close expected () => void, found function with arity 1\n"
+  },
+  {
+    "rank": 746,
+    "reads": 2,
+    "type": "DocumentPositionMapperHost",
+    "field": "getCanonicalFileName",
+    "read": "host.getCanonicalFileName",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "getCanonicalFileName(path: string): string;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/746-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/746-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: host.getCanonicalFileName expected (path: string) => string, found function with arity 0\n"
+  },
+  {
+    "rank": 758,
+    "reads": 2,
+    "type": "EmitHost",
+    "field": "getSourceFiles",
+    "read": "host.getSourceFiles",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getSourceFiles(): readonly SourceFile[];",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/758-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/758-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: host.getSourceFiles expected () => readonly SourceFile[], found function with arity 1\n"
+  },
+  {
+    "rank": 761,
+    "reads": 2,
+    "type": "EmitResolver",
+    "field": "getEnumMemberValue",
+    "read": "resolver.getEnumMemberValue",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "getEnumMemberValue(node: EnumMember): EvaluatorResult | undefined;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/761-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/761-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.getEnumMemberValue expected (node: EnumMember) => EvaluatorResult | undefined, found function with arity 0\n"
+  },
+  {
+    "rank": 764,
+    "reads": 2,
+    "type": "EmitResolver",
+    "field": "getPropertiesOfContainerFunction",
+    "read": "resolver.getPropertiesOfContainerFunction",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "getPropertiesOfContainerFunction(node: Declaration): Symbol[];",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/764-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/764-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.getPropertiesOfContainerFunction expected (node: Declaration) => Symbol[], found function with arity 0\n"
+  },
+  {
+    "rank": 767,
+    "reads": 2,
+    "type": "EmitResolver",
+    "field": "hasGlobalName",
+    "read": "resolver.hasGlobalName",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "hasGlobalName(name: string): boolean;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/767-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/767-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.hasGlobalName expected (name: string) => boolean, found function with arity 0\n"
+  },
+  {
+    "rank": 770,
+    "reads": 2,
+    "type": "EmitResolver",
+    "field": "isExpandoFunctionDeclaration",
+    "read": "resolver.isExpandoFunctionDeclaration",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "isExpandoFunctionDeclaration(node: FunctionDeclaration | VariableDeclaration): boolean;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/770-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/770-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.isExpandoFunctionDeclaration expected (node: FunctionDeclaration | VariableDeclaration) => boolean, found function with arity 0\n"
+  },
+  {
+    "rank": 773,
+    "reads": 2,
+    "type": "EmitResolver",
+    "field": "requiresAddingImplicitUndefined",
+    "read": "resolver.requiresAddingImplicitUndefined",
+    "status": "ready for oracle",
+    "arity": 2,
+    "foundArity": 0,
+    "declaration": "requiresAddingImplicitUndefined(node: ParameterDeclaration, enclosingDeclaration: Node | undefined): boolean;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/773-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/773-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.requiresAddingImplicitUndefined expected (node: ParameterDeclaration, enclosingDeclaration: Node | undefined) => boolean, found function with arity 0\n"
+  },
+  {
+    "rank": 776,
+    "reads": 2,
+    "type": "EmitTextWriter",
+    "field": "writeOperator",
+    "read": "writer.writeOperator",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "writeOperator(text: string): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/776-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/776-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: writer.writeOperator expected (text: string) => void, found function with arity 0\n"
+  },
+  {
+    "rank": 779,
+    "reads": 2,
+    "type": "EmitTextWriter",
+    "field": "writePunctuation",
+    "read": "writer.writePunctuation",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "writePunctuation(text: string): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/779-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/779-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: writer.writePunctuation expected (text: string) => void, found function with arity 0\n"
+  },
+  {
+    "rank": 782,
+    "reads": 2,
+    "type": "EmitTextWriter",
+    "field": "writeTrailingSemicolon",
+    "read": "writer.writeTrailingSemicolon",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "writeTrailingSemicolon(text: string): void;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/782-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/782-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: writer.writeTrailingSemicolon expected (text: string) => void, found function with arity 0\n"
+  },
+  {
+    "rank": 788,
+    "reads": 2,
+    "type": "FormatDiagnosticsHost",
+    "field": "getCurrentDirectory",
+    "read": "host.getCurrentDirectory",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getCurrentDirectory(): string;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/788-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/788-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: host.getCurrentDirectory expected () => string, found function with arity 1\n"
+  },
+  {
+    "rank": 797,
+    "reads": 2,
+    "type": "IterationTypesResolver",
+    "field": "getGlobalBuiltinIteratorTypes",
+    "read": "resolver.getGlobalBuiltinIteratorTypes",
+    "status": "ready for oracle",
+    "arity": 0,
+    "foundArity": 1,
+    "declaration": "getGlobalBuiltinIteratorTypes: () => readonly GenericType[];",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/797-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/797-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.getGlobalBuiltinIteratorTypes expected () => readonly GenericType[], found function with arity 1\n"
+  },
+  {
+    "rank": 800,
+    "reads": 2,
+    "type": "IterationTypesResolver",
+    "field": "getGlobalIteratorType",
+    "read": "resolver.getGlobalIteratorType",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "getGlobalIteratorType: (reportErrors: boolean) => GenericType;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/800-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/800-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: resolver.getGlobalIteratorType expected (reportErrors: boolean) => GenericType, found function with arity 0\n"
+  },
+  {
+    "rank": 914,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createArrayBindingPattern",
+    "read": "factory.createArrayBindingPattern",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "createArrayBindingPattern(elements: readonly ArrayBindingElement[]): ArrayBindingPattern;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/914-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/914-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createArrayBindingPattern expected (elements: readonly ArrayBindingElement[]) => ArrayBindingPattern, found function with arity 0\n"
+  },
+  {
+    "rank": 917,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createCallSignature",
+    "read": "factory.createCallSignature",
+    "status": "ready for oracle",
+    "arity": 3,
+    "foundArity": 0,
+    "declaration": "createCallSignature(typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined): CallSignatureDeclaration;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/917-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/917-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createCallSignature expected (typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined) => CallSignatureDeclaration, found function with arity 0\n"
+  },
+  {
+    "rank": 920,
+    "reads": 2,
+    "type": "NodeFactory",
+    "field": "createDeleteExpression",
+    "read": "factory.createDeleteExpression",
+    "status": "ready for oracle",
+    "arity": 1,
+    "foundArity": 0,
+    "declaration": "createDeleteExpression(expression: Expression): DeleteExpression;",
+    "probes": [
+      {
+        "backend": "c",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/920-c.log"
+      },
+      {
+        "backend": "js",
+        "exit": 0,
+        "log": "/tmp/lane5-c-probes/920-js.log"
+      }
+    ],
+    "diagnostic": "adamic: panic: field read failed: factory.createDeleteExpression expected (expression: Expression) => DeleteExpression, found function with arity 0\n"
   }
 ]

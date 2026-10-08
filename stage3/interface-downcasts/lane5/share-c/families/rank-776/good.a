@@ -1,0 +1,6 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+
+interface Base {readonly writeOperator:unknown;}
+interface Target {writeOperator(text: string): void;}
+function probe(value:Base):void {const writer=value as Target;writer.writeOperator("abc");console.log("completed");}
+probe({writeOperator:(text: string):void=>{}});

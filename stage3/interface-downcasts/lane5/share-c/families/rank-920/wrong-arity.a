@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface Expression {readonly value:number;}
+interface DeleteExpression {readonly value:number;readonly kind:221;}
+interface Base {readonly createDeleteExpression:unknown;}
+interface Target {createDeleteExpression(expression: Expression): DeleteExpression;}
+function probe(value:Base):void {const factory=value as Target;const result=factory.createDeleteExpression({value:3});console.log("completed");}
+probe({createDeleteExpression:(): DeleteExpression=>({value:3,kind:221})});

@@ -1,0 +1,7 @@
+// Original member declaration and read; adjacent carriers and bodies reduced.
+interface FunctionDeclaration {readonly value:number;readonly kind:263;}
+interface VariableDeclaration {readonly value:number;readonly kind:261;}
+interface Base {readonly isExpandoFunctionDeclaration:unknown;}
+interface Target {isExpandoFunctionDeclaration(node: FunctionDeclaration | VariableDeclaration): boolean;}
+function probe(value:Base):void {const resolver=value as Target;const result=resolver.isExpandoFunctionDeclaration({value:3,kind:263});console.log("completed");}
+probe({isExpandoFunctionDeclaration:(): boolean=>(true)});
