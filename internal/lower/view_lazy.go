@@ -163,6 +163,7 @@ func (l *lowering) checkLazyViewReads() error {
 			}
 		}
 	}
+	scopedFields, untrackedScope := l.scopedViewFieldFamilies(graph)
 	var refused error
 	inspect := func(node any) bool {
 		if refused != nil {
@@ -226,7 +227,21 @@ func (l *lowering) checkLazyViewReads() error {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
 		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) && !(contract != 0 && program.ViewContracts[contract-1].Kind == ir.ViewCallable && viewCallableConcreteReadContract(program, contract)) {
-			family = unsupportedFields[field]
+			reaches := graph.ReachingAllocations(receiver)
+			if untrackedScope || unknown || reaches.Unknown {
+				family = unsupportedFields[field]
+			} else {
+				for _, site := range reaches.Sites {
+					if scopedFields[site]["*"] != "" {
+						family = scopedFields[site]["*"]
+						break
+					}
+					if scopedFields[site][field] != "" {
+						family = scopedFields[site][field]
+						break
+					}
+				}
+			}
 		}
 		if family == "" {
 			return true
@@ -250,6 +265,12 @@ func (l *lowering) checkLazyViewReads() error {
 
 func viewAggregate(value ir.Expression) bool {
 	if value == nil {
+		return false
+	}
+	// A nullish constant has reference-shaped storage but no object allocation.
+	// Following it as an aggregate falsely introduces an unknown producer.
+	switch value.(type) {
+	case ir.Null, ir.Undefined:
 		return false
 	}
 	switch value.Type() {

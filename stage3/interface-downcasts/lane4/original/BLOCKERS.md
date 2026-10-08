@@ -1,4 +1,4 @@
-# Remaining original __String admission blockers
+# Original __String blockers after scoped fallback certification
 
 The original table has 27 / 540 certified and 3 / 3 remaining. All five nullable
 brand fields / nine reads are certified. The fixtures import complete official
@@ -39,3 +39,13 @@ Working targets: October 9, 2026 at 17:00 MDT for the complete branded family,
 conditional on resolving these three blockers; October 13 at 17:00 MDT for mixed
 primitives. The other 32 branded pairs / 549 candidate reads are delivered now.
 Exact production allocation reachability and whole-tsc compilation are unclaimed.
+
+Current checkpoint supersedes the first two rows: ActiveLabel.name and the
+renamed-binding name are now runtime certified with complete original fields,
+Node controls, both backend pins and mutants. The observed collision source is
+ArrowFunction.name: never; the descriptor is retained, but its obligation follows
+actual target allocations rather than every matching field name. Unknown flows
+retain the original conservative refusal. Explicit nullish constants cannot be
+aggregate producers and do not manufacture uncertainty. Remaining: only
+9477:escapedText, one pair / one read, handed to lane 7. Lane 4 has no remaining
+owned branded pair. The original table is 29 / 542 plus 5 / 9 nullable fields.

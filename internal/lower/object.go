@@ -544,7 +544,14 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) && !(of == ir.Union && (l.includesNull(l.checker.GetTypeAtLocation(node)) || l.includesUndefined(l.checker.GetTypeAtLocation(node)))) && !l.objectPrimitiveViewType(l.checker.GetTypeAtLocation(node)) {
+		if of == ir.Union {
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && interfaceScalar(l.concrete(l.checker.GetTypeOfSymbol(field))) {
+				if _, err := l.viewContract(node, l.concrete(l.checker.GetTypeOfSymbol(field))); err != nil {
+					return nil, err
+				}
+			}
+		}
+		if censusFieldSlotless(of) && !(of == ir.MaybeBoolean && l.result.CheckedFields[name]) && !(of == ir.Union && (l.includesNull(l.checker.GetTypeAtLocation(node)) || l.includesUndefined(l.checker.GetTypeAtLocation(node)))) && !l.objectPrimitiveViewType(l.checker.GetTypeAtLocation(node)) && !l.viewPrimitiveUnionRead(l.checker.GetTypeAtLocation(node)) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
 		if of.IsMaybe() {
@@ -586,6 +593,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 			}
 		}
 		l.prepareViewCallableProperty(node, declared, &property)
+		l.preparePrimitivePropertyRead(declared, &property)
 		if property.Of == ir.Object && declared.Flags()&checker.TypeFlagsUnion != 0 {
 			l.prepareUntaggedStructuralRead(node, declared, map[*checker.Type]bool{})
 		}

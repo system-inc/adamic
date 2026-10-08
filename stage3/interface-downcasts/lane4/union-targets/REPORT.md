@@ -31,3 +31,13 @@ one read belongs to lane 7. The original mixed primitive column has 31 pairs /
 141 reads pending, including those three brand entries; the non-brand share is
 28 / 138. Dictionary selection has a separate two-pair / eleven-read inventory.
 Dates remain October 9 for our branded family and October 13 for mixed primitives.
+
+Scoped fallback follow-up closes the class members gap above. Both original
+ClassDeclaration and ClassExpression array reads now match Node; wrong members
+payload stops with the exact NodeArray<ClassElement> field refusal. The same
+fix certifies the two original name pairs while retaining ArrowFunction.name:
+never through a wider helper. Whole array element/metadata certification remains
+lane 2's work. Direct cast admission and array field selection are now both
+exercised for the two requested targets. Raw follow-up logs accompany the push.
+Follow-up full oracle regression passed in 654.560s with both original class
+members reads and all union tag pins. See original/logs/scoped-regression.log.

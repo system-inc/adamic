@@ -11,8 +11,9 @@ Limits: latest owner integration is unresolved; additional optional suites and t
 | Optional boolean | a2eb65ca76816f895f846f78a210bc1717a5f7c4 | Already an ancestor | d718a9ffa0432245b69a3545c3ca080db865e0bb | None introduced |
 | Untagged object unions | cd32db4234fb0a65a6ad199474b802c9e7491054 | Already an ancestor | d718a9ffa0432245b69a3545c3ca080db865e0bb | None introduced |
 | Lazy admission owner | d5b3c4a9bde6ee28fe38568ef4b720aa9c2b68e3 | Aborted before resolving 18 paths; Map adapter restoration must preserve boxed dispatch and ownership | d718a9ffa0432245b69a3545c3ca080db865e0bb | Not runtime-tested; unresolved merge boundary |
-| Arrays and parser | a3b0e3570fdf83fa3071b7f34ff9780d5334d5f7 | Plan: retain existing duplicate sections, whitespace and both final reports; counts: retain every distinct row and reject differing values for one fixture | This merge | Required filter passes; inherited failures below |
-| Mixed unions | d78c3f5cf19959be2bdb2ba4b72951750303cc4a | Pending | Pending | Pending |
+| Arrays and parser | a3b0e3570fdf83fa3071b7f34ff9780d5334d5f7 | Plan: retain existing duplicate sections, whitespace and both final reports; counts: retain every distinct row and reject differing values for one fixture | e636841dd3d2996e471d97dd23712e7dbaa6aaeb | Required filter passes; inherited failures below |
+| Mixed unions, first tip | d78c3f5cf19959be2bdb2ba4b72951750303cc4a | One plan hunk: append both independent reports; update the primitive helper to preserve its wrong-boolean runtime refusal | This merge | Stale compile-only helper expectation fixed; inherited failures unchanged |
+| Mixed unions, requested newer tip | 37763565c317a80c3b362e475edab8b61ab0eafd | Pending | Pending | Pending |
 | Object and primitive unions | 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2 | Pending | Pending | Pending |
 | Intersections | 4c3c3009c1ab74e4da902ffa9357b81ec0cf7d95 | Pending | Pending | Pending |
 | Callables | baa72933a1504a6d186e5f307a0a4c9684c95615 | Pending | Pending | Pending |
@@ -96,3 +97,40 @@ also passed with ADAMIC_CALLABLE_NEVER_MUTANT=1. All thirteen source mutations
 were restored before any integration commit.
 
 Array filtered oracle: ok  	github.com/system-inc/adamic/internal/oracle	366.910s
+
+## Mixed union first tip
+
+The only merge conflict is one plan hunk: retain the array certification report
+and append the independent lane4 reconciliation report. All compiler hunks
+merged automatically. Unknown/untracked receiver fallback and the existing
+callable-only concrete-read exemption remain intact.
+
+The new complete-declaration conversion test passes in 0.009s. Scoped backend
+tests pass: lower 5.681s, native 5.244s, JavaScript 1.430s. Complete original
+inputs activate brand, primitive, array and intersection oracles. That run
+finished in 1457.212s with exactly one obsolete compile-only helper expectation.
+Its other cases pass, including 66 new primitive first-member/boolean-first and
+member/literal-bypass mutant executions on native and JavaScript.
+
+The original helper-unsupported.a boolean is now rejected at its helper field
+read with exit 70 and the exact string | number declaration. The corrected test
+also passes ordinary and viewed valid string/number objects through the same
+helper, compares source Node, release/sanitized native and JavaScript, and checks
+successful-run leaks. Two member-check mutants execute the original wrong value
+and print ordinary/true at exit 0, proving the retained runtime refusal.
+The corrected helper test passes in 1.753s. No compiler guard was changed by this
+expectation update. The fresh filtered oracle includes TestPrimitiveOrdinaryProperty.
+
+The broader lower refusal corpus additionally has two stale known-Union-callback
+expectations (a union a function value takes; Array.from's undefined as a union).
+The exact starting checkout reproduces both. No callback guard or expectation
+was changed for these failures. Counts refresh still fails on the exact same 41
+fixtures as the starting commit, in 50.651s. Callable unknown-producer and scalar
+never-exemption executable mutants were rerun against the mixed-union source;
+all three were caught.
+
+User steering during validation supplied newer lane4 tip
+37763565c317a80c3b362e475edab8b61ab0eafd. It was fetched and will be integrated
+before moving to lane4b.
+
+Fresh mixed filtered oracle: ok  	github.com/system-inc/adamic/internal/oracle	637.595s

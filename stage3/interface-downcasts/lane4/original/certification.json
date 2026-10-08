@@ -3,10 +3,10 @@
   "measurement": "Static candidate counts; no whole-tsc or exact allocation reachability claim",
   "total_pairs": 30,
   "total_reads": 543,
-  "certified_pairs": 27,
-  "certified_reads": 540,
-  "remaining_pairs": 3,
-  "remaining_reads": 3,
+  "certified_pairs": 29,
+  "certified_reads": 542,
+  "remaining_pairs": 1,
+  "remaining_reads": 1,
   "pairs": [
     {
       "receiver_type_id": 6997,
@@ -348,7 +348,7 @@
         "line": 8307,
         "column": 64
       },
-      "state": "blocked original named compile refusal"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 103520,
@@ -367,7 +367,7 @@
         "line": 1609,
         "column": 17
       },
-      "state": "blocked original named compile refusal"
+      "state": "certified original declarations"
     },
     {
       "receiver_type_id": 7612,
@@ -443,7 +443,8 @@
         "line": 38035,
         "column": 62
       },
-      "state": "blocked original named compile refusal"
+      "state": "handed to lane 7, original intersection compile refusal",
+      "owner": "lane 7"
     },
     {
       "receiver_type_id": 53493,
@@ -697,10 +698,28 @@
   "original_mixed_primitive_column": {
     "total_pairs": 63,
     "total_reads": 690,
-    "certified_brand_subset_pairs": 32,
-    "certified_brand_subset_reads": 549,
-    "remaining_pairs": 31,
-    "remaining_reads": 141,
-    "note": "Includes the three pending branded pairs and 28 nonbrand pairs / 138 reads. Dictionary handoff remains a separately sourced shared-selector queue."
+    "certified_brand_subset_pairs": 34,
+    "certified_brand_subset_reads": 551,
+    "remaining_pairs": 15,
+    "remaining_reads": 48,
+    "note": "Candidate counts. Two tuple pairs / four reads are scalar false positives, not certification credit. Corrected column: 61 / 686, certified 48 / 642, remaining 13 / 44. Lane 7 receivers: 2 / 3; lane 4b object alternatives: 4 / 18; shared rich dictionaries: 3 / 14; primitive arrays: 4 / 9.",
+    "certified_nonbrand_pairs": 14,
+    "certified_nonbrand_reads": 91,
+    "certified_pairs": 48,
+    "certified_reads": 642
+  },
+  "owned_remaining_pairs": 0,
+  "owned_remaining_reads": 0,
+  "corrected_mixed_primitive_column": {
+    "total_pairs": 61,
+    "total_reads": 686,
+    "certified_pairs": 48,
+    "certified_reads": 642,
+    "remaining_pairs": 13,
+    "remaining_reads": 44,
+    "reclassified_scalar_tuple_pairs": 2,
+    "reclassified_scalar_tuple_reads": 4,
+    "owned_remaining_components_pairs": 7,
+    "owned_remaining_components_reads": 23
   }
 }

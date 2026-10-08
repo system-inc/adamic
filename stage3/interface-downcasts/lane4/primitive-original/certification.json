@@ -1,0 +1,713 @@
+{
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "types_source_sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+  "fields": {
+    "EvaluatorResult": [
+      "hasExternalReferences",
+      "isSyntacticallyString",
+      "resolvedOtherFiles",
+      "value"
+    ],
+    "NodeLinks": [
+      "assertionExpressionType",
+      "calculatedFlags",
+      "capturedBlockScopeBindings",
+      "containsArgumentsReference",
+      "contextFreeType",
+      "declarationRequiresScopeChange",
+      "decoratorSignature",
+      "deferredNodes",
+      "effectsSignature",
+      "enumMemberValue",
+      "externalHelpersModule",
+      "fakeScopeForSignatureDeclaration",
+      "flags",
+      "hasReportedStatementInAmbientContext",
+      "instantiationExpressionTypes",
+      "isExhaustive",
+      "isVisible",
+      "jsxFlags",
+      "jsxFragmentType",
+      "jsxImplicitImportContainer",
+      "jsxNamespace",
+      "nonExistentPropCheckCache",
+      "outerTypeParameters",
+      "parameterInitializerContainsUndefined",
+      "potentialNewTargetCollisions",
+      "potentialReflectCollisions",
+      "potentialThisCollisions",
+      "potentialUnusedRenamedBindingElementsInTypes",
+      "potentialWeakMapSetCollisions",
+      "resolvedJSDocType",
+      "resolvedJsxElementAttributesType",
+      "resolvedSignature",
+      "resolvedSymbol",
+      "resolvedType",
+      "serializedTypes",
+      "skipDirectInference",
+      "spreadIndices",
+      "switchTypes"
+    ],
+    "EmitNode": [
+      "annotatedNodes",
+      "assignedName",
+      "autoGenerate",
+      "classThis",
+      "commentRange",
+      "constantValue",
+      "externalHelpers",
+      "externalHelpersModuleName",
+      "flags",
+      "generatedImportReference",
+      "helpers",
+      "identifierTypeArguments",
+      "internalFlags",
+      "leadingComments",
+      "snippetElement",
+      "sourceMapRange",
+      "startsOnNewLine",
+      "tokenSourceMapRanges",
+      "trailingComments",
+      "typeNode"
+    ],
+    "StringLiteralType": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checker",
+      "flags",
+      "freshType",
+      "id",
+      "immediateBaseConstraint",
+      "pattern",
+      "permissiveInstantiation",
+      "regularType",
+      "restrictiveInstantiation",
+      "symbol",
+      "value",
+      "widened"
+    ],
+    "NumberLiteralType": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checker",
+      "flags",
+      "freshType",
+      "id",
+      "immediateBaseConstraint",
+      "pattern",
+      "permissiveInstantiation",
+      "regularType",
+      "restrictiveInstantiation",
+      "symbol",
+      "value",
+      "widened"
+    ],
+    "Diagnostic": [
+      "canonicalHead",
+      "category",
+      "code",
+      "file",
+      "length",
+      "messageText",
+      "relatedInformation",
+      "reportsDeprecated",
+      "reportsUnnecessary",
+      "skippedOn",
+      "source",
+      "start"
+    ],
+    "IncrementalBundleEmitBuildInfo": [
+      "changeFileSet",
+      "checkPending",
+      "emitDiagnosticsPerFile",
+      "errors",
+      "fileInfos",
+      "fileNames",
+      "latestChangedDtsFile",
+      "options",
+      "outSignature",
+      "pendingEmit",
+      "resolvedRoot",
+      "root",
+      "semanticDiagnosticsPerFile",
+      "version"
+    ],
+    "PackageJsonInfoContents": [
+      "packageJsonContent",
+      "peerDependencies",
+      "resolvedEntrypoints",
+      "versionPaths"
+    ],
+    "ReusableDiagnostic": [
+      "category",
+      "code",
+      "file",
+      "length",
+      "messageText",
+      "relatedInformation",
+      "reportDeprecated",
+      "reportsUnnecessary",
+      "skippedOn",
+      "source",
+      "start"
+    ],
+    "ReusableDiagnosticRelatedInformation": [
+      "category",
+      "code",
+      "file",
+      "length",
+      "messageText",
+      "start"
+    ],
+    "IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo": [
+      "affectsGlobalScope",
+      "impliedFormat",
+      "signature",
+      "version"
+    ],
+    "Resolved": [
+      "extension",
+      "originalPath",
+      "packageId",
+      "path",
+      "resolvedUsingTsExtension"
+    ],
+    "FlowGraphNode": [
+      "circular",
+      "edges",
+      "endLane",
+      "flowNode",
+      "id",
+      "lane",
+      "level",
+      "text"
+    ],
+    "FlowGraphEdge": [
+      "source",
+      "target"
+    ],
+    "FilePresentOnHost": [
+      "fileWatcher",
+      "sourceFile",
+      "version"
+    ],
+    "FilePresenceUnknownOnHost": [
+      "fileWatcher",
+      "version"
+    ],
+    "StringLiteralType | NumberLiteralType": [
+      "aliasSymbol",
+      "aliasTypeArguments",
+      "checker",
+      "flags",
+      "freshType",
+      "id",
+      "immediateBaseConstraint",
+      "pattern",
+      "permissiveInstantiation",
+      "regularType",
+      "restrictiveInstantiation",
+      "symbol",
+      "value",
+      "widened"
+    ],
+    "FilePresentOnHost | FilePresenceUnknownOnHost": [
+      "fileWatcher",
+      "version"
+    ]
+  },
+  "pairs": [
+    {
+      "receiver_type_id": 10524,
+      "type": "EvaluatorResult<string | number | undefined>",
+      "field": "value",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 61,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 11344,
+        "column": 28
+      },
+      "original_fields": [
+        "hasExternalReferences",
+        "isSyntacticallyString",
+        "resolvedOtherFiles",
+        "value"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 46428,
+      "type": "StringLiteralType | NumberLiteralType",
+      "field": "value",
+      "declared_types": [
+        "string | number"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 11175,
+        "column": 46
+      },
+      "original_fields": [
+        "aliasSymbol",
+        "aliasTypeArguments",
+        "checker",
+        "flags",
+        "freshType",
+        "id",
+        "immediateBaseConstraint",
+        "pattern",
+        "permissiveInstantiation",
+        "regularType",
+        "restrictiveInstantiation",
+        "symbol",
+        "value",
+        "widened"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 10747,
+      "type": "NodeLinks",
+      "field": "isExhaustive",
+      "declared_types": [
+        "boolean | 0 | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 39371,
+        "column": 13
+      },
+      "original_fields": [
+        "assertionExpressionType",
+        "calculatedFlags",
+        "capturedBlockScopeBindings",
+        "containsArgumentsReference",
+        "contextFreeType",
+        "declarationRequiresScopeChange",
+        "decoratorSignature",
+        "deferredNodes",
+        "effectsSignature",
+        "enumMemberValue",
+        "externalHelpersModule",
+        "fakeScopeForSignatureDeclaration",
+        "flags",
+        "hasReportedStatementInAmbientContext",
+        "instantiationExpressionTypes",
+        "isExhaustive",
+        "isVisible",
+        "jsxFlags",
+        "jsxFragmentType",
+        "jsxImplicitImportContainer",
+        "jsxNamespace",
+        "nonExistentPropCheckCache",
+        "outerTypeParameters",
+        "parameterInitializerContainsUndefined",
+        "potentialNewTargetCollisions",
+        "potentialReflectCollisions",
+        "potentialThisCollisions",
+        "potentialUnusedRenamedBindingElementsInTypes",
+        "potentialWeakMapSetCollisions",
+        "resolvedJSDocType",
+        "resolvedJsxElementAttributesType",
+        "resolvedSignature",
+        "resolvedSymbol",
+        "resolvedType",
+        "serializedTypes",
+        "skipDirectInference",
+        "spreadIndices",
+        "switchTypes"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 9761,
+      "type": "Diagnostic",
+      "field": "skippedOn",
+      "declared_types": [
+        "keyof CompilerOptions | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5099,
+        "column": 37
+      },
+      "original_fields": [
+        "canonicalHead",
+        "category",
+        "code",
+        "file",
+        "length",
+        "messageText",
+        "relatedInformation",
+        "reportsDeprecated",
+        "reportsUnnecessary",
+        "skippedOn",
+        "source",
+        "start"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 10525,
+      "type": "EvaluatorResult<string | number | undefined> | undefined",
+      "field": "value",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1919,
+        "column": 77
+      },
+      "original_fields": [
+        "hasExternalReferences",
+        "isSyntacticallyString",
+        "resolvedOtherFiles",
+        "value"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 97934,
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "pendingEmit",
+      "declared_types": [
+        "IncrementalBuildInfoBundlePendingEmit | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2282,
+        "column": 33
+      },
+      "original_fields": [
+        "changeFileSet",
+        "checkPending",
+        "emitDiagnosticsPerFile",
+        "errors",
+        "fileInfos",
+        "fileNames",
+        "latestChangedDtsFile",
+        "options",
+        "outSignature",
+        "pendingEmit",
+        "resolvedRoot",
+        "root",
+        "semanticDiagnosticsPerFile",
+        "version"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 65708,
+      "type": "Resolved",
+      "field": "originalPath",
+      "declared_types": [
+        "string | true | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 241,
+        "column": 10
+      },
+      "original_fields": [
+        "extension",
+        "originalPath",
+        "packageId",
+        "path",
+        "resolvedUsingTsExtension"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 97892,
+      "type": "IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo",
+      "field": "signature",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2232,
+        "column": 18
+      },
+      "original_fields": [
+        "affectsGlobalScope",
+        "impliedFormat",
+        "signature",
+        "version"
+      ],
+      "state": "blocked at compound intersection receiver; lane 7"
+    },
+    {
+      "receiver_type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "peerDependencies",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2415,
+        "column": 9
+      },
+      "original_fields": [
+        "packageJsonContent",
+        "peerDependencies",
+        "resolvedEntrypoints",
+        "versionPaths"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 6994,
+      "type": "EmitNode",
+      "field": "constantValue",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7440,
+        "column": 9
+      },
+      "original_fields": [
+        "annotatedNodes",
+        "assignedName",
+        "autoGenerate",
+        "classThis",
+        "commentRange",
+        "constantValue",
+        "externalHelpers",
+        "externalHelpersModuleName",
+        "flags",
+        "generatedImportReference",
+        "helpers",
+        "identifierTypeArguments",
+        "internalFlags",
+        "leadingComments",
+        "snippetElement",
+        "sourceMapRange",
+        "startsOnNewLine",
+        "tokenSourceMapRanges",
+        "trailingComments",
+        "typeNode"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 6995,
+      "type": "EmitNode | undefined",
+      "field": "constantValue",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/emitNode.ts",
+        "line": 234,
+        "column": 12
+      },
+      "original_fields": [
+        "annotatedNodes",
+        "assignedName",
+        "autoGenerate",
+        "classThis",
+        "commentRange",
+        "constantValue",
+        "externalHelpers",
+        "externalHelpersModuleName",
+        "flags",
+        "generatedImportReference",
+        "helpers",
+        "identifierTypeArguments",
+        "internalFlags",
+        "leadingComments",
+        "snippetElement",
+        "sourceMapRange",
+        "startsOnNewLine",
+        "tokenSourceMapRanges",
+        "trailingComments",
+        "typeNode"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 100911,
+      "type": "FilePresentOnHost | FilePresenceUnknownOnHost",
+      "field": "version",
+      "declared_types": [
+        "string | false"
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 816,
+        "column": 13
+      },
+      "original_fields": [
+        "fileWatcher",
+        "version"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 7186,
+      "type": "FlowGraphNode",
+      "field": "circular",
+      "declared_types": [
+        "boolean | \"circularity\""
+      ],
+      "families": [
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 949,
+        "column": 55
+      },
+      "original_fields": [
+        "circular",
+        "edges",
+        "endLane",
+        "flowNode",
+        "id",
+        "lane",
+        "level",
+        "text"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 97180,
+      "type": "ReusableDiagnostic",
+      "field": "skippedOn",
+      "declared_types": [
+        "keyof CompilerOptions | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 579,
+        "column": 28
+      },
+      "original_fields": [
+        "category",
+        "code",
+        "file",
+        "length",
+        "messageText",
+        "relatedInformation",
+        "reportDeprecated",
+        "reportsUnnecessary",
+        "skippedOn",
+        "source",
+        "start"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 97181,
+      "type": "ReusableDiagnosticRelatedInformation",
+      "field": "file",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 601,
+        "column": 13
+      },
+      "original_fields": [
+        "category",
+        "code",
+        "file",
+        "length",
+        "messageText",
+        "start"
+      ],
+      "state": "certified original declarations and read syntax"
+    }
+  ],
+  "private_sha256": "5cdab3af2839cda74bd6aeba6d2116fc0c8e0af1df9e661a184a75beaefa51e6",
+  "private_source_sha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+  "certified_pairs": 14,
+  "certified_reads": 91,
+  "remaining_nonbrand_pairs": 14,
+  "remaining_nonbrand_reads": 47,
+  "corrected_remaining_nonbrand_pairs": 12,
+  "corrected_remaining_nonbrand_reads": 43
+}

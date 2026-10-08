@@ -2114,6 +2114,87 @@ fixtures. The integrator reconciles this small cast-proof dispatch hook.
 The existing certifiedCheckedCast hook also retains the union target contract
 on cast.go's multi-tag IR node. The tag proof remains distinct from payload proof.
 
+### Lane 4 fallback collision cause and scoped demand
+
+Original ArrowFunction declares name: never. Interning the complete Node graph
+therefore creates that descriptor even for ActiveLabel and renamed bindings.
+The global field-name fallback previously applied that obligation to every
+viewed allocation named name; similarly a Map members descriptor blocked class
+array members. New lower/view_demand_scopes.go and tests attach existing
+CheckedCast.ViewContract targets to the actual origins, then query lane 3's
+allocation graph and projection index to carry target contracts over actual
+field/element producers and stores. No second allocation solver is introduced.
+The named scopedViewFieldFamilies hook in view_lazy.go scopes only the fallback;
+direct unsupported reads, wider helpers receiving a viewed unsupported member,
+unknown callbacks, untracked origins, opaque projections and mutations retain
+refusals. Cast.go uses existing certifiedCheckedCast for union target metadata.
+Primitive nullish payloads do not invent aggregate allocations. Original name
+oracles assert ArrowFunction.name: never is still in the complete descriptor
+graph and run field-check mutants. The wider-helper forged-string mutant must
+be caught by the never obligation despite passing the helper's primitive check.
+The intersected Identifier pair remains lane 7's work.
+
+### Lane 4 first nonbrand primitive certification
+
+Owned original primitive fixtures and declaration witness preparation live in
+stage3/interface-downcasts/lane4/primitive-original; oracle tests live in
+internal/oracle/checked_views_primitives_original_test.go. Four pairs / 69
+candidate reads are certified using existing integrated nullable selectors.
+EmitNode direct destructuring is explicitly not credited by a property fixture.
+No production hook is added in this checkpoint.
+
+### Lane 4 primitive destructuring hook
+
+New lower/view_primitive_reads.go names viewPrimitiveUnionRead and
+preparePrimitiveDestructuredRead. Minimal hooks in interface_cast.go and
+collections.go admit only complete declared primitive union descriptors and
+attach existing runtime selector metadata to object binding field reads.
+Unsupported, missing and recursive descriptors retain refusal; global unknown
+flow guard remains unchanged. No runtime ABI or emitter change.
+
+The original binding fixture also exposed a panic in view_callables.go: its
+producer scan called Text on an unrelated VariableDeclaration binding pattern.
+Named viewCallableProducerDeclaration limits producer-name extraction to the
+four existing producer declaration kinds; callable proofs remain unchanged.
+
+Ordinary binding control exposed an unsafe erasure of the primitive-to-box
+conversion. Named primitiveBindingConversion in readiness.go retains the
+existing selector only for union binding reads with complete primitive
+descriptors. This is representation conversion, necessary with or without a
+view; ordinary helpers are held to Node in native, JS and sanitizer runs.
+
+### Lane 4 pure primitive property selectors
+
+Named preparePrimitivePropertyRead reuses the existing nullable selector with
+no admitted nullish alternative for pure primitive unions. Minimal object.go
+and interface_cast.go hooks require complete primitive descriptors. Readiness
+retains primitive-to-box conversion for property reads as well as bindings,
+including ordinary values. No runtime layout or emitter change. Original
+StringLiteralType | NumberLiteralType.value is the next six-read candidate.
+
+The lower NotYet table drops only its now-supported primitive field-read row;
+union field writes, class fields and array/closure storage refusals remain.
+An ordinary pure-primitive field fixture supplies Node/backend coverage.
+The original union helper is tested with viewed values of each full member;
+direct untagged union admission remains lane 4c and is not credited here.
+
+### Lane 4 nullable finite-member diagnostic alignment
+
+Minimal hook in javascript/view_nullish.go: nullishMemberSelection names
+"matches no member of" the declared union, matching the native selector when a
+runtime kind exists but a finite literal member rejects it. Resolved.originalPath
+false versus its true-only member exposed the mismatch. No check is removed.
+Complete original Resolved is printed from its private source interface and
+hash-pinned separately; all five fields, including PackageId, are retained.
+
+### Lane 4 private primitive receiver certification
+
+Owned primitive-original/prepare.cjs now prints complete original FlowGraphNode,
+FlowGraphEdge and watch presence interfaces, retaining dependencies and hashing
+the generated declarations. No new production hook in this batch. Builder
+signature receiver intersection remains lane 7, with a named refusal pin.
+Owned measure-tuple-candidates.cjs verifies two scalar tuple census corrections
+for lane 1: two pairs / four candidate reads, no certification credit.
 ## Lane 5 scalar and boxed callable adapters (October 8)
 
 Lane 5 owns new native/view_callables_boxing.go and lower/view_callables_boxing.go,
@@ -2205,3 +2286,11 @@ executed numeric-field mutants are covered. Cumulative fixture obligations are
 `stage3/interface-downcasts/lane2/RANKED15-ARRAYS-REPORT.md`. The required global
 counts refresh remains red in existing fixtures; two failures reproduce at merge
 baseline 0f47b23c. Fifteen group count rows were separately measured and recorded.
+
+### Lane 4 integration reconciliation after private primitive batch
+
+Merge d718a9ff retains both dictionary and primitive admission/readiness hooks,
+both untagged-object and primitive property preparation, and scoped fallback
+with integration callable exemptions. Global unknown fallback remains intact.
+Integration callable implementation-name validation supersedes the narrower
+producer-name helper, retaining computed-name refusal and binding-pattern safety.
