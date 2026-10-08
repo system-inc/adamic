@@ -1,11 +1,13 @@
 package selector
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -452,6 +454,68 @@ func TestSelectorThroughput(t *testing.T) {
 	}
 }
 
+// The vendored error fixtures may fail CSS parsing, but a parseable file must still contribute
+// every selector, including one inside _errors_. Unexpected malformed files and exclusions that
+// become parseable remain corpus failures.
+func TestCorpusKeepsEveryParseableFile(t *testing.T) {
+	t.Parallel()
+	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
+	if library == "" {
+		t.Skip("set ADAMIC_SELECTOR_LIBRARY to check CSS corpus loading")
+	}
+	root := t.TempDir()
+	excluded := "internal/format/css/testdata/prettier/css/_errors_/less-syntax.css"
+	for name, source := range map[string]string{
+		"valid.css":          ".required { color: red; }",
+		"_errors_/valid.css": ".also-required { color: blue; }",
+		excluded:             "a {.bordered();}",
+	} {
+		path := filepath.Join(root, name)
+		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	corpus := filepath.Join(t.TempDir(), "corpus.txt")
+	result := execute(t, nil, "node", script, library, "corpus", root, corpus)
+	if result.exitCode != 0 {
+		t.Fatalf("corpus: %s", result.stderr)
+	}
+	selectors, err := os.ReadFile(corpus)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(selectors) != "\".also-required\"\n\".required\"\n" {
+		t.Fatalf("parseable files lost selectors: %q", selectors)
+	}
+	if !strings.Contains(string(result.stdout), "3 CSS files, 1 expected CSS errors, 2 selectors") {
+		t.Fatalf("expected CSS error was not counted: %s", result.stdout)
+	}
+	if err := os.WriteFile(filepath.Join(root, excluded), []byte(".newly-parseable {}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	result = execute(t, nil, "node", script, library, "corpus", root, corpus)
+	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "expected CSS error became parseable") {
+		t.Fatalf("parseable exclusion was omitted: exit %d, %s", result.exitCode, result.stderr)
+	}
+	if err := os.WriteFile(filepath.Join(root, excluded), []byte("a {.bordered();}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(root, "unexpected.css"), []byte("a {.bordered();}"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	result = execute(t, nil, "node", script, library, "corpus", root, corpus)
+	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "unexpected.css") {
+		t.Fatalf("unexpected CSS error was omitted: exit %d, %s", result.exitCode, result.stderr)
+	}
+}
+
 // The explicit exception to JS agreement is observable, not an inference from Go.
 func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 	t.Parallel()
@@ -462,14 +526,55 @@ func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 	for _, text := range []string{"a| b", ":is(a|)", "a|@x", "*|)"} {
 		t.Run(text, func(t *testing.T) {
 			t.Parallel()
-			ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-			defer cancel()
-			command := exec.CommandContext(ctx, "node", "testdata/nontermination.mjs", library, text)
-			output, err := command.CombinedOutput()
-			if ctx.Err() != context.DeadlineExceeded || err == nil || string(output) != "entering parser\n" {
-				t.Fatalf("expected the entered parser still running at deadline, got %v, context %v, output %q", err, ctx.Err(), output)
+			// The second is counted from "entering parser", not from launch, so a slow node start on a
+			// loaded box can't decide the test. Starting gets its own generous bound and fails by name.
+			command := exec.Command("node", "testdata/nontermination.mjs", library, text)
+			stdout, err := command.StdoutPipe()
+			if err != nil {
+				t.Fatal(err)
 			}
-			t.Log("entered parser, no return within 1s, killed at deadline")
+			var stderr bytes.Buffer
+			command.Stderr = &stderr
+			if err := command.Start(); err != nil {
+				t.Fatal(err)
+			}
+			reader := bufio.NewReader(stdout)
+			entered := make(chan string, 1)
+			go func() {
+				line, _ := reader.ReadString('\n')
+				entered <- line
+			}()
+			select {
+			case line := <-entered:
+				if line != "entering parser\n" {
+					_ = command.Process.Kill()
+					_ = command.Wait()
+					t.Fatalf("expected %q first, got %q, stderr %q", "entering parser\n", line, stderr.String())
+				}
+			case <-time.After(60 * time.Second):
+				_ = command.Process.Kill()
+				_ = command.Wait()
+				t.Fatalf("node never printed %q within 60s of launch, stderr %q", "entering parser\n", stderr.String())
+			}
+			type ending struct {
+				rest []byte
+				err  error
+			}
+			ended := make(chan ending, 1)
+			go func() {
+				rest, _ := io.ReadAll(reader)
+				ended <- ending{rest, command.Wait()}
+			}()
+			select {
+			case end := <-ended:
+				t.Fatalf("the parser returned within 1s of entering: exit %v, output after entering %q, stderr %q", end.err, end.rest, stderr.String())
+			case <-time.After(time.Second):
+			}
+			_ = command.Process.Kill()
+			if end := <-ended; len(end.rest) != 0 {
+				t.Fatalf("output after entering the parser: %q", end.rest)
+			}
+			t.Log("entered parser, no return within 1s of entering, killed")
 		})
 	}
 }

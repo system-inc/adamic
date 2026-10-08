@@ -63,13 +63,14 @@ first = artifact / 'corpus' / selection['cases'][0]['id']
 error_row = next(row for row in selection['cases'] if row['baseline'])
 error_case = artifact / 'corpus' / error_row['id']
 probes = [
-    ('source hash', first / 'input.a', lambda b: b + b'\n'),
+    ('source hash', artifact / selection['cases'][0]['path'], lambda b: b + b'\n'),
     ('baseline hash', error_case / 'reference.errors.txt', lambda b: b + b'\n'),
     ('baseline summary', error_case / 'expected.stdout', lambda b: b.replace(b'error TS', b'error XX', 1)),
     ('expected stderr', first / 'expected.stderr', lambda b: b'wrong\n'),
     ('expected exit', first / 'expected.exit', lambda b: b'2\n'),
     ('case population', selection_path, lambda b: json.dumps({**selection, 'cases': selection['cases'][:-1]}).encode()),
     ('header options', selection_path, lambda b: json.dumps({**selection, 'cases': [{**selection['cases'][0], 'options': {'strict': 'changed'}}, *selection['cases'][1:]]}).encode()),
+    ('source path', selection_path, lambda b: json.dumps({**selection, 'cases': [{**selection['cases'][0], 'path': 'corpus/wrong.ts'}, *selection['cases'][1:]]}).encode()),
     ('baseline codes', selection_path, lambda b: json.dumps({**selection, 'cases': [{**row, 'codes': row['codes'] + [99999]} if row['id'] == error_row['id'] else row for row in selection['cases']]}).encode()),
 ]
 for check, path, mutate in probes:
