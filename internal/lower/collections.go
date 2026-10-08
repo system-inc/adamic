@@ -312,10 +312,17 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			// { x } reads x, and { x: other } reads x into other.
 			field = binding.Name().Text()
 			if declared.PropertyName != nil {
-				if !ast.IsIdentifier(declared.PropertyName) && declared.PropertyName.Kind != ast.KindStringLiteral {
+				if declared.PropertyName.Kind == ast.KindComputedPropertyName {
+					var known bool
+					field, known = l.constantFieldName(declared.PropertyName.AsComputedPropertyName().Expression)
+					if !known || field == iteratorSlot {
+						return nil, l.notYet(declared.PropertyName, "a computed field name")
+					}
+				} else if ast.IsIdentifier(declared.PropertyName) || declared.PropertyName.Kind == ast.KindStringLiteral {
+					field = declared.PropertyName.Text()
+				} else {
 					return nil, l.notYet(declared.PropertyName, "a computed field name")
 				}
-				field = declared.PropertyName.Text()
 			}
 			property := l.checker.GetPropertyOfType(destructured, field)
 			if property == nil {

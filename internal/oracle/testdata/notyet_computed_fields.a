@@ -1,0 +1,15 @@
+const enum Field { First = 3, Last = -2 }
+const table = { [Field.First]: 'first'.repeat(2), [Field.Last]: 'last'.repeat(2) };
+const { [Field.First]: first, [Field.Last]: last } = table;
+console.log(`${first} ${last}`);
+console.log(Object.keys(table).join(','));
+const words = { ['con' + 'structor']: 'own'.repeat(2), ['' + 'label']: 'label'.repeat(2) };
+console.log(Object.keys(words).join(','));
+const named = { label: 'lab'.repeat(2) };
+const { ['label']: label } = named;
+console.log(label);
+const proto = { ['__' + 'proto__']: 17 };
+console.log(Object.keys(proto).join(','));
+enum RuntimeField { Low = 250, High = 2000 }
+const runtime = { [RuntimeField.Low]: 'low'.repeat(2), [RuntimeField.High]: 'high'.repeat(2) };
+console.log(Object.keys(runtime).join(','));
