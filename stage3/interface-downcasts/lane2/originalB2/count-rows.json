@@ -1,0 +1,722 @@
+[
+  {
+    "fixture": "configfilespecs-validatedfilesspecbeforesubstitution-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-good.a | 5 | 5 | 6 | 8 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspecbeforesubstitution-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspecbeforesubstitution-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-lazy-element.a | 6 | 6 | 7 | 9 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspecbeforesubstitution-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-bad.a | 4 | 0 | 3 | 2 | 4 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspecbeforesubstitution-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-alias.a | 5 | 5 | 9 | 11 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspecbeforesubstitution-absent",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-absent.a | 1 | 0 | 1 | 1 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspecbeforesubstitution-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspecbeforesubstitution-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspec-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-good.a | 5 | 5 | 6 | 8 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspec-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspec-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-lazy-element.a | 6 | 6 | 7 | 9 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspec-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-bad.a | 4 | 0 | 3 | 2 | 4 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspec-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-alias.a | 5 | 5 | 9 | 11 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspec-absent",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-absent.a | 1 | 0 | 1 | 1 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "configfilespecs-validatedfilesspec-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/configfilespecs-validatedfilesspec-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-synthetictypereferences-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-synthetictypereferences-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-synthetictypereferences-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-synthetictypereferences-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-synthetictypereferences-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-synthetictypereferences-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-synthetictypereferences-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-synthetictypereferences-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticlibreferences-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticlibreferences-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticlibreferences-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticlibreferences-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticlibreferences-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticlibreferences-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticlibreferences-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticlibreferences-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticfilereferences-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticfilereferences-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticfilereferences-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticfilereferences-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticfilereferences-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticfilereferences-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "bundle-syntheticfilereferences-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/bundle-syntheticfilereferences-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "block---undefined-statements-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-good.a | 5 | 5 | 4 | 8 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "block---undefined-statements-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "block---undefined-statements-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-lazy-element.a | 6 | 6 | 6 | 9 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "block---undefined-statements-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-bad.a | 3 | 0 | 5 | 2 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "block---undefined-statements-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-alias.a | 6 | 6 | 7 | 12 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "block---undefined-statements-receiver-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/block---undefined-statements-receiver-undefined.a | 3 | 3 | 2 | 5 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-properties-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-properties-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-properties-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-properties-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-properties-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-properties-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-properties-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-properties-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-callsignatures-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-callsignatures-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-callsignatures-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-callsignatures-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-callsignatures-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-callsignatures-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "anonymoustype-callsignatures-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/anonymoustype-callsignatures-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typeparameters-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typeparameters-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typeparameters-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typeparameters-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typeparameters-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typeparameters-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "signaturedeclaration-typeparameters-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/signaturedeclaration-typeparameters-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "indexsignaturedeclaration-typeparameters-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "indexsignaturedeclaration-typeparameters-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "indexsignaturedeclaration-typeparameters-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "indexsignaturedeclaration-typeparameters-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "indexsignaturedeclaration-typeparameters-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "indexsignaturedeclaration-typeparameters-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "indexsignaturedeclaration-typeparameters-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/indexsignaturedeclaration-typeparameters-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-jsdocdiagnostics-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-jsdocdiagnostics-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-jsdocdiagnostics-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-jsdocdiagnostics-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-jsdocdiagnostics-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-jsdocdiagnostics-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "sourcefile-jsdocdiagnostics-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/sourcefile-jsdocdiagnostics-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "identifier-jsdoc-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "identifier-jsdoc-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "identifier-jsdoc-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "identifier-jsdoc-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "identifier-jsdoc-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "identifier-jsdoc-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "identifier-jsdoc-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/identifier-jsdoc-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-trailingcomments-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-trailingcomments-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-trailingcomments-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-trailingcomments-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-bad.a | 3 | 0 | 6 | 3 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-trailingcomments-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-trailingcomments-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-trailingcomments-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-trailingcomments-receiver-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-trailingcomments-receiver-undefined.a | 3 | 3 | 2 | 6 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-tokensourcemapranges-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-tokensourcemapranges-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-tokensourcemapranges-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-tokensourcemapranges-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-bad.a | 3 | 0 | 6 | 3 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-tokensourcemapranges-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-tokensourcemapranges-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-tokensourcemapranges-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-tokensourcemapranges-receiver-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-tokensourcemapranges-receiver-undefined.a | 3 | 3 | 2 | 6 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-leadingcomments-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-leadingcomments-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-leadingcomments-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-leadingcomments-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-bad.a | 3 | 0 | 6 | 3 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-leadingcomments-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-leadingcomments-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-leadingcomments-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-leadingcomments-receiver-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-leadingcomments-receiver-undefined.a | 3 | 3 | 2 | 6 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-identifiertypearguments-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-identifiertypearguments-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-identifiertypearguments-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-identifiertypearguments-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-bad.a | 3 | 0 | 6 | 3 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-identifiertypearguments-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-identifiertypearguments-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-identifiertypearguments-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-identifiertypearguments-receiver-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-identifiertypearguments-receiver-undefined.a | 3 | 3 | 2 | 6 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-annotatednodes-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-annotatednodes-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-annotatednodes-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-annotatednodes-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-bad.a | 3 | 0 | 6 | 3 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-annotatednodes-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-annotatednodes-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-annotatednodes-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode---undefined-annotatednodes-receiver-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode---undefined-annotatednodes-receiver-undefined.a | 3 | 3 | 2 | 6 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-trailingcomments-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-trailingcomments-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-trailingcomments-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-trailingcomments-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-trailingcomments-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-trailingcomments-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-trailingcomments-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-trailingcomments-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-leadingcomments-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-leadingcomments-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-leadingcomments-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-leadingcomments-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-leadingcomments-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-leadingcomments-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-leadingcomments-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-leadingcomments-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-annotatednodes-good",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-annotatednodes-lazy",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-lazy.a | 1 | 1 | 1 | 3 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-annotatednodes-lazy-element",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-lazy-element.a | 6 | 6 | 7 | 10 | 6 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-annotatednodes-bad",
+    "reason": "New original-declaration fixture counted at its pinned stopping read",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-bad.a | 3 | 0 | 6 | 4 | 3 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-annotatednodes-alias",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-alias.a | 6 | 6 | 8 | 13 | 5 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-annotatednodes-absent",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-absent.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  },
+  {
+    "fixture": "emitnode-annotatednodes-undefined",
+    "reason": "New original-declaration finishing control counted",
+    "row": "| stage3/interface-downcasts/lane2/originalB2/emitnode-annotatednodes-undefined.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |"
+  }
+]

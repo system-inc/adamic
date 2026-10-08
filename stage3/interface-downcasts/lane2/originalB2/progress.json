@@ -1,0 +1,657 @@
+{
+  "previous": "57fa2c98ed282dbe86afb3263ab68237670b55e4",
+  "worker_tip": "5dcbad439f5246ae43ceafc644e29858d5ed5052",
+  "rows": [
+    {
+      "type_id": 9853,
+      "type": "ConfigFileSpecs",
+      "field": "validatedFilesSpecBeforeSubstitution",
+      "declared_type": "readonly string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/watch.ts",
+          "line": 423,
+          "column": 27,
+          "start": 16938,
+          "end": 17001,
+          "text": "configFile.configFileSpecs.validatedFilesSpecBeforeSubstitution"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 9853,
+      "type": "ConfigFileSpecs",
+      "field": "validatedFilesSpec",
+      "declared_type": "readonly string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/watch.ts",
+          "line": 422,
+          "column": 29,
+          "start": 16761,
+          "end": 16806,
+          "text": "configFile.configFileSpecs.validatedFilesSpec"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 9844,
+      "type": "Bundle",
+      "field": "syntheticTypeReferences",
+      "declared_type": "readonly FileReference[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4306,
+          "column": 71,
+          "start": 181934,
+          "end": 181962,
+          "text": "node.syntheticTypeReferences"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 9844,
+      "type": "Bundle",
+      "field": "syntheticLibReferences",
+      "declared_type": "readonly FileReference[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4306,
+          "column": 107,
+          "start": 181970,
+          "end": 181997,
+          "text": "node.syntheticLibReferences"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 9844,
+      "type": "Bundle",
+      "field": "syntheticFileReferences",
+      "declared_type": "readonly FileReference[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4306,
+          "column": 35,
+          "start": 181898,
+          "end": 181926,
+          "text": "node.syntheticFileReferences"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 9227,
+      "type": "Block | undefined",
+      "field": "statements",
+      "declared_type": "NodeArray<Statement>",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/transformers/classFields.ts",
+          "line": 2420,
+          "column": 34,
+          "start": 111609,
+          "end": 111638,
+          "text": "constructor?.body?.statements"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 8879,
+      "type": "JSDocPropertyLikeTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 4261,
+          "column": 26,
+          "start": 180400,
+          "end": 180413,
+          "text": "param.comment"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Mixed scalar and array member handoff retained"
+    },
+    {
+      "type_id": 8878,
+      "type": "JSDocParameterTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5270,
+          "column": 20,
+          "start": 228339,
+          "end": 228351,
+          "text": "node.comment"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Mixed scalar and array member handoff retained"
+    },
+    {
+      "type_id": 8814,
+      "type": "JSDocEnumTag",
+      "field": "comment",
+      "declared_type": "string | NodeArray<JSDocComment> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties",
+        "scalar contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 5542,
+          "column": 20,
+          "start": 241420,
+          "end": 241432,
+          "text": "node.comment"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Mixed scalar and array member handoff retained"
+    },
+    {
+      "type_id": 8635,
+      "type": "AnonymousType",
+      "field": "properties",
+      "declared_type": "Symbol[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14651,
+          "column": 26,
+          "start": 849246,
+          "end": 849261,
+          "text": "type.properties"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 8635,
+      "type": "AnonymousType",
+      "field": "callSignatures",
+      "declared_type": "readonly Signature[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14672,
+          "column": 25,
+          "start": 850610,
+          "end": 850629,
+          "text": "type.callSignatures"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 7683,
+      "type": "SourceFile | ModuleBlock",
+      "field": "statements",
+      "declared_type": "NodeArray<Statement>",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 2338,
+          "column": 26,
+          "start": 109400,
+          "end": 109415,
+          "text": "body.statements"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained as in first batch"
+    },
+    {
+      "type_id": 7333,
+      "type": "ObjectTypeDeclaration",
+      "field": "members",
+      "declared_type": "NodeArray<TypeElement> | NodeArray<ClassElement>",
+      "families": [
+        "array contracts",
+        "object union"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 2989,
+          "column": 20,
+          "start": 107552,
+          "end": 107591,
+          "text": "(node as ObjectTypeDeclaration).members"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained as in first batch"
+    },
+    {
+      "type_id": 7331,
+      "type": "SignatureDeclaration",
+      "field": "typeParameters",
+      "declared_type": "NodeArray<TypeParameterDeclaration> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 3471,
+          "column": 34,
+          "start": 151650,
+          "end": 151669,
+          "text": "node.typeParameters"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 7323,
+      "type": "IndexSignatureDeclaration",
+      "field": "typeParameters",
+      "declared_type": "NodeArray<TypeParameterDeclaration> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 572,
+          "column": 41,
+          "start": 18798,
+          "end": 18817,
+          "text": "node.typeParameters"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 7297,
+      "type": "AccessorDeclaration",
+      "field": "typeParameters",
+      "declared_type": "NodeArray<TypeParameterDeclaration> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52877,
+          "column": 13,
+          "start": 3075044,
+          "end": 3075067,
+          "text": "accessor.typeParameters"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained as in first batch"
+    },
+    {
+      "type_id": 7297,
+      "type": "AccessorDeclaration",
+      "field": "modifiers",
+      "declared_type": "NodeArray<ModifierLike> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 2292,
+          "column": 54,
+          "start": 99559,
+          "end": 99573,
+          "text": "node.modifiers"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained as in first batch"
+    },
+    {
+      "type_id": 6998,
+      "type": "SourceFile",
+      "field": "jsDocDiagnostics",
+      "declared_type": "DiagnosticWithLocation[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2918,
+          "column": 29,
+          "start": 141841,
+          "end": 141868,
+          "text": "sourceFile.jsDocDiagnostics"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 6997,
+      "type": "Identifier",
+      "field": "jsDoc",
+      "declared_type": "JSDocArray | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6338,
+          "column": 23,
+          "start": 274987,
+          "end": 274997,
+          "text": "node.jsDoc"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 6995,
+      "type": "EmitNode | undefined",
+      "field": "trailingComments",
+      "declared_type": "SynthesizedComment[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/emitNode.ts",
+          "line": 209,
+          "column": 12,
+          "start": 6887,
+          "end": 6918,
+          "text": "node.emitNode?.trailingComments"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 6995,
+      "type": "EmitNode | undefined",
+      "field": "tokenSourceMapRanges",
+      "declared_type": "(SourceMapRange | undefined)[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/emitNode.ts",
+          "line": 148,
+          "column": 12,
+          "start": 4730,
+          "end": 4765,
+          "text": "node.emitNode?.tokenSourceMapRanges"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 6995,
+      "type": "EmitNode | undefined",
+      "field": "leadingComments",
+      "declared_type": "SynthesizedComment[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/emitNode.ts",
+          "line": 196,
+          "column": 12,
+          "start": 6178,
+          "end": 6208,
+          "text": "node.emitNode?.leadingComments"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 6995,
+      "type": "EmitNode | undefined",
+      "field": "identifierTypeArguments",
+      "declared_type": "NodeArray<TypeNode | TypeParameterDeclaration> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/emitNode.ts",
+          "line": 358,
+          "column": 12,
+          "start": 11789,
+          "end": 11827,
+          "text": "node.emitNode?.identifierTypeArguments"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 6995,
+      "type": "EmitNode | undefined",
+      "field": "annotatedNodes",
+      "declared_type": "Node[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/emitNode.ts",
+          "line": 69,
+          "column": 28,
+          "start": 2408,
+          "end": 2483,
+          "text": "getSourceFileOfNode(getParseTreeNode(sourceFile))?.emitNode?.annotatedNodes"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 6994,
+      "type": "EmitNode",
+      "field": "trailingComments",
+      "declared_type": "SynthesizedComment[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 7473,
+          "column": 76,
+          "start": 332583,
+          "end": 332612,
+          "text": "destEmitNode.trailingComments"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 6994,
+      "type": "EmitNode",
+      "field": "leadingComments",
+      "declared_type": "SynthesizedComment[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 7467,
+          "column": 74,
+          "start": 332250,
+          "end": 332278,
+          "text": "destEmitNode.leadingComments"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    },
+    {
+      "type_id": 6994,
+      "type": "EmitNode",
+      "field": "annotatedNodes",
+      "declared_type": "Node[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/factory/emitNode.ts",
+          "line": 47,
+          "column": 13,
+          "start": 1380,
+          "end": 1426,
+          "text": "getOrCreateEmitNode(sourceFile).annotatedNodes"
+        }
+      ],
+      "status": "certified",
+      "reason": "Next pending array field in reverse ranked order"
+    }
+  ],
+  "certified_pairs": 20,
+  "certified_static_reads": 20,
+  "runtime_reachability": "unmeasured",
+  "next_pair": "Deferred TypeMapper.targets"
+}
