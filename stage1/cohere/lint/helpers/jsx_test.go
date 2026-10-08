@@ -87,6 +87,8 @@ func TestJsxHelpersAndMutants(t *testing.T) {
 	}
 	for _, m := range mutants {
 		t.Run(m.file, func(t *testing.T) {
+			// The parent corpus and want are read-only; sources and outputs belong to this case.
+			t.Parallel()
 			dir := t.TempDir()
 			files, err := filepath.Glob("jsx/*.a")
 			if err != nil {

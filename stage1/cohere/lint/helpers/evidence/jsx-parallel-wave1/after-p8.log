@@ -1,0 +1,78 @@
+=== RUN   TestJsxHelpersAndMutants
+    jsx_test.go:21: captured 1284 distinct upstream inputs from 27 JSX consumers
+        @next/next/google-font-display 16
+        @next/next/google-font-preconnect 16
+        @next/next/inline-script-id 38
+        @next/next/next-script-for-ga 46
+        @next/next/no-before-interactive-script-outside-document 47
+        @next/next/no-css-tags 16
+        @next/next/no-head-element 8
+        @next/next/no-html-link-for-pages 6
+        @next/next/no-img-element 10
+        @next/next/no-page-custom-font 35
+        @next/next/no-styled-jsx-in-document 19
+        @next/next/no-sync-scripts 11
+        @next/next/no-unwanted-polyfillio 40
+        react/forbid-dom-props 34
+        react/jsx-key 148
+        react/jsx-no-duplicate-props 35
+        react/jsx-no-script-url 36
+        react/jsx-no-target-blank 139
+        react/jsx-props-no-spread-multi 46
+        react/no-children-prop 102
+        react/no-danger 38
+        react/no-string-refs 61
+        react/no-unknown-property 151
+        react/void-dom-elements-no-children 74
+        structure/boundary-no-project-theme-value 26
+        structure/react-element-no-anchor 47
+        structure/react-element-no-horizontal-rule 39
+        
+    jsx_test.go:34: 1285 sources, 23909 nodes (AttributeName/ElementParts), 31640 matcher pairs, 459187 intrinsic/attribute queries
+        
+    jsx_test.go:79: 514736 Go output rows byte-identical on Node, emitted JavaScript and sanitized native
+=== RUN   TestJsxHelpersAndMutants/attribute_name.a
+=== PAUSE TestJsxHelpersAndMutants/attribute_name.a
+=== RUN   TestJsxHelpersAndMutants/element_parts.a
+=== PAUSE TestJsxHelpersAndMutants/element_parts.a
+=== RUN   TestJsxHelpersAndMutants/has_attribute_named.a
+=== PAUSE TestJsxHelpersAndMutants/has_attribute_named.a
+=== RUN   TestJsxHelpersAndMutants/intrinsic_element_named.a
+=== PAUSE TestJsxHelpersAndMutants/intrinsic_element_named.a
+=== RUN   TestJsxHelpersAndMutants/match_exactly.a
+=== PAUSE TestJsxHelpersAndMutants/match_exactly.a
+=== RUN   TestJsxHelpersAndMutants/match_ignoring_case.a
+=== PAUSE TestJsxHelpersAndMutants/match_ignoring_case.a
+=== CONT  TestJsxHelpersAndMutants/attribute_name.a
+=== CONT  TestJsxHelpersAndMutants/intrinsic_element_named.a
+=== CONT  TestJsxHelpersAndMutants/has_attribute_named.a
+=== CONT  TestJsxHelpersAndMutants/match_ignoring_case.a
+=== CONT  TestJsxHelpersAndMutants/match_exactly.a
+=== CONT  TestJsxHelpersAndMutants/element_parts.a
+    jsx_test.go:117: output mutant caught on Node
+    jsx_test.go:117: output mutant caught on Node
+    jsx_test.go:117: output mutant caught on Node
+    jsx_test.go:117: output mutant caught on Node
+    jsx_test.go:117: output mutant caught on Node
+    jsx_test.go:117: output mutant caught on Node
+    jsx_test.go:117: output mutant caught on emitted JavaScript
+    jsx_test.go:117: output mutant caught on emitted JavaScript
+    jsx_test.go:117: output mutant caught on emitted JavaScript
+    jsx_test.go:117: output mutant caught on emitted JavaScript
+    jsx_test.go:117: output mutant caught on emitted JavaScript
+    jsx_test.go:117: output mutant caught on emitted JavaScript
+    jsx_test.go:117: output mutant caught on sanitized native
+    jsx_test.go:117: output mutant caught on sanitized native
+    jsx_test.go:117: output mutant caught on sanitized native
+    jsx_test.go:117: output mutant caught on sanitized native
+    jsx_test.go:117: output mutant caught on sanitized native
+    jsx_test.go:117: output mutant caught on sanitized native
+--- PASS: TestJsxHelpersAndMutants (63.17s)
+    --- PASS: TestJsxHelpersAndMutants/has_attribute_named.a (72.88s)
+    --- PASS: TestJsxHelpersAndMutants/element_parts.a (100.07s)
+    --- PASS: TestJsxHelpersAndMutants/match_ignoring_case.a (102.00s)
+    --- PASS: TestJsxHelpersAndMutants/intrinsic_element_named.a (106.14s)
+    --- PASS: TestJsxHelpersAndMutants/match_exactly.a (106.60s)
+    --- PASS: TestJsxHelpersAndMutants/attribute_name.a (109.59s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers	172.777s
