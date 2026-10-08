@@ -1,0 +1,196 @@
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/emit-helper-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: a field of type string | ((node: EmitHelperUniqueNameCallback) => string)
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-tuple-element-frontier
+    checked_views_object_primitive_frontiers_test.go:103: blocked original contract: a cast the runtime can't check
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-union-frontier
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-optional-frontier
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+    checked_views_object_primitive_frontiers_test.go:94: parent-read omission caught by exact missing-field refusal after valid execution
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/build-options-key-frontier
+    checked_views_object_primitive_frontiers_test.go:103: blocked original contract: a cast the runtime can't check
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-root-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: an array of IncrementalBuildInfoRoot
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: an array of IncrementalBuildInfoEmitSignature
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-out-signature-frontier
+    checked_views_object_primitive_frontiers_test.go:103: blocked original contract: checked view read of field outSignature with unsupported tuple union member contract
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-bundle-each-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: an array of IncrementalBundleEmitBuildInfoFileInfo
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-multi-each-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: an array of IncrementalMultiFileEmitBuildInfoFileInfo
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-each-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: an array of IncrementalBuildInfoEmitSignature
+=== RUN   TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-union-each-frontier
+    checked_views_object_primitive_frontiers_test.go:108: blocked original consumer: an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo
+--- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers (23.33s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/emit-helper-frontier (15.75s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-tuple-element-frontier (0.42s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-union-frontier (2.23s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/jsdoc-parent-optional-frontier (2.00s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/build-options-key-frontier (0.34s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-root-frontier (0.33s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-frontier (0.32s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-out-signature-frontier (0.49s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-bundle-each-frontier (0.34s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-multi-each-frontier (0.39s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-signature-each-frontier (0.36s)
+    --- PASS: TestCheckedViewObjectPrimitiveRemainingFrontiers/incremental-union-each-frontier (0.35s)
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/conditional-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/conditional-true
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "true\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "true\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "true\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "true\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/conditional-flags-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/location-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/location-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/location-code-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/detached-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/detached-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/detached-code-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/related-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/related-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/related-code-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/generated-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/generated-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/generated-prefix-wrong
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "undefined\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-negative-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "true:123\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "42:123\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false:123\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "42:123\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/literal-text-wrong
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-helpers-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-helpers-false
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "absent\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-uninitialized
+    checked_views_object_primitive_unions_test.go:371: treat uninitialized optional slot as undefined caught: exit 0 stdout "absent\n"
+    checked_views_object_primitive_unions_test.go:371: treat uninitialized optional slot as undefined caught: exit 0 stdout "absent\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-good
+    checked_views_object_primitive_unions_test.go:408: reject allowed absence caught: exit 70 stdout "true\n80\nabsent\n"
+    checked_views_object_primitive_unions_test.go:408: reject allowed absence caught: exit 70 stdout "true\n80\nabsent\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-false
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "absent\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/source-file-kind-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-good
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-boolean
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong union member caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+    checked_views_object_primitive_unions_test.go:371: skip outer union check caught: exit 0 stdout "wrong\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-code-wrong
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: accept wrong nested shape caught: exit 0 stdout "chain:false\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:0\n"
+    checked_views_object_primitive_unions_test.go:371: drop transitive check caught: exit 0 stdout "chain:false\n"
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-unread
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-frontier
+    checked_views_object_primitive_unions_test.go:503: expected pinned uncertified frontier, got <nil>
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-parent-probe
+    checked_views_object_primitive_unions_test.go:503: expected pinned uncertified frontier, got <nil>
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/compiler-options-key-probe
+    checked_views_object_primitive_unions_test.go:505: uncertified original pair: a cast the runtime can't check
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-static-left-probe
+    checked_views_object_primitive_unions_test.go:503: expected pinned uncertified frontier, got <nil>
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/bindable-left-probe
+    checked_views_object_primitive_unions_test.go:503: expected pinned uncertified frontier, got <nil>
+=== RUN   TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-comment-probe
+    checked_views_object_primitive_unions_test.go:513: uncertified original pair: a template interpolating a union with an object, an array, a map or a function in it
+--- FAIL: TestCheckedViewObjectPrimitiveOriginalPairs (48.41s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/conditional-good (1.65s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/conditional-true (1.84s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/conditional-flags-wrong (1.65s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/location-good (1.26s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/location-boolean (1.48s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/location-code-wrong (1.54s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/detached-good (1.23s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/detached-boolean (1.40s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/detached-code-wrong (1.43s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/related-good (1.42s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/related-boolean (1.71s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/related-code-wrong (1.62s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/generated-good (1.32s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/generated-boolean (1.62s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/generated-prefix-wrong (1.44s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-good (1.39s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-boolean (1.59s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-negative-wrong (1.57s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/literal-text-wrong (1.37s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-helpers-good (1.42s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-helpers-false (1.60s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-uninitialized (1.38s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-good (1.44s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-false (1.50s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/source-file-kind-wrong (1.48s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-good (1.18s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-boolean (1.38s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/diagnostic-code-wrong (1.39s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-unread (1.57s)
+    --- FAIL: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-expression-frontier (1.44s)
+    --- FAIL: TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-parent-probe (0.87s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/compiler-options-key-probe (0.34s)
+    --- FAIL: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-static-left-probe (1.25s)
+    --- FAIL: TestCheckedViewObjectPrimitiveOriginalPairs/bindable-left-probe (1.26s)
+    --- PASS: TestCheckedViewObjectPrimitiveOriginalPairs/jsdoc-comment-probe (0.37s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=115
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	71.769s
+FAIL

@@ -470,11 +470,11 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 	}
 	for _, frontier := range []struct{ name, output, refusal, notYet string }{
 		{"bindable-expression-unread", "admitted\n", "", ""},
-		{"bindable-expression-frontier", "80\n", "checked view read of field kind with unsupported union intersection contract", ""},
-		{"jsdoc-parent-probe", "80\n", "checked view read of field kind with unsupported union intersection contract", ""},
+		{"bindable-expression-frontier", "80\n", "", ""},
+		{"jsdoc-parent-probe", "80\n", "", ""},
 		{"compiler-options-key-probe", "true\n", "a cast the runtime can't check", ""},
-		{"bindable-static-left-probe", "212\n", "checked view read of field kind with unsupported union intersection contract", ""},
-		{"bindable-left-probe", "212\n", "checked view read of field kind with unsupported union intersection contract", ""},
+		{"bindable-static-left-probe", "212\n", "", ""},
+		{"bindable-left-probe", "212\n", "", ""},
 		{"jsdoc-comment-probe", "plain\n", "", "a template interpolating a union with an object, an array, a map or a function in it"},
 	} {
 		name := frontier.name
@@ -516,11 +516,47 @@ func TestCheckedViewObjectPrimitiveOriginalPairs(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			// These original producers intentionally omit Identifier fields. The
+			// integrated intersection walker now reaches and checks that obligation.
+			boundary := ""
+			if name == "jsdoc-parent-probe" {
+				boundary = "node.parent"
+			} else if name == "bindable-expression-frontier" || name == "bindable-static-left-probe" || name == "bindable-left-probe" {
+				boundary = "node.left"
+			}
+			want := run{stdout: []byte(output)}
+			if boundary != "" {
+				field := boundary + ".expression.escapedText"
+				if boundary == "node.parent" {
+					field = boundary + ".escapedText"
+				}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + field + " is not initialized; expected __String, found missing\n")}
+			}
 			sanitized, _ := nativelyUncached(t, program)
 			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-				if diff := disagreement(run{stdout: []byte(output)}, got); diff != "" {
+				if diff := disagreement(want, got); diff != "" {
 					t.Fatal(diff)
 				}
+			}
+			if boundary == "" {
+				return
+			}
+			// The walker may check the child at an earlier ancestor read. Remove
+			// the whole demanded path, then require a successful Node counterfactual.
+			if changed := changeObjectPrimitiveRead(program, func(read ir.Property) bool {
+				return read.View == boundary || strings.HasPrefix(read.View, boundary+".")
+			}, func(read ir.Property) ir.Property { read.View = ""; return read }); changed == 0 {
+				t.Fatal("frontier mutant found no demanded path")
+			}
+			mutated, binary := nativelyUncached(t, program)
+			for _, got := range []run{mutated, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if diff := disagreement(run{stdout: []byte(output)}, got); diff != "" {
+					t.Fatal("frontier mutant must execute Node value: " + diff)
+				}
+				t.Log("demanded-path omission caught by exact missing-field pin after successful execution")
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
 			}
 		})
 	}
