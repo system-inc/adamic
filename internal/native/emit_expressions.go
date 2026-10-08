@@ -391,10 +391,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			sort = "adamic_array_sort_undefined_last"
 		} else if expression.Element == ir.MaybeBoolean {
 			sort = "adamic_array_sort_maybe_boolean"
-			e.declarations = append(e.declarations, `#include "array_maybe_boolean.h"`)
 		} else if expression.Element == ir.Union {
 			sort = "adamic_array_sort_union"
-			e.declarations = append(e.declarations, `#include "array_union.h"`)
 		}
 		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does
 		// (sort.c), and the throw goes on from here.
