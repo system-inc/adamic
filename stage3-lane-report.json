@@ -1,0 +1,48 @@
+{
+  "status": "fail",
+  "errors": [
+    "test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106358, 'failing': 4, 'pending': 0}",
+    "reporter counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106358, 'failing': 4, 'pending': 0}",
+    "failed test names: expected ['unittests:: Public APIs for typescript.d.ts should be acknowledged when they change'], observed ['compiler tests compiler tests for tests/cases/compiler/unusedTypeParameterInMethod5.ts Correct type/symbol baselines for tests/cases/compiler/unusedTypeParameterInMethod5.ts', 'fourslash tests tests/cases/fourslash/codeFixWrapJsxInFragment4.ts fourslash test codeFixWrapJsxInFragment4.ts runs correctly', 'conformance tests conformance tests for tests/cases/conformance/jsx/jsxs/jsxJsxsCjsTransformChildren.tsx (@jsx: react-jsx) \"before all\" hook for \"Correct errors for tests/cases/conformance/jsx/jsxs/jsxJsxsCjsTransformChildren.tsx\"', 'unittests:: Public APIs for typescript.d.ts should be acknowledged when they change']",
+    "number of reported failure titles: expected 1, observed 4"
+  ],
+  "counts": {
+    "passing": 106358,
+    "failing": 4,
+    "pending": 0
+  },
+  "failed_tests": [
+    "compiler tests compiler tests for tests/cases/compiler/unusedTypeParameterInMethod5.ts Correct type/symbol baselines for tests/cases/compiler/unusedTypeParameterInMethod5.ts",
+    "fourslash tests tests/cases/fourslash/codeFixWrapJsxInFragment4.ts fourslash test codeFixWrapJsxInFragment4.ts runs correctly",
+    "conformance tests conformance tests for tests/cases/conformance/jsx/jsxs/jsxJsxsCjsTransformChildren.tsx (@jsx: react-jsx) \"before all\" hook for \"Correct errors for tests/cases/conformance/jsx/jsxs/jsxJsxsCjsTransformChildren.tsx\"",
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "ca33c11d412954b40fe1e938320fcaa454ad21c3",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 1532.443
+  },
+  "results": "/home/ahra/fast-gate/tree-3-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106358, 'failing': 4, 'pending': 0}"
+}
