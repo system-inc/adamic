@@ -1,3 +1,4 @@
+import type { ParseNode } from './rules.ts';
 import type { Rules } from './rules.ts';
 import { NexusFacts } from './nexus_facts.a';
 import { Bindings } from './bindings.ts';
@@ -134,45 +135,47 @@ export class ReactUseMemo {
         }
         return false;
     }
+    visitNode(n: ParseNode, i: number): void {
+        const kind = this.kind(n.children[0] ?? -1);
+        if(!['useMemo', 'useCallback'].includes(kind) || !this.gate.inside(i)) return;
+        const args = this.fourth.args(i);
+        if(args.length === 0) {
+            this.report('useMemoMissingCallback', useMemoMissingCallback, i);
+            return;
+        }
+        const callback = args[0] ?? -1;
+        const cb = this.rules.parser.node(callback);
+        const inline = ['ArrowFunction', 'FunctionExpression'].includes(cb.kind);
+        if(!inline) {
+            if(cb.kind === 'SpreadElement') return;
+            this.report('useMemoCallbackNotInline', useMemoCallbackNotInline, callback);
+        }
+        if(args.length >= 2) {
+            const dep = args[1] ?? -1;
+            const dn = this.rules.parser.node(dep);
+            if(
+                dn.kind !== 'ArrayLiteralExpression' ||
+                dn.children.some((c) =>
+                    ['SpreadElement', 'OmittedExpression'].includes(this.rules.parser.node(c).kind),
+                )
+            )
+                this.report('useMemoDependencyListNotArrayLiteral', useMemoDependencyListNotArrayLiteral, dep);
+            else
+                for(const c of dn.children)
+                    if(!this.simple(c)) this.report('useMemoDependencyNotSimple', useMemoDependencyNotSimple, c);
+        }
+        if(!inline || kind !== 'useMemo') return;
+        const ps = this.gate.params(callback);
+        if(ps.length > 0) this.report('useMemoCallbackHasParameters', useMemoCallbackHasParameters, ps[0] ?? -1);
+        if(cb.children.some((c) => ['AsyncKeyword', 'AsteriskToken'].includes(this.rules.parser.node(c).kind)))
+            this.report('useMemoCallbackAsyncOrGenerator', useMemoCallbackAsyncOrGenerator, callback);
+        const body = this.gate.body(callback);
+        if(body >= 0) for(const c of this.rules.parser.node(body).children) this.assignments(c, callback);
+    }
     run(): void {
         for(let i = 0; i < this.rules.parser.nodes.length; i++) {
-            const n = this.rules.parser.node(i);
-            if(n.kind !== 'CallExpression') continue;
-            const kind = this.kind(n.children[0] ?? -1);
-            if(!['useMemo', 'useCallback'].includes(kind) || !this.gate.inside(i)) continue;
-            const args = this.fourth.args(i);
-            if(args.length === 0) {
-                this.report('useMemoMissingCallback', useMemoMissingCallback, i);
-                continue;
-            }
-            const callback = args[0] ?? -1;
-            const cb = this.rules.parser.node(callback);
-            const inline = ['ArrowFunction', 'FunctionExpression'].includes(cb.kind);
-            if(!inline) {
-                if(cb.kind === 'SpreadElement') continue;
-                this.report('useMemoCallbackNotInline', useMemoCallbackNotInline, callback);
-            }
-            if(args.length >= 2) {
-                const dep = args[1] ?? -1;
-                const dn = this.rules.parser.node(dep);
-                if(
-                    dn.kind !== 'ArrayLiteralExpression' ||
-                    dn.children.some((c) =>
-                        ['SpreadElement', 'OmittedExpression'].includes(this.rules.parser.node(c).kind),
-                    )
-                )
-                    this.report('useMemoDependencyListNotArrayLiteral', useMemoDependencyListNotArrayLiteral, dep);
-                else
-                    for(const c of dn.children)
-                        if(!this.simple(c)) this.report('useMemoDependencyNotSimple', useMemoDependencyNotSimple, c);
-            }
-            if(!inline || kind !== 'useMemo') continue;
-            const ps = this.gate.params(callback);
-            if(ps.length > 0) this.report('useMemoCallbackHasParameters', useMemoCallbackHasParameters, ps[0] ?? -1);
-            if(cb.children.some((c) => ['AsyncKeyword', 'AsteriskToken'].includes(this.rules.parser.node(c).kind)))
-                this.report('useMemoCallbackAsyncOrGenerator', useMemoCallbackAsyncOrGenerator, callback);
-            const body = this.gate.body(callback);
-            if(body >= 0) for(const c of this.rules.parser.node(body).children) this.assignments(c, callback);
+            const node = this.rules.parser.node(i);
+            if(node.kind === 'CallExpression') { this.visitNode(node, i); }
         }
     }
 }

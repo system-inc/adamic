@@ -1,3 +1,4 @@
+import type { ParseNode } from './rules.ts';
 import type { Rules } from './rules.ts';
 import { NexusFacts } from './nexus_facts.a';
 const stringMethods: readonly string[] = [
@@ -91,36 +92,36 @@ export class NoDiscardedPureResult {
             .parts(graph.root())
             .some((id) => (graph.type(id).flags & 3) !== 0 || this.facts.callable(value, graph.type(id)));
     }
+    visitNode(statement: ParseNode, index: number): void {
+        const callIndex = this.rules.skip(statement.children[0] ?? -1);
+        const call = this.rules.parser.node(callIndex);
+        if(call.kind !== 'CallExpression') {
+            return;
+        }
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') {
+            return;
+        }
+        const name = callee.children[callee.children.length - 1] ?? -1;
+        if(this.rules.parser.node(name).kind !== 'Identifier' || !this.pure(name)) {
+            return;
+        }
+        const empty: number[] = [];
+        const arguments_ = call.list > 0 ? call.children.slice(call.children.length - call.list) : empty;
+        if(arguments_.some((argument) => this.callable(argument))) {
+            return;
+        }
+        this.facts.report(
+            'nexus/correctness-no-discarded-pure-result',
+            'discardedPureResult',
+            'This call computes a new value and changes nothing, and its result is thrown away, so the statement does nothing. Strings are immutable (`name.trim()` returns a trimmed copy and leaves `name` as it was), and these array methods return a new array or a value without touching the original (`list.concat(more)` does not add to `list`). Assign the result (`name = name.trim()`, `list = list.concat(more)`), use the mutating form (`list.push(...more)`), or delete the statement.',
+            callIndex,
+        );
+    }
     run(): void {
         for(let index = 0; index < this.rules.parser.nodes.length; index++) {
-            const statement = this.rules.parser.node(index);
-            if(statement.kind !== 'ExpressionStatement') {
-                continue;
-            }
-            const callIndex = this.rules.skip(statement.children[0] ?? -1);
-            const call = this.rules.parser.node(callIndex);
-            if(call.kind !== 'CallExpression') {
-                continue;
-            }
-            const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
-            if(callee.kind !== 'PropertyAccessExpression') {
-                continue;
-            }
-            const name = callee.children[callee.children.length - 1] ?? -1;
-            if(this.rules.parser.node(name).kind !== 'Identifier' || !this.pure(name)) {
-                continue;
-            }
-            const empty: number[] = [];
-            const arguments_ = call.list > 0 ? call.children.slice(call.children.length - call.list) : empty;
-            if(arguments_.some((argument) => this.callable(argument))) {
-                continue;
-            }
-            this.facts.report(
-                'nexus/correctness-no-discarded-pure-result',
-                'discardedPureResult',
-                'This call computes a new value and changes nothing, and its result is thrown away, so the statement does nothing. Strings are immutable (`name.trim()` returns a trimmed copy and leaves `name` as it was), and these array methods return a new array or a value without touching the original (`list.concat(more)` does not add to `list`). Assign the result (`name = name.trim()`, `list = list.concat(more)`), use the mutating form (`list.push(...more)`), or delete the statement.',
-                callIndex,
-            );
+            const node = this.rules.parser.node(index);
+            if(node.kind === 'ExpressionStatement') { this.visitNode(node, index); }
         }
     }
 }

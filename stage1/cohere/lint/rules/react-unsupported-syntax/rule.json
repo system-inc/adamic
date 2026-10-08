@@ -1,0 +1,20 @@
+{
+  "name": "react-hooks/unsupported-syntax",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "Identifier",
+    "WithStatement",
+    "ClassDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave17UnsupportedSyntax",
+  "upstreamPackage": "react",
+  "upstreamTest": "Test",
+  "programReads": [
+    "ReadsCompilerOptions",
+    "ReadsDefaultLibrary"
+  ]
+}

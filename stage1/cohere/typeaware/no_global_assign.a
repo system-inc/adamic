@@ -1,3 +1,4 @@
+import type { ParseNode } from './rules.ts';
 import type { Rules } from './rules.ts';
 import { Reassign } from './reassign.ts';
 import { NexusFacts } from './nexus_facts.a';
@@ -13,27 +14,30 @@ export class NoGlobalAssign {
         this.reports = reports;
         this.exceptions = exceptions;
     }
+    visitNode(node: ParseNode, index: number): void {
+        if(this.exceptions.includes(node.text) || !this.writes.writes(index)) {
+            return;
+        }
+        const facts = new GlobalBindingFacts(this.rules, index);
+        const parent = this.rules.parents[index] ?? -1;
+        const symbol =
+            parent >= 0 && this.rules.parser.node(parent).kind === 'ShorthandPropertyAssignment'
+                ? facts.shorthand
+                : facts.ordinary;
+        if(!symbol.present || !(symbol.declarationFiles[0] ?? false)) {
+            return;
+        }
+        this.reports.report(
+            'no-global-assign',
+            'noGlobalAssign',
+            `This assigns to \`${node.text}\`, which is a read-only global that the whole program shares. Nothing fails here: the failure lands later and elsewhere, when other code reaches for \`${node.text}\` and gets whatever was written instead. In a module or a class body the write throws instead of landing at all. Use a local variable.`,
+            index,
+        );
+    }
     run(): void {
         for(let index = 0; index < this.rules.parser.nodes.length; index++) {
             const node = this.rules.parser.node(index);
-            if(node.kind !== 'Identifier' || this.exceptions.includes(node.text) || !this.writes.writes(index)) {
-                continue;
-            }
-            const facts = new GlobalBindingFacts(this.rules, index);
-            const parent = this.rules.parents[index] ?? -1;
-            const symbol =
-                parent >= 0 && this.rules.parser.node(parent).kind === 'ShorthandPropertyAssignment'
-                    ? facts.shorthand
-                    : facts.ordinary;
-            if(!symbol.present || !(symbol.declarationFiles[0] ?? false)) {
-                continue;
-            }
-            this.reports.report(
-                'no-global-assign',
-                'noGlobalAssign',
-                `This assigns to \`${node.text}\`, which is a read-only global that the whole program shares. Nothing fails here: the failure lands later and elsewhere, when other code reaches for \`${node.text}\` and gets whatever was written instead. In a module or a class body the write throws instead of landing at all. Use a local variable.`,
-                index,
-            );
+            if(node.kind === 'Identifier') { this.visitNode(node, index); }
         }
     }
 }

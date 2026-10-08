@@ -1,3 +1,4 @@
+import type { ParseNode } from './rules.ts';
 import type { Rules } from './rules.ts';
 import { NexusFacts } from './nexus_facts.a';
 import { ReactCompilationGate } from './react_compilation_gate.a';
@@ -17,25 +18,27 @@ export class ReactUnsupportedSyntax {
         this.facts = facts;
         this.gate = gate;
     }
+    visitNode(n: ParseNode, i: number): void {
+        if(n.kind === 'Identifier' && n.text !== 'eval') return;
+        if(!this.gate.inside(i)) return;
+        if(n.kind === 'Identifier') {
+            if(!this.facts.declarations(i).some((d) => d.library)) return;
+            this.facts.report('react-hooks/unsupported-syntax', 'unsupportedEval', unsupportedEval, i);
+        }
+        else if(n.kind === 'WithStatement')
+            this.facts.report('react-hooks/unsupported-syntax', 'unsupportedWith', unsupportedWith, i);
+        else
+            this.facts.report(
+                'react-hooks/unsupported-syntax',
+                'unsupportedInlineClass',
+                unsupportedInlineClass,
+                i,
+            );
+    }
     run(): void {
         for(let i = 0; i < this.rules.parser.nodes.length; i++) {
-            const n = this.rules.parser.node(i);
-            if(!['Identifier', 'WithStatement', 'ClassDeclaration'].includes(n.kind)) continue;
-            if(n.kind === 'Identifier' && n.text !== 'eval') continue;
-            if(!this.gate.inside(i)) continue;
-            if(n.kind === 'Identifier') {
-                if(!this.facts.declarations(i).some((d) => d.library)) continue;
-                this.facts.report('react-hooks/unsupported-syntax', 'unsupportedEval', unsupportedEval, i);
-            }
-            else if(n.kind === 'WithStatement')
-                this.facts.report('react-hooks/unsupported-syntax', 'unsupportedWith', unsupportedWith, i);
-            else
-                this.facts.report(
-                    'react-hooks/unsupported-syntax',
-                    'unsupportedInlineClass',
-                    unsupportedInlineClass,
-                    i,
-                );
+            const node = this.rules.parser.node(i);
+            if(['Identifier', 'WithStatement', 'ClassDeclaration'].includes(node.kind)) { this.visitNode(node, i); }
         }
     }
 }

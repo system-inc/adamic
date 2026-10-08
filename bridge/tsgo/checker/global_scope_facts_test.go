@@ -2,6 +2,7 @@ package checker
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strings"
@@ -28,7 +29,7 @@ func TestGlobalScopeQuestions(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			sf := p.Compiler.GetSourceFile(file)
+			sf := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 			wire, err := p.Inspect(file, 0, uint64(len(row.source)), "SourceFile", "global-source-facts")
 			if err != nil {
 				t.Fatal(err)

@@ -1,0 +1,16 @@
+{
+  "rule": "no-global-assign",
+  "file": "/repository/source/GlobalAssign.ts",
+  "source": "Promise = 1;\n",
+  "outcome": "Findings",
+  "findings": [
+    {
+      "line": 1,
+      "column": 1,
+      "endLine": 1,
+      "endColumn": 8,
+      "messageId": "noGlobalAssign",
+      "message": "This assigns to `Promise`, which is a read-only global that the whole program shares. Nothing fails here: the failure lands later and elsewhere, when other code reaches for `Promise` and gets whatever was written instead. In a module or a class body the write throws instead of landing at all. Use a local variable."
+    }
+  ]
+}

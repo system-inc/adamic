@@ -1,0 +1,25 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { CheckedJudgments } from '../no-global-assign/context.a';
+import { NoImpliedEval } from '../../../typeaware/no_implied_eval.a';
+import { NexusFacts } from '../../../typeaware/nexus_facts.a';
+export class Rule {
+    readonly context: RuleContext;
+    checked: CheckedJudgments | undefined = undefined;
+    judgment: NoImpliedEval | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        if(this.judgment === undefined) {
+            const context = this.context;
+            this.checked = new CheckedJudgments(context);
+            const rules = this.checked.rules;
+            this.judgment = new NoImpliedEval(rules, new NexusFacts(rules));
+        }
+        const judgment = this.judgment ?? panic('missing judgment');
+        const checked = this.checked ?? panic('missing checker view');
+        judgment.visitNode(node, index);
+        checked.flush();
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

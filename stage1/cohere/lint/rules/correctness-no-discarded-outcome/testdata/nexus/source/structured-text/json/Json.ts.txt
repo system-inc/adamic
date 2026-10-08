@@ -1,0 +1,1 @@
+export type JsonParseOutcomeType = { outcome: 'Parsed'; value: unknown } | { outcome: 'Invalid'; message: string }; export declare function parseJson(text: string): JsonParseOutcomeType; parseJson('bad');

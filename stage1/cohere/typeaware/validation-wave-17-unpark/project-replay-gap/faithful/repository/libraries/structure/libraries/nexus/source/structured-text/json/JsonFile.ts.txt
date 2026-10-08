@@ -1,0 +1,18 @@
+export type JsonFileReadOutcomeType<ValueType = unknown> =
+    | { outcome: 'Parsed'; value: ValueType }
+    // Missing, a directory, or permission denied.
+    | { outcome: 'Unreadable'; message: string }
+    // Read, but not valid JSON.
+    | { outcome: 'Invalid'; message: string };
+export declare function readJsonFile<ValueType = unknown>(path: string, context: string): JsonFileReadOutcomeType<ValueType>;
+export type JsonFileWriteOutcomeType =
+    | { outcome: 'Written' }
+    // A value that will not serialize, a bad path, permissions, or a full disk.
+    | { outcome: 'Unwritable'; message: string };
+export interface JsonFileWriteOptionsInterface { mode?: number }
+export declare function writeJsonFile(
+    path: string,
+    value: unknown,
+    context: string,
+    options?: JsonFileWriteOptionsInterface,
+): JsonFileWriteOutcomeType;

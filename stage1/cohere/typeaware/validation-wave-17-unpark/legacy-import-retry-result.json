@@ -1,0 +1,39 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=30m",
+    "./stage1/cohere/typeaware",
+    "-run",
+    "^TestWave17(Fifth|Fourth)AgreementAndMutants$"
+  ],
+  "exit": 0,
+  "wall_seconds": 415.13866793299985,
+  "counts": {
+    "pass": 2
+  },
+  "top_level": {
+    "pass": 2
+  },
+  "skips": [],
+  "failed": [],
+  "mutants": [],
+  "nproc": 5,
+  "load_start": [
+    1.0380859375,
+    1.04833984375,
+    1.3349609375
+  ],
+  "load_end": [
+    1.6611328125,
+    1.494140625,
+    1.4658203125
+  ],
+  "load_1min_min_median_max": [
+    1.0380859375,
+    1.65234375,
+    2.32568359375
+  ]
+}

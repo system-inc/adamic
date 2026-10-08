@@ -1,0 +1,3 @@
+import { programArguments } from 'adamic';
+const pattern = programArguments()[0] ?? '^(is|has)[A-Z]([A-Za-z0-9]?)+';
+console.log(new RegExp(pattern, 'u').test('enabled') ? 'yes' : 'no');

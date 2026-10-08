@@ -340,3 +340,23 @@ Existing parked scopes remain incomplete; no full gate or 17 required external
 checks were run. The fresh audit of 658 refs and 33 claim blobs finds zero
 unclaimed rules. No new reservation is made. WAVE_17_LANDING7_REPORT.md holds
 evidence and timing. Only codex/typeaware-wave-17 is pushed.
+
+
+## Unified checker unpark landing
+
+Merged origin/area/stage1-lint c4bdc23fa (including shared checker 57f1ad9d)
+at merge 62235a4de; no rebase and no new claims. Fourteen previously owned
+rules now have typed, node-based unified registry descriptors, exact upstream
+Go adapters, firing/configured witnesses and caught mutants. Production queries
+forward to the area's context.checker; old standalone raw/projected runners are
+validation only. Existing messages and checks are retained.
+
+Witness parity is green across Go, Node, emitted JavaScript and sanitized native.
+Full original-project upstream parity is blocked by shared capture/replay losing
+compiler options and companion files, and the shared JSX census missing the five
+new JSX descriptors. Exact independent reproducers and all-input lint results are
+in ../WAVE_17_UNPARK_REPORT.md and ../validation-wave-17-unpark/.
+react/boolean-prop-naming remains parked on regexp.Compile(settings.Rule) at
+cohere/internal/lint/rules/react/boolean_prop_naming.go:182: native dynamic
+RegExp is not lowerable. The retained partial checks remain, not a complete port.
+No main, area branch, shared harness or registration generator is edited/pushed.

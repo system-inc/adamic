@@ -1,0 +1,14 @@
+{
+  "name": "no-global-assign",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "Identifier"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave17NoGlobalAssign",
+  "upstreamPackage": "core",
+  "upstreamTest": "Test"
+}

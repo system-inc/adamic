@@ -1,0 +1,14 @@
+{
+  "name": "@next/next/no-duplicate-head",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave17NoDuplicateHead",
+  "upstreamPackage": "next",
+  "upstreamTest": "Test"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@next/next/no-script-component-in-head",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "ImportDeclaration",
+    "JsxElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave17NoScriptComponentInHead",
+  "upstreamPackage": "next",
+  "upstreamTest": "Test"
+}

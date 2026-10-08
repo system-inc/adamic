@@ -1,0 +1,6 @@
+import { writeJsonFile } from '../structured-text/json/JsonFile';
+import { writeJsonFile as writeNexusJsonFile } from '../../libraries/structure/libraries/nexus/source/structured-text/json/JsonFile';
+export function save(path: string) {
+    writeJsonFile(path, {}, 'lookalike');
+    writeNexusJsonFile(path, {}, 'nexus');
+}

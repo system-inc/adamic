@@ -1,3 +1,4 @@
+export type { ParseNode } from '../../typescript/parser/nodes.ts';
 // Default production cohere judgments. The external library supplies facts only.
 import { panic, tsgoInspect } from 'adamic';
 import type { Parser } from '../../typescript/parser/parser.ts';
@@ -12,6 +13,15 @@ import type { TypeFact } from './type_fact.ts';
 import type { Types } from './types.ts';
 import { Parameters } from './parameters.ts';
 import type { UnaryMinus } from './unary_minus.ts';
+// The shared live Checker and its scratch-copy replay implement this fact view.
+// Keeping it structural avoids naming two different nominal Checker classes.
+export interface FactAnswer {
+    readonly value: string | undefined;
+    readonly reason: string;
+}
+export interface CheckerFacts {
+    ask(index: number, question: string): FactAnswer;
+}
 
 const getterMessage =
     "A getter and its setter name one property, so a caller that reads the property and writes the value straight back has to type-check. The getter here returns a type the setter will not accept, which makes that round trip an error and usually means one of the two annotations is wrong. Widen the setter's parameter, or narrow what the getter returns.";
@@ -69,6 +79,7 @@ export class Rules {
     readonly scanner: Scanner;
     readonly offsets: readonly number[];
     readonly unary: UnaryMinus;
+    readonly checker: CheckerFacts | undefined;
     readonly parents: number[] = [];
     readonly findings: Diagnostic[] = [];
     queries = 0;
@@ -79,6 +90,7 @@ export class Rules {
         scanner: Scanner,
         offsets: readonly number[],
         unary: UnaryMinus,
+        checker: CheckerFacts | undefined = undefined,
     ) {
         this.program = program;
         this.path = path;
@@ -86,6 +98,7 @@ export class Rules {
         this.scanner = scanner;
         this.offsets = offsets;
         this.unary = unary;
+        this.checker = checker;
     }
     byte(pos: number): number {
         return this.offsets[pos] ?? panic('position outside source');
@@ -99,6 +112,11 @@ export class Rules {
         return this.scanner.text.slice(this.start(node), node.end);
     }
     ask(index: number, question: string): string {
+        if(this.checker !== undefined) {
+            this.queries++;
+            const answer = this.checker.ask(index, question);
+            return answer.value ?? panic(answer.reason);
+        }
         const node = this.parser.node(index);
         this.queries++;
         return tsgoInspect(this.program, this.path, this.byte(node.pos), this.byte(node.end), node.kind, question);

@@ -1,0 +1,49 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=30m",
+    "./stage1/cohere/typeaware",
+    "-run",
+    "^Test(Wave17(Fifth|Fourth|Next|Third)AgreementAndMutants|Wave17HeadJudgmentsAndNativeJSX|Wave17AgreementMutantAndNativeJSX|Wave17UnicodeUpper|CoverageAgreementAndMutants)$"
+  ],
+  "exit": 1,
+  "wall_seconds": 113.06286923600055,
+  "counts": {
+    "fail": 7,
+    "pass": 1
+  },
+  "top_level": {
+    "fail": 7,
+    "pass": 1
+  },
+  "skips": [],
+  "failed": [
+    "TestCoverageAgreementAndMutants",
+    "TestWave17FifthAgreementAndMutants",
+    "TestWave17FourthAgreementAndMutants",
+    "TestWave17HeadJudgmentsAndNativeJSX",
+    "TestWave17NextAgreementAndMutants",
+    "TestWave17AgreementMutantAndNativeJSX",
+    "TestWave17ThirdAgreementAndMutants"
+  ],
+  "mutants": [],
+  "nproc": 5,
+  "load_start": [
+    2.466796875,
+    2.3544921875,
+    2.7001953125
+  ],
+  "load_end": [
+    1.4169921875,
+    2.0322265625,
+    2.541015625
+  ],
+  "load_1min_min_median_max": [
+    1.45361328125,
+    1.96484375,
+    2.5283203125
+  ]
+}

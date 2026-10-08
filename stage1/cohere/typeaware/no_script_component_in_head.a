@@ -1,3 +1,4 @@
+import type { ParseNode } from './rules.ts';
 import { HeadComponents } from './head_components.a';
 export class NoScriptComponentInHead {
     readonly heads: HeadComponents;
@@ -13,9 +14,8 @@ export class NoScriptComponentInHead {
             this.heads.rules.parser.node(tag).text === 'Script'
         );
     }
-    visit(index: number): void {
+    visitNode(node: ParseNode, index: number): void {
         const rules = this.heads.rules;
-        const node = rules.parser.node(index);
         if(node.kind === 'ImportDeclaration') {
             const clause = this.heads.clause(index);
             const module =
@@ -46,9 +46,11 @@ export class NoScriptComponentInHead {
                 }
             }
         }
-        for(const child of node.children) {
-            this.visit(child);
-        }
+    }
+    visit(index: number): void {
+        const node = this.heads.rules.parser.node(index);
+        this.visitNode(node, index);
+        for(const child of node.children) { this.visit(child); }
     }
     run(root: number): void {
         this.visit(root);

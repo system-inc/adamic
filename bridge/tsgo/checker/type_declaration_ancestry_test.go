@@ -1,6 +1,7 @@
 package checker
 
 import (
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strings"
@@ -34,7 +35,7 @@ produce();`
 		}
 		node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
 	}
-	walk(p.Compiler.GetSourceFile(file).AsNode())
+	walk(p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file)).AsNode())
 	if call == nil {
 		t.Fatal("call absent")
 	}

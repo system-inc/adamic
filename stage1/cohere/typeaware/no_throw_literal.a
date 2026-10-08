@@ -1,3 +1,4 @@
+import type { ParseNode } from './rules.ts';
 import type { Rules } from './rules.ts';
 import { NexusFacts } from './nexus_facts.a';
 import { GlobalBindingFacts } from './global_binding_facts.a';
@@ -45,37 +46,37 @@ export class NoThrowLiteral {
         }
         return false;
     }
+    visitNode(node: ParseNode, index: number): void {
+        const argument = node.children[0] ?? -1;
+        if(argument < 0) {
+            return;
+        }
+        if(!this.possible(argument)) {
+            this.reports.report(
+                'no-throw-literal',
+                'object',
+                'This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead.',
+                index,
+            );
+            return;
+        }
+        const arg = this.rules.parser.node(argument);
+        if(arg.kind === 'Identifier' && arg.text === 'undefined') {
+            const f = new GlobalBindingFacts(this.rules, argument);
+            if(!f.ordinary.declarationFiles.some((d) => !d)) {
+                this.reports.report(
+                    'no-throw-literal',
+                    'undef',
+                    'This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.',
+                    index,
+                );
+            }
+        }
+    }
     run(): void {
         for(let index = 0; index < this.rules.parser.nodes.length; index++) {
             const node = this.rules.parser.node(index);
-            if(node.kind !== 'ThrowStatement') {
-                continue;
-            }
-            const argument = node.children[0] ?? -1;
-            if(argument < 0) {
-                continue;
-            }
-            if(!this.possible(argument)) {
-                this.reports.report(
-                    'no-throw-literal',
-                    'object',
-                    'This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead.',
-                    index,
-                );
-                continue;
-            }
-            const arg = this.rules.parser.node(argument);
-            if(arg.kind === 'Identifier' && arg.text === 'undefined') {
-                const f = new GlobalBindingFacts(this.rules, argument);
-                if(!f.ordinary.declarationFiles.some((d) => !d)) {
-                    this.reports.report(
-                        'no-throw-literal',
-                        'undef',
-                        'This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.',
-                        index,
-                    );
-                }
-            }
+            if(node.kind === 'ThrowStatement') { this.visitNode(node, index); }
         }
     }
 }

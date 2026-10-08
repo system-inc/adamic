@@ -1,0 +1,1 @@
+import Head from 'next/head'; export default function Component() { return <><Head/><Head/></>; }

@@ -1,0 +1,5 @@
+{
+  "name": "owned judgment suppressed",
+  "from": "judgment.visitNode(node, index);",
+  "to": "// Mutant suppresses this rule judgment."
+}

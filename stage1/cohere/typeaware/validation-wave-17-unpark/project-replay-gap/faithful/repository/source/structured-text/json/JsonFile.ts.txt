@@ -1,0 +1,4 @@
+export type JsonFileWriteOutcomeType =
+    | { outcome: 'Written' }
+    | { outcome: 'Unwritable'; message: string };
+export declare function writeJsonFile(path: string, value: unknown, context: string): JsonFileWriteOutcomeType;

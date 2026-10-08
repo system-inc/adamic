@@ -1,0 +1,19 @@
+{
+  "rule": "no-implicit-globals",
+  "file": "/repository/source/ImplicitGlobals.js",
+  "source": "foo = 1\n",
+  "options": {
+    "LexicalBindings": false
+  },
+  "outcome": "Findings",
+  "findings": [
+    {
+      "line": 1,
+      "column": 1,
+      "endLine": 1,
+      "endColumn": 4,
+      "messageId": "globalVariableLeak",
+      "message": "This assigns to a name that was never declared, which creates a global at run time rather than the local the code reads as. Declare the variable if it is meant to be local, which is almost always what a bare assignment like this intended."
+    }
+  ]
+}

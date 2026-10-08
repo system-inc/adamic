@@ -57,7 +57,7 @@ a default-pattern function cannot substitute for it. This work stops with that
 rule incomplete and does not claim another batch.
 
 The native JSX boundary is separately observed, not inferred. Go reports two
-findings for jsx-boundary.a (loaded through a .tsx fixture alias). The sanitizer
+findings for the raw jsx-boundary.tsx.txt archive (originally loaded through a .tsx fixture alias). The sanitizer
 production native suite exits 70 with:
 
 ```

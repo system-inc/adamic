@@ -1,0 +1,41 @@
+// A compatibility view of the existing judgments, using the run's shared checker.
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Rules } from '../../../typeaware/rules.ts';
+import { UnaryMinus } from '../../../typeaware/unary_minus.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+export class CheckedJudgments {
+    readonly context: RuleContext;
+    readonly rules: Rules;
+    cursor = 0;
+    constructor(context: RuleContext) {
+        this.context = context;
+        const checker = context.checker ?? panic('typed rule without checker');
+        const unary = new UnaryMinus(checker.program, checker.path, context.parser, context.scanner, checker.offsets);
+        this.rules = new Rules(checker.program, checker.path, context.parser, context.scanner, checker.offsets, unary, checker);
+        for(const parent of context.parents) { this.rules.parents.push(parent); }
+    }
+    position(byte: number): number {
+        // Bridge diagnostics carry Go byte offsets; only findings cross this boundary.
+        const offsets = this.rules.offsets;
+        for(let at = 0; at < offsets.length; at++) {
+            if(offsets[at] === byte) { return at; }
+        }
+        return panic('finding byte offset outside source');
+    }
+    flush(): void {
+        for(; this.cursor < this.rules.findings.length; this.cursor++) {
+            const old = this.rules.findings[this.cursor] ?? panic('missing finding');
+            const edits: SuggestionEdit[] = [];
+            if(old.fixStart >= 0) { edits.push(new SuggestionEdit(this.position(old.fixStart), this.position(old.fixEnd), old.replacement)); }
+            for(const edit of old.repairs) { edits.push(new SuggestionEdit(this.position(edit.start), this.position(edit.end), edit.text)); }
+            const suggestions: Suggestion[] = [];
+            for(const suggestion of old.suggestions) {
+                const changes: SuggestionEdit[] = [];
+                for(const edit of suggestion.repairs) { changes.push(new SuggestionEdit(this.position(edit.start), this.position(edit.end), edit.text)); }
+                suggestions.push(new Suggestion(suggestion.id, suggestion.message, changes));
+            }
+            this.context.reportRange(this.position(old.start), this.position(old.end), old.rule, old.id, old.message, edits, suggestions);
+        }
+    }
+}

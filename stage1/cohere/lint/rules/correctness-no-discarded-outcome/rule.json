@@ -1,0 +1,14 @@
+{
+  "name": "nexus/correctness-no-discarded-outcome",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "ExpressionStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave17CorrectnessNoDiscardedOutcome",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "Test"
+}

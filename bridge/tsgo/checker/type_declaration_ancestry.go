@@ -49,7 +49,7 @@ func (p *Program) inspectTypeDeclarationAncestry(c *checker.Checker, node *ast.N
 			if source == nil {
 				return "", fmt.Errorf("type declaration has no source")
 			}
-			out.text(source.FileName())
+			out.text(string(source.FileName()))
 			ancestors := []*ast.Node{}
 			for ancestor := declaration; ancestor != nil; ancestor = ancestor.Parent {
 				ancestors = append(ancestors, ancestor)

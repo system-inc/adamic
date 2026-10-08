@@ -1,0 +1,29 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { CheckedJudgments } from '../no-global-assign/context.a';
+import { NoUselessBackreference } from '../../../typeaware/no_useless_backreference.a';
+import { Bindings } from '../../../typeaware/bindings.ts';
+import { NexusFacts } from '../../../typeaware/nexus_facts.a';
+import { Reassign } from '../../../typeaware/reassign.ts';
+import { FourthFacts } from '../../../typeaware/fourth_facts.a';
+import { RegexpReferences } from '../../../typeaware/regexp_references.a';
+export class Rule {
+    readonly context: RuleContext;
+    checked: CheckedJudgments | undefined = undefined;
+    judgment: NoUselessBackreference | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        if(this.judgment === undefined) {
+            const context = this.context;
+            this.checked = new CheckedJudgments(context);
+            const rules = this.checked.rules;
+            this.judgment = new NoUselessBackreference(rules, new NexusFacts(rules), new RegexpReferences(rules, new Bindings(rules), new Reassign(rules), new FourthFacts(rules)), new FourthFacts(rules));
+        }
+        const judgment = this.judgment ?? panic('missing judgment');
+        const checked = this.checked ?? panic('missing checker view');
+        judgment.run();
+        checked.flush();
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,14 @@
+{
+  "name": "@next/next/no-async-client-component",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave17NoAsyncClientComponent",
+  "upstreamPackage": "next",
+  "upstreamTest": "Test"
+}
