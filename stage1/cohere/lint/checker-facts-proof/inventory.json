@@ -1,0 +1,2303 @@
+{
+  "baseline": "c8f6d74f5387df926ae12d8babd2780564b60097",
+  "audits": {
+    "origin/lint-checker/audit-wave-18": {
+      "sha": "e9956e769fd9d430056977022af0d1079b4abe60",
+      "path": "stage1/cohere/lint/checker-audit/wave-18.md"
+    },
+    "origin/lint-checker/audit-wave-29": {
+      "sha": "aaf52ab7ff55f88c06ff2d0e4e4caa3dffd7dddd",
+      "path": "stage1/cohere/lint/checker-audit/wave-29.md"
+    },
+    "origin/lint-checker/audit-wave-30": {
+      "sha": "bb092f8d30ad33e17bc35b6d4fac3790beec36b5",
+      "path": "stage1/cohere/lint/checker-audit/wave-30.md"
+    }
+  },
+  "primary_questions": {
+    "accessed-property": [
+      "origin/codex/typeaware-wave-20"
+    ],
+    "alias-declarations": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "annotated-return-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "annotation-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "apparent-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "assignable": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "assignable-types": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "ast-context": [
+      "origin/codex/typeaware-wave-02"
+    ],
+    "awaited-shape": [
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-21"
+    ],
+    "awaited-type-shape": [
+      "origin/codex/typeaware-wave-11"
+    ],
+    "base-constraint-shape": [
+      "origin/codex/typeaware-wave-15"
+    ],
+    "base-member-facts": [
+      "origin/codex/typeaware-wave-18"
+    ],
+    "base-shapes": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "base-type": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "binding-declarations": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "binding-origin": [
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-26"
+    ],
+    "binding-state": [
+      "origin/codex/typeaware-wave-22"
+    ],
+    "binding-structure": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "call-count": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "call-declaration": [
+      "origin/codex/typeaware-wave-13"
+    ],
+    "call-declaration-chain": [
+      "origin/codex/typeaware-wave-15"
+    ],
+    "call-parameter-returns": [
+      "origin/codex/typeaware-wave-04"
+    ],
+    "call-parameters": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "call-returns": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "callable-type-facts": [
+      "origin/codex/typeaware-wave-04"
+    ],
+    "callback-parameters": [
+      "origin/codex/typeaware-wave-20"
+    ],
+    "callback-symbol": [
+      "origin/codex/typeaware-wave-15"
+    ],
+    "character-properties": [
+      "origin/codex/typeaware-wave-04"
+    ],
+    "class-heritage-names": [
+      "origin/codex/typeaware-wave-04"
+    ],
+    "component-property-syntax-facts": [
+      "origin/codex/typeaware-wave-18"
+    ],
+    "constraint-shape": [
+      "origin/codex/typeaware-wave-02"
+    ],
+    "constructor-expression": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "container-bases": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "contextual-argument": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "contextual-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "declaration-chain": [
+      "origin/codex/typeaware-wave-20"
+    ],
+    "declaration-contract": [
+      "origin/codex/typeaware-wave-15"
+    ],
+    "declaration-details": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "declaration-file-flags": [
+      "origin/codex/typeaware-wave-09"
+    ],
+    "declaration-lineage": [
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-26"
+    ],
+    "declarations": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "declared-call-signature": [
+      "origin/codex/typeaware-wave-05"
+    ],
+    "enum-declarations": [
+      "origin/codex/typeaware-wave-21"
+    ],
+    "enum-types": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "execution-graph": [
+      "origin/codex/typeaware-wave-02"
+    ],
+    "export-module-properties": [
+      "origin/codex/typeaware-wave-13"
+    ],
+    "export-symbol-chain": [
+      "origin/codex/typeaware-wave-13"
+    ],
+    "function-signatures": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "global-binding": [
+      "origin/codex/typeaware-wave-22"
+    ],
+    "global-source": [
+      "origin/codex/typeaware-wave-22"
+    ],
+    "identical-types": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "index-signature-access": [
+      "origin/codex/typeaware-wave-19"
+    ],
+    "interface-bases": [
+      "origin/codex/typeaware-wave-14"
+    ],
+    "isolated-declarations": [
+      "origin/codex/typeaware-wave-19"
+    ],
+    "iteration-type-facts": [
+      "origin/codex/typeaware-wave-18"
+    ],
+    "jsx-structure": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "jsx-syntax-facts": [
+      "origin/codex/typeaware-wave-18"
+    ],
+    "literal-string": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "literal-value": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "member-parameters": [
+      "origin/codex/typeaware-wave-10"
+    ],
+    "module-links": [
+      "origin/codex/typeaware-wave-08"
+    ],
+    "module-records": [
+      "origin/codex/typeaware-wave-20"
+    ],
+    "name": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "namespace-binding": [
+      "origin/codex/typeaware-wave-15"
+    ],
+    "node-structure": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "node-symbol-context": [
+      "origin/codex/typeaware-wave-21"
+    ],
+    "node-symbol-details": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "node-symbol-origin": [
+      "origin/codex/typeaware-wave-19"
+    ],
+    "nonnullable-shape": [
+      "origin/codex/typeaware-wave-15"
+    ],
+    "number-index-type": [
+      "origin/codex/typeaware-wave-11"
+    ],
+    "numeric-literal": [
+      "origin/codex/typeaware-wave-15"
+    ],
+    "numeric-syntax-bindings": [
+      "origin/codex/typeaware-wave-11"
+    ],
+    "options": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "output-callee": [
+      "origin/codex/typeaware-wave-05"
+    ],
+    "output-flow": [
+      "origin/codex/typeaware-wave-13"
+    ],
+    "output-symbol": [
+      "origin/codex/typeaware-wave-05"
+    ],
+    "platform-symbol": [
+      "origin/codex/typeaware-wave-13"
+    ],
+    "preference-binding": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "preference-structure": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "process-node-fields": [
+      "origin/codex/typeaware-wave-30"
+    ],
+    "program-imports": [
+      "origin/codex/typeaware-wave-04"
+    ],
+    "program-module-resolution": [
+      "origin/codex/typeaware-wave-30"
+    ],
+    "program-modules": [
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-21"
+    ],
+    "property-declarations": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "property-exists": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "property-info": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "property-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "raw-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "raw-type": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "react-hir": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "react-syntax-details": [
+      "origin/codex/typeaware-wave-11"
+    ],
+    "react-type-names": [
+      "origin/codex/typeaware-wave-21"
+    ],
+    "read-symbol": [
+      "origin/codex/typeaware-wave-13"
+    ],
+    "reference-context": [
+      "origin/codex/typeaware-wave-14"
+    ],
+    "reference-node": [
+      "origin/codex/typeaware-wave-21"
+    ],
+    "reference-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "reference-symbol-origins": [
+      "origin/codex/typeaware-wave-29"
+    ],
+    "regex-pattern": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "regex-pattern-facts": [
+      "origin/codex/typeaware-wave-18"
+    ],
+    "regexp-program": [
+      "origin/codex/typeaware-wave-29"
+    ],
+    "regular-expression-syntax": [
+      "origin/codex/typeaware-wave-11"
+    ],
+    "require-await": [
+      "origin/codex/typeaware-wave-10"
+    ],
+    "resolved-call": [
+      "origin/codex/typeaware-wave-02"
+    ],
+    "resolved-call-target": [
+      "origin/codex/typeaware-wave-30"
+    ],
+    "resolved-callee": [
+      "origin/codex/typeaware-wave-20"
+    ],
+    "resolved-declaration": [
+      "origin/codex/typeaware-wave-21"
+    ],
+    "resolved-name": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "resolved-signature-equal": [
+      "origin/codex/typeaware-wave-11"
+    ],
+    "return-type-sources": [
+      "origin/codex/typeaware-wave-04"
+    ],
+    "runtime-context": [
+      "origin/codex/typeaware-wave-10"
+    ],
+    "runtime-modules": [
+      "origin/codex/typeaware-wave-05"
+    ],
+    "scope-export-symbols": [
+      "origin/codex/typeaware-wave-22"
+    ],
+    "scope-locals": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "scope-symbols": [
+      "origin/codex/typeaware-wave-14"
+    ],
+    "signature": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "signature-context": [
+      "origin/codex/typeaware-wave-14"
+    ],
+    "signature-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "source-comments": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "source-context": [
+      "origin/codex/typeaware-wave-13"
+    ],
+    "source-parse-context": [
+      "origin/codex/typeaware-wave-30"
+    ],
+    "strict-this": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "stringification-type": [
+      "origin/codex/typeaware-wave-14"
+    ],
+    "symbol-ancestry": [
+      "origin/codex/typeaware-wave-05"
+    ],
+    "symbol-context": [
+      "origin/codex/typeaware-wave-14"
+    ],
+    "symbol-declaration-paths": [
+      "origin/codex/typeaware-wave-30"
+    ],
+    "symbol-declaration-provenance": [
+      "origin/codex/typeaware-wave-11"
+    ],
+    "symbol-declaration-syntax": [
+      "origin/codex/typeaware-wave-22"
+    ],
+    "symbol-identities": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "symbol-lineage": [
+      "origin/codex/typeaware-wave-30"
+    ],
+    "symbol-locations": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "symbol-origin": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "symbol-provenance": [
+      "origin/codex/typeaware-wave-29"
+    ],
+    "symbol-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "symbols-in-scope": [
+      "origin/codex/typeaware-wave-15"
+    ],
+    "syntax-metadata": [
+      "origin/codex/typeaware-wave-08"
+    ],
+    "transformed-shape": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "type": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "type-arguments": [
+      "origin/codex/typeaware-wave-26"
+    ],
+    "type-declaration-ancestors": [
+      "origin/codex/typeaware-wave-21"
+    ],
+    "type-declaration-ancestry": [
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "type-leaf-facts": [
+      "origin/codex/typeaware-wave-30"
+    ],
+    "type-metadata": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "type-operations": [
+      "origin/codex/typeaware-wave-22"
+    ],
+    "type-origin": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "type-projection": [
+      "origin/codex/typeaware-wave-05"
+    ],
+    "type-properties": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "type-reference-graph": [
+      "origin/codex/typeaware-wave-07"
+    ],
+    "type-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "type-symbol": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "type-symbol-details": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ],
+    "unicode-node-text": [
+      "origin/codex/typeaware-wave-22"
+    ],
+    "usage-shape": [
+      "origin/codex/typeaware-wave-05"
+    ],
+    "void-position-types": [
+      "origin/codex/typeaware-wave-04"
+    ],
+    "wave-27-call-declaration": [
+      "origin/codex/typeaware-wave-27"
+    ],
+    "wave-27-checker-links": [
+      "origin/codex/typeaware-wave-27"
+    ],
+    "wave-27-declaration-ancestry": [
+      "origin/codex/typeaware-wave-27"
+    ],
+    "wave-27-module-sources": [
+      "origin/codex/typeaware-wave-27"
+    ],
+    "wave-27-syntax-flow": [
+      "origin/codex/typeaware-wave-27"
+    ],
+    "wave08-symbol": [
+      "origin/codex/typeaware-wave-08"
+    ],
+    "widened-shape": [
+      "origin/codex/typeaware-wave-01",
+      "origin/codex/typeaware-wave-02",
+      "origin/codex/typeaware-wave-03",
+      "origin/codex/typeaware-wave-04",
+      "origin/codex/typeaware-wave-05",
+      "origin/codex/typeaware-wave-06",
+      "origin/codex/typeaware-wave-07",
+      "origin/codex/typeaware-wave-08",
+      "origin/codex/typeaware-wave-09",
+      "origin/codex/typeaware-wave-10",
+      "origin/codex/typeaware-wave-11",
+      "origin/codex/typeaware-wave-12",
+      "origin/codex/typeaware-wave-13",
+      "origin/codex/typeaware-wave-14",
+      "origin/codex/typeaware-wave-15",
+      "origin/codex/typeaware-wave-16",
+      "origin/codex/typeaware-wave-17",
+      "origin/codex/typeaware-wave-18",
+      "origin/codex/typeaware-wave-19",
+      "origin/codex/typeaware-wave-20",
+      "origin/codex/typeaware-wave-21",
+      "origin/codex/typeaware-wave-22",
+      "origin/codex/typeaware-wave-23",
+      "origin/codex/typeaware-wave-24",
+      "origin/codex/typeaware-wave-25",
+      "origin/codex/typeaware-wave-26",
+      "origin/codex/typeaware-wave-27",
+      "origin/codex/typeaware-wave-28",
+      "origin/codex/typeaware-wave-29",
+      "origin/codex/typeaware-wave-30"
+    ]
+  },
+  "legacy_apis": {
+    "All": [
+      "bridge/tsgo/checker/regex_pattern/comments/comments.go"
+    ],
+    "AllHexDigits": [
+      "bridge/tsgo/checker/regex_pattern/syntax/hex.go"
+    ],
+    "ClassEnd": [
+      "bridge/tsgo/checker/regex_pattern/syntax/charclass.go"
+    ],
+    "ContentLines": [
+      "bridge/tsgo/checker/regex_pattern/comments/comments.go"
+    ],
+    "CountCapturingGroups": [
+      "bridge/tsgo/checker/regex_pattern/pattern/pattern.go"
+    ],
+    "Current": [
+      "bridge/tsgo/checker/executiongraph/cfg.go",
+      "bridge/tsgo/checker/outputflow/cfg.go",
+      "bridge/tsgo/checker/process_flow/cfg.go",
+      "bridge/tsgo/checker/wave_01_next_flow/cfg.go",
+      "bridge/tsgo/checker/wave_27_syntax_flow.go"
+    ],
+    "Emit": [
+      "bridge/tsgo/checker/executiongraph/cfg.go",
+      "bridge/tsgo/checker/outputflow/cfg.go",
+      "bridge/tsgo/checker/process_flow/cfg.go",
+      "bridge/tsgo/checker/wave_01_next_flow/cfg.go",
+      "bridge/tsgo/checker/wave_27_syntax_flow.go"
+    ],
+    "Index": [
+      "bridge/tsgo/checker/executiongraph/cfg.go",
+      "bridge/tsgo/checker/outputflow/cfg.go",
+      "bridge/tsgo/checker/process_flow/cfg.go",
+      "bridge/tsgo/checker/wave_01_next_flow/cfg.go",
+      "bridge/tsgo/checker/wave_27_syntax_flow.go"
+    ],
+    "IndexRoots": [
+      "bridge/tsgo/checker/executiongraph/roots.go",
+      "bridge/tsgo/checker/outputflow/roots.go",
+      "bridge/tsgo/checker/process_flow/roots.go",
+      "bridge/tsgo/checker/wave_01_next_flow/roots.go"
+    ],
+    "Inspect": [
+      "bridge/tsgo/checker/facts.go"
+    ],
+    "InspectWave04Next": [
+      "bridge/tsgo/checker/wave04_next_dispatch.go"
+    ],
+    "InspectWave24": [
+      "bridge/tsgo/checker/wave_24_questions.go"
+    ],
+    "IsHexDigit": [
+      "bridge/tsgo/checker/regex_pattern/syntax/hex.go"
+    ],
+    "IsJsDoc": [
+      "bridge/tsgo/checker/regex_pattern/comments/comments.go"
+    ],
+    "IsRoot": [
+      "bridge/tsgo/checker/executiongraph/roots.go",
+      "bridge/tsgo/checker/outputflow/roots.go",
+      "bridge/tsgo/checker/process_flow/roots.go",
+      "bridge/tsgo/checker/wave_01_next_flow/roots.go"
+    ],
+    "IterateRegexCharacterClasses": [
+      "bridge/tsgo/checker/regex_pattern/syntax/charclass.go"
+    ],
+    "Open": [
+      "bridge/tsgo/checker/program.go"
+    ],
+    "ParseHexUint": [
+      "bridge/tsgo/checker/regex_pattern/syntax/hex.go"
+    ],
+    "ParseRegexCharacterClass": [
+      "bridge/tsgo/checker/regex_pattern/syntax/charclass.go"
+    ],
+    "ParseRegexCharacterClassWithEnd": [
+      "bridge/tsgo/checker/regex_pattern/syntax/charclass.go"
+    ],
+    "ParseRegexFlags": [
+      "bridge/tsgo/checker/regex_pattern/syntax/charclass.go"
+    ],
+    "Path": [
+      "bridge/tsgo/checker/program.go"
+    ],
+    "Query": [
+      "bridge/tsgo/checker/program.go"
+    ],
+    "RootOf": [
+      "bridge/tsgo/checker/executiongraph/roots.go",
+      "bridge/tsgo/checker/outputflow/roots.go",
+      "bridge/tsgo/checker/process_flow/roots.go",
+      "bridge/tsgo/checker/wave_01_next_flow/roots.go"
+    ],
+    "SkipPatternEscape": [
+      "bridge/tsgo/checker/regex_pattern/syntax/charclass.go"
+    ],
+    "TypeParts": [
+      "bridge/tsgo/checker/program.go"
+    ],
+    "UV": [
+      "bridge/tsgo/checker/regex_pattern/syntax/charclass.go",
+      "bridge/tsgo/checker/regex_pattern_facts.go"
+    ],
+    "Walk": [
+      "bridge/tsgo/checker/regex_pattern/pattern/pattern.go"
+    ]
+  },
+  "audited_dependencies": [
+    {
+      "api": "`ctx.TypeChecker.GetSymbolAtLocation`",
+      "rules": [
+        "id-denylist",
+        "id-match",
+        "nexus/concurrency-no-check-then-write",
+        "nexus/consistency-no-iso-string-date-cut",
+        "nexus/correctness-no-callback-in-parse-try",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-discarded-pure-result",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-require-blocking-standard-streams",
+        "no-restricted-globals",
+        "no-setter-return",
+        "no-shadow-restricted-names",
+        "react/jsx-fragments",
+        "react/jsx-no-constructed-context-values",
+        "react/jsx-no-undef"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md",
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "ctx.TypeChecker.GetSymbolAtLocation; ctx.TypeChecker.GetShorthandAssignmentValueSymbol; rule.DeclarationsIn",
+      "rules": [
+        "no-class-assign",
+        "no-const-assign",
+        "no-constant-binary-expression",
+        "no-new-native-nonconstructor",
+        "prefer-promise-reject-errors",
+        "prefer-rest-params"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunction`",
+      "rules": [
+        "react-hooks/purity",
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md",
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "`type_checking.IsSymbolFromDefaultLibrary`",
+      "rules": [
+        "nexus/consistency-no-iso-string-date-cut",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-uncleared-race-timeout"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "high_level_intermediate_representation.MayHoldComponentOrHook",
+      "rules": [
+        "react-hooks/set-state-in-effect",
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetAliasedSymbol`",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-require-blocking-standard-streams"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetShorthandAssignmentValueSymbol`",
+      "rules": [
+        "nexus/correctness-no-callback-in-parse-try",
+        "nexus/correctness-no-uncleared-race-timeout"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunctionWithoutManualMemoization`",
+      "rules": [
+        "react-hooks/refs",
+        "react-hooks/set-state-in-effect"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md",
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "`reference.WritesToBinding`",
+      "rules": [
+        "nexus/concurrency-no-check-then-write",
+        "no-shadow-restricted-names"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`typeChecker.GetShorthandAssignmentValueSymbol`; `ctx.TypeChecker.GetShorthandAssignmentValueSymbol`",
+      "rules": [
+        "no-restricted-globals",
+        "no-shadow-restricted-names"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`type_checking.IsSourceFileDefaultLibrary`",
+      "rules": [
+        "nexus/correctness-no-discarded-pure-result",
+        "nexus/correctness-no-uncleared-race-timeout"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "ctx.TypeChecker.GetSymbolAtLocation; ctx.TypeChecker.GetShorthandAssignmentValueSymbol",
+      "rules": [
+        "react/static-property-placement",
+        "react/style-prop-object"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "high_level_intermediate_representation.ForFunction",
+      "rules": [
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "`checker.Checker_getAwaitedType`",
+      "rules": [
+        "nexus/correctness-no-discarded-outcome"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "`checker.SkipAlias`",
+      "rules": [
+        "nexus/concurrency-no-check-then-write"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`checker.Type_symbol; symbol.Declarations; declaration.Parent`",
+      "rules": [
+        "nexus/correctness-no-discarded-outcome"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "`declarationAnchoredAt`; `resolvesToDeclaration`; `rule.DeclarationsIn`",
+      "rules": [
+        "no-shadow-restricted-names"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`descriptor.IsFunctionUnder`",
+      "rules": [
+        "no-setter-return"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`hir.ForFunction; hir.CloneFunction; hir.AnalyzePreservedManualMemoization`",
+      "rules": [
+        "react-hooks/preserve-manual-memoization"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "`reference.IsValueReference`; `reference.ReadSymbol`",
+      "rules": [
+        "no-restricted-globals"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`rule.IsDeclaredOnlyInDeclarationFiles`",
+      "rules": [
+        "no-setter-return"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`typeChecker.GetExportSpecifierLocalTargetSymbol`",
+      "rules": [
+        "no-restricted-globals"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`writers.ctx.TypeChecker.GetResolvedSignature; writers.ctx.TypeChecker.GetReturnTypeOfSignature`",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "ctx.TypeChecker.GetDeclaredTypeOfSymbol; ctx.TypeChecker.GetBaseTypes; ctx.TypeChecker.GetPropertyOfType",
+      "rules": [
+        "@typescript-eslint/class-literal-property-style"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "ctx.TypeChecker.GetSymbolAtLocation",
+      "rules": [
+        "react/jsx-no-undef"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "ctx.TypeChecker.IsArrayLikeType; ctx.TypeChecker.GetNumberIndexType; ctx.TypeChecker.GetTypeArguments; type_checking.GetWellKnownSymbolPropertyOfType; type_checking.NeedsToBeAwaited",
+      "rules": [
+        "@typescript-eslint/await-thenable"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "high_level_intermediate_representation.ForFunctionWithoutManualMemoization",
+      "rules": [
+        "react-hooks/set-state-in-effect"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "jsxNoConstructedContextValuesCheckMemo",
+      "rules": [
+        "react/jsx-no-constructed-context-values"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "jsxNoConstructedContextValuesStaysHome",
+      "rules": [
+        "react/jsx-no-constructed-context-values"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "regexpattern.Walk; regexsyntax.ParseRegexFlags; regexsyntax.SkipPatternEscape; regexsyntax.ClassEnd",
+      "rules": [
+        "prefer-regex-literals"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "walk.anyEscapes (receiver *jsxNoConstructedContextValuesStabilityWalk)",
+      "rules": [
+        "react/jsx-no-constructed-context-values"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    },
+    {
+      "api": "walk.functionEvaluation (receiver *jsxNoConstructedContextValuesStabilityWalk)",
+      "rules": [
+        "react/jsx-no-constructed-context-values"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
+      ]
+    }
+  ]
+}
