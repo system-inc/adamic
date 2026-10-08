@@ -17,6 +17,7 @@ the run ends.
 """
 
 import argparse
+import hashlib
 import json
 import os
 import signal
@@ -99,6 +100,8 @@ class Gate:
         if head != self.arguments.sha:
             self.fail("setup", "the tree is at %s, not the candidate %s" % (head, self.arguments.sha))
             return
+        if not self.npmPackages():
+            return
         if self.arguments.full:
             self.runFull()
             return
@@ -163,6 +166,45 @@ class Gate:
             self.checkCensus()
         except BaseException:
             self.fail("census", traceback.format_exc())
+
+    def npmPackages(self):
+        """The pinned npm packages a tree's tests read (stage3/api's @types/node for node:* imports),
+        installed with npm ci from its lockfile, once per lockfile: the install lives in a cache keyed
+        by the lockfile's hash, and the tree's node_modules is a link to it, so an unchanged lockfile
+        costs nothing and a changed one gets a fresh install."""
+        for directory in ("stage3/api",):
+            lockfile = os.path.join(self.arguments.tree, directory, "package-lock.json")
+            if not os.path.exists(lockfile):
+                continue
+            started = time.monotonic()
+            with open(lockfile, "rb") as handle:
+                key = hashlib.sha256(handle.read()).hexdigest()
+            cache = os.path.join(os.path.expanduser("~/fast-gate/npm"), key)
+            if not os.path.isdir(os.path.join(cache, "node_modules")):
+                staging = cache + ".staging-%d" % os.getpid()
+                os.makedirs(staging)
+                for name in ("package.json", "package-lock.json"):
+                    with open(os.path.join(self.arguments.tree, directory, name), "rb") as source, open(os.path.join(staging, name), "wb") as target:
+                        target.write(source.read())
+                process = subprocess.run(["npm", "ci", "--ignore-scripts", "--no-audit", "--no-fund"], cwd=staging, capture_output=True, text=True)
+                if process.returncode != 0:
+                    self.fail("setup", "npm ci for %s failed:\n%s" % (directory, (process.stdout + process.stderr)[-4000:]))
+                    return False
+                try:
+                    os.rename(staging, cache)
+                except OSError:
+                    pass  # another gate published the same lockfile's install first; its bytes are the same
+            link = os.path.join(self.arguments.tree, directory, "node_modules")
+            if os.path.islink(link) or not os.path.exists(link):
+                fresh = link + ".link-%d" % os.getpid()
+                os.symlink(os.path.join(cache, "node_modules"), fresh)
+                os.replace(fresh, link)
+            else:
+                # A real directory left by an earlier install moves aside, never deleted here.
+                os.rename(link, os.path.join(os.path.expanduser("~/fast-gate/npm"), "replaced-%d-%d" % (time.time(), os.getpid())))
+                os.symlink(os.path.join(cache, "node_modules"), link)
+            self.result.setdefault("npm", {})[directory] = {"lockfile_sha256": key, "seconds": round(time.monotonic() - started, 1)}
+        return True
 
     def guarded(self, stage, target, *arguments):
         """A thread whose any exception (a process that can't start for want of file descriptors, a
