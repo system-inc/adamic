@@ -1,0 +1,112 @@
+[
+  {
+    "source": "50446255",
+    "exit": 0,
+    "conflicts": [],
+    "result": "f3a12e1e78727b903ea68ab4b9c7ffe34f4cc0da"
+  },
+  {
+    "source": "c137f65f",
+    "exit": 0,
+    "conflicts": [],
+    "result": "42b601ed7eb69f7830f8b002bd3dc894bf618848"
+  },
+  {
+    "source": "adb405d5",
+    "exit": 1,
+    "conflicts": [
+      {
+        "file": "internal/lower/expression.go",
+        "hunks": 1
+      },
+      {
+        "file": "internal/lower/predicates.go",
+        "hunks": 2
+      },
+      {
+        "file": "internal/lower/refusals.go",
+        "hunks": 1
+      },
+      {
+        "file": "internal/oracle/counts.md",
+        "hunks": 1
+      }
+    ],
+    "result": "13759a9c6ccb0935ddb40f28b9ee331bb8380a7d",
+    "resolution": "Preserve area checks; map foundation flow proof API; retain area count row."
+  },
+  {
+    "source": "dfced069",
+    "exit": 1,
+    "conflicts": [
+      {
+        "file": "internal/oracle/testdata/view_direct_invalid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_direct_valid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_intersection_invalid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_intersection_valid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_invalid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_statement_invalid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_statement_valid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_union_invalid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_union_valid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_valid.a",
+        "hunks": 0
+      },
+      {
+        "file": "internal/oracle/testdata/view_writable_refused.a",
+        "hunks": 0
+      }
+    ],
+    "result": "13759a9c6ccb0935ddb40f28b9ee331bb8380a7d",
+    "disposition": "deferred, missing views dependencies; cherry-pick skipped",
+    "missing_views_symbols": [
+      "lowering.structuralViewCast",
+      "lowering.structuralViewIntersection"
+    ],
+    "other_missing_symbols": [
+      "lowering.checkedAssertionSource"
+    ],
+    "semantic_dependency": "lowering.view exists in the area but has the older eager scalar contract implementation, not shared lazy admission."
+  },
+  {
+    "source": "2e78986b",
+    "exit": 0,
+    "conflicts": [],
+    "disposition": "historical source-branch evidence only",
+    "result": "1c699f22de0f9981f977eec016cc7006fa7bd18e"
+  },
+  {
+    "source": "c191f97b",
+    "exit": 0,
+    "conflicts": [],
+    "disposition": "historical source-branch evidence only",
+    "result": "38dd6d21b56799d6e0f811b5196d0763ceb5c87f"
+  }
+]
