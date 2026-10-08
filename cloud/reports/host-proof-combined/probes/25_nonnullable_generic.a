@@ -1,0 +1,1 @@
+function isArray(value: unknown): value is readonly unknown[] { return Array.isArray(value); } export function flatten<T>(array: T[][] | readonly (T | readonly T[] | undefined)[]): T[] { const result = []; for (let i = 0; i < array.length; i++) { const v = array[i]; if (v) { if (!isArray(v)) { result.push(v); } } } return result; }

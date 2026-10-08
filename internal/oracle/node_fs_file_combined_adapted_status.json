@@ -340,11 +340,11 @@
     "nodeMatches": true,
     "native": {
       "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1097:26: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)\n"
     },
     "javascript": {
       "stage": "Refused",
-      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\n"
+      "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1097:26: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)\n"
     }
   }
 ]

@@ -1,6 +1,6 @@
 # Combined host proof
 
-24/25 adapted fixtures agree with Node on each backend and jointly. Pristine controls remain 16/25 on each backend. All 25 sources in both sets were rerun with generic-function-value 21e50844 and wasi-host-error-identity 6054117 merged. The WebAssembly host test suite passes, including the new Error identity oracle and tag-dropping mutant. Fixture 25 still refuses the conditional generic identity return at 1088:12.
+24/25 adapted fixtures agree with Node on both backends. All 25 were rerun after merging afdb4c94 (merge d6149508). The conditional identity refusal is fixed; fixture 25 now refuses NonNullable<T> seen as T at 1097:26. The WebAssembly host test suite passes. Pristine controls remain 16/25 on each backend.
 
 Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapted fixtures/status/Node records from 21ef072e via 33e60869; Date conversion 05635aa via merge 0e7a2cc3; scalar concatenation 998fb3eb via merge b78d7ea7. stage3/fixtures/host is identical to the adapted branch at 9eba5d10. The pristine run uses the unchanged pre-adaptation fixture snapshot at 08b5b2c4. Agrees requires exact stdout, stderr and exit against Node, including exit 1 and 2 fixtures.
 
@@ -30,7 +30,7 @@ Final additions: Buffer fallback ccb8a69 via merge 469bb8b9; exact audited adapt
 | 22_createHash_fallback.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 23_newLine.a | Agrees | Agrees | Agrees | Agrees | None | None |
 | 24_useCaseSensitiveFileNames.a | Agrees | Agrees | Agrees | Agrees | None | None |
-| 25_readDirectory.a | Checker | Checker | Refused | Refused | generic identity callback at 1088:12 | Compiler |
+| 25_readDirectory.a | Checker | Checker | Refused | Refused | NonNullable<T> seen as T at 1097:26 | Compiler |
 
 Fixture 25 passes checking on both backends. Exact next diagnostic:
 ```
@@ -434,3 +434,22 @@ Commands and results:
 - Host Error tag-dropping mutant caught by Node stdout; empty-symlink, static Stats/Dirent dispatch, missing WASI kind guard and storage-readiness mutants also pass their expected failure checks.
 
 Raw logs are compressed in logs/fs_last_*.log.gz. No full `go test ./...`, full counts regeneration or macOS gate was run. This remains a proof branch, never a main or area landing; no force push or rebase.
+
+
+## Conditional generic instantiation recount
+
+Merged afdb4c94 as d6149508. Invariance conflicts preserve the census marker-predicate rule and readonly-array contextual targets alongside contextual generic signatures.
+
+Adapted: 24/25 on each backend; original controls: 16/25 on each backend. Fixture 25 reaches this new compiler-owned first refusal:
+
+```
+adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1097:26: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)
+```
+
+Verified on both backends at 1:325:
+
+```typescript
+function isArray(value: unknown): value is readonly unknown[] { return Array.isArray(value); } export function flatten<T>(array: T[][] | readonly (T | readonly T[] | undefined)[]): T[] { const result = []; for (let i = 0; i < array.length; i++) { const v = array[i]; if (v) { if (!isArray(v)) { result.push(v); } } } return result; }
+```
+
+Commands: compiler build PASS; both all-25 observation runners complete (exit 1 for remaining refusals); focused `go test ./internal/lower -run '^TestGenericFunctionValue' -count=1 -v` PASS (0.631s). WASI command is the previous complete host selection plus `^TestGenericFunctionValueWrongResultMutant$`, with `ADAMIC_ORACLE_WASI=1`, `-count=1 -timeout 15m -v`: PASS (33.712s). Host Error tag-dropping and generic wrong-result mutants are caught by Node comparison; other selected host and storage mutants pass. Honest WASI target refusals remain explicit. Raw logs: logs/fs_conditional_*.log.gz. No full repository gate or macOS run. Proof branch only, no rebase or force push.

@@ -1,7 +1,7 @@
 [
   {
     "file": "01_readFile_utf8.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Checker",
@@ -27,7 +27,7 @@
   },
   {
     "file": "02_readFile_utf16le.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Checker",
@@ -53,7 +53,7 @@
   },
   {
     "file": "03_readFile_utf16be.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Checker",
@@ -79,7 +79,7 @@
   },
   {
     "file": "04_readFile_missing.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Checker",
@@ -105,7 +105,7 @@
   },
   {
     "file": "05_writeFile.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Refused",
@@ -131,7 +131,7 @@
   },
   {
     "file": "06_fileExists.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -159,7 +159,7 @@
   },
   {
     "file": "07_directoryExists.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -187,7 +187,7 @@
   },
   {
     "file": "08_getDirectories.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "NotYet",
@@ -213,7 +213,7 @@
   },
   {
     "file": "09_realpath.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -241,7 +241,7 @@
   },
   {
     "file": "10_getModifiedTime.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -269,7 +269,7 @@
   },
   {
     "file": "11_setModifiedTime.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -297,7 +297,7 @@
   },
   {
     "file": "12_deleteFile.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -325,7 +325,7 @@
   },
   {
     "file": "13_createDirectory.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Checker",
@@ -351,7 +351,7 @@
   },
   {
     "file": "14_getCurrentDirectory.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Disagrees",
@@ -397,7 +397,7 @@
   },
   {
     "file": "15_getExecutingFilePath.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -425,7 +425,7 @@
   },
   {
     "file": "16_getEnvironmentVariable.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -453,7 +453,7 @@
   },
   {
     "file": "17_write.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -481,7 +481,7 @@
   },
   {
     "file": "18_exit_0.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -509,7 +509,7 @@
   },
   {
     "file": "19_exit_1.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -537,7 +537,7 @@
   },
   {
     "file": "20_exit_2.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -565,7 +565,7 @@
   },
   {
     "file": "21_createHash.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -593,7 +593,7 @@
   },
   {
     "file": "22_createHash_fallback.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -621,7 +621,7 @@
   },
   {
     "file": "23_newLine.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -649,7 +649,7 @@
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Compiles",
@@ -677,7 +677,7 @@
   },
   {
     "file": "25_readDirectory.a",
-    "source": "adapted 9eba5d10; combined 02a997b6, 3550dbc4, 6469f37, 3a6c8231, e52e6219",
+    "source": "adapted 9eba5d10; combined afdb4c94 and 6054117",
     "original": {
       "native": {
         "stage": "Checker",
@@ -691,11 +691,11 @@
     "adapted": {
       "native": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1097:26: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)\n"
       },
       "javascript": {
         "stage": "Refused",
-        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1088:12: Adamic 0.1 refuses a function taking T seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)\n"
+        "diagnostic": "adamic: /workspace/adamic/stage3/fixtures/host/25_readDirectory.a:1097:26: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)\n"
       }
     }
   }
