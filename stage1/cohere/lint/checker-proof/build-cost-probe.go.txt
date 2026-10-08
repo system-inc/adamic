@@ -1,0 +1,77 @@
+package lint
+import (
+ "bytes"
+ "encoding/json"
+ "os/exec"
+ "os"
+ "path/filepath"
+ "testing"
+ "time"
+ "github.com/system-inc/adamic/internal/native"
+)
+// Temporary measured probe, run alone after the area baseline and removed
+// before the after gate. Both builds consume identical generated C and flags.
+func TestCheckerBuildCostProbe(t *testing.T) {
+ directory := "/workspace/checker-adapter-final.iAVfPc"
+ data, err := os.ReadFile(filepath.Join(directory, "main.c"))
+ if err != nil { t.Fatal(err) }
+ archive := checkerArchive(t, true)
+ options := native.Options{Sanitize: true}
+ before := filepath.Join(t.TempDir(), "before")
+ after := filepath.Join(t.TempDir(), "after")
+ started := time.Now()
+ if err := native.BuildTSGo(string(data), before, archive, options); err != nil { t.Fatal(err) }
+ t.Logf("before full runtime compilation: %.6f seconds", time.Since(started).Seconds())
+ started = time.Now()
+ if err := buildCheckerWithRuntime(string(data), after, archive, options); err != nil { t.Fatal(err) }
+ t.Logf("after cached split compilation: %.6f seconds", time.Since(started).Seconds())
+ warm := filepath.Join(t.TempDir(), "warm")
+ started = time.Now()
+ if err := buildCheckerWithRuntime(string(data), warm, archive, options); err != nil { t.Fatal(err) }
+ t.Logf("after identical warm split compilation: %.6f seconds", time.Since(started).Seconds())
+ path := filepath.Join(directory, "pilot.txt")
+ leftRun := execute(t, "", before, "--manifest", path)
+ left := leftRun.output
+ rightRun := execute(t, "", after, "--manifest", path)
+ right := rightRun.output
+ oracleRun := execute(t, "", goOracle(t), "--manifest", path)
+ want := oracleRun.output
+ if !bytes.Equal(left, right) || !bytes.Equal(right, want) { t.Fatal("changed output") }
+ t.Logf("pilot process durations: old native=%s split native=%s Go program and lint=%s", leftRun.duration, rightRun.duration, oracleRun.duration)
+ prefix := filepath.Join(t.TempDir(), "facts")
+ recorded := execute(t, "", after, "--manifest", path, "--record", prefix)
+ if !bytes.Equal(recorded.output, want) { t.Fatal("recording changed output") }
+ t.Logf("pilot native with recording=%s", recorded.duration)
+ current, _ := filepath.Abs(".")
+ runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+ replay := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(current, "main.ts"), "--manifest", path, "--replay", prefix)
+ emitted := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emittedJavaScript(t, current), "--manifest", path, "--replay", prefix)
+ if !bytes.Equal(replay.output, want) || !bytes.Equal(emitted.output, want) { t.Fatal("replay changed output") }
+ t.Logf("pilot replay durations: Node=%s emitted JavaScript=%s", replay.duration, emitted.duration)
+ profile := exec.Command(after, "--manifest", path)
+ profile.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
+ stdout, _ := os.Create(filepath.Join(t.TempDir(), "native-output"))
+ stderr, _ := os.Create(filepath.Join(t.TempDir(), "native-phases"))
+ profile.Stdout, profile.Stderr = stdout, stderr
+ err = profile.Run(); stdout.Close(); stderr.Close()
+ if err != nil { t.Fatal(err) }
+ phaseBytes, _ := os.ReadFile(stderr.Name())
+ t.Logf("native program phases: %s", phaseBytes)
+ // Measure the oracle's real program builder separately, using a Go overlay
+ // inside cohere so its internal package access matches the actual oracle.
+ cohere, _ := filepath.Abs(filepath.Join(repository, "cohere"))
+ sample := filepath.Join(t.TempDir(), "program-cost.go")
+ code := `package main
+import("fmt";"os";"path/filepath";"time";"github.com/system-inc/cohere/internal/types/program")
+func main(){c:=os.Args[1];s:=time.Now();_,e:=program.Build(program.Options{ConfigFileName:c,CurrentDirectory:filepath.Dir(c),SingleThreaded:true});if e!=nil{panic(e)};fmt.Printf("%d\n",time.Since(s).Nanoseconds())}`
+ if err := os.WriteFile(sample, []byte(code), 0644); err != nil { t.Fatal(err) }
+ virtual := filepath.Join(cohere, "adamic_checker_program_cost.go")
+ overlayData, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: sample}})
+ overlay := filepath.Join(t.TempDir(), "overlay.json")
+ if err := os.WriteFile(overlay, overlayData, 0644); err != nil { t.Fatal(err) }
+ programBinary := filepath.Join(t.TempDir(), "program-cost")
+ execute(t, cohere, "go", "build", "-overlay="+overlay, "-o", programBinary, virtual)
+ cost := execute(t, "", programBinary, filepath.Join(directory, "pilot.tsconfig.json"))
+ t.Logf("oracle program.Build nanoseconds: %s", cost.output)
+ t.Log("same C and sanitizer flags, both outputs identical to the live Go oracle")
+}
