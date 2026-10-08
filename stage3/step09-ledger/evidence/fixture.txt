@@ -1,0 +1,23 @@
+{
+  "stock_sites": 3,
+  "expected_dispositions": {
+    "rewritten": 2,
+    "proven_safe_upcast": 1
+  },
+  "observed": {
+    "rewritten": 2,
+    "proven_safe_upcast": 1
+  },
+  "mutant": {
+    "open": 2,
+    "proven_safe_upcast": 1
+  },
+  "mutant_caught": true,
+  "nested_casts_distinct": true,
+  "nested_dispositions": {
+    "open": 1,
+    "proven_safe_upcast": 1
+  },
+  "node": "value=1 widened=1\n",
+  "logs": "/tmp/adamic-gate/step09-fixture-xgss2dpl"
+}

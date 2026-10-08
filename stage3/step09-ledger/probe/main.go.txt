@@ -1,0 +1,20 @@
+// Measurement only: the overlay refuses the ordinary loader API and emits no code.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+)
+
+func main() {
+	program, err := load.Step09Load(os.Args[1:])
+	if err != nil {
+		panic(err)
+	}
+	if err := json.NewEncoder(os.Stdout).Encode(lower.Step09Casts(context.Background(), program)); err != nil {
+		panic(err)
+	}
+}

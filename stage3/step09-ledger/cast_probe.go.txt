@@ -1,0 +1,65 @@
+package lower
+
+import (
+	"context"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+type Step09Cast struct {
+	File    string `json:"file"`
+	Start   int    `json:"byte_start"`
+	End     int    `json:"byte_end"`
+	State   string `json:"state"`
+	Message string `json:"message,omitempty"`
+}
+
+// Step09Casts calls the production cast proof independently of sibling lowering failures.
+// No IR is emitted, and each refusal or panic remains visible.
+func Step09Casts(ctx context.Context, program *load.Program) []Step09Cast {
+	checker, release := program.Checker(ctx, program.Files()[0])
+	defer release()
+	l := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+	files := program.CompilerProgram().GetSourceFiles()
+	l.noteInheritance(files)
+	rows := []Step09Cast{}
+	for _, file := range files {
+		if file.IsDeclarationFile {
+			continue
+		}
+		var visit func(*ast.Node) bool
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindAsExpression {
+				row := Step09Cast{File: program.FileName(file), Start: scanner.GetTokenPosOfNode(node, file, false), End: node.End()}
+				func() {
+					defer func() {
+						if p := recover(); p != nil {
+							row.State = "unresolved"
+							row.Message = fmt.Sprint(p)
+						}
+					}()
+					proof, err := l.castProof(node)
+					if err != nil {
+						row.Message = err.Error()
+						row.State = "other_error"
+						if _, ok := err.(*Refused); ok {
+							row.State = "refused"
+						}
+					} else if len(proof.allowed) > 0 || len(proof.classes) > 0 {
+						row.State = "runtime_check"
+					} else {
+						row.State = "upcast"
+					}
+				}()
+				rows = append(rows, row)
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		visit(file.AsNode())
+	}
+	return rows
+}

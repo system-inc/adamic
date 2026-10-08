@@ -1,0 +1,34 @@
+{
+  "base_sha": "3ffb1a835184713998a34874e86326cd21db971f",
+  "typescript": "6.0.3",
+  "source": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  },
+  "extra_adaptations": [
+    {
+      "name": "43-any-returns",
+      "branch": "codex/stage3-real-any",
+      "sha": "643639ea30051875d2ba1a133866081bc8999e2a"
+    }
+  ],
+  "missing_requested_adaptations": [
+    "41",
+    "42"
+  ],
+  "status": "pending required adaptation refs; not published",
+  "semantic_diagnostics": {
+    "stock": 0,
+    "adapted": 0,
+    "40_before": 0,
+    "40_after": 0,
+    "43_before": 0,
+    "43_after": 0
+  },
+  "compiler_proof_sha256": {
+    "internal/load/load.go": "696744f1f05fbf6607a6a35d1b8bc54c2cb669f4319d09b7c6c49df5806f7839",
+    "internal/lower/cast_proof.go": "aeb60d8229090a32c2d47c41025ef599b00aa2886dc35e6a760d99c042bcf501",
+    "internal/lower/cast.go": "a68d0d2381a5e7b7c31e2dc824c67053a061f27a5a76e8fdb4b3fb13740700e1"
+  }
+}
