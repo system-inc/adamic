@@ -38,9 +38,9 @@ const viewArrayElementsRuntime = `const adamicViewArrayIndex = (array, index, re
     if (!(index in array)) return undefined;
     return check(array[index]);
 };
-const adamicViewArrayElement = (value, expression, type, expected, allowed, required = false) => {
+const adamicViewArrayElement = (value, expression, type, expected, allowed, required = false, tuple = false) => {
     if (value === undefined) { if (required) panic("element read failed: " + expression + " expected " + expected + ", found undefined"); return value; }
-    const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 8 ? adamicTypeOf(value) === "function" : false;
+    const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && (tuple || !Array.isArray(value)) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 8 ? adamicTypeOf(value) === "function" : false;
     if (!valid) panic("element read failed: " + expression + " expected " + expected + ", found " + (value === null ? "nullish" : Array.isArray(value) ? "array" : adamicTypeOf(value)));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;
@@ -60,7 +60,7 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 			allowed = append(allowed, quote(literal.String))
 		}
 	}
-	checked := fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => adamicViewArrayElement(value, %s, %d, %s, [%s], %t))", array, index, read.Relative, quote(read.View), read.Element, quote(read.ViewType), strings.Join(allowed, ", "), !read.UndefinedAllowed)
+	checked := fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => adamicViewArrayElement(value, %s, %d, %s, [%s], %t, %t))", array, index, read.Relative, quote(read.View), read.Element, quote(read.ViewType), strings.Join(allowed, ", "), !read.UndefinedAllowed, e.tupleViewContract(read.ViewContract))
 	if read.Element == ir.Object && read.ViewContract != 0 {
 		checked = "((adamicElement) => adamicElement === undefined ? undefined : " + e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, "adamicElement") + ")(" + checked + ")"
 	}
@@ -144,7 +144,7 @@ func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) str
 			literals = append(literals, strconv.FormatBool(literal.Boolean))
 		}
 	}
-	checked := fmt.Sprintf("adamicViewArrayElement(%s, %s, %d, %s, [%s], %t)", value, quote(read.View), read.Element, quote(read.ViewType), strings.Join(literals, ", "), !read.UndefinedAllowed)
+	checked := fmt.Sprintf("adamicViewArrayElement(%s, %s, %d, %s, [%s], %t, %t)", value, quote(read.View), read.Element, quote(read.ViewType), strings.Join(literals, ", "), !read.UndefinedAllowed, e.tupleViewContract(read.ViewContract))
 	if read.Element == ir.Object && read.ViewContract != 0 {
 		checked = "((adamicElement) => adamicElement === undefined ? undefined : " + e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, "adamicElement") + ")(" + checked + ")"
 	}

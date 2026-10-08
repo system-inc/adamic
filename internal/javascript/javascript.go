@@ -836,7 +836,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			if expected == "" {
 				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
 			}
-			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s], %t, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed), expression.Absent, expression.Optional, e.viewStringUndefined(expression))
+			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s], %t, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), e.tupleViewRepresentation(expression.ViewContract, expression.Of), quote(expected), e.values(expression.ViewAllowed), expression.Absent, expression.Optional, e.viewStringUndefined(expression))
 			if expression.Of == ir.Object {
 				value = e.viewObjectUnion(expression, value)
 			}

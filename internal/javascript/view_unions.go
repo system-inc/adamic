@@ -9,6 +9,9 @@ import (
 
 // The arrow holds the returned object, preserving a side-effectful receiver.
 func (e *emitter) viewObjectUnion(property ir.Property, value string) string {
+	if checked, tuple := e.viewTuple(property, value); tuple {
+		return checked
+	}
 	if property.ViewContract == 0 {
 		return value
 	}

@@ -25,7 +25,7 @@ func (l *lowering) objectPrimitiveViewType(target *checker.Type) bool {
 		}
 		if of == ir.Array && l.checker.IsArrayType(member) && !checker.IsTupleType(member) {
 			objects++
-		} else if of == ir.Object && member.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(member) && len(l.checker.GetIndexInfosOfType(member)) == 0 {
+		} else if of == ir.Object && member.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(member) && (len(l.checker.GetIndexInfosOfType(member)) == 0 || fixedViewTuple(member)) {
 			objects++
 		} else if interfaceScalar(member) && (of == ir.String || of == ir.Boolean || of == ir.Number) {
 			primitives++

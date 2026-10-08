@@ -46,6 +46,7 @@ type ViewContract struct {
 	MapReadonly   bool
 	ArrayReadonly bool
 	Element       ViewContractID
+	FixedTuple    bool
 	Tuple         []ViewContractID
 	Functions     []int
 	Parameters    []ViewContractID

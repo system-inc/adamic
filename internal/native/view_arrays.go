@@ -22,6 +22,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.emitViewArrayString(join)
 	}
 	value := e.evaluateWithoutViewArrays(expression)
+	if literal, ok := expression.(ir.ObjectLiteral); ok {
+		e.line("%s->tuple = %t;", value, literal.Tuple)
+	}
 	if !ir.HasArrayViews(e.program) {
 		return value
 	}

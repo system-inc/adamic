@@ -10,6 +10,20 @@ import (
 // Fixed tuples use object slots, not homogeneous array storage. Optional/rest
 // lengths need their own runtime witness and cannot be certified here.
 func (l *lowering) mapTupleEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	id := l.tupleViewSlot(node, target, func(element *checker.Type) ir.ViewContractID {
+		child := l.mapEntrySlot(node, l.concrete(element))
+		if tupleCallableEntry(l.result, child, map[ir.ViewContractID]bool{}) {
+			return 0
+		}
+		return child
+	})
+	if !mapEntryDescriptorProven(l.result, id, map[ir.ViewContractID]bool{}) || tupleCallableEntry(l.result, id, map[ir.ViewContractID]bool{}) {
+		return 0
+	}
+	return id
+}
+
+func (l *lowering) tupleViewSlot(node *ast.Node, target *checker.Type, build func(*checker.Type) ir.ViewContractID) ir.ViewContractID {
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
 	}
@@ -26,26 +40,23 @@ func (l *lowering) mapTupleEntrySlot(node *ast.Node, target *checker.Type) ir.Vi
 		if l.result.ViewContracts[id-1].Unsupported == "tuple building" {
 			return 0
 		}
-		if len(l.result.ViewContracts[id-1].Tuple) > 0 {
+		if l.result.ViewContracts[id-1].FixedTuple {
 			return id
 		}
 	}
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 	l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUnknown, Unsupported: "tuple building"})
 	l.result.ViewContractTypes[int(target.Id())] = id
-	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target), ArrayReadonly: tuple.IsReadonly()}
+	contract := ir.ViewContract{Kind: ir.ViewObject, Of: ir.Object, Name: l.checker.TypeToString(target), ArrayReadonly: tuple.IsReadonly(), FixedTuple: true}
 	for position, element := range l.checker.GetTypeArguments(target) {
-		child := l.mapEntrySlot(node, l.concrete(element))
-		if child == 0 || tupleCallableEntry(l.result, child, map[ir.ViewContractID]bool{}) {
+		child := build(element)
+		if child == 0 {
 			return 0
 		}
 		name := strconv.Itoa(position)
 		contract.Tuple = append(contract.Tuple, child)
 		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: name, Contract: child, Readonly: tuple.IsReadonly()})
 		l.result.CheckedFields[name] = true
-	}
-	if len(contract.Tuple) == 0 {
-		return 0
 	}
 	l.result.ViewContracts[id-1] = contract
 	l.result.ViewContractTypes[int(target.Id())] = id
@@ -60,7 +71,7 @@ func (l *lowering) readTupleViewElement(node *ast.Node, object ir.Expression, na
 		return ir.Property{Object: object, Name: name, Of: of}
 	}
 	declared := l.concrete(elements[position])
-	property := ir.Property{Object: object, Name: name, Of: of, Readiness: sourceExpression(node), View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewTypeID: int(declared.Id())}
+	property := ir.Property{Object: object, Name: name, Of: of, Readiness: sourceExpression(node), View: sourceExpression(node), ViewWhere: l.program.Where(node), ViewType: l.checker.TypeToString(declared), ViewTypeID: int(declared.Id()), ViewReceiverTypeID: int(l.checker.GetTypeAtLocation(receiver).Id())}
 	property.ViewAllowed = l.viewLiterals(declared)
 	property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 	return property

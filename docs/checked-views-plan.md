@@ -1613,13 +1613,24 @@ Branch `codex/views-tuples` starts from integration `4e67894a`. Own new
 The lane 2 ranked census supplies six candidate pairs and nine candidate reads.
 These are candidate counts, not exact reachability or certified coverage.
 
-Minimal shared hooks: the existing array contract adapter delegates fixed tuples
-to per-position descriptors; lazy admission recognizes those descriptors; tuple
-index lowering records the same read metadata as object fields; object/primitive
-union selection recognizes the tuple member. Native object production retains
-tuple identity, with initialization in object and region allocation. The existing
-array read and object-union dispatch invoke tuple validation. JavaScript uses
-array identity for tuple descriptors at the same dispatch sites. No second array
-consumer or callable path is introduced. Original numeric brands retain their
-existing refusal unless their real contracts can be certified without rewriting
-tsc declarations.
+Lane 1 tip `65d8a138` is merged at the user's explicit direction. Its
+`view_maps_tuples.go` constructor and tuple read lowering are the single tuple
+path. The array contract adapter supplies the lazy child builder to that same
+constructor; Map producers retain their complete-schema child builder. No second
+fixed-tuple constructor is added.
+
+Minimal shared hooks: `FixedTuple` distinguishes empty tuples from objects in
+IR and Map schema comparison; the array adapter delegates to `tupleViewSlot`;
+lazy admission uses exact tuple position descriptors before numeric-field
+fallback; producer metadata retains tuple identity in native object/region
+allocations; existing array and object-union dispatch validates tuple identity
+and arity. JavaScript uses array identity at those dispatch sites. Tuple read
+metadata retains the original receiver id in lane 1's existing read helper.
+
+The combined candidate queue has ten pairs and fifteen reads: lane 2's six/nine
+plus four/six optional-position receiver pairs in lane 1's nullish inventory.
+No rest receiver pair is identifiable in that inventory. Lane 1 additionally
+hands off two executable Map gap forms (optional and rest tuples); those fixture
+forms are not counted as production pairs or reads. Exact reachability remains
+unmeasured. Original numeric brands retain their current refusal unless their
+real contracts can be certified without rewriting tsc's declarations.

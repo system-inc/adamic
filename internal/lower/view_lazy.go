@@ -78,6 +78,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case l.isLibraryType(target, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		return "collection"
 	case checker.IsTupleType(target):
+		if fixedViewTuple(target) {
+			return ""
+		}
 		return "tuple"
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetIndexInfosOfType(target)) != 0 && !l.checker.IsArrayType(target):
 		return "dictionary"
@@ -195,7 +198,7 @@ func (l *lowering) checkLazyViewReads() error {
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" && !l.viewIntersectionReadChecks(contract) {
+		if family == "" && !l.viewIntersectionReadChecks(contract) && !l.viewTuplePositionChecks(program.ViewContractTypes[receiverTypeID], field, contract) {
 			family = unsupportedFields[field]
 		}
 		if family == "" {

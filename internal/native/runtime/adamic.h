@@ -204,6 +204,7 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	bool tuple;
 	// Original complete scalar-record declaration for array element writes.
 	unsigned int array_write_contract;
 	const char *real_type;

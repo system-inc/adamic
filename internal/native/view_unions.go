@@ -10,6 +10,9 @@ import (
 // Test union membership at the returned object, then leave member payload reads
 // checked. The caller has already evaluated the receiver exactly once.
 func (e *emitter) viewObjectUnion(property ir.Property, object string) {
+	if e.viewTuple(property, object) {
+		return
+	}
 	if property.ViewContract == 0 {
 		return
 	}

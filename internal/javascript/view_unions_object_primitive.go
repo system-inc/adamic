@@ -32,6 +32,8 @@ func (e *emitter) viewObjectPrimitive(property ir.Property) string {
 				}
 				tests = append(tests, "v === "+value)
 			}
+		} else if child.FixedTuple {
+			tests = append(tests, "v !== null && typeof v === 'object' && !(v instanceof Map)")
 		} else if child.Kind == ir.ViewArray && child.Of == ir.Array {
 			tests = append(tests, "Array.isArray(v)")
 		} else if child.Kind == ir.ViewObject && child.Of == ir.Object {
@@ -43,5 +45,12 @@ func (e *emitter) viewObjectPrimitive(property ir.Property) string {
 			panic("compiler bug: unavailable object primitive member adapter")
 		}
 	}
-	return fmt.Sprintf("((o) => { if (%t && (o === undefined || o === null)) return undefined; const v = adamicReadField(o, %s, %s, %t, %t, %s); if (!(%s)) panic('field read failed: ' + %s + ' matches no member of ' + %s + '; expected ' + %s + ', found ' + (v === undefined ? 'undefined' : v === null ? 'null' : Array.isArray(v) ? 'array' : v instanceof Map ? 'Map' : typeof v)); return v; })(%s)", property.Optional, quote(property.Name), quote(property.View), property.Optional, property.Absent, quote(contract.Name), strings.Join(tests, " || "), quote(property.View), quote(contract.Name), quote(contract.Name), e.value(property.Object))
+	checks := ""
+	for _, id := range contract.Members {
+		if e.program.ViewContracts[id-1].FixedTuple {
+			checked, _ := e.viewTuple(ir.Property{View: property.View, ViewContract: id}, "v")
+			checks += "if (v !== undefined && v !== null && typeof v === 'object' && !(v instanceof Map)) {" + checked + ";}"
+		}
+	}
+	return fmt.Sprintf("((o) => { if (%t && (o === undefined || o === null)) return undefined; const v = adamicReadField(o, %s, %s, %t, %t, %s); if (!(%s)) panic('field read failed: ' + %s + ' matches no member of ' + %s + '; expected ' + %s + ', found ' + (v === undefined ? 'undefined' : v === null ? 'null' : Array.isArray(v) ? 'array' : v instanceof Map ? 'Map' : typeof v)); %s return v; })(%s)", property.Optional, quote(property.Name), quote(property.View), property.Optional, property.Absent, quote(contract.Name), strings.Join(tests, " || "), quote(property.View), quote(contract.Name), quote(contract.Name), checks, e.value(property.Object))
 }
