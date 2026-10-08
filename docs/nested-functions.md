@@ -632,7 +632,7 @@ the updated audit and still fails with nested census site mismatch.
 ### Exact probe and integration preparation
 
 The unchanged probe is preserved at
-internal/oracle/refusals/omitted_scanner_original.a. Its dedicated oracle test
+internal/oracle/refusals/omitted_scanner_original.ts. Its dedicated oracle test
 holds Node to stdout 11, exit 0 and empty stderr, and holds lowering to the
 existing typed non-null assertion refusal. Both backends are checked on the
 normalized executable witness, not misreported as compiling the unchanged one.
