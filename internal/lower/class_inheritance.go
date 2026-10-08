@@ -606,7 +606,7 @@ func (l *lowering) initializerReads(node *ast.Node, available map[string]bool) e
 							next := append(append([]string{}, path...), step)
 							if member.Kind == ast.KindMethodDeclaration || member.Kind == ast.KindGetAccessor {
 								refused = examine(member.Body(), next)
-							} else if member.Kind == ast.KindPropertyDeclaration && !available[l.fieldName(child.Name())] {
+							} else if (member.Kind == ast.KindPropertyDeclaration || parameterProperty(member)) && !available[l.fieldName(child.Name())] {
 								refused = &Refused{Where: l.program.Where(child), What: "a field initializer reading an uninitialized field through " + strings.Join(next, " -> "), Fix: "declare the field it reads earlier, or initialize it in the constructor after super and all required fields are set"}
 							}
 							if refused != nil {
