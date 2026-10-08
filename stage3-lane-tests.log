@@ -1,0 +1,27 @@
+EE
+======================================================================
+ERROR: stage3/lane/test_check (unittest.loader._FailedTest.stage3/lane/test_check)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: stage3/lane/test_check
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'stage3/lane/test_check'
+
+
+======================================================================
+ERROR: stage3/lane/test_table (unittest.loader._FailedTest.stage3/lane/test_table)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: stage3/lane/test_table
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'stage3/lane/test_table'
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (errors=2)
