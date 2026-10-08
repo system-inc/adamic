@@ -1,0 +1,61 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11224:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 656658,
+      "body_end": 657015,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getTypeAliasForTypeLiteral",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11224:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11226:51",
+      "reason": "a NonNullExpression",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11226:51: stage 0 can't lower a NonNullExpression yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11224:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11226:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11226:51: stage 0 can't lower a NonNullExpression yet",
+      "start": 656763,
+      "end": 656852
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11224:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11227:40",
+      "reason": "reading node",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11227:40: stage 0 can't lower reading node yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11224:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11227:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11227:40: stage 0 can't lower reading node yet",
+      "start": 656852,
+      "end": 656970
+    }
+  ]
+}

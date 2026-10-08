@@ -1,0 +1,12 @@
+let calls = 0;
+function right(value: number): number { calls += 1; return value; }
+function choose(left: string[] | undefined, value: number): void {
+ const and = left && right(value);
+ console.log(`and:${and}:${typeof and}:${calls}`);
+ const or = left || right(value);
+ console.log(`or:${typeof or}:${calls}`);
+ if (typeof or === 'number') { console.log(`number:${or}`); }
+ else { console.log(`same:${or === left}`); }
+}
+const empty: string[] = [];
+for (const value of [0, -0, NaN, Infinity, -3, 2]) { choose(undefined, value); choose(empty, value); choose(['held'], value); }

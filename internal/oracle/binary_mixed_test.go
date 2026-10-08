@@ -2,6 +2,7 @@ package oracle
 
 func init() {
 	for _, name := range []string{
+		"binary_logical_value_number_object.a", "binary_logical_value_number_array.a",
 		"binary_logical_boolean_number.a",
 		"binary_logical_value_value.a", "binary_logical_value_boolean.a",
 		"binary_logical_boolean_value.a", "binary_logical_number_number.a",

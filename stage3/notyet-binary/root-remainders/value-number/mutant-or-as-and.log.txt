@@ -1,0 +1,27 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/binary_logical_value_number_object.a (0.46s)
+        oracle_test.go:761: exit codes differ
+            node:   exit 0, stdout "and:undefined:undefined:0\nor:number:1\nnumber:0\nand:undefined:undefined:1\nor:number:2\nnumber:0\nand:undefined:undefined:2\nor:number:3\nnumber:NaN\nand:undefined:undefined:3\nor:number:4\nnumber:Infinity\nand:undefined:undefined:4\nor:number:5\nnumber:-3\nand:undefined:undefined:5\nor:number:6\nnumber:2\nand:0:number:7\nor:object:7\nsame:true\nand:0:number:8\nor:object:8\nsame:true\nand:NaN:number:9\nor:object:9\nsame:true\nand:Infinity:number:10\nor:object:10\nsame:true\nand:-3:number:11\nor:object:11\nsame:true\nand:2:number:12\nor:object:12\nsame:true\n", stderr ""
+            native: exit 70, stdout "and:undefined:undefined:0\nor:undefined:0\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:767: JavaScript backend: exit codes differ
+            node:    exit 0, stdout "and:undefined:undefined:0\nor:number:1\nnumber:0\nand:undefined:undefined:1\nor:number:2\nnumber:0\nand:undefined:undefined:2\nor:number:3\nnumber:NaN\nand:undefined:undefined:3\nor:number:4\nnumber:Infinity\nand:undefined:undefined:4\nor:number:5\nnumber:-3\nand:undefined:undefined:5\nor:number:6\nnumber:2\nand:0:number:7\nor:object:7\nsame:true\nand:0:number:8\nor:object:8\nsame:true\nand:NaN:number:9\nor:object:9\nsame:true\nand:Infinity:number:10\nor:object:10\nsame:true\nand:-3:number:11\nor:object:11\nsame:true\nand:2:number:12\nor:object:12\nsame:true\n", stderr ""
+            backend: exit 70, stdout "and:undefined:undefined:0\nor:undefined:0\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:774: leaks:
+            exit 70
+            adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/binary_logical_value_number_array.a (0.46s)
+        oracle_test.go:761: exit codes differ
+            node:   exit 0, stdout "and:undefined:undefined:0\nor:number:1\nnumber:0\nand:0:number:2\nor:object:2\nsame:true\nand:0:number:3\nor:object:3\nsame:true\nand:undefined:undefined:3\nor:number:4\nnumber:0\nand:0:number:5\nor:object:5\nsame:true\nand:0:number:6\nor:object:6\nsame:true\nand:undefined:undefined:6\nor:number:7\nnumber:NaN\nand:NaN:number:8\nor:object:8\nsame:true\nand:NaN:number:9\nor:object:9\nsame:true\nand:undefined:undefined:9\nor:number:10\nnumber:Infinity\nand:Infinity:number:11\nor:object:11\nsame:true\nand:Infinity:number:12\nor:object:12\nsame:true\nand:undefined:undefined:12\nor:number:13\nnumber:-3\nand:-3:number:14\nor:object:14\nsame:true\nand:-3:number:15\nor:object:15\nsame:true\nand:undefined:undefined:15\nor:number:16\nnumber:2\nand:2:number:17\nor:object:17\nsame:true\nand:2:number:18\nor:object:18\nsame:true\n", stderr ""
+            native: exit 70, stdout "and:undefined:undefined:0\nor:undefined:0\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:767: JavaScript backend: exit codes differ
+            node:    exit 0, stdout "and:undefined:undefined:0\nor:number:1\nnumber:0\nand:0:number:2\nor:object:2\nsame:true\nand:0:number:3\nor:object:3\nsame:true\nand:undefined:undefined:3\nor:number:4\nnumber:0\nand:0:number:5\nor:object:5\nsame:true\nand:0:number:6\nor:object:6\nsame:true\nand:undefined:undefined:6\nor:number:7\nnumber:NaN\nand:NaN:number:8\nor:object:8\nsame:true\nand:NaN:number:9\nor:object:9\nsame:true\nand:undefined:undefined:9\nor:number:10\nnumber:Infinity\nand:Infinity:number:11\nor:object:11\nsame:true\nand:Infinity:number:12\nor:object:12\nsame:true\nand:undefined:undefined:12\nor:number:13\nnumber:-3\nand:-3:number:14\nor:object:14\nsame:true\nand:-3:number:15\nor:object:15\nsame:true\nand:undefined:undefined:15\nor:number:16\nnumber:2\nand:2:number:17\nor:object:17\nsame:true\nand:2:number:18\nor:object:18\nsame:true\n", stderr ""
+            backend: exit 70, stdout "and:undefined:undefined:0\nor:undefined:0\n", stderr "adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n"
+        oracle_test.go:774: leaks:
+            exit 70
+            adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back
+FAIL
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.477s
+FAIL

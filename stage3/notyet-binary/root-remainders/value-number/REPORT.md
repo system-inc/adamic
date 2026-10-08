@@ -1,0 +1,7 @@
+# value-number: 57 root-table operator-family sites
+
+The committed exact CSV breakdown gives 57 unique sites. Existing logical lowering and assignment values already implement their operators. This group adds exact shape oracle coverage; it does not claim a measured net census decrease or successful compilation of whole compiler bodies. No arithmetic rule is needed for these rows.
+
+Before: both attached census-replay results reproduce the exact original NotYet on dc6b1529. After: neither reproduces on this branch; attached ordered findings retain the next named stops. The command is `go run ./stage3/census/latent/replay -project /tmp/notyet-binary-adapted/src/tsc/tsc.ts -where /tmp/notyet-binary-adapted/src/compiler/FILE:LINE:COLUMN -kind NotYet -reason ORIGINAL_REASON`. Source hashes and exact checker types are retained in the parent breakdown.
+
+Commands (output in attached logs): `ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run TestNativeAgreesWithNode/internal/oracle/testdata/binary_logical_value_number -count=1 -timeout 15m`; counts updated with `go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 15m -args -update-counts`. The oracle compares source Node with the JavaScript backend, release native and sanitized native, including LeakSanitizer. Both logical operator mutants change the selected operand and are killed by Node output or exit differences, not build errors. Each source mutation is restored.

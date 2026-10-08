@@ -1,0 +1,41 @@
+{
+  "measurement": "measured on a checker-rejected entry-root program",
+  "file": "/tmp/notyet-binary-adapted/src/compiler/checker.ts",
+  "units": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11224:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 656658,
+      "body_end": 657015,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "getTypeAliasForTypeLiteral",
+      "parent": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "findings": [
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11224:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11225:13",
+      "reason": "a BinaryExpression with a value and a number",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11225:13: stage 0 can't lower a BinaryExpression with a value and a number yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected entry-root program",
+      "unit": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11224:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11225:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/notyet-binary-adapted/src/compiler/checker.ts:11225:13: stage 0 can't lower a BinaryExpression with a value and a number yet",
+      "start": 656660,
+      "end": 656981
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+from pathlib import Path
+import subprocess,os,sys
+shape=sys.argv[1];p=Path('internal/lower/binary_mixed.go');original=p.read_text()
+for name,before,after in [('and-as-or','logical := ir.And','logical := ir.Or'),('or-as-and','logical = ir.Or','logical = ir.And')]:
+ try:
+  assert original.count(before)==1;p.write_text(original.replace(before,after))
+  path=Path('/tmp/remainder-'+shape+'-mutant-'+name+'.log')
+  with path.open('w') as f:r=subprocess.run(['go','test','./internal/oracle','-run','TestNativeAgreesWithNode/internal/oracle/testdata/binary_logical_'+shape.replace('-','_'),'-count=1'],stdout=f,stderr=f,env=dict(os.environ,ADAMIC_GATE_UNCACHED='1'))
+  log=path.read_text();assert r.returncode and ('stdout differs' in log or 'exit codes differ' in log) and '[build failed]' not in log,(name,log)
+  print(shape,name,'caught by Node output or exit differences',flush=True)
+ finally:p.write_text(original)
