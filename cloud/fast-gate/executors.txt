@@ -48,8 +48,10 @@ cohere      cohere
 cohere      CohereSettings.json
 cohere      cohere-mirrors.json
 cohere      stage1/cohere/config/*
-# Read by path from outside a package's tree: the Node oracle runners the oracle's tests start.
+# Read by path from outside a package's tree: the Node oracle runners the oracle's tests start, and
+# the root tsconfig.json, the compiler options internal/load gives every program (the smoke set runs too).
 package:internal/oracle  oracle/*
+package:internal/load    tsconfig.json
 # Platforms' Cloudflare Workers (@system_adamic_platforms, Oct 7 20:59): workers/compute/verify.mjs,
 # workers/replay-all.mjs and workers/compute/verify-handler.mjs with a freshly built adamic, plus
 # workers/compute/verify-url.mjs when the transport changes. The workerd runs are proofs, not gates.

@@ -278,6 +278,11 @@ class Gate:
         API check. Its results (an 81,500-file adapted tree among them) stay beside the tree; only the
         verdict and the logs under 5 MB are copied into the published out directory."""
         started = time.monotonic()
+        if not os.path.exists(os.path.join(self.arguments.tree, "stage3/lane/run.sh")):
+            self.steps["stage3"] = 0.0
+            self.exits["stage3"] = 1
+            self.fail("stage3", "this change touches stage3/, but its tree has no stage3/lane/run.sh to verify it with: rebase it onto main, which has the lane")
+            return
         results = os.path.realpath(self.arguments.tree) + "-stage3-lane"
         if os.path.lexists(results):
             os.rename(results, "%s-%d" % (results, time.time()))
@@ -295,7 +300,7 @@ class Gate:
             thread.start()
         for thread in threads:
             thread.join()
-        for name in ("execution.json", "verdict.json", "verdict.txt", "patch-set.md"):
+        for name in ("execution.json", "report.json", "verdict.json", "verdict.txt", "patch-set.md"):
             if os.path.isfile(os.path.join(results, name)):
                 with open(os.path.join(results, name), "rb") as source, open(os.path.join(self.arguments.out, "stage3-lane-" + name), "wb") as target:
                     target.write(source.read())
@@ -343,7 +348,8 @@ class Gate:
             self.steps["catalog"] = 0.0
             self.result["catalog"] = "not in this tree"
             return
-        self.step("catalog", ["bash", "verify/catalog/check.sh"])
+        # check.sh takes the commit whose bugs it reintroduces and proves caught.
+        self.step("catalog", ["bash", "verify/catalog/check.sh", self.arguments.sha])
 
     def npmPackages(self):
         """The pinned npm packages a tree's tests read (stage3/api's @types/node for node:* imports),
