@@ -451,6 +451,19 @@ export class Parser {
     nextIdentifierSameLine(): boolean {
         return nextIdentifierSameLine(this.scanner);
     }
+    // TypeScript recognizes an unmistakable yield operand outside generators,
+    // but keeps yield(x) as an ordinary call and never crosses a line break.
+    yieldOperandAhead(): boolean {
+        const state = this.mark();
+        this.next();
+        const result =
+            (this.scanner.flags & 1) === 0 &&
+            (this.kind() === 'Identifier' ||
+                this.kind().endsWith('Keyword') ||
+                ['NumericLiteral', 'BigIntLiteral', 'StringLiteral'].includes(this.kind()));
+        this.rewind(state);
+        return result;
+    }
     mark(): ParserStateInterface {
         return {
             pos: this.scanner.pos,
@@ -1781,7 +1794,7 @@ export class Parser {
             const expression = this.unary();
             return this.make('AwaitExpression', pos, [expression]);
         }
-        if(operator === 'YieldKeyword' && (this.yieldContext || this.peek() === 'Identifier')) {
+        if(operator === 'YieldKeyword' && (this.yieldContext || this.yieldOperandAhead())) {
             this.next();
             const children: number[] = [];
             if(
