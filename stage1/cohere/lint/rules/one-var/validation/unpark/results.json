@@ -1,0 +1,71 @@
+{
+  "packageExit": 0,
+  "topLevelTests": {
+    "pass": 41,
+    "fail": 0,
+    "skip": 1
+  },
+  "allTestsIncludingSubtests": {
+    "pass": 147,
+    "skip": 1
+  },
+  "mutants": 94,
+  "mutantFailures": [],
+  "skips": [
+    {
+      "test": "TestCheckerBridgeRefusalPending",
+      "reason": "checker_pending_test.go:51: awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer"
+    }
+  ],
+  "requiredProofs": {
+    "TestRulesAgree": {
+      "status": "pass",
+      "seconds": 312.66
+    },
+    "TestOwnedWitnesses": {
+      "status": "pass",
+      "seconds": 13.18
+    },
+    "TestMutants": {
+      "status": "pass",
+      "seconds": 0.05
+    },
+    "TestCompilerAndStage1Agree": {
+      "status": "pass",
+      "seconds": 507.86
+    },
+    "TestShardsAgree": {
+      "status": "pass",
+      "seconds": 222.39
+    },
+    "TestProfileSnapshotsAgree": {
+      "status": "pass",
+      "seconds": 289.38
+    }
+  },
+  "wholeCompilerBenchmark": {
+    "GoSeconds": 1.784134,
+    "nativeSeconds": 10.726646,
+    "sourceNodeSeconds": 5.897897,
+    "files": 77,
+    "findings": 35069
+  },
+  "packageSeconds": 1469.719,
+  "ownedNativeMutant": {
+    "status": "pass",
+    "sidesCaught": [
+      "Node",
+      "emitted JavaScript",
+      "sanitized native"
+    ],
+    "seconds": 140.592,
+    "wrapperSha256": "55c798694141aad8f3123e2abe96c902e3f82a3f15a33039b431c8d17cd5ec1c",
+    "sanitizers": "address,undefined",
+    "sharedSourceChanged": false
+  },
+  "agreementBytes": {
+    "capturedCorpus": 14346558,
+    "compilerAndStage1": 36136622,
+    "ownedWitnesses": 470625
+  }
+}

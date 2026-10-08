@@ -1,0 +1,25 @@
+import type { RuleContext } from '../../context.ts';
+import { betweenToken, last, name } from './helpers.a';
+
+export function initializer(context: RuleContext, index: number): number {
+    const bound = name(context, index);
+    if(bound < 0) {
+        return -1;
+    }
+    let position = context.node(bound).end;
+    const final = last(context, index);
+    if(final === bound || final < 0) {
+        return -1;
+    }
+    for(const child of context.node(index).children) {
+        if(child === bound) {
+            continue;
+        }
+        const start = context.start(child);
+        if(betweenToken(context, position, start, 'EqualsToken')) {
+            return child;
+        }
+        position = context.node(child).end;
+    }
+    return -1;
+}

@@ -1,0 +1,20 @@
+{
+  "@typescript-eslint/no-mixed-enums": 81,
+  "nexus/correctness-no-collection-misuse": 6,
+  "nexus/correctness-no-discarded-outcome": 31,
+  "nexus/correctness-no-discarded-pure-result": 22,
+  "nexus/correctness-no-process-exit-after-output": 56,
+  "nexus/correctness-no-uncleared-race-timeout": 21,
+  "nexus/correctness-require-blocking-standard-streams": 48,
+  "no-obj-calls": 181,
+  "no-object-constructor": 59,
+  "no-promise-executor-return": 135,
+  "one-var": 340,
+  "react-hooks/set-state-in-effect": 53,
+  "react-hooks/set-state-in-render": 50,
+  "react-hooks/static-components": 22,
+  "react/jsx-fragments": 46,
+  "react/jsx-no-constructed-context-values": 191,
+  "react/jsx-no-undef": 45,
+  "react/style-prop-object": 76
+}

@@ -1,0 +1,17 @@
+import type { RuleContext } from '../../context.ts';
+export function first(context: RuleContext, index: number): number { return context.node(index).children[0] ?? -1; }
+export function parent(context: RuleContext, index: number): number { return context.parent(index); }
+export function last(context: RuleContext, index: number): number { const c = context.node(index).children; return c[c.length - 1] ?? -1; }
+export function name(context: RuleContext, index: number): number {
+    for(const child of context.node(index).children) {
+        if(['Identifier', 'StringLiteral', 'NumericLiteral', 'PrivateIdentifier', 'ComputedPropertyName', 'ObjectBindingPattern', 'ArrayBindingPattern'].includes(context.kind(child))) { return child; }
+    }
+    return -1;
+}
+export function betweenToken(context: RuleContext, start: number, end: number, kind: string): boolean {
+    context.scanner.pos = start;
+    while(context.scanner.scan() !== 'EndOfFile' && context.scanStart() < end) {
+        if(context.scanKind() === kind) { return true; }
+    }
+    return false;
+}
