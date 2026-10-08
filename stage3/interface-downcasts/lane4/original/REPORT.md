@@ -34,3 +34,15 @@ corrected to the approved cast path; no admission rule was weakened.
 Six helper-check removal mutants (one for each union alternative and one each
 for the two single receivers) were caught in both C and JavaScript by exit-70
 pins, rather than compiler warnings or sanitizer failures. Raw group logs retained.
+
+Third group: all five original __String | undefined field pairs / nine reads
+certified separately from the thirty-pair table: UnionType.keyPropertyName, both
+SourceFile local JSX names, SymbolLinks.typeOnlyExportStarName, and
+WideningContext.propertyName. Uncached oracle passed in 62.461s, thirty cases.
+Original receiver objects are reached through a viewed carrier then passed into
+an interface helper. Missing optional properties and explicit undefined agree
+with Node; number and null pin named exit-70 refusals. Five helper member-check
+bypass mutants run exit 0 instead of the refusal, caught in both backends.
+Full original fields are checked against the expanded upstream manifest.
+Combined delivered coverage is eleven pairs / 505 candidate reads. The original
+__String table remains six / 496 certified and twenty-four / 47 pending.

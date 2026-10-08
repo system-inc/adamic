@@ -43,7 +43,10 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 			t.Fatal("declaration drift: " + file)
 		}
 	}
-	for _, pair := range []struct{ typ, field string }{{"Identifier", "escapedText"}, {"Symbol", "escapedName"}, {"PrivateIdentifier", "escapedText"}, {"Identifier | PrivateIdentifier", "escapedText"}, {"TransientSymbol", "escapedName"}, {"MemberName", "escapedText"}} {
+	for _, pair := range []struct {
+		typ, field string
+		optional   bool
+	}{{"Identifier", "escapedText", false}, {"Symbol", "escapedName", false}, {"PrivateIdentifier", "escapedText", false}, {"Identifier | PrivateIdentifier", "escapedText", false}, {"TransientSymbol", "escapedName", false}, {"MemberName", "escapedText", false}, {"UnionType", "keyPropertyName", true}, {"SourceFile", "localJsxFragmentNamespace", true}, {"SourceFile", "localJsxNamespace", true}, {"SymbolLinks", "typeOnlyExportStarName", true}, {"WideningContext", "propertyName", true}} {
 		variants := []string{"good", "internal", "undefined", "wrong", "null", "missing"}
 		union := pair.typ == "Identifier | PrivateIdentifier" || pair.typ == "MemberName"
 		if union {
@@ -51,8 +54,11 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 		}
 		for _, fixtureVariant := range variants {
 			variant := strings.TrimSuffix(fixtureVariant, "-other")
-			t.Run(pair.typ+"/"+fixtureVariant, func(t *testing.T) {
+			t.Run(pair.typ+"/"+pair.field+"/"+fixtureVariant, func(t *testing.T) {
 				name := strings.ToLower(pair.typ) + "-" + fixtureVariant
+				if pair.optional {
+					name = strings.ToLower(pair.typ) + "-" + pair.field + "-" + fixtureVariant
+				}
 				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/original/" + name + ".a")
 				if err != nil {
 					t.Fatal(err)
@@ -103,11 +109,15 @@ func TestCheckedViewBrandsOriginalPairs(t *testing.T) {
 					}
 				}
 				want := run{stdout: []byte(text)}
+				expected := "__String"
+				if pair.optional {
+					expected += " | undefined"
+				}
 				if variant == "wrong" || variant == "null" {
 					found := map[string]string{"wrong": "number", "null": "null"}[variant]
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + pair.field + " is not a __String; expected __String, found " + found + "\n")}
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + pair.field + " is not a " + expected + "; expected " + expected + ", found " + found + "\n")}
 				}
-				if variant == "missing" {
+				if variant == "missing" && !pair.optional {
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value." + pair.field + " is not initialized; expected __String, found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {

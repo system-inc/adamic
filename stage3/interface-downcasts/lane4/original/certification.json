@@ -578,5 +578,120 @@
       },
       "state": "pending original certification"
     }
-  ]
+  ],
+  "undefined_fields": {
+    "total_pairs": 5,
+    "total_reads": 9,
+    "certified_pairs": 5,
+    "certified_reads": 9,
+    "remaining_pairs": 0,
+    "remaining_reads": 0,
+    "pairs": [
+      {
+        "receiver_type_id": 8654,
+        "type": "UnionType",
+        "field": "keyPropertyName",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 3,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 28038,
+          "column": 13
+        },
+        "state": "certified original declarations"
+      },
+      {
+        "receiver_type_id": 6998,
+        "type": "SourceFile",
+        "field": "localJsxFragmentNamespace",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 2,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 2441,
+          "column": 25
+        },
+        "state": "certified original declarations"
+      },
+      {
+        "receiver_type_id": 6998,
+        "type": "SourceFile",
+        "field": "localJsxNamespace",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 2,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 2487,
+          "column": 13
+        },
+        "state": "certified original declarations"
+      },
+      {
+        "receiver_type_id": 10560,
+        "type": "SymbolLinks",
+        "field": "typeOnlyExportStarName",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 1,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 4472,
+          "column": 98
+        },
+        "state": "certified original declarations"
+      },
+      {
+        "receiver_type_id": 10933,
+        "type": "WideningContext",
+        "field": "propertyName",
+        "declared_types": [
+          "__String | undefined"
+        ],
+        "families": [
+          "intersection field contract",
+          "mixed primitive union",
+          "nullish members",
+          "optional properties"
+        ],
+        "reads": 1,
+        "witness": {
+          "file": "src/compiler/checker.ts",
+          "line": 25949,
+          "column": 64
+        },
+        "state": "certified original declarations"
+      }
+    ]
+  }
 }
