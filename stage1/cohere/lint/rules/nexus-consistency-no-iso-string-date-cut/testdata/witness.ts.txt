@@ -1,0 +1,10 @@
+const marker = 'é😀';
+const iso = new Date().toISOString();
+const day = iso.slice(0, 10);
+new Date().toISOString().substring(10, 0);
+new Date().toISOString().substr(0, 10);
+new Date().toISOString().split('T')[0];
+const [first] = new Date().toISOString().split('T');
+class LocalDate { toISOString(): string { return 'local'; } }
+new LocalDate().toISOString().slice(0, 10);
+new Date().toISOString().slice(0, 16);

@@ -1,0 +1,82 @@
+[
+  {
+    "rule": "nexus/correctness-no-callback-in-parse-try",
+    "go_location": "cohere/internal/lint/rules/nexus/correctness_no_callback_in_parse_try.go:247",
+    "call": "checker.SkipAlias(symbol, ctx.TypeChecker)",
+    "missing": "alias-declarations / alias-followed-symbol-details",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  },
+  {
+    "rule": "nexus/correctness-no-collection-misuse",
+    "go_location": "cohere/internal/lint/rules/nexus/correctness_no_collection_misuse.go:258",
+    "call": "part.AsLiteralType().Value()",
+    "missing": "literal-value for a type identity, preserving string contents",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  },
+  {
+    "rule": "nexus/correctness-no-discarded-outcome",
+    "go_location": "cohere/internal/lint/rules/nexus/correctness_no_discarded_outcome.go:135",
+    "call": "checker.Checker_getAwaitedType(ctx.TypeChecker, valueType)",
+    "missing": "awaited-shape and type-declaration ancestry/union arm identity",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  },
+  {
+    "rule": "nexus/correctness-no-process-exit-after-output",
+    "go_location": "cohere/internal/lint/rules/nexus/correctness_no_process_exit_after_output.go:413",
+    "call": "ctx.TypeChecker.GetAliasedSymbol(symbol)",
+    "missing": "alias-declarations; also resolved signature declaration/body and selected return type at :314/:342",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  },
+  {
+    "rule": "nexus/correctness-require-blocking-standard-streams",
+    "go_location": "cohere/internal/lint/rules/nexus/correctness_require_blocking_standard_streams.go:586",
+    "call": "analysis.ctx.TypeChecker.GetAliasedSymbol(symbol)",
+    "missing": "alias-declarations; also program runtime module graph and foreign function bodies",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  },
+  {
+    "rule": "react/jsx-fragments",
+    "go_location": "cohere/internal/lint/rules/react/jsx_fragments.go:337",
+    "call": "declaration.AsVariableDeclaration().Initializer",
+    "missing": "foreign declaration initializer syntax; no ReadsOtherFiles is declared by this upstream rule",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  },
+  {
+    "rule": "react/jsx-no-constructed-context-values",
+    "go_location": "cohere/internal/lint/rules/react/jsx_no_constructed_context_values_stability.go:488",
+    "call": "walk.ctx.TypeChecker.GetResolvedSignature(call)",
+    "missing": "resolved signature declaration/body; native shared construction/stability/escape analysis remains absent",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  },
+  {
+    "rule": "react-hooks/purity",
+    "go_location": "cohere/internal/lint/rules/react/purity.go:250",
+    "call": "high_level_intermediate_representation.ForFunction(ctx, functionNode)",
+    "missing": "shared native React HIR, SSA and render/capture analysis",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  },
+  {
+    "rule": "react-hooks/refs",
+    "go_location": "cohere/internal/lint/rules/react/refs.go:184",
+    "call": "high_level_intermediate_representation.ForFunctionWithoutManualMemoization(ctx, functionNode)",
+    "missing": "shared native React HIR, SSA and capture analysis",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  },
+  {
+    "rule": "react-hooks/preserve-manual-memoization",
+    "go_location": "cohere/internal/lint/rules/react/preserve_manual_memoization.go:195",
+    "call": "hir.CloneFunction(hir.ForFunction(ctx, functionNode))",
+    "missing": "shared native React HIR/SSA/reactive scopes; hir.AnalyzePreservedManualMemoization at :199",
+    "matched_upstream_cases": 0,
+    "mutant": "not run: stopped before implementation"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "name": "nexus/consistency-no-iso-string-date-cut",
+  "typed": true,
+  "programReads": [
+    "ReadsCompilerOptions",
+    "ReadsDefaultLibrary"
+  ],
+  "node": true,
+  "kinds": [
+    "CallExpression",
+    "ElementAccessExpression",
+    "VariableDeclaration"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave30IsoStringDateCut",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestConsistencyNoIsoStringDateCut"
+}

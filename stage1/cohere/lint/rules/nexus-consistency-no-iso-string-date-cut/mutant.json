@@ -1,0 +1,5 @@
+{
+  "name": "Date declaration identity inverted",
+  "from": "declaration.parentName === 'Date'",
+  "to": "declaration.parentName !== 'Date'"
+}

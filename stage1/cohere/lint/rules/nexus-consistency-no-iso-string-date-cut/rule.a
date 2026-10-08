@@ -1,0 +1,112 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { FileQuestion } from '../../checker.a';
+import { SymbolDetails } from '../../checker_declarations.a';
+import { message } from './messages.a';
+const ruleName = 'nexus/consistency-no-iso-string-date-cut';
+export class Rule {
+    readonly context: RuleContext;
+    readonly locations = new Map<string, number>();
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        const checker = this.context.checker;
+        if(checker === undefined) { return; }
+        // Correlate declaration spans once. Only this file's parser table is indexed.
+        for(let index = 0; index < this.context.parser.nodes.length; index++) {
+            const node = this.context.parser.nodes[index] ?? panic('missing parser node');
+            this.locations.set(`${checker.offsets[node.pos]}:${checker.offsets[node.end]}:${node.kind}`, index);
+        }
+    }
+    symbol(index: number, library: boolean): SymbolDetails | undefined {
+        const checker = this.context.checker;
+        if(checker === undefined) { return undefined; }
+        const node = this.context.node(index);
+        // The library read uses exactly the upstream ReadsDefaultLibrary capability.
+        // Same-file const declarations need no additional program read.
+        const answer = library
+            ? checker.askFile(new FileQuestion('ReadsDefaultLibrary', `node-symbol-details\n${checker.offsets[node.pos]}\n${checker.offsets[node.end]}\n${node.kind}`))
+            : checker.ask(index, 'node-symbol-details');
+        return answer.value === undefined ? undefined : new SymbolDetails(answer.value);
+    }
+    callee(index: number): number {
+        if(index < 0 || this.context.kind(index) !== 'CallExpression') { return -1; }
+        const callee = this.context.unwrap(this.context.child(index, 0));
+        return this.context.kind(callee) === 'PropertyAccessExpression' && this.context.kind(this.context.property(callee)) === 'Identifier' ? callee : -1;
+    }
+    method(index: number): string {
+        const callee = this.callee(index);
+        return callee < 0 ? '' : this.context.node(this.context.property(callee)).text;
+    }
+    receiver(index: number): number {
+        const callee = this.callee(index);
+        return callee < 0 ? -1 : this.context.unwrap(this.context.child(callee, 0));
+    }
+    integer(index: number): number {
+        if(index < 0) { return -1; }
+        const node = this.context.node(this.context.unwrap(index));
+        if(node.kind !== 'NumericLiteral' || !/^\+?[0-9]+$/u.test(node.text)) { return -1; }
+        const value = Number(node.text);
+        return Number.isSafeInteger(value) && value >= 0 ? value : -1;
+    }
+    iso(index: number): boolean {
+        let expression = index;
+        if(this.context.kind(expression) === 'Identifier') {
+            const symbol = this.symbol(expression, false);
+            if(symbol === undefined || symbol.declarations.length !== 1) { return false; }
+            const declaration = symbol.declarations[0];
+            if(declaration === undefined || declaration.declarationPath !== this.context.checker?.path || declaration.declarationKind !== 'VariableDeclaration') { return false; }
+            const local = this.locations.get(`${declaration.declarationStart}:${declaration.declarationEnd}:VariableDeclaration`) ?? -1;
+            if(local < 0 || this.context.kind(this.context.name(local)) !== 'Identifier') { return false; }
+            const parent = this.context.parent(local);
+            if(parent < 0 || this.context.kind(parent) !== 'VariableDeclarationList' || this.context.node(parent).semantic !== '2') { return false; }
+            expression = this.context.initializer(local);
+            if(expression < 0) { return false; }
+            expression = this.context.unwrap(expression);
+        }
+        if(this.method(expression) !== 'toISOString' || this.context.node(expression).list !== 0) { return false; }
+        const member = this.context.property(this.callee(expression));
+        const symbol = this.symbol(member, true);
+        return symbol !== undefined && symbol.present && symbol.declarations.some(declaration => declaration.defaultLibrary) &&
+            symbol.declarations.some(declaration => declaration.parentKind === 'InterfaceDeclaration' && declaration.parentName === 'Date');
+    }
+    split(index: number): boolean {
+        if(this.method(index) !== 'split' || this.context.node(index).list !== 1) { return false; }
+        const argument = this.context.arguments(index)[0] ?? -1;
+        return ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(this.context.kind(argument)) && this.context.node(argument).text === 'T' && this.iso(this.receiver(index));
+    }
+    visit(node: ParseNode, index: number): void {
+        switch(node.kind) {
+            case 'CallExpression': {
+                if(node.list !== 2) { return; }
+                const arguments_ = this.context.arguments(index);
+                const first = this.integer(arguments_[0] ?? -1); const second = this.integer(arguments_[1] ?? -1);
+                if(first < 0 || second < 0) { return; }
+                let start = first; let end = second;
+                switch(this.method(index)) {
+                    case 'substring': start = Math.min(first, second); end = Math.max(first, second); break;
+                    case 'substr': end = first + second; break;
+                    case 'slice': break;
+                    default: return;
+                }
+                if(start < end && end <= 10 && this.iso(this.receiver(index))) { this.context.reportNode(index, ruleName, 'isoStringCutToDate', message); }
+                return;
+            }
+            case 'ElementAccessExpression':
+                if(this.integer(node.children[1] ?? -1) === 0 && this.split(this.context.unwrap(node.children[0] ?? -1))) {
+                    this.context.reportNode(index, ruleName, 'isoStringCutToDate', message);
+                }
+                return;
+            case 'VariableDeclaration': {
+                const name = node.children[0] ?? -1; const initializer = this.context.initializer(index);
+                if(name < 0 || initializer < 0 || this.context.kind(name) !== 'ArrayBindingPattern') { return; }
+                const first = this.context.node(name).children[0] ?? -1;
+                if(first < 0 || this.context.kind(first) !== 'BindingElement' || this.context.name(first) < 0 || this.context.has(first, 'DotDotDotToken')) { return; }
+                const split = this.context.unwrap(initializer);
+                if(this.split(split)) { this.context.reportNode(split, ruleName, 'isoStringCutToDate', message); }
+                return;
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
