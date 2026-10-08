@@ -31,7 +31,8 @@ typedef struct {
     adamic_regex_parse_node *body;
     const unsigned char *source;
     size_t length;
-    /* status: 0 accepted, 1 SyntaxError, 2 allocation failure, 3 V8 divergence refusal. */
+    /* status: 0 accepted, 1 Node SyntaxError, 2 allocation failure,
+     * 3 V8 divergence, 4 unsupported native feature. Only 1 is catchable. */
     int status;
     size_t error_offset;
     const char *reference_reason, *node_reason, *message;
