@@ -7,7 +7,10 @@ files, and pages the step's owner and @system_adamic the first time it finds the
   - queued, not running, for over a minute (a lower-ranked tip holds the slot it needs), or
   - not running and not queued, its newest verdict red with no newer push since.
 
-A gate running on any of its branches is a live turn and re-arms the alarm. It reads only files and
+A gate running on any of its branches is a live turn and re-arms the alarm. The chain's quiet worker too
+(@system_adamic, Oct 8: V1's worker sat quiet two hours on the critical path and nobody knew): each of the
+critical path's first three steps with no push to any of its branches for 20 minutes, and nothing of it
+running or queued, pages its owner and @system_adamic, once a quiet spell. It reads only files and
 `ahra tasks`, so a broken watcher can't silence it.
 
   cloud/star-idle-alarm.py          # the loop (launchd: com.adamic.star-idle-alarm)
@@ -29,23 +32,30 @@ queuedLimit = int(os.environ.get('ADAMIC_STAR_QUEUED_SECONDS', '60'))
 fullLog = Path(os.environ.get('ADAMIC_FULL_GATE_LOG', os.path.expanduser('~/Projects/system/adamic-gate-logs/full-gate-main.log')))
 mainReds = os.environ.get('ADAMIC_MAIN_REDS', '')  # a file standing in for cloud/merge-tree's, in tests
 verdictLine = re.compile(r'^(\d\d:\d\d:\d\d) done (\S+): (green|red): ([0-9a-f]{40})\b(.*)$')
+pushLine = re.compile(r'^(\d\d:\d\d:\d\d) queued (\S+) ([0-9a-f]{40})\b')
+quietLimit = int(os.environ.get('ADAMIC_CHAIN_QUIET_SECONDS', '1200'))
 
 
 def ahra(*arguments):
     return subprocess.run(['ahra', *arguments], cwd=ahraDirectory, capture_output=True, text=True, check=True).stdout
 
 
-def star():
-    """The critical path's wave-0 step: its id, owner and Branches globs (none if it declares none)."""
-    waterfall = json.loads(ahra('tasks', 'waterfall', 'system_adamic', '--json'))
-    waves = {node['id']: node.get('wave') for node in waterfall['nodes']}
-    path = [identifier for identifier in waterfall.get('criticalPath', []) if waves.get(identifier) == 0]
-    if not path:
-        return None
-    shown = ahra('tasks', 'show', path[0])
+def step(identifier):
+    """A roadmap step's id, owner and Branches globs (none if it declares none)."""
+    shown = ahra('tasks', 'show', identifier)
     owner = re.search(r'^owner\s+@(\S+)', shown, re.M)
     branches = re.search(r'^\s*Branches:\s*(.+)$', shown, re.M)
-    return {'id': path[0], 'owner': owner.group(1) if owner else '', 'globs': branches.group(1).split() if branches else []}
+    return {'id': identifier, 'owner': owner.group(1) if owner else '', 'globs': branches.group(1).split() if branches else []}
+
+
+def star():
+    """The critical path's wave-0 step, and its first three steps (the chain), as step() reads them."""
+    waterfall = json.loads(ahra('tasks', 'waterfall', 'system_adamic', '--json'))
+    waves = {node['id']: node.get('wave') for node in waterfall['nodes']}
+    path = waterfall.get('criticalPath', [])
+    chain = [step(identifier) for identifier in path[:3]]
+    first = [entry for entry in chain if waves.get(entry['id']) == 0]
+    return (first[0] if first else None), chain
 
 
 def lines(path):
@@ -131,6 +141,45 @@ def check(step, now):
                 '★%s has no live turn in the gate: its newest verdict is red (%s %s, first failure at %s) and nothing newer has been pushed '
                 'on its branches (%s).' % (step['id'], branch, sha[:12], where.group(1) if where else 'unknown', ' '.join(step['globs'])))
     return '%s %s %s' % (verdict, branch, sha[:12]), None, None
+
+
+def checkQuiet(chain, now):
+    """Each chain step whose worker is quiet: no push to its branches for quietLimit seconds (the watcher logs
+    every push it sees as 'queued'), and nothing of it running or queued. A step's time starts no earlier than
+    when this alarm first saw it on the chain. Returns (summary, key, text, owners) for each step."""
+    seenFile = state / 'chain-first-seen.json'
+    try:
+        firstSeen = json.loads(seenFile.read_text())
+    except (OSError, ValueError):
+        firstSeen = {}
+    firstSeen = {entry['id']: firstSeen.get(entry['id'], now) for entry in chain}
+    seenFile.write_text(json.dumps(firstSeen) + '\n')
+    running = [(lines(entry) or [''])[0].split()[:1] for entry in state.glob('running/*')]
+    queued = [line.split()[2] for line in lines(state / 'queue') if len(line.split()) >= 4]
+    pushes = [found for found in map(pushLine.match, lines(watchLog)) if found]
+    results = []
+    for entry in chain:
+        if not entry['globs']:
+            results.append(('%s: no Branches' % entry['id'], None, None, []))
+            continue
+        if any(fields and matches(fields[0], entry['globs']) for fields in running) or any(matches(branch, entry['globs']) for branch in queued):
+            results.append(('%s: in the gate' % entry['id'], None, None, []))
+            continue
+        last = [found for found in pushes if matches(found.group(2), entry['globs'])]
+        pushedAgo = ageOf(last[-1].group(1), now) if last else None
+        # Quiet since the later of its last push and its arrival on the chain.
+        onChain = now - firstSeen[entry['id']]
+        quiet = onChain if pushedAgo is None else min(pushedAgo, onChain)
+        if quiet < quietLimit:
+            results.append(('%s: pushed %s' % (entry['id'], '%d s ago' % pushedAgo if pushedAgo is not None else 'never, on the chain %d s' % quiet), None, None, []))
+            continue
+        lastPush = '%s %s, %d min ago' % (last[-1].group(2), last[-1].group(3)[:12], pushedAgo // 60) if last else 'none seen'
+        results.append(('%s: quiet %d min' % (entry['id'], quiet // 60),
+                        'quiet:%s:%s' % (entry['id'], last[-1].group(3) if last else 'none'),
+                        '#%s is on the critical path and its worker is quiet: no push to its branches (%s) for %d minutes, and nothing of it '
+                        'in the gate. Last push: %s.' % (entry['id'], ' '.join(entry['globs']), quiet // 60, lastPush),
+                        [entry['owner']] if entry['owner'] else []))
+    return results
 
 
 mainHeadCache = {'checked': 0, 'sha': ''}
@@ -242,17 +291,23 @@ def page(step, text):
             print('%s could not page %s: %s' % (time.strftime('%H:%M:%S', time.gmtime()), recipient, error), flush=True)
 
 
-def once(step):
+def once(step, chain=()):
     now = int(time.time())
     summary, key, text = check(step, now) if step and step['globs'] else ('no star with Branches', None, None)
     mainSummary, mainKey, mainText, mainOwners = checkMain(now)
     confirmSummary, confirmKey, confirmText, confirmOwners = checkConfirmation(now)
     mainSummary += '; ' + confirmSummary
     print('%s ★%s %s; %s' % (time.strftime('%H:%M:%S', time.gmtime()), step['id'] if step else '-', summary, mainSummary), flush=True)
+    quiet = checkQuiet(chain, now)
+    if chain:
+        print('%s chain: %s' % (time.strftime('%H:%M:%S', time.gmtime()), '; '.join(summary for summary, _, _, _ in quiet)), flush=True)
     starOwners = ['system_adamic_integration'] if key and key.startswith('green:') else ([step['owner']] if step else [])
-    for name, alarmKey, alarmText, owners in (('star-idle-alarmed', key, text, starOwners),
-                                              ('main-red-alarmed', mainKey, mainText, mainOwners),
-                                              ('main-confirm-alarmed', confirmKey, confirmText, confirmOwners)):
+    alarms = [('star-idle-alarmed', key, text, starOwners),
+              ('main-red-alarmed', mainKey, mainText, mainOwners),
+              ('main-confirm-alarmed', confirmKey, confirmText, confirmOwners)]
+    alarms += [('chain-quiet-alarmed-' + entry['id'], quietKey, quietText, owners)
+               for entry, (_, quietKey, quietText, owners) in zip(chain, quiet)]
+    for name, alarmKey, alarmText, owners in alarms:
         alarmed = state / name
         previous = alarmed.read_text().strip() if alarmed.exists() else ''
         if alarmKey is None:
@@ -264,14 +319,14 @@ def once(step):
 
 
 def main():
-    step, refreshed = None, 0
+    step, chain, refreshed = None, [], 0
     while True:
         if step is None or time.time() - refreshed >= 60:
             try:
-                step, refreshed = star(), time.time()
+                (step, chain), refreshed = star(), time.time()
             except (subprocess.CalledProcessError, OSError, ValueError, KeyError) as error:
                 print('%s could not read the star: %s' % (time.strftime('%H:%M:%S', time.gmtime()), error), flush=True)
-        once(step)
+        once(step, chain)
         if '--once' in sys.argv:
             return
         time.sleep(15)

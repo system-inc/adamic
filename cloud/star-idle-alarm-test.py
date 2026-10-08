@@ -24,7 +24,7 @@ class StarIdleAlarmTests(unittest.TestCase):
         (self.root / 'bin/ahra').write_text('''#!/bin/bash
 case "$1 $2" in
   "tasks waterfall") cat "$ROOT/waterfall.json" ;;
-  "tasks show") printf 'owner     @system_adamic_compiler (direct)\\n    Branches: cloud/land-*views-slice* compiler/area-stack*\\n' ;;
+  "tasks show") cat "$ROOT/show-$3" 2>/dev/null || printf 'owner     @system_adamic_compiler (direct)\\n    Branches: cloud/land-*views-slice* compiler/area-stack*\\n' ;;
   "os send") printf '%s|%s\\n' "$3" "$4" >> "$ROOT/sends" ;;
 esac
 ''')
@@ -79,6 +79,39 @@ esac
         (self.root / 'seen').write_text('cloud/land-views-slice1 %s\n' % other)
         (self.root / 'queue').write_text('B %d cloud/land-views-slice1 %s\n' % (self.now - 5, other))
         self.assertEqual(len(self.check()), 2)
+
+    def test_a_quiet_worker_on_the_chain_pages_its_owner_once_and_a_push_rearms(self):
+        # @system_adamic, Oct 8: V1's worker was quiet for two hours on the critical path and nobody knew.
+        waterfall = {'nodes': [{'id': 'a03mesg', 'wave': 0}, {'id': 'v1', 'wave': 1}, {'id': 'v2', 'wave': 2}, {'id': 'v3', 'wave': 3}],
+                     'criticalPath': ['a03mesg', 'v1', 'v2', 'v3']}
+        (self.root / 'waterfall.json').write_text(json.dumps(waterfall))
+        (self.root / 'show-v1').write_text('owner     @system_adamic_typescript (direct)\n    Branches: codex/views-v1-*\n')
+        (self.root / 'show-v2').write_text('owner     @system_adamic_typescript (direct)\n    Branches: codex/views-v2-*\n')
+        (self.root / 'show-v3').write_text('owner     @system_adamic_runtime (direct)\n    Branches: codex/views-v3-*\n')
+        self.assertEqual(self.check(), [], 'a step just seen on the chain is not yet quiet')
+        # On the chain for 25 minutes: v1 pushed 21 minutes ago is quiet, v2 pushed 5 minutes ago is not, and the
+        # fourth step is off the chain.
+        (self.root / 'chain-first-seen.json').write_text(json.dumps({'a03mesg': self.now, 'v1': self.now - 1500, 'v2': self.now - 1500, 'v3': self.now - 1500}))
+        (self.root / 'watch.log').write_text('%s queued codex/views-v1-frame %s (B)\n%s queued codex/views-v2-unions %s (S)\n' % (self.clock(1260), star, self.clock(300), other))
+        sends = self.check()
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_typescript', 'system_adamic'])
+        self.assertIn('#v1 is on the critical path and its worker is quiet', sends[0])
+        self.assertIn('codex/views-v1-frame %s, 21 min ago' % star[:12], sends[0])
+        self.assertEqual(len(self.check()), 2, 'one quiet spell pages once')
+        # In the gate is not quiet, and a newer push re-arms.
+        (self.root / 'running/7').write_text('codex/views-v1-frame %s S server S token log\n' % star)
+        self.assertEqual(len(self.check()), 2)
+        self.assertFalse((self.root / 'chain-quiet-alarmed-v1').exists())
+        (self.root / 'running/7').unlink()
+        with (self.root / 'watch.log').open('a') as handle:
+            handle.write('%s queued codex/views-v1-frame %s (B)\n' % (self.clock(10), other))
+        self.assertEqual(len(self.check()), 2)
+        # Never pushed and on the chain over 20 minutes is quiet too.
+        (self.root / 'chain-first-seen.json').write_text(json.dumps({'a03mesg': self.now, 'v1': self.now, 'v2': self.now - 1300}))
+        (self.root / 'watch.log').write_text('')
+        sends = self.check()
+        self.assertIn('#v2 is on the critical path', sends[-2])
+        self.assertIn('Last push: none seen', sends[-2])
 
     def clock(self, ago):
         return time.strftime('%H:%M:%S', time.gmtime(self.now - ago))
