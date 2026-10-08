@@ -197,3 +197,34 @@ The prior 8,048-byte reveal in 06 remains; total hidden bytes are now 49,786.
 [comparison](../../docs/overload-results/groups/field-hatch/regions.json),
 [exact stops](../../docs/overload-results/groups/field-hatch/next-stops.json), and
 [raw census](../../docs/overload-results/groups/field-hatch/after.jsonl.gz).
+
+## After escaped overload values retain their promises
+
+Compiler `fdb63c7bc8bf42976cfd5c0edd9186c78bf2a272` implements the further
+step 05 ruling for known overloaded closure values. Narrow variables and
+parameters retain the same call-site result check as the complete overload set.
+
+| Region | Hidden before | Hidden after | Additional revealed | First stop | Owner / raising function |
+|---|---:|---:|---:|---|---|
+| hidden-01-large | 13,625 | 13,625 | 0 | transformers/declarations.ts:1678:110; TS2345 | checker: isSignatureApplicable |
+| hidden-01-small | 6,899 | 6,899 | 0 | transformers/declarations.ts:1678:110; TS2345 | checker: isSignatureApplicable |
+| hidden-05-large | 6,078 | 6,078 | 0 | visitorPublic.ts:123:5; visitNode parameter node | lowering: censusOverload |
+| hidden-05-small | 5,748 | 5,748 | 0 | visitorPublic.ts:123:5; visitNode parameter node | lowering: censusOverload |
+| hidden-06 | 3,369 | 3,369 | 0 | visitorPublic.ts:196:5; visitNodes visitor: Node must fit TIn | lowering: censusOverload |
+| hidden-13 | 6,965 | 6,965 | 0 | transformers/es2017.ts:764:38; TS18048 | checker: checkNonNullTypeWithReporter / reportObjectPossiblyNullOrUndefinedError |
+| hidden-14 | 7,102 | 5,907 | 1,195 | utilities.ts:5041:1; skipParentheses result._expressionBrand (from 11338:9) | lowering: censusOverload |
+
+14 reveals another 1,195 bytes. Its first remaining boundary inside the region
+is utilities.ts:11338:9, which reaches the skipParentheses overload at 5041:1:
+
+```text
+Adamic 0.1 refuses overload 1 of skipParentheses result Expression cannot be served by implementation result Node at result._expressionBrand; required field is absent from Node; prove every return for this overload's admitted arguments, preserving result variance
+```
+
+The earlier 8,048 bytes in 06 and 324 signature bytes in 13 remain revealed.
+Total assigned hidden bytes are 48,591. 01 and 13 remain checker stops;
+05 remains on checked views. 06 is the next ruled group.
+[Report](../../docs/overload-results/groups/values/REPORT.md),
+[comparison](../../docs/overload-results/groups/values/regions.json),
+[exact stops](../../docs/overload-results/groups/values/next-stops.json), and
+[raw census](../../docs/overload-results/groups/values/after.jsonl.gz).
