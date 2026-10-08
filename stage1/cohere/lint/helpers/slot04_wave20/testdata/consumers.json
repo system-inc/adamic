@@ -1,0 +1,958 @@
+[
+  {
+    "name": "structure/consistency-require-matching-file-name:Agenda.tsx",
+    "source": "export function CalendarRoot(properties: { day: number }) {\n    return <div />;\n}\n\nexport const Calendar = Object.assign(CalendarRoot, {\n    Size: 1,\n});\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Button.client.tsx",
+    "source": "export function Button() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Button.jsx",
+    "source": "export function Button() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Button.spec.tsx",
+    "source": "function Harness() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Button.stories.tsx",
+    "source": "export function Primary() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Button.story.tsx",
+    "source": "export function Primary() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Button.test.tsx",
+    "source": "function Harness() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Calendar.tsx",
+    "source": "export function CalendarRoot(properties: { day: number }) {\n    return <div />;\n}\n\nexport const Calendar = Lodash.assign(CalendarRoot, {\n    Size: 1,\n});\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Calendar.tsx",
+    "source": "export function CalendarRoot(properties: { day: number }) {\n    return <div />;\n}\n\nexport const Calendar = Object.assign(CalendarRoot, {\n    Size: 1,\n});\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:ErrorBoundary.tsx",
+    "source": "export class Boundary extends React.Component {\n    render() {\n        return <Fallback />;\n    }\n}\n\nfunction Fallback() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:ErrorBoundary.tsx",
+    "source": "export class Boundary extends React.Component {\n    render() {\n        return <div />;\n    }\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:ErrorBoundary.tsx",
+    "source": "export class ErrorBoundary extends React.PureComponent {\n    render() {\n        return <div />;\n    }\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:ErrorBoundary.tsx",
+    "source": "export const Boundary = class extends Component {\n    render() {\n        return <div />;\n    }\n};\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Finance-Floor.jsx",
+    "source": "export class FinanceFloor extends React.Component {\n    render() {\n        return <div />;\n    }\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:FinanceFloorView.tsx",
+    "source": "/** The row. */\nexport function FinanceFloorViewRow() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:FinanceFloorView.tsx",
+    "source": "export function FinanceFloorViewRow() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:FinanceFloorViewRow.tsx",
+    "source": "export function FinanceFloorViewRow() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:FinanceFloorview.tsx",
+    "source": "export function FinanceFloorView() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Input.tsx",
+    "source": "export const Field = forwardRef(function (properties, reference) {\n    return <input ref={reference} />;\n});\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:MenuItem.tsx",
+    "source": "function MenuItemComponent(properties: { label: string }) {\n    return <div>{properties.label}</div>;\n}\n\nexport const MenuItem = React.memo(MenuItemComponent, function arePropertiesEqual(previous, next) {\n    return previous.label === next.label;\n});\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:MenuSearch.tsx",
+    "source": "export const MenuSearch = React.memo(\n    function MenuSearchInner(properties: { query: string }) {\n        return <input value={properties.query} />;\n    },\n);\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Page.tsx",
+    "source": "export function OsPage() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Table.tsx",
+    "source": "export const TableRow = () => <div />;\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Table.tsx",
+    "source": "export const TableRow = function () {\n    return <div />;\n};\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Table.tsx",
+    "source": "export function Table() {\n    return <TableRow />;\n}\n\nfunction TableRow() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Table.tsx",
+    "source": "export function TableRowInner<Row>(properties: { row: Row }) {\n    return <div />;\n}\n\nexport const TableRow = React.memo(TableRowInner, function (previous, next) {\n    return previous.row === next.row;\n}) as typeof TableRowInner;\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Table.tsx",
+    "source": "function TableCell() {\n    return <td />;\n}\n\nexport const TableRow = React.memo(function () {\n    return <tr />;\n});\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Table.tsx",
+    "source": "function TableRowInner(properties: { label: string }) {\n    return <div>{properties.label}</div>;\n}\n\nexport const TableRow = React.memo(TableRowInner, function (previous, next) {\n    return previous.label === next.label;\n});\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:TableRow.tsx",
+    "source": "export const TableRow = () => <div />;\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:TableRow.tsx",
+    "source": "export function TableRowInner<Row>(properties: { row: Row }) {\n    return <div />;\n}\n\nexport const TableRow = React.memo(TableRowInner, function (previous, next) {\n    return previous.row === next.row;\n}) as typeof TableRowInner;\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.jsx",
+    "source": "export function Button() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.ts",
+    "source": "export function Button() {\n    const [open] = useState(false);\n    return open;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "const Colors = { primary: 'red' };\n\nfunction renderLabel() {\n    return <span />;\n}\n\nexport function Button() {\n    return <div>{renderLabel()}</div>;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "const base = { a: 1 };\nexport const Settings = Object.assign(base, { b: 2 });\n\nexport function Button() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export const Colors = { primary: 'red' };\n\nexport function formatLabel(label: string) {\n    return label.trim();\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export default () => <div />;\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export default (function Button() {\n    return <div />;\n});\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export default class extends React.Component {\n    render() {\n        return <div />;\n    }\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export default function () {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export default function Button() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export function Button() {\n    const [open] = useState(false);\n    return open ? 'open' : 'closed';\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export function Button() {\n    function Inner() {\n        return <span />;\n    }\n    return <div><Inner /></div>;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export function Button(flag: boolean) {\n    if(flag) {\n        return <div />;\n    }\n    return null;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export function Button(properties: { a: string }): JSX.Element;\nexport function Button(properties: { a: string } | { b: string }) {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export function Button(properties: { label: string }) {\n    return properties.label;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export function Helper() {\n    return 1 + 1;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "export function renderButton() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "function Button() {\n    return <div />;\n}\n\nexport default () => <Button />;\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "function Button() {\n    return <div />;\n}\n\nexport default class extends React.Component {\n    render() {\n        return <Button />;\n    }\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "function Button() {\n    return <div />;\n}\n\nexport default function () {\n    return <Button />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:Toggle.tsx",
+    "source": "let Button;\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:apple-icon.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:apple-icon2.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:default.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:error.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:financeFloorView.tsx",
+    "source": "export const FinanceFloorView = () => <div />;\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:financeFloorView.tsx",
+    "source": "export function FinanceFloorView() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:forbidden.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:global-error.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:global-not-found.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:icon.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:icon1.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:icon12.tsx",
+    "source": "export default function Icon() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:iconA.tsx",
+    "source": "export default function Icon() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:index.tsx",
+    "source": "export function Button() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:index.tsx",
+    "source": "export { Button } from './Button';\nexport type { ButtonProperties } from './ButtonProperties';\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:layout.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:loading.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:manifest.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:mdx-components.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:not-found.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:opengraph-image.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:opengraph-image3.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:page.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:robots.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:route.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:sitemap.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:template.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:twitter-image.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:twitter-image9.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:unauthorized.tsx",
+    "source": "export default function OsPageRoute() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/consistency-require-matching-file-name:useThing.tsx",
+    "source": "export function ThingPanel() {\n    return <div />;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Thing.ts",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ label }: { label: string }) {\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\ndeclare const properties: any;\nconst { label } = properties;\nexport const value = label;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport const Button = ({ label }: { label: string }) => <button>{label}</button>;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Build({ label }: { label: string }) {\n    return label.length;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button() {\n    return <button />;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button(properties: any) {\n    const source = properties.data;\n    const { label } = source;\n    return <button>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button(properties: any) {\n    const { label, ...rest } = properties;\n    return <button {...rest}>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button(properties: { label: string }) {\n    const { label } = properties;\n    return <button>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button(properties: { label: string }) {\n    return <button>{properties.label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button(props: { label: string }) {\n    const { label } = props;\n    return <button>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ label }: { label: string }) {\n    return <button>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ label, ...buttonProperties }: any) {\n    return <button {...buttonProperties}>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ label, ...buttonProperties }: any) {\n    return <button>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ label, ...buttonPropertiesList }: any) {\n    return <button {...buttonPropertiesList}>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ label, ...remainingProperties }: any) {\n    return <button {...remainingProperties}>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ label, ...rest }: any) {\n    return <button {...rest}>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ label, ...restProperties }: any) {\n    return <button {...restProperties}>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ ref, label }: any) {\n    return <button ref={ref}>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ ref, label }: any) {\n    useImperativeHandle(ref, () => ({}));\n    return <button>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function Button({ ref: reference, label }: any) {\n    useImperativeHandle(reference, () => ({}));\n    return <button>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:Button.tsx",
+    "source": "import React from 'react';\ndeclare function useImperativeHandle(reference: unknown, create: () => unknown): void;\nexport function build({ label }: { label: string }) {\n    return <span>{label}</span>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-component-no-destructuring:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Thing.ts",
+    "source": "import React from 'react';\nfunction Button() {\n    React.useEffect(() => {}, []);\n    return null;\n}\nexport { Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "/** The button. */\nfunction Button() {\n    return <button />;\n}\nexport { Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "async function Button() {\n    return <button />;\n}\nexport { Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "const Button = () => <button />, value = 1;\nexport { Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "const Button = () => <button />;\nexport { Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Button() {\n    return <button />;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nconst Colors = 'red';\nexport { Colors };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nconst build = () => <div />;\nexport { build };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nconst value = 1;\nexport { value };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nexport * from './Other';\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nexport { Button } from './Button';\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nexport { PaginationButton } from './PaginationButton';\nexport { PaginationItem } from './PaginationItem';\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nfunction Build() {\n    return 1;\n}\nexport { Build };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nfunction build() {\n    return <div />;\n}\nexport { build };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nimport { Button } from './Button';\nexport { Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\ntype ButtonProperties = { label: string };\nexport type { ButtonProperties };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "export { Button };\nfunction Button() {\n    return <button />;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "function Button() {\n    return <button />;\n}\nconst value = 1;\nexport { value, Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "function Button() {\n    return <button />;\n}\nexport { Button } from './Other';\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "function Button() {\n    return <button />;\n}\nexport { Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "function Button() {\n    return <button />;\n}\nfunction Panel() {\n    return <div />;\n}\nexport { Button, Panel };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "function Button(): JSX.Element;\nfunction Button() {\n    return <button />;\n}\nexport { Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "import React from 'react';\nfunction Button() {\n    React.useEffect(() => {}, []);\n    return null;\n}\nexport { Button };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:Button.tsx",
+    "source": "import { other } from './other';\nfunction Button() {\n    return <button />;\n}\nexport { Button, other };\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-component-no-separate-named-export:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Thing.ts",
+    "source": "import React from 'react';\nexport function Button(props: { label: string }) {\n    React.useEffect(() => {}, []);\n    return props.label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export const Button = (props: { label: string }) => <button>{props.label}</button>;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export const Button = function(props: { label: string }) {\n    return <button>{props.label}</button>;\n};\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export function Button() {\n    return <button />;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export function Button(input: { label: string }) {\n    return <button>{input.label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export function Button(properties: { label: string }) {\n    return <button>{properties.label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export function Button(properties: { label: string }, props: unknown) {\n    return <button>{properties.label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export function Button(props: { label: string }) {\n    return <button>{props.label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export function Button(propsBag: { label: string }) {\n    return <button>{propsBag.label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export function Button({ label, ...buttonProperties }: any) {\n    return <button {...buttonProperties}>{label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export function build(props: { label: string }) {\n    return props.label.length;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "export function renderButton(props: { label: string }) {\n    return <button>{props.label}</button>;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:Button.tsx",
+    "source": "import React from 'react';\nexport function Button(props: { label: string }) {\n    React.useEffect(() => {}, []);\n    return props.label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "export function Page() { return null; }\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n"
+  },
+  {
+    "name": "structure/react-component-require-properties-parameter:ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n"
+  }
+]

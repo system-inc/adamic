@@ -1,0 +1,4 @@
+export function parameterNodes(parametersPresent: boolean, nodes: number[]): number[] {
+    if(!parametersPresent) { return []; }
+    return nodes;
+}

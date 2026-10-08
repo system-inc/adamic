@@ -1,0 +1,302 @@
+[
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/constructor_public_object_binding.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/constructor_public_object_binding.ts.txt",
+    "sha256": "6b2bdd4288c0af6cbf007529b3506e584fbd9dd81911584037702faaefbaf82c"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/decorated_async_promise_executor.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/decorated_async_promise_executor.ts.txt",
+    "sha256": "4e5cf793d4f53b8ff6e6c2f1f27ff9ba2a7431790dc72cc0f3e8c620278d46e2"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/decorated_class_expression.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/decorated_class_expression.ts.txt",
+    "sha256": "d54f64a9b196b444f7888d07bcba0c83faccfb0ca5a36bc62736aed9defbb5de"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/decorated_parameter.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/decorated_parameter.ts.txt",
+    "sha256": "2a632e630a52b9dbe82c2ce29e2bc6fa509a7d8af5f393937d4c935c8de7737c"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/interface_missing_body.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/interface_missing_body.ts.txt",
+    "sha256": "d7da1080854c0a29901b8f0562f022fb33f41f281233d3805291d546b9ef49f6"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/interface_missing_close_brace.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/interface_missing_close_brace.ts.txt",
+    "sha256": "8ac26b2c326cc469ad8c905c811908d7d58b685af3c94dddcd4d815d6feda25b"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/interface_unclosed_body.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/interface_unclosed_body.ts.txt",
+    "sha256": "1435183baf74b2dc5718a6126fcb575fd1f5b36ef74a0571e1f330b00e7e722e"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/jsx_closing_tag_in_ts.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/jsx_closing_tag_in_ts.ts.txt",
+    "sha256": "a4595637fc74b19095d679b9d67585d083f5d6a0d2fd3d7e32df9df6921df5f3"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/jsx_self_closing_in_ts.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/jsx_self_closing_in_ts.ts.txt",
+    "sha256": "8d8cdd40fbf3af38296d10b4b5c97f23069c57b5efffaa69693475d4efb23fcd"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/method_missing_type_parameter_close.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/method_missing_type_parameter_close.ts.txt",
+    "sha256": "08a26fb1e896ea1188ca1d5ea80dda5d436593dadbfde8ff98f21819447591a4"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/method_stray_type_parameter_angle.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/method_stray_type_parameter_angle.ts.txt",
+    "sha256": "9dfd6ce79007b5a5459382121060bb4e8a8283d3c7b3a4142fa8687498a62ad6"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/method_stray_type_parameter_angle_with_parameter.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/method_stray_type_parameter_angle_with_parameter.ts.txt",
+    "sha256": "2bf7cec06c167c8fcce58e388553ba109e3d24da49bf55ec7e440e5920b9f804"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/method_unclosed_type_parameters.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/method_unclosed_type_parameters.ts.txt",
+    "sha256": "08a26fb1e896ea1188ca1d5ea80dda5d436593dadbfde8ff98f21819447591a4"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/nextjs_interface_constructor_body.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/nextjs_interface_constructor_body.ts.txt",
+    "sha256": "e185a32134ff117ce99a6287a835daef72dc2d132d6b271f411757b8c68b867d"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_anchor_attribute.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_anchor_attribute.tsx.txt",
+    "sha256": "fb17c1752217500b8c915bb1c27850d582091cc14eedab17ebc7fa23ec0cbb8f"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_boolean_attribute.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_boolean_attribute.tsx.txt",
+    "sha256": "32ccb1c16895501aa2da274b73d73c622184fd2d5fd446777457b90c2c3dcef0"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_font_link.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_font_link.tsx.txt",
+    "sha256": "74c843873df80e3b487b49eedd1e21d7f9185606f1d4989dabba281f48c4ae0f"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_nested_head.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_nested_head.tsx.txt",
+    "sha256": "80057dabbd4b0104fb4b5a605712617fd0169b5230582b43c7e3a96f38e5da2e"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_paired_image.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_paired_image.tsx.txt",
+    "sha256": "e1b5b1f0c368665b66f07addc9425196db76edc11d0e9bc4f0950c099049702d"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_script_attribute.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_script_attribute.tsx.txt",
+    "sha256": "204bc3c68442bc91272c4118a7b88a162943ea67156e4354a3c7bb630893b205"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_script_single_quote.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/nextjs_jsx_script_single_quote.tsx.txt",
+    "sha256": "895f2a4dc4b6a8a9af42f530a2c099e7ddf9bba15018a63e039f7cbcb82f8716"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/nextjs_type_constructor_body.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/nextjs_type_constructor_body.ts.txt",
+    "sha256": "7ef00d4bdb40963fa03c3baa72ef05c86ac4d90ea156d154e97a771ad135ad42"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/octal_escape.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/octal_escape.ts.txt",
+    "sha256": "7b26a8ba001059af64b91492b1663a51dfecfeb6aa5d8afcd1496d34de404c35"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/octal_literal.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/octal_literal.ts.txt",
+    "sha256": "b6c686d3973c89358a39da3137eddc7394e916eff6553ef57b123343103242e7"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/top_level_await_new_module.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/top_level_await_new_module.ts.txt",
+    "sha256": "58d4ba8768c583435b6a144771b1506b8e674e4de186528c3d05a4ef59d69a25"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/top_level_await_new_script.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/top_level_await_new_script.ts.txt",
+    "sha256": "6816249248c942b5602eb382719146a4c109842b3c7b863009d73992920ec37c"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave08_computed_key_colon_before_bracket.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave08_computed_key_colon_before_bracket.ts.txt",
+    "sha256": "2ec03cfca1fe1dad900b79e40f471f7e7551bdc3d84cdd5245bed69adc3c869a"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave08_computed_key_missing_bracket.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave08_computed_key_missing_bracket.ts.txt",
+    "sha256": "7afcb6f9d0e1f8534e95cf67a0bca0703b5d5110cf26462abf0198178aef003b"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave08_jsx_self_closing_attribute.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave08_jsx_self_closing_attribute.tsx.txt",
+    "sha256": "5c59b0cdb045f69b53deda68ccce6e19da1bff43b37b5eeaf3271f90528f06d3"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave08_jsx_text_child.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave08_jsx_text_child.tsx.txt",
+    "sha256": "3bcc67abf4196acc4df638825aff2b280eee41881221b470d0e2a4fc263c915b"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave08_legacy_octal_bigint.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave08_legacy_octal_bigint.ts.txt",
+    "sha256": "86222fc0250e1674336b7bf6b07ee0903b575b24db6392eece57690713d26e9e"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave08_legacy_octal_decimal_long.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave08_legacy_octal_decimal_long.ts.txt",
+    "sha256": "dd6952c479482c8cdef5cbad3c87f8c3c9ed1fba167fc659273ea6220b7849cf"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave08_legacy_octal_decimal_short.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave08_legacy_octal_decimal_short.ts.txt",
+    "sha256": "ef5a899f944bf84503232f5e5553f411ee8ec31bfab60b37ca5cc77d0ee1ef06"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_class_attribute.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_class_attribute.tsx.txt",
+    "sha256": "5c59b0cdb045f69b53deda68ccce6e19da1bff43b37b5eeaf3271f90528f06d3"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_attribute.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_attribute.tsx.txt",
+    "sha256": "381798dcb6930bdcefff167601f8f774f5d63b62cf0c813f5f984f9f34944263"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_attribute_braces.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_attribute_braces.tsx.txt",
+    "sha256": "9664fc18d7df256672739ce62004e9b2ef32d7d688d6f69aac30e1429fb8cb94"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_element_braces.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_element_braces.tsx.txt",
+    "sha256": "c40b53031e639a3ee0dae0d174f9a3281b18a1b6630d70d8fb244085051714ba"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_spread_object.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_spread_object.tsx.txt",
+    "sha256": "1b711f8ce5d60e546243d3bc5b606edc4e167c2143967902535cad58a8e71ff1"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_spread_string.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_multiline_spread_string.tsx.txt",
+    "sha256": "0a2825432a6bbde993c437c7dd6a71e475ed6fb054c05625a953647ca58cff34"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_void_arrow_callback.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_jsx_void_arrow_callback.tsx.txt",
+    "sha256": "f8dcb7406ebee725f04c9c5349bf4eadbcfdef8839633ff2ea91f4d48f184f7d"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_octal_bigint.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_octal_bigint.ts.txt",
+    "sha256": "86222fc0250e1674336b7bf6b07ee0903b575b24db6392eece57690713d26e9e"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_octal_long_fraction.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_octal_long_fraction.ts.txt",
+    "sha256": "dd6952c479482c8cdef5cbad3c87f8c3c9ed1fba167fc659273ea6220b7849cf"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_octal_short_fraction.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_octal_short_fraction.ts.txt",
+    "sha256": "ef5a899f944bf84503232f5e5553f411ee8ec31bfab60b37ca5cc77d0ee1ef06"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave13_top_level_await_new.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave13_top_level_await_new.ts.txt",
+    "sha256": "50a9fc1c5e1d540d7e174ddaf96b972f06bb11b5b31746a58383ff2dc1333f0c"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave15_octal_literal_decimal_tail.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave15_octal_literal_decimal_tail.ts.txt",
+    "sha256": "017a35c5e6af8824a10d0825da0bccd712d6b84d0b488c313acc7bf829f1d5d4"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave16-interface-missing-body.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave16-interface-missing-body.ts.txt",
+    "sha256": "d7da1080854c0a29901b8f0562f022fb33f41f281233d3805291d546b9ef49f6"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave16-interface-unclosed-body.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave16-interface-unclosed-body.ts.txt",
+    "sha256": "1435183baf74b2dc5718a6126fcb575fd1f5b36ef74a0571e1f330b00e7e722e"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave16-jsx-fragment.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave16-jsx-fragment.tsx.txt",
+    "sha256": "fcb88a3e84711a008016eb311e7128718bda948f528b1c5d77e9bdb5be1b9348"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave16-jsx-provider-object-value.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave16-jsx-provider-object-value.tsx.txt",
+    "sha256": "b95cdb9c24c9ef7e8d3c18dfdfe615b2221ebc3581c7433254fc4af9213c4355"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave16-jsx-unresolved-tag.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave16-jsx-unresolved-tag.tsx.txt",
+    "sha256": "d2cbec093d4650e1a33aeebb519eed65f14f996310d95efa789458c4ef110020"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave16-method-incomplete-generic.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave16-method-incomplete-generic.ts.txt",
+    "sha256": "08a26fb1e896ea1188ca1d5ea80dda5d436593dadbfde8ff98f21819447591a4"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave16-method-stray-generic-angle.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave16-method-stray-generic-angle.ts.txt",
+    "sha256": "2bf7cec06c167c8fcce58e388553ba109e3d24da49bf55ec7e440e5920b9f804"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_component_return.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_component_return.tsx.txt",
+    "sha256": "ee965db8c44119c1321dc6210a734e7cc6229d249c50ae50ddd28dbe048b2f89"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_element_then_call.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_element_then_call.tsx.txt",
+    "sha256": "0a6c047a4c70e12fac3f987e4146d82e71fa15b3faae6e9c62cbad2a4db7af2f"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_provider_object_value.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_provider_object_value.tsx.txt",
+    "sha256": "f73c230543aaef616184fb672c5a199d49deb71089c86400cb4d48cc5c80e638"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_qualified_fragment.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_qualified_fragment.tsx.txt",
+    "sha256": "5cbd059540047bd09b39271089458325d34b8eabcbd33201f16f1ddd7145c26a"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_quoted_style.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_quoted_style.tsx.txt",
+    "sha256": "7169a020b0286281ac90aceaf5b1eb07fdf3219e54ec856c4f34aeecea51a837"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_self_closing_then_call.tsx",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave21_jsx_self_closing_then_call.tsx.txt",
+    "sha256": "8f1a309cb6b6993ef79495ddc9aff89ad0fc56d60f29db45397aca467ca7e20c"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/wave21_yield_label.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/wave21_yield_label.ts.txt",
+    "sha256": "9f2ac9dc0530e655ecc7869e023c3cf7121d08616d543084af2c8a1e971edec8"
+  },
+  {
+    "from": "stage1/typescript/parser/testdata/lint_cases/yield_keyword_label.ts",
+    "to": "stage1/typescript/parser/testdata/lint_cases/yield_keyword_label.ts.txt",
+    "sha256": "0d30430382534af8bf596cea8c2b6530a3fb8a78834f295cbb8ee3a54b95f8c5"
+  }
+]

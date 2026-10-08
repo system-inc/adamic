@@ -1,0 +1,1 @@
+export const Example = () => <><script src="/a.js" /><script src="/b.js"></script><script SRC="/c.js" /><script src="/d.js" async={false} /><Foo.script src="/e.js" /><script {...properties} /><script xlink:src="/f.js" /></>;

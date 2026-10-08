@@ -2,16 +2,15 @@ package lint
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/testguard"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
@@ -72,9 +71,7 @@ func sharedPath(name string) (string, error) {
 // run is execute without a test: output goes to a file, never a pipe, and anything on standard error is
 // a failure, as execute requires.
 func run(directory string, environment []string, name string, args ...string) ([]byte, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	command.Dir = directory
 	// An explicit environment loses the PWD os/exec sets from Dir, and the go command trusts PWD over the
 	// real working directory, so a stale one resolves the module through the wrong path.
@@ -91,7 +88,7 @@ func run(directory string, environment []string, name string, args ...string) ([
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil || stderr.Len() != 0 {
+	if err := testguard.Run(command, testguard.Budget, testguard.Ceiling); err != nil || stderr.Len() != 0 {
 		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	return os.ReadFile(output.Name())
@@ -209,7 +206,7 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	}
 	sort.Strings(names)
 	for _, name := range names {
-		if _, err := run(root, environment, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=10m"); err != nil {
+		if _, err := run(root, environment, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0"); err != nil {
 			return nil, err
 		}
 	}
@@ -282,7 +279,7 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 			case "type T = { m: => void };":
 				mode = "recovery"
 			case "interface I", "interface I { m(a: string): void;", "interface I { m<(a: string): void; }", "interface I { m<T(a: T): T; }":
-				mode = "unsupported-recovery"
+				mode = "recovery"
 			}
 		}
 		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {

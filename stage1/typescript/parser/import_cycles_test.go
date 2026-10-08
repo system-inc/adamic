@@ -14,6 +14,7 @@ import (
 // Import-cycles 779ff9d closed the type-only import cycle gap. Keep Node and
 // sanitized native output as the positive witness of that ruling.
 func TestTypeOnlyImportCycleCompiles(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("testdata/type_import_cycle/entry.a")
 	if err != nil {
 		t.Fatal(err)
@@ -35,7 +36,7 @@ func TestTypeOnlyImportCycleCompiles(t *testing.T) {
 		t.Fatalf("type-only cycle must compile after 779ff9d: %v", err)
 	}
 	binary := filepath.Join(t.TempDir(), "cycle")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+	if err := buildParserC(native.C(lowered), binary, true); err != nil {
 		t.Fatal(err)
 	}
 	got := execute(t, "", binary).output

@@ -1,0 +1,15 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { parameterTypeNodeIndex } from './structure_parameter_type_node.a';
+const input = readTextFile(programArguments()[0] ?? panic('cases path'));
+if (input.kind === 'Error') { panic(input.message); }
+const data = new OptionsJson(input.text); const root = data.parse();
+let number = 0;
+for (const row of data.node(root).children) {
+    const present = data.node(data.field(row, 'present')).text === 'true';
+    const kind = Number(data.node(data.field(row, 'kind')).text);
+    const typeId = Number(data.node(data.field(row, 'typeId')).text);
+    const result = parameterTypeNodeIndex(present, kind, typeId);
+    console.log(`case ${number}`); number++;
+    console.log(`result\t${result}`);
+}

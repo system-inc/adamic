@@ -1,0 +1,18 @@
+import { runes } from './runes.a';
+import { minimumEditDistance } from './minimum_edit_distance.a';
+export type Match = { value: string; ok: boolean; };
+export function bestMatch(needle: string, candidates: readonly string[], threshold: number): Match {
+ const needleLength = runes(needle).length;
+ let bestCandidate = ''; let bestDistance = 0; let found = false;
+ for(const candidate of candidates) {
+  let difference = runes(candidate).length - needleLength;
+  if(difference < 0) { difference = -difference; }
+  if(difference > threshold) { continue; }
+  const distance = minimumEditDistance(candidate, needle);
+  if(distance === 0) { return { value: '', ok: false }; }
+  if(distance > threshold) { continue; }
+  if(found && distance >= bestDistance) { continue; }
+  bestCandidate = candidate; bestDistance = distance; found = true;
+ }
+ return { value: bestCandidate, ok: found };
+}

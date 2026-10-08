@@ -1,0 +1,7 @@
+import { panic } from 'adamic';
+import type { JsxNode } from './model.a';
+export function isJsxValue(nodes: readonly JsxNode[], index: number): boolean {
+    if (index < 0) { return false; }
+    const node = (nodes[index] ?? panic('missing AST node'));
+    return node.element || node.fragment || node.selfClosing;
+}

@@ -1,0 +1,13 @@
+# Landing after nonprogressing automatic fix parity
+
+Merged lint-fix/nonprogressing-fix with a merge commit, retaining all checks from the area and port. The final evidence-only merge adds the fixer logs; no executable source changed after the full package run. The fixer branch is b8c259568. It rejects the empty automatic edit in `type Shape = { value: string }` with option `interface`, applies the two other edits in Go's proposal order, and returns `interface Shape { value: string }`.
+
+TestRulesAgree, TestOwnedWitnesses and TestMutants all pass. The upstream prefix captures all 50 consistent-type-definitions cases (3,929 total registered upstream combinations). Findings, independent automatic edits, suggestions, rejection rows and final source agree with Go across Node, emitted JavaScript and sanitized native. All four owned witnesses fire with their own options. The valid `object-alias-message-changed` mutant is caught by comparison; the restored no-progress panic also fails at runtime in all three port runtimes. The independent ordering/UTF-8 fixture matches Go.
+
+Full command: `GOMAXPROCS=4 GOFLAGS=-buildvcs=false go test -json -count=1 -timeout=60m ./stage1/cohere/lint`, with TypeScript v6.0.3 corpus at /workspace/wave-07-typescript, ADAMIC_LINT_BENCH=1 and both profile input variables set to a fresh /workspace/nonprogressing-port-full/profiles directory. Registry and vet pass; gofmt finds no unformatted owned or new Go files.
+
+Top-level counts: {'pass': 37, 'fail': 0, 'skip': 1}; all-test counts: {'pass': 120, 'fail': 0, 'skip': 1}; wall: 2070.299s; nproc: 5; mean load: [2.751431819897343, 2.749042308272947, 2.54181999169686]; peak load: [5.42333984375, 4.3115234375, 3.322265625]. Registered mutants caught: 76. Compiler and repository corpus: 878 files.
+
+The only skip is TestCheckerBridgeRefusalPending, awaiting TSGoError/error-as-value support in internal/load/prelude.d.ts. All input-dependent checks ran. Existing unsupported parser-recovery cases remain explicitly recorded by the harness, not counted as successful lint parity. The separate wave branch remains blocked on malformed JSX recovery; it is not claimed green by this port's gate.
+
+Evidence: [summary](evidence/nonprogressing-landing/summary.json), [raw events](evidence/nonprogressing-landing/events.jsonl.gz), [receipt and load samples](evidence/nonprogressing-landing/receipt.json), [native versus Go throughput](evidence/nonprogressing-landing/throughput.log), [registry](evidence/nonprogressing-landing/registry.log), [vet](evidence/nonprogressing-landing/vet.log), [gofmt](evidence/nonprogressing-landing/gofmt.log).

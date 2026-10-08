@@ -1,0 +1,22 @@
+import type {RuleContext} from '../../context.ts';
+import {enclosingFunctionOf} from '../../helpers/rules-react/enclosing_function_of.a';
+import {isReactCompiledFunction} from '../../helpers/rules-react/is_react_compiled_function.a';
+import {message} from './messages.a';
+export class Rule {
+    readonly context:RuleContext;
+    constructor(context:RuleContext){this.context=context;}
+    visit(index:number,parent:number):void {
+        const context=this.context;
+        const enclosing=enclosingFunctionOf(context,index);
+        if(enclosing<0){return;}
+        let inside=false;
+        for(let child=index;child>=0 && child!==enclosing;child=context.parent(child)){
+            const p=context.parent(child);
+            if(p<0 || context.kind(p)!=='TryStatement' || !context.has(p,'CatchClause')){continue;}
+            if(context.node(p).children[0]===child){inside=true;break;}
+        }
+        if(!inside || !isReactCompiledFunction(context,enclosing)){return;}
+        context.report(index,'react-hooks/error-boundaries','jsxInTryStatement',message,'','','');
+    }
+}
+export function create(context:RuleContext):Rule {return new Rule(context);}

@@ -68,6 +68,7 @@ func jsxManifest(t *testing.T) (string, int) {
 }
 
 func TestJsxNode(t *testing.T) {
+	t.Parallel()
 	manifest, count := jsxManifest(t)
 	directory, _ := filepath.Abs(".")
 	oracle := goOracle(t)
@@ -95,6 +96,7 @@ func TestJsxNode(t *testing.T) {
 
 // Not parallel: release throughput and full native tree comparisons share this corpus.
 func TestJsxNative(t *testing.T) {
+	t.Parallel()
 	manifest, count := jsxManifest(t)
 	directory, _ := filepath.Abs(".")
 	oracle := goOracle(t)

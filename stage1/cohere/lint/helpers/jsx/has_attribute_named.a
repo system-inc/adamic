@@ -1,0 +1,15 @@
+import { panic } from 'adamic';
+import { attributeName } from './attribute_name.a';
+import type { SourceNode } from './ast.a';
+// The match callback receives only identifier-named attributes, in list order.
+export function hasAttributeNamed(nodes: readonly SourceNode[], id: number, wanted: string,
+    matches: (candidate: string, wanted: string) => boolean): boolean {
+    if (id === -1) { return false; }
+    const attributes = nodes[id] ?? panic('missing attributes AST node');
+    if (attributes.kind !== 'JsxAttributes' || !attributes.propertiesPresent) { return false; }
+    for (const property of attributes.properties) {
+        const name = attributeName(nodes, property);
+        if (name.named && matches(name.name, wanted)) { return true; }
+    }
+    return false;
+}

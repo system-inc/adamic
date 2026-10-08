@@ -1,0 +1,19 @@
+import { panic } from 'adamic';
+import type { HelperNode } from './nodes.a';
+import { isIdentifierNamed } from './react_identifier_named.a';
+
+// The leaf name predicate is an explicit dependency, owned by another slot.
+// Supply Go-compatible isComponentBaseName. Outer parentheses are not skipped;
+// only the receiver of a property access skips parentheses.
+export function isComponentBase(nodes: readonly HelperNode[], expression: number, matchesBaseName: (name: string) => boolean): boolean {
+    if(expression === -1) { return false; }
+    const node = nodes[expression] ?? panic('missing helper AST component base');
+    if(node.kind === 'Identifier') {
+        return matchesBaseName(node.text);
+    }
+    if(node.kind !== 'PropertyAccessExpression') { return false; }
+    if(!isIdentifierNamed(nodes, node.expression, 'React')) { return false; }
+    if(node.name === -1) { return false; }
+    const name = nodes[node.name] ?? panic('missing helper AST component name');
+    return name.kind === 'Identifier' && matchesBaseName(name.text);
+}

@@ -1,0 +1,103 @@
+=== RUN   TestIncompleteCompilerAgrees
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.moduleSpecifiers.ts: 5 tokens, cutoff stride 1, edit stride 1, 16 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.performance.ts: 5 tokens, cutoff stride 1, edit stride 1, 16 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.ts: 389 tokens, cutoff stride 2, edit stride 13, 255 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/binder.ts: 20833 tokens, cutoff stride 82, edit stride 652, 319 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/builder.ts: 13258 tokens, cutoff stride 52, edit stride 415, 319 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/builderPublic.ts: 897 tokens, cutoff stride 4, edit stride 29, 287 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/builderState.ts: 3027 tokens, cutoff stride 12, edit stride 95, 317 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/builderStatePublic.ts: 54 tokens, cutoff stride 1, edit stride 2, 109 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/checker.ts: 348866 tokens, cutoff stride 1363, edit stride 10903, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/commandLineParser.ts: 21716 tokens, cutoff stride 85, edit stride 679, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/core.ts: 16280 tokens, cutoff stride 64, edit stride 509, 319 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/corePublic.ts: 152 tokens, cutoff stride 1, edit stride 5, 215 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/debug.ts: 8417 tokens, cutoff stride 33, edit stride 264, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/emitter.ts: 34258 tokens, cutoff stride 134, edit stride 1071, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/executeCommandLine.ts: 7535 tokens, cutoff stride 30, edit stride 236, 316 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/expressionToTypeNode.ts: 8846 tokens, cutoff stride 35, edit stride 277, 317 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/baseNodeFactory.ts: 383 tokens, cutoff stride 2, edit stride 12, 256 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitHelpers.ts: 4468 tokens, cutoff stride 18, edit stride 140, 313 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/emitNode.ts: 1739 tokens, cutoff stride 7, edit stride 55, 313 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeChildren.ts: 304 tokens, cutoff stride 2, edit stride 10, 215 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeConverters.ts: 875 tokens, cutoff stride 4, edit stride 28, 283 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeFactory.ts: 41990 tokens, cutoff stride 165, edit stride 1313, 319 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/nodeTests.ts: 5698 tokens, cutoff stride 23, edit stride 179, 312 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/parenthesizerRules.ts: 2612 tokens, cutoff stride 11, edit stride 82, 302 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilities.ts: 8619 tokens, cutoff stride 34, edit stride 270, 318 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/factory/utilitiesPublic.ts: 295 tokens, cutoff stride 2, edit stride 10, 208 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/moduleNameResolver.ts: 21374 tokens, cutoff stride 84, edit stride 668, 319 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/moduleSpecifiers.ts: 8795 tokens, cutoff stride 35, edit stride 275, 316 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/parser.ts: 62538 tokens, cutoff stride 245, edit stride 1955, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/path.ts: 4515 tokens, cutoff stride 18, edit stride 142, 315 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/performance.ts: 794 tokens, cutoff stride 4, edit stride 25, 263 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/performanceCore.ts: 354 tokens, cutoff stride 2, edit stride 12, 238 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/program.ts: 29758 tokens, cutoff stride 117, edit stride 930, 319 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/programDiagnostics.ts: 2272 tokens, cutoff stride 9, edit stride 71, 317 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/resolutionCache.ts: 8686 tokens, cutoff stride 34, edit stride 272, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/scanner.ts: 30606 tokens, cutoff stride 120, edit stride 957, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/semver.ts: 2488 tokens, cutoff stride 10, edit stride 78, 313 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/sourcemap.ts: 4186 tokens, cutoff stride 17, edit stride 131, 311 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/symbolWalker.ts: 1094 tokens, cutoff stride 5, edit stride 35, 283 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/sys.ts: 10285 tokens, cutoff stride 41, edit stride 322, 315 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/tracing.ts: 2114 tokens, cutoff stride 9, edit stride 67, 299 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformer.ts: 3095 tokens, cutoff stride 13, edit stride 97, 303 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classFields.ts: 14941 tokens, cutoff stride 59, edit stride 467, 318 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/classThis.ts: 529 tokens, cutoff stride 3, edit stride 17, 241 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations/diagnostics.ts: 4022 tokens, cutoff stride 16, edit stride 126, 316 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/declarations.ts: 10719 tokens, cutoff stride 42, edit stride 335, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/destructuring.ts: 3178 tokens, cutoff stride 13, edit stride 100, 309 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2015.ts: 21458 tokens, cutoff stride 84, edit stride 671, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2016.ts: 553 tokens, cutoff stride 3, edit stride 18, 247 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2017.ts: 5298 tokens, cutoff stride 21, edit stride 166, 317 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2018.ts: 7191 tokens, cutoff stride 29, edit stride 225, 312 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2019.ts: 225 tokens, cutoff stride 1, edit stride 8, 284 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2020.ts: 1634 tokens, cutoff stride 7, edit stride 52, 298 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/es2021.ts: 439 tokens, cutoff stride 2, edit stride 14, 284 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esDecorators.ts: 12395 tokens, cutoff stride 49, edit stride 388, 317 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/esnext.ts: 3172 tokens, cutoff stride 13, edit stride 100, 309 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/generators.ts: 11650 tokens, cutoff stride 46, edit stride 365, 318 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/jsx.ts: 4759 tokens, cutoff stride 19, edit stride 149, 315 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/legacyDecorators.ts: 3160 tokens, cutoff stride 13, edit stride 99, 308 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/esnextAnd2015.ts: 2110 tokens, cutoff stride 9, edit stride 66, 299 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/impliedNodeFormatDependent.ts: 489 tokens, cutoff stride 2, edit stride 16, 307 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/module.ts: 10653 tokens, cutoff stride 42, edit stride 333, 318 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/module/system.ts: 7651 tokens, cutoff stride 30, edit stride 240, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/namedEvaluation.ts: 2001 tokens, cutoff stride 8, edit stride 63, 315 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/taggedTemplate.ts: 581 tokens, cutoff stride 3, edit stride 19, 256 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/ts.ts: 11283 tokens, cutoff stride 45, edit stride 353, 315 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/typeSerializer.ts: 2806 tokens, cutoff stride 11, edit stride 88, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/transformers/utilities.ts: 4325 tokens, cutoff stride 17, edit stride 136, 319 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/tsbuild.ts: 405 tokens, cutoff stride 2, edit stride 13, 267 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/tsbuildPublic.ts: 14511 tokens, cutoff stride 57, edit stride 454, 319 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/types.ts: 47956 tokens, cutoff stride 188, edit stride 1499, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/utilities.ts: 63996 tokens, cutoff stride 250, edit stride 2000, 320 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/utilitiesPublic.ts: 12829 tokens, cutoff stride 51, edit stride 401, 316 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/visitorPublic.ts: 12454 tokens, cutoff stride 49, edit stride 390, 319 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/watch.ts: 5744 tokens, cutoff stride 23, edit stride 180, 314 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/watchPublic.ts: 6248 tokens, cutoff stride 25, edit stride 196, 314 inputs
+    incomplete_test.go:77: planned /workspace/scratch/typescript-6.0.3/src/compiler/watchUtilities.ts: 4444 tokens, cutoff stride 18, edit stride 139, 311 inputs
+    incomplete_test.go:79: planned all 77 compiler files: 22497 inputs
+    incomplete_test.go:87: debug continuation skips first 337 inputs; this is not a full corpus gate
+    incomplete_test.go:101: /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.moduleSpecifiers.ts: 5 tokens, cutoff stride 1
+    incomplete_test.go:101: /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.performance.ts: 5 tokens, cutoff stride 1
+    incomplete_test.go:101: /workspace/scratch/typescript-6.0.3/src/compiler/_namespaces/ts.ts: 389 tokens, cutoff stride 2
+    incomplete_test.go:101: /workspace/scratch/typescript-6.0.3/src/compiler/binder.ts: 20833 tokens, cutoff stride 82
+    incomplete_test.go:126: Node /workspace/scratch/typescript-6.0.3/src/compiler/binder.ts remove token 653:  line 1: port "diagnostic 1003 8220 1 1\tIdentifier expected.", Go "diagnostic 1131 8220 1 1\tProperty or signature expected."
+        Go context:
+        diagnostic 1131 8220 1 1	Property or signature expected.
+        diagnostic 1131 8222 11 1	Property or signature expected.
+        diagnostic 1128 8368 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 194459 0 0 -1 0 0				; saved input /tmp/adamic-parser-incomplete/binder.ts-remove-653.ts
+    incomplete_test.go:126: native /workspace/scratch/typescript-6.0.3/src/compiler/binder.ts remove token 653:  line 1: port "diagnostic 1003 8220 1 1\tIdentifier expected.", Go "diagnostic 1131 8220 1 1\tProperty or signature expected."
+        Go context:
+        diagnostic 1131 8220 1 1	Property or signature expected.
+        diagnostic 1131 8222 11 1	Property or signature expected.
+        diagnostic 1128 8368 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 194459 0 0 -1 0 0				; saved input /tmp/adamic-parser-incomplete/binder.ts-remove-653.ts
+    incomplete_test.go:131: comparison stopped at input 545 after checking 208 inputs; first failure retained
+--- FAIL: TestIncompleteCompilerAgrees (77.34s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	77.350s
+FAIL

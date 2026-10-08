@@ -1,0 +1,1 @@
+export interface HelperNode { readonly kind: string; readonly text: string; readonly expression: number; readonly name: number; readonly heritage: readonly number[]; readonly types: readonly number[]; }

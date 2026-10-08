@@ -32,7 +32,7 @@ func TestMdastIdentifierScalars(t *testing.T) {
 	goBinary := filepath.Join(dir, "go-identifier")
 	build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
 	build.Dir = cohere
-	if output, e := build.CombinedOutput(); e != nil {
+	if output, e := combinedOutput(build); e != nil {
 		t.Fatalf("Go identifier %v %s", e, output)
 	}
 	truth := execute(t, nil, goBinary)

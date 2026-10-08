@@ -1,0 +1,68 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { CoreArena } from '../../helpers/core/nodes.a';
+import { signaturesFromParser } from '../../helpers/core/from_parser.a';
+import { hasSameTokens } from '../../helpers/core/has_same_tokens.a';
+import { unexpected } from './messages.a';
+export class Rule {
+    readonly context: RuleContext; arena: CoreArena | undefined = undefined;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void { this.arena = signaturesFromParser(this.context.parser, this.context.source); }
+    logical(index: number, operator: string): boolean {
+        const node = this.context.node(this.context.unwrap(index));
+        return node.kind === 'BinaryExpression' && this.context.kind(node.children[1] ?? -1) === operator;
+    }
+    split(index: number, operator: string): number[] {
+        const current = this.context.unwrap(index);
+        if(!this.logical(current, operator)) { return [current]; }
+        const result = this.split(this.context.child(current, 0), operator);
+        for(const child of this.split(this.context.child(current, 2), operator)) { result.push(child); }
+        return result;
+    }
+    equal(left: number, right: number): boolean {
+        const a = this.context.unwrap(left); const b = this.context.unwrap(right);
+        const x = this.context.node(a); const y = this.context.node(b); if(x.kind !== y.kind) { return false; }
+        if(x.kind === 'BinaryExpression') {
+            const op = this.context.kind(x.children[1] ?? -1);
+            if(op === this.context.kind(y.children[1] ?? -1) && (op === 'BarBarToken' || op === 'AmpersandAmpersandToken')) {
+                return (this.equal(this.context.child(a, 0), this.context.child(b, 0)) && this.equal(this.context.child(a, 2), this.context.child(b, 2))) ||
+                    (this.equal(this.context.child(a, 0), this.context.child(b, 2)) && this.equal(this.context.child(a, 2), this.context.child(b, 0)));
+            }
+        }
+        return hasSameTokens(this.arena ?? panic('missing signature arena'), a, b);
+    }
+    subset(subset: readonly number[], superset: readonly number[]): boolean {
+        for(const operand of subset) {
+            let found = false; for(const candidate of superset) { if(this.equal(operand, candidate)) { found = true; break; } }
+            if(!found) { return false; }
+        }
+        return true;
+    }
+    visit(node: ParseNode, index: number): void {
+        const test = node.children[0] ?? -1; if(test < 0) { return; }
+        const conditions: number[] = [test];
+        if(this.logical(test, 'AmpersandAmpersandToken')) { for(const part of this.split(test, 'AmpersandAmpersandToken')) { conditions.push(part); } }
+        const remaining: number[][][] = [];
+        for(const condition of conditions) {
+            const groups: number[][] = []; for(const part of this.split(condition, 'BarBarToken')) { groups.push(this.split(part, 'AmpersandAmpersandToken')); }
+            remaining.push(groups);
+        }
+        let current = index;
+        while(true) {
+            const parent = this.context.parents[current] ?? -1;
+            if(parent < 0 || this.context.kind(parent) !== 'IfStatement' || this.context.node(parent).children[2] !== current) { return; }
+            current = parent; const earlier = this.context.child(current, 0);
+            const earlierGroups: number[][] = []; for(const part of this.split(earlier, 'BarBarToken')) { earlierGroups.push(this.split(part, 'AmpersandAmpersandToken')); }
+            for(let i = 0; i < remaining.length; i++) {
+                const kept: number[][] = []; for(const group of remaining[i] ?? panic('missing condition groups')) {
+                    let covered = false; for(const earlierGroup of earlierGroups) { if(this.subset(earlierGroup, group)) { covered = true; break; } }
+                    if(!covered) { kept.push(group); }
+                }
+                remaining[i] = kept;
+            }
+            for(const groups of remaining) { if(groups.length === 0) { this.context.report(test, 'no-dupe-else-if', 'unexpected', unexpected, '', '', ''); return; } }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

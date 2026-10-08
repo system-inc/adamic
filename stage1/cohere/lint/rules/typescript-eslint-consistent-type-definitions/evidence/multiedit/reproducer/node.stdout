@@ -1,0 +1,7 @@
+case 0
+/workspace/consistent-type-definitions-reproducer/no-semicolon.ts:1:6
+  @typescript-eslint/consistent-type-definitions  Use an `interface` instead of a `type` here. Both describe the same object shape, but an interface is the one this project writes: it can be reopened by a later declaration, it shows up under its own name in compiler errors rather than being expanded inline, and mixing the two spellings for the same job makes a reader ask whether the difference was meant.
+
+range 5 10 interfaceOverType fix	interface		0 4
+fix-edit	10 13	 
+fix-edit	30 30	

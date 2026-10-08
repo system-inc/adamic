@@ -1,0 +1,10 @@
+export function runes(value: string): number[] {
+ const result: number[] = [];
+ for(let i = 0; i < value.length;) {
+  let c = value.codePointAt(i) ?? 65533;
+  i += c > 65535 ? 2 : 1;
+  if(c >= 55296 && c <= 57343) { c = 65533; }
+  result.push(c);
+ }
+ return result;
+}

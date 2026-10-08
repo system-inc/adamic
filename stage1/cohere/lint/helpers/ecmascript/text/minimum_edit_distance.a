@@ -1,0 +1,22 @@
+import { runes } from './runes.a';
+export function minimumEditDistance(a: string, b: string): number {
+ let first = runes(a); let second = runes(b);
+ if(first.length < second.length) { const swap = first; first = second; second = swap; }
+ const width = second.length; let previous: number[] = []; let current: number[] = [];
+ for(let i = 0; i <= width; i++) { previous.push(i); current.push(0); }
+ for(let i = 0; i < first.length; i++) {
+  current[0] = i + 1;
+  for(let j = 0; j < width; j++) {
+   let substitution = previous[j] ?? 0;
+   if(first[i] !== second[j]) { substitution++; }
+   const deletion = (previous[j + 1] ?? 0) + 1;
+   const insertion = (current[j] ?? 0) + 1;
+   let best = substitution;
+   if(deletion < best) { best = deletion; }
+   if(insertion < best) { best = insertion; }
+   current[j + 1] = best;
+  }
+  const swap = previous; previous = current; current = swap;
+ }
+ return previous[width] ?? 0;
+}
