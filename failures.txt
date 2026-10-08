@@ -40,6 +40,21 @@
 === RUN   TestWASIAgreesWithNode
 --- FAIL: TestWASIAgreesWithNode (475.49s)
 
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/json_encode_objects.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/json_encode_objects.a
+    wasi_test.go:135: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIEmission/internal/oracle/testdata/json_encode_objects.a (0.11s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission
+=== RUN   TestWASIEmission
+--- FAIL: TestWASIEmission (93.18s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (skipped; the census table classes it required-input)
+census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
+=== RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+    wasi_test.go:132: fixture does not lower
+--- SKIP: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.06s)
+
 == github.com/system-inc/adamic/internal/oracle TestWasmtimeAgreesWithNode (skipped; no census row matches its name)
 === RUN   TestWasmtimeAgreesWithNode
     wasi_engines_test.go:66: set ADAMIC_ORACLE_WASMTIME=1
@@ -72,4 +87,11 @@
 === RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
     wasi_shim_test.go:27: fixture does not lower
 --- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.00s)
+
+== github.com/system-inc/adamic/internal/oracle TestWasmtimeCheckedWitness (skipped; no census row matches its name)
+=== RUN   TestWasmtimeCheckedWitness
+=== PAUSE TestWasmtimeCheckedWitness
+=== CONT  TestWasmtimeCheckedWitness
+    wasi_input_test.go:176: set ADAMIC_ORACLE_WASMTIME=1
+--- SKIP: TestWasmtimeCheckedWitness (0.00s)
 
