@@ -298,8 +298,81 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
 	if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
-		// The rest of a chain after a ?., which short-circuits with it.
-		return nil, l.notYet(node, "an optional chain longer than one step")
+		// Keep each step in one helper: a skipped chain returns immediately, whereas an
+		// undefined field on a present receiver still fails at the next ordinary dot.
+		steps := []*ast.Node{}
+		base := node
+		for base.Kind == ast.KindPropertyAccessExpression && base.Flags&ast.NodeFlagsOptionalChain != 0 {
+			steps = append(steps, base)
+			base = base.AsPropertyAccessExpression().Expression
+		}
+		if base.Flags&ast.NodeFlagsOptionalChain != 0 {
+			return nil, l.notYet(node, "an optional property chain containing a call or element access")
+		}
+		value, err := l.expression(base)
+		if err != nil {
+			return nil, err
+		}
+		result, err := l.typeOf(node)
+		if err != nil {
+			return nil, err
+		}
+		result = ir.Maybe(result)
+		if !result.IsReference() && !result.IsMaybe() {
+			return nil, l.notYet(node, "an optional property chain with an unrepresented result")
+		}
+		function := len(l.result.Functions)
+		held := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "receiver", Type: value.Type(), Function: function})
+		read := ir.Expression(ir.Read{Local: held, Of: value.Type()})
+		body := []ir.Statement{}
+		missing := fit(ir.Undefined{}, result)
+		for index := len(steps) - 1; index >= 0; index-- {
+			step := steps[index]
+			part := l.fieldName(step.Name())
+			if !read.Type().IsReference() || read.Type() == ir.Union || read.Type() == ir.Weak {
+				return nil, l.notYet(step, "an optional property chain through a "+typeName(read.Type()))
+			}
+			if step.AsPropertyAccessExpression().QuestionDotToken != nil {
+				body = append(body, ir.If{
+					Condition: ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: read}, Right: ir.IsNull{Value: read}},
+					Then:      []ir.Statement{ir.Return{Value: missing}},
+				})
+			} else {
+				read = ir.Defined{Value: read, Message: "TypeError: Cannot read properties of undefined (reading '" + part + "')"}
+			}
+			var next ir.Expression
+			switch {
+			case read.Type() == ir.Array && part == "length":
+				next = ir.Length{Array: read}
+			case read.Type() == ir.String && part == "length":
+				next = ir.StringLength{Value: read}
+			case read.Type() == ir.Map && part == "size":
+				next = ir.MapSize{Map: read}
+			case read.Type() == ir.Object:
+				field := l.checker.GetSymbolAtLocation(step.Name())
+				if field == nil || (len(field.Declarations) > 0 && field.Declarations[0].Kind == ast.KindMethodDeclaration) || accessorSymbol(field) || l.accessorNames[step.Name().Text()] || l.inheritedLibraryMember(step) || checker.IsTupleType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(step.AsPropertyAccessExpression().Expression))) {
+					return nil, l.notYet(step, "an optional property chain through a non-own data field")
+				}
+				stored, known := l.representation(l.checker.GetTypeOfSymbol(field))
+				if !known || censusFieldSlotless(stored) || stored == ir.Weak || l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+					return nil, l.notYet(step, "an optional property chain through an unrepresented field")
+				}
+				next = l.readObjectField(step, ir.Property{Object: read, Name: part, Of: stored, Class: l.classOf(step)})
+			default:
+				return nil, l.notYet(step, "."+part+" in an optional property chain")
+			}
+			if index == 0 {
+				body = append(body, ir.Return{Value: fit(next, result)})
+			} else {
+				local := len(l.result.Locals)
+				l.result.Locals = append(l.result.Locals, ir.Local{Name: "chain_step", Type: next.Type(), Function: function})
+				body = append(body, ir.Declare{Local: local, Value: next})
+				read = ir.Read{Local: local, Of: next.Type()}
+			}
+		}
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "optional_property_chain", Parameters: []int{held}, Returns: result, Body: body})
+		return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: result}, nil
 	}
 	if value, known := l.libraryMathNumberProperty(node); known {
 		return value, nil
