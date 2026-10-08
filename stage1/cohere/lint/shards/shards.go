@@ -27,12 +27,7 @@ func Run(binary, manifest string, count int, countOnly bool) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	rows := 0
-	for _, row := range bytes.Split(text, []byte("\n")) {
-		if len(row) > 0 {
-			rows++
-		}
-	}
+	rows := Cases(text)
 	outputs := make([][]byte, count)
 	failures := make([]error, count)
 	var group sync.WaitGroup
@@ -75,12 +70,28 @@ func Run(binary, manifest string, count int, countOnly bool) ([]byte, error) {
 	return Merge(outputs, rows)
 }
 
+var programPrefix = []byte("program ")
+
+// Cases is how many cases manifest holds, counted as main.ts numbers them: every non-empty line is a case
+// except a `program <tsconfig>` line, which opens the checker's program for the rows after it and prints no
+// case of its own. Counting that line too made every sharded typed run expect one case more than any shard
+// printed, so Merge refused it (#3mecm8z).
+func Cases(manifest []byte) int {
+	cases := 0
+	for _, row := range bytes.Split(manifest, []byte("\n")) {
+		if len(row) > 0 && !bytes.HasPrefix(row, programPrefix) {
+			cases++
+		}
+	}
+	return cases
+}
+
 var casePrefix = []byte("case ")
 
 // Merge puts the shards' case blocks back in case order. A block starts at a line `case <n>` and runs to
 // the next one; nothing a case prints starts a line that way, since findings, ranges, edits and the fixed
 // text are printed under their own prefixes with newlines escaped. Every case number from 0 must appear
-// exactly once, and exactly rows of them, the manifest's non-empty rows: a shard that lost or repeated a
+// exactly once, and exactly rows of them, the manifest's cases (Cases): a shard that lost or repeated a
 // row fails here instead of shifting the output, including one that lost the last rows, which leaves no gap.
 func Merge(outputs [][]byte, rows int) ([]byte, error) {
 	blocks := map[int][]byte{}
