@@ -9,8 +9,9 @@
     },
     {
       "file": "src/compiler/commandLineParser.ts",
-      "before": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Diagnostic[],\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any ",
-      "after": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any "
+      "before": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Diagnostic[],\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryObject ",
+      "after": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryObject ",
+      "count": 1
     },
     {
       "file": "src/compiler/commandLineParser.ts",
