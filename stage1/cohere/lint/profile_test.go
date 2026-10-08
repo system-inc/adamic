@@ -13,6 +13,7 @@ import (
 )
 
 // Opt-in artifacts outlive t.TempDir so callgrind and the timing runner use the same snapshot.
+// Not parallel: TestProfileSnapshotsAgree reads what it saves, and a serial test finishes first.
 func TestProfileArtifacts(t *testing.T) {
 	directory := os.Getenv("ADAMIC_LINT_PROFILE_DIR")
 	if directory == "" {
@@ -83,11 +84,15 @@ func buildProfile(t *testing.T, directory string) {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := buildCheckerWithRuntime(source, filepath.Join(directory, "scanner"), archive, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
-	if err := buildCheckerWithRuntime(source, filepath.Join(directory, "counted"), archive, native.Options{Count: true}); err != nil {
-		t.Fatal(err)
+	for _, build := range []struct {
+		name    string
+		options native.Options
+	}{{"scanner", native.Options{}}, {"counted", native.Options{Count: true}}} {
+		if err := nativeBuild(func() error {
+			return buildCheckerWithRuntime(source, filepath.Join(directory, build.name), archive, build.options)
+		}); err != nil {
+			t.Fatal(err)
+		}
 	}
 	runtime := filepath.Join(repository, "internal/native/runtime")
 	entries, err := os.ReadDir(runtime)
@@ -117,12 +122,18 @@ func buildProfile(t *testing.T, directory string) {
 	flags := append(native.Flags(native.Options{}), "-DADAMIC_TSGO", "-g", "-o", filepath.Join(directory, "profiled"))
 	flags = append(flags, units...)
 	flags = append(flags, archive, "-lm", "-lpthread", "-ldl")
-	execute(t, "", "clang", flags...)
+	if err := nativeBuild(func() error {
+		_, err := run("", nil, "clang", flags...)
+		return err
+	}); err != nil {
+		t.Fatal(err)
+	}
 	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
 }
 
 // Exercise the shared profile graph without requiring the external compiler corpus.
 func TestProfileCompilation(t *testing.T) {
+	t.Parallel()
 	directory := t.TempDir()
 	copyPort(t, directory, "", "")
 	prepareRegistry(t, directory)
@@ -168,8 +179,10 @@ func TestProfileCompilation(t *testing.T) {
 	}
 }
 
-// Not parallel: upstream fixture capture uses process-wide environment state.
+// It reads the snapshots TestProfileArtifacts saves, when both are pointed at one directory. That test is
+// serial, so it has finished before this one is released.
 func TestProfileSnapshotsAgree(t *testing.T) {
+	t.Parallel()
 	asked := os.Getenv("ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	if asked == "" {
 		t.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")

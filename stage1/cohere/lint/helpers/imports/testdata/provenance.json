@@ -1,0 +1,85 @@
+{
+  "goPin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "triage": "d7ab0bc4",
+  "helpers": [
+    {
+      "symbol": "ecmascript/imports.BindingsOf",
+      "file": "stage1/cohere/lint/helpers/imports/bindings_of.a",
+      "branch": "codex/lint-helpers-05",
+      "source": "stage1/cohere/lint/helpers/slot05/import_bindings.a",
+      "sourceCommit": "cd24dd580a8e8d97cdc1cf0aa839b47bf333e9bc"
+    },
+    {
+      "symbol": "ecmascript/imports.NormalizedFileName",
+      "file": "stage1/cohere/lint/helpers/imports/normalized_file_name.a",
+      "branch": "codex/lint-helpers-05",
+      "source": "stage1/cohere/lint/helpers/slot05/batch3/imports_normalized_file_name.a",
+      "sourceCommit": "cd24dd580a8e8d97cdc1cf0aa839b47bf333e9bc"
+    },
+    {
+      "symbol": "ecmascript/imports.ImportedNameOf",
+      "file": "stage1/cohere/lint/helpers/imports/imported_name_of.a",
+      "branch": "codex/lint-helpers-05",
+      "source": "stage1/cohere/lint/helpers/slot05/batch9/imported_name_of.a",
+      "sourceCommit": "cd24dd580a8e8d97cdc1cf0aa839b47bf333e9bc"
+    },
+    {
+      "symbol": "ecmascript/imports.CallExpressionSource",
+      "file": "stage1/cohere/lint/helpers/imports/call_expression_source.a",
+      "branch": "codex/lint-helpers-02",
+      "source": "stage1/cohere/lint/helpers/slot02/batch7/call_expression_source.a",
+      "sourceCommit": "ff5090b777bc4e27bd51a5b57d9c824670f14b26"
+    },
+    {
+      "symbol": "ecmascript/imports.HasPathSegment",
+      "file": "stage1/cohere/lint/helpers/imports/has_path_segment.a",
+      "branch": "codex/lint-helpers-03",
+      "source": "stage1/cohere/lint/helpers/slot03/batch21/has_path_segment.a",
+      "sourceCommit": "3e85502d728bcd67b3ed326565bcf09749f2ec1b"
+    },
+    {
+      "symbol": "ecmascript/imports.SourceVisitors",
+      "file": "stage1/cohere/lint/helpers/imports/source_visitors.a",
+      "branch": "codex/lint-helpers-from-codex/lint-wave1-15",
+      "source": "stage1/cohere/lint/helpers/wave15/import_source_visitors/source_visitors.a",
+      "sourceCommit": "298ecc4cb20069615bb68130f177bd6f97dd7869"
+    },
+    {
+      "symbol": "ecmascript/imports.SpecifierNode",
+      "file": "stage1/cohere/lint/helpers/imports/specifier_node.a",
+      "branch": "codex/lint-helpers-from-codex/lint-wave1-15",
+      "source": "stage1/cohere/lint/helpers/wave15/import_specifier/specifier_node.a",
+      "sourceCommit": "298ecc4cb20069615bb68130f177bd6f97dd7869"
+    }
+  ],
+  "duplicateChoice": "No imports symbol has multiple retained implementations in TRIAGE.md.",
+  "migrations": [
+    "Current Go AST parse options and kind numbers.",
+    "CallExpressionSource accepts import.source as current Go IsImportCall does.",
+    "Narrow per-helper projections avoid introducing unrelated helper dependencies."
+  ],
+  "unblocked": [
+    "@next/next/no-location-assign-relative-destination",
+    "@typescript-eslint/no-import-type-side-effects",
+    "base/consistency-no-bare-throw",
+    "nexus/boundary-no-internal-import",
+    "nexus/boundary-no-nexus-outside-import",
+    "nexus/boundary-no-project-import",
+    "nexus/import-no-forbidden-source",
+    "react/no-deprecated",
+    "structure/consistency-require-organized-imports"
+  ],
+  "notSuppliedBySources": [
+    "ecmascript/imports.LocalNameOfDefaultImport"
+  ],
+  "agreementCounts": {
+    "BindingsOf": 32689,
+    "NormalizedFileName": 573,
+    "ImportedNameOf": 4093,
+    "CallExpressionSource": 10572,
+    "HasPathSegment": 5350,
+    "SourceVisitors": 65,
+    "SpecifierNode": 82
+  },
+  "ruleUpstreamCases": 26
+}

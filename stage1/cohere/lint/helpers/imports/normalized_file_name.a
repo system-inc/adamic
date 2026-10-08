@@ -1,0 +1,9 @@
+export interface SourceFileName {
+    readonly fileName: string;
+}
+// -1 denotes nil. The adapter supplies the actual SourceFile.FileName(), without cleaning.
+export function normalizedFileName(files: readonly SourceFileName[], index: number): string {
+    const file = files[index];
+    if(file === undefined) { return ''; }
+    return file.fileName.split('\\').join('/');
+}

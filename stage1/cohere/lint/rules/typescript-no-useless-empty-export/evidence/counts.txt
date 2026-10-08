@@ -1,0 +1,7 @@
+Module source: codex/lint-helpers-04 8e0d98a645ae73cc4cf72561c779f257b51b8c9a
+Fresh capture: 426 inputs, 10 consumers
+Go comparisons: 8875 consumer AST/list rows; 2319 direct witness rows; three predicates per row
+Backends: source Node, emitted JavaScript, ASan/UBSan native
+Mutants: six, two per helper, caught on all three backends
+Proof rule: @typescript-eslint/no-useless-empty-export; 64 unique captured source/file/options cases
+Helpers package: PASS 100.224s; no skips
