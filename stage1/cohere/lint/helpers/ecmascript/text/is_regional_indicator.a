@@ -1,0 +1,1 @@
+export function isRegionalIndicator(c: number): boolean { return c >= 0x1f1e6 && c <= 0x1f1ff; }
