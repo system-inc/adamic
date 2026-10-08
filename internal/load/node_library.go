@@ -40,6 +40,14 @@ func nodeTypesIndexFromFS(files fs.FS) (tspath.RootedFilePath, error) {
 }
 
 func usesNodeModules(program *compiler.Program) bool {
+	// A project may request Node globals without importing a node: module.
+	// The caller package is hidden in favor of our pinned embedded declarations,
+	// so an explicit type-library request needs the same bundled root setup.
+	for _, name := range program.Options().Types {
+		if name == "node" {
+			return true
+		}
+	}
 	for _, file := range program.GetSourceFiles() {
 		for _, statement := range file.Statements.Nodes {
 			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {

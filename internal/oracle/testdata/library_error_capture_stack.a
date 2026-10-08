@@ -1,0 +1,37 @@
+interface Target {
+ readonly label: string;
+ stack?: string;
+}
+const plain = { label: 'target' };
+const target: Target = { label: 'target' };
+const alias = target;
+console.log(`before-own:${Object.hasOwn(target, 'stack')}`);
+console.log(`before-present:${target.stack !== undefined}`);
+Error.captureStackTrace(target);
+console.log(`own:${Object.hasOwn(alias, 'stack')}`);
+console.log(`method-own:${alias.hasOwnProperty('stack')}`);
+console.log(`present:${alias.stack !== undefined}`);
+console.log(`type:${typeof alias.stack}`);
+Error.captureStackTrace(plain);
+console.log(`plain-own:${Object.hasOwn(plain, 'stack')}`);
+console.log(`keys:${Object.keys(plain).join(',')}`);
+let calls = 0;
+function marker(): void {}
+function constructorOption(): () => void {
+ calls++;
+ return marker;
+}
+Error.captureStackTrace(target, constructorOption());
+console.log(`repeated-own:${Object.hasOwn(target, 'stack')}`);
+console.log(`repeated-type:${typeof target.stack}`);
+console.log(`option-evaluated:${calls}`);
+target.stack = 'owned'.repeat(3);
+console.log(`written-type:${typeof target.stack}`);
+Error.captureStackTrace(target, undefined);
+console.log(`recaptured-type:${typeof target.stack}`);
+const capture = Error.captureStackTrace;
+const second: Target = { label: 'second' };
+capture(second);
+console.log(`detached-own:${Object.hasOwn(second, 'stack')}`);
+console.log(`detached-type:${typeof second.stack}`);
+// Compare no frame text: only property presence, ownership and string type.

@@ -421,6 +421,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return value, err
 	}
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.libraryErrorValue(node); known {
+		return value, err
+	}
 	if value, known, err := l.processValue(node); known {
 		return value, err
 	}
