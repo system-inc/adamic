@@ -127,10 +127,12 @@ while true; do
     # Boxes where a big tip may borrow a small slot: a free small slot, and fewer than two big gates there
     # already (its area slot and one borrowed). Three big gates borrowing on one box stacked hundreds of
     # compiles and took Cloud and Workshop down (Oct 8 11:2xZ).
-    # The limit is ${state}/big-per-box (default 2), read every poll, so it moves by measurement.
-    bigPerBox=$(cat "${state}/big-per-box" 2>/dev/null || echo 2)
+    # The limit is ${state}/big-per-box, read every poll so it moves by measurement: a bare number is the
+    # default (2 without the file), and a "box N" line overrides it for that box (Cloud stays at 2 until
+    # its memory is understood, @system_adamic, Oct 8 06:28).
     borrowable=$(echo "${free}" | awk '$2 == "S" {print $1}' | while read -r b; do
-      [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt "${bigPerBox}" ] && echo "${b}"
+      limit=$(awk -v b="${b}" 'NF == 1 && $1 ~ /^[0-9]+$/ { fallback = $1 } NF == 2 && $1 == b { own = $2 } END { print (own != "" ? own : (fallback != "" ? fallback : 2)) }' "${state}/big-per-box" 2>/dev/null || echo 2)
+      [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt "${limit}" ] && echo "${b}"
     done | head -1)
     # A tip takes a free slot of its class; a big tip may also take a free small slot, but only when
     # no small tip could have it (rank 10 and up): 74 big tips waited on two area slots while four small
