@@ -1,10 +1,10 @@
 # Stricter checker options: verified audit, incomplete conversion
 
-Built an in-process option audit in internal/load, preserving project options and lib inputs.
+Built project options/lib loading and supported indexed presence guards in both backends, with explain counts.
 Commit: recorded in the worker's final report; branch codex/stricter-options-checks only.
 Measured 0 project errors and all 171 exact stricter-option sites, with no missing or extra sites.
-Six analysis mutants failed their intended assertions; no runtime-check mutants were run.
-Production loading now uses one TypeScript project's options and lib and records sites; mixed ownership and runtime conversion remain unfinished.
+Six audit and four loader mutants were caught; eight erase-runtime-check mutants built and were caught.
+Mixed checker ownership, catch/JSON checks, optional checks and unsupported indexed representations remain unfinished.
 
 ## What is built
 
@@ -41,8 +41,7 @@ to rows.csv. Normalized measured diagnostics are retained in sites.json.
 | strictBindCallApply primary attribution | 0 |
 
 One indexed site is also removed by the exact-optional ablation. Its two option
-names are retained; the primary order follows the ledger. No one of these 171
-sites has been converted. The report describes diagnostics, not inserted checks.
+names are retained; the primary order follows the ledger. These 171 rows describe diagnostics, not inserted check counts. Current dispositions are recorded below and in disposition.csv.
 
 ## Runtime proof gaps observed on current main
 
@@ -65,16 +64,15 @@ requested catch check would provide no failing native witness. A correct runtime
 conversion requires extending these representations and lowering paths first.
 This branch does not claim these extensions are impossible; they are not built.
 
-The five catch rows in the actual rows.csv are commandLineParser.ts:2301 and
-2952, program.ts:406 and 441, and sys.ts:1281. They are not all in sys.ts.
+The five catch rows in the actual rows.csv are commandLineParser.ts:2301,
+program.ts:406 and 441, and sys.ts:1281 and 1617. They are not all in sys.ts.
 The 18:05 ruling is retained: their eventual .ts implementation must keep the
 project's type and check the relevant uses, rather than blanket unknown typing.
 
-All 67 optional rows remain errors in this loader slice. The user reports that optional-field-write-2 at 7e7464e6 now matches Node for in, Object.keys and Object.hasOwn across aliases. Merge that branch after the current steps and convert all 67 rows; this update authorizes the next implementation, not suppression in the loader slice.
+All 67 optional rows remain errors in this loader slice. The user reports that optional-field-write-2 at 7e7464e6 now matches Node for in, Object.keys and Object.hasOwn across aliases. The latest scope assigns all 67 to codex/stricter-optional-writes, based on b651b305 and that presence branch. This worker does not merge or implement that slice.
 The two JSON.stringify declaration-contract rows are outside this flag-only
 audit. Their use-site checks and the .a diagnostic naming the fix are not built.
-Production .ts loading now preserves the owning project's options and lib, with strictNullChecks and strictFunctionTypes retained as Adamic soundness rules. It keeps the existing prelude. No --explain-checks interface was added. There are zero
-new converted checks of any kind. Planning range communicated October 7: October 8 to 9 by 21:30 MDT for supported indexed representations and catch/JSON, conditional on a second catch/JSON worker and a failing caught-value representation witness; it is not a verified completion date.
+Production .ts loading now preserves the owning project's options and lib, with strictNullChecks and strictFunctionTypes retained as Adamic soundness rules. It keeps the existing prelude. --explain-checks now counts actual lowered guards by kind and reports trusted: 0. Catch/JSON and optional guards have not yet been built. Planning range communicated October 7: October 8 to 9 by 21:30 MDT for supported indexed representations and catch/JSON, conditional on a second catch/JSON worker and a failing caught-value representation witness; it is not a verified completion date.
 
 ## Mutants actually run
 
@@ -132,15 +130,12 @@ prints Go 0.045s, Node 0.046s, submodules 0.111s, markdown dependencies 0.121s,
 clang 0.368s, Go build 37.762s, cache warm 37.910s and done 37.999s. nproc=5;
 cgroup cpu.max=400000 100000. Go 1.27.1, clang 20.1.8, Node 24.19.0.
 
-The full repository gate, native/oracle package gates, sanitizer runtime proofs,
-and erase-runtime-check mutants were not run. No runtime or emitter is changed.
-The production loader acceptance boundary is preserved conservatively until
-runtime conversion is implemented and proven. This is an incomplete unit.
+The initial audit did not run runtime proofs. The indexed proof below now covers sanitizer builds, erase-check mutants and a filtered existing oracle. The full repository gate remains unrun. This is an incomplete unit.
 
 ## Production loader slice
 
 The production probe reproduces all 171 ledger sites and all ablation memberships:
-99 indexed, 67 optional, 5 catch. All remain errors. The production checker also
+99 indexed, 67 optional, 5 catch. At that loader-only commit all remained errors. The production checker also
 retains 90 diagnostics from the existing prelude/library contracts, separately
 from the 171 sites. These are not converted or trusted. The stock-project audit
 still has 0 ordinary errors. `--allow-project-errors` is an explicit validation
@@ -177,3 +172,68 @@ python3 stage3/stricter-options/validate.py /tmp/stricter-options-production-rep
 ```
 
 Revised planning range after optional admission: October 9 to 10 by 21:30 MDT, assuming clean presence-branch integration and a second catch/JSON worker; October 10 to 12 without that split. Runtime witnesses and erase-check mutants remain unverified. This supersedes the earlier range.
+
+## Supported indexed guards and actual check counts
+
+Project array/string reads relied on as present now reuse the existing lookup and
+Coalesce panic IR. Both backends carry the same site message:
+`indexed read is absent: file:line:column`. The native lookup already decides
+bounds/presence, so the guard does not repeat bounds or evaluate the receiver/index
+twice. Null elements and tagged/weak element representations explicitly refuse
+until presence can be retained independently of their payload. Tuple positions
+remain statically checked. Existing strict-project guards retain their behavior.
+Direct observations of undefined keep undefined, including string interpolation.
+
+The joint indexed/exact-optional row is handled at its read. Its recorded ancestor
+forces the guard despite the optional receiving context; this is independently
+proved by the joint-optional fixture. All 99 primary indexed ledger rows now defer
+to guarded lowering or an explicit representation refusal. They are not blanket
+trusted facts. All 171 site keys and memberships still exactly match the ledger.
+72 rows remain checker errors: optional 67 and catch 5. The existing prelude adds
+90 other retained diagnostics; those are outside the flag ledger. Full adapted-tree
+native lowering and its total emitted-check count are not claimed.
+
+`--explain-checks <source>`, or build/c/js with `--explain-checks`, counts panic guards
+actually present in lowered IR. A one-read fixture prints indexed-presence=1,
+catch-error=0, json-stringify-defined=0, optional-write=0 and trusted: 0. Audited
+rows and refused witnesses are never counted as inserted guards.
+
+Twelve runtime fixtures pass against handwritten type-erased source on Node and
+both backends. Eight fail at runtime with the named check and exit 70: number,
+boolean, string array, string, negative index, fractional index, joint optional
+context and receiver/index evaluation order. Each has an emitted-C erase-panic
+mutant that successfully builds under sanitizers. Number/boolean/negative/
+fractional/joint/order mutants exit 0; string-array/string mutants exit 1 under the
+sanitizers after the erased guard permits a null dereference. All lose the required
+named exit-70 stop and are caught. Present number/string and direct array/string
+undefined observations pass. Each fixture asserts exactly one native lookup and
+checks its actual IR guard count (one, or zero for direct observations).
+
+The existing differential oracle passes indexing.a, string_index.a,
+narrowed_reads.a and narrowed_numbers.a, including sanitized and release native
+builds. The full gate was not run. Holes still refuse new Array<number>(2), typed
+arrays refuse new Uint8Array(0), and records refuse their element access before
+native emission. These existing lowering gaps remain outside this guard slice.
+
+Logs and commands:
+
+```sh
+go test ./internal/load ./internal/lower ./internal/ir ./cmd/adamic ./stage3/stricter-options -count=1 -timeout 10m > /tmp/stricter-options-indexed-final-packages-2.log 2>&1
+go vet ./internal/load ./internal/lower ./internal/ir ./cmd/adamic ./stage3/stricter-options > /tmp/stricter-options-indexed-final-vet-2.log 2>&1
+go test ./stage3/stricter-options -run TestIndexedPresenceRuntime -count=1 -timeout 10m -v > /tmp/stricter-options-indexed-joint.log 2>&1
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|narrowed_reads|narrowed_numbers|string_index)\.a$' -count=1 -timeout 10m -v > /tmp/stricter-options-indexed-oracle.log 2>&1
+python3 stage3/stricter-options/validate.py /tmp/stricter-options-indexed-report-final-2.json /tmp/stricter-options-adapted --allow-project-errors --disposition stage3/stricter-options/disposition.csv > /tmp/stricter-options-indexed-validation-final.log 2>&1
+```
+
+CLI smoke log: /tmp/stricter-options-indexed-cli-smoke.log. Its generated .ts fixture
+builds, reports one checked guard and zero trusted, then exits 70. The same source
+loaded as .a remains a checker error. Loader-mutant rerun log:
+/tmp/stricter-options-indexed-production-mutants.log. Ledger summary:
+/tmp/stricter-options-indexed-ledger-summary.log. The optional branch is authorized
+for a later merge at 7e7464e6 after the current steps, not yet merged here.
+
+## Latest scope and date
+
+This worker owns 106 sites: indexed 99, catch 5 and JSON.stringify 2. The optional worker owns the other 67. The updated ledger at a1a16427 records 173 after the library iterator fix; this indexed commit still reports the earlier 171 comparison, and has not yet integrated that fix or reproduced 173. Planning estimate: October 8 to 9 by 21:30 MDT; first 50 take 4 to 8 hours assuming their representations already lower. Catch representation support, JSON use checks, per-site witnesses and the updated ledger remain work, not measured completion. The previous optional-merge estimates are superseded.
+
+Final generic-read verification: internal/lower passes in 18.045s and stage3/stricter-options in 11.040s; log /tmp/stricter-options-indexed-generic-final.log.

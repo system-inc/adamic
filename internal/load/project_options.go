@@ -33,6 +33,8 @@ type OptionSite struct {
 type ProjectOptionReport struct {
 	ProjectErrors []string     `json:"project_errors"`
 	Sites         []OptionSite `json:"sites"`
+	// RemainingSites is populated by production probes, not the audit.
+	RemainingSites []OptionSite `json:"remaining_sites,omitempty"`
 }
 
 var stricterOptionNames = []string{
@@ -189,4 +191,13 @@ func diagnosticKeys(diagnostics []*ast.Diagnostic) map[optionDiagnosticKey]bool 
 		keys[optionKey(diagnostic)] = true
 	}
 	return keys
+}
+
+// alreadyStricter avoids shadow programs when their effective options cannot
+// differ. Inherited strict defaults count, not only explicit flag spellings.
+func alreadyStricter(options *core.CompilerOptions) bool {
+	return options.NoUncheckedIndexedAccess == core.TSTrue &&
+		options.ExactOptionalPropertyTypes == core.TSTrue &&
+		options.GetStrictOptionValue(options.UseUnknownInCatchVariables) &&
+		options.GetStrictOptionValue(options.StrictBindCallApply)
 }

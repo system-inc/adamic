@@ -29,4 +29,4 @@ for name, (file, before, after) in mutants.items():
     if result.returncode == 0 or '--- FAIL: TestProduction' not in text or '[build failed]' in text:
         raise SystemExit(f'{name}: survived or failed outside assertions; see {log}')
     print(f'{name}: caught by production assertions, exit {result.returncode}; {log}', flush=True)
-print('4 production loader mutants caught; no runtime checks converted', flush=True)
+print('4 production loader mutants caught; runtime conversion is not tested by this runner', flush=True)

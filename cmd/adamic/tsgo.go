@@ -11,6 +11,7 @@ import (
 func build(path, output string, arguments []string) int {
 	options := native.Options{}
 	archive := ""
+	explain := false
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
 		case "--target":
@@ -20,6 +21,8 @@ func build(path, output string, arguments []string) int {
 				return 2
 			}
 			options.Target = arguments[index]
+		case "--explain-checks":
+			explain = true
 		case "--count":
 			options.Count = true
 		case "--sanitize":
@@ -82,6 +85,9 @@ func build(path, output string, arguments []string) int {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
 		return 1
+	}
+	if explain {
+		explainChecks(program, os.Stderr)
 	}
 	return 0
 }

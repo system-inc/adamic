@@ -12,6 +12,7 @@ parser.add_argument('report', type=Path)
 parser.add_argument('tree', type=Path)
 parser.add_argument('--ledger-ref', default='3f0926c0a55a7b5f64f037b1745e0e984e08c8be')
 parser.add_argument('--save', type=Path)
+parser.add_argument('--disposition', type=Path)
 parser.add_argument('--allow-project-errors', action='store_true', help='Compare sites while retaining production prelude/soundness errors.')
 args = parser.parse_args()
 repository = Path(__file__).resolve().parents[2]
@@ -51,3 +52,18 @@ print(f'project errors={len(report["project_errors"])}; sites={len(actual)}; mis
 print('; '.join(f'{option}={counts[option]}' for option in options))
 if args.save:
     args.save.write_text(json.dumps(report, indent=2) + '\n')
+
+if args.disposition:
+    remaining = set()
+    for site in report.get('remaining_sites', []):
+        file = str(Path(site['file']).relative_to(args.tree.resolve()))
+        remaining.add((file, site['line'], site['column'], site['code']))
+    if not remaining.issubset(actual):
+        raise SystemExit('remaining error sites must be recorded sites')
+    with args.disposition.open('w', newline='') as output:
+        writer = csv.writer(output)
+        writer.writerow(['file', 'line', 'column', 'code', 'options', 'disposition'])
+        for site in report['sites']:
+            key = (site['file'], site['line'], site['column'], site['code'])
+            writer.writerow([*key, ';'.join(site['options']), 'checker-error' if key in remaining else 'deferred-to-lowering'])
+    print(f'checker errors={len(remaining)}; deferred to guarded lowering or explicit refusal={len(actual)-len(remaining)}')
