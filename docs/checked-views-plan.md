@@ -876,6 +876,32 @@ NodeArray representation/metadata, object intersections and unions, dynamic
 keys, tuple/element reads, callable alternatives and original-pair context
 witnesses. This is a delivery estimate, not completed production reachability.
 
+### Lane 4b original-pair witness checkpoint, October 8
+
+Original declarations are generated outside the repository from TypeScript pin
+050880ce59e30b356b686bd3144efe24f875ebc8 using original/prepare.cjs. No cohere
+code is copied. The generator rejects tracked source drift, audits every UTF-16
+read-site slice for the two leading pairs, emits declarations, and records their
+hashes and complete SourceFile/Node/Diagnostic/DiagnosticMessageChain field sets.
+The oracle binds type-only imports to those declarations, runs normal strict
+load diagnostics, and checks every root/member field name against the manifest.
+
+Certified standalone original field-contract pairs: SourceFile.externalModuleIndicator
+(20 candidate reads) and Diagnostic.messageText (15 candidate reads). These are
+complete original declarations, with valid/wrong/absent controls as applicable,
+both-backend refusal pins and independent semantic mutants. SourceFile also has
+generic, callback and stored-alias controls. Its optional missing field returns
+undefined; an uninitialized present slot still refuses. These are pair-contract
+witnesses and site provenance audits, not execution of the 35 whole-tsc contexts
+or exact production allocation reachability. Remaining: 40 candidate pairs /
+146 candidate reads. Whole-family working date remains October 13, 23:00 UTC.
+
+Only lane-owned emitter/runtime files changed for original optional admission:
+pass receiver optionality and field absence separately; allow a missing optional
+slot while retaining the shared readiness guard. Existing shared hook hunks remain
+those already listed. Original schemas retain all unread unsupported descendants
+as lazy obligations. No blanket shape certificate is claimed.
+
 ## Centralized checked-view integration
 
 The lead assigned Codex 01a11882-3830 on codex/views-integration to merge every

@@ -1,7 +1,7 @@
 Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-77 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+101 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -434,3 +434,34 @@ nullish entry point. Their source wrong/lazy/transitive controls run normally.
 Final NodeArray gates pass: lower 14.534s, native 22.807s, JavaScript
 1.528s, full IR 21.224s, uncached filtered oracle 146.049s, vet exit 0.
 All seven implementation mutants were restored before this gate.
+
+Lane 4b original-contract witnesses, d70bc4ddb7d71fd900c3d7a8ec682f38a1608cc4
+
+Resolved two hunks individually. In internal/javascript/view_unions_object_primitive.go,
+kept the optional-receiver short circuit as well as separate Optional and Absent
+arguments. In internal/native/runtime/view_unions_object_primitive.c, kept
+optional null-receiver return independent of the field Undefined flag, and
+retained absent-slot permission only when both allow_absent and undefined hold.
+The incoming combined condition would refuse an optional receiver when its
+field type lacks undefined. optional-receiver, optional-absent, required-missing
+and the uninitialized source-file witness prove these distinctions. Other
+incoming code and witness additions merged unchanged.
+
+Original declaration generation used pristine TypeScript v6.0.3 commit
+050880ce59e30b356b686bd3144efe24f875ebc8. The adapter generated 78 declarations
+and matched 20 + 15 read sites. ADAMIC_OBJECT_PRIMITIVE_ORIGINAL_DECLS was set
+for the oracle, so all nine original-pair controls actually ran, with manifest
+and declaration validation. All 24 new backend mutants were caught: readiness
+loss (2), rejection of permitted absence (2), nested-shape omission and dropped
+transitive checks (8), wrong union member and outer-check omission (12).
+Mutation happens on independent backend test inputs; production remains intact.
+
+Gates: lower 12.136s, native 19.806s, JavaScript 2.223s, full IR 2.764s,
+uncached filtered Node oracle 124.131s, vet exit 0. Logs use original-pairs
+prefix; upstream setup and original declaration preparation are also retained.
+Only library_array_holes_callbacks.a is excluded for the recorded baseline
+no-type-predicate refusal. Full repository and production census were not run.
+These are original-contract witnesses for two pairs and 35 candidate reads;
+40 candidate pairs and 146 reads remain, with whole-program reachability
+unmeasured. The optional-boolean landing hold remains active; its branch had
+no published ref at this check.
