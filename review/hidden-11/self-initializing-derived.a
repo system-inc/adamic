@@ -1,0 +1,2 @@
+function enclosing(): () => number { const derived: () => number = () => derived(); return derived; }
+console.log(`${enclosing()()}`);

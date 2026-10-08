@@ -1,0 +1,38 @@
+--- FAIL: TestCountsAreRecorded (58.42s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.01s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a (0.02s)
+            counts_test.go:165: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdir.a (0.05s)
+            counts_test.go:165: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_finalized.a (0.02s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_random.a (0.01s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_crypto.a (0.01s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_writes.a (0.01s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_bom.a (0.01s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_utf16.a (0.01s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_utf8.a (0.04s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_encodings.a (0.04s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/closure_convention_host24.a (0.03s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_file.a (0.03s)
+            counts_test.go:165: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_input.a (0.02s)
+            counts_test.go:155: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_close.a (0.02s)
+            counts_test.go:165: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/unknown_narrowing_host.a (0.01s)
+            counts_test.go:146: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	58.437s
+FAIL

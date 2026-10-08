@@ -1,0 +1,123 @@
+{
+  "unit": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 2776080,
+      "body_end": 2788525,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "checkKindsOfPropertyMemberOverrides",
+      "parent": "/tmp/hidden-adapted/src/compiler/checker.ts:1486:1",
+      "top": "/tmp/hidden-adapted/src/compiler/checker.ts:1486:1",
+      "depth": 1
+    }
+  ],
+  "head_boundaries": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47539:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/hidden-adapted/src/compiler/checker.ts:15068:50: stage 0 can't lower a value of type __String yet",
+      "start": 2777843,
+      "end": 2777924
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47540:18",
+      "reason": "reading baseSymbol",
+      "text": "/tmp/hidden-adapted/src/compiler/checker.ts:47540:18: stage 0 can't lower reading baseSymbol yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47540:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/hidden-adapted/src/compiler/checker.ts:47540:18: stage 0 can't lower reading baseSymbol yet",
+      "start": 2777924,
+      "end": 2777998
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47543:45",
+      "reason": "reading baseSymbol",
+      "text": "/tmp/hidden-adapted/src/compiler/checker.ts:47543:45: stage 0 can't lower reading baseSymbol yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47543:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/hidden-adapted/src/compiler/checker.ts:47543:45: stage 0 can't lower reading baseSymbol yet",
+      "start": 2777998,
+      "end": 2778056
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47546:28",
+      "reason": "reading derived",
+      "text": "/tmp/hidden-adapted/src/compiler/checker.ts:47546:28: stage 0 can't lower reading derived yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47546:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/hidden-adapted/src/compiler/checker.ts:47546:28: stage 0 can't lower reading derived yet",
+      "start": 2778143,
+      "end": 2778264
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47551:17",
+      "reason": "reading derived",
+      "text": "/tmp/hidden-adapted/src/compiler/checker.ts:47551:17: stage 0 can't lower reading derived yet"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47551:13",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/tmp/hidden-adapted/src/compiler/checker.ts:47551:17: stage 0 can't lower reading derived yet",
+      "start": 2778264,
+      "end": 2786286
+    }
+  ],
+  "first_finding": {
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "/tmp/hidden-adapted/src/compiler/checker.ts:15068:50",
+    "reason": "a value of type __String",
+    "text": "/tmp/hidden-adapted/src/compiler/checker.ts:15068:50: stage 0 can't lower a value of type __String yet"
+  },
+  "region": [
+    2778143,
+    2786286
+  ]
+}

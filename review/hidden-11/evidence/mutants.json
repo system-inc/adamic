@@ -1,0 +1,12 @@
+[
+  {
+    "mutant": "captured-derived-default",
+    "exit": 1,
+    "catcher": "stdout"
+  },
+  {
+    "mutant": "self-initializer-accepted",
+    "exit": 1,
+    "catcher": "assertion"
+  }
+]

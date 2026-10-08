@@ -1,0 +1,36 @@
+{
+  "region": [
+    2778143,
+    2786286
+  ],
+  "old_hidden_intersection": [
+    [
+      2778143,
+      2786286
+    ]
+  ],
+  "new_hidden_intersection": [
+    [
+      2778143,
+      2786286
+    ]
+  ],
+  "old_hidden_bytes": 8143,
+  "new_hidden_bytes": 8143,
+  "revealed_bytes": 0,
+  "next_boundary": {
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/tmp/hidden-adapted/src/compiler/checker.ts:47508:5",
+    "phase": "lowering",
+    "kind": "Boundary",
+    "where": "/tmp/hidden-adapted/src/compiler/checker.ts:47546:13",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "text": "/tmp/hidden-adapted/src/compiler/checker.ts:47546:28: stage 0 can't lower reading derived yet",
+    "start": 2778143,
+    "end": 2778264
+  },
+  "independent_region_byte_mask": "pass",
+  "production_compiler_unchanged_from_base": "dcdbb9098f77f30ad41790c56df1bd63ad462b63",
+  "source_files": 82,
+  "source_hash_mismatches": []
+}
