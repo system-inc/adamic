@@ -1,0 +1,32 @@
+[
+  {
+    "check": "main-summary",
+    "exit": 0,
+    "expected": 0,
+    "result": {
+      "valid": true,
+      "errors": []
+    }
+  },
+  {
+    "check": "combined-summary",
+    "exit": 0,
+    "expected": 0,
+    "result": {
+      "valid": true,
+      "errors": []
+    }
+  },
+  {
+    "check": "conflict-pass-mutant",
+    "exit": 1,
+    "expected": 1,
+    "result": {
+      "valid": false,
+      "errors": [
+        "merge conflict cannot be reported as pass",
+        "pass requires every merge to exit zero"
+      ]
+    }
+  }
+]

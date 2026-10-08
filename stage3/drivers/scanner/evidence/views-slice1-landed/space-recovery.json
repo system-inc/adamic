@@ -1,0 +1,70 @@
+[
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/split-0/node-end-mutant.stdout",
+    "bytes": 108021555,
+    "sha256": "633103c88eb93befa33c53163473f188f49fa3be9b002de98e93d39721e37cbf",
+    "archive": "/workspace/scratch/scanner-rehearsal-retry/split-0/node-end-mutant.stdout.gz",
+    "roundtrip_verified": true
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/split-0/node.stdout",
+    "bytes": 108021555,
+    "sha256": "bc6146e9e54a0e2c0a47c611075afe909e19131e80dc06470c64f4a0c97f48c7",
+    "archive": "/workspace/scratch/scanner-rehearsal-retry/split-0/node.stdout.gz",
+    "roundtrip_verified": true
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/split-0/comparison-control.stdout",
+    "bytes": 108021555,
+    "sha256": "bc6146e9e54a0e2c0a47c611075afe909e19131e80dc06470c64f4a0c97f48c7",
+    "archive": "/workspace/scratch/scanner-rehearsal-retry/split-0/comparison-control.stdout.gz",
+    "roundtrip_verified": true
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/split-1/node-end-mutant.stdout",
+    "bytes": 108021555,
+    "sha256": "633103c88eb93befa33c53163473f188f49fa3be9b002de98e93d39721e37cbf",
+    "archive": "/workspace/scratch/scanner-rehearsal-retry/split-1/node-end-mutant.stdout.gz",
+    "roundtrip_verified": true
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/split-1/node.stdout",
+    "bytes": 108021555,
+    "sha256": "bc6146e9e54a0e2c0a47c611075afe909e19131e80dc06470c64f4a0c97f48c7",
+    "archive": "/workspace/scratch/scanner-rehearsal-retry/split-1/node.stdout.gz",
+    "roundtrip_verified": true
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/split-1/comparison-control.stdout",
+    "bytes": 108021555,
+    "sha256": "bc6146e9e54a0e2c0a47c611075afe909e19131e80dc06470c64f4a0c97f48c7",
+    "archive": "/workspace/scratch/scanner-rehearsal-retry/split-1/comparison-control.stdout.gz",
+    "roundtrip_verified": true
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/reference/node-end-mutant.stdout",
+    "bytes": 108021555,
+    "sha256": "633103c88eb93befa33c53163473f188f49fa3be9b002de98e93d39721e37cbf",
+    "archive": "/workspace/scratch/scanner-rehearsal-retry/reference/node-end-mutant.stdout.gz",
+    "roundtrip_verified": true
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/reference/node.stdout",
+    "bytes": 108021555,
+    "sha256": "bc6146e9e54a0e2c0a47c611075afe909e19131e80dc06470c64f4a0c97f48c7",
+    "archive": "/workspace/scratch/scanner-rehearsal-retry/reference/node.stdout.gz",
+    "roundtrip_verified": true
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/reference/comparison-control.stdout",
+    "bytes": 108021555,
+    "sha256": "bc6146e9e54a0e2c0a47c611075afe909e19131e80dc06470c64f4a0c97f48c7",
+    "archive": "/workspace/scratch/scanner-rehearsal-retry/reference/comparison-control.stdout.gz",
+    "roundtrip_verified": true
+  },
+  {
+    "removed_regenerable": "/workspace/scratch/scanner-rehearsal-retry/full-tree/tests",
+    "git_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "verified_clean": true
+  }
+]
