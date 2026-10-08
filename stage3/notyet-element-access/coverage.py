@@ -20,7 +20,9 @@ for site in sorted(roots):
   group, covered = 'array-derived', False
  elif receiver.startswith('readonly ['):
   group, covered = 'fixed-tuple-union', True
- elif receiver.startswith(('Record<number', 'MapLike', 'CompilerOptions')):
+ elif receiver == 'CompilerOptions':
+  group, covered = 'finite-data-fields', True
+ elif receiver.startswith(('Record<number', 'MapLike')):
   group, covered = 'open-dictionary', False
  else:
   group, covered = 'finite-data-fields', True
