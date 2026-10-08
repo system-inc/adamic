@@ -1,0 +1,2714 @@
+{
+  "branch": "codex/notyet-object-property",
+  "tested_sha": "1f7917b2303898ecb13af6124907148545796abe",
+  "compiler_base": "b410340dc8f889b5799c3bc519117c63def3aa24",
+  "non_null_dependency": "c41c0e062e99da37820f822968d4df1b48cdaee7",
+  "views_merge": "5e82f4e3",
+  "views_revert": "b0f50bb3",
+  "policy": ".a non-null assertions remain refused; views integration must arrive through area/compiler",
+  "measurement": "checker-rejected entry-root project; no backend execution",
+  "observed": {
+    "original_root_sites": 26,
+    "original_stops_reproduced": 0,
+    "selected_units_without_lowering_stop": [
+      "src/compiler/checker.ts:2821:14",
+      "src/compiler/checker.ts:2822:14",
+      "src/compiler/program.ts:4862:13",
+      "src/compiler/program.ts:4869:13"
+    ],
+    "previous_next_stops_rechecked": 6,
+    "previous_next_stops_still_reproduced": 6
+  },
+  "kinds": [
+    {
+      "kind": "optional collection size",
+      "root_sites": 15,
+      "status": "lowered rule",
+      "sample_next_stop": "builder.ts:710:5: a call through ?. (an optional call)"
+    },
+    {
+      "kind": "long optional chain",
+      "root_sites": 9,
+      "status": "lowered rule",
+      "sample_next_stops": [
+        "checker.ts:36469:31: an optional property chain through an unrepresented field",
+        "checker.ts:53798:27 no longer raises original stop; next failure in debug.ts:213:28: a value of type unknown",
+        "utilities.ts:9417:9: reading jsxRuntimePragma"
+      ]
+    },
+    {
+      "kind": "function value length",
+      "root_sites": 1,
+      "status": "lowered rule",
+      "sample_next_stop": "emitter.ts:6375:32: a cast the runtime can't check"
+    },
+    {
+      "kind": "optional numeric property",
+      "root_sites": 1,
+      "status": "lowered rule",
+      "sample_next_stop": "utilities.ts:8107:13: a declaration directly in a case (wrap the case in a block)"
+    }
+  ],
+  "limitations": [
+    "No claim of full compiler-project success: replay uses a checker-rejected entry-root project.",
+    "All six previously recorded next stops remain on the corrected compiler branch.",
+    "Views-dependent draft fixtures are deferred and are not included in this branch."
+  ],
+  "verification": [
+    {
+      "command": "ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestCheckedNonNullTypeScript|TestCheckedNonNullAdamicRefusal|TestCheckedNonNullCounts|TestObjectPropertyFunctionLengthNodeWitness|TestNativeAgreesWithNode/internal/oracle/testdata/object_property_' -count=1 -timeout 10m",
+      "output": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t2.010s"
+    },
+    {
+      "command": "go test ./internal/lower -run TestNonNullAssertion -count=1",
+      "output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.067s"
+    },
+    {
+      "command": "go test ./cmd/adamic -run TestNonNullExplainChecks -count=1",
+      "output": "ok  \tgithub.com/system-inc/adamic/cmd/adamic\t2.281s"
+    },
+    {
+      "command": "go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts",
+      "output": "ok  \tgithub.com/system-inc/adamic/internal/oracle\t26.092s"
+    }
+  ],
+  "prior_mutant_evidence": [
+    {
+      "log": "object-property-chain-no-short-circuit-mutant.log",
+      "exit": 1,
+      "caught_by": "UndefinedBehaviorSanitizer and oracle"
+    },
+    {
+      "log": "object-property-chain-ordinary-dot-optional-mutant.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-chain-repeat-receiver-mutant.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-index-check-before-key-mutant.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-index-eager-mutant.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-binding-pattern.log",
+      "exit": 1,
+      "caught_by": "panic on binding pattern"
+    },
+    {
+      "log": "object-property-length-mutant-callback-static-signature.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-default-count.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-destructure-count.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-drop-optional.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-erased-this-count.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-fresh-operand.log",
+      "exit": 1,
+      "caught_by": "freshness cycle-write test"
+    },
+    {
+      "log": "object-property-length-mutant-js-zero-arity.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-native-static-arity.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-optional-count.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-ordinary-undefined.log",
+      "exit": 1,
+      "caught_by": "UndefinedBehaviorSanitizer and oracle"
+    },
+    {
+      "log": "object-property-length-mutant-repeat-receiver.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-length-mutant-rest-count.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-number-drop-optional-mutant.log",
+      "exit": 1,
+      "caught_by": "UndefinedBehaviorSanitizer and oracle"
+    },
+    {
+      "log": "object-property-size-mutant.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    },
+    {
+      "log": "object-property-size-repeat-receiver-mutant.log",
+      "exit": 1,
+      "caught_by": "Node oracle output or exit mismatch"
+    }
+  ],
+  "replays": [
+    {
+      "where": "src/compiler/utilities.ts:8102:13",
+      "reason": "?. to a number, which would be number | undefined",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.651,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8107:13",
+          "reason": "a declaration directly in a case (wrap the case in a block)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:8102:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/utilities.ts:8102:13",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "?. to a number, which would be number | undefined"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/utilities.ts:9417:9",
+      "reason": "an optional chain longer than one step",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.581,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:9413:36",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9413:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1750:25",
+          "reason": "a value of type unknown"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9414:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:9415:31",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9415:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9416:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:9417:9",
+          "reason": "reading jsxRuntimePragma"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9417:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:9420:12",
+          "reason": "a BinaryExpression with a boolean and a string"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9420:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/utilities.ts:9417:9",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional chain longer than one step"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/utilities.ts:9538:18",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.913,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:746:17",
+          "reason": "a function returning U | undefined"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9538:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/utilities.ts:9538:18",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/utilities.ts:10095:28",
+      "reason": "an optional chain longer than one step",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.875,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:10096:13",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:10095:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:10098:33",
+          "reason": "reading specifiers"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:10098:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/utilities.ts:10095:28",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional chain longer than one step"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:2519:13",
+      "reason": "an optional chain longer than one step",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.979,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2490:26",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/moduleNameResolver.ts:2490:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2492:9",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/moduleNameResolver.ts:2492:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:2528:62",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/moduleNameResolver.ts:2528:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/moduleNameResolver.ts:2529:64",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/moduleNameResolver.ts:2529:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2532:9",
+          "reason": "reading versionPaths"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/moduleNameResolver.ts:2532:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2545:101",
+          "reason": "reading onlyRecordFailuresForPackageFile"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/moduleNameResolver.ts:2545:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2546:9",
+          "reason": "reading packageFileResult"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/moduleNameResolver.ts:2546:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/moduleNameResolver.ts:2550:58",
+          "reason": "reading onlyRecordFailuresForIndex"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/moduleNameResolver.ts:2550:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/moduleNameResolver.ts:2519:13",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional chain longer than one step"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/checker.ts:2821:14",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 3.155,
+      "findings": [],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:2821:14",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": false
+    },
+    {
+      "where": "src/compiler/checker.ts:2822:14",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 3.008,
+      "findings": [],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:2822:14",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": false
+    },
+    {
+      "where": "src/compiler/checker.ts:12166:17",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 3.199,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:12160:13",
+          "reason": "a BinaryExpression with a boolean and a number"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:12160:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:12166:17",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/checker.ts:12172:13",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.783,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:12160:13",
+          "reason": "a BinaryExpression with a boolean and a number"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:12160:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:12172:13",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/checker.ts:36469:31",
+      "reason": "an optional chain longer than one step",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 3.341,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:2416:81",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36413:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36436:27",
+          "reason": "a BinaryExpression with a number and a string"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36435:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36438:57",
+          "reason": "reading parameterRange"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36438:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36439:13",
+          "reason": "reading isVoidPromiseError"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36439:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36446:13",
+          "reason": "reading isVoidPromiseError"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36442:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8751:141",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36452:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36453:17",
+          "reason": "assigning to an Identifier"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36453:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36365:118",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36454:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36456:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36462:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36463:17",
+          "reason": "assigning to an Identifier"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36463:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36464:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36467:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36469:31",
+          "reason": "an optional property chain through an unrepresented field"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36469:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36470:17",
+          "reason": "reading parameter"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36470:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36481:31",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36481:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:213:28",
+          "reason": "a value of type unknown"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/core.ts:1099:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "panic",
+          "where": "src/compiler/core.ts:1100:5",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "phase": "lowering",
+          "kind": "error",
+          "where": "",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/core.ts:1100:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36482:31",
+          "reason": "reading errorSpan"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36482:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/core.ts:1122:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "panic",
+          "where": "src/compiler/core.ts:1123:5",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/core.ts:1123:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36483:28",
+          "reason": "reading errorSpan"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36483:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36484:17",
+          "reason": "reading end"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36484:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:10655:6",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:10655:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:10645:6",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:10645:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36487:32",
+          "reason": "reading errorSpan"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36487:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36489:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36490:17",
+          "reason": "assigning to an Identifier"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36490:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36491:96",
+          "reason": "reading errorSpan"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36491:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:2422:122",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36493:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:36469:31",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional chain longer than one step"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/checker.ts:37725:21",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 3.098,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:37722:36",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37722:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:37723:36",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37723:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:37731:17",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37731:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:37725:21",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/checker.ts:37728:21",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.971,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:37722:36",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37722:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:37723:36",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37723:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:37731:17",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37731:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:37728:21",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/checker.ts:37872:17",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.973,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:37830:17",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37829:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/checker.ts:37848:55",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37848:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:37854:13",
+          "reason": "a BinaryExpression with a number and a boolean"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37854:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:37858:13",
+          "reason": "a BinaryExpression with a boolean and a number"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:37857:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:37872:17",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/checker.ts:53798:27",
+      "reason": "an optional chain longer than one step",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.862,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:213:28",
+          "reason": "a value of type unknown"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:53800:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:53798:27",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional chain longer than one step"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/emitter.ts:6375:12",
+      "reason": ".length on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.455,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:6375:32",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/emitter.ts:6375:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/emitter.ts:6375:12",
+        "-kind",
+        "NotYet",
+        "-reason",
+        ".length on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/program.ts:1365:35",
+      "reason": "an optional chain longer than one step",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.592,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/path.ts:278:1",
+          "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/program.ts:1364:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/program.ts:1365:35",
+          "reason": "reading packageJsonScope"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/program.ts:1365:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/program.ts:1366:18",
+          "reason": "reading impliedNodeFormat"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/program.ts:1366:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/program.ts:1365:35",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional chain longer than one step"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/program.ts:3791:16",
+      "reason": "an optional chain longer than one step",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.668,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/program.ts:3791:16",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/program.ts:3791:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/program.ts:3791:16",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional chain longer than one step"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/program.ts:4862:13",
+      "reason": "an optional chain longer than one step",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.788,
+      "findings": [],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/program.ts:4862:13",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional chain longer than one step"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": false
+    },
+    {
+      "where": "src/compiler/program.ts:4869:13",
+      "reason": "an optional chain longer than one step",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.624,
+      "findings": [],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/program.ts:4869:13",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional chain longer than one step"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": false
+    },
+    {
+      "where": "src/compiler/programDiagnostics.ts:233:38",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.783,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:214:33",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:214:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:216:35",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:216:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:217:13",
+          "reason": "reading cachedChain"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:217:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:233:60",
+          "reason": "reading reasons"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:233:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:236:13",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:236:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:238:28",
+          "reason": "reading cachedChain"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:238:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8751:141",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:263:44",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:264:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:281:17",
+          "reason": "reading cachedChain"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:281:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:292:18",
+          "reason": "reading cachedChain"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:292:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:295:26",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:295:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:296:16",
+          "reason": "reading location"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:296:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:300:9",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:300:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:307:9",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:307:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:317:9",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:317:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/programDiagnostics.ts:233:38",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/programDiagnostics.ts:236:31",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.675,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:214:33",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:214:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:216:35",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:216:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:217:13",
+          "reason": "reading cachedChain"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:217:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:233:60",
+          "reason": "reading reasons"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:233:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:236:13",
+          "reason": "a BinaryExpression with a value and a boolean"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:236:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:238:28",
+          "reason": "reading cachedChain"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:238:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8751:141",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:263:44",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:264:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:281:17",
+          "reason": "reading cachedChain"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:281:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:292:18",
+          "reason": "reading cachedChain"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:292:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:295:26",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:295:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:296:16",
+          "reason": "reading location"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:296:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:300:9",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:300:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:307:9",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:307:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/programDiagnostics.ts:317:9",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/programDiagnostics.ts:317:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/programDiagnostics.ts:236:31",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/builder.ts:705:10",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.57,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:710:5",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:710:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/builder.ts:705:10",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/builder.ts:756:10",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.553,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:746:17",
+          "reason": "a function returning U | undefined"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:757:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/builder.ts:756:10",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/builder.ts:778:10",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.588,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:746:17",
+          "reason": "a function returning U | undefined"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:779:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/builder.ts:778:10",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/builder.ts:1796:34",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.921,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:213:28",
+          "reason": "a value of type unknown"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1748:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1765:22",
+          "reason": "assigning to an ObjectLiteralExpression"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1765:21",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1773:25",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1773:25",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1796:21",
+          "reason": "a BinaryExpression with a boolean and a number | undefined"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1796:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1814:32",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1814:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1819:26",
+          "reason": "reading result"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1819:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1828:13",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1827:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/builder.ts:1846:40",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1846:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1847:13",
+          "reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1847:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1852:30",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1852:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1853:13",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1853:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1854:37",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1854:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1855:52",
+          "reason": "reading existingPending"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1855:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1856:17",
+          "reason": "reading pendingKind"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1856:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1858:17",
+          "reason": "reading result"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1858:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1862:13",
+          "reason": "a Set of Path (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1862:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1869:49",
+          "reason": "a BinaryExpression with a number | undefined and a number"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1869:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1870:39",
+          "reason": "reading result"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1870:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:1873:18",
+          "reason": "reading result"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:1873:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/builder.ts:1796:34",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/resolutionCache.ts:838:66",
+      "reason": "optional chaining to .size on a value",
+      "group": "original root",
+      "exit": 1,
+      "seconds": 2.649,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/resolutionCache.ts:840:13",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/resolutionCache.ts:840:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/resolutionCache.ts:838:66",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "optional chaining to .size on a value"
+      ],
+      "original_stop_reproduced": false,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/builder.ts:710:5",
+      "reason": "a call through ?. (an optional call)",
+      "group": "previous next stop",
+      "kind": "NotYet",
+      "exit": 0,
+      "seconds": 2.523,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:710:5",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/builder.ts:710:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/builder.ts:710:5",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "a call through ?. (an optional call)"
+      ],
+      "original_stop_reproduced": true,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/utilities.ts:9417:9",
+      "reason": "reading jsxRuntimePragma",
+      "group": "previous next stop",
+      "kind": "NotYet",
+      "exit": 0,
+      "seconds": 2.469,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:9413:36",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9413:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:1750:25",
+          "reason": "a value of type unknown"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9414:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:9415:31",
+          "reason": "a call through ?. (an optional call)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9415:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9416:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:9417:9",
+          "reason": "reading jsxRuntimePragma"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9417:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:9420:12",
+          "reason": "a BinaryExpression with a boolean and a string"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:9420:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/utilities.ts:9417:9",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "reading jsxRuntimePragma"
+      ],
+      "original_stop_reproduced": true,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/checker.ts:36469:31",
+      "reason": "an optional property chain through an unrepresented field",
+      "group": "previous next stop",
+      "kind": "NotYet",
+      "exit": 0,
+      "seconds": 2.784,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:2416:81",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36413:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36436:27",
+          "reason": "a BinaryExpression with a number and a string"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36435:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36438:57",
+          "reason": "reading parameterRange"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36438:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36439:13",
+          "reason": "reading isVoidPromiseError"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36439:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36446:13",
+          "reason": "reading isVoidPromiseError"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36442:9",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8751:141",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36452:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36453:17",
+          "reason": "assigning to an Identifier"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36453:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36365:118",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36454:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36456:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36462:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36463:17",
+          "reason": "assigning to an Identifier"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36463:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36464:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36467:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36469:31",
+          "reason": "an optional property chain through an unrepresented field"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36469:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36470:17",
+          "reason": "reading parameter"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36470:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36481:31",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36481:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:213:28",
+          "reason": "a value of type unknown"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/core.ts:1099:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "panic",
+          "where": "src/compiler/core.ts:1100:5",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "phase": "lowering",
+          "kind": "error",
+          "where": "",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/core.ts:1100:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36482:31",
+          "reason": "reading errorSpan"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36482:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/core.ts:1122:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "panic",
+          "where": "src/compiler/core.ts:1123:5",
+          "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/core.ts:1123:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36483:28",
+          "reason": "reading errorSpan"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36483:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36484:17",
+          "reason": "reading end"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36484:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:10655:6",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:10655:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/utilities.ts:10645:6",
+          "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:10645:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36487:32",
+          "reason": "reading errorSpan"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36487:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36489:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36490:17",
+          "reason": "assigning to an Identifier"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36490:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:36491:96",
+          "reason": "reading errorSpan"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36491:17",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        },
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:2422:122",
+          "reason": "a rest array of DiagnosticArguments"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/checker.ts:36493:13",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/checker.ts:36469:31",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "an optional property chain through an unrepresented field"
+      ],
+      "original_stop_reproduced": true,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/debug.ts:213:28",
+      "reason": "a value of type unknown",
+      "group": "previous next stop",
+      "kind": "NotYet",
+      "exit": 0,
+      "seconds": 2.495,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/debug.ts:213:28",
+          "reason": "a value of type unknown"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/debug.ts:213:5",
+          "reason": "function signature or prologue failed; continued at next declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/debug.ts:213:28",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "a value of type unknown"
+      ],
+      "original_stop_reproduced": true,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/emitter.ts:6375:32",
+      "reason": "a cast the runtime can't check",
+      "group": "previous next stop",
+      "kind": "Refused",
+      "exit": 0,
+      "seconds": 2.531,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "Refused",
+          "where": "src/compiler/emitter.ts:6375:32",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/emitter.ts:6375:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/emitter.ts:6375:32",
+        "-kind",
+        "Refused",
+        "-reason",
+        "a cast the runtime can't check"
+      ],
+      "original_stop_reproduced": true,
+      "selected_unit_has_lowering_stop": true
+    },
+    {
+      "where": "src/compiler/utilities.ts:8107:13",
+      "reason": "a declaration directly in a case (wrap the case in a block)",
+      "group": "previous next stop",
+      "kind": "NotYet",
+      "exit": 0,
+      "seconds": 2.476,
+      "findings": [
+        {
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:8107:13",
+          "reason": "a declaration directly in a case (wrap the case in a block)"
+        },
+        {
+          "phase": "lowering",
+          "kind": "Boundary",
+          "where": "src/compiler/utilities.ts:8102:5",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration"
+        }
+      ],
+      "command": [
+        "/tmp/object-property-overnight-replay",
+        "-project",
+        "/tmp/object-property-adapted/src/tsc/tsc.ts",
+        "-where",
+        "/tmp/object-property-adapted/src/compiler/utilities.ts:8107:13",
+        "-kind",
+        "NotYet",
+        "-reason",
+        "a declaration directly in a case (wrap the case in a block)"
+      ],
+      "original_stop_reproduced": true,
+      "selected_unit_has_lowering_stop": true
+    }
+  ]
+}
