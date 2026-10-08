@@ -9,6 +9,10 @@ import (
 // The physical adapter only supplies a boxed snapshot. Membership is checked at
 // the read, including finite literals and distinct null/undefined members.
 func (e *emitter) arrayPrimitiveUnionRead(id ir.ViewContractID, value, expression, expected string) {
+	if ir.MixedArrayContract(e.program, id) {
+		e.viewUntaggedObjectUnion(ir.Property{View: expression, ViewType: expected, ViewContract: id}, value)
+		return
+	}
 	test := "false"
 	if ir.PrimitiveArrayContract(e.program, id) {
 		test = e.arrayPrimitiveUnionTest(id, value)

@@ -344,7 +344,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// A finite data-class union keeps class/null/undefined as heap references.
 		// Its private witness supplies identity at each admitted element read.
 		nominal := valueType == ir.Union && isClassInstance(l.checker.GetNonNullableType(element)) && l.mapNominalEntrySlot(node, element) != 0
-		if ir.PrimitiveArrayContract(l.result, id) || nominal {
+		if ir.PrimitiveArrayContract(l.result, id) || nominal || l.completeMixedArrayContract(id) {
 			if _, err := l.viewContract(node, arrayType); err != nil {
 				return 0, err
 			}

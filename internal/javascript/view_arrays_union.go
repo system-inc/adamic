@@ -8,6 +8,9 @@ import (
 )
 
 func (e *emitter) arrayPrimitiveUnionRead(id ir.ViewContractID, value, expression, expected string) string {
+	if ir.MixedArrayContract(e.program, id) {
+		return e.viewUntaggedObjectUnion(ir.Property{View: expression, ViewType: expected, ViewContract: id}, value)
+	}
 	test := "false"
 	if ir.PrimitiveArrayContract(e.program, id) {
 		test = e.arrayPrimitiveUnionTest(id, "v")

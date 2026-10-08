@@ -91,6 +91,9 @@ func (e *emitter) emitViewArrayReadChecked(read ir.ArrayIndex, array, index, own
 	if read.Element == ir.Union && nominal.NominalClass != 0 {
 		wanted = "adamic_view_array_nominal_union"
 	}
+	if read.Element == ir.Union && ir.MixedArrayContract(e.program, read.ViewContract) {
+		wanted = "adamic_view_array_mixed_union"
+	}
 	e.line("adamic_value %s;", snapshot)
 	e.line("adamic_value *%s = adamic_view_array_at(%s, %s, %t, %t, %s, %s, %s, &%s, %s);", slot, array, index, read.Relative, read.UndefinedAllowed, wanted, cString(read.ViewType), cString(read.View), snapshot, owner)
 	if read.Required {

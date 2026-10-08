@@ -2,7 +2,7 @@
 #define ADAMIC_VIEW_ARRAYS_H
 
 // Internal extraction selectors for checked reference families; not IR types.
-enum { adamic_view_array_nominal_union = 16, adamic_view_array_tuple_union = 17 };
+enum { adamic_view_array_nominal_union = 16, adamic_view_array_tuple_union = 17, adamic_view_array_mixed_union = 18 };
 
 // Physical storage lives in the shared adamic_array.element_kind byte.
 struct adamic_array;
