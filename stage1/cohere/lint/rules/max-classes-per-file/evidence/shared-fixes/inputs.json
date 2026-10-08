@@ -1,0 +1,27 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=90m",
+    "./stage1/cohere/lint"
+  ],
+  "branch": "codex/lint-port-max-classes-per-file",
+  "source_sha": "fc9173e33f512d9501e1da574e8813cc82721c1a",
+  "start_load": [
+    7.376953125,
+    2.24609375,
+    1.3310546875
+  ],
+  "env": {
+    "GOMAXPROCS": "2",
+    "GOFLAGS": "-buildvcs=false",
+    "GOPROXY": "https://proxy.golang.org|direct",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-17-typescript",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/lint-shared-fixes/max-classes/profiles",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/lint-shared-fixes/max-classes/profiles",
+    "TMPDIR": "/tmp/adamic-gate/shared-fixes-max-classes"
+  }
+}
