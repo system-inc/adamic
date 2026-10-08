@@ -1,0 +1,38 @@
+[
+  {
+    "file": "01_scanner_keywords.a",
+    "edit": "Replace first-line expected header with a deliberately unmatched refusal reason",
+    "caught_by": "unchanged Gate.aCheck over captured real compiler diagnostics",
+    "failure": "a-check failed for 1 file:\n/tmp/step12-work/headers/01_scanner_keywords.a: refused, expected refused deliberately unmatched step12 reason (adamic: /workspace/adamic/stage3/fixtures/entries/01_scanner_keywords.a:95:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added)"
+  },
+  {
+    "file": "02_hidden_same_type.a",
+    "edit": "Replace first-line expected header with a deliberately unmatched refusal reason",
+    "caught_by": "unchanged Gate.aCheck over captured real compiler diagnostics",
+    "failure": "a-check failed for 1 file:\n/tmp/step12-work/headers/02_hidden_same_type.a: checked, expected refused deliberately unmatched step12 reason (adamic: /workspace/adamic/stage3/fixtures/entries/02_hidden_same_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet)"
+  },
+  {
+    "file": "03_hidden_other_type.a",
+    "edit": "Replace first-line expected header with a deliberately unmatched refusal reason",
+    "caught_by": "unchanged Gate.aCheck over captured real compiler diagnostics",
+    "failure": "a-check failed for 1 file:\n/tmp/step12-work/headers/03_hidden_other_type.a: checked, expected refused deliberately unmatched step12 reason (adamic: /workspace/adamic/stage3/fixtures/entries/03_hidden_other_type.a:7:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet)"
+  },
+  {
+    "file": "04_alias_add_key.a",
+    "edit": "Replace first-line expected header with a deliberately unmatched refusal reason",
+    "caught_by": "unchanged Gate.aCheck over captured real compiler diagnostics",
+    "failure": "a-check failed for 1 file:\n/tmp/step12-work/headers/04_alias_add_key.a: refused, expected refused deliberately unmatched step12 reason (adamic: /workspace/adamic/stage3/fixtures/entries/04_alias_add_key.a:4:34: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added)"
+  },
+  {
+    "file": "05_getter.a",
+    "edit": "Replace first-line expected header with a deliberately unmatched refusal reason",
+    "caught_by": "unchanged Gate.aCheck over captured real compiler diagnostics",
+    "failure": "a-check failed for 1 file:\n/tmp/step12-work/headers/05_getter.a: checked, expected refused deliberately unmatched step12 reason (adamic: /workspace/adamic/stage3/fixtures/entries/05_getter.a:11:52: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet)"
+  },
+  {
+    "file": "06_symbol_key.a",
+    "edit": "Replace first-line expected header with a deliberately unmatched refusal reason",
+    "caught_by": "unchanged Gate.aCheck over captured real compiler diagnostics",
+    "failure": "a-check failed for 1 file:\n/tmp/step12-work/headers/06_symbol_key.a: checked, expected refused deliberately unmatched step12 reason (adamic: /workspace/adamic/stage3/fixtures/entries/06_symbol_key.a:4:30: stage 0 can't lower a computed field name yet)"
+  }
+]
