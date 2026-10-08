@@ -26,6 +26,29 @@ func main() {
     defer stream.Close()
     encoder := json.NewEncoder(stream)
     fmt.Fprintf(os.Stderr, "compiled with %s\n", compiler.Name)
+    if filepath.Base(root) == "tsc.ts" {
+        entry := root
+        dependency := filepath.Clean(filepath.Join(filepath.Dir(entry), "../executeCommandLine.a"))
+        diagnostics := []string{}
+        if compiler.Name == "area" { diagnostics = append(diagnostics, dependency+":1:1: error TS2322: entry compiler witness") }
+        if LATENT {
+            if len(diagnostics) > 0 {
+                encoder.Encode(map[string]any{"roots":[]string{entry}, "status":"blocked", "checker_rejected":true, "diagnostics":diagnostics})
+            } else {
+                label := "measured on a checker-clean entry-root program"
+                encoder.Encode(map[string]any{"roots":[]string{entry}, "status":"measurement", "checker_rejected":false, "diagnostics":diagnostics, "measurement":label, "sources":[]string{entry,dependency}})
+                encoder.Encode(map[string]any{"file":entry, "measurement":label, "findings":[]any{}})
+                encoder.Encode(map[string]any{"file":dependency, "measurement":label, "findings":[]any{
+                    map[string]any{"measurement":label, "kind":"NotYet", "where":dependency+":1:1", "reason":"compiled with "+compiler.Name, "text":"entry compiler provenance"},
+                }})
+            }
+        } else {
+            kind := "accepted"
+            if len(diagnostics) > 0 { kind = "checker" }
+            for index := 0; index < 2; index++ { encoder.Encode(map[string]any{"roots":[]string{entry}, "kind":kind, "diagnostics":diagnostics}) }
+        }
+        return
+    }
     if LATENT {
         encoder.Encode(map[string]any{"measurement":"measured on a checker-rejected program", "status":"measurement", "checker_rejected":true})
         encoder.Encode(map[string]any{"measurement":"measured on a checker-rejected program", "file":file, "findings":[]any{
@@ -47,9 +70,10 @@ func main() {
 }
 '''
 # Latent coverage must include both source files too.
-DRIVER = DRIVER.replace('    } else {', '''        other := filepath.Join(root, "other.a")
+DRIVER = DRIVER.replace('    } else {\n        kind :=', '''        other := filepath.Join(root, "other.a")
         encoder.Encode(map[string]any{"measurement":"measured on a checker-rejected program", "file":other, "findings":[]any{}})
-    } else {''')
+    } else {
+        kind :=''')
 
 
 @unittest.skipUnless(shutil.which('go'), 'Go is required for real compiler selection probes')
@@ -73,13 +97,19 @@ class CompilerSelectionTests(unittest.TestCase):
         script = Path(os.environ.get('METER_SCRIPT_UNDER_TEST', source / 'twice-daily.sh'))
         self.write('stage3/meter/twice-daily.sh', script.read_text())
         self.write('go.mod', 'module meterprobe\n\ngo 1.21\n')
-        self.write('stage3/apply.sh', 'set -eu\nmkdir -p "$1/src/compiler"\nprintf "const x: number = 1;\\n" > "$1/src/compiler/input.a"\nprintf "const y: number = 2;\\n" > "$1/src/compiler/other.a"\n')
+        self.write('stage3/apply.sh', 'set -eu\nmkdir -p "$1/src/compiler" "$1/src/tsc"\nprintf "const x: number = 1;\\n" > "$1/src/compiler/input.a"\nprintf "const y: number = 2;\\n" > "$1/src/compiler/other.a"\nprintf "export {};\\n" > "$1/src/tsc/tsc.ts"\nprintf "export {};\\n" > "$1/src/executeCommandLine.a"\n')
         self.write('stage3/census/tool/main.go', DRIVER.replace('LATENT', 'false'))
         self.write('stage3/census/latent/tool/main.go', DRIVER.replace('LATENT', 'true'))
         self.write('stage3/census/latent/make_overlay.py',
                    'import json, pathlib, sys\np=pathlib.Path(sys.argv[2]); p.mkdir(parents=True)\n'
                    '(p/"empty.go").write_text("package main\\n")\n'
-                   '(p/"overlay.json").write_text(json.dumps({"Replace":{}}))\n')
+                   '(p/"overlay.json").write_text(json.dumps({"Replace":{}, "compiler_root":sys.argv[1]}))\n')
+        # A small entry driver provides distinct compiler witnesses in these refs.
+        self.write('stage3/meter/entry_overlay.py',
+                   'import json, pathlib, sys\ns=pathlib.Path(sys.argv[1]); p=pathlib.Path(sys.argv[2]); p.mkdir(parents=True)\n'
+                   'metadata=json.loads((s/"overlay.json").read_text())\n'
+                   '(p/"entry.go").write_text(' + repr(DRIVER.replace('LATENT', 'true')) + ')\n'
+                   '(p/"overlay.json").write_text(json.dumps({"Replace":{str(pathlib.Path(metadata["compiler_root"])/"stage3/census/latent/tool/main.go"):str(p/"entry.go")}}))\n')
         self.write('internal/compiler/name.go', 'package compiler\nconst Name = "main"\n')
         self.command('git', 'add', '.')
         self.command('git', 'commit', '-m', 'Main compiler witness')
@@ -130,6 +160,8 @@ class CompilerSelectionTests(unittest.TestCase):
             self.assertEqual(tree['adamic_commit'], self.checkout)
             self.assertEqual(tree['totals']['checker_own_file'], 2)
             self.assertEqual(tree['latent_lowering']['per_reason'], {'NotYet: compiled with checkout': 1})
+            self.assertTrue(tree['tsc_entry']['checker_whole_program'])
+            self.assertEqual(tree['tsc_entry']['lowering_census']['per_reason'], {'NotYet: compiled with checkout': 1})
         self.assertTrue((run / 'build.log').exists())
         self.assertIn('Both measured with Adamic ' + self.checkout, (run / 'report.md').read_text())
 
@@ -143,11 +175,21 @@ class CompilerSelectionTests(unittest.TestCase):
             self.assertEqual(tree['totals']['checker_own_file'], count)
             self.assertEqual(tree['latent_lowering']['per_reason'], {'NotYet: compiled with ' + label: 1})
             self.assertIn('compiled with ' + label, (run / label / 'census.log').read_text())
+            entry = tree['tsc_entry']
+            self.assertEqual(entry['checker_whole_program'], label == 'main')
+            self.assertEqual(entry['whole_program_diagnostics'], 0 if label == 'main' else 1)
+            if label == 'main':
+                self.assertEqual(entry['lowering_census']['source_files'], 2)
+            else:
+                self.assertIsNone(entry['lowering_census'])
+            self.assertTrue((run / label / 'tsc/census.log').exists())
             self.assertIn('compiled with ' + label, (run / label / 'latent.log').read_text())
             self.assertTrue((run / label / 'build.log').exists())
         self.assertFalse((run / 'build.log').exists())
         text = (run / 'report.md').read_text()
         self.assertEqual(text.splitlines()[:2], ['Whole program: main: 2/2; area: 0/2', 'Own file: main: 2/2; area: 1/2'])
+        self.assertIn('tsc entry: main: pass; area: fail', text)
+        self.assertIn('tsc entry diagnostics: main: 0; area: 1', text)
         self.assertIn('Main measured with Adamic ' + self.main, text)
         self.assertIn('area measured with Adamic ' + self.area, text)
         # A claimed per-ref compiler must agree with the actual source pin.
