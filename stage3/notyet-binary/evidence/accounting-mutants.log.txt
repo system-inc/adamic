@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/notyet-binary/build-breakdown.py", line 31, in <module>
+    assert set(shapes) == keys, ('missing exact failing nodes', len(keys-set(shapes)), sorted(keys-set(shapes))[:3])
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: ('missing exact failing nodes', 1, [('src/compiler/sys.ts:112:12', 'a BinaryExpression with a value and a value')])
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/notyet-binary/build-breakdown.py", line 21, in <module>
+    assert collections.Counter(reason for where, reason in keys) == expected
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+missing observation mutant caught, exit 1
+missing raw site mutant caught, exit 1

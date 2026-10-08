@@ -1,0 +1,17 @@
+package lower
+import (
+ "encoding/json"
+ "os"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/scanner"
+ "github.com/system-inc/adamic/internal/ir"
+)
+func (l *lowering) binaryAnalysis(node *ast.Node, operator ast.Kind, left, right ir.Expression) {
+ binary:=node.AsBinaryExpression(); file:=ast.GetSourceFileOfNode(node)
+ text:=file.Text()[scanner.GetTokenPosOfNode(node,file,false):node.End()]
+ token:=binary.OperatorToken
+ spelling:=file.Text()[scanner.GetTokenPosOfNode(token,file,false):token.End()]
+ types:=[]string{}
+ for _, side:=range []*ast.Node{binary.Left,binary.Right,node} { types=append(types,l.checker.TypeToString(l.checker.GetTypeAtLocation(side))) }
+ _=json.NewEncoder(os.Stderr).Encode(map[string]any{"where":l.program.Where(node),"reason":describe(node)+" with a "+typeName(left.Type())+" and a "+typeName(right.Type()),"operator":spelling,"left":types[0],"right":types[1],"whole":types[2],"expression":text})
+}
