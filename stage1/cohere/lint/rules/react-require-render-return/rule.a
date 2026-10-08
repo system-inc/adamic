@@ -1,0 +1,121 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { project } from '../../helpers/react/projection.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { isEs5ComponentCallStrict } from '../../helpers/rules-react/is_es5_component_call_strict.a';
+import { skipParenthesesOptional } from '../../helpers/rules-react/skip_parentheses_optional.a';
+import { messageNoRenderReturn } from './messages.a';
+
+class Component {
+    readonly index: number;
+    readonly render: number;
+    hasReturn = false;
+    constructor(index: number, render: number) {
+        this.index = index;
+        this.render = render;
+    }
+}
+
+export class Rule {
+    readonly context: RuleContext;
+    nodes: HelperNode[] = [];
+    readonly components: Component[] = [];
+    readonly byNode = new Map<number, Component>();
+    constructor(context: RuleContext) { this.context = context; }
+    visit(root: number): void {
+        this.nodes = project(this.context.parser.nodes);
+        this.walk(root);
+        for(const component of this.components) {
+            if(!component.hasReturn && component.render >= 0) {
+                this.context.reportNode(component.render, 'react/require-render-return',
+                    'noRenderReturn', messageNoRenderReturn);
+            }
+        }
+    }
+    component(index: number): boolean {
+        const context = this.context;
+        const kind = context.kind(index);
+        if(kind === 'ObjectLiteralExpression') {
+            const parent = context.parent(index);
+            if(context.kind(parent) !== 'CallExpression') { return false; }
+            return isEs5ComponentCallStrict(context, parent);
+        }
+        if(kind !== 'ClassDeclaration' && kind !== 'ClassExpression') { return false; }
+        for(const clause of context.children(index, 'HeritageClause')) {
+            for(const type of context.node(clause).children) {
+                if(context.kind(type) !== 'ExpressionWithTypeArguments') { continue; }
+                const expression = skipParenthesesOptional(context, context.node(type).children[0] ?? -1);
+                if(isComponentBase(this.nodes, expression, isComponentBaseName)) { return true; }
+            }
+        }
+        return false;
+    }
+    namedRender(index: number): boolean {
+        const context = this.context;
+        if(!['MethodDeclaration', 'PropertyDeclaration', 'PropertyAssignment',
+            'ShorthandPropertyAssignment', 'GetAccessor', 'SetAccessor'].includes(context.kind(index))) {
+            return false;
+        }
+        const name = context.name(index);
+        return name >= 0 && context.kind(name) === 'Identifier' && context.node(name).text === 'render';
+    }
+    callable(index: number): boolean {
+        const context = this.context;
+        const kind = context.kind(index);
+        if(kind === 'MethodDeclaration' || kind === 'GetAccessor' || kind === 'SetAccessor') { return true; }
+        if(kind !== 'PropertyDeclaration' && kind !== 'PropertyAssignment') { return false; }
+        const children = context.node(index).children;
+        const value = children[children.length - 1] ?? -1;
+        return context.kind(value) === 'FunctionExpression' || context.kind(value) === 'ArrowFunction';
+    }
+    render(index: number): number {
+        for(const member of this.context.node(index).children) {
+            if(this.namedRender(member) && this.callable(member)) { return member; }
+        }
+        return -1;
+    }
+    walk(index: number): void {
+        const context = this.context;
+        if(this.component(index)) {
+            const component = new Component(index, this.render(index));
+            this.components.push(component);
+            this.byNode.set(index, component);
+        }
+        const node = context.node(index);
+        if(node.kind === 'ReturnStatement') { this.mark(context.parent(index)); }
+        if(node.kind === 'ArrowFunction') {
+            const body = node.children[node.children.length - 1] ?? -1;
+            if(body >= 0 && context.kind(body) !== 'Block' && this.namedRender(context.parent(index))) {
+                this.mark(context.parent(index));
+            }
+        }
+        for(const child of node.children) { this.walk(child); }
+    }
+    mark(from: number): void {
+        const context = this.context;
+        let depth = 0;
+        let satisfiesRender = false;
+        for(let current = from; current >= 0; current = context.parent(current)) {
+            const kind = context.kind(current);
+            if(kind === 'FunctionExpression' || kind === 'FunctionDeclaration' || kind === 'ArrowFunction') {
+                depth++;
+            }
+            if(this.namedRender(current)) {
+                let atProperty = depth;
+                // Go fuses the class method and its function value into one node.
+                if(kind === 'MethodDeclaration' || kind === 'GetAccessor' || kind === 'SetAccessor') {
+                    atProperty++;
+                }
+                if(atProperty <= 1) { satisfiesRender = true; }
+            }
+            const component = this.byNode.get(current);
+            if(component !== undefined) {
+                // Match Go: a nested plain class may mark the outer component.
+                if(satisfiesRender) { component.hasReturn = true; }
+                return;
+            }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

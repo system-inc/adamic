@@ -1,0 +1,12 @@
+{
+  "name": "react/require-render-return",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleRequireRenderReturn",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestRequireRenderReturn"
+}

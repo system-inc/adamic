@@ -1,0 +1,5 @@
+{
+  "name": "render-return-scope-threshold",
+  "from": "if(atProperty <= 1)",
+  "to": "if(atProperty <= 2)"
+}

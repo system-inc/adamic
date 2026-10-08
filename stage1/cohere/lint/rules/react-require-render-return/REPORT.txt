@@ -1,0 +1,52 @@
+react/require-render-return port
+
+Base: 6bf7bcec73a04b85900c5a69a257b3cf34b35a40
+Cohere pin: 7945d102a6c18dd36adf9114a758ce646e8b2359
+Remote duplicate checks (exact JSON name and unquoted rule name) had no matches.
+All implementation and evidence files are confined to this rule directory.
+
+Observed parity:
+82 unique captured Go source/file/options cases, including the 17 imported upstream
+cases, match findings, descriptions, byte ranges and absence of fixes/suggestions.
+The selected run passed TestRulesAgree, TestOwnedWitnesses and this rule's mutant.
+The final-source whole run passed TestRulesAgree and TestOwnedWitnesses, compiler
+and stage1 comparisons, profile snapshots, shards and this rule's mutant.
+Selected corpus comparison: 5,287 captured combinations across all registered rules;
+14,240,425 identical output bytes on Go, source Node, emitted JS and ASan/UBSan native.
+Five reporting witnesses: class.ts.txt, factory.js.txt, nested-arrow.tsx.txt,
+unicode.jsx.txt and duplicate.ts.txt. Each runs selected and with all rules.
+No options, fixes or suggestions exist in the upstream rule; the adapter returns nil.
+
+Shared helpers reused: React AST projection, component-base/name predicates,
+isEs5ComponentCallStrict and skipParenthesesOptional. Only rule-local collection,
+render-property selection and scope counting were ported. No helper or cohere edits.
+
+Go behavior deliberately preserved:
+- bare return with no value still satisfies render;
+- second render returns, first is empty: the per-component flag makes both clean;
+- return inside a nested plain class marks the outer component: a Go false negative;
+- nested implicit render arrow marks the outer component;
+- string-literal and computed render keys stay clean, and only createReactClass
+  factories count. Scope count includes nested arrows and fused class methods.
+
+Mutant: render-return-scope-threshold changes atProperty <= 1 to <= 2. It compiles
+and is caught by Node and emitted JS on the nested-arrow witness. It also passed
+its catch check in the final-source whole run. Exact lines are in the mutant log.
+
+Commands and limitations:
+export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh
+bash cloud/setup.sh --wasi-sdk; source /workspace/adamic-tools/env.sh
+go run ./cmd/lint-registry
+go test ./stage1/cohere/lint -run 'TestRulesAgree|TestOwnedWitnesses|TestMutants/render-return-scope-threshold' -count=1 -v -timeout=30m
+Whole package once: go test ./stage1/cohere/lint -json -count=1 -timeout=30m -parallel=4
+Inputs and exact timing are in evidence/whole-summary.json. The TypeScript checkout
+is clean at 050880ce59e30b356b686bd3144efe24f875ebc8. WASI SDK 27 is installed.
+Both profile variables name one fresh directory; ADAMIC_LINT_BENCH=1 is set.
+/usr/bin/time was unavailable before any whole test started; Python measured wall time.
+
+Whole run: 102 passing test/subtest events, zero assertion-failing tests, one package
+failure due to the 30-minute timeout, one explicit skip (TestCheckerBridgeRefusalPending,
+awaiting codex/tsgo-errors-as-values), and 50 unfinished tests/subtests, listed in the
+summary. Wall time 1803.228185s; nproc 5; final load 5.04 4.79 4.20.
+The unfinished inherited mutant batch is not claimed as passing. No port helper or
+language blocker was found. Full repository tests were not requested or run.
