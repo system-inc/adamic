@@ -1,0 +1,31 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.47s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/module-block/wrong-members (0.44s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "3\n" stderr "" want "createModuleBlock" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createModuleBlock expected (statements: readonly Statement[]) => ModuleBlock, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/reflect-get/wrong-members (0.39s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "6\n" stderr "" want "createReflectGetCall" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createReflectGetCall expected (target: Expression, propertyKey: Expression, receiver?: Expression | undefined) => CallExpression, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-operator/wrong-members (0.41s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "146\n" stderr "" want "createTypeOperatorNode" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTypeOperatorNode expected (operator: SyntaxKind, type: TypeNode) => TypeOperatorNode, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-parameter/wrong-members (0.38s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "13\n" stderr "" want "createTypeParameterDeclaration" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTypeParameterDeclaration expected (modifiers: readonly Modifier[] | undefined, name: string | Identifier, constraint?: TypeNode | undefined, defaultType?: TypeNode | undefined) => TypeParameterDeclaration, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-update/wrong-members (0.43s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "36\n" stderr "" want "updateFunctionDeclaration" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateFunctionDeclaration expected (node: FunctionDeclaration, modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block | undefined) => FunctionDeclaration, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/import-update/wrong-members (0.41s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "15\n" stderr "" want "updateImportDeclaration" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateImportDeclaration expected (node: ImportDeclaration, modifiers: readonly ModifierLike[] | undefined, importClause: ImportClause | undefined, moduleSpecifier: Expression, attributes: ImportAttributes | undefined) => ImportDeclaration, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=6 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.477s
+FAIL

@@ -8,6 +8,14 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"module-block", "createModuleBlock", "3\n", "0\n3\n", "0", "statement.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"reflect-get", "createReflectGetCall", "6\n", "3\n3\n6\n", "0", "target.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"type-operator", "createTypeOperatorNode", "146\n", "146\n151\n161\n", "0", "type.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"type-parameter", "createTypeParameterDeclaration", "13\n", "3\n3\n7\n13\n", "0", "modifier.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"function-update", "updateFunctionDeclaration", "36\n", "1\n7\n36\n", "0", "typeParameter.value", "5\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"import-update", "updateImportDeclaration", "15\n", "5\n5\n15\n", "0", "moduleSpecifier.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"program-directory", "getCurrentDirectory", "abc\n", "", "1", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result"},
+		{"system-directory", "getCurrentDirectory", "abc\n", "", "1", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result"},
 		{"cancellation-check", "throwIfCancellationRequested", "3\n", "", "1", "", "", "", "good,wrong-value,wrong-arity"},
 		{"writer-text", "getText", "abc\n", "", "1", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result"},
 		{"redirect-path", "toPath", "root/3\n", "", "0", "", "", "9\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members"},

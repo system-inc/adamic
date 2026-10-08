@@ -1,0 +1,17 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface TypeParameterDeclaration {readonly value:number;}
+interface Statement {readonly value:number;}
+interface Expression {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Modifier {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface Identifier {readonly value:number;}
+interface AsteriskToken {readonly value:number;}
+interface ParameterDeclaration {readonly value:number;}
+interface Block {readonly value:number;}
+interface ImportClause {readonly value:number;}
+interface ImportAttributes {readonly value:number;}
+interface Base {readonly createTypeParameterDeclaration:unknown;}
+interface Target {createTypeParameterDeclaration(modifiers: readonly Modifier[] | undefined, name: string | Identifier, constraint?: TypeNode, defaultType?: TypeNode): TypeParameterDeclaration;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createTypeParameterDeclaration([{value:1}],"abc",{value:4},{value:5}).value}`);}
+probe({createTypeParameterDeclaration:(modifiers:readonly Modifier[]|undefined,name:number,constraint?:TypeNode,defaultType?:TypeNode):TypeParameterDeclaration=>({value:13})});

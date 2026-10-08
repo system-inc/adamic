@@ -1,0 +1,39 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (3.32s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/module-block/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "9\n" stderr "" want "createModuleBlock" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createModuleBlock expected (statements: readonly Statement[]) => ModuleBlock, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/reflect-get/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "9\n" stderr "" want "createReflectGetCall" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createReflectGetCall expected (target: Expression, propertyKey: Expression, receiver?: Expression | undefined) => CallExpression, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-operator/wrong-arity (0.40s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "9\n" stderr "" want "createTypeOperatorNode" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTypeOperatorNode expected (operator: SyntaxKind, type: TypeNode) => TypeOperatorNode, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-parameter/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "9\n" stderr "" want "createTypeParameterDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTypeParameterDeclaration expected (modifiers: readonly Modifier[] | undefined, name: string | Identifier, constraint?: TypeNode | undefined, defaultType?: TypeNode | undefined) => TypeParameterDeclaration, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-update/wrong-arity (0.48s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "9\n" stderr "" want "updateFunctionDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateFunctionDeclaration expected (node: FunctionDeclaration, modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block | undefined) => FunctionDeclaration, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/import-update/wrong-arity (0.40s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "9\n" stderr "" want "updateImportDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateImportDeclaration expected (node: ImportDeclaration, modifiers: readonly ModifierLike[] | undefined, importClause: ImportClause | undefined, moduleSpecifier: Expression, attributes: ImportAttributes | undefined) => ImportDeclaration, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/program-directory/wrong-arity (0.33s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "9\n" stderr "" want "getCurrentDirectory" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: program.getCurrentDirectory expected () => string, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/system-directory/wrong-arity (0.39s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "9\n" stderr "" want "getCurrentDirectory" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: system.getCurrentDirectory expected () => string, found function with arity 1\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=8 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.327s
+FAIL

@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly getCurrentDirectory:unknown;}
+interface Target {getCurrentDirectory(): string;}
+function probe(value:Base):void {const program=value as Target;console.log(program.getCurrentDirectory());}
+probe({getCurrentDirectory:(unused:number):string=>"9"});

@@ -1,0 +1,39 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (3.30s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/module-block/wrong-result (0.43s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createModuleBlock([{value:3}]).value is not initialized; expected number, found missing\n" want "createModuleBlock" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createModuleBlock expected (statements: readonly Statement[]) => ModuleBlock, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/reflect-get/wrong-result (0.40s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createReflectGetCall({value:1},{value:2},{value:3}).value is not initialized; expected number, found missing\n" want "createReflectGetCall" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createReflectGetCall expected (target: Expression, propertyKey: Expression, receiver?: Expression | undefined) => CallExpression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-operator/wrong-result (0.40s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createTypeOperatorNode(SyntaxKind.KeyOfKeyword,{value:3}).value is not initialized; expected number, found missing\n" want "createTypeOperatorNode" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTypeOperatorNode expected (operator: SyntaxKind, type: TypeNode) => TypeOperatorNode, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/type-parameter/wrong-result (0.39s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createTypeParameterDeclaration([{value:1}],\"abc\",{value:4},{value:5}).value is not initialized; expected number, found missing\n" want "createTypeParameterDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createTypeParameterDeclaration expected (modifiers: readonly Modifier[] | undefined, name: string | Identifier, constraint?: TypeNode | undefined, defaultType?: TypeNode | undefined) => TypeParameterDeclaration, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-update/wrong-result (0.45s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateFunctionDeclaration({value:1},[{value:2}],{value:3},{value:4},[{value:5}],[{value:6}],{value:7},{value:8}).value is not initialized; expected number, found missing\n" want "updateFunctionDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateFunctionDeclaration expected (node: FunctionDeclaration, modifiers: readonly ModifierLike[] | undefined, asteriskToken: AsteriskToken | undefined, name: Identifier | undefined, typeParameters: ... | undefined, parameters: ..., type: TypeNode | undefined, body: Block | undefined) => FunctionDeclaration, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/import-update/wrong-result (0.41s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: context.factory.updateImportDeclaration({value:1},[{value:2}],{value:3},{value:4},{value:5}).value is not initialized; expected number, found missing\n" want "updateImportDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateImportDeclaration expected (node: ImportDeclaration, modifiers: readonly ModifierLike[] | undefined, importClause: ImportClause | undefined, moduleSpecifier: Expression, attributes: ImportAttributes | undefined) => ImportDeclaration, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/program-directory/wrong-result (0.40s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "3\n" stderr "" want "getCurrentDirectory" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: program.getCurrentDirectory expected () => string, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/system-directory/wrong-result (0.38s)
+        checked_views_callable_later_ranked_test.go:105: gate cache node hit
+        checked_views_callable_later_ranked_test.go:125: gate cache node miss
+        checked_views_callable_later_ranked_test.go:145: backend2 exit 0 stdout "3\n" stderr "" want "getCurrentDirectory" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: system.getCurrentDirectory expected () => string, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=8 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	3.310s
+FAIL

@@ -13,7 +13,7 @@ const originalNodes = new Map();
 function collect(source) {
  const nodes = new Map();
  function visit(node) {
-  if (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node)) nodes.set(node.name.text, node);
+  if (ts.isTypeAliasDeclaration(node) || ts.isInterfaceDeclaration(node) || ts.isEnumDeclaration(node)) nodes.set(node.name.text, node);
   ts.forEachChild(node, visit);
  }
  visit(source);
@@ -21,6 +21,7 @@ function collect(source) {
 }
 for (const [name, node] of collect(original)) originalNodes.set(name, node);
 const families = new Map([
+ [212, {directory:'type-operator', aliases:[], carriers:[], enumConstants:[['SyntaxKind','KeyOfKeyword'],['SyntaxKind','ReadonlyKeyword'],['SyntaxKind','UniqueKeyword']]}],
  [192, {directory:'get-accessor-update', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral']}],
  [194, {directory:'set-accessor-update', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral']}],
  [176, {directory:'property-declaration', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral'], tokens:['QuestionToken','ExclamationToken']}],
@@ -56,7 +57,13 @@ for (const rank of process.argv[3].split(',').map(Number)) {
    const actual = fixture.get(token)?.members.find(member => member.name?.getText(source) === 'kind');
    if (typeof expected !== 'number' || !actual || !ts.isLiteralTypeNode(actual.type) || !ts.isNumericLiteral(actual.type.literal) || Number(actual.type.literal.text) !== expected) throw Error(name+': original token discriminator changed '+token);
   }
+  for (const [enumeration, member] of family.enumConstants || []) {
+   const originalMember = originalNodes.get(enumeration).members.find(node => node.name?.getText(original) === member);
+   const expected = checker.getTypeAtLocation(originalMember).value;
+   const actual = fixture.get(enumeration)?.members.find(node => node.name?.getText(source) === member)?.initializer;
+   if (typeof expected !== 'number' || !actual || !ts.isNumericLiteral(actual) || Number(actual.text) !== expected) throw Error(name+': original enum value changed '+enumeration+'.'+member);
+  }
   count++;
  }
 }
-console.log('Verified '+count+' fixtures retain original aliases and numeric kind discriminators.');
+console.log('Verified '+count+' fixtures retain requested original aliases, discriminators and enum values.');
