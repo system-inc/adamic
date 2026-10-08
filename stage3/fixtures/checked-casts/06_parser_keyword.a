@@ -1,4 +1,3 @@
-// a-check: refused adamic/no-unchecked-cast
 // Reduced from src/compiler/parser.ts:4566:61:as_cast; support types and driver are local.
 enum SyntaxKind { WithKeyword = 118, AssertKeyword = 132, Identifier = 80 }
 function select(currentToken: SyntaxKind): void {

@@ -1,4 +1,3 @@
-// a-check: refused adamic/no-unchecked-cast
 // Reduced from src/compiler/builder.ts:1466:70:as_cast; support types and driver are local.
 type CompilerOptionsValue = string | number | boolean | undefined;
 function select(value: CompilerOptionsValue): void {

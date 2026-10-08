@@ -1,0 +1,75 @@
+=== RUN   TestScannerCastCounts
+--- PASS: TestScannerCastCounts (1.88s)
+=== RUN   TestScannerErrorLibraryCastNotYet
+    scanner_constructor_views_test.go:39: gate cache node miss
+    scanner_constructor_views_test.go:51: library #ddwcejg dependency: /workspace/adamic/stage3/drivers/scanner/cast-checks/error-library-cast.a:3:1: stage 0 can't lower node:globals.ErrorConstructor.captureStackTrace yet
+--- PASS: TestScannerErrorLibraryCastNotYet (0.59s)
+=== RUN   TestStep09AcceptanceTagged
+=== RUN   TestStep09AcceptanceTagged/01_enum_declaration.a
+    step09_acceptance_test.go:45: gate cache node miss
+    step09_acceptance_test.go:62: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestStep09AcceptanceTagged/01_enum_declaration_fails.a
+    step09_acceptance_test.go:45: gate cache node miss
+    step09_acceptance_test.go:62: gate cache node miss
+    step09_acceptance_test.go:88: gate cache node miss
+    step09_acceptance_test.go:92: native release tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: field read failed: result.kind expected SyntaxKind.EnumDeclaration, found number 279\n"
+    step09_acceptance_test.go:92: JavaScript tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: field read failed: result.kind expected SyntaxKind.EnumDeclaration, found number 279\n"
+=== RUN   TestStep09AcceptanceTagged/02_name_subunion.a
+    step09_acceptance_test.go:45: gate cache node miss
+    step09_acceptance_test.go:62: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestStep09AcceptanceTagged/02_name_subunion_fails.a
+    step09_acceptance_test.go:45: gate cache node miss
+    step09_acceptance_test.go:62: gate cache node miss
+    step09_acceptance_test.go:88: gate cache node miss
+    step09_acceptance_test.go:92: native release tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: field read failed: result.kind expected \"Identifier\" | \"StringLiteral\", found string BindingPattern\n"
+    step09_acceptance_test.go:92: JavaScript tag omission caught by exact cast-point diagnostic: exit=70 stderr="adamic: panic: field read failed: result.kind expected \"Identifier\" | \"StringLiteral\", found string BindingPattern\n"
+--- PASS: TestStep09AcceptanceTagged (2.55s)
+    --- PASS: TestStep09AcceptanceTagged/01_enum_declaration.a (0.65s)
+    --- PASS: TestStep09AcceptanceTagged/01_enum_declaration_fails.a (0.65s)
+    --- PASS: TestStep09AcceptanceTagged/02_name_subunion.a (0.69s)
+    --- PASS: TestStep09AcceptanceTagged/02_name_subunion_fails.a (0.56s)
+=== RUN   TestStep09AcceptanceScalars
+=== RUN   TestStep09AcceptanceScalars/05_extension.a
+    step09_acceptance_test.go:108: gate cache node miss
+    step09_acceptance_test.go:128: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestStep09AcceptanceScalars/05_extension_fails.a
+    step09_acceptance_test.go:108: gate cache node miss
+    step09_acceptance_test.go:128: gate cache node miss
+    step09_acceptance_test.go:155: gate cache node miss
+    step09_acceptance_test.go:159: native release scalar omission caught by exact contract: exit=0 stdout="before\nextension=.wrong\nafter\n" stderr=""
+    step09_acceptance_test.go:159: JavaScript scalar omission caught by exact contract: exit=0 stdout="before\nextension=.wrong\nafter\n" stderr=""
+=== RUN   TestStep09AcceptanceScalars/06_parser_keyword.a
+    step09_acceptance_test.go:108: gate cache node miss
+    step09_acceptance_test.go:128: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestStep09AcceptanceScalars/06_parser_keyword_fails.a
+    step09_acceptance_test.go:108: gate cache node miss
+    step09_acceptance_test.go:128: gate cache node miss
+    step09_acceptance_test.go:155: gate cache node miss
+    step09_acceptance_test.go:159: JavaScript scalar omission caught by exact contract: exit=0 stdout="before\ntoken=80\nafter\n" stderr=""
+    step09_acceptance_test.go:159: native release scalar omission caught by exact contract: exit=0 stdout="before\ntoken=80\nafter\n" stderr=""
+=== RUN   TestStep09AcceptanceScalars/09_primitive_string.a
+    step09_acceptance_test.go:108: gate cache node miss
+    step09_acceptance_test.go:128: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestStep09AcceptanceScalars/09_primitive_string_fails.a
+    step09_acceptance_test.go:108: gate cache node miss
+    step09_acceptance_test.go:128: gate cache node miss
+    step09_acceptance_test.go:155: gate cache node miss
+    step09_acceptance_test.go:159: native release scalar omission caught by exact contract: exit=70 stdout="before\n" stderr="adamic: panic: a union value does not match its narrowed type\n"
+    step09_acceptance_test.go:159: JavaScript scalar omission caught by exact contract: exit=70 stdout="before\n" stderr="adamic: panic: a union value does not match its narrowed type\n"
+--- PASS: TestStep09AcceptanceScalars (3.72s)
+    --- PASS: TestStep09AcceptanceScalars/05_extension.a (0.58s)
+    --- PASS: TestStep09AcceptanceScalars/05_extension_fails.a (0.58s)
+    --- PASS: TestStep09AcceptanceScalars/06_parser_keyword.a (0.69s)
+    --- PASS: TestStep09AcceptanceScalars/06_parser_keyword_fails.a (0.55s)
+    --- PASS: TestStep09AcceptanceScalars/09_primitive_string.a (0.70s)
+    --- PASS: TestStep09AcceptanceScalars/09_primitive_string_fails.a (0.63s)
+PASS
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=26
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	8.760s

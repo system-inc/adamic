@@ -94,3 +94,70 @@ func TestStep09AcceptanceTagged(t *testing.T) {
 		})
 	}
 }
+
+func TestStep09AcceptanceScalars(t *testing.T) {
+	for _, fixture := range step09Fixtures(t) {
+		if !strings.HasPrefix(fixture.File, "05_") && !strings.HasPrefix(fixture.File, "06_") && !strings.HasPrefix(fixture.File, "09_") {
+			continue
+		}
+		t.Run(fixture.File, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/checked-casts", fixture.File))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || string(truth.stdout) != fixture.NodeOutput || len(truth.stderr) != 0 {
+				t.Fatalf("Node golden: %#v", truth)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			expected := truth
+			if fixture.Failing {
+				message := "cast failed: value expected string, found number"
+				if strings.HasPrefix(fixture.File, "05_") {
+					message = "cast failed: tryExtractTSExtension(candidate) expected Extension, found string"
+				}
+				if strings.HasPrefix(fixture.File, "06_") {
+					message = "cast failed: currentToken expected SyntaxKind.WithKeyword | SyntaxKind.AssertKeyword, found number"
+				}
+				expected = run{exitCode: 70, stdout: []byte(fixture.RuntimeOutput), stderr: []byte("adamic: panic: " + message + "\n")}
+			}
+			sanitized, binary := nativelyUncached(t, program)
+			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if diff := disagreement(expected, got); diff != "" {
+					t.Fatalf("contract: %s: %#v", diff, got)
+				}
+			}
+			if !fixture.Failing {
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				return
+			}
+			changed := 0
+			for index, function := range program.Functions {
+				if function.Name != "checked_scalar_cast" {
+					continue
+				}
+				outer := function.Body[0].(ir.If)
+				if strings.HasPrefix(fixture.File, "09_") {
+					program.Functions[index].Body = outer.Then
+				} else {
+					program.Functions[index].Body = outer.Then[0].(ir.If).Then
+				}
+				changed++
+			}
+			if changed != 1 {
+				t.Fatalf("want one owned scalar check, got %d", changed)
+			}
+			for backend, got := range map[string]run{"native release": releasedUncached(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+				if disagreement(expected, got) == "" {
+					t.Fatalf("%s scalar omission survived", backend)
+				}
+				t.Logf("%s scalar omission caught by exact contract: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+			}
+		})
+	}
+}
