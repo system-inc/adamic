@@ -171,8 +171,8 @@ class Gate:
     def npmPackages(self):
         """The pinned npm packages a tree's tests read (stage3/api's @types/node for node:* imports),
         installed with npm ci from its lockfile, once per lockfile: the install lives in a cache keyed
-        by the lockfile's hash, and the tree's node_modules is a link to it, so an unchanged lockfile
-        costs nothing and a changed one gets a fresh install."""
+        by the lockfile's hash and hardlinked into the tree, so an unchanged lockfile costs nothing and a
+        changed one gets a fresh install."""
         for directory in ("stage3/api",):
             lockfile = os.path.join(self.arguments.tree, directory, "package-lock.json")
             if not os.path.exists(lockfile):
@@ -197,15 +197,18 @@ class Gate:
                     os.rename(staging, cache)
                 except OSError:
                     pass  # another gate published the same lockfile's install first; its bytes are the same
-            link = os.path.join(self.arguments.tree, directory, "node_modules")
-            if os.path.islink(link) or not os.path.exists(link):
-                fresh = link + ".link-%d" % os.getpid()
-                os.symlink(os.path.join(cache, "node_modules"), fresh)
-                os.replace(fresh, link)
-            else:
-                # A real directory left by an earlier install moves aside, never deleted here.
-                os.rename(link, os.path.join(os.path.expanduser("~/fast-gate/npm"), "replaced-%d-%d" % (time.time(), os.getpid())))
-                os.symlink(os.path.join(cache, "node_modules"), link)
+            # A real directory, as npm would leave it (git ignores node_modules/ only as a directory, and
+            # tests that list files must not see a stray link): a hardlink copy of the cached install,
+            # kept while its marker names this lockfile. Anything else there moves aside, never deleted.
+            target = os.path.join(self.arguments.tree, directory, "node_modules")
+            marker = os.path.join(target, ".fast-gate-lockfile-sha256")
+            current = open(marker).read().strip() if os.path.isfile(marker) and not os.path.islink(target) else ""
+            if current != key:
+                if os.path.lexists(target):
+                    os.rename(target, os.path.join(os.path.expanduser("~/fast-gate/npm"), "replaced-%d-%d" % (time.time(), os.getpid())))
+                subprocess.run(["cp", "-al", os.path.join(cache, "node_modules"), target], check=True)
+                with open(marker, "w") as handle:
+                    handle.write(key + "\n")
             self.result.setdefault("npm", {})[directory] = {"lockfile_sha256": key, "seconds": round(time.monotonic() - started, 1)}
         return True
 
