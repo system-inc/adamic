@@ -1,7 +1,7 @@
 package oracle
 
 func init() {
-	for _, name := range []string{"binder", "checker", "builtin"} {
+	for _, name := range []string{"binder", "checker", "builtin", "closure"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

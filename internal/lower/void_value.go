@@ -13,6 +13,17 @@ func (l *lowering) voidValue(node *ast.Node, value ir.Expression) (ir.Expression
 	switch call := value.(type) {
 	case ir.Call:
 		arguments = call.Arguments
+	case ir.CallClosure:
+		targets := l.result.ClosureTargets(call)
+		if targets.Unknown || len(targets.Functions) == 0 {
+			return nil, l.notYet(node, "a void call used as a value")
+		}
+		for _, target := range targets.Functions {
+			if l.result.Functions[target].Returns != 0 {
+				return nil, l.notYet(node, "a void call used as a value")
+			}
+		}
+		arguments = append([]ir.Expression{call.Closure}, call.Arguments...)
 	case ir.ArrayVisit:
 		arguments = []ir.Expression{call.Array, call.Callback}
 	case ir.MapClear:
@@ -32,6 +43,9 @@ func (l *lowering) voidValue(node *ast.Node, value ir.Expression) (ir.Expression
 	switch call := value.(type) {
 	case ir.Call:
 		call.Arguments = reads
+		value = call
+	case ir.CallClosure:
+		call.Closure, call.Arguments = reads[0], reads[1:]
 		value = call
 	case ir.ArrayVisit:
 		call.Array, call.Callback = reads[0], reads[1]

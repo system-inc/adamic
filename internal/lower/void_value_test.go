@@ -12,6 +12,11 @@ func TestVoidValueErasedResultsStayNotYet(t *testing.T) {
 		{"closure", `function answer(): number { return 7; }
 const run: () => void = answer;
 console.log(String(run() === undefined));`, "a void call used as a value"},
+		{"contextual arrow", `const run: () => void = () => 7;
+console.log(String(run() === undefined));`, "a void call used as a value"},
+		{"unknown parameter", `function observe(run: () => void): boolean { return run() === undefined; }
+function answer(): number { return 7; }
+console.log(String(observe(answer)));`, "a void call used as a value"},
 		{"override", `class Base { run(): void {} }
 class Derived extends Base { run(): number { return 7; } }
 function observe(value: Base): boolean { return value.run() === undefined; }

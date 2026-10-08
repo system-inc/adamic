@@ -1,0 +1,9 @@
+let trace = "";
+const run = (value: string): void => { trace += value; };
+function argument(value: string): string { trace += "arg"; return value; }
+console.log(String(run(argument("first")) === undefined));
+console.log(trace);
+console.log(String(((): void => { trace += "inline"; })() === undefined));
+console.log(trace);
+const fail = (): void => { trace += "throw"; throw new Error("failure"); };
+try { console.log(String(fail() === undefined)); } catch (error) { console.log(trace); }

@@ -13,6 +13,7 @@ statement_source = statement_path.read_text()
 mutants = []
 for name, kind, fixture in [
     ('drop-call', 'ir.Call', 'binder'),
+    ('drop-closure', 'ir.CallClosure', 'closure'),
     ('drop-array-visit', 'ir.ArrayVisit', 'builtin'),
     ('drop-map-clear', 'ir.MapClear', 'builtin'),
     ('drop-map-visit', 'ir.MapForEach', 'builtin'),
@@ -28,12 +29,16 @@ mutants.append(('lose-return', statement_path,
                 statement_source.replace('ir.Evaluate{Value: value}, ir.Return{}', 'ir.Evaluate{Value: value}'),
                 './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/void_value_checker'))
 # Erasing a callable's actual result would make answer() print undefined instead of 7.
-closure = value_source.replace('case ir.ArrayVisit:\n\t\targuments',
-                              'case ir.CallClosure:\n\t\targuments = append([]ir.Expression{call.Closure}, call.Arguments...)\n\tcase ir.ArrayVisit:\n\t\targuments', 1)
-closure = closure.replace('case ir.ArrayVisit:\n\t\tcall.Array',
-                          'case ir.CallClosure:\n\t\tcall.Closure, call.Arguments = reads[0], reads[1:]\n\t\tvalue = call\n\tcase ir.ArrayVisit:\n\t\tcall.Array', 1)
+start = value_source.index('\t\ttargets := l.result.ClosureTargets(call)')
+end = value_source.index('\t\targuments = append', start)
+closure = value_source[:start] + value_source[end:]
 mutants.append(('erase-callable-result', value_path, closure,
                 './internal/lower', 'TestVoidValueErasedResultsStayNotYet/closure'))
+unknown_start = value_source.index('\t\tif targets.Unknown || len(targets.Functions) == 0 {')
+unknown_end = value_source.index('\t\tfor _, target', unknown_start)
+unknown = value_source[:unknown_start] + value_source[unknown_end:]
+mutants.append(('accept-unknown-target', value_path, unknown,
+                './internal/lower', 'TestVoidValueErasedResultsStayNotYet/unknown_parameter'))
 for name, path, mutated, package, test in mutants:
     try:
         original = value_source if path == value_path else statement_source
