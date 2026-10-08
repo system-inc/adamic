@@ -1,0 +1,11 @@
+=== RUN   TestCheckerIndexedWitnesses
+=== RUN   TestCheckerIndexedWitnesses/D069
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=true
+    witness_test.go:187: [D069] receiver=returned readonly object array, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=70 stdout="" stderr="adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+--- PASS: TestCheckerIndexedWitnesses (104.47s)
+    --- PASS: TestCheckerIndexedWitnesses/D069 (17.95s)
+        --- PASS: TestCheckerIndexedWitnesses/D069/absent=false (9.70s)
+        --- PASS: TestCheckerIndexedWitnesses/D069/absent=true (8.25s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-a	104.559s

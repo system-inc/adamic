@@ -1,0 +1,336 @@
+=== RUN   TestOptionalReturnAttribution
+--- PASS: TestOptionalReturnAttribution (2.89s)
+=== RUN   TestDifferentOverloadStorageRefuses
+--- PASS: TestDifferentOverloadStorageRefuses (1.15s)
+=== RUN   TestAssignedLedgerIsCovered
+--- PASS: TestAssignedLedgerIsCovered (0.01s)
+=== RUN   TestCheckerIndexedWitnesses
+=== RUN   TestCheckerIndexedWitnesses/D037
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=true
+    witness_test.go:187: [D037] receiver=object array, constant zero, overload-selected optional return Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D054
+=== RUN   TestCheckerIndexedWitnesses/D054/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D054/absent=true
+    witness_test.go:187: [D054] receiver=readonly object array, variable index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D056
+=== RUN   TestCheckerIndexedWitnesses/D056/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D056/absent=true
+    witness_test.go:187: [D056] receiver=readonly object array, variable index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D057
+=== RUN   TestCheckerIndexedWitnesses/D057/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D057/absent=true
+    witness_test.go:187: [D057] receiver=readonly callable array, loop index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D060-D061
+=== RUN   TestCheckerIndexedWitnesses/D060-D061/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D060-D061/absent=true
+    witness_test.go:187: [D060 D061] receiver=array of variadic tuples, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D067
+=== RUN   TestCheckerIndexedWitnesses/D067/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D067/absent=true
+    witness_test.go:187: [D067] receiver=object field containing number array, subtraction index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="0\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D068
+=== RUN   TestCheckerIndexedWitnesses/D068/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D068/absent=true
+    witness_test.go:187: [D068] receiver=readonly object array, position local Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D069
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=true
+    witness_test.go:187: [D069] receiver=returned readonly object array, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=70 stdout="" stderr="adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+=== RUN   TestCheckerIndexedWitnesses/D071
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=true
+    witness_test.go:187: [D071] receiver=returned readonly object array, three-element destructuring Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=70 stdout="" stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestCheckerIndexedWitnessesD071absent=true3123275198/001/main.ts:5:19\n"
+=== RUN   TestCheckerIndexedWitnesses/D072
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=true
+    witness_test.go:187: [D072] receiver=returned readonly object array, three-element destructuring Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=70 stdout="" stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestCheckerIndexedWitnessesD072absent=true3480546194/001/main.ts:5:31\n"
+=== RUN   TestCheckerIndexedWitnesses/D073
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=true
+    witness_test.go:187: [D073] receiver=returned readonly object array, one-element destructuring Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D077
+=== RUN   TestCheckerIndexedWitnesses/D077/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D077/absent=true
+    witness_test.go:187: [D077] receiver=object field containing object array, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D082
+=== RUN   TestCheckerIndexedWitnesses/D082/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D082/absent=true
+    witness_test.go:187: [D082] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D083
+=== RUN   TestCheckerIndexedWitnesses/D083/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D083/absent=true
+    witness_test.go:187: [D083] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D084
+=== RUN   TestCheckerIndexedWitnesses/D084/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D084/absent=true
+    witness_test.go:187: [D084] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D085
+=== RUN   TestCheckerIndexedWitnesses/D085/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D085/absent=true
+    witness_test.go:187: [D085] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D086
+=== RUN   TestCheckerIndexedWitnesses/D086/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D086/absent=true
+    witness_test.go:187: [D086] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D087
+=== RUN   TestCheckerIndexedWitnesses/D087/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D087/absent=true
+    witness_test.go:187: [D087] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D088
+=== RUN   TestCheckerIndexedWitnesses/D088/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D088/absent=true
+    witness_test.go:187: [D088] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D089
+=== RUN   TestCheckerIndexedWitnesses/D089/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D089/absent=true
+    witness_test.go:187: [D089] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D090
+=== RUN   TestCheckerIndexedWitnesses/D090/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D090/absent=true
+    witness_test.go:187: [D090] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D091
+=== RUN   TestCheckerIndexedWitnesses/D091/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D091/absent=true
+    witness_test.go:187: [D091] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D092
+=== RUN   TestCheckerIndexedWitnesses/D092/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D092/absent=true
+    witness_test.go:187: [D092] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D093
+=== RUN   TestCheckerIndexedWitnesses/D093/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D093/absent=true
+    witness_test.go:187: [D093] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D094
+=== RUN   TestCheckerIndexedWitnesses/D094/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D094/absent=true
+    witness_test.go:187: [D094] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D095
+=== RUN   TestCheckerIndexedWitnesses/D095/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D095/absent=true
+    witness_test.go:187: [D095] receiver=mutable object array, property index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/gaps/destructuring-third
+=== RUN   TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=false
+=== RUN   TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=true
+    witness_test.go:187: [] receiver=returned readonly object array, three-element destructuring Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+--- PASS: TestCheckerIndexedWitnesses (169.20s)
+    --- PASS: TestCheckerIndexedWitnesses/D037 (4.70s)
+        --- PASS: TestCheckerIndexedWitnesses/D037/absent=false (2.26s)
+        --- PASS: TestCheckerIndexedWitnesses/D037/absent=true (2.43s)
+    --- PASS: TestCheckerIndexedWitnesses/D054 (4.51s)
+        --- PASS: TestCheckerIndexedWitnesses/D054/absent=false (2.21s)
+        --- PASS: TestCheckerIndexedWitnesses/D054/absent=true (2.30s)
+    --- PASS: TestCheckerIndexedWitnesses/D056 (4.20s)
+        --- PASS: TestCheckerIndexedWitnesses/D056/absent=false (1.79s)
+        --- PASS: TestCheckerIndexedWitnesses/D056/absent=true (2.41s)
+    --- PASS: TestCheckerIndexedWitnesses/D057 (4.02s)
+        --- PASS: TestCheckerIndexedWitnesses/D057/absent=false (1.85s)
+        --- PASS: TestCheckerIndexedWitnesses/D057/absent=true (2.17s)
+    --- PASS: TestCheckerIndexedWitnesses/D060-D061 (4.26s)
+        --- PASS: TestCheckerIndexedWitnesses/D060-D061/absent=false (1.70s)
+        --- PASS: TestCheckerIndexedWitnesses/D060-D061/absent=true (2.56s)
+    --- PASS: TestCheckerIndexedWitnesses/D067 (4.15s)
+        --- PASS: TestCheckerIndexedWitnesses/D067/absent=false (1.81s)
+        --- PASS: TestCheckerIndexedWitnesses/D067/absent=true (2.34s)
+    --- PASS: TestCheckerIndexedWitnesses/D068 (4.25s)
+        --- PASS: TestCheckerIndexedWitnesses/D068/absent=false (2.05s)
+        --- PASS: TestCheckerIndexedWitnesses/D068/absent=true (2.20s)
+    --- PASS: TestCheckerIndexedWitnesses/D069 (5.25s)
+        --- PASS: TestCheckerIndexedWitnesses/D069/absent=false (2.00s)
+        --- PASS: TestCheckerIndexedWitnesses/D069/absent=true (3.25s)
+    --- PASS: TestCheckerIndexedWitnesses/D071 (4.48s)
+        --- PASS: TestCheckerIndexedWitnesses/D071/absent=false (2.25s)
+        --- PASS: TestCheckerIndexedWitnesses/D071/absent=true (2.22s)
+    --- PASS: TestCheckerIndexedWitnesses/D072 (4.31s)
+        --- PASS: TestCheckerIndexedWitnesses/D072/absent=false (2.00s)
+        --- PASS: TestCheckerIndexedWitnesses/D072/absent=true (2.30s)
+    --- PASS: TestCheckerIndexedWitnesses/D073 (3.63s)
+        --- PASS: TestCheckerIndexedWitnesses/D073/absent=false (1.65s)
+        --- PASS: TestCheckerIndexedWitnesses/D073/absent=true (1.98s)
+    --- PASS: TestCheckerIndexedWitnesses/D077 (4.14s)
+        --- PASS: TestCheckerIndexedWitnesses/D077/absent=false (1.58s)
+        --- PASS: TestCheckerIndexedWitnesses/D077/absent=true (2.56s)
+    --- PASS: TestCheckerIndexedWitnesses/D082 (4.52s)
+        --- PASS: TestCheckerIndexedWitnesses/D082/absent=false (1.86s)
+        --- PASS: TestCheckerIndexedWitnesses/D082/absent=true (2.65s)
+    --- PASS: TestCheckerIndexedWitnesses/D083 (8.75s)
+        --- PASS: TestCheckerIndexedWitnesses/D083/absent=false (6.41s)
+        --- PASS: TestCheckerIndexedWitnesses/D083/absent=true (2.34s)
+    --- PASS: TestCheckerIndexedWitnesses/D084 (6.28s)
+        --- PASS: TestCheckerIndexedWitnesses/D084/absent=false (2.16s)
+        --- PASS: TestCheckerIndexedWitnesses/D084/absent=true (4.12s)
+    --- PASS: TestCheckerIndexedWitnesses/D085 (4.65s)
+        --- PASS: TestCheckerIndexedWitnesses/D085/absent=false (2.47s)
+        --- PASS: TestCheckerIndexedWitnesses/D085/absent=true (2.18s)
+    --- PASS: TestCheckerIndexedWitnesses/D086 (3.83s)
+        --- PASS: TestCheckerIndexedWitnesses/D086/absent=false (1.80s)
+        --- PASS: TestCheckerIndexedWitnesses/D086/absent=true (2.03s)
+    --- PASS: TestCheckerIndexedWitnesses/D087 (4.55s)
+        --- PASS: TestCheckerIndexedWitnesses/D087/absent=false (2.02s)
+        --- PASS: TestCheckerIndexedWitnesses/D087/absent=true (2.53s)
+    --- PASS: TestCheckerIndexedWitnesses/D088 (4.79s)
+        --- PASS: TestCheckerIndexedWitnesses/D088/absent=false (2.07s)
+        --- PASS: TestCheckerIndexedWitnesses/D088/absent=true (2.72s)
+    --- PASS: TestCheckerIndexedWitnesses/D089 (5.97s)
+        --- PASS: TestCheckerIndexedWitnesses/D089/absent=false (1.92s)
+        --- PASS: TestCheckerIndexedWitnesses/D089/absent=true (4.05s)
+    --- PASS: TestCheckerIndexedWitnesses/D090 (5.24s)
+        --- PASS: TestCheckerIndexedWitnesses/D090/absent=false (2.34s)
+        --- PASS: TestCheckerIndexedWitnesses/D090/absent=true (2.90s)
+    --- PASS: TestCheckerIndexedWitnesses/D091 (11.25s)
+        --- PASS: TestCheckerIndexedWitnesses/D091/absent=false (5.40s)
+        --- PASS: TestCheckerIndexedWitnesses/D091/absent=true (5.85s)
+    --- PASS: TestCheckerIndexedWitnesses/D092 (4.20s)
+        --- PASS: TestCheckerIndexedWitnesses/D092/absent=false (1.73s)
+        --- PASS: TestCheckerIndexedWitnesses/D092/absent=true (2.47s)
+    --- PASS: TestCheckerIndexedWitnesses/D093 (8.70s)
+        --- PASS: TestCheckerIndexedWitnesses/D093/absent=false (4.18s)
+        --- PASS: TestCheckerIndexedWitnesses/D093/absent=true (4.51s)
+    --- PASS: TestCheckerIndexedWitnesses/D094 (7.54s)
+        --- PASS: TestCheckerIndexedWitnesses/D094/absent=false (3.32s)
+        --- PASS: TestCheckerIndexedWitnesses/D094/absent=true (4.22s)
+    --- PASS: TestCheckerIndexedWitnesses/D095 (8.04s)
+        --- PASS: TestCheckerIndexedWitnesses/D095/absent=false (3.39s)
+        --- PASS: TestCheckerIndexedWitnesses/D095/absent=true (4.64s)
+    --- PASS: TestCheckerIndexedWitnesses/gaps/destructuring-third (8.62s)
+        --- PASS: TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=false (3.91s)
+        --- PASS: TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=true (4.70s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-a	173.287s
+=== RUN   TestRecordBoundaries
+=== PAUSE TestRecordBoundaries
+=== RUN   TestRecordPrototypeMiss
+=== PAUSE TestRecordPrototypeMiss
+=== RUN   TestRecordAliases
+=== PAUSE TestRecordAliases
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/number
+=== RUN   TestLedgerWitnesses/number/present
+    witness_test.go:197: adamic: counts: allocations 4 frees 4 retains 2 releases 6 peak 4 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/number/absent
+    witness_test.go:213: erase number guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="0\n"
+    witness_test.go:213: erase number guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="0\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/boolean
+=== RUN   TestLedgerWitnesses/boolean/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 2 releases 5 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/boolean/absent
+    witness_test.go:213: erase boolean guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="false\n"
+    witness_test.go:213: erase boolean guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="false\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/string
+=== RUN   TestLedgerWitnesses/string/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 4 releases 7 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/string/absent
+    witness_test.go:213: erase string guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=-1 stdout=""
+    witness_test.go:213: erase string guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=1 stdout=""
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D129-D131
+=== RUN   TestLedgerWitnesses/D129-D131/present
+    witness_test.go:197: adamic: counts: allocations 5 frees 5 retains 6 releases 9 peak 5 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D129-D131/absent
+    witness_test.go:213: erase D129-D131 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=-1 stdout=""
+    witness_test.go:213: erase D129-D131 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=1 stdout=""
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/prototype-own-key
+=== RUN   TestLedgerWitnesses/prototype-own-key/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 4 releases 7 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/prototype-own-key/absent
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/proto-data
+=== RUN   TestLedgerWitnesses/proto-data/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 8 releases 10 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/proto-data/absent
+    witness_test.go:213: erase proto-data guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=-1 stdout=""
+    witness_test.go:213: erase proto-data guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=1 stdout=""
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/record-array
+=== RUN   TestLedgerWitnesses/record-array/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 5 releases 7 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/record-array/absent
+    witness_test.go:213: erase record-array guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:213: erase record-array guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+--- PASS: TestLedgerWitnesses (56.88s)
+    --- PASS: TestLedgerWitnesses/number (5.41s)
+        --- PASS: TestLedgerWitnesses/number/present (2.77s)
+        --- PASS: TestLedgerWitnesses/number/absent (2.63s)
+    --- PASS: TestLedgerWitnesses/boolean (4.83s)
+        --- PASS: TestLedgerWitnesses/boolean/present (2.57s)
+        --- PASS: TestLedgerWitnesses/boolean/absent (2.26s)
+    --- PASS: TestLedgerWitnesses/string (4.63s)
+        --- PASS: TestLedgerWitnesses/string/present (2.19s)
+        --- PASS: TestLedgerWitnesses/string/absent (2.44s)
+    --- PASS: TestLedgerWitnesses/D129-D131 (4.75s)
+        --- PASS: TestLedgerWitnesses/D129-D131/present (2.31s)
+        --- PASS: TestLedgerWitnesses/D129-D131/absent (2.44s)
+    --- PASS: TestLedgerWitnesses/prototype-own-key (4.33s)
+        --- PASS: TestLedgerWitnesses/prototype-own-key/present (2.34s)
+        --- PASS: TestLedgerWitnesses/prototype-own-key/absent (1.98s)
+    --- PASS: TestLedgerWitnesses/proto-data (4.92s)
+        --- PASS: TestLedgerWitnesses/proto-data/present (2.48s)
+        --- PASS: TestLedgerWitnesses/proto-data/absent (2.44s)
+    --- PASS: TestLedgerWitnesses/record-array (4.36s)
+        --- PASS: TestLedgerWitnesses/record-array/present (2.06s)
+        --- PASS: TestLedgerWitnesses/record-array/absent (2.30s)
+=== CONT  TestRecordBoundaries
+=== RUN   TestRecordBoundaries/record_cast
+=== CONT  TestRecordAliases
+=== CONT  TestRecordPrototypeMiss
+=== NAME  TestRecordBoundaries/record_cast
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_cast1654958109/001/main.ts:1:70: stage 0 can't lower a cast between incompatible record and fixed-object views or mutable payload types yet
+=== RUN   TestRecordBoundaries/nullable
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnullable2486722739/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/mixed
+--- PASS: TestRecordAliases (2.00s)
+=== NAME  TestRecordPrototypeMiss
+    boundaries_test.go:112: prototype guard erasure caught by exact named stderr and exit 70; mutant exits 0 printing undefined
+--- PASS: TestRecordPrototypeMiss (2.09s)
+=== NAME  TestRecordBoundaries/mixed
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesmixed2447268971/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/fixed_to_record
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesfixed_to_record1359908449/001/main.ts:1:80: stage 0 can't lower a { entry: number; } seen as a { readonly [key: string]: number; } (one keeps something weakly that the other keeps strongly; keep the Weak annotations the same in the view and implementation) yet
+=== RUN   TestRecordBoundaries/record_to_fixed
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_to_fixed1039478553/001/main.ts:1:74: stage 0 can't lower a { readonly [key: string]: number; } seen as a {} (one keeps something weakly that the other keeps strongly; keep the Weak annotations the same in the view and implementation) yet
+=== RUN   TestRecordBoundaries/nested_view
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_view1304058594/001/main.ts:1:127: stage 0 can't lower a { readonly record: { readonly [key: string]: number; }; } seen as a { readonly record: {}; } (one keeps something weakly that the other keeps strongly; keep the Weak annotations the same in the view and implementation) yet
+=== RUN   TestRecordBoundaries/reflection
+    boundaries_test.go:63: Node stdout="\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesreflection196321790/001/main.ts:1:80: stage 0 can't lower a { readonly [key: string]: number; } seen as a {} (one keeps something weakly that the other keeps strongly; keep the Weak annotations the same in the view and implementation) yet
+=== RUN   TestRecordBoundaries/named_read
+    boundaries_test.go:63: Node stdout="undefined\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnamed_read1637771327/001/main.ts:1:68: stage 0 can't lower a named property or prototype member on a record; read an own string key with brackets yet
+=== RUN   TestRecordBoundaries/nested_cast
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_cast3374182887/001/main.ts:1:102: stage 0 can't lower a cast between incompatible record and fixed-object views or mutable payload types yet
+=== RUN   TestRecordBoundaries/undefined
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesundefined1115307702/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/recursive
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecursive631822573/001/main.ts:1:24: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/array_widening
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesarray_widening1015608301/001/main.ts:1:108: stage 0 can't lower a { readonly [key: string]: "a"[]; } seen as a { readonly [key: string]: string[]; } (one keeps something weakly that the other keeps strongly; keep the Weak annotations the same in the view and implementation) yet
+=== RUN   TestRecordBoundaries/proto_literal
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesproto_literal3648864143/001/main.ts:1:54: stage 0 can't lower __proto__ in a record literal changes JavaScript's prototype yet
+=== RUN   TestRecordBoundaries/spread
+    boundaries_test.go:63: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesspread3636309670/001/main.ts:1:107: stage 0 can't lower a record literal with spread, methods or accessors yet
+--- PASS: TestRecordBoundaries (10.14s)
+    --- PASS: TestRecordBoundaries/record_cast (1.13s)
+    --- PASS: TestRecordBoundaries/nullable (0.87s)
+    --- PASS: TestRecordBoundaries/mixed (0.82s)
+    --- PASS: TestRecordBoundaries/fixed_to_record (0.62s)
+    --- PASS: TestRecordBoundaries/record_to_fixed (0.66s)
+    --- PASS: TestRecordBoundaries/nested_view (0.92s)
+    --- PASS: TestRecordBoundaries/reflection (0.56s)
+    --- PASS: TestRecordBoundaries/named_read (0.63s)
+    --- PASS: TestRecordBoundaries/nested_cast (0.55s)
+    --- PASS: TestRecordBoundaries/undefined (0.76s)
+    --- PASS: TestRecordBoundaries/recursive (0.65s)
+    --- PASS: TestRecordBoundaries/array_widening (0.65s)
+    --- PASS: TestRecordBoundaries/proto_literal (0.70s)
+    --- PASS: TestRecordBoundaries/spread (0.62s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-records	67.047s
