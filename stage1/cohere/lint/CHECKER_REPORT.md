@@ -181,3 +181,54 @@ error controls, and the complete repository gate were not added or claimed.
 Syntax compiler/repository corpus comparison does not assert typed pilot
 coverage on every compiler file. The JSDoc witness failure and pending native dependency remain visible
 on the harness branch until library's area reaches main.
+
+
+## Area merge and whole lint package rerun, October 8
+
+Merged origin/area/stage1-lint at 79f3e2868ffd2b91f8fac187a6cee3466222952b
+without rebasing. Merge commit: 62ab7b586618b78f32951aa343634d2d469cdbdf.
+The merge contains d45a323be's ECMAScript whitespace correction. The saved
+U+0085 JSDoc reproducer now gives identical Node and Go findings and fixes.
+
+The whole lint package was run on this branch, without a rule or test filter:
+
+```sh
+source /workspace/adamic-tools/env.sh
+export GOPROXY='https://proxy.golang.org|direct'
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-wave08-corpus
+export ADAMIC_LINT_PROFILE_DIR=/workspace/checker-area-whole.nvxuQI
+export ADAMIC_LINT_PROFILE_SNAPSHOTS="$ADAMIC_LINT_PROFILE_DIR"
+GOMAXPROCS=4 go test -count=1 -v -timeout 30m ./stage1/cohere/lint
+```
+
+The profile directory was fresh at the start. The TypeScript checkout is
+clean, with no tracked diff or untracked files, at the required 6.0.3 commit
+050880ce59e30b356b686bd3144efe24f875ebc8. Output was written directly to a log.
+/usr/bin/time is unavailable, so a Python monotonic clock measured the command.
+
+Result: FAIL, exit 1. Wall time: 319.727 seconds. Go package time: 302.428s.
+The native driver cannot type-check against this area's scalar bridge API:
+
+- checker.a:10:88: TS2322, number is not assignable to ProgramResult.
+- checker.a:11:66: TS2322, void is not assignable to ReleaseResult.
+- checker.a:13:5: TS2322, string is not assignable to InspectResult.
+
+These are the pending library dependency, not a replacement JSDoc finding.
+Library 6131c4c remains absent from this branch. No unsafe conversion, library
+merge, or check relaxation was used to turn this run green. Profile snapshot
+failures cascade from the native profile builds being unavailable. The
+no-program coverage, replay-entry and hash controls passed, as did the JSX
+whole-tree comparison of 63 captured sources (51,432 bytes).
+
+TestCheckerBridgeRefusalPending still explicitly skips with
+`awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer`.
+Optional throughput tests also skip because ADAMIC_LINT_BENCH was not requested;
+the correctness corpus and profile inputs were supplied.
+
+Pilot askFile confirmation: `ReadsCompilerOptions/options` is issued as
+`checker.askFile(new FileQuestion('ReadsCompilerOptions', 'options'))` in
+prepare. Expression `type-shape` questions use checker.ask; the forced bridge
+refusal control also uses ask. No change to those calls was needed.
+
+Evidence: checker-proof/area-whole-lint.txt, area-whole-time.txt,
+area-whole-inputs.txt, area-typescript-clean.json, and area-jsdoc-{go,node}.txt.
