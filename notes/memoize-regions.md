@@ -1,5 +1,5 @@
 Built: optional captured callbacks use presence checks; synchronous cell/closure cycles use runtime graph regions, and async capture and Promise-payload cycles remain refused.
-Commits: runtime base f09f8dbeccf9d9e7b2afdc4c56f5a534dc3952e6; merged capture adab0fe54fb8a53940b0c1481e2409b978c6050a in 9c62ffc5072b5b70621ef657f101383b17da1c6a; current main merged in 1571a852.
+Commits: runtime area d70bc6b1b90777ae5d265f1b101e497f823d61f8 merged in 4104c0e95e8df099b636adfcfe24b5200f50c733; current main f4efdd2369311d1420aa53fdf5c1a55bdda811d4 merged in dd6d7e9423464d720587a1abd4e5eb1348338ebb; original runtime base f09f8dbeccf9d9e7b2afdc4c56f5a534dc3952e6; merged capture adab0fe54fb8a53940b0c1481e2409b978c6050a in 9c62ffc5072b5b70621ef657f101383b17da1c6a; current main merged in 1571a852.
 Commands and outputs: full lower, native graph tests, expanded Node oracle, recorded counts, sequential signals, vet and formatting pass; commands and timings are below.
 Mutants: omitting the Promise payload edge accepts the pinned cycle and leaks 112 bytes in two allocations; restoring the synchronous seed refusal fails adapted fixture a; omitting environment adoption preserves stdout but LeakSanitizer finds 243 bytes in three allocations.
 Limits: Linux only, filtered repository gate; host fixture 14's cache/context shape is covered, not its filesystem imports; the original undefined! form still stops at the pinned assertion refusal.
@@ -66,3 +66,17 @@ Final graph/count gate: `go test -buildvcs=false ./internal/oracle -run '^TestGr
 ## Runtime Promise update verification
 
 All commands use the merged runtime update plus the payload-edge correction. Full lower passes in 48.694 s. The expanded uncached oracle command above, extended with `TestGraphRegionsCountsAndFree`, passes in 87.695 s: 231 Node and 475 native observations. `TestMemoize` includes the exact Promise and async refusals, Node equality in both backends, leak-clean memoize/self fixtures, and the environment-omission leak mutant. Vet passes and gofmt output is empty. The payload-edge overlay makes the dedicated refusal pin fail (exit 1); its separate native leak probe passes by observing the expected LeakSanitizer failure. Evidence is in [memoize-regions-evidence](memoize-regions-evidence/). Current origin/main remains ce0750f28ef3943057f1f852b3ae5d93e6c5d644.
+
+
+## Runtime area landing verification, October 8
+
+Merged exact origin/area/runtime d70bc6b1b90777ae5d265f1b101e497f823d61f8 (runtime/area-take-regions2 c06aad7fd5c535c32bb76f48cc3d24c96825744b). That merge has no tree delta: the area carries the same Promise payload correction already on this branch. Current main f4efdd2369311d1420aa53fdf5c1a55bdda811d4 was also merged. Its only conflict was counts.md. Existing runtime graph columns were retained; main's changed user_iterators row and three optional-widening rows were measured uncached and match. Rows were reordered from the actual fixture registry without changing the other recorded measurements. A scratch Go overlay provides that limited merge audit; the complete counts corpus was not rerun.
+
+Merged-tree commands, all output logged:
+
+- `ADAMIC_GATE_UNCACHED=1 go test -buildvcs=false ./internal/oracle -run 'TestMemoize|TestGraphRegionsCountsAndFree|TestNativeAgreesWithNode/internal/oracle/testdata/(memoize_regions|graph_regions|optional_widening|user_iterators)' -count=1 -v -timeout=30m`: PASS, 86.244 s; 135 uncached Node and 308 native observations. Adapted a/b, host14 and the real self-cycle match Node in JavaScript, sanitized native and release native. LeakSanitizer is clean; self frees exactly one region. Promise and async refusals remain pinned. Environment-omission mutant is caught by LeakSanitizer.
+- `go test -buildvcs=false ./internal/lower -count=1 -timeout=30m`: PASS, 59.700 s.
+- `GOFLAGS=-buildvcs=false go vet ./...`: PASS; `gofmt -l cmd internal`: empty.
+- Isolated captured-cell seed-refusal and missing-Promise-payload overlays rerun the existing dedicated tests; both exit 1 at their intended checks: the seed mutant refuses fixture a, and the payload-edge mutant makes the Promise pin receive nil instead of Refused. Logs and current patches are saved with the area evidence.
+
+Setup: GOPROXY=https://proxy.golang.org|direct; GOFLAGS=-buildvcs=false bash cloud/setup.sh; source /workspace/adamic-tools/env.sh. Node 0.045 s, Go 0.070, submodules 0.119, markdown 0.152 (step 0.012), clang 0.410, build 37.423, deferred 37.758, cache 37.760, done 37.813. nproc=5; cgroup quota=4 CPUs. The initial generic fetch only refreshed main because this checkout's refspec fetches main alone; explicitly fetching the two runtime refs resolved the requested hashes. Final merged traces are in memoize-regions-evidence/area-runtime. Linux only; no full repository gate.
