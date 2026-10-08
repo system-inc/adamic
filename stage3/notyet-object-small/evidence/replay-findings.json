@@ -1,0 +1,704 @@
+[
+  {
+    "log": "object-small-non-null-index-checker-final.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19528:13",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19528:13: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19531:9",
+        "reason": "adding an own field through a computed optional-field write",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19531:9: Adamic 0.1 refuses adding an own field through a computed optional-field write; declare and initialize every candidate as a required own field before writing it, or use a Map; object shapes are fixed when made"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19540:20",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19540:20: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19549:24",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19549:24: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19558:13",
+        "reason": "a BinaryExpression with a boolean and a number",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19558:13: stage 0 can't lower a BinaryExpression with a boolean and a number yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19569:24",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19569:24: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19572:16",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19572:16: stage 0 can't lower an ElementAccessExpression yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-index-checker.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19528:13",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19528:13: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19531:9",
+        "reason": "assigning an optional object field through a computed key requires growing its own shape",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19531:9: stage 0 can't lower assigning an optional object field through a computed key requires growing its own shape yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19540:20",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19540:20: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19549:24",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19549:24: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19558:13",
+        "reason": "a BinaryExpression with a boolean and a number",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19558:13: stage 0 can't lower a BinaryExpression with a boolean and a number yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19569:24",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19569:24: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:19526:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/checker.ts:19572:16",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/checker.ts:19572:16: stage 0 can't lower an ElementAccessExpression yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-index-debug.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/debug.ts:187:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/debug.ts:187:83",
+        "reason": "a value of type K",
+        "text": "/tmp/object-small-adapted/src/compiler/debug.ts:187:83: stage 0 can't lower a value of type K yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-index-parser.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/parser.ts:10781:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/object-small-adapted/src/compiler/parser.ts:10784:18",
+        "reason": "a cast the runtime can't check",
+        "text": "/tmp/object-small-adapted/src/compiler/parser.ts:10784:18: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/parser.ts:10781:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/parser.ts:10787:26",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/parser.ts:10787:26: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/parser.ts:10781:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/parser.ts:10788:14",
+        "reason": "reading args",
+        "text": "/tmp/object-small-adapted/src/compiler/parser.ts:10788:14: stage 0 can't lower reading args yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/parser.ts:10781:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/parser.ts:10791:13",
+        "reason": "reading argument",
+        "text": "/tmp/object-small-adapted/src/compiler/parser.ts:10791:13: stage 0 can't lower reading argument yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/parser.ts:10781:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/parser.ts:10794:9",
+        "reason": "assigning an object element with a key that is not a finite string union",
+        "text": "/tmp/object-small-adapted/src/compiler/parser.ts:10794:9: stage 0 can't lower assigning an object element with a key that is not a finite string union yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-index-sys.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/sys.ts:171:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/sys.ts:172:29",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/sys.ts:172:29: stage 0 can't lower an ElementAccessExpression yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-push-1.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/utilities.ts:7749:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/utilities.ts:7750:9",
+        "reason": "a BinaryExpression with a value and a value",
+        "text": "/tmp/object-small-adapted/src/compiler/utilities.ts:7750:9: stage 0 can't lower a BinaryExpression with a value and a value yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-push-2.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/utilities.ts:7749:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/utilities.ts:7750:9",
+        "reason": "a BinaryExpression with a value and a value",
+        "text": "/tmp/object-small-adapted/src/compiler/utilities.ts:7750:9: stage 0 can't lower a BinaryExpression with a value and a value yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-slice.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/core.ts:985:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/core.ts:987:34",
+        "reason": "an array of T",
+        "text": "/tmp/object-small-adapted/src/compiler/core.ts:987:34: stage 0 can't lower an array of T yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/core.ts:985:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/core.ts:991:13",
+        "reason": "an array of T",
+        "text": "/tmp/object-small-adapted/src/compiler/core.ts:991:13: stage 0 can't lower an array of T yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-sort.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:810:19",
+        "reason": "a call through ?. (an optional call)",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:810:19: stage 0 can't lower a call through ?. (an optional call) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:811:19",
+        "reason": "a call through ?. (an optional call)",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:811:19: stage 0 can't lower a call through ?. (an optional call) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:812:9",
+        "reason": "reading cache",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:812:9: stage 0 can't lower reading cache yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:713:17",
+        "reason": "a function returning T | undefined",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:713:17: stage 0 can't lower a function returning T | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/object-small-adapted/src/compiler/path.ts:803:1",
+        "reason": "overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string",
+        "text": "/tmp/object-small-adapted/src/compiler/path.ts:803:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:852:34",
+        "reason": "reading directoryStart",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:852:34: stage 0 can't lower reading directoryStart yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:859:39",
+        "reason": "a comparator that doesn't take two elements and return a number",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:859:39: stage 0 can't lower a comparator that doesn't take two elements and return a number yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:861:30",
+        "reason": "a SpreadElement",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:861:30: stage 0 can't lower a SpreadElement yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/object-small-adapted/src/compiler/path.ts:278:1",
+        "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+        "text": "/tmp/object-small-adapted/src/compiler/path.ts:278:1: Adamic 0.1 refuses overload 1 of getDirectoryPath result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:864:13",
+        "reason": "reading newDirectory",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:864:13: stage 0 can't lower reading newDirectory yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:865:21",
+        "reason": "reading newDirectory",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:865:21: stage 0 can't lower reading newDirectory yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/object-small-adapted/src/compiler/core.ts:1337:1",
+        "reason": "overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]",
+        "text": "/tmp/object-small-adapted/src/compiler/core.ts:1337:1: Adamic 0.1 refuses overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]; make the implementation result covariant with every overload result"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:872:13",
+        "reason": "reading remainingPaths",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:872:13: stage 0 can't lower reading remainingPaths yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:873:26",
+        "reason": "a SpreadElement",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:873:26: stage 0 can't lower a SpreadElement yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-spread-new-final.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/tracing.ts:175:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/debug.ts:213:28",
+        "reason": "a value of type unknown",
+        "text": "/tmp/object-small-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-spread-new.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/tracing.ts:175:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/debug.ts:213:28",
+        "reason": "a value of type unknown",
+        "text": "/tmp/object-small-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-spread-scanner.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/scanner.ts:3468:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/debug.ts:226:74",
+        "reason": "a generic function as a value",
+        "text": "/tmp/object-small-adapted/src/compiler/debug.ts:226:74: stage 0 can't lower a generic function as a value yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/scanner.ts:3468:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/core.ts:2173:29",
+        "reason": "for...of over an object",
+        "text": "/tmp/object-small-adapted/src/compiler/core.ts:2173:29: stage 0 can't lower for...of over an object yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/scanner.ts:3468:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/scanner.ts:3498:130",
+        "reason": "a generic function as a value",
+        "text": "/tmp/object-small-adapted/src/compiler/scanner.ts:3498:130: stage 0 can't lower a generic function as a value yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/scanner.ts:3468:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/scanner.ts:3499:37",
+        "reason": "reading suggestion",
+        "text": "/tmp/object-small-adapted/src/compiler/scanner.ts:3499:37: stage 0 can't lower reading suggestion yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/scanner.ts:3468:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/scanner.ts:3509:69",
+        "reason": "an ElementAccessExpression",
+        "text": "/tmp/object-small-adapted/src/compiler/scanner.ts:3509:69: stage 0 can't lower an ElementAccessExpression yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/scanner.ts:3468:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/scanner.ts:3534:218",
+        "reason": "a generic function as a value",
+        "text": "/tmp/object-small-adapted/src/compiler/scanner.ts:3534:218: stage 0 can't lower a generic function as a value yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/scanner.ts:3468:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/scanner.ts:3535:37",
+        "reason": "reading suggestion",
+        "text": "/tmp/object-small-adapted/src/compiler/scanner.ts:3535:37: stage 0 can't lower reading suggestion yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-spread-utilities.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": []
+  },
+  {
+    "log": "object-small-non-null-tuple-index-1.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:1364:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:1389:13",
+        "reason": "a declaration directly in a case (wrap the case in a block)",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:1389:13: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-tuple-index-2.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:1364:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:1389:13",
+        "reason": "a declaration directly in a case (wrap the case in a block)",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:1389:13: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-tuple-missing.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": []
+  },
+  {
+    "log": "object-small-non-null-tuple-push.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/checker.ts:22618:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/debug.ts:213:28",
+        "reason": "a value of type unknown",
+        "text": "/tmp/object-small-adapted/src/compiler/debug.ts:213:28: stage 0 can't lower a value of type unknown yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-union-builder.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/builder.ts:1520:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/builder.ts:1520:95",
+        "reason": "a value of type Path",
+        "text": "/tmp/object-small-adapted/src/compiler/builder.ts:1520:95: stage 0 can't lower a value of type Path yet"
+      }
+    ]
+  },
+  {
+    "log": "object-small-non-null-union-utilities.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": []
+  },
+  {
+    "log": "object-small-sort-signature-after-non-null.log",
+    "measurement": "measured on a checker-rejected entry-root program",
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:810:19",
+        "reason": "a call through ?. (an optional call)",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:810:19: stage 0 can't lower a call through ?. (an optional call) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:811:19",
+        "reason": "a call through ?. (an optional call)",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:811:19: stage 0 can't lower a call through ?. (an optional call) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:812:9",
+        "reason": "reading cache",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:812:9: stage 0 can't lower reading cache yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:713:17",
+        "reason": "a function returning T | undefined",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:713:17: stage 0 can't lower a function returning T | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/object-small-adapted/src/compiler/path.ts:803:1",
+        "reason": "overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string",
+        "text": "/tmp/object-small-adapted/src/compiler/path.ts:803:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:852:34",
+        "reason": "reading directoryStart",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:852:34: stage 0 can't lower reading directoryStart yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:861:30",
+        "reason": "a SpreadElement",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:861:30: stage 0 can't lower a SpreadElement yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/object-small-adapted/src/compiler/path.ts:278:1",
+        "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+        "text": "/tmp/object-small-adapted/src/compiler/path.ts:278:1: Adamic 0.1 refuses overload 1 of getDirectoryPath result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:864:13",
+        "reason": "reading newDirectory",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:864:13: stage 0 can't lower reading newDirectory yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:865:21",
+        "reason": "reading newDirectory",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:865:21: stage 0 can't lower reading newDirectory yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/object-small-adapted/src/compiler/core.ts:1337:1",
+        "reason": "overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]",
+        "text": "/tmp/object-small-adapted/src/compiler/core.ts:1337:1: Adamic 0.1 refuses overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]; make the implementation result covariant with every overload result"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:872:13",
+        "reason": "reading remainingPaths",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:872:13: stage 0 can't lower reading remainingPaths yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:809:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:873:26",
+        "reason": "a SpreadElement",
+        "text": "/tmp/object-small-adapted/src/compiler/moduleSpecifiers.ts:873:26: stage 0 can't lower a SpreadElement yet"
+      }
+    ]
+  }
+]
