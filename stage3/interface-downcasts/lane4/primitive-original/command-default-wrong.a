@@ -1,0 +1,7 @@
+import type { CommandLineOption, CommandLineOptionOfStringType } from 'original-tsc-types';
+interface Base { readonly name: string; }
+function helper(option: CommandLineOption): string { return typeof option.defaultValueDescription; }
+
+const raw = {name: 'example', type: 'string' as const, defaultValueDescription: null};
+const base: Base = raw;
+console.log(helper(base as CommandLineOptionOfStringType));

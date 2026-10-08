@@ -1,0 +1,27 @@
+=== RUN   TestCheckedViewOriginalCommandDefault
+=== RUN   TestCheckedViewOriginalCommandDefault/string
+=== RUN   TestCheckedViewOriginalCommandDefault/number
+    checked_views_primitive_remaining_test.go:99: first-member substitution caught by Node control
+    checked_views_primitive_remaining_test.go:99: first-member substitution caught by Node control
+=== RUN   TestCheckedViewOriginalCommandDefault/boolean
+=== RUN   TestCheckedViewOriginalCommandDefault/undefined
+=== RUN   TestCheckedViewOriginalCommandDefault/message
+=== RUN   TestCheckedViewOriginalCommandDefault/wrong
+    checked_views_primitive_remaining_test.go:109: member-check omission caught by named refusal pin
+    checked_views_primitive_remaining_test.go:109: member-check omission caught by named refusal pin
+=== RUN   TestCheckedViewOriginalCommandDefault/nested
+    checked_views_primitive_remaining_test.go:120: transitive omission caught by refusal pin
+    checked_views_primitive_remaining_test.go:120: transitive omission caught by refusal pin
+--- PASS: TestCheckedViewOriginalCommandDefault (17.08s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/string (2.42s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/number (2.51s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/boolean (1.97s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/undefined (2.00s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/message (1.93s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/wrong (2.00s)
+    --- PASS: TestCheckedViewOriginalCommandDefault/nested (4.24s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=17
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	17.136s

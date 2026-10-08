@@ -1,0 +1,68 @@
+=== RUN   TestLazyViewAdaptedCensus
+    view_adapted_census_test.go:21: set LAZY_ADAPTED_ROOT, LAZY_ADAPTED_SITES and LAZY_ADAPTED_OUTPUT
+--- SKIP: TestLazyViewAdaptedCensus (0.00s)
+=== RUN   TestViewIntersectionContracts
+=== PAUSE TestViewIntersectionContracts
+=== RUN   TestLazyViewCensus
+    view_lazy_census_test.go:29: set LAZY_VIEW_CENSUS_ROOT, LAZY_VIEW_CENSUS_SEEDS and LAZY_VIEW_CENSUS_OUTPUT
+--- SKIP: TestLazyViewCensus (0.00s)
+=== RUN   TestLazyViewDemandUsesSharedFlow
+=== RUN   TestLazyViewDemandUsesSharedFlow/helper_merge
+=== RUN   TestLazyViewDemandUsesSharedFlow/wider_helper
+=== RUN   TestLazyViewDemandUsesSharedFlow/ordinary_only
+=== RUN   TestLazyViewDemandUsesSharedFlow/callback_unknown
+=== RUN   TestLazyViewDemandUsesSharedFlow/missing_producer
+--- PASS: TestLazyViewDemandUsesSharedFlow (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/helper_merge (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/wider_helper (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/ordinary_only (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/callback_unknown (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/missing_producer (0.00s)
+=== RUN   TestLazyViewArrayDemand
+=== RUN   TestLazyViewArrayDemand/index
+=== RUN   TestLazyViewArrayDemand/map
+=== RUN   TestLazyViewArrayDemand/visit
+=== RUN   TestLazyViewArrayDemand/reduce
+=== RUN   TestLazyViewArrayDemand/pop
+=== RUN   TestLazyViewArrayDemand/join
+=== RUN   TestLazyViewArrayDemand/search
+=== RUN   TestLazyViewArrayDemand/for_of
+--- PASS: TestLazyViewArrayDemand (0.00s)
+    --- PASS: TestLazyViewArrayDemand/index (0.00s)
+    --- PASS: TestLazyViewArrayDemand/map (0.00s)
+    --- PASS: TestLazyViewArrayDemand/visit (0.00s)
+    --- PASS: TestLazyViewArrayDemand/reduce (0.00s)
+    --- PASS: TestLazyViewArrayDemand/pop (0.00s)
+    --- PASS: TestLazyViewArrayDemand/join (0.00s)
+    --- PASS: TestLazyViewArrayDemand/search (0.00s)
+    --- PASS: TestLazyViewArrayDemand/for_of (0.00s)
+=== RUN   TestMixedPrimitivePropertyCertificateRejectsUnsupported
+--- PASS: TestMixedPrimitivePropertyCertificateRejectsUnsupported (0.00s)
+=== RUN   TestPrimitiveIntersectionDescendantKeepsUnsupported
+--- PASS: TestPrimitiveIntersectionDescendantKeepsUnsupported (0.00s)
+=== CONT  TestViewIntersectionContracts
+=== RUN   TestViewIntersectionContracts/interfaces
+=== RUN   TestViewIntersectionContracts/nested
+=== RUN   TestViewIntersectionContracts/brand
+=== RUN   TestViewIntersectionContracts/runtime_member
+=== RUN   TestViewIntersectionContracts/optional_brand
+=== RUN   TestViewIntersectionContracts/primitive_brand_lane
+--- PASS: TestViewIntersectionContracts (0.60s)
+    --- PASS: TestViewIntersectionContracts/interfaces (0.19s)
+    --- PASS: TestViewIntersectionContracts/nested (0.09s)
+    --- PASS: TestViewIntersectionContracts/brand (0.07s)
+    --- PASS: TestViewIntersectionContracts/runtime_member (0.07s)
+    --- PASS: TestViewIntersectionContracts/optional_brand (0.09s)
+    --- PASS: TestViewIntersectionContracts/primitive_brand_lane (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.642s
+=== RUN   TestPrimitiveViewMembers
+--- PASS: TestPrimitiveViewMembers (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.021s
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.051s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.030s [no tests to run]

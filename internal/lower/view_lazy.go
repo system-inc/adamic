@@ -229,8 +229,15 @@ func (l *lowering) checkLazyViewReads() error {
 				family = unsupported
 			}
 		}
+		fieldChecks := false
+		if read, ok := node.(ir.Property); ok {
+			fieldChecks = read.Of == ir.Union && read.View != "" && read.ViewContract == contract && mixedPrimitivePropertyChecks(program, contract)
+		}
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
+			if family == "untagged object union" && fieldChecks {
+				family = ""
+			}
 		}
 		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) && !(contract != 0 && program.ViewContracts[contract-1].Kind == ir.ViewCallable && viewCallableConcreteReadContract(program, contract)) {
 			reaches := graph.ReachingAllocations(receiver)

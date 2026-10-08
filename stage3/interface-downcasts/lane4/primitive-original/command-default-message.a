@@ -1,0 +1,14 @@
+import type { CommandLineOption, CommandLineOptionOfStringType } from 'original-tsc-types';
+interface Base { readonly name: string; }
+function helper(option: CommandLineOption): string {
+ const member = option.defaultValueDescription;
+ if (typeof member === 'string') return member;
+ if (typeof member === 'number') return String(member);
+ if (typeof member === 'boolean') return String(member);
+ if (member === undefined) return 'undefined';
+ if (member === null) return 'null';
+ return String(member.code);
+}
+const raw = {name: 'example', type: 'string' as const, defaultValueDescription: {key: 'key', category: 1, code: 42, message: 'message'.concat('-built')}};
+const base: Base = raw;
+console.log(helper(base as CommandLineOptionOfStringType));

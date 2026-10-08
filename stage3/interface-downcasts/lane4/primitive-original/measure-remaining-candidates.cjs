@@ -1,0 +1,34 @@
+const ts = require('../../../api/node_modules/typescript');
+const fs = require('node:fs');
+const path = require('node:path');
+const cp = require('node:child_process');
+const crypto = require('node:crypto');
+const zlib = require('node:zlib');
+const [root, output] = process.argv.slice(2).map(p => path.resolve(p));
+const pin = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../../source.json')));
+if (cp.execFileSync('git', ['-C', root, 'rev-parse', 'HEAD'], {encoding: 'utf8'}).trim() !== pin.commit) throw Error('upstream pin mismatch');
+cp.execFileSync('git', ['-C', root, 'diff', '--exit-code', 'HEAD', '--', 'src']);
+const program = ts.createProgram([path.join(root, 'src/compiler/types.ts')], {strict: true, target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler, types: []});
+const checker = program.getTypeChecker();
+const inventory = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.resolve(__dirname, '../read-demand-pairs.json.gz'))));
+const ids = [11269,97892,9477];
+const pairs = inventory.filter(p => ids.includes(p.receiver_type_id) && ['defaultValueDescription','signature','escapedText'].includes(p.field));
+if (pairs.length !== 3 || pairs.reduce((n,p)=>n+p.reads,0)!==7) throw Error('remaining inventory drift');
+for (const pair of pairs) {
+ const file=program.getSourceFile(path.join(root,pair.witness.file));
+ const offset=file.getPositionOfLineAndCharacter(pair.witness.line-1,pair.witness.column-1);
+ let access;
+ const visit=node=>{if(ts.isPropertyAccessExpression(node)&&node.getStart(file)===offset&&node.name.text===pair.field)access=node;ts.forEachChild(node,visit);};visit(file);
+ if(!access)throw Error('original read drift');
+ const receiver=checker.getTypeAtLocation(access.expression);
+ const property=checker.getPropertyOfType(receiver,pair.field);
+ pair.original_declared_type=checker.typeToString(checker.getTypeOfSymbolAtLocation(property,access));
+ pair.original_read_type=checker.typeToString(checker.getTypeAtLocation(access));
+ pair.original_fields=checker.getPropertiesOfType(receiver).map(f=>f.name).sort();
+ pair.original_expression=access.getText(file);
+ pair.source_sha256=crypto.createHash('sha256').update(fs.readFileSync(file.fileName)).digest('hex');
+}
+const exportedTypes = checker.getExportsOfModule(checker.getSymbolAtLocation(program.getSourceFile(path.join(root,'src/compiler/types.ts'))));
+const fields = Object.fromEntries(['DiagnosticMessage','CommandLineOptionOfStringType','CommandLineOptionOfNumberType','CommandLineOptionOfBooleanType'].map(name => [name,checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(exportedTypes.find(s=>s.name===name))).map(f=>f.name).sort()]));
+fs.writeFileSync(output,JSON.stringify({upstream_commit:pin.commit,measurement:'Original declarations; static candidate counts',fields,pairs},null,2)+'\n');
+console.log('Verified three original pairs / seven candidate reads and complete receiver fields');

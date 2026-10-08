@@ -1,20 +1,26 @@
 {
   "basis": "Static candidates; original full declarations, not whole-tsc execution",
   "integration": "267fd75b",
-  "certified_pairs": 53,
-  "certified_candidate_reads": 661,
-  "remaining_pairs": 8,
-  "remaining_candidate_reads": 25,
+  "certified_pairs": 54,
+  "certified_candidate_reads": 665,
+  "remaining_pairs": 7,
+  "remaining_candidate_reads": 21,
   "lane6_dictionary_reference_pairs": 3,
   "lane6_dictionary_reference_reads": 14,
-  "owned_remaining_pairs": 5,
-  "owned_remaining_reads": 11,
+  "owned_remaining_pairs": 4,
+  "owned_remaining_reads": 7,
   "groups": [
     {
       "pair": "7536:value",
       "reads": 10,
       "evidence": "lane4b/original/certification.json and logs/remaining-literal.log",
       "result": "original Node, C sanitizers and release, JavaScript pass; eight semantic backend mutant kills"
+    },
+    {
+      "pair": "11269:defaultValueDescription",
+      "reads": 4,
+      "evidence": "logs/command-default-full-fields.log; remaining-candidates.json",
+      "result": "all five member kinds; wrong null and nested code pins; six backend semantic mutant kills"
     }
   ]
 }

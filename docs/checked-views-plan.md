@@ -2334,3 +2334,11 @@ Dictionary reference arms for CompilerOptions, OptionsBase and BuildOptions
 Owned follow-up witnesses and ledger live under lane4/primitive-original.
 LiteralType.value already has integrated original-declaration certification;
 rerun its full Node/backend/refusal/mutant evidence before crediting it here.
+
+Named lane 4 hooks for original union-helper field reads: object.go calls
+prepareMixedPrimitiveProperty to intern the complete original field descriptor;
+view_lazy.go uses mixedPrimitivePropertyChecks only to distinguish that checked
+field read from its unsupported static untagged union receiver. Direct unsupported
+field descriptors, scoped source-family checks and the global unknown fallback
+remain intact. Owned lower/view_primitive_property_contracts.go and negative
+certificate tests; no emitter or runtime change in this group.

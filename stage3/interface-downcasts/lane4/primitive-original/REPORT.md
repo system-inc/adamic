@@ -277,3 +277,24 @@ omission. No new production code needed for this already integrated pair.
 Corrected column now 53 / 661 certified, 8 / 25 remaining. Lane 6 owns
 three dictionary reference pairs / fourteen reads; this worker has five /
 eleven remaining. Counts are static candidates, not exact reachability.
+
+CommandLineOption.defaultValueDescription checkpoint: one original pair /
+four candidate reads green. Full original member interfaces pass into the
+CommandLineOption helper; string, number, both boolean descriptors, undefined
+and DiagnosticMessage selection retain the original merged declaration.
+All seven cases and six backend mutant kills passed uncached in 17.136s:
+ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-brand2-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^TestCheckedViewOriginalCommandDefault$' -count=1 -v -timeout 10m.
+Wrong null and nested code pins stop at named reads with exit 70. Positive
+native cases run ASan/UBSan. Independent stock-checker measurement verifies
+complete member and DiagnosticMessage field sets; all original declarations
+remain hash-verified. Mutants skip the actual selector, take an untested first
+member, and omit the transitive code check; each exits normally and fails its
+pin. Earlier omission drafts encountered a later narrowing guard and were
+not credited; the final typeof poison isolates the actual selector.
+Minimal shared hooks are listed in the plan. Scoped source checks and the
+global unknown fallback are unchanged. Lower/IR selected certificate and
+intersection/lazy tests passed; vet passed. Full gate is not claimed.
+Column now 54 / 665 certified, 7 / 21 remaining; exclude lane 6 three /
+fourteen from owned work, leaving four / seven. Counts remain candidates.

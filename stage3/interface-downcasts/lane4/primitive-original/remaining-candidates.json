@@ -1,0 +1,229 @@
+{
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "measurement": "Original declarations; static candidate counts",
+  "fields": {
+    "DiagnosticMessage": [
+      "category",
+      "code",
+      "elidedInCompatabilityPyramid",
+      "key",
+      "message",
+      "reportsDeprecated",
+      "reportsUnnecessary"
+    ],
+    "CommandLineOptionOfStringType": [
+      "affectsBindDiagnostics",
+      "affectsBuildInfo",
+      "affectsDeclarationPath",
+      "affectsEmit",
+      "affectsModuleResolution",
+      "affectsProgramStructure",
+      "affectsSemanticDiagnostics",
+      "affectsSourceFile",
+      "allowConfigDirTemplateSubstitution",
+      "allowJsFlag",
+      "category",
+      "defaultValueDescription",
+      "description",
+      "disallowNullOrUndefined",
+      "extraValidation",
+      "isCommandLineOnly",
+      "isFilePath",
+      "isTSConfigOnly",
+      "name",
+      "paramType",
+      "shortName",
+      "showInHelp",
+      "showInSimplifiedHelpView",
+      "strictFlag",
+      "transpileOptionValue",
+      "type"
+    ],
+    "CommandLineOptionOfNumberType": [
+      "affectsBindDiagnostics",
+      "affectsBuildInfo",
+      "affectsDeclarationPath",
+      "affectsEmit",
+      "affectsModuleResolution",
+      "affectsProgramStructure",
+      "affectsSemanticDiagnostics",
+      "affectsSourceFile",
+      "allowConfigDirTemplateSubstitution",
+      "allowJsFlag",
+      "category",
+      "defaultValueDescription",
+      "description",
+      "disallowNullOrUndefined",
+      "extraValidation",
+      "isCommandLineOnly",
+      "isFilePath",
+      "isTSConfigOnly",
+      "name",
+      "paramType",
+      "shortName",
+      "showInHelp",
+      "showInSimplifiedHelpView",
+      "strictFlag",
+      "transpileOptionValue",
+      "type"
+    ],
+    "CommandLineOptionOfBooleanType": [
+      "affectsBindDiagnostics",
+      "affectsBuildInfo",
+      "affectsDeclarationPath",
+      "affectsEmit",
+      "affectsModuleResolution",
+      "affectsProgramStructure",
+      "affectsSemanticDiagnostics",
+      "affectsSourceFile",
+      "allowConfigDirTemplateSubstitution",
+      "allowJsFlag",
+      "category",
+      "defaultValueDescription",
+      "description",
+      "disallowNullOrUndefined",
+      "extraValidation",
+      "isCommandLineOnly",
+      "isFilePath",
+      "isTSConfigOnly",
+      "name",
+      "paramType",
+      "shortName",
+      "showInHelp",
+      "showInSimplifiedHelpView",
+      "strictFlag",
+      "transpileOptionValue",
+      "type"
+    ]
+  },
+  "pairs": [
+    {
+      "receiver_type_id": 11269,
+      "type": "CommandLineOption",
+      "field": "defaultValueDescription",
+      "declared_types": [
+        "string | number | boolean | DiagnosticMessage | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 259,
+        "column": 44
+      },
+      "original_declared_type": "string | number | boolean | DiagnosticMessage | undefined",
+      "original_read_type": "string | number | boolean | DiagnosticMessage | undefined",
+      "original_fields": [
+        "affectsBindDiagnostics",
+        "affectsBuildInfo",
+        "affectsDeclarationPath",
+        "affectsEmit",
+        "affectsModuleResolution",
+        "affectsProgramStructure",
+        "affectsSemanticDiagnostics",
+        "affectsSourceFile",
+        "allowConfigDirTemplateSubstitution",
+        "allowJsFlag",
+        "category",
+        "defaultValueDescription",
+        "description",
+        "disallowNullOrUndefined",
+        "extraValidation",
+        "isCommandLineOnly",
+        "isFilePath",
+        "isTSConfigOnly",
+        "name",
+        "paramType",
+        "shortName",
+        "showInHelp",
+        "showInSimplifiedHelpView",
+        "strictFlag",
+        "transpileOptionValue",
+        "type"
+      ],
+      "original_expression": "option.defaultValueDescription",
+      "source_sha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf"
+    },
+    {
+      "receiver_type_id": 97892,
+      "type": "IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo",
+      "field": "signature",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2232,
+        "column": 18
+      },
+      "original_declared_type": "string | false | undefined",
+      "original_read_type": "string | false | undefined",
+      "original_fields": [
+        "affectsGlobalScope",
+        "impliedFormat",
+        "signature",
+        "version"
+      ],
+      "original_expression": "fileInfo.signature",
+      "source_sha256": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814"
+    },
+    {
+      "receiver_type_id": 9477,
+      "type": "LeftHandSideExpression & Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 38035,
+        "column": 62
+      },
+      "original_declared_type": "__String",
+      "original_read_type": "__String",
+      "original_fields": [
+        "_declarationBrand",
+        "_expressionBrand",
+        "_flowContainerBrand",
+        "_jsdocContainerBrand",
+        "_leftHandSideExpressionBrand",
+        "_memberExpressionBrand",
+        "_primaryExpressionBrand",
+        "_unaryExpressionBrand",
+        "_updateExpressionBrand",
+        "emitNode",
+        "end",
+        "escapedText",
+        "flags",
+        "flowNode",
+        "id",
+        "jsDoc",
+        "kind",
+        "localSymbol",
+        "modifierFlagsCache",
+        "original",
+        "parent",
+        "pos",
+        "symbol",
+        "transformFlags"
+      ],
+      "original_expression": "node.expression.escapedText",
+      "source_sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+    }
+  ]
+}
