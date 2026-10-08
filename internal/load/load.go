@@ -1,6 +1,7 @@
 // Package load turns Adamic source files into a checked program: every file parsed, bound and
 // type-checked by typescript-go in this process. Adamic sources use its defaults;
-// TypeScript project roots use their project's compiler options and libraries.
+// TypeScript project roots use their project's checking options and libraries,
+// with source-extension imports enabled and TypeScript emission disabled.
 //
 // A program either loads clean or Load returns an error naming every diagnostic. There is no
 // half-loaded state, because a compiler that lowers a program the checker rejected is lowering a

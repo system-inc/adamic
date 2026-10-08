@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 )
@@ -58,5 +59,12 @@ func projectConfig(fs *sourceFS, current tspath.RootedDirectoryPath, paths []str
 		}
 		return nil, true, &CheckError{Diagnostics: formatted}
 	}
+	// Adamic resolves source-extension imports and emits its own backends, never
+	// TypeScript output. Keep project checking and resolution options otherwise;
+	// NoEmit also makes AllowImportingTsExtensions valid for emitting projects.
+	options := *config.CompilerOptions()
+	options.AllowImportingTsExtensions = core.TSTrue
+	options.NoEmit = core.TSTrue
+	config.SetCompilerOptions(&options)
 	return config, true, nil
 }
