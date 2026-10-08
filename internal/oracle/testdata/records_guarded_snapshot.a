@@ -1,0 +1,24 @@
+function show(record: Record<string, string>, key: string): void {
+    const value = record[key];
+    if (Object.hasOwn(record, key)) {
+        delete record[key];
+        console.log(String(value));
+    }
+    else { console.log('missing'); }
+}
+const record: Record<string, string> = { ['constructor']: `own${1}`, ['toString']: `own${2}` };
+show(record, 'constructor');
+show(record, 'constructor');
+show(record, 'toString');
+show(record, '__proto__');
+
+function direct(record: Record<string, string>): void {
+    if (Object.hasOwn(record, 'toString')) {
+        console.log(String(record['toString']));
+    }
+    else { console.log('direct missing'); }
+}
+const own: Record<string, string> = { ['toString']: `direct${3}` };
+direct(own);
+delete own['toString'];
+direct(own);
