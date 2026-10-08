@@ -1,0 +1,34 @@
+{
+  "exit": 1,
+  "wall_seconds": 144.698,
+  "top_level": {
+    "pass": 0,
+    "fail": 0,
+    "skip": 0
+  },
+  "including_subtests": {
+    "pass": 0,
+    "fail": 0,
+    "skip": 0
+  },
+  "skips": [],
+  "nproc": 5,
+  "load_start": [
+    7.9248046875,
+    7.98779296875,
+    7.65625
+  ],
+  "load_end": [
+    5.060546875,
+    7.64501953125,
+    7.6396484375
+  ],
+  "load_1m_median": 9.54345703125,
+  "load_1m_max": 11.58984375,
+  "package": {
+    "pass": 0,
+    "fail": 1,
+    "skip": 0,
+    "failure": "bridge/tsgo/checker build failed before tests"
+  }
+}
