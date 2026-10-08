@@ -8,17 +8,25 @@ import (
 )
 
 // appendsTo is the parts after the first of an assignment text = text + ..., to a string local only
-// this function can see: not a global, which a call among the parts could write, not captured, which a
-// closure among them could, and not borrowed. Those are the assignments appendTo writes, where text's
+// this function can see, or a hoisted global followed only by string literals. Calls among a global's
+// parts could write it, captured bindings can change through closures, and borrowed values cannot
+// transfer ownership. Those are the assignments appendTo writes, where text's
 // own reference goes to adamic_string_append, which may write in place.
 func (e *emitter) appendsTo(statement ir.Assign) ([]ir.Expression, bool) {
 	declared := e.program.Locals[statement.Local]
-	if declared.Type != ir.String || declared.Global || declared.Captured || declared.Borrowed || statement.Checked {
+	if declared.Type != ir.String || declared.Captured || declared.Borrowed || statement.Checked {
 		return nil, false
 	}
 	concat, isConcat := statement.Value.(ir.Concat)
 	if !isConcat || len(concat.Parts) < 2 {
 		return nil, false
+	}
+	if declared.Global {
+		for _, part := range concat.Parts[1:] {
+			if _, literal := part.(ir.StringConstant); !literal {
+				return nil, false
+			}
+		}
 	}
 	if read, isRead := concat.Parts[0].(ir.Read); !isRead || read.Local != statement.Local || read.Checked || read.Readiness != "" {
 		return nil, false

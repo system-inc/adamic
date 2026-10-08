@@ -30,7 +30,7 @@ adamic_string *adamic_string_share(const adamic_string *string, size_t offset, s
 	const adamic_string *owner = string->owner != NULL ? string->owner : string;
 	// A zero-count stack piece is borrowed, unlike a marked literal. It has no count a view
 	// can keep, so even a whole slice must copy. Built literal indexes remain non-NULL.
-	bool borrowed = owner->heap.references == 0 && owner->index == NULL;
+	bool borrowed = adamic_reference_count(&owner->heap) == 0 && owner->index == NULL;
 	if (!borrowed && offset == 0 && size == string->length) {
 		return adamic_retain((adamic_string *)string);
 	}
@@ -41,7 +41,7 @@ adamic_string *adamic_string_share(const adamic_string *string, size_t offset, s
 	size_t remainder = storage % SHARE_FRACTION + sizeof *owner % SHARE_FRACTION;
 	minimum += remainder / SHARE_FRACTION + (remainder % SHARE_FRACTION != 0);
 	bool oversized = minimum > sizeof *owner && size < minimum - sizeof *owner;
-	if (borrowed || (owner->heap.references != 0 && oversized)) {
+	if (borrowed || (adamic_reference_count(&owner->heap) != 0 && oversized)) {
 		adamic_string *copy = adamic_string_allocate(size);
 		if (size > 0) {
 			memcpy((char *)copy->bytes, string->bytes + offset, size);

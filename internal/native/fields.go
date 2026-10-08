@@ -48,6 +48,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
 		{"bytes", "finalized"},
+		{"value", "writable", "enumerable", "configurable"},
 		// Process host layouts are part of the same whole-program proof.
 		{"name", "message", "code"}, {"heapUsed"},
 		{"name", "entryType", "startTime", "duration"}, {"setBlocking"},

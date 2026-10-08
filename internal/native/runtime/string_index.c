@@ -81,21 +81,22 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
 	index->cursor_offset = 0;
 	index->count = count;
 	index->view = NULL;
-	if (!indexed) { return index; }
-	size_t checkpoint = 0, unit = 0;
-	for (size_t offset = 0; offset < string->length;) {
-		size_t size = width((unsigned char)string->bytes[offset]);
-		size_t next = unit + (size == 4 ? 2 : 1);
-		// Every checkpoint this code point holds: its first unit, or the low half of a pair.
-		for (; checkpoint < count && checkpoint * STEP < next; checkpoint++) {
-			index->checkpoints[checkpoint] = (uint32_t)(offset << 1 | (checkpoint * STEP != unit));
+	if (indexed) {
+		size_t checkpoint = 0, unit = 0;
+		for (size_t offset = 0; offset < string->length;) {
+			size_t size = width((unsigned char)string->bytes[offset]);
+			size_t next = unit + (size == 4 ? 2 : 1);
+			// Every checkpoint this code point holds: its first unit, or the low half of a pair.
+			for (; checkpoint < count && checkpoint * STEP < next; checkpoint++) {
+				index->checkpoints[checkpoint] = (uint32_t)(offset << 1 | (checkpoint * STEP != unit));
+			}
+			unit = next;
+			offset += size;
 		}
-		unit = next;
-		offset += size;
-	}
-	// A checkpoint at the very end (units a multiple of STEP) is the end.
-	for (; checkpoint < count; checkpoint++) {
-		index->checkpoints[checkpoint] = (uint32_t)(string->length << 1);
+		// A checkpoint at the very end (units a multiple of STEP) is the end.
+		for (; checkpoint < count; checkpoint++) {
+			index->checkpoints[checkpoint] = (uint32_t)(string->length << 1);
+		}
 	}
 	index->view = malloc((units == 0 ? 1 : units) * sizeof *index->view);
 	if (index->view == NULL) {
@@ -273,5 +274,21 @@ void adamic_string_prepare_shared(adamic_string *string) {
 // RegExp borrows the same immutable view published by the shared string index.
 // Short strings and ownerless stack pieces use the caller's temporary decoder.
 const uint16_t *adamic_string_utf16_view(adamic_string *string) {
-	return adamic_string_unit_view(string);
+	struct adamic_string_index *index = cached(string);
+	if (index != NULL && index != ADAMIC_LITERAL_INDEX) {
+		return index->view;
+	}
+	// ASCII needs no position checkpoints, but repeated RegExp calls still need
+	// its immutable unit view. Keep short strings and borrowed pieces uncached.
+	if (adamic_reference_count(&string->heap) == 0 || string->length < MINIMUM) {
+		return NULL;
+	}
+	size_t units = adamic_string_units(string);
+	if (adamic_is_shared(&string->heap)) {
+		index = shared_index(string, units);
+	} else {
+		index = build(string, units);
+		string->index = index;
+	}
+	return index->view;
 }

@@ -5,13 +5,11 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
-	"errors"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -30,7 +28,7 @@ func init() {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
-		}{scout23Directory + name + ".a", false, false})
+		}{scout23Directory + name + ".a", true, false})
 	}
 }
 
@@ -166,8 +164,7 @@ func TestScout23NodeOnlyMutants(t *testing.T) {
 	}
 }
 
-// The callback implementation is owned separately. Hold its pending witnesses
-// to valid Node executions and a named refusal, without weakening their types.
+// Compiler callback support runs the untouched scout witnesses against Node.
 func TestScout23CallbackWitnesses(t *testing.T) {
 	t.Parallel()
 	for _, name := range []string{"callback_escape", "callback_wildcard"} {
@@ -180,12 +177,7 @@ func TestScout23CallbackWitnesses(t *testing.T) {
 			if expected.exitCode != 0 || len(expected.stderr) != 0 || len(expected.stdout) == 0 {
 				t.Fatalf("invalid Node witness: %+v", expected)
 			}
-			_, err = lowered(t, path)
-			var gap *lower.NotYet
-			if !errors.As(err, &gap) || !strings.Contains(err.Error(), "regex replacement other than a string") {
-				t.Fatalf("expected callback owner's named gap: %v", err)
-			}
-			t.Log(err)
+			scout23CompileMatchesNode(t, path, expected)
 		})
 	}
 }
@@ -207,12 +199,25 @@ func TestScout23AssignmentWitness(t *testing.T) {
 	if difference := disagreement(expected, onNode(t, adapted)); difference != "" {
 		t.Fatalf("statement split changed Node behavior: %s", difference)
 	}
-	_, err = lowered(t, original)
-	var gap *lower.NotYet
-	if !errors.As(err, &gap) || !strings.Contains(err.Error(), "a BinaryExpression with a number and a number") {
-		t.Fatalf("expected assignment expression gap: %v", err)
+	scout23CompileMatchesNode(t, original, expected)
+}
+
+func scout23CompileMatchesNode(t *testing.T, path string, expected run) {
+	t.Helper()
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Log(err)
+	if difference := disagreement(expected, onJavaScriptBackend(t, program)); difference != "" {
+		t.Fatal("JavaScript: " + difference)
+	}
+	actual, binary := natively(t, program)
+	if difference := disagreement(expected, actual); difference != "" {
+		t.Fatal("native: " + difference)
+	}
+	if failure := leaks(t, program, binary); failure != "" {
+		t.Fatal(failure)
+	}
 }
 
 // Counts are measured only for this family. Unrelated rows retain their Linux
