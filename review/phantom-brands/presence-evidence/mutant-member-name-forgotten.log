@@ -1,0 +1,8 @@
+--- FAIL: TestPhantomArrayWritesNameTheMember (0.00s)
+    --- FAIL: TestPhantomArrayWritesNameTheMember/({value:_a.second}_=_{value:_undefined}); (0.07s)
+        phantom_array_presence_test.go:116: got /tmp/adamic-gate/TestPhantomArrayWritesNameTheMember({value_a.second}_=_{value37176016/001/main.a:1:93: Adamic 0.1 refuses a write to phantom array brand member first; keep the brand member phantom and unwritten; store observable state in a separate real field or Map, want Adamic 0.1 refuses a write to phantom array brand member second; keep the brand member phantom and unwritten; store observable state in a separate real field or Map
+    --- FAIL: TestPhantomArrayWritesNameTheMember/a.second_=_undefined; (0.07s)
+        phantom_array_presence_test.go:116: got /tmp/adamic-gate/TestPhantomArrayWritesNameTheMembera.second_=_undefined2514486651/001/main.a:1:92: Adamic 0.1 refuses a write to phantom array brand member first; keep the brand member phantom and unwritten; store observable state in a separate real field or Map, want Adamic 0.1 refuses a write to phantom array brand member second; keep the brand member phantom and unwritten; store observable state in a separate real field or Map
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.078s
+FAIL

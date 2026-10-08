@@ -18,6 +18,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	if source == nil || target == nil {
 		return nil
 	}
+	source, target = l.phantomArrayView(source), l.phantomArrayView(target)
 	if weak := l.weakTarget(source); weak != nil {
 		source = weak
 	}

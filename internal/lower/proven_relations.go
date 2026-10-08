@@ -9,7 +9,10 @@ import (
 // proofs as assignments. Contextual typing may build a fresh literal at the target type;
 // values it contains are still checked at their own assignment sites by the refusal walk.
 func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.Type) error {
-	source := l.checker.GetTypeAtLocation(expression)
+	return l.provenTypesRelation(where, expression, l.checker.GetTypeAtLocation(expression), target)
+}
+
+func (l *lowering) provenTypesRelation(where, expression *ast.Node, source, target *checker.Type) error {
 	refuse := func(part, fix string) error {
 		return &Refused{Where: l.program.Where(where), What: "an unproven relation from " + l.checker.TypeToString(source) + " to " + l.checker.TypeToString(target) + ": " + part, Fix: fix}
 	}

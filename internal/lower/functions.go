@@ -61,6 +61,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if implementation := l.censusImplementation(declaration); implementation != nil {
 		declaration = implementation
 	}
+	if err := l.overloadResults(declaration); err != nil {
+		return err
+	}
 	if err := l.censusOverloads(declaration); err != nil {
 		return err
 	}

@@ -22,14 +22,20 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
+	target := l.concrete(l.checker.GetTypeAtLocation(node))
+	if handled, err := l.phantomArrayCast(node, as.Expression, source, target); handled {
+		return value, err
+	}
+	if l.phantomCast(source, target) {
+		return value, nil
+	}
 	if proof.interfaceView {
 		return l.interfaceCast(node, value, l.concrete(l.checker.GetTypeAtLocation(as.Expression)), l.concrete(l.checker.GetTypeAtLocation(node)))
 	}
 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}
-	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
-	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: castRepair}
 	if value.Type() != ir.Object {
 		return nil, refused

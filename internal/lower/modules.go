@@ -144,6 +144,9 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			if statement.Body() == nil && l.censusImplementation(statement) != nil {
 				continue
 			}
+			if err := l.overloadResults(statement); err != nil {
+				return err
+			}
 			if err := l.censusOverloads(statement); err != nil {
 				return err
 			}

@@ -40,6 +40,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}
+	if l.phantomArrayBase(proven) != nil {
+		return ir.Array, true
+	}
 	flags := proven.Flags()
 	if l.finitePartialRecordElement(proven) != nil {
 		return ir.Record, true
@@ -71,11 +74,17 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
 		}
+		if primitive := l.phantomBase(proven); primitive != nil {
+			if l.phantomUndefined(proven) {
+				return ir.Object, true
+			}
+			return l.representation(primitive)
+		}
 		return l.objectIntersection(proven)
 	}
 	switch {
-	case flags&checker.TypeFlagsUndefined != 0:
-		// An undefined-only value uses the existing null reference representation.
+	case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
+		// An undefined or erased void value uses the existing null reference representation.
 		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
@@ -118,7 +127,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		var shared ir.Type
 		mixed, weak := false, false
 		for _, member := range proven.Types() {
-			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 || l.phantomUndefined(member) {
 				// undefined joins a union of references as a null pointer; it's checked below that
 				// the rest are references.
 				continue
@@ -173,10 +182,10 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
-		return proven.Flags()&checker.TypeFlagsUndefined != 0
+		return proven.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(proven)
 	}
 	for _, member := range proven.Types() {
-		if member.Flags()&checker.TypeFlagsUndefined != 0 {
+		if member.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(member) {
 			return true
 		}
 	}
@@ -274,6 +283,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 // and result of a function, Weak in both or in neither, all the way down.
 func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
 	from, to = l.present(from), l.present(to)
+	from, to = l.phantomArrayView(from), l.phantomArrayView(to)
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
@@ -480,6 +490,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	}
 	if value, known, err := l.namespaceExpression(node); known {
 		return value, err
+	}
+	if member, handled, err := l.phantomMember(node); handled {
+		return member, err
 	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
@@ -1106,7 +1119,16 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 		}
 		arguments = append(arguments, lowered)
 	}
-	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
+	value := ir.Expression(ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
+	result := l.checker.GetTypeAtLocation(call.AsNode())
+	if l.hasPhantom(result) || l.phantomArrayBase(result) != nil {
+		var err error
+		value, err = l.overloadedCall(call, value.(ir.Call))
+		if err != nil {
+			return nil, err
+		}
+	}
+	return l.censusOverloadResult(call, value)
 }
 
 // coalesce lowers value ?? fallback, and value ?? panic('why'), evaluating the right side only when
@@ -1168,6 +1190,9 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // program runs. Its closure receives omitted arguments as undefined before forwarding them;
 // the declared function retains its ordinary default-parameter prologue.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if err := l.overloadedValue(node); err != nil {
+		return nil, err
+	}
 	symbol := l.symbol(node)
 	if node.Kind == ast.KindShorthandPropertyAssignment {
 		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
@@ -1185,7 +1210,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	if symbol != nil {
 		for _, declaration := range symbol.Declarations {
 			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
-				return nil, l.notYet(node, "an overloaded function as a value")
+				return nil, l.notYet(node, "an overloaded function read as a value")
 			}
 		}
 	}

@@ -14,7 +14,7 @@ interface Handler { handle(animal: Animal): void; }
 interface DogHandler { handle(dog: Dog): void; }
 function serve(handler: DogHandler): string;
 function serve(handler: Handler): string { handler.handle({ name: 'cat' }); return 'written'; }
-`, "overload 1 of serve parameter handler"},
+`, "an overload parameter handler not proven compatible"},
 		{"generic parameter constraints", `interface Animal { readonly name: string; }
 interface Dog extends Animal { readonly bark: string; }
 interface Handler { handle(animal: Animal): void; }
@@ -26,12 +26,12 @@ function serve<U extends Handler>(handler: U): string { handler.handle({ name: '
 interface Dog extends Animal { readonly bark: string; }
 function serve(dogs: Dog[]): string;
 function serve(animals: Animal[]): string { animals.push({ name: 'cat' }); return 'written'; }
-`, "overload 1 of serve parameter dogs"},
+`, "an overload parameter dogs not proven compatible"},
 		{"result covariance", `type Path = string & { readonly __pathBrand: true };
 function ensureTrailingDirectorySeparator(path: Path): Path;
 function ensureTrailingDirectorySeparator(path: string): string;
 function ensureTrailingDirectorySeparator(path: string) { return path + '/'; }
-`, "overload 1 of ensureTrailingDirectorySeparator result"},
+`, "a primitive brand member __pathBrand whose type is not void"},
 	}
 	for _, probe := range probes {
 		t.Run(probe.name, func(t *testing.T) {

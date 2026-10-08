@@ -757,6 +757,12 @@ func (e *emitter) value(expression ir.Expression) string {
 			}
 		}
 		return object
+	case ir.PhantomMember:
+		operator := "["
+		if expression.Optional {
+			operator = "?.["
+		}
+		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
 		if expression.View != "" {
 			expected := expression.ViewType

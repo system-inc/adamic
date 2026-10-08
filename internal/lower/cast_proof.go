@@ -109,6 +109,12 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
 		return castProof{}, refused
 	}
+	if handled, err := l.phantomArrayCast(node, as.Expression, source, target); handled {
+		return castProof{}, err
+	}
+	if l.phantomCast(source, target) {
+		return castProof{}, nil
+	}
 	members, targets := castMembers(source), castMembers(target)
 	allClasses := true
 	for _, member := range append(append([]*checker.Type{}, members...), targets...) {
