@@ -1,0 +1,18 @@
+{
+  "idempotent": true,
+  "LFReconstruction": true,
+  "mutants": [
+    {
+      "name": "duplicate retained interface anchor",
+      "caughtBy": "missing or duplicate reviewed site: 26"
+    },
+    {
+      "name": "drift retained interface anchor",
+      "caughtBy": "missing or duplicate reviewed site: 26"
+    },
+    {
+      "name": "duplicate shifted void owner",
+      "caughtBy": "missing or duplicate void owner"
+    }
+  ]
+}
