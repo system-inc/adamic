@@ -1,0 +1,23 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=3h",
+    "./stage1/cohere/lint"
+  ],
+  "base": "d845dccde413c89643293e808626344d12e3f023",
+  "nproc": 5,
+  "load_start": [
+    3.1396484375,
+    3.7548828125,
+    1.72998046875
+  ],
+  "inputs": {
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/facts-wave30-profiles",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/facts-wave30-profiles",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-30-typescript"
+  }
+}
