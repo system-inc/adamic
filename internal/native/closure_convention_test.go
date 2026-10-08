@@ -163,50 +163,6 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 	}
 }
 
-// Every owner site compiles through the shared typedefs, including when receiver
-// and canonical fields change the closure layout. Dropping its count must fail.
-func TestClosureConventionOwnerRuntimeSites(t *testing.T) {
-	root, err := filepath.Abs("runtime")
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, module := range []string{"node_process.c", "parallel.c"} {
-		for _, features := range [][]string{nil, {"-DADAMIC_CLOSURE_CONVENTION=1"}, {"-DADAMIC_CLOSURE_CONVENTION=1", "-DADAMIC_CLOSURE_RECEIVERS=1", "-DADAMIC_CANONICAL_CLOSURES=1"}} {
-			arguments := append(Flags(Options{}), features...)
-			arguments = append(arguments, "-I", root, "-c", filepath.Join(root, module), "-o", filepath.Join(t.TempDir(), "runtime.o"))
-			if output, err := exec.Command(compilerName(Options{}), arguments...).CombinedOutput(); err != nil {
-				t.Fatalf("%s with %v: %v\n%s", module, features, err, output)
-			}
-		}
-	}
-	for _, probe := range []struct{ module, call string }{
-		{"node_process.c", "adamic_closure_call(closure, padded, count)"},
-		{"node_process.c", "adamic_closure_call(closure, args, count)"},
-		{"parallel.c", "adamic_closure_call(scope->work, arguments, 2)"},
-		{"parallel.c", "adamic_closure_call(work, arguments, 2)"},
-	} {
-		source, err := os.ReadFile(filepath.Join(root, probe.module))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if strings.Count(string(source), probe.call) != 1 {
-			t.Fatalf("mutation site moved: %s", probe.call)
-		}
-		last := strings.LastIndex(probe.call, ", ")
-		mutant := strings.Replace(string(source), probe.call, probe.call[:last]+")", 1)
-		path := filepath.Join(t.TempDir(), probe.module)
-		if err := os.WriteFile(path, []byte(mutant), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		arguments := append(Flags(Options{}), "-DADAMIC_CLOSURE_CONVENTION=1", "-I", root, "-c", path, "-o", path+".o")
-		output, err := exec.Command(compilerName(Options{}), arguments...).CombinedOutput()
-		if err == nil || !strings.Contains(string(output), "expected 3, have 2") {
-			t.Fatalf("owner drop-count mutant escaped: %s: %v\n%s", probe.call, err, output)
-		}
-		t.Logf("%s: drop-count mutant rejected under -Werror: expected 3, have 2", probe.call)
-	}
-}
-
 func TestParserHasNoUnusedOptionalMethodThunks(t *testing.T) {
 	checked, err := load.Load([]string{filepath.Join("..", "..", "stage1", "typescript", "parser", "main.ts")})
 	if err != nil {

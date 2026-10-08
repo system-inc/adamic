@@ -1060,8 +1060,6 @@ _Noreturn void adamic_unreachable(void);
 adamic_array *adamic_plain_object_keys(const adamic_object *object);
 void *adamic_library_identity(size_t index);
 
-#include "node_process.h"
-#include "parallel.h"
 
 // C permits some function-to-void pointer conversions without a diagnostic.
 // Check the source expression's type before a constructor can convert it.
