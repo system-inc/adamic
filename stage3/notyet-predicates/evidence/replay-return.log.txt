@@ -1,0 +1,5 @@
+replay load/register/lower: 7.558366166s
+replay signature did not reproduce: Refused a type predicate whose return is not proven (return expression is not a trusted check on node) at /tmp/notyet-predicates-adapted/src/compiler/utilitiesPublic.ts:616:5 (selected /tmp/notyet-predicates-adapted/src/compiler/utilitiesPublic.ts:615:1)
+exit status 1
+replay total (including overlay and Go build): 30.759726914s
+exit status 1
