@@ -1,6 +1,6 @@
 {
     "extends": ["cohere:typescript"],
-    "ignorePatterns": ["internal/load/testdata/0.1/refuse/**", "stage1/**/gaps/**", "review/**"],
+    "ignorePatterns": ["internal/load/testdata/0.1/refuse/**", "stage1/**/gaps/**", "review/**", "internal/lower/testdata/input-spread/*_array.a"],
     "overrides": [
         {
             "files": ["**/*.ts", "**/*.a"],

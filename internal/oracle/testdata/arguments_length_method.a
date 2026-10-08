@@ -1,0 +1,37 @@
+class Reader {
+	read(value?: number): string {
+		return `${arguments.length}:${value ?? -1}`;
+	}
+}
+class Other extends Reader {
+	read(value?: number): string {
+		return `other:${value ?? -1}`;
+	}
+}
+function method(reader: Reader): string {
+	return `${reader.read()} ${reader.read(undefined)} ${reader.read(3)}`;
+}
+console.log(method(new Reader()));
+console.log(method(new Other()));
+interface View {
+	read(value?: number): string;
+}
+function viewed(reader: View): string {
+	return `${reader.read()} ${reader.read(undefined)} ${reader.read(4)}`;
+}
+console.log(viewed(new Reader()));
+class RestReader {
+	read(...items: number[]): string {
+		return `${arguments.length}:${items.join(',')}`;
+	}
+}
+const rest = new RestReader();
+console.log(rest.read(1, 2, 3));
+console.log(rest.read(...[4, 5]));
+interface RestView {
+	read(...items: number[]): string;
+}
+function restView(reader: RestView): string {
+	return reader.read(6, 7, 8, 9);
+}
+console.log(restView(rest));
