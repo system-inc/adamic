@@ -1,0 +1,8 @@
+=== RUN   TestNullableRuntimeReview
+=== RUN   TestNullableRuntimeReview/map-set
+    runtime_review_test.go:58: Node "3\nempty\nnil\ntext\nempty\nupdated\ntrue\ntrue\nfalse\ntrue\n3\ntrue\ntrue\ntrue\ntrue\ntrue\nfalse\ntrue\n"; JS, release and ASan/UBSan match
+    runtime_review_test.go:65: map address-check mutant caught: exit=0 stdout="2\nnil\nnil\ntext\nupdated\nupdated\ntrue\nfalse\nfalse\ntrue\n2\ntrue\ntrue\ntrue\ntrue\nfalse\nfalse\ntrue\n" stderr=""
+--- PASS: TestNullableRuntimeReview (8.29s)
+    --- PASS: TestNullableRuntimeReview/map-set (8.29s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	8.304s

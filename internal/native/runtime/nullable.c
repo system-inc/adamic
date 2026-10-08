@@ -2,7 +2,7 @@
 #include "adamic.h"
 
 // This address is never returned by a string-producing operation. Its bytes are not its identity.
-adamic_string adamic_null_string = ADAMIC_STRING("");
+adamic_string adamic_null_string = ADAMIC_STRING("null");
 static adamic_string adamic_string_null_text = ADAMIC_STRING("null");
 
 void *adamic_reference_null(enum adamic_kind kind) {
