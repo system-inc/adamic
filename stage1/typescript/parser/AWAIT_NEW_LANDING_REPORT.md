@@ -1,3 +1,5 @@
+Fixture paths now use .ts.txt/.tsx.txt; see `FIXTURE_EXTENSIONS_LANDING_REPORT.md`.
+
 The top-level await/new difference was a parser lookahead bug, not a language
 gap. `parser.ts:456` now shares the same-line identifier, keyword and literal
 lookahead used for yield. `parser.ts:1792` uses it for await, matching
@@ -6,10 +8,10 @@ The old tree split await and the constructor into separate statements, making
 lint report no-new on the constructor. The new tree nests the constructor under
 AwaitExpression and matches typescript-go's tree and diagnostics byte for byte.
 
-The original input is `testdata/lint_cases/wave13_top_level_await_new.ts`. Its
+The original input is `testdata/lint_cases/wave13_top_level_await_new.ts.txt`. Its
 expected-difference sidecar is removed. The two new inputs are
-`testdata/lint_cases/top_level_await_new_script.ts` and
-`testdata/lint_cases/top_level_await_new_module.ts`. They cover constructor calls,
+`testdata/lint_cases/top_level_await_new_script.ts.txt` and
+`testdata/lint_cases/top_level_await_new_module.ts.txt`. They cover constructor calls,
 constructors without parentheses, argument and initializer expressions,
 parentheses, binary and conditional expressions, ordinary and async function
 bodies, and script/module files. Numeric, bigint, string and keyword operands

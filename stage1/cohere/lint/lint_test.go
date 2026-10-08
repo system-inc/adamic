@@ -263,9 +263,13 @@ func generated(t *testing.T) []string {
 	}
 	var rows []string
 	// Keep parser recovery regressions in the ordinary lint gate as well as profiles.
-	for _, name := range []string{"wave13_top_level_await_new.ts", "top_level_await_new_script.ts", "top_level_await_new_module.ts"} {
-		path, err := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/lint_cases", name))
+	for _, name := range []string{"wave13_top_level_await_new.ts.txt", "top_level_await_new_script.ts.txt", "top_level_await_new_module.ts.txt"} {
+		data, err := os.ReadFile(filepath.Join(repository, "stage1/typescript/parser/testdata/lint_cases", name))
 		if err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(t.TempDir(), strings.TrimSuffix(name, ".txt"))
+		if err := os.WriteFile(path, data, 0644); err != nil {
 			t.Fatal(err)
 		}
 		rows = append(rows, path+"\tno-new", path+"\tall")

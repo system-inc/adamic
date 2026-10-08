@@ -128,10 +128,11 @@ func lintCaseSides(t *testing.T, directory, binary, path string) []struct {
 }
 
 // A missing sidecar promises exact agreement. A present sidecar is one object,
-// named <case stem>.expected.json, with the same file name as its TS/TSX case.
+// named <case stem>.expected.json, with the same file name as its .ts.txt/.tsx.txt case.
 func lintCaseReadExpectation(t *testing.T, file string) *lintCaseExpectation {
 	t.Helper()
-	stem := strings.TrimSuffix(file, filepath.Ext(file))
+	sourceName := strings.TrimSuffix(file, ".txt")
+	stem := strings.TrimSuffix(sourceName, filepath.Ext(sourceName))
 	path := filepath.Join("testdata/lint_cases", stem+".expected.json")
 	data, err := os.ReadFile(path)
 	if errors.Is(err, os.ErrNotExist) {
@@ -161,6 +162,11 @@ func TestLintCases(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	for _, file := range files {
+		if strings.HasSuffix(file.Name(), ".ts") || strings.HasSuffix(file.Name(), ".tsx") {
+			t.Fatalf("source fixture testdata/lint_cases/%s: use .ts.txt or .tsx.txt", file.Name())
+		}
+	}
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -170,10 +176,11 @@ func TestLintCases(t *testing.T) {
 	// Orphan sidecars and two cases sharing a stem must not pass silently.
 	stems := map[string]string{}
 	for _, file := range files {
-		if file.IsDir() || !(strings.HasSuffix(file.Name(), ".ts") || strings.HasSuffix(file.Name(), ".tsx")) {
+		if file.IsDir() || !(strings.HasSuffix(file.Name(), ".ts.txt") || strings.HasSuffix(file.Name(), ".tsx.txt")) {
 			continue
 		}
-		stem := strings.TrimSuffix(file.Name(), filepath.Ext(file.Name()))
+		sourceName := strings.TrimSuffix(file.Name(), ".txt")
+		stem := strings.TrimSuffix(sourceName, filepath.Ext(sourceName))
 		if previous, exists := stems[stem]; exists {
 			t.Fatalf("cases share an expectation path: %s and %s", previous, file.Name())
 		}
@@ -188,13 +195,19 @@ func TestLintCases(t *testing.T) {
 	}
 	count := 0
 	for _, file := range files {
-		if file.IsDir() || !(strings.HasSuffix(file.Name(), ".ts") || strings.HasSuffix(file.Name(), ".tsx")) {
+		if file.IsDir() || !(strings.HasSuffix(file.Name(), ".ts.txt") || strings.HasSuffix(file.Name(), ".tsx.txt")) {
 			continue
 		}
 		count++
 		t.Run(file.Name(), func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join("testdata/lint_cases", file.Name()))
+			data, err := os.ReadFile(filepath.Join("testdata/lint_cases", file.Name()))
 			if err != nil {
+				t.Fatal(err)
+			}
+			// Restore the source extension only in scratch space: both parsers select
+			// JSX from the input filename, while the stage1 source corpus excludes .txt.
+			path := filepath.Join(t.TempDir(), strings.TrimSuffix(file.Name(), ".txt"))
+			if err := os.WriteFile(path, data, 0644); err != nil {
 				t.Fatal(err)
 			}
 			want := execute(t, "", oracle, path, "--whole", "--recovery").output
