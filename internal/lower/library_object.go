@@ -65,7 +65,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		// Named hasOwn can also use literal-origin interface aliases. Unknown origins
 		// may hide constructor storage whose inherited slots are not own properties.
 		// A plain const's literal initializer proves the complete shape, including field presence.
-		if !((name == "keys" || name == "assign" || name == "hasOwn") && l.literalObjectKeys(written[0], 0)) && !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		if !((name == "keys" || name == "assign") && l.literalObjectKeys(written[0], 0)) && !l.exactObject(written[0], 0) && !(name == "hasOwn" && (isClassInstance(l.checker.GetTypeAtLocation(written[0])) || l.literalDataObject(written[0], 0))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])
@@ -205,6 +205,32 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 		return false
 	}
 	return l.exactObject(variable.Initializer, depth+1)
+}
+
+// literalDataObject follows const aliases through annotations to plain data
+// initializers. Getter literals and constructor views need different own-property
+// descriptors; proving only their names would not make hasOwn sound.
+func (l *lowering) literalDataObject(node *ast.Node, depth int) bool {
+	if depth > 16 {
+		return false
+	}
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindObjectLiteralExpression {
+		return l.exactObject(node, 0)
+	}
+	if !ast.IsIdentifier(node) {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return false
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		return false
+	}
+	initializer := declaration.AsVariableDeclaration().Initializer
+	return initializer != nil && l.literalDataObject(initializer, depth+1)
 }
 
 // objectCanFreeze is conservative across aliases and calls. A try around a write in a program

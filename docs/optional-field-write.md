@@ -197,10 +197,12 @@ and static descriptors retain their existing path. Plain quoted # names remain
 public; the shared key enumerator must not mistake them for private identifiers.
 The existing class_features_private.a and library_for_in.a controls hold this.
 
-Object.hasOwn on literal-origin interface annotations and aliases is included
+Object.hasOwn on plain-data-literal interface annotations and const aliases is included
 as a small fix. Present plain-object, declared literal-key and private-name checks
 remain, with NUL names refused. General parameters and constructor-object views
-remain NotYet: inherited constructor storage needs separate own-presence handling.
+remain NotYet: inherited constructor storage and getter descriptors need separate
+own-presence handling. Getter origins are excluded even when an annotation hides
+their accessor declaration.
 Values/entries still require their exact shape and homogeneous representation.
 Homogeneous number | undefined values/entries are admitted using the existing
 packed-number runtime path so the requested entries control can preserve present
