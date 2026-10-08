@@ -19,21 +19,41 @@
 # the record changes anything else. A meter run is measured after a landing, so each landing carries
 # the newest run there is.
 #
-# usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
+# Gate minutes are wall time from the first gate start to the last green piece (the whole run, its
+# reruns, input runs and groups), so every row means the same thing (@system_adamic, October 7).
+# --correct-minutes <new_main> <minutes> "<note>" rewrites an earlier row that was recorded another
+# way, in this landing's velocity commit: the row whose new_main starts with <new_main> gets <minutes>
+# and "; <note>" on its branches field. Exactly one row must match.
+#
+# usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] [--correct-minutes <new_main> <minutes> "<note>"] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
 set -euo pipefail
 
 defer=no
 meterRun=""
+correctMain=""
+correctMinutes=""
+correctNote=""
 while [ "$#" -gt 0 ]; do
 	case "$1" in
 	--defer-velocity) defer=yes; shift ;;
 	--meter-run) meterRun=$2; shift 2 ;;
+	--correct-minutes) correctMain=$2; correctMinutes=$3; correctNote=$4; shift 4 ;;
 	*) break ;;
 	esac
 done
 if [ "$defer" = yes ] && [ -n "$meterRun" ]; then
 	echo "refused: a meter run is recorded with the velocity row, so it can't ride a deferred push" >&2
 	exit 2
+fi
+if [ -n "$correctMain" ]; then
+	if [ "$defer" = yes ]; then
+		echo "refused: a corrected row is written with the velocity commit, so it can't ride a deferred push" >&2
+		exit 2
+	fi
+	if ! [[ "$correctMain" =~ ^[0-9a-f]{8,40}$ ]] || ! [[ "$correctMinutes" =~ ^[0-9]+$ ]]; then
+		echo "refused: --correct-minutes takes a main sha of 8 or more hex characters and whole minutes" >&2
+		exit 2
+	fi
 fi
 if [ "$#" -ne 6 ]; then
 	echo "usage: $0 <full sha> <gate minutes> <pass> <fail> <skip> \"<branches landed>\"" >&2
@@ -92,6 +112,13 @@ if ! git merge-base --is-ancestor "$old" "$sha"; then
 The tree is ${gated:0:8}'s, as gated, plus main's record paths: $(printf '%s\n' "$recordPaths" | grep . | sed 's#^stage3/meter/runs/\([^/]*\)/.*#stage3/meter/runs/\1/#' | sort -u | paste -sd ' ' -).")
 	echo "Landing ${gated:0:8} over record-only main ${old:0:8} as ${sha:0:8} (tree = gated tree + record paths)."
 fi
+if [ -n "$correctMain" ]; then
+	matched=$(git show "${sha}:${velocityFile}" 2>/dev/null | awk -F, -v main="$correctMain" 'index($3, main) == 1' | wc -l | tr -d ' ')
+	if [ "$matched" != "1" ]; then
+		echo "refused: ${matched} velocity rows have new_main ${correctMain}, not one" >&2
+		exit 1
+	fi
+fi
 git push origin "${sha}:refs/heads/main"
 commitsLanded=$(git rev-list --count "${old}..${sha}")
 
@@ -110,6 +137,14 @@ if [ -s "$heldRows" ]; then
 $row"
 fi
 if existing=$(git show "${sha}:${velocityFile}" 2>/dev/null); then
+	if [ -n "$correctMain" ]; then
+		matched=$(printf '%s\n' "$existing" | awk -F, -v main="$correctMain" 'index($3, main) == 1' | wc -l | tr -d ' ')
+		if [ "$matched" != "1" ]; then
+			echo "main is pushed as ${sha:0:8}, but its velocity row is NOT written: ${matched} rows have new_main ${correctMain}, not one; write the row by hand" >&2
+			exit 1
+		fi
+		existing=$(printf '%s\n' "$existing" | awk -F, -v OFS=, -v main="$correctMain" -v minutes="$correctMinutes" -v note="$(printf '%s' "$correctNote" | tr ',' ';')" 'index($3, main) == 1 { $5 = $5 "; " note; $6 = minutes } { print }')
+	fi
 	blob=$(printf '%s\n%s\n' "$existing" "$rows" | git hash-object -w --stdin)
 else
 	blob=$(printf '%s\n%s\n' "$velocityHeader" "$rows" | git hash-object -w --stdin)
