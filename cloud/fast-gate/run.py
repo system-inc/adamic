@@ -491,9 +491,12 @@ class Gate:
             thread.start()
         for thread in threads:
             thread.join()
-        for name in ("execution.json", "report.json", "verdict.json", "verdict.txt", "patch-set.md"):
+        # oracle/tests.log is tsc's own suite's output, each failure's title and message at its end: without
+        # it a lane red named a test and nothing more (area/library ca016bab, extractFunction1, Oct 8).
+        # The publish step gzips a log over 5 MB.
+        for name in ("execution.json", "report.json", "verdict.json", "verdict.txt", "patch-set.md", "oracle/tests.log"):
             if os.path.isfile(os.path.join(results, name)):
-                with open(os.path.join(results, name), "rb") as source, open(os.path.join(self.arguments.out, "stage3-lane-" + name), "wb") as target:
+                with open(os.path.join(results, name), "rb") as source, open(os.path.join(self.arguments.out, "stage3-lane-" + name.replace("/", "-")), "wb") as target:
                     target.write(source.read())
         self.steps["stage3"] = round(time.monotonic() - started, 1)
         self.result["stage3_exits"] = codes
