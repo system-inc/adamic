@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -73,6 +74,13 @@ func (l *lowering) objectIntegrityValue(argument, call *ast.Node) (ir.Expression
 			}
 			if l.isLibraryGlobal(created.Expression, "Set") {
 				return ir.SetNew{Element: ir.Number}, nil
+			}
+		}
+		if empty && (l.isLibraryGlobal(created.Expression, "Map") || l.isLibraryGlobal(created.Expression, "Set")) {
+			for _, element := range l.typeArguments(l.checker.GetTypeAtLocation(argument)) {
+				if element.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
+					return nil, l.notYet(argument, "an untyped collection escaping Object integrity; provide explicit element types")
+				}
 			}
 		}
 	}

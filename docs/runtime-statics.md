@@ -482,3 +482,19 @@ The header adds only a type and function declarations.
   string, initialized statically by ADAMIC_STRING before any pool. Its zero count
   makes retain/release skip writes; the literal-index sentinel prevents string
   cache mutation. No other writers, lazy registration or shared mutable state.
+
+## Date storage in the library landing stack
+
+Reviewed `runtime-file:date.c`, `runtime-file:date.h`,
+`runtime-file:date_iso_parse_impl.h`, `runtime-file:date_parse_impl.h`,
+`runtime-file:date_string.c` and `runtime-file:date_string.h`.
+The arithmetic and parser scratch state is call-local; calendar tables and shapes
+are const. Ruling 10 refuses source local-time conversion at compile time, including
+the legacy parser and zone formatter inherited from the Date area branch.
+
+- `date.c:date_now_closure:1`: statically initialized immortal closure with no
+  environment or writers. Its invocation reads CLOCK_REALTIME into call-local storage.
+- `date.c:invalid:1`: statically initialized immortal string. Retain/release skip
+  its zero count; the literal-index sentinel prevents string cache writes.
+- `date_string.c:name:1`: statically initialized immortal error-name string with
+  the same zero-count and literal-index protection; no writers.

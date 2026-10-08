@@ -50,7 +50,12 @@ func TestScout19TSCCollectionMutants(t *testing.T) {
     adamic_array_push(array, value);
 }`
 			case "identity":
-				code = strings.Replace(code, " != NULL)", " == NULL)", 1)
+				for _, line := range strings.Split(code, "\n") {
+					if strings.Contains(line, "bool ") && strings.Contains(line, "adamic_map_get(") && strings.Contains(line, " != NULL)") {
+						code = strings.Replace(code, line, strings.Replace(line, " != NULL)", " == NULL)", 1), 1)
+						break
+					}
+				}
 			case "numeric_ids":
 				code = strings.ReplaceAll(code, "adamic_map_set(", "scout19_first(")
 				helper = `static void scout19_first(adamic_map *map, adamic_value key, adamic_value value) {
