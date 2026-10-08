@@ -58,16 +58,13 @@ interface ReadonlySet<T> {
 	isDisjointFrom<U>(other: ReadonlySetLike<U>): boolean;
 }
 
-// Built-in collection iterators always provide done, including false on a yielded result.
-// Requiring it here avoids an optional boolean slot while preserving the ECMAScript result union.
-type AdamicCollectionIteratorResult<T> =
-	| { readonly done: false; readonly value: T }
-	| { readonly done: true; readonly value: undefined };
+// Completion is the iterator return type, never part of the yielded element type.
+// Keep TypeScript's named result union and its done-flag discrimination.
 interface MapIterator<T> {
-	next(): AdamicCollectionIteratorResult<T>;
+	next(): IteratorResult<T, undefined>;
 }
 interface SetIterator<T> {
-	next(): AdamicCollectionIteratorResult<T>;
+	next(): IteratorResult<T, undefined>;
 }
 
 interface ReadonlySetLike<T> {

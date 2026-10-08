@@ -647,6 +647,9 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if prefix.Operator == ast.KindExclamationToken {
+		operand = libraryIteratorDoneTruth(operand)
+	}
 	switch {
 	case prefix.Operator == ast.KindMinusToken && operand.Type() == ir.Number:
 		return ir.Unary{Operator: ir.Negate, Operand: operand}, nil
