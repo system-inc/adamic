@@ -1,0 +1,6 @@
+FIRST FAILURE (tests, at 810.3 s):
+github.com/system-inc/adamic/stage1/cohere/lint TestChildCPUWaitGuard
+=== RUN   TestChildCPUWaitGuard
+    deadlines_test.go:85: silent child: wall 2.902525005s CPU 1.067687s
+--- FAIL: TestChildCPUWaitGuard (2.90s)
+
