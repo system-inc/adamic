@@ -1,0 +1,17 @@
+docs/wasm.md
+internal/native/host_target.go
+internal/native/library_node_fs_file.go
+internal/native/library_node_fs_wasi.go
+internal/native/library_node_fs_wasi_test.go
+internal/native/runtime/node_fs_file.c
+internal/oracle/counts.md
+internal/oracle/node_fs_file_test.go
+internal/oracle/oracle_test.go
+internal/oracle/testdata/node_buffer_fs_decode.a
+internal/oracle/testdata/node_fs_file_wasi_defaults.a
+internal/oracle/testdata/node_fs_file_wasi_dynamic_mkdir.a
+internal/oracle/testdata/node_fs_file_wasi_dynamic_open.a
+internal/oracle/testdata/node_fs_file_wasi_dynamic_utimes.a
+internal/oracle/wasi_fs_refusals_test.go
+internal/oracle/wasi_host_test.go
+internal/oracle/wasi_test.go
