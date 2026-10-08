@@ -1,0 +1,6 @@
+=== RUN   TestShapeMissingValueProducers
+=== RUN   TestShapeMissingValueProducers/local
+    shape_source_frontier_test.go:27: nonempty allocations must retain their missing-value frontier: {Sites:[-1] Unknown:true Reasons:[missing expression]}; want "local 0 has a producer without a value"
+--- FAIL: TestShapeMissingValueProducers (0.00s)
+    --- FAIL: TestShapeMissingValueProducers/local (0.00s)
+FAIL

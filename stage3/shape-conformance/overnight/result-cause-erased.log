@@ -1,0 +1,6 @@
+=== RUN   TestShapeMissingValueProducers
+=== RUN   TestShapeMissingValueProducers/result
+    shape_source_frontier_test.go:27: nonempty allocations must retain their missing-value frontier: {Sites:[-1] Unknown:true Reasons:[missing expression]}; want "function 0 returns without a value"
+--- FAIL: TestShapeMissingValueProducers (0.00s)
+    --- FAIL: TestShapeMissingValueProducers/result (0.00s)
+FAIL

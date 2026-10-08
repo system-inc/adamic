@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	"reflect"
 	"sort"
 	"strconv"
@@ -87,6 +88,14 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 			unknown("local or result has no tracked producer")
 		}
 		for _, source := range sources {
+			if source == nil {
+				if node <= len(graph.program.Locals) {
+					unknown(fmt.Sprintf("local %d has a producer without a value", node-1))
+				} else {
+					unknown(fmt.Sprintf("function %d returns without a value", node-len(graph.program.Locals)-1))
+				}
+				continue
+			}
 			follow(source, depth)
 		}
 	}

@@ -2,9 +2,11 @@ package lower
 
 import (
 	"context"
+	"strings"
+	"testing"
+
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
-	"testing"
 )
 
 func TestShapeDynamicArrayFrontier(t *testing.T) {
@@ -24,6 +26,9 @@ func TestShapeDynamicArrayFrontier(t *testing.T) {
 					got := newAllocationFlowGraph(program).ReachingAllocations(cast.Value)
 					if !got.Unknown {
 						t.Fatal("uninitialized temporary frontier was lost")
+					}
+					if !strings.Contains(strings.Join(got.Reasons, "\n"), "has a producer without a value") {
+						t.Fatalf("temporary producer lacks its specific Unknown cause: %+v", got)
 					}
 					t.Logf("cast reaching=%+v", got)
 				}
