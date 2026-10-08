@@ -1,0 +1,13 @@
+case 0
+skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+skipped @typescript-eslint/prefer-find no program
+/tmp/imports-max-order-proof/input.ts:1:1
+  max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+
+range 0 60 maximumExceeded 			0 60
+/tmp/imports-max-order-proof/input.ts:1:1
+  @typescript-eslint/no-import-type-side-effects  Every name in this import carries its own inline `type` qualifier, so TypeScript erases the names and leaves the bare `import 'module'` behind, which still runs the module for its side effects. The import reads as type-only and is not. Move the qualifier to the top level, where it removes the whole statement.
+
+range 0 29 useTopLevelQualifier fix			9 14
+fix-edit	6 6	 type
+fixed	import type { A } from 'mod';\u000aclass First {}\u000aclass Second {}\u000a

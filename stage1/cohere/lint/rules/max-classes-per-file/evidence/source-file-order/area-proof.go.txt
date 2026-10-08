@@ -1,0 +1,32 @@
+package lint
+import (
+ "bytes"
+ "fmt"
+ "os"
+ "path/filepath"
+ "strings"
+ "testing"
+)
+func TestMaxClassesAreaOrderProof(t *testing.T) {
+ directory, err := filepath.Abs("."); if err != nil { t.Fatal(err) }
+ proof := "/tmp/imports-max-order-proof"
+ source := filepath.Join(proof, "input.ts")
+ if err := os.WriteFile(source, []byte("import { type A } from 'mod';\nclass First {}\nclass Second {}\n"), 0644); err != nil { t.Fatal(err) }
+ path := manifest(t, []string{source + "\tall"})
+ want := execute(t, "", goOracle(t), "--manifest", path).output
+ if err := os.WriteFile(filepath.Join(proof,"go.txt"), want, 0644); err != nil { t.Fatal(err) }
+ sides := []struct{name string; run execution}{
+  {"node", node(t,directory,path,false)},
+  {"emitted", emittedNode(t,directory,path,false)},
+  {"native", execute(t,"",buildPort(t,directory,true),"--manifest",path)},
+ }
+ for _, side := range sides {
+  if err := os.WriteFile(filepath.Join(proof,side.name+".txt"),side.run.output,0644); err != nil { t.Fatal(err) }
+  if bytes.Equal(side.run.output,want) { t.Fatalf("area mismatch unexpectedly absent on %s",side.name) }
+  t.Logf("area mismatch on %s: %s", side.name,difference(side.run.output,want))
+ }
+ var own []string
+ for _, row := range upstream(t) { if strings.Split(row,"\t")[1] == "max-classes-per-file" { own=append(own,row) } }
+ t.Logf("max-classes-per-file upstream count: %d",len(own))
+ if err := os.WriteFile(filepath.Join(proof,"upstream-count.txt"),[]byte(fmt.Sprintf("%d\n",len(own))),0644); err != nil { t.Fatal(err) }
+}

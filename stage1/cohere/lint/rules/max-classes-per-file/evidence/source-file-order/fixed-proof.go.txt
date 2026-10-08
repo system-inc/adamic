@@ -1,0 +1,44 @@
+package lint
+
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func TestMaxClassesOwnParity(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var own []string
+	for _, row := range upstream(t) {
+		if strings.Split(row, "\t")[1] == "max-classes-per-file" {
+			own = append(own, row)
+		}
+	}
+	t.Logf("max-classes-per-file upstream count: %d", len(own))
+	if err := os.WriteFile("/tmp/imports-max-order-proof/fixed-upstream-count.txt", []byte(fmt.Sprintf("%d\n", len(own))), 0644); err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, true)
+	compare(t, oracle, binary, directory, manifest(t, own))
+	for _, descriptor := range prepareRegistry(t, directory) {
+		if descriptor.Name != "max-classes-per-file" {
+			continue
+		}
+		var witnesses []string
+		for _, row := range ownedWitnessRows(t, directory, descriptor) {
+			witnesses = append(witnesses, row, strings.SplitN(row, "\t", 2)[0]+"\tall")
+		}
+		compare(t, oracle, binary, directory, manifest(t, witnesses))
+	}
+	proof := manifest(t, []string{"/tmp/imports-max-order-proof/input.ts\tall"})
+	answer := compare(t, oracle, binary, directory, proof)
+	if err := os.WriteFile("/tmp/imports-max-order-proof/fixed.txt", answer, 0644); err != nil {
+		t.Fatal(err)
+	}
+}
