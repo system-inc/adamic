@@ -551,9 +551,19 @@ func TestLegacyMutants(t *testing.T) {
 
 func TestDecorationOptionMutant(t *testing.T) {
 	t.Parallel()
-	path := manifest(t, generated(t))
+	path := manifest(t, append(generated(t), warningJavaScriptRows(t)...))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
-	directory := mutant(t, "foldedRange(character, first, last)", "foldedRange(character, first, first)", "comments.ts")
+	directory := mutant(t,
+		"for(const entry of decoration) {",
+		`for(let index = 0; index < decoration.length; index++) {
+        const entry = decoration[index] ?? '';
+        if(index + 2 < decoration.length && decoration[index + 1] === '-') {
+            const first = (decoration[index] ?? '').codePointAt(0) ?? 0;
+            const last = (decoration[index + 2] ?? '').codePointAt(0) ?? 0;
+            const point = character.codePointAt(0) ?? 0;
+            if(point >= first && point <= last) { return true; }
+            index += 2;
+        }`, "comments.ts")
 	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
@@ -566,7 +576,7 @@ func TestDecorationOptionMutant(t *testing.T) {
 		if bytes.Equal(side.run.output, want) {
 			t.Fatalf("decoration range mutant survived on %s", side.name)
 		}
-		t.Logf("decoration range collapsed to one character caught on %s: %s", side.name, difference(side.run.output, want))
+		t.Logf("unescaped decoration range caught on %s: %s", side.name, difference(side.run.output, want))
 	}
 }
 
