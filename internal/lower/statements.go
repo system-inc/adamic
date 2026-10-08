@@ -112,6 +112,13 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 		if err := l.optionalCall(expression); err != nil {
 			return nil, err
 		}
+		if l.classInterfaceMethod(expression) {
+			call, err := l.callClosure(expression)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: call}}, nil
+		}
 		if l.isConsole(expression.AsCallExpression().Expression) {
 			statement, err := l.console(expression)
 			if err != nil {

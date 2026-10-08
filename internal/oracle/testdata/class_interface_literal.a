@@ -1,0 +1,5 @@
+class A { readonly tag: string = 'a'; bark(): string { return 'woof'; } }
+interface Named { bark(): string }
+const either: A | Named = { tag: 'literal', bark: () => 'literal' };
+function read(value: A | Named): string { if ('tag' in value) { return `A ${value.tag} ${value.bark()}`; } return `Named ${value.bark()}`; }
+console.log(read(either)); console.log(read(new A()));

@@ -1,0 +1,6 @@
+class A { readonly tag: string = 'a'; bark(): string { return 'woof'; } }
+interface Named { bark(): string }
+const either: A | Named = { tag: 'literal', bark: () => 'literal' };
+function asClass(value: A | Named): string { return (value as A).bark(); }
+console.log(asClass(new A()));
+console.log(asClass(either));

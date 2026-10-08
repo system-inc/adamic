@@ -483,6 +483,10 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MapSize:
 		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->count", e.value(expression.Map)))
 	case ir.HasOwn:
+		if expression.Prototype {
+			e.line("extern bool adamic_object_has_property(const adamic_object *, const adamic_string *);")
+			return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has_property(%s, %s)", e.value(expression.Object), e.value(expression.Key)))
+		}
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has(%s, %s)", e.value(expression.Object), e.value(expression.Key)))
 	case ir.ReadTextFile:
 		return e.own(ir.Object, fmt.Sprintf("adamic_read_text_file(%s)", e.value(expression.Path)))
