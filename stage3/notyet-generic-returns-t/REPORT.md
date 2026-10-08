@@ -1,3 +1,5 @@
+Historical report for codex/notyet-generic-returns-t. Its merge commits are not carried onto the fresh topic branch. Current topic-only evidence is in TOPIC.md.
+
 d61b40d3cb24022a72b6730d3d02052d7adeca37: 26 raw roots have representations covered by this unit: 24 signature roots and two Map construction roots; these are not 26 completely lowered compiler functions.
 Built nullable/undefined and object signatures, concrete generic binder recovery, Map key specialization/context/brands, and defaulted object binding parameters.
 Commits pushed: 8e3b5daf, 2f92582e, fd0e1225, b647eebb, fe2bd0e0, a53c8958, ba33e849, 3063d1a9, af7f71ab, d61b40d3.

@@ -1,0 +1,10 @@
+enum InternalSymbolName { Call = "__call", New = "__new" }
+type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | InternalSymbolName;
+let calls = 0;
+function escapedName(call: boolean): __String {
+    calls++;
+    if (call) return InternalSymbolName.Call;
+    return InternalSymbolName.New;
+}
+console.log(`${["plain", "brand"].join("-")}: ${escapedName(true)} ${escapedName(false)}`);
+console.log(`${typeof escapedName(true)} ${calls}`);

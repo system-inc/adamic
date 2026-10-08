@@ -305,7 +305,10 @@ func (l *lowering) signatureResult(proven *checker.Type) (ir.Type, bool) {
 		}
 		return ir.Maybe(shared), true
 	}
-	return l.representation(proven)
+	if held, known := l.representation(proven); known {
+		return held, true
+	}
+	return l.stringBrandSignature(concrete)
 }
 
 // A void member permits an implicit undefined result just as an undefined member

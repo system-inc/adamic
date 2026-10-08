@@ -1,0 +1,10 @@
+enum InternalSymbolName { Call = "__call", New = "__new" }
+type __String = (string & { __escapedIdentifier: void }) | (void & { __escapedIdentifier: void }) | InternalSymbolName;
+let calls = 0;
+function escapedLookup(present: boolean): __String | undefined {
+    calls++;
+    if (!present) return undefined;
+    return InternalSymbolName.Call;
+}
+console.log(`${["optional", "brand"].join("-")}: ${escapedLookup(true)} ${escapedLookup(false)}`);
+console.log(`${typeof escapedLookup(true)} ${typeof escapedLookup(false)} ${calls}`);
