@@ -46,7 +46,7 @@ func TestTypedArrayRuntime(t *testing.T) {
 				}
 				t.Fatalf("runtime differs from Node: %d lines instead of %d", len(left), len(right))
 			}
-			for _, mode := range []string{"write", "check"} {
+			for _, mode := range []string{"write", "check", "write16", "check16"} {
 				for _, index := range []string{"3", "-1", "0.5", "NaN", "Infinity", "-Infinity"} {
 					got, err := exec.Command(binary, mode, index).CombinedOutput()
 					failure, ok := err.(*exec.ExitError)
