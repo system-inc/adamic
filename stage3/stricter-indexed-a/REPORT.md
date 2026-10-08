@@ -1,8 +1,8 @@
-Built 22 minimal project .ts runtime witnesses proving 23 of 27 checker ledger rows; pinned four blocked rows.
-Commits: b7214299, 59257d6a, 90342391, 0ebf5687 and a17a300f, all pushed only to codex/stricter-indexed-a.
-Commands: setup passed in 1009.044s (nproc=5); complete witness package passed in 129.065s; filtered oracle passed in 8.125s; vet passed.
-Mutants: all 22 single-panic erasures compiled and were caught by exact indexed-site stdout/stderr/exit assertions, including every supported array payload kind.
-Not covered: D037 and D071-D073, the whole-program compiler build, hole/typed-array/record representations, and D069's initially absent optional-field context.
+Built shared dense-array destructuring guards and runtime proofs for D071-D073; 26 of 27 rows now proven.
+Commits: prior witness commits plus the follow-up destructuring commit on codex/stricter-indexed-a.
+Commands: D071-D073 witness gate passed in 65.236s; whole lowering-package gate is running.
+Mutants: each selected binding panic erased alone; D071/D072 hit the next binding guard, D073 printed undefined; exact named stderr caught all three.
+Not covered yet: D037 attribution follow-up is in progress; D069 initially absent own-field storage requires the records representation.
 
 Group 1 proves D054, D056, D057, D067 and D068. Each source Node run has exit 0,
 empty stderr, and stdout `7` when present or `undefined` when absent. Release
@@ -184,3 +184,29 @@ the entire touched package plus the filtered existing oracle. Five group pushes
 were made without opening a PR. The branch remains based on 390af985; no landing
 into main or an area branch is claimed. Final report commit SHA is in the worker's
 final response.
+
+Follow-up: D071-D073
+
+Dense-array declarations evaluate their receiver once and emit one ArrayIndex per
+plain binding, in order. Direct reads and binding reads both call
+indexedPresenceGuard in internal/lower/indexed_checks.go. The binding's source
+position supplies the named message. Omitted positions emit no value read;
+defaults, rest and nested bindings still refuse. Arrays outside project .ts checks
+refuse a binding whose type omits undefined on exhaustion. Nullable/tagged/weak
+presence representations retain the direct-read helper's refusals.
+
+D071 and D072 each list three binding guards at line 5, columns 8, 19 and 31;
+D073 lists one at line 5, column 8. D071 supplies an empty array, D072 supplies
+only the first element, and D073 supplies an empty array. Node prints undefined;
+both backends and release/sanitized native stop at the selected binding with
+exit 70 and exact indexed read is absent stderr. The mutant erases only that
+binding's panic. The next binding catches D071/D072, but at a different named
+site; the required selected-site assertion kills each mutant. D073's mutant
+finishes and prints undefined. No compiler warning is counted as a mutant kill.
+
+Command: go test ./stage3/stricter-indexed-a -run
+'TestCheckerIndexedWitnesses/(D071|D072|D073)$' -count=1 -timeout 10m -v.
+The recorded expanded filter also included a slash-containing supplemental name;
+it did not select that probe, which is run separately. Logs/destructuring.txt
+retains the complete three-row evidence. Earlier report sections describe the
+initial witness-only state; this follow-up supersedes their destructuring refusals.

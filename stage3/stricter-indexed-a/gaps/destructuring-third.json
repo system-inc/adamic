@@ -1,0 +1,11 @@
+{
+  "ids": [],
+  "read": "nextType",
+  "receiver": "returned readonly object array, three-element destructuring",
+  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nfunction getTypeArguments(type: Type): readonly Type[] { return absent ? [type, type] : [type, type, type]; }\nconst type: Type = { flags: 7 };\nconst [yieldType, returnType, nextType] = getTypeArguments(type);\nconst value: Type = nextType;\nconsole.log(value === undefined ? \"undefined\" : `${value.flags}`);\n",
+  "reads": [
+    "yieldType",
+    "returnType",
+    "nextType"
+  ]
+}
