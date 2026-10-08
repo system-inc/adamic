@@ -11,8 +11,5 @@
   "oracle": "oracleValidTypeof",
   "upstreamPackage": "core",
   "upstreamTest": "TestValidTypeof",
-  "programReads": [
-    "ReadsOtherFiles",
-    "ReadsDefaultLibrary"
-  ]
+  "programReads": []
 }

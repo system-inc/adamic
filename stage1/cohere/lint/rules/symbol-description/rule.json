@@ -11,8 +11,5 @@
   "oracle": "oracleSymbolDescription",
   "upstreamPackage": "core",
   "upstreamTest": "TestSymbolDescription",
-  "programReads": [
-    "ReadsOtherFiles",
-    "ReadsDefaultLibrary"
-  ]
+  "programReads": []
 }

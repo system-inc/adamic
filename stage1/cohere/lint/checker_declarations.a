@@ -1,13 +1,10 @@
 // Raw declaration facts are owned by the run's checker and never reopen a file.
-import { panic } from 'adamic';
-import { Checker, FileQuestion, Answer } from './checker.a';
+import { Checker, Answer } from './checker.a';
 import type { ParseNode } from '../../typescript/parser/nodes.ts';
 import { Frames, header } from '../typeaware/frames.ts';
 
 export function declarationAnswer(checker: Checker, node: ParseNode, question: string): Answer {
-    const first = checker.offsets[node.pos] ?? panic('declaration start outside source');
-    const last = checker.offsets[node.end] ?? panic('declaration end outside source');
-    return checker.askFile(new FileQuestion('ReadsOtherFiles', `${question}\n${first}\n${last}\n${node.kind}`));
+    return checker.askNode(node, question);
 }
 export class DeclarationTag {
     readonly tagKind: string;

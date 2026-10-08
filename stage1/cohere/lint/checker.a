@@ -3,6 +3,7 @@ import { panic } from 'adamic';
 import { openBridge as tsgoProgram, inspectBridge as tsgoInspect, releaseBridge as tsgoRelease } from './checker_bridge.a';
 import type { Parser } from '../../typescript/parser/parser.ts';
 import { Frames } from '../typeaware/frames.ts';
+import type { ParseNode } from '../../typescript/parser/nodes.ts';
 
 export type TSGoError = { readonly kind: 'Error'; readonly message: string };
 export type ProgramResult = { readonly kind: 'Ok'; readonly value: number } | TSGoError;
@@ -69,7 +70,9 @@ export class Checker {
         return this.ask(this.root, question.text);
     }
     ask(index: number, question: string): Answer {
-        const node = this.parser.node(index);
+        return this.askNode(this.parser.node(index), question);
+    }
+    askNode(node: ParseNode, question: string): Answer {
         const start = this.offsets[node.pos] ?? panic('checker span outside source');
         const end = this.offsets[node.end] ?? panic('checker span outside source');
         const key = this.record || this.replay !== undefined ? frame(this.path) + frame(`${start}`) + frame(`${end}`) + frame(node.kind) + frame(question) : '';

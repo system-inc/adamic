@@ -1,10 +1,7 @@
 {
   "name": "no-new-native-nonconstructor",
   "typed": true,
-  "programReads": [
-    "ReadsOtherFiles",
-    "ReadsDefaultLibrary"
-  ],
+  "programReads": [],
   "node": true,
   "kinds": [
     "NewExpression"

@@ -1,9 +1,7 @@
 {
   "name": "no-class-assign",
   "typed": true,
-  "programReads": [
-    "ReadsOtherFiles"
-  ],
+  "programReads": [],
   "node": true,
   "kinds": [
     "Identifier"
