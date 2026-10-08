@@ -133,6 +133,36 @@ def removeLine(path, line):
                 handle.write("\n".join(kept for kept in existing if kept != line))
 
 
+def riderGreenAlone(rider, riderSha):
+    # The rider's own fast gate on main: the rider itself when it holds main, otherwise main merged
+    # with it, pushed once as cloud/land-rider-<sha8> so the watcher gates it, and remembered in a
+    # state file so the train reads that candidate's verdict on later runs.
+    if subprocess.run(["git", "merge-base", "--is-ancestor", main, riderSha]).returncode == 0:
+        gated = riderSha
+    else:
+        record = os.path.join(state, f"rider-gate-{riderSha[:12]}")
+        gated = open(record).read().strip() if os.path.exists(record) else ""
+        if not gated:
+            merged = subprocess.run(["git", "merge-tree", "--write-tree", "--name-only", main, riderSha], capture_output=True, text=True)
+            if merged.returncode != 0:
+                tell(f"rider-alone-conflict-{riderSha[:12]}", "system_adamic_integration", f"Rider {rider} {riderSha[:8]} doesn't merge with main {main[:8]}; it can't gate alone, so it doesn't ride.")
+                return False
+            gated = git("commit-tree", merged.stdout.splitlines()[0], "-p", main, "-p", riderSha, "-m",
+                        f"Merge {rider} at {riderSha[:8]} onto main {main[:8]}, gating alone before it rides the star's train")
+            if dryRun:
+                return False
+            git("push", "-q", "origin", f"{gated}:refs/heads/cloud/land-rider-{riderSha[:8]}")
+            with open(record, "w") as handle:
+                handle.write(gated + "\n")
+            log(f"rider gating alone: {rider} {riderSha[:8]} as cloud/land-rider-{riderSha[:8]} {gated[:12]}")
+    reference, status = newestLog(gated, "fast")
+    if status.startswith("red"):
+        log(f"rider red alone: {rider} {riderSha[:8]} {reference}; it doesn't ride")
+        tell(f"rider-red-{riderSha[:12]}", "system_adamic_integration", f"Rider {rider} {riderSha[:8]} is red on its own fast gate ({reference}), so it doesn't ride the star.")
+        return False
+    return status.startswith("green")
+
+
 def appendOnce(path, line):
     existing = open(path).read().split("\n") if os.path.exists(path) else []
     if line not in existing:
@@ -174,6 +204,10 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
             tell(f"rider-missing-{rider}-{number}", "system_adamic_integration", f"Train slice {number} ({slug}) names rider {rider}, which isn't on origin; it builds without it.")
             continue
         if subprocess.run(["git", "merge-base", "--is-ancestor", riderSha, base]).returncode == 0:
+            continue
+        # @system_adamic, October 8: a rider joins only after its own fast gate is green alone on main,
+        # and at most three ride a slice; the rest wait for the next slice or land on their own.
+        if len(riders) >= 3 or not riderGreenAlone(rider, riderSha):
             continue
         merged = subprocess.run(["git", "merge-tree", "--write-tree", "--name-only", below, riderSha], capture_output=True, text=True)
         if merged.returncode != 0:
