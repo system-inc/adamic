@@ -1,0 +1,13 @@
+interface FunctionType { readonly parameters: readonly string[]; }
+function name(kind: string, parent: FunctionType, parameter: string): string {
+    switch (kind) {
+        case 'Parameter':
+            const functionType = parent;
+            const index = functionType.parameters.indexOf(parameter);
+            return 'arg' + index;
+        default:
+            return 'other';
+    }
+}
+console.log(name('Parameter', { parameters: ['first', 'second'] }, 'second'));
+console.log(name('Other', { parameters: [] }, ''));

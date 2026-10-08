@@ -1,0 +1,12 @@
+type Declaration = { readonly kind: 'Export'; readonly name: string } | { readonly kind: 'Interface' };
+function state(node: Declaration): string {
+    switch (node.kind) {
+        case 'Interface':
+            return 'none';
+        case 'Export':
+            const exportDeclaration = node;
+            return exportDeclaration.name;
+    }
+}
+console.log(state({ kind: 'Export', name: 'exported' }));
+console.log(state({ kind: 'Interface' }));
