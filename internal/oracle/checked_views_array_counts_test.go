@@ -27,7 +27,8 @@ func viewRankedArrayCounts(t *testing.T) []string {
 			rows = append(rows, counted(t, relative, false, nil, false, false))
 		}
 	}
-	return append(rows, ranked15ArrayCounts(t)...)
+	rows = append(rows, ranked15ArrayCounts(t)...)
+	return append(rows, originalRankedArrayCounts(t, "16")...)
 }
 
 // Not parallel: updating measured rows writes the shared counts file.

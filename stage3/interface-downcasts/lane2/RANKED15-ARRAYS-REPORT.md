@@ -1,5 +1,5 @@
 Held group fifteen's three array pairs against complete original TypeScript declarations; no compiler change was needed.
-Commits: started at 1ff63ff942647d7eafe3ba2d4bebb71da7ba0e8e; integration bd05075f5b8cbd592e8ece1a098d582eb43cf510 merged as 0f47b23cf1499f24ff0ae3961a0a85c20d9c7fa4; group commit is the commit containing this report.
+Commits: started at 1ff63ff942647d7eafe3ba2d4bebb71da7ba0e8e; integration bd05075f5b8cbd592e8ece1a098d582eb43cf510 merged as 0f47b23cf1499f24ff0ae3961a0a85c20d9c7fa4; group commit is d55340c06a13ad2076a4288a3ccf3a16fb462793; evidence commit is 19b40cd487e497a007bf6467a6daa038bc96492c.
 Validation: 15 probes compare Node, sanitized native, release native and JavaScript; six finishing probes pass leak checks; 15 measured count rows recorded.
 Mutants: native numeric-field bypass produced unchecked numeric output; JavaScript numeric-field bypass printed bad and exited zero; both were caught by function-wrong-pos.
 Limits: required global counts refresh fails in existing fixtures, with two failures reproduced at the integration baseline; production reachability, tuples, union-target casts and remaining pairs are unmeasured.
@@ -49,7 +49,7 @@ The required counts command failed after 69.598s, before reaching the additional
 go test ./internal/oracle -run '^TestCountsAreRecorded$/^fixtures$/^internal$/^oracle$/^testdata$/^(graph_regions_regression_06.a|process_exit.a)$' -count=1 -v -timeout 10m > /tmp/lane2-group15-baseline-counts-corrected.log 2>&1
 ```
 
-Both failures reproduce there: graph_regions_regression_06 aborts with invalid pointer; process_exit refuses lowering. This establishes baseline status for those two witnesses, not every other failure. Their fixes are outside this lane's territory. The separate group counts refresh adds only fifteen measured rows and leaves existing rows unchanged; it does not make the required global refresh green.
+Both failures reproduce there: graph_regions_regression_06 aborts with invalid pointer; process_exit refuses lowering. This establishes baseline status for those two witnesses, not every other failure. The integrator owns internal/oracle/testdata/graph_regions_regression_06.a and internal/oracle/testdata/process_exit.a baseline failures. Per the user's continuation instruction, these do not block further lane 2 groups; retain only lane 2 fixture row changes after the required refresh attempt. The separate group counts refresh adds only fifteen measured rows and leaves existing rows unchanged; it does not make the required global refresh green.
 
 Native mutant: return any numeric field slot without checking its stored kind in object.c. function-wrong-pos executes in sanitized and release native, exits zero and prints unchecked numeric values instead of the required rejection; the test fails (61.886s). JavaScript mutant: make the numeric field predicate unconditional in readiness.go. The same witness executes, prints bad and exits zero; the test fails (3.285s). Neither kill is a compilation failure. The runner restores both files in finally, and the restored source is verified afterward. These are temporary mutants, not production edits.
 
