@@ -63,6 +63,13 @@ IN THE SOFTWARE.
     Node.js v24.19.0's `deps/v8/src/builtins/regexp-replace.tq` and
     `deps/v8/src/runtime/runtime-regexp.cc`; match collection precedes callbacks,
     whose arguments preserve captures, offset, input and named-group order);
+  - sparse Array callback and join semantics (`internal/native/runtime/array_holes.c`,
+    `internal/native/library_array_holes.go` and `internal/native/emit_arrays.go`,
+    after Node.js v24.19.0's `deps/v8/src/builtins/array-join.tq`,
+    `array-map.tq` and `array-foreach.tq`; sparse storage itself uses Adamic's maps);
+  - default string Array sorting (`internal/native/runtime/array_sort_strings.c`,
+    after Node.js v24.19.0's `deps/v8/third_party/v8/builtins/array-sort.tq`;
+    the existing stable sorter orders strings by UTF-16 units, then undefined, then holes);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /

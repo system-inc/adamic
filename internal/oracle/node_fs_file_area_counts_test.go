@@ -6,8 +6,9 @@ import (
 	"testing"
 )
 
-// Measure only the two library families brought into the fs host area. Preserve
+// Measure only the library families brought into the fs host area. Preserve
 // all other recorded rows while ordering them by the live fixture registry.
+// Not parallel: -update-counts writes the shared counts.md table.
 func TestFSFileAreaMergedCounts(t *testing.T) {
 	contents, err := os.ReadFile(countsPath)
 	if err != nil {
@@ -26,7 +27,10 @@ func TestFSFileAreaMergedCounts(t *testing.T) {
 		rows[key] = line
 	}
 	for _, fixture := range fixtures {
-		if !strings.HasPrefix(fixture.path, "internal/oracle/testdata/library_date_string") && !strings.HasPrefix(fixture.path, "internal/oracle/testdata/regexp_replace/") {
+		if !fixture.lowers {
+			continue
+		}
+		if !strings.HasPrefix(fixture.path, "internal/oracle/testdata/library_date_string") && !strings.HasPrefix(fixture.path, "internal/oracle/testdata/regexp_replace/") && !strings.HasPrefix(fixture.path, "internal/oracle/testdata/array-holes-boundaries/") && !strings.HasPrefix(fixture.path, "internal/oracle/testdata/library_array_holes") && !strings.HasPrefix(fixture.path, "internal/oracle/testdata/library_array_sort_strings") {
 			continue
 		}
 		row := counted(t, fixture.path, false, nil, false, false)
