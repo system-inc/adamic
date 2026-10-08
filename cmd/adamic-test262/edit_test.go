@@ -147,11 +147,20 @@ func TestRunnerLocationHelper(t *testing.T) {
 	if os.Getenv("ADAMIC_TEST262_CONTEXT_HELPER") != "1" {
 		return
 	}
+	var parts, nodeParts []string
+	observeContextParts = func(observed, observedNode []string) { parts, nodeParts = observed, observedNode }
 	cache, _, context, err := prepareCache()
 	if err != nil {
 		t.Fatal(err)
 	}
 	fmt.Printf("%s %s\n", context, cache.nodeContext)
+	// Each part on its own line, an environment variable's value hashed, since logs are published.
+	for index, part := range append(parts, nodeParts...) {
+		if name, value, ok := strings.Cut(part, "="); ok && !strings.ContainsAny(name, "/ ") {
+			part = name + "=" + cacheKey(value)
+		}
+		fmt.Printf("part %d %s\n", index, part)
+	}
 }
 
 func TestRunnerLocationIdentity(t *testing.T) {
@@ -177,8 +186,27 @@ func TestRunnerLocationIdentity(t *testing.T) {
 			t.Fatalf("helper: %v: %s", err, output)
 		}
 		if before != nil && string(before) != string(output) {
-			t.Fatalf("relocating identical runner bytes invalidates observations: %s vs %s", before, output)
+			t.Fatalf("relocating identical runner bytes invalidates observations; the parts that differ:\n%s", differingLines(string(before), string(output)))
 		}
 		before = output
 	}
+}
+
+// differingLines names the helper's output lines that differ between two runs, by position.
+func differingLines(before, after string) string {
+	first, second := strings.Split(before, "\n"), strings.Split(after, "\n")
+	var differences []string
+	for index := 0; index < len(first) || index < len(second); index++ {
+		var left, right string
+		if index < len(first) {
+			left = first[index]
+		}
+		if index < len(second) {
+			right = second[index]
+		}
+		if left != right {
+			differences = append(differences, fmt.Sprintf("  before: %s\n  after:  %s", left, right))
+		}
+	}
+	return strings.Join(differences, "\n")
 }

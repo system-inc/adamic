@@ -178,8 +178,15 @@ func prepareCache() (*resultCache, string, string, error) {
 			nodeParts = append(nodeParts, path, cacheKey(string(contents)))
 		}
 	}
+	if observeContextParts != nil {
+		observeContextParts(parts, nodeParts)
+	}
 	return &resultCache{directory: filepath.Join(directory, "adamic", "test262"), nodeContext: cacheKey(nodeParts...)}, string(version), cacheKey(parts...), nil
 }
+
+// observeContextParts lets a test see the identity's parts before they are hashed, so a mismatch
+// can name the part that moved instead of only two different hashes.
+var observeContextParts func(parts, nodeParts []string)
 
 // Embedding the actual built sources avoids trusting mutable checkout files at run time.
 // Compiler implementation and tests cannot affect the Node adaptation/capture path.
