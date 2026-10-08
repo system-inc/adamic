@@ -1,0 +1,11 @@
+{
+  "cases": [
+    "report_test.ReportTests.test_duplicate_file_is_rejected",
+    "report_test.ReportTests.test_whole_program_roots_are_checked",
+    "entry_test.EntryCensusTests.test_reach_includes_dependency_outside_compiler_and_excludes_unused_file"
+  ],
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "ran": 3
+}
