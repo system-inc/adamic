@@ -121,6 +121,7 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 
 func TestJsxLintTrees(t *testing.T) {
 	t.Parallel()
+	skipWhenRuleScoped(t)
 	paths := jsxSources(t)
 	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))

@@ -11,6 +11,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"testing"
 
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
@@ -37,6 +38,59 @@ type sharedValue struct {
 }
 
 var sharedValues sync.Map
+
+// ruleScope is the rule directories ADAMIC_LINT_RULES names, comma-separated, or nil when it's unset and the
+// whole package runs (#60hxabf). A batch that only adds or changes rule directories gates on those rules: their
+// upstream agreement and mutants, the generated rows that run every rule together, every rule's witnesses, the
+// registry and the harness's own tests. The tests that run every rule over a whole corpus skip by name, and the
+// full package stays the gate to main. The seat sets the variable only when the batch's diff touches nothing
+// outside stage1/cohere/lint/rules/<slug>/.
+var ruleScope = func() map[string]bool {
+	named := os.Getenv("ADAMIC_LINT_RULES")
+	if named == "" {
+		return nil
+	}
+	scope := map[string]bool{}
+	for _, slug := range strings.Split(named, ",") {
+		if slug = strings.TrimSpace(slug); slug != "" {
+			scope[slug] = true
+		}
+	}
+	return scope
+}()
+
+// inRuleScope is whether a rule runs in this run's scope: every rule when the run isn't scoped.
+func inRuleScope(descriptor registry.Descriptor) bool {
+	return ruleScope == nil || ruleScope[descriptor.Slug]
+}
+
+// validateRuleScope refuses a scope naming a rule directory the registry doesn't hold, so a typo can't scope
+// a run down to nothing.
+func validateRuleScope(descriptors []registry.Descriptor) error {
+	known := map[string]bool{}
+	for _, descriptor := range descriptors {
+		known[descriptor.Slug] = true
+	}
+	for slug := range ruleScope {
+		if !known[slug] {
+			return fmt.Errorf("ADAMIC_LINT_RULES names %s, which is no rule directory", slug)
+		}
+	}
+	return nil
+}
+
+// skipWhenRuleScoped skips a test that runs every rule over a whole corpus, saying so, when the run is scoped.
+func skipWhenRuleScoped(t *testing.T) {
+	t.Helper()
+	if ruleScope != nil {
+		var slugs []string
+		for slug := range ruleScope {
+			slugs = append(slugs, slug)
+		}
+		sort.Strings(slugs)
+		t.Skipf("scoped to %s by ADAMIC_LINT_RULES: this test runs every rule over a whole corpus, and the full package gates the merge to main", strings.Join(slugs, ", "))
+	}
+}
 
 // shared is the run's one value for key. Its maker never calls t.Fatal: a goroutine that exits inside a
 // sync.Once marks it done with nothing in it, and every later test would read an empty answer.

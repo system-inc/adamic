@@ -412,11 +412,20 @@ func TestRulesAgree(t *testing.T) {
 	}
 	oracle := goOracle(t)
 	binary := buildPort(t, directory, true)
-	rows := generated(t)
 	module := emittedJavaScript(t, directory)
 	typed := map[string]bool{}
+	scoped := map[string]bool{}
 	for _, descriptor := range prepareRegistry(t, directory) {
 		typed[descriptor.Name] = descriptor.Typed
+		scoped[descriptor.Name] = inRuleScope(descriptor)
+	}
+	// Scoped, the generated rows that run every rule together stay, since they're how a new rule disturbing
+	// the shared walk shows; a generated row naming one rule outside the scope goes.
+	var rows []string
+	for _, row := range generated(t) {
+		if fields := strings.Split(row, "\t"); len(fields) < 2 || fields[1] == "all" || scoped[fields[1]] {
+			rows = append(rows, row)
+		}
 	}
 	// A typed case is replayed under the compiler options upstream's test built its program with, and Go must
 	// report there the count upstream's own run reported. Both engines read one tsconfig, so their agreement
@@ -427,6 +436,9 @@ func TestRulesAgree(t *testing.T) {
 	strictAlone := map[string]bool{}
 	for _, row := range upstream(t) {
 		fields := strings.Split(row, "\t")
+		if len(fields) > 1 && !scoped[fields[1]] {
+			continue
+		}
 		if len(fields) > 1 && typed[fields[1]] {
 			config := filepath.Join(t.TempDir(), "tsconfig.json")
 			program, found := programs[fields[0]]
@@ -467,16 +479,19 @@ func TestRulesAgree(t *testing.T) {
 		}
 	}
 	t.Logf("typed upstream cases: %d under their captured compiler options, %d under strict alone; %d held to upstream's count, %d not, their programs holding other fixture files", captured, assumed, captured-uncounted, uncounted)
-	for key := range strictAloneTypedCases {
-		if !strictAlone[key] {
-			t.Errorf("%q is listed in strictAloneTypedCases and no longer replays under strict alone; remove it", key)
+	// The exact counts are the whole corpus's, so a scoped run, which replays some rules, doesn't hold them.
+	if ruleScope == nil {
+		for key := range strictAloneTypedCases {
+			if !strictAlone[key] {
+				t.Errorf("%q is listed in strictAloneTypedCases and no longer replays under strict alone; remove it", key)
+			}
 		}
-	}
-	if captured != capturedTypedCases {
-		t.Errorf("%d typed cases replay under their captured programs, want %d. A new typed rule's cases change this on purpose; fewer means the capture lost programs", captured, capturedTypedCases)
-	}
-	if uncounted != 0 {
-		t.Errorf("%d typed cases come from programs with other fixture files, so they aren't held to upstream's count; the replay lints one file, so decide each one before accepting it", uncounted)
+		if captured != capturedTypedCases {
+			t.Errorf("%d typed cases replay under their captured programs, want %d. A new typed rule's cases change this on purpose; fewer means the capture lost programs", captured, capturedTypedCases)
+		}
+		if uncounted != 0 {
+			t.Errorf("%d typed cases come from programs with other fixture files, so they aren't held to upstream's count; the replay lints one file, so decide each one before accepting it", uncounted)
+		}
 	}
 	compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
 }
@@ -521,6 +536,7 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 
 func TestCompilerAndStage1Agree(t *testing.T) {
 	t.Parallel()
+	skipWhenRuleScoped(t)
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
@@ -919,6 +935,7 @@ func TestThroughput(t *testing.T) {
 // harness pass that walks the table by row reports on the copies and fails here.
 func TestNodeTableIsLinkOnly(t *testing.T) {
 	t.Parallel()
+	skipWhenRuleScoped(t)
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -945,6 +962,7 @@ func TestNodeTableIsLinkOnly(t *testing.T) {
 // case, so the whole output is compared, and the count mode too.
 func TestShardsAgree(t *testing.T) {
 	t.Parallel()
+	skipWhenRuleScoped(t)
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -1010,6 +1028,10 @@ func TestMutants(t *testing.T) {
 		t.Fatalf("native canary rule %s is missing", nativeCanaryRule)
 	}
 	for _, descriptor := range descriptors {
+		// Scoped, a rule outside the scope keeps its mutant out, and the native canary always runs.
+		if !inRuleScope(descriptor) && descriptor.Name != nativeCanaryRule {
+			continue
+		}
 		var change struct{ Name, File, From, To string }
 		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
 		if err != nil {
