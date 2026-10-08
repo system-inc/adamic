@@ -819,14 +819,16 @@ func TestMutants(t *testing.T) {
 				change.File = descriptor.Module
 			}
 			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
-			// Its build takes a slot of nativeBuilds, the cap every native build in the package shares.
-			binary := buildMutantPort(t, directory)
 			type runtimeSide struct {
 				name string
 				run  execution
 			}
 			var sides []runtimeSide
 			if descriptor.Typed {
+				// A typed mutant's checker answers come from a live native run, which records the
+				// transcript Node and emitted JavaScript replay, so it is the one kind built natively.
+				// Its build takes a slot of nativeBuilds, the cap every native build in the package shares.
+				binary := buildMutantPort(t, directory)
 				prefix := filepath.Join(t.TempDir(), "transcript")
 				live := execute(t, "", binary, "--manifest", path, "--record", prefix)
 				runner := filepath.Join(repository, "oracle/node.mjs")
@@ -836,7 +838,12 @@ func TestMutants(t *testing.T) {
 					{"emitted JavaScript", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emittedJavaScript(t, directory), "--manifest", path, "--replay", prefix)},
 				}
 			} else {
-				sides = []runtimeSide{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}}
+				// A semantic mutant is held to Go on Node and emitted JavaScript only. Native's own
+				// lowering, JSX parsing, spans and serialization are held by the canary below, so a
+				// native build per rule bought no catch the other two miss, and it was most of this
+				// test's time: 1,735s of 2,218s on the seat with 83 rules (#axg2xys). The harness merge
+				// 9de097476 restored the per-rule build as if git had dropped it; the canary ruling had.
+				sides = []runtimeSide{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}}
 			}
 			for _, side := range sides {
 				if bytes.Equal(side.run.output, want) {
@@ -845,7 +852,7 @@ func TestMutants(t *testing.T) {
 				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
 			}
 			if descriptor.Name == nativeCanaryRule {
-				binary := buildPort(t, directory, true)
+				binary := buildMutantPort(t, directory)
 				got := execute(t, "", binary, "--manifest", path)
 				if diff := difference(got.output, sides[0].run.output); diff != "" {
 					t.Fatalf("native canary differs from mutated Node: %s", diff)
