@@ -1,0 +1,5 @@
+{
+  "name": "empty-string-is-whitespace",
+  "from": "inAttribute ? value !== '' && allWhitespace(value) : edgeWhitespace(value)",
+  "to": "inAttribute ? allWhitespace(value) : edgeWhitespace(value)"
+}

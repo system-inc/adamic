@@ -1,0 +1,6 @@
+=== RUN   TestProvisionedPrettierFixtures
+    files_test.go:161: corpus-files: /tmp/corpus-prettier-sparse.FJUIsi/prettier root tests/format/css: missing tracked corpus files (including sparse-checkout omissions): ["tests/format/css/bom/bom.css"]
+--- FAIL: TestProvisionedPrettierFixtures (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/corpusfiles	0.023s
+FAIL
