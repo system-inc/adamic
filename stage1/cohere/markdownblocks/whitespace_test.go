@@ -69,7 +69,7 @@ func testWhitespacePolicy(t *testing.T, cases, fork string) {
 				}
 				write(t, filepath.Join(scratch, file), b)
 			}
-			result := nativeMutant(t, lowered(t, filepath.Join(scratch, "testdata/whitespace_probe.ts")), cases)
+			result := onNode(t, filepath.Join(scratch, "testdata/whitespace_probe.ts"), cases)
 			clean(t, m.name, result)
 			if bytes.Equal(result.stdout, want) {
 				t.Fatal("survived")
