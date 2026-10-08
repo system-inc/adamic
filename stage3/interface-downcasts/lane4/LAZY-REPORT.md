@@ -1,3 +1,14 @@
+Built: accepted heap/slot probes and primitive contract planning; corrected the finite-key overclaim.
+Commits: __String 4ba489e5; finite-key component 0bae12f8; this probe/correction checkpoint.
+Checks: all checked-view oracles pass 80.374s; scoped vet passes; IR 32.511s and JavaScript 2.307s pass; five native graph failures reproduce at 0bae12f8.
+Mutants: seven probe defects caught by semantic release output or exit-70 pins; detailed list below.
+Uncovered: nine mixed primitive candidate pairs / twenty-seven reads, source boxed selection, full tsc compilation and exact runtime reachability.
+
+This current summary and the correction below supersede historical tables,
+including the finite-key group's incorrect completion claim. Earlier __String
+source evidence remains valid. The following chronological checkpoints preserve
+the observed work and prior estimates rather than rewriting their history.
+
 Built: merged integration ba59427 and replaced the old queue with the lazy candidate inventory.
 Commits: integration ba59427; this measurement checkpoint on codex/views-mixed-unions.
 Checks: supplied gzip inventory parses; exact family counts assert 14/511 and 23/538.
@@ -137,6 +148,11 @@ this group's additions. Test outputs are preserved in logs/brand-candidate-pairs
 
 ## Finite string-key unions
 
+Correction: this checkpoint incorrectly counted the two tsc pairs as complete.
+Real CompilerOptions has a string index signature; the correction below
+supersedes its completion claim and remaining totals. The fixtures are finite-key
+component coverage only.
+
 Built: Diagnostic.skippedOn and ReusableDiagnostic.skippedOn, two candidate pairs / four reads.
 Commits: builds on 4ba489e5; this source fixture group.
 Checks: TestCheckedViewPrimitiveKeyPairs passes 6.307s, with Node controls, native release, JavaScript and sanitized native positives.
@@ -160,3 +176,109 @@ lowering, slot probing and emitters because its single component test did not
 establish freedom from silent miscompiles or memory-safety failures. None of that
 rewrite ran. These independent fixtures complete unaffected work; a narrower
 runtime probe with dedicated tests is the next step before enabling dispatch.
+
+## Corrected inventory and accepted probe foundation
+
+The prior finite-key group incorrectly completed 9761:skippedOn (three reads)
+and 97180:skippedOn (one read). Stock TypeScript types.ts:7571 declares a string
+index signature on CompilerOptions. Its keyof admits strings and numbers, not
+just named property literals. The reduced finite-key fixture omitted that
+signature, making its unknown-string refusal and number refusal inappropriate
+for the real pair. Those fixtures are now explicitly named component coverage;
+their two pairs and four reads are restored to pending. No history is rewritten.
+
+The corrected gap witnesses preserve the full string/number/undefined shape via
+an interface extending the library's Record<string,...>. A numericKey declaration
+of type keyof CompilerOptions is checker-clean. This avoids introducing runtime
+dictionary storage while retaining the inherited index signature's key domain.
+Source Node accepts notAnOption, 42, undefined and optional absence; malformed
+boolean and null show their actual values. Adamic currently refuses the mixed
+field at compilation. These gap witnesses complete no pair.
+
+| Family | Completed candidate pairs / reads | Remaining candidate pairs / reads |
+| --- | ---: | ---: |
+| __String | 14 / 511 | 0 / 0 |
+| Mixed primitive union | 14 / 511 | 9 / 27 |
+
+| Remaining pair | Candidate reads |
+| --- | ---: |
+| 6849:<element> | 8 |
+| 46428:value | 6 |
+| 9761:skippedOn | 3 |
+| 97934:pendingEmit | 3 |
+| 37515:peerDependencies | 2 |
+| 97892:signature | 2 |
+| 6995:constantValue | 1 |
+| 97180:skippedOn | 1 |
+| 97923:forEach | 1 |
+
+The forEach candidate carries array/object/intersection consumer obligations in
+addition to its mixed primitive dependency. This lane does not claim that a
+primitive selector completes those other families. No production tsc allocation
+reachability is measured, and no second whole-program flow solver is introduced.
+
+Accepted source-independent foundation:
+
+* adamic_view_union_heap classifies real borrowed heap values and unwraps scalar
+  boxes. Unknown kinds stay unknown; null storage is handled separately.
+* adamic_object_view_union_snapshot calls the shared readiness/static-owner
+  resolver, retains its actual owner's storage evidence, and distinguishes null,
+  undefined, optional absence and present uninitialized slots. It neither invokes
+  getters nor enables a cast or read dispatch. Runtime probes cover plain/boxed/
+  packed scalar storage, mismatched reference tags, unknown storage and inheritance.
+* PrimitiveViewMembers admits only complete primitive alternatives and preserves
+  finite literals and undefined. Unsupported/object/missing/recursive graphs do
+  not acquire a primitive certificate. Its unit test passes in the IR package.
+
+Seven semantic native release mutations were run independently with production
+restored in finally: number-tag, boolean-payload, skip-readiness, ignore-owner,
+collapse-null, ignore-reference-storage and trust-unknown. The first two are
+caught by TestCheckedViewPrimitiveHeap; the remaining five by
+TestCheckedViewPrimitiveProbe. The readiness/unknown/null/reference mutations
+run valid code to exit 0 instead of the pinned exit 70; the owner mutation refuses
+a valid inherited numeric read. No clang warning or sanitizer-only failure is
+counted. Initially the number-tag mutant escaped because printing the original
+payload hid the selected member; the harness now observes the selected member's
+kind against source Node, and the rerun catches it. That escaped attempt is not
+reported as a kill.
+
+Full native package validation fails five graph tests. Exactly those five fail
+at the previously pushed 0bae12f8 in an isolated detached worktree as well:
+GraphRegionsMillion, GraphContainerBoundary, GraphClosureEnvironment,
+GraphLazyRegions and GraphRegionsRuntime. Their logs are preserved; this is an
+observed baseline comparison, not a claim that the full repository gate passes.
+The complete checked-view oracle and scoped vet results are recorded after the
+final run. IR and JavaScript packages pass. No unverified source adapter is enabled.
+
+Automatic approval review rejected both a broad boxed-field rewrite and the
+subsequent proposed array adapter, citing memory-safety and silent-miscompile risk
+and stating that cross-layer work exceeded the accepted probe-only scope. Neither
+rejected edit ran. The concrete adapter is preserved for review only, with a
+successful git apply --check and its source/runtime validation gate in
+ADAPTER-REVIEW.md. Admission and shared dispatcher hooks remain unapplied.
+
+The __String family delivered October 8 UTC (October 7 MDT), before October 9.
+For the eight direct primitive pairs / twenty-six reads, October 9, 2026 at
+17:00 MDT (23:00 UTC) remains a working target only if adapter approval arrives
+October 8. The overlapping forEach candidate depends on integrated object/
+intersection consumer adapters; there is no honest unconditional date for all
+nine pairs while those dependencies and automatic approval remain unresolved.
+Whole-tsc checker cleanup is not a per-pair fixture dependency.
+
+Final accepted-state commands:
+
+* go test ./internal/oracle -run '^TestCheckedView' -count=1 -timeout 15m:
+  PASS 80.374s, including the corrected open-key and primitive-array gap tests.
+* go test ./internal/ir ./internal/native ./internal/javascript -count=1 -timeout 15m:
+  IR PASS 32.511s, JavaScript PASS 2.307s; native FAIL 462.555s on the five
+  graph tests listed above. The same five fail at 0bae12f8 in 11.859s.
+* go vet ./internal/ir ./internal/native ./internal/javascript ./internal/oracle:
+  PASS with no output. git diff --check and review patch applicability pass.
+
+A fresh integration-tip read failed because GitHub HTTPS authentication is no
+longer configured: fatal: could not read Username for 'https://github.com':
+No such device or address. The environment reports no configured secret or
+outbound identity, and Git has no credential helper. This is separate from the
+automatic code-review rejection. The last merged integration tip remains
+ba59427. Push is retried after this commit; if authentication remains absent,
+the commit is exported as a format-patch for the user/integrator.

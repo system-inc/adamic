@@ -1,9 +1,14 @@
 package oracle
 
 import (
+	"context"
 	"encoding/json"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -74,7 +79,9 @@ func TestCheckedViewBrandCandidatePairs(t *testing.T) {
 	}
 }
 
-func TestCheckedViewPrimitiveKeyPairs(t *testing.T) {
+// This reduced finite-key contract is component coverage, not a tsc pair.
+// Real CompilerOptions has a string index signature, so keyof also admits numbers.
+func TestCheckedViewFiniteStringKeyComponent(t *testing.T) {
 	for _, pair := range []string{"9761", "97180"} {
 		for _, variant := range []string{"target", "strict", "undefined", "missing", "wrong", "number", "null"} {
 			t.Run(pair+"/"+variant, func(t *testing.T) {
@@ -119,6 +126,55 @@ func TestCheckedViewPrimitiveKeyPairs(t *testing.T) {
 						}
 						t.Logf("literal-member bypass caught: exit %d stdout %q", got.exitCode, got.stdout)
 					}
+				}
+			})
+		}
+	}
+}
+
+// Admission remains closed until the boxed array adapter passes source oracles.
+func TestCheckedViewPrimitiveArrayPairGap(t *testing.T) {
+	for _, variant := range []string{"string", "number", "plain-number", "plain-string", "wrong", "bounds"} {
+		t.Run(variant, func(t *testing.T) {
+			path, err := filepath.Abs("../../stage3/interface-downcasts/lane4/primitive-pairs/6849-element-" + variant + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			text := map[string]string{"string": "word", "number": "42", "plain-number": "42", "plain-string": "word", "wrong": "true", "bounds": "undefined"}[variant]
+			if difference := disagreement(run{stdout: []byte(text + "\n")}, onNode(t, path)); difference != "" {
+				t.Fatal("source Node: " + difference)
+			}
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lower.Lower(context.Background(), loaded)
+			if err == nil || !strings.HasSuffix(err.Error(), ":4:92: stage 0 can't lower an array of string | number yet") {
+				t.Fatalf("expected closed array admission, got %v", err)
+			}
+		})
+	}
+}
+
+func TestCheckedViewOpenCompilerOptionKeyGaps(t *testing.T) {
+	for _, pair := range []string{"9761", "97180"} {
+		for _, variant := range []string{"string", "number", "undefined", "missing", "wrong", "null"} {
+			t.Run(pair+"/"+variant, func(t *testing.T) {
+				path, err := filepath.Abs("../../stage3/interface-downcasts/lane4/primitive-pairs/" + pair + "-skippedOn-open-" + variant + ".a")
+				if err != nil {
+					t.Fatal(err)
+				}
+				text := map[string]string{"string": "notAnOption", "number": "42", "undefined": "undefined", "missing": "undefined", "wrong": "true", "null": "null"}[variant]
+				if difference := disagreement(run{stdout: []byte(text + "\n")}, onNode(t, path)); difference != "" {
+					t.Fatal("source Node: " + difference)
+				}
+				loaded, err := load.Load([]string{path})
+				if err != nil {
+					t.Fatal(err)
+				}
+				_, err = lower.Lower(context.Background(), loaded)
+				if err == nil || !strings.Contains(err.Error(), "stage 0 can't lower a field of type keyof CompilerOptions | undefined yet") {
+					t.Fatalf("expected mixed-key compile refusal, got %v", err)
 				}
 			})
 		}

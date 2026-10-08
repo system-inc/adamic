@@ -13,8 +13,8 @@
     "mixed primitive union": {
       "total_pairs": 23,
       "total_reads": 538,
-      "remaining_pairs": 7,
-      "remaining_reads": 23
+      "remaining_pairs": 9,
+      "remaining_reads": 27
     }
   },
   "pairs": [
@@ -4547,8 +4547,8 @@
         }
       ],
       "pair_id": "9761:skippedOn",
-      "state": "complete source fixture group",
-      "evidence": "TestCheckedViewPrimitiveKeyPairs; primitive-pairs/9761-skippedOn-*.a"
+      "state": "pending",
+      "evidence": "Finite-key component fixture omitted CompilerOptions string index signature; actual keyof admits string and number. Full pair is not complete."
     },
     {
       "type_id": 97934,
@@ -5061,8 +5061,8 @@
         }
       ],
       "pair_id": "97180:skippedOn",
-      "state": "complete source fixture group",
-      "evidence": "TestCheckedViewPrimitiveKeyPairs; primitive-pairs/97180-skippedOn-*.a"
+      "state": "pending",
+      "evidence": "Finite-key component fixture omitted CompilerOptions string index signature; actual keyof admits string and number. Full pair is not complete."
     },
     {
       "type_id": 97923,

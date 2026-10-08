@@ -1030,3 +1030,32 @@ callable or dictionary contract is enabled by these hooks. The two leading
 candidate pairs are pinned by TestCheckedViewCompleteBrand and both backend
 undefined-admission overlay mutants. Integration consumes this lane tip through
 the user; no individual lane branch is merged.
+
+### Lane 4 staged boxed primitive probe
+
+Lane 4 owns the named adamic_view_union_heap normalizer in its mixed-union
+runtime and adamic_object_view_union_snapshot in shared object.c, declared in
+view_unions_mixed.h. The latter calls the existing readiness/static-owner resolver,
+then classifies only source storage evidence. Optional absence stays separate
+from present uninitialized storage. Unknown storage remains unknown. No cast
+admission or read dispatch is enabled by these probe-only changes. Dedicated
+release and sanitizer probes cover storage formats and inherited owners before
+source dispatch is enabled. The integrator reconciles these minimal named hooks.
+
+Lane 4 also owns internal/ir/view_primitives.go and its tests: the named
+PrimitiveViewMembers planner preserves literal/undefined alternatives and
+rejects missing, unsupported, object and recursive member graphs. It does not
+enable source admission or a second flow graph. The primitive array adapter
+remains an unapplied review artifact in lane4/primitive-array-adapter-review.patch,
+with its staged hooks and validation gate in lane4/ADAPTER-REVIEW.md. Automatic
+approval review rejected enabling that cross-layer work on memory-safety and
+silent-miscompile risk. Accepted probe work remains separately reviewable.
+
+Census correction: the reduced finite CompilerOptions key fixtures in 0bae12f8
+omitted tsc's string index signature and therefore did not complete either
+skippedOn pair. The corrected lane 4 candidate ledger has nine mixed primitive
+pairs / twenty-seven reads remaining. The __String family remains complete,
+fourteen candidate pairs / five hundred eleven reads. Candidate counts are not
+certified production reachability. The full key gaps inherit a library Record
+index signature and checker-validate a numeric keyof key without constructing
+runtime dictionary storage. They remain compile refusals, not completions.

@@ -4,6 +4,28 @@
 #include <stdlib.h>
 #include <string.h>
 
+adamic_view_union_value adamic_view_union_heap(const adamic_heap *value) {
+    adamic_view_union_value snapshot = {adamic_view_union_unknown, {.reference = (void *)value}};
+    if (value == NULL) { snapshot.kind = adamic_view_union_undefined; return snapshot; }
+    switch (value->kind) {
+    case adamic_kind_number:
+        snapshot.kind = adamic_view_union_number;
+        snapshot.payload.number = ((const adamic_number_box *)value)->number;
+        break;
+    case adamic_kind_boolean:
+        snapshot.kind = adamic_view_union_boolean;
+        snapshot.payload.boolean = ((const adamic_boolean_box *)value)->boolean;
+        break;
+    case adamic_kind_string: snapshot.kind = adamic_view_union_string; break;
+    case adamic_kind_object: snapshot.kind = adamic_view_union_object; break;
+    case adamic_kind_array: snapshot.kind = adamic_view_union_array; break;
+    case adamic_kind_map: snapshot.kind = adamic_view_union_map; break;
+    case adamic_kind_closure: snapshot.kind = adamic_view_union_function; break;
+    default: break;
+    }
+    return snapshot;
+}
+
 const char *adamic_view_union_kind_name(adamic_view_union_kind kind) {
     switch (kind) {
     case adamic_view_union_number: return "number";
