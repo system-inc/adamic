@@ -115,3 +115,8 @@ func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
 	}
 	counts.Sites = append(counts.Sites, ir.NonNullCheck{Where: l.program.Where(node), Expression: sourceExpression(node), Proven: proven})
 }
+
+func sourceExpression(node *ast.Node) string {
+	file := ast.GetSourceFileOfNode(node)
+	return file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
+}

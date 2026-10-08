@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRanked4ArrayContracts (0.01s)
-    --- FAIL: TestCheckedViewRanked4ArrayContracts/ranked4-chain-set-wrong (0.78s)
-        checked_views_ranked4_arrays_test.go:61: stderr differs; stderr "adamic: panic: field read failed: raw.next[0]!.messageText is not a number; expected number, found string\n"; stdout ""; exit 70
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.800s
-FAIL

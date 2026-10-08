@@ -1,3 +1,0 @@
-const callback: () => number|string = ():number => 5;
-const holder = {callback};
-console.log(`${holder.callback()}`);

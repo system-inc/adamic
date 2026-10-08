@@ -1,8 +1,0 @@
-import type { RenamedBinding } from 'original-tsc-private';
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: RenamedBinding; }
-function helper(value: RenamedBinding): void { console.log(String(value.name)); }
-const raw = {kind: 'box' as const, child: {name: null}};
-const base: Base = raw;
-const carrier = base as Carrier;
-helper(carrier.child);

@@ -11,7 +11,6 @@ import (
 func build(path, output string, arguments []string) int {
 	options := native.Options{}
 	archive := ""
-	explain := false
 	for index := 0; index < len(arguments); index++ {
 		switch arguments[index] {
 		case "--target":
@@ -21,8 +20,6 @@ func build(path, output string, arguments []string) int {
 				return 2
 			}
 			options.Target = arguments[index]
-		case "--explain-checks":
-			explain = true
 		case "--count":
 			options.Count = true
 		case "--sanitize":
@@ -62,7 +59,6 @@ func build(path, output string, arguments []string) int {
 		return code
 	}
 	if explain {
-		explainPredicateChecks(os.Stderr, program)
 		explainNonNullChecks(os.Stderr, program)
 	}
 	var err error

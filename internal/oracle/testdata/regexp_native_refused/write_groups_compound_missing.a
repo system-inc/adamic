@@ -1,6 +1,0 @@
-const m = /(?<x>a)/.exec('a');
-if (m !== null && m.groups !== undefined) {
-  const g = m.groups;
-  g.y += 'q';
-  console.log(`${g.y}`);
-}

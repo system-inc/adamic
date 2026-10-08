@@ -1,5 +1,0 @@
-interface Base { readonly kind: 'items' | 'other'; }
-interface Items extends Base { readonly kind: 'items'; readonly values: readonly number[]; }
-function items(node: Base): Items { return node as Items; }
-const raw = {kind: 'items' as const, values: ['bad']};
-for (const value of items(raw).values) { console.log(`${value}`); }

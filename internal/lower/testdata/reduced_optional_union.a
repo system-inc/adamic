@@ -1,3 +1,0 @@
-type A = { kind: 0; id?: number };
-declare const narrow: (A | { kind: 1 }) & A;
-const wide: { id?: number } = narrow;

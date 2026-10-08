@@ -1,5 +1,0 @@
---- FAIL: TestOptionalWideningReducedSource (0.07s)
-    optional_widening_test.go:169: /workspace/adamic/internal/lower/testdata/reduced_optional_union.a:3:31: Adamic 0.1 refuses optional property id in { id?: number; } absent from structural source never, which can hide fields; declare id on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.083s
-FAIL

@@ -1,1 +1,0 @@
-type Constructable={new(required:string):Child}; class Base { static child: Constructable | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child; console.log(new Child(`c${1}`).tag);

@@ -25,9 +25,9 @@ import (
 
 const usage = `usage:
   adamic types <file.a|file.ts>...
-  adamic c <file.a|file.ts> [--explain-checks]
-  adamic js <file.a|file.ts> [--explain-checks]
-  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]`
+  adamic c <file.a|file.ts>
+  adamic js <file.a|file.ts>
+  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]`
 
 func main() {
 	os.Exit(run(os.Args[1:]))
@@ -36,29 +36,6 @@ func main() {
 // run is the command, returning its exit code: 0 on success, 1 when the program is refused or can't
 // be compiled, 2 for a usage error.
 func run(arguments []string) int {
-	// Explanation goes to stderr so C/JavaScript output remains usable.
-	explain := false
-	filtered := make([]string, 0, len(arguments))
-	for _, argument := range arguments {
-		if argument == "--explain-checks" {
-			explain = true
-		} else {
-			filtered = append(filtered, argument)
-		}
-	}
-	if explain {
-		if len(filtered) == 2 && (filtered[0] == "c" || filtered[0] == "js") {
-			return renderWithChecks(filtered[0], filtered[1])
-		}
-		if len(filtered) > 0 && filtered[0] == "build" {
-			arguments = append(filtered, "--explain-checks")
-		} else {
-			fmt.Fprintln(os.Stderr, usage)
-			return 2
-		}
-	} else {
-		arguments = filtered
-	}
 	switch {
 	case len(arguments) == 3 && (arguments[0] == "c" || arguments[0] == "js") && arguments[2] == "--explain-checks":
 		return renderWithChecks(arguments[0], arguments[1])

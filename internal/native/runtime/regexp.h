@@ -55,7 +55,7 @@ adamic_array *adamic_regex_iterator_step(adamic_object *iterator);
 adamic_object *adamic_regex_next(adamic_object *iterator);
 adamic_string *adamic_regex_replace(adamic_string *input, adamic_object *regex,
 									adamic_string *replacement, bool require_global);
-adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit, bool default_limit);
+adamic_array *adamic_regex_split(adamic_string *input, adamic_object *regex, double limit);
 double adamic_regex_search(adamic_string *input, adamic_object *regex);
 adamic_value adamic_regex_property(adamic_array *array, const char *name);
 adamic_maybe_boolean adamic_regex_done(adamic_object *object);

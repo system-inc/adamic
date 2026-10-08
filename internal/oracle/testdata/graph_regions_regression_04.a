@@ -1,6 +1,0 @@
-interface TreeNode {
-	readonly children: TreeNode[];
-}
-const root: TreeNode = { children: [] };
-root.children.push(root);
-

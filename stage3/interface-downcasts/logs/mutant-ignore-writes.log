@@ -1,8 +1,0 @@
-=== RUN   TestInterfaceConstructionProof
-=== RUN   TestInterfaceConstructionProof/alias_write
-    interface_cast_test.go:39: want refusal containing "write may invalidate", got <nil>
---- FAIL: TestInterfaceConstructionProof (0.03s)
-    --- FAIL: TestInterfaceConstructionProof/alias_write (0.03s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.035s
-FAIL

@@ -1,4 +1,0 @@
-interface Holder { back: Link<Holder> | undefined; }
-class Link<T> { slot: T | undefined = undefined; set(value: T): void { this.slot = value; } }
-class Child<T> extends Link<T> {}
-const child = new Child<Holder>(); const holder: Holder = { back: child }; child.set(holder);

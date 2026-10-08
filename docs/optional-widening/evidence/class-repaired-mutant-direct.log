@@ -1,6 +1,0 @@
---- FAIL: TestOptionalWideningRefused (0.00s)
-    --- FAIL: TestOptionalWideningRefused/class_transitive (0.04s)
-        optional_widening_test.go:43: want optional-property refusal, got <nil>
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.049s
-FAIL

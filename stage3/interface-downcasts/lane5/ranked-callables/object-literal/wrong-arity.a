@@ -1,6 +1,0 @@
-interface ObjectLiteralElementLike {readonly value:number;}
-interface ObjectLiteralExpression {readonly value:number;}
-interface Base {readonly createObjectLiteralExpression:unknown;}
-interface Target {createObjectLiteralExpression(properties?: readonly ObjectLiteralElementLike[], multiLine?: boolean): ObjectLiteralExpression;}
-function probe(value:Base):void {const factory=value as Target;const properties:readonly ObjectLiteralElementLike[]=[{value:3}];console.log(`${factory.createObjectLiteralExpression(properties).value}`);}
-probe({createObjectLiteralExpression:(one:number):ObjectLiteralExpression=>({value:9})});

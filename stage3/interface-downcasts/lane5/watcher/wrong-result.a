@@ -1,8 +1,0 @@
-// Reduced original tsc FileWatcher.close witness; source span pinned in original-witnesses.json.
-interface Base { readonly close: unknown; }
-export interface FileWatcher {
-    close(): void;
-}
-function closeWatcher(value: Base): void { const watcher = value as FileWatcher; watcher.close(); }
-const value = {kind:'watcher' as const, close:(): number => 7};
-closeWatcher(value);

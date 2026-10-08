@@ -1,6 +1,0 @@
---- FAIL: TestOptionalWideningAllowed (0.00s)
-    --- FAIL: TestOptionalWideningAllowed/generic_subclass (0.05s)
-        optional_widening_test.go:77: /tmp/adamic-gate/TestOptionalWideningAllowedgeneric_subclass1048008615/001/main.a:5:42: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from class source Base<number>, but subclass Derived<T> declares y at /tmp/adamic-gate/TestOptionalWideningAllowedgeneric_subclass1048008615/001/main.a:2:36 with an incompatible type; make the subclass property assignable to the target, or build a fresh object with known fields (adamic/no-optional-widening)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.059s
-FAIL

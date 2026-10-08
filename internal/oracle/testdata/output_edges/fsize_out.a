@@ -1,4 +1,0 @@
-for (let line = 0; line < 20000; line += 1) {
-	console.log(`line ${line} ${'y'.repeat(20)}`);
-}
-console.error('after');

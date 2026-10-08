@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewArrayReferenceWrites (0.00s)
-    --- FAIL: TestCheckedViewArrayReferenceWrites/reference-array-uninitialized (0.87s)
-        checked_views_array_reference_writes_test.go:35: stderr differs; stderr "adamic: panic: field read failed: <array write>.value is not initialized; expected number, found uninitialized\n"; stdout ""; exit 70
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=26
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	2.991s
-FAIL

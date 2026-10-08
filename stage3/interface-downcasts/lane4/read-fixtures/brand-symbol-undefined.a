@@ -1,8 +1,0 @@
-type InternalSymbolName = '__call' | '__new';
-type __String = (string & { __escapedViewSymbol: void }) | (void & { __escapedViewSymbol: void }) | InternalSymbolName;
-interface Base { readonly kind: 'box' | 'other' }
-interface ViewSymbol extends Base { readonly kind: 'box'; readonly escapedName: __String }
-function helper(value: ViewSymbol): void { console.log(String(value.escapedName)); }
-const raw = {kind: 'box' as const, escapedName: undefined};
-const base: Base = raw;
-helper(base as ViewSymbol);

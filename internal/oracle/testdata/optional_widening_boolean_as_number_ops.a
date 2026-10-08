@@ -1,8 +1,0 @@
-const original = { x: 1, y: true };
-const view: { x: number } = original;
-const wider: { x: number; y?: number } = { x: view.x };
-console.log(`${wider.y === undefined}`);
-console.log(`${wider.y !== undefined}`);
-console.log(`${(wider.y ?? 0) * 10}`);
-console.log(`${(wider.y ?? 0) > 0}`);
-console.log(`${wider.y === 1}`);

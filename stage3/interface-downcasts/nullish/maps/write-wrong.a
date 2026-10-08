@@ -1,4 +1,0 @@
-const map=new Map<string,1|2>([['key',1]]);
-const wide:Map<string,number>=map;
-wide.set('key',3);
-console.log(String(map.get('key')));

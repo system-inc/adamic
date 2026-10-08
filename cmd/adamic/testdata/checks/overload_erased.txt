@@ -1,7 +1,0 @@
-internal/lower/testdata/predicates/overload_erased.a:3:16: predicate overload 1 of isNumber
-  true: proven; implementation body proves this direction
-  false: proven; implementation body proves this direction
-internal/lower/testdata/predicates/overload_erased.a:3:31: predicate overload 1 of isNumber
-  true: proven; implementation body proves this direction
-  false: proven; implementation body proves this direction
-adamic: predicate checks: proven 4 checked 0 unobservable 0

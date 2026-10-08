@@ -1,9 +1,0 @@
-interface MapLike<T> {
-    [index: string]: T;
-}
-const values: MapLike<number> = {};
-values["item"] = 7;
-console.log(String(values["item"]));
-console.log(Object.keys(values).join(","));
-console.log(String(delete values["item"]));
-console.log(String(values["missing"]));

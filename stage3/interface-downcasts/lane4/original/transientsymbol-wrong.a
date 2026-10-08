@@ -1,6 +1,0 @@
-import type { TransientSymbol } from 'original-tsc-types';
-interface Base { readonly flags: number; }
-function helper(value: TransientSymbol): void { console.log(String(value.escapedName)); }
-const raw = { flags: 1, escapedName: 42 };
-const base: Base = raw;
-helper(base as TransientSymbol);

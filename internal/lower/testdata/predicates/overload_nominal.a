@@ -1,5 +1,0 @@
-class A { readonly value = 1; }
-class B { readonly value = 1; }
-function lie(value: A | B): value is A;
-function lie(value: A | B): boolean { console.log("called"); return true; }
-console.log(`${lie(new B())}`);

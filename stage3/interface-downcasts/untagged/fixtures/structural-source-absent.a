@@ -1,9 +1,0 @@
-// Representative member-count fixture. Not the full compiler interfaces.
-interface Left { readonly text: string; readonly note?: string; }
-interface Right { readonly child: {readonly label: string}; readonly note?: string; }
-type Target = Left | Right;
-interface Holder { readonly kind: 'Holder'; readonly value?: Target; }
-const raw={kind:'Holder' as const};
-const base:{readonly kind:'Holder'}=raw;
-const view=base as Holder;
-console.log(`${view.value===undefined}`);

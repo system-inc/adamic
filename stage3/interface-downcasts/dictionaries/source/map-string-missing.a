@@ -1,6 +1,0 @@
-interface MapLike<T> { [key: string]: T; }
-const payload = { other: 'name' };
-const base: {} = payload;
-const view = base as MapLike<string>;
-const value = view['item'];
-console.log(`${value}`);

@@ -1,6 +1,0 @@
-import type { JSDocCallbackTag } from 'original-tsc-types';
-interface Base { readonly kind: number; }
-const raw = { kind: 339, comment: true };
-const base: Base = raw;
-const viewed = base as JSDocCallbackTag;
-console.log(`${viewed.kind}`);

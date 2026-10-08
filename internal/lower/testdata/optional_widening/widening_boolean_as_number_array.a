@@ -1,8 +1,0 @@
-const original = { x: 1, y: true };
-const views: readonly { x: number }[] = [original];
-const wider: readonly { x: number; y?: number }[] = views;
-for (const point of wider) {
-	console.log(typeof point.y);
-	console.log(`${point.y === undefined}`);
-	console.log(`${(point.y ?? 0) + 1}`);
-}

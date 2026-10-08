@@ -1,6 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-
-interface Base {readonly setText:unknown;}
-interface Target {setText(text: string | undefined, start?: number, length?: number): void;}
-function probe(value:Base):void {const scanner=value as Target;const s="ab";scanner.setText(undefined);scanner.setText(s+"n",undefined,undefined);scanner.setText(s+"n",2,4);scanner.setText(s+"n",0,0);}
-probe({setText:(text:string|undefined,start?:number,length?:number):void=>{console.log(`${(text===undefined?0:text.length)+(start===undefined?0:start)+(length===undefined?0:length)}`);}});

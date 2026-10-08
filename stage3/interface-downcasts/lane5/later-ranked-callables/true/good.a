@@ -1,6 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface TrueLiteral {readonly value:number;}
-interface Base {readonly createTrue:unknown;}
-interface Target {createTrue(): TrueLiteral;}
-function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createTrue().value}`);}
-probe({createTrue:():TrueLiteral=>({value:3})});

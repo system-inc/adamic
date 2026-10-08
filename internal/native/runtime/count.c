@@ -16,9 +16,6 @@ void adamic_count_allocation(void) {
 }
 
 void adamic_count_report(void) {
-	if (adamic_counted.graph_regions != 0) {
-		fprintf(stderr, "adamic: graph counts: regions %zu merges %zu\n", adamic_counted.graph_regions, adamic_counted.graph_merges);
-	}
 	char line[200];
 	int length = snprintf(line, sizeof line, "adamic: counts: allocations %zu frees %zu retains %zu releases %zu peak %zu regions %zu\n",
 		adamic_counted.allocations, adamic_counted.frees, adamic_counted.retains, adamic_counted.releases, adamic_counted.peak, adamic_counted.regions);

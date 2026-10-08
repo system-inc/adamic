@@ -1,6 +1,0 @@
-let text = 'é';
-for (let i = 0; i < 100000; i++) text += 'a ';
-const word = /a/g;
-let count = 0;
-while (word.test(text)) count++;
-console.log(`${count}`);

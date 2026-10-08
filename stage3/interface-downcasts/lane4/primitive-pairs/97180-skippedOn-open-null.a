@@ -1,9 +1,0 @@
-export {};
-interface CompilerOptions extends Record<string, number | boolean | undefined> { target?: number; strict?: boolean }
-interface Base { readonly kind: 'box' | 'other' }
-interface ReusableDiagnostic extends Base { readonly kind: 'box'; readonly skippedOn?: keyof CompilerOptions | undefined }
-function helper(value: ReusableDiagnostic): void { console.log(String(value.skippedOn)); }
-const numericKey: keyof CompilerOptions = 42;
-const raw = {kind: 'box' as const, skippedOn: null};
-const base: Base = raw;
-helper(base as ReusableDiagnostic);

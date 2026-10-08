@@ -1,6 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-
-interface Base {readonly getEnvironmentVariable:unknown;}
-interface Target {getEnvironmentVariable(name: string): string;}
-function probe(value:Base):void {const system=value as Target;if(!system.getEnvironmentVariable){console.log("missing");}else{console.log(system.getEnvironmentVariable("abc"));}}
-probe({getEnvironmentVariable:(name:string):string=>name});

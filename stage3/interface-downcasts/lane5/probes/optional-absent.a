@@ -1,6 +1,0 @@
-interface Base { readonly kind: 'callback' | 'other'; }
-interface Callback extends Base { readonly kind: 'callback'; readonly run?: (value: number) => number; }
-function read(node: Base): Callback { return node as Callback; }
-const input = {kind: 'callback' as const};
-const callback = read(input).run;
-console.log(callback === undefined ? 'undefined' : `${callback(7)}`);

@@ -24,7 +24,6 @@ func renderWithChecks(backend, path string) int {
 		}
 		return 1
 	}
-	explainPredicateChecks(os.Stderr, program)
 	explainNonNullChecks(os.Stderr, program)
 	if backend == "js" {
 		fmt.Print(javascript.JavaScript(program))
@@ -32,27 +31,6 @@ func renderWithChecks(backend, path string) int {
 		fmt.Print(native.C(program))
 	}
 	return 0
-}
-
-func explainPredicateChecks(output io.Writer, program *ir.Program) {
-	sites := append([]ir.PredicateCallCheck(nil), program.PredicateChecks.Sites...)
-	sort.SliceStable(sites, func(i, j int) bool { return sites[i].Where < sites[j].Where })
-	for _, site := range sites {
-		if site.Overload == 0 {
-			fmt.Fprintf(output, "%s: predicate %s\n", relative(site.Where), site.Function)
-		} else {
-			fmt.Fprintf(output, "%s: predicate overload %d of %s\n", relative(site.Where), site.Overload, site.Function)
-		}
-		for _, direction := range site.Directions {
-			status := direction.Status
-			if status == "unobservable" {
-				status += " (proven)"
-			}
-			fmt.Fprintf(output, "  %s: %s; %s\n", direction.Direction, status, direction.Reason)
-		}
-	}
-	counts := program.PredicateChecks
-	fmt.Fprintf(output, "adamic: predicate checks: proven %d checked %d unobservable %d\n", counts.Proven, counts.Checked, counts.Unobservable)
 }
 
 func explainNonNullChecks(output io.Writer, program *ir.Program) {

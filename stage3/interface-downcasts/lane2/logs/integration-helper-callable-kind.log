@@ -1,6 +1,0 @@
---- FAIL: TestViewCallablesNode (0.14s)
-    --- FAIL: TestViewCallablesNode/kind (0.04s)
-        view_callables_test.go:19: exit 0, stdout "", stderr ""; want 70, "", "adamic: panic: field read failed: node.run is not a function; expected function, found number\n"
-FAIL
-FAIL	github.com/system-inc/adamic/internal/javascript	0.145s
-FAIL

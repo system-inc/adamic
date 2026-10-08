@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRanked4ArrayContracts (0.01s)
-    --- FAIL: TestCheckedViewRanked4ArrayContracts/ranked4-files-push-wrong (18.78s)
-        checked_views_ranked4_arrays_test.go:61: exit codes differ; stderr ""; stdout "3\n"; exit 0
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	18.813s
-FAIL

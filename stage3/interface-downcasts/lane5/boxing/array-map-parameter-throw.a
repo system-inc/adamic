@@ -1,3 +1,0 @@
-const values = [1, 2, 3];
-const callback = (value:number|string):string => {throw new Error(`${value}`);};
-try { console.log(values.map(callback).join(",")); } catch(error) { if(error instanceof Error) {console.log(error.message);} }

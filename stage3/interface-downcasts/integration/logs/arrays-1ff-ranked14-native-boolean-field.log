@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRanked14ArrayContracts (0.00s)
-    --- FAIL: TestCheckedViewRanked14ArrayContracts/ranked14-jsdoc-signature-parameters-wrong-bracketed (14.72s)
-        checked_views_ranked14_arrays_test.go:65: exit codes differ; stderr "/tmp/adamic-gate/adamic-build-2613052698/main.c:647:30: runtime error: load of value 32, which is not a valid value for type 'bool'\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-2613052698/main.c:647:30 \n"; stdout ""; exit 1
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	14.736s
-FAIL

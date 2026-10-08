@@ -1,6 +1,0 @@
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: (string | number)[]; }
-const raw = {kind: 'box' as const, child: [42]};
-const base: Base = raw;
-const viewed = base as Carrier;
-console.log(String(viewed.child[-1]));

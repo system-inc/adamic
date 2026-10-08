@@ -322,23 +322,12 @@ func (p *parser) quantifier(atom Node) (Node, error) {
 			p.pos = start
 			return nil, p.fail("incomplete quantifier")
 		}
-		// V8's ParseIntervalQuantifier saturates each decimal at INT_MAX
-		// before checking order. Keep exact counters, but use that observed
-		// early-error comparison, including the cohere witness near 2^63.
-		if max != nil && quantifierOrderBound(min).Cmp(quantifierOrderBound(max)) > 0 {
+		if max != nil && min.Cmp(max) > 0 {
 			return nil, p.failAt(start, "quantifier range out of order")
 		}
 	}
 	greedy := !p.take('?')
 	return &Quantifier{Atom: atom, Min: min, Max: max, Greedy: greedy}, nil
-}
-
-func quantifierOrderBound(value *big.Int) *big.Int {
-	limit := big.NewInt(2147483647)
-	if value.Cmp(limit) > 0 {
-		return limit
-	}
-	return value
 }
 
 func (p *parser) escape(inClass bool) (Node, bool, error) {
@@ -369,17 +358,15 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
 		}
 		return &Assertion{Kind: kind}, false, nil
 	}
-	if c >= '1' && c <= '9' {
+	if !inClass && c >= '1' && c <= '9' {
 		p.pos--
 		n, _ := p.decimal()
-		if !inClass && n.IsInt64() && n.Int64() <= int64(p.captureCount) {
+		if n.IsInt64() && n.Int64() <= int64(p.captureCount) {
 			return &Backreference{Index: int(n.Int64())}, true, nil
 		}
 		if p.flags.Unicode || p.flags.UnicodeSets {
 			return nil, false, p.failAt(start, "invalid decimal escape")
 		}
-		// Annex B.1.2 ClassEscape / LegacyOctalEscapeSequence also
-		// applies inside legacy classes, independently of capture count.
 		p.pos = start + 1
 		return p.legacyOctal(start)
 	}

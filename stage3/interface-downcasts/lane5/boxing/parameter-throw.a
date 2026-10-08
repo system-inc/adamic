@@ -1,2 +1,0 @@
-const f: (value:number) => string = (value:number|string):string => { throw new Error(`${value}`); };
-try { console.log(f(5)); } catch (error) { if (error instanceof Error) { console.log(error.message); } }

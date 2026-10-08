@@ -1,2 +1,0 @@
-function outer(): number { const result = inner(); function inner(): number { return 7; } return result; }
-console.log(String(outer()));

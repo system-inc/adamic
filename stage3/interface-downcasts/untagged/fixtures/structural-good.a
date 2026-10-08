@@ -1,6 +1,0 @@
-// Representative member-count fixture. Not the full compiler interfaces.
-interface Left { readonly text: string; readonly note?: string; }
-interface Right { readonly child: {readonly label: string}; readonly note?: string; }
-type Target = Left | Right;
-const value2: Right = {child: {label: 'name'}};
-console.log('2:' + value2.child.label);
