@@ -1,0 +1,7 @@
+=== RUN   TestRegexpCompileDynamicPatternGap
+    gap_test.go:46: go: true
+    gap_test.go:46: node: true
+    gap_test.go:57: /workspace/adamic/stage1/cohere/lint/helpers/regexp/gaps/dynamic_pattern.a:3:27: stage 0 can't lower RegExp with a nonconstant pattern yet
+--- PASS: TestRegexpCompileDynamicPatternGap (0.39s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/helpers/regexp	0.399s
