@@ -1,0 +1,29 @@
+import { panic } from 'adamic';
+export interface SourceNode {
+    readonly kind: string;
+    readonly text: string;
+    readonly expression: number;
+    readonly name: number;
+    readonly keyword: string;
+    readonly argumentsPresent: boolean;
+    readonly arguments: readonly number[];
+    readonly propertiesPresent: boolean;
+    readonly properties: readonly number[];
+}
+export interface CallSourceResult { readonly source: string; readonly found: boolean; }
+// Read-only projection of the Go AST. Import defer/source use MetaProperty, not a
+// property access. Require accepts exactly one string-literal-like argument.
+export function callExpressionSource(nodes: readonly SourceNode[], id: number): CallSourceResult {
+    if (id === -1) { return {source: '', found: false}; }
+    const node = nodes[id] ?? panic('missing source AST node');
+    if (node.kind !== 'CallExpression') { return {source: '', found: false}; }
+    const expression = nodes[node.expression] ?? panic('missing call expression');
+    const dynamicImport = expression.kind === 'ImportKeyword' ||
+        (expression.kind === 'MetaProperty' && expression.keyword === 'ImportKeyword' && (expression.text === 'defer' || expression.text === 'source'));
+    const requireCall = expression.kind === 'Identifier' && expression.text === 'require' && node.arguments.length === 1;
+    if (!dynamicImport && !requireCall) { return {source: '', found: false}; }
+    if (!node.argumentsPresent || node.arguments.length === 0) { return {source: '', found: false}; }
+    const first = nodes[node.arguments[0] ?? panic('missing argument index')] ?? panic('missing argument node');
+    if (first.kind !== 'StringLiteral' && first.kind !== 'NoSubstitutionTemplateLiteral') { return {source: '', found: false}; }
+    return {source: first.text, found: true};
+}
