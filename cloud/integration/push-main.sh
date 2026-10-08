@@ -159,6 +159,12 @@ if unrecorded:
     problems.append("planned stages without a recorded exit of 0: %s" % " ".join(unrecorded))
 if fast.get("finished") is not True:
     problems.append("the gate didn't record that it finished")
+# A scoped run (ADAMIC_LINT_RULES, cohere's rule-only batches) skips lint's corpus-wide tests by name,
+# so it never lands anything (cohere, #60hxabf). Since developer tools' 796e9810 the gate refuses to
+# start with it set and records "scoped_env"; a log from before that records nothing, and no gate
+# before it ever set the variable.
+if fast.get("scoped_env"):
+    problems.append("it ran scoped (%s set)" % " ".join(fast["scoped_env"]))
 if problems:
     print("; ".join(problems))
     sys.exit(1)
