@@ -36,15 +36,15 @@ item.iterator = `+factory+`;`)
 	}
 }
 
-func TestLibraryIteratorCustomOriginRefused(t *testing.T) {
+func TestLibraryIteratorCustomProtocolDispatchRefused(t *testing.T) {
 	_, err := lowerSource(t, `const other = ['other'].values();
 const custom: ArrayIterator<string> = {
  next: (): IteratorResult<string, undefined> => ({ done: false, value: 'custom' }),
  [Symbol.iterator]: (): ArrayIterator<string> => other,
 };
 for (const value of custom) { console.log(value); break; }`)
-	if err == nil || !strings.Contains(err.Error(), "compiler protocol origin is not proved") {
-		t.Fatalf("want custom iterator origin refusal, got %v", err)
+	if err == nil || !strings.Contains(err.Error(), "custom iterator protocol dispatch") {
+		t.Fatalf("want compiler protocol dispatch boundary, got %v", err)
 	}
 }
 
@@ -57,6 +57,27 @@ func TestLibraryIteratorCompilerSlotsRefused(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
 			if err == nil || !strings.Contains(err.Error(), probe.reason) {
 				t.Fatalf("want %s refusal, got %v", probe.reason, err)
+			}
+		})
+	}
+}
+
+func TestLibraryIteratorBuiltinOverridesRefused(t *testing.T) {
+	for _, source := range []string{
+		`const values = [1]; values[Symbol.iterator] = () => [9].values();`,
+		`const values = new Map<number, number>(); values[Symbol.iterator] = () => new Map<number, number>().entries();`,
+		`const values = new Set<number>(); values[Symbol.iterator] = () => [9].values();`,
+		`Array.prototype[Symbol.iterator] = () => [9].values();`,
+		`String.prototype[Symbol.iterator] = () => 'other'[Symbol.iterator]();`,
+		`Map.prototype[Symbol.iterator] = () => new Map<number, number>().entries();`,
+		`Set.prototype[Symbol.iterator] = () => [9].values();`,
+		`const values = new Uint8Array(1); values[Symbol.iterator] = () => [9].values();`,
+		`Uint8Array.prototype[Symbol.iterator] = () => [9].values();`,
+	} {
+		t.Run(source, func(t *testing.T) {
+			_, err := lowerSource(t, source)
+			if err == nil || !(strings.Contains(err.Error(), "inherited library member") || strings.Contains(err.Error(), "assigning an element of a value") || strings.Contains(err.Error(), "new an Identifier")) {
+				t.Fatalf("want compiler built-in write refusal, got %v", err)
 			}
 		})
 	}

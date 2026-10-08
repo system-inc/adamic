@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"array_next", "string_next", "map_set_live", "tsc_helpers"} {
+	for _, name := range []string{"array_next", "string_next", "map_set_live", "tsc_helpers", "identity_close", "to_array"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -38,6 +38,9 @@ func TestLibraryIteratorProtocolMutants(t *testing.T) {
 		{"live_bound", "map_set_live", "map.c", "iterator->next < iterator->map->used", "iterator->next < iterator->map->count"},
 		{"done_flag", "map_set_live", "map_set.c", "result->slots[0].boolean = !present;", "result->slots[0].boolean = true;"},
 		{"tsc_callback_order", "tsc_helpers", "map_set.c", "pair->slots[0] = key;\n\t\tpair->slots[1] = value;", "pair->slots[0] = value;\n\t\tpair->slots[1] = key;"},
+		{"iterator_identity_copy", "identity_close", "map_set.c", "adamic_retain(self)", "adamic_object_copy(self)"},
+		{"shared_next_skip", "identity_close", "map_set.c", "return next->code(next, arguments);", "adamic_value skipped = next->code(next, arguments);\n\tadamic_release(skipped.reference);\n\treturn next->code(next, arguments);"},
+		{"to_array_skip", "to_array", "map_set.c", "state->slots[2].number = (double)(position + 1);", "state->slots[2].number = (double)(position + 2);"},
 		{"completion_value", "map_set_live", "map_set.c", "(adamic_maybe_number){false, 0}", "(adamic_maybe_number){true, 0}"},
 	}
 	for _, mutant := range mutants {

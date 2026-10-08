@@ -234,7 +234,7 @@ func (l *lowering) libraryIteratorLoop(function int, iterator ir.Expression, ite
 	held := l.libraryLocal(function, "iterator", ir.Object)
 	step := l.libraryLocal(function, "step", ir.Object)
 	loop := []ir.Statement{
-		ir.Declare{Local: step.Local, Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}},
+		ir.Declare{Local: step.Local, Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure, Method: true}, Returns: ir.Object}},
 		ir.If{Condition: ir.Property{Object: step, Name: "done", Of: ir.Boolean}, Then: []ir.Statement{ir.Break{}}},
 		ir.Declare{Local: item.Local, Value: ir.Property{Object: step, Name: "value", Of: item.Of}},
 	}
@@ -532,7 +532,7 @@ func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
 			}
 		}
 	}
-	return l.libraryIteratorOrigin(node)
+	return l.libraryIteratorCustomProtocolBoundary(node)
 }
 
 func (l *lowering) libraryIteratorType(proven *checker.Type) bool {

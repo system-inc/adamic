@@ -20,6 +20,20 @@ func (l *lowering) librarySequenceIterator(node *ast.Node) (ir.Expression, bool,
 		}
 	} else if callee.Kind == ast.KindPropertyAccessExpression {
 		access := callee.AsPropertyAccessExpression()
+		if callee.Name().Text() == "toArray" && l.libraryIteratorType(l.checker.GetTypeAtLocation(access.Expression)) {
+			if len(call.Arguments.Nodes) != 0 {
+				return nil, true, l.notYet(node, "iterator toArray with arguments")
+			}
+			element, known := l.libraryIteratorElement(access.Expression)
+			if !known {
+				return nil, true, l.notYet(node, "iterator toArray without a represented yield type")
+			}
+			iterator, err := l.expression(access.Expression)
+			if err != nil {
+				return nil, true, err
+			}
+			return l.libraryIteratorArray(node, iterator, element), true, nil
+		}
 		if name := callee.Name().Text(); name == "keys" || name == "values" || name == "entries" {
 			receiver, part = access.Expression, name
 		}
@@ -34,7 +48,10 @@ func (l *lowering) librarySequenceIterator(node *ast.Node) (ir.Expression, bool,
 			return nil, true, l.notYet(node, "a built-in iterator factory with arguments")
 		}
 		value, err := l.expression(receiver)
-		return value, true, err
+		if err != nil {
+			return nil, true, err
+		}
+		return ir.CallClosure{Closure: ir.Property{Object: value, Name: iteratorSlot, Of: ir.Closure, Method: true}, Returns: ir.Object}, true, nil
 	}
 	if part == "iterator" && of == ir.Map {
 		part = "entries"
@@ -73,9 +90,9 @@ func (l *lowering) librarySequenceIterator(node *ast.Node) (ir.Expression, bool,
 	return ir.CollectionIterator{Collection: source, Part: part, Key: ir.Number, Value: element}, true, nil
 }
 
-// A library interface can also describe a user object with a different iterator
-// factory. The compiler must prove protocol origin before treating that as built-in.
-func (l *lowering) libraryIteratorOrigin(node *ast.Node) error {
+// A library interface can also describe a user iterator. Until compiler protocol
+// dispatch handles that erased view, do not read it as native iterator state.
+func (l *lowering) libraryIteratorCustomProtocolBoundary(node *ast.Node) error {
 	view := l.checker.GetTypeAtLocation(node)
 	if !l.libraryIteratorType(view) {
 		return nil
@@ -111,7 +128,7 @@ func (l *lowering) libraryIteratorOrigin(node *ast.Node) error {
 		module.AsNode().ForEachChild(visit)
 	}
 	if unsafe {
-		return l.notYet(node, "a built-in iterator view that can hide a custom Symbol.iterator method; compiler protocol origin is not proved")
+		return l.notYet(node, "custom iterator protocol dispatch through a built-in interface view (compiler lowering is not implemented)")
 	}
 	return nil
 }

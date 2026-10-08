@@ -44,9 +44,39 @@ uint64_t adamic_map_number_hash(double number) {
 	return hash & 0x3fffffffu;
 }
 
-static const char *const iterator_names[] = {"next"};
+// Inherited method tables are immutable and shared by each iterator family. The bound closure
+// is private state, not the public next property; reflection and copying are refused.
+static adamic_value iterator_next(adamic_object *self, adamic_value *arguments) {
+	adamic_closure *next = self->slots[0].reference;
+	return next->code(next, arguments);
+}
+
+static adamic_value iterator_identity(adamic_object *self, adamic_value *arguments) {
+	(void)arguments;
+	return (adamic_value){.reference = adamic_retain(self)};
+}
+
+static const char *const iterator_method_names[] = {"next", "__adamic_symbol_iterator"};
+// V8 has one next method per family, with a common inherited Symbol.iterator.
+static adamic_value array_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
+static adamic_value set_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
+static adamic_value string_iterator_next(adamic_object *self, adamic_value *arguments) { return iterator_next(self, arguments); }
+static const adamic_method iterator_method_code[][2] = {
+	{iterator_next, iterator_identity}, {set_iterator_next, iterator_identity},
+	{array_iterator_next, iterator_identity}, {string_iterator_next, iterator_identity}
+};
+static const adamic_methods iterator_prototypes[] = {
+	{2, iterator_method_names, iterator_method_code[0]}, {2, iterator_method_names, iterator_method_code[1]},
+	{2, iterator_method_names, iterator_method_code[2]}, {2, iterator_method_names, iterator_method_code[3]}
+};
+static const char *const iterator_names[] = {"__adamic_iterator_state"};
 static const bool iterator_references[] = {true};
-static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL};
+static const adamic_shape iterator_shapes[] = {
+	{1, iterator_names, iterator_references, &iterator_prototypes[0]},
+	{1, iterator_names, iterator_references, &iterator_prototypes[1]},
+	{1, iterator_names, iterator_references, &iterator_prototypes[2]},
+	{1, iterator_names, iterator_references, &iterator_prototypes[3]}
+};
 static const char *const state_names[] = {"iterator", "part", "key", "value", "set"};
 static const bool state_references[] = {true, false, false, false, false};
 static const adamic_shape state_shape = {5, state_names, state_references, NULL};
@@ -165,7 +195,7 @@ static adamic_object *sequence_iterator(void *collection, int part, int value) {
 	state->slots[4].boolean = false;
 	adamic_closure *next = adamic_closure_new(sequence_next, 1);
 	next->cells[0] = adamic_cell_new((adamic_value){.reference = state}, true);
-	adamic_object *object = adamic_object_new(&iterator_shape);
+	adamic_object *object = adamic_object_new(&iterator_shapes[((adamic_heap *)collection)->kind == adamic_kind_string ? 3 : 2]);
 	object->slots[0].reference = next;
 	return object;
 }
@@ -182,7 +212,7 @@ adamic_object *adamic_collection_iterator(void *collection, int part, int key, i
 	state->slots[4].boolean = set;
 	adamic_closure *next = adamic_closure_new(collection_next, 1);
 	next->cells[0] = adamic_cell_new((adamic_value){.reference = state}, true);
-	adamic_object *object = adamic_object_new(&iterator_shape);
+	adamic_object *object = adamic_object_new(&iterator_shapes[set ? 1 : 0]);
 	object->slots[0].reference = next;
 	return object;
 }
