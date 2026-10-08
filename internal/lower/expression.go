@@ -40,8 +40,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			}
 		}
 	}
-	if l.nodeBufferType(proven, "Buffer") {
-		return ir.Array, true
+	if valueType, known := l.nodeBufferRepresentation(proven); known {
+		return valueType, true
 	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
@@ -194,10 +194,11 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
-				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+			skipKeeping, viewErr := l.nodeBufferContextualView(node, contextual)
+			if viewErr != nil {
+				return nil, viewErr
 			}
-			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.checker.GetTypeAtLocation(node); !skipKeeping && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
@@ -417,6 +418,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeCryptoNamespaceValue(node); known {
+		return value, err
+	}
 	if value, known, err := l.nodeFSDirectoryValue(node); known {
 		return value, err
 	}
@@ -877,6 +881,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeCryptoFallback(node); known {
+		return value, err
+	}
 	conditional := node.AsConditionalExpression()
 	condition, err := l.condition(conditional.Condition)
 	if err != nil {
