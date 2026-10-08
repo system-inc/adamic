@@ -1,0 +1,14 @@
+class Base {
+ static value = 20;
+ static plus(value: number): number { return value + 2; }
+ static read(): number { return this.value; }
+}
+class Child extends Base { static override value = 30; }
+const plus = Base.plus;
+const childPlus = Child.plus;
+const bound = Child.read.bind(Child);
+console.log(`${plus(3)} ${childPlus(4)} ${plus === childPlus} ${bound()}`);
+console.log(`${Base.hasOwnProperty('plus')} ${Child.hasOwnProperty('plus')} ${Object.keys(Base).join(',')}`);
+class Override extends Base { static override plus(value: number): number { return value + 4; } }
+const other = Override.plus;
+console.log(`${other(3)} ${other === plus} ${Override.hasOwnProperty('plus')}`);

@@ -248,8 +248,13 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
 		}
 		fields[slot].Value = ir.Read{Local: l.locals[l.symbol(parent.Name())], Of: ir.Object, Checked: checked}
 	}
+	methods := lowered.methodList()
+	for index := range methods {
+		method := &methods[index]
+		method.OwnStatic = lowered.base == nil || lowered.base.methods[method.Name] != method.Function
+	}
 	object := ir.Read{Local: l.staticGlobals[l.symbol(declaration.Name())], Of: ir.Object}
-	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{Fields: fields, Class: lowered.class}}}
+	statements := []ir.Statement{ir.Declare{Local: object.Local, Value: ir.ObjectLiteral{Fields: fields, Methods: methods, Class: lowered.class}}}
 	outerInstance, outerType, outerNode := l.instance, l.classType, l.classNode
 	l.instance, l.classType, l.classNode = lowered, l.checker.GetTypeOfSymbol(l.symbol(declaration.Name())), declaration.Name()
 	defer func() { l.instance, l.classType, l.classNode = outerInstance, outerType, outerNode }()

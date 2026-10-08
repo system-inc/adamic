@@ -23,6 +23,12 @@ mutants = [
     ('bound-cycle-hidden', 'internal/lower/cycles.go',
      'for _, bound := range f.boundMethods {', 'for _, bound := range f.boundMethods[:0] {',
      './internal/lower', 'TestMethodBindCycleIsRefused', ['want bound receiver cycle refusal']),
+    ('static-throw-hidden', 'internal/lower/exceptions.go',
+     'for _, lowered := range l.statics {', 'for _, lowered := range map[*ast.Symbol]*instance{} {',
+     './internal/oracle', 'TestMethodValuesTypeScript/static_reading', ['stdout differs']),
+    ('static-own-hidden', 'internal/native/runtime/object.c',
+     'methods->own_static[index] && key[0]', 'false && methods->own_static[index] && key[0]',
+     './internal/oracle', 'TestNativeAgreesWithNode/internal/oracle/testdata/method_values/static', ['stdout differs']),
 ]
 for name, relative, original, replacement, package, test, catchers in mutants:
     source = repository / relative

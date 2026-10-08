@@ -780,8 +780,9 @@ type Field struct {
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
 // is this.
 type Method struct {
-	Name     string
-	Function int
+	Name      string
+	Function  int
+	OwnStatic bool // an own, non-enumerable constructor method
 }
 
 func (InstanceOf) Type() Type  { return Boolean }

@@ -7,7 +7,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"free", "bind"} {
+	for _, name := range []string{"free", "bind", "static"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -18,7 +18,7 @@ func init() {
 
 func TestMethodValuesTypeScript(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"free", "bind", "reading", "uncaught"} {
+	for _, name := range []string{"free", "bind", "reading", "uncaught", "static", "static_reading"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/method_values", name+".a"))

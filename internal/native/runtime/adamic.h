@@ -209,6 +209,7 @@ struct adamic_methods {
 	const char *const *names;
 	const adamic_method *code;
 	adamic_closure *const *values;
+	const bool *own_static;
 };
 adamic_value adamic_method_value_call(adamic_closure *self, adamic_value *arguments, size_t argument_count);
 adamic_closure *adamic_object_method_value(const adamic_object *object, const char *name, adamic_slot_cache *cache);

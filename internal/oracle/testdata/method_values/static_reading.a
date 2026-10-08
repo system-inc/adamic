@@ -1,0 +1,9 @@
+// Materialized as .ts. An unbound this-reading .a extraction remains refused.
+class Counter {
+ static value = 7;
+ static read(): number { console.log('entered static'); return this.value; }
+}
+const read = Counter.read;
+try { console.log(`${read()}`); } catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+const bound = Counter.read.bind(Counter);
+console.log(`${bound()}`);

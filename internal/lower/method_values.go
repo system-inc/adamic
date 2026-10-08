@@ -133,7 +133,10 @@ func (l *lowering) userMethodValue(node *ast.Node) (ir.Expression, bool, error) 
 		}
 		if declaration.Kind == ast.KindMethodDeclaration && declaration.Parent.Kind == ast.KindClassDeclaration {
 			if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsStatic) {
-				return nil, true, l.notYet(access, "a static method value")
+				if _, err := l.staticInstance(l.staticClass(l.checker.GetTypeAtLocation(receiver), declaration.Parent)); err != nil {
+					return nil, true, err
+				}
+				continue
 			}
 			if _, err := l.instantiate(declaration.Parent, l.checker.GetTypeAtLocation(receiver), access); err != nil {
 				return nil, true, err

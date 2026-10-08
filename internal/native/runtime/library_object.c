@@ -41,6 +41,7 @@ void adamic_object_check_write(const adamic_object *object, const char *name) {
 }
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
+ if (object->class != NULL && object->class->is_static && adamic_object_has(object, key)) return true;
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
   if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;

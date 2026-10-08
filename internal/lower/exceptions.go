@@ -121,6 +121,12 @@ func (l *lowering) exceptions() error {
 			dispatched[method.Function] = true
 		}
 	}
+	// Constructor methods can now escape as ordinary callable values too.
+	for _, lowered := range l.statics {
+		for _, method := range lowered.methodList() {
+			dispatched[method.Function] = true
+		}
+	}
 	// Whether any function value can throw, and so every call through one, grows with what can, so
 	// the two are worked out together until neither changes.
 	for changed := true; changed; {
