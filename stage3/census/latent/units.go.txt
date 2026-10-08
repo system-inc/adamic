@@ -108,7 +108,14 @@ func (l *lowering) latentLexicalLocal(identifier *ast.Node, symbol *ast.Symbol) 
 }
 
 func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile)) {
+	latentFullSelected(ctx, program, emit, nil)
+}
+
+func latentFullSelected(ctx context.Context, program *load.Program, emit func(LatentFile), selection *latentReplaySelection) {
 	for _, file := range program.Files() {
+		if selection != nil && file != selection.file {
+			continue
+		}
 		latentFindings = nil
 		latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), "refusal_scan"
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
@@ -116,14 +123,16 @@ func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile
 		fresh := func() *lowering {
 			return &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
 		}
-		func() {
-			defer func() {
-				if failure := recover(); failure != nil {
-					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(file.AsNode()), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
-				}
+		if selection == nil {
+			func() {
+				defer func() {
+					if failure := recover(); failure != nil {
+						latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(file.AsNode()), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
+					}
+				}()
+				latentRecord(fresh().latentRefuse(file))
 			}()
-			latentRecord(fresh().latentRefuse(file))
-		}()
+		}
 		// Registration is prepared once per file, then deep-copied per attempted unit.
 		base := fresh()
 		base.noteInheritance(program.Files())
@@ -132,6 +141,9 @@ func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile
 		base.latentRegisterNested(program.Files())
 		for _, candidate := range latentCandidates(program, file) {
 			node := candidate.node
+			if selection != nil && node != selection.node {
+				continue
+			}
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
 			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "attempted", CheckerDiagnostics: []string{}, Parent: candidate.parent, Top: candidate.top, Depth: candidate.depth}
 			if node.Name() != nil {

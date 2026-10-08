@@ -33,6 +33,7 @@ subprocess.run(['go', 'run', str(territory / 'statementrewrite'),
 replace[str(repository / 'internal/lower/statements.go')] = str(statement_output)
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
+overlay('internal/lower/latent_replay.go', (territory / 'replay.go.txt').read_text())
 
 # Parse the exact refusal function and its visitor scopes; fail on unsupported shapes.
 refusal_output = scratch / 'internal_lower_refusals.go'
@@ -87,5 +88,6 @@ if (repository / 'internal/lower/enums.go').exists():
         }""")
 overlay('internal/lower/latent_hook.go', hook)
 overlay('stage3/census/latent/tool/main.go', (territory / 'main.go.txt').read_text())
+overlay('stage3/census/latent/replay/worker/main.go', (territory / 'replay/main.go.txt').read_text())
 (scratch / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
 print(scratch / 'overlay.json')

@@ -85,3 +85,13 @@ func (p *Program) LatentOwnDiagnosticsIn(body *ast.Node) []string {
 	}
 	return result
 }
+
+// Entry replay uses the same resolved graph as the entry census.
+func (p *Program) LatentReplayEntryReach() {
+	p.files = nil
+	for _, source := range p.compiler.GetSourceFiles() {
+		if !source.IsDeclarationFile && !IsLibrary(source) {
+			p.files = append(p.files, source)
+		}
+	}
+}

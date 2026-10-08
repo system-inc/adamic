@@ -200,3 +200,34 @@ owner and change the baseline checker observation; all must fail their audits.
 Reason CSVs flag both unowned rows and context-sensitive `reading X` observations.
 Those reads can reflect incomplete isolated bindings after earlier failures;
 they remain observed NotYet sites and require individual interpretation.
+
+
+## Replay one lowering finding
+
+From the repository root, run `go run ./stage3/census/latent/replay -project /path/to/adapted/src/tsc/tsc.ts -where /path/to/adapted/src/compiler/file.ts:LINE:COLUMN -kind NotYet -reason 'exact census reason'` (use the census source directory instead of the entry file for a directory census).
+
+The command prepares the same guarded scratch overlay automatically. It loads the
+same complete project, keeps all declarations and bindings, selects the smallest
+eligible census unit containing the diagnostic node position, and attempts only
+that unit through the full census code. Signature matching requires the exact
+`where`, `kind` and `reason` fields from an actual `lowering` finding. Positions
+are one-based lines and UTF-16 columns, as printed by the census. Use the same
+source paths and bytes as the original run. Scan-only findings and findings whose
+reproduction depends on a larger enclosing attempt can fail this assertion.
+
+stdout is the selected unit's census JSON record, including its refusals in order.
+stderr prints the matching refusal, load/register/lower time, and total time
+including overlay generation and Go compilation. A missing signature exits
+nonzero. Production Load and Lower remain disabled; the worker checks both guards
+on every invocation. For repeated work, build the worker with the generated
+`make_overlay.py` overlay and invoke it with the same arguments.
+
+Run the two integration tests with
+`python3 stage3/census/latent/replay/replay_test.py > /tmp/replay-tests.log 2>&1`.
+They compare every finding, in order, against an unfiltered full census of a
+nested body whose parent is checker-rejected, including an ancestor capture and
+an imported binding. Selecting the parent's sibling must exit 1 at the signature
+assertion. Run the positive test with `LATENT_REPLAY_MUTANT_PARENT_SIBLING=1` to
+prove that the equality/reproduction check itself fails under that mutant.
+
+[Replay validation and three real-project timings](replay/REPORT.md) compare the command with the 10,551-attempt full entry census.
