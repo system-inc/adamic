@@ -1,0 +1,23 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=60m",
+    "./stage1/cohere/lint"
+  ],
+  "environment": {
+    "TMPDIR": "/tmp/adamic-gate",
+    "GOMAXPROCS": "4",
+    "GOCACHE": "/tmp/wave19-unpark-cache/go-build",
+    "XDG_CACHE_HOME": "/tmp/wave19-unpark-cache",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave19-typescript",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/tmp/wave19-unpark-full/profiles",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/tmp/wave19-unpark-full/profiles"
+  },
+  "nproc": "5",
+  "branch": "codex/typeaware-wave-19",
+  "head": "68f8d2d8fee79d375c33a56b1694d848327ea357"
+}

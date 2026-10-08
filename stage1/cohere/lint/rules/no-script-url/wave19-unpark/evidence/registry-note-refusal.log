@@ -1,0 +1,6 @@
+=== RUN   TestRulesAgree
+    lint_test.go:367: /workspace/adamic/stage1/cohere/lint/rules/typescript-consistent-generic-constructors/rule.a:75:35: stage 0 can't lower lastIndexOf with these arguments yet
+--- FAIL: TestRulesAgree (80.35s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	80.403s
+FAIL

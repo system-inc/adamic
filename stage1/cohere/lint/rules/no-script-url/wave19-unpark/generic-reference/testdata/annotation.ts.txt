@@ -1,0 +1,2 @@
+class Box<T> {}
+const box = new Box<string>();

@@ -1,0 +1,119 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../../../context.ts';
+import type { ParseNode } from '../../../../../../typescript/parser/nodes.ts';
+import { FileQuestion } from '../../../../checker.a';
+import { Frames, header } from '../../../../../typeaware/frames.ts';
+import { SuggestionEdit } from '../../../../suggestions.a';
+import { forFile } from '../../../../helpers/comments/for_file.ts';
+import { preferConstructor, preferTypeAnnotation } from './messages.a';
+const ruleName = '@typescript-eslint/consistent-generic-constructors';
+export class Rule {
+    readonly context: RuleContext;
+    isolated = false;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        const answer = this.context.checker?.askFile(new FileQuestion('ReadsCompilerOptions', 'isolated-declarations'));
+        if(answer === undefined || answer.value === undefined) { return; }
+        const frames = new Frames(answer.value);
+        header(frames, 'isolated-declarations');
+        this.isolated = frames.yes(); frames.end();
+    }
+    exempt(index: number): boolean {
+        const name = this.context.node(index).text;
+        if(!['Float32Array', 'Float64Array', 'Int16Array', 'Int32Array', 'Int8Array', 'Uint16Array',
+            'Uint32Array', 'Uint8Array', 'Uint8ClampedArray'].includes(name)) { return false; }
+        const answer = this.context.checker?.ask(index, 'node-symbol-origin');
+        if(answer === undefined || answer.value === undefined) { return true; }
+        const frames = new Frames(answer.value); header(frames, 'node-symbol-origin');
+        const present = frames.yes();
+        let libraries = true;
+        if(present) {
+            frames.field(); const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                frames.field(); frames.yes();
+                if(!frames.yes()) { libraries = false; }
+            }
+        }
+        frames.end(); return !present || libraries;
+    }
+    visit(node: ParseNode, index: number, parent: number): void {
+        const context = this.context;
+        if(node.kind === 'Parameter' && !['FunctionDeclaration', 'FunctionExpression', 'MethodDeclaration',
+            'Constructor', 'GetAccessor', 'SetAccessor'].includes(context.kind(parent))) { return; }
+        const initializerIndex = node.children[node.children.length - 1] ?? -1;
+        if(initializerIndex < 0 || context.kind(initializerIndex) !== 'NewExpression') { return; }
+        const initializer = context.node(initializerIndex);
+        const calleeIndex = initializer.children[0] ?? -1;
+        if(calleeIndex < 0 || context.kind(calleeIndex) !== 'Identifier') { return; }
+        const callee = context.node(calleeIndex);
+        const count = Math.max(0, initializer.list);
+        const constructorArguments = initializer.children.slice(1, initializer.children.length - count);
+        const namedHost = context.name(index);
+        const hostIndex = namedHost >= 0 ? namedHost : node.children.find((child) =>
+            context.kind(child) === 'ObjectBindingPattern' || context.kind(child) === 'ArrayBindingPattern') ?? -1;
+        if(hostIndex < 0) { return; }
+        const beforeInitializer = node.children[node.children.length - 2] ?? -1;
+        const hasAnnotation = beforeInitializer !== hostIndex && beforeInitializer >= 0 &&
+            context.start(beforeInitializer) > context.node(hostIndex).end;
+        let annotationIndex = hasAnnotation ? beforeInitializer : -1;
+        let unwrappedIndex = annotationIndex;
+        while(unwrappedIndex >= 0 && context.kind(unwrappedIndex) === 'ParenthesizedType') {
+            unwrappedIndex = context.child(unwrappedIndex, 0);
+        }
+        if(unwrappedIndex >= 0) {
+            const unwrapped = context.node(unwrappedIndex);
+            const nameIndex = unwrapped.children[0] ?? -1;
+            if(unwrapped.kind !== 'TypeReference' || nameIndex < 0 || context.kind(nameIndex) !== 'Identifier' ||
+                context.node(nameIndex).text !== callee.text || this.exempt(nameIndex)) { return; }
+        }
+        const mode = context.settings.read('mode', 'Constructor');
+        const source = context.source;
+        if(mode === 'TypeAnnotation') {
+            if(hasAnnotation || constructorArguments.length === 0) { return; }
+            const first = constructorArguments[0] ?? panic('missing constructor type');
+            const last = constructorArguments[constructorArguments.length - 1] ?? first;
+            let argumentStart = context.node(first).pos;
+            while(argumentStart > 0 && source.slice(argumentStart - 1, argumentStart) !== '<') { argumentStart--; }
+            if(argumentStart > 0) { argumentStart--; }
+            let argumentEnd = context.node(last).end;
+            while(argumentEnd < source.length && source.slice(argumentEnd, argumentEnd + 1) !== '>') { argumentEnd++; }
+            if(argumentEnd < source.length) { argumentEnd++; }
+            if(argumentStart < 0 || argumentEnd <= 0) { panic('missing generic delimiters'); }
+            const host = context.node(hostIndex);
+            context.reportNode(index, ruleName, 'preferTypeAnnotation', preferTypeAnnotation, [
+                new SuggestionEdit(argumentStart, argumentEnd, ''),
+                new SuggestionEdit(host.end, host.end, `: ${callee.text}${source.slice(argumentStart, argumentEnd)}`),
+            ]);
+            return;
+        }
+        if(this.isolated || annotationIndex < 0 || constructorArguments.length > 0) { return; }
+        const annotation = context.node(annotationIndex);
+        const unwrapped = context.node(unwrappedIndex);
+        if(unwrapped.children.length < 2) { return; }
+        let start = context.start(annotationIndex);
+        while(start > 0 && source.slice(start - 1, start) !== ':') { start--; }
+        if(start > 0) { start--; }
+        const first = context.node(unwrapped.children[1] ?? panic('missing annotation type'));
+        const last = context.node(unwrapped.children[unwrapped.children.length - 1] ?? panic('missing annotation type'));
+        let argumentStart = first.pos;
+        while(argumentStart > 0 && source.slice(argumentStart - 1, argumentStart) !== '<') { argumentStart--; }
+        if(argumentStart > 0) { argumentStart--; }
+        let argumentEnd = last.end;
+        while(argumentEnd < source.length && source.slice(argumentEnd, argumentEnd + 1) !== '>') { argumentEnd++; }
+        if(argumentEnd < source.length) { argumentEnd++; }
+        if(argumentStart < 0 || argumentEnd <= 0) { panic('missing generic delimiters'); }
+        let comments = '';
+        const offsets = context.checker?.offsets ?? panic('missing checker offsets');
+        for(const comment of forFile(context.parser, context.root, undefined)) {
+            const firstUnit = offsets.indexOf(comment.start);
+            const lastUnit = offsets.indexOf(comment.end);
+            if(firstUnit >= start && lastUnit <= annotation.end &&
+                !(firstUnit >= argumentStart && lastUnit <= argumentEnd)) { comments += comment.text; }
+        }
+        const insertion = comments + source.slice(argumentStart, argumentEnd) + (initializer.list < 0 ? '()' : '');
+        context.reportNode(index, ruleName, 'preferConstructor', preferConstructor, [
+            new SuggestionEdit(start, annotation.end, ''), new SuggestionEdit(callee.end, callee.end, insertion),
+        ]);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

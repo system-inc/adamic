@@ -1,0 +1,24 @@
+{
+  "package": {
+    "pass": 0,
+    "fail": 1,
+    "skip": 0
+  },
+  "tests": {
+    "pass": 0,
+    "fail": 0,
+    "skip": 0
+  },
+  "wallSeconds": 232.93586569700005,
+  "nproc": 5,
+  "load1min": {
+    "min": 0.09,
+    "median": 4.21,
+    "max": 7.52,
+    "start": 0.09,
+    "end": 3.93
+  },
+  "newUpstreamCasesMatched": 0,
+  "newMutantsRun": 0,
+  "blocker": "Bridge build fails before tests. No skip was reached. All correctness/profile/throughput inputs were set."
+}

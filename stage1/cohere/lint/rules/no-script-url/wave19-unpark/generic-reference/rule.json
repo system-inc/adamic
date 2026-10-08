@@ -1,0 +1,22 @@
+{
+  "name": "@typescript-eslint/consistent-generic-constructors",
+  "typed": true,
+  "programReads": [
+    "ReadsCompilerOptions",
+    "ReadsDefaultLibrary"
+  ],
+  "node": true,
+  "parent": true,
+  "kinds": [
+    "VariableDeclaration",
+    "PropertyDeclaration",
+    "Parameter"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave19GenericConstructors",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestConsistentGenericConstructors"
+}

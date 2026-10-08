@@ -1,0 +1,10 @@
+=== RUN   TestRulesAgree
+    lint_test.go:367: checker compilation phases: load=231.598187ms lower=4.323536305s C=728.931381ms JavaScript=32.638548ms
+    lint_test.go:367: checker native build: 1m34.573762462s
+    lint_test.go:290: cohere cases: 3972 unique source/rule/options combinations
+    lint_test.go:382: /tmp/adamic-gate/adamic-lint-native-3697400364/scanner [--manifest /tmp/adamic-gate/TestRulesAgree2316948033/018/manifest.txt --record /tmp/adamic-gate/TestRulesAgree2316948033/020/transcript]: exit status 70
+        adamic: panic: unsupported checker question: isolated-declarations
+--- FAIL: TestRulesAgree (354.71s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	354.839s
+FAIL

@@ -1,0 +1,5 @@
+{
+  "name": "wave19-generic-arguments-dropped",
+  "from": "comments + source.slice(argumentStart, argumentEnd)",
+  "to": "comments"
+}
