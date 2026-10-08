@@ -1,0 +1,82 @@
+package oracle
+
+import (
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
+	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"local-name", "getLocalName", "3\n", "3\n3\n3\n10\n5\n", "1", "node.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+	} {
+		for _, variant := range strings.Split(family.variants, ",") {
+			t.Run(family.directory+"/"+variant, func(t *testing.T) {
+				program, path := interfaceFixture(t, "lane5/later-ranked-callables/"+family.directory+"/"+variant)
+				truth := onNode(t, path)
+				out := family.good
+				switch variant {
+				case "optional-values":
+					out = family.optional
+				case "wrong-arity":
+					out = "9\n"
+				case "wrong-result":
+					out = family.resultOut
+				case "wrong-parameter-payload":
+					out = family.payloadOut
+				}
+				if variant == "wrong-value" {
+					if truth.exitCode != 70 || !strings.Contains(string(truth.stderr), "TypeError:") {
+						t.Fatalf("Node %#v", truth)
+					}
+				} else if truth.exitCode != 0 || string(truth.stdout) != out {
+					t.Fatalf("Node %#v want %q", truth, out)
+				}
+				sanitized, binary := nativelyUncached(t, program)
+				for index, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+					if variant == "good" || variant == "optional-values" {
+						if difference := disagreement(truth, got); difference != "" {
+							t.Fatal(difference)
+						}
+						continue
+					}
+					field, found := family.field, "found number"
+					switch variant {
+					case "wrong-arity":
+						found = "found function with arity " + family.arity
+					case "wrong-result":
+						found = "found function with incompatible result representation"
+					case "wrong-members":
+						found = "found function with incompatible parameter representations"
+					case "wrong-parameter-payload":
+						field = family.payload
+						found = "expected string, found number"
+					}
+					if got.exitCode != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), field) || !strings.Contains(string(got.stderr), found) {
+						t.Fatalf("backend%d exit %d stdout %q stderr %q want %q and %q; sanitized exit %d stderr %q", index, got.exitCode, got.stdout, got.stderr, field, found, sanitized.exitCode, sanitized.stderr)
+					}
+				}
+				if variant == "good" || variant == "optional-values" {
+					if report := leaksUncached(t, program, binary); report != "" {
+						t.Fatal(report)
+					}
+				}
+			})
+		}
+	}
+}
+
+func TestCheckedViewCallableLaterRankedUnionRefusal(t *testing.T) {
+	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/string-from-node/good.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "3\n" {
+		t.Fatalf("Node %#v", truth)
+	}
+	_, err = lowered(t, path)
+	if err == nil || !strings.Contains(err.Error(), "unsupported untagged object union contract") {
+		t.Fatalf("union payload refusal: %v", err)
+	}
+}

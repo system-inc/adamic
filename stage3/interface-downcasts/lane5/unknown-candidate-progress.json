@@ -545,6 +545,33 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers; Node, native release/sanitized and JavaScript; executable callable check mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "local-name",
+      "pairs": 1,
+      "candidateReads": 23,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "getLocalName",
+          "declared_types": [
+            "(node: Declaration, allowComments?: boolean | undefined, allowSourceMaps?: boolean | undefined, ignoreAssignedName?: boolean | undefined) => Identifier"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 23,
+          "witness": {
+            "file": "src/compiler/transformers/ts.ts",
+            "line": 982,
+            "column": 17
+          },
+          "rank": 67,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; executable callable contract mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
