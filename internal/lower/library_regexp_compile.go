@@ -26,6 +26,10 @@ func (l *lowering) dynamicRegExp(node *ast.Node, args []*ast.Node) (ir.Expressio
 	for len(arguments) < 2 {
 		arguments = append(arguments, ir.StringConstant{Index: l.constant("")})
 	}
+	return l.runtimeRegExpNew(arguments), nil
+}
+
+func (l *lowering) runtimeRegExpNew(arguments []ir.Expression) ir.Expression {
 	const marker = "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n"
 	found := false
 	for _, program := range l.result.Regexps {
@@ -43,5 +47,5 @@ func (l *lowering) dynamicRegExp(node *ast.Node, args []*ast.Node) (ir.Expressio
 #include "regexp_compile_runtime.c"
 `})
 	}
-	return ir.RegExpNew{Index: -1, Arguments: arguments}, nil
+	return ir.RegExpNew{Index: -1, Arguments: arguments}
 }
