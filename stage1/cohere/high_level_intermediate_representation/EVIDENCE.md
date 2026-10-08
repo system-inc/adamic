@@ -431,3 +431,62 @@ Go checker bridge tests pass; native HIR compilation succeeds. The full construc
 run fails with the runtime message recorded above. The last all-backend certificate
 remains 380 originals, 50 probes and 49 lowering mutants at cee5281f; array/object
 work is backed up at fa891b36 on stage1-hir/wip. No finished-unit push is made.
+
+## Shared wrapper allocation blocked: generic static method (Oct 8)
+
+The numeric-enum diagnostic is closed by the owner's ruling: enums are closed,
+so dynamic numeric slots must instead use the shared readonly ArenaIndex<Tag>
+wrapper, with undefined for absence. A separate worktree/branch,
+`/workspace/arena-index`, `stage1-arena/index`, was created from
+`origin/area/stage1-lint` (1f9e223d). No branch has been pushed for this module
+because its required native test does not yet pass. HIR is unchanged pending a
+permitted minting API that compiles; no new native coverage is claimed.
+
+The first generic node-value push/read attempt failed verbatim:
+
+```text
+adamic: /workspace/arena-index/stage1/cohere/arena/arena_index.a:6:45: stage 0 can't lower a value of type Value yet
+exit status 1
+```
+
+An index-only allocator with a private wrapper constructor also fails verbatim:
+
+```text
+adamic: /workspace/arena-index/stage1/cohere/arena/arena_index.a:7:23: stage 0 can't lower a class instantiated with Tag yet
+exit status 1
+```
+
+The failing production API (Go counterpart remains the owned function/symbol
+node tables; core.ts:HIRArena.create and export_origin.ts:SymbolGraph) reduces to:
+
+```typescript
+export class ArenaIndex<Tag> {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push<Tag>(indices: ArenaIndex<Tag>[]): ArenaIndex<Tag> {
+        const index = new ArenaIndex<Tag>(indices.length);
+        indices.push(index);
+        return index;
+    }
+}
+const indices: ArenaIndex<'Function'>[] = [];
+ArenaIndex.push<'Function'>(indices);
+```
+
+Compilation uses `go run ./cmd/adamic build
+/workspace/arena-index/stage1/cohere/arena/testdata/main.a -o /tmp/arena-index`.
+Generic static methods are not concretized at this minting operation. No generic
+parameter was erased, no cast/brand weakening was introduced, and no compiler
+source was changed. Boxing counts cannot be measured before a running native
+wrapper implementation exists.
+
+Automatic approval review rejected a public numeric constructor because callers
+could mint an arbitrary numeric slot outside an arena. It also rejected a public
+constructor taking an arena handle array/free push because callers could allocate
+outside a concrete arena. Both proposed edits were rejected before execution;
+the worktree still holds the private-constructor attempt. The exact second reason:
+"Although it avoids a bare numeric slot, the exported public constructor and generic
+free `push` let callers mint handles outside a concrete arena, still violating the
+ruling that only an arena’s own allocator may construct indices."
+A compiler fix for static generic specialization, or an explicitly authorized
+minting interface, is needed before the shared-home and HIR replacement can land.
