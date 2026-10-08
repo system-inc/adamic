@@ -16,6 +16,11 @@ AnalyzeFactory(factory *ast.Node, target *checker.Type, checker *checker.Checker
 FactoryReadPlan(summary FactoryCompletion, field string) FieldReadPlan
 ```
 
+Integration points: functions.go asks at a concrete factory body/return; cast.go
+asks before admitting a base-result cast; object.go asks while forming a Property
+read. class.go writes publish readiness after their RHS. The first analyzer is
+not wired into these paths yet: no production check erasure has acceptance credit.
+
 The summary identifies allocation sites and aliases by bound symbols, each
 required field's declared type, typed writes definitely executed at every escape,
 and reads before those writes. Each escape retains its source location and the
@@ -91,6 +96,15 @@ array field instead of adding an expando`. Array algorithms returning new ordina
 arrays do not copy metadata unless source explicitly writes it. slice is not a
 NodeArray factory. Alias writes must be visible through the same allocation.
 
+object.go handles named reads and array construction; class.go handles metadata
+writes; native/emit_arrays.go and the JavaScript emitter consume the same layout.
+Planned IR nodes are NodeArrayLiteral{Element, Elements, Layout, Metadata},
+NodeArrayRead{Array, Layout, Slot, Contract, Checked} and
+NodeArrayWrite{Array, Layout, Slot, Value, Contract}. Their Type remains ir.Array;
+field reads have the slot representation. Ownership visitors must walk all operands
+and metadata references before admission. These nodes are contractual signatures,
+not speculative additions to ir.go. The built ArrayLayout is slot planning only.
+
 Both backends require metadata support before these instructions can be emitted.
 A Node-only schema fixture is pending, not a backend pass. No ir.Type or instruction
 is added merely to describe a future runtime ABI.
@@ -100,6 +114,11 @@ is added merely to describe a future runtime ABI.
 ```go
 LowerSpeculativeResult(value ir.Expression, actual, wanted *checker.Type) (ir.Expression, error)
 ```
+
+cast.go and concrete generic result lowering ask for this plan; control.go uses
+the existing ToBoolean lowering for success/rewind branches. Planned IR is
+CheckedSpecialization{Value, Contract, Message}, preserving the wanted result
+representation with a runtime certificate. No unresolved checker type reaches C.
 
 The proven direction is an ordinary value conversion. Otherwise emit a runtime
 contract check at the consuming specialization, evaluate the result once and keep

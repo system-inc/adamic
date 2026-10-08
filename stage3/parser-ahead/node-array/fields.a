@@ -1,0 +1,25 @@
+// a-check: refused a cast the runtime can't check
+// Reduced NodeArray declarations from TypeScript 050880ce; enum values 0 and 1 retained.
+interface Node {kind:number;}
+interface TextRange {pos:number;end:number;}
+interface ReadonlyTextRange {readonly pos:number;readonly end:number;}
+enum TransformFlags {None=0,ContainsTypeScript=1}
+interface MutableNodeArray<T extends Node> extends Array<T>,TextRange {
+ hasTrailingComma:boolean;
+ transformFlags:TransformFlags;
+}
+interface NodeArray<T extends Node> extends ReadonlyArray<T>,ReadonlyTextRange {
+ readonly hasTrailingComma:boolean;
+ transformFlags:TransformFlags;
+}
+function createNodeArray():MutableNodeArray<Node> {
+ const nodes=[{kind:1}] as MutableNodeArray<Node>;
+ nodes.pos=-1;
+ nodes.end=7;
+ nodes.hasTrailingComma=true;
+ nodes.transformFlags=TransformFlags.ContainsTypeScript;
+ return nodes;
+}
+const nodes:NodeArray<Node>=createNodeArray();
+console.log(`${nodes.pos}|${nodes.end}|${nodes.hasTrailingComma}|${nodes.transformFlags}|${nodes.length}|${nodes[0]?.kind}`);
+console.log(String(Array.isArray(nodes)));

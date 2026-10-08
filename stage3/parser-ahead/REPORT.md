@@ -1,8 +1,8 @@
-Built: step 24 parser contract before implementation, on the selected live train tip.
-Commits: contract delivery SHA reported after push; base 9f16421c.
-Commands and outputs: setup passed; nproc 5, CPU quota 4; local records described below.
-Mutants: no new executable check in this contract item; implementation mutants remain pending.
-Uncovered: factory completion, NodeArray emission and whole-parser acceptance are not claimed by documentation.
+Built: parser contract, bounded source completion analysis and fixed NodeArray slot planning; native staged factories and NodeArray emission remain pending.
+Commits: contract 29f7a000; completion facts e990d7d2; final schema delivery SHA reported after push; base 9f16421c.
+Commands and outputs: owned lower tests PASS 0.349s; owned oracle/source/boundary/count tests PASS 1.936s; pinned local a-check six inputs PASS; focused vet PASS.
+Mutants: four completion proof mutants, four metadata slot mutants and one payload mutant caught; payload executed in both backends.
+Uncovered: completion is not wired to production check erasure; staged slots, generic result admission, metadata emission, complete views and Program lifetime await integration; no native parser pass.
 
 The contract is pasted below for posting on #6z35tzs. No message was sent externally.
 
@@ -23,6 +23,11 @@ Lowering asks before trusting a factory result or erasing a checked field read:
 AnalyzeFactory(factory *ast.Node, target *checker.Type, checker *checker.Checker) FactoryCompletion
 FactoryReadPlan(summary FactoryCompletion, field string) FieldReadPlan
 ```
+
+Integration points: functions.go asks at a concrete factory body/return; cast.go
+asks before admitting a base-result cast; object.go asks while forming a Property
+read. class.go writes publish readiness after their RHS. The first analyzer is
+not wired into these paths yet: no production check erasure has acceptance credit.
 
 The summary identifies allocation sites and aliases by bound symbols, each
 required field's declared type, typed writes definitely executed at every escape,
@@ -99,6 +104,15 @@ array field instead of adding an expando`. Array algorithms returning new ordina
 arrays do not copy metadata unless source explicitly writes it. slice is not a
 NodeArray factory. Alias writes must be visible through the same allocation.
 
+object.go handles named reads and array construction; class.go handles metadata
+writes; native/emit_arrays.go and the JavaScript emitter consume the same layout.
+Planned IR nodes are NodeArrayLiteral{Element, Elements, Layout, Metadata},
+NodeArrayRead{Array, Layout, Slot, Contract, Checked} and
+NodeArrayWrite{Array, Layout, Slot, Value, Contract}. Their Type remains ir.Array;
+field reads have the slot representation. Ownership visitors must walk all operands
+and metadata references before admission. These nodes are contractual signatures,
+not speculative additions to ir.go. The built ArrayLayout is slot planning only.
+
 Both backends require metadata support before these instructions can be emitted.
 A Node-only schema fixture is pending, not a backend pass. No ir.Type or instruction
 is added merely to describe a future runtime ABI.
@@ -108,6 +122,11 @@ is added merely to describe a future runtime ABI.
 ```go
 LowerSpeculativeResult(value ir.Expression, actual, wanted *checker.Type) (ir.Expression, error)
 ```
+
+cast.go and concrete generic result lowering ask for this plan; control.go uses
+the existing ToBoolean lowering for success/rewind branches. Planned IR is
+CheckedSpecialization{Value, Contract, Message}, preserving the wanted result
+representation with a runtime certificate. No unresolved checker type reaches C.
 
 The proven direction is an ordinary value conversion. Otherwise emit a runtime
 contract check at the consuming specialization, evaluate the result once and keep
@@ -213,3 +232,86 @@ missing declared slot at allocation, or define it when written? Node adds text o
 at the actual write. Proposal: reserve physical storage without publishing an own
 property, then publish on the actual write. This preserves key presence and avoids
 an invented initial value. Current checked-field writes reject the absent slot.
+
+## Item 3: NodeArray first schema shape
+
+NodeArrayLayout assigns the four declared extra fields to slots 0 through 3 and
+keeps distinct presence/initialization bitmap indices. Read(name) returns the slot
+and representation. Duplicate names, changed required representations, new unknown
+required fields and unreifiable extra representations fail closed. Explicit optional
+extensions retain declared order and presence state. No wrapper, expando runtime,
+byte-offset ABI or speculative IR instruction is introduced. This is planning code;
+the array runtime and both emission paths still need their real instructions.
+
+The independent stock TypeScript AST at 050880ce verifies all four inherited/own
+fields and their types in both NodeArray and MutableNodeArray. Source Node prints:
+
+```
+-1|7|true|1|1|1
+true
+```
+
+The final true is Array.isArray; length and indexed kind are included. Optional
+presence is a separate reduced array extension, not a claim about the source's
+four required fields. Node prints:
+
+```
+false|true
+true|true
+true|ready
+```
+
+Its cache is absent, then present undefined, then present string. Real stage 0 C
+and JavaScript attempts for the required-field fixture both refuse its cast. The
+optional-extension fixture refuses its optional relation. Headers pin these current
+boundaries for a-check; they are pending support required by the ruling, not newly
+chosen permanent refusals. Lowering cannot reach a native metadata read, so no
+native sanitizer/leak or native slot-omission claim is made for either fixture.
+There are no runtime count rows for refused NodeArray programs. The three factory
+rows verify unchanged in the final focused oracle run.
+
+Commands, redirected to the retained logs:
+
+```
+go test ./internal/lower -run '^TestParserNodeArray' -count=1 -v
+go test ./internal/oracle -run '^TestParserAheadNodeArraySource$' -count=1 -v
+node stage3/parser-ahead/node-array/verify-source.cjs /tmp/lane5-c-original
+python3 stage3/parser-ahead/node-array/mutants.py
+python3 stage3/parser-ahead/check-local.py
+go test ./internal/lower -run '^TestParserFactory|^TestParserNodeArray' -count=1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestParserAhead' -count=1
+go vet ./internal/lower ./internal/oracle
+```
+
+Four independent overlay mutants return the wrong fixed slot for pos, end,
+hasTrailingComma and transformFlags. Each compiles and fails its matching slot
+assertion. They certify the planner only; emitted metadata mutants remain pending.
+The Node/source boundary suite passes 0.327s, schema planning 0.007s. The final
+combined lower suite passes 0.349s; oracle passes 1.936s. The six-file pinned
+Gate.aCheck passes. Local pre-push records include source hashes and worktree status;
+this is not a whole fast-gate pass. Initial CLI flag-order and relative-path runner
+errors were corrected; neither receives acceptance credit. Initial layout compilation
+used nonexistent IR constants and was corrected before any reported successful test.
+
+Design questions raised by prediction and observations:
+
+- Node adds metadata keys at their actual write and preserves array identity.
+  Proposal: reserve physical slots in the array allocation while keeping presence
+  false until the write. A wrapper or eagerly published undefined properties differs.
+- Node's optional cache distinguishes absence and present undefined. Proposal: carry
+  both presence and initialization state, then let step 17 encode the optional value.
+  That dependency must be connected to metadata emission, not merely object fields.
+- The original generic factory casts a base allocation with missing subtype fields.
+  Proposal: concrete result specialization records its fixed target layout and retains
+  checks on uncompleted reads; unresolved generic shapes remain pending, never trusted.
+- A factory result can outlive speculation rewind. Proposal: request the Program region
+  from step 06. Existing statement regions cannot establish that lifetime. This unit
+  does not change runtime region ownership or reclaim speculative trees.
+
+Step 24 delivery is contract and first planning shapes, with one existing native
+complete-layout control and real negative/boundary observations. The requested
+end-to-end completion and NodeArray builds are not finished. They await staged
+allocation/write support, per-allocation view contracts, generic checked result
+admission and array metadata emission on the train. Source and planner successes
+are explicitly pending for native parser acceptance. No other worker branch was
+merged; no protected central compiler file was edited; no stub was credited.
