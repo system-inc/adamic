@@ -304,9 +304,11 @@ class Gate:
         if os.path.lexists(results):
             os.rename(results, "%s-%d" % (results, time.time()))
         # The lane's own tests import check and run from their directory (from the root both fail with
-        # ModuleNotFoundError); with stage3/api's npm packages in place they are 32 of 32 on the box.
+        # ModuleNotFoundError), and read the pinned TypeScript API from STAGE3_CACHE/api, so they get
+        # the same npm ci of stage3/api that apply.py makes first: 32 of 32 on the box.
+        install = 'mkdir -p "$STAGE3_CACHE/api" && cp ../api/package.json ../api/package-lock.json "$STAGE3_CACHE/api/" && npm ci --prefix "$STAGE3_CACHE/api" --ignore-scripts --no-audit --no-fund'
         commands = [("stage3-apply-tests", ["python3", "stage3/test_apply.py"], None),
-                    ("stage3-lane-tests", ["python3", "-m", "unittest", "test_check", "test_table"], os.path.join(self.arguments.tree, "stage3/lane")),
+                    ("stage3-lane-tests", ["bash", "-c", install + " && python3 -m unittest test_check test_table"], os.path.join(self.arguments.tree, "stage3/lane")),
                     ("stage3-lane", ["bash", "stage3/lane/run.sh", results], None)]
         codes = {}
         # Each command gets its own STAGE3_CACHE: apply runs npm ci into the cache's api/, which deletes
