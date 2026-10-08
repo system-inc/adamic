@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"sync"
 	"syscall"
 	"testing"
@@ -30,10 +31,50 @@ var formatterOnce sync.Once
 var formatterBinary string
 var formatterError error
 
-// Eight GiB for the formerly serial tests leaves eight GiB on the measured
+// By default, eight GiB for the formerly serial tests leaves eight GiB on the measured
 // sixteen-GiB box for layoutSlots' work, other parallel tests and retained heaps.
 // Each unit is 512 MiB; weights round 125% of the isolated process-tree peak up.
-var markdownMemory = newMarkdownMemoryBudget(16)
+const markdownMemoryDefaultUnits = 16
+const markdownMemoryLargestWeight = 8
+
+var markdownMemory = newMarkdownMemoryBudget(markdownMemoryDefaultUnits)
+var markdownMemoryConfigurationOnce sync.Once
+var markdownMemoryConfigurationError error
+
+// Check before t.Parallel so the first selected test reports configuration
+// errors by name. Every top-level test participates, including filtered runs.
+func configureMarkdownMemory(t *testing.T) {
+	t.Helper()
+	first := false
+	markdownMemoryConfigurationOnce.Do(func() {
+		first = true
+		units := markdownMemoryDefaultUnits
+		if value, set := os.LookupEnv("ADAMIC_MARKDOWNBLOCKS_MEMORY_UNITS"); set {
+			var err error
+			units, err = strconv.Atoi(value)
+			if err != nil || units < markdownMemoryLargestWeight {
+				markdownMemoryConfigurationError = fmt.Errorf("ADAMIC_MARKDOWNBLOCKS_MEMORY_UNITS=%q: must be a positive integer of at least %d (512 MiB units; largest test weight)", value, markdownMemoryLargestWeight)
+				return
+			}
+		}
+		markdownMemory.capacity = units
+		t.Logf("markdownblocks memory capacity: %d units (512 MiB each)", units)
+	})
+	if markdownMemoryConfigurationError != nil {
+		if first {
+			t.Fatal(markdownMemoryConfigurationError)
+		}
+		// Abort later tests too, before any work or admission waits. The first
+		// test owns the diagnostic; do not repeat it in concurrent output.
+		t.FailNow()
+	}
+}
+
+func parallelMarkdown(t *testing.T) {
+	t.Helper()
+	configureMarkdownMemory(t)
+	t.Parallel()
+}
 
 type markdownMemoryBudget struct {
 	mu       sync.Mutex
@@ -66,6 +107,7 @@ func (budget *markdownMemoryBudget) release(weight int) {
 
 func parallelMarkdownMemory(t *testing.T, weight int) {
 	t.Helper()
+	configureMarkdownMemory(t)
 	// KEEP modes export to caller-chosen directories. Leave the newly parallel
 	// tests in the serial phase whenever an export is requested, even if callers
 	// assign the same directory to different KEEP variables.
@@ -78,6 +120,9 @@ func parallelMarkdownMemory(t *testing.T, weight int) {
 		}
 	}
 	t.Parallel()
+	if weight > markdownMemory.capacity {
+		t.Fatalf("%s: markdownblocks memory weight %d exceeds capacity %d (512 MiB units)", t.Name(), weight, markdownMemory.capacity)
+	}
 	markdownMemory.acquire(weight)
 	t.Cleanup(func() { markdownMemory.release(weight) })
 }
@@ -156,7 +201,7 @@ func nativeBinaryResult(source string, options native.Options) (string, error) {
 }
 
 func TestNativeBuildModesAreDistinct(t *testing.T) {
-	t.Parallel()
+	parallelMarkdown(t)
 	const source = `#include <stdio.h>
 int main(void) {
 #if __has_feature(address_sanitizer)

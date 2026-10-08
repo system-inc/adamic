@@ -1,0 +1,4 @@
+// Control: same visible behavior, without the optional constructor marker.
+import type {} from 'node:util';
+Error.captureStackTrace(new Error());
+console.log('ok');
