@@ -2,8 +2,8 @@ package native
 
 import (
 	"context"
+	"errors"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -212,7 +212,10 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 
 // Fixed layouts cannot yet create a missing optional property. Preserve the explicit
 // failure instead of turning this already unsupported write into an out-of-bounds store.
-// This is a safety fixture, not a claim of Node parity: Node creates the field.
+// This is a safety fixture, not a claim of Node parity: Node creates the field. A literal typed
+// Optional that leaves missing out has no slot for it, so stage 0 refuses the write rather than
+// let it reach the runtime's missing-slot panic, which stays behind it in object.c. An object
+// reaching set with no such type is refused earlier, as optional widening.
 func TestOptionalWriteMissingSlotRemainsChecked(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs("testdata/field_write_absent.a")
@@ -232,19 +235,9 @@ func TestOptionalWriteMissingSlotRemainsChecked(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := lower.Lower(context.Background(), loaded)
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, sanitize := range []bool{true, false} {
-		binary := filepath.Join(t.TempDir(), "absent-write")
-		if err := Build(C(program), binary, Options{Sanitize: sanitize}); err != nil {
-			t.Fatal(err)
-		}
-		output, err := exec.Command(binary).CombinedOutput()
-		exit, ok := err.(*exec.ExitError)
-		if !ok || exit.ExitCode() != 70 || string(output) != "2\nadamic: panic: compiler bug: a field the checker proved is there is missing\n" {
-			t.Fatalf("sanitize %v: missing-slot write must remain checked: %v, %q", sanitize, err, output)
-		}
+	_, err = lower.Lower(context.Background(), loaded)
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "field_write_absent.a:5:2: stage 0 can't lower writing a possibly absent optional own field yet") {
+		t.Fatalf("missing-slot write must be refused before it reaches C, got %v", err)
 	}
 }
