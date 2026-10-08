@@ -470,6 +470,7 @@ Step 04's closures (compiler/area-next-fixtures 118579fc) merged into area/runti
 - `runtime-file:node_fs_file.h`: declarations only.
 - `runtime-file:node_host.c`: the main-thread directory cache above.
 - `runtime-file:regexp_replace.c`: no mutable static storage.
+
 ## Deterministic normalization and exit mutants (roadmap step 03)
 
 The normalization cache and exit-flush checks now use the cloned-runtime hook approach
