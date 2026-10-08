@@ -23,6 +23,15 @@ func (e *emitter) viewCallableExpected(property ir.Property) string {
 	if contract.Kind != ir.ViewCallable || (contract.Result == 0 && !contract.DiscardResult) {
 		return "undefined"
 	}
+	if len(contract.Members) != 0 {
+		overloads := make([]string, len(contract.Members))
+		for index, member := range contract.Members {
+			child := property
+			child.ViewContract = member
+			overloads[index] = e.viewCallableExpected(child)
+		}
+		return "{name: " + quote(contract.Name) + ", overloads: [" + strings.Join(overloads, ", ") + "]}"
+	}
 	if contract.DiscardResult {
 		return viewCallableSignature(nil, ir.Type(255), contract.Name)
 	}

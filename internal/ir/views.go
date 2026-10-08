@@ -41,16 +41,18 @@ type ViewContract struct {
 	Unsupported string
 
 	// NominalClass is an existing erased class identity, used by Map stores.
-	NominalClass  int
-	NominalBases  []string
-	Nominal       string
-	Undefined     bool
-	Null          bool
-	Kind          ViewKind
-	Name          string
-	Of            Type
-	Allowed       []ViewLiteral
-	Fields        []ViewFieldContract
+	NominalClass int
+	NominalBases []string
+	Nominal      string
+	Undefined    bool
+	Null         bool
+	Kind         ViewKind
+	Name         string
+	Of           Type
+	Allowed      []ViewLiteral
+	Fields       []ViewFieldContract
+	// For ViewCallable, Members is the complete conjunctive overload set.
+	// Each child keeps its own parameters and result; no union arm is selected.
 	Members       []ViewContractID
 	Key           ViewContractID
 	MapReadonly   bool

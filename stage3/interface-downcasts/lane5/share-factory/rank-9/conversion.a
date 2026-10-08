@@ -1,0 +1,7 @@
+// Original overloaded/generic declarations and read; adjacent carriers reduced.
+interface StringLiteral {readonly value:number;}
+interface Base {readonly createStringLiteral:unknown;}
+interface Target {createStringLiteral(text: string, isSingleQuote?: boolean): StringLiteral;
+createStringLiteral(text: string, isSingleQuote?: boolean, hasExtendedUnicodeEscape?: boolean): StringLiteral;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createStringLiteral("ok",true,true).value}`);console.log(`${factory.createStringLiteral("ok").value}`);console.log(`${factory.createStringLiteral("ok",undefined,undefined).value}`);}
+probe({createStringLiteral:(text:string, isSingleQuote?:boolean, hasExtendedUnicodeEscape?:boolean):StringLiteral=>({value:(isSingleQuote===undefined ? 100 : isSingleQuote===true ? 2 : 0)+(hasExtendedUnicodeEscape===undefined ? 10 : hasExtendedUnicodeEscape===true ? 1 : 0)})});

@@ -173,9 +173,41 @@ func TestCheckedViewCallableShareAFrontiers(t *testing.T) {
 			if truth.exitCode != 0 || string(truth.stdout) != member.Stdout {
 				t.Fatalf("source Node: %#v", truth)
 			}
-			_, err = lowered(t, path)
+			program, lowerError := lowered(t, path)
+			err = lowerError
 			if err == nil {
-				t.Fatal("frontier lowered; needs complete positive/negative/mutant certification")
+				sanitized, binary := nativelyUncached(t, program)
+				switch member.Rank {
+				case 3, 9, 24:
+					// These original controls now also have negative and mutant certificates
+					// in TestCheckedViewCallableFactory. Keep the frontier's source control.
+					for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+						if difference := disagreement(truth, got); difference != "" {
+							t.Fatal(difference)
+						}
+					}
+					if report := leaksUncached(t, program, binary); report != "" {
+						t.Fatal(report)
+					}
+				case 186, 189:
+					// The reduced producer in these original controls serves only one arm.
+					// A full-set runtime check must stop before the selected call executes.
+					expected := "{ (phaseModifier: number | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; (isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; }"
+					read := "nodeFactory.createImportClause"
+					if member.Rank == 189 {
+						expected = "{ (asteriskToken: AsteriskToken, expression: Expression): YieldExpression; (asteriskToken: undefined, expression: Expression | undefined): YieldExpression; (asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression; }"
+						read = "factory.createYieldExpression"
+					}
+					message := "adamic: panic: field read failed: " + read + " expected " + expected + ", found function with incompatible overload signature 1\n"
+					for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+						if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
+							t.Fatalf("full overload-set frontier: %#v want %q", got, message)
+						}
+					}
+				default:
+					t.Fatal("frontier lowered; needs complete positive/negative/mutant certification")
+				}
+				return
 			}
 			t.Logf("rank %d original read refusal: %v", member.Rank, err)
 			expected := "Adamic 0.1 refuses checked view read of field " + member.Field + " with unsupported callable contract; prove or implement the callable contract before reading this field"

@@ -77,4 +77,34 @@ static inline const adamic_heap *adamic_view_callable_shape(
     int length = snprintf(message, capacity, "field read failed: %s expected %s, found %s", expression, wanted, found);
     adamic_panic(message, (size_t)length);
 }
+
+/* A known producer must serve every advertised overload. Extra arguments are
+   evaluated and ignored; omitted producer parameters must admit undefined. */
+static inline bool adamic_view_callable_overload_matches(const adamic_callable_signature *recorded, const adamic_callable_signature *expected) {
+    if (recorded == NULL || expected == NULL || recorded->result == 0 || expected->result == 0) return false;
+    if (!adamic_callable_representation_compatible(recorded->result, expected->result, recorded->result_mask, expected->result_mask)) return false;
+    for (size_t index = 0; index < recorded->arity; index++) {
+        if (recorded->parameters == NULL) return false;
+        uint16_t takes = recorded->parameter_masks == NULL ? 0 : recorded->parameter_masks[index];
+        if (index >= expected->arity) {
+            if ((adamic_callable_members(recorded->parameters[index], takes) & 1u) == 0) return false;
+        } else {
+            if (expected->parameters == NULL || !adamic_callable_representation_compatible(expected->parameters[index], recorded->parameters[index], expected->parameter_masks == NULL ? 0 : expected->parameter_masks[index], takes)) return false;
+        }
+    }
+    return true;
+}
+
+static inline const adamic_heap *adamic_view_callable_overloads(const adamic_heap *value, const adamic_callable_signature *recorded, const adamic_callable_signature *const *expected, size_t count, const char *name, const char *expression, bool optional) {
+    if (optional && value == NULL) return NULL;
+    if (value == NULL || value->kind != adamic_kind_closure || recorded == NULL || count == 0) return adamic_view_callable_shape(value, recorded, count == 0 ? NULL : expected[0], expression, optional);
+    size_t index = 0;
+    while (index < count && adamic_view_callable_overload_matches(recorded, expected[index])) index++;
+    if (index == count) return value;
+    size_t capacity = strlen(expression) + strlen(name) + 120;
+    char *message = malloc(capacity);
+    if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+    int length = snprintf(message, capacity, "field read failed: %s expected %s, found function with incompatible overload signature %zu", expression, name, index + 1);
+    adamic_panic(message, (size_t)length);
+}
 #endif

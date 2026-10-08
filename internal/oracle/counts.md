@@ -2705,3 +2705,13 @@ compiler proof counts, independent of the runtime allocation counts above.
 | stage3/interface-downcasts/lane5/share-a/rank-429/good.a | 5 | 5 | 3 | 7 | 5 | 0 | 0 | 0 |
 | stage3/interface-downcasts/lane5/share-a/rank-429/wrong-arity.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
 | stage3/interface-downcasts/lane5/share-a/rank-429/wrong-value.a | 1 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-24/conversion.a | 11 | 11 | 15 | 25 | 5 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-24/good.a | 5 | 5 | 3 | 7 | 5 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-24/wrong-overload.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-3/conversion.a | 11 | 11 | 7 | 17 | 5 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-3/good.a | 5 | 5 | 3 | 7 | 5 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-3/wrong-overload.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-3/wrong-result.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-9/conversion.a | 11 | 11 | 7 | 17 | 5 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-9/good.a | 5 | 5 | 3 | 7 | 5 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-9/wrong-overload.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |

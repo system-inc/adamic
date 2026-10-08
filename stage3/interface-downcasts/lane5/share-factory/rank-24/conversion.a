@@ -1,0 +1,9 @@
+// Original overloaded/generic declarations and read; adjacent carriers reduced.
+type GeneratedIdentifierFlags=number;
+interface Identifier {readonly value:number;}
+interface GeneratedNamePart {readonly value:number;}
+interface Base {readonly createUniqueName:unknown;}
+interface Target {createUniqueName(text: string, flags?: GeneratedIdentifierFlags): Identifier;
+createUniqueName(text: string, flags?: GeneratedIdentifierFlags, prefix?: string | GeneratedNamePart, suffix?: string): Identifier;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createUniqueName("ok",8,"ab","c").value}`);console.log(`${factory.createUniqueName("ok").value}`);console.log(`${factory.createUniqueName("ok",undefined,"ab","c").value}`);}
+probe({createUniqueName:(text:string, flags?:GeneratedIdentifierFlags, prefix?:string | GeneratedNamePart, suffix?:string):Identifier=>({value:(flags===undefined ? 100 : flags)+(typeof prefix === "string" ? prefix.length : 0)+(suffix?.length ?? 0)})});

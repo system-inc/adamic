@@ -1,0 +1,6 @@
+=== RUN   TestResolvedCallableDeclarationMembership
+    view_callable_calls_test.go:52: undeclared resolution admitted: <nil>
+--- FAIL: TestResolvedCallableDeclarationMembership (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.068s
+FAIL

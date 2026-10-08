@@ -17,6 +17,9 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 	for _, producer := range e.viewCallableProducers() {
 		e.line("if (%s != NULL && %s->heap.kind == adamic_kind_closure && %s->code == %s) %s = %s;", value, value, value, e.functionName(producer.Function), recorded, producer.Signature)
 	}
+	if property.ViewContract != 0 && len(e.program.ViewContracts[property.ViewContract-1].Members) != 0 && e.program.ViewContracts[property.ViewContract-1].Kind == ir.ViewCallable {
+		return e.emitViewCallableOverloadShape(property, value, recorded)
+	}
 	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
 	e.certifyUntaggedCallableRecorded(property, value, recorded, expected)
 	return emitViewCallableShape(value, recorded, expected, property.View, property.Absent || property.Optional || property.UndefinedAllowed)
@@ -29,6 +32,9 @@ func (e *emitter) viewCallableExpected(property ir.Property) string {
 	}
 	contract := e.program.ViewContracts[id-1]
 	if contract.Kind != ir.ViewCallable || (contract.Result == 0 && !contract.DiscardResult) {
+		return "NULL"
+	}
+	if len(contract.Members) != 0 {
 		return "NULL"
 	}
 	if contract.DiscardResult {

@@ -1,0 +1,4 @@
+native-overload-result: caught by negative exit=0 stdout="read\n" stderr=""; log /tmp/views-callables-factory-mutants/native-overload-result.log
+javascript-overload-result: caught by negative exit=0 stdout="read\n" stderr=""; log /tmp/views-callables-factory-mutants/javascript-overload-result.log
+overload-union-read: caught by unsupported read admitted; log /tmp/views-callables-factory-mutants/overload-union-read.log
+resolved-declaration-membership: caught by undeclared resolution admitted: <nil>; log /tmp/views-callables-factory-mutants/resolved-declaration-membership.log

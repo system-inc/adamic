@@ -37,7 +37,12 @@ func (e *emitter) emitViewCallableMethodCertificate(property ir.Property, method
 	}
 	witness := e.temporary()
 	e.line("adamic_closure %s = {.heap = {.references = 0, .kind = adamic_kind_closure, .slab = 0}, .code = NULL, .receiver = false, .count = 0};", witness)
-	e.line("(void)adamic_view_callable_shape(&%s.heap, %s, %s, %s, false);", witness, recorded, expected, cString(property.View))
+	if property.ViewContract != 0 && e.program.ViewContracts[property.ViewContract-1].Kind == ir.ViewCallable && len(e.program.ViewContracts[property.ViewContract-1].Members) != 0 {
+		e.line("(void)%s;", e.emitViewCallableOverloadShape(property, "&"+witness, recorded))
+	} else {
+		e.line("(void)adamic_view_callable_shape(&%s.heap, %s, %s, %s, false);", witness, recorded, expected, cString(property.View))
+	}
+
 }
 
 // Method thunks do not yet use the scalar-to-union result adapter. Keep that

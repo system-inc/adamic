@@ -48,6 +48,36 @@ func TestViewCallableShapeContract(t *testing.T) {
 			if l.result.ViewContracts[id-1].Result != 0 {
 				t.Fatal("unknown signature recorded as proven")
 			}
+			if declaration == "type Target = { (value: number): number; (value: string): string; };" {
+				sentinel := errors.New("overload child unavailable")
+				err = l.completeViewCallableShapeContract(node, target, id, func(*checker.Type) (ir.ViewContractID, error) { calls++; return 0, sentinel })
+				if !errors.Is(err, sentinel) || calls != 1 {
+					t.Fatalf("lost overload child failure: %v calls %d", err, calls)
+				}
+				calls = 0
+				err = l.completeViewCallableShapeContract(node, target, id, func(child *checker.Type) (ir.ViewContractID, error) {
+					calls++
+					of, known := l.representation(child)
+					if !known {
+						t.Fatal("overload representation unavailable")
+					}
+					childID := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+					l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewScalar, Of: of})
+					return childID, nil
+				})
+				contract := l.result.ViewContracts[id-1]
+				if err != nil || len(contract.Members) != 2 || calls != 4 {
+					t.Fatalf("incomplete overload set: %#v, %v, calls %d", contract, err, calls)
+				}
+				for index, member := range contract.Members {
+					signature := l.result.ViewContracts[member-1]
+					want := []ir.Type{ir.Number, ir.String}[index]
+					if len(signature.Parameters) != 1 || signature.Result == 0 || l.result.ViewContracts[signature.Parameters[0]-1].Of != want || l.result.ViewContracts[signature.Result-1].Of != want {
+						t.Fatalf("overload %d lost its signature: %#v", index+1, signature)
+					}
+				}
+				return
+			}
 			supported := declaration == "type Target = (value: number) => number;" || declaration == "type Target = () => string;" || declaration == "type Target = (value?: number) => number;"
 			sentinel := errors.New("child unavailable")
 			err = l.completeViewCallableShapeContract(node, target, id, func(*checker.Type) (ir.ViewContractID, error) { calls++; return 0, sentinel })

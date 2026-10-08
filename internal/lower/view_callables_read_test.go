@@ -17,6 +17,7 @@ func TestPrepareViewCallableRead(t *testing.T) {
 		"interface Result { unread: unknown; }; type Target = (value: number) => Result;",
 		"type Target = <T>(value: T) => T;",
 		"type Target = (...values: number[]) => number;",
+		"type Target = { (value: number): number; (value: string): string; } | ((value: number) => number);",
 	} {
 		t.Run(declaration, func(t *testing.T) {
 			path := filepath.Join(t.TempDir(), "read.a")
@@ -33,8 +34,12 @@ func TestPrepareViewCallableRead(t *testing.T) {
 			node := file.Statements.Nodes[len(file.Statements.Nodes)-1]
 			target := checked.GetTypeAtLocation(node.Name())
 			l := &lowering{program: program, checker: checked, result: &ir.Program{}}
+			// A normal cast has already interned the registry before a union read.
+			if declaration == "type Target = { (value: number): number; (value: string): string; } | ((value: number) => number);" {
+				l.result.ViewContractTypes = map[int]ir.ViewContractID{}
+			}
 			id, err := l.prepareViewCallableRead(node, target)
-			if declaration == "type Target = <T>(value: T) => T;" || declaration == "type Target = (...values: number[]) => number;" {
+			if declaration == "type Target = <T>(value: T) => T;" || declaration == "type Target = (...values: number[]) => number;" || declaration == "type Target = { (value: number): number; (value: string): string; } | ((value: number) => number);" {
 				if err == nil {
 					t.Fatal("unsupported read admitted")
 				}

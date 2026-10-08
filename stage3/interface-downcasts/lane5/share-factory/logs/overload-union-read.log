@@ -1,0 +1,20 @@
+=== RUN   TestPrepareViewCallableRead
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_()_=>_string;
+=== RUN   TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_}_|_((value:_number)_=>_number);
+    view_callables_read_test.go:44: unsupported read admitted
+--- FAIL: TestPrepareViewCallableRead (0.30s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number; (0.05s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined; (0.04s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_()_=>_string; (0.04s)
+    --- PASS: TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result; (0.04s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T; (0.06s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number; (0.04s)
+    --- FAIL: TestPrepareViewCallableRead/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_}_|_((value:_number)_=>_number); (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.311s
+FAIL

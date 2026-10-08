@@ -1,0 +1,113 @@
+{
+  "base": "a62778110b958f54d52622da01bf7758bce629dc",
+  "roadmapStep": 9,
+  "pairs": 3,
+  "reads": 368,
+  "members": [
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createIdentifier",
+      "declared_types": [
+        "{ (text: string): Identifier; (text: string, originalKeywordKind?: SyntaxKind | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 206,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 10948,
+        "column": 66
+      },
+      "rank": 3,
+      "certified": true,
+      "directory": "gap-3",
+      "read": "factory.createIdentifier",
+      "declarations": [
+        "createIdentifier(text: string): Identifier;",
+        "createIdentifier(text: string, originalKeywordKind?: SyntaxKind, hasExtendedUnicodeEscape?: boolean): Identifier;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 438195,
+      "utf16End": 438219,
+      "stdout": "7\n",
+      "neededChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "certificateDirectory": "rank-3",
+      "test": "TestCheckedViewCallableFactory"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createStringLiteral",
+      "declared_types": [
+        "{ (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 104,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 10950,
+        "column": 9
+      },
+      "rank": 9,
+      "certified": true,
+      "directory": "gap-9",
+      "read": "factory.createStringLiteral",
+      "declarations": [
+        "createStringLiteral(text: string, isSingleQuote?: boolean): StringLiteral;",
+        "createStringLiteral(text: string, isSingleQuote?: boolean, hasExtendedUnicodeEscape?: boolean): StringLiteral;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 438364,
+      "utf16End": 438391,
+      "stdout": "7\n",
+      "neededChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "certificateDirectory": "rank-9",
+      "test": "TestCheckedViewCallableFactory"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createUniqueName",
+      "declared_types": [
+        "{ (text: string, flags?: GeneratedIdentifierFlags | undefined): Identifier; (text: string, flags?: GeneratedIdentifierFlags | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifier; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 58,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 538,
+        "column": 20
+      },
+      "rank": 24,
+      "certified": true,
+      "directory": "gap-24",
+      "read": "factory.createUniqueName",
+      "declarations": [
+        "createUniqueName(text: string, flags?: GeneratedIdentifierFlags): Identifier;",
+        "createUniqueName(text: string, flags?: GeneratedIdentifierFlags, prefix?: string | GeneratedNamePart, suffix?: string): Identifier;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 22748,
+      "utf16End": 22772,
+      "stdout": "7\n",
+      "neededChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "certificateDirectory": "rank-24",
+      "test": "TestCheckedViewCallableFactory"
+    }
+  ]
+}

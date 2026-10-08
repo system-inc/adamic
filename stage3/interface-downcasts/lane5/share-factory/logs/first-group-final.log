@@ -1,0 +1,500 @@
+=== RUN   TestResolvedCallableDeclarationMembership
+--- PASS: TestResolvedCallableDeclarationMembership (0.08s)
+=== RUN   TestViewCallableShapeContract
+=== PAUSE TestViewCallableShapeContract
+=== RUN   TestPrepareViewCallableRead
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_()_=>_string;
+=== RUN   TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_}_|_((value:_number)_=>_number);
+--- PASS: TestPrepareViewCallableRead (0.46s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number; (0.06s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined; (0.07s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_()_=>_string; (0.06s)
+    --- PASS: TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result; (0.08s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T; (0.08s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number; (0.05s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_}_|_((value:_number)_=>_number); (0.06s)
+=== CONT  TestViewCallableShapeContract
+=== RUN   TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number;
+=== RUN   TestViewCallableShapeContract/type_Target_=_()_=>_string;
+=== RUN   TestViewCallableShapeContract/type_Target_=_(value?:_number)_=>_number;
+=== RUN   TestViewCallableShapeContract/type_Target_=_<T>(value:_T)_=>_T;
+=== RUN   TestViewCallableShapeContract/type_Target_=_(...values:_number[])_=>_number;
+=== RUN   TestViewCallableShapeContract/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_};
+--- PASS: TestViewCallableShapeContract (0.35s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number; (0.08s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_()_=>_string; (0.08s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(value?:_number)_=>_number; (0.05s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_<T>(value:_T)_=>_T; (0.04s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(...values:_number[])_=>_number; (0.06s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_}; (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.025s
+=== RUN   TestViewCallableShapeNative
+=== PAUSE TestViewCallableShapeNative
+=== RUN   TestViewCallableProducerCertificateNative
+=== RUN   TestViewCallableProducerCertificateNative/valid
+=== RUN   TestViewCallableProducerCertificateNative/wrong-arity
+=== RUN   TestViewCallableProducerCertificateNative/wrong-result
+=== RUN   TestViewCallableProducerCertificateNative/optional-absent
+=== RUN   TestViewCallableProducerCertificateNative/unrecorded
+--- PASS: TestViewCallableProducerCertificateNative (2.91s)
+    --- PASS: TestViewCallableProducerCertificateNative/valid (0.52s)
+    --- PASS: TestViewCallableProducerCertificateNative/wrong-arity (0.48s)
+    --- PASS: TestViewCallableProducerCertificateNative/wrong-result (0.44s)
+    --- PASS: TestViewCallableProducerCertificateNative/optional-absent (1.07s)
+    --- PASS: TestViewCallableProducerCertificateNative/unrecorded (0.40s)
+=== CONT  TestViewCallableShapeNative
+=== RUN   TestViewCallableShapeNative/valid
+=== RUN   TestViewCallableShapeNative/wrong-arity
+=== RUN   TestViewCallableShapeNative/wrong-parameter
+=== RUN   TestViewCallableShapeNative/wrong-result
+=== RUN   TestViewCallableShapeNative/unknown-result
+=== RUN   TestViewCallableShapeNative/unknown-parameter
+=== RUN   TestViewCallableShapeNative/unknown-signature
+=== RUN   TestViewCallableShapeNative/number
+=== RUN   TestViewCallableShapeNative/optional-absent
+=== RUN   TestViewCallableShapeNative/required-absent
+--- PASS: TestViewCallableShapeNative (5.08s)
+    --- PASS: TestViewCallableShapeNative/valid (0.45s)
+    --- PASS: TestViewCallableShapeNative/wrong-arity (0.39s)
+    --- PASS: TestViewCallableShapeNative/wrong-parameter (0.70s)
+    --- PASS: TestViewCallableShapeNative/wrong-result (0.67s)
+    --- PASS: TestViewCallableShapeNative/unknown-result (0.38s)
+    --- PASS: TestViewCallableShapeNative/unknown-parameter (0.40s)
+    --- PASS: TestViewCallableShapeNative/unknown-signature (0.37s)
+    --- PASS: TestViewCallableShapeNative/number (0.49s)
+    --- PASS: TestViewCallableShapeNative/optional-absent (0.78s)
+    --- PASS: TestViewCallableShapeNative/required-absent (0.36s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	8.077s
+=== RUN   TestViewCallableShapeNode
+=== PAUSE TestViewCallableShapeNode
+=== RUN   TestViewCallableProducerCertificateNode
+=== RUN   TestViewCallableProducerCertificateNode/valid
+=== RUN   TestViewCallableProducerCertificateNode/wrong-arity
+=== RUN   TestViewCallableProducerCertificateNode/wrong-result
+=== RUN   TestViewCallableProducerCertificateNode/optional-absent
+=== RUN   TestViewCallableProducerCertificateNode/unrecorded
+--- PASS: TestViewCallableProducerCertificateNode (0.28s)
+    --- PASS: TestViewCallableProducerCertificateNode/valid (0.08s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-arity (0.06s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-result (0.06s)
+    --- PASS: TestViewCallableProducerCertificateNode/optional-absent (0.04s)
+    --- PASS: TestViewCallableProducerCertificateNode/unrecorded (0.04s)
+=== CONT  TestViewCallableShapeNode
+=== RUN   TestViewCallableShapeNode/valid
+=== RUN   TestViewCallableShapeNode/wrong-arity
+=== RUN   TestViewCallableShapeNode/wrong-parameter
+=== RUN   TestViewCallableShapeNode/wrong-result
+=== RUN   TestViewCallableShapeNode/unknown-result
+=== RUN   TestViewCallableShapeNode/unknown-parameter
+=== RUN   TestViewCallableShapeNode/unknown-signature
+=== RUN   TestViewCallableShapeNode/number
+=== RUN   TestViewCallableShapeNode/optional-absent
+=== RUN   TestViewCallableShapeNode/required-absent
+--- PASS: TestViewCallableShapeNode (0.65s)
+    --- PASS: TestViewCallableShapeNode/valid (0.05s)
+    --- PASS: TestViewCallableShapeNode/wrong-arity (0.05s)
+    --- PASS: TestViewCallableShapeNode/wrong-parameter (0.05s)
+    --- PASS: TestViewCallableShapeNode/wrong-result (0.06s)
+    --- PASS: TestViewCallableShapeNode/unknown-result (0.06s)
+    --- PASS: TestViewCallableShapeNode/unknown-parameter (0.04s)
+    --- PASS: TestViewCallableShapeNode/unknown-signature (0.05s)
+    --- PASS: TestViewCallableShapeNode/number (0.05s)
+    --- PASS: TestViewCallableShapeNode/optional-absent (0.05s)
+    --- PASS: TestViewCallableShapeNode/required-absent (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.933s
+=== RUN   TestCheckedViewCallableFactory
+=== RUN   TestCheckedViewCallableFactory/createIdentifier
+=== RUN   TestCheckedViewCallableFactory/createIdentifier/good
+=== RUN   TestCheckedViewCallableFactory/createIdentifier/conversion
+    checked_views_callable_factory_test.go:67: native0 resolved undefined conversion mutant caught: stdout "9\n110\n0\n", Node requires "9\n110\n110\n"
+    checked_views_callable_factory_test.go:67: native1 resolved undefined conversion mutant caught: stdout "9\n110\n0\n", Node requires "9\n110\n110\n"
+=== RUN   TestCheckedViewCallableFactory/createIdentifier/wrong-overload
+    checked_views_callable_factory_test.go:51: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:51: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:51: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:90: backend0 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:90: backend1 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:90: backend2 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+=== RUN   TestCheckedViewCallableFactory/createIdentifier/wrong-result
+    checked_views_callable_factory_test.go:43: sanitized result exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:51: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:51: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:51: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 1\n"
+=== RUN   TestCheckedViewCallableFactory/createStringLiteral
+=== RUN   TestCheckedViewCallableFactory/createStringLiteral/good
+=== RUN   TestCheckedViewCallableFactory/createStringLiteral/conversion
+    checked_views_callable_factory_test.go:67: native0 resolved undefined conversion mutant caught: stdout "3\n110\n0\n", Node requires "3\n110\n110\n"
+    checked_views_callable_factory_test.go:67: native1 resolved undefined conversion mutant caught: stdout "3\n110\n0\n", Node requires "3\n110\n110\n"
+=== RUN   TestCheckedViewCallableFactory/createStringLiteral/wrong-overload
+    checked_views_callable_factory_test.go:51: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createStringLiteral expected { (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:51: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createStringLiteral expected { (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:51: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createStringLiteral expected { (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:90: backend0 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:90: backend1 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:90: backend2 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+=== RUN   TestCheckedViewCallableFactory/createUniqueName
+=== RUN   TestCheckedViewCallableFactory/createUniqueName/good
+=== RUN   TestCheckedViewCallableFactory/createUniqueName/conversion
+    checked_views_callable_factory_test.go:67: native0 resolved undefined conversion mutant caught: stdout "11\n100\n3\n", Node requires "11\n100\n103\n"
+    checked_views_callable_factory_test.go:67: native1 resolved undefined conversion mutant caught: stdout "11\n100\n3\n", Node requires "11\n100\n103\n"
+=== RUN   TestCheckedViewCallableFactory/createUniqueName/wrong-overload
+    checked_views_callable_factory_test.go:51: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createUniqueName expected { (text: string, flags?: number | undefined): Identifier; (text: string, flags?: number | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:51: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createUniqueName expected { (text: string, flags?: number | undefined): Identifier; (text: string, flags?: number | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:51: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createUniqueName expected { (text: string, flags?: number | undefined): Identifier; (text: string, flags?: number | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:90: backend0 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:90: backend1 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:90: backend2 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+--- PASS: TestCheckedViewCallableFactory (13.91s)
+    --- PASS: TestCheckedViewCallableFactory/createIdentifier (5.66s)
+        --- PASS: TestCheckedViewCallableFactory/createIdentifier/good (0.96s)
+        --- PASS: TestCheckedViewCallableFactory/createIdentifier/conversion (2.03s)
+        --- PASS: TestCheckedViewCallableFactory/createIdentifier/wrong-overload (1.92s)
+        --- PASS: TestCheckedViewCallableFactory/createIdentifier/wrong-result (0.74s)
+    --- PASS: TestCheckedViewCallableFactory/createStringLiteral (4.34s)
+        --- PASS: TestCheckedViewCallableFactory/createStringLiteral/good (0.74s)
+        --- PASS: TestCheckedViewCallableFactory/createStringLiteral/conversion (1.81s)
+        --- PASS: TestCheckedViewCallableFactory/createStringLiteral/wrong-overload (1.79s)
+    --- PASS: TestCheckedViewCallableFactory/createUniqueName (3.91s)
+        --- PASS: TestCheckedViewCallableFactory/createUniqueName/good (0.70s)
+        --- PASS: TestCheckedViewCallableFactory/createUniqueName/conversion (1.85s)
+        --- PASS: TestCheckedViewCallableFactory/createUniqueName/wrong-overload (1.37s)
+=== RUN   TestCheckedViewCallableFactoryCounts
+--- PASS: TestCheckedViewCallableFactoryCounts (2.99s)
+=== RUN   TestCheckedViewCallableFactoryDeclarations
+--- PASS: TestCheckedViewCallableFactoryDeclarations (0.00s)
+=== RUN   TestCheckedViewCallableShareA
+=== RUN   TestCheckedViewCallableShareA/rank-102
+=== RUN   TestCheckedViewCallableShareA/rank-102/good
+=== RUN   TestCheckedViewCallableShareA/rank-102/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 102 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 102 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-102/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-120
+=== RUN   TestCheckedViewCallableShareA/rank-120/good
+=== RUN   TestCheckedViewCallableShareA/rank-120/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 120 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 120 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-120/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-276
+=== RUN   TestCheckedViewCallableShareA/rank-276/good
+=== RUN   TestCheckedViewCallableShareA/rank-276/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 276 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+    checked_views_callable_share_a_test.go:109: rank 276 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedViewCallableShareA/rank-276/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-291
+=== RUN   TestCheckedViewCallableShareA/rank-291/good
+=== RUN   TestCheckedViewCallableShareA/rank-291/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 291 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 291 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-291/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-435
+=== RUN   TestCheckedViewCallableShareA/rank-435/good
+=== RUN   TestCheckedViewCallableShareA/rank-435/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 435 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 435 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-435/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-450
+=== RUN   TestCheckedViewCallableShareA/rank-450/good
+=== RUN   TestCheckedViewCallableShareA/rank-450/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 450 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 450 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-450/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-453
+=== RUN   TestCheckedViewCallableShareA/rank-453/good
+=== RUN   TestCheckedViewCallableShareA/rank-453/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 453 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 453 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-453/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-456
+=== RUN   TestCheckedViewCallableShareA/rank-456/good
+=== RUN   TestCheckedViewCallableShareA/rank-456/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 456 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 456 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-456/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-465
+=== RUN   TestCheckedViewCallableShareA/rank-465/good
+=== RUN   TestCheckedViewCallableShareA/rank-465/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 465 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 465 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-465/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-357
+=== RUN   TestCheckedViewCallableShareA/rank-357/good
+=== RUN   TestCheckedViewCallableShareA/rank-357/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 357 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 357 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-357/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-363
+=== RUN   TestCheckedViewCallableShareA/rank-363/good
+=== RUN   TestCheckedViewCallableShareA/rank-363/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 363 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 363 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-363/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-444
+=== RUN   TestCheckedViewCallableShareA/rank-444/good
+=== RUN   TestCheckedViewCallableShareA/rank-444/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 444 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 444 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-444/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-429
+=== RUN   TestCheckedViewCallableShareA/rank-429/good
+=== RUN   TestCheckedViewCallableShareA/rank-429/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 429 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 429 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-429/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-285
+=== RUN   TestCheckedViewCallableShareA/rank-285/good
+=== RUN   TestCheckedViewCallableShareA/rank-285/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 285 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+    checked_views_callable_share_a_test.go:109: rank 285 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedViewCallableShareA/rank-285/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-306
+=== RUN   TestCheckedViewCallableShareA/rank-306/good
+=== RUN   TestCheckedViewCallableShareA/rank-306/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 306 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 306 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-306/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-333
+=== RUN   TestCheckedViewCallableShareA/rank-333/good
+=== RUN   TestCheckedViewCallableShareA/rank-333/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 333 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "done\n"
+    checked_views_callable_share_a_test.go:109: rank 333 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "done\n"
+=== RUN   TestCheckedViewCallableShareA/rank-333/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-354
+=== RUN   TestCheckedViewCallableShareA/rank-354/good
+=== RUN   TestCheckedViewCallableShareA/rank-354/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 354 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 354 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-354/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-360
+=== RUN   TestCheckedViewCallableShareA/rank-360/good
+=== RUN   TestCheckedViewCallableShareA/rank-360/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 360 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 360 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-360/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-366
+=== RUN   TestCheckedViewCallableShareA/rank-366/good
+=== RUN   TestCheckedViewCallableShareA/rank-366/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 366 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 366 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-366/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-369
+=== RUN   TestCheckedViewCallableShareA/rank-369/good
+=== RUN   TestCheckedViewCallableShareA/rank-369/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 369 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 369 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-369/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-372
+=== RUN   TestCheckedViewCallableShareA/rank-372/good
+=== RUN   TestCheckedViewCallableShareA/rank-372/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 372 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "1\n"
+    checked_views_callable_share_a_test.go:109: rank 372 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "1\n"
+=== RUN   TestCheckedViewCallableShareA/rank-372/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-375
+=== RUN   TestCheckedViewCallableShareA/rank-375/good
+=== RUN   TestCheckedViewCallableShareA/rank-375/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 375 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 375 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-375/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-396
+=== RUN   TestCheckedViewCallableShareA/rank-396/good
+=== RUN   TestCheckedViewCallableShareA/rank-396/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 396 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "ok\n"
+    checked_views_callable_share_a_test.go:109: rank 396 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "ok\n"
+=== RUN   TestCheckedViewCallableShareA/rank-396/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-399
+=== RUN   TestCheckedViewCallableShareA/rank-399/good
+=== RUN   TestCheckedViewCallableShareA/rank-399/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 399 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+    checked_views_callable_share_a_test.go:109: rank 399 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedViewCallableShareA/rank-399/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-402
+=== RUN   TestCheckedViewCallableShareA/rank-402/good
+=== RUN   TestCheckedViewCallableShareA/rank-402/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 402 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "ok\n"
+    checked_views_callable_share_a_test.go:109: rank 402 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "ok\n"
+=== RUN   TestCheckedViewCallableShareA/rank-402/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-426
+=== RUN   TestCheckedViewCallableShareA/rank-426/good
+=== RUN   TestCheckedViewCallableShareA/rank-426/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 426 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+    checked_views_callable_share_a_test.go:109: rank 426 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedViewCallableShareA/rank-426/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-477
+=== RUN   TestCheckedViewCallableShareA/rank-477/good
+=== RUN   TestCheckedViewCallableShareA/rank-477/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 477 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+    checked_views_callable_share_a_test.go:109: rank 477 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "7\n"
+=== RUN   TestCheckedViewCallableShareA/rank-477/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-486
+=== RUN   TestCheckedViewCallableShareA/rank-486/good
+=== RUN   TestCheckedViewCallableShareA/rank-486/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 486 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "done\n"
+    checked_views_callable_share_a_test.go:109: rank 486 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "done\n"
+=== RUN   TestCheckedViewCallableShareA/rank-486/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-489
+=== RUN   TestCheckedViewCallableShareA/rank-489/good
+=== RUN   TestCheckedViewCallableShareA/rank-489/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 489 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "ok\n"
+    checked_views_callable_share_a_test.go:109: rank 489 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "ok\n"
+=== RUN   TestCheckedViewCallableShareA/rank-489/wrong-value
+=== RUN   TestCheckedViewCallableShareA/rank-513
+=== RUN   TestCheckedViewCallableShareA/rank-513/good
+=== RUN   TestCheckedViewCallableShareA/rank-513/wrong-arity
+    checked_views_callable_share_a_test.go:109: rank 513 backend0 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+    checked_views_callable_share_a_test.go:109: rank 513 backend1 arity mutant caught by pinned exit/message: mutant exit 0 stdout "true\n"
+=== RUN   TestCheckedViewCallableShareA/rank-513/wrong-value
+--- PASS: TestCheckedViewCallableShareA (84.29s)
+    --- PASS: TestCheckedViewCallableShareA/rank-102 (2.60s)
+        --- PASS: TestCheckedViewCallableShareA/rank-102/good (0.78s)
+        --- PASS: TestCheckedViewCallableShareA/rank-102/wrong-arity (0.76s)
+        --- PASS: TestCheckedViewCallableShareA/rank-102/wrong-value (1.06s)
+    --- PASS: TestCheckedViewCallableShareA/rank-120 (2.65s)
+        --- PASS: TestCheckedViewCallableShareA/rank-120/good (0.72s)
+        --- PASS: TestCheckedViewCallableShareA/rank-120/wrong-arity (0.84s)
+        --- PASS: TestCheckedViewCallableShareA/rank-120/wrong-value (1.09s)
+    --- PASS: TestCheckedViewCallableShareA/rank-276 (2.99s)
+        --- PASS: TestCheckedViewCallableShareA/rank-276/good (0.71s)
+        --- PASS: TestCheckedViewCallableShareA/rank-276/wrong-arity (1.66s)
+        --- PASS: TestCheckedViewCallableShareA/rank-276/wrong-value (0.62s)
+    --- PASS: TestCheckedViewCallableShareA/rank-291 (2.67s)
+        --- PASS: TestCheckedViewCallableShareA/rank-291/good (1.13s)
+        --- PASS: TestCheckedViewCallableShareA/rank-291/wrong-arity (0.92s)
+        --- PASS: TestCheckedViewCallableShareA/rank-291/wrong-value (0.61s)
+    --- PASS: TestCheckedViewCallableShareA/rank-435 (3.16s)
+        --- PASS: TestCheckedViewCallableShareA/rank-435/good (1.18s)
+        --- PASS: TestCheckedViewCallableShareA/rank-435/wrong-arity (0.93s)
+        --- PASS: TestCheckedViewCallableShareA/rank-435/wrong-value (1.05s)
+    --- PASS: TestCheckedViewCallableShareA/rank-450 (2.98s)
+        --- PASS: TestCheckedViewCallableShareA/rank-450/good (0.95s)
+        --- PASS: TestCheckedViewCallableShareA/rank-450/wrong-arity (1.41s)
+        --- PASS: TestCheckedViewCallableShareA/rank-450/wrong-value (0.62s)
+    --- PASS: TestCheckedViewCallableShareA/rank-453 (2.68s)
+        --- PASS: TestCheckedViewCallableShareA/rank-453/good (0.81s)
+        --- PASS: TestCheckedViewCallableShareA/rank-453/wrong-arity (1.20s)
+        --- PASS: TestCheckedViewCallableShareA/rank-453/wrong-value (0.63s)
+    --- PASS: TestCheckedViewCallableShareA/rank-456 (2.99s)
+        --- PASS: TestCheckedViewCallableShareA/rank-456/good (1.06s)
+        --- PASS: TestCheckedViewCallableShareA/rank-456/wrong-arity (0.96s)
+        --- PASS: TestCheckedViewCallableShareA/rank-456/wrong-value (0.97s)
+    --- PASS: TestCheckedViewCallableShareA/rank-465 (2.76s)
+        --- PASS: TestCheckedViewCallableShareA/rank-465/good (0.77s)
+        --- PASS: TestCheckedViewCallableShareA/rank-465/wrong-arity (0.92s)
+        --- PASS: TestCheckedViewCallableShareA/rank-465/wrong-value (1.07s)
+    --- PASS: TestCheckedViewCallableShareA/rank-357 (2.51s)
+        --- PASS: TestCheckedViewCallableShareA/rank-357/good (0.78s)
+        --- PASS: TestCheckedViewCallableShareA/rank-357/wrong-arity (1.19s)
+        --- PASS: TestCheckedViewCallableShareA/rank-357/wrong-value (0.54s)
+    --- PASS: TestCheckedViewCallableShareA/rank-363 (2.48s)
+        --- PASS: TestCheckedViewCallableShareA/rank-363/good (0.72s)
+        --- PASS: TestCheckedViewCallableShareA/rank-363/wrong-arity (1.17s)
+        --- PASS: TestCheckedViewCallableShareA/rank-363/wrong-value (0.60s)
+    --- PASS: TestCheckedViewCallableShareA/rank-444 (2.46s)
+        --- PASS: TestCheckedViewCallableShareA/rank-444/good (0.93s)
+        --- PASS: TestCheckedViewCallableShareA/rank-444/wrong-arity (1.01s)
+        --- PASS: TestCheckedViewCallableShareA/rank-444/wrong-value (0.52s)
+    --- PASS: TestCheckedViewCallableShareA/rank-429 (2.62s)
+        --- PASS: TestCheckedViewCallableShareA/rank-429/good (0.87s)
+        --- PASS: TestCheckedViewCallableShareA/rank-429/wrong-arity (0.88s)
+        --- PASS: TestCheckedViewCallableShareA/rank-429/wrong-value (0.86s)
+    --- PASS: TestCheckedViewCallableShareA/rank-285 (2.97s)
+        --- PASS: TestCheckedViewCallableShareA/rank-285/good (0.82s)
+        --- PASS: TestCheckedViewCallableShareA/rank-285/wrong-arity (1.55s)
+        --- PASS: TestCheckedViewCallableShareA/rank-285/wrong-value (0.59s)
+    --- PASS: TestCheckedViewCallableShareA/rank-306 (2.97s)
+        --- PASS: TestCheckedViewCallableShareA/rank-306/good (0.82s)
+        --- PASS: TestCheckedViewCallableShareA/rank-306/wrong-arity (1.46s)
+        --- PASS: TestCheckedViewCallableShareA/rank-306/wrong-value (0.69s)
+    --- PASS: TestCheckedViewCallableShareA/rank-333 (3.34s)
+        --- PASS: TestCheckedViewCallableShareA/rank-333/good (1.16s)
+        --- PASS: TestCheckedViewCallableShareA/rank-333/wrong-arity (1.33s)
+        --- PASS: TestCheckedViewCallableShareA/rank-333/wrong-value (0.86s)
+    --- PASS: TestCheckedViewCallableShareA/rank-354 (2.80s)
+        --- PASS: TestCheckedViewCallableShareA/rank-354/good (0.88s)
+        --- PASS: TestCheckedViewCallableShareA/rank-354/wrong-arity (1.20s)
+        --- PASS: TestCheckedViewCallableShareA/rank-354/wrong-value (0.73s)
+    --- PASS: TestCheckedViewCallableShareA/rank-360 (3.48s)
+        --- PASS: TestCheckedViewCallableShareA/rank-360/good (1.27s)
+        --- PASS: TestCheckedViewCallableShareA/rank-360/wrong-arity (1.11s)
+        --- PASS: TestCheckedViewCallableShareA/rank-360/wrong-value (1.10s)
+    --- PASS: TestCheckedViewCallableShareA/rank-366 (3.02s)
+        --- PASS: TestCheckedViewCallableShareA/rank-366/good (0.98s)
+        --- PASS: TestCheckedViewCallableShareA/rank-366/wrong-arity (1.36s)
+        --- PASS: TestCheckedViewCallableShareA/rank-366/wrong-value (0.68s)
+    --- PASS: TestCheckedViewCallableShareA/rank-369 (3.42s)
+        --- PASS: TestCheckedViewCallableShareA/rank-369/good (1.30s)
+        --- PASS: TestCheckedViewCallableShareA/rank-369/wrong-arity (1.32s)
+        --- PASS: TestCheckedViewCallableShareA/rank-369/wrong-value (0.79s)
+    --- PASS: TestCheckedViewCallableShareA/rank-372 (2.57s)
+        --- PASS: TestCheckedViewCallableShareA/rank-372/good (0.75s)
+        --- PASS: TestCheckedViewCallableShareA/rank-372/wrong-arity (1.22s)
+        --- PASS: TestCheckedViewCallableShareA/rank-372/wrong-value (0.60s)
+    --- PASS: TestCheckedViewCallableShareA/rank-375 (2.50s)
+        --- PASS: TestCheckedViewCallableShareA/rank-375/good (0.95s)
+        --- PASS: TestCheckedViewCallableShareA/rank-375/wrong-arity (0.86s)
+        --- PASS: TestCheckedViewCallableShareA/rank-375/wrong-value (0.69s)
+    --- PASS: TestCheckedViewCallableShareA/rank-396 (3.31s)
+        --- PASS: TestCheckedViewCallableShareA/rank-396/good (1.34s)
+        --- PASS: TestCheckedViewCallableShareA/rank-396/wrong-arity (1.27s)
+        --- PASS: TestCheckedViewCallableShareA/rank-396/wrong-value (0.70s)
+    --- PASS: TestCheckedViewCallableShareA/rank-399 (2.97s)
+        --- PASS: TestCheckedViewCallableShareA/rank-399/good (0.97s)
+        --- PASS: TestCheckedViewCallableShareA/rank-399/wrong-arity (1.32s)
+        --- PASS: TestCheckedViewCallableShareA/rank-399/wrong-value (0.68s)
+    --- PASS: TestCheckedViewCallableShareA/rank-402 (2.89s)
+        --- PASS: TestCheckedViewCallableShareA/rank-402/good (1.08s)
+        --- PASS: TestCheckedViewCallableShareA/rank-402/wrong-arity (0.97s)
+        --- PASS: TestCheckedViewCallableShareA/rank-402/wrong-value (0.83s)
+    --- PASS: TestCheckedViewCallableShareA/rank-426 (2.45s)
+        --- PASS: TestCheckedViewCallableShareA/rank-426/good (0.63s)
+        --- PASS: TestCheckedViewCallableShareA/rank-426/wrong-arity (0.88s)
+        --- PASS: TestCheckedViewCallableShareA/rank-426/wrong-value (0.94s)
+    --- PASS: TestCheckedViewCallableShareA/rank-477 (2.78s)
+        --- PASS: TestCheckedViewCallableShareA/rank-477/good (0.79s)
+        --- PASS: TestCheckedViewCallableShareA/rank-477/wrong-arity (1.35s)
+        --- PASS: TestCheckedViewCallableShareA/rank-477/wrong-value (0.65s)
+    --- PASS: TestCheckedViewCallableShareA/rank-486 (2.63s)
+        --- PASS: TestCheckedViewCallableShareA/rank-486/good (1.00s)
+        --- PASS: TestCheckedViewCallableShareA/rank-486/wrong-arity (1.00s)
+        --- PASS: TestCheckedViewCallableShareA/rank-486/wrong-value (0.62s)
+    --- PASS: TestCheckedViewCallableShareA/rank-489 (2.36s)
+        --- PASS: TestCheckedViewCallableShareA/rank-489/good (0.94s)
+        --- PASS: TestCheckedViewCallableShareA/rank-489/wrong-arity (0.80s)
+        --- PASS: TestCheckedViewCallableShareA/rank-489/wrong-value (0.62s)
+    --- PASS: TestCheckedViewCallableShareA/rank-513 (2.27s)
+        --- PASS: TestCheckedViewCallableShareA/rank-513/good (0.73s)
+        --- PASS: TestCheckedViewCallableShareA/rank-513/wrong-arity (0.77s)
+        --- PASS: TestCheckedViewCallableShareA/rank-513/wrong-value (0.76s)
+=== RUN   TestCheckedViewCallableShareAFrontiers
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-3
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-9
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-12
+    checked_views_callable_share_a_test.go:212: rank 12 original read refusal: /workspace/adamic/stage3/interface-downcasts/lane5/share-a/gap-12/good.a:5:79: Adamic 0.1 refuses checked view read of field cloneNode with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-24
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-174
+    checked_views_callable_share_a_test.go:212: rank 174 original read refusal: /workspace/adamic/stage3/interface-downcasts/lane5/share-a/gap-174/good.a:6:79: Adamic 0.1 refuses checked view read of field createModifier with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-186
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-189
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-165
+    checked_views_callable_share_a_test.go:212: rank 165 original read refusal: /workspace/adamic/stage3/interface-downcasts/lane5/share-a/gap-165/good.a:6:64: Adamic 0.1 refuses checked view read of field onEmitNode with unsupported callable contract; prove or implement the callable contract before reading this field
+--- PASS: TestCheckedViewCallableShareAFrontiers (6.75s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-3 (0.82s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-9 (0.82s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-12 (0.34s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-24 (1.19s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-174 (0.32s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-186 (1.71s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-189 (1.29s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-165 (0.25s)
+PASS
+gate cache: native hits=0 misses=10
+gate cache: node hits=0 misses=246
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	108.148s

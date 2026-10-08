@@ -14,6 +14,9 @@ func (l *lowering) mapCallableEntrySlot(node *ast.Node, target *checker.Type) ir
 		return 0
 	}
 	signatures := l.checker.GetSignaturesOfType(present, checker.SignatureKindCall)
+	if len(signatures) != 1 {
+		return 0
+	}
 	signature := signatures[0]
 	for _, parameter := range signature.Parameters() {
 		if !l.mapEntryTypeProven(l.checker.GetTypeOfSymbol(parameter), map[*checker.Type]bool{}) {

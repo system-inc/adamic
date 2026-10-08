@@ -1,0 +1,17 @@
+=== RUN   TestCheckedViewCallableFactory
+=== RUN   TestCheckedViewCallableFactory/createIdentifier
+=== RUN   TestCheckedViewCallableFactory/createIdentifier/wrong-result
+    checked_views_callable_factory_test.go:30: gate cache node hit
+    checked_views_callable_factory_test.go:43: sanitized result exit=0 stdout="read\n" stderr=""
+    checked_views_callable_factory_test.go:45: gate cache node hit
+    checked_views_callable_factory_test.go:51: backend0 negative exit=0 stdout="read\n" stderr=""
+    checked_views_callable_factory_test.go:58: negative did not stop: oracle.run{stdout:[]uint8{0x72, 0x65, 0x61, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewCallableFactory (0.67s)
+    --- FAIL: TestCheckedViewCallableFactory/createIdentifier (0.67s)
+        --- FAIL: TestCheckedViewCallableFactory/createIdentifier/wrong-result (0.67s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.687s
+FAIL

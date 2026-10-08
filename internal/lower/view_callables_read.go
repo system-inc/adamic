@@ -18,6 +18,9 @@ func (l *lowering) prepareViewCallableRead(node *ast.Node, declared *checker.Typ
 		return 0, l.notYet(node, "checked callable read of "+l.checker.TypeToString(declared))
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		if !l.runtimeViewCallableShape(target) {
+			return 0, l.notYet(node, "checked callable union with unsupported signatures")
+		}
 		return l.prepareUntaggedCallableUnionRead(node, target)
 	}
 	id := l.result.ViewContractTypes[int(target.Id())]
@@ -76,24 +79,34 @@ func (l *lowering) runtimeViewCallableShape(target *checker.Type) bool {
 	if l.includesUndefined(target) {
 		target = l.checker.GetNonNullableType(target)
 	}
+	// The existing union selector handles one signature per alternative.
+	// An overload set is conjunctive and must not borrow that disjunctive proof.
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			if len(l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)) > 1 {
+				return false
+			}
+		}
+	}
 	signatures := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
-	if len(signatures) != 1 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
+	if len(signatures) == 0 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)) != 0 {
 		return false
 	}
-	s := signatures[0]
-	if len(s.TypeParameters()) != 0 || s.HasRestParameter() {
-		return false
-	}
-	for _, p := range s.Parameters() {
-		if !l.viewCallableBoxedRepresentation(l.checker.GetTypeOfSymbol(p)) {
+	for _, s := range signatures {
+		if len(s.TypeParameters()) != 0 || s.HasRestParameter() {
+			return false
+		}
+		for _, p := range s.Parameters() {
+			if !l.viewCallableBoxedRepresentation(l.checker.GetTypeOfSymbol(p)) {
+				return false
+			}
+		}
+		result := l.checker.GetReturnTypeOfSignature(s)
+		if result.Flags()&checker.TypeFlagsVoid == 0 && !l.viewCallableBoxedRepresentation(result) {
 			return false
 		}
 	}
-	result := l.checker.GetReturnTypeOfSignature(s)
-	if result.Flags()&checker.TypeFlagsVoid != 0 {
-		return true
-	}
-	return l.viewCallableBoxedRepresentation(result)
+	return true
 }
 
 func viewCallableScalarRepresentation(of ir.Type) bool {

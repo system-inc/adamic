@@ -1289,14 +1289,8 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	// Each argument is made what the function value takes: a number or undefined where it takes
 	// number | undefined is packed as one.
-	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
-		for index, parameter := range signatures[0].Parameters() {
-			if index < len(arguments) {
-				if takes, isKnown := l.censusCallableParameter(parameter); isKnown {
-					arguments[index] = fit(arguments[index], takes)
-				}
-			}
-		}
+	if err := l.convertResolvedCallableArguments(node, signatures, arguments); err != nil {
+		return nil, err
 	}
 	for _, argument := range arguments {
 		if censusCallableSlotless(argument.Type()) {
