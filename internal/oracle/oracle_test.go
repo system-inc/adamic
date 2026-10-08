@@ -37,6 +37,7 @@ var fixtures = []struct {
 	// the check, so the native binary is held to the JavaScript backend, which does.
 	checked bool
 }{
+	{"internal/oracle/testdata/host_scout_djb2.a", true, false},
 	{"internal/oracle/testdata/release_fma.a", true, false},
 	{"internal/oracle/testdata/typeof_null.a", true, false},
 	{"internal/oracle/testdata/graph_regions/classification_return.a", true, false},
