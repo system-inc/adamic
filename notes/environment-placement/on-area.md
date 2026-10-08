@@ -75,7 +75,7 @@ ownership; their allocations, frees, peak and region counts are unchanged.
 
 ## Verification
 
-All package runs used -count=1 and -timeout 30m. The runtime and oracle gates
+The requested package runs used -count=1 and -timeout 30m. The runtime and oracle gates
 used ADAMIC_GATE_UNCACHED=1. The oracle ran its ASan/UBSan malloc and slab variants,
 release comparisons, leak checks, counted builds and ThreadSanitizer schedules.
 Go-only analysis packages ran their complete existing tests; their compiled
