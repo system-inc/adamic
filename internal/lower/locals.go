@@ -70,6 +70,9 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
+	if l.caught[symbol] {
+		valueType = ir.Union
+	}
 	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {

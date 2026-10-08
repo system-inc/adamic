@@ -43,6 +43,8 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
+	case flags&checker.TypeFlagsUnknown != 0:
+		return ir.Union, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
 	case flags&checker.TypeFlagsStringLike != 0:
@@ -475,6 +477,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
 				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
 					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
+				}
+				if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Error") {
+					matches = ir.InstanceOf{Value: held, Class: ir.ErrorClass}
 				}
 				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
 				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
