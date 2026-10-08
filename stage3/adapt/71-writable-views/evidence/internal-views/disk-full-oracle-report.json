@@ -1,0 +1,31 @@
+{
+  "tree": "/tmp/unit71-next-lane/adapted-tree",
+  "nproc": 4,
+  "workers": 4,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 3.187
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 1,
+      "seconds": 28.353
+    }
+  },
+  "status": "fail",
+  "wall_seconds": 31.548
+}

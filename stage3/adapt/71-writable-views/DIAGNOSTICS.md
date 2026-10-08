@@ -25,3 +25,5 @@ The final exact-table scalar DiagnosticWithLocation -> Diagnostic reason is 93 -
 The retained sites cross mutable arrays, collections and public Diagnostic/DiagnosticRelatedInformation contracts. To protect the narrower holder, a type-only approach must propagate readonly element fields through those storage contracts and their aliases. That audit is incomplete here, and updating the lane's API sanction is outside the unit's territory. A copy would be a runtime edit if the existing writable API must be retained. No copy was made. This conditional API limitation is distinct from proof of a genuine writer in tsc.
 
 All retained current sites are in REMAINING.md and evidence/reconciliation.json. The unit leaves these coupled storage views alone and does not claim that a lack of proof establishes a language question. The original position-setter witnesses remain the actual writer examples.
+
+[BLOCKED-DIAGNOSTICS.md](BLOCKED-DIAGNOSTICS.md) now enumerates all 163 retained diagnostic sites with the file and span fields each wider view would need to protect. The public declaration and API sanction are unchanged.

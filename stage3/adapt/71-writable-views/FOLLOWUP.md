@@ -4,6 +4,8 @@ Complete census 1174 -> 1047; table-selected writable views 755 -> 637; diagnost
 Undo mutants restore two sink rows, twelve tuple rows and one fresh-allocation row; writer and witness guards fail as intended.
 Shared sentinels and coupled diagnostic storage remain unadapted; full table coverage is not claimed.
 
+These are the accepted f8dea48f measurements. [INTERNAL-VIEWS.md](INTERNAL-VIEWS.md) supersedes the final counts and verification; [BLOCKED-DIAGNOSTICS.md](BLOCKED-DIAGNOSTICS.md) lists the retained diagnostic sites and fields.
+
 Tuple audit
 
 getTypeArguments reads target.typeParameters and target.resolvedTypeParameters. Its writes populate resolvedTypeArguments on the original reference; that cache stays writable. The input becomes Omit<TypeReference, "target"> & { readonly target: GenericType; }. GenericType's common nested fields have the same domains in TupleType; TupleType adds fields rather than narrowing those domains. getTypeReferenceArity only reads target.typeParameters.length, so its input becomes Readonly<TypeReference>.

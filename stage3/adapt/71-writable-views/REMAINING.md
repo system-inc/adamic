@@ -1,6 +1,6 @@
 # Remaining writable-view refusals
 
-1047 unique sites in the corrected final census; 637 match the supplied table's writable adaptation reasons. Exact latent reasons on a checker-rejected program. Retention does not establish a reachable writer. See FOLLOWUP.md and DIAGNOSTICS.md.
+1021 unique sites in the corrected final census; 615 match the supplied table's writable adaptation reasons. Exact latent reasons on a checker-rejected program. Retention does not establish a reachable writer. See INTERNAL-VIEWS.md, FOLLOWUP.md and BLOCKED-DIAGNOSTICS.md.
 
 - `src/compiler/binder.ts:1034:95`: a value of type FlowNode seen as FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read
 - `src/compiler/binder.ts:1041:52`: a value of type FlowNode seen as FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read
@@ -106,7 +106,6 @@
 - `src/compiler/checker.ts:12722:17`: a value of type Block | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace
 - `src/compiler/checker.ts:12723:17`: a value of type AutoAccessorPropertyDeclaration | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace
 - `src/compiler/checker.ts:12789:29`: a value of type Declaration | undefined seen as Symbol | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of SymbolFlags would replace
-- `src/compiler/checker.ts:13079:64`: a value of type never[] seen as TypeParameter[], which can write TypeParameter where never is read
 - `src/compiler/checker.ts:13243:45`: a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read
 - `src/compiler/checker.ts:13254:51`: a value of type never[] seen as BaseType[], which can write BaseType where never is read
 - `src/compiler/checker.ts:13281:20`: a value of type never[] seen as BaseType[], which can write BaseType where never is read
@@ -128,14 +127,11 @@
 - `src/compiler/checker.ts:13759:81`: a value of type never[] seen as Signature[], which can write Signature where never is read
 - `src/compiler/checker.ts:13760:86`: a value of type never[] seen as Signature[], which can write Signature where never is read
 - `src/compiler/checker.ts:13761:77`: a value of type never[] seen as IndexInfo[], which can write IndexInfo where never is read
-- `src/compiler/checker.ts:13964:55`: a value of type never[] seen as Declaration[], which can write Declaration where never is read
 - `src/compiler/checker.ts:13997:62`: a value of type Map<__String, TransientSymbol> seen as SymbolTable | undefined, which can write Symbol where TransientSymbol is read
 - `src/compiler/checker.ts:14215:68`: a value of type TransientSymbol[] seen as Symbol[], which can write Symbol where TransientSymbol is read
 - `src/compiler/checker.ts:14225:38`: a value of type Set<__String> seen as Set<__String | undefined>, which can write __String | undefined where __String is read
-- `src/compiler/checker.ts:14317:57`: a value of type never[] seen as Signature[], which can write Signature where never is read
 - `src/compiler/checker.ts:14332:105`: a value of type Symbol | undefined seen as Type | undefined, which can write TypeFlags where SymbolFlags is read
 - `src/compiler/checker.ts:14362:26`: a value of type never[] seen as Signature[], which can write Signature where never is read
-- `src/compiler/checker.ts:14496:16`: a value of type never[] seen as IndexInfo[], which can write IndexInfo where never is read
 - `src/compiler/checker.ts:14567:107`: a value of type never[] seen as Signature[], which can write Signature where never is read
 - `src/compiler/checker.ts:14567:133`: a value of type never[] seen as IndexInfo[], which can write IndexInfo where never is read
 - `src/compiler/checker.ts:14567:72`: a value of type never[] seen as Signature[], which can write Signature where never is read
@@ -249,7 +245,6 @@
 - `src/compiler/checker.ts:28850:24`: a value of type FlowNode seen as FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read
 - `src/compiler/checker.ts:29059:34`: a value of type FlowNode seen as FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read
 - `src/compiler/checker.ts:2923:37`: a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read
-- `src/compiler/checker.ts:30893:74`: a value of type never[] seen as Declaration[], which can write Declaration where never is read
 - `src/compiler/checker.ts:30895:42`: a value of type DiagnosticWithLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where SourceFile is read
 - `src/compiler/checker.ts:31056:43`: a value of type Declaration[] seen as Node[], which can write Node where Declaration is read
 - `src/compiler/checker.ts:31403:42`: a value of type FlowNode | undefined seen as false | FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read
@@ -397,21 +392,7 @@
 - `src/compiler/checker.ts:49332:78`: a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read
 - `src/compiler/checker.ts:49351:43`: a value of type FlowNode | undefined seen as false | FlowNode | undefined, which can write BindingElement | Expression | VariableDeclaration where BinaryExpression | CallExpression is read
 - `src/compiler/checker.ts:49574:72`: a value of type never[] seen as PotentiallyUnusedIdentifier[], which can write PotentiallyUnusedIdentifier where never is read
-- `src/compiler/checker.ts:49588:19`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49589:19`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49590:19`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49591:19`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49592:19`: a value of type BindingElement[] seen as unknown[], which can write unknown where BindingElement is read
 - `src/compiler/checker.ts:49616:45`: a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read
-- `src/compiler/checker.ts:49631:23`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49636:23`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49641:23`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49646:23`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49663:19`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49664:19`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49665:19`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49666:19`: a value of type Node[] seen as unknown[], which can write unknown where Node is read
-- `src/compiler/checker.ts:49667:19`: a value of type BindingElement[] seen as unknown[], which can write unknown where BindingElement is read
 - `src/compiler/checker.ts:49736:24`: a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read
 - `src/compiler/checker.ts:49742:63`: a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read
 - `src/compiler/checker.ts:49748:62`: a value of type DiagnosticWithLocation[] seen as Diagnostic[], which can write Diagnostic where DiagnosticWithLocation is read
@@ -536,24 +517,24 @@
 - `src/compiler/debug.ts:244:61`: a function taking number seen as one taking never[] (tsc relates a method's parameters both ways), so it can be handed what it can't take
 - `src/compiler/debug.ts:275:63`: a function taking never seen as one taking never[] (tsc relates a method's parameters both ways), so it can be handed what it can't take
 - `src/compiler/debug.ts:355:35`: a function taking Node | undefined seen as one taking never[] (tsc relates a method's parameters both ways), so it can be handed what it can't take
-- `src/compiler/debug.ts:445:34`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"SyntaxKind", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read
-- `src/compiler/debug.ts:449:34`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"SnippetKind", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read
-- `src/compiler/debug.ts:453:34`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"ScriptKind", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read
-- `src/compiler/debug.ts:457:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"NodeFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read
-- `src/compiler/debug.ts:461:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"NodeCheckFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read
-- `src/compiler/debug.ts:465:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"ModifierFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read
-- `src/compiler/debug.ts:469:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"TransformFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read
-- `src/compiler/debug.ts:473:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"EmitFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read
-- `src/compiler/debug.ts:477:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"SymbolFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read
-- `src/compiler/debug.ts:481:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"TypeFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read
-- `src/compiler/debug.ts:485:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"SignatureFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read
-- `src/compiler/debug.ts:489:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"ObjectFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read
-- `src/compiler/debug.ts:493:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"FlowFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read
-- `src/compiler/debug.ts:497:36`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"RelationComparisonResult", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read
-- `src/compiler/debug.ts:501:34`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"CheckMode", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read
-- `src/compiler/debug.ts:505:34`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"SignatureCheckMode", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read
-- `src/compiler/debug.ts:509:35`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"TypeFacts", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read
-- `src/compiler/debug.ts:540:56`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"FlowFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read
+- `src/compiler/debug.ts:445:34`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"SyntaxKind", Record<string, string | number>>, which can write Record<string, string | number> where typeof SyntaxKind is read
+- `src/compiler/debug.ts:449:34`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"SnippetKind", Record<string, string | number>>, which can write Record<string, string | number> where typeof SnippetKind is read
+- `src/compiler/debug.ts:453:34`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"ScriptKind", Record<string, string | number>>, which can write Record<string, string | number> where typeof ScriptKind is read
+- `src/compiler/debug.ts:457:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"NodeFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeFlags is read
+- `src/compiler/debug.ts:461:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"NodeCheckFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof NodeCheckFlags is read
+- `src/compiler/debug.ts:465:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"ModifierFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof ModifierFlags is read
+- `src/compiler/debug.ts:469:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"TransformFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof TransformFlags is read
+- `src/compiler/debug.ts:473:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"EmitFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof EmitFlags is read
+- `src/compiler/debug.ts:477:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"SymbolFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof SymbolFlags is read
+- `src/compiler/debug.ts:481:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"TypeFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFlags is read
+- `src/compiler/debug.ts:485:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"SignatureFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureFlags is read
+- `src/compiler/debug.ts:489:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"ObjectFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof ObjectFlags is read
+- `src/compiler/debug.ts:493:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"FlowFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read
+- `src/compiler/debug.ts:497:36`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"RelationComparisonResult", Record<string, string | number>>, which can write Record<string, string | number> where typeof RelationComparisonResult is read
+- `src/compiler/debug.ts:501:34`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"CheckMode", Record<string, string | number>>, which can write Record<string, string | number> where typeof CheckMode is read
+- `src/compiler/debug.ts:505:34`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"SignatureCheckMode", Record<string, string | number>>, which can write Record<string, string | number> where typeof SignatureCheckMode is read
+- `src/compiler/debug.ts:509:35`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"TypeFacts", Record<string, string | number>>, which can write Record<string, string | number> where typeof TypeFacts is read
+- `src/compiler/debug.ts:540:56`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"FlowFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof FlowFlags is read
 - `src/compiler/emitter.ts:1287:9`: a function taking NodeArray<T> seen as one taking NodeArray<T> (tsc relates a method's parameters both ways), so it can be handed what it can't take
 - `src/compiler/emitter.ts:1292:9`: a function taking TypeNode seen as one taking Node (tsc relates a method's parameters both ways), so it can be handed what it can't take
 - `src/compiler/emitter.ts:1293:9`: a function taking NodeArray<T> seen as one taking NodeArray<T> | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take
@@ -569,7 +550,7 @@
 - `src/compiler/emitter.ts:5776:34`: a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node | undefined, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace
 - `src/compiler/emitter.ts:5780:28`: a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Identifier | PrivateIdentifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace
 - `src/compiler/emitter.ts:5784:41`: a value of type GeneratedIdentifier | GeneratedPrivateIdentifier seen as Node, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace
-- `src/compiler/emitter.ts:5790:141`: a value of type typeof import("/tmp/unit71-diagnostics-replay/src/compiler/_namespaces/ts") seen as Record<"GeneratedIdentifierFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read
+- `src/compiler/emitter.ts:5790:141`: a value of type typeof import("src/compiler/_namespaces/ts") seen as Record<"GeneratedIdentifierFlags", Record<string, string | number>>, which can write Record<string, string | number> where typeof GeneratedIdentifierFlags is read
 - `src/compiler/emitter.ts:606:27`: a value of type never[] seen as string[], which can write string where never is read
 - `src/compiler/emitter.ts:6270:26`: a value of type Node | undefined seen as EmitNode | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of EmitFlags would replace
 - `src/compiler/emitter.ts:916:40`: a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read
@@ -748,9 +729,7 @@
 - `src/compiler/moduleSpecifiers.ts:401:143`: a value of type never[] seen as string[], which can write string where never is read
 - `src/compiler/moduleSpecifiers.ts:463:95`: a value of type FutureSourceFile | SourceFile seen as Pick<SourceFile, "fileName" | "impliedNodeFormat">, whose readonly field fileName becomes writable: a readonly field may hold something narrower than string, which a write of string would replace
 - `src/compiler/moduleSpecifiers.ts:555:69`: a value of type never[] seen as string[], which can write string where never is read
-- `src/compiler/moduleSpecifiers.ts:725:78`: a value of type never[] seen as string[], which can write string where never is read
 - `src/compiler/moduleSpecifiers.ts:817:90`: a value of type ModuleSpecifierResolutionHost & ModuleResolutionHost seen as ModuleResolutionHost, which can write boolean | (() => boolean) | undefined where (() => boolean) & (boolean | (() => boolean) | undefined) is read
-- `src/compiler/moduleSpecifiers.ts:821:49`: a value of type never[] seen as string[], which can write string where never is read
 - `src/compiler/moduleSpecifiers.ts:822:138`: a value of type ModuleSpecifierResolutionHost & ModuleResolutionHost seen as ModuleResolutionHost, which can write boolean | (() => boolean) | undefined where (() => boolean) & (boolean | (() => boolean) | undefined) is read
 - `src/compiler/moduleSpecifiers.ts:968:97`: a value of type { ending: ModuleSpecifierEnding; value: string; }[] seen as { ending: ModuleSpecifierEnding | undefined; value: string; }[], which can write ModuleSpecifierEnding | undefined where ModuleSpecifierEnding is read
 - `src/compiler/parser.ts:10594:67`: a value of type never[] seen as CommentRange[], which can write CommentRange where never is read
@@ -855,11 +834,7 @@
 - `src/compiler/sourcemap.ts:763:119`: a value of type (left: MappedPosition, right: MappedPosition) => boolean seen as EqualityComparer<SourceMappedPosition> | undefined, which can write string | undefined where string is read
 - `src/compiler/symbolWalker.ts:42:12`: a function taking (symbol: Symbol) => boolean seen as one taking ((symbol: Symbol) => boolean) | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take
 - `src/compiler/symbolWalker.ts:49:23`: a value of type (type: Type) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Type) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read
-- `src/compiler/symbolWalker.ts:55:27`: a value of type Type[] seen as unknown[], which can write unknown where Type is read
-- `src/compiler/symbolWalker.ts:56:27`: a value of type Symbol[] seen as unknown[], which can write unknown where Symbol is read
 - `src/compiler/symbolWalker.ts:59:25`: a value of type (symbol: Symbol) => { visitedTypes: Type[]; visitedSymbols: Symbol[]; } seen as (root: Symbol) => { visitedTypes: readonly Type[]; visitedSymbols: readonly Symbol[]; }, which can write readonly Type[] where Type[] is read
-- `src/compiler/symbolWalker.ts:65:27`: a value of type Type[] seen as unknown[], which can write unknown where Type is read
-- `src/compiler/symbolWalker.ts:66:27`: a value of type Symbol[] seen as unknown[], which can write unknown where Symbol is read
 - `src/compiler/sys.ts:138:81`: a value of type typeof PollingInterval seen as Levels, whose readonly field Low becomes writable: a readonly field may hold something narrower than PollingInterval.Low, which a write of number would replace
 - `src/compiler/sys.ts:1539:13`: a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take
 - `src/compiler/sys.ts:1540:13`: a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take
@@ -1048,4 +1023,3 @@
 - `src/compiler/watch.ts:829:34`: a function taking [fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined] seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take
 - `src/compiler/watchUtilities.ts:283:150`: a value of type never[] seen as string[], which can write string where never is read
 - `src/compiler/watchUtilities.ts:284:59`: a value of type never[] seen as string[], which can write string where never is read
-- `src/compiler/watchUtilities.ts:414:84`: a value of type never[] seen as string[], which can write string where never is read

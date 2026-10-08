@@ -21,6 +21,8 @@ function hashes(root) {
     return result;
 }
 const cases = [
+    { family: 'sentinels', owner: 'getUnionSignatures', rejected_owner: 'createTypeChecker', statement: 'emptyArray.push(undefined!);' },
+    { family: 'clear', owner: 'clear', statement: 'array[0] = undefined;' },
     { family: 'diagnostics', owner: 'convertToJson', statement: 'errors.push(undefined);' },
     { family: 'tuples', owner: 'getTypeArguments', statement: 'type.target = type.target;' },
     { family: 'empty-arrays', owner: 'addAntecedent', statement: 'label.antecedent = [label];' },
@@ -45,7 +47,7 @@ for (const test of cases) {
         const before = hashes(scratch);
         const result = child.spawnSync(process.execPath, [path.join(__dirname, 'adapt.cjs'), scratch], { encoding: 'utf8' });
         assert.equal(result.status, 1);
-        assert(result.stderr.includes(`reviewed runtime body changed: ${test.owner}`), result.stderr);
+        assert(result.stderr.includes(`reviewed runtime body changed: ${test.rejected_owner || test.owner}`), result.stderr);
         assert.deepEqual(hashes(scratch), before);
         console.log(JSON.stringify({ ...test, exit: result.status, source_unchanged_after_rejection: true }));
     }

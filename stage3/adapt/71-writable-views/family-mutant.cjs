@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 if (process.argv.length !== 4) throw new Error('usage: node family-mutant.cjs <family> <scratch-tree>');
 const family = process.argv[2];
-if (!['diagnostics', 'tuples', 'empty-arrays'].includes(family)) throw new Error('unknown family');
+if (!['diagnostics', 'tuples', 'empty-arrays', 'sentinels', 'clear'].includes(family)) throw new Error('unknown family');
 const spec = require(`./${family}.json`);
 const edit = spec.edits[spec.undo_index];
 const file = path.join(path.resolve(process.argv[3]), edit.file);

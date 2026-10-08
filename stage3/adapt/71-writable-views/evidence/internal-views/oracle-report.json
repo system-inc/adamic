@@ -1,0 +1,51 @@
+{
+  "tree": "/tmp/unit71-next-lane2/adapted-tree",
+  "nproc": 4,
+  "workers": 4,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 2.868
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 31.98
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=4",
+        "--lint=false",
+        "--no-colors"
+      ],
+      "exit": 1,
+      "seconds": 434.799
+    }
+  },
+  "status": "fail",
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "wall_seconds": 469.747
+}

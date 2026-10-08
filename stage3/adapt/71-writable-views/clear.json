@@ -1,0 +1,19 @@
+{
+  "family": "clear",
+  "undo_index": 0,
+  "owners": [
+    {
+      "file": "src/compiler/core.ts",
+      "function": "clear",
+      "runtime_sha256": "64516c9b69e6ac03529e6bd00c2c2b4810844c95afae54a05a009d6bf4f0545f"
+    }
+  ],
+  "edits": [
+    {
+      "file": "src/compiler/core.ts",
+      "owner": "clear",
+      "before": "clear(array: unknown[])",
+      "after": "clear(array: { length: number })"
+    }
+  ]
+}

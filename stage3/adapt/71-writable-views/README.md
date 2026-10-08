@@ -1,12 +1,12 @@
-Built type-only range, cache, diagnostic, tuple and fresh-array adaptations; no compiler or runtime edits.
+Built type-only internal range, cache, diagnostic, tuple, array and sentinel adaptations; public API unchanged.
 Base: ef3141e9b1152ab51b51497f8ce3a2799449c8a3; refusal-table input: d35a81d36fdafccf827bad0f572d311b2a0d4deb.
-Apply builds; landing lane PASS; oracle results match main: 106366 passing, one sanctioned API-baseline failure.
-Undo mutants restore 2 range, 2 sink, 12 tuple and 1 fresh-array rows; writer and witness mutants fail.
-Census 1174 -> 1047; exact table writable subset 755 -> 637. Full table adaptation is not complete. See FOLLOWUP.md.
+This continuation removes 22 selected views and four collateral views; apply/lane PASS; full oracle matches main (106366 passing, one sanctioned failure).
+Sentinel undo restores one row; clear undo restores eighteen; new writer and existing type/runtime guard mutants reject before writes.
+Census 1174 -> 1021; exact table writable subset 755 -> 615. Remaining requested scope: 82 shared views and 370 other views, plus 163 diagnostics.
 
 The 487f0d6c generic diagnostic experiment is withdrawn: captured types still escaped into writable collections. Only its two JSON push sinks remain, removing nine rows. The minimal generic-storage.a witness demonstrates the missed alias.
 
-The final continuation is documented in [FOLLOWUP.md](FOLLOWUP.md), including remaining-family counts, guards, the EvaluatorResult control, and final verification. [DIAGNOSTICS.md](DIAGNOSTICS.md) records the prior diagnostic continuation. The detailed counts below are the historical initial 3bc49948 subset; evidence/reconciliation.json and REMAINING.md now describe the final continuation.
+The newest continuation is documented in [INTERNAL-VIEWS.md](INTERNAL-VIEWS.md). The prior f8dea48f continuation is documented in [FOLLOWUP.md](FOLLOWUP.md), including remaining-family counts, guards, the EvaluatorResult control, and final verification. [DIAGNOSTICS.md](DIAGNOSTICS.md) records the prior diagnostic continuation. The detailed counts below are the historical initial 3bc49948 subset; evidence/reconciliation.json and REMAINING.md now describe the final continuation.
 
 The initial edit changes only type annotations, preserves source bytes elsewhere, and introduces neither any nor unknown. The range inputs become Readonly<TextRange>, including their existing undefined unions. The sibling 70 checker-symbol audit proves no writes or escapes, following local callees. parameters.json is the explicit selection; evidence/range-survey.json records the wider candidate survey. These are internal functions or local closures.
 

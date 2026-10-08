@@ -1,0 +1,106 @@
+{
+  "family": "sentinels",
+  "undo_index": 0,
+  "owners": [
+    {
+      "file": "src/compiler/checker.ts",
+      "function": "getOuterTypeParameters",
+      "runtime_sha256": "17c51393fa548584f179aa06dd444d32b62d4a3402aa8b75de3e770f58913b60"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "function": "getResolvedMembersOrExportsOfSymbol",
+      "runtime_sha256": "63bd199564c762c0cae04038e2798c5b466b84934366f11393cd9015a6dcd3fc"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "function": "markEntityNameOrEntityExpressionAsReference",
+      "runtime_sha256": "878726b5dc5d98993738b3f9fac64a40adebbf61cb11f0270e3d637422e657e5"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "function": "forEachFileNameOfModule",
+      "runtime_sha256": "f3e41c6fcfada0af1b22acd019e825f5512cdcc47de906cd5b0dd8d7df9fc322"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "function": "getAllModulePathsWorker",
+      "runtime_sha256": "cdb98dfe54014d84f8b31778da1c5562bf25b378fba949cc1ac0e1043adc4c76"
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "function": "updateSharedExtendedConfigFileWatcher",
+      "runtime_sha256": "b41307291675b3c5261435ab682812087484b93ea647b1273a751b736746e0df"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "function": "getUnionSignatures",
+      "runtime_sha256": "f8eae75aeb2317c96ba0d8321b0c5ee670a827411d65af452b39dd0810d7238a"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "function": "getUnionIndexInfos",
+      "runtime_sha256": "11abe953124805bf9168bcc4d2a9599acd20aa0a8cb85890e2a09eb7f7c9631f"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "function": "find",
+      "runtime_sha256": "8e541d713206968cdfdf4cf8419eef37d71783886078e3519f227f3a1cf6fc0f"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "function": "arrayToMap",
+      "runtime_sha256": "6d158128b13b9ed9bbb0b5735e03cf57dbee79c1b22bacc488dd1215c5a09f2a"
+    }
+  ],
+  "edits": [
+    {
+      "file": "src/compiler/checker.ts",
+      "owner": "getOuterTypeParameters",
+      "before": "outerTypeParameters || emptyArray",
+      "after": "outerTypeParameters || emptyArray as readonly TypeParameter[]"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "owner": "getResolvedMembersOrExportsOfSymbol",
+      "before": "symbol.declarations || emptyArray",
+      "after": "symbol.declarations || emptyArray as readonly Declaration[]"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "owner": "markEntityNameOrEntityExpressionAsReference",
+      "before": "rootSymbol.declarations || emptyArray",
+      "after": "rootSymbol.declarations || emptyArray as readonly Declaration[]"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "owner": "forEachFileNameOfModule",
+      "before": "referenceRedirect ? [referenceRedirect] : emptyArray",
+      "after": "referenceRedirect ? [referenceRedirect] : emptyArray as readonly string[]"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "owner": "getAllModulePathsWorker",
+      "before": "toResolve || emptyArray",
+      "after": "toResolve || emptyArray as readonly string[]"
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "owner": "updateSharedExtendedConfigFileWatcher",
+      "before": "options?.configFile?.extendedSourceFiles || emptyArray",
+      "after": "options?.configFile?.extendedSourceFiles || emptyArray as readonly string[]"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "owner": "getUnionSignatures",
+      "before": "getUnionSignatures(signatureLists: readonly (readonly Signature[])[]): Signature[]",
+      "after": "getUnionSignatures(signatureLists: readonly (readonly Signature[])[]): readonly Signature[]"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "owner": "getUnionIndexInfos",
+      "before": "getUnionIndexInfos(types: readonly Type[]): IndexInfo[]",
+      "after": "getUnionIndexInfos(types: readonly Type[]): readonly IndexInfo[]"
+    }
+  ]
+}

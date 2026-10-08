@@ -1,0 +1,27 @@
+[
+  {
+    "file": "cumulative/after.jsonl.gz",
+    "target": "../clear-undo/before.jsonl.gz",
+    "uncompressed_sha256": "a66fa61f84301fa136d7c372e7783f711f58ccc20fbf4aef5886288fc47f909e"
+  },
+  {
+    "file": "cumulative/before.jsonl.gz",
+    "target": "../../followup/cumulative/after.jsonl.gz",
+    "uncompressed_sha256": "7f6441729e84cefb8a9dccca841df50d4a069f81e7b2e45da38531da0d53e448"
+  },
+  {
+    "file": "main-cumulative/after.jsonl.gz",
+    "target": "../clear-undo/before.jsonl.gz",
+    "uncompressed_sha256": "a66fa61f84301fa136d7c372e7783f711f58ccc20fbf4aef5886288fc47f909e"
+  },
+  {
+    "file": "main-cumulative/before.jsonl.gz",
+    "target": "../../final/before.jsonl.gz",
+    "uncompressed_sha256": "61ecde0e4ae75bc7cebeab5e8eefc40d5f5b01d6ab31c0459e18169c9bb315bc"
+  },
+  {
+    "file": "sentinel-undo/before.jsonl.gz",
+    "target": "../clear-undo/before.jsonl.gz",
+    "uncompressed_sha256": "a66fa61f84301fa136d7c372e7783f711f58ccc20fbf4aef5886288fc47f909e"
+  }
+]

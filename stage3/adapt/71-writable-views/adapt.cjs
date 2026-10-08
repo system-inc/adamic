@@ -76,7 +76,7 @@ function inspectInitializer(node) {
 }
 inspectInitializer(factory);
 if (initializers !== 1) throw new Error('SourceFile cache initialization changed');
-const families = require('./type-plans.cjs')(program, tree, [require('./diagnostics.json'), require('./tuples.json'), require('./empty-arrays.json')], edits);
+const families = require('./type-plans.cjs')(program, tree, [require('./diagnostics.json'), require('./tuples.json'), require('./empty-arrays.json'), require('./sentinels.json'), require('./clear.json')], edits);
 // Complete every audit before changing any source. Preserve all other bytes.
 for (const [file] of edits) if (fs.readFileSync(file.fileName, 'utf8') !== file.text)
     throw new Error(`source changed during audit: ${file.fileName}`);
