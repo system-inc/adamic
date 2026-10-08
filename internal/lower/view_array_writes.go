@@ -40,6 +40,14 @@ func (l *lowering) viewArrayLiteralSourceContract(node *ast.Node) ir.ViewContrac
 			return id
 		}
 	}
+	if element != nil && l.callableViewContract(element) && l.runtimeViewCallableShape(element) {
+		if id, err := l.prepareViewCallableRead(node, element); err == nil {
+			l.result.ViewContracts[id-1].Unsupported = ""
+			if ir.ArrayCallableContract(l.result, id) {
+				return id
+			}
+		}
+	}
 	if element != nil && isClassInstance(l.checker.GetNonNullableType(element)) {
 		if of, known := l.representation(element); known && (of == ir.Object || of == ir.Union) {
 			return l.mapNominalEntrySlot(node, element)

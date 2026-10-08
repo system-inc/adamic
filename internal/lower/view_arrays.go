@@ -95,6 +95,7 @@ func (l *lowering) viewArrayUse(node, array *ast.Node, of ir.Type, required bool
 	if element == nil {
 		return ir.ArrayViewRead{}
 	}
+	l.prepareUntaggedStructuralRead(node, element, map[*checker.Type]bool{})
 	return ir.ArrayViewRead{TupleUnion: l.tupleScalarUnionType(element), UndefinedAllowed: l.includesUndefined(element), Element: of, View: sourceExpression(array) + "[element]", ViewType: l.checker.TypeToString(element), ViewTypeID: int(l.concrete(element).Id()), ViewAllowed: l.viewContractLiterals(element), Required: required && !l.includesUndefined(element)}
 }
 

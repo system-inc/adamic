@@ -26,6 +26,13 @@ func (e *emitter) viewArrayReferenceWrite(array, value string) {
 	e.line("bool %s = false;", checked)
 	e.line("switch (%s->element_contract) {", array)
 	for index, source := range e.program.ViewContracts {
+		if ir.ArrayCallableContract(e.program, ir.ViewContractID(index+1)) {
+			e.line("case %d: {", index+1)
+			certified := e.arrayCallableCertificate(ir.Property{View: "<array write>", ViewContract: ir.ViewContractID(index + 1)}, "((adamic_closure *)"+value+")")
+			e.line("(void)%s;", certified)
+			e.line("%s = true; break; }", checked)
+			continue
+		}
 		if ir.PrimitiveArrayContract(e.program, ir.ViewContractID(index+1)) {
 			e.line("case %d:", index+1)
 			e.arrayPrimitiveUnionRead(ir.ViewContractID(index+1), value, "<array write>", source.Name)

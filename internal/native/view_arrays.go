@@ -130,6 +130,15 @@ func (e *emitter) emitViewArrayReadChecked(read ir.ArrayIndex, array, index, own
 		e.indent--
 		e.line("}")
 	}
+	if logical && read.Element == ir.Closure && read.ViewContract > 0 {
+		contract := e.program.ViewContracts[read.ViewContract-1]
+		if contract.Result != 0 || contract.DiscardResult || contract.Kind == ir.ViewUnion && contract.Of == ir.Closure {
+			e.line("if (%s != NULL) {", slot)
+			checked := e.arrayCallableCertificate(ir.Property{View: read.View, ViewContract: read.ViewContract}, "((adamic_closure *)"+snapshot+".reference)")
+			e.line("%s.reference = %s;", snapshot, checked)
+			e.line("}")
+		}
+	}
 	if logical && read.Element == ir.Union {
 		e.line("if (%s != NULL) {", slot)
 		if nominal.NominalClass != 0 {
@@ -162,7 +171,7 @@ func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index, owne
 }
 
 func (e *emitter) viewArrayMutation(array string, element ir.Type, value string) {
-	if ir.HasArrayViews(e.program) && (element == ir.Object || element == ir.Union) {
+	if ir.HasArrayViews(e.program) && (element == ir.Object || element == ir.Union || element == ir.Closure) {
 		e.viewArrayReferenceWrite(array, value)
 		return
 	}

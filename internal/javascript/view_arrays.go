@@ -82,6 +82,12 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 	if read.Element == ir.Object && read.ViewContract != 0 {
 		checked = "((element) => element === undefined ? undefined : " + e.nominalViewRead(read.ViewContract, "element", read.View, false) + ")(" + checked + ")"
 	}
+	if read.Element == ir.Closure && read.ViewContract > 0 {
+		contract := e.program.ViewContracts[read.ViewContract-1]
+		if contract.Result != 0 || contract.DiscardResult || contract.Kind == ir.ViewUnion && contract.Of == ir.Closure {
+			checked = "((value)=>value===undefined?undefined:" + e.arrayCallableCertificate(ir.Property{View: read.View, ViewContract: read.ViewContract}, "value") + ")(" + checked + ")"
+		}
+	}
 	if read.Element == ir.Union {
 		checked = e.arrayPrimitiveUnionRead(read.ViewContract, checked, read.View, read.ViewType)
 	}
@@ -97,8 +103,8 @@ const adamicViewVisit = (array, method, callback, check) => adamicVisit(array, m
 const adamicViewFind = (array, method, callback, check) => adamicFind(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
 const adamicViewReduce = (array, callback, initial, check) => adamicReduce(array, new AdamicClosure((self, values) => adamicCall(callback, [values[0], check(values[1]), values[2], values[3]]), []), initial);
 const adamicViewPop = (array, check) => { if (array.length === 0) return undefined; const index = array.length - 1; const value = index in array ? check(array[index]) : undefined; array.pop(); return value; };
-const adamicViewPush = (array, value, storage) => { if (storage === 4 || storage === 10) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); return array.push(value); };
-const adamicViewSetIndex = (array, index, value, storage, holes) => { if (storage === 4 || storage === 10) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); if (holes) array[index] = value; else adamicSetIndex(array, index, value); };
+const adamicViewPush = (array, value, storage) => { if (storage === 4 || storage === 8 || storage === 10) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); return array.push(value); };
+const adamicViewSetIndex = (array, index, value, storage, holes) => { if (storage === 4 || storage === 8 || storage === 10) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); if (holes) array[index] = value; else adamicSetIndex(array, index, value); };
 const adamicViewJoin = (array, separator, check) => array.map(value => check(value)).join(separator);
 `
 
