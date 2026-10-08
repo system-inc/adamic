@@ -815,6 +815,40 @@ The initial October 9 estimate was revised after inspection of pending hooks.
 No integrated pair is complete at this territory checkpoint: 73 pairs and
 267 reads remain. Lazy-admission branch was not yet present on origin.
 
+### Lane 4b resumed on integrated lazy admission, October 7
+
+Merged integration ba59427ccc7afecae29a305c41e6e9c7867e5610. Superseding
+inventory: 42 candidate pairs / 181 candidate reads from lazy/census; exact
+production reachability remains unmeasured pending checker-clean TypeScript.
+The old 73/267 table remains historical. Ranked ledger and source controls are
+in lane4b/resume. No original tsc pair is yet marked complete.
+
+The lead now authorizes minimal shared hooks. This lane adds named dispatch to
+objectPrimitiveViewType in lower/object.go and lower/interface_cast.go, and
+viewObjectPrimitive in native/view_fields.go and javascript/javascript.go.
+The two admission guards allow one structural object plus scalar primitives
+and optional undefined; accessors remain refused. Backend dispatch preserves
+the shared union contract and descendant read obligations. New runtime files
+normalize concrete scalar and boxed slots, check presence/readiness, select
+literal primitive membership, and retain the single object alternative.
+Selection of that alternative is not a structural-conformance certificate:
+its fields remain lazy obligations and every reachable descendant read must
+use the shared view machinery. No object member is erased into Unknown.
+
+Production source controls cover reduced true|Node|undefined and string|Chain
+shapes, matching the first two ranked shapes (five candidate pairs / 43 reads).
+They are not original-pair coverage. Both backends pin outer and nested wrong
+values, and valid values; the optional shape also pins undefined. Independent
+release mutants remove outer selection, accept a wrong literal/nested scalar,
+and remove a transitive read check. Arrays, Map, callables, intersections,
+multiple object alternatives, indexed reads, inherited static slots and packed
+optional numeric/boolean storage remain outside this adapter checkpoint.
+
+Revised whole-family working date: October 16, 2026, 23:00 UTC. This includes
+remaining member adapters and original-pair witnesses; exact reachability will
+still require the checker-clean program. Only integration is merged, and the
+lead forwards this lane's tip to the integrator for hunk reconciliation.
+
 ## Centralized checked-view integration
 
 The lead assigned Codex 01a11882-3830 on codex/views-integration to merge every
@@ -865,3 +899,196 @@ now arrives through `codex/views-integration`, whose owner resolves shared hunks
 The earlier merge observations above remain historical evidence. At this unit's
 check, `git ls-remote --heads origin codex/views-integration` returned no ref.
 Do not resolve another lane's compiler conflicts locally while waiting for it.
+
+
+## Dictionary contracts unit, October 7, 2026
+
+Branch `codex/views-dictionaries` starts at lane 4 `9ecdda53`, after `583d19b7`.
+This unit owns new `internal/lower/view_dictionaries.go` and tests,
+`internal/native/view_dictionaries.go` and tests,
+`internal/javascript/view_dictionaries.go` and tests,
+`internal/native/runtime/view_dictionaries.c/.h`,
+`internal/oracle/checked_views_dictionaries_test.go`, and
+`stage3/interface-downcasts/dictionaries/` (ranking, fixtures, logs, reports).
+The user explicitly authorizes this plan addition. Existing lane files and
+protected orchestration files remain their owners' territory.
+
+The frozen family is 409 pairs and 2,256 explicit reads. Numeric-indexed
+NodeArray types appear in this dictionary inventory; preserve their pair ids
+and demand rather than claiming they are supported or silently reassigning them.
+Array dispatch must precede dictionary dispatch. String-key objects with named
+properties (CompilerOptions) need both named field and index contracts.
+
+Reuse `runtime/record.c`: its record is an ordinary counted object wrapping the
+existing ordered Map. The current base contains that runtime and its component
+oracle, but no record IR kind or frontend record operations. Its untagged
+adamic_value slots and reference_values bit cannot distinguish number from
+boolean or prove a nested object's logical type. A target cast must never
+supply the missing source certificate.
+
+Concrete handoffs required from the shared owners before source admission:
+
+1. Reconcile lazy-admission `5002bfe0` with this base in cast.go,
+   interface_cast.go, readiness.go, view_objects.go and native/view_fields.go.
+   The attempted merge was aborted with all shared code restored. Initial setup
+   failed on checker APIs; restoring both exact submodule checkouts recovered
+   the compiler build without a committed pin or loader change.
+2. Add ViewDictionary to the common contract kinds, with Element referring to
+   the shared recursive child registry. Add a viewDictionaryContractHook to
+   view_contracts.go after array/callable dispatch, before ordinary object
+   admission. The lane helper will use string index information, intern before
+   recursion, and preserve named fields and unsupported/deferred children.
+3. Supply the existing record lowering through shared IR and expression dispatch.
+   Dictionary field reads must preserve the record identity and element contract
+   on aliases, helper parameters, returns, callbacks, generics and stored fields.
+   An indexed read with viewed or Unknown provenance must call the dictionary
+   read hook even when no lexical cast appears in its function.
+4. Supply a source-certified normalized record slot probe: presence, initialized
+   state, logical kind, borrowed payload and child schema/contract. Reuse existing
+   readiness, null/undefined and object-view metadata. Do not infer kind from the
+   target or add another record table/bitmap. Every alias write/delete/overwrite
+   must maintain source facts; Unknown keeps the check. Existing get returns
+   untagged storage and is insufficient for a runtime type check.
+5. Wire emitViewDictionaryRead in both backend indexed/property read dispatches,
+   passing the evaluated receiver/key, element contract, expression and declared
+   type once. A missing key is undefined only when the declared read permits it;
+   a present undefined is distinct from an uninitialized slot. Preserve current
+   own-key prototype refusals until inherited semantics are implemented soundly.
+   Nested object results feed shared transitive view propagation at later reads.
+
+Whole-family working estimate: October 16, 2026 at 23:00 UTC, conditional on
+these hooks and reconciled lazy admission by October 9 at 23:00 UTC. The earlier
+October 14 estimate was provisional before inspecting the source representation.
+No unconditional completion date is defensible while shared source probing and
+record compiler lowering are absent. No pair is completed by a ranking or a
+component oracle. Each push records actual source support separately.
+
+Coordination update: consume other lanes only through `codex/views-integration`.
+Both earlier direct merges were aborted. The integration ref was absent at this
+unit's final remote check. Dictionary source admission remains blocked on the
+registry, record compiler operations, source probes and transitive indexed-read
+hooks above. The recovered exact submodule checkout builds successfully; setup
+rerun exits 0 in 24.177s and the existing record package passes in 11.344s.
+
+
+## Lane 7: nonprimitive intersection field contracts, October 7
+
+Branch `codex/views-intersections` starts at lane 4 tip 9ecdda53, after
+583d19b7, and merges phantom-brands d90994da without copying cohere code.
+The user authorizes this lane-specific plan addition. Own only new
+`internal/lower/view_intersections.go` and `view_intersections_test.go`,
+`internal/native/view_intersections.go` and `view_intersections_test.go`,
+`internal/javascript/view_intersections.go` and `view_intersections_test.go`,
+`internal/native/runtime/view_intersections.c/.h`,
+`internal/oracle/checked_views_intersections_test.go`, and
+`stage3/interface-downcasts/lane7/` fixtures, ranking, evidence and reports.
+Existing shared files remain with their owners, including counts.md.
+
+The frozen family ledger contains 198 pairs and 1,145 reads. Primitive brands
+are tracked separately, never counted as lane 7 completions. Lane 4 owns
+__String (30 direct-display pairs, 543 reads); other primitive branded aliases
+such as Path need ownership reconciliation. Type displays alone cannot establish
+that an intersection constituent is phantom. Reuse phantomField from the merged
+brand implementation and preserve the overload result rule.
+
+Priority follows the ranked pair ledger, starting with object refinement fields,
+then nested intersections, interface composition, and array/callable overlaps.
+An intersection checks every runtime constituent, ignoring only a proven phantom
+constituent. A bare object heap tag never proves constituent fields. Nested
+results retain their intersection contract through helper, generic, callback,
+container and alias reads. Optional absence and readiness use shared machinery.
+Unknown provenance retains checks; unread unsupported children do not refuse casts.
+
+Concrete handoff to the lazy-admission/shared-dispatch owner:
+
+1. Route TypeFlagsIntersection before generic representation/callable dispatch
+   through lane 7's viewIntersectionContractHook. The lane will supply the hook
+   and builder in its new lower file. Reserve recursive ids in the common registry.
+2. Supply a distinct intersection descriptor (all member ids, not union selection)
+   in common IR, or an explicit all-members discriminator. ViewUnion cannot encode
+   conjunction. ViewObject flattened fields alone must preserve repeated-field
+   conjunction and each member's readonly/optional obligations.
+3. At each potentially viewed intersection read, validate shared presence/readiness
+   once and hand the evaluated snapshot plus all constituent ids to the lane's
+   matcher. Keep child contracts on subsequent reads; no getter reevaluation.
+4. Expose a pure non-panicking shared member matcher and normalized slot probes.
+   They must distinguish missing, uninitialized, undefined and null. Array and
+   callable constituents require the respective owners' adapters. Unsupported
+   members remain named read-site obligations, not successful Unknown contracts.
+
+Observed base has no intersection hook or descriptor. Lazy-admission branch is
+not yet published at this checkpoint. These handoffs are prerequisites for source
+integration; a standalone helper must not be counted as completed pairs.
+Working estimate for the whole nonprimitive family: October 16, 2026, 23:00 UTC,
+conditional on shared hooks and lazy admission by October 9. This is a planning
+estimate, not an observed delivery. No runtime completion is claimed yet.
+
+Lane 7 component API checkpoint: `(*lowering).viewIntersectionContracts(node,
+target,build)` returns all nonphantom constituent ids, propagating unsupported
+member errors. It does not reserve an aggregate descriptor. The shared owner
+should call it from the intersection dispatch hook after defining the all-members
+IR discriminator. Runtime entry points are `adamic_view_intersection_matches`
+and `adamic_view_intersection_require`; JavaScript helper text is exported by
+`javascript.IntersectionRuntime()`. They reuse lane 4's normalized snapshot type
+and accept a pure member matcher from shared dispatch. Production source admission
+is not enabled. Four source Node controls and six C/JS adapter mutations pass;
+these do not prove frontend transitive propagation or optional/readiness behavior.
+The ranked frozen ledger still has zero completed pairs and zero completed reads.
+
+Lane 7 coordination update: the user now assigns all cross-lane merges/conflict
+resolution to `codex/views-integration` (worker 01a11882-3830). Lane 7's lazy,
+callable and shape merge attempts were aborted without editing conflict hunks.
+No individual lane is merged after this ruling. The integration branch was not
+published during this checkpoint. Source c/js compilation of lane7/good.a still
+refuses Named & Counted at value, so zero pairs/reads are complete. Native and
+JavaScript package tests pass; lower retains the documented mixed-array adapter
+failure. The lane-owned component work, six executable mutants and exact blocker
+handoff are recorded in lane7/REPORT.txt. Rest pending integrated lazy admission.
+
+### Dictionary boxed-record helper checkpoint after ba59427c
+
+The dictionary lane supplies `runtime/view_dictionaries.c/.h` and
+`javascript.DictionaryRuntime()`. Native `adamic_view_dictionary_read` consumes
+only source-certified existing records whose table values use existing union
+boxes (`reference_values=true`). It classifies each selected box at the read,
+checks a logical-kind mask and returns a borrowed normalized value with the
+nonzero child contract on reference results. JavaScript's corresponding helper
+checks an own data property without invoking getters. Neither scans unread keys.
+Native null has no distinct boxed encoding yet and stays unsupported.
+
+Shared wiring remains required: a source-certified record producer, descriptor
+registration ahead of unsupportedViewFamily's dictionary fallback, record IR and
+indexed-read dispatch, and propagation of the result's child contract. Existing
+raw scalar records must keep their current representation; they cannot be passed
+as boxed_storage=true on the word of a target cast. Shared source dispatch must
+retain deferred refusals until the complete producer/read path exists.
+
+The lazy census reports 18 dictionary-contract pairs / 174 candidate reads and
+14 dictionary-read pairs / 66 candidate reads; their deduplicated union is 29
+pairs / 228 reads. This is a candidate table, not exact runtime reachability.
+ADAPTED-CENSUS.md explicitly says runtime reachability is unmeasured while
+checker diagnostics prevent production IR. Do not replace that Unknown with zero
+or claim exact pair completion from component evidence.
+
+`internal/lower/view_dictionaries.go` now declares viewDictionaryContractHook and
+prepares recursive index/named-field descriptors, rolling back new ids on failure.
+The root remains Unsupported dictionary source dispatch until shared source
+wiring is complete. New records are not created by this helper. It does not change
+refusals.go's unconditional index-signature rule or install a read dispatcher.
+The native helper currently supports broad kind membership on source-certified
+boxed tables; finite literals and full array/callable/union/null contracts require
+their complete owning adapters, never a kind-mask shortcut.
+
+Revised whole-family working date: October 19, 2026 at 23:00 UTC, conditional
+on source producer and shared dispatch handoffs by October 9. Group1.md records
+the proven helper paths and all unimplemented source obligations. Candidate
+progress remains 29 / 228, with exact production reachability unmeasured.
+
+### Shared-hook coordination amendment, October 8, 2026
+
+The user now authorizes each lane to add its own minimal shared-code hooks
+listed under that lane's plan section. This supersedes earlier owner-only
+wiring restrictions for those named hooks. The integration worker reconciles
+each overlapping hunk individually, preserving all refusals and Node agreements.
+Lanes still consume other lanes through codex/views-integration; a hook or
+component alone is not evidence of complete source admission.

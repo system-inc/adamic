@@ -821,6 +821,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
+		if expression.View != "" && expression.Of == ir.Union {
+			return e.viewObjectPrimitive(expression)
+		}
 		if expression.View != "" {
 			if expression.Nullish {
 				return e.nullishViewField(expression)
