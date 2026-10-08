@@ -1,0 +1,78 @@
+{
+  "sha": "d4cb7218c8db1b799778ecbf1d72b70febf59437",
+  "branch": "cloud/land-lint-08-cfg-5",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "base_name": "main",
+  "tools_sha": "1877cae2876b47184b7e2a778395f90cf576355c",
+  "machine": {
+    "hostname": "Workshop",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "Workshop",
+    "cpus": 64,
+    "load": [
+      55.1,
+      40.1,
+      44.7
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "wall_seconds": 0.5,
+  "steps_seconds": {},
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": true,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "darwin-compile": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "stopped": {
+    "reason": "preempted: the star takes workshop alone; queued again",
+    "at_seconds": 0.5
+  },
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "darwin_compile": "green: darwin build and compile of internal/oracle/testdata/047cb0d_n_arrayindex.a on Sun2 in 2 s"
+}
