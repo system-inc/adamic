@@ -26,6 +26,12 @@ def main():
     compiler = scratch / 'adamic'
     run('build-probe', ['go', 'build', '-o', str(probe), './stage3/project-loader/probe'])
     run('build-compiler', ['go', 'build', '-o', str(compiler), './cmd/adamic'])
+    # Authored fixtures must also pass the gate's standalone .a check, before
+    # they are adapted into tsconfig-owned sources for the project oracle.
+    authored_files = sorted((ROOT / 'stage3/project-loader/fixture').rglob('*.a'))
+    authored_files += sorted((HERE / 'fixture').rglob('*.a'))
+    for index, authored in enumerate(authored_files):
+        run('authored-check-' + str(index), [str(compiler), 'c', str(authored)])
     work = scratch / 'fixture'
     for authored in (HERE / 'fixture/types').rglob('*.a'):
         relative = authored.relative_to(HERE / 'fixture/types')
@@ -34,7 +40,18 @@ def main():
         else:
             target = work / relative.with_suffix('.ts')
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(authored.read_text().replace('.a\'', '.js\''))
+        text = authored.read_text().replace('.a\'', '.js\'')
+        # Authored .a fixtures resolve aliases through type-only module imports.
+        # The project-loading oracle supplies those same aliases exclusively
+        # through each project's selected @types package instead.
+        if relative.parts[0] == 'packages':
+            assert text.startswith('export type '), text
+            text = text.removeprefix('export ')
+        else:
+            lines = text.splitlines(keepends=True)
+            assert lines[0].startswith('import type { '), text
+            text = ''.join(lines[1:])
+        target.write_text(text)
     (work / 'prelude.d.ts').write_text((ROOT / 'internal/load/prelude.d.ts').read_text())
     (work / 'package.json').write_text('{"type":"module"}\n')
     options = dict(strict=True, target='es2020', module='esnext', moduleResolution='bundler',
@@ -105,7 +122,7 @@ def main():
                          '-run', '^TestProjectReferencesTypesUnion/' + test + '$'], 1)
         assert '--- FAIL:' in log and witness in log and '[build failed]' not in log, log
         killed.append(name)
-    summary = dict(clean_output='7\n', duplicate_diagnostics=loader_diagnostics, mutants_caught=killed, logs=str(scratch))
+    summary = dict(authored_checked=[str(path.relative_to(ROOT)) for path in authored_files], clean_output='7\n', duplicate_diagnostics=loader_diagnostics, mutants_caught=killed, logs=str(scratch))
     (scratch / 'RESULT.json').write_text(json.dumps(summary, indent=2) + '\n')
     print(json.dumps(summary, indent=2))
 
