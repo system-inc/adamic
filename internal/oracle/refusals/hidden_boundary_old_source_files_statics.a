@@ -1,0 +1,15 @@
+class Marker {
+    static readonly value = 1;
+}
+interface SourceProvider {
+    getSourceFiles(): readonly number[];
+}
+function read(oldProgram: SourceProvider): number {
+    const oldSourceFiles = oldProgram.getSourceFiles();
+    let total = 0;
+    for (const value of oldSourceFiles) {
+        total += value;
+    }
+    return total;
+}
+console.log(`${Marker.value}:${read({ getSourceFiles: () => [7] })}`);

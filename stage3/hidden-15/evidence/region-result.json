@@ -1,0 +1,76 @@
+{
+  "base_commit": "4885cec50290686df487b62aac47c85d871ed40c",
+  "census_pin": "388096e6",
+  "scope": "program.ts all full-mode units; project loading retains all compiler directory roots",
+  "source_sha256": "7aaf5804093401db924e8278b142db40fcb2b14cef0566081cfaf870477b5284",
+  "interval": [
+    117206,
+    123466
+  ],
+  "old_hidden_intersections": [
+    [
+      117206,
+      123466
+    ]
+  ],
+  "new_hidden_intersections": [
+    [
+      117206,
+      123466
+    ]
+  ],
+  "old_hidden_bytes": 6260,
+  "new_hidden_bytes": 6260,
+  "revealed_bytes": 0,
+  "counts": {
+    "boundary_records": 529,
+    "checker_skipped_bodies": 10,
+    "independent_attempts": 237
+  },
+  "overlapping_stock_units": [
+    {
+      "where": "program.ts:1515:1",
+      "start": 68400,
+      "end": 253523,
+      "function": true,
+      "body_start": 68631,
+      "body_end": 253523
+    },
+    {
+      "where": "program.ts:2345:5",
+      "start": 115206,
+      "end": 128879,
+      "function": true,
+      "body_start": 115275,
+      "body_end": 128879
+    }
+  ],
+  "overlapping_census_units": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/tmp/hidden-adapted/src/compiler/program.ts:1515:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 68631,
+      "body_end": 253523,
+      "status": "split_checker_body",
+      "checker_diagnostics": [
+        "/tmp/hidden-adapted/src/compiler/program.ts:1876:11: error TS2375: Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'."
+      ],
+      "name": "createProgram",
+      "top": "/tmp/hidden-adapted/src/compiler/program.ts:1515:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/tmp/hidden-adapted/src/compiler/program.ts:2345:5",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 115275,
+      "body_end": 128879,
+      "status": "attempted",
+      "checker_diagnostics": [],
+      "name": "tryReuseStructureFromOldProgram",
+      "parent": "/tmp/hidden-adapted/src/compiler/program.ts:1515:1",
+      "top": "/tmp/hidden-adapted/src/compiler/program.ts:1515:1",
+      "depth": 1
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+function enclosing(): () => number {
+    const oldSourceFiles = [7];
+    return () => oldSourceFiles[0] ?? 0;
+}
+console.log(`${enclosing()()}`);
