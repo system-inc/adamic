@@ -1,6 +1,10 @@
 package native
 
-import "github.com/system-inc/adamic/internal/ir"
+import (
+	"slices"
+
+	"github.com/system-inc/adamic/internal/ir"
+)
 
 // exactReceiverClass proves an allocation's identity, including a local whose
 // only binding is that allocation. A static class type alone is not exact: this
@@ -20,9 +24,17 @@ func (e *emitter) exactReceiverClass(value ir.Expression) int {
 			}
 		}
 	case ir.Read:
-		if e.program.Locals[value.Local].Captured {
+		local := e.program.Locals[value.Local]
+		if local.Captured || (local.Function >= 0 && slices.Contains(e.program.Functions[local.Function].Parameters, value.Local)) {
 			return 0
 		}
+		if class, known := e.exactReceiverClasses[value.Local]; known {
+			return class
+		}
+		if e.exactReceiverClasses == nil {
+			e.exactReceiverClasses = map[int]int{}
+		}
+		e.receiverClassWalks++
 		class, declarations, written := 0, 0, false
 		var statements func([]ir.Statement)
 		statements = func(list []ir.Statement) {
@@ -46,9 +58,11 @@ func (e *emitter) exactReceiverClass(value ir.Expression) int {
 		for _, function := range e.program.Functions {
 			statements(function.Body)
 		}
-		if declarations == 1 && !written {
-			return class
+		if declarations != 1 || written {
+			class = 0
 		}
+		e.exactReceiverClasses[value.Local] = class
+		return class
 	}
 	return 0
 }

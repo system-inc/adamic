@@ -92,3 +92,34 @@ func TestExactReceiverRejectsAssignments(t *testing.T) {
 		t.Fatalf("assigned receiver taken as exact: %d", got)
 	}
 }
+
+// Count whole-program walks, independent of machine speed. Both positive and
+// negative answers must be cached, and parameters must never start a walk.
+func TestExactReceiverWalksPerBinding(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{
+		Locals: []ir.Local{
+			{Type: ir.Object, Function: -1},
+			{Type: ir.Object, Function: -1},
+			{Type: ir.Object, Function: 0},
+			{Type: ir.Object, Function: -1, Captured: true},
+		},
+		Functions: []ir.Function{{Parameters: []int{2}}},
+		Classes:   []ir.Class{{Constructor: 0}},
+		Main: []ir.Statement{
+			ir.Declare{Local: 0, Value: ir.Call{Function: 0, Returns: ir.Object}},
+			ir.Declare{Local: 1, Value: ir.Undefined{Of: ir.Object}},
+		},
+	}
+	e := &emitter{program: program}
+	for iteration := 0; iteration < 100; iteration++ {
+		for local, want := range []int{1, 0, 0, 0} {
+			if got := e.exactReceiverClass(ir.Read{Local: local, Of: ir.Object}); got != want {
+				t.Fatalf("local %d: class %d, want %d", local, got, want)
+			}
+		}
+	}
+	if e.receiverClassWalks != 2 {
+		t.Fatalf("whole-program walks: got %d, want 2 (one per nonparameter binding)", e.receiverClassWalks)
+	}
+}

@@ -130,6 +130,10 @@ func cBytes(value string) string {
 }
 
 type emitter struct {
+	// Receiver identities are emission-only facts; cache unknown answers too.
+	exactReceiverClasses map[int]int
+	receiverClassWalks   int
+
 	program *ir.Program
 	out     strings.Builder
 	indent  int
