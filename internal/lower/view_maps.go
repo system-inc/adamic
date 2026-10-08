@@ -50,10 +50,13 @@ func (l *lowering) mapProducer(node *ast.Node, value ir.MapNew) ir.MapNew {
 // slotContract has already checked every member recursively. Unknown or lazy
 // descriptors cannot certify entries merely because their storage is a pointer.
 func mapEntryContract(contract ir.ViewContract) bool {
-	return contract.Unsupported == "" && (contract.Kind == ir.ViewScalar || contract.Kind == ir.ViewObject || contract.Kind == ir.ViewArray || contract.Kind == ir.ViewUnion || contract.Kind == ir.ViewNullable || contract.Kind == ir.ViewNull || contract.Kind == ir.ViewUndefined)
+	return contract.Unsupported == "" && (contract.Kind == ir.ViewScalar || contract.Kind == ir.ViewObject || contract.Kind == ir.ViewArray || contract.Kind == ir.ViewUnion || contract.Kind == ir.ViewNullable || contract.Kind == ir.ViewNull || contract.Kind == ir.ViewUndefined || contract.Kind == ir.ViewCallable && contract.Result != 0)
 }
 
 func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	if l.callableViewContract(l.checker.GetNonNullableType(target)) {
+		return l.mapCallableEntrySlot(node, target)
+	}
 	if !l.mapEntryTypeProven(target, map[*checker.Type]bool{}) {
 		return 0
 	}

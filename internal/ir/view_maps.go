@@ -67,6 +67,17 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 			}
 			return false
 		}
+		if source.Kind == ViewCallable {
+			if target.Kind != ViewCallable || source.Result == 0 || target.Result == 0 || len(source.Parameters) != len(target.Parameters) {
+				return false
+			}
+			for i, parameter := range source.Parameters {
+				if !sameStorage(parameter, target.Parameters[i]) || !accepts(target.Parameters[i], parameter) {
+					return false
+				}
+			}
+			return sameStorage(source.Result, target.Result) && accepts(source.Result, target.Result)
+		}
 		if source.Undefined && !target.Undefined {
 			return false
 		}

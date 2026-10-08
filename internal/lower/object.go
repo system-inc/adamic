@@ -1550,7 +1550,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	case "get":
 		return ir.MapGet{Map: object, Key: arguments[0], KeyType: key, ValueType: value}, true, nil
 	case "set":
-		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver)}, true, nil
+		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver), ValueContract: l.mapEntrySlot(node, l.concrete(l.typeArguments(l.checker.GetTypeAtLocation(receiver))[1])), ValueWhere: sourceExpression(node)}, true, nil
 	case "has":
 		return ir.MapHas{Map: object, Key: arguments[0], KeyType: key}, true, nil
 	}

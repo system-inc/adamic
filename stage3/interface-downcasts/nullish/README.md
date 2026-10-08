@@ -348,3 +348,35 @@ After this push the production table remains 2,018 pairs/9,101 reads awaiting
 whole-program lowering and reaching-view proof. Callable entries, tuples,
 nominal/phantom witnesses and cross-representation read conversion remain;
 ledger-driven checks are untouched.
+
+## Callable Map producer proofs (October 8)
+
+Callable Map entries now have private signature descriptors, preserving the
+shared refusal for callable array elements. Constructors, ordinary .set writes,
+and copied entry arrays check the actual producer's immutable code identity
+before it enters storage. Nullable entries bypass this check only for the
+permitted null/undefined representations. Readonly Map comparison is
+contravariant in callable parameters and covariant in callable results; mutable
+Map comparison retains both directions. Physical calling conventions must match.
+
+Node controls cover plain, null, undefined, combined nullable callable entries,
+and a nullable Map clone. Parameter and result schema mutants exit 70 at
+node.value. Two IR mutants replace a constructor/.set producer with a closure
+whose actual result is string while storage promises number; both backends stop
+at the storage site. Disabling each backend's producer guard independently makes
+these mutants run on (exit 0), killing the implementation mutation by behavior,
+without compiler warnings. Logs are in evidence/map-callable-*.
+
+This batch handles fixed-arity scalar signatures supported by the integration
+callable producer table. Void, rest, generic, object/array/union calling
+conventions remain outside this certificate. Tuples, nominal/phantom witnesses,
+and conversion between physical entry representations remain unsupported.
+The exact production inventory remains 2,018 pairs / 9,101 reads pending
+whole-program lowering and shared reaching-view proof; fixture controls do not
+subtract production rows. Ledger-driven inserted checks remain with their worker.
+
+Restored full Map oracle selection passes in 51.036s (native sanitizer/release,
+JS, Node and positive-fixture leak checks). Scoped View|Map|Contract|Callable
+package checks pass: lower 4.879s, native 34.342s, JS 0.976s; IR has no matching
+tests. Vet passes. The previously recorded broader census failures are unchanged
+in scope; this batch does not claim a full repository gate.
