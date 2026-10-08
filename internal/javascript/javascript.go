@@ -1299,9 +1299,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		return e.value(expression.Map) + ".set(" + e.mapEntryNominalCertificate(expression.KeyContract, e.value(expression.Key), expression.ValueWhere) + ", " + e.mapEntryCallableCertificate(expression.ValueContract, e.mapEntryNominalCertificate(expression.ValueContract, e.value(expression.Value), expression.ValueWhere), expression.ValueWhere) + ")"
 	case ir.SetNew:
 		if expression.Values == nil {
-			return "new Set()"
+			return fmt.Sprintf("adamicViewSetProducer(new Set(), %d)", expression.Element)
 		}
-		return "new Set(" + e.value(expression.Values) + ")"
+		return fmt.Sprintf("adamicViewSetProducer(new Set(%s), %d)", e.value(expression.Values), expression.Element)
 	case ir.SetAdd:
 		return e.value(expression.Set) + ".add(" + e.value(expression.Value) + ")"
 	case ir.SetValues:

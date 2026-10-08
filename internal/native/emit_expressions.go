@@ -594,7 +594,8 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		if expression.Values != nil {
 			values = e.value(expression.Values)
 		}
-		created := e.own(ir.Map, newMap(expression.Element, false))
+		e.declarations = append(e.declarations, "#include \"view_set_intrinsics.h\"")
+		created := e.own(ir.Map, fmt.Sprintf("adamic_view_set_producer(%s, %d)", newMap(expression.Element, false), expression.Element))
 		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		if expression.Values != nil {
 			e.line("adamic_set_add_all(%s, %s);", created, values)

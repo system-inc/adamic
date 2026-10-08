@@ -265,6 +265,10 @@ func (e *emitter) arguments(call ir.Call) []string {
 			value = boxed
 		}
 		if index < len(parameters) {
+			// Structural receivers keep their allocation and heap tag.
+			if argument.Type() == ir.Map && e.program.Locals[parameters[index]].Type == ir.Object {
+				value = "(adamic_object *)" + value
+			}
 			arguments = append(arguments, value)
 		} else {
 			e.line("(void)%s;", value)

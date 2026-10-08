@@ -22,6 +22,8 @@ const adamicReadField = (object, name, expression, optional = false, allowAbsent
     if (optional && (object === undefined || object === null)) return undefined;
     if (object === undefined || object === null) panic(fieldView ? "field read failed: " + expression + " is not initialized; expected " + fieldView + ", found missing" : "read before assignment: field '" + name + "' in " + expression);
     if (!Object.hasOwn(object, name) && typeof object === 'function' && adamicClassIdentities.has(Object.getPrototypeOf(object))) return adamicReadField(Object.getPrototypeOf(object), name, expression, false, allowAbsent, fieldView);
+    // Read the intrinsic getter with the original receiver, retaining the field type check.
+    if (!Object.hasOwn(object, name) && name === "size" && object instanceof Set && adamicViewSetElements.has(object)) return Reflect.get(Set.prototype, "size", object);
     if (allowAbsent && !Object.hasOwn(object, name)) return undefined;
     if (!Object.hasOwn(object, name) || adamicFieldReadiness.get(object)?.has(name)) panic(fieldView ? "field read failed: " + expression + " is not initialized; expected " + fieldView + ", found " + (!Object.hasOwn(object, name) ? "missing" : "uninitialized") : "read before assignment: field '" + name + "' in " + expression);
     return object[name];
