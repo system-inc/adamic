@@ -90,5 +90,21 @@ class StallAlarmTests(unittest.TestCase):
         self.assertEqual(len(self.check()), 2)
 
 
+    def test_a_slot_held_for_a_family_with_none_waiting_is_not_free(self):
+        # Oct 8 20:38Z: Server's area slot held for runtime's step, no runtime tip queued, every other slot busy.
+        (self.root / 'slots').write_text('box1 S\nserver B\n')
+        (self.root / 'first-step-globs.poll').write_text('area/runtime,\ncloud/land-runtime-*\n')
+        self.state(queuedAgo=400, startedAgo=360)
+        other = subprocess.Popen(['sleep', '60'])
+        self.addCleanup(other.wait)
+        self.addCleanup(other.kill)
+        self.running('box1', pid=other.pid)
+        self.assertEqual(self.check(), [], 'the held slot is not free while its family is absent')
+        # A tip of its family waiting makes it free, and the idle slot is a stall again.
+        with open(self.root / 'queue', 'a') as handle:
+            handle.write('B %d cloud/land-runtime-slice3 %s\n' % (self.now - 400, 'f' * 40))
+        self.assertEqual(len(self.check()), 2)
+
+
 if __name__ == '__main__':
     unittest.main()

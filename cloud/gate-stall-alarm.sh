@@ -28,17 +28,50 @@ tell() {
 # the gates running on them. A gate counts only while its watcher-recorded pid is alive, so a dead
 # watcher's leftovers never make a stalled fleet look full.
 freeSlots() {
-  local drained="" pid box total=0 busy=0
-  for pid in "${state}"/reserved-running/*; do
-    [ -f "${pid}" ] && kill -0 "$(basename "${pid}")" 2>/dev/null && drained="${drained} $(cat "${pid}")"
-  done
-  total=$(awk -v drained="${drained} " 'NF >= 2 && index(drained, " " $1 " ") == 0' "${state}/slots" 2>/dev/null | grep -c .)
-  for pid in "${state}"/running/*; do
-    [ -f "${pid}" ] && kill -0 "$(basename "${pid}")" 2>/dev/null || continue
-    box=$(awk '{print ($4 == "" ? "threadripper" : $4)}' "${pid}")
-    case " ${drained} " in *" ${box} "*) ;; *) busy=$(( busy + 1 )) ;; esac
-  done
-  echo $(( total - busy ))
+  # A slot held for a family (a third-field glob, or Server's area slot for the first ready step's globs)
+  # is usable only while a tip of that family waits or runs there: at 20:38Z the only "free" slot was
+  # Server's, held for runtime's step with no runtime tip queued, and the alarm fired on a full fleet.
+  python3 - "${state}" <<'PY'
+import fnmatch, os, sys
+state = sys.argv[1]
+def read(name):
+    try:
+        with open(os.path.join(state, name)) as handle:
+            return [line.split() for line in handle if line.strip()]
+    except OSError:
+        return []
+def alive(pid):
+    try:
+        os.kill(int(pid), 0)
+        return True
+    except (OSError, ValueError):
+        return False
+drained = set()
+for pid in os.listdir(os.path.join(state, 'reserved-running')) if os.path.isdir(os.path.join(state, 'reserved-running')) else []:
+    if alive(pid):
+        drained.update(word for line in read(os.path.join('reserved-running', pid)) for word in line)
+running = []
+for pid in os.listdir(os.path.join(state, 'running')) if os.path.isdir(os.path.join(state, 'running')) else []:
+    fields = (read(os.path.join('running', pid)) or [[]])[0]
+    if alive(pid) and fields:
+        running.append((fields[0], fields[2] if len(fields) > 2 else '', fields[3] if len(fields) > 3 else 'threadripper'))
+queued = [fields[2] for fields in read('queue') if len(fields) >= 4]
+firstStep = [fields[0] for fields in read('first-step-globs.poll')]
+total = 0
+for fields in read('slots'):
+    if len(fields) < 2 or fields[0] in drained:
+        continue
+    box, slot = fields[0], fields[1]
+    globs = fields[2:3] or (firstStep if (box, slot) == ('server', 'B') else [])
+    globs = [glob.rstrip(',') for glob in globs if glob.rstrip(',')]
+    if globs:
+        family = lambda branch: any(fnmatch.fnmatchcase(branch, glob) for glob in globs)
+        if not any(family(branch) for branch in queued) and not any(family(b) and c == slot and x == box for b, c, x in running):
+            continue
+    total += 1
+busy = sum(1 for _, _, box in running if box not in drained)
+print(total - busy)
+PY
 }
 
 check() {
