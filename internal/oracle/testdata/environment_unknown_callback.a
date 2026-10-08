@@ -1,0 +1,8 @@
+function check(start: number): string {
+ let total = start;
+ function visit(value: number): void { total += value; }
+ let callback = visit;
+ [1, 2].forEach(callback);
+ return String(total);
+}
+console.log(check(3));

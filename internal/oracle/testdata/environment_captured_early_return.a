@@ -1,0 +1,13 @@
+// Returning the cell's value must keep the result alive after its environment ends.
+function run(text: string, early: boolean): string {
+ function read(): string { return text; }
+ if (early) {
+  try { return text; }
+  finally { text = text + '?'; console.log(read()); }
+ }
+ text = text + '!';
+ return read();
+}
+for (const early of [true, false]) {
+ console.log(run('value' + String(early), early));
+}

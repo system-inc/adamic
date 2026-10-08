@@ -1,0 +1,7 @@
+function make(start: number): () => string {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ return read;
+}
+const read = make(3);
+console.log(read());

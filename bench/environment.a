@@ -1,0 +1,14 @@
+function checkTypeRelatedTo(left: number, right: number): number {
+ let relation = 0;
+ let depth = 0;
+ let scratch = left + right;
+ function compare(): number { relation += left < right ? 1 : 2; return descend(); }
+ function descend(): number { depth += 1; scratch += depth; return finish(); }
+ function finish(): number { return relation + scratch + depth; }
+ function related(): number { return compare() + finish(); }
+ function result(): number { return related() + finish(); }
+ return result();
+}
+let total = 0;
+for (let index = 0; index < 1000000; index += 1) { total += checkTypeRelatedTo(index % 17, index % 13); }
+console.log(String(total));

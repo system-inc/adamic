@@ -1,0 +1,7 @@
+function check(start: number): string {
+ let scratch = 'scratch' + String(start);
+ function helper(): string { scratch += '!'; return scratch; }
+ const alias = helper;
+ return alias();
+}
+console.log(check(3));

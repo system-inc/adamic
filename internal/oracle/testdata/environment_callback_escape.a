@@ -1,0 +1,9 @@
+let saved: (() => string) | undefined = undefined;
+function check(start: number): void {
+ const scratch = 'scratch' + String(start);
+ function read(): string { return scratch; }
+ [1].forEach(() => { saved = (): string => scratch; });
+}
+check(3);
+function show(): void { if (saved !== undefined) { console.log(saved()); } }
+show();

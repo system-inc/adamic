@@ -148,9 +148,11 @@ typedef struct adamic_cell {
 typedef struct adamic_environment {
 	adamic_heap heap;
 	size_t count;
-	adamic_cell cells[];
+	adamic_cell *cells;
 } adamic_environment;
 adamic_environment *adamic_environment_new(size_t count);
+void adamic_environment_init(adamic_environment *, adamic_cell *, size_t);
+void adamic_environment_end(adamic_environment *);
 void adamic_environment_initialize_cells(adamic_heap *, adamic_cell *, size_t);
 void adamic_environment_drop_cells(adamic_cell *, size_t, void (*)(void *));
 
@@ -319,6 +321,7 @@ static inline void adamic_region_hold(adamic_region *region, const void *value) 
 	}
 }
 bool adamic_region_contains(const adamic_region *region, const void *value);
+adamic_environment *adamic_environment_new_in(adamic_region *, size_t);
 void adamic_region_end(adamic_region *region);
 
 // adamic_object_copy is { ...source }: the same shape, its references retained.

@@ -34,7 +34,8 @@ type FunctionTargets struct {
 }
 
 // ClosureTargets answers which functions a function-value call can run. Only a
-// closure literal or a const initialized directly with one is bounded. Parameters,
+// closure literal, a const initialized directly with one, or an immutable nested
+// declaration binding is bounded. Parameters,
 // mutable bindings, properties, returned values and joins are Unknown. ArrayVisit
 // covers forEach, filter, find, some and every; MapForEach covers Map and Set.
 // A sort's named comparator is a direct function, rather than a function value.
@@ -65,6 +66,9 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
 	case MakeClosure:
 		return FunctionTargets{Functions: []int{value.Function}}
 	case Read:
+		if target := p.Locals[value.Local].NestedFunction; target != 0 {
+			return FunctionTargets{Functions: []int{target - 1}}
+		}
 		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
 			return FunctionTargets{Functions: []int{target - 1}}
 		}
