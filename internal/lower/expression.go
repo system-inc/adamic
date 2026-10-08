@@ -722,14 +722,13 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				value = right
 			}
-			if !value.Type().IsReference() {
-				return nil, l.notYet(node, "null comparison with a scalar")
-			}
 			operand := node.AsBinaryExpression().Left
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			// Scalars cannot hold null. IsNull still evaluates its operand, and a
+			// generic reference must consult this instantiation before erasing the test.
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !value.Type().IsReference() || !l.includesNull(l.concrete(l.checker.GetTypeAtLocation(operand)))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
@@ -756,7 +755,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if l.includesNull(l.concrete(l.checker.GetTypeAtLocation(operand))) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {

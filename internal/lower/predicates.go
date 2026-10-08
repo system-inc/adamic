@@ -230,8 +230,19 @@ func (p *predicateFlowProof) statement(node *ast.Node, paths []predicateFlowPath
 	case ast.KindEmptyStatement:
 		return paths, nil
 	case ast.KindExpressionStatement, ast.KindVariableStatement:
-		if node.Kind == ast.KindExpressionStatement && p.l.isPanicCall(node.Expression()) {
-			return nil, nil
+		if node.Kind == ast.KindExpressionStatement {
+			expression := ast.SkipParentheses(node.Expression())
+			if p.l.isPanicCall(expression) {
+				return nil, nil
+			}
+			// Only an independently inspected direct helper removes this path.
+			// A never annotation or a method's static signature is not evidence.
+			if expression.Kind == ast.KindCallExpression && ast.IsIdentifier(ast.SkipParentheses(expression.Expression())) {
+				verifier := predicateVerifier{l: p.l}
+				if verifier.neverCall(expression, map[*ast.Node]bool{}) {
+					return nil, nil
+				}
+			}
 		}
 		if predicateEffects(node) {
 			// Unknown calls and all writes can invalidate discriminants through an alias. Starting
