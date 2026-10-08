@@ -2,8 +2,8 @@
 # branches merged in below the source, landing on the slice's whole gate). star-train.py stacks each slice on
 # the one above it and lands the bottom one when it's green (Kirk and @system_adamic, October 8).
 views-slice1	compiler/area-stack	system_adamic_compiler
-views-v1	compiler/views-rehearsal@views-v1	system_adamic_compiler	compiler/test-split-flow library/land-unicode-split
-views-v2	compiler/views-rehearsal@views-v2	system_adamic_compiler
+views-v1	compiler/views-rehearsal@views-v1	system_adamic_compiler	compiler/test-split-flow library/land-unicode-split devtools/buildcache
+views-v2	compiler/views-v2	system_adamic_compiler
 views-v3	compiler/views-rehearsal@views-v3	system_adamic_compiler
 views-v4	compiler/views-rehearsal@views-v4	system_adamic_compiler
 views-v5	compiler/views-rehearsal@views-v5	system_adamic_compiler

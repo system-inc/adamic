@@ -179,7 +179,23 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
                     f"Merge {rider} at {riderSha[:8]} onto {below[:8]}, riding below slice {number} ({slug}) of the star's train")
         riders.append((rider, riderSha))
     riderTag = "".join(f"-with-{riderSha[:8]}" for _, riderSha in riders)
-    prefix = f"cloud/land-train-{number}-{slug}{riderTag}-{sourceSha[:8]}-"
+    # Fixes: commits the owner made for this slice after a later slice was on top of it, so they carry
+    # no trailer and sit above the later slice on the rehearsal. The owner sends their shas and
+    # integration lists them in a state file fixes-<slug>, in order; each is cherry-picked into the
+    # slice's tree, so the slice gets its fix without the later slice's commits. A fix already on the
+    # base or in the source drops out.
+    fixesFile = os.path.join(state, f"fixes-{slug}")
+    fixes = []
+    for line in (open(fixesFile).read().split() if os.path.exists(fixesFile) else []):
+        fixSha = git("rev-parse", "-q", "--verify", f"{line}^{{commit}}", check=False)
+        if not fixSha:
+            log(f"fix missing: {line} for slice {number} ({slug})")
+            continue
+        if any(subprocess.run(["git", "merge-base", "--is-ancestor", fixSha, other]).returncode == 0 for other in (base, sourceSha)):
+            continue
+        fixes.append(fixSha)
+    fixTag = "-fixes-" + subprocess.run(["git", "hash-object", "--stdin"], input=" ".join(fixes), capture_output=True, text=True).stdout[:8] if fixes else ""
+    prefix = f"cloud/land-train-{number}-{slug}{riderTag}{fixTag}-{sourceSha[:8]}-"
     name = f"{prefix}{base[:8]}"
     if name not in trainHeads:
         # When a slice lands, main moves to its velocity commit, a row in a table no test reads. The
@@ -203,7 +219,22 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
             tell(f"conflict-{name}", "system_adamic_integration", f"Train conflict at slice {number} ({slug}): {source} {sourceSha[:8]} onto {below[:8]} in {', '.join(files[:6])}, sent to @{owner}.")
             break
         tree = merged.stdout.splitlines()[0]
-        ridden = f"\nRiders merged below it: {', '.join(f'{rider} {riderSha[:8]}' for rider, riderSha in riders)}." if riders else ""
+        picked = None
+        for fixSha in fixes:
+            step = git("commit-tree", tree, "-p", below, "-p", sourceSha, "-m", "star-train fix step")
+            merged = subprocess.run(["git", "merge-tree", "--write-tree", "--name-only", f"--merge-base={fixSha}^", step, fixSha], capture_output=True, text=True)
+            if merged.returncode != 0:
+                picked = fixSha
+                break
+            tree = merged.stdout.splitlines()[0]
+        if picked:
+            files = [line for line in merged.stdout.splitlines()[1:] if line and not line.startswith(("Auto-merging", "CONFLICT"))]
+            log(f"fix conflict: {picked[:8]} into slice {number} ({slug}): {' '.join(files[:6])}")
+            tell(f"fix-conflict-{name}", owner, f"The star's train can't take fix {picked[:8]} into slice {number} ({slug}) on {base[:8]}: it conflicts in {', '.join(files[:6])}. Please send a fix that applies on {source} {sourceSha[:8]}.")
+            tell(f"fix-conflict-{name}", "system_adamic_integration", f"Train fix {picked[:8]} conflicts in slice {number} ({slug}): {', '.join(files[:6])}, sent to @{owner}.")
+            break
+        ridden = (f"\nFixes cherry-picked into it: {', '.join(fixSha[:8] for fixSha in fixes)}." if fixes else "")
+        ridden += f"\nRiders merged below it: {', '.join(f'{rider} {riderSha[:8]}' for rider, riderSha in riders)}." if riders else ""
         message = (f"Merge {source} at {sourceSha[:8]} onto {below[:8]}, slice {number} ({slug}) of the star's train\n\n"
                    f"Gates as if every slice below had landed; git merge-tree was clean.{ridden}\n\nGate-runs: deferred")
         candidate = git("commit-tree", tree, "-p", below, "-p", sourceSha, "-m", message)
