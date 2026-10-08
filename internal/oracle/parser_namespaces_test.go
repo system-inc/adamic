@@ -15,6 +15,8 @@ func init() {
 		"internal/oracle/testdata/namespace_method_receiver.a",
 		"stage3/namespace-parser-stops/native-namespace-class.a",
 		"internal/oracle/testdata/namespace_class_registration.a",
+		"stage3/namespace-parser-stops/native-callable-namespace.a",
+		"internal/oracle/testdata/namespace_callable_properties.a",
 	} {
 		fixtures = append(fixtures, struct {
 			path            string
@@ -29,6 +31,55 @@ func TestParserNamespaceReceiver(t *testing.T) {
 
 func TestParserNamespaceClass(t *testing.T) {
 	parserNamespaceMatchesNode(t, []string{"stage3/namespace-parser-stops/native-namespace-class.a", "internal/oracle/testdata/namespace_class_registration.a"})
+}
+
+func TestParserCallableNamespace(t *testing.T) {
+	parserNamespaceMatchesNode(t, []string{"stage3/namespace-parser-stops/native-callable-namespace.a", "internal/oracle/testdata/namespace_callable_properties.a"})
+}
+
+func TestParserCallableNamespaceMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/namespace_callable_properties.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := false
+	root, attached := -1, -1
+	for i, function := range program.Functions {
+		if function.Name == "log" {
+			root = i
+		}
+		if function.Name == "error" {
+			attached = i
+		}
+	}
+	if root < 0 || attached < 0 {
+		t.Fatal("mutant found no callable root or attached function")
+	}
+	redirect := func(value ir.Expression) ir.Expression {
+		if call, ok := value.(ir.Call); ok && call.Function == attached {
+			call.Function = root
+			changed = true
+			return call
+		}
+		return value
+	}
+	mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), redirect)
+	mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), redirect)
+	if !changed {
+		t.Fatal("mutant changed no actual attached function call")
+	}
+	compiled, _ := natively(t, program)
+	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+		if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(truth, got) != "stdout differs" {
+			t.Fatalf("%s attached function mutant survived: %+v", backend, got)
+		}
+		t.Logf("%s attached function confused with callable root caught by Node stdout", backend)
+	}
 }
 
 func parserNamespaceMatchesNode(t *testing.T, sources []string) {

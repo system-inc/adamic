@@ -152,9 +152,31 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			if declaration == node || declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindTypeAliasDeclaration {
 				continue
 			}
+			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent == node.Parent {
+				if namespaceOwnThis(declaration) {
+					return &Refused{Where: l.program.Where(declaration), What: "this in a callable namespace function; qualified and detached calls have different receivers", Fix: "pass the state explicitly"}
+				}
+				for _, parameter := range declaration.Parameters() {
+					if parameter.Name().Text() == "this" {
+						return l.notYet(parameter, "an explicit callable-namespace this parameter; pass state explicitly")
+					}
+				}
+				continue
+			}
 			return l.notYet(node, "a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module")
 		}
 		for _, member := range namespaceStatements(node) {
+			if l.namespaceMergedFunction(node.Name()) && ast.HasSyntacticModifier(member, ast.ModifierFlagsExport) {
+				if member.Kind == ast.KindVariableStatement {
+					for _, variable := range member.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
+						if variable.Name() != nil && callableNamespaceIntrinsic(variable.Name().Text()) {
+							return l.notYet(variable, "a callable namespace export colliding with a function intrinsic")
+						}
+					}
+				} else if member.Name() != nil && callableNamespaceIntrinsic(member.Name().Text()) {
+					return l.notYet(member, "a callable namespace export colliding with a function intrinsic")
+				}
+			}
 			switch member.Kind {
 			case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement, ast.KindModuleDeclaration, ast.KindClassDeclaration:
 			case ast.KindFunctionDeclaration:
@@ -186,6 +208,12 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 	}
 	if l.namespaceValueNode(node) && l.namespaceDeclaration(node) != nil {
 		parent := node.Parent
+		if l.namespaceMergedFunction(node) {
+			if l.callableNamespaceUse(node) {
+				return nil
+			}
+			return l.notYet(node, "observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented")
+		}
 		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != node {
 			return l.notYet(node, "a namespace object used as a value; use qualified members or named module imports")
 		}

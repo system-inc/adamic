@@ -12,7 +12,7 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		{"object value", "namespace N {export const x=1;} const value=N;", "namespace object"},
 		{"reflection", "namespace N {export const x=1;} console.log(Object.keys(N).join(' '));", "namespace object"},
 		{"reopening", "namespace N {export const x=1;} namespace N {export const y=2;}", "reopened namespace"},
-		{"function merge", "function N():number{return 1;} namespace N {export const x=1;}", "merged with a runtime value"},
+		{"function merge escape", "function N():number{return 1;} namespace N {export const x=1;} const alias=N;", "callable namespace object"},
 		{"class merge", "class N {} namespace N {export const x=1;}", "merged with a runtime value"},
 		{"mutable export", "namespace N {export let x=1;}", "mutable namespace export"},
 		{"uninitialized state", "namespace N {let x:number;}", "initialized name"},
