@@ -165,6 +165,7 @@ static void host_directory_error(int error, const char *operation, const adamic_
     adamic_thrown->slots[0].reference = &error_name;
     adamic_thrown->slots[1].reference = message;
     adamic_thrown->slots[2].reference = prefix;
+    adamic_error_tag(adamic_thrown);
     adamic_release(reason);
     adamic_release(syscall);
 }
@@ -465,4 +466,5 @@ void adamic_node_error(adamic_string *name, adamic_string *message, adamic_strin
     adamic_thrown->slots[0].reference = adamic_retain(name);
     adamic_thrown->slots[1].reference = adamic_retain(message);
     adamic_thrown->slots[2].reference = adamic_retain(code);
+    adamic_error_tag(adamic_thrown);
 }

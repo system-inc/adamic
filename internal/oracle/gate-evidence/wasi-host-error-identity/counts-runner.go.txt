@@ -1,0 +1,15 @@
+package oracle
+import (
+ "testing"
+ "path/filepath"
+)
+func TestHostTagCountRows(t *testing.T) {
+ t.Log(counted(t,"internal/oracle/testdata/wasi/host_error_identity.a",false,nil,false,false))
+ for _, fixture := range inputFixtures {
+  t.Run(filepath.Base(fixture.path),func(t *testing.T){ t.Log(counted(t,fixture.path,true,fixture.arguments,fixture.unreadable,fixture.writes)) })
+ }
+ for _, fixture := range fsFileFixtures {
+  path:="internal/oracle/testdata/node_fs_file_"+fixture+".a"
+  t.Run(fixture,func(t *testing.T){t.Log(counted(t,path,true,nil,false,false))})
+ }
+}

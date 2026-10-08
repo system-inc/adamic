@@ -31,6 +31,7 @@ static void raise_error(const char *name, const char *code, const char *message)
     error->slots[0].reference = text(name);
     error->slots[1].reference = text(message);
     error->slots[2].reference = text(code);
+    adamic_error_tag(error);
     adamic_thrown = error;
 }
 
