@@ -1434,3 +1434,30 @@ boxed Union reads in prepareViewCallableProperty. Otherwise the new same-name
 proof exemption would admit nullable function reads without a signature check.
 TestCheckedViewNullishCallableSignatureMutant now pins the runtime wrong-result
 refusal in both backends rather than the older compile-time refusal.
+
+Untagged final candidate projections, October 8: reuse lane 5 at tip 15b30747
+through integration 6a7f1bf3 (merge 976f8bc6). Revised candidate-projection target
+is October 9, 2026, 23:00 UTC; full unchanged TypeChecker remains outside this
+claim. New fixtures are pair-24, pair-72 and pair-227 .a projections and the owned
+run-nested-callable-mutants.py harness. Minimal named shared hooks:
+- view_callable_signatures_match/adamicViewCallableSignaturesMatch extracts the
+  existing lane-5 representation predicate for nested non-panicking selection.
+- viewCallableProducers/viewCallableRecorded reuses lane-5 immutable code lookup;
+  the JS record includes its function index. No closure convention is added.
+- completeViewCallableShapeContract accepts represented optional parameters;
+  generics, rest and overloads still refuse. The scalar read filter stays strict.
+- lower.untaggedCallableTargets and certifyUntaggedCallableProducers reuse existing
+  closureRecords and exact checker identity to populate ViewContract.Functions;
+  ProducerCertified requires that whitelist, including an empty whitelist. This
+  is conservative for higher-order parameters and object results.
+- checkLazyViewReads runs that certificate hook and bypasses field-name fallback
+  only for a fully producer-certified callable read; receiver refusals remain.
+- prepareUntaggedStructuralRead is called at object-union and array-element reads
+  to demand nested supported scalar callable certificates lazily.
+The native and JS owned structural matchers use the shared producer certificates.
+The native declaration includes lane-5 header before its generated signatures.
+Both callable read emitters retain lane-5 named refusals and enforce logical
+producer membership for unions. Compiler-wide reachability remains unmeasured;
+fixtures deliberately narrow TypeChecker to one scalar check method and forEach
+thisArg to optional number. Intrinsic array forEach and its any thisArg are not
+certified by these fixtures. Full original-interface completions remain zero.

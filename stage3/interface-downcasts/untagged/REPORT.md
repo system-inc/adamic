@@ -1,3 +1,47 @@
+Built: final three candidate projections (Type ranks 24/72 and optional forEach rank 227), reusing lane 5 producer certificates and adding exact logical producer membership.
+Commits: integration merge 976f8bc6; final group follows in Git history.
+Commands: final three Node/native/JS controls and remaining-boundary receipts passed 1.802s; shipping gate follows integration refresh. Setup done 214.165s, nproc 5.
+Mutants: skip nested callable checks native/JS; accept wrong results native/JS; drop nested Symbol checks native/JS; drop logical certificates native/JS; erase checker identity proof. All nine caught semantic pinned refusal failures and restored.
+Uncovered: zero reduced candidate projections remain; original TypeChecker and intrinsic forEach contracts, full compiler interfaces, and exact reachability are not certified.
+
+Revised planning target was October 9, 2026, 23:00 UTC. The final reduced
+candidate projections are implemented October 8. This is 61 projections/434
+candidate reads represented, zero remaining in that projection inventory. It is
+not full unchanged compiler-interface completion; those counts stay zero. Ranks
+24 and 72 contribute 43 candidate reads, using a recursive Type projection with
+one scalar TypeChecker method. Rank 227 contributes one candidate read, using
+optional number thisArg; its original intrinsic owner and any thisArg are outside
+this proof. Both original Type boundary receipts still conservatively refuse.
+
+Lane 5 was inspected at 15b30747 and consumed through integration 6a7f1bf3.
+Its immutable producer lookup, expected signature descriptors and named failures
+are shared with this family. A pure predicate is extracted for nested structural
+selection, without changing closure calling conventions. Higher-order callable
+union members additionally require exact checker identity against existing
+closureRecords, certified only after all implementations are lowered. This
+conservatively rejects unproved producers even if their physical parameter/result
+representations match. ProducerCertified makes an empty whitelist a refusal.
+
+Optional represented parameters now have a positive Node/native/JS control;
+generic, rest and overloaded contracts remain unsupported. A complete callable
+read certificate supersedes only field-name fallback in lazy admission, retaining
+receiver refusals. Both direct and stored nested callback mismatches have exact
+exit-70 pins naming forEach, ForEach and the uncertified function signature.
+Type fixtures also pin wrong checker results and wrong nested Symbol names.
+A valid empty indexed array is held to Node. Unsupported original Type fixtures
+are kept as boundary receipts, not credited as full conformance.
+
+Reproduce final controls:
+```
+source /workspace/adamic-tools/env.sh
+go test ./internal/oracle -run 'TestCheckedViewUntaggedCandidatePairs/^(24|72|227)$/|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedRemainingBoundaries' -count=1 -v > /tmp/untagged-last-three-restored.log 2>&1
+python3 stage3/interface-downcasts/untagged/run-nested-callable-mutants.py > /tmp/untagged-nested-callable-mutants.log 2>&1
+```
+The first mutation run corrected a JavaScript whitespace anchor; that failed
+harness assertion is not counted as a caught mutant. The corrected eight runtime
+mutants and separately added checker-proof mutant all fail semantically with
+successfully executed binaries. Every mutation is restored in finally.
+
 Built: fifteen recursive FlowNode projections plus fixed-signature callable union selection with direct and nested source controls.
 Commits: previous group e3be8faf; this group's commit follows in Git history.
 Commands: FlowNode/callable Node/native/JS controls passed 16.002s; remaining-boundary receipts passed 0.367s; final view packages passed (IR 0.012s, lower 4.581s, native 11.512s, JS 0.973s); oracle passed 72.813s with 548 Node executions.

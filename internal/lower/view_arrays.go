@@ -56,6 +56,7 @@ func (l *lowering) markViewArrayRead(node *ast.Node, read ir.ArrayIndex) ir.Arra
 	array := node.AsElementAccessExpression().Expression
 	element := l.untaggedArrayElement(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(array)))
 	if element != nil {
+		l.prepareUntaggedStructuralRead(node, element, map[*checker.Type]bool{})
 		read.View = sourceExpression(node)
 		read.ViewType = l.checker.TypeToString(element)
 		read.ViewTypeID = int(element.Id())

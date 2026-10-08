@@ -43,7 +43,7 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, value string) st
 	if err != nil {
 		panic(err)
 	}
-	return fmt.Sprintf("((adamicUntaggedValue) => { %s; adamicUntaggedPlainSelect(adamicUntaggedValue, %s, %d, %s, %s); return adamicUntaggedValue; })(%s)", viewUntaggedPlainRuntime, string(encoded), property.ViewContract, quote(property.View), quote(property.ViewType), value)
+	return fmt.Sprintf("((adamicUntaggedValue) => { %s; adamicUntaggedPlainSelect(adamicUntaggedValue, %s, %d, %s, %s); return adamicUntaggedValue; })(%s)", viewUntaggedPlainRuntime+"; const adamicUntaggedCallableRecorded=(value)=>"+e.viewCallableRecorded("value"), string(encoded), property.ViewContract, quote(property.View), quote(property.ViewType), value)
 }
 
 const viewUntaggedPlainRuntime = `
@@ -70,6 +70,14 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
    const wanted=contract.Of===1 || contract.Of===7?'number':contract.Of===2 || contract.Of===9?'boolean':contract.Of===3?'string':'unknown';
    if(typeof value!==wanted) return false;
    return !contract.Allowed?.length || contract.Allowed.some(literal=>value===(literal.Of===1?literal.Number:literal.Of===2?literal.Boolean:literal.String));
+  }
+  if(contract.Kind===5){
+   if(!contract.Result && !contract.DiscardResult) return false;
+   const parameters=(contract.Parameters || []).map(id=>contracts[id-1]?.Of || 0);
+   const expected={parameters,result:contract.DiscardResult?255:contracts[contract.Result-1]?.Of || 0};
+   const recorded=adamicUntaggedCallableRecorded(value);
+   if(contract.ProducerCertified && !(contract.Functions || []).includes(recorded?.function)) return false;
+   return adamicViewCallableSignaturesMatch(recorded,expected);
   }
   if(contract.Kind===3){
    if(!Array.isArray(value) || !contract.Element) return false;
@@ -128,4 +136,27 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, 
 		choices = append(choices, viewCallableSignature(parameters, result, root.Name))
 	}
 	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>recorded!==undefined && recorded.result===expected.result && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && value===expected.parameters[index])) || choices[0];})(" + recorded + ")"
+}
+
+func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded string) string {
+	id := property.ViewContract
+	if id <= 0 || int(id) > len(e.program.ViewContracts) {
+		return recorded
+	}
+	root := e.program.ViewContracts[id-1]
+	if root.Kind != ir.ViewUnion || root.Of != ir.Closure {
+		return recorded
+	}
+	functions := []int{}
+	certified := false
+	for _, member := range root.Members {
+		contract := e.program.ViewContracts[member-1]
+		certified = certified || contract.ProducerCertified
+		functions = append(functions, contract.Functions...)
+	}
+	if !certified {
+		return recorded
+	}
+	encoded, _ := json.Marshal(functions)
+	return "((recorded)=>" + string(encoded) + ".includes(recorded?.function) ? recorded : undefined)(" + recorded + ")"
 }

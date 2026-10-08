@@ -114,5 +114,13 @@
   "219/wrong": "adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n",
   "219/nested": "adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n",
   "220/wrong": "adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n",
-  "220/nested": "adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+  "220/nested": "adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n",
+  "24/wrong": "adamic: panic: field read failed: view0.type matches no member of Type; expected Type, found object\n",
+  "24/nested": "adamic: panic: field read failed: view0.type matches no member of Type; expected Type, found object\n",
+  "72/wrong": "adamic: panic: field read failed: view0.items[0] matches no member of Type; expected Type, found object\n",
+  "72/nested": "adamic: panic: field read failed: view0.items[0] matches no member of Type; expected Type, found object\n",
+  "227/wrong": "adamic: panic: field read failed: view0.forEach expected ForEach, found function with unknown signature\n",
+  "227/nested": "adamic: panic: field read failed: view0.holder.forEach expected ForEach, found function with unknown signature\n",
+  "227/logical": "adamic: panic: field read failed: view0.forEach expected ForEach, found function with unknown signature\n",
+  "227/logical-nested": "adamic: panic: field read failed: view0.holder.forEach expected ForEach, found function with unknown signature\n"
 }

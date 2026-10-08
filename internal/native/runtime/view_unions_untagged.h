@@ -1,6 +1,7 @@
 #ifndef ADAMIC_VIEW_UNIONS_UNTAGGED_H
 #define ADAMIC_VIEW_UNIONS_UNTAGGED_H
 #include "view_unions_mixed.h"
+#include "view_callables_contract.h"
 
 typedef struct adamic_view_untagged_tag {
     const char *field;
@@ -32,6 +33,10 @@ typedef struct adamic_view_untagged_field {
     size_t contract;
     bool optional;
 } adamic_view_untagged_field;
+typedef struct adamic_view_untagged_callable_producer {
+    adamic_code code;
+    const adamic_callable_signature *signature;
+} adamic_view_untagged_callable_producer;
 typedef struct adamic_view_untagged_contract {
     unsigned int kind;
     unsigned int of;
@@ -43,6 +48,9 @@ typedef struct adamic_view_untagged_contract {
     const size_t *members;
     size_t member_count;
     size_t element;
+    const adamic_callable_signature *callable;
+    const adamic_view_untagged_callable_producer *producers;
+    size_t producer_count;
 } adamic_view_untagged_contract;
 bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_value *object, const char *field, adamic_view_union_value *slot);
 bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value);

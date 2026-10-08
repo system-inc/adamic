@@ -87,6 +87,9 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 		if contract.Kind == ir.ViewScalar {
 			return contract.Of == ir.Number || contract.Of == ir.String || contract.Of == ir.Boolean || contract.Of == ir.MaybeNumber || contract.Of == ir.MaybeBoolean
 		}
+		if contract.Kind == ir.ViewCallable {
+			return contract.Result != 0 || contract.DiscardResult
+		}
 		if contract.Kind == ir.ViewUndefined {
 			return true
 		}
@@ -190,8 +193,83 @@ func (l *lowering) prepareUntaggedCallableUnionRead(node *ast.Node, target *chec
 		if err != nil {
 			return 0, err
 		}
+		if l.untaggedCallableTargets == nil {
+			l.untaggedCallableTargets = map[ir.ViewContractID]*checker.Type{}
+		}
+		l.untaggedCallableTargets[child] = member
+		l.result.ViewContracts[child-1].Unsupported = ""
 		contract.Members = append(contract.Members, child)
 	}
 	l.result.ViewContracts[id-1] = contract
 	return id, nil
+}
+
+// Prepare nested callable obligations using lane 5's existing descriptor builder.
+// Only represented fixed scalar signatures are certified; errors stay lazy.
+func (l *lowering) prepareUntaggedStructuralRead(node *ast.Node, target *checker.Type, seen map[*checker.Type]bool) {
+	if target == nil || seen[target] {
+		return
+	}
+	seen[target] = true
+	if l.callableViewContract(target) {
+		if l.runtimeViewCallableShape(target) {
+			if id, err := l.prepareViewCallableRead(node, target); err == nil {
+				l.result.ViewContracts[id-1].Unsupported = ""
+			}
+		}
+		return
+	}
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range target.Types() {
+			l.prepareUntaggedStructuralRead(node, member, seen)
+		}
+		return
+	}
+	if element := l.untaggedArrayElement(target); element != nil {
+		l.prepareUntaggedStructuralRead(node, element, seen)
+		return
+	}
+	if target.Flags()&checker.TypeFlagsObject == 0 {
+		return
+	}
+	for _, field := range l.checker.GetPropertiesOfType(target) {
+		l.prepareUntaggedStructuralRead(node, l.checker.GetTypeOfSymbol(field), seen)
+	}
+}
+
+// Reuse closureRecords' checker proof and lane 5's code-identity registry. Exact
+// logical identity is conservative: physical Closure/Object tags alone do not
+// certify higher-order arguments or object results.
+func (l *lowering) certifyUntaggedCallableProducers() {
+	for id, target := range l.untaggedCallableTargets {
+		contract := &l.result.ViewContracts[id-1]
+		contract.ProducerCertified = true
+		contract.Functions = nil
+		for _, producer := range l.closureRecords {
+			if checker.Checker_isTypeIdenticalTo(l.checker, producer.proven, target) {
+				contract.Functions = append(contract.Functions, producer.function)
+			}
+		}
+	}
+}
+func certifiedUntaggedCallableRead(program *ir.Program, id ir.ViewContractID) bool {
+	if id <= 0 || int(id) > len(program.ViewContracts) {
+		return false
+	}
+	contract := program.ViewContracts[id-1]
+	if contract.Unsupported != "" {
+		return false
+	}
+	if contract.Kind == ir.ViewCallable {
+		return contract.ProducerCertified
+	}
+	if contract.Kind != ir.ViewUnion || contract.Of != ir.Closure || len(contract.Members) == 0 {
+		return false
+	}
+	for _, member := range contract.Members {
+		if !certifiedUntaggedCallableRead(program, member) {
+			return false
+		}
+	}
+	return true
 }

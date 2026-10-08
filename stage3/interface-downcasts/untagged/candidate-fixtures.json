@@ -80,6 +80,18 @@
     "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
   },
   {
+    "rank": 24,
+    "source_alias": "Type",
+    "good_stdout": "true\ntrue\n",
+    "candidate_reads": 33,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive Type flags/id/checker/symbol/types projection; checker has one fixed scalar callable, not full original TypeChecker"
+  },
+  {
     "rank": 32,
     "type_id": 7312,
     "receiver": "ForInStatement",
@@ -158,6 +170,19 @@
     ],
     "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces",
     "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\n"
+  },
+  {
+    "rank": 72,
+    "source_alias": "Type",
+    "good_stdout": "true\ntrue\n",
+    "candidate_reads": 10,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "independent recursive Type flags/id/checker/symbol/types projection; checker has one fixed scalar callable, not full original TypeChecker"
   },
   {
     "rank": 73,
@@ -843,6 +868,20 @@
       "empty"
     ],
     "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
+  },
+  {
+    "rank": 227,
+    "source_alias": "ForEach",
+    "good_stdout": "true\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "logical",
+      "logical-nested"
+    ],
+    "scope": "independent forEach callback union with represented optional number thisArg; full intrinsic array owner and any thisArg not certified"
   },
   {
     "rank": 228,

@@ -63,6 +63,7 @@ bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_valu
         if (heap->kind == adamic_kind_number && actual == 10) { result->kind = adamic_view_union_number; result->payload.number = ((const adamic_number_box *)heap)->number; }
         if (heap->kind == adamic_kind_boolean && actual == 10) { result->kind = adamic_view_union_boolean; result->payload.boolean = ((const adamic_boolean_box *)heap)->boolean; }
         if (heap->kind == adamic_kind_string && (actual == 3 || actual == 10)) { result->kind = adamic_view_union_string; }
+        if (heap->kind == adamic_kind_closure && (actual == 8 || actual == 10)) { result->kind = adamic_view_union_function; }
         if (heap->kind == adamic_kind_array && (actual == 5 || actual == 10)) { result->kind = adamic_view_union_array; }
         if (heap->kind == adamic_kind_object && (actual == 4 || actual == 10)) { result->kind = adamic_view_union_object; }
         return true;
@@ -95,6 +96,15 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
         if (contract->allowed_count == 0) { return true; }
         for (size_t i = 0; i < contract->allowed_count; i++) {
             if (tag_matches(value, &contract->allowed[i])) { return true; }
+        }
+        return false;
+    }
+    if (contract->kind == 5) {
+        if (value->kind != adamic_view_union_function || value->payload.reference == NULL) { return false; }
+        const adamic_closure *closure = value->payload.reference;
+        for (size_t i = 0; i < contract->producer_count; i++) {
+            const adamic_view_untagged_callable_producer *producer = &contract->producers[i];
+            if (closure->code == producer->code && adamic_view_callable_signatures_match(producer->signature, contract->callable)) { return true; }
         }
         return false;
     }

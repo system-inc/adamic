@@ -470,7 +470,7 @@ func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 // These receipts keep remaining adapter boundaries distinct from completed
 // candidates. Their valid Node controls do not certify Adamic support.
 func TestCheckedViewUntaggedRemainingBoundaries(t *testing.T) {
-	for _, fixture := range []string{"type-contract-boundary", "base-type-boundary", "callable-union-optional-boundary"} {
+	for _, fixture := range []string{"type-contract-boundary", "base-type-boundary"} {
 		t.Run(fixture, func(t *testing.T) {
 			path, err := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/" + fixture + ".a")
 			if err != nil {
@@ -493,5 +493,19 @@ func TestCheckedViewUntaggedRemainingBoundaries(t *testing.T) {
 				t.Fatal(err)
 			}
 		})
+	}
+}
+
+// Optional represented parameters now use lane 5's immutable producer contracts.
+func TestCheckedViewUntaggedOptionalCallableControl(t *testing.T) {
+	program, path := interfaceFixture(t, "untagged/fixtures/callable-union-optional-boundary")
+	node := onNode(t, path)
+	if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+		t.Fatal(difference)
+	}
+	for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(node, got); difference != "" {
+			t.Errorf("%s: %s", backend, difference)
+		}
 	}
 }

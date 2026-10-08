@@ -82,6 +82,7 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 func (l *lowering) checkLazyViewReads() error {
 	// Untagged recursive read hook: all reserved array/interface descendants
 	// are complete now; re-evaluate only this adapter's provisional refusal.
+	l.certifyUntaggedCallableProducers()
 	l.completeUntaggedRecursiveContracts()
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
@@ -189,7 +190,7 @@ func (l *lowering) checkLazyViewReads() error {
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" {
+		if family == "" && !certifiedUntaggedCallableRead(program, contract) {
 			family = unsupportedFields[field]
 		}
 		if family == "" {
