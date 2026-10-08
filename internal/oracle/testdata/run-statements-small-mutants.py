@@ -12,6 +12,8 @@ mutants = [
     ("prefix-result", "internal/lower/expression.go", "l.result.Functions[index].Body = append(body, ir.Return{Value: value})", "l.result.Functions[index].Body = append(body, ir.Return{Value: ir.Binary{Operator: ir.Subtract, Left: value, Right: ir.NumberConstant{Value: 1}}})", "TestNativeAgreesWithNode/internal/oracle/testdata/statements_small_prefix", "stdout"),
 ]
 mutants.extend([
+    ("throw-identity", "internal/lower/exceptions.go", "return []ir.Statement{ir.Throw{Value: value}}, nil", 'return []ir.Statement{ir.Throw{Value: ir.MakeError{Message: ir.Property{Object: value, Name: "message", Of: ir.String}}}}, nil', "TestNativeAgreesWithNode/internal/oracle/testdata/statements_small_throw", "stdout"),
+    ("error-provenance", "internal/lower/exceptions.go", "&& madeError(thrown)", "&& true", "TestStatementsSmallRulings/structural_error", "stdout differs"),
     ("parameter-order", "internal/lower/functions.go", "(defaultIndex == len(defaults) || patterns[patternIndex].incoming < defaults[defaultIndex].incoming)", "true", "TestNativeAgreesWithNode/internal/oracle/testdata/statements_small_parameters", "stdout"),
     ("template-object", "internal/lower/expression.go", 'return nil, l.notYet(span, "a template interpolating an object, an array, a map, a function or undefined")', 'value = ir.StringConstant{Index: l.constant("[object Object]")}', "TestStatementsSmallRulings/template", "want preserved stop"),
     ("nonnull-refusal", "internal/lower/refusals.go", 'ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic(\'why it can\'t be missing\'), or narrow and handle the missing case"},', '', "TestStatementsSmallRulings/nonnull", "want preserved stop"),

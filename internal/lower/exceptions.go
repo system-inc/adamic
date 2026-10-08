@@ -24,7 +24,34 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
 	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
 	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
-	if !isNewError && !isCaught {
+	// Error is structurally typed: { name, message, stack } can satisfy it without
+	// being an Error on Node. Follow only immutable bindings to a real allocation.
+	seen := map[*ast.Symbol]bool{}
+	var madeError func(*ast.Node) bool
+	madeError = func(value *ast.Node) bool {
+		if value == nil {
+			return false
+		}
+		value = ast.SkipParentheses(value)
+		if value.Kind == ast.KindNewExpression {
+			return l.isLibraryGlobal(value.AsNewExpression().Expression, "Error")
+		}
+		if !ast.IsIdentifier(value) {
+			return false
+		}
+		symbol := l.symbol(value)
+		if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
+			return false
+		}
+		seen[symbol] = true
+		declaration := symbol.Declarations[0]
+		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindVariableDeclarationList || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+			return false
+		}
+		return madeError(declaration.AsVariableDeclaration().Initializer)
+	}
+	isStoredError := !isNewError && !isCaught && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") && madeError(thrown)
+	if !isNewError && !isCaught && !isStoredError {
 		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
 			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
 		}
