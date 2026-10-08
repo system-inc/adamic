@@ -8,3 +8,5 @@ github.com/system-inc/adamic/internal/fresh TestFreshWrites____oracle_testdata_n
     corpus_coverage_test.go:19: test unit exceeded 30 seconds: 31.652049147s
 --- FAIL: TestFreshWrites____oracle_testdata_node_buffer_finalized_a_9c919f6e11f6 (31.65s)
 
+red: 6c28ada8cf7b6c3a09f301eade767247651f7e15 full gate, first failure at tests after 100.0 s (coverage=0.0s build=14.2s tools=0.1s vet=26.8s wasi=178.1s catalog=236.5s stage3=279.6s tests=279.6s; 177 units over 30 s (11658 s, 92 on the burn-down, 85 drifted over)), 13 fail, 4973 pass
+stopped: stopped
