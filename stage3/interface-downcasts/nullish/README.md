@@ -569,3 +569,30 @@ inventory, so transferring tuples does not justify subtracting every array row.
 The current executable gap table and these measurement limits are in
 lane-remaining.json. Remaining storage gaps are nested boxed unions, nested
 packed booleans and boxed key domains; each stops at node.value in its fixture.
+
+## October 8 continuation blocked by integration rollback
+
+Owner tip 0ea22091 remains green under its recorded scoped gates. Fetching the
+designated integration branch returned bd05075f5b8cbd592e8ece1a098d582eb43cf510.
+Its report says the owner merge was rejected: the ordinary
+censusCallableSlotless Union exception loses the mixed-union callback ABI
+refusals, while restoring that guard refuses entry-live-mutation.a:5:82.
+The integrator reverted the entire owner item, including Map storage adapters.
+An attempted merge produced content and modify/delete conflicts; it was aborted
+without selecting either side or changing compiler code. The designated
+integrator owns reconciliation, and broader callable conventions belong to
+lane 5. This blocks building the next groups against the newest shared tree.
+
+Pending groups remain nested boxed union storage, nested packed boolean storage,
+boxed key domains, and nominal stores beneath entry aggregates. The conservative
+demand inventory remains 2,018 pairs / 9,101 reads; exact remaining reaching-view
+pairs and reads are unmeasured. The array/tuple overlap is 1,195 reads, not an
+exact packed-boolean or nested-union count. No new admission, test pass, or mutant
+kill is claimed for this documentation checkpoint.
+
+Required primitive brands hit the existing language refusal in
+internal/lower/phantom_brands.go:133, function (*lowering).phantomRefusal:
+"Adamic 0.1 refuses a primitive brand member brand whose type is not void; make
+brand void (or optional and typed undefined) so the brand is phantom". Both read
+and unread controls refuse at the type declaration. This is not a lazy-view
+read refusal.
