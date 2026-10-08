@@ -1,0 +1,23 @@
+test_ordinary_apply_leaves_git_clean (__main__.ApplyCheckoutTests.test_ordinary_apply_leaves_git_clean) ... Preparing worktree (detached HEAD 2f312321b7)
+Updating files:  26% (3145/11757)Updating files:  27% (3175/11757)Updating files:  28% (3292/11757)Updating files:  29% (3410/11757)Updating files:  30% (3528/11757)Updating files:  31% (3645/11757)Updating files:  32% (3763/11757)Updating files:  33% (3880/11757)Updating files:  34% (3998/11757)Updating files:  34% (4074/11757)Updating files:  35% (4115/11757)Updating files:  36% (4233/11757)Updating files:  37% (4351/11757)Updating files:  38% (4468/11757)Updating files:  39% (4586/11757)Updating files:  40% (4703/11757)Updating files:  41% (4821/11757)Updating files:  42% (4938/11757)Updating files:  43% (5056/11757)Updating files:  44% (5174/11757)Updating files:  45% (5291/11757)Updating files:  46% (5409/11757)Updating files:  47% (5526/11757)Updating files:  48% (5644/11757)Updating files:  48% (5671/11757)Updating files:  49% (5761/11757)Updating files:  50% (5879/11757)Updating files:  51% (5997/11757)Updating files:  52% (6114/11757)Updating files:  53% (6232/11757)Updating files:  54% (6349/11757)Updating files:  55% (6467/11757)Updating files:  56% (6584/11757)Updating files:  57% (6702/11757)Updating files:  58% (6820/11757)Updating files:  59% (6937/11757)Updating files:  59% (6974/11757)Updating files:  60% (7055/11757)Updating files:  61% (7172/11757)Updating files:  62% (7290/11757)Updating files:  63% (7407/11757)Updating files:  64% (7525/11757)Updating files:  65% (7643/11757)Updating files:  66% (7760/11757)Updating files:  67% (7878/11757)Updating files:  68% (7995/11757)Updating files:  69% (8113/11757)Updating files:  70% (8230/11757)Updating files:  71% (8348/11757)Updating files:  72% (8466/11757)Updating files:  73% (8583/11757)Updating files:  74% (8701/11757)Updating files:  75% (8818/11757)Updating files:  76% (8936/11757)Updating files:  77% (9053/11757)Updating files:  78% (9171/11757)Updating files:  79% (9289/11757)Updating files:  80% (9406/11757)Updating files:  81% (9524/11757)Updating files:  82% (9641/11757)Updating files:  83% (9759/11757)Updating files:  84% (9876/11757)Updating files:  85% (9994/11757)Updating files:  85% (10017/11757)Updating files:  86% (10112/11757)Updating files:  87% (10229/11757)Updating files:  88% (10347/11757)Updating files:  89% (10464/11757)Updating files:  90% (10582/11757)Updating files:  91% (10699/11757)Updating files:  92% (10817/11757)Updating files:  93% (10935/11757)Updating files:  94% (11052/11757)Updating files:  95% (11170/11757)Updating files:  96% (11287/11757)Updating files:  97% (11405/11757)Updating files:  98% (11522/11757)Updating files:  99% (11640/11757)Updating files: 100% (11757/11757)Updating files: 100% (11757/11757), done.
+HEAD is now at 2f312321b7 Refresh catalog undo patches 08, 11 and 12 for the compiler area
+[detached HEAD b2d5bbba7a] Seed the apply checkout test
+ 1 file changed, 2 insertions(+)
+Cloning into '/tmp/adamic-gate/stage3-apply-checkout-pyq32yvk/adapted'...
+Note: switching to '050880ce59e30b356b686bd3144efe24f875ebc8'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
