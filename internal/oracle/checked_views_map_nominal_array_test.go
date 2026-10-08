@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"github.com/system-inc/adamic/internal/ir"
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -359,6 +360,98 @@ func TestCheckedViewOptionalMutableNominalMutants(t *testing.T) {
 				}
 			}
 			t.Logf("Node=%q; optional mutable lookalike caught at %s", truth.stdout, site)
+		})
+	}
+}
+
+func TestCheckedViewNullableNominalSlotMutants(t *testing.T) {
+	t.Run("narrow-slot", func(t *testing.T) {
+		program, path := interfaceFixture(t, "nullish/maps/entry-nominal-nullable-slot-null-narrow")
+		truth := onNode(t, path)
+		native, _ := nativelyUncached(t, program)
+		for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+			if got.exitCode != 70 || !strings.Contains(string(got.stderr), "field write failed:") || !strings.Contains(string(got.stderr), "child") {
+				t.Fatalf("narrow original slot admitted null: %#v", got)
+			}
+		}
+		t.Logf("Node=%q; actual nonnullable slot rejects widened helper write", truth.stdout)
+	})
+	for _, site := range []string{"read", "producer", "write"} {
+		t.Run(site, func(t *testing.T) {
+			program, path := interfaceFixture(t, "nullish/maps/entry-nominal-nullable-slot-null-"+site)
+			truth := onNode(t, path)
+			fake, item := -1, -1
+			for i, local := range program.Locals {
+				if local.Name == "fake" {
+					fake = i
+				}
+				if local.Name == "item" {
+					item = i
+				}
+			}
+			if fake < 0 || item < 0 {
+				t.Fatal("missing locals")
+			}
+			changed := false
+			for i, statement := range program.Main {
+				if site == "write" {
+					if store, ok := statement.(ir.SetProperty); ok && store.Name == "child" && !store.Define && store.WriteContract != 0 && program.ViewContracts[store.WriteContract-1].Kind != ir.ViewNull {
+						store.Value = ir.Read{Local: fake, Of: ir.Object}
+						program.Main[i] = store
+						changed = true
+					}
+					continue
+				}
+				if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "source" {
+					if site == "producer" {
+						creation, ok := declaration.Value.(ir.MapNew)
+						if !ok {
+							t.Fatal("missing Map")
+						}
+						creation.Entries[0][1] = ir.ObjectLiteral{Fields: []ir.Field{{Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}}}
+						declaration.Value = creation
+						program.Main[i] = declaration
+					} else {
+						mutation := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}
+						remaining := append([]ir.Statement(nil), program.Main[i+1:]...)
+						program.Main = append(program.Main[:i+1], mutation)
+						program.Main = append(program.Main, remaining...)
+					}
+					changed = true
+					break
+				}
+			}
+			if !changed {
+				t.Fatal("mutation missed")
+			}
+			native, _ := nativelyUncached(t, program)
+			expected := "Map nominal producer failed:"
+			if site == "read" {
+				expected = "field read failed:"
+			}
+			for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if got.exitCode != 70 || !strings.Contains(string(got.stderr), expected) || !strings.Contains(string(got.stderr), "class identity") {
+					t.Fatalf("nullable mutable class lookalike ran on: %#v", got)
+				}
+			}
+			t.Logf("Node=%q; nullable mutable lookalike caught at %s", truth.stdout, site)
+		})
+	}
+}
+
+func TestCheckedViewNullableNominalSlotBoundaryRefusals(t *testing.T) {
+	for _, name := range []string{"null-helper", "both-helper", "both-optional-helper"} {
+		t.Run(name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/entry-nominal-nullable-slot-"+name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			_, err = lowered(t, path)
+			if err == nil || !strings.Contains(err.Error(), "nullable nominal value from an unboxed reference") {
+				t.Fatalf("unboxed boundary escaped: %v", err)
+			}
+			t.Logf("Node=%q; named refusal=%v", truth.stdout, err)
 		})
 	}
 }

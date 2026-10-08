@@ -11,6 +11,15 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('nullable-slot-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalSlotMutants$/^producer$'),
+ ('nullable-slot-js-producer', 'internal/javascript/view_maps_nominal.go', '"((entry) => {if (!(" + strings.Join', '"((entry) => {if (false && !(" + strings.Join', '^TestCheckedViewNullableNominalSlotMutants$/^producer$'),
+ ('nullable-slot-native-write', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalSlotMutants$/^write$'),
+ ('nullable-slot-js-write', 'internal/javascript/view_maps_nominal.go', '"((entry) => {if (!(" + strings.Join', '"((entry) => {if (false && !(" + strings.Join', '^TestCheckedViewNullableNominalSlotMutants$/^write$'),
+ ('nullable-slot-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalSlotMutants$/^read$'),
+ ('nullable-slot-js-read', 'internal/javascript/view_nominal_reads.go', '"((value) => (" + strings.Join', '"((value) => (true || " + strings.Join', '^TestCheckedViewNullableNominalSlotMutants$/^read$'),
+ ('nullable-slot-null-containment', 'internal/ir/view_writes.go', 'present.Null = present.Null || contract.Null', 'present.Null = false', '^TestCheckedViewNullableNominalSlotMutants$/^narrow-slot$'),
+ ('nullable-slot-unboxed-boundary', 'internal/lower/class.go', 'nominalUnion && rawValue.Type() == ir.Object && l.includesNull', 'false && nominalUnion && rawValue.Type() == ir.Object && l.includesNull', '^TestCheckedViewNullableNominalSlotBoundaryRefusals$'),
+
  ('optional-mutable-late-helper', 'internal/lower/class.go', 'write.WriteContract = writeContract', 'write.WriteContract = 0', '^TestCheckedViewOptionalMutableNominalMutants$/^narrow-slot$'),
  ('optional-mutable-slot', 'internal/ir/view_writes.go', 'present.Undefined = present.Undefined || contract.Undefined', 'present.Undefined = false', '^TestCheckedViewOptionalMutableNominalMutants$/^narrow-slot$'),
  ('optional-mutable-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewOptionalMutableNominalMutants$/^producer$'),

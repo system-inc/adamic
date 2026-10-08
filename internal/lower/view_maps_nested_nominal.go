@@ -78,12 +78,12 @@ func (l *lowering) mapNestedNominalEntrySlot(node *ast.Node, target *checker.Typ
 			if descriptor.Kind == ir.ViewNullable && descriptor.Element != 0 {
 				descriptor = l.result.ViewContracts[descriptor.Element-1]
 			}
-			if l.result.ViewContracts[child-1].Of != ir.Object || descriptor.NominalClass == 0 {
+			if (l.result.ViewContracts[child-1].Of != ir.Object && l.result.ViewContracts[child-1].Of != ir.Union) || descriptor.NominalClass == 0 {
 				return 0
 			}
 		}
 		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: child, Optional: field.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(field)})
-		if ir.HasMapNominalWitness(l.result, child) && l.result.ViewContracts[child-1].Of == ir.Object && !l.checker.IsReadonlySymbol(field) {
+		if ir.HasMapNominalWitness(l.result, child) && (l.result.ViewContracts[child-1].Of == ir.Object || l.result.ViewContracts[child-1].Of == ir.Union) && !l.checker.IsReadonlySymbol(field) {
 			l.optionalViewWriteField(field.Name)
 		}
 		if l.result.CheckedFields == nil {

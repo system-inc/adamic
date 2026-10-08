@@ -20,6 +20,12 @@
       "family": "nominal class beneath a recursive aggregate entry",
       "read": "node.value",
       "outcome": "named compile refusal"
+    },
+    {
+      "family": "nullable nominal unboxed callable boundary",
+      "read": "nullable class source value at entry.child write",
+      "outcome": "named compile refusal before ambiguous reference is stored",
+      "coordination": "broader callable conventions remain with lane 5"
     }
   ],
   "delegated": "optional and rest tuples belong to lane 4c; the inventory combines array and tuple rows and cannot isolate the tuple share",
@@ -77,6 +83,11 @@
     {
       "family": "optional mutable class reference fields",
       "scope": "finite direct class/undefined optional members, absent reads and present slot writes, helper and generic writes, retained helper certificates before later view activation, original narrower slots refuse widened undefined writes; adding absent slots through escaped aliases remains outside this scope",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nullable nominal source-slot conversions",
+      "scope": "direct finite class/null and class/null/undefined boxed slots, initially null and existing optional slots, checked source alias writes and original nonnullable constructor-slot containment; unboxed nullable callable values remain refused",
       "production_reaching_view_counts": "unmeasured"
     }
   ]

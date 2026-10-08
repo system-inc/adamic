@@ -1007,3 +1007,51 @@ OptionalMutableNominal|TestArrayHoles(Milestone|Refusals)$`) passed in 306.628s.
 Touched packages (`View|Map|Contract|Callable|Tuple|JSON|Generic|Class`, inherited
 Phantom exclusion) passed: IR 0.048s, lower 12.862s, native 49.381s, JavaScript
 1.276s. Scoped vet passed. The complete repository gate was not run.
+
+### Nullable nominal source-slot conversions, October 8
+
+Finite class/null and class/null/undefined reference members now use the checked
+boxed slot adapter. Complete private class descriptors compare their logical
+null and undefined admissions separately from their common reference storage.
+Direct null literals receive a source certificate only through this adapter;
+other unsupported slot conversions keep their existing refusals. Native writes
+retain the incoming reference, release the old reference, and stamp the actual
+boxed storage type. Optional existing nullable class slots use the same adapter.
+
+Nine Node controls cover class/null/both writes, initially null payloads, optional
+existing slots, and independently read-only producer/read probes. Three class
+lookalike payload mutants isolate producer, read, and write identity guards. A
+fourth probe writes a nullable value through a tagged view into an actual required
+class slot: Node runs on, both native modes and JavaScript stop at that write.
+Eight counterfactuals remove each backend identity guard, erase null admission
+from source containment, or bypass the unboxed boundary refusal. All were killed
+without a build failure. Evidence is under `evidence/nullable-slots-*`.
+
+The helper controls exposed a separate convention gap: a nullable class argument
+can arrive as an unboxed Object reference, so null and undefined cannot both be
+recovered at the field store. Such writes now have a named refusal at the source
+value: `writing a nullable nominal value from an unboxed reference; preserve null
+and undefined through the callable boundary`. Three refusal controls are held to
+Node. The broader callable convention stays with lane 5; no ABI change was made.
+An initial payload mutant targeted a literal null's certificate and survived;
+the isolated write probe now corrupts the class-valued write instead. Initial
+failure and survivor observations are preserved in the expanded probe log.
+
+Recursive nominal producer descriptors still need a runtime visited witness;
+escaped aliases adding absent slots, nullable array length constructors, boxed
+nonprimitive JSON and recursive JSON remain outside this group. Required
+primitive brands retain `(*lowering).phantomRefusal` in
+`internal/lower/phantom_brands.go:133`: `Adamic 0.1 refuses a primitive brand member
+brand whose type is not void; make brand void (or optional and typed undefined)
+so the brand is phantom`. Conservative inventory remains 2,018 pairs / 9,101
+reads; exact production reaching-view discharge is unmeasured.
+
+Nullable slot validation: the restored scoped uncached oracle (`Map|Nullish|
+NullableSelection|JSONArray|ArrayJSONStorage|NominalArray|MutableNominal|
+OptionalNominal|NullableNominal|JSONStringify|OptionalMutableNominal|
+TestArrayHoles(Milestone|Refusals)$`) passed in 231.588s. Touched package scope
+(`View|Map|Contract|Callable|Tuple|JSON|Generic|Class`, inherited Phantom exclusion)
+passed: IR 0.020s, lower 8.677s, native 37.309s, JavaScript 1.032s; scoped vet
+passed. After restricting literal-null certificates to nominal union stores, the
+final focused uncached oracle passed in 6.908s and final IR/lower checks passed
+in 0.011s/4.014s; scoped vet passed again. The full repository gate was not run.

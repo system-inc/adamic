@@ -100,3 +100,14 @@ func supportedSlotContract(program *ir.Program, id ir.ViewContractID, seen map[i
 	}
 	return true
 }
+
+// Only finite class/nullish references use this checked union slot adapter.
+func (l *lowering) nominalUnionWriteTarget(target *ast.Node) bool {
+	symbol := l.checker.GetSymbolAtLocation(target)
+	if symbol == nil {
+		return false
+	}
+	declared := l.concrete(l.checker.GetTypeOfSymbol(symbol))
+	of, known := l.representation(declared)
+	return known && of == ir.Union && isClassInstance(l.checker.GetNonNullableType(declared)) && l.mapNominalEntrySlot(target, declared) != 0
+}

@@ -41,7 +41,7 @@ func (e *emitter) checkedWrite(write ir.SetProperty) {
 		e.line("adamic_object_field_types(%s)[%s.index] = 2;", object, cache)
 	} else if of == ir.MaybeBoolean {
 		e.line("%s->boolean = (%s).boolean; adamic_object_field_types(%s)[%s.index] = (%s).present ? 2 : 13;", slot, value, object, cache, value)
-	} else if of == ir.String || of == ir.Object {
+	} else if of == ir.String || of == ir.Object || of == ir.Union {
 		old := e.temporary()
 		e.line("void *%s = %s->reference;", old, slot)
 		e.line("%s->reference = %s;", slot, e.kept(value))
