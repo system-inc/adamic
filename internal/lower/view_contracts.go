@@ -34,6 +34,9 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 		l.result.ViewContractTypes[int(target.Id())] = id
 		return id, nil
 	}
+	if l.structuralViewIntersection(target) {
+		return l.internStructuralViewIntersection(node, target)
+	}
 	build := func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) }
 	// Pure phantom brands retain their existing erased contract path.
 	// Real NodeArray own fields still require the array adapter.
@@ -61,6 +64,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			}
 			contract := l.result.ViewContracts[id-1]
 			contract.Undefined = true
+			contract.ObjectPresent = id
 			contract.Name = l.checker.TypeToString(target)
 			optional := ir.ViewContractID(len(l.result.ViewContracts) + 1)
 			l.result.ViewContracts = append(l.result.ViewContracts, contract)

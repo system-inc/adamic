@@ -59,7 +59,7 @@ func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields
 }
 
 func (l *lowering) viewDataType(target *checker.Type) bool {
-	if l.viewArrayBase(target) != nil {
+	if l.structuralViewIntersection(target) || l.viewArrayBase(target) != nil {
 		return true
 	}
 	if base := l.phantomBase(target); base != nil {

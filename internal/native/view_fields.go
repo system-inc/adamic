@@ -28,7 +28,7 @@ func (e *emitter) viewField(property ir.Property) string {
 	}
 	undefined := e.viewStringUndefined(property)
 	if property.Absent || property.Optional || undefined || of == ir.MaybeNumber || of == ir.MaybeBoolean {
-		e.line("adamic_value %s = adamic_object_optional_view(%s, %s, &%s, %d, %s, %s, %t, %t);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View), property.Absent, property.Optional)
+		e.line("adamic_value %s = adamic_object_optional_view_undefined(%s, %s, &%s, %d, %s, %s, %t, %t, %t);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View), property.Absent, property.Optional, undefined)
 	} else {
 		e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), of, cString(name), cString(property.View))
 	}
