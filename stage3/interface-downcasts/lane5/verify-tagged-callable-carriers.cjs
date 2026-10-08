@@ -21,6 +21,7 @@ function collect(source) {
 }
 for (const [name, node] of collect(original)) originalNodes.set(name, node);
 const families = new Map([
+ [217, {directory:'canonical-file-name', aliases:['GetCanonicalFileName'], aliasFile:'src/compiler/core.ts', carriers:[]}],
  [212, {directory:'type-operator', aliases:[], carriers:[], enumConstants:[['SyntaxKind','KeyOfKeyword'],['SyntaxKind','ReadonlyKeyword'],['SyntaxKind','UniqueKeyword']]}],
  [192, {directory:'get-accessor-update', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral']}],
  [194, {directory:'set-accessor-update', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral']}],
@@ -38,11 +39,13 @@ for (const rank of process.argv[3].split(',').map(Number)) {
  const family = families.get(rank);
  if (!family) throw Error('missing requested tagged family');
  const directory = path.join(__dirname, 'later-ranked-callables', family.directory);
+ const aliasSource = family.aliasFile ? ts.createSourceFile(family.aliasFile, fs.readFileSync(path.join(pin,family.aliasFile),'utf8'),ts.ScriptTarget.Latest,true) : original;
+ const aliasNodes = family.aliasFile ? collect(aliasSource) : originalNodes;
  for (const name of fs.readdirSync(directory).filter(name => name.endsWith('.a'))) {
   const source = ts.createSourceFile(name, fs.readFileSync(path.join(directory,name),'utf8'), ts.ScriptTarget.Latest, true);
   const fixture = collect(source);
   for (const alias of family.aliases) {
-   if (!fixture.has(alias) || normalized(fixture.get(alias).getText(source)) !== normalized(originalNodes.get(alias).getText(original))) throw Error(name+': original alias changed '+alias);
+   if (!fixture.has(alias) || normalized(fixture.get(alias).getText(source)) !== normalized(aliasNodes.get(alias).getText(aliasSource))) throw Error(name+': original alias changed '+alias);
   }
   for (const carrier of family.carriers) {
    const originalKind = originalNodes.get(carrier).members.find(member => member.name?.getText(original) === 'kind');

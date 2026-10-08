@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface CompilerOptions {readonly value:string;}
+interface Base {readonly getCompilerOptions:unknown;}
+interface Target {getCompilerOptions(): CompilerOptions;}
+function probe(value:Base):void {const host=value as Target;console.log(`${host.getCompilerOptions().value}`);}
+probe({getCompilerOptions:():CompilerOptions=>({value:"3"})});

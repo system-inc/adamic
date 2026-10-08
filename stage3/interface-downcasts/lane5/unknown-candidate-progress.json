@@ -2520,6 +2520,73 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "canonical-emit-package-hosts",
+      "pairs": 3,
+      "candidateReads": 22,
+      "members": [
+        {
+          "receiver_type_id": 9939,
+          "type": "Program",
+          "field": "getCanonicalFileName",
+          "declared_types": [
+            "GetCanonicalFileName"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 8,
+          "witness": {
+            "file": "src/compiler/builderState.ts",
+            "line": 325,
+            "column": 82
+          },
+          "rank": 217,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11678,
+          "type": "EmitHost",
+          "field": "getCompilerOptions",
+          "declared_types": [
+            "() => CompilerOptions"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 6541,
+            "column": 29
+          },
+          "rank": 227,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10037,
+          "type": "ModuleResolutionCache",
+          "field": "getPackageJsonInfoCache",
+          "declared_types": [
+            "() => PackageJsonInfoCache"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 7,
+          "witness": {
+            "file": "src/compiler/moduleSpecifiers.ts",
+            "line": 817,
+            "column": 57
+          },
+          "rank": 234,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

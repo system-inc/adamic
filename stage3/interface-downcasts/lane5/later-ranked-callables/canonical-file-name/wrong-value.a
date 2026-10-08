@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+type GetCanonicalFileName = (fileName: string) => string;
+interface Base {readonly getCanonicalFileName:unknown;}
+interface Target {getCanonicalFileName: GetCanonicalFileName;}
+function probe(value:Base):void {const newProgram=value as Target;const sourceFile=0;function getReferencedFiles(program:Target,sourceFile:number,getCanonicalFileName:GetCanonicalFileName):string{return getCanonicalFileName("abc");}console.log(getReferencedFiles(newProgram,sourceFile,newProgram.getCanonicalFileName));}
+probe({getCanonicalFileName:3});

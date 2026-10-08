@@ -8,6 +8,9 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"canonical-file-name", "getCanonicalFileName", "abc/3\n", "", "0", "", "", "3\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members"},
+		{"emit-host-options", "getCompilerOptions", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
+		{"package-cache", "getPackageJsonInfoCache", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
 		{"module-block", "createModuleBlock", "3\n", "0\n3\n", "0", "statement.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"reflect-get", "createReflectGetCall", "6\n", "3\n3\n6\n", "0", "target.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"type-operator", "createTypeOperatorNode", "146\n", "146\n151\n161\n", "0", "type.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

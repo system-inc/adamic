@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.45s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/canonical-file-name/wrong-arity (0.54s)
+        checked_views_callable_later_ranked_test.go:108: gate cache node miss
+        checked_views_callable_later_ranked_test.go:128: gate cache node miss
+        checked_views_callable_later_ranked_test.go:148: backend0 exit 0 stdout "9\n" stderr "" want "getCanonicalFileName" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/emit-host-options/wrong-arity (0.43s)
+        checked_views_callable_later_ranked_test.go:108: gate cache node miss
+        checked_views_callable_later_ranked_test.go:128: gate cache node miss
+        checked_views_callable_later_ranked_test.go:148: backend0 exit 0 stdout "9\n" stderr "" want "getCompilerOptions" and "found function with arity 1"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/package-cache/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:108: gate cache node miss
+        checked_views_callable_later_ranked_test.go:128: gate cache node miss
+        checked_views_callable_later_ranked_test.go:148: backend0 exit 0 stdout "9\n" stderr "" want "getPackageJsonInfoCache" and "found function with arity 1"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.461s
+FAIL

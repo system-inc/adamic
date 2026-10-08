@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.24s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/canonical-file-name/wrong-arity (0.42s)
+        checked_views_callable_later_ranked_test.go:108: gate cache node hit
+        checked_views_callable_later_ranked_test.go:128: gate cache node miss
+        checked_views_callable_later_ranked_test.go:148: backend2 exit 0 stdout "9\n" stderr "" want "getCanonicalFileName" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: newProgram.getCanonicalFileName expected GetCanonicalFileName, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/emit-host-options/wrong-arity (0.40s)
+        checked_views_callable_later_ranked_test.go:108: gate cache node hit
+        checked_views_callable_later_ranked_test.go:128: gate cache node miss
+        checked_views_callable_later_ranked_test.go:148: backend2 exit 0 stdout "9\n" stderr "" want "getCompilerOptions" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: host.getCompilerOptions expected () => CompilerOptions, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/package-cache/wrong-arity (0.39s)
+        checked_views_callable_later_ranked_test.go:108: gate cache node hit
+        checked_views_callable_later_ranked_test.go:128: gate cache node miss
+        checked_views_callable_later_ranked_test.go:148: backend2 exit 0 stdout "9\n" stderr "" want "getPackageJsonInfoCache" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: cache.getPackageJsonInfoCache expected () => PackageJsonInfoCache, found function with arity 1\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.248s
+FAIL

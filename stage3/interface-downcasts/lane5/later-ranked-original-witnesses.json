@@ -2087,6 +2087,28 @@
       "declarationLine": 9092
     },
     {
+      "rank": 217,
+      "type": "Program",
+      "field": "getCanonicalFileName",
+      "candidateReads": 8,
+      "witness": {
+        "file": "src/compiler/builderState.ts",
+        "line": 325,
+        "column": 82
+      },
+      "read": "newProgram.getCanonicalFileName",
+      "readKind": "property",
+      "call": "getReferencedFiles(newProgram, sourceFile, newProgram.getCanonicalFileName)",
+      "utf16Start": 12748,
+      "utf16End": 12779,
+      "fileSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+      "declaration": "getCanonicalFileName: GetCanonicalFileName;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 4920,
+      "declarationKind": "property-function"
+    },
+    {
       "rank": 218,
       "type": "Program",
       "field": "getCurrentDirectory",
@@ -2127,6 +2149,100 @@
       "declarationFile": "src/compiler/sys.ts",
       "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
       "declarationLine": 1418
+    },
+    {
+      "rank": 223,
+      "type": "CompilerHost",
+      "field": "realpath",
+      "candidateReads": 7,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 1950,
+        "column": 19
+      },
+      "read": "host.realpath",
+      "readKind": "property",
+      "call": "host.realpath?.bind",
+      "utf16Start": 92593,
+      "utf16End": 92606,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "realpath?(path: string): string;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 7994,
+      "declarationOwner": "ModuleResolutionHost",
+      "inheritancePath": [
+        "CompilerHost",
+        "ModuleResolutionHost"
+      ]
+    },
+    {
+      "rank": 225,
+      "type": "DirectoryStructureHost",
+      "field": "directoryExists",
+      "candidateReads": 7,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 129,
+        "column": 26
+      },
+      "read": "host.directoryExists",
+      "readKind": "property",
+      "call": "host.directoryExists && directoryExists",
+      "utf16Start": 4192,
+      "utf16End": 4212,
+      "fileSha256": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487",
+      "declaration": "directoryExists?(path: string): boolean;",
+      "declarationFile": "src/compiler/watchUtilities.ts",
+      "declarationSha256": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487",
+      "declarationLine": 73
+    },
+    {
+      "rank": 227,
+      "type": "EmitHost",
+      "field": "getCompilerOptions",
+      "candidateReads": 7,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6541,
+        "column": 29
+      },
+      "read": "host.getCompilerOptions",
+      "readKind": "property",
+      "call": "host.getCompilerOptions()",
+      "utf16Start": 255007,
+      "utf16End": 255030,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "getCompilerOptions(): CompilerOptions;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 4531,
+      "declarationOwner": "ScriptReferenceHost",
+      "inheritancePath": [
+        "EmitHost",
+        "ScriptReferenceHost"
+      ]
+    },
+    {
+      "rank": 234,
+      "type": "ModuleResolutionCache",
+      "field": "getPackageJsonInfoCache",
+      "candidateReads": 7,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 817,
+        "column": 57
+      },
+      "read": "cache.getPackageJsonInfoCache",
+      "readKind": "property",
+      "call": "cache.getPackageJsonInfoCache()",
+      "utf16Start": 38674,
+      "utf16End": 38703,
+      "fileSha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+      "declaration": "getPackageJsonInfoCache(): PackageJsonInfoCache;",
+      "declarationFile": "src/compiler/moduleNameResolver.ts",
+      "declarationSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "declarationLine": 901
     }
   ]
 }
