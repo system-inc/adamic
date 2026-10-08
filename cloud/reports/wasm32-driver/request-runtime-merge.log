@@ -1,0 +1,21 @@
+Merge made by the 'ort' strategy.
+ docs/wasm.md                          | 231 +++++++++++++++++++++++++++++++++
+ internal/native/runtime/adamic.c      |   7 +
+ internal/native/runtime/input.c       |  22 ++++
+ internal/native/runtime/sort.c        |  11 ++
+ internal/native/runtime/stack.c       |  12 ++
+ internal/native/runtime/weak.c        |   5 +
+ internal/native/wasm/io.a             |  14 ++
+ internal/native/wasm/request-abi.c    |  31 +++++
+ internal/native/wasm/request-host.mjs |  87 +++++++++++++
+ internal/native/wasm/request.a        |  24 ++++
+ internal/native/wasm/run.mjs          |  17 +++
+ internal/native/wasm_test.go          | 237 ++++++++++++++++++++++++++++++++++
+ 12 files changed, 698 insertions(+)
+ create mode 100644 docs/wasm.md
+ create mode 100644 internal/native/wasm/io.a
+ create mode 100644 internal/native/wasm/request-abi.c
+ create mode 100644 internal/native/wasm/request-host.mjs
+ create mode 100644 internal/native/wasm/request.a
+ create mode 100644 internal/native/wasm/run.mjs
+ create mode 100644 internal/native/wasm_test.go

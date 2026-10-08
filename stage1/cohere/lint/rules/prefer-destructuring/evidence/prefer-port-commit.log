@@ -1,0 +1,13 @@
+[codex/lint-port-prefer-destructuring ece266c04] Port prefer destructuring to registered node listeners
+ 11 files changed, 182 insertions(+)
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/evidence/source-sha256.json
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/evidence/upstream-tests.json
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/helpers.a
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/messages.a
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/mutant.json
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/oracle.go
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/rule.a
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/rule.json
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/testdata/array.ts.txt
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/testdata/binding-array.ts.txt
+ create mode 100644 stage1/cohere/lint/rules/prefer-destructuring/testdata/object.ts.txt

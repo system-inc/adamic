@@ -1,0 +1,16 @@
+// Literal translations from codex/lint-regex patterns.a at the pinned cohere revision.
+export const digitOrUnderscore = /[0-9_]/gu;
+export const vowel = /[AEIOUY]/gu;
+export const uppercaseToken = /\b[A-Z][A-Z0-9_]*\b/gu;
+export const fencedBlock = /```[\s\S]*?```/gu;
+export const inlineBackticks = /`[^`]*`/gu;
+export const doubleQuoted = /"[^"\n]*"/gu;
+export const singleQuotedToken = /'[A-Za-z0-9_.\-\/]+'/gu;
+export const singleQuotedCapitalPhrase = /'[A-Z0-9_][A-Z0-9_ .,:=\-\/]*[A-Z0-9_]'/gu;
+export const notNewline = /[^\n]/gu;
+export const jsDocGutter = /^[ \t\n\f\r]*\*?[ \t\n\f\r]?/gu;
+export const blockCommentGutter = /^[ \t]*\*(?: |\t|(?![\s\S]))/gu;
+export const exampleTag = /^@example\b/gu;
+export const anyJsDocTag = /^@\w+/gu;
+export const commandLine = /^[ \t\n\f\r]*(\$|ahra[ \t\n\f\r]|git[ \t\n\f\r]|pnpm[ \t\n\f\r]|npm[ \t\n\f\r]|sqlite3[ \t\n\f\r]|curl[ \t\n\f\r]|s[ \t\n\f\r]+c\b)/gu;
+export const structureCommandStarter = /s[ \t\n\f\r]+c/gu;

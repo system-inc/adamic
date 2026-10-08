@@ -83,6 +83,12 @@ func TestDescriptorRejections(t *testing.T) {
 	}{
 		{"duplicate public name", func(d map[string]any) { d["name"] = "no-empty" }, "duplicate rule name"},
 		{"unknown field", func(d map[string]any) { d["vist"] = "visit" }, "unknown field"},
+		{"unknown program read", func(d map[string]any) { d["typed"] = true; d["programReads"] = []string{"ReadsUnknown"} }, "invalid program read"},
+		{"duplicate program read", func(d map[string]any) {
+			d["typed"] = true
+			d["programReads"] = []string{"ReadsCompilerOptions", "ReadsCompilerOptions"}
+		}, "duplicate program read"},
+		{"untyped program read", func(d map[string]any) { d["programReads"] = []string{"ReadsCompilerOptions"} }, "program reads require typed"},
 		{"missing named export", func(d map[string]any) { d["visit"] = "missing" }, "missing named hook"},
 		{"bad kind", func(d map[string]any) { d["kinds"] = []string{"NotARealNode"} }, "invalid or duplicate kind"},
 		{"missing oracle export", func(d map[string]any) { d["oracle"] = "missing" }, "missing oracle adapter exports"},

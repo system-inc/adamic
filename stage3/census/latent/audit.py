@@ -11,7 +11,7 @@ with tempfile.TemporaryDirectory(prefix='latent-audit-') as temporary:
     scratch = pathlib.Path(temporary)
     source = scratch / 'source'
     source.mkdir()
-    (source / 'one.a').write_text('import { other } from "./two.a";\nfunction first(): number { function inner(): number { return 1; } return inner(); }\nfunction target(): number { return other(); }\nfunction later(): number { function inner(): number { return 3; } return inner(); }\nfunction asserted(value: number | undefined): number { return value! + value!; }\nfunction bad(): number { const impossible: number = "wrong"; return impossible!; }\nfunction signatureOnly(value: Missing): number { return 1; }\nfunction broken(): number { return "wrong"; } function clean(): number { return 4; }\n')
+    (source / 'one.a').write_text('import { other } from "./two.a";\nfunction first(): number { function inner(): number { return 1; } return inner(); }\nfunction target(): number { return other(); }\nfunction later(): number { function inner(): number { return 3; } return inner(); }\nfunction asserted(value: number | undefined): number { debugger; debugger; return value! + value!; }\nfunction bad(): number { const impossible: number = "wrong"; return impossible!; }\nfunction signatureOnly(value: Missing): number { return 1; }\nfunction broken(): number { return "wrong"; } function clean(): number { return 4; }\n')
     (source / 'two.a').write_text('export function other(): number { return 3; }\n')
     observations = {}
     for name, extra in [('baseline', {}), ('mutant', {'LATENT_MUTANT_FUNCTION': 'target'}), ('scope_mutant', {'LATENT_MUTANT_BODY_SCOPE': '1'})]:
@@ -44,8 +44,9 @@ with tempfile.TemporaryDirectory(prefix='latent-audit-') as temporary:
     assert not any(':3:' in f['unit'] for row in baseline.values() for f in row['findings']), 'imported sibling call was not registered'
 
     findings = baseline['one.a']['findings']
-    assert sum(f['reason'] == 'a function inside a function (a closure)' for f in findings) == 2, findings
-    assert sum(f['kind'] == 'Refused' and f['reason'] == 'the non-null assertion !' for f in findings) == 2, findings
+    # Continuation witnesses must survive newly supported compiler features.
+    assert all(next(u for u in units if f':{line}:1' in u['where'])['status'] == 'attempted' for line in (2, 4)), units
+    assert sum(f['kind'] == 'Refused' and f['reason'] == 'debugger' for f in findings) == 2, findings
     assert len(mutant['one.a']['findings']) == len(findings) + 1
     added = [f for f in mutant['one.a']['findings'] if f not in findings]
     assert len(added) == 1 and added[0]['kind'] == 'NotYet' and added[0]['reason'] == 'latent planted extra NotYet', added

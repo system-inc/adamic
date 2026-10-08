@@ -4,7 +4,7 @@ This driver judges the real `tsc --noEmit` CLI. The corpus contains 300 small
 programs from TypeScript 6.0.3's `tests/cases/compiler`: 60 clean and 240 with
 errors. Each error case retains its upstream `.errors.txt` baseline. Each case
 has expectations derived from that baseline and separately captured Node goldens.
-`selection.json` records every source path, SHA256, baseline path/hash, header
+`selection.json` records every upstream source path, local `path`, SHA256, baseline path/hash, header
 option, feature bucket and diagnostic code. `SELECTION.md` lists all 300 cases.
 
 ```sh
@@ -77,10 +77,14 @@ goldens. Reviewed goldens never update during an ordinary run.
 
 ## Headers, diagnostics and files
 
-Original bytes are stored as `input.a`, including BOMs and CRLFs. These are
-untrusted compiler-test inputs, often intentionally ill-typed, not stage-0
-feature fixtures. New authored tiny programs also use `.a`. Only scratch files
-materialized for tsc have `.ts` extensions. No production compiler file or other
+Original bytes are stored under their exact upstream filenames and extensions,
+including BOMs and CRLFs. All 300 selected inputs are `.ts`; they are verbatim
+upstream TypeScript data, often intentionally ill-typed, not authored Adamic code.
+The manifest's `path` locates each input in its case directory; `source` retains
+the upstream path and `source_sha256` retains the unchanged byte pin.
+New authored tiny programs use `.a`. Their first-line a-check metadata is omitted
+when materializing the tiny project, preserving its original diagnostic positions.
+No production compiler file or other
 fixture bucket is changed, and this unit does not add a `status.json` bucket or
 edit `fixtures_test.go`.
 

@@ -1,0 +1,91 @@
+=== RUN   TestFormatterMatchesGo
+    format_test.go:181: recorded original Prettier difference, case 8783: "error\tInvalid character" versus Go "ok\t!!binary 2000-01-01\\n"
+    format_test.go:181: recorded original Prettier difference, case 8785: "error\tInvalid character" versus Go "ok\t!!binary <<\\n"
+    format_test.go:181: recorded original Prettier difference, case 8852: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8853: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8854: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8855: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8862: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8863: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8864: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8865: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8872: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8873: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8874: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8875: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 8943: "error\tInvalid character" versus Go "ok\t%YAML 1.1\\n---\\n!!binary 2000-01-01\\n"
+    format_test.go:181: recorded original Prettier difference, case 8945: "error\tInvalid character" versus Go "ok\t%YAML 1.1\\n---\\n!!binary <<\\n"
+    format_test.go:181: recorded original Prettier difference, case 9012: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9013: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9014: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9015: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9022: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9023: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9024: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9025: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9032: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9033: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9034: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9035: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9103: "error\tInvalid character" versus Go "ok\t%YAML 1.2\\n---\\n!!binary 2000-01-01\\n"
+    format_test.go:181: recorded original Prettier difference, case 9105: "error\tInvalid character" versus Go "ok\t%YAML 1.2\\n---\\n!!binary <<\\n"
+    format_test.go:181: recorded original Prettier difference, case 9172: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9173: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9174: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9175: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9182: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9183: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9184: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9185: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9192: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9193: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9194: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:181: recorded original Prettier difference, case 9195: "error\tc.resolve is not a function" versus Go "error\ttag.resolve is not a function"
+    format_test.go:186: original Prettier: 9984 matching cases, 42 proved binary/minification differences
+    format_test.go:188: 36 repository files, 10026 cases, 992282 format answer bytes identical on Go/native/Node/emitted JavaScript
+--- PASS: TestFormatterMatchesGo (37.25s)
+=== RUN   TestFileDriver
+    format_test.go:269: 36 repository files and 14 direct stdout controls byte-identical to Go on all three port executions
+--- PASS: TestFileDriver (36.11s)
+=== RUN   TestFormatterMutants
+=== RUN   TestFormatterMutants/root_final_newline_lost
+    format_test.go:330: native successful execution, wrong bytes caught: byte 28293: got "gePath \"$vsix\"\\n          npx --yes ovsx@1.2.0 publish \"$vsix\" --pat \"$OVSX_PAT\"\nok\t# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/custom-", want "gePath \"$vsix\"\\n          npx --yes ovsx@1.2.0 publish \"$vsix\" --pat \"$OVSX_PAT\"\\n\nok\t# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/custo"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 28293: got "gePath \"$vsix\"\\n          npx --yes ovsx@1.2.0 publish \"$vsix\" --pat \"$OVSX_PAT\"\nok\t# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/custom-", want "gePath \"$vsix\"\\n          npx --yes ovsx@1.2.0 publish \"$vsix\" --pat \"$OVSX_PAT\"\\n\nok\t# yaml-language-server: $schema=https://golangci-lint.run/jsonschema/custo"
+=== RUN   TestFormatterMutants/colon_separation_lost
+    format_test.go:330: native successful execution, wrong bytes caught: byte 1694: got "own here refusing a file with one byte flipped before anything publishes.\\nname:release\\n\\non:\\n  workflow_dispatch:\\n    inputs:\\n      version:\\n        descr", want "own here refusing a file with one byte flipped before anything publishes.\\nname: release\\n\\non:\\n  workflow_dispatch:\\n    inputs:\\n      version:\\n        desc"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 1694: got "own here refusing a file with one byte flipped before anything publishes.\\nname:release\\n\\non:\\n  workflow_dispatch:\\n    inputs:\\n      version:\\n        descr", want "own here refusing a file with one byte flipped before anything publishes.\\nname: release\\n\\non:\\n  workflow_dispatch:\\n    inputs:\\n      version:\\n        desc"
+=== RUN   TestFormatterMutants/flow_trailing_comma_lost
+    format_test.go:330: native successful execution, wrong bytes caught: byte 783469: got "first: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,\\n  second: [a, b]\\n}\\n\nok\t[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, { x: y }, end]", want "first: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,\\n  second: [a, b],\\n}\\n\nok\t[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, { x: y }, end"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 783469: got "first: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,\\n  second: [a, b]\\n}\\n\nok\t[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, { x: y }, end]", want "first: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,\\n  second: [a, b],\\n}\\n\nok\t[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, { x: y }, end"
+=== RUN   TestFormatterMutants/batch_backslash_scan_misses_escapes
+    format_test.go:330: native successful execution, wrong bytes caught: byte 79: got "ok\t# Builds every platform binary and stages the npm packages for one version.\\\\n#\\\\n# There is no build matrix, which is the whole point of writing cohere in ", want "ok\t# Builds every platform binary and stages the npm packages for one version.\\n#\\n# There is no build matrix, which is the whole point of writing cohere in Go"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 79: got "ok\t# Builds every platform binary and stages the npm packages for one version.\\\\n#\\\\n# There is no build matrix, which is the whole point of writing cohere in ", want "ok\t# Builds every platform binary and stages the npm packages for one version.\\n#\\n# There is no build matrix, which is the whole point of writing cohere in Go"
+=== RUN   TestFormatterMutants/emoji_first_unit_range_loses_endpoint
+    format_test.go:330: native successful execution, wrong bytes caught: byte 865030: got "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [\\n    👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦\xf0\x9f", want "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d\xf0"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 865030: got "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [\\n    👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦\xf0\x9f", want "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d\xf0"
+=== RUN   TestFormatterMutants/emoji_surrogate_slot_shifted
+    format_test.go:330: native successful execution, wrong bytes caught: byte 865030: got "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [\\n    👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦\xf0\x9f", want "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d\xf0"
+    format_test.go:330: Node successful execution, wrong bytes caught: byte 865030: got "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [\\n    👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦\xf0\x9f", want "́ééééééééééééééééé\":\\n  [a, b]\\n\nok\tkey:\\n  [👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d👩\u200d👦👨\u200d\xf0"
+--- PASS: TestFormatterMutants (55.32s)
+    --- PASS: TestFormatterMutants/root_final_newline_lost (9.00s)
+    --- PASS: TestFormatterMutants/colon_separation_lost (8.95s)
+    --- PASS: TestFormatterMutants/flow_trailing_comma_lost (9.07s)
+    --- PASS: TestFormatterMutants/batch_backslash_scan_misses_escapes (8.66s)
+    --- PASS: TestFormatterMutants/emoji_first_unit_range_loses_endpoint (9.09s)
+    --- PASS: TestFormatterMutants/emoji_surrogate_slot_shifted (8.96s)
+=== RUN   TestSpeedCostProbes
+=== RUN   TestSpeedCostProbes/stringUnitScan.ts
+    speed_gap_test.go:71: both modes match Node's checksum 52998400000
+=== RUN   TestSpeedCostProbes/arenaNodeRead.ts
+    speed_gap_test.go:71: both modes match Node's checksum 57600000000
+=== RUN   TestSpeedCostProbes/numericMapLookup.ts
+    speed_gap_test.go:71: both modes match Node's checksum 1702000
+--- PASS: TestSpeedCostProbes (3.13s)
+    --- PASS: TestSpeedCostProbes/stringUnitScan.ts (1.88s)
+    --- PASS: TestSpeedCostProbes/arenaNodeRead.ts (0.78s)
+    --- PASS: TestSpeedCostProbes/numericMapLookup.ts (0.47s)
+=== RUN   TestWidthsMatchGo
+    width_test.go:110: 1112320 width cases: every Unicode scalar and 256 emoji/context sequences; 2224684 exact Go answer bytes
+--- PASS: TestWidthsMatchGo (17.09s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/yaml	148.915s

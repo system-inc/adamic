@@ -1,0 +1,15 @@
+// nexus/shouting.go:168; `'[A-Za-z0-9_.\-/]+'`
+import { observe } from '../observe.a';
+const pattern = "'[A-Za-z0-9_.\\-/]+'";
+const flags = "gu";
+const regex = new RegExp(pattern, flags);
+observe(regex, "", 0);
+observe(regex, "🌍", 1);
+observe(regex, "TODO\n", 2);
+observe(regex, " TODO", 3);
+observe(regex, "'A'", 4);
+observe(regex, "x'A'", 5);
+observe(regex, "'A'\n", 6);
+observe(regex, "/**\n * Iterates through 'array' by index and performs the callback on each element of array until the callback\n * returns a truthy value, then returns that value.\n * If no such value is found, the callback is applied to each element of array and undefined is returned.\n *\n * @internal\n */", 7);
+observe(regex, "// If there is richer color support, e.g. 256+ we can use extended ANSI codes which are not just generic 'blue'", 8);
+observe(regex, "// 'using' helpers", 9);

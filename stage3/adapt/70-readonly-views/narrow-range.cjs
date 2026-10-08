@@ -16,7 +16,7 @@ export const observation = [promisedPos, promisedEnd];
 `;
 const root = path.resolve('/readonly-range-counterexample'), main = path.join(root, 'main.ts'), published = path.join(root, 'published.d.ts');
 const options = { strict: true, exactOptionalPropertyTypes: true, noUncheckedIndexedAccess: true,
-    verbatimModuleSyntax: true, erasableSyntaxOnly: true, moduleDetection: ts.ModuleDetectionKind.Force,
+    verbatimModuleSyntax: true, erasableSyntaxOnly: false, moduleDetection: ts.ModuleDetectionKind.Force,
     module: ts.ModuleKind.ESNext, moduleResolution: ts.ModuleResolutionKind.Bundler,
     target: ts.ScriptTarget.ES2024, lib: ['lib.es2024.d.ts'], types: [] };
 const host = ts.createCompilerHost(options), read = host.readFile, exists = host.fileExists, getSourceFile = host.getSourceFile;

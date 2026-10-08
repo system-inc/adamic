@@ -3,6 +3,7 @@ package native
 import (
 	"context"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -80,10 +81,23 @@ console.log((missing?.steady ?? -3).toString());
 	generated := C(program)
 	// Semantic parity alone would also pass if the optimization disappeared entirely.
 	lookup := func(name string) bool {
-		return regexp.MustCompile(`adamic_object_field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
+		return regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
 	}
-	if lookup("steady") || lookup("label") {
-		t.Fatal("uniform fields still use shape lookup")
+	// Required reads keep the uniform-slot proof. Writes also guard presence and may
+	// contain a checked fallback in their slot declaration.
+	readLookup := func(name string) bool {
+		for _, line := range strings.Split(generated, "\n") {
+			if strings.HasPrefix(strings.TrimSpace(line), "adamic_value *") {
+				continue
+			}
+			if regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(line) {
+				return true
+			}
+		}
+		return false
+	}
+	if readLookup("steady") || readLookup("label") {
+		t.Fatal("uniform reads still use shape lookup")
 	}
 	if !lookup("left") || !lookup("emptyLeft") {
 		t.Fatal("conflicting layouts lost their lookup fallback")
@@ -181,7 +195,7 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 		t.Fatal(err)
 	}
 	generated := C(program)
-	if !regexp.MustCompile(`adamic_object_field\([^\n]+, "uniform", &adamic_cache_`).MatchString(generated) {
+	if !regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, "uniform", &adamic_cache_`).MatchString(generated) {
 		t.Fatal("regex program specialized a field before named-group layouts entered the proof")
 	}
 	want := runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", path)
@@ -192,6 +206,45 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 		}
 		if got := runWithInput(t, "", binary); got != want {
 			t.Fatalf("sanitize %v: native %q; Node %q", sanitize, got, want)
+		}
+	}
+}
+
+// Fixed layouts cannot yet create a missing optional property. Preserve the explicit
+// failure instead of turning this already unsupported write into an out-of-bounds store.
+// This is a safety fixture, not a claim of Node parity: Node creates the field.
+func TestOptionalWriteMissingSlotRemainsChecked(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs("testdata/field_write_absent.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	wantNode := runWithInput(t, string(source), "node", "--disable-warning=ExperimentalWarning", "-e",
+		"const fs=require('fs'),m=require('module'); eval(m.stripTypeScriptTypes(fs.readFileSync(0,'utf8')))")
+	if wantNode != "2\n2\n" {
+		t.Fatalf("Node changed missing-property semantics: %q", wantNode)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, sanitize := range []bool{true, false} {
+		binary := filepath.Join(t.TempDir(), "absent-write")
+		if err := Build(C(program), binary, Options{Sanitize: sanitize}); err != nil {
+			t.Fatal(err)
+		}
+		output, err := exec.Command(binary).CombinedOutput()
+		exit, ok := err.(*exec.ExitError)
+		if !ok || exit.ExitCode() != 70 || string(output) != "2\nadamic: panic: compiler bug: a field the checker proved is there is missing\n" {
+			t.Fatalf("sanitize %v: missing-slot write must remain checked: %v, %q", sanitize, err, output)
 		}
 	}
 }
