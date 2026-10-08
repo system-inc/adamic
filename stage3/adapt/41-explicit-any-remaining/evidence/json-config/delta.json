@@ -1,0 +1,122 @@
+{
+  "any_before": 35,
+  "any_after": 26,
+  "any_mutant": 27,
+  "totals_before": {
+    "Refused": 5151,
+    "NotYet": 1468
+  },
+  "totals_after": {
+    "Refused": 5159,
+    "NotYet": 1470
+  },
+  "totals_mutant": {
+    "Refused": 5159,
+    "NotYet": 1470
+  },
+  "latent_mutant_extra": [
+    [
+      "NotYet",
+      "a function returning any",
+      "src/compiler/commandLineParser.ts:2482:17"
+    ]
+  ],
+  "tokens_removed": 11,
+  "reason_count_delta": [
+    {
+      "kind": "NotYet",
+      "reason": "a Map of string | number",
+      "delta": 1
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a call through ?. (an optional call)",
+      "delta": 1
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning JsonConfigValue",
+      "delta": 1
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a function returning any",
+      "delta": -2
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type JsonValue",
+      "delta": 3
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type T",
+      "delta": 3
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a value of type any",
+      "delta": -7
+    },
+    {
+      "kind": "NotYet",
+      "reason": "an ElementAccessExpression",
+      "delta": 1
+    },
+    {
+      "kind": "NotYet",
+      "reason": "reading onPropertySet",
+      "delta": 1
+    },
+    {
+      "kind": "Refused",
+      "reason": "a cast the runtime can't check",
+      "delta": 2
+    },
+    {
+      "kind": "Refused",
+      "reason": "a method read as a value (parse would lose its object, and this with it)",
+      "delta": 1
+    },
+    {
+      "kind": "Refused",
+      "reason": "a number as a condition",
+      "delta": 1
+    },
+    {
+      "kind": "Refused",
+      "reason": "a type predicate whose return is not proven (the body's true narrowing does not match null | undefined)",
+      "delta": -1
+    },
+    {
+      "kind": "Refused",
+      "reason": "a type predicate whose return is not proven (true return narrows to T, not T & (null | undefined))",
+      "delta": 1
+    },
+    {
+      "kind": "Refused",
+      "reason": "a value of type (string | number | boolean | JsonConfigValue[] | JsonConfigObject | null)[] | undefined seen as JsonConfigValue, which can write JsonConfigValue where string | number | boolean | JsonConfigValue[] | JsonConfigObject | null is read",
+      "delta": 1
+    },
+    {
+      "kind": "Refused",
+      "reason": "a value of type string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> seen as CompilerOptionsValue, which can write string | number where string is read",
+      "delta": -1
+    },
+    {
+      "kind": "Refused",
+      "reason": "an index signature",
+      "delta": 2
+    },
+    {
+      "kind": "Refused",
+      "reason": "optional property sourceRoot in RawSourceMap absent from structural source never, which can hide fields",
+      "delta": 1
+    },
+    {
+      "kind": "Refused",
+      "reason": "the non-null assertion !",
+      "delta": 1
+    }
+  ]
+}

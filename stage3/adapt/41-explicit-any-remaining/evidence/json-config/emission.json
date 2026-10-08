@@ -1,0 +1,33 @@
+{
+  "family": "JSON and config",
+  "typescript": "6.0.3",
+  "files": {
+    "src/compiler/commandLineParser.ts": {
+      "before": "c6df29c7ad17642aba22380b7bf372b940490437f3ab5ed2aa4c160dd039acec",
+      "after": "cafce13b7d7c413ed0ad788125ce21c690d8dcf0282a57dcfb4ced38457769ad",
+      "tokensRemoved": 9,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    },
+    "src/compiler/sourcemap.ts": {
+      "before": "00e7dced942673d407f4fb7fdae4c48e1936aeb0e0aea95106e7c9e8e4e7d513",
+      "after": "38edb5de6178d29e47eac1fd630e0ca8e472b4f0634d742e4f3d6bd02a1d4be3",
+      "tokensRemoved": 2,
+      "javascriptByteIdentical": true,
+      "javascriptASTIdentical": true
+    }
+  },
+  "tokensRemoved": 11,
+  "mutants": [
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "mutation": "add throw to actual emitted source",
+      "caughtBy": "whole-file JavaScript AST equality"
+    }
+  ]
+}

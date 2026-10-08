@@ -246,5 +246,133 @@
     "before": "(first as any)[id] = second[id];",
     "after": "(first as T2)[id] = second[id];",
     "reason": "T1 extends T2. Both watch-host callers copy compatible broad host fields, not literal-narrowed properties."
+  },
+  {
+    "id": 33,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "export interface JsonConversionNotifier {",
+    "after": "type JsonConfigValue = string | number | boolean | null | undefined | JsonConfigValue[] | JsonConfigObject;\ninterface JsonConfigObject { [key: string]: JsonConfigValue; }\n\n/** @internal */\nexport interface JsonConversionNotifier {",
+    "reason": "The AST converter produces JSON scalars, recursive containers and undefined for recovery or check-only mode."
+  },
+  {
+    "id": 34,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "    onPropertySet(\n        keyText: string,\n        value: any,",
+    "after": "    onPropertySet(\n        keyText: string,\n        value: JsonConfigValue,",
+    "reason": "Only convertToJson invokes this notifier with its recursively produced value."
+  },
+  {
+    "id": 35,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "    jsonConversionNotifier: JsonConversionNotifier | undefined,\n): any {\n    const rootExpression",
+    "after": "    jsonConversionNotifier: JsonConversionNotifier | undefined,\n): JsonConfigObject {\n    const rootExpression",
+    "reason": "The wrong-root branch either selects an object recovery element or returns the empty object; the remaining root is object or absent."
+  },
+  {
+    "id": 36,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "return convertToJson(sourceFile, firstObject, errors, /*returnValue*/ true, jsonConversionNotifier);",
+    "after": "return convertToJson(sourceFile, firstObject, errors, /*returnValue*/ true, jsonConversionNotifier) as JsonConfigObject;",
+    "reason": "find selected an object literal and true mode constructs its object."
+  },
+  {
+    "id": 37,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "return convertToJson(sourceFile, rootExpression, errors, /*returnValue*/ true, jsonConversionNotifier);",
+    "after": "return convertToJson(sourceFile, rootExpression, errors, /*returnValue*/ true, jsonConversionNotifier) as JsonConfigObject;",
+    "reason": "The wrong-root branch has exited, so the object or absent root produces an object in true mode."
+  },
+  {
+    "id": 38,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "    jsonConversionNotifier: JsonConversionNotifier | undefined,\n): any {\n    if (!rootExpression)",
+    "after": "    jsonConversionNotifier: JsonConversionNotifier | undefined,\n): JsonConfigValue {\n    if (!rootExpression)",
+    "reason": "Every produced value has the recursive union, including recovery and check-only undefined."
+  },
+  {
+    "id": 39,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "        objectOption: TsConfigOnlyOption | undefined,\n    ): any {\n        const result: any = returnValue ? {} : undefined;",
+    "after": "        objectOption: TsConfigOnlyOption | undefined,\n    ): JsonConfigObject | undefined {\n        const result: JsonConfigObject | undefined = returnValue ? {} : undefined;",
+    "reason": "The object is initially empty in value mode and absent in check-only mode."
+  },
+  {
+    "id": 40,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "result[keyText] = value;",
+    "after": "result![keyText] = value;",
+    "reason": "The returnValue guard dominates this write and also selected object allocation."
+  },
+  {
+    "id": 41,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function convertPropertyValueToJson(valueExpression: Expression, option: CommandLineOption | undefined): any {",
+    "after": "function convertPropertyValueToJson(valueExpression: Expression, option: CommandLineOption | undefined): JsonConfigValue {",
+    "reason": "The scalar, array, object and recovery arms exhaust the produced domain."
+  },
+  {
+    "id": 42,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function isNullOrUndefined(x: any): x is null | undefined {",
+    "after": "function isNullOrUndefined<T>(x: T): x is T & (null | undefined) {",
+    "reason": "The equality-only guard preserves caller T and narrows its absent part."
+  },
+  {
+    "id": 43,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function startsWithConfigDirTemplate(value: any): value is string {",
+    "after": "function startsWithConfigDirTemplate<T>(value: T): value is T & string {",
+    "reason": "The existing string guard proves the narrowed part of caller T."
+  },
+  {
+    "id": 44,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function getOptionValueWithEmptyStrings(value: any, option: CommandLineOption): {} | undefined {",
+    "after": "function getOptionValueWithEmptyStrings<T>(value: T, option: CommandLineOption): {} | undefined {",
+    "reason": "The serializer classifies every actual T with existing equality, typeof and array checks."
+  },
+  {
+    "id": 46,
+    "kind": "JSON and config",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "if (value === undefined) return value;",
+    "after": "if (value === undefined) return value as undefined;",
+    "reason": "The existing equality branch proves the returned value is undefined; the generic checker does not retain that narrowing."
+  },
+  {
+    "id": 47,
+    "kind": "JSON and config",
+    "file": "src/compiler/sourcemap.ts",
+    "before": "function isStringOrNull(x: any)",
+    "after": "function isStringOrNull(x: JsonValue)",
+    "reason": "The parser supplies only a JSON value to the existing scalar guard."
+  },
+  {
+    "id": 48,
+    "kind": "JSON and config",
+    "file": "src/compiler/sourcemap.ts",
+    "before": "function isRawSourceMap(x: any): x is RawSourceMap {",
+    "after": "type JsonValue = string | number | boolean | null | JsonArray | { [key: string]: JsonValue | undefined; };\ninterface JsonArray extends Array<JsonValue> {\n    version?: never; file?: never; mappings?: never; sources?: never;\n    sourceRoot?: never; sourcesContent?: never; names?: never;\n}\n\nfunction isRawSourceMap(x: JsonValue): x is JsonValue & RawSourceMap {",
+    "reason": "Builtin JSON arrays have none of the map object fields. The original validator refines the recursive parse domain without adding a guard."
+  },
+  {
+    "id": 49,
+    "kind": "JSON and config",
+    "file": "src/compiler/sourcemap.ts",
+    "before": "const parsed = JSON.parse(text);",
+    "after": "const parsed = (JSON.parse as (text: string) => JsonValue)(text);",
+    "reason": "Without a reviver the builtin returns the recursive JSON domain, not a known map shape; the existing validator still decides the shape."
   }
 ]

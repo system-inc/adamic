@@ -1,0 +1,13 @@
+{
+  "inputs": 8,
+  "recursiveDomain": true,
+  "configRootRecovery": true,
+  "invalidSourceMapsRejected": true,
+  "observationsIdentical": true,
+  "mutants": [
+    {
+      "change": "actual source-map version check accepts 2 instead of 3",
+      "caughtBy": "runtime valid and invalid shape assertions"
+    }
+  ]
+}
