@@ -1,0 +1,274 @@
+{
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "types_source_sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+  "fields": {
+    "EvaluatorResult": [
+      "hasExternalReferences",
+      "isSyntacticallyString",
+      "resolvedOtherFiles",
+      "value"
+    ],
+    "NodeLinks": [
+      "assertionExpressionType",
+      "calculatedFlags",
+      "capturedBlockScopeBindings",
+      "containsArgumentsReference",
+      "contextFreeType",
+      "declarationRequiresScopeChange",
+      "decoratorSignature",
+      "deferredNodes",
+      "effectsSignature",
+      "enumMemberValue",
+      "externalHelpersModule",
+      "fakeScopeForSignatureDeclaration",
+      "flags",
+      "hasReportedStatementInAmbientContext",
+      "instantiationExpressionTypes",
+      "isExhaustive",
+      "isVisible",
+      "jsxFlags",
+      "jsxFragmentType",
+      "jsxImplicitImportContainer",
+      "jsxNamespace",
+      "nonExistentPropCheckCache",
+      "outerTypeParameters",
+      "parameterInitializerContainsUndefined",
+      "potentialNewTargetCollisions",
+      "potentialReflectCollisions",
+      "potentialThisCollisions",
+      "potentialUnusedRenamedBindingElementsInTypes",
+      "potentialWeakMapSetCollisions",
+      "resolvedJSDocType",
+      "resolvedJsxElementAttributesType",
+      "resolvedSignature",
+      "resolvedSymbol",
+      "resolvedType",
+      "serializedTypes",
+      "skipDirectInference",
+      "spreadIndices",
+      "switchTypes"
+    ],
+    "EmitNode": [
+      "annotatedNodes",
+      "assignedName",
+      "autoGenerate",
+      "classThis",
+      "commentRange",
+      "constantValue",
+      "externalHelpers",
+      "externalHelpersModuleName",
+      "flags",
+      "generatedImportReference",
+      "helpers",
+      "identifierTypeArguments",
+      "internalFlags",
+      "leadingComments",
+      "snippetElement",
+      "sourceMapRange",
+      "startsOnNewLine",
+      "tokenSourceMapRanges",
+      "trailingComments",
+      "typeNode"
+    ]
+  },
+  "pairs": [
+    {
+      "receiver_type_id": 10524,
+      "type": "EvaluatorResult<string | number | undefined>",
+      "field": "value",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 61,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 11344,
+        "column": 28
+      },
+      "original_fields": [
+        "hasExternalReferences",
+        "isSyntacticallyString",
+        "resolvedOtherFiles",
+        "value"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 10747,
+      "type": "NodeLinks",
+      "field": "isExhaustive",
+      "declared_types": [
+        "boolean | 0 | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 39371,
+        "column": 13
+      },
+      "original_fields": [
+        "assertionExpressionType",
+        "calculatedFlags",
+        "capturedBlockScopeBindings",
+        "containsArgumentsReference",
+        "contextFreeType",
+        "declarationRequiresScopeChange",
+        "decoratorSignature",
+        "deferredNodes",
+        "effectsSignature",
+        "enumMemberValue",
+        "externalHelpersModule",
+        "fakeScopeForSignatureDeclaration",
+        "flags",
+        "hasReportedStatementInAmbientContext",
+        "instantiationExpressionTypes",
+        "isExhaustive",
+        "isVisible",
+        "jsxFlags",
+        "jsxFragmentType",
+        "jsxImplicitImportContainer",
+        "jsxNamespace",
+        "nonExistentPropCheckCache",
+        "outerTypeParameters",
+        "parameterInitializerContainsUndefined",
+        "potentialNewTargetCollisions",
+        "potentialReflectCollisions",
+        "potentialThisCollisions",
+        "potentialUnusedRenamedBindingElementsInTypes",
+        "potentialWeakMapSetCollisions",
+        "resolvedJSDocType",
+        "resolvedJsxElementAttributesType",
+        "resolvedSignature",
+        "resolvedSymbol",
+        "resolvedType",
+        "serializedTypes",
+        "skipDirectInference",
+        "spreadIndices",
+        "switchTypes"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 10525,
+      "type": "EvaluatorResult<string | number | undefined> | undefined",
+      "field": "value",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1919,
+        "column": 77
+      },
+      "original_fields": [
+        "hasExternalReferences",
+        "isSyntacticallyString",
+        "resolvedOtherFiles",
+        "value"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 6994,
+      "type": "EmitNode",
+      "field": "constantValue",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7440,
+        "column": 9
+      },
+      "original_fields": [
+        "annotatedNodes",
+        "assignedName",
+        "autoGenerate",
+        "classThis",
+        "commentRange",
+        "constantValue",
+        "externalHelpers",
+        "externalHelpersModuleName",
+        "flags",
+        "generatedImportReference",
+        "helpers",
+        "identifierTypeArguments",
+        "internalFlags",
+        "leadingComments",
+        "snippetElement",
+        "sourceMapRange",
+        "startsOnNewLine",
+        "tokenSourceMapRanges",
+        "trailingComments",
+        "typeNode"
+      ],
+      "state": "property-read component only; original destructuring not certified"
+    },
+    {
+      "receiver_type_id": 6995,
+      "type": "EmitNode | undefined",
+      "field": "constantValue",
+      "declared_types": [
+        "string | number | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/emitNode.ts",
+        "line": 234,
+        "column": 12
+      },
+      "original_fields": [
+        "annotatedNodes",
+        "assignedName",
+        "autoGenerate",
+        "classThis",
+        "commentRange",
+        "constantValue",
+        "externalHelpers",
+        "externalHelpersModuleName",
+        "flags",
+        "generatedImportReference",
+        "helpers",
+        "identifierTypeArguments",
+        "internalFlags",
+        "leadingComments",
+        "snippetElement",
+        "sourceMapRange",
+        "startsOnNewLine",
+        "tokenSourceMapRanges",
+        "trailingComments",
+        "typeNode"
+      ],
+      "state": "certified original declarations and read syntax"
+    }
+  ],
+  "certified_pairs": 4,
+  "certified_reads": 69,
+  "remaining_nonbrand_pairs": 24,
+  "remaining_nonbrand_reads": 69
+}

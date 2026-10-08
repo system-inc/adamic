@@ -1660,3 +1660,12 @@ oracles assert ArrowFunction.name: never is still in the complete descriptor
 graph and run field-check mutants. The wider-helper forged-string mutant must
 be caught by the never obligation despite passing the helper's primitive check.
 The intersected Identifier pair remains lane 7's work.
+
+### Lane 4 first nonbrand primitive certification
+
+Owned original primitive fixtures and declaration witness preparation live in
+stage3/interface-downcasts/lane4/primitive-original; oracle tests live in
+internal/oracle/checked_views_primitives_original_test.go. Four pairs / 69
+candidate reads are certified using existing integrated nullable selectors.
+EmitNode direct destructuring is explicitly not credited by a property fixture.
+No production hook is added in this checkpoint.

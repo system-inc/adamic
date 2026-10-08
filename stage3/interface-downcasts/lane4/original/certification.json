@@ -700,9 +700,13 @@
     "total_reads": 690,
     "certified_brand_subset_pairs": 34,
     "certified_brand_subset_reads": 551,
-    "remaining_pairs": 29,
-    "remaining_reads": 139,
-    "note": "One intersection pair / one read belongs to lane 7; 28 nonbrand pairs / 138 reads remain. Shared dictionary selector inventory is separate and overlapping."
+    "remaining_pairs": 25,
+    "remaining_reads": 70,
+    "note": "Includes lane 7 intersection: one pair / one read. Nonbrand remaining: 24 pairs / 69 reads. EmitNode direct destructuring is not credited. Dictionary inventory overlaps.",
+    "certified_nonbrand_pairs": 4,
+    "certified_nonbrand_reads": 69,
+    "certified_pairs": 38,
+    "certified_reads": 620
   },
   "owned_remaining_pairs": 0,
   "owned_remaining_reads": 0
