@@ -183,6 +183,18 @@ fi
 if [ "${#packages[@]}" -gt 0 ]; then
 	go vet "${packages[@]}" >"$logs/vet.log" 2>&1 || { echo "go vet failed: $logs/vet.log"; status=1; }
 fi
+# Every skip in the tree declares its class (internal/skipcensus/README.md), so an area declares its
+# own skips before a stack is built rather than at the gate. The audit takes well under a second.
+# Like gofmt, it's judged on the merged tree alone: the base never excuses it, since a base that
+# failed it would excuse every undeclared skip a merge brought.
+if [ -d internal/skipcensus ]; then
+	if go test -count=1 -run '^TestCensus$' ./internal/skipcensus >"$logs/census.log" 2>&1; then
+		echo "ran: the skip census (every skip declares its class)"
+	else
+		echo "the skip census failed ($logs/census.log): a skip without its class, or a class the census can't read"
+		status=1
+	fi
+fi
 # Every runtime .c is compiled into runtime.a for every target, so one call wasi-libc lacks breaks
 # the WebAssembly leg of every program, and Mac merges never run that leg (library's unguarded mkdtemp
 # reached a stack gate as 529 oracle failures). A change to the runtime or to how it's built builds
