@@ -1,0 +1,11 @@
+// nodeFactory.ts:2399:40: fixed leading argument in a tuple-rest dispatcher.
+function update1(node: string, name: string, value: number, extra: string): string { return `${node}:${name}:${value}:${extra}`; }
+function update2(node: string, name: string, value: number): string { return `${node}:${name}:${value}`; }
+function update(...args: Parameters<typeof update1 | typeof update2>): string {
+    if (args.length === 4) { return update1(...args); }
+    return update2(...args);
+}
+console.log(update('node'.repeat(2), 'long'.repeat(2), 3, 'extra'.repeat(2)));
+console.log(update('old', 'name', 4));
+function fixed(label: string, ...args: [string, number]): string { return `${label}:${args.length}:${args[0]}:${args[1]}`; }
+console.log(fixed('head', 'body'.repeat(2), 6));

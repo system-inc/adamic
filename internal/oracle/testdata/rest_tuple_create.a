@@ -1,0 +1,12 @@
+// nodeFactory.ts:2363:40: overload dispatcher with a union of fixed tuples.
+function create1(name: string, value: number, extra: string): string { return `${name}:${value}:${extra}`; }
+function create2(name: string, value: number): string { return `${name}:${value}`; }
+function create(...args: Parameters<typeof create1 | typeof create2>): string {
+    if (args.length === 3) { return create1(...args); }
+    return create2(...args);
+}
+let order = '';
+function text(label: string): string { order += label; return label.repeat(3); }
+console.log(create(text('a'), 7, text('b')));
+console.log(create(text('c'), 8));
+console.log(order);
