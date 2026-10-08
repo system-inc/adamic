@@ -1,0 +1,63 @@
+{
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+  "cpu_quota": "400000 100000",
+  "timing_GOMAXPROCS": 1,
+  "validation_GOMAXPROCS": 4,
+  "native_flags": "clang -std=c11 -O2 -ffp-contract=off -fno-optimize-sibling-calls; --tsgo archive; default Go archive optimization",
+  "validation_flags": "ASan/UBSan/LSan; native and archive boundary -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
+  "versions": {
+    "go": "go version go1.27.1 linux/amd64",
+    "clang": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)",
+    "node": "v24.19.0"
+  },
+  "source_sha256": {
+    "driver.ts": "412a2c7c269d35848e84d1ad8111af134634551b52a2520b4a667beb62e76d26",
+    "pilot.ts": "1dd4701e48a4d6a4cc6ca5ca58dbf64e4c07de1f7648cc40a843d591a42310c1",
+    "main.go": "38e538d1d00fd424abbb244fd8ed5bb7f20f76f6705f618425e95101a41ae92d",
+    "main_test.go": "28d0938922db6e129ce30cc13f9c85a5b3beabb227d4805be65335b916fafb2e",
+    "testdata/oracle.go": "edc7f20dfb84ce499310ef1e818cb038816b1f220113b45e8f748ade52c2f714",
+    "testdata/pilot.mjs": "0c41c55abec9c931477efbe674ec47bc4b018d0dd805dc7a8e7b733b84f32ac9"
+  },
+  "binary_sha256": {
+    "driver": "339a44aabfbbbd2d7b9374a9857fbc713529378a05fb75d2193b054964f41c62",
+    "pilot": "1efc16b75b395b2b8ea1e804fa0a11d9059c061385a5aeb20402500881a7608d",
+    "driver-asan": "8d22733f76a157ac33f417471b59af6c6b31a80279bd9ecf73017c66dc6f881c",
+    "pilot-asan": "cb5f7a4d25fa40b99db445195855b52e347adf1796bf98d0b3441c440d2c447f",
+    "oracle": "3ff5ae8a5678c27ccaabbce1eb36b8a1e330030757999af8b5325544a44a6e7a",
+    "measure": "0f4f0b0f43e3299b7da0fc6af2cf3b890fa2582de4387565471d115bc2efd336"
+  },
+  "config": {
+    "compilerOptions": {
+      "strict": true,
+      "target": "ESNext",
+      "noResolve": true
+    },
+    "files": [
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/actualbudget__actual-9732a446/packages/ci-actions/src/news-feed/parse.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/angular__angular-c0dc8c4b/adev/shared-docs/components/algolia-icon/algolia-icon.component.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/babel__babel-f67453d5/Makefile.source.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/backstage__backstage-53293124/.storybook/main.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/calcom__cal.diy-54343aa6/apps/api/v2/src/env.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/date-fns__date-fns-717ce0a8/pkgs/core/examples/cts/test.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/excalidraw__excalidraw-ed10ac7d/packages/common/src/editorInterface.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/grafana__grafana-c7a7b797/apps/alerting/rules/plugin/src/generated/alertrule/v0alpha1/alertrule_object_gen.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__playwright-2a8ba77a/packages/injected/src/ariaSnapshot.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/n8n-io__n8n-e77e30c7/packages/@n8n/agents/src/runtime/loop/stream-sink.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/nestjs__nest-35142c3e/integration/_support/register-local-packages.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/outline__outline-478e8121/app/actions/index.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/prisma__prisma-c882b033/apps/lsp-playground/src/bridge.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/shadcn-ui__ui-a2e305c2/apps/v4/app/(app)/(create)/hooks/use-action-menu.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/supabase__supabase-87681812/apps/design-system/config/docs.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/TanStack__query-eaa75f4f/examples/angular/auto-refetching/src/app/app.component.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/tldraw__tldraw-db1c86ea/apps/analytics-worker/src/worker.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/trpc__trpc-d756e591/examples/.experimental/next-app-dir/next.config.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/twentyhq__twenty-ddd16625/packages/create-twenty-app/src/cli.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/typeorm__typeorm-c64a1f05/docs/docusaurus.config.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__TypeScript-50d70a3f/tsc/testdata/fixtures/compiler/core.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__TypeScript-050880ce/src/compiler/core.ts",
+      "/workspace/scratch/checker-bridge-scout-final/public/samples/vuejs__core-4ab865a8/packages/compiler-core/src/compat/compatConfig.ts"
+    ]
+  },
+  "manifest_sha256": "1fa3c99578d99240e9b5d529b032dabdabbea6d4ee9e4d392e73feddf64a15e4"
+}

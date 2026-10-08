@@ -1,0 +1,320 @@
+[
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:71",
+    "options": "production defaults",
+    "sha256": "3398fd5fc7df5d155fee63a4f1a2ea62695fafa2deceb35c3acca6027a1946aa",
+    "source": "declare const varAny: any;\nvarAny === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:75",
+    "options": "production defaults",
+    "sha256": "0b1f6e96b698458d2cdb4ecc1f0758e90b0f569169ae86ea4cf1c4c39b5f1daa",
+    "source": "declare const varAny: any;\nvarAny == false;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:79",
+    "options": "production defaults",
+    "sha256": "e8595893cbbc23de35ef04c76c5f024a3242b50b33362e27da1704e6ea098131",
+    "source": "declare const varString: string;\nvarString === false;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:83",
+    "options": "production defaults",
+    "sha256": "e5c043201ad889d9871500a1f2468368ea5c826a624da1acf616844eec0d0e22",
+    "source": "declare const varString: string;\nvarString === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:87",
+    "options": "production defaults",
+    "sha256": "ec81ff8ebf6eb9743d40a383a3a79f664e3b5cc67015a9f0d7bb5a1b96586d19",
+    "source": "declare const varObject: {};\nvarObject === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:91",
+    "options": "production defaults",
+    "sha256": "14fa898b2d1e442350cb70833e3025341970e5c24370022121ab5c4cfb17a8cd",
+    "source": "declare const varObject: {};\nvarObject == false;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:95",
+    "options": "production defaults",
+    "sha256": "40848612b131dbd68ca70391c5fabb4358cc32f272dc5f4c94c900416819094d",
+    "source": "declare const varNullOrUndefined: null | undefined;\nvarNullOrUndefined === false;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:99",
+    "options": "production defaults",
+    "sha256": "a6b68c46fa343c1a0929f1af2184c965138cdc29f08237534add542bc7ce2e59",
+    "source": "declare const varBooleanOrString: boolean | string;\nvarBooleanOrString === false;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:103",
+    "options": "production defaults",
+    "sha256": "987a7af7e3711ffba782f3fd35453fa94e51b69b3bb844a3b2535b3e22674569",
+    "source": "declare const varBooleanOrString: boolean | string;\nvarBooleanOrString == true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:107",
+    "options": "production defaults",
+    "sha256": "185d2640ccf8e098b0c428b9ca534badbd941716da669e83346ac3170bd6348c",
+    "source": "declare const varTrueOrStringOrUndefined: true | string | undefined;\nvarTrueOrStringOrUndefined == true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:111",
+    "options": "production defaults",
+    "sha256": "03733aa4eab4c529ef1cebab3045771256051e86e0442cae3340077c3df66a11",
+    "source": "const test: \u003cT\u003e(someCondition: T) =\u003e void = someCondition =\u003e {\n  if (someCondition === true) {\n  }\n};\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:115",
+    "options": "production defaults",
+    "sha256": "a2a42bb841821771020edb18be89b73c64dfb5a3eb5a1f3bd5c579d405864300",
+    "source": "const test: \u003cT\u003e(someCondition: boolean | string) =\u003e void = someCondition =\u003e {\n  if (someCondition === true) {\n  }\n};\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:119",
+    "options": "production defaults",
+    "sha256": "4fa569ca453db7085c7b39732921068640b79c16fd8108edd999bfdc4156d2a9",
+    "source": "declare const varBooleanOrUndefined: boolean | undefined;\nvarBooleanOrUndefined === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:139",
+    "options": "production defaults",
+    "sha256": "20043662c337846f59ee2ccd6f19bbc16dc5d182d9af68c40ba9dc9bb7887b87",
+    "source": "'false' === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:143",
+    "options": "production defaults",
+    "sha256": "482fad249a715f11e35fbb21ceafa39ac0331e8f3c5b1d6c1ed400e037d3f733",
+    "source": "'true' === false;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:147",
+    "options": "production defaults",
+    "sha256": "e01526b8b2109747ad33875636c83eac28db3201d3fc876d90e8a26ffdbe675c",
+    "source": "const unconstrained: \u003cT\u003e(someCondition: T) =\u003e void = someCondition =\u003e {\n  if (someCondition === true) {\n  }\n};\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:151",
+    "options": "production defaults",
+    "sha256": "0041ef60635ced14bf6e8e2e0e5a99a0d97bbf39a41aa449a87ea56115d2f6bc",
+    "source": "const extendsUnknown: \u003cT extends unknown\u003e(\n  someCondition: T,\n) =\u003e void = someCondition =\u003e {\n  if (someCondition === true) {\n  }\n};\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:187",
+    "options": "production defaults",
+    "sha256": "094d8fc98ba1a0fd1b864a2dd8c0a55333ad6d1829a0184a89fd1e1c3c95239c",
+    "source": "true === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:194",
+    "options": "production defaults",
+    "sha256": "5b6c9ca96b542243cb2083cc7e74bb464900a7303fe7d2361a983303e90b9905",
+    "source": "false !== true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:201",
+    "options": "production defaults",
+    "sha256": "bcbe621106025de1d958f2cfee5dfc0db6f80b17897745a6d52b4337a9a000a4",
+    "source": "declare const varBoolean: boolean;\nif (varBoolean !== false) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:208",
+    "options": "production defaults",
+    "sha256": "24c729a225926b67bfc57bc906fb952f8d6335e40aa3d47f8f27240e780752f2",
+    "source": "declare const varTrue: true;\nif (varTrue !== true) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:383",
+    "options": "production defaults",
+    "sha256": "83fa20d169559519eb342c1346b392c68ec3d424ae4a91a8811f53c2d6552ebd",
+    "source": "declare const varBoolean: boolean;\nif (false !== varBoolean) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:390",
+    "options": "production defaults",
+    "sha256": "04eb87fd48fd2208b2c45de9ebda2b0cdea2ed3b8b7ca745e2b303cb2905fdf4",
+    "source": "declare const varBoolean: boolean;\nif (true !== varBoolean) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:397",
+    "options": "production defaults",
+    "sha256": "9f1dfe8dc5e3414782da12225e5a558f1e810ea313514af9be7cd50e83d7c51d",
+    "source": "declare const x;\n        if ((x instanceof Error) === false) {\n        }\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:404",
+    "options": "production defaults",
+    "sha256": "23f5e7cf18364a63b25cea6410b61304ef14738bb618a1e4ca321c5f38d27714",
+    "source": "declare const x;\n        if (false === (x instanceof Error)) {\n        }\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:411",
+    "options": "production defaults",
+    "sha256": "c78b15260d094e308828b8e2634ce2e2b0b5291f8dbf971b2961af259af36b07",
+    "source": "declare const x;\nif (x instanceof Error === false) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:418",
+    "options": "production defaults",
+    "sha256": "4d7fc0fe3b00fb12173cd14b508533def645b45515892e23cb278f570e1afa0c",
+    "source": "declare const x;\n        if (typeof x === 'string' === false) {\n        }\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:425",
+    "options": "production defaults",
+    "sha256": "12e73cc86082c99cbdcba91fb161647f22418ca2830f2b49ab0ec68f130de5b7",
+    "source": "declare const x;\n        if (x instanceof Error === (false)) {\n        }\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:432",
+    "options": "production defaults",
+    "sha256": "31895481a514d9dca35c1ffbd77cbc94402eba788643267a9e3a03590629a34d",
+    "source": "declare const x;\n        if ((false) === x instanceof Error) {\n        }\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:439",
+    "options": "production defaults",
+    "sha256": "1cb5c9aee6e1fd0ac2d15890053a070f6de936e08e27c04f12e6cc738e0b3705",
+    "source": "declare const varBoolean: boolean;\nif (!(varBoolean !== false)) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:446",
+    "options": "production defaults",
+    "sha256": "511a23d4c38b26412ae93704dee8b62d8bbcd28494a1f042d7d49582f28c0123",
+    "source": "declare const varBoolean: boolean;\nif (!(varBoolean === false)) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:453",
+    "options": "production defaults",
+    "sha256": "73db188279058881ec2ebef299360a58cc6e07f4a1f78e6f116204a5f5cefe13",
+    "source": "declare const varBoolean: boolean;\nif (!(varBoolean instanceof Event == false)) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:460",
+    "options": "production defaults",
+    "sha256": "c89e5685a6f4f8467ff0106f934a013d1ae6e36161b216f4a571759bcfa7ad91",
+    "source": "declare const varBoolean: boolean;\nif (varBoolean instanceof Event == false) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:467",
+    "options": "production defaults",
+    "sha256": "ea82766a1162115a22d8d802f8cfe0c8c434e2612e15d1b52b25294c1a1a2d0e",
+    "source": "declare const varBoolean: boolean;\nif (!((varBoolean ?? false) !== false)) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:474",
+    "options": "production defaults",
+    "sha256": "c2f15e4ed7ff65a40631cd80ef814b51f504db7acb5c6ec736d293be05e00d00",
+    "source": "declare const varBoolean: boolean;\nif (!((varBoolean ?? false) === false)) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:481",
+    "options": "production defaults",
+    "sha256": "e6b1659c4abc78429bcd8b51a69a942bf05052f3ac9b2adcc7c9109f62407323",
+    "source": "declare const varBoolean: boolean;\nif (!((varBoolean ?? true) !== false)) {\n}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:488",
+    "options": "production defaults",
+    "sha256": "a979622e65c2721e8bc5392417162403b91391cd02daca82f098d5f0b511f69a",
+    "source": "const test: \u003cT extends boolean\u003e(someCondition: T) =\u003e void = someCondition =\u003e {\n  if (someCondition === true) {\n  }\n};\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:495",
+    "options": "production defaults",
+    "sha256": "3fe7c585d460c169be6c6d3e7bfc312a49c3cd3e902bd1521407d1477bc0af28",
+    "source": "const test: \u003cT extends boolean\u003e(someCondition: T) =\u003e void = someCondition =\u003e {\n  if (!(someCondition !== false)) {\n  }\n};\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:502",
+    "options": "production defaults",
+    "sha256": "24f5e48936fa0f2ac1b68cee1fd374baede1a4873ffe316377b5f34ad080fca4",
+    "source": "const test: \u003cT extends boolean\u003e(someCondition: T) =\u003e void = someCondition =\u003e {\n  if (!((someCondition ?? true) !== false)) {\n  }\n};\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:509",
+    "options": "production defaults",
+    "sha256": "8ab9fedfeffc99f96c81a8f026c2fbdb627594a648b3979eb9f1d1265e3007c7",
+    "source": "declare const a: boolean;\ndeclare const b: boolean;\ndeclare const c: boolean;\n(a || b) === true \u0026\u0026 c;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:650",
+    "options": "production defaults",
+    "sha256": "a7d7d91ba68a29fc0b42bfd42bc3e4b76ea3fb1a93c2555cf1c6a59aad550249",
+    "source": "declare const a: boolean;\ndeclare const c: boolean;\ndeclare const y: boolean;\nconst z = (a || c) === true \u0026\u0026 y;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:657",
+    "options": "production defaults",
+    "sha256": "3a7cd73a2cf84bc70b1e86d5116c86208d83ac5b1597b495d55e03f70062a219",
+    "source": "declare const b: boolean;\ndeclare const y: boolean;\nconst z = (b) === true \u0026\u0026 y;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:664",
+    "options": "production defaults",
+    "sha256": "d4500f733bfec2c47413d3adc9748571f76b0c7070b3602c7821aa7eecf81f11",
+    "source": "declare const b: boolean;\nif ((b === true)) {}\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:671",
+    "options": "production defaults",
+    "sha256": "48ebc51a438909cf09bcbee94a84d7cba81b4d15d6a2543bdb15b97a2d8cdc67",
+    "source": "declare const b: boolean;\nconst z = ((b)) === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:678",
+    "options": "production defaults",
+    "sha256": "d3358288b8507c9fcd4def9f73bb4ef0620e9775e67fa24e4250351a23d4d3c7",
+    "source": "declare const b: boolean | string;\nconst z = b === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:685",
+    "options": "production defaults",
+    "sha256": "2b614a184d5d7e07f496c947d8ff81ceebf3b51fad3e9e02c13e13dc402a8531",
+    "source": "declare const b: null | undefined;\nconst z = b === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:737",
+    "options": "production defaults",
+    "sha256": "351ea52f9240c232f3e6a6fb59c10d218240dbb952e741b273790fbbeac24c37",
+    "source": "function f\u003cT\u003e(b: T) { return b === true; }\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:744",
+    "options": "production defaults",
+    "sha256": "d1b5e886a3a3df55a40fd6a78c184c098a4a1d151f2190ee36f177dd47d4b4a2",
+    "source": "function f\u003cT extends boolean\u003e(b: T) { return b === true; }\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:751",
+    "options": "production defaults",
+    "sha256": "00b1cbdaed26c3b02f19193d113ce39d3bb22df7b425cc442aa77c5536a60e8f",
+    "source": "declare const b: any;\nconst z = b === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:758",
+    "options": "production defaults",
+    "sha256": "1be88f98e7d771f9c0b0a87911a1ec7feae25c9b2e4b866eda9b0a04e77eae7b",
+    "source": "declare const b: boolean;\nconst z = true === b;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:765",
+    "options": "production defaults",
+    "sha256": "52e831d544eafdcfe6a7bba0a79fff56f8dd51a477ba76c6421e1b9f58ce8f0c",
+    "source": "const z = true === true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:772",
+    "options": "production defaults",
+    "sha256": "517747a4f2eafbbfd059754a6c996e9c719d8aaaaf3f047d5a4347ea8e5fce04",
+    "source": "declare const b: boolean;\nconst z = b == true;\n"
+  },
+  {
+    "location": "cohere/internal/lint/rules/typescript/no_unnecessary_boolean_literal_compare_test.go:779",
+    "options": "production defaults",
+    "sha256": "623ff750403c940a7e8e04dfe4d2b185a0aafc82febf26a6897b2cb621579ed6",
+    "source": "declare const b: boolean;\nconst z = b \u003e= true;\n"
+  }
+]

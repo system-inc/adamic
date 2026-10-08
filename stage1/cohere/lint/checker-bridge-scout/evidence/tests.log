@@ -1,0 +1,17 @@
+=== RUN   TestAgreementAndMutants
+=== PAUSE TestAgreementAndMutants
+=== CONT  TestAgreementAndMutants
+    main_test.go:232: native answer mutant caught by byte comparison
+    main_test.go:244: native and Node ReadsOtherFiles contract guard caught forbidden ask
+    main_test.go:244: native and Node ReadsDefaultLibrary contract guard caught forbidden ask
+    main_test.go:253: native repair-output mutant compiles/runs, caught by full fix-byte comparison
+    main_test.go:253: Node repair-output mutant compiles/runs, caught by full fix-byte comparison
+    main_test.go:268: Node missing mutant caught by replay contract
+    main_test.go:268: Node extra mutant caught by replay contract
+    main_test.go:268: Node wrong-question mutant caught by replay contract
+    main_test.go:272: 84 cases, 37 findings including exact repair bytes, 156 actual pilot questions; native facts and Node ask plans agree
+    main_test.go:294: shared 23-file public project: 2 findings, 38 real pilot questions; Go/native/Node and timing counts agree
+    main_test.go:300: single-program 23-file native production walk agrees with Go
+--- PASS: TestAgreementAndMutants (45.20s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/checker-bridge-scout	45.202s

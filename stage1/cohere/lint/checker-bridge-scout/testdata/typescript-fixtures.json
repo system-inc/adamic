@@ -1,0 +1,20 @@
+[
+  {
+    "path": "cohere/TypeScript/tsc/testdata/tests/cases/conformance/types/literal/booleanLiteralTypes2.ts",
+    "sha256": "145dc91549dd073a6996f5f556a54d35243f4085dc14706e122e6a3717f3ba3d",
+    "bytes": 1731,
+    "source": "// @target: es2015\r\n// @strictNullChecks: true\r\n\r\ntype A1 = true | false;\r\ntype A2 = false | true;\r\n\r\nfunction f1() {\r\n    var a: A1;\r\n    var a: A2;\r\n    var a: true | false;\r\n    var a: false | true;\r\n}\r\n\r\nfunction f2(a: true | false, b: boolean) {\r\n    a = b;\r\n    b = a;\r\n}\r\n\r\nfunction f3(a: true | false, b: true | false) {\r\n    var x = a || b;\r\n    var x = a && b;\r\n    var x = !a;\r\n}\r\n\r\nfunction f4(t: true, f: false) {\r\n    var x1 = t && f;\r\n    var x2 = f && t;\r\n    var x3 = t || f;\r\n    var x4 = f || t;\r\n    var x5 = !t;\r\n    var x6 = !f;\r\n}\r\n\r\ndeclare function g(x: true): string;\r\ndeclare function g(x: false): boolean;\r\ndeclare function g(x: boolean): number;\r\n\r\nfunction f5(b: boolean) {\r\n    var z1 = g(true);\r\n    var z2 = g(false);\r\n    var z3 = g(b);\r\n}\r\n\r\nfunction assertNever(x: never): never {\r\n    throw new Error(\"Unexpected value\");\r\n}\r\n\r\nfunction f10(x: true | false) {\r\n    switch (x) {\r\n        case true: return \"true\";\r\n        case false: return \"false\";\r\n    }\r\n}\r\n\r\nfunction f11(x: true | false) {\r\n    switch (x) {\r\n        case true: return \"true\";\r\n        case false: return \"false\";\r\n    }\r\n    return assertNever(x);\r\n}\r\n\r\nfunction f12(x: true | false) {\r\n    if (x) {\r\n        x;\r\n    }\r\n    else {\r\n        x;\r\n    }\r\n}\r\n\r\nfunction f13(x: true | false) {\r\n    if (x === true) {\r\n        x;\r\n    }\r\n    else {\r\n        x;\r\n    }\r\n}\r\n\r\ntype Item =\r\n    { kind: true, a: string } |\r\n    { kind: false, b: string };\r\n\r\nfunction f20(x: Item) {\r\n    switch (x.kind) {\r\n        case true: return x.a;\r\n        case false: return x.b;\r\n    }\r\n}\r\n\r\nfunction f21(x: Item) {\r\n    switch (x.kind) {\r\n        case true: return x.a;\r\n        case false: return x.b;\r\n    }\r\n    return assertNever(x);\r\n}"
+  },
+  {
+    "path": "cohere/TypeScript/tsc/testdata/tests/cases/compiler/booleanAssignment.ts",
+    "sha256": "82a2e416e5c3f466b882148c94a32e45f156c4539f16742c79714b232c5c491e",
+    "bytes": 186,
+    "source": "// @target: es2015\r\nvar b = new Boolean();\r\nb = 1; // Error\r\nb = \"a\"; // Error\r\nb = {}; // Error\r\n\r\nvar o = {};\r\no = b; // OK\r\n\r\nb = true; // OK\r\n\r\ndeclare var b2:boolean;\r\nb = b2; // OK"
+  },
+  {
+    "path": "cohere/TypeScript/tsc/testdata/tests/cases/conformance/types/primitives/boolean/booleanPropertyAccess.ts",
+    "sha256": "aabcafa738be985e90ae36174de75d1493ff62002b908776abbb7cdf353416a3",
+    "bytes": 84,
+    "source": "// @target: es2015\r\nvar x = true;\r\n\r\nvar a = x.toString();\r\nvar b = x['toString']();"
+  }
+]

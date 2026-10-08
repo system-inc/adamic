@@ -1,0 +1,53 @@
+[
+  {
+    "implementation": "go",
+    "round": 1,
+    "process_ns": 87555391,
+    "repetitions": 1
+  },
+  {
+    "implementation": "native",
+    "round": 1,
+    "process_ns": 673494934,
+    "repetitions": 100,
+    "load_ns": 79818065,
+    "query_ns": 24385821,
+    "queries": 3800,
+    "first_query_ns": 76095,
+    "run_ns": 585411565
+  },
+  {
+    "implementation": "native",
+    "round": 2,
+    "process_ns": 713829885,
+    "repetitions": 100,
+    "load_ns": 75301273,
+    "query_ns": 32589677,
+    "queries": 3800,
+    "first_query_ns": 17467,
+    "run_ns": 631874176
+  },
+  {
+    "implementation": "go",
+    "round": 2,
+    "process_ns": 84450051,
+    "repetitions": 1
+  },
+  {
+    "implementation": "go",
+    "round": 3,
+    "process_ns": 80955182,
+    "repetitions": 1
+  },
+  {
+    "implementation": "native",
+    "round": 3,
+    "process_ns": 670635926,
+    "repetitions": 100,
+    "load_ns": 73724300,
+    "query_ns": 25249362,
+    "queries": 3800,
+    "first_query_ns": 16335,
+    "run_ns": 591926581
+  }
+]

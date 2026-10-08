@@ -1,0 +1,28 @@
+[
+  {
+    "implementation": "go",
+    "round": 1,
+    "process_ns": 98900016,
+    "repetitions": 1
+  },
+  {
+    "implementation": "native",
+    "round": 1,
+    "process_ns": 731299205,
+    "repetitions": 100,
+    "inspect_ns": 18000594,
+    "parts_ns": 0,
+    "allocated_bytes": 5961120,
+    "allocated_objects": 50153,
+    "collections": 0,
+    "input_ns": 802667,
+    "call_ns": 30427670,
+    "output_ns": 685799,
+    "facts_bytes": 196700,
+    "load_ns": 95017899,
+    "query_ns": 32235900,
+    "queries": 3800,
+    "first_query_ns": 15324,
+    "run_ns": 629221271
+  }
+]

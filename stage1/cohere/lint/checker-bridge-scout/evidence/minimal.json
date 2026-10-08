@@ -1,0 +1,50 @@
+[
+  {
+    "name": "empty",
+    "source": "",
+    "output": "findings 0\n",
+    "transcript": "102\n71\n/workspace/scratch/checker-bridge-scout/minimal-current/empty/source.ts1\n01\n010\nSourceFile7\noptions5\nValue15\n1\n17\noptions1\n1"
+  },
+  {
+    "name": "two-literals",
+    "source": "true===false\n",
+    "output": "findings 1\n1\n02\n1257\n@typescript-eslint/no-unnecessary-boolean-literal-compare6\ndirect132\nThis compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.1\n02\n125\n!true\n",
+    "transcript": "110\n78\n/workspace/scratch/checker-bridge-scout/minimal-current/two-literals/source.ts1\n02\n1310\nSourceFile7\noptions5\nValue15\n1\n17\noptions1\n1114\n78\n/workspace/scratch/checker-bridge-scout/minimal-current/two-literals/source.ts1\n01\n411\nTrueKeyword10\ntype-shape5\nValue70\n1\n110\ntype-shape1\n11\n11\n11\n11\n01\n11\n14\n81920\n1\n01\n01\n02\n-11\n01\n01\n01\n0"
+  },
+  {
+    "name": "plain",
+    "source": "let b=true;b===true\n",
+    "output": "findings 1\n2\n112\n1957\n@typescript-eslint/no-unnecessary-boolean-literal-compare6\ndirect132\nThis compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.2\n112\n191\nb\n",
+    "transcript": "103\n71\n/workspace/scratch/checker-bridge-scout/minimal-current/plain/source.ts1\n02\n2010\nSourceFile7\noptions5\nValue15\n1\n17\noptions1\n1108\n71\n/workspace/scratch/checker-bridge-scout/minimal-current/plain/source.ts2\n112\n1210\nIdentifier10\ntype-shape5\nValue70\n1\n110\ntype-shape1\n11\n11\n11\n11\n01\n11\n14\n81920\n1\n01\n01\n02\n-11\n01\n01\n01\n0"
+  },
+  {
+    "name": "unconstrained",
+    "source": "function f<T>(b:T){return b===true}\n",
+    "output": "findings 0\n",
+    "transcript": "111\n79\n/workspace/scratch/checker-bridge-scout/minimal-current/unconstrained/source.ts1\n02\n3610\nSourceFile7\noptions5\nValue15\n1\n17\noptions1\n1116\n79\n/workspace/scratch/checker-bridge-scout/minimal-current/unconstrained/source.ts2\n252\n2710\nIdentifier10\ntype-shape5\nValue72\n1\n110\ntype-shape1\n11\n11\n11\n11\n01\n11\n16\n5242880\n1\n01\n01\n02\n-11\n01\n01\n01\n0"
+  },
+  {
+    "name": "constrained",
+    "source": "function f<T extends boolean>(b:T){return b===true}\n",
+    "output": "findings 1\n2\n422\n5057\n@typescript-eslint/no-unnecessary-boolean-literal-compare6\ndirect132\nThis compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.2\n422\n501\nb\n",
+    "transcript": "109\n77\n/workspace/scratch/checker-bridge-scout/minimal-current/constrained/source.ts1\n02\n5210\nSourceFile7\noptions5\nValue15\n1\n17\noptions1\n1114\n77\n/workspace/scratch/checker-bridge-scout/minimal-current/constrained/source.ts2\n412\n4310\nIdentifier10\ntype-shape5\nValue153\n1\n110\ntype-shape1\n11\n11\n11\n11\n01\n31\n19\n1342179840\n1\n01\n01\n02\n-11\n01\n01\n21\n21\n31\n01\n24\n81920\n1\n01\n01\n02\n-11\n01\n01\n01\n01\n34\n81920\n1\n01\n01\n02\n-11\n01\n01\n01\n0"
+  },
+  {
+    "name": "nullable",
+    "source": "declare let b:boolean|undefined;b===true\n",
+    "output": "findings 0\n",
+    "transcript": "106\n74\n/workspace/scratch/checker-bridge-scout/minimal-current/nullable/source.ts1\n02\n4110\nSourceFile7\noptions5\nValue15\n1\n17\noptions1\n1111\n74\n/workspace/scratch/checker-bridge-scout/minimal-current/nullable/source.ts2\n322\n3310\nIdentifier10\ntype-shape5\nValue189\n1\n110\ntype-shape1\n11\n11\n11\n11\n01\n41\n19\n1342177280\n1\n01\n01\n02\n-11\n01\n01\n31\n21\n31\n41\n01\n21\n40\n1\n01\n01\n02\n-11\n01\n01\n01\n01\n34\n81920\n1\n01\n01\n02\n-11\n01\n01\n01\n01\n44\n81920\n1\n01\n01\n02\n-11\n01\n01\n01\n0"
+  },
+  {
+    "name": "unicode",
+    "source": "//🌍\nlet b=true;b===false\n",
+    "output": "findings 1\n2\n182\n2757\n@typescript-eslint/no-unnecessary-boolean-literal-compare6\ndirect132\nThis compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.2\n182\n272\n!b\n",
+    "transcript": "105\n73\n/workspace/scratch/checker-bridge-scout/minimal-current/unicode/source.ts1\n02\n2810\nSourceFile7\noptions5\nValue15\n1\n17\noptions1\n1110\n73\n/workspace/scratch/checker-bridge-scout/minimal-current/unicode/source.ts2\n182\n1910\nIdentifier10\ntype-shape5\nValue70\n1\n110\ntype-shape1\n11\n11\n11\n11\n01\n11\n14\n81920\n1\n01\n01\n02\n-11\n01\n01\n01\n0"
+  },
+  {
+    "name": "type-error",
+    "source": "1===true\n",
+    "output": "findings 0\n",
+    "transcript": "107\n76\n/workspace/scratch/checker-bridge-scout/minimal-current/type-error/source.ts1\n01\n910\nSourceFile7\noptions5\nValue15\n1\n17\noptions1\n1115\n76\n/workspace/scratch/checker-bridge-scout/minimal-current/type-error/source.ts1\n01\n114\nNumericLiteral10\ntype-shape5\nValue70\n1\n110\ntype-shape1\n11\n11\n11\n11\n01\n11\n14\n20480\n1\n01\n01\n02\n-11\n01\n01\n01\n0"
+  }
+]

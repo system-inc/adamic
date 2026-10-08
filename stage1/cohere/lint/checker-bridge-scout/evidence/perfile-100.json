@@ -1,0 +1,1943 @@
+{
+  "GOOS": "linux",
+  "GOARCH": "amd64",
+  "GoVersion": "go1.27.1",
+  "CPUs": 5,
+  "GOMAXPROCS": 1,
+  "Profile": false,
+  "QuietHundred": false,
+  "Records": [
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/actualbudget__actual-9732a446/packages/ci-actions/src/news-feed/parse.ts",
+      "sha256": "7401608b8ca3a520d13faf59775147a2bf87810fcdf802c91265a5b9b0c63ff9",
+      "questions": 4,
+      "unique_questions": 4,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 84355370,
+      "go_query_ns": 843969,
+      "go_first_ns": 5969,
+      "native": {
+        "first_query_ns": 16214,
+        "load_ns": 72574122,
+        "queries": 400,
+        "query_ns": 1193312,
+        "run_ns": 1467446
+      },
+      "pilot": {
+        "first_query_ns": 15734,
+        "load_ns": 76342313,
+        "queries": 400,
+        "query_ns": 2125034,
+        "run_ns": 23370386
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 82095197
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/angular__angular-c0dc8c4b/adev/shared-docs/components/algolia-icon/algolia-icon.component.ts",
+      "sha256": "5da4cf426c0a7f3fe7fe9b95ce0f9334bbeb900233ed6a36b017311fc4b017b3",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 58028974,
+      "go_query_ns": 106914,
+      "go_first_ns": 5238,
+      "native": {
+        "first_query_ns": 16575,
+        "load_ns": 80339825,
+        "queries": 100,
+        "query_ns": 168115,
+        "run_ns": 253062
+      },
+      "pilot": {
+        "first_query_ns": 14582,
+        "load_ns": 80762604,
+        "queries": 100,
+        "query_ns": 153420,
+        "run_ns": 1123577
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 87099544
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/babel__babel-f67453d5/Makefile.source.ts",
+      "sha256": "13a96c0a66d2a34a467500f3bb2913c11142ac5ceaaa8db0a2b82478b6df2d02",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 66746416,
+      "go_query_ns": 54683,
+      "go_first_ns": 5288,
+      "native": {
+        "first_query_ns": 15113,
+        "load_ns": 76721801,
+        "queries": 100,
+        "query_ns": 124550,
+        "run_ns": 211650
+      },
+      "pilot": {
+        "first_query_ns": 15233,
+        "load_ns": 72069705,
+        "queries": 100,
+        "query_ns": 548401,
+        "run_ns": 20182952
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 78186923
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/backstage__backstage-53293124/.storybook/main.ts",
+      "sha256": "117cc72f437a05a2e09e5a1ee5c0de1f2e33dc4ce123fc8a9927d5e5d5950e4b",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 51987686,
+      "go_query_ns": 56356,
+      "go_first_ns": 6129,
+      "native": {
+        "first_query_ns": 14752,
+        "load_ns": 98892095,
+        "queries": 100,
+        "query_ns": 155328,
+        "run_ns": 238871
+      },
+      "pilot": {
+        "first_query_ns": 14732,
+        "load_ns": 73321426,
+        "queries": 100,
+        "query_ns": 182005,
+        "run_ns": 5184439
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 74800349
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/calcom__cal.diy-54343aa6/apps/api/v2/src/env.ts",
+      "sha256": "3d7cc0dee8772b49e932c5375201f663f7b8df281053875442973f11fedf1c9f",
+      "questions": 2,
+      "unique_questions": 2,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 78373651,
+      "go_query_ns": 1471732,
+      "go_first_ns": 6380,
+      "native": {
+        "first_query_ns": 15664,
+        "load_ns": 71918261,
+        "queries": 200,
+        "query_ns": 891375,
+        "run_ns": 1051428
+      },
+      "pilot": {
+        "first_query_ns": 14492,
+        "load_ns": 72629891,
+        "queries": 200,
+        "query_ns": 941847,
+        "run_ns": 4789263
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 74222406
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/date-fns__date-fns-717ce0a8/pkgs/core/examples/cts/test.ts",
+      "sha256": "20e987c5eef181730d53b3b868532f80c3a765b32fcbf2f392195e0346af9ec9",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 61326880,
+      "go_query_ns": 60071,
+      "go_first_ns": 5459,
+      "native": {
+        "first_query_ns": 16055,
+        "load_ns": 75982650,
+        "queries": 100,
+        "query_ns": 137287,
+        "run_ns": 217859
+      },
+      "pilot": {
+        "first_query_ns": 18658,
+        "load_ns": 84133084,
+        "queries": 100,
+        "query_ns": 158861,
+        "run_ns": 1423029
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 70442098
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/excalidraw__excalidraw-ed10ac7d/packages/common/src/editorInterface.ts",
+      "sha256": "5873bcc094c4d12376dc6e90d7e0e0099a71d48e0972b303fa731be21486a858",
+      "questions": 3,
+      "unique_questions": 3,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 63686774,
+      "go_query_ns": 1936910,
+      "go_first_ns": 6029,
+      "native": {
+        "first_query_ns": 15073,
+        "load_ns": 79274847,
+        "queries": 300,
+        "query_ns": 1952035,
+        "run_ns": 2156466
+      },
+      "pilot": {
+        "first_query_ns": 15203,
+        "load_ns": 73592730,
+        "queries": 300,
+        "query_ns": 1192078,
+        "run_ns": 11153465
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 84268113
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/grafana__grafana-c7a7b797/apps/alerting/rules/plugin/src/generated/alertrule/v0alpha1/alertrule_object_gen.ts",
+      "sha256": "32d31f62c03edce48e76b82389909d08ef899cb5b4569a278deb7df9d1939a66",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 57231745,
+      "go_query_ns": 70369,
+      "go_first_ns": 5559,
+      "native": {
+        "first_query_ns": 16615,
+        "load_ns": 74336048,
+        "queries": 100,
+        "query_ns": 166642,
+        "run_ns": 308697
+      },
+      "pilot": {
+        "first_query_ns": 14271,
+        "load_ns": 74077958,
+        "queries": 100,
+        "query_ns": 161042,
+        "run_ns": 2073161
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 75506020
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__playwright-2a8ba77a/packages/injected/src/ariaSnapshot.ts",
+      "sha256": "7caadae854a544c5f0da7bdb7392b0b8962bb67c40bf906c755cc52b3ec262d7",
+      "questions": 4,
+      "unique_questions": 4,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 53576796,
+      "go_query_ns": 976918,
+      "go_first_ns": 5629,
+      "native": {
+        "first_query_ns": 16004,
+        "load_ns": 73500406,
+        "queries": 400,
+        "query_ns": 1671586,
+        "run_ns": 1929324
+      },
+      "pilot": {
+        "first_query_ns": 16214,
+        "load_ns": 73827259,
+        "queries": 400,
+        "query_ns": 2323827,
+        "run_ns": 37728961
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 84341413
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/n8n-io__n8n-e77e30c7/packages/@n8n/agents/src/runtime/loop/stream-sink.ts",
+      "sha256": "eeb98db5784b247eeb06c76708737cf31b27e7c487d452514a0a4f03258578b7",
+      "questions": 2,
+      "unique_questions": 2,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 75209967,
+      "go_query_ns": 2436849,
+      "go_first_ns": 6490,
+      "native": {
+        "first_query_ns": 15594,
+        "load_ns": 75921091,
+        "queries": 200,
+        "query_ns": 953732,
+        "run_ns": 1091028
+      },
+      "pilot": {
+        "first_query_ns": 13911,
+        "load_ns": 69404260,
+        "queries": 200,
+        "query_ns": 1512600,
+        "run_ns": 31167441
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 81288924
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/nestjs__nest-35142c3e/integration/_support/register-local-packages.ts",
+      "sha256": "ec6432fff755fed15ab658f9c235baacb5886dbbbeee9fffe969c430ef5fc47f",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 64484524,
+      "go_query_ns": 59773,
+      "go_first_ns": 5168,
+      "native": {
+        "first_query_ns": 17076,
+        "load_ns": 75304345,
+        "queries": 100,
+        "query_ns": 142354,
+        "run_ns": 223988
+      },
+      "pilot": {
+        "first_query_ns": 13481,
+        "load_ns": 76676933,
+        "queries": 100,
+        "query_ns": 183332,
+        "run_ns": 3874913
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 85650161
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/outline__outline-478e8121/app/actions/index.ts",
+      "sha256": "7c86dfdbc175804f45df39708e0d3dd4a9c2979eee21c8b50449700f6750c0fc",
+      "questions": 4,
+      "unique_questions": 4,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 67234572,
+      "go_query_ns": 4193319,
+      "go_first_ns": 6600,
+      "native": {
+        "first_query_ns": 13661,
+        "load_ns": 69495001,
+        "queries": 400,
+        "query_ns": 1582216,
+        "run_ns": 1843064
+      },
+      "pilot": {
+        "first_query_ns": 14282,
+        "load_ns": 73123096,
+        "queries": 400,
+        "query_ns": 2454357,
+        "run_ns": 21589416
+      },
+      "findings": 2,
+      "go_oracle_process_ns": 74016395
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/prisma__prisma-c882b033/apps/lsp-playground/src/bridge.ts",
+      "sha256": "cc4a7c403e73d5e5a70b96f39e994d37c29a424f0a98b1d47ab1bca1b4198d86",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 58415804,
+      "go_query_ns": 59451,
+      "go_first_ns": 5769,
+      "native": {
+        "first_query_ns": 15243,
+        "load_ns": 68127110,
+        "queries": 100,
+        "query_ns": 136717,
+        "run_ns": 243959
+      },
+      "pilot": {
+        "first_query_ns": 14252,
+        "load_ns": 72642210,
+        "queries": 100,
+        "query_ns": 212180,
+        "run_ns": 5695982
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 87508837
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/shadcn-ui__ui-a2e305c2/apps/v4/app/(app)/(create)/hooks/use-action-menu.ts",
+      "sha256": "45bc69d86c4721c817ea3bc331e83abe9b878edcf57f07bc1c22657a1e5814f0",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 66123915,
+      "go_query_ns": 62645,
+      "go_first_ns": 5548,
+      "native": {
+        "first_query_ns": 15534,
+        "load_ns": 71314419,
+        "queries": 100,
+        "query_ns": 143418,
+        "run_ns": 224499
+      },
+      "pilot": {
+        "first_query_ns": 16314,
+        "load_ns": 69760112,
+        "queries": 100,
+        "query_ns": 178380,
+        "run_ns": 6001254
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 71517341
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/supabase__supabase-87681812/apps/design-system/config/docs.ts",
+      "sha256": "6e0b5953179232896fe8d81d84c7aebba5041cbe070da3886955dc73d6eb82e1",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 63142863,
+      "go_query_ns": 58167,
+      "go_first_ns": 5278,
+      "native": {
+        "first_query_ns": 14352,
+        "load_ns": 71740788,
+        "queries": 100,
+        "query_ns": 129410,
+        "run_ns": 209487
+      },
+      "pilot": {
+        "first_query_ns": 13881,
+        "load_ns": 72543234,
+        "queries": 100,
+        "query_ns": 423959,
+        "run_ns": 17812193
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 91918862
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/TanStack__query-eaa75f4f/examples/angular/auto-refetching/src/app/app.component.ts",
+      "sha256": "b658f062b1f53c80eb6444bfb13ff300fab858afa696f5d77e6127bd0880b9bf",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 58937813,
+      "go_query_ns": 109026,
+      "go_first_ns": 5168,
+      "native": {
+        "first_query_ns": 15313,
+        "load_ns": 73109528,
+        "queries": 100,
+        "query_ns": 167232,
+        "run_ns": 252271
+      },
+      "pilot": {
+        "first_query_ns": 13721,
+        "load_ns": 72639405,
+        "queries": 100,
+        "query_ns": 208887,
+        "run_ns": 1096158
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 85159260
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/tldraw__tldraw-db1c86ea/apps/analytics-worker/src/worker.ts",
+      "sha256": "737ee4f2719b3535b781feb150dbfd737604b49c3d8d2548713117358af4e346",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 58469704,
+      "go_query_ns": 59460,
+      "go_first_ns": 5449,
+      "native": {
+        "first_query_ns": 15273,
+        "load_ns": 79732784,
+        "queries": 100,
+        "query_ns": 130487,
+        "run_ns": 209888
+      },
+      "pilot": {
+        "first_query_ns": 14261,
+        "load_ns": 78456208,
+        "queries": 100,
+        "query_ns": 228812,
+        "run_ns": 4644287
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 74918826
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/trpc__trpc-d756e591/examples/.experimental/next-app-dir/next.config.ts",
+      "sha256": "a7e2921e17d954e94add77cb4cab49e7f1d087701512278c8c3920e261d14d7f",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 55968355,
+      "go_query_ns": 62376,
+      "go_first_ns": 5558,
+      "native": {
+        "first_query_ns": 17065,
+        "load_ns": 80177042,
+        "queries": 100,
+        "query_ns": 144131,
+        "run_ns": 226082
+      },
+      "pilot": {
+        "first_query_ns": 15323,
+        "load_ns": 76781954,
+        "queries": 100,
+        "query_ns": 145139,
+        "run_ns": 1395852
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 79054493
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/twentyhq__twenty-ddd16625/packages/create-twenty-app/src/cli.ts",
+      "sha256": "820cc7bb5e9a208daa329e80b011db29280a566de58900c2785800cc8f087e5e",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 72422026,
+      "go_query_ns": 59659,
+      "go_first_ns": 5488,
+      "native": {
+        "first_query_ns": 15163,
+        "load_ns": 69311380,
+        "queries": 100,
+        "query_ns": 134367,
+        "run_ns": 213813
+      },
+      "pilot": {
+        "first_query_ns": 14622,
+        "load_ns": 74933212,
+        "queries": 100,
+        "query_ns": 217916,
+        "run_ns": 4674514
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 79737982
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/typeorm__typeorm-c64a1f05/docs/docusaurus.config.ts",
+      "sha256": "badfa26b156158ae7037804b4b27e78a5f45c8d7275f06e1165e1c01b9e8251f",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 85580072,
+      "go_query_ns": 71221,
+      "go_first_ns": 5539,
+      "native": {
+        "first_query_ns": 15804,
+        "load_ns": 78756742,
+        "queries": 100,
+        "query_ns": 188966,
+        "run_ns": 292353
+      },
+      "pilot": {
+        "first_query_ns": 13541,
+        "load_ns": 67597486,
+        "queries": 100,
+        "query_ns": 172363,
+        "run_ns": 15803484
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 84179648
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__TypeScript-50d70a3f/tsc/testdata/fixtures/compiler/core.ts",
+      "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 62666795,
+      "go_query_ns": 61292,
+      "go_first_ns": 6050,
+      "native": {
+        "first_query_ns": 14542,
+        "load_ns": 67067785,
+        "queries": 100,
+        "query_ns": 181347,
+        "run_ns": 264330
+      },
+      "pilot": {
+        "first_query_ns": 253945,
+        "load_ns": 77949746,
+        "queries": 100,
+        "query_ns": 3052182,
+        "run_ns": 162995825
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 73800633
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__TypeScript-050880ce/src/compiler/core.ts",
+      "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 51511876,
+      "go_query_ns": 57759,
+      "go_first_ns": 5618,
+      "native": {
+        "first_query_ns": 76706,
+        "load_ns": 80952004,
+        "queries": 100,
+        "query_ns": 188331,
+        "run_ns": 269878
+      },
+      "pilot": {
+        "first_query_ns": 33240,
+        "load_ns": 72952730,
+        "queries": 100,
+        "query_ns": 1189103,
+        "run_ns": 153314571
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 87480128
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/vuejs__core-4ab865a8/packages/compiler-core/src/compat/compatConfig.ts",
+      "sha256": "62dab2d0fcecd15d15e87a26b50f9c105401708cbd9a023deb9ba885d6624ce7",
+      "questions": 3,
+      "unique_questions": 3,
+      "repetitions": 100,
+      "round": 1,
+      "go_load_ns": 69061823,
+      "go_query_ns": 901508,
+      "go_first_ns": 5338,
+      "native": {
+        "first_query_ns": 13601,
+        "load_ns": 72345977,
+        "queries": 300,
+        "query_ns": 883881,
+        "run_ns": 1078462
+      },
+      "pilot": {
+        "first_query_ns": 15753,
+        "load_ns": 77378362,
+        "queries": 300,
+        "query_ns": 1183512,
+        "run_ns": 10352295
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 88597753
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/actualbudget__actual-9732a446/packages/ci-actions/src/news-feed/parse.ts",
+      "sha256": "7401608b8ca3a520d13faf59775147a2bf87810fcdf802c91265a5b9b0c63ff9",
+      "questions": 4,
+      "unique_questions": 4,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 62702380,
+      "go_query_ns": 715084,
+      "go_first_ns": 5649,
+      "native": {
+        "first_query_ns": 16995,
+        "load_ns": 77038613,
+        "queries": 400,
+        "query_ns": 1201815,
+        "run_ns": 1452127
+      },
+      "pilot": {
+        "first_query_ns": 16605,
+        "load_ns": 74166116,
+        "queries": 400,
+        "query_ns": 2177579,
+        "run_ns": 17492289
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 73805681
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/angular__angular-c0dc8c4b/adev/shared-docs/components/algolia-icon/algolia-icon.component.ts",
+      "sha256": "5da4cf426c0a7f3fe7fe9b95ce0f9334bbeb900233ed6a36b017311fc4b017b3",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 54729125,
+      "go_query_ns": 306863,
+      "go_first_ns": 5308,
+      "native": {
+        "first_query_ns": 15654,
+        "load_ns": 75910200,
+        "queries": 100,
+        "query_ns": 182547,
+        "run_ns": 266824
+      },
+      "pilot": {
+        "first_query_ns": 13159,
+        "load_ns": 80098042,
+        "queries": 100,
+        "query_ns": 242656,
+        "run_ns": 1200967
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 85345102
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/babel__babel-f67453d5/Makefile.source.ts",
+      "sha256": "13a96c0a66d2a34a467500f3bb2913c11142ac5ceaaa8db0a2b82478b6df2d02",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 68100969,
+      "go_query_ns": 77113,
+      "go_first_ns": 5178,
+      "native": {
+        "first_query_ns": 15803,
+        "load_ns": 74477797,
+        "queries": 100,
+        "query_ns": 128461,
+        "run_ns": 227894
+      },
+      "pilot": {
+        "first_query_ns": 16625,
+        "load_ns": 79992522,
+        "queries": 100,
+        "query_ns": 703382,
+        "run_ns": 19491965
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 79057467
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/backstage__backstage-53293124/.storybook/main.ts",
+      "sha256": "117cc72f437a05a2e09e5a1ee5c0de1f2e33dc4ce123fc8a9927d5e5d5950e4b",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 68041268,
+      "go_query_ns": 67913,
+      "go_first_ns": 5077,
+      "native": {
+        "first_query_ns": 15454,
+        "load_ns": 73318723,
+        "queries": 100,
+        "query_ns": 267798,
+        "run_ns": 352082
+      },
+      "pilot": {
+        "first_query_ns": 13190,
+        "load_ns": 74040375,
+        "queries": 100,
+        "query_ns": 229875,
+        "run_ns": 5259548
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 99019443
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/calcom__cal.diy-54343aa6/apps/api/v2/src/env.ts",
+      "sha256": "3d7cc0dee8772b49e932c5375201f663f7b8df281053875442973f11fedf1c9f",
+      "questions": 2,
+      "unique_questions": 2,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 62924134,
+      "go_query_ns": 705248,
+      "go_first_ns": 5388,
+      "native": {
+        "first_query_ns": 15253,
+        "load_ns": 74792003,
+        "queries": 200,
+        "query_ns": 1636753,
+        "run_ns": 1787285
+      },
+      "pilot": {
+        "first_query_ns": 15404,
+        "load_ns": 79086111,
+        "queries": 200,
+        "query_ns": 1296945,
+        "run_ns": 5601956
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 90571124
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/date-fns__date-fns-717ce0a8/pkgs/core/examples/cts/test.ts",
+      "sha256": "20e987c5eef181730d53b3b868532f80c3a765b32fcbf2f392195e0346af9ec9",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 53995775,
+      "go_query_ns": 59849,
+      "go_first_ns": 5188,
+      "native": {
+        "first_query_ns": 16435,
+        "load_ns": 77880857,
+        "queries": 100,
+        "query_ns": 222817,
+        "run_ns": 312072
+      },
+      "pilot": {
+        "first_query_ns": 14823,
+        "load_ns": 73928261,
+        "queries": 100,
+        "query_ns": 158546,
+        "run_ns": 1741375
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 85623713
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/excalidraw__excalidraw-ed10ac7d/packages/common/src/editorInterface.ts",
+      "sha256": "5873bcc094c4d12376dc6e90d7e0e0099a71d48e0972b303fa731be21486a858",
+      "questions": 3,
+      "unique_questions": 3,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 70088750,
+      "go_query_ns": 923573,
+      "go_first_ns": 5368,
+      "native": {
+        "first_query_ns": 18117,
+        "load_ns": 72636482,
+        "queries": 300,
+        "query_ns": 1198587,
+        "run_ns": 1402713
+      },
+      "pilot": {
+        "first_query_ns": 15844,
+        "load_ns": 73971782,
+        "queries": 300,
+        "query_ns": 1290794,
+        "run_ns": 11760796
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 76479782
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/grafana__grafana-c7a7b797/apps/alerting/rules/plugin/src/generated/alertrule/v0alpha1/alertrule_object_gen.ts",
+      "sha256": "32d31f62c03edce48e76b82389909d08ef899cb5b4569a278deb7df9d1939a66",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 85177608,
+      "go_query_ns": 69303,
+      "go_first_ns": 5638,
+      "native": {
+        "first_query_ns": 15614,
+        "load_ns": 88266538,
+        "queries": 100,
+        "query_ns": 239498,
+        "run_ns": 332963
+      },
+      "pilot": {
+        "first_query_ns": 15474,
+        "load_ns": 72361438,
+        "queries": 100,
+        "query_ns": 164193,
+        "run_ns": 2152180
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 82064505
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__playwright-2a8ba77a/packages/injected/src/ariaSnapshot.ts",
+      "sha256": "7caadae854a544c5f0da7bdb7392b0b8962bb67c40bf906c755cc52b3ec262d7",
+      "questions": 4,
+      "unique_questions": 4,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 54030104,
+      "go_query_ns": 1060408,
+      "go_first_ns": 5308,
+      "native": {
+        "first_query_ns": 16825,
+        "load_ns": 75519823,
+        "queries": 400,
+        "query_ns": 1587560,
+        "run_ns": 1839948
+      },
+      "pilot": {
+        "first_query_ns": 15553,
+        "load_ns": 89416621,
+        "queries": 400,
+        "query_ns": 2981223,
+        "run_ns": 41450949
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 87839355
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/n8n-io__n8n-e77e30c7/packages/@n8n/agents/src/runtime/loop/stream-sink.ts",
+      "sha256": "eeb98db5784b247eeb06c76708737cf31b27e7c487d452514a0a4f03258578b7",
+      "questions": 2,
+      "unique_questions": 2,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 65992906,
+      "go_query_ns": 779373,
+      "go_first_ns": 6140,
+      "native": {
+        "first_query_ns": 16095,
+        "load_ns": 73991364,
+        "queries": 200,
+        "query_ns": 1124873,
+        "run_ns": 1269918
+      },
+      "pilot": {
+        "first_query_ns": 16756,
+        "load_ns": 79707576,
+        "queries": 200,
+        "query_ns": 2118191,
+        "run_ns": 34064171
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 109652311
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/nestjs__nest-35142c3e/integration/_support/register-local-packages.ts",
+      "sha256": "ec6432fff755fed15ab658f9c235baacb5886dbbbeee9fffe969c430ef5fc47f",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 81302249,
+      "go_query_ns": 59740,
+      "go_first_ns": 5518,
+      "native": {
+        "first_query_ns": 17997,
+        "load_ns": 78331989,
+        "queries": 100,
+        "query_ns": 235474,
+        "run_ns": 317379
+      },
+      "pilot": {
+        "first_query_ns": 15944,
+        "load_ns": 72531841,
+        "queries": 100,
+        "query_ns": 191352,
+        "run_ns": 3564743
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 78021114
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/outline__outline-478e8121/app/actions/index.ts",
+      "sha256": "7c86dfdbc175804f45df39708e0d3dd4a9c2979eee21c8b50449700f6750c0fc",
+      "questions": 4,
+      "unique_questions": 4,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 62383988,
+      "go_query_ns": 1230608,
+      "go_first_ns": 5929,
+      "native": {
+        "first_query_ns": 15363,
+        "load_ns": 76636068,
+        "queries": 400,
+        "query_ns": 1700008,
+        "run_ns": 1975293
+      },
+      "pilot": {
+        "first_query_ns": 15593,
+        "load_ns": 78483157,
+        "queries": 400,
+        "query_ns": 2903102,
+        "run_ns": 22183126
+      },
+      "findings": 2,
+      "go_oracle_process_ns": 87280561
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/prisma__prisma-c882b033/apps/lsp-playground/src/bridge.ts",
+      "sha256": "cc4a7c403e73d5e5a70b96f39e994d37c29a424f0a98b1d47ab1bca1b4198d86",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 64834047,
+      "go_query_ns": 82472,
+      "go_first_ns": 5879,
+      "native": {
+        "first_query_ns": 17587,
+        "load_ns": 87684550,
+        "queries": 100,
+        "query_ns": 175737,
+        "run_ns": 261966
+      },
+      "pilot": {
+        "first_query_ns": 15874,
+        "load_ns": 76155342,
+        "queries": 100,
+        "query_ns": 183308,
+        "run_ns": 5924506
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 80925024
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/shadcn-ui__ui-a2e305c2/apps/v4/app/(app)/(create)/hooks/use-action-menu.ts",
+      "sha256": "45bc69d86c4721c817ea3bc331e83abe9b878edcf57f07bc1c22657a1e5814f0",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 68568416,
+      "go_query_ns": 60743,
+      "go_first_ns": 5408,
+      "native": {
+        "first_query_ns": 16004,
+        "load_ns": 76316115,
+        "queries": 100,
+        "query_ns": 149529,
+        "run_ns": 232360
+      },
+      "pilot": {
+        "first_query_ns": 14142,
+        "load_ns": 85557780,
+        "queries": 100,
+        "query_ns": 8276567,
+        "run_ns": 15407936
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 84190881
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/supabase__supabase-87681812/apps/design-system/config/docs.ts",
+      "sha256": "6e0b5953179232896fe8d81d84c7aebba5041cbe070da3886955dc73d6eb82e1",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 59721958,
+      "go_query_ns": 57867,
+      "go_first_ns": 5038,
+      "native": {
+        "first_query_ns": 14402,
+        "load_ns": 74990779,
+        "queries": 100,
+        "query_ns": 154018,
+        "run_ns": 236076
+      },
+      "pilot": {
+        "first_query_ns": 14923,
+        "load_ns": 80225462,
+        "queries": 100,
+        "query_ns": 582899,
+        "run_ns": 18846077
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 105393651
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/TanStack__query-eaa75f4f/examples/angular/auto-refetching/src/app/app.component.ts",
+      "sha256": "b658f062b1f53c80eb6444bfb13ff300fab858afa696f5d77e6127bd0880b9bf",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 64909881,
+      "go_query_ns": 78273,
+      "go_first_ns": 5208,
+      "native": {
+        "first_query_ns": 16766,
+        "load_ns": 75629528,
+        "queries": 100,
+        "query_ns": 209945,
+        "run_ns": 298621
+      },
+      "pilot": {
+        "first_query_ns": 14943,
+        "load_ns": 77793254,
+        "queries": 100,
+        "query_ns": 191597,
+        "run_ns": 1062201
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 96572801
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/tldraw__tldraw-db1c86ea/apps/analytics-worker/src/worker.ts",
+      "sha256": "737ee4f2719b3535b781feb150dbfd737604b49c3d8d2548713117358af4e346",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 59786184,
+      "go_query_ns": 77736,
+      "go_first_ns": 22985,
+      "native": {
+        "first_query_ns": 15234,
+        "load_ns": 74669416,
+        "queries": 100,
+        "query_ns": 134074,
+        "run_ns": 229541
+      },
+      "pilot": {
+        "first_query_ns": 14933,
+        "load_ns": 73979834,
+        "queries": 100,
+        "query_ns": 176092,
+        "run_ns": 4384723
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 77528201
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/trpc__trpc-d756e591/examples/.experimental/next-app-dir/next.config.ts",
+      "sha256": "a7e2921e17d954e94add77cb4cab49e7f1d087701512278c8c3920e261d14d7f",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 55505915,
+      "go_query_ns": 59912,
+      "go_first_ns": 5279,
+      "native": {
+        "first_query_ns": 17006,
+        "load_ns": 78908237,
+        "queries": 100,
+        "query_ns": 143747,
+        "run_ns": 226005
+      },
+      "pilot": {
+        "first_query_ns": 13941,
+        "load_ns": 100396477,
+        "queries": 100,
+        "query_ns": 184454,
+        "run_ns": 1024294
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 108859561
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/twentyhq__twenty-ddd16625/packages/create-twenty-app/src/cli.ts",
+      "sha256": "820cc7bb5e9a208daa329e80b011db29280a566de58900c2785800cc8f087e5e",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 73606019,
+      "go_query_ns": 58478,
+      "go_first_ns": 5869,
+      "native": {
+        "first_query_ns": 16656,
+        "load_ns": 74647353,
+        "queries": 100,
+        "query_ns": 138861,
+        "run_ns": 219435
+      },
+      "pilot": {
+        "first_query_ns": 15724,
+        "load_ns": 74507680,
+        "queries": 100,
+        "query_ns": 234443,
+        "run_ns": 4638380
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 85224138
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/typeorm__typeorm-c64a1f05/docs/docusaurus.config.ts",
+      "sha256": "badfa26b156158ae7037804b4b27e78a5f45c8d7275f06e1165e1c01b9e8251f",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 68012451,
+      "go_query_ns": 56036,
+      "go_first_ns": 5218,
+      "native": {
+        "first_query_ns": 16064,
+        "load_ns": 74927511,
+        "queries": 100,
+        "query_ns": 153084,
+        "run_ns": 256541
+      },
+      "pilot": {
+        "first_query_ns": 27651,
+        "load_ns": 86140459,
+        "queries": 100,
+        "query_ns": 694858,
+        "run_ns": 18691027
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 85440607
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__TypeScript-50d70a3f/tsc/testdata/fixtures/compiler/core.ts",
+      "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 82344729,
+      "go_query_ns": 61303,
+      "go_first_ns": 6289,
+      "native": {
+        "first_query_ns": 16275,
+        "load_ns": 73290911,
+        "queries": 100,
+        "query_ns": 204200,
+        "run_ns": 356198
+      },
+      "pilot": {
+        "first_query_ns": 36094,
+        "load_ns": 104790779,
+        "queries": 100,
+        "query_ns": 3632162,
+        "run_ns": 218651367
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 124558150
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__TypeScript-050880ce/src/compiler/core.ts",
+      "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 65069732,
+      "go_query_ns": 57496,
+      "go_first_ns": 5619,
+      "native": {
+        "first_query_ns": 52869,
+        "load_ns": 82437765,
+        "queries": 100,
+        "query_ns": 172421,
+        "run_ns": 253553
+      },
+      "pilot": {
+        "first_query_ns": 55874,
+        "load_ns": 100700610,
+        "queries": 100,
+        "query_ns": 2759837,
+        "run_ns": 199026681
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 94444438
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/vuejs__core-4ab865a8/packages/compiler-core/src/compat/compatConfig.ts",
+      "sha256": "62dab2d0fcecd15d15e87a26b50f9c105401708cbd9a023deb9ba885d6624ce7",
+      "questions": 3,
+      "unique_questions": 3,
+      "repetitions": 100,
+      "round": 2,
+      "go_load_ns": 71857265,
+      "go_query_ns": 1225179,
+      "go_first_ns": 5778,
+      "native": {
+        "first_query_ns": 15113,
+        "load_ns": 103627071,
+        "queries": 300,
+        "query_ns": 1401188,
+        "run_ns": 1659537
+      },
+      "pilot": {
+        "first_query_ns": 18478,
+        "load_ns": 71424462,
+        "queries": 300,
+        "query_ns": 1515888,
+        "run_ns": 9624570
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 87911237
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/actualbudget__actual-9732a446/packages/ci-actions/src/news-feed/parse.ts",
+      "sha256": "7401608b8ca3a520d13faf59775147a2bf87810fcdf802c91265a5b9b0c63ff9",
+      "questions": 4,
+      "unique_questions": 4,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 60163229,
+      "go_query_ns": 919319,
+      "go_first_ns": 5719,
+      "native": {
+        "first_query_ns": 19079,
+        "load_ns": 104398410,
+        "queries": 400,
+        "query_ns": 9680794,
+        "run_ns": 9944223
+      },
+      "pilot": {
+        "first_query_ns": 17616,
+        "load_ns": 96099709,
+        "queries": 400,
+        "query_ns": 7517092,
+        "run_ns": 24218727
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 91941858
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/angular__angular-c0dc8c4b/adev/shared-docs/components/algolia-icon/algolia-icon.component.ts",
+      "sha256": "5da4cf426c0a7f3fe7fe9b95ce0f9334bbeb900233ed6a36b017311fc4b017b3",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 115704727,
+      "go_query_ns": 65951,
+      "go_first_ns": 5188,
+      "native": {
+        "first_query_ns": 17317,
+        "load_ns": 81339470,
+        "queries": 100,
+        "query_ns": 227079,
+        "run_ns": 416008
+      },
+      "pilot": {
+        "first_query_ns": 15123,
+        "load_ns": 111551272,
+        "queries": 100,
+        "query_ns": 163778,
+        "run_ns": 1114303
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 94815068
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/babel__babel-f67453d5/Makefile.source.ts",
+      "sha256": "13a96c0a66d2a34a467500f3bb2913c11142ac5ceaaa8db0a2b82478b6df2d02",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 97300022,
+      "go_query_ns": 72147,
+      "go_first_ns": 6089,
+      "native": {
+        "first_query_ns": 16916,
+        "load_ns": 84428767,
+        "queries": 100,
+        "query_ns": 170368,
+        "run_ns": 255376
+      },
+      "pilot": {
+        "first_query_ns": 18518,
+        "load_ns": 96029367,
+        "queries": 100,
+        "query_ns": 1668444,
+        "run_ns": 28397992
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 92130172
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/backstage__backstage-53293124/.storybook/main.ts",
+      "sha256": "117cc72f437a05a2e09e5a1ee5c0de1f2e33dc4ce123fc8a9927d5e5d5950e4b",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 63948558,
+      "go_query_ns": 56292,
+      "go_first_ns": 5408,
+      "native": {
+        "first_query_ns": 14332,
+        "load_ns": 69569960,
+        "queries": 100,
+        "query_ns": 126121,
+        "run_ns": 206772
+      },
+      "pilot": {
+        "first_query_ns": 16325,
+        "load_ns": 80144486,
+        "queries": 100,
+        "query_ns": 192902,
+        "run_ns": 5716086
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 84794039
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/calcom__cal.diy-54343aa6/apps/api/v2/src/env.ts",
+      "sha256": "3d7cc0dee8772b49e932c5375201f663f7b8df281053875442973f11fedf1c9f",
+      "questions": 2,
+      "unique_questions": 2,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 55058437,
+      "go_query_ns": 583835,
+      "go_first_ns": 4667,
+      "native": {
+        "first_query_ns": 14452,
+        "load_ns": 77633732,
+        "queries": 200,
+        "query_ns": 1646483,
+        "run_ns": 1798196
+      },
+      "pilot": {
+        "first_query_ns": 14852,
+        "load_ns": 79161675,
+        "queries": 200,
+        "query_ns": 1058264,
+        "run_ns": 4805239
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 79159712
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/date-fns__date-fns-717ce0a8/pkgs/core/examples/cts/test.ts",
+      "sha256": "20e987c5eef181730d53b3b868532f80c3a765b32fcbf2f392195e0346af9ec9",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 80050954,
+      "go_query_ns": 58259,
+      "go_first_ns": 5669,
+      "native": {
+        "first_query_ns": 15784,
+        "load_ns": 91915146,
+        "queries": 100,
+        "query_ns": 130320,
+        "run_ns": 212200
+      },
+      "pilot": {
+        "first_query_ns": 14222,
+        "load_ns": 73451033,
+        "queries": 100,
+        "query_ns": 140209,
+        "run_ns": 1410631
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 85171269
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/excalidraw__excalidraw-ed10ac7d/packages/common/src/editorInterface.ts",
+      "sha256": "5873bcc094c4d12376dc6e90d7e0e0099a71d48e0972b303fa731be21486a858",
+      "questions": 3,
+      "unique_questions": 3,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 60883507,
+      "go_query_ns": 955546,
+      "go_first_ns": 5208,
+      "native": {
+        "first_query_ns": 15724,
+        "load_ns": 82197957,
+        "queries": 300,
+        "query_ns": 1175266,
+        "run_ns": 1376720
+      },
+      "pilot": {
+        "first_query_ns": 13331,
+        "load_ns": 71301395,
+        "queries": 300,
+        "query_ns": 1368699,
+        "run_ns": 11202924
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 86508394
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/grafana__grafana-c7a7b797/apps/alerting/rules/plugin/src/generated/alertrule/v0alpha1/alertrule_object_gen.ts",
+      "sha256": "32d31f62c03edce48e76b82389909d08ef899cb5b4569a278deb7df9d1939a66",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 53707301,
+      "go_query_ns": 69707,
+      "go_first_ns": 5518,
+      "native": {
+        "first_query_ns": 16555,
+        "load_ns": 71138750,
+        "queries": 100,
+        "query_ns": 153260,
+        "run_ns": 237329
+      },
+      "pilot": {
+        "first_query_ns": 14812,
+        "load_ns": 74142187,
+        "queries": 100,
+        "query_ns": 241660,
+        "run_ns": 2149297
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 88018971
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__playwright-2a8ba77a/packages/injected/src/ariaSnapshot.ts",
+      "sha256": "7caadae854a544c5f0da7bdb7392b0b8962bb67c40bf906c755cc52b3ec262d7",
+      "questions": 4,
+      "unique_questions": 4,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 72361953,
+      "go_query_ns": 1120334,
+      "go_first_ns": 5298,
+      "native": {
+        "first_query_ns": 14182,
+        "load_ns": 75763927,
+        "queries": 400,
+        "query_ns": 1511347,
+        "run_ns": 1815753
+      },
+      "pilot": {
+        "first_query_ns": 14001,
+        "load_ns": 73778087,
+        "queries": 400,
+        "query_ns": 2513574,
+        "run_ns": 40144757
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 84913589
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/n8n-io__n8n-e77e30c7/packages/@n8n/agents/src/runtime/loop/stream-sink.ts",
+      "sha256": "eeb98db5784b247eeb06c76708737cf31b27e7c487d452514a0a4f03258578b7",
+      "questions": 2,
+      "unique_questions": 2,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 65124043,
+      "go_query_ns": 867132,
+      "go_first_ns": 5839,
+      "native": {
+        "first_query_ns": 15323,
+        "load_ns": 97363078,
+        "queries": 200,
+        "query_ns": 948728,
+        "run_ns": 1087933
+      },
+      "pilot": {
+        "first_query_ns": 14011,
+        "load_ns": 68500814,
+        "queries": 200,
+        "query_ns": 1580238,
+        "run_ns": 31007694
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 87384473
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/nestjs__nest-35142c3e/integration/_support/register-local-packages.ts",
+      "sha256": "ec6432fff755fed15ab658f9c235baacb5886dbbbeee9fffe969c430ef5fc47f",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 82698668,
+      "go_query_ns": 73636,
+      "go_first_ns": 5598,
+      "native": {
+        "first_query_ns": 15924,
+        "load_ns": 71926299,
+        "queries": 100,
+        "query_ns": 144218,
+        "run_ns": 224500
+      },
+      "pilot": {
+        "first_query_ns": 15303,
+        "load_ns": 81906967,
+        "queries": 100,
+        "query_ns": 232118,
+        "run_ns": 3409932
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 86600989
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/outline__outline-478e8121/app/actions/index.ts",
+      "sha256": "7c86dfdbc175804f45df39708e0d3dd4a9c2979eee21c8b50449700f6750c0fc",
+      "questions": 4,
+      "unique_questions": 4,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 61435591,
+      "go_query_ns": 1243360,
+      "go_first_ns": 5669,
+      "native": {
+        "first_query_ns": 14672,
+        "load_ns": 72960472,
+        "queries": 400,
+        "query_ns": 1704348,
+        "run_ns": 2010247
+      },
+      "pilot": {
+        "first_query_ns": 15393,
+        "load_ns": 75588682,
+        "queries": 400,
+        "query_ns": 3261161,
+        "run_ns": 26414815
+      },
+      "findings": 2,
+      "go_oracle_process_ns": 71429609
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/prisma__prisma-c882b033/apps/lsp-playground/src/bridge.ts",
+      "sha256": "cc4a7c403e73d5e5a70b96f39e994d37c29a424f0a98b1d47ab1bca1b4198d86",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 54505882,
+      "go_query_ns": 57489,
+      "go_first_ns": 5157,
+      "native": {
+        "first_query_ns": 14252,
+        "load_ns": 73412645,
+        "queries": 100,
+        "query_ns": 274169,
+        "run_ns": 357851
+      },
+      "pilot": {
+        "first_query_ns": 13911,
+        "load_ns": 74914558,
+        "queries": 100,
+        "query_ns": 234240,
+        "run_ns": 6092584
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 73349089
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/shadcn-ui__ui-a2e305c2/apps/v4/app/(app)/(create)/hooks/use-action-menu.ts",
+      "sha256": "45bc69d86c4721c817ea3bc331e83abe9b878edcf57f07bc1c22657a1e5814f0",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 71318241,
+      "go_query_ns": 62774,
+      "go_first_ns": 5919,
+      "native": {
+        "first_query_ns": 13440,
+        "load_ns": 75081876,
+        "queries": 100,
+        "query_ns": 143576,
+        "run_ns": 223969
+      },
+      "pilot": {
+        "first_query_ns": 16175,
+        "load_ns": 78038940,
+        "queries": 100,
+        "query_ns": 345672,
+        "run_ns": 6729616
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 76143761
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/supabase__supabase-87681812/apps/design-system/config/docs.ts",
+      "sha256": "6e0b5953179232896fe8d81d84c7aebba5041cbe070da3886955dc73d6eb82e1",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 62725810,
+      "go_query_ns": 58842,
+      "go_first_ns": 5177,
+      "native": {
+        "first_query_ns": 18338,
+        "load_ns": 80206269,
+        "queries": 100,
+        "query_ns": 262720,
+        "run_ns": 389889
+      },
+      "pilot": {
+        "first_query_ns": 15072,
+        "load_ns": 77572988,
+        "queries": 100,
+        "query_ns": 747565,
+        "run_ns": 20397262
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 77301210
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/TanStack__query-eaa75f4f/examples/angular/auto-refetching/src/app/app.component.ts",
+      "sha256": "b658f062b1f53c80eb6444bfb13ff300fab858afa696f5d77e6127bd0880b9bf",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 56277665,
+      "go_query_ns": 61861,
+      "go_first_ns": 5378,
+      "native": {
+        "first_query_ns": 16274,
+        "load_ns": 87796437,
+        "queries": 100,
+        "query_ns": 150568,
+        "run_ns": 259100
+      },
+      "pilot": {
+        "first_query_ns": 13129,
+        "load_ns": 71471700,
+        "queries": 100,
+        "query_ns": 148513,
+        "run_ns": 933434
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 82752604
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/tldraw__tldraw-db1c86ea/apps/analytics-worker/src/worker.ts",
+      "sha256": "737ee4f2719b3535b781feb150dbfd737604b49c3d8d2548713117358af4e346",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 79341809,
+      "go_query_ns": 58038,
+      "go_first_ns": 5819,
+      "native": {
+        "first_query_ns": 15864,
+        "load_ns": 70534241,
+        "queries": 100,
+        "query_ns": 136006,
+        "run_ns": 214983
+      },
+      "pilot": {
+        "first_query_ns": 14102,
+        "load_ns": 70275952,
+        "queries": 100,
+        "query_ns": 157955,
+        "run_ns": 4276082
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 76873987
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/trpc__trpc-d756e591/examples/.experimental/next-app-dir/next.config.ts",
+      "sha256": "a7e2921e17d954e94add77cb4cab49e7f1d087701512278c8c3920e261d14d7f",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 60378393,
+      "go_query_ns": 59571,
+      "go_first_ns": 4977,
+      "native": {
+        "first_query_ns": 14542,
+        "load_ns": 70743905,
+        "queries": 100,
+        "query_ns": 138758,
+        "run_ns": 218729
+      },
+      "pilot": {
+        "first_query_ns": 13300,
+        "load_ns": 71227523,
+        "queries": 100,
+        "query_ns": 238519,
+        "run_ns": 1112383
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 78705191
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/twentyhq__twenty-ddd16625/packages/create-twenty-app/src/cli.ts",
+      "sha256": "820cc7bb5e9a208daa329e80b011db29280a566de58900c2785800cc8f087e5e",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 62181961,
+      "go_query_ns": 75747,
+      "go_first_ns": 5749,
+      "native": {
+        "first_query_ns": 15563,
+        "load_ns": 74656000,
+        "queries": 100,
+        "query_ns": 137954,
+        "run_ns": 218318
+      },
+      "pilot": {
+        "first_query_ns": 14251,
+        "load_ns": 74714678,
+        "queries": 100,
+        "query_ns": 182433,
+        "run_ns": 4642003
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 84674881
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/typeorm__typeorm-c64a1f05/docs/docusaurus.config.ts",
+      "sha256": "badfa26b156158ae7037804b4b27e78a5f45c8d7275f06e1165e1c01b9e8251f",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 65815112,
+      "go_query_ns": 59089,
+      "go_first_ns": 6139,
+      "native": {
+        "first_query_ns": 18628,
+        "load_ns": 74751089,
+        "queries": 100,
+        "query_ns": 135060,
+        "run_ns": 217186
+      },
+      "pilot": {
+        "first_query_ns": 15163,
+        "load_ns": 77480731,
+        "queries": 100,
+        "query_ns": 699390,
+        "run_ns": 16301411
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 115224881
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__TypeScript-50d70a3f/tsc/testdata/fixtures/compiler/core.ts",
+      "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 62410012,
+      "go_query_ns": 77228,
+      "go_first_ns": 6019,
+      "native": {
+        "first_query_ns": 18528,
+        "load_ns": 74919736,
+        "queries": 100,
+        "query_ns": 153727,
+        "run_ns": 234324
+      },
+      "pilot": {
+        "first_query_ns": 46450,
+        "load_ns": 75274237,
+        "queries": 100,
+        "query_ns": 1922604,
+        "run_ns": 161812656
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 86833140
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/microsoft__TypeScript-050880ce/src/compiler/core.ts",
+      "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+      "questions": 1,
+      "unique_questions": 1,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 60618796,
+      "go_query_ns": 56510,
+      "go_first_ns": 5769,
+      "native": {
+        "first_query_ns": 17166,
+        "load_ns": 73045024,
+        "queries": 100,
+        "query_ns": 149704,
+        "run_ns": 232682
+      },
+      "pilot": {
+        "first_query_ns": 39239,
+        "load_ns": 75761238,
+        "queries": 100,
+        "query_ns": 1404297,
+        "run_ns": 165837004
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 90007845
+    },
+    {
+      "program_files": 122,
+      "file": "/workspace/scratch/checker-bridge-scout-final/public/samples/vuejs__core-4ab865a8/packages/compiler-core/src/compat/compatConfig.ts",
+      "sha256": "62dab2d0fcecd15d15e87a26b50f9c105401708cbd9a023deb9ba885d6624ce7",
+      "questions": 3,
+      "unique_questions": 3,
+      "repetitions": 100,
+      "round": 3,
+      "go_load_ns": 66207698,
+      "go_query_ns": 1566319,
+      "go_first_ns": 5819,
+      "native": {
+        "first_query_ns": 17897,
+        "load_ns": 94290830,
+        "queries": 300,
+        "query_ns": 1284527,
+        "run_ns": 1662200
+      },
+      "pilot": {
+        "first_query_ns": 15884,
+        "load_ns": 78161863,
+        "queries": 300,
+        "query_ns": 1123137,
+        "run_ns": 10200617
+      },
+      "findings": 0,
+      "go_oracle_process_ns": 95163411
+    }
+  ]
+}
