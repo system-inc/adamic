@@ -1,0 +1,1 @@
+function Example(props) { let C; if (props.flag) { C = make(); } else { C = Known; } return <C />; }

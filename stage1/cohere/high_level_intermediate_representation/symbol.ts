@@ -1,0 +1,50 @@
+// Resident compiler facts needed by lower.go:1259; no lexical binding surrogate.
+import { SymbolGraph } from './export_origin.ts';
+import { panic } from 'adamic';
+import { Frames, header } from '../typeaware/frames.ts';
+
+export type SymbolDeclarationType = {
+    readonly kind: string;
+    readonly sameSource: boolean;
+    readonly start: number;
+    readonly end: number;
+    readonly name: string;
+    readonly property: string;
+    readonly module: string;
+};
+export class SymbolFacts {
+    readonly identity: number;
+    readonly name: string;
+    readonly declarations: readonly SymbolDeclarationType[];
+    constructor(wire: string) {
+        const frames = new Frames(wire);
+        header(frames, 'symbol');
+        this.identity = frames.natural();
+        this.name = frames.field();
+        const count = frames.natural();
+        const declarations: SymbolDeclarationType[] = [];
+        for(let index = 0; index < count; index++) {
+            declarations.push({ kind: frames.field(), sameSource: frames.yes(), start: frames.natural(), end: frames.natural(), name: frames.field(), property: frames.field(), module: frames.field() });
+        }
+        frames.end();
+        if(this.identity === 0 && (this.name !== '' || count !== 0)) { panic('absent symbol has declarations'); }
+        this.declarations = declarations;
+    }
+}
+export class SymbolSnapshot {
+    graph: SymbolGraph | undefined = undefined;
+    readonly symbols: Map<string, SymbolFacts> = new Map<string, SymbolFacts>();
+    constructor(wire: string) {
+        const frames = new Frames(wire);
+        const count = frames.natural();
+        for(let index = 0; index < count; index++) {
+            const start = frames.natural(); const end = frames.natural();
+            this.symbols.set(`${start}:${end}`, new SymbolFacts(frames.field()));
+        }
+        if(frames.cursor < frames.text.length) { this.graph = new SymbolGraph(frames.field()); }
+        frames.end();
+    }
+    read(start: number, end: number): SymbolFacts {
+        return this.symbols.get(`${start}:${end}`) ?? panic(`missing exact HIR symbol ${start}:${end}`);
+    }
+}

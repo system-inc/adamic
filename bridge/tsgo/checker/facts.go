@@ -203,6 +203,28 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
+	case "symbol-graph":
+		if question != mode {
+			return "", fmt.Errorf("unexpected symbol graph suffix")
+		}
+		ids := make(map[*ast.Symbol]int, len(p.symbolIDs))
+		for symbol, id := range p.symbolIDs {
+			ids[symbol] = int(id)
+		}
+		result := SymbolGraph(c, source, ids)
+		if p.symbolIDs == nil {
+			p.symbolIDs = make(map[*ast.Symbol]uint64)
+		}
+		for symbol, id := range ids {
+			p.symbolIDs[symbol] = uint64(id)
+		}
+		return result, nil
+
+	case "symbol":
+		if question != mode {
+			return "", fmt.Errorf("unexpected symbol suffix")
+		}
+		p.writeSymbol(out, c, source, node)
 	case "symbol-origin":
 		if question != mode {
 			return "", fmt.Errorf("unexpected symbol-origin suffix")

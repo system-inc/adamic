@@ -1,0 +1,12 @@
+function declaredValue() { return 1; }
+function Component() {}
+function useFoo() {}
+function get2() {     return 2;   }
+function Foo() {}
+function t() {}
+function bar() {     return 42;   }
+function Empty() {}
+function NumberValue() { 1; 2; return 3; }
+function useBoolean() { false; return true; }
+function Nil() { return null; }
+function Bare() { return; }
