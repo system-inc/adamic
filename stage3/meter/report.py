@@ -11,6 +11,7 @@ import sys
 
 MEASUREMENT = 'measured on a checker-rejected program'
 ENTRY_MEASUREMENT = 'measured on a checker-clean entry-root program'
+REJECTED_ENTRY_MEASUREMENT = 'measured on a checker-rejected entry-root program'
 
 
 def reason_owner(reason, owners):
@@ -45,7 +46,7 @@ def lowering_summary(records, expected, measurement):
             raise ValueError('invalid or duplicate latent census file')
         seen.add(name)
         for finding in record.get('findings') or []:
-            if finding.get('measurement') != measurement or finding['kind'] not in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic'):
+            if finding.get('measurement') != measurement or finding['kind'] not in ('NotYet', 'Refused', 'SkippedDependency', 'error', 'panic', 'Boundary'):
                 raise ValueError('invalid latent finding')
             sites.add(tuple(finding[key] for key in ('kind', 'where', 'reason', 'text')))
             events += 1
@@ -74,6 +75,11 @@ def lowering_summary(records, expected, measurement):
                         for kind, reason in ranked[:10]],
         'source_files': len(seen),
         'recorded_events': events,
+        'latent_mode': records[0].get('latent_mode', 'first-error'),
+        'boundaries': counts['Boundary'],
+        'excluded_nested_functions': [dict(unit, file=record['file'], bytes=unit.get('body_end',0)-unit.get('body_start',0))
+                                      for record in records[1:] for unit in record.get('units',[])
+                                      if unit.get('depth',0)>0 and unit['status']=='split_checker_body'],
     }
 
 
@@ -104,7 +110,7 @@ def entry_summary(tree, run):
     result = {'root': 'src/tsc/tsc.ts', 'checker_whole_program': checked,
               'whole_program_diagnostics': len(diagnostics), 'diagnostics': diagnostics,
               'outcome': record['kind'], 'lowering_attempted': checked, 'lowering_census': None}
-    if not checked:
+    if not checked and header.get('latent_mode') != 'full':
         if len(latent) != 1 or header.get('status') != 'blocked':
             raise ValueError('tsc entry lowering ran despite checker diagnostics')
         return result
@@ -112,7 +118,9 @@ def entry_summary(tree, run):
     expected = {str(Path(name).resolve()) for name in sources}
     if len(expected) != len(sources) or str(entry) not in expected or any(not Path(name).is_file() for name in expected):
         raise ValueError('invalid tsc entry resolved reach')
-    result['lowering_census'] = lowering_summary(latent, expected, ENTRY_MEASUREMENT)
+    measurement = ENTRY_MEASUREMENT if checked else REJECTED_ENTRY_MEASUREMENT
+    result['lowering_census'] = lowering_summary(latent, expected, measurement)
+    result['measurement_attempted'] = True
     return result
 
 
@@ -120,7 +128,7 @@ def entry_table(label, entry):
     summary = entry['lowering_census']
     if summary is None:
         return ['', f'tsc entry lowering, {label}: blocked by checker diagnostics.']
-    lines = ['', f'tsc entry lowering, {label}: {ENTRY_MEASUREMENT}.',
+    lines = ['', f"tsc entry lowering, {label}: {summary['measurement']}.",
              f"Resolved source files: {summary['source_files']}; "
              f"NotYet: {summary['totals']['NotYet']}; Refused: {summary['totals']['Refused']}.",
              f"Errors: {summary['totals']['error']}; panics: {summary['totals']['panic']}; "
@@ -139,7 +147,8 @@ def entry_table(label, entry):
 def latent_table(label, summary):
     totals = summary['totals']
     lines = ['', f'Latent lowering, {label}: {MEASUREMENT}.',
-             f"NotYet: {totals['NotYet']}; Refused: {totals['Refused']}.", '',
+             f"NotYet: {totals['NotYet']}; Refused: {totals['Refused']}.",
+             f"Recovery boundaries: {summary['boundaries']}; named nested checker exclusions: {len(summary['excluded_nested_functions'])}.", '',
              '| Reason | Owner | NotYet | Refused | Total |', '| --- | --- | ---: | ---: | ---: |']
     for item in summary['reason_rows'][:10]:
         reason = escape(item['reason']).replace('|', '&#124;').replace('\n', ' ')
@@ -294,6 +303,12 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
         trees[label]['tree_commit'] = commit
         trees[label]['latent_lowering'] = latent_summary(tree, run / label)
         trees[label]['tsc_entry'] = entry_summary(tree, run / label / 'tsc')
+        if metadata and 'latent_mode' in metadata:
+            if trees[label]['latent_lowering']['latent_mode'] != metadata['latent_mode']:
+                raise ValueError('latent overlay mode does not match requested mode')
+            entry_census=trees[label]['tsc_entry']['lowering_census']
+            if entry_census and entry_census['latent_mode'] != metadata['latent_mode']:
+                raise ValueError('entry overlay mode does not match requested mode')
         with (run / label / 'report.md').open('a') as output:
             output.write('\n'.join(entry_table(label, trees[label]['tsc_entry']) +
                                    latent_table(label, trees[label]['latent_lowering'])) + '\n')
