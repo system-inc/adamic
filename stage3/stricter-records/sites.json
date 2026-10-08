@@ -46,5 +46,13 @@
     "absent": "{ __proto__ }",
     "read": "record[key]",
     "want": "7\n"
+  },
+  {
+    "id": "record-array",
+    "typed": "const record: { readonly [key: string]: string[] } = INPUT;\nconst key = \"entry\";\nconst value: string[] = record[key];\nconsole.log(value === undefined ? \"undefined\" : \"present\");\n",
+    "present": "{ entry: [\"7\"] }",
+    "absent": "{}",
+    "read": "record[key]",
+    "want": "present\n"
   }
 ]

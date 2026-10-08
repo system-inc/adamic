@@ -69,8 +69,8 @@ func TestLedgerWitnesses(t *testing.T) {
 	if err := json.Unmarshal(data, &sites); err != nil {
 		t.Fatal(err)
 	}
-	if len(sites) != 6 {
-		t.Fatalf("want 6 record shapes, got %d", len(sites))
+	if len(sites) != 7 {
+		t.Fatalf("want 7 record shapes, got %d", len(sites))
 	}
 	cli := os.Getenv("ADAMIC_WITNESS_CLI")
 	if cli == "" {
@@ -131,8 +131,13 @@ func TestLedgerWitnesses(t *testing.T) {
 					if s.ID == "D129-D131" {
 						count = 2
 					}
-					if len(checks) != count || checks[0] != (ir.InsertedCheck{Kind: "indexed-presence", Where: where}) {
+					if len(checks) != count {
 						t.Fatalf("site must be individually checked: %+v, want %s", checks, where)
+					}
+					for _, check := range checks {
+						if check != (ir.InsertedCheck{Kind: "indexed-presence", Where: where}) {
+							t.Fatalf("site: %+v, want %s", check, where)
+						}
 					}
 					explain := run(t, cli, "--explain-checks", path)
 					expectedExplain := ""
