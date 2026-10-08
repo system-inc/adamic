@@ -1,0 +1,10 @@
+--- FAIL: TestCountsAreRecorded (63.39s)
+    counts_test.go:225: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):
+        recorded: | internal/oracle/testdata/node_fs_directory_symlink.a | 162 | 162 | 90 | 177 | 34 | 0 |
+        measured: | internal/oracle/testdata/node_fs_directory_symlink.a | 167 | 167 | 90 | 179 | 34 | 0 |
+FAIL
+gate cache: native hits=0 misses=403
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	63.413s
+FAIL

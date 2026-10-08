@@ -1,0 +1,12 @@
+=== RUN   TestRegExpNativeTiming
+=== RUN   TestRegExpNativeTiming/class_string_duplicates
+    regexp_native_fixes_test.go:42: gate cache node miss
+    regexp_native_fixes_test.go:51: native execution exceeded 3s or failed: signal: killed (3.005013193s)
+--- FAIL: TestRegExpNativeTiming (18.50s)
+    --- FAIL: TestRegExpNativeTiming/class_string_duplicates (18.50s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	18.553s
+FAIL

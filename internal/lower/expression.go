@@ -30,6 +30,19 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
 	flags := proven.Flags()
+	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
+		return ir.Union, true
+	}
+	if flags&checker.TypeFlagsIntersection != 0 {
+		for _, part := range proven.Types() {
+			if part.Flags()&checker.TypeFlagsNonPrimitive != 0 {
+				return ir.Union, true
+			}
+		}
+	}
+	if l.nodeBufferType(proven, "Buffer") {
+		return ir.Array, true
+	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
@@ -60,7 +73,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// An object with call signatures is a function, held as a closure.
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
-		if l.includesNull(proven) {
+		if l.includesNull(proven) && !dynamicObjectType(proven) {
 			// A nullable match result uses NULL. A type also holding undefined needs a tag.
 			if l.includesUndefined(proven) {
 				return 0, false
@@ -154,13 +167,26 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.methodObservation(node); handled {
+		return value, err
+	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
+		return nil, err
+	}
+	if err := l.nodeBufferUnsupportedUse(node); err != nil {
 		return nil, err
 	}
 	if err := l.regexUnsupportedUse(node); err != nil {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil {
+		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
+				return nil, err
+			}
+		}
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -168,7 +194,10 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		// as an object, so it can't be seen as an array either, here or anywhere inside. A literal is
 		// made as the type it's written into, so it never differs.
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-			if own := l.checker.GetTypeAtLocation(node); !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferView(l.present(own), l.present(contextual)) && !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) {
+				return nil, l.notYet(node, "Buffer or Hash viewed as another object type (native host internal slots)")
+			}
+			if own := l.checker.GetTypeAtLocation(node); !l.nodeBufferReadArgument(node) && !l.nodeFSFileBufferArgument(node) && !l.sameKeeping(own, contextual, map[[2]*checker.Type]bool{}) {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(contextual)+" (one keeps something weakly that the other keeps strongly)")
 			} else if tuple, array := l.tupleSeenAsArray(own, contextual, map[[2]*checker.Type]bool{}); tuple != nil {
 				return nil, l.notYet(node, "a "+l.checker.TypeToString(tuple)+" seen as a "+l.checker.TypeToString(array)+" (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]])")
@@ -214,6 +243,9 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if !l.nodeBufferView(from, to) {
+		return false
+	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
@@ -385,7 +417,13 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
+	if value, known, err := l.nodeFSDirectoryValue(node); known {
+		return value, err
+	}
 	node = ast.SkipParentheses(node)
+	if value, known, err := l.processValue(node); known {
+		return value, err
+	}
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
 	}
@@ -508,6 +546,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return ir.TypeOf{Value: operand, Null: null}, nil
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindInKeyword {
+			return l.inProperty(node)
+		}
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
 		}
@@ -717,7 +758,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: value.Type() != ir.Union && !l.includesNull(l.checker.GetTypeAtLocation(operand))})
 			if operator == ast.KindExclamationEqualsEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
@@ -744,7 +785,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if value.Type() != ir.Union && l.includesNull(l.checker.GetTypeAtLocation(operand)) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
@@ -933,6 +974,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return l.callFunction(call, instance)
 	}
+	// Host units get their builtin dispatch first. Refuse the remainder by the
+	// resolved member name rather than attempting a declaration-only function.
+	if module, member := l.nodeHostMember(callee); module != "" {
+		return nil, l.notYet(node, module+"."+member)
+	}
 	function, isFunction := l.functions[l.symbol(callee)]
 	if !ast.IsIdentifier(callee) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
@@ -952,6 +998,11 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 			return nil, err
 		}
 		arguments = append(arguments, lowered)
+	}
+	for index, parameter := range l.result.Functions[function].Parameters {
+		if index < len(arguments) && l.result.Locals[parameter].Type == ir.Union {
+			arguments[index] = fit(arguments[index], ir.Union)
+		}
 	}
 	return ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns}, nil
 }
@@ -1102,7 +1153,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		arguments = append(arguments, lowered)
 	}
 	var returns ir.Type
-	if result := l.checker.GetTypeAtLocation(node); result.Flags()&checker.TypeFlagsVoid == 0 {
+	if result := l.checker.GetTypeAtLocation(node); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
 		var isKnown bool
 		if returns, isKnown = l.representation(result); !isKnown {
 			return nil, l.notYet(node, "a call returning "+l.checker.TypeToString(result))
@@ -1112,10 +1163,16 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	// number | undefined is packed as one.
 	if signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall); len(signatures) == 1 {
 		for index, parameter := range signatures[0].Parameters() {
-			if index < len(arguments) {
-				if takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter)); isKnown {
-					arguments[index] = fit(arguments[index], takes)
-				}
+			takes, isKnown := l.representation(l.checker.GetTypeOfSymbol(parameter))
+			if !isKnown {
+				return nil, l.notYet(node, "a function value parameter without a runtime representation")
+			}
+			if index >= len(arguments) {
+				// The checker accepted an omitted optional argument. A native closure reads every
+				// declared parameter slot, so absence must be supplied as typed undefined.
+				arguments = append(arguments, fit(ir.Undefined{}, takes))
+			} else {
+				arguments[index] = fit(arguments[index], takes)
 			}
 		}
 	}

@@ -1048,6 +1048,8 @@ func (a *analysis) value(expression ir.Expression) value {
 		}
 		// Patterns are compiled constants; the runtime object holds only immutable strings.
 		return a.fresh(anyField, value{})
+	case ir.NodeHostCall:
+		return a.call(a.operands(expression), expression.Type())
 	case ir.RegExpCall:
 		return a.regexCall(expression)
 	case ir.RegExpProperty:
@@ -1154,6 +1156,10 @@ func (a *analysis) value(expression ir.Expression) value {
 		return value{}
 	case ir.MaybeToString:
 		a.value(expression.Value)
+		return value{}
+	case ir.MethodPresence:
+		// Presence evaluates the receiver and returns a boolean without retaining a method.
+		a.value(expression.Object)
 		return value{}
 	case ir.TypeOf:
 		a.value(expression.Value)
@@ -1277,6 +1283,11 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ReadDirectory:
 		a.value(expression.Path)
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
+	case ir.NodeFSFile:
+		return a.nodeFSFile(expression)
+	case ir.RealPath:
+		a.value(expression.Path)
+		return a.fresh(anyField, value{})
 	case ir.FileStatus:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})
@@ -1300,6 +1311,11 @@ func (a *analysis) value(expression ir.Expression) value {
 			elements.merge(a.load(a.value(other), elementKey))
 		}
 		return a.fresh(elementKey, elements)
+	case ir.HasProperty:
+		a.value(expression.Object)
+		return value{}
+	case ir.DynamicProperty:
+		return a.load(a.value(expression.Object), expression.Name)
 	case ir.HasAccessor:
 		a.value(expression.Object)
 		return value{}
