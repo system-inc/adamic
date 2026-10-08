@@ -8,8 +8,7 @@ import (
 	"testing"
 )
 
-// Preserve the exact handed-off input. This is a blocker witness, not runtime
-// certification: homogeneous array storage cannot be asserted into tuple slots.
+// Preserve the exact handed-off input and certify its live array-backed tuple read.
 func TestCheckedViewTupleLane4bCastFrontier(t *testing.T) {
 	root, _ := tupleOriginalInputs(t)
 	source, err := os.ReadFile("../../stage3/interface-downcasts/tuples/frontiers/incremental-tuple-element-frontier.a")
@@ -24,11 +23,20 @@ func TestCheckedViewTupleLane4bCastFrontier(t *testing.T) {
 	if diff := disagreement(run{stdout: []byte("string\n")}, onNode(t, file)); diff != "" {
 		t.Fatal(diff)
 	}
-	_, err = lowered(t, file)
-	if err == nil || !strings.Contains(err.Error(), "a cast the runtime can't check") || !strings.Contains(err.Error(), "adamic/no-unchecked-cast") {
-		t.Fatal("frontier unexpectedly admitted without an array-to-tuple storage witness")
+	program, err := lowered(t, file)
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Logf("original source Node=string; retained compiler boundary: %v", err)
+	want := run{stdout: []byte("string\n")}
+	actual, binary := nativelyUncached(t, program)
+	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if diff := disagreement(want, got); diff != "" {
+			t.Errorf("%s; got %#v", diff, got)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
 }
 
 func TestCheckedViewTupleLane4bOutSignature(t *testing.T) {
