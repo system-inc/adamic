@@ -1,0 +1,13 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { readTerminal } from '../../../replay/index.ts';
+import { HIRFunction } from '../../../core.ts';
+
+// Minimal Go-produced Scope terminal, before unit 7's dependency traversal.
+const path = programArguments()[0] ?? panic('missing terminal input');
+const input = readTextFile(path);
+if (input.kind === 'Error') { panic(input.message); }
+const functionInput = new HIRFunction('probe');
+functionInput.newBlock('block');
+functionInput.newBlock('block');
+const terminal = readTerminal(functionInput, input.text.trimEnd());
+console.log(terminal.kind);
