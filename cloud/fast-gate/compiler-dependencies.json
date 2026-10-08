@@ -616,7 +616,11 @@
         "internal/flow",
         "cmd/adamic"
       ],
-      "coverage": "inventory; standalone dispatch pending"
+      "coverage": "inventory; standalone dispatch pending",
+      "recorded_probes": {
+        "format": "minimal_programs",
+        "path": "stage3/drivers/parser/evidence/front10/build/report.json"
+      }
     },
     "stage3/drivers/scanner": {
       "dependencies": [
@@ -628,7 +632,11 @@
         "internal/flow",
         "cmd/adamic"
       ],
-      "coverage": "inventory; standalone dispatch pending"
+      "coverage": "inventory; standalone dispatch pending",
+      "recorded_probes": {
+        "format": "inline-source-results",
+        "path": "stage3/drivers/scanner/evidence/clean-records-rebase/witnesses/results.json"
+      }
     },
     "stage3/drivers/tsc": {
       "dependencies": [
@@ -640,7 +648,10 @@
         "internal/flow",
         "cmd/adamic"
       ],
-      "coverage": "inventory; standalone dispatch pending"
+      "coverage": "inventory; standalone dispatch pending",
+      "recorded_probes": {
+        "same_probes_as": "stage3/drivers/tsc-entry"
+      }
     },
     "stage3/drivers/tsc-entry": {
       "dependencies": [
@@ -652,7 +663,12 @@
         "internal/flow",
         "cmd/adamic"
       ],
-      "coverage": "inventory; standalone dispatch pending"
+      "coverage": "inventory; standalone dispatch pending",
+      "recorded_probes": {
+        "format": "stop-probes-and-streams",
+        "path": "stage3/drivers/tsc-entry/evidence/main-efe9f404/stops.json",
+        "streams": "stage3/drivers/tsc-entry/evidence/compiler-tips/area-b68b2fe1"
+      }
     }
   }
 }
