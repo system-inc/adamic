@@ -228,3 +228,37 @@ Total assigned hidden bytes are 48,591. 01 and 13 remain checker stops;
 [comparison](../../docs/overload-results/groups/values/regions.json),
 [exact stops](../../docs/overload-results/groups/values/next-stops.json), and
 [raw census](../../docs/overload-results/groups/values/after.jsonl.gz).
+
+
+## After coupled visitor invocation proofs and checks
+
+Compiler `5a718e9356a53f6909ae6abc227bf50da1ce2952` preserves the original visitor closure and checks
+unproven concrete TypeScript inputs at implementation invocation sites. Adamic
+sources require present original-array input proofs through known helpers.
+The independent result contract is retained.
+
+| Region | Hidden after | Additional revealed in 06 group | Cumulative revealed | Next stop | Owner / raising function |
+|---|---:|---:|---:|---|---|
+| 01 large | 13,625 | 0 | 0 | declarations.ts:1678:110 TS2345 | checker: isSignatureApplicable |
+| 01 small | 6,899 | 0 | 0 | declarations.ts:1678:110 TS2345 | checker: isSignatureApplicable |
+| 05 large | 6,078 | 0 | 0 | visitorPublic.ts:123:5 visitNode parameter node, from es2018.ts:828:9 | lowering: censusOverload; checked views |
+| 05 small | 5,748 | 0 | 0 | visitorPublic.ts:123:5 visitNode parameter node, from es2015.ts:3193:9 | lowering: censusOverload; checked views |
+| 06 | 3,369 | 0 | 8,048 | visitorPublic.ts:194:1 visitNodes result covariance, from esDecorators.ts:1250:13 | lowering: censusOverload |
+| 13 | 6,965 | 0 | 324 | es2017.ts:764:38 TS18048 | checker: checkNonNullTypeWithReporter |
+| 14 | 5,907 | 0 | 1,195 | utilities.ts:5041:1 skipParentheses result._expressionBrand, from utilities.ts:11338:9 | lowering: censusOverload |
+
+
+06 moves past its visitor parameter refusal to the independent result:
+
+```text
+visitorPublic.ts:194:1: Adamic 0.1 refuses overload 1 of visitNodes result NodeArray<TOut> | (TInArray & undefined) cannot be served by implementation result NodeArray<Node> | undefined at result; result covariance requires undefined to fit NodeArray<TOut> | (TInArray & undefined); prove every return for this overload's admitted arguments, preserving result variance
+```
+
+No additional bytes are revealed in this group. 06 still has 3,369 hidden bytes;
+its prior 8,048-byte reveal remains. 14 retains its new 1,195-byte reveal and
+13 retains 324 signature bytes. Total assigned hidden bytes remain 48,591.
+01 and 13 remain checker stops; 05 waits on checked views.
+[Report](../../docs/overload-results/groups/visitors/REPORT.md),
+[comparison](../../docs/overload-results/groups/visitors/regions.json),
+[exact stops](../../docs/overload-results/groups/visitors/next-stops.json), and
+[raw census](../../docs/overload-results/groups/visitors/after.jsonl.gz).
