@@ -1,5 +1,5 @@
 // Original member declaration and read; adjacent carriers and bodies reduced.
-enum ScriptKind {Unknown=0,JS=1,JSX=2,TS=3,TSX=4,External=5,JSON=6,Deferred=7}
+const enum ScriptKind {Unknown=0,JS=1,JSX=2,TS=3,TSX=4,External=5,JSON=6,Deferred=7}
 interface Base {readonly setScriptKind:unknown;}
 interface Target {setScriptKind(scriptKind: ScriptKind): void;}
 function probe(value:Base):void {const scanner=value as Target;scanner.setScriptKind(0);console.log("completed");}

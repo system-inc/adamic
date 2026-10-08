@@ -36,3 +36,5 @@ Native Array.push batch: 17 pairs / 227 candidate reads. Original Array method d
 Validation: TestCheckedViewCallableShareCArrayIntrinsics and ArrayMutants PASS in 16.470s, /tmp/lane5-c-array-recheck.log; scoped new-fixture counts updater and independent original-source verifier PASS.
 
 Batch 12: ranks 302, 305, 317, 428, 449, 509, 545, 887, 923, 935, 959, 965, 989, 1064, 1067, 1139, 1862, 1877, 2039; 19 new pairs / 53 reads. Scoped positive/negative and mutant tests passed: /tmp/lane5-c-batch12.log. Original verifier and scoped counts updater passed.
+
+Batch 14: ranks 302, 305, 317, 428, 449, 509, 545, 887, 923, 935, 959, 965, 989, 1064, 1067, 1139, 1862, 1877, 2039; 19 new pairs / 53 reads. Scoped positive/negative and mutant tests passed: /tmp/lane5-c-batch14.log. Original verifier and scoped counts updater passed.
