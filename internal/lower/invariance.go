@@ -44,7 +44,9 @@ type widening struct {
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
-	if from == to || visited[[2]*checker.Type{from, to}] {
+	// never exposes no readable values. Writable containers still check the
+	// reverse element relation before reaching this recursive read comparison.
+	if from == to || visited[[2]*checker.Type{from, to}] || from.Flags()&checker.TypeFlagsNever != 0 {
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
@@ -493,6 +495,9 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
+	if found.source.Flags()&checker.TypeFlagsNever != 0 && l.checker.IsArrayType(l.withoutUndefined(contextual)) {
+		return &Refused{Where: l.program.Where(node), What: "a never[] seen as writable " + l.checker.TypeToString(contextual) + ", which can write " + l.checker.TypeToString(found.target) + " into a shared never[]", Fix: "declare the result readonly T[], or return a fresh [] (adamic/invariant-mutable)"}
+	}
 	if found.enum {
 		if enumObjectSymbol(found.target) != nil {
 			return &Refused{Where: l.program.Where(node), What: "a structural object seen as " + l.checker.TypeToString(found.target) + "; the complete enum shape is unproven", Fix: "use the enum's runtime object or a typeof alias, or give the ordinary object an explicit interface"}
@@ -622,6 +627,11 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 	switch parent.Kind {
 	case ast.KindConditionalExpression:
 		if conditional := parent.AsConditionalExpression(); conditional.WhenTrue == child || conditional.WhenFalse == child {
+			// A readonly destination or assertion is the actual view; the
+			// best common branch type can instead be a mutable array.
+			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(l.withoutUndefined(contextual)) {
+				return contextual
+			}
 			return l.checker.GetTypeAtLocation(parent)
 		}
 	case ast.KindBinaryExpression:

@@ -1,0 +1,5 @@
+const emptyArray: never[] = [];
+function fallback<T>(values: readonly T[]): T[] {
+    return emptyArray;
+}
+console.log(fallback<string>([]).length.toString());

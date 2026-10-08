@@ -541,6 +541,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindObjectLiteralExpression:
 		return l.objectLiteral(node)
 	case ast.KindArrayLiteralExpression:
+		if l.emptyNeverArrayLiteral(node) {
+			return ir.ArrayLiteral{Element: ir.Number}, nil
+		}
 		return l.arrayLiteral(node)
 	case ast.KindPropertyAccessExpression:
 		return l.property(node)

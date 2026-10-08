@@ -507,6 +507,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Element.IsReference() {
 			value = retained(value)
 		}
+		// An empty copy of never[] has no element ownership yet. The first
+		// typed write supplies it after all operands have been evaluated.
+		e.line("if (%s->length == 0) { %s->references = %t; }", array, array, expression.Element.IsReference())
 		// The append happens here, in JavaScript's order, and the new length is the value.
 		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(expression.Element), slotted(expression.Element, value))
 		length := e.temporary()

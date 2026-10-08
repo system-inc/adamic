@@ -223,6 +223,9 @@ func (e *emitter) spliceArguments(splice ir.ArraySplice) string {
 	}
 	packed := "NULL"
 	if len(items) > 0 {
+		// A populated array already has its invariant ownership convention;
+		// a slotless copy adopts the inserted elements' convention.
+		e.line("if (%s->length == 0) { %s->references = %t; }", array, array, splice.Element.IsReference())
 		packed = "(adamic_value[]){" + strings.Join(items, ", ") + "}"
 	}
 	return fmt.Sprintf("%s, %s, %s, %t, %d, %s", array, start, count, splice.Count != nil, len(items), packed)
