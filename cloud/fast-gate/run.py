@@ -63,11 +63,16 @@ def main():
     parser.add_argument("--session", default="")
     parser.add_argument("--session-source", default="")
     parser.add_argument("--weights", help="package seconds, longest first, to order the full gate's packages")
+    parser.add_argument("--packages-file", help="full gate: newline-separated exact package shard")
+    parser.add_argument("--once-steps", action="store_true", help="shard owns repository checks (census is deferred)")
+    parser.add_argument("--census-only", action="store_true", help="check collected test.jsonl only")
     arguments = parser.parse_args()
+    if (arguments.packages_file or arguments.census_only or arguments.once_steps) and not arguments.full:
+        parser.error("shard options require --full")
     os.makedirs(arguments.out, exist_ok=True)
     gate = Gate(arguments)
     try:
-        gate.run()
+        gate.checkCensus() if arguments.census_only else gate.run()
     except BaseException:
         gate.fail("runner", traceback.format_exc())
     finally:
@@ -91,6 +96,12 @@ class Gate:
         self.exits = {}
         self.watchers = []
         self.planned = ["coverage", "build", "vet", "tests", "wasi", "stage3", "catalog", "census"] if arguments.full else ["coverage", "build", "vet", "tests", "smoke", "census"]
+        self.sharded = isinstance(vars(arguments).get("packages_file"), str)
+        self.onceSteps = not self.sharded or vars(arguments).get("once_steps") is True
+        if self.sharded:
+            self.planned = ["coverage", "build", "vet", "tests", "wasi", "stage3", "catalog"] if self.onceSteps else ["tests"]
+        if vars(arguments).get("census_only") is True:
+            self.planned = ["census"]
         self.result = {
             "sha": arguments.sha,
             "branch": arguments.branch,
@@ -186,6 +197,9 @@ class Gate:
         self.checkCensus()
 
     def runFull(self):
+        if self.sharded:
+            self.runFullShard()
+            return
         listing = subprocess.run(["go", "list", "./..."], cwd=self.arguments.tree, capture_output=True, text=True, check=True).stdout.split()
         order = []
         if self.arguments.weights and os.path.exists(self.arguments.weights):
@@ -226,6 +240,43 @@ class Gate:
             self.checkCensus()
         except BaseException:
             self.fail("census", traceback.format_exc())
+
+    def runFullShard(self):
+        listing = subprocess.run(["go", "list", "./..."], cwd=self.arguments.tree, capture_output=True, text=True, check=True).stdout.split()
+        with open(self.arguments.packages_file) as handle:
+            packages = [line.strip() for line in handle if line.strip()]
+        if len(packages) != len(set(packages)) or set(packages) - set(listing):
+            raise ValueError("duplicate or unknown shard packages")
+        self.result.update({"packages": "all", "package_list": packages})
+        if self.onceSteps:
+            # The no-executor check holds on main too: what this main changed against its first parent.
+            parents = git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
+            changed = git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []
+            _, unowned = self.touched([path for path in changed if path])
+            self.cover(unowned, [path for path in changed if path])
+            try:
+                self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
+            except BaseException:
+                self.fail("build", traceback.format_exc())
+        log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
+        wasi = None
+        if os.environ.get("WASI_SYSROOT"):
+            wasi = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
+        threads = []
+        if packages:
+            threads.append(self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-p", str(self.arguments.parallel), "-skip", "^TestWASI$"] + packages, log))
+        else:
+            self.exits["tests"] = 0
+        if self.onceSteps:
+            threads.extend([self.guarded("vet", self.vet),
+                            self.guarded("wasi", self.test, "wasi", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-run", "^TestWASI$", "./internal/native"], log, wasi),
+                            self.guarded("stage3", self.stage3),
+                            self.guarded("catalog", self.catalogFull)])
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join()
+        log.close()
 
     def cover(self, unowned, changed=(), pathSetChanged=None):
         """Each changed path outside a Go package to its executor (cloud/fast-gate/executors.txt from the

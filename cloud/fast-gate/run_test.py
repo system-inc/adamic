@@ -13,11 +13,15 @@ import os
 import subprocess
 import sys
 import tempfile
+import shutil
+import threading
 import unittest
 from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import run  # noqa: E402
+import shards  # noqa: E402
+from pathlib import Path
 
 realRun, realPopen = subprocess.run, subprocess.Popen
 
@@ -76,12 +80,15 @@ class FailClosed(unittest.TestCase):
             realRun(["git", "-C", self.tree] + command, check=True)
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
 
-    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None):
+    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None, packages_file=None, once_steps=False):
         out = tempfile.mkdtemp(dir=self.directory)
         arguments = mock.Mock(tree=self.tree, sha=self.sha, base=base or self.sha, tools=self.tree, out=out, parallel=4, full=full,
-                              branch="", branch_source="", session="", session_source="", weights=None)
+                              branch="", branch_source="", session="", session_source="", weights=None, packages_file=packages_file, once_steps=once_steps)
+
+        self.commands = []
 
         def popen(command, **options):
+            self.commands.append(command)
             if command[0] == "git":
                 return realPopen(command, **options)
             if stage(command) == broken:
@@ -134,6 +141,40 @@ class FailClosed(unittest.TestCase):
                 gate, status, result = self.gate(silent=silent)
                 self.assertTrue(status.startswith("red:"), status)
                 self.assertIn(stageName, status)
+
+    def test_package_shard_runs_only_its_packages(self):
+        path = Path(self.directory) / "packages.txt"
+        path.write_text("example.com/p\n")
+        gate, status, result = self.gate(full=True, packages_file=str(path))
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["planned_stages"], ["tests"])
+        tests = [command for command in self.commands if command[:2] == ["go", "test"]]
+        self.assertEqual(len(tests), 1)
+        self.assertEqual(tests[0][-1], "example.com/p")
+        self.assertIn("-count=1", tests[0])
+        self.assertIn("-skip", tests[0])
+
+    def test_empty_shard_does_not_test_current_directory(self):
+        path = Path(self.directory) / "empty.txt"
+        path.write_text("")
+        gate, status, result = self.gate(full=True, packages_file=str(path))
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertFalse(any(command[:2] == ["go", "test"] for command in self.commands))
+
+    def test_once_shard_defers_census(self):
+        path = Path(self.directory) / "packages.txt"
+        path.write_text("example.com/p\n")
+        gate, status, result = self.gate(full=True, packages_file=str(path), once_steps=True)
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertNotIn("census", result["planned_stages"])
+        self.assertIn("wasi", result["planned_stages"])
+        self.assertIn("build", result["planned_stages"])
+
+    def test_unknown_package_is_red(self):
+        path = Path(self.directory) / "packages.txt"
+        path.write_text("unknown\n")
+        gate, status, result = self.gate(full=True, packages_file=str(path))
+        self.assertTrue(status.startswith("red:"), status)
 
 
 class Coverage(FailClosed):
@@ -226,6 +267,179 @@ class Coverage(FailClosed):
         self.assertEqual(result["a_check_exempt"], ["stage3/corpus/upstream.a"])
         self.assertEqual(list(result["a_check"]), ["stage3/probe.a"])
         self.assertEqual(result["executors"], {"stage3": 2})
+
+
+class ShardPlan(unittest.TestCase):
+    def test_deterministic_balanced_and_exact(self):
+        packages = ["p%03d" % index for index in range(144)]
+        weights = {name: 10.0 for name in packages}
+        boxes = {"home": 64, "server": 64, "chonchon": 16}
+        layout = shards.plan(packages, weights, boxes)
+        self.assertEqual(layout, shards.plan(list(reversed(packages)), dict(reversed(list(weights.items()))), dict(reversed(list(boxes.items())))))
+        assigned = [name for row in layout["shards"] for name in row["packages"]]
+        self.assertEqual(sorted(assigned), sorted(packages))
+        self.assertEqual(len(assigned), len(set(assigned)))
+        self.assertEqual([row["estimated_wall_seconds"] for row in layout["shards"]], [10.0] * 3)
+        self.assertEqual(layout["once_box"], "home")
+        self.assertEqual(sum(row["once_steps"] for row in layout["shards"]), 1)
+
+    def test_longest_first_and_unknown_weight(self):
+        layout = shards.plan(["a", "b", "c"], {"a": 100, "b": 10}, {"small": 1, "large": 4})
+        self.assertEqual(layout["once_box"], "large")
+        self.assertEqual(layout["shards"][0]["packages"][0], "a")
+        self.assertEqual(sum(row["estimated_seconds"] for row in layout["shards"]), 111)
+
+    def test_invalid_inputs_fail(self):
+        for packages, weights, boxes in [(["a", "a"], {}, {"x": 1}), (["a"], {}, {"x": 0}), (["a"], {"a": float("nan")}, {"x": 1})]:
+            with self.assertRaises(ValueError):
+                shards.plan(packages, weights, boxes)
+
+
+class ShardMerge(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        self.layout = shards.plan(["a", "b"], {"a": 4, "b": 1}, {"home": 2, "server": 1})
+        self.census = {"sha": "sha", "tools_sha": "tools", "finished": True, "stages_exit": {"census": 0}}
+        for row in self.layout["shards"]:
+            directory = self.root / "shards" / str(row["index"])
+            directory.mkdir(parents=True)
+            events = [{"Package": package, "Test": "TestOne", "Action": action} for package in row["packages"] for action in ("pass", "skip")]
+            (directory / "test.jsonl").write_text("".join(json.dumps(event) + "\n" for event in events))
+            stages = ["coverage", "build", "vet", "tests", "wasi", "stage3", "catalog"] if row["once_steps"] else ["tests"]
+            shards.write_json(directory / "full.json", {"sha": "sha", "tools_sha": "tools", "package_list": row["packages"], "finished": True,
+                "failure": None, "planned_stages": stages, "stages_exit": {stage: 0 for stage in stages}, "steps_seconds": {"tests": 1},
+                "pass": len(events) // 2, "skip": len(events) // 2, "fail": 0})
+
+    def merge(self, **options):
+        return shards.merge(self.layout, self.root, "sha", "tools", census=self.census, **options)
+
+    def test_counts_add_up_and_compare(self):
+        result = self.merge()
+        self.assertIsNone(result["failure"])
+        self.assertEqual((result["pass"], result["fail"], result["skip"]), (2, 0, 2))
+        self.assertTrue((self.root / "status.txt").read_text().startswith("green:"))
+        self.assertEqual(shards.event_counts([self.root / "test.jsonl"]), shards.event_counts(list((self.root / "shards").glob("*/test.jsonl"))))
+        self.assertEqual(result["stages_exit"]["census"], 0)
+
+    def test_red_shard_names_box_and_is_sticky(self):
+        path = self.root / "shards/1/full.json"
+        report = json.loads(path.read_text())
+        report["failure"] = {"step": "tests", "detail": "bad test", "after_seconds": 2}
+        report["stages_exit"]["tests"] = 1
+        shards.write_json(path, report)
+        result = self.merge(final=False)
+        self.assertEqual(result["failure"]["step"], "shard-1@server/tests")
+        self.assertFalse((self.root / "full.json").exists())
+        report["failure"] = None
+        report["stages_exit"]["tests"] = 0
+        shards.write_json(path, report)
+        self.assertEqual(self.merge()["failure"]["step"], "shard-1@server/tests")
+
+    def test_missing_shard_is_red(self):
+        (self.root / "shards/1/full.json").unlink()
+        self.assertIsNone(self.merge(final=False)["failure"])
+        result = self.merge()
+        self.assertEqual(result["failure"]["step"], "shard-1@server")
+        self.assertIn("missing shard", result["failure"]["detail"])
+
+    def test_missing_census_is_red(self):
+        self.census = None
+        self.assertEqual(self.merge()["failure"]["step"], "shard-census@home")
+
+    def test_counts_mismatch_is_red(self):
+        path = self.root / "shards/1/test.jsonl"
+        path.write_text("")
+        self.assertIn("counts disagree", self.merge()["failure"]["detail"])
+
+    def test_partial_snapshot_does_not_create_false_red(self):
+        path = self.root / "shards/1/full.json"
+        original = path.read_text()
+        path.write_text('{"sha":')
+        self.assertIsNone(self.merge(final=False)["failure"])
+        path.write_text(original)
+        self.assertIsNone(self.merge()["failure"])
+
+    def test_wrong_source_is_red(self):
+        path = self.root / "shards/1/full.json"
+        report = json.loads(path.read_text())
+        report["sha"] = "other"
+        shards.write_json(path, report)
+        self.assertIn("wrong source", self.merge()["failure"]["detail"])
+
+    def test_comparer_counts_repeated_events(self):
+        path = self.root / "whole.jsonl"
+        path.write_text('{"Package":"a","Test":"T","Action":"pass"}\n' * 2)
+        self.assertEqual(shards.event_counts([path])[("a", "pass")], 2)
+
+
+class ShardCoordinator(unittest.TestCase):
+    def test_launcher_collects_and_runs_census_on_owner(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            sha, tools = "a" * 40, "b" * 40
+            args = mock.Mock(out=str(root / "run"), sha=sha, tools=tools, boxes="home server", timeout=100)
+            ready = {box: threading.Event() for box in ("home", "server")}
+            calls = []
+
+            def remote(box, script, arguments, timeout=300):
+                calls.append((box, script))
+                realRun(["bash", "-n"], input=script, text=True, check=True)
+                directory = root / box
+                directory.mkdir(exist_ok=True)
+                if "nproc --all" in script:
+                    return ("2" if box == "home" else "1") + "\na\nb\n\nWEIGHTS\n4 a\n1 b\n"
+                if "--packages-file" in script:
+                    packages = script.split("'PACKAGES'\n", 1)[1].split("PACKAGES\n", 1)[0].split()
+                    stages = ["coverage", "build", "vet", "tests", "wasi", "stage3", "catalog"] if "--once-steps" in script else ["tests"]
+                    (directory / "test.jsonl").write_text("".join(json.dumps({"Package": name, "Test": "T", "Action": "pass"}) + "\n" for name in packages))
+                    shards.write_json(directory / "full.json", {"sha": sha, "tools_sha": tools, "finished": True, "package_list": packages,
+                        "failure": None, "pass": len(packages), "fail": 0, "skip": 0,
+                        "steps_seconds": {"tests": 1}, "planned_stages": stages, "stages_exit": {stage: 0 for stage in stages}})
+                    ready[box].set()
+                if "--census-only" in script:
+                    self.assertEqual(box, "home")
+                    self.assertEqual(sum(shards.event_counts([root / "uploaded.jsonl"]).values()), 2)
+                    directory = root / "remote-census"
+                    directory.mkdir()
+                    shards.write_json(directory / "full.json", {"sha": sha, "tools_sha": tools, "finished": True, "stages_exit": {"census": 0}, "failure": None})
+                return ""
+
+            def copy(command, **options):
+                self.assertEqual(command[0], "scp")
+                source, destination = command[-2:]
+                if ":" not in source:
+                    shutil.copyfile(source, root / "uploaded.jsonl")
+                elif source.endswith("-census"):
+                    shutil.copytree(root / "remote-census", destination)
+                else:
+                    box = source.split(":", 1)[0]
+                    self.assertTrue(ready[box].wait(2))
+                    shutil.copytree(root / box, destination, dirs_exist_ok=True)
+                return subprocess.CompletedProcess(command, 0, stdout=b"", stderr=b"")
+
+            with mock.patch.object(shards, "remote", side_effect=remote), mock.patch.object(shards.subprocess, "run", side_effect=copy), mock.patch.object(shards.time, "sleep"), mock.patch("builtins.print"):
+                shards.coordinate(args)
+            result = json.loads((root / "run/full.json").read_text())
+            self.assertIsNone(result["failure"])
+            self.assertEqual(result["pass"], 2)
+            self.assertEqual(sum("--once-steps" in script for _, script in calls), 1)
+            self.assertEqual(sum("--census-only" in script for _, script in calls), 1)
+
+    def test_down_box_finishes_red_with_name(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            args = mock.Mock(out=str(Path(temporary) / "run"), sha="a" * 40, tools="b" * 40, boxes="home server", timeout=100)
+            def remote(box, *arguments):
+                if box == "server":
+                    raise OSError("box down")
+                return "2\na\n\nWEIGHTS\n1 a\n"
+            with mock.patch.object(shards, "remote", side_effect=remote):
+                shards.coordinate(args)
+            result = json.loads((Path(args.out) / "full.json").read_text())
+            self.assertTrue(result["finished"])
+            self.assertEqual(result["failure"]["step"], "setup@server")
+            self.assertTrue((Path(args.out) / "status.txt").read_text().startswith("red:"))
 
 
 if __name__ == "__main__":
