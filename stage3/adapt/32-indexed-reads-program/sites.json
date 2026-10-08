@@ -884,7 +884,9 @@
     "total": 1,
     "action": "decline",
     "class": "U-table",
-    "invariant": "The existing any cast is a tracing enum-name lookup, not a required indexed-absence finding."
+    "invariant": "The existing any cast is a tracing enum-name lookup, not a required indexed-absence finding.",
+    "laterExpression": "(FileIncludeKind as Record<number, string>)[reason.kind]",
+    "laterExpressionProof": "Adaptation 40 replaces only the enum display cast type; Record<number, string> erases to the same enum reverse lookup."
   },
   {
     "file": "program.ts",
@@ -2311,9 +2313,9 @@
     "expression": "allowedEndings[0]",
     "occurrence": 1,
     "total": 2,
-    "action": "decline",
+    "action": "assert",
     "class": "U-endpoint",
-    "invariant": "The existing switch default calls Debug.assertNever for an absent or invalid preferred ending; that failure handling remains unchanged."
+    "invariant": "Private processEnding receives fresh nonempty factory arrays or fresh [ending] singletons; the twelve audited producer/forwarder bodies make no intervening array writes. The required first ending is checked at the original switch read."
   },
   {
     "file": "moduleSpecifiers.ts",
@@ -2325,7 +2327,7 @@
     "total": 2,
     "action": "decline",
     "class": "U-endpoint",
-    "invariant": "The existing switch default calls Debug.assertNever for an absent or invalid preferred ending; that failure handling remains unchanged."
+    "invariant": "The exhaustive default reports an impossible ending through assertNever; the owning nonempty tuple contract excludes legitimate absence, and no required read is introduced on this failure path."
   },
   {
     "file": "sys.ts",
@@ -2553,7 +2555,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2565,7 +2569,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2625,7 +2631,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2637,7 +2645,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2649,7 +2659,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2661,7 +2673,9 @@
     "total": 3,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "sys.ts",
@@ -2673,7 +2687,9 @@
     "total": 1,
     "action": "decline",
     "class": "U-typed",
-    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists."
+    "invariant": "The BOM length guard covers these bytes; equality checks already accept absence and no required-value diagnostic exists.",
+    "laterAssertion": "47-host-errors",
+    "laterInvariant": "Adaptation 47 proves this dense Node Buffer read under its len >= 2 or len >= 3 guard; 32 inserts nothing and accepts only the existing 47 assertion."
   },
   {
     "file": "builder.ts",
@@ -3273,7 +3289,7 @@
     "function": "",
     "action": "decline",
     "class": "U-position",
-    "invariant": "Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument."
+    "invariant": "Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison."
   },
   {
     "file": "watchUtilities.ts",
@@ -3285,7 +3301,7 @@
     "function": "",
     "action": "decline",
     "class": "U-position",
-    "invariant": "Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument."
+    "invariant": "Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison."
   },
   {
     "file": "watchUtilities.ts",
@@ -3297,7 +3313,7 @@
     "function": "",
     "action": "decline",
     "class": "U-position",
-    "invariant": "Watcher logging accepts the any-valued callback arguments and explicitly handles the optional second argument."
+    "invariant": "Callback tuples always supply a file name at position zero; their optional second event argument is handled by the existing undefined comparison."
   },
   {
     "file": "resolutionCache.ts",

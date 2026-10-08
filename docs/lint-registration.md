@@ -13,6 +13,10 @@ The rule directory contains:
 - `rule.json`: public name, interested node kinds, factory/class names and provenance.
 - `oracle.go`: the unmodified upstream cohere rule and its typed options adapter.
 - `testdata/*.{ts,tsx,js,jsx}.txt`: raw source witnesses, outside the module graph.
+- `testdata/<name>.options.json` (optional, beside `<name>.ts.txt`): the rule's options for that witness,
+  as upstream writes them. A rule that reports nothing by default, such as one that bans only the
+  types it is configured with, witnesses a finding this way. The options reach the witness's own row
+  (never its "all" row), so the Go adapter must decode them and the port reads the same settings.
 - `mutant.json`: one source mutation that compiles, runs, and must disagree with Go.
   Fields are `name`, `from`, `to`, and optional `file` (default the discovered `rule.a` or `rule.ts`). The
   file must stay inside this rule directory. Anchors are scoped to that file,

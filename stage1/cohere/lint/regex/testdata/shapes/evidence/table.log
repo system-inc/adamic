@@ -1,0 +1,10 @@
+=== RUN   TestFixedPatterns
+    regex_test.go:89: 82 fixed patterns, 125771 match records, 2354870 identical bytes on Go, Node, emitted JS and sanitized native
+    regex_test.go:110: translation mutant caught by byte comparison on backend 0: base/consistency_require_pagination_argument_name.go:27
+    regex_test.go:110: translation mutant caught by byte comparison on backend 1: base/consistency_require_pagination_argument_name.go:27
+    regex_test.go:110: translation mutant caught by byte comparison on backend 2: base/consistency_require_pagination_argument_name.go:27
+--- PASS: TestFixedPatterns (20.87s)
+=== RUN   TestInventoryMatchesPinnedSource
+--- PASS: TestInventoryMatchesPinnedSource (0.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint/regex	21.676s

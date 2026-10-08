@@ -1,0 +1,12 @@
+==447829== Callgrind, a call-graph generating cache profiler
+==447829== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==447829== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==447829== Command: /workspace/checker-library-measured/oracle --manifest /workspace/checker-library-measured/pilot.txt
+==447829== Parent PID: 447826
+==447829== 
+==447829== For interactive control, run 'callgrind_control -h'.
+==447829== 
+==447829== Events    : Ir
+==447829== Collected : 442628194
+==447829== 
+==447829== I   refs:      442,628,194

@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "original": {
+    "total": 8,
+    "read_only": 1,
+    "write": 7
+  },
+  "alias_edge_dropped": {
+    "total": 8,
+    "read_only": 2,
+    "write": 6
+  },
+  "checks": [
+    "direct multi-variable alias reaches c.p = 2",
+    "callback alias reaches alias.p = 3",
+    "unrelated p symbol leaves read-only site unchanged",
+    "dropping alias changes the write count",
+    "write to another missing member is detected",
+    "computed keyof member write is detected",
+    "Object.assign alias write is detected",
+    "untyped alias does not hide a write",
+    "library-returned receiver alias is detected"
+  ]
+}

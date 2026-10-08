@@ -2,18 +2,16 @@
 package json
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
-	"syscall"
 	"testing"
-	"time"
 	"unicode/utf8"
+
+	"github.com/system-inc/adamic/internal/gatesample"
 )
 
 type textCase struct {
@@ -62,16 +60,10 @@ func TestUpstreamNumericSeparatorGap(t *testing.T) {
 	}
 }
 
-// corpusCases includes every checkout JSON file and the original generated edge cases.
-func corpusCases(t *testing.T) []textCase {
-	t.Helper()
-	root, err := filepath.Abs("../../..")
-	if err != nil {
-		t.Fatal(err)
-	}
+// fileCorpus walks every JSON input, including provisioned files and submodules.
+func fileCorpus(root string) ([]textCase, error) {
 	var cases []textCase
-	groups := map[string]int{}
-	err = filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
+	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -93,17 +85,20 @@ func corpusCases(t *testing.T) []textCase {
 			return err
 		}
 		relative = filepath.ToSlash(relative)
-		group := "Adamic"
-		if strings.HasPrefix(relative, "cohere/") {
-			group = "cohere"
-		}
-		if strings.HasPrefix(relative, "cohere/TypeScript/") {
-			group = "TypeScript"
-		}
-		groups[group]++
 		cases = append(cases, textCase{relative, string(encoded)})
 		return nil
 	})
+	return cases, err
+}
+
+// corpusCases validates the whole corpus before landing-gate sampling.
+func corpusCases(t *testing.T) []textCase {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cases, err := fileCorpus(root)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -124,18 +119,22 @@ func corpusCases(t *testing.T) []textCase {
 			cases = append(cases, textCase{fmt.Sprintf("generated/%d/%s", index, name), text})
 		}
 	}
-	t.Logf("repository groups: %v; generated %d; total %d", groups, len(generated)*2, len(cases))
+	t.Logf("full corpus: %d cases before gate sampling", len(cases))
+	verifyCorpusPin(t, cases)
 	return cases
 }
 
 // Prettier is a separate upstream report. Only the nine named disagreements are known;
 // an added difference or a closed difference requires updating the report explicitly.
 func TestUpstreamRepositoryCorpusParity(t *testing.T) {
+	if err := gatesample.Validate(); err != nil {
+		t.Fatalf("%s: %v", t.Name(), err)
+	}
 	t.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
 		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
-	cases := corpusCases(t)
+	cases := sampledCorpusCases(t, 8)
 	goAnswers, prettierAnswers := oracleAnswers(t, cases)
 	differences := 0
 	var report strings.Builder
@@ -260,14 +259,10 @@ func writeJSON(t *testing.T, path string, value any) {
 	}
 }
 
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+func bounded(t *testing.T, name string, arguments ...string) *progressCommand {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 5 * time.Second
+	command := newProgressCommand(jsonProgressPolicy, name, arguments...)
+	t.Cleanup(command.cancel)
 	return command
 }
 

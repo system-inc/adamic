@@ -1,0 +1,5 @@
+{
+  "name": "no-iterator-static-key",
+  "from": "property.text !== '__iterator__'",
+  "to": "property.text !== '__iterator_mutated__'"
+}

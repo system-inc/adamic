@@ -1,0 +1,14 @@
+ss...F
+======================================================================
+FAIL: test_unexpected_symlink_is_rejected (__main__.InstallationKey.test_unexpected_symlink_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/adamic/cloud/test_markdown_setup.py", line 53, in test_unexpected_symlink_is_rejected
+    with self.assertRaisesRegex(ValueError, 'unexpected installed symlink'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (failures=1, skipped=2)
