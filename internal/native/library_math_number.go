@@ -21,6 +21,9 @@ func (e *emitter) libraryMathCall(call ir.MathCall) (string, bool) {
 }
 
 func (e *emitter) libraryNumberCall(call ir.NumberCall) (string, bool) {
+	if call.Function == "toBoolean" {
+		return e.censusToBoolean(call.Arguments[0]), true
+	}
 	if call.Function == "hasOwnProperty" || call.Function == "prototypeHasOwnProperty" {
 		prototype := "false"
 		if call.Function == "prototypeHasOwnProperty" {

@@ -1,0 +1,23 @@
+namespace Actions {
+    let total = 0;
+    export const prefix = 'action';
+    export function add(value: number): number { total += value; return total; }
+    export function read(): number { return total; }
+    export const twice: (value: number) => number = (value) => add(value * 2);
+    export function capture(label: string): () => string { return () => `${prefix} ${label} ${total}`; }
+}
+class BaseAction {
+    readonly field = 7;
+    constructor(protected readonly apply: (value: number) => number) {}
+    run(value: number): number { return this.apply(value) + this.field; }
+}
+class ChildAction extends BaseAction {
+    readonly own = 3;
+    constructor(apply: (value: number) => number, public readonly render: () => string) { super(apply); }
+    override run(value: number): number { return super.run(value) + this.own; }
+}
+const one = new ChildAction(Actions.add, Actions.capture('one'));
+const two = new ChildAction(Actions.twice, Actions.capture('two'));
+const base: BaseAction = one;
+console.log(`${base.run(2)} ${two.run(3)} ${Actions.read()}`);
+console.log(`${one.render()} ${two.render()} ${Actions.add === Actions.add}`);

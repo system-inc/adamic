@@ -1,0 +1,1 @@
+const method = String.prototype.substring; const bound = method.bind('abcd', 1); console.log(bound(3));

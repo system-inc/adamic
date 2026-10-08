@@ -224,7 +224,7 @@ export class ScalarResolver {
         let chompStart = lines.length;
         for(let index = lines.length - 1; index >= 0; index--) {
             const line = lines[index];
-            if(line === undefined) break;
+            if(!line) break;
             if(emptyContent(line.content)) chompStart = index;
             else break;
         }
@@ -239,7 +239,7 @@ export class ScalarResolver {
         let contentStart = 0;
         for(let index = 0; index < chompStart; index++) {
             const line = lines[index];
-            if(line === undefined) break;
+            if(!line) break;
             if(emptyContent(line.content)) {
                 if(indent === 0 && line.indent.length > trimIndent) trimIndent = line.indent.length;
             }
@@ -260,18 +260,18 @@ export class ScalarResolver {
         }
         for(let index = lines.length - 1; index >= chompStart; index--) {
             const line = lines[index];
-            if(line === undefined) break;
+            if(!line) break;
             if(line.indent.length > trimIndent) chompStart = index + 1;
         }
         let separator = '';
         let previousMoreIndented = false;
         for(let index = 0; index < contentStart; index++) {
             const line = lines[index];
-            if(line !== undefined) result.value += `${line.indent.slice(trimIndent)}\n`;
+            if(line) result.value += `${line.indent.slice(trimIndent)}\n`;
         }
         for(let index = contentStart; index < chompStart; index++) {
             const line = lines[index];
-            if(line === undefined) break;
+            if(!line) break;
             let lineIndent = line.indent;
             let content = line.content;
             offset += lineIndent.length + content.length + 1;
@@ -311,7 +311,7 @@ export class ScalarResolver {
         if(chomp === '+') {
             for(let index = chompStart; index < lines.length; index++) {
                 const line = lines[index];
-                if(line !== undefined) result.value += `\n${line.indent.slice(trimIndent)}`;
+                if(line) result.value += `\n${line.indent.slice(trimIndent)}`;
             }
             if(char(result.value, result.value.length - 1) !== '\n') result.value += '\n';
         }

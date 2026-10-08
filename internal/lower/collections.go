@@ -231,7 +231,7 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 			return nil, true, l.notYet(arguments[0], "forEach with a callback returning "+l.checker.TypeToString(result))
 		}
 	}
-	return ir.MapForEach{Map: collection, Callback: callback, Key: key, Value: value, Set: set, Returns: returns}, true, nil
+	return ir.MapForEach{Map: collection, Callback: callback, Key: key, Value: value, Set: set, Returns: returns, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
 }
 
 // tupleLength is tuple.length for a tuple of fixed length: its type's count, which the checker gives
@@ -345,11 +345,14 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			return nil, err
 		}
 		of := l.result.Locals[local].Type
-		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) {
+		if element, isKnown := l.representation(fieldType); !isKnown || element != of || (slotless(of) && !(of == ir.Union && l.writable(fieldType))) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
-		statements = append(statements, ir.Declare{Local: local, Value: value})
+		value.View = sourceExpression(binding) + " (field " + field + ")"
+		value.ViewType = l.checker.TypeToString(fieldType)
+		value.ViewAllowed = l.viewLiterals(fieldType)
+		statements = append(statements, l.initializeLocal(local, value)...)
 	}
 	return statements, nil
 }
