@@ -1,3 +1,13 @@
+Superseded by the user correction: NotYet workers stay on area/compiler and
+must not merge views integration. No ABI resolution or approval is now needed
+for this unit. The attempted merge was aborted before any merge commit existed.
+Checked non-null c41c0e06 remains; ! in .a stays refused.
+
+The isolated views certification checkout was not pushed, and its tests and
+native emitter change are not carried onto codex/notyet-element-access. Its
+observations are outside this compiler-area unit and do not increase coverage
+on this branch. The original merge-attempt record follows for audit only.
+
 Views prerequisite merge is pending automatic approval review.
 
 Requested views tip: ffe428ab26eefb73154adbf570ad99e9c1b4f872.
