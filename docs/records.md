@@ -70,6 +70,43 @@ through an alias. Conversions between fixed objects and records require a proven
 copy or a representation-aware relation; an existing object cannot simply be
 reinterpreted as a dictionary.
 
+## Finite partial records
+
+A library `Partial<Record<K, V>>` with a nonempty finite union of string or
+number literal keys now uses the same dictionary storage as `MapLike<V>`.
+Program aliases, including generic aliases, resolve through the checker to the
+library utilities. Every field must be mutable, optional and have the same
+non-missing value type `V`; call signatures and additional index signatures are
+excluded. Required finite `Record<K, V>` objects retain fixed storage.
+
+The representation is chosen at creation, including a contextually typed `{}`.
+Only actual literal entries are defined; the declared optional key set does not
+preallocate own properties. A missing key reads undefined and is absent from
+`Object.keys`. An explicitly stored undefined is present in keys when `V`
+admits it. The finite view and unrestricted view share identity and storage, so
+writes and deletes through either alias are visible through the other. Existing
+record operations provide Node key order, own enumeration, iteration, spread,
+JSON, counted ownership and cycle analysis in both backends.
+
+The checker’s `GetNonMissingTypeOfSymbol` distinguishes the optional absence
+marker from an explicit undefined value in `V`. This keeps a partial number
+record in number-valued slots rather than changing its MapLike view to optional
+number slots. Mutable value invariance remains enforced: partial Dog records
+cannot acquire an Animal-valued alias, nor can number-valued records acquire an
+alias that can write undefined. Existing fixed objects cannot be reinterpreted
+as finite partial dictionaries, and dictionaries cannot acquire a fixed object
+view. Empty key sets, symbol keys, readonly shapes and unsupported value slots
+remain outside this extension.
+
+The unchanged front24 `native-partial-record-view.a` from parser proof
+`5d777de3` is `records_partial_parser.a`. It prints `0` on Node and both
+backends. `records_partial_views.a` proves shared writes/deletes and integer-key
+order; `records_partial_undefined.a` proves absent versus own undefined,
+reference values and a generic alias. The absent-entry IR mutant defines a
+missing declared field as own undefined: both backends print `1` where Node
+prints `0`, with clean native sanitizer execution. Refusal probes retain
+fixed/dictionary storage separation and mutable value invariance.
+
 ## Representation and IR
 
 The distinct counted `Record` representation with string keys and a proven
@@ -344,6 +381,72 @@ assertions. Static mutation logs recorded exit 1 for the intentionally failing
 probe; the production files were restored each time. The runtime's own nine
 mutants are documented separately below. macOS, other targets, untouched tsc
 compilation and dynamic prototype-name frequency in tsc were not tested.
+
+## Finite partial verification, October 8, 2026
+
+Merged main `f4efdd23` into the feature branch with merge commit `dfcbb5d8`.
+The expression conflict keeps both main’s enum dispatch and record dispatch;
+the counts conflict retains main’s rows and feature-only fixtures. The updated
+checker’s named file-path type required explicit string conversion at the two
+regexp-library tests. Re-greening found enum namespace objects must bypass the
+record index-signature gate; their existing enum representation is retained.
+
+The initial setup failed on those two checker API compile errors. After the
+merge compatibility fixes, setup succeeded: Go 0.085s, Node 0.086s, markdown
+0.258s, submodules 0.258s, clang 0.818s, build 82.003s, cache warm 82.713s,
+total 82.871s; `nproc` 5. Tools are Go 1.27.1, Node v24.19.0 and clang 20.1.8.
+The broad fetch attempted historical nested-submodule fetching and was stopped;
+setup fetched the pinned submodule revisions successfully instead.
+
+All test output was redirected to `/tmp/partial-record-*.log`. The final
+uncached Node oracle covers 73 fixtures, including finite partial records,
+existing records, detached own tests, optional/fixed objects and enums. Native
+sanitizer/release comparisons and normal-completion leak checks agree with Node.
+The absent-entry mutant is killed separately in native and JavaScript by stdout.
+The complete counts update covers 515 rows. Three rows are new:
+
+| Fixture | Allocations/frees | Retains/releases | Peak |
+| --- | --- | --- | --- |
+| records_partial_parser | 5/5 | 0/5 | 5 |
+| records_partial_views | 20/20 | 54/44 | 6 |
+| records_partial_undefined | 15/15 | 13/23 | 8 |
+
+The other changed rows reflect main’s borrowing improvements applied to the
+feature-only record fixtures. Their allocations, frees, peak and region counts
+are unchanged; the deliberate environment stop remains a partial execution.
+Each retain/release change is recorded here:
+
+| Fixture | Retains before/after | Releases before/after |
+| --- | --- | --- |
+| detached_own_records | 15/3 | 16/4 |
+| detached_own_objects | 12/4 | 16/8 |
+| records_discarded | 6/4 | 12/10 |
+| records_guarded_snapshot | 21/15 | 33/27 |
+| records_compare_missing_scalar | 92/75 | 104/87 |
+| records_environment_boundary | 3/1 | 2/2 |
+| records_operations | 137/136 | 99/98 |
+| records_for_in | 30/28 | 26/24 |
+| records_census | 42/38 | 49/45 |
+
+Final commands, all exit 0:
+
+```sh
+go test ./internal/lower ./internal/ir ./internal/javascript ./internal/flow ./internal/fresh -count=1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -v -run 'TestPartialRecord|TestNativeAgreesWithNode/internal/oracle/testdata/(records_|detached_own_|optional_|object_|enum)'
+go test ./internal/oracle -count=1 -run '^TestCountsAreRecorded$' -args -update-counts
+go vet ./internal/lower ./internal/ir ./internal/javascript ./internal/oracle
+gofmt -l internal/lower/expression.go internal/lower/records.go internal/lower/records_partial.go internal/lower/records_partial_test.go internal/oracle/records_partial_test.go
+git diff --check
+```
+
+Lower passed in 94.583s, IR in 29.381s, flow in 140.540s and fresh in
+102.812s; JavaScript has no package tests. The uncached oracle passed in
+55.811s (native hits 0/misses 193, Node hits 0/misses 152). Counts passed in
+85.592s; vet, formatting and whitespace logs are empty.
+
+The full repository gate, untouched tsc parser and non-Linux targets were not
+run for this unit. Empty finite key sets and conversion of existing fixed
+objects remain unsupported.
 
 ## Runtime implementation
 
