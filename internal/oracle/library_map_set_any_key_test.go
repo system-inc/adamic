@@ -51,6 +51,7 @@ func TestMapSetAnyKeyMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			changed := false
+			var collisionControl []byte
 			for _, entry := range entries {
 				if entry.IsDir() || (!strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h")) {
 					continue
@@ -61,6 +62,17 @@ func TestMapSetAnyKeyMutants(t *testing.T) {
 				}
 				if entry.Name() == "map.c" {
 					source := string(contents)
+					if mutant.kind == "objects" || mutant.kind == "classes" {
+						// The train probes hashes even for tiny maps. Different hashes
+						// can hide an equality mutant. A constant identity hash is valid:
+						// verify that collision-only control before accepting the kill.
+						before := "return (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;"
+						if strings.Count(source, before) != 1 {
+							t.Fatal("identity collision control input missing")
+						}
+						source = strings.Replace(source, before, "return 0;", 1)
+						collisionControl = []byte(source)
+					}
 					if !strings.Contains(source, mutant.before) {
 						t.Fatal("mutant input missing")
 					}
@@ -74,29 +86,43 @@ func TestMapSetAnyKeyMutants(t *testing.T) {
 			if !changed {
 				t.Fatal("mutant changed nothing")
 			}
-			options := native.Options{Sanitize: true}
-			library, err := native.RuntimeLibrary(snapshot, options)
-			if err != nil {
-				t.Fatal(err)
-			}
-			main := filepath.Join(snapshot, "main.c")
+			// Keep emitted code outside the runtime archive, including the control rebuild.
+			main := filepath.Join(t.TempDir(), "main.c")
 			if err := os.WriteFile(main, []byte(native.C(program)), 0644); err != nil {
 				t.Fatal(err)
 			}
-			binary := filepath.Join(snapshot, "mutant")
-			arguments := append(native.Flags(options), "-I", filepath.Dir(library), "-o", binary, main)
-			arguments = append(arguments, native.RuntimeLinkFlags(library)...)
-			arguments = append(arguments, "-lm", "-pthread")
-			if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
-				t.Fatalf("must compile: %v\n%s", err, output)
+			runSnapshot := func(name string) run {
+				options := native.Options{Sanitize: true}
+				library, err := native.RuntimeLibrary(snapshot, options)
+				if err != nil {
+					t.Fatal(err)
+				}
+				binary := filepath.Join(snapshot, name)
+				arguments := append(native.Flags(options), "-I", filepath.Dir(library), "-o", binary, main)
+				arguments = append(arguments, native.RuntimeLinkFlags(library)...)
+				arguments = append(arguments, "-lm", "-pthread")
+				if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
+					t.Fatalf("must compile: %v\n%s", err, output)
+				}
+				got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+				if got.exitCode != 0 || len(got.stderr) != 0 {
+					t.Fatalf("failed outside comparison: %+v", got)
+				}
+				return got
 			}
-			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
-			if got.exitCode != 0 || len(got.stderr) != 0 {
-				t.Fatalf("failed outside comparison: %+v", got)
-			}
+			got := runSnapshot("mutant")
 			truth := onNode(t, path)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
 				t.Fatalf("Node failed: %+v", truth)
+			}
+			if collisionControl != nil {
+				if err := os.WriteFile(filepath.Join(snapshot, "map.c"), collisionControl, 0644); err != nil {
+					t.Fatal(err)
+				}
+				if difference := disagreement(truth, runSnapshot("collision-control")); difference != "" {
+					t.Fatalf("valid collisions changed behavior: %s", difference)
+				}
+				t.Log("collision-only control agrees with Node")
 			}
 			if difference := disagreement(truth, got); difference != "stdout differs" {
 				t.Fatalf("want Node stdout to catch mutant, got %q", difference)

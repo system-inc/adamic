@@ -17,9 +17,6 @@ binary Adamic makes carries what is ported into the runtime, and these notices t
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
-  - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
-    after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
-    GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
   - mixed Map and Set key dispatch (`internal/native/runtime/map.c`, after
     SameValueZeroHeapNumber, SameValueZeroString, FindOrderedHashTableEntryForOtherKey
     and NormalizeNumberKey in src/builtins/builtins-collections-gen.cc, Node v24.19.0);
@@ -183,19 +180,16 @@ SOFTWARE.
 ## In the compiler
 
 The collection helper bodies in `stage1/typescript/collections/core.a` and their
-six `internal/oracle/testdata/scout19_*.a` witnesses are excerpts adapted from
+six `internal/oracle/testdata/scout19_*.a` witnesses, plus the ruled composition
+in `stage1/typescript/collections/multimap.a`, the source input
+`stage3/scout/19-slice2/multimap-composition/original.a`, and the
+`internal/oracle/testdata/scout19_slice2_*.a` witnesses are excerpts adapted from
 Microsoft TypeScript at `d92d9bfee114c80be2c375d72edae966176e3a4f`,
-`tsc/testdata/fixtures/compiler/core.ts`, `checker.ts`, `builder.ts`, and
-`transformers/classFields.ts`. Copyright (c) Microsoft Corporation, licensed
+`tsc/testdata/fixtures/compiler/core.ts`, `checker.ts`, `builder.ts`,
+`types.ts`, `path.ts`, `utilitiesPublic.ts`, and `transformers/classFields.ts`. Copyright (c) Microsoft Corporation, licensed
 under Apache License 2.0; the source notice and license are retained in
 [cohere/TypeScript/NOTICE.txt](cohere/TypeScript/NOTICE.txt) and
 [cohere/TypeScript/LICENSE.txt](cohere/TypeScript/LICENSE.txt).
-
-The test262 harness fixtures in `cmd/adamic-test262/testdata/regexp/harness/`
-are copied from tc39/test262 commit `7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd`.
-`cmd/adamic-test262/regexp_prelude.go` adapts that checkout's `regExpUtils.js`
-(Copyright (C) 2017 Mathias Bynens).
-Their BSD license is reproduced in that fixture directory's [LICENSE](cmd/adamic-test262/testdata/regexp/LICENSE).
 
 The `adamic` compiler (stage 0) is built on cohere and the TypeScript compiler it carries (typescript-go,
 Copyright (c) Microsoft Corporation, Apache License 2.0), and on the Go toolchain. Their notices are in
