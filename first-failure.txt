@@ -1,4 +1,3 @@
-FIRST FAILURE (census, at 2549.7 s):
 s:6dcd1081c12d5b6018fcc9cefc4b64e74675be953be75185fa2be02d217f45de	ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations.
 measurement	github.com/system-inc/adamic/internal/native	TestRecordBenchmark	TestRecordBenchmark:06ee23e4bcdbf34555e793a31d7dc4a10bdb21fb5c9a110c068aa7683ad1f84d	Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness.
 measurement	github.com/system-inc/adamic/internal/native	TestMeasureClangUnits	TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
@@ -18,4 +17,3 @@ skips=43 required-input=0 unknown=1
 gate skipped 0 required-input tests; 1 unclassified skips
 exit status 1
 
-red: 9f16421c7910607cd06c006b719ff126bd15a7f7 full gate, first failure at census after 2549.7 s (coverage=0.0s build=12.5s tools=0.1s vet=25.4s wasi=160.8s catalog=216.7s stage3=779.4s tests=2535.4s census=0.5s), 0 fail, 10226 pass
