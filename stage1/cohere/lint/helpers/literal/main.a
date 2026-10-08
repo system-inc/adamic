@@ -1,6 +1,8 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { OptionsJson } from '../options_json.ts';
 import { cookedBytesProducedBy } from './cooked_bytes_produced_by.a';
+import { CookedToRaw } from './cooked_to_raw.a';
+import { escapeWidthInStringLiteral } from './escape_width_in_string_literal.a';
 import { producesNoCookedBytes } from './produces_no_cooked_bytes.a';
 function field(corpus: OptionsJson, row: number, key: string): string {
     const node = corpus.node(row);
@@ -17,5 +19,7 @@ for(const row of corpus.node(root).children) {
     const kind = field(corpus, row, 'kind');
     const a = field(corpus, row, 'a');
     if(kind === 'tail') { console.log(`${producesNoCookedBytes(a)}`); }
+    else if(kind === 'width') { console.log(`${escapeWidthInStringLiteral(a,Number(field(corpus,row,'b')))}`); }
+    else if(kind === 'mapping') { const result = CookedToRaw(a,field(corpus,row,'b')); console.log(result.valid ? `[${result.offsets.join(',')}]` : 'null'); }
     else { console.log(`${cookedBytesProducedBy(a, field(corpus, row, 'b'))}`); }
 }

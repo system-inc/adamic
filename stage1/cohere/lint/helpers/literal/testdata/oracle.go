@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/system-inc/cohere/internal/lint/ecmascript/literal"
 	"os"
+	"strconv"
 )
 
 func main() {
@@ -21,6 +22,18 @@ func main() {
 	for _, r := range rows {
 		if r.Kind == "tail" {
 			fmt.Println(literal.AdamicTail(r.A))
+		} else if r.Kind == "width" {
+			i, e := strconv.Atoi(r.B)
+			if e != nil {
+				panic(e)
+			}
+			fmt.Println(literal.AdamicWidth(r.A, i))
+		} else if r.Kind == "mapping" {
+			b, e := json.Marshal(literal.CookedToRaw(r.A, r.B))
+			if e != nil {
+				panic(e)
+			}
+			fmt.Println(string(b))
 		} else {
 			fmt.Println(literal.AdamicProduced(r.A, r.B))
 		}

@@ -129,7 +129,18 @@ func TestLiteralGoAgreement(t *testing.T) {
 			if err = json.Unmarshal(data, &rows); err != nil {
 				t.Fatal(err)
 			}
-			expected := map[string]int{"no-regex-spaces": 460, "no-misleading-character-class": 1186, "controls": 82}
+			var coverage map[string]struct{ Calls int }
+			metadata, err := os.ReadFile("testdata/coverage.json")
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err = json.Unmarshal(metadata, &coverage); err != nil {
+				t.Fatal(err)
+			}
+			expected := map[string]int{}
+			for key, value := range coverage {
+				expected[key] = value.Calls
+			}
 			if len(rows) != expected[name] {
 				t.Fatalf("capture count drift: %d != %d", len(rows), expected[name])
 			}
@@ -139,7 +150,7 @@ func TestLiteralGoAgreement(t *testing.T) {
 				kinds[r.Kind]++
 				recorded.WriteString(r.Want + "\n")
 			}
-			if kinds["produced"] == 0 || kinds["tail"] == 0 {
+			if kinds["produced"] == 0 || kinds["tail"] == 0 || kinds["width"] == 0 || kinds["mapping"] == 0 {
 				t.Fatal("missing captured helper", kinds)
 			}
 
@@ -159,6 +170,8 @@ func TestLiteralMutants(t *testing.T) {
 	for _, m := range []struct{ file, old, new string }{
 		{"cooked_bytes_produced_by.a", "return width;", "return width + 1;"},
 		{"produces_no_cooked_bytes.a", "index += 2;", "index += 3;"},
+		{"escape_width_in_string_literal.a", "return 6;", "return 5;"},
+		{"cooked_to_raw.a", "return new Mapping(true,offsets);", "return new Mapping(false,offsets);"},
 	} {
 		t.Run(m.file, func(t *testing.T) {
 			root := t.TempDir()
@@ -166,7 +179,7 @@ func TestLiteralMutants(t *testing.T) {
 			if err := os.Mkdir(dir, 0755); err != nil {
 				t.Fatal(err)
 			}
-			for _, name := range []string{"main.a", "cooked_bytes_produced_by.a", "produces_no_cooked_bytes.a"} {
+			for _, name := range []string{"main.a", "cooked_bytes_produced_by.a", "produces_no_cooked_bytes.a", "escape_width_in_string_literal.a", "cooked_to_raw.a"} {
 				data, err := os.ReadFile(name)
 				if err != nil {
 					t.Fatal(err)
@@ -184,6 +197,16 @@ func TestLiteralMutants(t *testing.T) {
 				t.Fatal(err)
 			}
 			write(t, filepath.Join(root, "options_json.ts"), options)
+			if err := os.Mkdir(filepath.Join(root, "regexsyntax"), 0755); err != nil {
+				t.Fatal(err)
+			}
+			for _, name := range []string{"utf8.a", "all_hex_digits.a", "is_hex_digit.a"} {
+				data, err := os.ReadFile("../regexsyntax/" + name)
+				if err != nil {
+					t.Fatal(err)
+				}
+				write(t, filepath.Join(root, "regexsyntax", name), data)
+			}
 			for _, o := range observations(t, dir, path) {
 				if bytes.Equal(o.output, want) {
 					t.Fatalf("%s mutant survived", o.name)

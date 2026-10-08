@@ -1,3 +1,4 @@
 package literal
 func AdamicProduced(a,b string)int{return cookedBytesProducedBy(a,b)}
 func AdamicTail(a string)bool{return producesNoCookedBytes(a)}
+func AdamicWidth(a string,i int)int{return escapeWidthInStringLiteral(a,i)}

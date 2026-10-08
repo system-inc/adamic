@@ -1,0 +1,4 @@
+const literal = /  foo   /;
+const constructor = new RegExp("\\\\d  bar   ");
+const unicode = RegExp("👍   end");
+const nested = new RegExp("[[    ]    ]    ", "v");
