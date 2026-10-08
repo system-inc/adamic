@@ -5,8 +5,9 @@ import { lowerSourceAt } from './lower.ts';
 import { ConstructedHIR } from './core.ts';
 import { HIRFile, ForFunction } from './cache.ts';
 import { SymbolSnapshot } from './symbol.ts';
+import { CloneFunction } from './clone.ts';
 import { dump } from './dump.ts';
-export function constructionCoverage(path: string, cached: boolean = false): void {
+export function constructionCoverage(path: string, cached: boolean = false, cloned: boolean = false): void {
     const manifest = readTextFile(path);
     if(manifest.kind === 'Error') { panic(manifest.message); }
     for(const line of manifest.text.split('\n')) {
@@ -38,6 +39,7 @@ export function constructionCoverage(path: string, cached: boolean = false): voi
             if(cached) { const file = new HIRFile(source.text, undefined, fields[1] ?? '/test.tsx', fields[13] === 'true'); if(ForFunction(file, file.at(start, end)) !== undefined) { panic('checker-less cache constructed'); } }
             fn = lowerSourceAt(source.text, start, end, symbols, nestedPath, fields[1] ?? '/test.tsx', fields[13] === 'true') ?? panic(`eligible construction declined: ${key}`);
         }
+        if(cloned) { const original = dump(fn); const copy = CloneFunction(fn); if(dump(copy) !== original) { panic('clone changes hir-v1'); } copy.arena.read(copy.root).params.pop(); copy.arena.read(copy.root).blockOrder.pop(); if(dump(fn) !== original) { panic('clone aliases mutable graph storage'); } }
         console.log(dump(fn).trimEnd());
     }
 }

@@ -25,21 +25,22 @@ import (
 )
 
 type constructionRecord struct {
-	Extension  string   `json:"extension"`
-	Key        string   `json:"key"`
-	Source     string   `json:"source"`
-	Start      int      `json:"start"`
-	End        int      `json:"end"`
-	Checker    bool     `json:"checker"`
-	Dump       string   `json:"dump"`
-	Functions  int      `json:"functions"`
-	Eligible   bool     `json:"eligible"`
-	Calls      []string `json:"calls"`
-	Symbols    string   `json:"symbols"`
-	RootStart  int      `json:"rootStart"`
-	RootEnd    int      `json:"rootEnd"`
-	NestedPath string   `json:"nestedPath"`
-	Excluded   string   `json:"excluded"`
+	CloneBeforeSSA bool     `json:"cloneBeforeSSA"`
+	Extension      string   `json:"extension"`
+	Key            string   `json:"key"`
+	Source         string   `json:"source"`
+	Start          int      `json:"start"`
+	End            int      `json:"end"`
+	Checker        bool     `json:"checker"`
+	Dump           string   `json:"dump"`
+	Functions      int      `json:"functions"`
+	Eligible       bool     `json:"eligible"`
+	Calls          []string `json:"calls"`
+	Symbols        string   `json:"symbols"`
+	RootStart      int      `json:"rootStart"`
+	RootEnd        int      `json:"rootEnd"`
+	NestedPath     string   `json:"nestedPath"`
+	Excluded       string   `json:"excluded"`
 }
 
 var constructionRecords = map[string]*constructionRecord{}
@@ -72,6 +73,10 @@ func constructionExpression(n *ast.Node) bool {
 				}
 			case ast.KindShorthandPropertyAssignment:
 				if member.Name().Kind != ast.KindIdentifier {
+					return false
+				}
+			case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
+				if !constructionEligible(member) {
 					return false
 				}
 			case ast.KindPropertyAssignment:
@@ -215,10 +220,10 @@ func constructionExpression(n *ast.Node) bool {
 		}
 		return constructionExpression(x.Left) && constructionExpression(x.Right)
 	}
-	return false
+	return true
 }
 func constructionEligible(node *ast.Node) bool {
-	if node.Kind != ast.KindFunctionDeclaration && node.Kind != ast.KindFunctionExpression && node.Kind != ast.KindArrowFunction {
+	if functionBody(node) == nil {
 		return false
 	}
 	body := functionBody(node)
@@ -228,7 +233,7 @@ func constructionEligible(node *ast.Node) bool {
 	if parameters := functionParameters(node); parameters != nil {
 		for _, p := range parameters.Nodes {
 			x := p.AsParameterDeclaration()
-			if x.Name().Kind != ast.KindIdentifier {
+			if x.Name() == nil {
 				return false
 			}
 		}
@@ -244,7 +249,7 @@ func constructionInitializer(node *ast.Node) bool {
 	}
 	for _, decl := range node.AsVariableDeclarationList().Declarations.Nodes {
 		d := decl.AsVariableDeclaration()
-		if d.Name().Kind != ast.KindIdentifier || (d.Initializer != nil && !constructionExpression(d.Initializer)) {
+		if d.Name() == nil || (d.Initializer != nil && !constructionExpression(d.Initializer)) {
 			return false
 		}
 	}
@@ -309,7 +314,7 @@ func constructionStatement(statement *ast.Node) bool {
 			c := x.CatchClause.AsCatchClause()
 			if c.VariableDeclaration != nil {
 				d := c.VariableDeclaration.AsVariableDeclaration()
-				if d.Name().Kind != ast.KindIdentifier || d.Type != nil {
+				if d.Name() == nil {
 					return false
 				}
 			}
@@ -332,7 +337,7 @@ func constructionStatement(statement *ast.Node) bool {
 	case ast.KindEmptyStatement:
 		return true
 	}
-	return false
+	return true
 }
 
 func constructionObserve(f *Function, typeChecker *checker.Checker, caller string, constructed bool) {
@@ -347,9 +352,9 @@ func constructionObserve(f *Function, typeChecker *checker.Checker, caller strin
 	if !constructed {
 		Construct(clone)
 	}
-	constructionStore(clone, typeChecker != nil, constructionSymbols(source, typeChecker), caller, clone.Node, "")
+	constructionStore(clone, typeChecker != nil, constructionSymbols(source, typeChecker), caller, clone.Node, "", !constructed)
 }
-func constructionStore(clone *Function, checked bool, symbols string, caller string, root *ast.Node, path string) {
+func constructionStore(clone *Function, checked bool, symbols string, caller string, root *ast.Node, path string, cloneBeforeSSA bool) {
 	source := ast.GetSourceFileOfNode(clone.Node)
 	if source == nil {
 		return
@@ -389,7 +394,7 @@ func constructionStore(clone *Function, checked bool, symbols string, caller str
 			old.NestedPath = nestedPath
 		}
 	} else {
-		constructionRecords[key] = &constructionRecord{Extension: extension, Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: eligible, RootStart: rootStart, RootEnd: rootEnd, NestedPath: nestedPath, Calls: []string{caller}, Symbols: symbols, Excluded: excluded}
+		constructionRecords[key] = &constructionRecord{CloneBeforeSSA: cloneBeforeSSA, Extension: extension, Key: key, Source: source.Text(), Start: f.Node.Pos(), End: f.Node.End(), Checker: checked, Dump: dump, Functions: 1, Eligible: eligible, RootStart: rootStart, RootEnd: rootEnd, NestedPath: nestedPath, Calls: []string{caller}, Symbols: symbols, Excluded: excluded}
 	}
 	constructionMutex.Unlock()
 	for index, nested := range clone.Functions {
@@ -397,7 +402,7 @@ func constructionStore(clone *Function, checked bool, symbols string, caller str
 		if path != "" {
 			next = path + "," + next
 		}
-		constructionStore(nested, checked, symbols, caller+"/nested", root, next)
+		constructionStore(nested, checked, symbols, caller+"/nested", root, next, cloneBeforeSSA)
 	}
 }
 
@@ -484,7 +489,7 @@ func TestMain(m *testing.M) {
 			if err := os.WriteFile(dumpPath, []byte(r.Dump), 0600); err != nil {
 				panic(err)
 			}
-			fmt.Fprintf(&manifest, "%s\t%s\t%d\t%d\t%t\t%s\t%d\t%t\t%s\t%s\t%d\t%d\t%s\n", key, sourcePath, r.Start, r.End, r.Checker, dumpPath, r.Functions, r.Eligible, symbolsPath, r.Excluded, r.RootStart, r.RootEnd, r.NestedPath)
+			fmt.Fprintf(&manifest, "%s\t%s\t%d\t%d\t%t\t%s\t%d\t%t\t%s\t%s\t%d\t%d\t%s\t%t\n", key, sourcePath, r.Start, r.End, r.Checker, dumpPath, r.Functions, r.Eligible, symbolsPath, r.Excluded, r.RootStart, r.RootEnd, r.NestedPath, r.CloneBeforeSSA)
 			total += r.Functions
 			if r.Eligible {
 				eligible += r.Functions
@@ -523,6 +528,10 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function Patterns({a: {b = 1}, [key()]: c, ...rest}, [x, , y = 2, ...tail]) { const {q = 3, renamed: r} = rest; let [z, , ...end] = tail; for (const {item} of end) { z = item; } return [b,c,x,y,q,r,z]; }",
+		"function MethodShapes(value) { return { get x() { return value; }, set x(next) { value = next; }, async *[value]() { return value; }, method() { return value; } }; }",
+		"function Unknown() { debugger; type T = number; interface I { x: string }; class C {} return class {}; }",
+		"function* Yield(value) { yield value; return import.meta; }",
 		"function Optional(value, key) { value?.x.y; value?.[key]; value?.method(); return value[key]?.(); }",
 		"export async function Typed<T>(value: T, other?: number, ...rest: unknown[]): Promise<T> { return await value; }",
 		"function Defaults(value = make()) { const typed: number = 1; let empty: string; return value; }",
@@ -603,7 +612,7 @@ func constructionTarget(n *ast.Node) bool {
 	if n.Kind == ast.KindParenthesizedExpression {
 		return constructionTarget(n.Expression())
 	}
-	return n.Kind == ast.KindIdentifier || (n.Kind == ast.KindPropertyAccessExpression || n.Kind == ast.KindElementAccessExpression) && constructionExpression(n)
+	return n.Kind == ast.KindAsExpression || n.Kind == ast.KindTypeAssertionExpression || n.Kind == ast.KindSatisfiesExpression || n.Kind == ast.KindObjectLiteralExpression || n.Kind == ast.KindArrayLiteralExpression || n.Kind == ast.KindIdentifier || (n.Kind == ast.KindPropertyAccessExpression || n.Kind == ast.KindElementAccessExpression) && constructionExpression(n)
 }
 func constructionFrame(s string) string {
 	return fmt.Sprintf("%d\n%s", len(utf16.Encode([]rune(s))), s)

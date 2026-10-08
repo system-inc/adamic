@@ -1,0 +1,3 @@
+class Index { readonly slot: number; private constructor(slot: number) { this.slot = slot; } static push(): Index { return new Index(0); } }
+const index = Index.push();
+console.log(`${{...{slot: index.slot}}.slot}`);

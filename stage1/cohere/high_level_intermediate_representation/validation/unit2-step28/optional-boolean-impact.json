@@ -1,0 +1,620 @@
+[
+  {
+    "key": "01e82c4db857d54a15a45c2a1b5610fa6937f480ac6fd99ba5b1734e60355a3a",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:optional-member-expression-single.js"
+    ]
+  },
+  {
+    "key": "04696663c5fbcc1ce599cd146318eec43a85877ac355efe66edf4f3a0ef6e52a",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:optional-member-expression-inverted-optionals-parallel-paths.js"
+    ]
+  },
+  {
+    "key": "082567aca57ee46cd9f06fc0d8f62e3563017785be933a660372cd46f82a958c",
+    "calls": [
+      "dependency_oracle_test.go:455/nested"
+    ]
+  },
+  {
+    "key": "08cbcd57a9bf1f90013295af2ec29f74aff25df09310cfa50a05559d7de6d0d5",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "upstream:error.hoist-optional-member-expression-with-conditional-optional.js"
+    ]
+  },
+  {
+    "key": "08f25edcbc2defd8166cf2570205024f8abbbd4675c8ae12990940abe82d1948",
+    "calls": [
+      "preserve_manual_memoization_score_test.go:552"
+    ]
+  },
+  {
+    "key": "09dec40bbfa38c98a6b727d20c26521f8b0eecb8e840647abac160cd1a7dda12",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:propagate-scope-deps-hir-fork/optional-member-expression-as-memo-dep.js"
+    ]
+  },
+  {
+    "key": "1074fd10913d2ac2421945921fabb00ec5dd55095128e68343230155552c7c53",
+    "calls": [
+      "preserve_manual_memoization_score_test.go:552"
+    ]
+  },
+  {
+    "key": "136e766869f16c5410d3a954a0d0e30aa62e6552013c83482ec0aa93e6da85d8",
+    "calls": [
+      "dependency_oracle_test.go:455"
+    ]
+  },
+  {
+    "key": "19c36455509526d76393b7fa580b481c4be636213dfd2b6daa5336762489b663",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "upstream:error.invalid-optional-member-expression-as-memo-dep-non-optional-in-body.js"
+    ]
+  },
+  {
+    "key": "1bb60c714e9bc1b45c4a322ca2bcd124fae0d447f09a1b875fb6698699cf02a3",
+    "calls": [
+      "ranges_test.go:38"
+    ]
+  },
+  {
+    "key": "2496984b91629289462dd34bf3ebf142271e20c3bd984c50b43bf5bc89db11e7",
+    "calls": [
+      "upstream:exhaustive-deps/error.invalid-exhaustive-deps.js/nested"
+    ]
+  },
+  {
+    "key": "25ffe375b53420e767aa0d35e99203a76492c90e8013ba3a4374d34c5bb2b8b4",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:preserve-memo-deps-optional-property-chain.js/nested"
+    ]
+  },
+  {
+    "key": "276e86b13522e8b23acbf55ec4d472e8e2f6d18ef9adc9d974833d20714a4386",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:optional-member-expression-inverted-optionals-parallel-paths.js/nested"
+    ]
+  },
+  {
+    "key": "2a8a3bc30d11299c977c0e312611c6733a907ab05f6924f084941cf13b795099",
+    "calls": [
+      "preserve_manual_memoization_score_test.go:552"
+    ]
+  },
+  {
+    "key": "3bddf4c68c7cd2797bd58201e4ff5b01a40129e0cbb4240ac862c219842bbd6c",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:preserve-memo-validation/useMemo-conditional-access-alloc.ts"
+    ]
+  },
+  {
+    "key": "46d2bb248b4b74f9a5ac2ba6a459c9adabbd12eac7ff98287196bc71a0dad8aa",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "upstream:error.todo-preserve-memo-deps-mixed-optional-nonoptional-property-chain.js/nested"
+    ]
+  },
+  {
+    "key": "4c4a4492998acd4141186f37822784508b771520b6fedaa253dabe6931a50b6c",
+    "calls": [
+      "preserve_manual_memoization_score_test.go:552/nested"
+    ]
+  },
+  {
+    "key": "523b131c4035866a7bfc963bca0c4f76c05c97284b34a0d07370f4bfc9156eeb",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:optional-member-expression-single-with-unconditional.js/nested"
+    ]
+  },
+  {
+    "key": "5426fc8cdae26efbb0ed538ca52257d0fa767b4e08637fd194e9e89017d713c2",
+    "calls": [
+      "upstream:error.ref-optional.js"
+    ]
+  },
+  {
+    "key": "55ef2cdad5bca342bce907a757991b782cac4aa6326d809f77fdac3aea67a24d",
+    "calls": [
+      "preserve_manual_memoization_score_test.go:552/nested"
+    ]
+  },
+  {
+    "key": "5a29cd57cf3a6099adc334d2bf2e78040570e65c51a8dd0820c6e8eafe05bc01",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:preserve-memo-validation/useMemo-conditional-access-noAlloc.ts/nested"
+    ]
+  },
+  {
+    "key": "5ee256a0c82e81726fafbbe98d65562b7faba7c57c38876bc295eed77bfcf174",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:propagate-scope-deps-hir-fork/optional-member-expression-single.js/nested"
+    ]
+  },
+  {
+    "key": "5fc7c18d118927fe140c6cbff214e0eafb4304f00f0e9a01a53f75b75b05da1b",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:optional-member-expression-single.js/nested"
+    ]
+  },
+  {
+    "key": "614fac42e79c29ceb193bb8ddd04ae420816318a4372cb0704a2af2a1d4f43be",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "upstream:propagate-scope-deps-hir-fork/error.todo-optional-member-expression-with-conditional.js"
+    ]
+  },
+  {
+    "key": "679a1ea0cb94837e40739f35b26a734f1b20a3abbeadef8590d598b43683c5a4",
+    "calls": [
+      "dependency_oracle_test.go:455/nested/nested",
+      "memo_block_scope_oracle_test.go:272/nested/nested",
+      "preserve_manual_memoization_score_test.go:552/nested/nested",
+      "prune_non_escaping_scopes_test.go:445/nested/nested",
+      "scope_oracle_test.go:200/nested/nested",
+      "upstream:preserve-memo-deps-optional-property-chain.js/nested/nested"
+    ]
+  },
+  {
+    "key": "68eecdd6fa096ab6498344cfebfe3c98cae405453f971ffd482bf7df2dc0f7cb",
+    "calls": [
+      "preserve_manual_memoization_score_test.go:552"
+    ]
+  },
+  {
+    "key": "6ce1f68ee9bfac15206f82f9e8ead4340e6d489d0dd82a174216aef011da5be7",
+    "calls": [
+      "preserve_manual_memoization_score_test.go:552/nested"
+    ]
+  },
+  {
+    "key": "6e1ebdad470fe1bf92e463d1ae1b118296a6096aee8a84cc66ba865f8d68d523",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:optional-member-expression-as-memo-dep.js/nested"
+    ]
+  },
+  {
+    "key": "722a42f50058588e719c5d8e7da2de6d48599ef6cd7264687eff5c0d8cb1da63",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "upstream:propagate-scope-deps-hir-fork/error.todo-optional-member-expression-with-conditional.js/nested"
+    ]
+  },
+  {
+    "key": "739a01396d54b903bf49c2ba69b54dbd883b9cb1c94b9467108060b09e02db5c",
+    "calls": [
+      "upstream:exhaustive-deps/error.invalid-exhaustive-deps.js/nested"
+    ]
+  },
+  {
+    "key": "74518f90b0d8ec2d114d32a3ef6b7ad7379a6b18512007a073ec6eda6c2a13c9",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:preserve-memo-deps-optional-property-chain.js"
+    ]
+  },
+  {
+    "key": "74c1d5360c98518614e1130982f897f680b2c32630c7842e69d1acca0c1d253b",
+    "calls": [
+      "inline_iife_test.go:43"
+    ]
+  },
+  {
+    "key": "7585abeecdab90f057ab1bf082937227008263a597a59ce31e9cdb073014b22f",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "upstream:error.hoist-optional-member-expression-with-conditional.js"
+    ]
+  },
+  {
+    "key": "76dea06aa36f6a81991b6f64d6d82787467e57ed981cec195e12df08608af2c6",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:propagate-scope-deps-hir-fork/optional-member-expression-single-with-unconditional.js/nested"
+    ]
+  },
+  {
+    "key": "7d84ee951fed8927643e7c6530cb25f5a9dd16e4699b800e7e5714d90bae2507",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "upstream:error.hoist-optional-member-expression-with-conditional-optional.js/nested"
+    ]
+  },
+  {
+    "key": "803ec75e3b5f72190e28386b59a2479c052aba5b8104635ceb40d285b771ee49",
+    "calls": [
+      "drop_manual_memoization_deps_test.go:202"
+    ]
+  },
+  {
+    "key": "81da27b26e69e76ae441ef2ff7c170a2742a28a2f97656007e7a15bb80d13919",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:propagate-scope-deps-hir-fork/optional-member-expression-single-with-unconditional.js"
+    ]
+  },
+  {
+    "key": "830883fa4d533ff5fd426da0d9d0bd5112527a3ae81ca27f5fadca577ce1a6f5",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "upstream:preserve-memo-validation/error.useCallback-infer-less-specific-conditional-access.ts/nested"
+    ]
+  },
+  {
+    "key": "884191b5aacae48c8520e3a6ad24bc11bfe8d70fe37d92a9921307ae1d71c15b",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "upstream:propagate-scope-deps-hir-fork/error.todo-optional-member-expression-with-conditional-optional.js/nested"
+    ]
+  },
+  {
+    "key": "8877531e2471dda91d200d4c11bd0531c4d9b08bc75e0070ec79f7a6891785dd",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:propagate-scope-deps-hir-fork/optional-member-expression-as-memo-dep.js/nested"
+    ]
+  },
+  {
+    "key": "8abb228ecaae8318b48254c448912d8d3ebd33a11d66c30b7885faa1e2e62ef9",
+    "calls": [
+      "drop_manual_memoization_deps_test.go:202"
+    ]
+  },
+  {
+    "key": "8cf6f0b802cd11dd74a818d5640ca09ee4f68b5adc1d2fe035c86a7386035a09",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:optional-member-expression-single-with-unconditional.js"
+    ]
+  },
+  {
+    "key": "a0a1d01f6b961e9aaa67ba52b6a02dad576d7b234c04a2c57416786fd05b533f",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:propagate-scope-deps-hir-fork/optional-member-expression-inverted-optionals-parallel-paths.js"
+    ]
+  },
+  {
+    "key": "a2b6c09edbe76d48467b5e7985e8df450808b4661cf136abe19bf26f24985b85",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:optional-member-expression-as-memo-dep.js"
+    ]
+  },
+  {
+    "key": "a80094e56efbbd64e0018e265d8015eb7fa72f65ea58124aedd25613b325790b",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "upstream:preserve-memo-validation/error.useMemo-infer-less-specific-conditional-access.ts"
+    ]
+  },
+  {
+    "key": "a9b16fe961b68c36e584dec3eb67f18dc100bcba3939dbe6ed22f755fd9319b7",
+    "calls": [
+      "dependency_oracle_test.go:455/nested"
+    ]
+  },
+  {
+    "key": "aa5be4f2b4f1b34dbf6d9745efc5ae96210ec084b82d15bcdf00f6622ca4c7f8",
+    "calls": [
+      "ranges_test.go:38"
+    ]
+  },
+  {
+    "key": "ad8007a0b3ad9f7e69bcd64ed0e9bdf0aa88d155760a4867e99abe5192f737a3",
+    "calls": [
+      "capture_test.go:35"
+    ]
+  },
+  {
+    "key": "adb43192c6948a695a1aebbb2eb006adfe06b7a6f805767aa5d20fbc588c312c",
+    "calls": [
+      "ranges_test.go:38"
+    ]
+  },
+  {
+    "key": "aee7ea443474b6526112cd7a0a3c6acf8f7075e21d74d024b6ba6922733197f4",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:preserve-memo-validation/useMemo-conditional-access-noAlloc.ts"
+    ]
+  },
+  {
+    "key": "b26bf071dee3d8b603cc64c0c41084cd6de7842abf840b021cbb0b5610dc7e71",
+    "calls": [
+      "ranges_test.go:38"
+    ]
+  },
+  {
+    "key": "be34589773d12f246849c715495ddf5154a22382b23c51db92d4fc393a618345",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "upstream:preserve-memo-validation/error.useMemo-infer-less-specific-conditional-access.ts/nested"
+    ]
+  },
+  {
+    "key": "c1e7a416f7c9bc65c9faa40ca50d19acd19526179dd53295e82a8f23c50c9759",
+    "calls": [
+      "upstream:exhaustive-deps/error.invalid-exhaustive-deps.js"
+    ]
+  },
+  {
+    "key": "c4b8de157018b136f6690447fbfe925ac025661ade84267fbdc4fda85dafeaa5",
+    "calls": [
+      "upstream:exhaustive-deps/error.invalid-exhaustive-deps.js/nested"
+    ]
+  },
+  {
+    "key": "c521292e6f8345fb691603a80486c74c78d669e5d869ef0d701309990122e137",
+    "calls": [
+      "drop_manual_memoization_deps_test.go:202"
+    ]
+  },
+  {
+    "key": "c7092f563bcc25ebcacad68d9f4f80fdaa46de26f0391eeb81d679cc5c8d007b",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "upstream:propagate-scope-deps-hir-fork/error.todo-optional-member-expression-with-conditional-optional.js"
+    ]
+  },
+  {
+    "key": "c7b75bd74868b23314736020470f4ad5ed89b58028aebdfd08792f4adbab2cf7",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:preserve-memo-validation/useMemo-conditional-access-alloc.ts/nested"
+    ]
+  },
+  {
+    "key": "c85d005c30b4748e4de1a7da4f4f29624e9c255fdc86555f0b4ac4d73732a19d",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "upstream:error.hoist-optional-member-expression-with-conditional.js/nested"
+    ]
+  },
+  {
+    "key": "cc5612bb2edb5a51935f65ebdce93e2d1e14cc338483bf4cd0a1685e621a9665",
+    "calls": [
+      "dependency_oracle_test.go:455/nested",
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "scope_oracle_test.go:200/nested",
+      "upstream:propagate-scope-deps-hir-fork/optional-member-expression-inverted-optionals-parallel-paths.js/nested"
+    ]
+  },
+  {
+    "key": "cd3796d1de73c40fe29d12179fbeb63a6660e8da31ac2881e774942d5f0f0cfd",
+    "calls": [
+      "preserve_manual_memoization_score_test.go:552"
+    ]
+  },
+  {
+    "key": "cde7967d76432a3bc2b7137342aa12d9013f9fd5dc201b9af1541db5005369b8",
+    "calls": [
+      "ranges_test.go:38"
+    ]
+  },
+  {
+    "key": "cf8c727d764a452a876830a9392cd2eb4452cdd8954001dd6274693958c95f58",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272/nested/nested",
+      "preserve_manual_memoization_score_test.go:552/nested/nested",
+      "prune_non_escaping_scopes_test.go:445/nested/nested",
+      "upstream:error.todo-preserve-memo-deps-mixed-optional-nonoptional-property-chain.js/nested/nested"
+    ]
+  },
+  {
+    "key": "d214eb6264ac62f35aa465cb57a41611716e9cafdd1f6532c45b4b79241cde00",
+    "calls": [
+      "inline_iife_test.go:43/nested"
+    ]
+  },
+  {
+    "key": "d9074ed9d22405c6119c2110c20c4c09b33b67b8312ff25ca4504fab6e5abf98",
+    "calls": [
+      "drop_manual_memoization_deps_test.go:202/nested"
+    ]
+  },
+  {
+    "key": "e037e15277ff8235ec5d8ad81d5338a635a39d718f6cfb1ce4430f1067aa72e3",
+    "calls": [
+      "upstream:exhaustive-deps/error.invalid-exhaustive-deps.js/nested"
+    ]
+  },
+  {
+    "key": "e0906596e6943685e9808511571e204537d1d22674b32d8963199636981c264a",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:propagate-scope-deps-hir-fork/optional-member-expression-single.js"
+    ]
+  },
+  {
+    "key": "e7271fbde780924246227622c765964bb080e9576d1a83fd11171812a96956f5",
+    "calls": [
+      "capture_test.go:35"
+    ]
+  },
+  {
+    "key": "ed1a7036507fd9a0696c597c5aedf1da52b462c13645db067f82ea2d45d2cda7",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "upstream:preserve-memo-validation/error.useCallback-conditional-access-noAlloc.ts"
+    ]
+  },
+  {
+    "key": "ed2e6b0cc42a0a8d6fc664c3d3772a1c21dcf964df02f78b5d6722927f96da65",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272/nested",
+      "preserve_manual_memoization_score_test.go:552/nested",
+      "prune_non_escaping_scopes_test.go:445/nested",
+      "upstream:preserve-memo-validation/error.useCallback-conditional-access-noAlloc.ts/nested"
+    ]
+  },
+  {
+    "key": "ede4f4c08f01a1aba9f0241bd1eaed0648a836aef3dcb2a23a4ee4f1fef6e169",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "upstream:error.todo-preserve-memo-deps-mixed-optional-nonoptional-property-chain.js"
+    ]
+  },
+  {
+    "key": "f15dd1e1836889c9a07980707be1feafe449d447790c5e6755e56d43033d77a5",
+    "calls": [
+      "ranges_test.go:38"
+    ]
+  },
+  {
+    "key": "f48b9357ab139b01a7c2fdd5fb059ccdcd88992cacf2c89ffac590c993fa9013",
+    "calls": [
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "upstream:preserve-memo-validation/error.useCallback-infer-less-specific-conditional-access.ts"
+    ]
+  },
+  {
+    "key": "f75606b97a5485c5e2fa1db04b6cc92edf677c80456eea1831d6ccdd09b9303c",
+    "calls": [
+      "dependency_oracle_test.go:455"
+    ]
+  },
+  {
+    "key": "fdc56ea22ff7d1de59f1b8df0e2838b54b24df180cf0f3f13128a1f522cd8f4c",
+    "calls": [
+      "dependency_oracle_test.go:455",
+      "memo_block_scope_oracle_test.go:272",
+      "preserve_manual_memoization_score_test.go:552",
+      "prune_non_escaping_scopes_test.go:445",
+      "scope_oracle_test.go:200",
+      "upstream:repro-slow-validate-preserve-memo.ts"
+    ]
+  }
+]

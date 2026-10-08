@@ -1,0 +1,136 @@
+=== RUN   TestHIRStaticComponentsCertificate
+    stage1_hir_certificate_test.go:19: checker compilation phases: load=364.827896ms lower=20.769546382s C=1.387935812s JavaScript=61.519665ms
+    stage1_hir_certificate_test.go:19: checker native build: 2m21.64580436s
+    lint_test.go:295: cohere cases: 5227 unique source/rule/options combinations
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=152.681357ms native program, lint and recording=133.119292ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=133.119292ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=531.746528ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=133.659757ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 766 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=94.084395ms native program, lint and recording=124.8971ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=124.8971ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=555.672175ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=137.238649ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 852 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=98.183599ms native program, lint and recording=126.93308ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=126.93308ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=442.905778ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=109.824333ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 833 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=172.683592ms native program, lint and recording=139.344787ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=139.344787ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=528.923698ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=122.306229ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 839 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=99.151701ms native program, lint and recording=117.870453ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=117.870453ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=513.219114ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=118.10448ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 819 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=99.278497ms native program, lint and recording=131.758957ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=131.758957ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=525.091394ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=122.519933ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 884 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=97.926905ms native program, lint and recording=108.224874ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=108.224874ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=532.729278ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=122.532175ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 940 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=84.494884ms native program, lint and recording=117.405368ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=117.405368ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=612.57247ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=114.741202ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 128 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=87.305102ms native program, lint and recording=132.843961ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=132.843961ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=610.046607ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=143.143051ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 712 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=78.602034ms native program, lint and recording=111.130347ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=111.130347ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=510.657337ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=121.435802ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 718 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=92.007387ms native program, lint and recording=118.031057ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=118.031057ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=538.055502ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=117.35016ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 760 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=91.53154ms native program, lint and recording=126.949639ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=126.949639ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=512.500525ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=106.968366ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 158 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=120.843099ms native program, lint and recording=134.298583ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=134.298583ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=552.600811ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=121.059238ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 714 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=86.455825ms native program, lint and recording=116.742269ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=116.742269ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=541.243462ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=118.334645ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 131 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=121.571714ms native program, lint and recording=137.336487ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=137.336487ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=575.427065ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=148.92512ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 95 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=111.906734ms native program, lint and recording=143.029084ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=143.029084ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=541.843044ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=117.287984ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 108 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=93.69977ms native program, lint and recording=182.624717ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=182.624717ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=620.321297ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=122.035252ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 895 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=103.817749ms native program, lint and recording=122.689415ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=122.689415ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=550.92032ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=124.65074ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 141 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=91.398241ms native program, lint and recording=110.516317ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=110.516317ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=615.761265ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=132.905755ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 826 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=114.593029ms native program, lint and recording=123.193381ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=123.193381ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=1.016101887s
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=197.27119ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 86 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=200.499275ms native program, lint and recording=164.619192ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=164.619192ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=604.769034ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=138.97312ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 197 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=109.202055ms native program, lint and recording=111.323426ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=111.323426ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=1.069515548s
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=285.027727ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 90 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=230.597156ms native program, lint and recording=529.656048ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=529.656048ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=773.000789ms
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=131.021546ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 766 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=248.735015ms native program, lint and recording=450.45028ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=450.45028ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=2.288777963s
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=330.430528ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 763 bytes
+    stage1_hir_certificate_test.go:42: typed runtime time: Go program and lint=212.329924ms native program, lint and recording=194.536788ms
+    stage1_hir_certificate_test.go:42: typed runtime time: native=194.536788ms
+    stage1_hir_certificate_test.go:42: typed runtime time: Node=1.680395452s
+    stage1_hir_certificate_test.go:42: typed runtime time: emitted JavaScript=193.871714ms
+    stage1_hir_certificate_test.go:42: live Go, native, Node and emitted JavaScript replay identical: 741 bytes
+    stage1_hir_certificate_test.go:44: static-components: 22 upstream cases and 3 owned witnesses match Go on Node, emitted JS and native
+    lint_test.go:147: checker compilation phases: load=446.368914ms lower=20.210870078s C=1.265930377s JavaScript=115.036715ms
+    lint_test.go:155: checker native mutant build: 2m4.934227537s
+    stage1_hir_certificate_test.go:67: static-components creation mutant caught on native and Node
+--- PASS: TestHIRStaticComponentsCertificate (410.35s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	410.620s

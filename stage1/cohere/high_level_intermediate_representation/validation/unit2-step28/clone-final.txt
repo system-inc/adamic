@@ -1,0 +1,6 @@
+=== RUN   TestCloneFunctionNodeOracle
+    clone_test.go:24: Node-only CloneFunction: 1514/1537 including probes; native blocked by gap 2
+    clone_test.go:56: Node catches clone storage alias at the checked block arena read
+--- PASS: TestCloneFunctionNodeOracle (1.90s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation	1.918s

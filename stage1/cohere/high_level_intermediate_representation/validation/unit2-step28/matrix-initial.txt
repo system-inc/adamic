@@ -1,0 +1,199 @@
+=== RUN   TestFileFunctionCacheOracle
+    cache_test.go:69: live native resident-checker ForFunction matches Go without a replay snapshot
+    cache_test.go:71: 3 function cache entries match Go, repeated identities and checker gating
+    cache_test.go:106: fresh-lowering cache-hit mutant executes and disagrees with Go on both backends
+--- PASS: TestFileFunctionCacheOracle (61.55s)
+=== RUN   TestWholeConstructionCensus
+    construction_test.go:110: HIR construction census: 1537 context-distinct functions in 1537 records; 1514 eligible; 395 fixtures (40 Flow exclusions)
+    construction_test.go:113: optional boolean semantic impact: 74/1465 original graphs; 1391 do not read that field
+    construction_test.go:128: ForFunction cache matches every admitted checker-backed row; checker-less cache requests decline
+    construction_test.go:130: 1514/1537 context-distinct functions match Go on Node and natively; remaining rows are explicit declines
+    construction_test.go:131: 45 Go tests skipped; names recorded in go-tests.log
+=== RUN   TestWholeConstructionCensus/catches_pattern_rest_dropped
+=== RUN   TestWholeConstructionCensus/catches_pattern_default_dropped
+=== RUN   TestWholeConstructionCensus/catches_pattern_hole_dropped
+=== RUN   TestWholeConstructionCensus/catches_pattern_computed_key_dropped
+=== RUN   TestWholeConstructionCensus/catches_catch_pattern_kind_changes
+=== RUN   TestWholeConstructionCensus/catches_assignment_target_reason_changes
+=== RUN   TestWholeConstructionCensus/catches_object_method_key_changes
+=== RUN   TestWholeConstructionCensus/catches_unsupported_reason_changes
+=== RUN   TestWholeConstructionCensus/catches_debugger_becomes_unknown
+=== RUN   TestWholeConstructionCensus/catches_meta_property_changes_name
+=== RUN   TestWholeConstructionCensus/catches_optional_property_loses_marker
+=== RUN   TestWholeConstructionCensus/catches_optional_computed_loses_marker
+=== RUN   TestWholeConstructionCensus/catches_async_function_loses_flag
+=== RUN   TestWholeConstructionCensus/catches_generator_loses_flag
+=== RUN   TestWholeConstructionCensus/catches_await_loses_operand
+=== RUN   TestWholeConstructionCensus/catches_typed_binding_changes_declaration_kind
+=== RUN   TestWholeConstructionCensus/catches_cast_changes_type_span
+=== RUN   TestWholeConstructionCensus/catches_property_delete_changes_key
+=== RUN   TestWholeConstructionCensus/catches_computed_delete_loses_key
+=== RUN   TestWholeConstructionCensus/catches_regex_flags_disappear
+=== RUN   TestWholeConstructionCensus/catches_template_operand_disappears
+=== RUN   TestWholeConstructionCensus/catches_tagged_template_changes_tag
+=== RUN   TestWholeConstructionCensus/catches_this_changes_global_name
+=== RUN   TestWholeConstructionCensus/catches_array_hole_disappears
+=== RUN   TestWholeConstructionCensus/catches_array_spread_disappears
+=== RUN   TestWholeConstructionCensus/catches_object_spread_disappears
+=== RUN   TestWholeConstructionCensus/catches_object_shorthand_loses_operand
+    construction_test.go:334: mutant anchor moved: object shorthand loses operand
+=== RUN   TestWholeConstructionCensus/catches_computed_object_key_loses_operand
+=== RUN   TestWholeConstructionCensus/catches_object_key_precedes_initializer
+    construction_test.go:334: mutant anchor moved: object key precedes initializer
+=== RUN   TestWholeConstructionCensus/catches_star_export_origin_disappears
+=== RUN   TestWholeConstructionCensus/catches_jsx_component_tag_loses_value
+=== RUN   TestWholeConstructionCensus/catches_jsx_host_tag_becomes_component
+=== RUN   TestWholeConstructionCensus/catches_jsx_bare_prop_becomes_false
+=== RUN   TestWholeConstructionCensus/catches_jsx_spread_loses_marker
+=== RUN   TestWholeConstructionCensus/catches_jsx_trivia_becomes_text
+=== RUN   TestWholeConstructionCensus/catches_jsx_empty_child_becomes_return_place
+=== RUN   TestWholeConstructionCensus/catches_jsx_fragment_drops_first_child
+=== RUN   TestWholeConstructionCensus/catches_do_loop_loses_continue_variant
+=== RUN   TestWholeConstructionCensus/catches_for_increment_jumps_past_loop
+=== RUN   TestWholeConstructionCensus/catches_iterator_next_loses_collection
+=== RUN   TestWholeConstructionCensus/catches_for_in_uses_return_slot_as_object
+=== RUN   TestWholeConstructionCensus/catches_switch_cases_stop_falling_through
+=== RUN   TestWholeConstructionCensus/catches_label_terminal_targets_exit
+=== RUN   TestWholeConstructionCensus/catches_try_completion_loses_variant
+=== RUN   TestWholeConstructionCensus/catches_for_condition_disappears
+=== RUN   TestWholeConstructionCensus/catches_capture_read_becomes_local
+=== RUN   TestWholeConstructionCensus/catches_capture_pairing_loses_outer_value
+=== RUN   TestWholeConstructionCensus/catches_contextual_outer_writes_become_local
+=== RUN   TestWholeConstructionCensus/catches_context_declaration_registration_disappears
+=== RUN   TestWholeConstructionCensus/catches_hoisted_function_becomes_ordinary_let
+=== RUN   TestWholeConstructionCensus/catches_optional_call_becomes_unconditional
+=== RUN   TestWholeConstructionCensus/catches_call_arguments_lose_spread
+=== RUN   TestWholeConstructionCensus/catches_method_call_loses_receiver
+=== RUN   TestWholeConstructionCensus/catches_constructor_uses_return_slot_as_callee
+=== RUN   TestWholeConstructionCensus/catches_React_callee_origin_disappears
+=== RUN   TestWholeConstructionCensus/catches_concise_arrow_returns_unused_slot
+=== RUN   TestWholeConstructionCensus/catches_anonymous_assignment_name_disappears
+=== RUN   TestWholeConstructionCensus/catches_return_store_to_nil
+=== RUN   TestWholeConstructionCensus/catches_binary_right_operand_becomes_left
+=== RUN   TestWholeConstructionCensus/catches_unary_operator_becomes_plus
+=== RUN   TestWholeConstructionCensus/catches_comma_returns_left_operand
+=== RUN   TestWholeConstructionCensus/catches_literal_boolean_flips
+=== RUN   TestWholeConstructionCensus/catches_parameter_becomes_capture
+=== RUN   TestWholeConstructionCensus/catches_symbol_local_read_loses_binding
+=== RUN   TestWholeConstructionCensus/catches_import_classification_loses_module
+=== RUN   TestWholeConstructionCensus/catches_declaration_kind_becomes_const
+=== RUN   TestWholeConstructionCensus/catches_assignment_result_loses_RHS
+=== RUN   TestWholeConstructionCensus/catches_compound_assignment_uses_plus
+=== RUN   TestWholeConstructionCensus/catches_update_operation_flips
+=== RUN   TestWholeConstructionCensus/catches_property_load_loses_name
+=== RUN   TestWholeConstructionCensus/catches_computed_load_loses_receiver
+=== RUN   TestWholeConstructionCensus/catches_if_branch_successors_swap
+=== RUN   TestWholeConstructionCensus/catches_ternary_true_arm_loses_value
+=== RUN   TestWholeConstructionCensus/catches_logical_short_circuit_chooses_wrong_arm
+=== RUN   TestWholeConstructionCensus/catches_while_back_edge_exits_loop
+=== RUN   TestWholeConstructionCensus/catches_continue_uses_break_target
+=== RUN   TestWholeConstructionCensus/catches_throw_becomes_return
+=== RUN   TestWholeConstructionCensus/catches_return_becomes_unreachable
+=== RUN   TestWholeConstructionCensus/catches_post_abrupt_instructions_join_entry
+=== NAME  TestWholeConstructionCensus
+    construction_test.go:136: off-by-one FunctionIndex mutant stopped at a checked arena read on Node and native
+--- FAIL: TestWholeConstructionCensus (1596.23s)
+    --- PASS: TestWholeConstructionCensus/catches_pattern_rest_dropped (22.68s)
+    --- PASS: TestWholeConstructionCensus/catches_pattern_default_dropped (19.45s)
+    --- PASS: TestWholeConstructionCensus/catches_pattern_hole_dropped (19.44s)
+    --- PASS: TestWholeConstructionCensus/catches_pattern_computed_key_dropped (18.81s)
+    --- PASS: TestWholeConstructionCensus/catches_catch_pattern_kind_changes (16.97s)
+    --- PASS: TestWholeConstructionCensus/catches_assignment_target_reason_changes (23.19s)
+    --- PASS: TestWholeConstructionCensus/catches_object_method_key_changes (16.98s)
+    --- PASS: TestWholeConstructionCensus/catches_unsupported_reason_changes (34.07s)
+    --- PASS: TestWholeConstructionCensus/catches_debugger_becomes_unknown (23.45s)
+    --- PASS: TestWholeConstructionCensus/catches_meta_property_changes_name (26.14s)
+    --- PASS: TestWholeConstructionCensus/catches_optional_property_loses_marker (38.41s)
+    --- PASS: TestWholeConstructionCensus/catches_optional_computed_loses_marker (22.08s)
+    --- PASS: TestWholeConstructionCensus/catches_async_function_loses_flag (19.29s)
+    --- PASS: TestWholeConstructionCensus/catches_generator_loses_flag (20.69s)
+    --- PASS: TestWholeConstructionCensus/catches_await_loses_operand (18.64s)
+    --- PASS: TestWholeConstructionCensus/catches_typed_binding_changes_declaration_kind (28.04s)
+    --- PASS: TestWholeConstructionCensus/catches_cast_changes_type_span (18.06s)
+    --- PASS: TestWholeConstructionCensus/catches_property_delete_changes_key (17.59s)
+    --- PASS: TestWholeConstructionCensus/catches_computed_delete_loses_key (21.03s)
+    --- PASS: TestWholeConstructionCensus/catches_regex_flags_disappear (19.26s)
+    --- PASS: TestWholeConstructionCensus/catches_template_operand_disappears (18.83s)
+    --- PASS: TestWholeConstructionCensus/catches_tagged_template_changes_tag (20.78s)
+    --- PASS: TestWholeConstructionCensus/catches_this_changes_global_name (17.72s)
+    --- PASS: TestWholeConstructionCensus/catches_array_hole_disappears (22.32s)
+    --- PASS: TestWholeConstructionCensus/catches_array_spread_disappears (17.49s)
+    --- PASS: TestWholeConstructionCensus/catches_object_spread_disappears (20.96s)
+    --- FAIL: TestWholeConstructionCensus/catches_object_shorthand_loses_operand (0.00s)
+    --- PASS: TestWholeConstructionCensus/catches_computed_object_key_loses_operand (17.19s)
+    --- FAIL: TestWholeConstructionCensus/catches_object_key_precedes_initializer (0.00s)
+    --- PASS: TestWholeConstructionCensus/catches_star_export_origin_disappears (18.55s)
+    --- PASS: TestWholeConstructionCensus/catches_jsx_component_tag_loses_value (17.81s)
+    --- PASS: TestWholeConstructionCensus/catches_jsx_host_tag_becomes_component (18.51s)
+    --- PASS: TestWholeConstructionCensus/catches_jsx_bare_prop_becomes_false (21.03s)
+    --- PASS: TestWholeConstructionCensus/catches_jsx_spread_loses_marker (21.58s)
+    --- PASS: TestWholeConstructionCensus/catches_jsx_trivia_becomes_text (18.85s)
+    --- PASS: TestWholeConstructionCensus/catches_jsx_empty_child_becomes_return_place (19.83s)
+    --- PASS: TestWholeConstructionCensus/catches_jsx_fragment_drops_first_child (25.62s)
+    --- PASS: TestWholeConstructionCensus/catches_do_loop_loses_continue_variant (28.15s)
+    --- PASS: TestWholeConstructionCensus/catches_for_increment_jumps_past_loop (19.52s)
+    --- PASS: TestWholeConstructionCensus/catches_iterator_next_loses_collection (21.19s)
+    --- PASS: TestWholeConstructionCensus/catches_for_in_uses_return_slot_as_object (19.63s)
+    --- PASS: TestWholeConstructionCensus/catches_switch_cases_stop_falling_through (19.80s)
+    --- PASS: TestWholeConstructionCensus/catches_label_terminal_targets_exit (26.95s)
+    --- PASS: TestWholeConstructionCensus/catches_try_completion_loses_variant (19.02s)
+    --- PASS: TestWholeConstructionCensus/catches_for_condition_disappears (26.68s)
+    --- PASS: TestWholeConstructionCensus/catches_capture_read_becomes_local (22.59s)
+    --- PASS: TestWholeConstructionCensus/catches_capture_pairing_loses_outer_value (24.39s)
+    --- PASS: TestWholeConstructionCensus/catches_contextual_outer_writes_become_local (19.67s)
+    --- PASS: TestWholeConstructionCensus/catches_context_declaration_registration_disappears (18.22s)
+    --- PASS: TestWholeConstructionCensus/catches_hoisted_function_becomes_ordinary_let (17.96s)
+    --- PASS: TestWholeConstructionCensus/catches_optional_call_becomes_unconditional (20.26s)
+    --- PASS: TestWholeConstructionCensus/catches_call_arguments_lose_spread (17.72s)
+    --- PASS: TestWholeConstructionCensus/catches_method_call_loses_receiver (16.33s)
+    --- PASS: TestWholeConstructionCensus/catches_constructor_uses_return_slot_as_callee (16.31s)
+    --- PASS: TestWholeConstructionCensus/catches_React_callee_origin_disappears (17.58s)
+    --- PASS: TestWholeConstructionCensus/catches_concise_arrow_returns_unused_slot (23.10s)
+    --- PASS: TestWholeConstructionCensus/catches_anonymous_assignment_name_disappears (19.36s)
+    --- PASS: TestWholeConstructionCensus/catches_return_store_to_nil (19.60s)
+    --- PASS: TestWholeConstructionCensus/catches_binary_right_operand_becomes_left (17.13s)
+    --- PASS: TestWholeConstructionCensus/catches_unary_operator_becomes_plus (20.15s)
+    --- PASS: TestWholeConstructionCensus/catches_comma_returns_left_operand (22.99s)
+    --- PASS: TestWholeConstructionCensus/catches_literal_boolean_flips (19.72s)
+    --- PASS: TestWholeConstructionCensus/catches_parameter_becomes_capture (19.69s)
+    --- PASS: TestWholeConstructionCensus/catches_symbol_local_read_loses_binding (17.49s)
+    --- PASS: TestWholeConstructionCensus/catches_import_classification_loses_module (16.99s)
+    --- PASS: TestWholeConstructionCensus/catches_declaration_kind_becomes_const (17.35s)
+    --- PASS: TestWholeConstructionCensus/catches_assignment_result_loses_RHS (16.81s)
+    --- PASS: TestWholeConstructionCensus/catches_compound_assignment_uses_plus (18.09s)
+    --- PASS: TestWholeConstructionCensus/catches_update_operation_flips (17.94s)
+    --- PASS: TestWholeConstructionCensus/catches_property_load_loses_name (18.24s)
+    --- PASS: TestWholeConstructionCensus/catches_computed_load_loses_receiver (16.58s)
+    --- PASS: TestWholeConstructionCensus/catches_if_branch_successors_swap (16.79s)
+    --- PASS: TestWholeConstructionCensus/catches_ternary_true_arm_loses_value (15.78s)
+    --- PASS: TestWholeConstructionCensus/catches_logical_short_circuit_chooses_wrong_arm (16.52s)
+    --- PASS: TestWholeConstructionCensus/catches_while_back_edge_exits_loop (20.46s)
+    --- PASS: TestWholeConstructionCensus/catches_continue_uses_break_target (17.20s)
+    --- PASS: TestWholeConstructionCensus/catches_throw_becomes_return (16.15s)
+    --- PASS: TestWholeConstructionCensus/catches_return_becomes_unreachable (16.86s)
+    --- PASS: TestWholeConstructionCensus/catches_post_abrupt_instructions_join_entry (16.01s)
+=== RUN   TestNodeConstructionReplay
+    construction_test.go:294: set HIR_NODE_CENSUS to the independently exported Go census
+--- SKIP: TestNodeConstructionReplay (0.00s)
+=== RUN   TestArenaIndexBrands
+--- PASS: TestArenaIndexBrands (0.21s)
+=== RUN   TestArenaOwnerIdentity
+    construction_test.go:475: same-slot index from another HIRArena is rejected on Node and native
+--- PASS: TestArenaOwnerIdentity (0.69s)
+=== RUN   TestOptionalBooleanGapStandsWhereGapsMdSays
+--- PASS: TestOptionalBooleanGapStandsWhereGapsMdSays (0.18s)
+=== RUN   TestStraightLineOracle
+    oracle_test.go:54: 12 functions match Go on Node and natively
+=== RUN   TestStraightLineOracle/catches_return_store_to_nil
+--- PASS: TestStraightLineOracle (43.12s)
+    --- PASS: TestStraightLineOracle/catches_return_store_to_nil (15.26s)
+=== RUN   TestResidentSymbolFacts
+    symbol_test.go:193: [go run ./cmd/adamic build /workspace/adamic/stage1/cohere/hir-symbol-mutant-343898213/symbol_main.ts -o /tmp/adamic-gate/TestResidentSymbolFacts3071967756/001/symbol-mutant --tsgo /tmp/adamic-gate/TestResidentSymbolFacts3071967756/001/tsgo.a]: exit status 1
+        stage1/cohere/hir-symbol-mutant-343898213/symbol_live.ts:13:133: error TS7006: Parameter 'node' implicitly has an 'any' type.
+        stage1/cohere/hir-symbol-mutant-343898213/symbol_live.ts:13:138: error TS7006: Parameter 'question' implicitly has an 'any' type.
+        stage1/cohere/hir-symbol-mutant-343898213/symbol_live.ts:3:33: error TS2307: Cannot find module './symbol_query.ts' or its corresponding type declarations.
+        exit status 1
+--- FAIL: TestResidentSymbolFacts (17.45s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation	1719.456s
+FAIL

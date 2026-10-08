@@ -1,8 +1,8 @@
 import { panic } from 'adamic';
 // Go high_level_intermediate_representation.go: owned tables and function-local IDs.
 import type { BlockIdType, IdentifierIdType, DeclarationIdType, EvaluationOrderType, PhiInterface } from '../static_single_assignment/static_single_assignment.ts';
-import { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex } from '../arena/arena_index.a';
-export { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex } from '../arena/arena_index.a';
+import { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex, PatternIndex } from '../arena/arena_index.a';
+export { FunctionIndex, BlockIndex, InstructionIndex, IdentifierIndex, DeclarationIndex, PatternIndex } from '../arena/arena_index.a';
 export type EffectType = '<unknown>' | 'freeze' | 'read' | 'capture' | 'mutate-iterator?' | 'mutate?' | 'mutate' | 'store';
 export interface PlaceInterface {
     readonly identifier: IdentifierIndex;
@@ -12,6 +12,7 @@ export interface PlaceInterface {
     readonly end: number;
 }
 export interface IdentifierInterface {
+    nodeIndex: number;
     readonly id: IdentifierIndex;
     readonly declaration: DeclarationIndex;
     readonly name: string;
@@ -24,7 +25,15 @@ export interface ObjectPropertyInterface { readonly key: string; computedKey: Pl
 export interface JsxTagInterface { readonly name: string; place: PlaceInterface | undefined; }
 export interface JsxAttributeInterface { readonly name: string; value: PlaceInterface; readonly spread: boolean; }
 export interface ModuleExportOriginInterface { readonly module: string; readonly exported: string; }
-export type ValueType = { readonly kind: 'TypeCastExpression'; value: PlaceInterface; readonly nodeKind: string; readonly nodePos: number; readonly nodeEnd: number }
+export interface PatternPropertyInterface { readonly key: string; computedKey: PlaceInterface | undefined; defaultValue: PlaceInterface | undefined; readonly value: PatternIndex; }
+export interface PatternElementInterface { readonly value: PatternIndex | undefined; defaultValue: PlaceInterface | undefined; }
+export type PatternType = { readonly kind: 'Place'; place: PlaceInterface } | { readonly kind: 'Object'; readonly properties: PatternPropertyInterface[]; rest: PlaceInterface | undefined } | { readonly kind: 'Array'; readonly elements: PatternElementInterface[]; rest: PlaceInterface | undefined };
+export type ValueType = { readonly kind: 'Destructure'; lvaluePattern: PatternIndex; readonly pattern: PatternIndex; value: PlaceInterface; readonly declarationKind: number }
+    | { readonly kind: 'ObjectMethod'; readonly key: string; readonly functionReference: FunctionReferenceInterface }
+    | { readonly kind: 'UnsupportedNode'; readonly nodeKind: string; readonly nodePos: number; readonly nodeEnd: number; readonly reason: string }
+    | { readonly kind: 'Debugger' }
+    | { readonly kind: 'MetaProperty'; readonly meta: string; readonly property: string }
+    | { readonly kind: 'TypeCastExpression'; value: PlaceInterface; readonly nodeKind: string; readonly nodePos: number; readonly nodeEnd: number }
     | { readonly kind: 'Await'; value: PlaceInterface }
     | { readonly kind: 'PropertyDelete'; object: PlaceInterface; readonly property: string }
     | { readonly kind: 'ComputedDelete'; object: PlaceInterface; property: PlaceInterface }
@@ -65,24 +74,27 @@ export class Instruction {
         this.id = id; this.lvalue = lvalue; this.value = value; this.start = start; this.end = end;
     }
 }
+// gap 1 (GAPS.md, ruling (a)): presence and value are required booleans.
+export interface OptionalFlagInterface { readonly present: boolean; readonly value: boolean; }
 // A tagged arena record; accessors validate the fields required by each terminal kind.
 export interface TerminalType {
     readonly kind: 'Optional' | 'Return' | 'Throw' | 'Unreachable' | 'Unsupported' | 'Goto' | 'If' | 'Branch' | 'Logical' | 'Ternary' | 'While' | 'DoWhile' | 'For' | 'ForOf' | 'ForIn' | 'Switch' | 'Label' | 'Try';
-    value?: PlaceInterface;
-    readonly block?: BlockIndex;
-    readonly variant?: number;
-    testPlace?: PlaceInterface;
-    readonly testBlock?: BlockIndex;
-    readonly consequent?: BlockIndex;
-    readonly alternate?: BlockIndex;
-    readonly fallthrough?: BlockIndex;
-    readonly optional?: boolean;
-    readonly operator?: string;
-    readonly loop?: BlockIndex;
-    readonly init?: BlockIndex;
-    readonly update?: BlockIndex;
-    readonly cases?: { test: PlaceInterface | undefined; readonly block: BlockIndex }[];
-    readonly handler?: BlockIndex;
+    value?: PlaceInterface | undefined;
+    readonly block?: BlockIndex | undefined;
+    readonly variant?: number | undefined;
+    testPlace?: PlaceInterface | undefined;
+    readonly testBlock?: BlockIndex | undefined;
+    readonly consequent?: BlockIndex | undefined;
+    readonly alternate?: BlockIndex | undefined;
+    readonly fallthrough?: BlockIndex | undefined;
+    // gap 1 (GAPS.md): the optional boolean is carried as a presence/value record.
+    readonly optionalFlag?: OptionalFlagInterface | undefined;
+    readonly operator?: string | undefined;
+    readonly loop?: BlockIndex | undefined;
+    readonly init?: BlockIndex | undefined;
+    readonly update?: BlockIndex | undefined;
+    readonly cases?: { test: PlaceInterface | undefined; readonly block: BlockIndex }[] | undefined;
+    readonly handler?: BlockIndex | undefined;
     handlerBinding?: PlaceInterface | undefined;
 }
 export function testPlace(terminal: TerminalType): PlaceInterface { return terminal.testPlace ?? panic('terminal requires a test place'); }
@@ -99,11 +111,16 @@ export class BasicBlock {
     constructor(arenaIndices: readonly BlockIndex[], id: BlockIndex, terminal: TerminalType, kind: string = 'block') { this.arenaIndices = arenaIndices; this.id = id; this.terminal = terminal; this.kind = kind; }
 }
 export class HIRFunction {
+    nodeIndex = -1;
     isAsync = false;
     isGenerator = false;
     readonly name: string;
     readonly kind: string;
     readonly blockIndices: BlockIndex[] = [];
+    readonly patternIndices: PatternIndex[] = [];
+    readonly patterns: PatternType[] = [];
+    pattern(index: PatternIndex): PatternType { return this.patterns[PatternIndex.read(this.patternIndices, index)] ?? panic('missing pattern'); }
+    addPattern(value: PatternType): PatternIndex { const index = PatternIndex.push(this.patternIndices); this.patterns.push(value); return index; }
     readonly instructionIndices: InstructionIndex[] = [];
     readonly identifierIndices: IdentifierIndex[] = [];
     readonly declarationIndices: DeclarationIndex[] = [];
@@ -126,7 +143,7 @@ export class HIRFunction {
         this.kind = first >= 65 && first <= 90 ? 'component' : name.startsWith('use') && ((next >= 65 && next <= 90) || (next >= 48 && next <= 57)) ? 'hook' : 'other';
         const identifier = IdentifierIndex.push(this.identifierIndices);
         const declaration = DeclarationIndex.push(this.declarationIndices);
-        this.identifiers.push({ id: identifier, declaration, name: '' });
+        this.identifiers.push({ id: identifier, declaration, nodeIndex: -1, name: '' });
         this.returns = { identifier, effect: '<unknown>', reactive: false, start: 0, end: 0 };
         this.entry = BlockIndex.push(this.blockIndices);
         this.blockTable.push(new BasicBlock(this.blockIndices, this.entry, { kind: 'Return', value: this.returns }));
@@ -137,7 +154,7 @@ export class HIRFunction {
         const fresh = DeclarationIndex.push(this.declarationIndices);
         const declared = declaration ?? fresh;
         DeclarationIndex.read(this.declarationIndices, declared);
-        this.identifiers.push({ id, declaration: declared, name });
+        this.identifiers.push({ id, declaration: declared, name, nodeIndex: -1 });
         return { identifier: id, effect: '<unknown>', reactive: false, start, end };
     }
     newBlock(kind: string): BasicBlock {
@@ -163,7 +180,7 @@ export class HIRFunction {
     temporary(start: number, end: number, declaration: DeclarationIndex | undefined = undefined): PlaceInterface { return this.named('', start, end, declaration); }
     mint(original: IdentifierIndex): IdentifierIndex {
         const old = this.identifier(original); const id = IdentifierIndex.push(this.identifierIndices);
-        this.identifiers.push({ id, declaration: old.declaration, name: old.name }); return id;
+        this.identifiers.push({ id, declaration: old.declaration, name: old.name, nodeIndex: old.nodeIndex }); return id;
     }
     emit(place: PlaceInterface, value: ValueType, start: number, end: number): InstructionIndex {
         const id = InstructionIndex.push(this.instructionIndices);

@@ -1,0 +1,15 @@
+=== RUN   TestWholeConstructionCensus
+    construction_test.go:110: HIR construction census: 1537 context-distinct functions in 1537 records; 1514 eligible; 395 fixtures (40 Flow exclusions)
+    construction_test.go:113: optional boolean semantic impact: 74/1465 original graphs; 1391 do not read that field
+    construction_test.go:128: ForFunction cache matches every admitted checker-backed row; checker-less cache requests decline
+    construction_test.go:130: 1514/1537 context-distinct functions match Go on Node and natively; remaining rows are explicit declines
+    construction_test.go:131: 45 Go tests skipped; names recorded in go-tests.log
+=== RUN   TestWholeConstructionCensus/catches_object_shorthand_loses_operand
+=== RUN   TestWholeConstructionCensus/catches_object_key_precedes_initializer
+=== NAME  TestWholeConstructionCensus
+    construction_test.go:136: off-by-one FunctionIndex mutant stopped at a checked arena read on Node and native
+--- PASS: TestWholeConstructionCensus (91.74s)
+    --- PASS: TestWholeConstructionCensus/catches_object_shorthand_loses_operand (20.69s)
+    --- PASS: TestWholeConstructionCensus/catches_object_key_precedes_initializer (21.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation	91.754s

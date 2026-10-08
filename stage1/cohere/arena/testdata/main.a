@@ -1,5 +1,6 @@
-import { FunctionIndex, BlockIndex } from '../arena_index.a';
+import { FunctionIndex, BlockIndex, PatternIndex } from '../arena_index.a';
 const functions: FunctionIndex[] = []; const blocks: BlockIndex[] = [];
 const first = FunctionIndex.push(functions); const second = FunctionIndex.push(functions); const third = FunctionIndex.push(functions);
+const patterns: PatternIndex[] = []; const pattern = PatternIndex.push(patterns);
 const block = BlockIndex.push(blocks); const absent: FunctionIndex | undefined = undefined;
-console.log(`${first.slot},${second.slot},${FunctionIndex.read(functions, third)}:${BlockIndex.read(blocks, block)}:${absent === undefined}`);
+console.log(`${first.slot},${second.slot},${FunctionIndex.read(functions, third)}:${BlockIndex.read(blocks, block)}:${PatternIndex.read(patterns, pattern)}:${absent === undefined}`);

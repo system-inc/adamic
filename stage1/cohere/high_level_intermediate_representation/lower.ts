@@ -7,7 +7,7 @@ import type { OriginInterface } from './export_origin.ts';
 import { Scanner } from '../../typescript/scanner/scanner.ts';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { written } from '../../typescript/parser/nodes.ts';
-import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface, JsxTagInterface, JsxAttributeInterface, ArrayElementInterface, ObjectPropertyInterface, FunctionIndex, BlockIndex } from './core.ts';
+import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface, JsxTagInterface, JsxAttributeInterface, ArrayElementInterface, ObjectPropertyInterface, FunctionIndex, BlockIndex, DeclarationIndex, PatternIndex, PatternPropertyInterface, PatternElementInterface } from './core.ts';
 import { constructHIR } from './graph.ts';
 function literal(kind: string, text: string): string | undefined {
     if(['NumericLiteral', 'StringLiteral', 'BigIntLiteral', 'NoSubstitutionTemplateLiteral'].includes(kind)) { return `string:${written(text)}`; }
@@ -32,6 +32,8 @@ const logicals = new Map<string, string>([['AmpersandAmpersandToken', '&&'], ['B
 function supportedTarget(parser: Parser, id: number): boolean {
  const node = parser.node(id);
  if(node.kind === 'ParenthesizedExpression') { return supportedTarget(parser, node.children[0] ?? -1); }
+ if(node.kind === 'AsExpression' || node.kind === 'TypeAssertionExpression' || node.kind === 'SatisfiesExpression') { return true; }
+ if(node.kind === 'ObjectLiteralExpression' || node.kind === 'ArrayLiteralExpression') { return true; }
  return node.kind === 'Identifier' || ((node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') && supportedExpression(parser, id));
 }
 function supportedExpression(parser: Parser, id: number): boolean {
@@ -48,7 +50,8 @@ function supportedExpression(parser: Parser, id: number): boolean {
             const member = parser.node(child);
             if(member.kind === 'SpreadAssignment') { return supportedExpression(parser, member.children[0] ?? -1); }
             if(member.kind === 'ShorthandPropertyAssignment') { return parser.node(member.children[0] ?? -1).kind === 'Identifier'; }
-            if(member.kind !== 'PropertyAssignment') { return false; }
+            if(['MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(member.kind)) { return supportedFunction(parser, child); }
+            if(member.kind !== 'PropertyAssignment') { return true; }
             const name = parser.node(member.children[0] ?? -1);
             return (name.kind !== 'ComputedPropertyName' || supportedExpression(parser, name.children[0] ?? -1)) && supportedExpression(parser, member.children[1] ?? -1);
         });
@@ -92,7 +95,7 @@ function supportedExpression(parser: Parser, id: number): boolean {
         if(operator === 'EqualsToken' || compounds.has(operator)) { return supportedTarget(parser, node.children[0] ?? -1) && supportedExpression(parser, node.children[2] ?? -1); }
         return (operator === 'CommaToken' || operators.has(operator) || logicals.has(operator)) && supportedExpression(parser, node.children[0] ?? -1) && supportedExpression(parser, node.children[2] ?? -1);
     }
-    return false;
+    return true;
 }
 function declarationInitializer(parser: Parser, id: number): number | undefined {
     const node = parser.node(id);
@@ -108,7 +111,7 @@ function parameterBinding(parser: Parser, id: number): number {
 function supportedList(parser: Parser, id: number): boolean {
     const list = parser.node(id);
     if(list.kind !== 'VariableDeclarationList') { return false; }
-    for(const child of list.children) { const declaration = parser.node(child); const initializer = declarationInitializer(parser, child); if(parser.node(declaration.children[0] ?? -1).kind !== 'Identifier' || (initializer !== undefined && !supportedExpression(parser, initializer))) { return false; } }
+    for(const child of list.children) { const declaration = parser.node(child); const initializer = declarationInitializer(parser, child); if((initializer !== undefined && !supportedExpression(parser, initializer))) { return false; } }
     return true;
 }
 function supportedStatement(parser: Parser, id: number): boolean {
@@ -130,17 +133,17 @@ function supportedStatement(parser: Parser, id: number): boolean {
     }
     if(statement.kind === 'SwitchStatement') { return supportedExpression(parser, statement.children[0] ?? -1) && parser.node(statement.children[1] ?? -1).children.every((child) => { const clause = parser.node(child); return (clause.kind === 'DefaultClause' || supportedExpression(parser, clause.children[0] ?? -1)) && clause.children.slice(clause.kind === 'CaseClause' ? 1 : 0).every((id) => supportedStatement(parser, id)); }); }
     if(statement.kind === 'LabeledStatement') { return supportedStatement(parser, statement.children[1] ?? -1); }
-    if(statement.kind === 'TryStatement') { return statement.children.every((child) => { const part = parser.node(child); if(part.kind !== 'CatchClause') { return supportedStatement(parser, child); } const binding = part.children.length > 1 ? parser.node(part.children[0] ?? -1) : undefined; return (binding === undefined || (binding.children.length === 1 && parser.node(binding.children[0] ?? -1).kind === 'Identifier')) && supportedStatement(parser, part.children[part.children.length - 1] ?? -1); }); }
+    if(statement.kind === 'TryStatement') { return statement.children.every((child) => { const part = parser.node(child); if(part.kind !== 'CatchClause') { return supportedStatement(parser, child); } const binding = part.children.length > 1 ? parser.node(part.children[0] ?? -1) : undefined; return supportedStatement(parser, part.children[part.children.length - 1] ?? -1); }); }
     if(statement.kind === 'WhileStatement') { return supportedExpression(parser, statement.children[0] ?? -1) && supportedStatement(parser, statement.children[1] ?? -1); }
     if(statement.kind === 'BreakStatement' || statement.kind === 'ContinueStatement') { return statement.children.length <= 1; }
     if(statement.kind === 'VariableStatement') { return supportedList(parser, statement.children[0] ?? -1); }
-    if(!['ExpressionStatement', 'ReturnStatement', 'ThrowStatement', 'EmptyStatement'].includes(statement.kind) || statement.children.length > 1) { return false; }
-    return statement.children.every((child) => supportedExpression(parser, child));
+    if(['ExpressionStatement', 'ReturnStatement', 'ThrowStatement'].includes(statement.kind)) { return statement.children.every((child) => supportedExpression(parser, child)); }
+    return true;
 }
 function supportedFunction(parser: Parser, root: number): boolean {
     const node = parser.node(root);
     const body = node.children[node.children.length - 1] ?? -1;
-    for(const child of node.children) { if(parser.node(child).kind === 'Parameter' && parser.node(parameterBinding(parser, child)).kind !== 'Identifier') { return false; } }
+    for(const child of node.children) { if(parser.node(child).kind === 'Parameter' && parameterBinding(parser, child) < 0) { return false; } }
     return parser.node(body).kind === 'Block' ? supportedStatement(parser, body) : node.kind === 'ArrowFunction' && supportedExpression(parser, body);
 }
 class StraightLineBuilder {
@@ -184,7 +187,7 @@ class StraightLineBuilder {
                 const entry = usage.get(symbol) ?? { reassigned: false, referenced: false, innerWrite: false };
                 entry.referenced = true; usage.set(symbol, entry);
             }
-            const next = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(node.kind) ? depth + 1 : depth;
+            const next = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor'].includes(node.kind) ? depth + 1 : depth;
             for(const child of node.children) { this.contextUsage(child, next, usage); }
     }
     captureOf(symbol: number): PlaceInterface | undefined {
@@ -211,12 +214,62 @@ class StraightLineBuilder {
         this.fn.functions.push(builder.functionIndex);
         return this.emit({ kind: 'FunctionExpression', functionReference: { index: builder.functionIndex, ordinal: functionId }, captures }, id, undefined);
     }
+    pattern(id: number): PatternIndex {
+        const node = this.parser.node(id);
+        if(node.kind === 'Identifier') { return this.fn.addPattern({kind: 'Place', place: this.bind(id)}); }
+        if(node.kind === 'ObjectBindingPattern' || node.kind === 'ArrayBindingPattern') {
+            const properties: PatternPropertyInterface[] = []; const elements: PatternElementInterface[] = []; let rest: PlaceInterface | undefined;
+            for(const child of node.children) {
+                const element = this.parser.node(child); const parts = element.children.filter((part) => this.parser.node(part).kind !== 'DotDotDotToken');
+                if(element.kind === 'OmittedExpression' || parts.length === 0) { elements.push({value: undefined,defaultValue: undefined}); continue; }
+                const first = parts[0] ?? -1; const scanner = new Scanner(this.parser.scanner.text); scanner.pos = this.parser.node(first).end; scanner.scan();
+                const renamed = scanner.kind === 'ColonToken'; const name = parts[renamed ? 1 : 0] ?? -1;
+                if(element.children.some((part) => this.parser.node(part).kind === 'DotDotDotToken')) { if(this.parser.node(name).kind === 'Identifier') { rest = this.bind(name); } continue; }
+                const propertyName = renamed ? this.parser.node(first) : this.parser.node(name);
+                const computedKey = renamed && propertyName.kind === 'ComputedPropertyName' ? this.expression(propertyName.children[0] ?? -1) : undefined;
+                const initializer = declarationInitializer(this.parser,child); const defaultValue = initializer === undefined ? undefined : this.expression(initializer);
+                const value = this.pattern(name);
+                if(node.kind === 'ObjectBindingPattern') { properties.push({key: computedKey === undefined && (renamed || propertyName.kind === 'Identifier') ? propertyName.text : '',computedKey,defaultValue,value}); }
+                else { elements.push({value,defaultValue}); }
+            }
+            return node.kind === 'ObjectBindingPattern' ? this.fn.addPattern({kind: 'Object',properties,rest}) : this.fn.addPattern({kind: 'Array',elements,rest});
+        }
+        if(node.kind === 'ObjectLiteralExpression') {
+            const properties: PatternPropertyInterface[] = []; let rest: PlaceInterface | undefined;
+            for(const child of node.children) {
+                const member = this.parser.node(child); const name = member.children[0] ?? -1;
+                if(member.kind === 'SpreadAssignment') { if(this.parser.node(name).kind === 'Identifier') { rest = this.bind(name); } continue; }
+                if(member.kind !== 'PropertyAssignment' && member.kind !== 'ShorthandPropertyAssignment') { continue; }
+                const value = this.pattern(member.kind === 'PropertyAssignment' ? member.children[1] ?? -1 : name);
+                const keyNode = this.parser.node(name); const computedKey = keyNode.kind === 'ComputedPropertyName' ? this.expression(keyNode.children[0] ?? -1) : undefined;
+                const initial = member.kind === 'ShorthandPropertyAssignment' ? member.children[member.children.length - 1] : undefined;
+                const defaultValue = initial !== undefined && initial !== name ? this.expression(initial) : undefined;
+                properties.push({key: computedKey === undefined ? keyNode.text : '',computedKey,defaultValue,value});
+            }
+            return this.fn.addPattern({kind: 'Object',properties,rest});
+        }
+        if(node.kind === 'ArrayLiteralExpression') {
+            const elements: PatternElementInterface[] = []; let rest: PlaceInterface | undefined;
+            for(const child of node.children) {
+                const item = this.parser.node(child);
+                if(item.kind === 'OmittedExpression') { elements.push({value: undefined,defaultValue: undefined}); continue; }
+                if(item.kind === 'SpreadElement') { const target = item.children[0] ?? -1; if(this.parser.node(target).kind === 'Identifier') { rest = this.bind(target); } continue; }
+                const value = this.pattern(item.kind === 'BinaryExpression' ? item.children[0] ?? -1 : child);
+                const defaultValue = item.kind === 'BinaryExpression' ? this.expression(item.children[2] ?? -1) : undefined;
+                elements.push({value,defaultValue});
+            }
+            return this.fn.addPattern({kind: 'Array',elements,rest});
+        }
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') { return this.fn.addPattern({kind: 'Place',place: this.expression(id)}); }
+        return this.fn.addPattern({kind: 'Place',place: this.temporary(id)});
+    }
     bind(id: number): PlaceInterface {
         const node = this.parser.node(id);
         const symbol = this.identity(id);
         const old = this.locals.get(symbol);
         const declaration = old === undefined || symbol === 0 ? undefined : this.fn.identifier(old.identifier).declaration;
         const place = this.fn.named(node.text, this.byte(node.pos), this.byte(node.end), declaration);
+        this.fn.identifier(place.identifier).nodeIndex = id;
         if(symbol !== 0) { this.locals.set(symbol, place); }
         return place;
     }
@@ -264,6 +317,8 @@ class StraightLineBuilder {
                 else { this.emit({ kind: 'StoreContext', lvalue: { identifier: capture.identifier, effect: '<unknown>', reactive: false, start: this.byte(node.pos), end: this.byte(node.end) }, value, declarationKind: 2 }, id, undefined); }
             }
         }
+        else if(node.kind === 'ObjectLiteralExpression' || node.kind === 'ArrayLiteralExpression') { const pattern = this.pattern(id); this.emit({kind: 'Destructure', lvaluePattern: pattern, pattern, value, declarationKind: 2},id,undefined); }
+        else if(node.kind !== 'PropertyAccessExpression' && node.kind !== 'ElementAccessExpression') { this.emit({kind: 'UnsupportedNode', nodeKind: 'Kind' + node.kind, nodePos: this.byte(node.pos), nodeEnd: this.byte(node.end), reason: 'assignment target'}, id, undefined); }
         else {
             const object = this.expression(node.children[0] ?? -1);
             if(node.kind === 'PropertyAccessExpression') { this.emit({ kind: 'PropertyStore', object, property: this.parser.node(node.children[1] ?? -1).text, value }, id, undefined); }
@@ -281,10 +336,10 @@ class StraightLineBuilder {
             const declaration = this.parser.node(declarationId);
             const name = declaration.children[0] ?? -1;
             const initializer = declarationInitializer(this.parser, declarationId);
-            if(initializer === undefined) { this.emit({ kind: 'DeclareLocal', lvalue: this.bind(name), declarationKind }, declarationId, undefined); }
+            if(initializer === undefined) { if(this.parser.node(name).kind === 'Identifier') { this.emit({ kind: 'DeclareLocal', lvalue: this.bind(name), declarationKind }, declarationId, undefined); } }
             else {
                 const value = this.expression(initializer);
-                this.emit({ kind: 'StoreLocal', lvalue: this.bind(name), value, declarationKind }, declarationId, undefined);
+                if(this.parser.node(name).kind === 'Identifier') { this.emit({ kind: 'StoreLocal', lvalue: this.bind(name), value, declarationKind }, declarationId, undefined); } else { const pattern = this.pattern(name); this.emit({kind: 'Destructure', lvaluePattern: pattern, pattern, value, declarationKind}, declarationId, undefined); }
             }
         }
     }
@@ -341,6 +396,8 @@ class StraightLineBuilder {
         }
         else if(node.kind === 'ThrowStatement') { this.close({ kind: 'Throw', value: this.expression(node.children[0] ?? -1) }); }
         else if(node.kind === 'ExpressionStatement') { this.expression(node.children[0] ?? -1); }
+        else if(node.kind === 'DebuggerStatement') { this.emit({ kind: 'Debugger' }, id, undefined); }
+        else if(!['EmptyStatement', 'InterfaceDeclaration', 'TypeAliasDeclaration'].includes(node.kind)) { this.unsupported(id); }
     }
     lookupJump(label: string, continuing: boolean): { readonly label: string; readonly breakBlock: BlockIndex; readonly continueBlock?: BlockIndex } | undefined {
         for(let index = this.jumps.length - 1; index >= 0; index--) {
@@ -353,7 +410,7 @@ class StraightLineBuilder {
     forBinding(id: number, value: PlaceInterface): void {
         const node = this.parser.node(id);
         if(node.kind !== 'VariableDeclarationList') { this.assign(id, value); return; }
-        for(const child of node.children) { const name = this.parser.node(child).children[0] ?? -1; this.emit({ kind: 'StoreLocal', lvalue: this.bind(name), value, declarationKind: (Number.parseInt(node.semantic, 10) & 2) !== 0 ? 0 : 1 }, name, undefined); }
+        for(const child of node.children) { const name = this.parser.node(child).children[0] ?? -1; const declarationKind = (Number.parseInt(node.semantic,10) & 2) !== 0 ? 0 : 1; if(this.parser.node(name).kind === 'Identifier') { this.emit({ kind: 'StoreLocal', lvalue: this.bind(name), value, declarationKind }, name, undefined); } else { const pattern = this.pattern(name); this.emit({kind: 'Destructure', lvaluePattern: pattern, pattern, value, declarationKind},name,undefined); } }
     }
     flow(id: number, label: string): void {
         const node = this.parser.node(id);
@@ -411,17 +468,17 @@ class StraightLineBuilder {
         const finallyId = node.children.slice(1).find((child) => this.parser.node(child).kind === 'Block');
         const finalBlock = finallyId === undefined ? undefined : this.fn.newBlock('block'); const normal = finalBlock ?? fallthrough; const handler = this.fn.newBlock('catch');
         let binding: PlaceInterface | undefined;
-        if(catchId !== undefined) { const clause = this.parser.node(catchId); if(clause.children.length > 1) { binding = this.bind(this.parser.node(clause.children[0] ?? -1).children[0] ?? -1); } }
+        if(catchId !== undefined) { const clause = this.parser.node(catchId); if(clause.children.length > 1) { const name = this.parser.node(clause.children[0] ?? -1).children[0] ?? -1; if(this.parser.node(name).kind === 'Identifier') { binding = this.bind(name); } } }
         this.close({ kind: 'Try', block: body.id, handler: handler.id, handlerBinding: binding, fallthrough: fallthrough.id }); this.current = body; this.statement(node.children[0] ?? -1); this.jump(normal.id, 2);
         this.current = handler;
-        if(catchId !== undefined) { const clause = this.parser.node(catchId); this.statement(clause.children[clause.children.length - 1] ?? -1); this.jump(normal.id, 2); }
+        if(catchId !== undefined) { const clause = this.parser.node(catchId); if(clause.children.length > 1 && binding === undefined) { const name = this.parser.node(clause.children[0] ?? -1).children[0] ?? -1; const nameNode = this.parser.node(name); const temporary = this.temporary(name); const pattern = this.pattern(name); this.emit({kind: 'Destructure', lvaluePattern: pattern, pattern, value: temporary, declarationKind: 3},name,undefined); } this.statement(clause.children[clause.children.length - 1] ?? -1); this.jump(normal.id, 2); }
         else if(finalBlock !== undefined) { this.jump(finalBlock.id, 2); } else { this.close({ kind: 'Unreachable' }); }
         if(finalBlock !== undefined) { this.current = finalBlock; this.statement(finallyId ?? -1); this.jump(fallthrough.id, 2); }
         this.current = fallthrough;
     }
     valueBranch(id: number, logical: string | undefined): PlaceInterface {
         const node = this.parser.node(id);
-        const result = this.fn.temporary(this.byte(node.pos), this.byte(node.end));
+        const result = this.temporary(id);
         const testBlock = this.fn.newBlock('value'); const fallthrough = this.fn.newBlock('block');
         if(logical === undefined) { this.close({ kind: 'Ternary', testBlock: testBlock.id, fallthrough: fallthrough.id }); }
         else { this.close({ kind: 'Logical', operator: logical, testBlock: testBlock.id, fallthrough: fallthrough.id }); }
@@ -437,15 +494,20 @@ class StraightLineBuilder {
         this.current = first;
         const firstNode = node.children[logical === undefined ? 2 : 0] ?? -1;
         const firstValue = logical === undefined ? this.expression(firstNode) : left;
-        const firstPlace = logical === undefined ? result : this.fn.temporary(this.byte(this.parser.node(firstNode).pos), this.byte(this.parser.node(firstNode).end), shared);
+        const firstPlace = logical === undefined ? result : this.temporary(firstNode,shared);
         this.emit({ kind: 'LoadLocal', place: firstValue }, firstNode, firstPlace); this.jump(fallthrough.id, 0);
         this.current = second;
         const secondNode = node.children[logical === undefined ? 4 : 2] ?? -1;
         const secondValue = this.expression(secondNode);
-        const secondPlace = logical === undefined ? result : this.fn.temporary(this.byte(this.parser.node(secondNode).pos), this.byte(this.parser.node(secondNode).end), shared);
+        const secondPlace = logical === undefined ? result : this.temporary(secondNode,shared);
         this.emit({ kind: 'LoadLocal', place: secondValue }, secondNode, secondPlace); this.jump(fallthrough.id, 0);
         this.current = fallthrough;
         return result;
+    }
+    temporary(id: number, declaration: DeclarationIndex | undefined = undefined): PlaceInterface {
+        if(id < 0) { return this.fn.temporary(0,0,declaration); }
+        const node = this.parser.node(id); const place = this.fn.temporary(this.byte(node.pos),this.byte(node.end),declaration);
+        this.fn.identifier(place.identifier).nodeIndex = id; return place;
     }
     byte(index: number): number { return utf8Length(this.source.slice(0, index)); }
     emit(value: ValueType, id: number, target: PlaceInterface | undefined): PlaceInterface {
@@ -453,6 +515,7 @@ class StraightLineBuilder {
         const start = this.byte(node.pos);
         const end = this.byte(node.end);
         const place = target ?? this.fn.temporary(start, end);
+        if(target === undefined) { this.fn.identifier(place.identifier).nodeIndex = id; }
         const block = this.ensureBlock();
         block.instructions.push(this.fn.emit(place, value, start, end));
         return place;
@@ -553,9 +616,16 @@ class StraightLineBuilder {
         for(const child of node.children) {
             const member = this.parser.node(child);
             if(member.kind === 'SpreadAssignment') { properties.push({ key: '', computedKey: undefined, value: this.expression(member.children[0] ?? -1), spread: true }); continue; }
-            const nameId = member.children[0] ?? -1; const name = this.parser.node(nameId);
+            const method = ['MethodDeclaration', 'GetAccessor', 'SetAccessor'].includes(member.kind);
+            const nameId = method ? member.children.find((part) => ['Identifier', 'StringLiteral', 'NumericLiteral', 'ComputedPropertyName', 'PrivateIdentifier', 'NoSubstitutionTemplateLiteral'].includes(this.parser.node(part).kind)) ?? -1 : member.children[0] ?? -1; const name = this.parser.node(nameId);
             // Go lowers the initializer before a computed key, including effects and block splits.
-            const value = this.expression(member.kind === 'ShorthandPropertyAssignment' ? nameId : member.children[1] ?? -1);
+            let value: PlaceInterface;
+            if(method) {
+                const builder = lowerFunction(this.parser, child, this.source, this.symbols, this, this.arena) ?? panic('object method declined');
+                const ordinal = this.fn.functions.length; this.fn.functions.push(builder.functionIndex);
+                value = this.emit({ kind: 'ObjectMethod', key: name.kind === 'ComputedPropertyName' ? '' : name.text, functionReference: { index: builder.functionIndex, ordinal } }, child, undefined);
+            } else if(member.kind === 'PropertyAssignment' || member.kind === 'ShorthandPropertyAssignment') { value = this.expression(member.kind === 'ShorthandPropertyAssignment' ? nameId : member.children[1] ?? -1); }
+            else { properties.push({key: '', computedKey: undefined, value: this.emit({kind: 'UnsupportedNode', nodeKind: 'Kind' + member.kind, nodePos: this.byte(member.pos), nodeEnd: this.byte(member.end), reason: 'object member'}, child, undefined), spread: false}); continue; }
             const computedKey = name.kind === 'ComputedPropertyName' ? this.expression(name.children[0] ?? -1) : undefined;
             properties.push({ key: computedKey === undefined ? name.text : '', computedKey, value, spread: false });
         }
@@ -598,7 +668,7 @@ class StraightLineBuilder {
     }
     optionalChain(id: number, parentAlternate: BasicBlock | undefined): PlaceInterface {
         const node = this.parser.node(id);
-        const result = this.fn.temporary(this.byte(node.pos), this.byte(node.end));
+        const result = this.temporary(id);
         const continuation = this.fn.newBlock(this.current?.kind ?? 'value');
         let alternate = parentAlternate;
         if(alternate === undefined) {
@@ -607,7 +677,8 @@ class StraightLineBuilder {
             this.emit({ kind: 'StoreLocal', lvalue: result, value: empty, declarationKind: 0 }, id, undefined); this.jump(continuation.id, 0); this.current = saved;
         }
         const test = this.fn.newBlock('value');
-        this.close({ kind: 'Optional', optional: node.children.some((child) => this.parser.node(child).kind === 'QuestionDotToken'), testBlock: test.id, fallthrough: continuation.id }); this.current = test;
+        // gap 1 (GAPS.md): keep presence beside the value until mixed-union lowering lands.
+        this.close({ kind: 'Optional', optionalFlag: { present: true, value: node.children.some((child) => this.parser.node(child).kind === 'QuestionDotToken') }, testBlock: test.id, fallthrough: continuation.id }); this.current = test;
         const objectId = node.children[0] ?? -1;
         const object = this.optionalLink(objectId) ? this.optionalChain(objectId, alternate) : this.expression(objectId);
         const consequent = this.fn.newBlock('value'); this.close({ kind: 'Branch', testPlace: object, consequent: consequent.id, alternate: alternate.id, fallthrough: continuation.id }); this.current = consequent;
@@ -628,11 +699,17 @@ class StraightLineBuilder {
         } else { quasis.push(template.text); }
         return tag === undefined ? this.emit({ kind: 'TemplateLiteral', quasis, subexprs }, id, undefined) : this.emit({ kind: 'TaggedTemplateExpression', tag, quasis, subexprs }, id, undefined);
     }
+    unsupported(id: number): PlaceInterface {
+        const node = this.parser.node(id);
+        return this.emit({ kind: 'UnsupportedNode', nodeKind: 'Kind' + node.kind, nodePos: this.byte(node.pos), nodeEnd: this.byte(node.end), reason: 'Kind' + node.kind }, id, undefined);
+    }
     expression(id: number): PlaceInterface {
         const node = this.parser.node(id);
         if(node.kind === 'AsExpression' || node.kind === 'SatisfiesExpression' || node.kind === 'TypeAssertionExpression') { const type = this.parser.node(node.children[node.kind === 'TypeAssertionExpression' ? 0 : 1] ?? -1); return this.emit({ kind: 'TypeCastExpression', value: this.expression(node.children[node.kind === 'TypeAssertionExpression' ? 1 : 0] ?? -1), nodeKind: type.kind, nodePos: this.byte(type.pos), nodeEnd: this.byte(type.end) }, id, undefined); }
         if(node.kind === 'AwaitExpression') { return this.emit({ kind: 'Await', value: this.expression(node.children[0] ?? -1) }, id, undefined); }
         if(node.kind === 'DeleteExpression') { const targetId = node.children[0] ?? -1; const target = this.parser.node(targetId); if(target.kind === 'PropertyAccessExpression') { return this.emit({ kind: 'PropertyDelete', object: this.expression(target.children[0] ?? -1), property: this.parser.node(target.children[target.children.length - 1] ?? -1).text }, id, undefined); } if(target.kind === 'ElementAccessExpression') { return this.emit({ kind: 'ComputedDelete', object: this.expression(target.children[0] ?? -1), property: this.expression(target.children[target.children.length - 1] ?? -1) }, id, undefined); } this.expression(targetId); return this.emit({ kind: 'Primitive', literal: 'bool:true' }, id, undefined); }
+        if(node.kind === 'MetaProperty') { return this.emit({ kind: 'MetaProperty', meta: 'import', property: 'meta' }, id, undefined); }
+        if(node.kind === 'SpreadElement') { return this.expression(node.children[0] ?? -1); }
         if(node.kind === 'ThisKeyword') { return this.emit({ kind: 'LoadGlobal', name: 'this', bindingKind: 0, source: '', imported: '' }, id, undefined); }
         if(node.kind === 'RegularExpressionLiteral') { const slash = node.text.lastIndexOf('/'); return this.emit({ kind: 'RegExpLiteral', pattern: slash <= 0 ? node.text : node.text.slice(1, slash), flags: slash <= 0 ? '' : node.text.slice(slash + 1) }, id, undefined); }
         if(node.kind === 'TemplateExpression' || node.kind === 'TaggedTemplateExpression') { return this.template(id); }
@@ -676,6 +753,7 @@ class StraightLineBuilder {
             }
             return this.emit({ kind: 'BinaryExpression', left, operator: operators.get(operator) ?? panic('unsupported binary'), right }, id, undefined);
         }
+        if(!['TypeOfExpression', 'VoidExpression', 'PrefixUnaryExpression'].includes(node.kind)) { return this.unsupported(id); }
         const value = this.expression(node.children[0] ?? -1);
         const operator = node.kind === 'TypeOfExpression' ? 'typeof' : node.kind === 'VoidExpression' ? 'void' : operators.get(node.operator) ?? panic('unsupported unary');
         return this.emit({ kind: 'UnaryExpression', operator, value }, id, undefined);
@@ -692,8 +770,8 @@ function lowerFunction(parser: Parser, root: number, source: string, symbols: Sy
     else if(node.kind === 'ArrowFunction') { conciseId = body; }
     for(const id of node.children.slice(0, node.children.length - 1)) {
         const child = parser.node(id);
-        if(child.kind === 'Identifier' && node.kind !== 'ArrowFunction') { name = child.text; }
-        if(child.kind === 'Parameter') { const binding = parameterBinding(parser, id); if(parser.node(binding).kind !== 'Identifier') { return undefined; } parameters.push(binding); }
+        if(['Identifier', 'StringLiteral', 'NumericLiteral', 'PrivateIdentifier', 'NoSubstitutionTemplateLiteral'].includes(child.kind) && node.kind !== 'ArrowFunction') { name = child.text; }
+        if(child.kind === 'Parameter') { const binding = parameterBinding(parser, id); parameters.push(binding); }
     }
     if(bodyId < 0 && conciseId < 0) { return undefined; }
     if(name === '') {
@@ -707,12 +785,13 @@ function lowerFunction(parser: Parser, root: number, source: string, symbols: Sy
     for(const id of statements) { if(!supportedStatement(parser, id)) { return undefined; } }
     const functionIndex = arena.create(name);
     const fn = arena.read(functionIndex);
+    fn.nodeIndex = root;
     fn.isAsync = node.children.some((child) => parser.node(child).kind === 'AsyncKeyword');
     fn.isGenerator = node.children.some((child) => parser.node(child).kind === 'AsteriskToken');
     const builder = new StraightLineBuilder(parser, source, fn, symbols, enclosing, arena, functionIndex);
     for(const id of parameters) {
         const parameter = parser.node(id);
-        fn.params.push(builder.bind(id));
+        if(parameter.kind === 'Identifier') { fn.params.push(builder.bind(id)); } else { const temporary = builder.temporary(id); fn.params.push(temporary); const pattern = builder.pattern(id); builder.emit({kind: 'Destructure', lvaluePattern: pattern, pattern, value: temporary, declarationKind: 1}, id, undefined); }
     }
     builder.findContext(bodyId >= 0 ? bodyId : conciseId);
     builder.statements(statements);
@@ -721,24 +800,24 @@ function lowerFunction(parser: Parser, root: number, source: string, symbols: Sy
     return builder;
 }
 // Construct once; the file entry cache owns the parser and checker facts.
-export function lowerParsedFunction(parser: Parser, root: number, source: string, symbols: SymbolSnapshot | undefined): ConstructedHIR | undefined {
-    if(!['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(parser.node(root).kind) || !supportedFunction(parser, root)) { return undefined; }
+export function lowerParsedFunction(parser: Parser, root: number, source: string, symbols: SymbolSnapshot | undefined, cloneBeforeSSA: boolean = false): ConstructedHIR | undefined {
+    if(!['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor'].includes(parser.node(root).kind) || !supportedFunction(parser, root)) { return undefined; }
     const arena = new HIRArena();
     const builder = lowerFunction(parser, root, source, symbols, undefined, arena);
     if(builder === undefined) { return undefined; }
-    constructHIR(arena, builder.functionIndex);
+    constructHIR(arena, builder.functionIndex, cloneBeforeSSA);
     return new ConstructedHIR(arena, builder.functionIndex);
 }
 // Corpus positions are UTF-8 offsets; path selects a nested graph constructed with its parent.
-export function lowerSourceAt(source: string, start: number, end: number, symbols: SymbolSnapshot | undefined = undefined, path: string = '', filePath: string = '/test.tsx'): ConstructedHIR | undefined {
+export function lowerSourceAt(source: string, start: number, end: number, symbols: SymbolSnapshot | undefined = undefined, path: string = '', filePath: string = '/test.tsx', cloneBeforeSSA: boolean = false): ConstructedHIR | undefined {
     const parser = new Parser(source, filePath); parser.file();
     let root = -1;
     for(let index = 0; index < parser.nodes.length; index++) {
         const candidate = parser.node(index);
-        if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction'].includes(candidate.kind) && (start < 0 || (utf8Length(source.slice(0, candidate.pos)) === start && utf8Length(source.slice(0, candidate.end)) === end))) { root = index; break; }
+        if(['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration', 'GetAccessor', 'SetAccessor', 'Constructor'].includes(candidate.kind) && (start < 0 || (utf8Length(source.slice(0, candidate.pos)) === start && utf8Length(source.slice(0, candidate.end)) === end))) { root = index; break; }
     }
     if(root < 0) { return undefined; }
-    const graph = lowerParsedFunction(parser, root, source, symbols);
+    const graph = lowerParsedFunction(parser, root, source, symbols, cloneBeforeSSA);
     if(graph === undefined) { return undefined; }
     const arena = graph.arena;
     let index = graph.root;

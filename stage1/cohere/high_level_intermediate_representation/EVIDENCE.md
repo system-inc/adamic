@@ -699,3 +699,113 @@ allocations/frees **2,181,808**, retains **8,982,877**, releases **8,859,478**,
 peak **11,956**, regions **0**. The current Optional tip still refuses compilation;
 this historical measurement does not certify it. Counts and exact small dump are
 retained beside the source delta.
+
+
+## Step 28: 09:44 optional-field ruling and full construction
+
+Ruling (a) authorizes the selector/values shape: `OptionalFlagInterface` carries
+required boolean `present` and `value` fields; terminals hold that optional
+record. `gap 1 (GAPS.md)` marks every site in core.ts, lower.ts and dump.ts. The
+original optional-boolean proving program and exact `lower.NotYet.What` assertion
+remain in gaps_test.go and fail when compiler step 17 (#qgr7mm4) closes the gap.
+The complete Go census finds **74/1,465** original graphs that read Optional's
+field and **1,391** that do not. `optional-boolean-impact.json` records keys and
+test provenance. The earlier whole-program native refusal is removed by the
+explicitly authorized representation.
+
+Construction now admits **1,442/1,465** originals: every non-Flow graph, including
+methods/accessors, destructured bindings/parameters/assignment targets/catch
+bindings, unsupported nodes, debugger and meta properties. Native and Node
+compare byte-identically to Go, including cached ForFunction. **72/72** probes
+also match. The 23 Flow graph exclusions, 40 Flow fixture exclusions and 45
+classified original Go test skips remain unchanged.
+
+Pattern nodes use `PatternIndex` in the shared arena home. Original and
+SSA-renamed destructuring patterns preserve Go's clone timing: the Go adapter
+records `cloneBeforeSSA`, an invocation fact, independently of the expected dump.
+The normal ForFunction path shares the already-renamed pattern; Lower followed
+by CloneFunction then Construct retains a separate original pattern. No graph
+answers are read back into the port.
+
+The new node handles preserve Go's Identifier.Node reporting seam and propagate
+through SSA minting. HIRFile can reuse the context's parser, preserving file kind
+and index identity. MayHoldComponentOrHook and AsCompilationUnit are exported.
+The rule-owned static-components implementation uses only the HIR and imported
+SSA graph. Its Go adapter remains beside the rule directory under lintoracle.
+The structural symbol-query boundary avoids linking another lint module's
+nominal Checker class into a copied rule mutant.
+
+## New stop: CloneFunction spread with static constructor objects
+
+Go `clone.go:96` copies `Instruction.Value` of type `InstructionValue`; the deep
+copy entry is `inline_remap.go:271`. Adamic `clone.ts` copies the equivalent
+`ValueType` discriminated record and its arrays, remapping all references to
+fresh checked arenas. Object spreads preserve the complete record before
+replacing owned arrays/edges. The required private-index static minting classes
+cause the native compiler's program-wide spread refusal.
+
+Compiler message for the pending clone, verbatim:
+
+```
+adamic: clone_main.ts: stage 0 can't lower spreading in a program with static constructor objects yet
+```
+
+Shortest proving program, `testdata/static-constructor-spread-gap.a`:
+
+```typescript
+class Index { readonly slot: number; private constructor(slot: number) { this.slot = slot; } static push(): Index { return new Index(0); } }
+const index = Index.push();
+console.log(`${{...{slot: index.slot}}.slot}`);
+```
+
+Node stdout: `0\n`. Compiler message verbatim:
+
+```
+adamic: static-constructor-spread-gap.a: stage 0 can't lower spreading in a program with static constructor objects yet
+```
+
+Exact `lower.NotYet.What`: `spreading in a program with static constructor objects`.
+The selector-style gap test passes on that exact refusal and fails when it closes.
+No workaround is applied. The pending clone is isolated in clone.ts,
+clone_main.ts and clone_coverage.ts; ordinary construction and static-components
+have no import of it. Unit 2 is stopped here, rather than declared complete.
+
+Node-only CloneFunction matches all **1,514** admitted construction observations
+(1,442 originals + 72 probes); its storage-alias mutant is stopped by
+`BlockIndex belongs to another arena`. Native clone coverage is **0**, blocked by
+the compiler refusal. Clone coverage is not added to construction's native count.
+
+Current-tip counted native construction: the same byte-identical 12-function
+probe measures allocations/frees **4,161/4,161**, **+949** from 3,212, **+292**
+from 3,869 and **+37** from the reconstructed typed checkpoint's 4,124. Retains
+16,250; releases 14,835; peak 237; regions 0. Known contributors are boxed indices,
+canonical handle arrays and owner-bound SSA closures; this slice additionally
+creates pattern-node/handle arrays per function. No isolated attribution is
+claimed for the +37. On all 1,514 admitted observations: allocations/frees
+**4,300,331/4,300,331**, retains 19,518,706, releases 18,665,838, peak 11,969,
+regions 0. That larger corpus is not a like-for-like allocation delta.
+
+## Final unit 2 checkpoint and parallel staffing
+
+Construction native = Node **1,442/1,465 originals**, plus **72/72 probes**;
+23 Flow originals remain catalogued. All 1,514 admitted direct and cached
+observations match Go hir-v1. The counted native build independently matches
+every admitted record and every decline; its 12-function dump is unchanged.
+The semantic matrix catches **79/79** mutants on both runtimes, with two moved
+object anchors repaired and rerun against the complete census. The final
+integration run passes cache identity/mutant, 22 resident symbol selectors and
+identity mutant, both exact gap tests and the full construction comparison.
+Retained aggregate receipt and command output: `validation/unit2-step28/`.
+
+Explicit branch/default/optional temporaries now retain their AST source handles,
+as Go newTemporary(node) does, so conditional callees have exact diagnostic spans.
+This metadata does not alter hir-v1 or the allocation count. PLAN.md assigns
+Go checkpoints and exclusive files to units 3–10. A shared replay owner must
+add the decoder and later-state sidecars; current scopes are a placeholder.
+Units 3,4,6–10 can start isolated algorithm development; unit 5 execution and
+unit 4 projection await the missing mutation_aliasing area import. Unit 10
+composition depends on the earlier Adamic algorithms and native clone ruling.
+
+Static-components final certificate: **22/22 upstream cases + 3/3 owned witnesses**
+match Go on native, Node and emitted JavaScript. The creation-deletion mutant
+is caught on native and Node. Retained output: `validation/unit2-step28/static-components-final.txt`.

@@ -96,4 +96,81 @@ Native compilation feedback during this slice was on port expressions, not an un
 
 ## Unit 2 continuation
 
-See [PROGRESS.md](PROGRESS.md) for the current clean seam and exact remaining construction/rule work. Its executed-test census supersedes the first landing's source-text selector for unit 2 coverage: 748/1,465 raw corpus functions on Node and native (23 explicitly excluded Flow graphs; active denominator 1,442), plus 56/56 path probes. All index kinds now import the shared private-constructor classes in ../arena/arena_index.a under the Oct 8 07:57 ruling; see EVIDENCE.md for its independent landing and measured boxing cost. Unit 2 and static-components remain unfinished. The owner confirms mutation_aliasing is scheduled for tonight's area pin bump and is not required before unit 4.
+See [PROGRESS.md](PROGRESS.md) and [REPORT.md](REPORT.md) for the current certificate: 1,442/1,465 originals on native and Node (all 1,442 non-Flow graphs), plus 72/72 path probes. The optional-field ruling is applied. Static-components' owned rule certificate is recorded there. Unit 2 is stopped on the isolated native CloneFunction static-constructor/spread gap, with its Node-only certificate kept separate. The parallel pass assignments below supersede implementation sequencing while preserving Go's integrated execution order.
+
+
+## Parallel pass lanes after unit 2 (step 08 / step 28)
+
+The arrows above describe **integrated execution order**, not an implementation
+prerequisite. A worker can consume the Go state immediately before its pass and
+compare its result with Go immediately after the pass. No unit 3–10 needs a
+previous worker's Adamic algorithm to begin this isolated work. Every checkpoint
+keeps the original 1,465 census keys: no new hash from a changed graph, no sample
+and no silently dropped error path. Go-input replay can retain the 23 Flow graphs
+without parsing them in Adamic; integrated construction still catalogs those
+23 exclusions. Each adapter exports the original file kind, source/AST handles,
+checker availability and query facts separately from analysis answers.
+
+### Replay bootstrap and the limit of today's dump
+
+The current `hir-v1` **construction** oracle is byte-identical on the admitted
+corpus. It is a printer, not yet a decoder, and its `scopes -` line is a
+placeholder. It does not yet print `AliasingEffects`, mutable ranges, disjoint
+representatives, scope alignment/dependencies, reactive trees or preservation
+findings. Calling those later lanes immediately oracle-certified would be false.
+They are **ready to staff for Go-input development today**, with the shared replay
+bootstrap below; none is waiting for a prior Adamic pass. Their full comparison
+becomes runnable when their named before/after state codec exists.
+
+Assign one replay/integration owner before the pass workers start. That owner
+alone writes `replay/`, `core.ts`, `dump.ts`, `graph.ts`, `cache.ts`,
+`symbol_query.ts`, `symbol_live.ts`, `testdata/oracle_test.go`, the census exporter,
+and `../arena/arena_index.a`. Pass workers request missing record/arena types from
+that owner; they never edit those shared files. Add all Go instruction variants
+and the scope/reactive arena index classes centrally once, with private minting
+and checked reads. Keep the construction dump unchanged where new state is absent.
+SSA and mutation_aliasing remain imported algorithms, never copied.
+
+The owner's codec exports and reads **checkpoint bundles**: the existing hir-v1
+function/block/instruction/place rows plus canonical sidecar rows below, linked by
+function-nesting path and existing identifier/block/instruction IDs. AST/type
+facts use source kind/span handles; they are input facts, not expected analysis
+results. Maps and sets print sorted numeric identities; dependency paths retain
+segment order, computed/optional distinctions and their identity registry. Effects
+retain their original sequence. Scope and reactive-node IDs use Go's IDs, and
+fresh IDs follow Go's allocation order. Recursive graphs are typed index arenas;
+no object-address strings or cycle-capable links. The codec roundtrip must itself
+be byte-identical and have a corrupt-index mutant before any pass certificate.
+
+Each worker exclusively owns `passes/unit-N/` (implementation, local types,
+Go tagged adapter, input/output fixtures, comparison test and mutants). Its
+sidecar encoder belongs in that directory, using the shared framing/identity
+reader by import. This gives separate files to simultaneous workers. Shared-file
+changes and pipeline wiring are serialized by the replay/integration owner; unit
+10 owns the composed orchestration, requesting the final public entry/cache glue.
+The pipeline order must follow Go `AnalyzePreservedManualMemoization`, not merely
+unit number: outline → reactive facts → drop memo → inline/merge/DCE → ranges →
+scopes/terminals → loop/hook flattening → dependencies → reactive tree → prune →
+validate. In particular unit 9's flattening runs before units 7 and 8.
+
+| Unit / exclusive write directory | Go entry point(s) and before state | Output in hir-v1 checkpoint terms | Shared files / modules read; writes reserved to integration owner | Can start from Go input today? |
+| --- | --- | --- | --- | --- |
+| **3 memo / rewrites**, `passes/unit-3/` | `drop_manual_memoization.go:198 DropManualMemoization`; `inline_iife.go:81 InlineImmediatelyInvokedFunctionExpressions` / `:116 ...IncludingMemoCallbacks`; `inline_remap.go:67 CopyNestedBodyInto`; `outline_functions.go:38 OutlineFunctions`; `dead_code_elimination.go:43 EliminateDeadCode`; `merge_consecutive_blocks.go:62 MergeConsecutiveBlocks`; cache entry `ForFunctionWithoutManualMemoization`. Supply constructed SSA graph, captures, callee origins and source dependency facts. Preservation's drop checkpoint is after outline + InferReactive; export each subpass separately. | Rewritten instruction/identifier/block tables, memo Start/Finish markers and source dependencies, nested/outlined identities, remap tables and rewrite/DCE counts. Rebuild SSA with imported module at Go's corresponding checkpoint. | Read core/dump/graph, shared arena, SSA and symbol facts. Only owner adds missing Memo/DeclareContext variants or the public cache hook; worker writes its own memo cache module. | **Ready for isolated Go-input work.** Needs replay graph + AST/memo sidecars, not unit 4's Adamic code. The pending native CloneFunction gap blocks integration through that clone, not fresh-arena replay. |
+| **4 effects / reactive facts**, `passes/unit-4/` | `effects.go:493 InferAliasingEffects`, `:523 InferAliasingEffectsForNested`, `:1189 ProjectEffects`; `reactive.go:189 InferReactive`. Supply appropriate prepass graph, hook origins, imported/callee signatures, AST/type-checker facts and nil-checker context where originally nil. ProjectEffects receives Go-produced ranges at its own independent checkpoint. | Place effect/reactive flags; ordered alias effect records, captures and closure/custom-hook summaries, value kinds, primitive constraints and projected effect map. | Read frozen core, SSA and symbol-query bridge; mutation_aliasing types for projection. Unit 4 owns all effects/primitive/reactive-fact types. Owner alone extends generic replay fact selectors. | **Ready for isolated Go-input work.** Graph and checker-fact codec required; no prior Adamic pass. Full native import must use the area's mutation_aliasing module where projection requires it. |
+| **5 ranges / disjoint**, `passes/unit-5/` | `ranges.go:31 InferMutableRangesWithEffects`, `:44 RangesForNested`, `:115 MutationSites`; `disjoint.go:331 FindDisjointMutableValuesWithRanges` (wrappers at `ranges.go:20`, `disjoint.go:315`). Input is graph + Go-produced alias effects, closure value kinds and nested summaries; disjoint's input additionally has Go ranges. | Mutable intervals keyed by function path/identifier, frozen/value-kind facts, closure widening and mutation sites; deterministic disjoint representative and union membership rows. Preserve separate nested tables. | Import `static_single_assignment` and `mutation_aliasing` **by reference**. Read core, unit-4 public fact types and replay codecs. Worker owns its adapters and disjoint state; does not edit either analysis module. | **Prepare Go-input adapters now; execution BLOCKED on the mutation_aliasing import in this checkout.** The promised lint-area pin/module bump is not present here (`stage1/cohere/mutation_aliasing/` is absent). No Adamic unit 4 algorithm is needed once that existing module lands; never copy the Go algorithm to bypass it. |
+| **6 scopes / alignment**, `passes/unit-6/` | `scopes.go:264 AssignReactiveScopesWithSets`, `:409 ValidateScopes`; `align_method_calls.go:44 AlignMethodCallScopes`; `align_scopes.go:375 AlignThenMergeReactiveScopes`; `scope_terminals.go:335 BuildReactiveScopeTerminals`. Input: graph + Go ranges/disjoint representatives, then scopes/alignment at each subpass boundary. | Scope assignments and intervals, aligned/merged identity maps, declarations/outputs and memoization graph levels; inserted scope terminals, including structured edge IDs and validation results. | Read frozen core/arena, unit-5 range/disjoint schema and shared framing. Scope index class/core terminal variants are added once by owner. Unit 6 owns ScopeIdentity and all scope/alignment data types. | **Ready for isolated Go-input work.** Needs scope sidecars and decoder, not Adamic ranges/effects. Current `scopes -` alone is insufficient input or output. |
+| **7 dependencies / hoistability**, `passes/unit-7/` | `hoistable.go:826 CollectHoistablePropertyLoads`; `dependencies.go:1138 CollectScopeDependenciesWithHoistable` (wrapper `:1077 CollectScopeDependencies`); `always_invalidating.go:50 IsAlwaysInvalidatingType`. Input: graph after scope terminals and loop/hook flattening, Go scope identities/ranges, invoked-function facts, null/optional paths and checker facts. | Per-scope ordered dependency paths/outputs, path identity and temporary registries, hoistable-load tree and stable/invalidating facts. Unchanged graph rows still compare. | Read frozen core, unit-3 invoked schema, unit-5 ranges and unit-6 ScopeIdentity schema. Worker owns path/hoistable/dependency types and encoder; new shared path arena handles only owner writes. | **Ready for isolated Go-input work.** Go-produced flattening input replaces waiting for units 6 or 9 Adamic implementations. Requires full path/identity and checker-fact codec. |
+| **8 reactive tree**, `passes/unit-8/` | `reactive_build.go:281 BuildReactiveFunction`, `:293 BuildReactiveFunctionWithFlattenedScopes`; `reactive_visitor.go:81 VisitReactiveFunction`; `reactive_transform.go:103 TransformReactiveFunction`. Input: Go graph with scope terminals, Go scope/flattened identity sets and required dependency facts. Visitor/transform fixture states include the explicit operation to apply. | Typed reactive arena node/edge rows, structured blocks/loops/scopes, instruction order, scope outputs/dependencies and `ReactiveBuildResult` failures. Tree and source graph both dump; impossible builds are counted outcomes, not discarded cases. | Read frozen core/arena and unit-6/7 schema. Owner creates shared ReactiveIndex; worker exclusively owns reactive types, builder, visitors and transforms. | **Ready for isolated Go-input work.** No earlier Adamic pass required. Needs reactive-tree codec; construction hir-v1 cannot yet express this tree. |
+| **9 flatten / prune / merge**, `passes/unit-9/` | `flatten_reactive_loops.go:51 FlattenReactiveLoops`; `flatten_scopes_with_hooks.go:38 FlattenScopesWithHooksOrUse`; `prune_non_escaping_scopes.go:95 PruneNonEscapingScopesWithScopes`; `PruneNonReactiveDependencies`; `PruneUnusedScopes`; `MergeReactiveScopesThatInvalidateTogether`; `PruneAlwaysInvalidatingScopes`. Export before/after each exact Go subpass, not one invented late flattening stage. | Flattened/pruned scope identity sets, changed graph terminals for flattening, changed reactive tree and dependency table, merge/last-use facts and per-pass counts. Preserve pruned identities even after the tree removes the scope. | Read core, unit-6 ScopeIdentity, unit-7 dependencies and unit-8 reactive schema; read checker facts for escaping/type distinctions. Worker owns prune/flatten code and result schema. | **Ready for isolated Go-input work.** Go trees/tables supply prerequisites; no need to wait for Adamic unit 8. Requires graph + reactive + dependency replay codecs. |
+| **10 preservation / composition**, `passes/unit-10/` | `manual_memo_comparison.go:86 CompareManualMemoDependencies`; `preserve_manual_memoization.go:107 ValidatePreservedManualMemoizationWithPruned`; orchestration `:439 AnalyzePreservedManualMemoization`. Input: Go post-prune tree, source graph/memo markers, aligned scope identities, inferred/source dependency tables and pruned-by-chain set. | Ordered preservation findings (identifier, scope, evaluation order, kind), comparison results and canonical per-subpass checkpoints. Rule adapter separately compares exact Go diagnostics. | Read all public pass schemas, core and cache. Worker owns comparison, validation and composed pipeline module. Only integration owner edits root public exports/cache and rule registration remains in the rule's own directory. | **Ready for isolated validator/comparison work.** Go-produced final states suffice today. **Full composed Adamic AnalyzePreservedManualMemoization truly needs units 3–9 and the native clone gap resolved.** |
+
+Units 3, 4, 6, 7, 8, 9 and 10 can be staffed now for isolated implementation,
+with one shared replay/integration owner in parallel. Unit 5 can prepare its
+adapters now, but executing them awaits the mutation_aliasing area import; unit
+4's projection subpass has the same dependency. All eight are independent of
+previous Adamic algorithms for their Go-input certificates.
+No pass is marked ready-to-run against a decoder that has not been built. Each
+lane must land its complete 1,465-record checkpoint comparison and a semantic
+mutant before claiming completion; native and Node counts remain separate until
+both execute. Shared schemas land before dependent lane imports, but schema
+availability is distinct from waiting for the earlier algorithm.

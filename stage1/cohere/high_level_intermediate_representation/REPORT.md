@@ -1,113 +1,114 @@
-# Unit 2 report — stopped on native optional-boolean field read
+# Unit 2 report — full construction and static-components; clone native stop
 
-Unit 2 is unfinished. This stopped checkpoint is on `stage1-hir/wip`, which merges
-lint area `ad7bd06632f119abc7680719ad3a7d3b71100f58` at `c7dab335` without rebasing.
-Static-components remains unregistered: **0 upstream rule cases certified**.
+Roadmap step 28. This stopped unit is on `stage1-hir/wip`; the watched plan branch
+is not pushed. The lint-area merge remains `c7dab335` from `ad7bd066`; cohere stays
+pinned at `7945d102a6c18dd36adf9114a758ce646e8b2359`. HIR made no parser change.
 
-## Parser recovery and file-kind checks
+## Coverage
 
-The parser owner's `88f4a83d` recovery is imported through the lint-area merge.
-HIR made no parser change. The shortest former blocker is
-`function F(){return <x>{a}{b}</x>}`, parsed as **TS**. It now parses on native and
-Node; typescript-go and Node print byte-identical whole ASTs and diagnostics.
-The retained trees include diagnostic 1005 at 26 (`';' expected.`) and 1110 at 30
-(`Type expected.`). See `validation/unit2-merge/shortest-{go,node}.tree`.
+| Certificate | Native | Node |
+| --- | --- | --- |
+| Original construction functions | **1,442 / 1,465** | **1,442 / 1,465** |
+| Admitted non-Flow originals | **1,442 / 1,442** | **1,442 / 1,442** |
+| Construction path probes | **72 / 72** | **72 / 72** |
+| Combined constructed observations | **1,514 / 1,537** | **1,514 / 1,537** |
+| Static-components upstream cases | **22 / 22** | **22 / 22** |
+| Static-components owned witnesses | **3 / 3** | **3 / 3** |
+| Pending CloneFunction observations | **0 — compiler refusal** | **1,514 / 1,537** |
 
-The oracle captures Go's `source.ScriptKind`, selected from each case filename.
-Its exported files retain `.ts`, `.tsx`, `.js` and `.jsx`; direct and cached replay
-pass those paths into the imported parser. The JSX-looking `rangesFor` tests use
-`fixture.ts` in Go, so TS recovery is the correct contract for them. Upstream TSX
-cases retain TSX. There is no remaining parser gap on this input.
+Every admitted graph is byte-identical to Go hir-v1, through direct construction
+and cached ForFunction. Static-components compares complete findings to the
+unchanged Go rule; emitted JavaScript matches too. The 23 Flow graphs and 40 Flow
+fixtures remain catalogued exclusions. All 45 original Go test skips retain
+their per-group out-of-rule-reach / later-unit classification in SKIPPED.md and
+the checked census summary. No admitted failure was dropped.
 
-## Coverage and mutants
+Construction now covers methods/accessors and computed names, closures and
+capture writes, all statement/control-flow/JSX paths in the admitted corpus,
+optional chains, typed/default/rest parameters, patterns and destructuring,
+catch patterns, casts and unsupported targets, debugger/meta/unsupported nodes.
+Patterns have their own checked arena; no cyclic object links are introduced.
+Go's Lower→Clone→Construct versus ForFunction→Clone invocation distinction is
+recorded independently as cloneBeforeSSA, preserving both pattern views.
 
-| Certificate | Original functions | Probes | Overall |
-| --- | --- | --- | --- |
-| Last native = Node checkpoint, typed/async forms | **966 / 1,465** | **63 / 63** | 1,029 / 1,528 |
-| Current Node, structural optional chains | **1,013 / 1,465** | **64 / 64** | 1,077 / 1,529 |
-| Current native | compilation blocked | compilation blocked | no current-tip execution certificate |
+## Mutants and local validation
 
-All original functions remain in the census. The 23 Flow graphs, 40 excluded
-Flow upstream fixtures, and 45 classified original Go test skips remain intact.
-No admitted failing graph was dropped. Every admitted graph in each passing
-certificate compares byte for byte with Go's hir-v1 dump through direct and
-cached ForFunction construction.
+Static-components' creation mutant **fails against Go on native and Node**.
+The HIR semantic matrix has **79 / 79 mutants caught** on native and Node,
+combining the full run with the repaired-anchor complete-corpus reruns. FunctionIndex and PatternIndex off-by-one mutants stop at checked
+reads on both runtimes. Private minting and cross-brand misuse are rejected;
+foreign arena handles also fail. The ForFunction cache-hit mutant is caught on
+native and Node. Pending CloneFunction's alias mutant fails on Node at
+`BlockIndex belongs to another arena`; native clone is not certified.
 
-Casts, satisfies, regex recovery, deletes, typed declarations, typed/default/rest
-parameters, async/await and generator metadata now have native/Node certificates.
-Optional dot chains preserve shared alternate blocks and inherited continuation
-kinds; computed optional loads preserve Go's instruction flag. Method calls keep
-Go's receiver/property evaluation and exact optional-marker child roles.
+The rule certificate is reproducible with its owned `certify.sh`, which overlays
+its owned test beside the generic lint harness. It captures every upstream case
+for the exact descriptor name and uses the harness's native checker transcript
+for Node/emitted-JS replay, including the mutant. No shared registration list or
+parser code was patched. Two old object-mutant anchors moved with object method
+lowering; their targeted complete-corpus rerun passes after reanchoring.
 
-**69 / 69 semantic mutants pass on current Node**, including both optional-path
-mutants. The seven new cast/delete/function-form mutants passed on native and
-Node before the Optional extension; 67 semantic mutants have native certificates
-across checkpoints, but the combined current native matrix cannot run. Earlier
-native certificates and their scope remain described in EVIDENCE.md. The checked
-FunctionIndex off-by-one mutant stopped on both runtimes at the last native
-checkpoint. Brand, private-mint and owner checks remain unchanged.
+## Rulings and new language stop
 
-The three moved mutant anchors were refreshed. Await and typed-binding mutants
-now preserve nested graph construction, so they reach a semantic disagreement
-rather than aborting with a missing nested path.
+The 09:44 optional-boolean ruling (a) is applied: an optional record holds required
+boolean presence/value fields. Every site is marked `gap 1 (GAPS.md)`. The original
+proving program and exact selector-style test stay in GAPS.md / gaps_test.go,
+failing when step 17 (#qgr7mm4) lowers the field. Go dumps identify **74 / 1,465**
+original graphs requiring that field and **1,391** without it; the retained impact
+JSON names every key and original test call. The authorized workaround restores
+the whole native construction build.
 
-Logs are retained under `validation/unit2-merge/`: expressions/native/Node,
-function forms/native/Node, whole Node mutant matrix, and native refusals.
-
-## Language gap for @system_adamic
-
-Go `terminal.go:217` defines `Optional`; line 218 is `Optional bool`. The Adamic
-tagged terminal record in `core.ts:79` contains `readonly optional?: boolean`.
-Native refuses the field read in `dump.ts:108:145`:
-
-```
-adamic: /workspace/adamic/stage1/cohere/high_level_intermediate_representation/dump.ts:108:145: stage 0 can't lower a field of type boolean | undefined yet
-```
-
-[testdata/optional-boolean-gap.a](testdata/optional-boolean-gap.a) is the checked
-three-line reproducer. It prints `true` on Node. Native compilation reports:
+Unit 2 stops on the **isolated native CloneFunction** gap, GAPS.md gap 2.
+Go `clone.go:96` copies `Instruction.Value: InstructionValue`, through the deep
+copy at `inline_remap.go:271`. Adamic `clone.ts` copies `ValueType` records and
+owned arrays into fresh checked arenas. The compiler refuses object spread in
+the same program as the required private-index static constructor objects:
 
 ```
-adamic: /workspace/adamic/stage1/cohere/high_level_intermediate_representation/testdata/optional-boolean-gap.a:2:53: stage 0 can't lower a field of type boolean | undefined yet
+adamic: clone_main.ts: stage 0 can't lower spreading in a program with static constructor objects yet
 ```
 
-No representation or field-read workaround was applied. EVIDENCE.md's latest entry
-records both this gap and closure of the earlier parser blocker.
+The three-line proving program is `testdata/static-constructor-spread-gap.a`;
+Node prints `0\n`, and its exact `lower.NotYet.What` is
+`spreading in a program with static constructor objects`. The gap test passes on
+that refusal and fails as soon as it closes. No workaround is applied.
+The pending clone is isolated behind clone_main.ts / clone_coverage.ts, with no
+import from ordinary construction or the rule. Its Node count is separate from
+the native = Node construction certificate. Unit 2 is not declared complete.
 
-## Allocation measurement
+## Allocations
 
-The previous shared-index 12-function probe measured **3,212 -> 3,869 allocations
-(+657)**, with frees equal to allocations. Retains rose by 2,168, releases by 1,905,
-and peak live objects by 24 (175 -> 199); regions stayed zero. The current Optional
-tip cannot be measured natively because its build is refused.
+The same byte-identical **12-function** native probe:
 
-Known contributors to that earlier delta are boxed concrete indices, canonical
-handle arrays, and per-function SSA adapter closures. The closures bind the owning
-HIRFunction because the imported SSA identifier callback does not receive it.
-The measurement does not isolate each contributor; the brand remains intact.
-The post-merge **last passing native checkpoint (966 originals + 63 probes)** was
-reconstructed in an isolated detached checkout at `c7dab335`; its exact source
-delta is retained in `validation/unit2-merge/native-checkpoint.patch`. This is a
-historical certificate and measurement, not current-tip native certification.
+| Metric | Current |
+| --- | ---: |
+| Allocations / frees | **4,161 / 4,161** |
+| Delta from original 3,212 | **+949** |
+| Delta from shared-index 3,869 | **+292** |
+| Delta from typed checkpoint 4,124 | **+37** |
+| Retains / releases | 16,250 / 14,835 |
+| Peak live / regions | 237 / 0 |
 
-Its counted build matches Go on **1,029 / 1,528** graphs in the checkpoint manifest. The same 12-function
-dump is byte-identical to the previous measured dump. Its metrics are:
+Known causes of earlier growth are boxed concrete indices, canonical handle
+arrays and owner-bound SSA callbacks. This slice additionally creates pattern
+node and handle arrays per function. No isolated share of the +37 is claimed;
+the brand remains enforced. Full current admitted corpus: **4,300,331 allocations
+and frees**, retains 19,518,706, releases 18,665,838, peak 11,969, regions 0.
+Its denominator differs from older full-corpus measurements, so that total is
+not presented as a like-for-like delta.
 
-- Allocations/frees: **4,124 / 4,124**, **+912** from 3,212 and **+255** from 3,869.
-- Retains/releases: **15,849 / 14,727**.
-- Peak live: **234**; regions: **0**.
-- Full admitted census: **2,181,808 allocations and frees**, peak **11,956**.
+## Next work and parallel lanes
 
-The additional +255 accompanies the parser recovery merge and typed/function-form
-extension, including per-function metadata callbacks and body-child slices. No
-isolated share is claimed for those contributors. Count outputs are retained in
-`native-12-counts.txt` and `native-corpus-counts.txt`.
+After the ruling/fix, certify CloneFunction on native and rerun its integrated
+certificate. Static-components itself is green. PLAN.md now names, for units
+3–10, exact Go entry points, input/output checkpoint states, exclusive owned
+directories and shared-file ownership. Units 3, 4, 6–10 can start isolated Go-input
+work without earlier Adamic algorithms. Unit 5 and unit 4's projection require
+the promised mutation_aliasing area import, absent in this checkout. A shared
+replay owner must first provide the decoder and missing pass-state sidecars:
+today's printer has `scopes -`, not a complete later-pass replay schema.
+Only the composed unit 10 pipeline genuinely needs the earlier Adamic passes.
 
-## Remaining work
-
-After the language ruling: complete patterns/destructuring and method/function
-variants, remaining construction paths, rule-owned ForFunction and compilation-unit
-integration, then static-components in its own directory under
-`docs/lint-registration.md`. Finish the full construction and upstream rule
-comparisons, native/Node mutant matrix, and allocation measurement before calling
-unit 2 complete. The watched plan branch has not been pushed.
+Retained certificates and the aggregate mutant receipt are in `validation/unit2-step28/`.
+Final metadata verification also preserves source handles on conditional/logical/optional
+temporaries, needed for exact static-components creation spans; hir-v1 is unchanged.

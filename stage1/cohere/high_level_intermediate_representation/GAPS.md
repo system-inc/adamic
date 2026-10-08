@@ -1,0 +1,76 @@
+# HIR compiler gaps — roadmap step 28
+
+Ruling (a), @system_adamic 09:44, authorizes a presence bit beside the boolean
+value, as selector gap 3 and values gap 2 do. Mixed-union lowering remains owned
+by compiler step 17 (#qgr7mm4). The port applies that representation and keeps
+the original proving program intact. `gaps_test.go` asserts the proving program's Node output and the exact
+`lower.NotYet.What`; it fails as soon as lowering succeeds or the refusal changes.
+
+## Optional boolean field read
+
+[Shortest proving program](testdata/optional-boolean-gap.a):
+
+```typescript
+interface Terminal { readonly optional?: boolean; }
+function read(terminal: Terminal): boolean { return terminal.optional ? true : false; }
+console.log(read({ optional: true }) ? 'true' : 'false');
+```
+
+Node stdout is `true\n`. Exact `lower.NotYet.What`:
+
+```
+a field of type boolean | undefined
+```
+
+Go `cohere/internal/lint/ecmascript/high_level_intermediate_representation/terminal.go:218`
+has `Optional bool`. Adamic's tagged record in `core.ts` has
+`readonly optional?: boolean`; the refusal occurs when `dump.ts` reads that field.
+The dump reads a presence/value record with required boolean fields. The graph
+and hir-v1 meaning remain unchanged. All workaround sites carry `gap 1 (GAPS.md)`
+comments in core.ts, lower.ts and dump.ts. When the gap test fails because lowering
+succeeds, remove these sites together and recertify the whole corpus.
+
+## Construction corpus impact
+
+The independent Go hir-v1 dumps identify the graphs requiring an Optional terminal
+field read, including nested functions included in a root dump. The census keeps
+all **1,465** original context-distinct functions and explicitly records Flow
+exclusions. An optional computed-load or call flag is a required boolean and does
+not itself require the refused field type.
+
+The owned impact test records all matching census keys and provenance, rather
+than estimating the affected count from syntax or the current admission grammar.
+**74 / 1,465** original graphs require the field, and **1,391** do not. Before
+the authorized workaround the whole native executable failed to build, even for
+functions that did not execute the Optional branch. The presence/value record
+now restores native compilation. The census writes `optional-boolean-impact.json`
+with every affected key and original test-call provenance.
+
+## Gap 2: CloneFunction spread with private-index static constructors
+
+Go `clone.go:96` copies `Instruction.Value` (the `InstructionValue` interface),
+through `inline_remap.go:271`'s deep copy. Adamic `clone.ts` copies the equivalent
+`ValueType` discriminated record, its writable arrays and its arena edges. The
+required concrete private-index classes have static minting methods. Stage 0
+refuses combining these static constructor objects with object record spreads.
+The pending clone is isolated behind `clone_main.ts` / `clone_coverage.ts`; ordinary
+construction and the rule do not import it. No workaround is applied.
+
+Shortest proving program, `testdata/static-constructor-spread-gap.a`:
+
+```typescript
+class Index { readonly slot: number; private constructor(slot: number) { this.slot = slot; } static push(): Index { return new Index(0); } }
+const index = Index.push();
+console.log(`${{...{slot: index.slot}}.slot}`);
+```
+
+Node stdout: `0\n`. Compiler message verbatim:
+
+```
+adamic: static-constructor-spread-gap.a: stage 0 can't lower spreading in a program with static constructor objects yet
+```
+
+Exact `lower.NotYet.What`: `spreading in a program with static constructor objects`.
+The selector-style test fails when lowering succeeds or its refusal changes.
+This blocks the pending CloneFunction certificate on native; it does not block
+any of the 1,442 admitted construction graphs or static-components.

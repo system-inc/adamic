@@ -174,7 +174,7 @@ function Component(value) {
 		t.Fatal(err)
 	}
 	defer os.RemoveAll(mutant)
-	for _, name := range []string{"symbol.ts", "symbol_main.ts", "symbol_live.ts", "export_origin.ts"} {
+	for _, name := range []string{"symbol.ts", "symbol_main.ts", "symbol_live.ts", "symbol_query.ts", "export_origin.ts"} {
 		data, err := os.ReadFile(filepath.Join(lane, name))
 		if err != nil {
 			t.Fatal(err)

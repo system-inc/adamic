@@ -1,6 +1,6 @@
 import { testPlace, testBlock } from './core.ts';
 import { panic } from 'adamic';
-import type { ConstructedHIR, HIRArena, FunctionIndex, HIRFunction, PlaceInterface, Instruction, TerminalType } from './core.ts';
+import type { ConstructedHIR, HIRArena, FunctionIndex, HIRFunction, PlaceInterface, Instruction, TerminalType, PatternIndex } from './core.ts';
 export function placeText(place: PlaceInterface): string {
     return `${place.identifier.slot}:${place.effect}:${place.reactive ? 1 : 0}:${place.start}:${place.end}`;
 }
@@ -54,7 +54,10 @@ export function quote(text: string): string {
 function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunction): string {
     let payload = '';
     const value = instruction.value;
-    if(value.kind === 'TypeCastExpression') { payload = `{"Node":{"end":${value.nodeEnd},"kind":${quote('Kind' + value.nodeKind)},"pos":${value.nodePos}},"Value":${quote(placeText(value.value))}}`; }
+    if(value.kind === 'UnsupportedNode') { payload = `{"Node":{"end":${value.nodeEnd},"kind":${quote(value.nodeKind)},"pos":${value.nodePos}},"Reason":${quote(value.reason)}}`; }
+    else if(value.kind === 'Debugger') { payload = '{}'; }
+    else if(value.kind === 'MetaProperty') { payload = `{"Meta":${quote(value.meta)},"Property":${quote(value.property)}}`; }
+    else if(value.kind === 'TypeCastExpression') { payload = `{"Node":{"end":${value.nodeEnd},"kind":${quote('Kind' + value.nodeKind)},"pos":${value.nodePos}},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'Await') { payload = `{"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'PropertyDelete' || value.kind === 'ComputedDelete') { payload = `{"Object":${quote(placeText(value.object))},"Property":${quote(value.kind === 'PropertyDelete' ? value.property : placeText(value.property))}}`; }
     else if(value.kind === 'RegExpLiteral') { payload = `{"Flags":${quote(value.flags)},"Pattern":${quote(value.pattern)}}`; }
@@ -81,6 +84,8 @@ function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunct
             payload = `{"Children":${children},"Props":${props},"Tag":${tag}}`;
         }
     }
+    else if(value.kind === 'Destructure') { const pattern = patternText(fn,value.pattern); payload = `{"Kind":${value.declarationKind},"LValue":${patternText(fn,value.lvaluePattern)},"Pattern":${pattern},"Value":${quote(placeText(value.value))}}`; }
+    else if(value.kind === 'ObjectMethod') { arena.read(value.functionReference.index); if(fn.functions[value.functionReference.ordinal] !== value.functionReference.index) { panic('method function index disagrees'); } payload = `{"Function":${value.functionReference.ordinal},"Key":${quote(value.key)}}`; }
     else if(value.kind === 'FunctionExpression') { arena.read(value.functionReference.index); if(fn.functions[value.functionReference.ordinal] !== value.functionReference.index) { panic('function reference ordinal disagrees with arena index'); } payload = `{"Captures":[${value.captures.map((place) => quote(placeText(place))).join(',')}],"Function":${value.functionReference.ordinal}}`; }
     else if(value.kind === 'StoreLocal' || value.kind === 'StoreContext') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { payload = `{"LValue":${quote(placeText(value.lvalue))},"Operation":${quote(value.operation)},"Value":${quote(placeText(value.value))}}`; }
@@ -105,7 +110,8 @@ function terminalText(terminal: TerminalType): string {
     if(terminal.kind === 'Throw') { return `{"Value":${quote(placeText(terminal.value ?? panic('missing terminal value')))}}`; }
     if(terminal.kind === 'Goto') { return `{"Block":${(terminal.block ?? panic('missing terminal index')).slot + 1},"Variant":${terminal.variant}}`; }
     if(terminal.kind === 'If' || terminal.kind === 'Branch') { return `{"Alternate":${(terminal.alternate ?? panic('missing terminal index')).slot + 1},"Consequent":${(terminal.consequent ?? panic('missing terminal index')).slot + 1},"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Test":${quote(placeText(testPlace(terminal)))}}`; }
-    if(terminal.kind === 'Optional') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing optional exit')).slot + 1},"Optional":${terminal.optional ? 'true' : 'false'},"Test":${testBlock(terminal).slot + 1}}`; }
+    // gap 1 (GAPS.md): narrow the flag record, then read its required boolean.
+    if(terminal.kind === 'Optional') { const flag = terminal.optionalFlag ?? panic('missing optional presence/value'); if(!flag.present) { panic('Optional terminal requires its boolean'); } return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing optional exit')).slot + 1},"Optional":${flag.value ? 'true' : 'false'},"Test":${testBlock(terminal).slot + 1}}`; }
     if(terminal.kind === 'Logical') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Operator":${quote(terminal.operator ?? panic('missing logical operator'))},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
     if(terminal.kind === 'Ternary') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
     if(terminal.kind === 'While' || terminal.kind === 'DoWhile') { return `{"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Loop":${(terminal.loop ?? panic('missing terminal index')).slot + 1},"Test":${(terminal.testBlock ?? panic('missing terminal index')).slot + 1}}`; }
@@ -116,4 +122,12 @@ function terminalText(terminal: TerminalType): string {
     if(terminal.kind === 'Try') { return `{"Block":${(terminal.block ?? panic('missing terminal index')).slot + 1},"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Handler":${(terminal.handler ?? panic('missing terminal index')).slot + 1},"HandlerBinding":${terminal.handlerBinding === undefined ? 'null' : quote(placeText(terminal.handlerBinding))}}`; }
     if(terminal.kind === 'Switch') { const cases = (terminal.cases ?? panic('missing cases')).map((clause) => `{"Block":${clause.block.slot + 1},"Test":${clause.test === undefined ? 'null' : quote(placeText(clause.test))}}`).join(','); return `{"Cases":[${cases}],"Fallthrough":${(terminal.fallthrough ?? panic('missing terminal index')).slot + 1},"Test":${quote(placeText(testPlace(terminal)))}}`; }
     return '{}';
+}
+
+function patternText(fn: HIRFunction, index: PatternIndex): string {
+ const value = fn.pattern(index);
+ if(value.kind === 'Place') { return `{"Place":${quote(placeText(value.place))}}`; }
+ const rest = value.rest === undefined ? 'null' : quote(placeText(value.rest));
+ if(value.kind === 'Object') { return `{"Properties":[${value.properties.map((item) => `{"ComputedKey":${item.computedKey === undefined ? 'null' : quote(placeText(item.computedKey))},"Default":${item.defaultValue === undefined ? 'null' : quote(placeText(item.defaultValue))},"Key":${quote(item.key)},"Value":${patternText(fn,item.value)}}`).join(',')}],"Rest":${rest}}`; }
+ return `{"Elements":[${value.elements.map((item) => `{"Default":${item.defaultValue === undefined ? 'null' : quote(placeText(item.defaultValue))},"Value":${item.value === undefined ? 'null' : patternText(fn,item.value)}}`).join(',')}],"Rest":${rest}}`;
 }

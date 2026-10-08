@@ -5,7 +5,7 @@ import { reversePostorder, markPredecessors, markEvaluationOrder } from '../stat
 import type { GraphInterface, EdgeType } from '../static_single_assignment/static_single_assignment.ts';
 import { BlockIndex, IdentifierIndex, DeclarationIndex } from '../arena/arena_index.a';
 import { HIRFunction, BasicBlock, HIRArena, testPlace, testBlock } from './core.ts';
-import type { PlaceInterface, FunctionIndex, BlockIndex as HIRBlockIndex }  from './core.ts';
+import type { PlaceInterface, FunctionIndex, BlockIndex as HIRBlockIndex, PatternIndex }  from './core.ts';
 function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock, PlaceInterface> { return {
     entry: (fn) => BlockIndex.read(fn.blockIndices, fn.entry) + 1,
     blockBound: (fn) => fn.nextBlock,
@@ -53,6 +53,7 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
             instruction.value.right = visit(instruction.value.right, 'Use');
         }
         const value = instruction.value;
+        if(value.kind === 'Destructure') { visitPattern(fn,value.lvaluePattern,visit); value.value = visit(value.value,'Use'); }
         if(value.kind === 'TypeCastExpression' || value.kind === 'Await') { value.value = visit(value.value, 'Use'); }
         if(value.kind === 'PropertyDelete' || value.kind === 'ComputedDelete') { value.object = visit(value.object, 'Use'); }
         if(value.kind === 'ComputedDelete') { value.property = visit(value.property, 'Use'); }
@@ -100,12 +101,29 @@ function graphFor(fnOwner: HIRFunction): GraphInterface<HIRFunction, BasicBlock,
     identifierOf: (place) => IdentifierIndex.read(fnOwner.identifierIndices, place.identifier),
     withIdentifier: (place, identifier) => ({ identifier: fnOwner.identifierAt(identifier), effect: place.effect, reactive: place.reactive, start: place.start, end: place.end }),
 }; }
-export function constructHIR(arena: HIRArena, index: FunctionIndex): void {
+export function constructHIR(arena: HIRArena, index: FunctionIndex, cloneBeforeSSA: boolean = false): void {
     const fn = arena.read(index);
     const hirGraph = graphFor(fn);
     reversePostorder(hirGraph, fn);
     markPredecessors(hirGraph, fn);
     markEvaluationOrder(hirGraph, fn);
+    // Go oracle constructs a CloneFunction: LValue and Pattern are independently copied.
+    for(const instruction of fn.instructions) { const value = instruction.value; if(value.kind === 'Destructure' && cloneBeforeSSA) { value.lvaluePattern = clonePattern(fn,value.pattern); } }
     construct(hirGraph, fn);
-    for(const nested of fn.functions) { constructHIR(arena, nested); }
+    for(const nested of fn.functions) { constructHIR(arena, nested, cloneBeforeSSA); }
+}
+
+function visitPattern(fn: HIRFunction, index: PatternIndex, visit: (place: PlaceInterface, role: 'Use' | 'Define') => PlaceInterface): void {
+ const p = fn.pattern(index);
+ if(p.kind === 'Place') { p.place = visit(p.place,'Define'); return; }
+ if(p.kind === 'Object') { for(const item of p.properties) { if(item.computedKey !== undefined) { item.computedKey = visit(item.computedKey,'Use'); } if(item.defaultValue !== undefined) { item.defaultValue = visit(item.defaultValue,'Use'); } visitPattern(fn,item.value,visit); } }
+ else { for(const item of p.elements) { if(item.value === undefined) { continue; } if(item.defaultValue !== undefined) { item.defaultValue = visit(item.defaultValue,'Use'); } visitPattern(fn,item.value,visit); } }
+ if(p.rest !== undefined) { p.rest = visit(p.rest,'Define'); }
+}
+
+function clonePattern(fn: HIRFunction, index: PatternIndex): PatternIndex {
+ const p = fn.pattern(index);
+ if(p.kind === 'Place') { return fn.addPattern({kind: 'Place',place: p.place}); }
+ if(p.kind === 'Object') { return fn.addPattern({kind: 'Object',rest: p.rest,properties: p.properties.map((item) => ({key: item.key,computedKey: item.computedKey,defaultValue: item.defaultValue,value: clonePattern(fn,item.value)}))}); }
+ return fn.addPattern({kind: 'Array',rest: p.rest,elements: p.elements.map((item) => ({value: item.value === undefined ? undefined : clonePattern(fn,item.value),defaultValue: item.defaultValue}))});
 }

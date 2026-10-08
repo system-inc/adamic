@@ -1,0 +1,27 @@
+=== RUN   TestFileFunctionCacheOracle
+    cache_test.go:69: live native resident-checker ForFunction matches Go without a replay snapshot
+    cache_test.go:71: 3 function cache entries match Go, repeated identities and checker gating
+    cache_test.go:106: fresh-lowering cache-hit mutant executes and disagrees with Go on both backends
+--- PASS: TestFileFunctionCacheOracle (75.83s)
+=== RUN   TestWholeConstructionCensus
+    construction_test.go:110: HIR construction census: 1537 context-distinct functions in 1537 records; 1514 eligible; 395 fixtures (40 Flow exclusions)
+    construction_test.go:113: optional boolean semantic impact: 74/1465 original graphs; 1391 do not read that field
+    construction_test.go:128: ForFunction cache matches every admitted checker-backed row; checker-less cache requests decline
+    construction_test.go:130: 1514/1537 context-distinct functions match Go on Node and natively; remaining rows are explicit declines
+    construction_test.go:131: 45 Go tests skipped; names recorded in go-tests.log
+=== RUN   TestWholeConstructionCensus/catches_object_shorthand_loses_operand
+=== RUN   TestWholeConstructionCensus/catches_object_key_precedes_initializer
+=== NAME  TestWholeConstructionCensus
+    construction_test.go:136: off-by-one FunctionIndex mutant stopped at a checked arena read on Node and native
+--- PASS: TestWholeConstructionCensus (89.36s)
+    --- PASS: TestWholeConstructionCensus/catches_object_shorthand_loses_operand (18.87s)
+    --- PASS: TestWholeConstructionCensus/catches_object_key_precedes_initializer (19.52s)
+=== RUN   TestOptionalBooleanGapStandsWhereGapsMdSays
+--- PASS: TestOptionalBooleanGapStandsWhereGapsMdSays (0.29s)
+=== RUN   TestStaticConstructorSpreadGapStandsWhereGapsMdSays
+--- PASS: TestStaticConstructorSpreadGapStandsWhereGapsMdSays (0.16s)
+=== RUN   TestResidentSymbolFacts
+    symbol_test.go:199: 22 exact symbol selectors agree across Go, native live, Node/native replay; shadow identity mutant caught
+--- PASS: TestResidentSymbolFacts (47.55s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation	213.236s

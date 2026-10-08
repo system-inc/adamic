@@ -99,3 +99,16 @@ export class ExpressionIndex {
         return index.slot;
     }
 }
+
+export class PatternIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: PatternIndex[]): PatternIndex {
+        const index = new PatternIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly PatternIndex[], index: PatternIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('PatternIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('PatternIndex belongs to another arena'); }
+        return index.slot;
+    }
+}

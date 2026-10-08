@@ -1,0 +1,64 @@
+import type { RuleContext } from '../../context.ts';
+import { HIRFile, ForFunction, AsCompilationUnit, MayHoldComponentOrHook } from '../../../high_level_intermediate_representation/cache.ts';
+import { readSymbolsFrom } from '../../../high_level_intermediate_representation/symbol_query.ts';
+import { ConstructedHIR } from '../../../high_level_intermediate_representation/core.ts';
+import type { IdentifierIndex, HIRFunction } from '../../../high_level_intermediate_representation/core.ts';
+import { message } from './messages.a';
+const ruleName = 'react-hooks/static-components';
+function functionKind(kind: string): boolean { return ['FunctionDeclaration','FunctionExpression','ArrowFunction','MethodDeclaration','GetAccessor','SetAccessor','Constructor'].includes(kind); }
+export class Rule {
+ readonly context: RuleContext;
+ file: HIRFile | undefined;
+ constructor(context: RuleContext) { this.context = context; }
+ createsJsx(index: number): boolean {
+  const node = this.context.node(index);
+  if(['JsxElement','JsxSelfClosingElement','JsxFragment'].includes(node.kind)) { return true; }
+  if(functionKind(node.kind) || node.kind === 'ClassDeclaration' || node.kind === 'ClassExpression') { return false; }
+  return node.children.some((child) => this.createsJsx(child));
+ }
+ unit(fn: HIRFunction): boolean {
+  if(fn.kind === 'other' || fn.nodeIndex < 0) { return false; }
+  const node = this.context.node(fn.nodeIndex); const body = node.children[node.children.length - 1] ?? -1;
+  return body >= 0 && this.createsJsx(body);
+ }
+ analyze(graph: ConstructedHIR, file: HIRFile): void {
+  const fn = graph.arena.read(graph.root);
+  if(!this.unit(fn)) { for(const child of fn.functions) { this.analyze(new ConstructedHIR(graph.arena,child),file); } return; }
+  const standalone = AsCompilationUnit(file,graph); this.report(standalone.arena.read(standalone.root));
+ }
+ report(fn: HIRFunction): void {
+  const dynamic = new Map<IdentifierIndex,IdentifierIndex>();
+  for(const blockId of fn.blockOrder) {
+   const block = fn.block(blockId);
+   for(const phi of block.phis) { for(const entry of phi.operands) { const creator = dynamic.get(entry.place.identifier); if(creator !== undefined) { dynamic.set(phi.place.identifier,creator); break; } } }
+   for(const index of block.instructions) {
+    const instruction = fn.instruction(index); const target = instruction.lvalue.identifier; const value = instruction.value;
+    if(value.kind === 'FunctionExpression') { dynamic.set(target,target); }
+    else if(value.kind === 'CallExpression' || value.kind === 'NewExpression') { dynamic.set(target,value.callee.identifier); }
+    else if(value.kind === 'MethodCall') { dynamic.set(target,value.property.identifier); }
+    else if(value.kind === 'LoadLocal') { const creator = dynamic.get(value.place.identifier); if(creator !== undefined) { dynamic.set(target,creator); } }
+    else if(value.kind === 'StoreLocal') { const creator = dynamic.get(value.value.identifier); if(creator !== undefined) { dynamic.set(target,creator); dynamic.set(value.lvalue.identifier,creator); } }
+    else if(value.kind === 'JsxExpression' && value.tag.place !== undefined) {
+     const creator = dynamic.get(value.tag.place.identifier); if(creator === undefined) { continue; }
+     const node = fn.identifier(value.tag.place.identifier).nodeIndex; const creation = fn.identifier(creator).nodeIndex;
+     const created = creation < 0 ? '' : this.context.source.slice(this.context.start(creation),this.context.node(creation).end);
+     if(node >= 0) { this.context.report(node,ruleName,'staticComponents',message(created),'','',''); }
+    }
+   }
+  }
+ }
+ walk(index: number, file: HIRFile): void {
+  for(const child of this.context.node(index).children) {
+   if(functionKind(this.context.kind(child))) { const graph = ForFunction(file,child); if(graph !== undefined) { this.analyze(graph,file); } }
+   else { this.walk(child,file); }
+  }
+ }
+ visit(index: number): void {
+  if(!this.context.typed(ruleName)) { return; }
+  const checker = this.context.checker;
+  if(checker === undefined || !MayHoldComponentOrHook(this.context.parser,this.context.source)) { return; }
+  const file = new HIRFile(this.context.source,readSymbolsFrom(checker.parser,checker.offsets,checker.root,(node,question) => checker.ask(node,question)),this.context.parser.path,false,this.context.parser); this.file = file;
+  this.walk(index,file);
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
