@@ -12,6 +12,7 @@ import (
 // require changed findings on every runtime. Restoring that byte restores the
 // original output. No cache is cleared or disabled between these observations.
 func TestCheckerCacheSourceByte(t *testing.T) {
+	t.Parallel()
 	directory := mutant(t, "", "")
 	source := filepath.Join(t.TempDir(), "source.ts")
 	if err := os.WriteFile(source, []byte("debugger;\n"), 0644); err != nil {

@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"sync"
 	"testing"
 
@@ -24,6 +25,20 @@ type checkerBuiltBinary struct {
 
 var checkerBinaries = map[string]*checkerBuiltBinary{}
 var checkerBuildDirectories []string
+
+// nativeBuilds bounds the package's native builds at once, which are what its memory peaks on. Every native
+// build in these tests goes through nativeBuild: the top-level tests run in parallel, so a cap held by
+// TestMutants alone would let the others' builds stack on top of its four. A slot is taken by the caller
+// that starts a build, never inside another slot, so no build waits on itself.
+var nativeBuilds = make(chan struct{}, min(runtime.NumCPU(), 4))
+
+// nativeBuild runs build holding one slot. The slot is released by defer: a build that fails with t.Fatal
+// ends its goroutine, and a slot it kept would leave every other build waiting until the package timed out.
+func nativeBuild(build func() error) error {
+	nativeBuilds <- struct{}{}
+	defer func() { <-nativeBuilds }()
+	return build()
+}
 
 // A single archive per instrumentation mode and test process, with its sources from the landed tree.
 func checkerArchive(t *testing.T, sanitize bool) string {
@@ -81,7 +96,12 @@ func checkerBinary(t *testing.T, source, archive string, sanitize bool) string {
 	} else {
 		// Share identical builds while allowing the existing bounded mutant workers
 		// to compile different sources independently. Publish failures before t.Fatal.
-		built.path, built.err = compileCheckerBinary(source, archive, sanitize)
+		// Only the builder holds a slot of nativeBuilds; a test waiting on its build holds none.
+		built.err = nativeBuild(func() error {
+			var err error
+			built.path, err = compileCheckerBinary(source, archive, sanitize)
+			return err
+		})
 		close(built.ready)
 	}
 	if built.err != nil {

@@ -137,21 +137,28 @@ func buildPort(t *testing.T, directory string, sanitize bool) string {
 }
 
 // Each registered mutant is built once and owns its binary until its subtest
-// completes. Retaining all 75 checker-linked binaries adds no build reuse.
+// completes. Retaining all 75 checker-linked binaries adds no build reuse. Its slot
+// of nativeBuilds covers the lowering too, which for a copy of the whole port is the
+// larger part of its memory.
 func buildMutantPort(t *testing.T, directory string) string {
 	t.Helper()
-	built := checkerCompile(t, directory)
-	archive := ""
-	if built.bridge {
-		archive = checkerArchive(t, true)
-	}
-	started := time.Now()
-	binary, err := compileCheckerBinary(built.c, archive, true)
+	var binary string
+	err := nativeBuild(func() error {
+		built := checkerCompile(t, directory)
+		archive := ""
+		if built.bridge {
+			archive = checkerArchive(t, true)
+		}
+		started := time.Now()
+		var err error
+		binary, err = compileCheckerBinary(built.c, archive, true)
+		t.Logf("checker native mutant build: %s", time.Since(started))
+		return err
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Cleanup(func() { os.RemoveAll(filepath.Dir(binary)) })
-	t.Logf("checker native mutant build: %s", time.Since(started))
 	return binary
 }
 
@@ -357,8 +364,8 @@ func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module
 	return want.output
 }
 
-// Not parallel: upstream capture uses t.Setenv and a process-wide fixture capture destination.
 func TestRulesAgree(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -430,8 +437,8 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 	}
 }
 
-// Not parallel: the large sanitized corpus runs before timing samples.
 func TestCompilerAndStage1Agree(t *testing.T) {
+	t.Parallel()
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to pinned v6.0.3")
@@ -526,8 +533,8 @@ func copyPort(t *testing.T, directory, from, to string, targets ...string) strin
 	return directory
 }
 
-// Not parallel: this semantic overlap check precedes timing samples.
 func TestLegacyMutants(t *testing.T) {
+	t.Parallel()
 	path := manifest(t, generated(t))
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", path).output
@@ -600,7 +607,8 @@ func TestCountGuardMutant(t *testing.T) {
 	}
 }
 
-// Not parallel: interleaved timing samples must not compete with tests in this package.
+// Not parallel: interleaved timing samples must not compete with tests in this package. A serial test
+// finishes before any parallel one is released, so nothing else runs while it samples.
 func TestThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
 		t.Skip("set ADAMIC_LINT_BENCH=1")
@@ -684,6 +692,7 @@ func TestThroughput(t *testing.T) {
 // of typescript-go's tree (#k4fm1vf) depends on it: its tables hold rows no link reaches. A rule or
 // harness pass that walks the table by row reports on the copies and fails here.
 func TestNodeTableIsLinkOnly(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -709,6 +718,7 @@ func TestNodeTableIsLinkOnly(t *testing.T) {
 // manifest (#tj6d455): one, two, and the machine's cores. Equal counts cannot see a reordered or repeated
 // case, so the whole output is compared, and the count mode too.
 func TestShardsAgree(t *testing.T) {
+	t.Parallel()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
@@ -760,11 +770,10 @@ func TestShardsAgree(t *testing.T) {
 // One edited JSX rule is the native canary. Semantic mutations are held to Go on
 // Node and emitted JavaScript; this copy also proves sanitized native matches the
 // mutated Node result, including JSX parsing, text spans and finding serialization.
-var mutantBuilds = make(chan struct{}, min(runtime.NumCPU(), 4))
-
 const nativeCanaryRule = "react/jsx-no-comment-textnodes"
 
 func TestMutants(t *testing.T) {
+	t.Parallel()
 	oracle := goOracle(t)
 	descriptors := prepareRegistry(t, ".")
 	hasCanary := false
@@ -824,13 +833,8 @@ func TestMutants(t *testing.T) {
 				change.File = descriptor.Module
 			}
 			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
-			// The slot is released by defer: buildPort fails with t.Fatal, which ends this goroutine, and a
-			// slot held by a failed build would leave every other subtest waiting until the package timed out.
-			binary := func() string {
-				mutantBuilds <- struct{}{}
-				defer func() { <-mutantBuilds }()
-				return buildMutantPort(t, directory)
-			}()
+			// Its build takes a slot of nativeBuilds, the cap every native build in the package shares.
+			binary := buildMutantPort(t, directory)
 			type runtimeSide struct {
 				name string
 				run  execution

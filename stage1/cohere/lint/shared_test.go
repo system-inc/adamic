@@ -13,10 +13,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -99,36 +95,6 @@ func run(directory string, environment []string, name string, args ...string) ([
 		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	return os.ReadFile(output.Name())
-}
-
-func buildPortTo(directory string, sanitize bool, binary string) error {
-	if _, err := registry.Generate(directory); err != nil {
-		return err
-	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		return err
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return err
-	}
-	return native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize})
-}
-
-func emitJavaScriptTo(directory, module string) error {
-	if _, err := registry.Generate(directory); err != nil {
-		return err
-	}
-	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
-	if err != nil {
-		return err
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(module, []byte(javascript.JavaScript(lowered)), 0644)
 }
 
 // goOracleIn builds the Go oracle over sourceRoot's rules into directory, through an overlay inside cohere

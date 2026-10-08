@@ -10,6 +10,7 @@ import (
 
 // The go command's module downloads are the only stderr execute forgives, and only from go.
 func TestCommandDiagnosticsDropOnlyModuleDownloads(t *testing.T) {
+	t.Parallel()
 	for _, row := range []struct {
 		name, command, stderr, want string
 	}{
@@ -28,7 +29,7 @@ func TestCommandDiagnosticsDropOnlyModuleDownloads(t *testing.T) {
 	}
 }
 
-// Not parallel: each case runs this test binary again with a fake go first on PATH.
+// Each case runs this test binary again with a fake go first on PATH.
 // execute passes a go command whose only stderr is module downloads, and fails one that writes anything else.
 func TestExecuteFailsOnStderrOtherThanModuleDownloads(t *testing.T) {
 	if lines := os.Getenv("ADAMIC_LINT_STDERR_PROBE"); lines != "" {
@@ -41,6 +42,8 @@ func TestExecuteFailsOnStderrOtherThanModuleDownloads(t *testing.T) {
 		execute(t, "", "go", "version")
 		return
 	}
+	// Parallel only here: the probe above sets PATH, which a parallel test may not.
+	t.Parallel()
 	for _, row := range []struct {
 		name, stderr string
 		passes       bool

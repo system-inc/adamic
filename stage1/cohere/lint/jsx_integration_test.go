@@ -74,7 +74,7 @@ func buildNative(t *testing.T, entry string, sanitize bool) string {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+	if err := nativeBuild(func() error { return native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}) }); err != nil {
 		t.Fatal(err)
 	}
 	return binary
@@ -133,8 +133,8 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	}
 }
 
-// Not parallel: this replays all JSX fixture trees before native throughput.
 func TestJsxLintTrees(t *testing.T) {
+	t.Parallel()
 	paths := jsxSources(t)
 	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
