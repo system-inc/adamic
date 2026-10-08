@@ -1,0 +1,34 @@
+import type {RuleContext} from '../../context.ts';
+import {structureFileContext} from '../../helpers/structure_file_context.a';
+import {parameterNodes} from '../../helpers/slot03/batch3/parameter_nodes.a';
+import {parameterTypeNodeIndex} from '../../helpers/from_wave1_11/structure_parameter_type_node.a';
+import {useParamsNotParameters,useSearchParamsNotSearchParameters} from './messages.a';
+export class Rule {
+ readonly context:RuleContext;
+ readonly active:boolean;
+ constructor(context:RuleContext){this.context=context;const file=structureFileContext(context.parser.path);this.active=file.isPageFile || file.isLayoutFile;}
+ visit(index:number):void {
+  if(!this.active){return;}
+  const name=this.context.name(index);
+  if(name<0 || !['generateMetadata','generateStaticParams','generateViewport'].includes(this.context.node(name).text)){return;}
+  const parameters=parameterNodes(true,this.context.children(index,'Parameter'));
+  if(parameters.length===0){return;}
+  const parameter=parameters[0] ?? -1;
+  let annotation=-1;
+  for(const child of this.context.node(parameter).children){
+   const pos=this.context.node(child).pos;
+   if(this.context.source.slice(pos-1,pos)===':'){annotation=child;break;}
+  }
+  const type=parameterTypeNodeIndex(parameter>=0,this.context.kind(parameter)==='Parameter' ? 171 : -1,annotation);
+  if(this.context.kind(type)!=='TypeLiteral'){return;}
+  for(const member of this.context.node(type).children){
+   if(this.context.kind(member)!=='PropertySignature'){continue;}
+   const key=this.context.name(member);
+   if(this.context.kind(key)!=='Identifier'){continue;}
+   const text=this.context.node(key).text;
+   if(text==='parameters'){this.context.report(key,'structure/next-require-api-parameter-name','useParamsNotParameters',useParamsNotParameters,'fix','params','');}
+   else if(text==='searchParameters'){this.context.report(key,'structure/next-require-api-parameter-name','useSearchParamsNotSearchParameters',useSearchParamsNotSearchParameters,'fix','searchParams','');}
+  }
+ }
+}
+export function create(context:RuleContext):Rule{return new Rule(context);}

@@ -1,0 +1,3 @@
+export function generateViewport({searchParameters}: /* annotation comment */ {searchParameters: unknown}) { return searchParameters; }
+export function generateMetadata(argument = { parameters: 1 }) { return argument; }
+export function generateReport(argument: {parameters: unknown}) { return argument; }
