@@ -58,6 +58,12 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 			if property.Kind == ast.KindPropertyAssignment && l.uninitializedInitializer(property.AsPropertyAssignment().Initializer) {
 				declared := l.declaredField(node, fieldName)
+				initializer := ast.SkipParentheses(property.AsPropertyAssignment().Initializer)
+				if declared == 0 && initializer.Kind == ast.KindAsExpression {
+					// An annotated placeholder reserves the annotation's storage even
+					// when the object literal has no contextual type.
+					declared, _ = l.representation(l.checker.GetTypeAtLocation(initializer))
+				}
 				if declared == 0 || declared == ir.MaybeBoolean {
 					return nil, l.notYet(property, "an uninitialized object field without a supported declared slot type")
 				}

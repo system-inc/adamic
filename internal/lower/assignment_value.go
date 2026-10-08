@@ -8,6 +8,9 @@ import (
 // assignmentValue keeps the assignment visible to write analysis and reads its
 // stored value immediately. A local has no setter that could replace that value.
 func (l *lowering) assignmentValue(node *ast.Node) (ir.Expression, error) {
+	if l.uninitializedInitializer(node.AsBinaryExpression().Right) {
+		return nil, l.notYet(node, "using the result of a placeholder reset")
+	}
 	target := ast.SkipParentheses(node.AsBinaryExpression().Left)
 	if !ast.IsIdentifier(target) {
 		return nil, l.notYet(target, "an assignment value to a member")

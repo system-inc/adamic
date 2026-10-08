@@ -408,6 +408,35 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 
 // setProperty lowers object.name = value, as a statement.
 func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if l.uninitializedInitializer(valueNode) {
+		if err := l.absentOptionalWrite(target); err != nil {
+			return nil, err
+		}
+		member := l.checker.GetSymbolAtLocation(target)
+		if member == nil {
+			return nil, l.notYet(target, "resetting an unknown placeholder field")
+		}
+		for _, declaration := range member.Declarations {
+			if declaration.Kind == ast.KindGetAccessor || declaration.Kind == ast.KindSetAccessor {
+				return nil, l.notYet(target, "resetting a placeholder through an accessor")
+			}
+		}
+		if target.Name().Kind == ast.KindPrivateIdentifier {
+			return nil, l.notYet(target, "resetting a private placeholder field")
+		}
+		object, err := l.expression(target.AsPropertyAccessExpression().Expression)
+		if err != nil {
+			return nil, err
+		}
+		if object.Type() != ir.Object {
+			return nil, l.notYet(target, "resetting a placeholder field without object storage")
+		}
+		of, err := l.typeOfSymbol(target, member)
+		if err != nil || censusFieldSlotless(of) {
+			return nil, l.notYet(target, "resetting a placeholder field without supported storage")
+		}
+		return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: placeholderZero(of), Uninitialized: true, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	}
 	if call, handled, err := l.superAccessor(target, valueNode); handled {
 		if err != nil {
 			return nil, err

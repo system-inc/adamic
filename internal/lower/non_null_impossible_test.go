@@ -48,6 +48,21 @@ func TestAdamicNullishAssertionsAreRefused(t *testing.T) {
 						t.Fatal(err)
 					}
 					_, err = Lower(context.Background(), program)
+					// Literal field initialization is the placeholder exception.
+					if source == "const box: {value: number; other: number} = {value: "+operand+"!, get other(): number { return 1; }};" {
+						if err != nil {
+							t.Fatal(err)
+						}
+						return
+					}
+					// Container slots have no placeholder representation on this tip.
+					if source == "const values=[1]; values[0]="+operand+"!;" {
+						var notYet *NotYet
+						if !errors.As(err, &notYet) {
+							t.Fatalf("want unsupported placeholder container, got %v", err)
+						}
+						return
+					}
 					var refused *Refused
 					if !errors.As(err, &refused) {
 						t.Fatalf("want exactly-nullish Refused, got %v", err)

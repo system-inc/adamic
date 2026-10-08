@@ -468,7 +468,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
 		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = true;", e.localReady(statement.Local))
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		} else if e.program.Locals[statement.Local].NamespaceState {
 			e.line("%s = true;", readyName(statement.Local))
 		}
