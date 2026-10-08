@@ -1,0 +1,4 @@
+// a-check: type error TS2488
+const rows: [string, number][] = [['ok', 1]];
+const [name, value] = rows[0];
+console.log(name + String(value));

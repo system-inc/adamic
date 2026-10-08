@@ -1,0 +1,4 @@
+// a-check: type error TS2345
+const values: string[] = ['ok'];
+function use(value: string): string { return value; }
+console.log(use(values[0]));

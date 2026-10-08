@@ -1,0 +1,58 @@
+{
+  "nullable-iteration": {
+    "replace": "rows[0]",
+    "with": "rows[1]"
+  },
+  "optional-field-presence": {
+    "replace": "{ read }",
+    "with": "{}"
+  },
+  "caught-unknown": {
+    "replace": "Error('ok')",
+    "with": "Error('mutant')"
+  },
+  "host-declarations": {
+    "replace": "'host'",
+    "with": "'mutant'"
+  },
+  "host-members": {
+    "replace": "= 7",
+    "with": "= 8"
+  },
+  "host-inference": {
+    "replace": "profile: 'ok'",
+    "with": "profile: 'mutant'"
+  },
+  "library-set-shape": {
+    "replace": "[1]",
+    "with": "[1, 2]"
+  },
+  "nullable-index-key": {
+    "replace": "keys[0]",
+    "with": "keys[1]"
+  },
+  "optional-call": {
+    "replace": "targets[0]",
+    "with": "targets[1]"
+  },
+  "overload-use": {
+    "replace": "values[0]",
+    "with": "values[1]"
+  },
+  "spread-tuple": {
+    "replace": "rows[0]",
+    "with": "rows[1]"
+  },
+  "nullable-argument": {
+    "replace": "values[0]",
+    "with": "values[1]"
+  },
+  "nullable-result-relation": {
+    "replace": "values[0]",
+    "with": "values[1]"
+  },
+  "nullable-dereference": {
+    "replace": "values[0]",
+    "with": "values[1]"
+  }
+}

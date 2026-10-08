@@ -1,0 +1,6 @@
+// a-check: type error TS2769
+function use(value: string): string;
+function use(value: number): string;
+function use(value: string | number): string { return String(value); }
+const values: string[] = ['ok'];
+console.log(use(values[0]));

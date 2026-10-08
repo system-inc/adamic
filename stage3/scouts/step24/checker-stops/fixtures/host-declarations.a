@@ -1,0 +1,2 @@
+// a-check: type error TS2591
+console.log(process.platform.length > 0 ? 'host' : 'missing');

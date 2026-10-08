@@ -1,0 +1,674 @@
+{
+  "nullable-argument": {
+    "expected": "ok\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-argument.a"
+      ],
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/nullable-argument.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-argument.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-argument.a:4:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-argument.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-argument.a:4:17: error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      }
+    }
+  },
+  "nullable-result-relation": {
+    "expected": "ok\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-result-relation.a"
+      ],
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/nullable-result-relation.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-result-relation.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-result-relation.a:3:7: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-result-relation.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-result-relation.a:3:7: error TS2322: Type 'string | undefined' is not assignable to type 'string'.\n  Type 'undefined' is not assignable to type 'string'.\n"
+      }
+    }
+  },
+  "nullable-dereference": {
+    "expected": "ok\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-dereference.a"
+      ],
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/nullable-dereference.a"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'text')\n"
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-dereference.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-dereference.a:3:13: error TS2532: Object is possibly 'undefined'.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-dereference.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-dereference.a:3:13: error TS2532: Object is possibly 'undefined'.\n"
+      }
+    }
+  },
+  "nullable-iteration": {
+    "expected": "ok1\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-iteration.a"
+      ],
+      "exit": 0,
+      "stdout": "ok1\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/nullable-iteration.a"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))\n"
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-iteration.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-iteration.a:3:7: error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-iteration.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-iteration.a:3:7: error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n"
+      }
+    }
+  },
+  "optional-field-presence": {
+    "expected": "present\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/optional-field-presence.a"
+      ],
+      "exit": 0,
+      "stdout": "present\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/optional-field-presence.a"
+      ],
+      "exit": 0,
+      "stdout": "absent\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/optional-field-presence.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/optional-field-presence.a:4:7: error TS2375: Type '{ read: undefined; }' is not assignable to type 'Host' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'read' are incompatible.\n    Type 'undefined' is not assignable to type '() => string'.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/optional-field-presence.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/optional-field-presence.a:4:7: error TS2375: Type '{ read: undefined; }' is not assignable to type 'Host' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'read' are incompatible.\n    Type 'undefined' is not assignable to type '() => string'.\n"
+      }
+    }
+  },
+  "caught-unknown": {
+    "expected": "ok\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/caught-unknown.a"
+      ],
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/caught-unknown.a"
+      ],
+      "exit": 0,
+      "stdout": "mutant\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/caught-unknown.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/caught-unknown.a:2:60: error TS18046: 'error' is of type 'unknown'.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/caught-unknown.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/caught-unknown.a:2:60: error TS18046: 'error' is of type 'unknown'.\n"
+      }
+    }
+  },
+  "host-declarations": {
+    "expected": "host\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/host-declarations.a"
+      ],
+      "exit": 0,
+      "stdout": "host\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/host-declarations.a"
+      ],
+      "exit": 0,
+      "stdout": "mutant\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/host-declarations.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/host-declarations.a:2:13: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/host-declarations.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/host-declarations.a:2:13: error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+      }
+    }
+  },
+  "host-members": {
+    "expected": "7\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/host-members.a"
+      ],
+      "exit": 0,
+      "stdout": "7\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/host-members.a"
+      ],
+      "exit": 0,
+      "stdout": "8\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/host-members.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/host-members.a:2:7: error TS2339: Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'.\nstage3/scouts/step24/checker-stops/fixtures/host-members.a:3:26: error TS2339: Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/host-members.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/host-members.a:2:7: error TS2339: Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'.\nstage3/scouts/step24/checker-stops/fixtures/host-members.a:3:26: error TS2339: Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'.\n"
+      }
+    }
+  },
+  "host-inference": {
+    "expected": "ok\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/host-inference.a"
+      ],
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/host-inference.a"
+      ],
+      "exit": 0,
+      "stdout": "mutant\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/host-inference.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/host-inference.a:2:19: error TS7006: Parameter 'err' implicitly has an 'any' type.\nstage3/scouts/step24/checker-stops/fixtures/host-inference.a:2:26: error TS7031: Binding element 'profile' implicitly has an 'any' type.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/host-inference.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/host-inference.a:2:19: error TS7006: Parameter 'err' implicitly has an 'any' type.\nstage3/scouts/step24/checker-stops/fixtures/host-inference.a:2:26: error TS7031: Binding element 'profile' implicitly has an 'any' type.\n"
+      }
+    }
+  },
+  "library-set-shape": {
+    "expected": "1\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/library-set-shape.a"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/library-set-shape.a"
+      ],
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/library-set-shape.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/library-set-shape.a:4:7: error TS2740: Type '{ size: number; has(element: number): boolean; add(element: number): Set<number>; delete(element: number): boolean; clear(): void; entries(): SetIterator<[number, number]>; ... 4 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<number>': union, intersection, difference, symmetricDifference, and 3 more.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/library-set-shape.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/library-set-shape.a:4:7: error TS2740: Type '{ size: number; has(element: number): boolean; add(element: number): Set<number>; delete(element: number): boolean; clear(): void; entries(): SetIterator<[number, number]>; ... 4 more ...; [Symbol.toStringTag]: string; }' is missing the following properties from type 'Set<number>': union, intersection, difference, symmetricDifference, and 3 more.\n"
+      }
+    }
+  },
+  "nullable-index-key": {
+    "expected": "ok\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-index-key.a"
+      ],
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/nullable-index-key.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-index-key.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-index-key.a:4:20: error TS2538: Type 'undefined' cannot be used as an index type.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/nullable-index-key.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/nullable-index-key.a:4:20: error TS2538: Type 'undefined' cannot be used as an index type.\n"
+      }
+    }
+  },
+  "optional-call": {
+    "expected": "ok\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/optional-call.a"
+      ],
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/optional-call.a"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: targets[1] is not a function\n"
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/optional-call.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/optional-call.a:3:13: error TS2722: Cannot invoke an object which is possibly 'undefined'.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/optional-call.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/optional-call.a:3:13: error TS2722: Cannot invoke an object which is possibly 'undefined'.\n"
+      }
+    }
+  },
+  "overload-use": {
+    "expected": "ok\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/overload-use.a"
+      ],
+      "exit": 0,
+      "stdout": "ok\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/overload-use.a"
+      ],
+      "exit": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/overload-use.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/overload-use.a:6:17: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'string | undefined' is not assignable to parameter of type 'number'.\n      Type 'undefined' is not assignable to type 'number'.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/overload-use.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/overload-use.a:6:17: error TS2769: No overload matches this call.\n  The last overload gave the following error.\n    Argument of type 'string | undefined' is not assignable to parameter of type 'number'.\n      Type 'undefined' is not assignable to type 'number'.\n"
+      }
+    }
+  },
+  "spread-tuple": {
+    "expected": "ok1\n",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/spread-tuple.a"
+      ],
+      "exit": 0,
+      "stdout": "ok1\n",
+      "stderr": ""
+    },
+    "mutant": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/adamic-gate/checker-stops-mutants-qe45rrjh/spread-tuple.a"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: rows[1] is not iterable (cannot read property undefined)\n"
+    },
+    "catcher": "Node golden stdout/exit/stderr comparison",
+    "compilers": {
+      "main": {
+        "command": [
+          "/workspace/cache/step24-adamic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/spread-tuple.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/spread-tuple.a:4:20: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.\nstage3/scouts/step24/checker-stops/fixtures/spread-tuple.a:4:23: error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n"
+      },
+      "topic": {
+        "command": [
+          "/workspace/cache/checker-stops-topic",
+          "c",
+          "/workspace/adamic/stage3/scouts/step24/checker-stops/fixtures/spread-tuple.a"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": "stage3/scouts/step24/checker-stops/fixtures/spread-tuple.a:4:20: error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.\nstage3/scouts/step24/checker-stops/fixtures/spread-tuple.a:4:23: error TS2488: Type '[string, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.\n"
+      }
+    }
+  }
+}
