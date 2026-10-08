@@ -1,0 +1,51 @@
+Markdown AstPath oracle streaming
+
+Base: 84e92ceac3e8597f63749bc1b7718dade9629549, pushed to cohere-pin/f5d1934a-wip.
+Fix branch: stage1-format/markdown-astpath-stream.
+No cohere source or AstPath traversal implementation changed.
+
+Harness changes:
+- stage1/cohere/markdownblocks/testdata/path_library.mjs emits each complete encoded context directly to stdout instead of joining all contexts into one V8 string.
+- stage1/cohere/markdownblocks/testdata/path_probe.ts emits the same contexts separately on source Node, JavaScript backend and native builds.
+- stage1/cohere/markdownblocks/path_test.go runs the existing full-output comparisons sequentially; all comparisons, leak checks, mutants and three release timing rounds remain.
+- stage1/cohere/markdownblocks/path_output_test.go redirects stdout to scratch files and compares every byte in 64 KiB buffers, reporting the context and absolute differing byte. Scratch stdout is removed after comparison. Linux and macOS leak modes retain their previous flags and failure conditions.
+The zero-context case still emits exactly one newline.
+
+Machine: AMD EPYC 7763, nproc 5, cgroup CPU quota 4, 16 GiB memory limit. Go 1.27.1, Node 24.19.0, clang 20.1.8.
+Setup: GOPROXY='https://proxy.golang.org|direct' ADAMIC_TOOLS=/workspace/adamic-tools bash cloud/setup.sh
+Timing: go ready 0.042s; node ready 0.053s; submodules ready 0.134s; Markdown dependencies ready 0.136s; clang ready 0.239s; go build ready 37.481s; build cache warm 37.825s; done 37.855s.
+Setup load: before 0.00/0.04/0.46, after 6.50/1.79/1.03.
+
+Smoke proof, old WIP harness versus streamed harness:
+- Three complete contexts: fork and source Node each produce 2,257,859 byte-identical bytes, exit 0, empty stderr.
+- Empty input: fork and source Node each produce one identical LF byte, exit 0, empty stderr.
+- Scratch mutant adds one extra LF after every context: clean exit 0, rejected at byte 1,058,098.
+Evidence: harness-equivalence.log.
+
+Full-package command, unsampled:
+source /workspace/adamic-tools/env.sh
+ADAMIC_GATE_UNCACHED=1 ADAMIC_MARKDOWNBLOCKS_CENSUS=1 ADAMIC_MARKDOWNBLOCKS_MEMORY_UNITS=8 GOMAXPROCS=4 go test -json -count=1 -timeout=90m -parallel=2 ./stage1/cohere/markdownblocks
+The existing memory reservation knob prevents AstPath and mdast heavy tests overlapping; no input or check is omitted. Width dependencies are set by env.sh. Test output goes directly to package.jsonl.
+
+Additional checks: go vet ./stage1/cohere/markdownblocks exits 0; git diff --check clean; gofmt applied to path_test.go.
+File-backed comparison proof:
+TestAstPathOutputComparison passes six controls: identical bytes across a buffer boundary, changed first byte, changed second context, missing final newline, extra newline, empty output.
+Scratch overlay mutant changes the byte-mismatch branch to false. The changed-first-byte and changed-second-context controls fail by name (exit 1); other controls retain length checks. Evidence: comparator-mutant.log and comparator-mutant.patch.
+
+Initial validation attempt after fixing the Node join but before file-backed Go capture: package killed by the cgroup memory limit after 1,287.542s; largest child RSS 10,122,516 KiB. Preserved in package-oom.jsonl.gz. The final implementation removes complete-output buffers from the Go harness as well.
+
+Full results:
+118 tests/subtests pass, 0 fail, 0 skip. Test runner exit 0. Wall time 3,360.689s (go test package time 3,358.580s). Largest child peak RSS 3,396,520 KiB; this is not an aggregate process-tree peak. AstPath itself passed in 1,841.790s.
+TestMarkdownAstPath/map_callback_result: path_test.go:166: caught by path bytes, first difference770
+TestMarkdownAstPath/array_frame: path_test.go:166: caught by path bytes, first difference268
+TestMarkdownAstPath/ancestor_order: path_test.go:166: caught by path bytes, first difference191
+TestMarkdownAstPath/call_restore: path_test.go:166: caught by path bytes, first difference260
+TestMarkdownAstPath: path_test.go:189: actual Go AstPath 146.3 documents/s, three runs, full path observation I/O, AST parsing excluded
+TestMarkdownAstPath: path_test.go:189: native AstPath 103.9 documents/s, three runs, full path observation I/O, AST parsing excluded
+TestMarkdownAstPath: path_test.go:189: actual original AstPath 47.3 documents/s, three runs, full path observation I/O, AST parsing excluded
+TestMarkdownAstPath: path_test.go:191: 5352 contexts, 1253 physical files, all per-node getter bytes and parent-node call/map/each/parent restore bytes agree; 1247434336 output bytes
+
+Final rerun had no additional OOM events: oom=3 and oom_kill=2 before and after. All fixed controls, per-node comparisons, leak checks, four existing AstPath mutants and every three-round release comparison ran. No cases were excluded. The shared layout native canary also passed.
+
+Scope: harness only. The original fork and port each retain their per-context row join, but no longer form a corpus-sized string. No cohere source, AstPath traversal logic, compiler code, pin or agreement expectation changed. Other pin-bump reds remain for their assigned workers. The dominance branch was not pushed.
+

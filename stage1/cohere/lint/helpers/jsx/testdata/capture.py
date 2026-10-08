@@ -5,7 +5,10 @@ here = Path(__file__).resolve().parent
 root = here.parents[5]
 cohere = root / 'cohere'
 out = Path(sys.argv[1])
-assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=cohere,text=True).strip() == '7945d102a6c18dd36adf9114a758ce646e8b2359', 'Go cohere pin drift'
+sys.path.insert(0, str(root / 'stage1/cohere/lint/helpers/testdata'))
+from pin import capture_pin
+pin = capture_pin(root)
+(out / 'capture-pin.json').write_text(json.dumps({'pin': pin}) + '\n')
 ledger = json.loads((here.parents[1] / 'comments/readiness.json').read_text())
 consumers = {r['rule'] for r in ledger['remaining'] if any('/jsx.' in h for h in r['remaining_helpers'])}
 harness = cohere / 'internal/lint/testing/rule_testing.go'

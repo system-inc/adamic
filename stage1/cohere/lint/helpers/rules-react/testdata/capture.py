@@ -3,6 +3,10 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[5]
 COHERE=ROOT/'cohere'
+import sys
+sys.path.insert(0, str(ROOT/'stage1/cohere/lint/helpers/testdata'))
+from pin import capture_pin
+PIN=capture_pin(ROOT)
 functions={
 'DecodeCompilerRuleOptions':('compiler_rule_options.go','string(raw)','false'),
 'DecodeNoMethodSetStateOptions':('no_method_set_state_options.go','string(raw)','false'),

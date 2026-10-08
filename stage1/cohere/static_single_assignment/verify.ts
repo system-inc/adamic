@@ -25,13 +25,18 @@
  * its names. A violation's String is its detail, which a caller reads off the field.
  */
 
+import { panic } from 'adamic';
+import { edgesOf } from './graph.ts';
 import type { BlockIdType, GraphInterface, IdentifierIdType, PlaceVisitorType } from './static_single_assignment.ts';
 
-// Dominance is the immediate-dominator array over a function's block array, by position in it.
+// Dominance is the immediate-dominator array over a function's blocks, by position in the order
+// computeDominance made.
 export class Dominance {
-    // position maps a block id to its index in the block array, which is reverse postorder.
+    // position maps a block id to its index in that order: a reverse postorder of the real edges from the
+    // entry, then the blocks they don't reach.
     private readonly position: Map<BlockIdType, number>;
-    // immediate[i] is the index of block i's immediate dominator; the entry is its own.
+    // immediate[i] is the index of block i's immediate dominator; the entry is its own, and a block the
+    // real edges don't reach has none (-1), dominated by nothing but itself.
     private readonly immediate: number[];
 
     constructor(position: Map<BlockIdType, number>, immediate: number[]) {
@@ -63,24 +68,132 @@ export class Dominance {
     }
 }
 
-// computeDominance runs Cooper-Harvey-Kennedy over the function's blocks.
-//
-// The block array is already in reverse postorder with unreachable blocks removed, which is the
-// precondition the algorithm needs and the reason this is short.
+// RealOrderFrameInterface is one block on realReversePostorder's walk: the real successors it names, and
+// the next one to follow.
+interface RealOrderFrameInterface<B> {
+    readonly block: B;
+    readonly successors: BlockIdType[];
+    next: number;
+}
+
+// RealOrderInterface is the order realReversePostorder makes, and how many of its blocks the real edges
+// reach, which come first.
+interface RealOrderInterface<B> {
+    readonly blocks: B[];
+    readonly reached: number;
+}
+
+// realOrderFrame is the frame for the block with an id, or undefined when the function holds no such
+// block or the walk has been there.
+function realOrderFrame<F, B, P>(
+    graph: GraphInterface<F, B, P>,
+    fn: F,
+    id: BlockIdType,
+    visited: Map<BlockIdType, boolean>,
+): RealOrderFrameInterface<B> | undefined {
+    const block = graph.block(fn, id);
+    if(block === undefined || visited.get(id) === true) {
+        return undefined;
+    }
+    visited.set(id, true);
+    const successors: BlockIdType[] = [];
+    for(const edge of edgesOf(graph, block)) {
+        if(edge.edge !== 'Fallthrough') {
+            successors.push(edge.successor);
+        }
+    }
+    return { block, successors, next: 0 };
+}
+
+// realReversePostorder (Go's realReversePostorder) is the function's blocks in a reverse postorder of the
+// real edges from its entry, then the blocks those edges don't reach, in the block array's order.
+// Fallthroughs are not edges. Exceptional edges are real ones, as everywhere in this module.
+function realReversePostorder<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): RealOrderInterface<B> {
+    const visited = new Map<BlockIdType, boolean>();
+    const postorder: B[] = [];
+    const stack: RealOrderFrameInterface<B>[] = [];
+    const entry = realOrderFrame(graph, fn, graph.entry(fn), visited);
+    if(entry !== undefined) {
+        stack.push(entry);
+    }
+    while(stack.length > 0) {
+        const top = stack[stack.length - 1] ?? panic('an empty walk stack');
+        if(top.next === top.successors.length) {
+            postorder.push(top.block);
+            stack.pop();
+            continue;
+        }
+        const next = top.successors[top.next] ?? panic('a frame reading past its successors');
+        top.next++;
+        const child = realOrderFrame(graph, fn, next, visited);
+        if(child !== undefined) {
+            stack.push(child);
+        }
+    }
+
+    const blocks: B[] = [];
+    for(let index = postorder.length - 1; index >= 0; index--) {
+        blocks.push(postorder[index] ?? panic('a postorder index past its end'));
+    }
+    for(const block of graph.blocks(fn)) {
+        if(visited.get(graph.id(block)) !== true) {
+            blocks.push(block);
+        }
+    }
+    return { blocks, reached: postorder.length };
+}
+
+// EntryPredecessorsInterface is an entry block and the predecessors it should not have.
+export interface EntryPredecessorsInterface {
+    readonly entry: BlockIdType;
+    readonly predecessors: readonly BlockIdType[];
+}
+
+/*
+ * entryPredecessors (Go's entryPredecessors) is the entry block and its predecessors when it has any, which
+ * GraphInterface.entry rules out: construct's lookup walks back through predecessors until a block has
+ * none, and an entry some edge enters can put it on a cycle that never ends. It is undefined when the
+ * entry has none.
+ */
+export function entryPredecessors<F, B, P>(
+    graph: GraphInterface<F, B, P>,
+    fn: F,
+): EntryPredecessorsInterface | undefined {
+    const entry = graph.entry(fn);
+    const block = graph.block(fn, entry);
+    if(block === undefined) {
+        return undefined;
+    }
+    const predecessors = graph.predecessors(block);
+    return predecessors.length > 0 ? { entry, predecessors } : undefined;
+}
+
+/*
+ * computeDominance runs Cooper-Harvey-Kennedy over the function's blocks.
+ *
+ * The algorithm needs every block after some predecessor of it, so that each immediate dominator comes
+ * before its block. A reverse postorder of the real edges guarantees that, and the block array isn't always
+ * one: reversePostorder visits a structural fallthrough first and keeps a block where the fallthrough first
+ * reached it, so a loop a fallthrough reaches before its back edge sits ahead of every real predecessor it
+ * has, and the fixed point over the block array settled on too few dominators (#6v4a54x). So this walks
+ * the real edges itself, as Go's does since cohere 0cba6cd, and the block array keeps its order. Blocks the
+ * real edges don't reach follow, dominated by nothing but themselves.
+ */
 export function computeDominance<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): Dominance {
-    const blocks = graph.blocks(fn);
+    const order = realReversePostorder(graph, fn);
     const position = new Map<BlockIdType, number>();
-    for(let index = 0; index < blocks.length; index++) {
-        const block = blocks[index];
+    for(let index = 0; index < order.blocks.length; index++) {
+        const block = order.blocks[index];
         if(block !== undefined) {
             position.set(graph.id(block), index);
         }
     }
-    const immediate = Array.from({ length: blocks.length }, () => -1);
-    if(blocks.length === 0) {
+    const immediate = Array.from({ length: order.blocks.length }, () => -1);
+    if(order.reached === 0) {
         return new Dominance(position, immediate);
     }
     immediate[0] = 0;
+    const blocks = order.blocks.slice(0, order.reached);
 
     const immediateOf = (index: number): number => immediate[index] ?? -1;
     const intersect = function(first: number, second: number): number {
@@ -122,9 +235,10 @@ export function computeDominance<F, B, P>(graph: GraphInterface<F, B, P>, fn: F)
     return new Dominance(position, immediate);
 }
 
-// SingleAssignmentViolationKindType (Go's SSAViolationKind) is which of the two invariants a violation breaks: a value written more
-// than once, or a use the definition does not dominate.
-export type SingleAssignmentViolationKindType = 'MultipleDefinitions' | 'UseNotDominated';
+// SingleAssignmentViolationKindType (Go's SSAViolationKind) is which invariant a violation breaks: a value
+// written more than once, a use the definition does not dominate, or an entry some edge enters, which
+// GraphInterface.entry rules out and construct refuses.
+export type SingleAssignmentViolationKindType = 'MultipleDefinitions' | 'UseNotDominated' | 'EntryHasPredecessors';
 
 // SingleAssignmentViolationInterface (Go's SSAViolation) is one broken invariant.
 export interface SingleAssignmentViolationInterface {
@@ -158,6 +272,15 @@ export function verifySingleAssignment<F, B, P>(
         return violations;
     }
 
+    const entered = entryPredecessors(graph, fn);
+    if(entered !== undefined) {
+        violations.push({
+            kind: 'EntryHasPredecessors',
+            identifier: 0,
+            block: entered.entry,
+            detail: `the entry block bb${entered.entry} has predecessors [${entered.predecessors.join(' ')}], and no edge may enter it`,
+        });
+    }
     const dominance = computeDominance(graph, fn);
 
     // Where each value is defined. A parameter is defined at the entry block.

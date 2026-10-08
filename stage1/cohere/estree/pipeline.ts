@@ -1,7 +1,7 @@
 import { referenceError } from './sourceReferences.ts';
 import { syntaxError } from './sourceValidation.ts';
 import { externalModule } from './sourceModules.ts';
-import { panic } from 'adamic';
+import { panic, utf8Length } from 'adamic';
 import { Parser } from './sourceParser.ts';
 import { Converter } from './convert.ts';
 import { collectComments } from './comments.ts';
@@ -35,7 +35,7 @@ export function answer(path: string, text: string): string {
     }
     if(parser.diagnostics.length > 0) {
         const diagnostic = parser.diagnostics[0] ?? panic('missing diagnostic');
-        return panic(`ESTree parser diagnostic ${diagnostic.code} at ${diagnostic.start}: ${diagnostic.message}`);
+        return panic(`parse error at ${utf8Length(convertedText.slice(0, diagnostic.start))}: ${diagnostic.message}`);
     }
     if(parser.scanner.errors.length > 0) {
         return panic('ESTree scanner diagnostic');

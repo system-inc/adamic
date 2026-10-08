@@ -52,13 +52,10 @@ func TestUpstreamNumericSeparatorGap(t *testing.T) {
 	goAnswers, prettierAnswers := oracleAnswers(t, cases)
 	for index, item := range cases {
 		goAnswer, prettierAnswer := goAnswers[index], prettierAnswers[index]
-		if goAnswer.Error != "" || !strings.Contains(goAnswer.Output, item.Text[1:len(item.Text)-1]) {
-			t.Fatalf("Go's gap changed for %s %q: %+v; update GAPS.md", item.Name, item.Text, goAnswer)
+		if !strings.Contains(goAnswer.Error, "numeric separator") || !strings.Contains(prettierAnswer.Error, "numeric separator") || !sameAnswer(goAnswer, prettierAnswer) {
+			t.Fatalf("closed numeric-separator gap regressed for %s %q: Go %+v; Prettier %+v", item.Name, item.Text, goAnswer, prettierAnswer)
 		}
-		if !strings.Contains(prettierAnswer.Error, "numeric separator") || sameAnswer(goAnswer, prettierAnswer) {
-			t.Fatalf("Prettier's gap changed for %s %q: %+v; update GAPS.md", item.Name, item.Text, prettierAnswer)
-		}
-		t.Logf("%s %s: Go formats %q; Prettier refuses: %s", item.Name, item.Text, goAnswer.Output, prettierAnswer.Error)
+		t.Logf("%s %s: Go and Prettier both refuse (closed by cohere 1ee5f944): Go %s; Prettier %s", item.Name, item.Text, goAnswer.Error, prettierAnswer.Error)
 	}
 }
 
@@ -126,7 +123,7 @@ func corpusCases(t *testing.T) []textCase {
 	return cases
 }
 
-// Prettier is a separate upstream report. Only the nine named disagreements are known;
+// Prettier is a separate upstream report. Only the two empty-input disagreements are known;
 // an added difference or a closed difference requires updating the report explicitly.
 func TestUpstreamRepositoryCorpusParity(t *testing.T) {
 	if err := gatesample.Validate(); err != nil {
@@ -145,7 +142,7 @@ func TestUpstreamRepositoryCorpusParity(t *testing.T) {
 			continue
 		}
 		differences++
-		known := item.Name == "stage1/cohere/json/gaps/numeric-separators.json" || strings.HasPrefix(item.Name, "generated/12/") || strings.HasPrefix(item.Name, "generated/13/") || strings.HasPrefix(item.Name, "generated/14/") || strings.HasPrefix(item.Name, "generated/16/")
+		known := strings.HasPrefix(item.Name, "generated/16/")
 		if !known {
 			t.Errorf("unexpected upstream difference: %s", item.Name)
 		}
@@ -167,10 +164,10 @@ func TestUpstreamRepositoryCorpusParity(t *testing.T) {
 	if report.String() != string(knownReport) {
 		t.Error("upstream difference identities or answers changed; update the checked-in report")
 	}
-	if differences != 9 {
-		t.Fatalf("known upstream report changed: %d differences, want exactly 9", differences)
+	if differences != 2 {
+		t.Fatalf("known upstream report changed: %d differences, want exactly 2", differences)
 	}
-	t.Logf("exactly nine known upstream differences in %d texts", len(cases))
+	t.Logf("exactly two known upstream differences in %d texts", len(cases))
 }
 
 func oracleAnswers(t *testing.T, cases []textCase, mutations ...printerMutation) ([]answer, []answer) {

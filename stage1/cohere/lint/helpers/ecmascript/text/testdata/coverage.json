@@ -1,24 +1,24 @@
 {
-  "pin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "pin": "f5d1934a2d7bebe706210cb1cfd01aebff4f8ca7",
   "calls": {
     "BestMatch": 84,
-    "GraphemeCount": 906,
+    "GraphemeCount": 908,
     "MinimumEditDistance": 195,
     "UnescapeStringLiteralText": 329,
-    "continuesCluster": 2969,
+    "continuesCluster": 2989,
     "decodeEntity": 291,
-    "hangulJoins": 2306,
-    "hangulLeading": 7949,
-    "hangulSyllable": 15007,
-    "hangulTrailing": 7925,
-    "hangulVowel": 8052,
-    "hangulVowelSyllable": 7574,
+    "hangulJoins": 2326,
+    "hangulLeading": 7969,
+    "hangulSyllable": 15047,
+    "hangulTrailing": 7945,
+    "hangulVowel": 8072,
+    "hangulVowelSyllable": 7594,
     "hexValue": 5532,
-    "isGraphemeControl": 8475,
-    "isGraphemeExtend": 8454,
-    "isIndicLinker": 7721,
-    "isPictograph": 8194,
-    "isRegionalIndicator": 11423
+    "isGraphemeControl": 8495,
+    "isGraphemeExtend": 8474,
+    "isIndicLinker": 7741,
+    "isPictograph": 8216,
+    "isRegionalIndicator": 11465
   },
   "inputSets": {
     "next": {
@@ -28,19 +28,19 @@
       "decodeEntity": 18
     },
     "core": {
-      "GraphemeCount": 449,
-      "continuesCluster": 784,
-      "hangulJoins": 782,
-      "hangulLeading": 786,
-      "hangulSyllable": 1547,
-      "hangulTrailing": 779,
-      "hangulVowel": 786,
-      "hangulVowelSyllable": 774,
-      "isGraphemeControl": 784,
-      "isGraphemeExtend": 784,
-      "isIndicLinker": 782,
-      "isPictograph": 1223,
-      "isRegionalIndicator": 2015
+      "GraphemeCount": 451,
+      "continuesCluster": 804,
+      "hangulJoins": 802,
+      "hangulLeading": 806,
+      "hangulSyllable": 1587,
+      "hangulTrailing": 799,
+      "hangulVowel": 806,
+      "hangulVowelSyllable": 794,
+      "isGraphemeControl": 804,
+      "isGraphemeExtend": 804,
+      "isIndicLinker": 802,
+      "isPictograph": 1245,
+      "isRegionalIndicator": 2057
     },
     "structure": {
       "BestMatch": 16,
@@ -97,7 +97,7 @@
     "@next/next/no-page-custom-font": 35,
     "@next/next/no-typos": 50,
     "@next/next/no-unwanted-polyfillio": 40,
-    "id-length": 202,
+    "id-length": 201,
     "structure/boundary-no-project-theme-value": 28,
     "structure/next-no-near-miss-route-export": 40
   }

@@ -4,6 +4,10 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[5]
 COHERE=ROOT/'cohere'
+import sys
+sys.path.insert(0, str(ROOT/'stage1/cohere/lint/helpers/testdata'))
+from pin import capture_pin
+PIN=capture_pin(ROOT)
 HELPERS=['appendNodeSignature','appendTokensBetween','bodyDefinitelyExits','consistentReturnIsGenerator','hasSameTokens','idDenylistIsDestructuringTarget','idDenylistIsImportAttributeKey','idDenylistIsImportOptionsObject','isEmptyBracketLiteral','isNullOrUndefined','isSeparateEvaluationContext','memberAccessObject','noRestrictedExportsNameText','numericLiteralSign','switchStatementExits','tokenSignature','tryStatementExits']
 with tempfile.TemporaryDirectory(prefix='core-capture-') as td:
  td=Path(td); capture=td/'capture';capture.mkdir();replace={}
@@ -39,8 +43,14 @@ with tempfile.TemporaryDirectory(prefix='core-capture-') as td:
  calls=[json.loads(x) for x in (capture/'calls.jsonl').read_text().splitlines()]
  used=set(c['helper'] for c in calls);assert used==set(HELPERS),set(HELPERS)-used
  frames={key:json.loads((capture/(key+'.json')).read_text()) for key in sorted(set(c['frame'] for c in calls))}
- out={'pin':subprocess.check_output(['git','rev-parse','HEAD'],cwd=COHERE,text=True).strip(),'frames':frames,'calls':calls}
+ out={'pin':PIN,'frames':frames,'calls':calls}
  import gzip
  with gzip.open(HERE/'captures.json.gz','wt') as f:json.dump(out,f,separators=(',',':'))
  print('actual Go calls:',len(calls),'frames:',len(frames))
  for h in HELPERS: print(h,sum(c['helper']==h for c in calls))
+
+metadata=json.loads((HERE/'helpers.json').read_text())
+metadata['pin']=PIN
+for row in metadata['helpers']:
+  row['go_calls']=sum(c['helper']==row['symbol'].split('.')[-1] for c in calls)
+(HERE/'helpers.json').write_text(json.dumps(metadata,indent=2)+'\n')

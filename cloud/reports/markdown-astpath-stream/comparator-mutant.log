@@ -1,0 +1,8 @@
+--- FAIL: TestAstPathOutputComparison (0.01s)
+    --- FAIL: TestAstPathOutputComparison/changed_first_byte (0.00s)
+        path_output_test.go:212: difference = 65538, context 2, equal true
+    --- FAIL: TestAstPathOutputComparison/changed_second_context (0.00s)
+        path_output_test.go:212: difference = 65538, context 2, equal true
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	0.020s
+FAIL

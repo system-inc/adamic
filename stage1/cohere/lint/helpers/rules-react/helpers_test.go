@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/coherepin"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -276,8 +277,8 @@ func TestCaptureCoverage(t *testing.T) {
 		t.Fatal(err)
 	}
 	root, _ := filepath.Abs("../../../../../cohere")
-	if strings.TrimSpace(string(run(t, root, "git", "rev-parse", "HEAD"))) != metadata.Cohere {
-		t.Fatal("cohere pin drift")
+	if err := coherepin.Check(filepath.Dir(root), metadata.Cohere); err != nil {
+		t.Fatal(err)
 	}
 	for file, hash := range metadata.GoSources {
 		data, err = os.ReadFile(filepath.Join(root, file))

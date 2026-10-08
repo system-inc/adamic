@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/coherepin"
 	"os"
 	"path/filepath"
 	"strings"
@@ -20,6 +21,18 @@ func TestJsxHelpersAndMutants(t *testing.T) {
 	scratch := t.TempDir()
 	t.Log(string(run(t, "", "python3", "jsx/testdata/capture.py", scratch)))
 	root, _ := filepath.Abs("../../../../cohere")
+	var recorded struct{ Pin string }
+	data, err := os.ReadFile(filepath.Join(scratch, "capture-pin.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = json.Unmarshal(data, &recorded); err != nil {
+		t.Fatal(err)
+	}
+	if err = coherepin.Check(filepath.Dir(root), recorded.Pin); err != nil {
+		t.Fatal(err)
+	}
+
 	side, _ := filepath.Abs("jsx/testdata/oracle.go")
 	virtual := filepath.Join(root, "adamic_jsx_helpers.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})

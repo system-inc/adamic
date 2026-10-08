@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/coherepin"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -45,9 +46,21 @@ func TestReactAgreement(t *testing.T) {
 	cohere := filepath.Join(root, "cohere")
 	dir, _ := filepath.Abs(".")
 	scratch := t.TempDir()
-	if pin := strings.TrimSpace(string(run(t, cohere, "git", "rev-parse", "HEAD"))); pin != "7945d102a6c18dd36adf9114a758ce646e8b2359" {
-		t.Fatal("pin drift", pin)
+	pin, err := coherepin.Pinned(root)
+	if err != nil {
+		t.Fatal(err)
 	}
+	if err = coherepin.Check(root, pin); err != nil {
+		t.Fatal(err)
+	}
+	capturePin, err := json.Marshal(map[string]string{"pin": pin})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err = os.WriteFile(filepath.Join(scratch, "capture-pin.json"), capturePin, 0644); err != nil {
+		t.Fatal(err)
+	}
+
 	// Capture actual asserted cases through Go cohere's own testing hook.
 	harness := filepath.Join(cohere, "internal/lint/testing/rule_testing.go")
 	original := "return Result{Diagnostics: diagnostics, SourceFile: sourceFile, capture: captured}"
@@ -141,6 +154,11 @@ func TestReactAgreement(t *testing.T) {
 	wantPath := filepath.Join(scratch, "want.txt")
 	t.Log(string(run(t, "", oracle, sources, cases, wantPath)))
 	want := read(t, wantPath)
+	if evidence := os.Getenv("ADAMIC_REACT_HELPERS_CAPTURE"); evidence != "" {
+		for _, name := range []string{"sources.json", "cases.json", "want.txt", "capture-pin.json"} {
+			write(t, filepath.Join(evidence, name), read(t, filepath.Join(scratch, name)))
+		}
+	}
 	check := func(entry string, mutant bool, label string) {
 		t.Helper()
 		node := run(t, "", "node", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle/node.mjs"), entry, cases)

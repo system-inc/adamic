@@ -13,6 +13,25 @@ and exact syntax-error messages to Go; `audit_test.go` reports Prettier separate
 and checks the entire report against `known-upstream-differences.txt`. Closing,
 adding, or changing a known disagreement fails that report test.
 
+## Current pin: f5d1934a
+
+The cohere bump from `7945d102` to `f5d1934a2d7bebe706210cb1cfd01aebff4f8ca7`
+closes the numeric-separator oracle gap in commit `1ee5f944`. The six probes in
+`TestUpstreamNumericSeparatorGap` now require both Go and Prettier to refuse;
+`gaps/numeric-separators.json` remains a witness. The Adamic port still accepts
+these malformed literals, so `TestPortMatchesGoCohere` and
+`TestProfileSnapshotsAgree` fail at that witness. This bump does not change the port.
+
+The separate Go/Prettier report now contains two empty-input differences.
+Although `1ee5f944` makes the outer `native.Formatter.FormatParsed` dispatch accept empty text,
+this slice calls `javascript.FormatJSON` directly, which still refuses it.
+The two generated empty inputs therefore stay in the checked-in report.
+The cohere TypeScript pin is `d92d9bfee114c80be2c375d72edae966176e3a4f`;
+Prettier remains 3.9.6. The corpus pin now contains 853 cohere identities;
+repository JSON is checked against Git and the other pinned groups are unchanged.
+
+The original slice observations, pins and measurements below are historical.
+
 ## Pins and scope
 
 - Adamic main: `fe3b9f236e0672e968bcb7ad53c1882cdde18f29`.

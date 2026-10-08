@@ -84,7 +84,8 @@ func TestThePortMakesWhatGoCohereMakes(t *testing.T) {
 		// nothing to verify.
 		var missing []string
 		for _, each := range []string{`(?m)^phi \S+ \S+ \S+ \S+`, ` placeholder `, `(?m)^violation MultipleDefinitions `, `(?m)^violation UseNotDominated `,
-			` context uses=`, `(?m)^returns \d`, `(?m)^params \d`, `(?m)^stats 0 0 0$`, `(?m)^function \S+\.tsx?#\d+$`} {
+			` context uses=`, `(?m)^returns \d`, `(?m)^params \d`, `(?m)^stats 0 0 0$`, `(?m)^function \S+\.tsx?#\d+$`,
+			`(?m)^violation EntryHasPredecessors `} {
 			if !regexp.MustCompile(each).MatchString(goAnswers) {
 				missing = append(missing, each)
 			}
@@ -126,6 +127,37 @@ func TestThePortMakesWhatGoCohereMakes(t *testing.T) {
 	}
 }
 
+// construct refuses a function whose entry some edge enters, as Go's does since cohere 0cba6cd, with a
+// panic that names the entry and its predecessors, where its lookup would otherwise circle the entry, a
+// and b until the stack ran out: natively, on Node and through the JavaScript backend alike.
+func TestConstructRefusesAnEntryWithPredecessors(t *testing.T) {
+	t.Parallel()
+	cases := strings.Join([]string{
+		"function entered", "entry 1", "bound 5", "identifier 0 -", "identifier 1 x",
+		"block 1", "edge 2 Real", "block 2", "edge 3 Real", "block 3", "edge 1 Real", "edge 4 Real",
+		"block 4", "instruction -1", "use 1 x", "passes construct", "",
+	}, "\n")
+	casesPath := filepath.Join(t.TempDir(), "cases.txt")
+	if err := os.WriteFile(casesPath, []byte(cases), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	const refusal = "adamic: panic: static_single_assignment.construct: the entry block bb1 has predecessors [3]; GraphInterface.entry must be a block no edge enters\n"
+	portSource := portDirectory(t, nil)
+	program := lowered(t, filepath.Join(portSource, "main.ts"))
+	for _, side := range []struct {
+		name string
+		run  run
+	}{
+		{"natively", nativelyRun(t, program, casesPath)},
+		{"on Node", onNode(t, filepath.Join(portSource, "main.ts"), casesPath)},
+		{"through the JavaScript backend", onJavaScriptBackend(t, program, casesPath)},
+	} {
+		if side.run.exitCode != 70 || !strings.HasPrefix(string(side.run.stderr), refusal) {
+			t.Errorf("%s: exit %d, stderr %q; want 70 and %q", side.name, side.run.exitCode, side.run.stderr, refusal)
+		}
+	}
+}
+
 // mutant is one change to one port file. A condition a mutant turns off is turned off with a test no id
 // passes (ids are never negative), not with `&& false`, which the checker narrows to unreachable code and
 // refuses.
@@ -134,6 +166,21 @@ type mutant struct {
 }
 
 var mutants = []mutant{
+	// computeDominance: the fixed point over the block array again, which isn't a reverse postorder of the
+	// real edges when a fallthrough reaches a block first (#6v4a54x).
+	{
+		name: "dominance over the block array",
+		file: "verify.ts",
+		from: "const order = realReversePostorder(graph, fn);",
+		to:   "const order = { blocks: [...graph.blocks(fn)], reached: graph.blocks(fn).length };",
+	},
+	// verifySingleAssignment: an entry some edge enters goes unreported.
+	{
+		name: "an entry's predecessors unreported",
+		file: "verify.ts",
+		from: "if(entered !== undefined) {\n        violations.push({",
+		to:   "if(entered !== undefined && entered.entry < 0) {\n        violations.push({",
+	},
 	// reversePostorder: the real successors walked in their own order rather than reversed, so a
 	// conditional's arms and a loop's body come out in another order.
 	{

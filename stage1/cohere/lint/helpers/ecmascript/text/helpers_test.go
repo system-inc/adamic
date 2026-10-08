@@ -5,6 +5,7 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/coherepin"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -188,8 +189,8 @@ func TestTextCapturePin(t *testing.T) {
 		t.Fatal(e)
 	}
 	root, _ := filepath.Abs("../../../../../../cohere")
-	if strings.TrimSpace(string(command(t, "git", "-C", root, "rev-parse", "HEAD"))) != coverage.Pin {
-		t.Fatal("Go capture pin changed; regenerate with actual Go")
+	if err := coherepin.Check(filepath.Dir(root), coverage.Pin); err != nil {
+		t.Fatal(err)
 	}
 	got := command(t, "go", "run", "testdata/tables.go")
 	want, e := os.ReadFile("unicode_tables.a")
