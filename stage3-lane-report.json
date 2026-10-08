@@ -1,0 +1,19 @@
+{
+  "status": "fail",
+  "errors": [
+    "apply exit: expected 0, observed 1; see apply.log"
+  ],
+  "execution": {
+    "commit": "bb9bb3f9f3da1eeb4ca487a499f29f5d9c0bb921",
+    "apply_exit": 1,
+    "oracle_exit": null,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 30.536
+  },
+  "results": "/home/ahra/fast-gate/tree-2-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: apply exit: expected 0, observed 1; see apply.log"
+}
