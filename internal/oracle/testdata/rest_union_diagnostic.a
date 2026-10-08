@@ -1,0 +1,14 @@
+// Reduced binder.ts:567:78: fixed arguments followed by forwarded DiagnosticArguments.
+type DiagnosticArguments = (string | number | undefined)[];
+function createDiagnosticInFile(file: string, node: number, message: string, ...args: DiagnosticArguments): string {
+    return `${file}:${node}:${message}:${args.length}`;
+}
+function createDiagnosticForNode(node: number, message: string, ...args: DiagnosticArguments): string {
+    return createDiagnosticInFile('source', node, message, ...args);
+}
+let order = '';
+function text(value: string): string { order += value; return value.repeat(3); }
+function number(value: number): number { order += `${value}`; return value; }
+console.log(createDiagnosticForNode(7, 'empty'));
+console.log(createDiagnosticForNode(8, 'mixed', text('a'), number(42), undefined, text('b')));
+console.log(order);

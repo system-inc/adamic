@@ -1,0 +1,17 @@
+// Reduced binder.ts:2746:72: build and append a diagnostic with forwarded rest items.
+type DiagnosticArguments = (string | number | undefined)[];
+const diagnostics: string[] = [];
+function createFileDiagnostic(start: number, length: number, message: string, ...args: DiagnosticArguments): string {
+    return `${start}:${length}:${message}:${args.length}`;
+}
+function errorOnFirstToken(start: number, message: string, ...args: DiagnosticArguments): void {
+    diagnostics.push(createFileDiagnostic(start, 1, message, ...args));
+}
+function relay(...args: DiagnosticArguments): void {
+    errorOnFirstToken(3, 'forward', undefined, ...args, 'tail'.repeat(2));
+    errorOnFirstToken(4, 'again', ...args);
+}
+errorOnFirstToken(1, 'empty');
+errorOnFirstToken(2, 'mixed', 'label'.repeat(3), 12, undefined);
+relay('owned'.repeat(3), 0, undefined);
+console.log(diagnostics.join('|'));
