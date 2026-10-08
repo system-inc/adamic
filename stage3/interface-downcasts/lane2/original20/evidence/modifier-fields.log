@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewRanked20OriginalArrays
+=== RUN   TestCheckedViewRanked20OriginalArrays/decorators-170-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:121: gate cache node hit
+--- PASS: TestCheckedViewRanked20OriginalArrays (1.15s)
+    --- PASS: TestCheckedViewRanked20OriginalArrays/decorators-170-good (1.15s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.162s

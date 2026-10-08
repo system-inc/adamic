@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewRanked20OriginalArrays
+=== RUN   TestCheckedViewRanked20OriginalArrays/arguments-214-wrong-pos
+    checked_views_original_ranked_arrays_test.go:123: exit codes differ; stderr ""; stdout "bad\n"; exit 0
+--- FAIL: TestCheckedViewRanked20OriginalArrays (1.17s)
+    --- FAIL: TestCheckedViewRanked20OriginalArrays/arguments-214-wrong-pos (1.17s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.184s
+FAIL

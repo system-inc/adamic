@@ -2688,3 +2688,15 @@ which the plan assigns to lane 4c. Per the lead's stop instruction, ranked work
 pauses on that dependency. No new pair credit: held 171 / 2840; remainder
 163 / 349. Evidence and exact commands are in
 stage3/interface-downcasts/lane2/MORNING_RECHECK_REPORT.md.
+
+## Lane 2 group 20: original union argument, modifier and type arrays
+
+The updated instruction skips lane 4c untagged-union admission blockers and
+continues ranked array work. Group 20 certifies CallExpression | NewExpression
+.arguments (9 reads), HasDecorators.modifiers (8) and UnionOrIntersectionTypeNode
+.types (7), against complete original declarations and exact source spans.
+39 probes pass Node and both native configurations plus JavaScript, with 24
+finishing leak checks, 39 measured count rows and six executed descendant-check
+mutants. No compiler change. Fixture obligations held: 174 / 2864; remaining
+160 / 325. IncrementalBuildInfo.fileNames remains a noted lane 4c skip, not
+credit. See stage3/interface-downcasts/lane2/RANKED20-ARRAYS-REPORT.md.

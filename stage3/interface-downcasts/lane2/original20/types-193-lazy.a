@@ -1,0 +1,8 @@
+import type { UnionOrIntersectionTypeNode } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as UnionOrIntersectionTypeNode;
+ console.log(`${viewed.kind}`);
+}
+const raw = { kind: 193, types: 7 };
+read(raw);

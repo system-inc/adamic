@@ -1,0 +1,35 @@
+{
+  "targets": [
+    [
+      "CallExpression | NewExpression",
+      "arguments",
+      9
+    ],
+    [
+      "HasDecorators",
+      "modifiers",
+      8
+    ],
+    [
+      "UnionOrIntersectionTypeNode",
+      "types",
+      7
+    ]
+  ],
+  "fields": [
+    "CallExpression",
+    "ClassDeclaration",
+    "ClassExpression",
+    "ExportKeyword",
+    "Expression",
+    "GetAccessorDeclaration",
+    "IntersectionTypeNode",
+    "MethodDeclaration",
+    "NewExpression",
+    "ParameterDeclaration",
+    "PropertyDeclaration",
+    "SetAccessorDeclaration",
+    "TypeNode",
+    "UnionTypeNode"
+  ]
+}

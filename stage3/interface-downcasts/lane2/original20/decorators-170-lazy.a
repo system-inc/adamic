@@ -1,0 +1,8 @@
+import type { HasDecorators } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as HasDecorators;
+ console.log(`${viewed.kind}`);
+}
+const raw = { kind: 170, modifiers: 7 };
+read(raw);

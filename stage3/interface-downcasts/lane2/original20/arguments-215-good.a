@@ -1,0 +1,10 @@
+import type { CallExpression, NewExpression } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as CallExpression | NewExpression;
+ const items = viewed.arguments;
+ if (items === undefined) return;
+ console.log(`${items.length}:${items[0]!.pos}`);
+}
+const raw = { kind: 215, arguments: [{kind: 80, pos: 7}] };
+read(raw);

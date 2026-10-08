@@ -1,0 +1,10 @@
+import type { HasDecorators } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as HasDecorators;
+ const items = viewed.modifiers;
+ if (items === undefined) return;
+ console.log(`${items.length}:${items[0]!.pos}`);
+}
+const raw = { kind: 173, modifiers: [{kind: 95, pos: 7}] };
+read(raw);

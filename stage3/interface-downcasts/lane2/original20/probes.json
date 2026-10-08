@@ -1,0 +1,343 @@
+[
+  {
+    "name": "arguments-214-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression",
+      "Expression"
+    ]
+  },
+  {
+    "name": "arguments-214-lazy",
+    "source": "214\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression"
+    ]
+  },
+  {
+    "name": "arguments-214-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.arguments matches no member of NodeArray<Expression> | undefined; expected NodeArray<Expression> | undefined, found number",
+    "contracts": [
+      "CallExpression"
+    ]
+  },
+  {
+    "name": "arguments-214-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallExpression",
+      "Expression"
+    ]
+  },
+  {
+    "name": "arguments-214-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "CallExpression",
+      "Expression"
+    ]
+  },
+  {
+    "name": "arguments-214-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression",
+      "Expression"
+    ]
+  },
+  {
+    "name": "arguments-214-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected Expression, found number",
+    "contracts": [
+      "CallExpression",
+      "Expression"
+    ]
+  },
+  {
+    "name": "arguments-214-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallExpression",
+      "Expression"
+    ]
+  },
+  {
+    "name": "arguments-214-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallExpression",
+      "Expression"
+    ]
+  },
+  {
+    "name": "arguments-215-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "NewExpression",
+      "Expression"
+    ]
+  },
+  {
+    "name": "arguments-215-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "arguments-215-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "NewExpression"
+    ]
+  },
+  {
+    "name": "decorators-170-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ParameterDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-170-lazy",
+    "source": "170\n",
+    "diagnostic": "",
+    "contracts": [
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "decorators-170-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.modifiers matches no member of NodeArray<ModifierLike> | undefined; expected NodeArray<ModifierLike> | undefined, found number",
+    "contracts": [
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "decorators-170-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "ParameterDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-170-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "ParameterDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-170-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ParameterDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-170-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected ModifierLike, found number",
+    "contracts": [
+      "ParameterDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-170-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ParameterDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-170-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "ParameterDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-170-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "decorators-170-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "decorators-173-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "PropertyDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-175-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "MethodDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-178-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-179-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-232-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassExpression",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "decorators-264-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ClassDeclaration",
+      "ExportKeyword"
+    ]
+  },
+  {
+    "name": "types-193-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "UnionTypeNode",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "types-193-lazy",
+    "source": "193\n",
+    "diagnostic": "",
+    "contracts": [
+      "UnionTypeNode"
+    ]
+  },
+  {
+    "name": "types-193-wrong-array",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: viewed.types is not a NodeArray<TypeNode>; expected NodeArray<TypeNode>, found number",
+    "contracts": [
+      "UnionTypeNode"
+    ]
+  },
+  {
+    "name": "types-193-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "UnionTypeNode",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "types-193-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "UnionTypeNode",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "types-193-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "UnionTypeNode",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "types-193-wrong-kind",
+    "source": "undefined\n",
+    "diagnostic": "element read failed: items[0] expected TypeNode, found number",
+    "contracts": [
+      "UnionTypeNode",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "types-193-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "UnionTypeNode",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "types-193-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "UnionTypeNode",
+      "TypeNode"
+    ]
+  },
+  {
+    "name": "types-194-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "IntersectionTypeNode",
+      "TypeNode"
+    ]
+  }
+]
