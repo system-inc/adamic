@@ -65,3 +65,8 @@ AdamicJsonRecoveryValue | undefined from 43, retaining that return in both
 patterns and changing only its errors sink. Each sink has an independent
 wrong-expected-type mutant; the unchanged runtime guards reject proposed body
 edits in all three plan families.
+
+Both composed sink patterns occur exactly once. Batch 5 full apply passes;
+all two wrong-type, three family runtime, and four plan mutants are rejected
+before source writes. [evidence/batch5-composition.json](evidence/batch5-composition.json)
+records these nine catches. Historical census counts are not remeasured here.
