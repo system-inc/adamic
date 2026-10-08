@@ -478,6 +478,9 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 		}
 		g.write(out)
 	default:
+		if handled, err := p.inspectDeclarations(source, node, c, out, mode, question); handled {
+			return out.String(), err
+		}
 		return "", fmt.Errorf("unsupported checker question: %s", question)
 	}
 	return out.String(), nil

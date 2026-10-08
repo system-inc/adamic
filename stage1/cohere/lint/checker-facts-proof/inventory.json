@@ -5,6 +5,10 @@
       "sha": "e9956e769fd9d430056977022af0d1079b4abe60",
       "path": "stage1/cohere/lint/checker-audit/wave-18.md"
     },
+    "origin/lint-checker/audit-wave-19": {
+      "sha": "6b14ed374edd917770ea12de660226a3f2c65241",
+      "path": "stage1/cohere/lint/checker-audit/wave-19.md"
+    },
     "origin/lint-checker/audit-wave-29": {
       "sha": "aaf52ab7ff55f88c06ff2d0e4e4caa3dffd7dddd",
       "path": "stage1/cohere/lint/checker-audit/wave-29.md"
@@ -12,6 +16,26 @@
     "origin/lint-checker/audit-wave-30": {
       "sha": "bb092f8d30ad33e17bc35b6d4fac3790beec36b5",
       "path": "stage1/cohere/lint/checker-audit/wave-30.md"
+    },
+    "origin/lint-checker/audit-wave-01": {
+      "sha": "7d6478a68f401037b7b8fa4a7d06fd4b5eb2f040",
+      "path": "stage1/cohere/lint/checker-audit/wave-01.md"
+    },
+    "origin/lint-checker/audit-wave-06": {
+      "sha": "7f7dff03e7323aa99481ba12d7a05e339f2d72a8",
+      "path": "stage1/cohere/lint/checker-audit/wave-06.md"
+    },
+    "origin/lint-checker/audit-wave-12": {
+      "sha": "b5d8ce23631638c60e336a82359176602e1f7d4d",
+      "path": "stage1/cohere/lint/checker-audit/wave-12.md"
+    },
+    "origin/lint-checker/audit-wave-15": {
+      "sha": "19e6b2f09a3a40462df951f25cfa9e4f74fc9184",
+      "path": "stage1/cohere/lint/checker-audit/wave-15.md"
+    },
+    "origin/lint-checker/audit-wave-20": {
+      "sha": "7b4d81298b5925009e12035da1bd645708199408",
+      "path": "stage1/cohere/lint/checker-audit/wave-20.md"
     }
   },
   "primary_questions": {
@@ -2048,6 +2072,16 @@
       ]
     },
     {
+      "api": "`ast.IsGlobalScopeAugmentation(container.Parent)`; `ast.IsExternalModule(container.AsSourceFile())`",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-uncleared-race-timeout"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
+      ]
+    },
+    {
       "api": "`ctx.TypeChecker.GetAliasedSymbol`",
       "rules": [
         "nexus/correctness-no-process-exit-after-output",
@@ -2086,6 +2120,16 @@
       ],
       "evidence": [
         "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`resolvesToAGlobal(ctx, callee)`",
+      "rules": [
+        "@typescript-eslint/no-array-constructor",
+        "symbol-description"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
       ]
     },
     {
@@ -2138,6 +2182,24 @@
       ]
     },
     {
+      "api": "`checker.Checker_getIndexTypeOfType(ctx.TypeChecker, part, checker.Checker_stringType(ctx.TypeChecker))`; corresponding `checker.Checker_numberType(ctx.TypeChecker)` call",
+      "rules": [
+        "require-await"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
+      ]
+    },
+    {
+      "api": "`checker.Checker_getResolvedSignature(ctx.TypeChecker, call, nil, checker.CheckModeNormal)`; `resolved.Target()`; `declared.TypeParameters()`",
+      "rules": [
+        "require-await"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
+      ]
+    },
+    {
       "api": "`checker.SkipAlias`",
       "rules": [
         "nexus/concurrency-no-check-then-write"
@@ -2153,6 +2215,33 @@
       ],
       "evidence": [
         "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "`ctx.Program.Options().IsolatedDeclarations.IsTrue()`",
+      "rules": [
+        "@typescript-eslint/consistent-generic-constructors"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
+      ]
+    },
+    {
+      "api": "`ctx.Program.Options().NoPropertyAccessFromIndexSignature.IsTrue()`",
+      "rules": [
+        "@typescript-eslint/dot-notation"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetIndexInfosOfType(objectType)`",
+      "rules": [
+        "@typescript-eslint/dot-notation"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
       ]
     },
     {
@@ -2174,12 +2263,39 @@
       ]
     },
     {
+      "api": "`dotNotationFirstModifier(property)`; `property.Declarations[0].Modifiers()`",
+      "rules": [
+        "@typescript-eslint/dot-notation"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
+      ]
+    },
+    {
       "api": "`hir.ForFunction; hir.CloneFunction; hir.AnalyzePreservedManualMemoization`",
       "rules": [
         "react-hooks/preserve-manual-memoization"
       ],
       "evidence": [
         "origin/lint-checker/audit-wave-30:stage1/cohere/lint/checker-audit/wave-30.md"
+      ]
+    },
+    {
+      "api": "`identifierIsShadowed(ctx, operand)`",
+      "rules": [
+        "valid-typeof"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
+      ]
+    },
+    {
+      "api": "`program.SourceFiles()`; `program.ResolveModule(importer, specifier)`; `program.GetSourceFileForResolvedModule(resolved.ResolvedFileName)`",
+      "rules": [
+        "nexus/correctness-require-blocking-standard-streams"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
       ]
     },
     {
@@ -2207,6 +2323,24 @@
       ],
       "evidence": [
         "origin/lint-checker/audit-wave-29:stage1/cohere/lint/checker-audit/wave-29.md"
+      ]
+    },
+    {
+      "api": "`type_checking.IsThenableType(ctx.TypeChecker, node, returnPart)`; `type_checking.GetCallSignatures(...)`",
+      "rules": [
+        "require-await"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
+      ]
+    },
+    {
+      "api": "`writers.ctx.TypeChecker.GetResolvedSignature(call)`; `signature.Declaration()`; `ast.GetFunctionFlags(declaration)`",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-19:stage1/cohere/lint/checker-audit/wave-19.md"
       ]
     },
     {
@@ -2298,6 +2432,1987 @@
       "evidence": [
         "origin/lint-checker/audit-wave-18:stage1/cohere/lint/checker-audit/wave-18.md"
       ]
+    },
+    {
+      "api": "`checker.Checker_functionHasImplicitReturn`",
+      "rules": [
+        "nexus/correctness-no-implicit-return"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`ast.GetJSDocDeprecatedTag`",
+      "rules": [
+        "@typescript-eslint/no-deprecated"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetSymbolsInScope`",
+      "rules": [
+        "no-else-return"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetSymbolAtLocation`",
+      "rules": [
+        "nexus/correctness-require-child-process-error-listener",
+        "nexus/performance-no-independent-await-in-loop",
+        "react-hooks/globals",
+        "symbol-description"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetShorthandAssignmentValueSymbol`",
+      "rules": [
+        "nexus/correctness-require-response-status-check",
+        "nexus/performance-no-independent-await-in-loop"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`checker.SkipAlias`",
+      "rules": [
+        "nexus/performance-no-independent-await-in-loop"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`symbol.Declarations` (field, not call)",
+      "rules": [
+        "symbol-description"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`checker.Checker_getResolvedSignature; resolved.Target()`",
+      "rules": [
+        "require-await"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`control_flow_graph.Build`",
+      "rules": [
+        "nexus/correctness-require-response-status-check",
+        "require-atomic-updates"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.MayHoldComponentOrHook`",
+      "rules": [
+        "react-hooks/immutability"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunctionWithoutManualMemoization`",
+      "rules": [
+        "react-hooks/no-deriving-state-in-effects"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-01:stage1/cohere/lint/checker-audit/wave-01.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetSymbolAtLocation`",
+      "rules": [
+        "nexus/correctness-require-child-process-error-listener",
+        "nexus/correctness-require-response-status-check",
+        "nexus/performance-no-independent-await-in-loop",
+        "no-new-func",
+        "no-new-native-nonconstructor",
+        "no-new-wrappers",
+        "no-throw-literal",
+        "prefer-arrow-callback",
+        "react/jsx-fragments",
+        "react/jsx-no-undef",
+        "react/no-adjacent-inline-elements"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetShorthandAssignmentValueSymbol(parent)`",
+      "rules": [
+        "nexus/correctness-require-child-process-error-listener",
+        "nexus/correctness-require-response-status-check",
+        "nexus/performance-no-independent-await-in-loop"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetExportSpecifierLocalTargetSymbol(parent)`",
+      "rules": [
+        "nexus/correctness-require-child-process-error-listener"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`checker.SkipAlias(symbol, analysis.ctx.TypeChecker)`",
+      "rules": [
+        "nexus/performance-no-independent-await-in-loop"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetPromisedTypeOfPromise(declared)`",
+      "rules": [
+        "no-useless-return"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`checker.Type_alias(valueType)`",
+      "rules": [
+        "react-hooks/set-state-in-effect"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`flow.WalkerFor(ctx)`",
+      "rules": [
+        "adamic/nominal-class"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`control_flow_graph.Build`",
+      "rules": [
+        "nexus/correctness-require-response-status-check",
+        "no-useless-return"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`resolvesToAGlobal(ctx, identifier)`",
+      "rules": [
+        "no-new-func",
+        "no-new-native-nonconstructor",
+        "no-new-wrappers"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`undefinedIsShadowed(ctx, identifier); identifierIsShadowed(ctx, identifier)`",
+      "rules": [
+        "no-throw-literal"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`reference.NewTracker(ctx.SourceFile, ctx.TypeChecker, nil); tracker.GlobalReferences(regExpCallTraceMap); reference.ConstantStringIn(ctx, arguments[0])`",
+      "rules": [
+        "no-useless-backreference"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunctionWithoutManualMemoization(ctx, functionNode)`",
+      "rules": [
+        "react-hooks/set-state-in-effect"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunction(ctx, functionNode)`",
+      "rules": [
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`isPragmaCreateElementCall(ctx, node); bindsToPragmaImport(ctx, identifier)`",
+      "rules": [
+        "react/no-adjacent-inline-elements"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-06:stage1/cohere/lint/checker-audit/wave-06.md"
+      ]
+    },
+    {
+      "api": "`typeChecker.GetGlobalSymbol(name, ast.SymbolFlagsAll, nil)`",
+      "rules": [
+        "@typescript-eslint/no-redeclare"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-12:stage1/cohere/lint/checker-audit/wave-12.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetSymbolAtLocation(...)`",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-test-on-global-regex",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-no-write-only-collection",
+        "nexus/correctness-require-blocking-standard-streams",
+        "no-new-func",
+        "no-new-native-nonconstructor",
+        "no-new-wrappers",
+        "prefer-rest-params",
+        "react-hooks/exhaustive-deps",
+        "react/jsx-fragments",
+        "react/jsx-no-constructed-context-values",
+        "react/jsx-no-undef"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-12:stage1/cohere/lint/checker-audit/wave-12.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetShorthandAssignmentValueSymbol(parent)`",
+      "rules": [
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-no-write-only-collection",
+        "react-hooks/exhaustive-deps"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-12:stage1/cohere/lint/checker-audit/wave-12.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetAliasedSymbol(symbol)`; `analysis.ctx.TypeChecker.GetAliasedSymbol(symbol)`",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-require-blocking-standard-streams"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-12:stage1/cohere/lint/checker-audit/wave-12.md"
+      ]
+    },
+    {
+      "api": "`resolvesToAGlobal(ctx, identifier)`",
+      "rules": [
+        "no-new-func",
+        "no-new-native-nonconstructor",
+        "no-new-wrappers",
+        "prefer-regex-literals"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-12:stage1/cohere/lint/checker-audit/wave-12.md"
+      ]
+    },
+    {
+      "api": "`reference.NewTracker(ctx.SourceFile, ctx.TypeChecker, nil)`",
+      "rules": [
+        "prefer-regex-literals"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-12:stage1/cohere/lint/checker-audit/wave-12.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunctionWithoutManualMemoization(ctx, functionNode)`",
+      "rules": [
+        "react-hooks/set-state-in-effect"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-12:stage1/cohere/lint/checker-audit/wave-12.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunction(ctx, functionNode)`",
+      "rules": [
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-12:stage1/cohere/lint/checker-audit/wave-12.md"
+      ]
+    },
+    {
+      "api": "`checker.Signature_parameters; checker.Signature_declaration; checker.Checker_getTypeOfSymbol; ctx.TypeChecker.GetSignatureFromDeclaration`",
+      "rules": [
+        "@typescript-eslint/no-useless-default-assignment"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`type_checking.GetTypeName`",
+      "rules": [
+        "@typescript-eslint/require-array-sort-compare"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetNonNullableType`",
+      "rules": [
+        "nexus/correctness-no-global-listener-target-assertion"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetSymbolAtLocation`",
+      "rules": [
+        "nexus/correctness-no-global-listener-target-assertion",
+        "nexus/correctness-no-mock-on-module-namespace",
+        "no-invalid-regexp",
+        "no-throw-literal",
+        "prefer-arrow-callback",
+        "react/jsx-fragments",
+        "react/jsx-no-constructed-context-values",
+        "react/jsx-no-undef"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`rule.IsDeclaredOnlyInDeclarationFiles`",
+      "rules": [
+        "no-invalid-regexp"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`identifierIsShadowed`",
+      "rules": [
+        "no-throw-literal"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`type_checking.IsSourceFileDefaultLibrary`",
+      "rules": [
+        "nexus/correctness-no-global-listener-target-assertion"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`part.AsLiteralType().Value()`",
+      "rules": [
+        "nexus/correctness-no-leaked-number-render"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetResolvedSignature; signature.Declaration()`",
+      "rules": [
+        "nexus/correctness-no-mock-on-module-namespace"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`ctx.Program.Options`",
+      "rules": [
+        "nexus/correctness-no-mock-on-module-namespace"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetSymbolsInScope`",
+      "rules": [
+        "no-label-var"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`reference.NewTracker`",
+      "rules": [
+        "no-misleading-character-class",
+        "no-useless-backreference"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`reference.ConstantStringIn`",
+      "rules": [
+        "no-misleading-character-class",
+        "no-useless-backreference"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`reference.IsConstantRegExpIn`",
+      "rules": [
+        "no-misleading-character-class"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`regexsyntax.ParseRegexFlags; regexsyntax.SkipPatternEscape`",
+      "rules": [
+        "no-misleading-character-class",
+        "no-useless-backreference"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`regexsyntax.ParseRegexCharacterClassWithEnd`",
+      "rules": [
+        "no-misleading-character-class"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`esregexp.Compile`",
+      "rules": [
+        "no-invalid-regexp"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunction`",
+      "rules": [
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunctionWithoutManualMemoization`",
+      "rules": [
+        "react-hooks/set-state-in-effect"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.MayHoldComponentOrHook`",
+      "rules": [
+        "react-hooks/set-state-in-effect",
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`jsxNoConstructedContextValuesCheckMemo; (*jsxNoConstructedContextValuesStabilityWalk).functionEvaluation; (*jsxNoConstructedContextValuesStabilityWalk).anyEscapes; jsxNoConstructedContextValuesStaysHome`",
+      "rules": [
+        "react/jsx-no-constructed-context-values"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-15:stage1/cohere/lint/checker-audit/wave-15.md"
+      ]
+    },
+    {
+      "api": "`type_checking.IsPromiseLike`",
+      "rules": [
+        "@typescript-eslint/no-floating-promises"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`type_checking.IsBuiltinSymbolLike`",
+      "rules": [
+        "@typescript-eslint/no-implied-eval"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`type_checking.IsThenableType`",
+      "rules": [
+        "@typescript-eslint/no-meaningless-void-operator"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`type_checking.IsSymbolFromDefaultLibrary`",
+      "rules": [
+        "nexus/correctness-no-uncleared-race-timeout"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`control_flow_graph.Build`",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-require-blocking-standard-streams"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`property.AccessedName`",
+      "rules": [
+        "prefer-promise-reject-errors"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`reference.NewTracker`",
+      "rules": [
+        "prefer-regex-literals"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`ctx.TypeChecker.GetSymbolAtLocation`",
+      "rules": [
+        "prefer-promise-reject-errors",
+        "prefer-rest-params",
+        "react/jsx-fragments",
+        "react/jsx-no-constructed-context-values",
+        "react/jsx-no-undef"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`jsx.ElementParts`",
+      "rules": [
+        "react/jsx-fragments",
+        "react/jsx-no-undef"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`walk.ctx.TypeChecker.GetResolvedSignature`",
+      "rules": [
+        "react/jsx-no-constructed-context-values"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`walk.ctx.TypeChecker.GetTypeAtLocation`",
+      "rules": [
+        "react/jsx-no-constructed-context-values"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunctionWithoutManualMemoization`",
+      "rules": [
+        "react-hooks/set-state-in-effect"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "`high_level_intermediate_representation.ForFunction`",
+      "rules": [
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "evidence": [
+        "origin/lint-checker/audit-wave-20:stage1/cohere/lint/checker-audit/wave-20.md"
+      ]
+    },
+    {
+      "api": "GetSymbolAtLocation",
+      "rules": [
+        "nexus/security-no-interpolated-sql-string",
+        "no-alert",
+        "no-new-func",
+        "no-throw-literal",
+        "prefer-arrow-callback",
+        "prefer-exponentiation-operator",
+        "use-isnan"
+      ],
+      "evidence": [
+        "user report: typeaware-16, 18 parser-unparked rules; exact Go API calls; eight GetSymbolAtLocation consumers, seven named"
+      ]
+    },
+    {
+      "api": "GetShorthandAssignmentValueSymbol",
+      "rules": [
+        "no-import-assign"
+      ],
+      "evidence": [
+        "user report: typeaware-16, 18 parser-unparked rules; exact Go API calls; eight GetSymbolAtLocation consumers, seven named"
+      ]
+    },
+    {
+      "api": "reference.NewTracker",
+      "rules": [
+        "no-useless-backreference"
+      ],
+      "evidence": [
+        "user report: typeaware-16, 18 parser-unparked rules; exact Go API calls; eight GetSymbolAtLocation consumers, seven named"
+      ]
     }
-  ]
+  ],
+  "normalized_priority": [
+    {
+      "api": "GetSymbolAtLocation",
+      "rules": [
+        "@typescript-eslint/no-array-constructor",
+        "id-denylist",
+        "id-match",
+        "nexus/concurrency-no-check-then-write",
+        "nexus/consistency-no-iso-string-date-cut",
+        "nexus/correctness-no-callback-in-parse-try",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-discarded-pure-result",
+        "nexus/correctness-no-global-listener-target-assertion",
+        "nexus/correctness-no-mock-on-module-namespace",
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-no-test-on-global-regex",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-no-write-only-collection",
+        "nexus/correctness-require-blocking-standard-streams",
+        "nexus/correctness-require-child-process-error-listener",
+        "nexus/correctness-require-response-status-check",
+        "nexus/performance-no-independent-await-in-loop",
+        "nexus/security-no-interpolated-sql-string",
+        "no-alert",
+        "no-class-assign",
+        "no-const-assign",
+        "no-constant-binary-expression",
+        "no-invalid-regexp",
+        "no-new-func",
+        "no-new-native-nonconstructor",
+        "no-new-wrappers",
+        "no-restricted-globals",
+        "no-setter-return",
+        "no-shadow-restricted-names",
+        "no-throw-literal",
+        "no-useless-assignment",
+        "prefer-arrow-callback",
+        "prefer-exponentiation-operator",
+        "prefer-promise-reject-errors",
+        "prefer-regex-literals",
+        "prefer-rest-params",
+        "react-hooks/exhaustive-deps",
+        "react-hooks/globals",
+        "react/jsx-fragments",
+        "react/jsx-no-constructed-context-values",
+        "react/jsx-no-undef",
+        "react/no-adjacent-inline-elements",
+        "react/static-property-placement",
+        "react/style-prop-object",
+        "symbol-description",
+        "use-isnan",
+        "valid-typeof"
+      ],
+      "count": 48
+    },
+    {
+      "api": "GetShorthandAssignmentValueSymbol",
+      "rules": [
+        "nexus/correctness-no-callback-in-parse-try",
+        "nexus/correctness-no-uncleared-race-timeout",
+        "nexus/correctness-no-write-only-collection",
+        "nexus/correctness-require-child-process-error-listener",
+        "nexus/correctness-require-response-status-check",
+        "nexus/performance-no-independent-await-in-loop",
+        "no-class-assign",
+        "no-const-assign",
+        "no-constant-binary-expression",
+        "no-import-assign",
+        "no-new-native-nonconstructor",
+        "no-restricted-globals",
+        "no-shadow-restricted-names",
+        "prefer-promise-reject-errors",
+        "prefer-rest-params",
+        "react-hooks/exhaustive-deps",
+        "react/static-property-placement",
+        "react/style-prop-object"
+      ],
+      "count": 18
+    },
+    {
+      "api": "Build",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-require-blocking-standard-streams",
+        "nexus/correctness-require-response-status-check",
+        "no-useless-return"
+      ],
+      "count": 4
+    },
+    {
+      "api": "GetResolvedSignature",
+      "rules": [
+        "nexus/correctness-no-mock-on-module-namespace",
+        "nexus/correctness-no-process-exit-after-output",
+        "react/jsx-no-constructed-context-values"
+      ],
+      "count": 3
+    },
+    {
+      "api": "IsSourceFileDefaultLibrary",
+      "rules": [
+        "nexus/correctness-no-discarded-pure-result",
+        "nexus/correctness-no-global-listener-target-assertion",
+        "nexus/correctness-no-uncleared-race-timeout"
+      ],
+      "count": 3
+    },
+    {
+      "api": "IsSymbolFromDefaultLibrary",
+      "rules": [
+        "nexus/consistency-no-iso-string-date-cut",
+        "nexus/correctness-no-collection-misuse",
+        "nexus/correctness-no-uncleared-race-timeout"
+      ],
+      "count": 3
+    },
+    {
+      "api": "MayHoldComponentOrHook",
+      "rules": [
+        "react-hooks/set-state-in-effect",
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "count": 3
+    },
+    {
+      "api": "NewTracker",
+      "rules": [
+        "no-misleading-character-class",
+        "no-useless-backreference",
+        "prefer-regex-literals"
+      ],
+      "count": 3
+    },
+    {
+      "api": "output-symbol",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output",
+        "symbol-description",
+        "valid-typeof"
+      ],
+      "count": 3
+    },
+    {
+      "api": "ConstantStringIn",
+      "rules": [
+        "no-misleading-character-class",
+        "no-useless-backreference"
+      ],
+      "count": 2
+    },
+    {
+      "api": "ElementParts",
+      "rules": [
+        "react/jsx-fragments",
+        "react/jsx-no-undef"
+      ],
+      "count": 2
+    },
+    {
+      "api": "ForFunction",
+      "rules": [
+        "react-hooks/set-state-in-render",
+        "react-hooks/static-components"
+      ],
+      "count": 2
+    },
+    {
+      "api": "GetAliasedSymbol",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output",
+        "nexus/correctness-require-blocking-standard-streams"
+      ],
+      "count": 2
+    },
+    {
+      "api": "GetSymbolsInScope",
+      "rules": [
+        "no-else-return",
+        "no-label-var"
+      ],
+      "count": 2
+    },
+    {
+      "api": "IsThenableType",
+      "rules": [
+        "@typescript-eslint/no-meaningless-void-operator",
+        "require-await"
+      ],
+      "count": 2
+    },
+    {
+      "api": "ParseRegexFlags",
+      "rules": [
+        "no-misleading-character-class",
+        "no-useless-backreference"
+      ],
+      "count": 2
+    },
+    {
+      "api": "SkipAlias",
+      "rules": [
+        "nexus/concurrency-no-check-then-write",
+        "nexus/performance-no-independent-await-in-loop"
+      ],
+      "count": 2
+    },
+    {
+      "api": "SkipPatternEscape",
+      "rules": [
+        "no-misleading-character-class",
+        "no-useless-backreference"
+      ],
+      "count": 2
+    },
+    {
+      "api": "SourceFile",
+      "rules": [
+        "no-useless-backreference",
+        "prefer-regex-literals"
+      ],
+      "count": 2
+    },
+    {
+      "api": "WritesToBinding",
+      "rules": [
+        "nexus/concurrency-no-check-then-write",
+        "no-shadow-restricted-names"
+      ],
+      "count": 2
+    },
+    {
+      "api": "type-projection",
+      "rules": [
+        "@typescript-eslint/restrict-template-expressions",
+        "require-await"
+      ],
+      "count": 2
+    },
+    {
+      "api": "AccessedName",
+      "rules": [
+        "prefer-promise-reject-errors"
+      ],
+      "count": 1
+    },
+    {
+      "api": "AsLiteralType",
+      "rules": [
+        "nexus/correctness-no-leaked-number-render"
+      ],
+      "count": 1
+    },
+    {
+      "api": "Checker_getTypeOfSymbol",
+      "rules": [
+        "@typescript-eslint/no-useless-default-assignment"
+      ],
+      "count": 1
+    },
+    {
+      "api": "Compile",
+      "rules": [
+        "no-invalid-regexp"
+      ],
+      "count": 1
+    },
+    {
+      "api": "Declaration",
+      "rules": [
+        "nexus/correctness-no-mock-on-module-namespace"
+      ],
+      "count": 1
+    },
+    {
+      "api": "ForFunctionWithoutManualMemoization",
+      "rules": [
+        "react-hooks/set-state-in-effect"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetBaseTypes",
+      "rules": [
+        "@typescript-eslint/class-literal-property-style"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetCallSignatures",
+      "rules": [
+        "require-await"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetDeclaredTypeOfSymbol",
+      "rules": [
+        "@typescript-eslint/class-literal-property-style"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetExportSpecifierLocalTargetSymbol",
+      "rules": [
+        "nexus/correctness-require-child-process-error-listener"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetGlobalSymbol",
+      "rules": [
+        "@typescript-eslint/no-redeclare"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetIndexInfosOfType",
+      "rules": [
+        "@typescript-eslint/dot-notation"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetNonNullableType",
+      "rules": [
+        "nexus/correctness-no-global-listener-target-assertion"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetNumberIndexType",
+      "rules": [
+        "@typescript-eslint/await-thenable"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetPromisedTypeOfPromise",
+      "rules": [
+        "no-useless-return"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetPropertyOfType",
+      "rules": [
+        "@typescript-eslint/class-literal-property-style"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetReturnTypeOfSignature",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetSignatureFromDeclaration",
+      "rules": [
+        "@typescript-eslint/no-useless-default-assignment"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetTypeArguments",
+      "rules": [
+        "@typescript-eslint/await-thenable"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetTypeAtLocation",
+      "rules": [
+        "react/jsx-no-constructed-context-values"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetTypeName",
+      "rules": [
+        "@typescript-eslint/require-array-sort-compare"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GetWellKnownSymbolPropertyOfType",
+      "rules": [
+        "@typescript-eslint/await-thenable"
+      ],
+      "count": 1
+    },
+    {
+      "api": "GlobalReferences",
+      "rules": [
+        "no-useless-backreference"
+      ],
+      "count": 1
+    },
+    {
+      "api": "IsArrayLikeType",
+      "rules": [
+        "@typescript-eslint/await-thenable"
+      ],
+      "count": 1
+    },
+    {
+      "api": "IsBuiltinSymbolLike",
+      "rules": [
+        "@typescript-eslint/no-implied-eval"
+      ],
+      "count": 1
+    },
+    {
+      "api": "IsConstantRegExpIn",
+      "rules": [
+        "no-misleading-character-class"
+      ],
+      "count": 1
+    },
+    {
+      "api": "IsDeclaredOnlyInDeclarationFiles",
+      "rules": [
+        "no-invalid-regexp"
+      ],
+      "count": 1
+    },
+    {
+      "api": "IsPromiseLike",
+      "rules": [
+        "@typescript-eslint/no-floating-promises"
+      ],
+      "count": 1
+    },
+    {
+      "api": "IsValueReference",
+      "rules": [
+        "no-restricted-globals"
+      ],
+      "count": 1
+    },
+    {
+      "api": "NeedsToBeAwaited",
+      "rules": [
+        "@typescript-eslint/await-thenable"
+      ],
+      "count": 1
+    },
+    {
+      "api": "Options",
+      "rules": [
+        "nexus/correctness-no-mock-on-module-namespace"
+      ],
+      "count": 1
+    },
+    {
+      "api": "ParseRegexCharacterClassWithEnd",
+      "rules": [
+        "no-misleading-character-class"
+      ],
+      "count": 1
+    },
+    {
+      "api": "ReadSymbol",
+      "rules": [
+        "no-restricted-globals"
+      ],
+      "count": 1
+    },
+    {
+      "api": "Signature_declaration",
+      "rules": [
+        "@typescript-eslint/no-useless-default-assignment"
+      ],
+      "count": 1
+    },
+    {
+      "api": "Signature_parameters",
+      "rules": [
+        "@typescript-eslint/no-useless-default-assignment"
+      ],
+      "count": 1
+    },
+    {
+      "api": "Type_alias",
+      "rules": [
+        "react-hooks/set-state-in-effect"
+      ],
+      "count": 1
+    },
+    {
+      "api": "WalkerFor",
+      "rules": [
+        "adamic/nominal-class"
+      ],
+      "count": 1
+    },
+    {
+      "api": "declared-call-signature",
+      "rules": [
+        "require-await"
+      ],
+      "count": 1
+    },
+    {
+      "api": "functionHasImplicitReturn",
+      "rules": [
+        "nexus/correctness-no-implicit-return"
+      ],
+      "count": 1
+    },
+    {
+      "api": "getAwaitedType",
+      "rules": [
+        "nexus/correctness-no-discarded-outcome"
+      ],
+      "count": 1
+    },
+    {
+      "api": "getIndexTypeOfType",
+      "rules": [
+        "require-await"
+      ],
+      "count": 1
+    },
+    {
+      "api": "getResolvedSignature",
+      "rules": [
+        "require-await"
+      ],
+      "count": 1
+    },
+    {
+      "api": "numberType",
+      "rules": [
+        "require-await"
+      ],
+      "count": 1
+    },
+    {
+      "api": "other-file",
+      "rules": [
+        "nexus/correctness-no-process-exit-after-output"
+      ],
+      "count": 1
+    },
+    {
+      "api": "reference.NewTracker",
+      "rules": [
+        "no-useless-backreference"
+      ],
+      "count": 1
+    },
+    {
+      "api": "runtime-modules",
+      "rules": [
+        "nexus/correctness-require-blocking-standard-streams"
+      ],
+      "count": 1
+    },
+    {
+      "api": "stringType",
+      "rules": [
+        "require-await"
+      ],
+      "count": 1
+    }
+  ],
+  "auxiliary_dispatch_selectors": [
+    {
+      "question": "access-name",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "alias",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-01",
+        "origin/codex/typeaware-wave-06"
+      ],
+      "files": [
+        "bridge/tsgo/checker/declaration_context.go",
+        "bridge/tsgo/checker/wave06_declarations.go"
+      ]
+    },
+    {
+      "question": "apparent",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "argument",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "asyncDispose",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-18"
+      ],
+      "files": [
+        "bridge/tsgo/checker/iteration_type_facts.go"
+      ]
+    },
+    {
+      "question": "asyncIterator",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-18"
+      ],
+      "files": [
+        "bridge/tsgo/checker/iteration_type_facts.go"
+      ]
+    },
+    {
+      "question": "bases",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "call",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-06",
+        "origin/codex/typeaware-wave-27"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave06_declarations.go",
+        "bridge/tsgo/checker/wave_27_checker_links.go"
+      ]
+    },
+    {
+      "question": "callable-return-shape",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_final_questions.go"
+      ]
+    },
+    {
+      "question": "callbacks",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-18"
+      ],
+      "files": [
+        "bridge/tsgo/checker/iteration_type_facts.go"
+      ]
+    },
+    {
+      "question": "code-path-graph",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_next_questions.go"
+      ]
+    },
+    {
+      "question": "constrained",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "construct",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "contextual",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "declaration-ancestry",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-23"
+      ],
+      "files": [
+        "bridge/tsgo/checker/declaration_ancestry.go"
+      ]
+    },
+    {
+      "question": "declared-syntax-type",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-25"
+      ],
+      "files": [
+        "bridge/tsgo/checker/process_questions.go"
+      ]
+    },
+    {
+      "question": "export",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-01"
+      ],
+      "files": [
+        "bridge/tsgo/checker/declaration_context.go"
+      ]
+    },
+    {
+      "question": "foreign-node-symbol-context",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_react_questions.go"
+      ]
+    },
+    {
+      "question": "foreign-source-syntax-tree",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_react_questions.go"
+      ]
+    },
+    {
+      "question": "function",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-10"
+      ],
+      "files": [
+        "bridge/tsgo/checker/require_await_facts.go"
+      ]
+    },
+    {
+      "question": "generic-signature-shape",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_final_questions.go"
+      ]
+    },
+    {
+      "question": "heritage",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-10",
+        "origin/codex/typeaware-wave-22",
+        "origin/codex/typeaware-wave-27"
+      ],
+      "files": [
+        "bridge/tsgo/checker/require_await_facts.go",
+        "bridge/tsgo/checker/type_operations.go",
+        "bridge/tsgo/checker/wave_27_checker_links.go"
+      ]
+    },
+    {
+      "question": "import-runtime-options",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_questions.go"
+      ]
+    },
+    {
+      "question": "index",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-05"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_projection.go"
+      ]
+    },
+    {
+      "question": "index-number",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-10"
+      ],
+      "files": [
+        "bridge/tsgo/checker/require_await_facts.go"
+      ]
+    },
+    {
+      "question": "index-string",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-10"
+      ],
+      "files": [
+        "bridge/tsgo/checker/require_await_facts.go"
+      ]
+    },
+    {
+      "question": "indexed-type-shape",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_final_questions.go"
+      ]
+    },
+    {
+      "question": "iterator",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-18",
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/iteration_type_facts.go",
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "member",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "metadata",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "node",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-01",
+        "origin/codex/typeaware-wave-26"
+      ],
+      "files": [
+        "bridge/tsgo/checker/declaration_context.go",
+        "bridge/tsgo/checker/declaration_lineage.go",
+        "bridge/tsgo/checker/symbol_documentation.go"
+      ]
+    },
+    {
+      "question": "node-binding",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_questions.go"
+      ]
+    },
+    {
+      "question": "process-symbol-details",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-25"
+      ],
+      "files": [
+        "bridge/tsgo/checker/process_questions.go"
+      ]
+    },
+    {
+      "question": "program-module-edges",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_next_questions.go"
+      ]
+    },
+    {
+      "question": "property",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-01",
+        "origin/codex/typeaware-wave-05",
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/symbol_documentation.go",
+        "bridge/tsgo/checker/type_operations.go",
+        "bridge/tsgo/checker/type_projection.go"
+      ]
+    },
+    {
+      "question": "property-global",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-10"
+      ],
+      "files": [
+        "bridge/tsgo/checker/require_await_facts.go"
+      ]
+    },
+    {
+      "question": "property-location",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-10"
+      ],
+      "files": [
+        "bridge/tsgo/checker/require_await_facts.go"
+      ]
+    },
+    {
+      "question": "raw",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/type_operations.go"
+      ]
+    },
+    {
+      "question": "resolved",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-10"
+      ],
+      "files": [
+        "bridge/tsgo/checker/require_await_facts.go"
+      ]
+    },
+    {
+      "question": "resolved-call-declaration",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03",
+        "origin/codex/typeaware-wave-25"
+      ],
+      "files": [
+        "bridge/tsgo/checker/process_questions.go",
+        "bridge/tsgo/checker/wave_03_next_questions.go"
+      ]
+    },
+    {
+      "question": "shorthand",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-01"
+      ],
+      "files": [
+        "bridge/tsgo/checker/declaration_context.go",
+        "bridge/tsgo/checker/symbol_documentation.go"
+      ]
+    },
+    {
+      "question": "signature-kinds",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_questions.go"
+      ]
+    },
+    {
+      "question": "signatures",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-05",
+        "origin/codex/typeaware-wave-10",
+        "origin/codex/typeaware-wave-22"
+      ],
+      "files": [
+        "bridge/tsgo/checker/require_await_facts.go",
+        "bridge/tsgo/checker/type_operations.go",
+        "bridge/tsgo/checker/type_projection.go"
+      ]
+    },
+    {
+      "question": "source-access-context",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_more_questions.go"
+      ]
+    },
+    {
+      "question": "source-module-context",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_next_questions.go"
+      ]
+    },
+    {
+      "question": "source-syntax-tree",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_react_questions.go"
+      ]
+    },
+    {
+      "question": "source-token-start",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-03"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave_03_react_questions.go"
+      ]
+    },
+    {
+      "question": "symbol",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-06",
+        "origin/codex/typeaware-wave-27"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave06_declarations.go",
+        "bridge/tsgo/checker/wave_27_checker_links.go"
+      ]
+    },
+    {
+      "question": "syntax-control-flow",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-25"
+      ],
+      "files": [
+        "bridge/tsgo/checker/process_questions.go"
+      ]
+    },
+    {
+      "question": "syntax-projection",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-25"
+      ],
+      "files": [
+        "bridge/tsgo/checker/process_questions.go"
+      ]
+    },
+    {
+      "question": "syntax-reference-facts",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-25"
+      ],
+      "files": [
+        "bridge/tsgo/checker/process_questions.go"
+      ]
+    },
+    {
+      "question": "values",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-18"
+      ],
+      "files": [
+        "bridge/tsgo/checker/iteration_type_facts.go"
+      ]
+    },
+    {
+      "question": "wave04-next-declaration-context",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-04"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave04_next_dispatch.go"
+      ]
+    },
+    {
+      "question": "wave04-next-program-modules",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-04"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave04_next_dispatch.go"
+      ]
+    },
+    {
+      "question": "wave04-next-resolved-signature-declaration",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-04"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave04_next_dispatch.go"
+      ]
+    },
+    {
+      "question": "wave04-next-source-context",
+      "present": false,
+      "branches": [
+        "origin/codex/typeaware-wave-04"
+      ],
+      "files": [
+        "bridge/tsgo/checker/wave04_next_dispatch.go"
+      ]
+    }
+  ],
+  "implemented": {
+    "node-symbol-details": {
+      "rules": [
+        "no-new-wrappers",
+        "no-new-native-nonconstructor"
+      ],
+      "contract": "presence, shared identity, flags, name and complete ordered declaration records"
+    },
+    "binding-declarations": {
+      "rules": [
+        "no-class-assign"
+      ],
+      "contract": "raw shorthand value binding and ordered declaration origins; not a general read-symbol identity API"
+    },
+    "symbol-provenance": {
+      "rules": [
+        "symbol-description",
+        "valid-typeof"
+      ],
+      "contract": "wave24 ancestry and source flags, using shared identity and guarded local selector"
+    },
+    "reference.WritesToBinding": {
+      "rules": [
+        "no-class-assign"
+      ],
+      "owner": "native harness structural analysis"
+    }
+  },
+  "wave05_input": {
+    "reported_sha": "46bfae7a",
+    "inspected_sha": "335b5ae50be5fff106e044fdd93a19ad1b434ab4",
+    "requested_sha_status": "not found in fetched history; GitHub commit lookup returned 422",
+    "reported_green_cases": {
+      "no-useless-assignment": 261,
+      "@typescript-eslint/restrict-template-expressions": 100,
+      "nexus/correctness-no-process-exit-after-output": 56,
+      "require-await": 15,
+      "nexus/correctness-no-uncleared-race-timeout": 21
+    },
+    "source_report": "stage1/cohere/typeaware/wave_05_core/CHECKER_LANDING_REPORT.md",
+    "note": "Worker-reported parity, not rerun by this unit. The newer report also names Symbol/typeof green and three unrelated parser failures."
+  },
+  "wave05_questions": {
+    "output-symbol": {
+      "confirmed_consumers": [
+        "nexus/correctness-no-process-exit-after-output",
+        "symbol-description",
+        "valid-typeof"
+      ],
+      "contract": "raw or alias-followed symbol identity, declaration flags and parent name-kind/module-keyword ancestry"
+    },
+    "declared-call-signature": {
+      "confirmed_consumers": [
+        "require-await"
+      ],
+      "contract": "declared target type parameters, declared/instantiated parameter type IDs, rest flag, return/contextual IDs"
+    },
+    "runtime-modules": {
+      "confirmed_consumers": [
+        "nexus/correctness-require-blocking-standard-streams"
+      ],
+      "contract": "ordered runtime edges, dts and computed-load flags across program files"
+    },
+    "type-projection": {
+      "confirmed_consumers": [
+        "require-await",
+        "@typescript-eslint/restrict-template-expressions"
+      ],
+      "contract": "property/string-index/number-index type IDs, call signatures and heritage graph roots"
+    },
+    "other-file": {
+      "confirmed_consumers": [
+        "nexus/correctness-no-process-exit-after-output"
+      ],
+      "contract": "guarded exact foreign selector delegated within the same program; legacy foreign parsing still requires migration"
+    }
+  },
+  "wave07_input": {
+    "local_head": "9045ca18",
+    "reported_rule_count": 5,
+    "only_blocker": "unsupported checker question: node-symbol-details",
+    "names": "requested; local commit unavailable here; do not add five to the distinct named count yet",
+    "question_status": "implemented in this slice, adapted from wave 18; worker certification still required"
+  },
+  "wave16_input": {
+    "reported_unparked_rules": 18,
+    "symbol_cases": {
+      "use-isnan": 316,
+      "prefer-exponentiation-operator": 196,
+      "prefer-arrow-callback": 83,
+      "nexus/security-no-interpolated-sql-string": 78,
+      "no-alert": 50,
+      "no-throw-literal": 48,
+      "no-new-func": 41
+    },
+    "named_case_sum": 812,
+    "reported_symbol_consumers": 8,
+    "reported_symbol_cases": "about 820; eighth rule name not supplied",
+    "other_dependencies": [
+      {
+        "api": "GetShorthandAssignmentValueSymbol",
+        "rule": "no-import-assign",
+        "cases": 148
+      },
+      {
+        "api": "GetResolvedSignature plus signature.Declaration",
+        "reported_rules": 2,
+        "cases": 61
+      },
+      {
+        "api": "symbol.Declarations[0] source file",
+        "reported_rules": 2,
+        "cases": 38
+      },
+      {
+        "api": "AsLiteralType().Value()",
+        "cases": 52
+      },
+      {
+        "api": "reference.NewTracker",
+        "rule": "no-useless-backreference",
+        "cases": 408
+      }
+    ],
+    "evidence": "user report: typeaware-16, 18 parser-unparked rules; exact Go API calls; eight GetSymbolAtLocation consumers, seven named",
+    "sql_slug": "user shorthand no-security-sql normalized from the origin wave-16 claim to nexus/security-no-interpolated-sql-string",
+    "results": "worker reports, not local reruns"
+  }
 }

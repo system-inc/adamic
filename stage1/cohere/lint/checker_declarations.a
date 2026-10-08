@@ -1,0 +1,63 @@
+// Raw declaration facts are owned by the run's checker and never reopen a file.
+import { panic } from 'adamic';
+import { Checker, FileQuestion, Answer } from './checker.a';
+import type { ParseNode } from '../../typescript/parser/nodes.ts';
+import { Frames, header } from '../typeaware/frames.ts';
+
+export function declarationAnswer(checker: Checker, node: ParseNode, question: string): Answer {
+    const first = checker.offsets[node.pos] ?? panic('declaration start outside source');
+    const last = checker.offsets[node.end] ?? panic('declaration end outside source');
+    return checker.askFile(new FileQuestion('ReadsOtherFiles', `${question}\n${first}\n${last}\n${node.kind}`));
+}
+export class DeclarationTag {
+    readonly tagKind: string;
+    readonly tagName: string;
+    readonly tagStart: number;
+    readonly tagEnd: number;
+    readonly tagText: string;
+    constructor(frames: Frames) {
+        this.tagKind = frames.field(); this.tagName = frames.field();
+        this.tagStart = frames.natural(); this.tagEnd = frames.natural(); this.tagText = frames.field();
+    }
+}
+export class Declaration {
+    readonly declarationPath: string;
+    readonly declarationKind: string;
+    readonly declarationStart: number;
+    readonly declarationEnd: number;
+    readonly declarationFile: boolean;
+    readonly defaultLibrary: boolean;
+    readonly parentKind: string;
+    readonly parentName: string;
+    readonly parentStart: number;
+    readonly parentEnd: number;
+    readonly tags: DeclarationTag[] = [];
+    readonly parameters: string[] = [];
+    constructor(frames: Frames) {
+        this.declarationPath = frames.field(); this.declarationKind = frames.field(); this.declarationStart = frames.natural(); this.declarationEnd = frames.natural();
+        this.declarationFile = frames.yes(); this.defaultLibrary = frames.yes();
+        this.parentKind = frames.field(); this.parentName = frames.field();
+        this.parentStart = frames.natural(); this.parentEnd = frames.natural();
+        const tags = frames.natural();
+        for(let at = 0; at < tags; at++) { this.tags.push(new DeclarationTag(frames)); }
+        const parameters = frames.natural();
+        for(let at = 0; at < parameters; at++) { this.parameters.push(frames.field()); }
+    }
+}
+export class SymbolDetails {
+    readonly present: boolean;
+    readonly symbolId: number;
+    readonly symbolFlags: number;
+    readonly symbolName: string;
+    readonly declarations: Declaration[] = [];
+    constructor(value: string) {
+        const frames = new Frames(value); header(frames, 'node-symbol-details'); this.present = frames.yes();
+        let id = 0; let flags = 0; let name = '';
+        if(this.present) {
+            id = frames.natural(); flags = frames.natural(); name = frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) { this.declarations.push(new Declaration(frames)); }
+        }
+        this.symbolId = id; this.symbolFlags = flags; this.symbolName = name; frames.end();
+    }
+}

@@ -1,0 +1,34 @@
+// The native structural half of cohere's reference.WritesToBinding.
+// Name resolution remains a checker fact. Wrappers include rest targets and
+// parentheses; shorthand default values and computed keys remain reads.
+import type { RuleContext } from './context.ts';
+const assignments = ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'];
+export function writesToBinding(context: RuleContext, index: number): boolean {
+    let current = index;
+    while(context.parent(current) >= 0) {
+        const parentIndex = context.parent(current);
+        const parent = context.node(parentIndex);
+        switch(parent.kind) {
+            case 'PropertyAccessExpression':
+                return false;
+            case 'SpreadElement': case 'SpreadAssignment': case 'ArrayLiteralExpression':
+            case 'ObjectLiteralExpression': case 'ParenthesizedExpression':
+                current = parentIndex; break;
+            case 'PropertyAssignment':
+                if(parent.children[parent.children.length - 1] !== current) { return false; }
+                current = parentIndex; break;
+            case 'ShorthandPropertyAssignment':
+                if(parent.children[0] !== current) { return false; }
+                current = parentIndex; break;
+            case 'BinaryExpression':
+                return parent.children[0] === current && assignments.includes(context.kind(parent.children[1] ?? -1));
+            case 'PrefixUnaryExpression': case 'PostfixUnaryExpression':
+                return parent.operator === 'PlusPlusToken' || parent.operator === 'MinusMinusToken';
+            case 'ForInStatement': case 'ForOfStatement':
+                return parent.children[0] === current;
+            default:
+                return false;
+        }
+    }
+    return false;
+}

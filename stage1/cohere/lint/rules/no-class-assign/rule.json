@@ -1,0 +1,17 @@
+{
+  "name": "no-class-assign",
+  "typed": true,
+  "programReads": [
+    "ReadsOtherFiles"
+  ],
+  "node": true,
+  "kinds": [
+    "Identifier"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleCheckerNoClassAssign",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoClassAssign"
+}

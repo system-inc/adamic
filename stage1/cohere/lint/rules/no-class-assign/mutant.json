@@ -1,0 +1,5 @@
+{
+  "name": "class writes ignored",
+  "from": "if(first === '' || classes === 0) { return; }",
+  "to": "if(first !== '' && classes > 0) { return; }"
+}

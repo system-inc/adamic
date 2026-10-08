@@ -1,0 +1,1 @@
+export function typeofWitness(x: unknown, name: string) { return [typeof x === 'array', typeof x === undefined, typeof x === name, typeof x === 'string']; }

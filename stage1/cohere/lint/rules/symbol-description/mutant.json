@@ -1,0 +1,5 @@
+{
+  "name": "symbol-description-global",
+  "from": "callee.text !== 'Symbol'",
+  "to": "callee.text !== 'SymbolIgnored'"
+}

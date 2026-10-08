@@ -1,0 +1,35 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { declarationAnswer } from '../../checker_declarations.a';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { messageSymbolDescription } from './messages.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        if(node.list > 0 || this.context.checker === undefined) { return; }
+        const calleeIndex = this.context.unwrap(node.children[0] ?? -1);
+        const callee = this.context.node(calleeIndex);
+        if(callee.kind !== 'Identifier' || callee.text !== 'Symbol') { return; }
+        const declarations = this.origins(callee);
+        if(declarations.length === 0 || declarations[0] !== true) { return; }
+        this.context.reportNode(index, 'symbol-description', 'expected', messageSymbolDescription);
+    }
+    origins(node: ParseNode): boolean[] {
+        const checker = this.context.checker;
+        if(checker === undefined) { return []; }
+        const answer = declarationAnswer(checker, node, 'symbol-provenance');
+        if(answer === undefined || answer.value === undefined) { return []; }
+        const frames = new Frames(answer.value); header(frames, 'symbol-provenance');
+        frames.natural(); frames.natural(); const count = frames.natural(); const result: boolean[] = [];
+        for(let at = 0; at < count; at++) {
+            frames.field(); result.push(frames.yes()); frames.yes(); frames.yes();
+            const ancestors = frames.natural();
+            for(let child = 0; child < ancestors; child++) {
+                frames.field(); frames.field(); frames.natural(); frames.natural(); frames.natural(); frames.yes();
+            }
+        }
+        frames.end(); return result;
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

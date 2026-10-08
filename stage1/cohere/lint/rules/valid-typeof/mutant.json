@@ -1,0 +1,5 @@
+{
+  "name": "valid-typeof-options",
+  "from": "read('requirestringliterals','false')",
+  "to": "read('ignored-requirestringliterals','false')"
+}

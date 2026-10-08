@@ -1,0 +1,1 @@
+new Symbol(); new BigInt(1); function f(Symbol: any) { new Symbol(); }
