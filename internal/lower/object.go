@@ -1729,7 +1729,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		}
 		return ir.RegExpGroup{Object: object, Name: index.Text(), Of: of, Optional: optional}, nil
 	}
-	if optional && object.Type() != ir.Object {
+	if optional && object.Type() != ir.Object && object.Type() != ir.Array {
 		// text?.[0] on a string that may be missing: indexing it as a string would read a null one.
 		return nil, l.notYet(node, "?.[] on a "+typeName(object.Type()))
 	}
@@ -1755,7 +1755,7 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
-		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element}), nil
+		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional}), nil
 	}
 	// pairs[0]?.[0]: the tuple may be missing, and the read is undefined then (collections.go).
 	if optional {

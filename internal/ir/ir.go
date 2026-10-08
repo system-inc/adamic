@@ -615,6 +615,7 @@ type (
 		Array, Index Expression
 		Element      Type
 		Relative     bool
+		Optional     bool // array?.[index], skipping the index when the receiver is missing
 	}
 
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,

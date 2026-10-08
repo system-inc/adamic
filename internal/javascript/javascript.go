@@ -1024,6 +1024,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Relative {
 			return e.value(expression.Array) + ".at(" + e.value(expression.Index) + ")"
 		}
+		if expression.Optional {
+			return e.value(expression.Array) + "?.[" + e.value(expression.Index) + "]"
+		}
 		return e.value(expression.Array) + "[" + e.value(expression.Index) + "]"
 	case ir.ArraySearch:
 		method := ".indexOf("
