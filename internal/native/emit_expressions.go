@@ -247,7 +247,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MaybeToString:
 		return e.maybeToString(expression.Value)
 	case ir.Box:
-		return e.box(expression.Value)
+		return e.boxNull(expression.Value, expression.Null)
 	case ir.MakeError:
 		return e.makeError(expression)
 	case ir.WeakOf:

@@ -33,10 +33,18 @@ func converted(from ir.Type, to ir.Type, value string) (string, bool) {
 
 // box emits a value where a union goes.
 func (e *emitter) box(value ir.Expression) string {
+	return e.boxNull(value, false)
+}
+
+func (e *emitter) boxNull(value ir.Expression, null bool) string {
 	if _, null := value.(ir.Null); null {
 		return "&adamic_null"
 	}
-	boxed, fresh := converted(value.Type(), ir.Union, e.value(value))
+	raw := e.value(value)
+	if null && value.Type().IsReference() && value.Type() != ir.Union {
+		return fmt.Sprintf("(%s == NULL ? &adamic_null : (adamic_heap *)%s)", raw, raw)
+	}
+	boxed, fresh := converted(value.Type(), ir.Union, raw)
 	if fresh {
 		return e.own(ir.Union, boxed)
 	}
@@ -47,6 +55,9 @@ func (e *emitter) box(value ir.Expression) string {
 // read out of its box now, as JavaScript reads the variable; a reference is the union's, borrowed.
 func (e *emitter) narrow(narrow ir.Narrow) string {
 	value := e.value(narrow.Value)
+	if narrow.Checked {
+		e.checkCaughtType(narrow, value)
+	}
 	switch narrow.To {
 	case ir.Number:
 		return e.snapshot(ir.Number, fmt.Sprintf("((const adamic_number_box *)%s)->number", value))

@@ -248,6 +248,10 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		if len(site.Options) == 1 && site.Options[0] == "JSON.stringify" {
 			continue
 		}
+		if len(site.Options) == 1 && site.Options[0] == "useUnknownInCatchVariables" {
+			// Catch-derived values stay tagged and lower checks each typed use.
+			continue
+		}
 		// Every successfully lowered project indexed read requiring presence is
 		// guarded by lower.checkedIndexedRead. Unsupported representations refuse
 		// before emission. For a joint optional/index site the recorded ancestor

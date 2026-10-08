@@ -101,10 +101,10 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	}
 	valueType := ir.Object
 	inferred := l.evolvingObject(name)
-	if l.caught[symbol] {
+	if l.catchOrigin(name, map[*ast.Symbol]bool{}) {
 		valueType = ir.Union
 	}
-	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
+	if !l.alwaysUndefined[symbol] && !l.catchOrigin(name, map[*ast.Symbol]bool{}) {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
 			if inferred == nil {

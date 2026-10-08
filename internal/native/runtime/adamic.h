@@ -33,6 +33,7 @@ enum adamic_kind {
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_kind_environment,
 #endif
+	adamic_kind_null,
 };
 
 typedef struct adamic_heap {
@@ -896,6 +897,9 @@ bool adamic_weak_held(const void *target);
 extern adamic_heap *adamic_thrown;
 extern bool adamic_exception_pending;
 bool adamic_is_error(const adamic_heap *value);
+extern adamic_heap adamic_null;
+
+adamic_heap *adamic_caught_property(adamic_heap *value, const adamic_string *name);
 adamic_object *adamic_error_new(adamic_string *message);
 _Noreturn void adamic_uncaught(void);
 

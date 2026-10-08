@@ -250,7 +250,8 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 		if slotless(of) {
 			return l.notYet(member, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(member.Name())))
 		}
-		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Uninitialized: l.uninitializedDeclaration(member) || (member.Kind == ast.KindPropertyDeclaration && assertionInitializer(member.AsPropertyDeclaration().Initializer))}
+		fieldType := l.concrete(l.checker.GetTypeAtLocation(member.Name()))
+		field := ir.Field{Name: l.fieldName(member.Name()), Value: zeroValue(of), Private: member.Name().Kind == ast.KindPrivateIdentifier, Null: l.includesNull(fieldType) && !l.includesUndefined(fieldType), Uninitialized: l.uninitializedDeclaration(member) || (member.Kind == ast.KindPropertyDeclaration && assertionInitializer(member.AsPropertyDeclaration().Initializer))}
 		// An uninitialized reference still has its declared representation for the shape bitmap.
 		if of.IsReference() {
 			field.Value = ir.Undefined{Of: of}

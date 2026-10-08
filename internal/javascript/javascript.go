@@ -81,6 +81,8 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// A Map's forEach gives value, key and the map; a Set's gives its element twice and the set.
 	builder.WriteString("const adamicCollectionVisit = (collection, callback) => collection.forEach((value, key, all) => adamicCall(callback, [value, key, all]));\n")
 	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
+	builder.WriteString("const adamicCaughtProperty = (value, name) => { return value[name]; };\n")
+	builder.WriteString("const adamicCaughtType = (value, name, optional) => { if (optional && value === undefined) return value; if (typeof value !== name || value === undefined) panic('adamic/catch-type: caught value does not match its typed use'); return value; };\n")
 	builder.WriteString("const adamicDefinedNull = (value, message) => value === null ? panic(message) : value;\n")
 	builder.WriteString("const adamicDefined = (value, message) => value === undefined ? panic(message) : value;\n")
 	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
@@ -952,6 +954,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
+		if expression.Method == "catchProperty" {
+			return "adamicCaughtProperty(" + e.values(expression.Arguments) + ")"
+		}
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "toBoolean" {
@@ -1003,6 +1008,10 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.WeakTarget:
 		return e.value(expression.Value)
 	case ir.Narrow:
+		if expression.Checked {
+			name := map[ir.Type]string{ir.String: "string", ir.Number: "number", ir.Boolean: "boolean", ir.Object: "object", ir.Array: "object", ir.Map: "object", ir.Closure: "function"}[expression.To.Present()]
+			return fmt.Sprintf("adamicCaughtType(%s, %s, %t)", e.value(expression.Value), quote(name), expression.Optional)
+		}
 		return e.value(expression.Value)
 	case ir.ArrayIsArray:
 		return "Array.isArray(" + e.value(expression.Value) + ")"
