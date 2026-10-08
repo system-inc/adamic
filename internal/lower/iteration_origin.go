@@ -381,3 +381,64 @@ func (l *lowering) genericIteratorFactoryKnown(member *ast.Symbol, source, itera
 	}
 	return l.iterationReturnsClass(body, iterator, source, 0)
 }
+
+// A receiver-returning factory preserves the source's dynamic identity. Only refine
+// the result when every explicit return is this (or a local alias), not a new iterator.
+func (l *lowering) iterationFactoryReturnsReceiver(member *ast.Symbol) bool {
+	var receiver func(*ast.Node, int) bool
+	receiver = func(node *ast.Node, depth int) bool {
+		if node == nil || depth > 16 {
+			return false
+		}
+		node = ast.SkipParentheses(node)
+		if node.Kind == ast.KindThisKeyword {
+			return true
+		}
+		if ast.IsIdentifier(node) {
+			symbol := l.symbol(node)
+			if symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+				return receiver(symbol.Declarations[0].AsVariableDeclaration().Initializer, depth+1)
+			}
+		}
+		return false
+	}
+	roots := l.checker.GetRootSymbols(member)
+	if len(roots) != 1 || len(roots[0].Declarations) != 1 {
+		return false
+	}
+	declaration := roots[0].Declarations[0]
+	if declaration.Kind != ast.KindMethodDeclaration || declaration.Body() == nil {
+		return false
+	}
+	found, sound := false, true
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if ast.IsFunctionLike(node) {
+			return false
+		}
+		if node.Kind == ast.KindReturnStatement {
+			found = true
+			sound = sound && receiver(node.AsReturnStatement().Expression, 0)
+			return false
+		}
+		return node.ForEachChild(visit)
+	}
+	declaration.Body().ForEachChild(visit)
+	return found && sound
+}
+
+// Class overrides retain their protocol ABI and method slot. Structural views and
+// literal/arrow conventions still need the existing origin proof.
+func (l *lowering) iterationConventionFits(actual, expected *ast.Symbol, shape, view *checker.Type) bool {
+	if memberConvention(actual) == memberConvention(expected) {
+		return true
+	}
+	if actual == nil || expected == nil || !isClassInstance(shape) || !isClassInstance(view) {
+		return false
+	}
+	actualOwner, expectedOwner := memberConvention(actual), memberConvention(expected)
+	if actualOwner == nil || expectedOwner == nil || actualOwner.Kind != ast.KindClassDeclaration || expectedOwner.Kind != ast.KindClassDeclaration {
+		return false
+	}
+	return l.nominalAncestor(shape, view, map[[2]*checker.Type]bool{})
+}

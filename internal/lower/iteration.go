@@ -116,7 +116,9 @@ func (l *lowering) memberFunction(where *ast.Node, proven *checker.Type, value i
 				if err != nil {
 					return nil, false, -1, err
 				}
-				return nil, true, instance.methods[l.methodKey(declaration, instance.class)], nil
+				key := l.methodKey(declaration, instance.class)
+				call := ir.Call{Function: instance.methods[key], Virtual: instance.slots[key] + 1}
+				return call, true, call.Function, nil
 			}
 		}
 	}
@@ -136,7 +138,11 @@ func invokeMember(function ir.Expression, receiver bool, direct int, value ir.Ex
 		arguments = append([]ir.Expression{value}, arguments...)
 	}
 	if direct >= 0 {
-		return ir.Call{Function: direct, Arguments: arguments, Returns: returns}
+		call := ir.Call{Function: direct, Arguments: arguments, Returns: returns}
+		if method, ok := function.(ir.Call); ok {
+			call.Virtual = method.Virtual
+		}
+		return call
 	}
 	return ir.CallClosure{Closure: function, Arguments: arguments, Returns: returns}
 }
@@ -174,6 +180,11 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	iterator, err := l.memberResult(where, entry)
 	if err != nil {
 		return nil, err
+	}
+	receiverFactory := l.iterationFactoryReturnsReceiver(entry)
+	if receiverFactory && isClassInstance(source) {
+		// Returning this preserves the source's subtype, including a newly introduced return.
+		iterator = source
 	}
 	next := l.checker.GetPropertyOfType(iterator, "next")
 	if _, err := l.memberReceiver(where, next); err != nil {
@@ -215,6 +226,14 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 	}
 	sourceKnown := l.iterationOrigin(where, []*ast.Symbol{entry}, nil, 0)
 	iteratorKnown := sourceKnown && l.iterationFactoryKnown(entry, next, close)
+	if receiverFactory {
+		presence := close != nil
+		members := []*ast.Symbol{next}
+		if close != nil {
+			members = append(members, close)
+		}
+		iteratorKnown = sourceKnown && l.iterationOrigin(where, members, &presence, 0)
+	}
 	if isClassInstance(source) && len(l.checker.GetTypeArguments(source)) > 0 && !l.knownIterationClass(where, source, 0) {
 		return nil, l.notYet(where, "a generic iterable view without proven native type arguments")
 	}
@@ -244,19 +263,19 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 			}
 			if !sourceKnown && l.iterationShapeFits(shape, source) {
 				actual := l.iteratorMember(shape)
-				if actual == nil || memberConvention(actual) != memberConvention(entry) {
+				if actual == nil || !l.iterationConventionFits(actual, entry, shape, source) {
 					hazard = l.notYet(where, "an iterable view that erases its method receiver convention")
 					return true
 				}
 			}
 			if !iteratorKnown && l.iterationShapeFits(shape, iterator) {
 				actual := l.checker.GetPropertyOfType(shape, "next")
-				if memberConvention(actual) != memberConvention(next) {
+				if !l.iterationConventionFits(actual, next, shape, iterator) {
 					hazard = l.notYet(where, "an iterator view that erases its method receiver convention")
 					return true
 				}
 				actualClose := l.checker.GetPropertyOfType(shape, "return")
-				if close != nil && memberConvention(actualClose) != memberConvention(close) {
+				if close != nil && !l.iterationConventionFits(actualClose, close, shape, iterator) {
 					hazard = l.notYet(where, "an iterator view that erases its return receiver convention")
 					return true
 				}
@@ -270,7 +289,7 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
 				}
 			}
 			if !iteratorKnown && l.iterationShapeFits(shape, iterator) && (l.checker.GetPropertyOfType(shape, "return") != nil) != (close != nil) {
-				hazard = l.notYet(where, "an iterator view that can hide a return method")
+				hazard = l.notYet(where, "an iterator view that can hide a return method; retain the concrete subclass type, or return a separate iterator object")
 				return true
 			}
 		}
