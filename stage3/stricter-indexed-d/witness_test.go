@@ -21,6 +21,7 @@ import (
 
 type site struct {
 	ID, File, Expression, Cause, Read, Receiver, Source, Present, Absent string
+	Refusal, NullPresent                                                 string
 	Line                                                                 int
 	Blocked                                                              bool
 }
@@ -70,11 +71,18 @@ func TestLedgerWitnesses(t *testing.T) {
 	}
 	for _, s := range sites {
 		t.Run(s.ID, func(t *testing.T) {
-			for _, name := range []string{"present", "absent", "hole"} {
-				absent := name != "present"
+			variants := []string{"present", "absent", "hole"}
+			if s.NullPresent != "" {
+				variants = append(variants, "null")
+			}
+			for _, name := range variants {
+				absent := name == "absent" || name == "hole"
 				values, want := s.Present, "7\n"
 				if absent {
 					values, want = s.Absent, "undefined\n"
+				}
+				if name == "null" {
+					values, want = s.NullPresent, "null\n"
 				}
 				if name == "hole" {
 					if s.Blocked {
@@ -112,8 +120,12 @@ func TestLedgerWitnesses(t *testing.T) {
 						return
 					}
 					if s.Blocked {
-						if err == nil || !strings.Contains(err.Error(), "Adamic 0.1 refuses an index signature; use a Map") {
-							t.Fatalf("expected record representation refusal: %v", err)
+						refusal := s.Refusal
+						if refusal == "" {
+							refusal = "Adamic 0.1 refuses an index signature; use a Map"
+						}
+						if err == nil || !strings.Contains(err.Error(), refusal) {
+							t.Fatalf("expected representation refusal %q: %v", refusal, err)
 						}
 						t.Logf("BLOCKED %s %s: %v; Node %q", s.ID, s.Receiver, err, node.stdout)
 						return
