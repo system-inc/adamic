@@ -1,0 +1,24 @@
+=== RUN   TestRulesAgree
+    lint_test.go:367: /workspace/adamic/stage1/cohere/lint/rules/react-jsx-curly-brace-presence/rule.a:33:58: stage 0 can't lower push with other than one value yet
+--- FAIL: TestRulesAgree (6.69s)
+=== RUN   TestMutants
+=== RUN   TestMutants/empty-string-is-whitespace
+=== PAUSE TestMutants/empty-string-is-whitespace
+=== CONT  TestMutants/empty-string-is-whitespace
+    lint_test.go:822: /tmp/adamic-gate/lint-shared-2321315462/oracle-572984687/oracle [--manifest /tmp/adamic-gate/TestMutantsempty-string-is-whitespace1647946203/023/manifest.txt]: exit status 2
+        panic: json: unknown field "allowLoop"
+        
+        goroutine 1 [running]:
+        main.oracleJsxCurlyBracePresenceOptions({0xd6329138cc0?, 0x1e72ed8?, 0x0?})
+        	/workspace/adamic/cohere/adamic_lint_react_jsx_curly_brace_presence.go:27 +0x1c9
+        main.collect({0xd63294ed6a6, 0x53}, {0xd632923a1b0, 0x86}, {0xd6329138cc0, 0x7, 0xc}, 0x0)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:210 +0x669
+        main.run({0xd63294ed6a6?, 0xd63293a3a00?}, 0x0, 0xd63293a3a00, 0x0)
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:68 +0x171
+        main.main()
+        	/workspace/adamic/cohere/adamic_lint_oracle.go:292 +0x595
+--- FAIL: TestMutants (0.01s)
+    --- FAIL: TestMutants/empty-string-is-whitespace (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	6.752s
+FAIL

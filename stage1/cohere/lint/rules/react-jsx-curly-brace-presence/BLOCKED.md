@@ -1,7 +1,7 @@
 # Blocked: variadic Array.push lowering
 
-The draft is not registered or certified. `rule.a.txt` and `rule.json.txt` preserve
-work without adding an uncompilable rule to shared discovery.
+The draft is registered but not certified. `rule.a` and `rule.json` preserve
+the implementation at the language-gap stop. Do not merge this blocked draft.
 
 Adamic rejects `Array.push` with more than one value. The compiler reports
 `rule.a:33:58: stage 0 can't lower push with other than one value yet`.
