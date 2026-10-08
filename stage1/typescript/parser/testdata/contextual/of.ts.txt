@@ -1,0 +1,14 @@
+{
+    of = true;
+    of();
+    of.value;
+    of
+}
+{
+    of
+    class C {}
+}
+{
+    of
+    function f() {}
+}

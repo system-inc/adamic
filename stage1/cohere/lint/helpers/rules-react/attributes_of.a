@@ -1,0 +1,2 @@
+import type {RuleContext} from '../../context.ts';
+export function attributesOf(context:RuleContext,index:number):number[] {return index>=0 && context.kind(index)==='JsxAttributes' ? context.node(index).children : [];}

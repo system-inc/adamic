@@ -1,0 +1,14 @@
+{
+    global = true;
+    global();
+    global.value;
+    global
+}
+{
+    global
+    class C {}
+}
+{
+    global
+    function f() {}
+}

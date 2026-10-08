@@ -1,0 +1,16 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.144s)
+v24.19.0
+setup: node ready (0.210s)
+setup: submodules ready (0.641s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.077s
+setup: markdown dependencies ready (0.749s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.125s)
+setup: go build ready (24.470s)
+setup: test binaries deferred (use --warm-tests) (24.644s)
+setup: build cache warm (24.646s)
+setup: build-flags commit=9b7547976bea1b00f8b04508b9102d03511f65b3 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=11.52 16.62 10.91 6/199 5538 load-after=11.10 16.13 10.90 2/189 6212
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (24.753s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.pxovVT

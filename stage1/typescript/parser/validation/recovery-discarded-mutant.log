@@ -1,0 +1,28 @@
+=== RUN   TestRecoveryMutants
+=== RUN   TestRecoveryMutants/diagnostic-code
+    recovery_test.go:153: Node:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+    recovery_test.go:153: native:  line 1: port "diagnostic 1006 11 0 1\t'{' expected.", Go "diagnostic 1005 11 0 1\t'{' expected."
+        Go context:
+        diagnostic 1005 11 0 1	'{' expected.
+        file
+        0 SourceFile 0 11 0 0 -1 0 0				
+        1 InterfaceDeclaration 0 11 0 0 -1 0 0				
+        2 Identifier 9 11 0 0 -1 0 0		I		
+=== RUN   TestRecoveryMutants/generic-child
+    recovery_test.go:132: /tmp/adamic-gate/TestRecoveryMutantsgeneric-child60541399/001/parser.ts:286:57: stage 0 can't lower an array of never yet
+=== RUN   TestRecoveryMutants/eof-loop
+    recovery_test.go:145: Node: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+    recovery_test.go:145: native: EOF loop caught by 2s deadline; input /tmp/adamic-parser-recovery-mutants/eof-loop.ts
+--- FAIL: TestRecoveryMutants (27.28s)
+    --- PASS: TestRecoveryMutants/diagnostic-code (11.83s)
+    --- FAIL: TestRecoveryMutants/generic-child (0.08s)
+    --- PASS: TestRecoveryMutants/eof-loop (14.88s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	27.280s
+FAIL

@@ -1,0 +1,6 @@
+export function replacedMessage(operator: string): string {
+    return `Assignment (=) can be replaced with operator assignment (${operator}). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.`;
+}
+export function unexpectedMessage(operator: string): string {
+    return `Unexpected operator assignment (${operator}) shorthand. This project writes the operation out, so the target and the operator are read separately rather than fused into one token.`;
+}

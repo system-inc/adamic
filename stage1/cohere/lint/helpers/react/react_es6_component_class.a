@@ -1,0 +1,27 @@
+import { panic } from 'adamic';
+
+export interface ReactClassNode {
+    readonly kind: string;
+    readonly expression: number;
+    readonly heritage: readonly number[];
+    readonly types: readonly number[];
+}
+
+// Go react.IsEs6ComponentClass over immutable parser identities. The separately
+// owned react.isComponentBase is supplied by the caller for expression identities.
+// Go checks heritage shapes without filtering extends versus implements.
+export function reactEs6ComponentClass(nodes: readonly ReactClassNode[], index: number, isComponentBase: (expression: number) => boolean): boolean {
+    if (index === -1) { return false; }
+    const node = nodes[index] ?? panic('invalid class syntax node');
+    if (node.kind !== 'ClassDeclaration' && node.kind !== 'ClassExpression') { return false; }
+    for (const clauseIndex of node.heritage) {
+        const clause = nodes[clauseIndex] ?? panic('invalid heritage syntax node');
+        if (clause.kind !== 'HeritageClause') { continue; }
+        for (const typeIndex of clause.types) {
+            const type = nodes[typeIndex] ?? panic('invalid heritage type node');
+            if (type.kind !== 'ExpressionWithTypeArguments') { continue; }
+            if (isComponentBase(type.expression)) { return true; }
+        }
+    }
+    return false;
+}

@@ -1,0 +1,35 @@
+import type { NameAnswer } from './accessed_name.a';
+import { accessedName, SettledName } from './accessed_name.a';
+import { readTextFile, programArguments, panic } from 'adamic';
+function decode(text: string): string {
+    let result = '';
+    for(let i = 0; i < text.length; i += 4) { result += String.fromCharCode(parseInt(text.slice(i, i + 4), 16)); }
+    return result;
+}
+function hex(text: string): string {
+    let result = '';
+    for(let i = 0; i < text.length; i++) { result += text.charCodeAt(i).toString(16).padStart(4, '0'); }
+    return result;
+}
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+for(const line of input.text.split('\n')) {
+    if(line === '') { continue; }
+    const fields = line.split('\t');
+    const handle = Number(fields[2] ?? '-1');
+    const accept = Number(fields[4] ?? '0');
+    let calls = 0;
+    let delegatedAccept = -1;
+    let delegatedKey = -2;
+    const result = accessedName(fields[0] === '1', Number(fields[1] ?? '0'), handle, Number(fields[3] ?? '0'), accept, (key: number, flags: number): NameAnswer => {
+        if(key !== handle || flags !== accept) { panic('changed Name dependency input'); }
+        calls++;
+        delegatedAccept = flags;
+        delegatedKey = key;
+        const answer = new SettledName();
+        answer.text = decode(fields[5] ?? '');
+        answer.ok = fields[6] === '1';
+        return answer;
+    });
+    console.log(`${result.ok ? 1 : 0}\t${hex(result.text)}\t${calls}\t${delegatedAccept}\t${delegatedKey}`);
+}

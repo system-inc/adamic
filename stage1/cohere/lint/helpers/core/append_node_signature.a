@@ -1,0 +1,12 @@
+import type { CoreArena } from './nodes.a';
+import { appendTokensBetween } from './append_tokens_between.a';
+export function appendNodeSignature(arena: CoreArena, index: number, prefix = ''): string {
+    const node = arena.node(index); let result = prefix + node.kindNumber.toString() + '(';
+    let cursor = node.start;
+    for(const child of node.children) {
+        result = appendTokensBetween(arena.source, cursor, arena.node(child).start, result);
+        result = appendNodeSignature(arena, child, result) + ','; cursor = arena.node(child).end;
+    }
+    result += node.children.length === 0 ? arena.source.slice(node.start, node.end) : appendTokensBetween(arena.source, cursor, node.end);
+    return result + ')';
+}

@@ -1,0 +1,327 @@
+=== RUN   TestGeneratedExpressionsAgree
+    generated_test.go:131: 1676 generated inputs, seed 720, 1432520 identical tree bytes
+--- PASS: TestGeneratedExpressionsAgree (12.51s)
+=== RUN   TestIncompleteRecoveryCasesAgree
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-bad-constraint.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-bad-parameter.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-missing-body-brace.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/arrow-missing-token.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/block-assignment.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/call-bad-type-arguments.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-accessor-eof.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-extra-return-colon.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-invalid-member.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-missing-method-body.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-missing-return-colon.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-modifier-eof.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-private-accessor.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-private-modifier.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/class-private-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/decorated-expression.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/dotted-missing-type-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/function-expression-reserved-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-empty.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-extra-angle.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-missing-angle.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-missing-body.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/heritage-repeated.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/index-signature-missing-bracket.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/interface-modifier.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/method-wrong-return-separator.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/missing-import-type-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/missing-type-query-name.ts.txt
+=== RUN   TestIncompleteRecoveryCasesAgree/tuple-damaged-type.ts.txt
+--- PASS: TestIncompleteRecoveryCasesAgree (15.83s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-bad-constraint.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-bad-parameter.ts.txt (0.18s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-missing-body-brace.ts.txt (0.16s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/arrow-missing-token.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/block-assignment.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/call-bad-type-arguments.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-accessor-eof.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-extra-return-colon.ts.txt (0.17s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-invalid-member.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-missing-method-body.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-missing-return-colon.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-modifier-eof.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-private-accessor.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-private-modifier.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/class-private-name.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/decorated-expression.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/dotted-missing-type-name.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/function-expression-reserved-name.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-empty.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-extra-angle.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-missing-angle.ts.txt (0.13s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-missing-body.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/heritage-repeated.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/index-signature-missing-bracket.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/interface-modifier.ts.txt (0.14s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/method-wrong-return-separator.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/missing-import-type-name.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/missing-type-query-name.ts.txt (0.15s)
+    --- PASS: TestIncompleteRecoveryCasesAgree/tuple-damaged-type.ts.txt (0.14s)
+=== RUN   TestLintCases
+=== RUN   TestLintCases/constructor_public_object_binding.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=393
+=== RUN   TestLintCases/decorated_async_promise_executor.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=529
+=== RUN   TestLintCases/decorated_class_expression.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=338
+=== RUN   TestLintCases/decorated_parameter.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=454
+=== RUN   TestLintCases/interface_missing_body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=185
+=== RUN   TestLintCases/interface_missing_close_brace.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=294
+=== RUN   TestLintCases/interface_unclosed_body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=399
+=== RUN   TestLintCases/jsx_closing_tag_in_ts.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=551
+=== RUN   TestLintCases/jsx_self_closing_in_ts.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=428
+=== RUN   TestLintCases/method_missing_type_parameter_close.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=543
+=== RUN   TestLintCases/method_stray_type_parameter_angle.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=294
+=== RUN   TestLintCases/method_stray_type_parameter_angle_with_parameter.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=399
+=== RUN   TestLintCases/method_unclosed_type_parameters.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=543
+=== RUN   TestLintCases/nextjs_interface_constructor_body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=356
+=== RUN   TestLintCases/nextjs_jsx_anchor_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=340
+=== RUN   TestLintCases/nextjs_jsx_boolean_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=304
+=== RUN   TestLintCases/nextjs_jsx_font_link.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=341
+=== RUN   TestLintCases/nextjs_jsx_nested_head.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=456
+=== RUN   TestLintCases/nextjs_jsx_paired_image.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=443
+=== RUN   TestLintCases/nextjs_jsx_script_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=342
+=== RUN   TestLintCases/nextjs_jsx_script_single_quote.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=346
+=== RUN   TestLintCases/nextjs_type_constructor_body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=427
+=== RUN   TestLintCases/octal_escape.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=364
+=== RUN   TestLintCases/octal_literal.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=352
+=== RUN   TestLintCases/wave08_computed_key_colon_before_bracket.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=401
+=== RUN   TestLintCases/wave08_computed_key_missing_bracket.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=393
+=== RUN   TestLintCases/wave08_jsx_self_closing_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=349
+=== RUN   TestLintCases/wave08_jsx_text_child.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=377
+=== RUN   TestLintCases/wave08_legacy_octal_bigint.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=337
+=== RUN   TestLintCases/wave08_legacy_octal_decimal_long.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=343
+=== RUN   TestLintCases/wave08_legacy_octal_decimal_short.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=339
+=== RUN   TestLintCases/wave13_jsx_class_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=349
+=== RUN   TestLintCases/wave13_jsx_multiline_attribute.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=351
+=== RUN   TestLintCases/wave13_jsx_multiline_attribute_braces.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=375
+=== RUN   TestLintCases/wave13_jsx_multiline_element_braces.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=409
+=== RUN   TestLintCases/wave13_jsx_multiline_spread_object.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=432
+=== RUN   TestLintCases/wave13_jsx_multiline_spread_string.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=312
+=== RUN   TestLintCases/wave13_jsx_void_arrow_callback.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=534
+=== RUN   TestLintCases/wave13_octal_bigint.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=337
+=== RUN   TestLintCases/wave13_octal_long_fraction.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=343
+=== RUN   TestLintCases/wave13_octal_short_fraction.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=339
+=== RUN   TestLintCases/wave13_top_level_await_new.ts
+    lint_cases_test.go:209: listed=true, oracle bytes=304
+=== RUN   TestLintCases/wave15_octal_literal_decimal_tail.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=469
+=== RUN   TestLintCases/wave16-interface-missing-body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=185
+=== RUN   TestLintCases/wave16-interface-unclosed-body.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=399
+=== RUN   TestLintCases/wave16-jsx-fragment.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=341
+=== RUN   TestLintCases/wave16-jsx-provider-object-value.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=476
+=== RUN   TestLintCases/wave16-jsx-unresolved-tag.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=234
+=== RUN   TestLintCases/wave16-method-incomplete-generic.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=543
+=== RUN   TestLintCases/wave16-method-stray-generic-angle.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=399
+=== RUN   TestLintCases/wave21_jsx_component_return.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=347
+=== RUN   TestLintCases/wave21_jsx_element_then_call.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=453
+=== RUN   TestLintCases/wave21_jsx_provider_object_value.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=478
+=== RUN   TestLintCases/wave21_jsx_qualified_fragment.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=322
+=== RUN   TestLintCases/wave21_jsx_quoted_style.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=344
+=== RUN   TestLintCases/wave21_jsx_self_closing_then_call.tsx
+    lint_cases_test.go:209: listed=false, oracle bytes=345
+=== RUN   TestLintCases/wave21_yield_label.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=325
+=== RUN   TestLintCases/yield_keyword_label.ts
+    lint_cases_test.go:209: listed=false, oracle bytes=327
+--- PASS: TestLintCases (18.59s)
+    --- PASS: TestLintCases/constructor_public_object_binding.ts (0.14s)
+    --- PASS: TestLintCases/decorated_async_promise_executor.ts (0.13s)
+    --- PASS: TestLintCases/decorated_class_expression.ts (0.15s)
+    --- PASS: TestLintCases/decorated_parameter.ts (0.14s)
+    --- PASS: TestLintCases/interface_missing_body.ts (0.14s)
+    --- PASS: TestLintCases/interface_missing_close_brace.ts (0.13s)
+    --- PASS: TestLintCases/interface_unclosed_body.ts (0.15s)
+    --- PASS: TestLintCases/jsx_closing_tag_in_ts.ts (0.13s)
+    --- PASS: TestLintCases/jsx_self_closing_in_ts.ts (0.14s)
+    --- PASS: TestLintCases/method_missing_type_parameter_close.ts (0.13s)
+    --- PASS: TestLintCases/method_stray_type_parameter_angle.ts (0.13s)
+    --- PASS: TestLintCases/method_stray_type_parameter_angle_with_parameter.ts (0.13s)
+    --- PASS: TestLintCases/method_unclosed_type_parameters.ts (0.14s)
+    --- PASS: TestLintCases/nextjs_interface_constructor_body.ts (0.13s)
+    --- PASS: TestLintCases/nextjs_jsx_anchor_attribute.tsx (0.13s)
+    --- PASS: TestLintCases/nextjs_jsx_boolean_attribute.tsx (0.14s)
+    --- PASS: TestLintCases/nextjs_jsx_font_link.tsx (0.13s)
+    --- PASS: TestLintCases/nextjs_jsx_nested_head.tsx (0.13s)
+    --- PASS: TestLintCases/nextjs_jsx_paired_image.tsx (0.14s)
+    --- PASS: TestLintCases/nextjs_jsx_script_attribute.tsx (0.13s)
+    --- PASS: TestLintCases/nextjs_jsx_script_single_quote.tsx (0.13s)
+    --- PASS: TestLintCases/nextjs_type_constructor_body.ts (0.15s)
+    --- PASS: TestLintCases/octal_escape.ts (0.14s)
+    --- PASS: TestLintCases/octal_literal.ts (0.13s)
+    --- PASS: TestLintCases/wave08_computed_key_colon_before_bracket.ts (0.14s)
+    --- PASS: TestLintCases/wave08_computed_key_missing_bracket.ts (0.16s)
+    --- PASS: TestLintCases/wave08_jsx_self_closing_attribute.tsx (0.15s)
+    --- PASS: TestLintCases/wave08_jsx_text_child.tsx (0.14s)
+    --- PASS: TestLintCases/wave08_legacy_octal_bigint.ts (0.13s)
+    --- PASS: TestLintCases/wave08_legacy_octal_decimal_long.ts (0.13s)
+    --- PASS: TestLintCases/wave08_legacy_octal_decimal_short.ts (0.13s)
+    --- PASS: TestLintCases/wave13_jsx_class_attribute.tsx (0.14s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_attribute.tsx (0.13s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_attribute_braces.tsx (0.15s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_element_braces.tsx (0.15s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_spread_object.tsx (0.14s)
+    --- PASS: TestLintCases/wave13_jsx_multiline_spread_string.tsx (0.14s)
+    --- PASS: TestLintCases/wave13_jsx_void_arrow_callback.tsx (0.14s)
+    --- PASS: TestLintCases/wave13_octal_bigint.ts (0.14s)
+    --- PASS: TestLintCases/wave13_octal_long_fraction.ts (0.13s)
+    --- PASS: TestLintCases/wave13_octal_short_fraction.ts (0.15s)
+    --- PASS: TestLintCases/wave13_top_level_await_new.ts (0.15s)
+    --- PASS: TestLintCases/wave15_octal_literal_decimal_tail.ts (0.15s)
+    --- PASS: TestLintCases/wave16-interface-missing-body.ts (0.13s)
+    --- PASS: TestLintCases/wave16-interface-unclosed-body.ts (0.14s)
+    --- PASS: TestLintCases/wave16-jsx-fragment.tsx (0.14s)
+    --- PASS: TestLintCases/wave16-jsx-provider-object-value.tsx (0.16s)
+    --- PASS: TestLintCases/wave16-jsx-unresolved-tag.tsx (0.15s)
+    --- PASS: TestLintCases/wave16-method-incomplete-generic.ts (0.16s)
+    --- PASS: TestLintCases/wave16-method-stray-generic-angle.ts (0.14s)
+    --- PASS: TestLintCases/wave21_jsx_component_return.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_jsx_element_then_call.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_jsx_provider_object_value.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_jsx_qualified_fragment.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_jsx_quoted_style.tsx (0.13s)
+    --- PASS: TestLintCases/wave21_jsx_self_closing_then_call.tsx (0.14s)
+    --- PASS: TestLintCases/wave21_yield_label.ts (0.13s)
+    --- PASS: TestLintCases/yield_keyword_label.ts (0.13s)
+=== RUN   TestExpressionsAgree
+    parser_test.go:212: 58 inputs, 17463 identical canonical bytes
+    parser_test.go:221: native precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:221: Node precedence mutant caught: case 45 line 466: port "1 BinaryExpression 0 7 0 0 -1 0 0\t\t\t", Go "1 Identifier 0 3 0 0 -1 0 0\t\tx\t"
+        Go context:
+        expression
+        0 Identifier 0 1 0 0 -1 0 0		x	
+        case 45
+        expression
+        0 BinaryExpression 0 11 0 0 -1 0 0			
+        1 Identifier 0 3 0 0 -1 0 0		x	
+        1 PlusToken 3 5 0 0 -1 0 0			
+        1 BinaryExpression 5 11 0 0 -1 0 0			
+        2 Identifier 5 7 0 0 -1 0 0		y	
+        2 AsteriskToken 7 9 0 0 -1 0 0			
+    parser_test.go:231: native optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:231: Node optional mutant caught: case 30 line 328: port "2 PropertyAccessExpression 0 6 0 0 -1 0 0\t\t\t", Go "2 PropertyAccessExpression 0 6 32 0 -1 0 0\t\t\t"
+        Go context:
+        1 Identifier 10 11 0 0 -1 0 0		e	
+        case 30
+        expression
+        0 CallExpression 0 16 32 0 1 0 0			
+        1 ElementAccessExpression 0 11 32 0 -1 0 0			
+        2 PropertyAccessExpression 0 6 32 0 -1 0 0			
+        3 PropertyAccessExpression 0 4 32 0 -1 0 0			
+        4 Identifier 0 1 0 0 -1 0 0		a	
+        4 QuestionDotToken 1 3 0 0 -1 0 0			
+        4 Identifier 3 4 0 0 -1 0 0		b	
+    parser_test.go:242: native parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+    parser_test.go:242: Node parenthesized expression misclassified as arrow caught: case 2 line 20: port "0 ArrowFunction 0 3 0 0 -1 0 0\t\t\t", Go "0 ParenthesizedExpression 0 3 0 0 -1 0 0\t\t\t"
+        Go context:
+        2 Identifier 1 2 0 0 -1 0 0		x	
+        1 EqualsGreaterThanToken 3 6 0 0 -1 0 0			
+        1 Identifier 6 8 0 0 -1 0 0		x	
+        case 2
+        expression
+        0 ParenthesizedExpression 0 3 0 0 -1 0 0			
+        1 Identifier 1 2 0 0 -1 0 0		x	
+        case 3
+        expression
+        0 ParenthesizedExpression 0 8 0 0 -1 0 0			
+--- PASS: TestExpressionsAgree (41.59s)
+=== RUN   TestCompilerExpressionsAgree
+    parser_test.go:295: 77 whole compiler files, 28836875 identical expression tree bytes
+--- PASS: TestCompilerExpressionsAgree (20.63s)
+=== RUN   TestMethodRecoveryAgrees
+--- PASS: TestMethodRecoveryAgrees (39.84s)
+=== RUN   TestWholeGeneratedAgrees
+    whole_generated_test.go:71: 68 generated whole files, 93323 identical bytes
+--- PASS: TestWholeGeneratedAgrees (10.86s)
+=== RUN   TestWholeCompilerAgrees
+    whole_test.go:39: 77 whole compiler files, 44766682 identical whole-tree bytes
+--- PASS: TestWholeCompilerAgrees (23.69s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	183.560s

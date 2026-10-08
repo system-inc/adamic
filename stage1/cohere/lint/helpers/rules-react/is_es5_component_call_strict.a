@@ -1,0 +1,17 @@
+import type {RuleContext} from '../../context.ts';
+import {project} from '../react/projection.a';
+import {isEs5ComponentCall} from '../react/es5_component_call.a';
+import {isIdentifierNamed} from '../react/react_identifier_named.a';
+import {skipParenthesesOptional} from './skip_parentheses_optional.a';
+export function isEs5ComponentCallStrict(context:RuleContext,index:number):boolean {
+    const nodes=project(context.parser.nodes);
+    if(!isEs5ComponentCall(nodes,index,(node:number,name:string):boolean => isIdentifierNamed(nodes,node,name))){return false;}
+    const callee=skipParenthesesOptional(context,context.node(index).children[0] ?? -1);
+    if(callee<0){return false;}
+    if(context.kind(callee)==='Identifier'){return context.node(callee).text==='createReactClass';}
+    if(context.kind(callee)==='PropertyAccessExpression'){
+        const name=context.node(callee).children[1] ?? -1;
+        return name>=0 && context.kind(name)==='Identifier' && context.node(name).text==='createReactClass';
+    }
+    return false;
+}

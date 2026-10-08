@@ -1,0 +1,16 @@
+import { normalizedFileName } from '../../normalized_file_name.a';
+import type { SourceFileName } from '../../normalized_file_name.a';
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../../options_json.ts';
+const input = readTextFile(programArguments()[0] ?? panic('missing cases'));
+if(input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse();
+if(root < 0) { panic(json.error); }
+function text(index: number, field: string): string { return json.node(json.field(index, field)).text; }
+function number(index: number, field: string): number { return Number(text(index, field)); }
+function indices(index: number, field: string): number[] { return json.node(json.field(index, field)).children.map(v => Number(json.node(v).text)); }
+for(const row of json.node(root).children) {
+const files: SourceFileName[] = [];
+if(text(row, 'missing') !== 'true') { files.push({fileName: text(row, 'left')}); }
+console.log(normalizedFileName(files, 0));
+}

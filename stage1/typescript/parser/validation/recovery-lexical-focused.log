@@ -1,0 +1,6 @@
+=== RUN   TestMethodRecoveryAgrees
+    recovery_test.go:66: /workspace/adamic/stage1/typescript/parser/parser.ts:381:17: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet
+--- FAIL: TestMethodRecoveryAgrees (0.62s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	0.630s
+FAIL

@@ -1,0 +1,4 @@
+Six helper mutants (two per helper): source Node, emitted JavaScript, sanitized native all caught. See helpers.txt.gz.
+    lint_test.go:855: module empty export fix suppressed caught on Node: case 85 line 4370: port "range 24 34 uselessEmptyExport \t\t\t24 34", Go "range 24 34 uselessEmptyExport fix\t\t\t24 34"
+    lint_test.go:855: module empty export fix suppressed caught on emitted JavaScript: case 85 line 4370: port "range 24 34 uselessEmptyExport \t\t\t24 34", Go "range 24 34 uselessEmptyExport fix\t\t\t24 34"
+    lint_test.go:855: module empty export fix suppressed caught on native: case 85 line 4370: port "range 24 34 uselessEmptyExport \t\t\t24 34", Go "range 24 34 uselessEmptyExport fix\t\t\t24 34"

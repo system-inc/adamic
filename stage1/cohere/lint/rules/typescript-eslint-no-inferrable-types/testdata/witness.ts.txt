@@ -1,0 +1,3 @@
+const count: number = 5;
+function f(value: number = 5) {}
+class C { value: number = 5; readonly keep: number = 5; }

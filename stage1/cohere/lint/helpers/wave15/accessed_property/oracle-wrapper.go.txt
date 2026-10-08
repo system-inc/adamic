@@ -1,0 +1,37 @@
+var wave15AccessLock sync.Mutex
+var wave15AccessCalls, wave15AccessAccept int
+var wave15AccessKey *ast.Node
+func wave15AccessDependencyName(node *ast.Node,accept Kinds) (string,bool) {
+ wave15AccessCalls++;wave15AccessAccept=int(accept);wave15AccessKey=node
+ return Name(node,accept)
+}
+func AccessedName(node *ast.Node,accept Kinds) (string,bool) {
+ wave15AccessLock.Lock();defer wave15AccessLock.Unlock()
+ present,kind,keyHandle,keyKind := node != nil,0,-1,0
+ var key *ast.Node
+ if node != nil {
+  kind=int(node.Kind)
+  if node.Kind == ast.KindPropertyAccessExpression { key=node.AsPropertyAccessExpression().Name() }
+  if node.Kind == ast.KindElementAccessExpression { key=ast.SkipParentheses(node.AsElementAccessExpression().ArgumentExpression) }
+ }
+ if key != nil { keyHandle=1;keyKind=int(key.Kind);if key==node {keyHandle=0} }
+ nameText,nameOK := Name(key,accept)
+ wave15AccessCalls,wave15AccessAccept,wave15AccessKey=0,-1,nil
+ text,ok := wave15OriginalAccessedName(node,accept)
+ delegatedKey := -2
+ if wave15AccessCalls > 0 {
+  if wave15AccessKey != key {panic("unexpected delegated key")}
+  delegatedKey=keyHandle
+ }
+ record:=struct {
+  Present bool; Kind,KeyHandle,KeyKind,Accept int; NameText string;NameOK bool
+  Text string;OK bool;Calls,DelegatedAccept,DelegatedKey int;Kinds []int
+ }{present,kind,keyHandle,keyKind,int(accept),nameText,nameOK,text,ok,wave15AccessCalls,wave15AccessAccept,delegatedKey,[]int{int(ast.KindPropertyAccessExpression),int(ast.KindElementAccessExpression),int(ast.KindIdentifier),int(ast.KindPrivateIdentifier)}}
+ path:=os.Getenv("WAVE15_ACCESSED_CAPTURE")
+ if path != "" {
+  data,err:=json.Marshal(record);if err != nil {panic(err)}
+  file,err:=os.OpenFile(path,os.O_APPEND|os.O_CREATE|os.O_WRONLY,0600);if err!=nil {panic(err)}
+  if _,err=file.Write(append(data,'\n'));err!=nil {panic(err)};if err=file.Close();err!=nil {panic(err)}
+ }
+ return text,ok
+}
