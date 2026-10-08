@@ -1,0 +1,28 @@
+{"Time":"2026-10-08T03:44:11.366456806Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-08T03:44:11.374132303Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest"}
+{"Time":"2026-10-08T03:44:11.374188164Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest","Output":"=== RUN   TestWASIRequest\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:11.374210263Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request.a"}
+{"Time":"2026-10-08T03:44:11.374212718Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request.a","Output":"=== RUN   TestWASIRequest/request.a\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:15.977473793Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request.a","Output":"    request_test.go:96: {\"rounds\":10000,\"live\":2,\"memory\":524288,\"regionObjects\":630000,\"moduleInitialization\":\"once\"}\n"}
+{"Time":"2026-10-08T03:44:15.977545745Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request.a","Output":"        \n"}
+{"Time":"2026-10-08T03:44:15.977621396Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request.a","Output":"--- PASS: TestWASIRequest/request.a (4.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:15.977628391Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request.a","Elapsed":4.6}
+{"Time":"2026-10-08T03:44:15.977655044Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request_alias.a"}
+{"Time":"2026-10-08T03:44:15.977657662Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request_alias.a","Output":"=== RUN   TestWASIRequest/request_alias.a\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:16.231015289Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request_alias.a","Output":"    request_test.go:96: {\"rounds\":10000,\"live\":2,\"memory\":524288,\"regionObjects\":630000,\"moduleInitialization\":\"once\"}\n"}
+{"Time":"2026-10-08T03:44:16.231055135Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request_alias.a","Output":"        \n"}
+{"Time":"2026-10-08T03:44:16.231144608Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request_alias.a","Output":"--- PASS: TestWASIRequest/request_alias.a (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:16.231150728Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest/request_alias.a","Elapsed":0.25}
+{"Time":"2026-10-08T03:44:16.23115759Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest","Output":"--- PASS: TestWASIRequest (4.86s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:16.231166497Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequest","Elapsed":4.86}
+{"Time":"2026-10-08T03:44:16.231169385Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:16.232568232Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic\t4.866s\n"}
+{"Time":"2026-10-08T03:44:16.23260638Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":4.866}
+{"Time":"2026-10-08T03:44:17.814290689Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-08T03:44:17.824519618Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows"}
+{"Time":"2026-10-08T03:44:17.824578591Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"=== RUN   TestWASIRequestThrows\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:21.995061104Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"--- PASS: TestWASIRequestThrows (4.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:21.995159749Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Elapsed":4.17}
+{"Time":"2026-10-08T03:44:21.99517699Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-08T03:44:21.996744751Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic\t4.182s\n"}
+{"Time":"2026-10-08T03:44:21.996783017Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":4.182}
