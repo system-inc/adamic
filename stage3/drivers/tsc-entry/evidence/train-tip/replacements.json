@@ -1,0 +1,137 @@
+[
+  {
+    "ordinal": 1,
+    "file": "src/compiler/builder.ts",
+    "function": "<anonymous>",
+    "start": 55501,
+    "end": 55523,
+    "original_sha256": "c3766518c75da43d88136e18821cabbf2b57ca474ddecadc678277b29915893a",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 2,
+    "file": "src/compiler/builder.ts",
+    "function": "getBuildInfo",
+    "start": 54528,
+    "end": 71434,
+    "original_sha256": "50ec2207ebc02c744363fe6bd37476a342a5bc1bb7828ca66522d98776ed04fa",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 3,
+    "file": "src/compiler/builder.ts",
+    "function": "createBuilderProgramUsingIncrementalBuildInfo",
+    "start": 89127,
+    "end": 96119,
+    "original_sha256": "a4c0dbff7bad24e49145c6bc6adab4154526ce6a5c0dce263bf22f26c855361f",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 4,
+    "file": "src/compiler/builder.ts",
+    "function": "<anonymous>",
+    "start": 15982,
+    "end": 16041,
+    "original_sha256": "a995eef37eff3dd86aa12ac7e03fa8fc356a9cc5ce0b91b1f167be92b08bc2d4",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 5,
+    "file": "src/compiler/builder.ts",
+    "function": "<anonymous>",
+    "start": 43217,
+    "end": 43462,
+    "original_sha256": "fdfcdf6518549ccf5f3dcf578e0cf859ccaf4d5c067c8ec3a362c238185461c8",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 6,
+    "file": "src/compiler/checker.ts",
+    "function": "<anonymous>",
+    "start": 575352,
+    "end": 575438,
+    "original_sha256": "ea5865e3504d3a242779991ba19fe288f0c08df9bc1502ed7b1ed68ce32a0455",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 7,
+    "file": "src/compiler/checker.ts",
+    "function": "<anonymous>",
+    "start": 575565,
+    "end": 575620,
+    "original_sha256": "3e31de9749e8be02c3b08a252fd3a05d3af0dc2bcb7a6c03692426bd4009d42f",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 8,
+    "file": "src/compiler/checker.ts",
+    "function": "<anonymous>",
+    "start": 576108,
+    "end": 576172,
+    "original_sha256": "60b7825f426eb431f3d3bfbaef2c6df19fe903aedb70cc56d6cbfcd624c743c8",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 9,
+    "file": "src/compiler/checker.ts",
+    "function": "serializeModule",
+    "start": 575742,
+    "end": 579931,
+    "original_sha256": "8df5acf26cf4977d6faf973728ac0070fa3987402f831aa894eb434f270c6df8",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 10,
+    "file": "src/compiler/checker.ts",
+    "function": "<anonymous>",
+    "start": 592039,
+    "end": 592056,
+    "original_sha256": "62dd6adc13501bf11a31789a68bd245862d15b88eb675b0cf6aad0930f998c33",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 11,
+    "file": "src/compiler/checker.ts",
+    "function": "serializeAsClass",
+    "start": 589853,
+    "end": 595798,
+    "original_sha256": "86903fb93aec0b7d4b995399a0fc1fa8a3b287ce486ad8745e71cae992b874b2",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 12,
+    "file": "src/compiler/checker.ts",
+    "function": "serializePropertySymbol",
+    "start": 621985,
+    "end": 631876,
+    "original_sha256": "4e6fb03806d44878a0d1c9a41c7e6d4a39cc2b32c3eea1d1feebe9ccb43ecbdd",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 13,
+    "file": "src/compiler/checker.ts",
+    "function": "getFlowTypeFromCommonJSExport",
+    "start": 681677,
+    "end": 682688,
+    "original_sha256": "9eacd6889790648b8507fe02c8fad3eab0df5f533e763352c2a5b7abb9db601b",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 14,
+    "file": "src/compiler/checker.ts",
+    "function": "getTypeOfAlias",
+    "start": 728590,
+    "end": 730255,
+    "original_sha256": "2ef3aabb6b3da4b629a97650af03e89b9191f70a1662565ebafb43f9912fdc40",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  },
+  {
+    "ordinal": 15,
+    "file": "src/compiler/checker.ts",
+    "function": "getResolvedMembersOrExportsOfSymbol",
+    "start": 787746,
+    "end": 791579,
+    "original_sha256": "78e85b2278795da76af41ae15f250bb20ea8fd85f231724a4d6a45675de34bc1",
+    "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+  }
+]

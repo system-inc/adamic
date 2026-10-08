@@ -1,0 +1,68 @@
+{
+  "status": "pending",
+  "train_branch": "cloud/land-train-4-views-v3-787cea7a-6c28ada8",
+  "train_sha": "1e81b051c52eee40d47c44f4a5f68b821e606708",
+  "compiler_sha": "1e81b051c52eee40d47c44f4a5f68b821e606708",
+  "base_main": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "merges": [
+    {
+      "branch": "codex/project-references-source",
+      "sha": "88fe8de47cba6928539f1b35d4fd84c1ad06f34d",
+      "result": "conflicted and aborted",
+      "conflicts": [
+        "internal/load/load.go",
+        "internal/load/source_fs.go",
+        "internal/oracle/counts.md"
+      ]
+    },
+    {
+      "branch": "codex/stricter-options-next",
+      "sha": "8f32e51e8fc41b8f1177453213ca5453ce764486",
+      "result": "conflicted and aborted",
+      "conflicts": [
+        "internal/ir/ir.go",
+        "internal/javascript/javascript.go",
+        "internal/lower/class_inheritance.go",
+        "internal/lower/exceptions.go",
+        "internal/lower/expression.go",
+        "internal/lower/lower_test.go",
+        "internal/lower/object.go",
+        "internal/lower/refusals.go",
+        "internal/native/emit_objects.go",
+        "internal/native/runtime/node_process.c",
+        "internal/native/runtime/parallel.c",
+        "internal/oracle/counts.md"
+      ]
+    }
+  ],
+  "compiler_binary_sha256": "88541051864488f3cb2f10a46d339b58266c3f538bce2b02e3ad10d459949cf6",
+  "go_build_exit": 0,
+  "native_tsc_produced": false,
+  "native_backend_reached": false,
+  "stop_count": 16,
+  "scratch_replacements": 15,
+  "source_profile": "train adaptations in numeric order; sparse checkout retains all src and generators, API baseline and manifests",
+  "apply_exit": 0,
+  "closure_files": 81,
+  "patch_total": {
+    "files": 79,
+    "added": 5247,
+    "removed": 5213
+  },
+  "node_entry_exit": 0,
+  "node_version": "24.19.0",
+  "nproc": 5,
+  "setup": {
+    "exit": 1,
+    "observed_last_timing": "clang ready (0.425s)",
+    "workaround": "source /workspace/adamic-tools/env.sh; runner separately builds ./cmd/adamic successfully"
+  },
+  "not_run": [
+    "complete Go gate",
+    "train rehearsal gate",
+    "native --tiny diagnostics",
+    "native execution",
+    "successful source-reference or checked-options merge"
+  ]
+}

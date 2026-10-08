@@ -1,0 +1,9 @@
+UTF-16 scalar-count mutant: caught by known-answer fixture
+pending-status: caught (rehearsal status must remain pending)
+stop-population: caught (stop population)
+split-byte: caught (split bytes)
+node-byte: caught (Node witness bytes)
+owner: caught (checked-options owner)
+outside-file: caught (closure population)
+source-hash: caught (source hash: src/tsc/tsc.ts)
+Known-answer fixtures and eight mutants caught; no rehearsal pass claimed
