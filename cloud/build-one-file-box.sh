@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # One pinned one-file change per area, build only, on the gate box: prints CSV rows
-# (timestamp_utc,main_sha,box,file,build_seconds). Run by cloud/build-one-file.sh on every new main.
+# (timestamp_utc,main_sha,box,file,build_seconds,load_1m). Run by cloud/build-one-file.sh on every new main.
 #
 # The edit is the same each time, a new function at the end of the file, but it carries a fresh
 # number so the build cache can never answer it from an earlier run. The Go files are timed with
@@ -28,11 +28,13 @@ measure() {
   else
     printf '\nexport function buildOneFileBenchmark%s(): number {\n    return %s;\n}\n' "${nonce}" "${nonce:0:9}" >> "${file}"
   fi
+  # The box's 1-minute load as the build starts, beside each row, so a slow row can be read as load.
+  load=$(cut -d' ' -f1 /proc/loadavg)
   started=$(date +%s.%N)
   if [ "${language}" = go ]; then go build ./... ; else go build -o ~/bench/adamic ./cmd/adamic && ~/bench/adamic build stage1/cohere/json/main.ts -o ~/bench/json.out > /dev/null; fi
   ended=$(date +%s.%N)
   cp ~/bench/original "${file}"
-  printf '%s,%s,%s,%s,%.2f\n' "$(date -u +%FT%TZ)" "${sha}" "$(hostname) $(nproc)" "${file}" "$(echo "${ended} - ${started}" | bc)"
+  printf '%s,%s,%s,%s,%.2f,%s\n' "$(date -u +%FT%TZ)" "${sha}" "$(hostname) $(nproc)" "${file}" "$(echo "${ended} - ${started}" | bc)" "${load}"
 }
 measure internal/lower/optional_widening.go go
 measure internal/native/native.go go

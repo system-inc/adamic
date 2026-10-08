@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # The pinned one-file-change build benchmark on every new main, on the gate box, appended to
-# documentation/velocity/build-one-file.csv (timestamp_utc,main_sha,box,file,build_seconds) on the
+# documentation/velocity/build-one-file.csv (timestamp_utc,main_sha,box,file,build_seconds,load_1m) on the
 # branch records/build-one-file. Run it from a checkout with a push credential:
 #
 #   cloud/build-one-file.sh             # loop: each new main, once
@@ -42,7 +42,9 @@ BOX
   git -C "${records}" fetch -q origin
   git -C "${records}" ls-remote --exit-code origin "refs/heads/${branch}" > /dev/null && git -C "${records}" switch -q --detach "origin/${branch}"
   mkdir -p "$(dirname "${records}/${csv}")"
-  [ -f "${records}/${csv}" ] || echo "timestamp_utc,main_sha,box,file,build_seconds" > "${records}/${csv}"
+  [ -f "${records}/${csv}" ] || echo "timestamp_utc,main_sha,box,file,build_seconds,load_1m" > "${records}/${csv}"
+  # Rows before the load column was added leave it empty.
+  sed -i.bak '1s/^timestamp_utc,main_sha,box,file,build_seconds$/timestamp_utc,main_sha,box,file,build_seconds,load_1m/' "${records}/${csv}" && rm -f "${records}/${csv}.bak"
   echo "${rows}" >> "${records}/${csv}"
   git -C "${records}" add "${csv}"
   git -C "${records}" -c user.name=kirkouimet -c user.email=kirk@kirkouimet.com commit -q -m "Build one file on main ${sha:0:12}" -m "$(printf '%s\n\nCo-Authored-By: Ahra <ahra@ahra.ai>' "${rows}")"

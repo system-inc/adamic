@@ -84,6 +84,7 @@ class Gate:
         # Fail closed: green needs every planned stage to have recorded exit 0, not just no failure,
         # so a stage that died without reporting (an exception, a process that never started) is red.
         self.exits = {}
+        self.watchers = []
         self.planned = ["build", "vet", "tests", "wasi", "census"] if arguments.full else ["build", "vet", "tests", "smoke", "census"]
         self.result = {
             "sha": arguments.sha,
@@ -124,7 +125,7 @@ class Gate:
             "smoke_list": "cloud/fast-gate/smoke.txt",
             "smoke_list_source": smokeSource,
             "smoke_list_blob": git(smokeSource["root"], "hash-object", os.path.join(smokeSource["root"], "cloud/fast-gate/smoke.txt")),
-            "smoke_fixtures": smoke,
+            "smoke_fixtures": ["%s %s" % entry for entry in smoke],
         })
         if not smoke:
             self.fail("smoke", "no smoke list in the gated tree or the tools checkout")
@@ -134,7 +135,7 @@ class Gate:
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
         threads = [self.guarded("build", self.build), self.guarded("vet", self.vet),
                    self.guarded("tests", self.testSplit, packages, log),
-                   self.guarded("smoke", self.test, "smoke", ["go", "test", "-count=1", "-failfast", "-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)]
+                   self.guarded("smoke", self.smoke, smoke, log)]
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -273,8 +274,9 @@ class Gate:
             path = os.path.join(root, "cloud/fast-gate/smoke.txt")
             if os.path.exists(path):
                 with open(path) as handle:
-                    fixtures = [line.strip() for line in handle if line.strip() and not line.startswith("#")]
-                return fixtures, {"root": root, "from": name}
+                    # "fixture" runs in TestNativeAgreesWithNode; "Lane fixture" in that lane.
+                    fixtures = [(line.split() if len(line.split()) == 2 else [smokeTest, line.strip()]) for line in handle if line.strip() and not line.startswith("#")]
+                return [tuple(entry) for entry in fixtures], {"root": root, "from": name}
         return [], {"root": self.arguments.tools, "from": "missing"}
 
     def touched(self, changed):
@@ -476,6 +478,37 @@ class Gate:
             return None
         return output
 
+    def smoke(self, smoke, log):
+        """The pinned smoke set in one process, then a check that every entry passed: an entry whose
+        lane exists but whose fixture didn't run is red, never a silent pass. An entry whose lane the
+        gated tree doesn't have yet (it grew from a red on a stack that hasn't landed) is listed as
+        absent."""
+        lanes = sorted({lane for lane, _ in smoke})
+        passed, seen = set(), set()
+
+        def watch(line):
+            try:
+                event = json.loads(line)
+            except ValueError:
+                return
+            test = event.get("Test") or ""
+            lane = test.split("/", 1)[0]
+            if lane in lanes:
+                seen.add(lane)
+                if event.get("Action") == "pass" and "/" in test:
+                    passed.add((lane, test.split("/", 1)[1]))
+
+        self.watchers.append(watch)
+        self.test("smoke", ["go", "test", "-count=1", "-failfast", "-json", "-timeout", "30m", "-run", smokePattern(smoke), "./internal/oracle"], log)
+        if self.exits.get("smoke") != 0:
+            return
+        absent = sorted("%s %s" % entry for entry in smoke if entry[0] not in seen)
+        missing = sorted("%s %s" % entry for entry in smoke if entry[0] in seen and entry not in passed)
+        self.result["smoke_absent_lanes"] = absent
+        if missing:
+            self.exits["smoke"] = 1
+            self.fail("smoke", "smoke entries that didn't run: %s" % ", ".join(missing))
+
     def test(self, name, command, log, environment=None):
         started = time.monotonic()
         code = self.stream(name, command, log, None, environment)
@@ -493,6 +526,8 @@ class Gate:
             if log is not None:
                 with self.lock:
                     log.write(line)
+            for watch in self.watchers:
+                watch(line)
             try:
                 event = json.loads(line)
             except ValueError:
@@ -616,12 +651,13 @@ def fixturePattern(prefix, fixtures):
     return "/".join("^(%s)$" % "|".join(re.escape(part) for part in level) for level in levels)
 
 
-def smokePattern(fixtures):
-    """A -run pattern for exactly these fixtures. Go splits both the pattern and each subtest name
-    on '/' and matches level by level, so alternation can't span a slash: each level gets its own
-    alternation, and a name shorter than the pattern ignores the levels past its end."""
-    levels = [[smokeTest]]
-    for fixture in fixtures:
+def smokePattern(entries):
+    """A -run pattern for exactly these (lane, fixture) entries. Go splits both the pattern and each
+    subtest name on '/' and matches level by level, so alternation can't span a slash: each level gets
+    its own alternation, and a name shorter than the pattern ignores the levels past its end. A lane
+    may also run another lane's fixture that it has; the check after the run reads only its own."""
+    levels = [sorted({lane for lane, _ in entries})]
+    for _, fixture in entries:
         for depth, part in enumerate(fixture.split("/"), start=1):
             if len(levels) <= depth:
                 levels.append([])
