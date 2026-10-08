@@ -273,6 +273,13 @@ class Gate:
         if "cohere" in executors:
             packages = sorted(set(packages) | set(self.goList("./stage1/cohere/...")))
         packages = sorted(set(packages) | set(self.extraPackages))
+        # A requested deferred test in a package the change doesn't touch runs alone in it.
+        self.onlyTests = {}
+        for importPath, names in getattr(self, "requested", {}).items():
+            if importPath not in packages:
+                packages = sorted(set(packages) | {importPath})
+                self.onlyTests[importPath] = set(names)
+                self.packageDirectories.setdefault(importPath, os.path.join(tree, importPath[len(module) + 1:]))
         if "stage3" in executors:
             packages = sorted(set(packages) | set(self.goList("./stage3/...")))
             self.planned.append("stage3")
@@ -314,6 +321,9 @@ class Gate:
         for thread in threads:
             thread.join()
         log.close()
+        if self.failure is not None:
+            return
+        self.requestedRan()
         if self.failure is not None:
             return
         self.checkCensus()
@@ -769,14 +779,51 @@ class Gate:
         takes that test off the deferred list for this gate, when its package is gated. Recorded in
         fast.json as deferred_run_by_request."""
         text = self.git(self.arguments.tree, "log", "--format=%(trailers:key=Gate-runs,valueonly)", "%s..%s" % (self.arguments.base, self.arguments.sha))
+        self.requested = {}
         for line in text.splitlines():
             fields = line.split()
+            if fields == ["deferred"]:
+                # "Gate-runs: deferred" runs every deferred test, in its package whether or not the change
+                # touches it (@system_adamic, Oct 8: a landing that changes emitted C or the runtime, or
+                # carries more than one area's commits, proves the full gate's deferred tests before main).
+                self.result["deferred_all_requested"] = True
+                for importPath, names in self.deferred.items():
+                    self.requested.setdefault(importPath, set()).update(names)
+                    self.result.setdefault("deferred_run_by_request", []).extend(importPath + " " + name for name in sorted(names))
+                self.deferred = {}
+                continue
             if len(fields) != 2:
                 continue
             importPath = module + "/" + fields[0].strip("/")
             if fields[1] in self.deferred.get(importPath, set()):
                 self.deferred[importPath].discard(fields[1])
+                self.requested.setdefault(importPath, set()).add(fields[1])
                 self.result.setdefault("deferred_run_by_request", []).append(importPath + " " + fields[1])
+
+    def requestedRan(self):
+        """Every requested deferred test ran to a verdict rather than skipping (a skipped or missing one
+        would let a void pass for a proof): fast.json's deferred_run_results names each one's outcome."""
+        requested = getattr(self, "requested", {})
+        if not requested:
+            return
+        outcomes = {}
+        try:
+            with open(os.path.join(self.arguments.out, "test.jsonl")) as handle:
+                for line in handle:
+                    try:
+                        event = json.loads(line)
+                    except ValueError:
+                        continue
+                    if isinstance(event, dict) and event.get("Test") and "/" not in event["Test"] and event.get("Action") in ("pass", "fail", "skip"):
+                        outcomes[event.get("Package", "") + " " + event["Test"]] = event["Action"]
+        except OSError:
+            pass
+        results = {importPath + " " + name: outcomes.get(importPath + " " + name, "missing")
+                   for importPath, names in requested.items() for name in sorted(names)}
+        self.result["deferred_run_results"] = results
+        unproven = ["%s: %s" % (test, outcome) for test, outcome in sorted(results.items()) if outcome not in ("pass", "fail")]
+        if unproven:
+            self.fail("deferred", "requested deferred tests that didn't run to a verdict:\n" + "\n".join(unproven))
 
     def smokeList(self):
         for root, name in ((self.arguments.tree, "gated tree"), (self.arguments.tools, "tools checkout")):
@@ -1005,6 +1052,8 @@ class Gate:
             with self.lock:
                 tally["packages"] += 1
             names = [line for line in listing.splitlines() if line.startswith(("Test", "Example", "Fuzz"))]
+            if importPath in getattr(self, "onlyTests", {}):
+                names = [name for name in names if name in self.onlyTests[importPath]]
             selection = getattr(self, "oracleSelection", {"whole": True}) if importPath == oracle else {"whole": True}
             patterns = {}
             if not selection["whole"]:
