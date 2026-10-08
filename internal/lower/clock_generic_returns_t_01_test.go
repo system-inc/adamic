@@ -1,8 +1,14 @@
 package lower
 
 import (
+	"context"
 	"errors"
+	"os"
+	"path/filepath"
 	"testing"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 func TestClockGenericReturnsT01Shapes(t *testing.T) {
@@ -43,4 +49,41 @@ console.log(typeof make());`)
 		}
 	})
 
+}
+
+// Reject null at the signature proof itself. A later body or call refusal must
+// not hide a mutant which merges null with the missing object representation.
+func TestClockGenericReturnsT01RejectsNullBeforeBody(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "probe.a")
+	source := `interface Base<T> { readonly token: T; }
+function make(): (Base<"="> & { readonly left: { readonly text: string } }) | undefined | null { return null; }
+console.log(typeof make());`
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := program.Files()[0]
+	checked, release := program.Checker(context.Background(), file)
+	defer release()
+	l := &lowering{program: program, checker: checked}
+	found := false
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == "make" {
+			found = true
+			result := checked.GetReturnTypeOfSignature(checked.GetSignatureFromDeclaration(node))
+			if held, known := l.clockGenericReturnsT01(result); known {
+				t.Errorf("null and undefined admitted with one representation: %v", held)
+			}
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	file.AsNode().ForEachChild(visit)
+	if !found {
+		t.Fatal("missing checked make signature")
+	}
 }
