@@ -1,5 +1,5 @@
 import { statSync } from 'node:fs';
-const options = { throwIfNoEntry: false };
+const options = (({ throwIfNoEntry: false }) as const);
 const present = statSync('.', options);
 if (present === undefined) console.log('missing');
 else console.log(present.isDirectory() ? 'directory' : 'other');
