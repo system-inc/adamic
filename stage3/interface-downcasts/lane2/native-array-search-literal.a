@@ -1,0 +1,5 @@
+interface Base { readonly kind: 'items' | 'other'; }
+interface Items extends Base { readonly kind: 'items'; readonly values: readonly 'ok'[]; }
+function items(node: Base): Items { return node as Items; }
+const raw = {kind: 'items' as const, values: ['bad', 'ok']};
+console.log(`${items(raw).values.indexOf('ok')}`);

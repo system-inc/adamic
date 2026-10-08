@@ -1,0 +1,12 @@
+=== RUN   TestCheckedViewDictionaryArrays
+=== RUN   TestCheckedViewDictionaryArrays/paths-producer-good
+    checked_view_dictionary_propagation_test.go:55: gate cache node miss
+    checked_view_dictionary_propagation_test.go:60: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+--- PASS: TestCheckedViewDictionaryArrays (0.62s)
+    --- PASS: TestCheckedViewDictionaryArrays/paths-producer-good (0.62s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.628s

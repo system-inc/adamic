@@ -1,0 +1,16 @@
+running raw-undefined
+raw-undefined: caught, exit=1
+running raw-maybe-pair
+raw-maybe-pair: caught, exit=1
+running boxed-nullable
+boxed-nullable: caught, exit=1
+running omit-required-presence
+omit-required-presence: caught, exit=1
+running omit-scalar-unpack
+omit-scalar-unpack: caught, exit=1
+running omit-optional-absence
+omit-optional-absence: caught, exit=1
+running omit-snapshot-unpack
+omit-snapshot-unpack: caught, exit=1
+running omit-dictionary-unpack
+omit-dictionary-unpack: caught, exit=1

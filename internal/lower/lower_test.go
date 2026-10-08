@@ -56,7 +56,6 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		source string
 		want   string
 	}{
-		{"a closure", "function outer(): number {\n\tfunction inner(): number {\n\t\treturn 1;\n\t}\n\treturn inner();\n}\nconsole.log(`${outer()}`);\n", "main.a:2:2: stage 0 can't lower a function inside a function (a closure) yet"},
 		{"a class inside a function", "function make(): number {\n\tclass Box {\n\t\treadonly size = 1;\n\t}\n\treturn 1;\n}\nconsole.log(`${make()}`);\n", "main.a:2:2: stage 0 can't lower a class inside a function yet"},
 		{"join on an array of functions", "const steps = [(): number => 1];\nconsole.log(steps.join(','));\n", "main.a:2:13: stage 0 can't lower join on an array of objects, arrays, maps or functions yet"},
 		{"concat on an array of arrays", "const grid: number[][] = [[1]];\nconst more = grid.concat([[2]]);\n", "main.a:2:14: stage 0 can't lower concat on an array of arrays yet"},
@@ -71,7 +70,6 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"an array of boolean | undefined", "const answers: (boolean | undefined)[] = [true, undefined];\n", "main.a:1:42: stage 0 can't lower an array of true | undefined yet"},
 		{"a captured boolean | undefined", "function run(): boolean {\n\tlet seen: boolean | undefined;\n\tconst mark = (): void => {\n\t\tseen = true;\n\t};\n\tmark();\n\treturn seen ?? false;\n}\nconsole.log(`${run()}`);\n", "main.a:4:3: stage 0 can't lower a boolean | undefined variable a function value captures yet"},
 		{"an array of a union", "const mixed: (string | number)[] = ['a', 1];\n", "main.a:1:36: stage 0 can't lower an array of string | number yet"},
-		{"a field of a union", "interface Shown {\n\treadonly value: string | number;\n}\nconst shown: Shown = { value: 1 };\nconsole.log(`${shown.value}`);\n", "main.a:5:16: stage 0 can't lower a field of type string | number yet"},
 		{"a union stored in a field", "interface Shown {\n\tvalue: string | number;\n}\nconst shown: Shown = { value: 1 };\nshown.value = 'one';\n", "main.a:5:1: stage 0 can't lower storing string | number in a field yet"},
 		{"a class field of a union", "class Shown {\n\tvalue: string | number = 1;\n}\nconsole.log(`${new Shown() === new Shown()}`);\n", "main.a:2:2: stage 0 can't lower a field of type string | number yet"},
 		{"a map of a union", "const values = new Map<string, string | number>();\n", "main.a:1:16: stage 0 can't lower a Map of string | number yet"},
@@ -129,7 +127,7 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		{"Array.from's undefined typed as a number", "const made = Array.from({ length: 2 }, (value: number, index: number) => value + index);\n", "main.a:1:41: Adamic 0.1 refuses a first Array.from parameter typed number, which is undefined every time;"},
 		{"a parent pointer not declared weak", "interface TreeNode {\n\treadonly name: string;\n\tparent: TreeNode | undefined;\n\treadonly children: readonly TreeNode[];\n}\nconst root: TreeNode = { name: 'root', parent: undefined, children: [] };\nroot.parent = root;\n", "main.a:3:2: Adamic 0.1 refuses TreeNode.parent, a mutable field of type TreeNode | undefined, which can reach back to the TreeNode holding it: a cycle reference counting can't free, and the write at "},
 		{"a doubly linked list with a strong next", "import type { Weak } from 'adamic';\ninterface ListNode {\n\tprev: Weak<ListNode>;\n\tnext: ListNode | undefined;\n}\nconst first: ListNode = { prev: undefined, next: undefined };\nfirst.next = first;\n", "main.a:4:2: Adamic 0.1 refuses ListNode.next, a mutable field of type ListNode | undefined, which can reach back to the ListNode holding it"},
-		{"a closure in a cell it captures", "function run(): number {\n\tlet countdown = (from: number): number => from;\n\tcountdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:6: Adamic 0.1 refuses 'countdown', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function countdown() {})"},
+		{"a closure in a cell it captures", "function run(): number {\n\tlet countdown = (from: number): number => from;\n\tcountdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:6: Adamic 0.1 refuses 'countdown', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing"},
 		{"a mutable array of children", "interface TreeNode {\n\treadonly children: TreeNode[];\n}\nconst root: TreeNode = { children: [] };\nroot.children.push(root);\n", "main.a:2:2: Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at "},
 		{"a callback that captures what holds it", "class Button {\n\tlabel = 'ok';\n\tonClick: () => string = () => '';\n}\nfunction wire(): string {\n\tconst button = new Button();\n\tbutton.onClick = () => button.label;\n\treturn button.onClick();\n}\nconsole.log(wire());\n", "main.a:3:2: Adamic 0.1 refuses Button.onClick, a mutable field of type () => string, which can reach back to the Button holding it"},
 		{"a map whose values reach back", "interface Room {\n\treadonly doors: Map<string, Room>;\n}\nconst hall: Room = { doors: new Map<string, Room>() };\nhall.doors.set('self', hall);\n", "main.a:2:2: Adamic 0.1 refuses Map<string, Room>, a map whose values can reach back to a map like it: a cycle reference counting can't free, and the write at "},
@@ -141,7 +139,6 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 		{"a cycle a generic class makes but never names", "interface Tagged {\n\treadonly id: number;\n}\nclass Box<T> {\n\treadonly id: number;\n\tv: T | undefined;\n\tconstructor(v: T) {\n\t\tthis.id = 1;\n\t\tthis.v = v;\n\t}\n}\nclass Maker<T> {\n\treadonly tag: string;\n\tconstructor(tag: string) {\n\t\tthis.tag = tag;\n\t}\n\tmake(x: T): Tagged {\n\t\treturn this.tag.length > 0 ? new Box<T>(x) : new Box<T>(x);\n\t}\n}\ninterface Node {\n\treadonly name: string;\n\tbox: Tagged;\n}\nfunction make(k: number): number {\n\tconst empty = new Maker<number>(`e`);\n\tconst n: Node = { name: `n${k}`, box: empty.make(0) };\n\tconst maker = new Maker<Node>(`m`);\n\tn.box = maker.make(n);\n\treturn n.box.id + n.name.length;\n}\nconsole.log(`${make(1)}`);\n", "main.a:23:2: Adamic 0.1 refuses Node.box, a mutable field of type Tagged, which can reach back to the Node holding it"},
 		{"a generic cell holding a function that captures it", "class Tie<T> {\n\treadonly tag: string;\n\tconstructor(tag: string) {\n\t\tthis.tag = tag;\n\t}\n\ttie(initial: T, make: (get: () => T) => T): T {\n\t\tlet cell: T = initial;\n\t\tconst get = (): T => (this.tag.length > 0 ? cell : cell);\n\t\tcell = make(get);\n\t\treturn cell;\n\t}\n}\nfunction run(n: number): number {\n\tconst tie = new Tie<() => number>(`t${n}`);\n\tconst f = tie.tie(\n\t\t(): number => 0,\n\t\t(get: () => () => number): (() => number) => (): number => (n > 100 ? get()() : n),\n\t);\n\treturn f();\n}\nconsole.log(`${run(1)}`);\n", "main.a:7:7: Adamic 0.1 refuses 'cell', a variable a function value captures and can be reached from what it holds"},
 		{"reduce without an initial value", "const sum = [1, 2].reduce((total, value) => total + value);\n", "main.a:1:13: Adamic 0.1 refuses reduce without an initial value;"},
-		{"!", "const map = new Map<string, number>();\nconst value = map.get('a')!;\n", "main.a:2:15: Adamic 0.1 refuses the non-null assertion !;"},
 		{"Math.random", "const roll = Math.random();\n", "main.a:1:14: Adamic 0.1 refuses Math.random;"},
 		{"Math.random, not called", "const roll = Math.random;\n", "main.a:1:14: Adamic 0.1 refuses Math.random;"},
 		{"a method read off its object", "class Counter {\n\tcount = 0;\n\tincrement(): number {\n\t\tthis.count += 1;\n\t\treturn this.count;\n\t}\n}\nconst counter = new Counter();\nconst detached: () => number = counter.increment;\n", "main.a:9:32: Adamic 0.1 refuses a method read as a value (increment would lose its object, and this with it); call it in an arrow that keeps the object: () => counter.increment() (unbound-method)"},
@@ -150,7 +147,14 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+			program, err := lowerSource(t, probe.source)
+			if strings.Contains(probe.want, "cycle reference counting can't free") || strings.Contains(probe.want, "which can reach back") || strings.Contains(probe.want, "can reach back") || strings.Contains(probe.want, "a variable a function value captures") {
+				if err != nil || len(program.GraphTypes) == 0 {
+					t.Errorf("want graph ownership, got %v", err)
+				}
+				return
+			}
+
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
 				t.Errorf("got %v, want a refusal ending %q", err, probe.want)

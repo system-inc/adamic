@@ -1,0 +1,14 @@
+=== RUN   TestCheckedViewUntaggedArrayUnion
+=== RUN   TestCheckedViewUntaggedArrayUnion/mixed
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.elements matches no member of readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found array\n"
+    checked_views_untagged_unions_test.go:419: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:433: javascript: exit codes differ
+--- FAIL: TestCheckedViewUntaggedArrayUnion (0.40s)
+    --- FAIL: TestCheckedViewUntaggedArrayUnion/mixed (0.40s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.434s
+FAIL

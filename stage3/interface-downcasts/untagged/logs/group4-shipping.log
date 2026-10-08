@@ -1,0 +1,1833 @@
+=== RUN   TestCheckedViewCallableContractControl
+=== PAUSE TestCheckedViewCallableContractControl
+=== RUN   TestCheckedViewInterfaces
+=== RUN   TestCheckedViewInterfaces/interfaces-good
+    checked_views_interfaces_test.go:16: gate cache node miss
+    checked_views_interfaces_test.go:24: gate cache node miss
+=== RUN   TestCheckedViewInterfaces/interfaces-missing-inherited
+    checked_views_interfaces_test.go:24: gate cache node miss
+=== RUN   TestCheckedViewInterfaces/interfaces-wrong-inherited
+    checked_views_interfaces_test.go:24: gate cache node miss
+    checked_views_interfaces_test.go:31: gate cache node miss
+=== RUN   TestCheckedViewInterfaces/interfaces-uninitialized-object
+    checked_views_interfaces_test.go:24: gate cache node miss
+--- PASS: TestCheckedViewInterfaces (3.34s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-good (0.56s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-missing-inherited (0.69s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-wrong-inherited (1.03s)
+    --- PASS: TestCheckedViewInterfaces/interfaces-uninitialized-object (1.06s)
+=== RUN   TestCheckedViewLazyUnread
+=== RUN   TestCheckedViewLazyUnread/unread
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/unread-untagged
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/unread-mixed
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/optional-error
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+=== RUN   TestCheckedViewLazyUnread/optional-error-fields
+    checked_views_lazy_test.go:13: gate cache node miss
+    checked_views_lazy_test.go:28: gate cache node miss
+    oracle_test.go:651: gate cache native miss
+--- PASS: TestCheckedViewLazyUnread (4.58s)
+    --- PASS: TestCheckedViewLazyUnread/unread (1.65s)
+    --- PASS: TestCheckedViewLazyUnread/unread-untagged (0.68s)
+    --- PASS: TestCheckedViewLazyUnread/unread-mixed (0.62s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error (0.87s)
+    --- PASS: TestCheckedViewLazyUnread/optional-error-fields (0.76s)
+=== RUN   TestCheckedViewLazyHelperMutant
+=== RUN   TestCheckedViewLazyHelperMutant/helper
+    checked_views_lazy_test.go:52: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/helper-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/generic
+    checked_views_lazy_test.go:52: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/generic-mutant.a:9:85: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/callback
+    checked_views_lazy_test.go:52: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/callback-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewLazyHelperMutant/field
+    checked_views_lazy_test.go:52: caught helper mutant: /workspace/adamic/stage3/interface-downcasts/lazy/field-mutant.a:9:72: Adamic 0.1 refuses checked view read of field opaque with unsupported callable contract; prove or implement the callable contract before reading this field
+--- PASS: TestCheckedViewLazyHelperMutant (0.15s)
+    --- PASS: TestCheckedViewLazyHelperMutant/helper (0.04s)
+    --- PASS: TestCheckedViewLazyHelperMutant/generic (0.05s)
+    --- PASS: TestCheckedViewLazyHelperMutant/callback (0.03s)
+    --- PASS: TestCheckedViewLazyHelperMutant/field (0.04s)
+=== RUN   TestCheckedViewLazyMissingNameMutant
+    checked_views_lazy_test.go:59: gate cache node miss
+    checked_views_lazy_test.go:64: gate cache node miss
+    checked_views_lazy_test.go:69: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:69: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+    checked_views_lazy_test.go:69: caught missing-name mutant: adamic: panic: field read failed: value.name is not initialized; expected string, found missing
+--- PASS: TestCheckedViewLazyMissingNameMutant (0.43s)
+=== RUN   TestCheckedViewLazyOptionalCodeMutants
+=== RUN   TestCheckedViewLazyOptionalCodeMutants/number
+    checked_views_lazy_test.go:77: gate cache node miss
+    checked_views_lazy_test.go:86: gate cache node miss
+    checked_views_lazy_test.go:91: caught optional number mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found number
+    checked_views_lazy_test.go:91: caught optional number mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found number
+    checked_views_lazy_test.go:91: caught optional number mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found number
+=== RUN   TestCheckedViewLazyOptionalCodeMutants/null
+    checked_views_lazy_test.go:77: gate cache node miss
+    checked_views_lazy_test.go:86: gate cache node miss
+    checked_views_lazy_test.go:91: caught optional null mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found null
+    checked_views_lazy_test.go:91: caught optional null mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found null
+    checked_views_lazy_test.go:91: caught optional null mutant: adamic: panic: field read failed: error.code is not a string | undefined; expected string | undefined, found null
+--- PASS: TestCheckedViewLazyOptionalCodeMutants (0.89s)
+    --- PASS: TestCheckedViewLazyOptionalCodeMutants/number (0.45s)
+    --- PASS: TestCheckedViewLazyOptionalCodeMutants/null (0.43s)
+=== RUN   TestCheckedViewObjects
+=== RUN   TestCheckedViewObjects/objects-good
+    checked_views_objects_test.go:22: gate cache node miss
+    checked_views_objects_test.go:30: gate cache node miss
+=== RUN   TestCheckedViewObjects/objects-untagged-good
+    checked_views_objects_test.go:22: gate cache node miss
+    checked_views_objects_test.go:30: gate cache node miss
+=== RUN   TestCheckedViewObjects/objects-untagged-wrong
+    checked_views_objects_test.go:30: gate cache node miss
+=== RUN   TestCheckedViewObjects/objects-wrong-nested
+    checked_views_objects_test.go:30: gate cache node miss
+    checked_views_objects_test.go:39: gate cache node miss
+    checked_views_objects_test.go:44: skip transitive view caught by pinned exit/message with valid C
+=== RUN   TestCheckedViewObjects/objects-missing-nested
+    checked_views_objects_test.go:30: gate cache node miss
+=== RUN   TestCheckedViewObjects/objects-uninitialized-nested
+    checked_views_objects_test.go:30: gate cache node miss
+--- PASS: TestCheckedViewObjects (2.40s)
+    --- PASS: TestCheckedViewObjects/objects-good (0.47s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-good (0.43s)
+    --- PASS: TestCheckedViewObjects/objects-untagged-wrong (0.35s)
+    --- PASS: TestCheckedViewObjects/objects-wrong-nested (0.45s)
+    --- PASS: TestCheckedViewObjects/objects-missing-nested (0.34s)
+    --- PASS: TestCheckedViewObjects/objects-uninitialized-nested (0.35s)
+=== RUN   TestCheckedViewObjectUnions
+=== RUN   TestCheckedViewObjectUnions/unions-objects-good
+    checked_views_unions_test.go:16: gate cache node miss
+    checked_views_unions_test.go:24: gate cache node miss
+=== RUN   TestCheckedViewObjectUnions/unions-objects-wrong-payload
+    checked_views_unions_test.go:24: gate cache node miss
+=== RUN   TestCheckedViewObjectUnions/unions-objects-wrong-tag
+    checked_views_unions_test.go:24: gate cache node miss
+=== RUN   TestCheckedViewObjectUnions/unions-objects-missing-tag
+    checked_views_unions_test.go:24: gate cache node miss
+--- PASS: TestCheckedViewObjectUnions (1.38s)
+    --- PASS: TestCheckedViewObjectUnions/unions-objects-good (0.43s)
+    --- PASS: TestCheckedViewObjectUnions/unions-objects-wrong-payload (0.33s)
+    --- PASS: TestCheckedViewObjectUnions/unions-objects-wrong-tag (0.32s)
+    --- PASS: TestCheckedViewObjectUnions/unions-objects-missing-tag (0.31s)
+=== RUN   TestCheckedViewUntaggedSelection
+=== RUN   TestCheckedViewUntaggedSelection/binding-name
+    checked_views_untagged_unions_test.go:42: gate cache node miss
+    checked_views_untagged_unions_test.go:45: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+=== RUN   TestCheckedViewUntaggedSelection/option-element
+    checked_views_untagged_unions_test.go:42: gate cache node miss
+    checked_views_untagged_unions_test.go:45: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+=== RUN   TestCheckedViewUntaggedSelection/structural
+    checked_views_untagged_unions_test.go:42: gate cache node miss
+    checked_views_untagged_unions_test.go:45: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+    checked_views_untagged_unions_test.go:65: gate cache node miss
+    checked_views_untagged_unions_test.go:69: gate cache node miss
+--- PASS: TestCheckedViewUntaggedSelection (2.82s)
+    --- PASS: TestCheckedViewUntaggedSelection/binding-name (0.84s)
+    --- PASS: TestCheckedViewUntaggedSelection/option-element (0.82s)
+    --- PASS: TestCheckedViewUntaggedSelection/structural (0.90s)
+=== RUN   TestCheckedViewUntaggedSourceFrontier
+=== RUN   TestCheckedViewUntaggedSourceFrontier/binding-name
+    checked_views_untagged_unions_test.go:177: gate cache node miss
+    checked_views_untagged_unions_test.go:186: owner hooks installed; tested by SourceDispatch
+=== RUN   TestCheckedViewUntaggedSourceFrontier/option-element
+    checked_views_untagged_unions_test.go:177: gate cache node miss
+    checked_views_untagged_unions_test.go:186: owner hooks installed; tested by SourceDispatch
+=== RUN   TestCheckedViewUntaggedSourceFrontier/structural
+    checked_views_untagged_unions_test.go:177: gate cache node miss
+    checked_views_untagged_unions_test.go:186: owner hooks installed; tested by SourceDispatch
+--- PASS: TestCheckedViewUntaggedSourceFrontier (0.39s)
+    --- SKIP: TestCheckedViewUntaggedSourceFrontier/binding-name (0.13s)
+    --- SKIP: TestCheckedViewUntaggedSourceFrontier/option-element (0.12s)
+    --- SKIP: TestCheckedViewUntaggedSourceFrontier/structural (0.13s)
+=== RUN   TestCheckedViewUntaggedSourceDispatch
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/absent
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/wrong
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:235: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/absent
+    checked_views_untagged_unions_test.go:232: gate cache node miss
+    checked_views_untagged_unions_test.go:233: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:234: gate cache node miss
+    checked_views_untagged_unions_test.go:235: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\n" stderr=""
+--- PASS: TestCheckedViewUntaggedSourceDispatch (2.94s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/good (0.40s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/good (0.25s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/absent (0.22s)
+=== RUN   TestCheckedViewUntaggedSourceFlows
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedSourceFlows (1.76s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/wrong (0.22s)
+=== RUN   TestCheckedViewUntaggedCandidatePairs
+=== RUN   TestCheckedViewUntaggedCandidatePairs/8/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/8/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/8/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/8/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/11/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/11/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/11/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/11/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/13/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/13/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ModuleBody | undefined; expected ModuleBody | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ModuleBody | undefined; expected ModuleBody | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/13/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/13/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/19/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/19/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/19/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/20/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/20/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/20/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/20/empty
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/32/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/32/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/32/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/41/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/41/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody; expected ConciseBody, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody; expected ConciseBody, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/41/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/45/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/45/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.operand matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.operand matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/45/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/60/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/60/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/60/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/63/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/63/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.literal matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.literal matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/63/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/73/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/73/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/73/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/83/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/83/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/83/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/84/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/84/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/84/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/92/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/92/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/92/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/105/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/105/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/105/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/105/empty
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/108/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/108/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/108/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/109/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/109/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/109/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/114/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/114/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/114/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/116/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/116/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/116/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/117/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/117/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/117/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/124/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/124/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/124/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/126/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/126/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/126/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/126/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/130/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/130/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/130/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/130/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/133/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/133/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/133/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/138/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/138/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/138/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/140/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/140/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/140/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/141/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/141/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.node matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.node matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/141/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/142/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/142/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/142/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/143/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/143/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/143/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/145/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/145/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/145/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/145/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/147/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/147/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/147/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.returnFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/147/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/155/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/155/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/155/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/155/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/164/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/164/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/164/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/166/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/166/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/166/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/170/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/170/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/170/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.endFlowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/170/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/175/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/175/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/175/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/175/empty
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/178/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/178/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/178/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.flowNode matches no member of FlowNode | undefined; expected FlowNode | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/178/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/179/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/179/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/179/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/190/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/190/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/190/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/191/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/191/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.dotDotDotToken matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.dotDotDotToken matches no member of CandidateTarget | undefined; expected CandidateTarget | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/191/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/191/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/192/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/192/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/192/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/196/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/196/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/196/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/199/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/199/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parameters is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/199/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/199/empty
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/204/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/204/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.parent matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/204/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/205/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/205/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.items[0] matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/205/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/206/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/206/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.body matches no member of ConciseBody | undefined; expected ConciseBody | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/206/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/206/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/210/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/210/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer; expected ForInitializer, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/210/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/211/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/211/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/211/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/213/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/213/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.elements is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/213/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/213/empty
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/215/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/215/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/215/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/215/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/219/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/219/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/219/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/220/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/220/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/220/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.antecedent matches no member of FlowNode; expected FlowNode, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/221/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/221/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/221/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/223/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/223/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/223/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/224/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/224/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.members is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/224/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/224/empty
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/225/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/225/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.initializer matches no member of ForInitializer | undefined; expected ForInitializer | undefined, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/225/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/225/absent
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/226/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/226/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.fileInfos is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.fileInfos is not a ArrayTarget; expected ArrayTarget, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/226/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item0.payload.label is not a string; expected string, found boolean\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/226/empty
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/228/good
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCandidatePairs/228/wrong
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view0.expression matches no member of CandidateTarget; expected CandidateTarget, found object\n"
+=== RUN   TestCheckedViewUntaggedCandidatePairs/228/nested
+    checked_views_untagged_unions_test.go:322: gate cache node miss
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node miss
+    checked_views_untagged_unions_test.go:333: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+    checked_views_untagged_unions_test.go:333: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value0.payload.label is not a string; expected string, found boolean\n"
+--- PASS: TestCheckedViewUntaggedCandidatePairs (46.83s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/8/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/8/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/8/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/8/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/11/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/11/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/11/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/11/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/13/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/13/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/13/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/13/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/19/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/19/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/19/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/20/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/20/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/20/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/20/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/32/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/32/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/32/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/41/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/41/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/41/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/45/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/45/wrong (0.20s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/45/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/60/good (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/60/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/60/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/63/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/63/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/63/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/73/good (0.27s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/73/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/73/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/83/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/83/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/83/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/84/good (0.25s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/84/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/84/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/92/good (0.59s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/92/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/92/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/105/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/105/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/105/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/105/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/108/good (0.44s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/108/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/108/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/109/good (0.42s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/109/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/109/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/114/good (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/114/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/114/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/116/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/116/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/116/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/117/good (0.80s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/117/wrong (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/117/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/124/good (0.42s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/124/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/124/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/126/good (0.42s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/126/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/126/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/126/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/130/good (0.27s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/130/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/130/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/130/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/133/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/133/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/133/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/138/good (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/138/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/138/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/140/good (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/140/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/140/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/141/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/141/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/141/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/142/good (0.44s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/142/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/142/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/143/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/143/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/143/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/145/good (0.43s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/145/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/145/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/145/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/147/good (0.44s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/147/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/147/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/147/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/155/good (0.45s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/155/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/155/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/155/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/164/good (0.25s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/164/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/164/nested (0.20s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/166/good (0.44s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/166/wrong (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/166/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/170/good (0.43s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/170/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/170/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/170/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/175/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/175/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/175/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/175/empty (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/178/good (0.42s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/178/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/178/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/178/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/179/good (0.27s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/179/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/179/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/190/good (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/190/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/190/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/191/good (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/191/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/191/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/191/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/192/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/192/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/192/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/196/good (0.25s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/196/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/196/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/199/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/199/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/199/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/199/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/204/good (0.26s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/204/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/204/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/205/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/205/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/205/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/206/good (0.30s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/206/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/206/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/206/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/210/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/210/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/210/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/211/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/211/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/211/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/213/good (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/213/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/213/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/213/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/215/good (0.24s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/215/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/215/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/215/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/219/good (0.43s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/219/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/219/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/220/good (0.44s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/220/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/220/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/221/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/221/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/221/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/223/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/223/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/223/nested (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/224/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/224/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/224/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/224/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/225/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/225/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/225/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/225/absent (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/226/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/226/wrong (0.20s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/226/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/226/empty (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/228/good (0.22s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/228/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/228/nested (0.21s)
+=== RUN   TestCheckedViewUntaggedOwnClassData
+=== RUN   TestCheckedViewUntaggedOwnClassData/good
+    checked_views_untagged_unions_test.go:357: gate cache node miss
+    checked_views_untagged_unions_test.go:365: gate cache node miss
+    checked_views_untagged_unions_test.go:366: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:366: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedOwnClassData/wrong
+    checked_views_untagged_unions_test.go:357: gate cache node miss
+    checked_views_untagged_unions_test.go:365: gate cache node miss
+    checked_views_untagged_unions_test.go:366: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:366: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedOwnClassData/getter
+    checked_views_untagged_unions_test.go:357: gate cache node miss
+    checked_views_untagged_unions_test.go:365: gate cache node miss
+    checked_views_untagged_unions_test.go:366: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:366: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedOwnClassData (0.66s)
+    --- PASS: TestCheckedViewUntaggedOwnClassData/good (0.21s)
+    --- PASS: TestCheckedViewUntaggedOwnClassData/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedOwnClassData/getter (0.22s)
+=== RUN   TestCheckedViewUntaggedRecursive
+=== RUN   TestCheckedViewUntaggedRecursive/good
+    checked_views_untagged_unions_test.go:393: gate cache node miss
+    checked_views_untagged_unions_test.go:401: gate cache node miss
+    checked_views_untagged_unions_test.go:402: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:402: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedRecursive/absent
+    checked_views_untagged_unions_test.go:393: gate cache node miss
+    checked_views_untagged_unions_test.go:401: gate cache node miss
+    checked_views_untagged_unions_test.go:402: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:402: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedRecursive/wrong
+    checked_views_untagged_unions_test.go:393: gate cache node miss
+    checked_views_untagged_unions_test.go:401: gate cache node miss
+    checked_views_untagged_unions_test.go:402: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:402: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedRecursive/nested
+    checked_views_untagged_unions_test.go:393: gate cache node miss
+    checked_views_untagged_unions_test.go:401: gate cache node miss
+    checked_views_untagged_unions_test.go:402: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:402: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedRecursive/cycle
+    checked_views_untagged_unions_test.go:393: gate cache node miss
+    checked_views_untagged_unions_test.go:401: gate cache node miss
+    checked_views_untagged_unions_test.go:402: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:402: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedRecursive/cycle-wrong
+    checked_views_untagged_unions_test.go:393: gate cache node miss
+    checked_views_untagged_unions_test.go:401: gate cache node miss
+    checked_views_untagged_unions_test.go:402: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:402: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedRecursive (1.26s)
+    --- PASS: TestCheckedViewUntaggedRecursive/good (0.21s)
+    --- PASS: TestCheckedViewUntaggedRecursive/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedRecursive/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedRecursive/nested (0.21s)
+    --- PASS: TestCheckedViewUntaggedRecursive/cycle (0.21s)
+    --- PASS: TestCheckedViewUntaggedRecursive/cycle-wrong (0.21s)
+=== RUN   TestCheckedViewUntaggedArrayUnion
+=== RUN   TestCheckedViewUntaggedArrayUnion/good
+    checked_views_untagged_unions_test.go:415: gate cache node miss
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:418: gate cache node miss
+    checked_views_untagged_unions_test.go:419: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedArrayUnion/wrong
+    checked_views_untagged_unions_test.go:415: gate cache node miss
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:418: gate cache node miss
+    checked_views_untagged_unions_test.go:419: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.elements is not a readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found boolean\n"
+    checked_views_untagged_unions_test.go:419: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.elements is not a readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found boolean\n"
+=== RUN   TestCheckedViewUntaggedArrayUnion/nested
+    checked_views_untagged_unions_test.go:415: gate cache node miss
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:418: gate cache node miss
+    checked_views_untagged_unions_test.go:419: native: exit=70 stdout="" stderr="adamic: panic: field read failed: item.payload matches no member of { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_untagged_unions_test.go:419: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: item.payload matches no member of { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; }, found object\n"
+=== RUN   TestCheckedViewUntaggedArrayUnion/empty
+    checked_views_untagged_unions_test.go:415: gate cache node miss
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:418: gate cache node miss
+    checked_views_untagged_unions_test.go:419: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedArrayUnion/mixed
+    checked_views_untagged_unions_test.go:415: gate cache node miss
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:418: gate cache node miss
+    checked_views_untagged_unions_test.go:419: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.elements matches no member of readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found array\n"
+    checked_views_untagged_unions_test.go:419: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.elements matches no member of readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found array\n"
+=== RUN   TestCheckedViewUntaggedArrayUnion/unread
+    checked_views_untagged_unions_test.go:415: gate cache node miss
+    checked_views_untagged_unions_test.go:417: Node: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:418: gate cache node miss
+    checked_views_untagged_unions_test.go:419: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:419: native: exit=0 stdout="true\n" stderr=""
+--- PASS: TestCheckedViewUntaggedArrayUnion (1.31s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/good (0.21s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/wrong (0.21s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/nested (0.23s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/empty (0.22s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/mixed (0.22s)
+    --- PASS: TestCheckedViewUntaggedArrayUnion/unread (0.22s)
+=== RUN   TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_untagged_unions_test.go:445: gate cache node miss
+    checked_views_untagged_unions_test.go:449: gate cache node miss
+    checked_views_untagged_unions_test.go:450: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:450: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_untagged_unions_test.go:445: gate cache node miss
+    checked_views_untagged_unions_test.go:449: gate cache node miss
+    checked_views_untagged_unions_test.go:450: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:450: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_untagged_unions_test.go:445: gate cache node miss
+    checked_views_untagged_unions_test.go:449: gate cache node miss
+    checked_views_untagged_unions_test.go:450: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_untagged_unions_test.go:450: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+=== RUN   TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_untagged_unions_test.go:445: gate cache node miss
+    checked_views_untagged_unions_test.go:449: gate cache node miss
+    checked_views_untagged_unions_test.go:450: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_untagged_unions_test.go:450: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+--- PASS: TestCheckedViewUntaggedCallableUnion (0.89s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-number (0.22s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-string (0.23s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/nested (0.22s)
+=== RUN   TestCheckedViewUntaggedRemainingBoundaries
+=== RUN   TestCheckedViewUntaggedRemainingBoundaries/type-contract-boundary
+    checked_views_untagged_unions_test.go:479: gate cache node miss
+    checked_views_untagged_unions_test.go:491: lowering refusal: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/type-contract-boundary.a:10:13: Adamic 0.1 refuses checked view read of field value with unsupported untagged object union contract; prove or implement the untagged object union contract before reading this field
+=== RUN   TestCheckedViewUntaggedRemainingBoundaries/base-type-boundary
+    checked_views_untagged_unions_test.go:479: gate cache node miss
+    checked_views_untagged_unions_test.go:491: lowering refusal: view.items[0]: Adamic 0.1 refuses checked view read of field [element] with unsupported untagged object union contract; prove or implement the untagged object union contract before reading this field
+=== RUN   TestCheckedViewUntaggedRemainingBoundaries/callable-union-optional-boundary
+    checked_views_untagged_unions_test.go:479: gate cache node miss
+    checked_views_untagged_unions_test.go:491: lowering refusal: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a:7:13: Adamic 0.1 refuses checked view read of field value with unsupported callable contract; prove or implement the callable contract before reading this field
+--- PASS: TestCheckedViewUntaggedRemainingBoundaries (0.39s)
+    --- PASS: TestCheckedViewUntaggedRemainingBoundaries/type-contract-boundary (0.14s)
+    --- PASS: TestCheckedViewUntaggedRemainingBoundaries/base-type-boundary (0.12s)
+    --- PASS: TestCheckedViewUntaggedRemainingBoundaries/callable-union-optional-boundary (0.13s)
+=== CONT  TestCheckedViewCallableContractControl
+    checked_views_callable_contract_test.go:11: gate cache node miss
+    checked_views_callable_contract_test.go:15: gate cache node miss
+--- PASS: TestCheckedViewCallableContractControl (0.39s)
+PASS
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=548
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	72.813s

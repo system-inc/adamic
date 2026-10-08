@@ -1,0 +1,15 @@
+
+interface Base { readonly kind: string; }
+interface Box extends Base { readonly kind: 'Box'; readonly type: "string" | "number" | "boolean" | "object" | Map<string, string | number> | "list" | "listOrElement"; }
+function read(value: Box): string {
+ const member = value.type;
+ if (typeof member === 'string') return member;
+ const entry = member.get('answer');
+ return `${entry}`;
+}
+const concrete0 = { kind: 'Box', type: 'string' };
+const source0: Base = concrete0;
+console.log(read(source0 as Box));
+const concrete1 = { kind: 'Box', type: new Map<string, string | number>([['answer', 42]]) };
+const source1: Base = concrete1;
+console.log(read(source1 as Box));

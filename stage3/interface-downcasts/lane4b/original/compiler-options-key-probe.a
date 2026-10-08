@@ -1,0 +1,6 @@
+import type { CompilerOptions } from 'original-tsc-types';
+interface Base { readonly target: number; }
+function read(node: CompilerOptions, key: string): string { return `${node[key]}`; }
+const concrete = { target: 1, diagnostics: true };
+const base: Base = concrete;
+console.log(read(base as CompilerOptions, 'diagnostics'));

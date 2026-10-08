@@ -1,0 +1,4120 @@
+{
+  "source_sha256": "729efae4f2e2dae64328ec30bce4908eee50e063f22e201f1bc99aea94044615",
+  "measurement": "Unknown-fallback family demand, not successful lowering",
+  "pairs": 198,
+  "reads": 1145,
+  "completed_pairs": 0,
+  "completed_reads": 0,
+  "ranked_pairs": [
+    {
+      "receiver_type_id": 4329,
+      "type": "Symbol",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 224,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 383,
+        "column": 54
+      },
+      "rank": 1,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 6997,
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 224,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 866,
+        "column": 33
+      },
+      "rank": 2,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 6998,
+      "type": "SourceFile",
+      "field": "path",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 90,
+      "witness": {
+        "file": "src/compiler/tracing.ts",
+        "line": 204,
+        "column": 23
+      },
+      "rank": 3,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 6998,
+      "type": "SourceFile",
+      "field": "resolvedPath",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 80,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6124,
+        "column": 29
+      },
+      "rank": 4,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 34526,
+      "type": "NamedDeclaration & { name: DeclarationName; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier | ObjectBindingPattern | ArrayBindingPattern | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ElementAccessExpression | ComputedPropertyName | JsxNamespacedName | NoSubstitutionTemplateLiteral | PropertyAccessEntityNameExpression"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 25,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 932,
+        "column": 55
+      },
+      "rank": 5,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 7618,
+      "type": "PrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 15,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6360,
+        "column": 51
+      },
+      "rank": 6,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 7619,
+      "type": "Identifier | PrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 14,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 858,
+        "column": 39
+      },
+      "rank": 7,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 9245,
+      "type": "LiteralImportTypeNode",
+      "field": "argument",
+      "declared_types": [
+        "TypeNode & LiteralTypeNode & { readonly literal: StringLiteral; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 14,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4369,
+        "column": 52
+      },
+      "rank": 8,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9471,
+      "type": "BindableObjectDefinePropertyCall",
+      "field": "arguments",
+      "declared_types": [
+        "NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 14,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 975,
+        "column": 28
+      },
+      "rank": 9,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10871,
+      "type": "ElementWithComputedPropertyName",
+      "field": "name",
+      "declared_types": [
+        "ComputedPropertyName"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 12,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 7620,
+        "column": 35
+      },
+      "rank": 10,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9474,
+      "type": "BindableStaticAccessExpression",
+      "field": "expression",
+      "declared_types": [
+        "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 1759,
+        "column": 79
+      },
+      "rank": 11,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10560,
+      "type": "SymbolLinks",
+      "field": "typeOnlyDeclaration",
+      "declared_types": [
+        "false | TypeOnlyAliasDeclaration | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "object plus primitive union",
+        "optional properties"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 4446,
+        "column": 24
+      },
+      "rank": 12,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 38457,
+      "type": "TypeNode & LiteralTypeNode & { readonly literal: StringLiteral; }",
+      "field": "literal",
+      "declared_types": [
+        "LiteralExpression & StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4369,
+        "column": 52
+      },
+      "rank": 13,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 7642,
+      "type": "JSDoc",
+      "field": "parent",
+      "declared_types": [
+        "HasJSDoc"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 10,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 883,
+        "column": 22
+      },
+      "rank": 14,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10393,
+      "type": "TransientSymbol",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 10,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 1565,
+        "column": 17
+      },
+      "rank": 15,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 9170,
+      "type": "MemberName",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 10821,
+        "column": 12
+      },
+      "rank": 16,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 9476,
+      "type": "BindableStaticPropertyAssignmentExpression",
+      "field": "left",
+      "declared_types": [
+        "BindableStaticAccessExpression"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 2911,
+        "column": 57
+      },
+      "rank": 17,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9485,
+      "type": "BindablePropertyAssignmentExpression",
+      "field": "left",
+      "declared_types": [
+        "BindableAccessExpression"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 3270,
+        "column": 94
+      },
+      "rank": 18,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101319,
+      "type": "CompilerHost & ReadBuildProgramHost",
+      "field": "getCurrentDirectory",
+      "declared_types": [
+        "(() => string) & (() => string)"
+      ],
+      "families": [
+        "callable contracts",
+        "intersection field contract"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 446,
+        "column": 61
+      },
+      "rank": 19,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 33864,
+      "type": "ParameterPropertyDeclaration",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 8,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 42245,
+        "column": 92
+      },
+      "rank": 20,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "IntrinsicElements",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 7,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34017,
+        "column": 54
+      },
+      "rank": 21,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 98922,
+      "type": "Readonly<PathPathComponents>",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 7,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 287,
+        "column": 10
+      },
+      "rank": 22,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 34945,
+      "type": "NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>",
+      "field": "2",
+      "declared_types": [
+        "Expression & (ObjectLiteralExpression | NumericLiteral | StringLiteralLike | BindableStaticNameExpression)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 3975,
+        "column": 48
+      },
+      "rank": 23,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 70883,
+      "type": "__String[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 14206,
+        "column": 49
+      },
+      "rank": 24,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 3871,
+      "type": "Process",
+      "field": "stdout",
+      "declared_types": [
+        "WriteStream & { fd: 1; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 1528,
+        "column": 17
+      },
+      "rank": 25,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9913,
+      "type": "ReferencedFile",
+      "field": "file",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 468,
+        "column": 63
+      },
+      "rank": 26,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 33864,
+      "type": "ParameterPropertyDeclaration",
+      "field": "parent",
+      "declared_types": [
+        "ConstructorDeclaration"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2969,
+        "column": 40
+      },
+      "rank": 27,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 34945,
+      "type": "NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>",
+      "field": "0",
+      "declared_types": [
+        "Expression & (ObjectLiteralExpression | NumericLiteral | StringLiteralLike | BindableStaticNameExpression)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4183,
+        "column": 28
+      },
+      "rank": 28,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 68704,
+      "type": "SymbolTrackerImpl",
+      "field": "moduleResolverHost",
+      "declared_types": [
+        "(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 8106,
+        "column": 37
+      },
+      "rank": 29,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 87261,
+      "type": "PerFileState",
+      "field": "filenameDeclaration",
+      "declared_types": [
+        "(VariableDeclaration & { name: Identifier; }) | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/transformers/jsx.ts",
+        "line": 110,
+        "column": 13
+      },
+      "rank": 30,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 7612,
+      "type": "GeneratedIdentifier",
+      "field": "emitNode",
+      "declared_types": [
+        "EmitNode & { autoGenerate: AutoGenerateInfo; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 1592,
+        "column": 19
+      },
+      "rank": 31,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 8883,
+      "type": "JSDocAugmentsTag",
+      "field": "class",
+      "declared_types": [
+        "ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 5201,
+        "column": 20
+      },
+      "rank": 32,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9228,
+      "type": "Identifier | undefined",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 8397,
+        "column": 13
+      },
+      "rank": 33,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 9475,
+      "type": "BindableAccessExpression",
+      "field": "expression",
+      "declared_types": [
+        "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 3407,
+        "column": 60
+      },
+      "rank": 34,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 39806,
+      "type": "PropertyAccessEntityNameExpression | BindableStaticElementAccessExpression",
+      "field": "expression",
+      "declared_types": [
+        "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 3440,
+        "column": 19
+      },
+      "rank": 35,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 53514,
+      "type": "GeneratedIdentifier | GeneratedPrivateIdentifier",
+      "field": "emitNode",
+      "declared_types": [
+        "(EmitNode & { autoGenerate: AutoGenerateInfo; }) | (EmitNode & { autoGenerate: AutoGenerateInfo; })"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 1519,
+        "column": 26
+      },
+      "rank": 36,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 88465,
+      "type": "ThisCapturingVariableStatement",
+      "field": "declarationList",
+      "declared_types": [
+        "VariableDeclarationList & { readonly declarations: { 0: ThisCapturingVariableDeclaration; }; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1466,
+        "column": 29
+      },
+      "rank": 37,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 98916,
+      "type": "DirectoryOfFailedLookupWatch",
+      "field": "dirPath",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 494,
+        "column": 40
+      },
+      "rank": 38,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101296,
+      "type": "BuildInfoCacheEntry",
+      "field": "path",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1448,
+        "column": 35
+      },
+      "rank": 39,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 8654,
+      "type": "UnionType",
+      "field": "keyPropertyName",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 28038,
+        "column": 13
+      },
+      "rank": 40,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 8719,
+      "type": "TracingNode",
+      "field": "tracingPath",
+      "declared_types": [
+        "Path | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 41754,
+        "column": 118
+      },
+      "rank": 41,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 8882,
+      "type": "JSDocImplementsTag",
+      "field": "class",
+      "declared_types": [
+        "ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 5216,
+        "column": 54
+      },
+      "rank": 42,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 8920,
+      "type": "PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }",
+      "field": "operand",
+      "declared_types": [
+        "UnaryExpression & NumericLiteral"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 12046,
+        "column": 41
+      },
+      "rank": 43,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9847,
+      "type": "JsonSourceFile",
+      "field": "path",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2248,
+        "column": 27
+      },
+      "rank": 44,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10441,
+      "type": "NodeArray<Expression> & [StringLiteralLike]",
+      "field": "0",
+      "declared_types": [
+        "Expression & StringLiteralLike"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 3887,
+        "column": 16
+      },
+      "rank": 45,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 34945,
+      "type": "NodeArray<Expression> & readonly [BindableStaticNameExpression, NumericLiteral | StringLiteralLike, ObjectLiteralExpression] & Readonly<...>",
+      "field": "1",
+      "declared_types": [
+        "Expression & (ObjectLiteralExpression | NumericLiteral | StringLiteralLike | BindableStaticNameExpression)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 975,
+        "column": 28
+      },
+      "rank": 46,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 39599,
+      "type": "CallExpression & { expression: Identifier; arguments: [StringLiteralLike]; } & { expression: Identifier; arguments: [...]; }",
+      "field": "expression",
+      "declared_types": [
+        "LeftHandSideExpression & Identifier"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 38034,
+        "column": 27
+      },
+      "rank": 47,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 40931,
+      "type": "PrefixUnaryExpression & { operand: NumericLiteral; }",
+      "field": "operand",
+      "declared_types": [
+        "UnaryExpression & NumericLiteral"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 5414,
+        "column": 69
+      },
+      "rank": 48,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 66531,
+      "type": "ModuleResolutionState & { host: GetPackageJsonEntrypointsHost; }",
+      "field": "host",
+      "declared_types": [
+        "ModuleResolutionHost & GetPackageJsonEntrypointsHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2305,
+        "column": 41
+      },
+      "rank": 49,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "IntrinsicAttributes",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22898,
+        "column": 56
+      },
+      "rank": 50,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 88484,
+      "type": "VariableDeclarationList & { readonly declarations: { 0: ThisCapturingVariableDeclaration; }; }",
+      "field": "declarations",
+      "declared_types": [
+        "NodeArray<VariableDeclaration> & { 0: ThisCapturingVariableDeclaration; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1466,
+        "column": 29
+      },
+      "rank": 51,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 90280,
+      "type": "Node | FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | ... 24 more ... | ModuleBlock",
+      "field": "parent",
+      "declared_types": [
+        "Node | FunctionExpression | ArrowFunction | MethodDeclaration | GetAccessorDeclaration | ... 65 more ... | WithStatement"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/transformers/declarations/diagnostics.ts",
+        "line": 567,
+        "column": 32
+      },
+      "rank": 52,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97181,
+      "type": "ReusableDiagnosticRelatedInformation",
+      "field": "messageText",
+      "declared_types": [
+        "string | ReusableDiagnosticMessageChain"
+      ],
+      "families": [
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 608,
+        "column": 31
+      },
+      "rank": 53,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97898,
+      "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+      "field": "1",
+      "declared_types": [
+        "[] | EmitSignature | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "mixed primitive union",
+        "object plus primitive union"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2302,
+        "column": 31
+      },
+      "rank": 54,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97905,
+      "type": "IncrementalBuildInfoRootStartEnd",
+      "field": "1",
+      "declared_types": [
+        "IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 1416,
+        "column": 31
+      },
+      "rank": 55,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101767,
+      "type": "SolutionBuilderState<T>",
+      "field": "compilerHost",
+      "declared_types": [
+        "CompilerHost & ReadBuildProgramHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 951,
+        "column": 36
+      },
+      "rank": 56,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101988,
+      "type": "InvalidateProjectCreateInfo",
+      "field": "project",
+      "declared_types": [
+        "ResolvedConfigFileName"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1321,
+        "column": 39
+      },
+      "rank": 57,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 6998,
+      "type": "SourceFile",
+      "field": "localJsxFragmentNamespace",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2441,
+        "column": 25
+      },
+      "rank": 58,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 6998,
+      "type": "SourceFile",
+      "field": "localJsxNamespace",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2487,
+        "column": 13
+      },
+      "rank": 59,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 8923,
+      "type": "PrefixUnaryExpression & { operator: SyntaxKind.MinusToken; operand: NumericLiteral | BigIntLiteral; }",
+      "field": "operand",
+      "declared_types": [
+        "UnaryExpression & (NumericLiteral | BigIntLiteral)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 12043,
+        "column": 41
+      },
+      "rank": 60,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9732,
+      "type": "{ arguments: { types?: { value: string; pos: number; end: number; } | undefined; } & { lib?: { value: string; pos: number; end: number; } | undefined; } & { path?: { value: string; pos: number; end: number; } | undefined; } & { ...; } & { ...; } & { ...; }; range: CommentRange; }",
+      "field": "arguments",
+      "declared_types": [
+        "{ types?: { value: string; pos: number; end: number; } | undefined; } & { lib?: { value: string; pos: number; end: number; } | undefined; } & { path?: { value: string; pos: number; end: number; } | undefined; } & { ...; } & { ...; } & { ...; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 10634,
+        "column": 97
+      },
+      "rank": 61,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9733,
+      "type": "{ arguments: { path: string; } & { name?: string | undefined; }; range: CommentRange; }",
+      "field": "arguments",
+      "declared_types": [
+        "{ path: string; } & { name?: string | undefined; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 10658,
+        "column": 35
+      },
+      "rank": 62,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9928,
+      "type": "FilePreprocessingFileExplainingDiagnostic",
+      "field": "file",
+      "declared_types": [
+        "Path | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/programDiagnostics.ts",
+        "line": 165,
+        "column": 33
+      },
+      "rank": 63,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10435,
+      "type": "RequireOrImportCall",
+      "field": "arguments",
+      "declared_types": [
+        "NodeArray<Expression> & [StringLiteralLike]"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 3887,
+        "column": 16
+      },
+      "rank": 64,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10450,
+      "type": "VariableDeclarationInitializedTo<AccessExpression | RequireOrImportCall>",
+      "field": "initializer",
+      "declared_types": [
+        "AccessExpression | RequireOrImportCall"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 3785,
+        "column": 106
+      },
+      "rank": 65,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10477,
+      "type": "VariableDeclarationInitializedTo<RequireOrImportCall>",
+      "field": "initializer",
+      "declared_types": [
+        "RequireOrImportCall"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 3887,
+        "column": 16
+      },
+      "rank": 66,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10782,
+      "type": "UniqueESSymbolType",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 11172,
+        "column": 16
+      },
+      "rank": 67,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 11738,
+      "type": "ImmediatelyInvokedArrowFunction",
+      "field": "expression",
+      "declared_types": [
+        "LeftHandSideExpression & ParenthesizedExpression & { readonly expression: ArrowFunction; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1463,
+        "column": 45
+      },
+      "rank": 68,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 34691,
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 44924,
+        "column": 88
+      },
+      "rank": 69,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 45175,
+      "type": "SymlinkedDirectory",
+      "field": "realPath",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 9518,
+        "column": 79
+      },
+      "rank": 70,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 55713,
+      "type": "PrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 24388,
+        "column": 54
+      },
+      "rank": 71,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 56970,
+      "type": "AssignmentExpression<EqualsToken> & { readonly left: GeneratedIdentifier; }",
+      "field": "left",
+      "declared_types": [
+        "LeftHandSideExpression & GeneratedIdentifier"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 928,
+        "column": 71
+      },
+      "rank": 72,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 67004,
+      "type": "SourceFile | FutureSourceFile",
+      "field": "path",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 348,
+        "column": 31
+      },
+      "rank": 73,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 71273,
+      "type": "ExportDeclaration & { readonly exportClause: NamedExports; }",
+      "field": "exportClause",
+      "declared_types": [
+        "NamedExports"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 9513,
+        "column": 53
+      },
+      "rank": 74,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "Element",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34285,
+        "column": 27
+      },
+      "rank": 75,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "IntrinsicClassAttributes",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22899,
+        "column": 61
+      },
+      "rank": 76,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "JSX",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34094,
+        "column": 113
+      },
+      "rank": 77,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 77441,
+      "type": "typeof ReactNames",
+      "field": "Fragment",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 37535,
+        "column": 46
+      },
+      "rank": 78,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 79434,
+      "type": "ClassElement | ParameterPropertyDeclaration",
+      "field": "name",
+      "declared_types": [
+        "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 47282,
+        "column": 30
+      },
+      "rank": 79,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 83991,
+      "type": "ClassThisAssignmentBlock",
+      "field": "body",
+      "declared_types": [
+        "Block & { readonly statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: AssignmentExpression<EqualsToken> & { ...; }; }]; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/classThis.ts",
+        "line": 122,
+        "column": 27
+      },
+      "rank": 80,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 83997,
+      "type": "NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: AssignmentExpression<EqualsToken> & { ...; }; }]",
+      "field": "0",
+      "declared_types": [
+        "Statement & ExpressionStatement & { readonly expression: AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: ThisExpression; }; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/classThis.ts",
+        "line": 122,
+        "column": 27
+      },
+      "rank": 81,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 83999,
+      "type": "Block & { readonly statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: AssignmentExpression<EqualsToken> & { ...; }; }]; }",
+      "field": "statements",
+      "declared_types": [
+        "NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: AssignmentExpression<EqualsToken> & { ...; }; }]"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/classThis.ts",
+        "line": 122,
+        "column": 27
+      },
+      "rank": 82,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84238,
+      "type": "ClassNamedEvaluationHelperBlock",
+      "field": "body",
+      "declared_types": [
+        "Block & { readonly statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: CallExpression & { ...; }; }]; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 205,
+        "column": 27
+      },
+      "rank": 83,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84244,
+      "type": "NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; }]",
+      "field": "0",
+      "declared_types": [
+        "Statement & ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 205,
+        "column": 27
+      },
+      "rank": 84,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84246,
+      "type": "Block & { readonly statements: NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: CallExpression & { ...; }; }]; }",
+      "field": "statements",
+      "declared_types": [
+        "NodeArray<Statement> & readonly [ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; }]"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 205,
+        "column": 27
+      },
+      "rank": 85,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84425,
+      "type": "ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "objectAssignmentInitializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 285,
+        "column": 57
+      },
+      "rank": 86,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84436,
+      "type": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 311,
+        "column": 57
+      },
+      "rank": 87,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84436,
+      "type": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 311,
+        "column": 46
+      },
+      "rank": 88,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84493,
+      "type": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 341,
+        "column": 57
+      },
+      "rank": 89,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84493,
+      "type": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 341,
+        "column": 46
+      },
+      "rank": 90,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84561,
+      "type": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 373,
+        "column": 57
+      },
+      "rank": 91,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84561,
+      "type": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 373,
+        "column": 46
+      },
+      "rank": 92,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84598,
+      "type": "(AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (AssignmentExpression<...> & ... 1 more ... & BinaryExpression)",
+      "field": "left",
+      "declared_types": [
+        "LeftHandSideExpression & Identifier & Expression"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 434,
+        "column": 46
+      },
+      "rank": 93,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84598,
+      "type": "(AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (AssignmentExpression<...> & ... 1 more ... & BinaryExpression)",
+      "field": "right",
+      "declared_types": [
+        "Expression & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 434,
+        "column": 57
+      },
+      "rank": 94,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 87263,
+      "type": "VariableDeclaration & { name: Identifier; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/transformers/jsx.ts",
+        "line": 111,
+        "column": 20
+      },
+      "rank": 95,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 93975,
+      "type": "IteratorYieldResult<Path>",
+      "field": "value",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 690,
+        "column": 13
+      },
+      "rank": 96,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97866,
+      "type": "IncrementalBuildInfoDiagnosticOfFile",
+      "field": "0",
+      "declared_types": [
+        "readonly ReusableDiagnostic[] | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2384,
+        "column": 53
+      },
+      "rank": 97,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97866,
+      "type": "IncrementalBuildInfoDiagnosticOfFile",
+      "field": "1",
+      "declared_types": [
+        "readonly ReusableDiagnostic[] | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2384,
+        "column": 64
+      },
+      "rank": 98,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97954,
+      "type": "IncrementalBuildInfoRoot[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "IncrementalBuildInfoRoot"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 1413,
+        "column": 22
+      },
+      "rank": 99,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 98916,
+      "type": "DirectoryOfFailedLookupWatch",
+      "field": "packageDirPath",
+      "declared_types": [
+        "Path | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 1139,
+        "column": 61
+      },
+      "rank": 100,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 98922,
+      "type": "Readonly<PathPathComponents>",
+      "field": "0",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 273,
+        "column": 22
+      },
+      "rank": 101,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101129,
+      "type": "BuildOrder",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "ResolvedConfigFileName"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 737,
+        "column": 37
+      },
+      "rank": 102,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101435,
+      "type": "SolutionBuilderState<T>",
+      "field": "compilerHost",
+      "declared_types": [
+        "CompilerHost & ReadBuildProgramHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 556,
+        "column": 32
+      },
+      "rank": 103,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101988,
+      "type": "InvalidateProjectCreateInfo",
+      "field": "projectPath",
+      "declared_types": [
+        "ResolvedConfigFilePath"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1326,
+        "column": 13
+      },
+      "rank": 104,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 102606,
+      "type": "SolutionBuilderState<T>",
+      "field": "compilerHost",
+      "declared_types": [
+        "CompilerHost & ReadBuildProgramHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2284,
+        "column": 40
+      },
+      "rank": 105,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 104295,
+      "type": "BindablePropertyAssignmentExpression & (DynamicNamedDeclaration | DynamicNamedBinaryExpression)",
+      "field": "left",
+      "declared_types": [
+        "PropertyAccessEntityNameExpression | BindableElementAccessExpression | (ElementAccessExpression & { readonly expression: BindableStaticNameExpression; })"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 3426,
+        "column": 72
+      },
+      "rank": 106,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 7378,
+      "type": "SourceFile | undefined",
+      "field": "path",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 2697,
+        "column": 59
+      },
+      "rank": 107,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 7612,
+      "type": "GeneratedIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6327,
+        "column": 44
+      },
+      "rank": 108,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 7644,
+      "type": "JSDoc | JSDocTypeLiteral",
+      "field": "parent",
+      "declared_types": [
+        "Node | HasJSDoc"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4832,
+        "column": 32
+      },
+      "rank": 109,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 8588,
+      "type": "Symbol | undefined",
+      "field": "escapedName",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 38412,
+        "column": 20
+      },
+      "rank": 110,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 9185,
+      "type": "GeneratedPrivateIdentifier",
+      "field": "emitNode",
+      "declared_types": [
+        "EmitNode & { autoGenerate: AutoGenerateInfo; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6355,
+        "column": 47
+      },
+      "rank": 111,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9185,
+      "type": "GeneratedPrivateIdentifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6351,
+        "column": 51
+      },
+      "rank": 112,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 9452,
+      "type": "LiteralLikeElementAccessExpression",
+      "field": "argumentExpression",
+      "declared_types": [
+        "Expression & (NumericLiteral | StringLiteralLike)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4175,
+        "column": 12
+      },
+      "rank": 113,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9454,
+      "type": "BindableStaticElementAccessExpression",
+      "field": "argumentExpression",
+      "declared_types": [
+        "Expression & (NumericLiteral | StringLiteralLike)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 991,
+        "column": 24
+      },
+      "rank": 114,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9477,
+      "type": "LeftHandSideExpression & Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 38035,
+        "column": 62
+      },
+      "rank": 115,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 9657,
+      "type": "ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }",
+      "field": "expression",
+      "declared_types": [
+        "LeftHandSideExpression & (Identifier | PropertyAccessEntityNameExpression)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 44317,
+        "column": 60
+      },
+      "rank": 116,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 9918,
+      "type": "FilePreprocessingLibReferenceDiagnostic",
+      "field": "reason",
+      "declared_types": [
+        "ReferencedFile & { kind: FileIncludeKind.LibReferenceDirective; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/programDiagnostics.ts",
+        "line": 190,
+        "column": 74
+      },
+      "rank": 117,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10236,
+      "type": "SymbolTracker | undefined",
+      "field": "moduleResolverHost",
+      "declared_types": [
+        "(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 6636,
+        "column": 40
+      },
+      "rank": 118,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10560,
+      "type": "SymbolLinks",
+      "field": "typeOnlyExportStarName",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 4472,
+        "column": 98
+      },
+      "rank": 119,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 10933,
+      "type": "WideningContext",
+      "field": "propertyName",
+      "declared_types": [
+        "__String | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 25949,
+        "column": 64
+      },
+      "rank": 120,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 15322,
+      "type": "Path[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2359,
+        "column": 16
+      },
+      "rank": 121,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 36241,
+      "type": "JSDoc | undefined",
+      "field": "parent",
+      "declared_types": [
+        "HasJSDoc"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 37834,
+        "column": 52
+      },
+      "rank": 122,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 39599,
+      "type": "CallExpression & { expression: Identifier; arguments: [StringLiteralLike]; } & { expression: Identifier; arguments: [...]; }",
+      "field": "arguments",
+      "declared_types": [
+        "NodeArray<Expression> & [StringLiteralLike]"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 3892,
+        "column": 20
+      },
+      "rank": 123,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 39781,
+      "type": "ElementAccessExpression & Declaration & { readonly argumentExpression: NumericLiteral | StringLiteralLike; } & { ...; }",
+      "field": "expression",
+      "declared_types": [
+        "LeftHandSideExpression & Identifier"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 2898,
+        "column": 71
+      },
+      "rank": 124,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 39820,
+      "type": "VariableDeclarationInitializedTo<AccessExpression | RequireOrImportCall> | VariableDeclarationInitializedTo<AccessExpression | RequireOrImportCall> | BindingElementOfBareOrAccessedRequire",
+      "field": "initializer",
+      "declared_types": [
+        "Expression | AccessExpression | RequireOrImportCall | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4353,
+        "column": 33
+      },
+      "rank": 125,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 39824,
+      "type": "RequireOrImportCall | undefined",
+      "field": "arguments",
+      "declared_types": [
+        "NodeArray<Expression> & [StringLiteralLike]"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4353,
+        "column": 20
+      },
+      "rank": 126,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 40625,
+      "type": "TypeParameterDeclaration & { parent: JSDocTemplateTag; }",
+      "field": "parent",
+      "declared_types": [
+        "JSDocTemplateTag"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 4832,
+        "column": 32
+      },
+      "rank": 127,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 41103,
+      "type": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "Expression & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1974,
+        "column": 102
+      },
+      "rank": 128,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 41105,
+      "type": "ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "objectAssignmentInitializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 2132,
+        "column": 102
+      },
+      "rank": 129,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 41107,
+      "type": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1996,
+        "column": 102
+      },
+      "rank": 130,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 41109,
+      "type": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1702,
+        "column": 102
+      },
+      "rank": 131,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 41111,
+      "type": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 2020,
+        "column": 102
+      },
+      "rank": 132,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 41113,
+      "type": "PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1497,
+        "column": 102
+      },
+      "rank": 133,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 41116,
+      "type": "AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "right",
+      "declared_types": [
+        "Expression & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 2066,
+        "column": 106
+      },
+      "rank": 134,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 41122,
+      "type": "ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "expression",
+      "declared_types": [
+        "Expression & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 2174,
+        "column": 102
+      },
+      "rank": 135,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 42959,
+      "type": "readonly InitializedVariableDeclaration[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "InitializedVariableDeclaration"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/generators.ts",
+        "line": 1369,
+        "column": 34
+      },
+      "rank": 136,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 46230,
+      "type": "TypeReferenceNode & { typeName: Identifier; }",
+      "field": "typeName",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 7942,
+        "column": 43
+      },
+      "rank": 137,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 46232,
+      "type": "Identifier",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 7942,
+        "column": 43
+      },
+      "rank": 138,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 46546,
+      "type": "(PrefixUnaryExpression & { operator: SyntaxKind.PlusToken; operand: NumericLiteral; }) | (PrefixUnaryExpression & { ...; })",
+      "field": "operand",
+      "declared_types": [
+        "UnaryExpression & (NumericLiteral | BigIntLiteral)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/expressionToTypeNode.ts",
+        "line": 924,
+        "column": 25
+      },
+      "rank": 139,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 53493,
+      "type": "Mutable<Identifier>",
+      "field": "escapedText",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 1338,
+        "column": 13
+      },
+      "rank": 140,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 56454,
+      "type": "AccessorDeclaration & { readonly name: Identifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 368,
+        "column": 58
+      },
+      "rank": 141,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 65619,
+      "type": "{ key: CanonicalKey; path: string; flags: WatchDirectoryFlags; }",
+      "field": "key",
+      "declared_types": [
+        "CanonicalKey"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 4140,
+        "column": 25
+      },
+      "rank": 142,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 67303,
+      "type": "ModuleDeclaration & { name: StringLiteral; }",
+      "field": "name",
+      "declared_types": [
+        "StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 884,
+        "column": 16
+      },
+      "rank": 143,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 67308,
+      "type": "ModuleDeclaration & { name: StringLiteral; } & AmbientModuleDeclaration",
+      "field": "name",
+      "declared_types": [
+        "StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 881,
+        "column": 141
+      },
+      "rank": 144,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 67321,
+      "type": "AmbientModuleDeclaration & { name: StringLiteral; }",
+      "field": "name",
+      "declared_types": [
+        "StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 922,
+        "column": 16
+      },
+      "rank": 145,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 69241,
+      "type": "PropertyDeclaration | ParameterPropertyDeclaration",
+      "field": "parent",
+      "declared_types": [
+        "ClassDeclaration | ClassExpression | ConstructorDeclaration"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 3186,
+        "column": 84
+      },
+      "rank": 146,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 69493,
+      "type": "LiteralImportTypeNode | undefined",
+      "field": "argument",
+      "declared_types": [
+        "TypeNode & LiteralTypeNode & { readonly literal: StringLiteral; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 4745,
+        "column": 17
+      },
+      "rank": 147,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 69494,
+      "type": "(TypeNode & LiteralTypeNode & { readonly literal: StringLiteral; }) | undefined",
+      "field": "literal",
+      "declared_types": [
+        "LiteralExpression & StringLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 4745,
+        "column": 17
+      },
+      "rank": 148,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 69509,
+      "type": "(ImportEqualsDeclaration & { moduleReference: ExternalModuleReference; }) | undefined",
+      "field": "moduleReference",
+      "declared_types": [
+        "ExternalModuleReference"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 4749,
+        "column": 17
+      },
+      "rank": 149,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 70860,
+      "type": "ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }",
+      "field": "getCommonSourceDirectory",
+      "declared_types": [
+        "(() => string) & (() => string)"
+      ],
+      "families": [
+        "callable contracts",
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 8637,
+        "column": 92
+      },
+      "rank": 150,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 70885,
+      "type": "{ name: __String; oldSymbol: Symbol; }",
+      "field": "name",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 8307,
+        "column": 64
+      },
+      "rank": 151,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 73057,
+      "type": "ReplaceableIndexedAccessType",
+      "field": "indexType",
+      "declared_types": [
+        "Type & TypeParameter"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 14692,
+        "column": 64
+      },
+      "rank": 152,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 73057,
+      "type": "ReplaceableIndexedAccessType",
+      "field": "objectType",
+      "declared_types": [
+        "Type & TypeParameter"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 14692,
+        "column": 80
+      },
+      "rank": 153,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementAttributesPropertyNameContainer",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34162,
+        "column": 57
+      },
+      "rank": 154,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementChildrenAttributeNameContainer",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34170,
+        "column": 57
+      },
+      "rank": 155,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementClass",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34279,
+        "column": 33
+      },
+      "rank": 156,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "ElementType",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34153,
+        "column": 65
+      },
+      "rank": 157,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 75216,
+      "type": "typeof JsxNames",
+      "field": "LibraryManagedAttributes",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 34148,
+        "column": 65
+      },
+      "rank": 158,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 78063,
+      "type": "NodeArray<TypeNode> & any[]",
+      "field": "indexOf",
+      "declared_types": [
+        "((searchElement: TypeNode, fromIndex?: number | undefined) => number) & ((searchElement: any, fromIndex?: number | undefined) => number)"
+      ],
+      "families": [
+        "callable contracts",
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 42805,
+        "column": 36
+      },
+      "rank": 159,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 78328,
+      "type": "ClassElement & NamedDeclaration & { name: DeclarationName; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 44510,
+        "column": 134
+      },
+      "rank": 160,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 79411,
+      "type": "(PropertyAssignment & { readonly name: Identifier; }) | (BindingElement & { readonly name: Identifier; readonly initializer: Expression; readonly dotDotDotToken: undefined; }) | (PropertyDeclaration & { ...; })",
+      "field": "name",
+      "declared_types": [
+        "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 47073,
+        "column": 135
+      },
+      "rank": 161,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 80951,
+      "type": "(NamedDeclaration & { name: DeclarationName; }) | undefined",
+      "field": "name",
+      "declared_types": [
+        "Identifier | ObjectBindingPattern | ArrayBindingPattern | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ElementAccessExpression | ComputedPropertyName | JsxNamespacedName | NoSubstitutionTemplateLiteral | PropertyAccessEntityNameExpression"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 12269,
+        "column": 56
+      },
+      "rank": 162,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 83995,
+      "type": "ExpressionStatement & { readonly expression: AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: ThisExpression; }; }",
+      "field": "expression",
+      "declared_types": [
+        "Expression & AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: ThisExpression; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1438,
+        "column": 42
+      },
+      "rank": 163,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84242,
+      "type": "ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; }",
+      "field": "expression",
+      "declared_types": [
+        "Expression & CallExpression & { readonly expression: Identifier; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1451,
+        "column": 34
+      },
+      "rank": 164,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84413,
+      "type": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "Expression & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 266,
+        "column": 65
+      },
+      "rank": 165,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84413,
+      "type": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "name",
+      "declared_types": [
+        "Identifier"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 265,
+        "column": 75
+      },
+      "rank": 166,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84573,
+      "type": "PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "initializer",
+      "declared_types": [
+        "(Expression | undefined) & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 394,
+        "column": 65
+      },
+      "rank": 167,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84598,
+      "type": "(AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (AssignmentExpression<...> & ... 1 more ... & BinaryExpression)",
+      "field": "operatorToken",
+      "declared_types": [
+        "(EqualsToken & BinaryOperatorToken) | ((AmpersandAmpersandEqualsToken | BarBarEqualsToken | QuestionQuestionEqualsToken) & BinaryOperatorToken)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 439,
+        "column": 9
+      },
+      "rank": 168,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84638,
+      "type": "ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "field": "expression",
+      "declared_types": [
+        "Expression & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 457,
+        "column": 64
+      },
+      "rank": 169,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 84695,
+      "type": "(AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }) | (AssignmentExpression<...> & { ...; })",
+      "field": "right",
+      "declared_types": [
+        "Expression & WrappedExpression<AnonymousFunctionDefinition>"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1789,
+        "column": 106
+      },
+      "rank": 170,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 85700,
+      "type": "PrivateIdentifierInExpression",
+      "field": "left",
+      "declared_types": [
+        "Expression & PrivateIdentifier"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 672,
+        "column": 46
+      },
+      "rank": 171,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 88461,
+      "type": "ThisCapturingVariableDeclaration",
+      "field": "name",
+      "declared_types": [
+        "Identifier & GeneratedIdentifier & { readonly escapedText: { __escapedIdentifier: void; } & \"__this\"; }"
+      ],
+      "families": [
+        "intersection field contract",
+        "untagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1505,
+        "column": 17
+      },
+      "rank": 172,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 88472,
+      "type": "TransformedSuperCall",
+      "field": "expression",
+      "declared_types": [
+        "LeftHandSideExpression & PropertyAccessExpression & { readonly expression: SyntheticSuper; }"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/es2015.ts",
+        "line": 1399,
+        "column": 20
+      },
+      "rank": 173,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 92175,
+      "type": "JSDocImplementsTag | JSDocAugmentsTag",
+      "field": "class",
+      "declared_types": [
+        "(ExpressionWithTypeArguments & { readonly expression: Identifier | PropertyAccessEntityNameExpression; }) | (ExpressionWithTypeArguments & { ...; })"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/emitter.ts",
+        "line": 4170,
+        "column": 14
+      },
+      "rank": 174,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 94190,
+      "type": "IsIgnoredFileFromWildCardWatchingInput",
+      "field": "fileOrDirectoryPath",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 575,
+        "column": 5
+      },
+      "rank": 175,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 94190,
+      "type": "IsIgnoredFileFromWildCardWatchingInput",
+      "field": "watchedDirPath",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/watchUtilities.ts",
+        "line": 573,
+        "column": 5
+      },
+      "rank": 176,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97267,
+      "type": "BuilderProgramStateWithDefinedProgram",
+      "field": "currentChangedFilePath",
+      "declared_types": [
+        "Path | undefined"
+      ],
+      "families": [
+        "intersection field contract",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 667,
+        "column": 42
+      },
+      "rank": 177,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97898,
+      "type": "[fileId: IncrementalBuildInfoFileId, signature: [] | EmitSignature]",
+      "field": "0",
+      "declared_types": [
+        "[] | EmitSignature | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "mixed primitive union",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2299,
+        "column": 40
+      },
+      "rank": 178,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97905,
+      "type": "IncrementalBuildInfoRootStartEnd",
+      "field": "0",
+      "declared_types": [
+        "IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2415,
+        "column": 21
+      },
+      "rank": 179,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 97913,
+      "type": "readonly IncrementalBuildInfoRoot[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "IncrementalBuildInfoRoot"
+      ],
+      "families": [
+        "array or tuple contracts",
+        "intersection field contract",
+        "object plus primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2412,
+        "column": 29
+      },
+      "rank": 180,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 98447,
+      "type": "[fileId: IncrementalBuildInfoFileId] | [fileId: IncrementalBuildInfoFileId, emitKind: BuilderFileEmit]",
+      "field": "0",
+      "declared_types": [
+        "BuilderFileEmit | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2318,
+        "column": 170
+      },
+      "rank": 181,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 98447,
+      "type": "[fileId: IncrementalBuildInfoFileId] | [fileId: IncrementalBuildInfoFileId, emitKind: BuilderFileEmit]",
+      "field": "1",
+      "declared_types": [
+        "BuilderFileEmit | IncrementalBuildInfoFileId"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2242,
+        "column": 51
+      },
+      "rank": 182,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 98922,
+      "type": "Readonly<PathPathComponents>",
+      "field": "1",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/resolutionCache.ts",
+        "line": 277,
+        "column": 9
+      },
+      "rank": 183,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101023,
+      "type": "OutOfDateRoots",
+      "field": "inputFile",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2412,
+        "column": 32
+      },
+      "rank": 184,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101132,
+      "type": "readonly ResolvedConfigFileName[]",
+      "field": "[dynamic index]",
+      "declared_types": [
+        "ResolvedConfigFileName"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1905,
+        "column": 29
+      },
+      "rank": 185,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101472,
+      "type": "SolutionBuilderState<T>",
+      "field": "compilerHost",
+      "declared_types": [
+        "CompilerHost & ReadBuildProgramHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 605,
+        "column": 53
+      },
+      "rank": 186,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101679,
+      "type": "SolutionBuilderState<T>",
+      "field": "compilerHost",
+      "declared_types": [
+        "CompilerHost & ReadBuildProgramHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 746,
+        "column": 13
+      },
+      "rank": 187,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101683,
+      "type": "SolutionBuilderState<T>",
+      "field": "compilerHost",
+      "declared_types": [
+        "CompilerHost & ReadBuildProgramHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 781,
+        "column": 26
+      },
+      "rank": 188,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101746,
+      "type": "SolutionBuilderState<T>",
+      "field": "compilerHost",
+      "declared_types": [
+        "CompilerHost & ReadBuildProgramHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 910,
+        "column": 36
+      },
+      "rank": 189,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 101899,
+      "type": "SolutionBuilderState<T>",
+      "field": "compilerHost",
+      "declared_types": [
+        "CompilerHost & ReadBuildProgramHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1351,
+        "column": 78
+      },
+      "rank": 190,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 102016,
+      "type": "SolutionBuilderState<T>",
+      "field": "compilerHost",
+      "declared_types": [
+        "CompilerHost & ReadBuildProgramHost"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2161,
+        "column": 47
+      },
+      "rank": 191,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 102146,
+      "type": "BuildInfoCacheEntry | undefined",
+      "field": "path",
+      "declared_types": [
+        "Path"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1442,
+        "column": 12
+      },
+      "rank": 192,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 102260,
+      "type": "{ ref: ProjectReference; refStatus: Unbuildable | UpToDate | OutputMissing | ErrorReadingFile | OutOfDateWithSelf | ... 6 more ... | ForceBuild; resolvedRefPath: ResolvedConfigFilePath; resolvedConfig: ParsedCommandLine; }",
+      "field": "resolvedRefPath",
+      "declared_types": [
+        "ResolvedConfigFilePath"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1730,
+        "column": 54
+      },
+      "rank": 193,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 102397,
+      "type": "InvalidatedProject<T>",
+      "field": "project",
+      "declared_types": [
+        "ResolvedConfigFileName"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1970,
+        "column": 87
+      },
+      "rank": 194,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 102397,
+      "type": "InvalidatedProject<T>",
+      "field": "projectPath",
+      "declared_types": [
+        "ResolvedConfigFilePath"
+      ],
+      "families": [
+        "intersection field contract"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1971,
+        "column": 36
+      },
+      "rank": 195,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 103520,
+      "type": "ActiveLabel",
+      "field": "name",
+      "declared_types": [
+        "__String"
+      ],
+      "families": [
+        "intersection field contract",
+        "mixed primitive union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 1609,
+        "column": 17
+      },
+      "rank": 196,
+      "status": "pending source integration",
+      "owner": "lane 4"
+    },
+    {
+      "receiver_type_id": 104258,
+      "type": "PropertyAccessEntityNameExpression | (LeftHandSideExpression & PropertyAccessEntityNameExpression) | (LeftHandSideExpression & ... 3 more ... & { ...; })",
+      "field": "expression",
+      "declared_types": [
+        "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 3284,
+        "column": 75
+      },
+      "rank": 197,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    },
+    {
+      "receiver_type_id": 104296,
+      "type": "PropertyAccessEntityNameExpression | BindableElementAccessExpression | (ElementAccessExpression & { ...; })",
+      "field": "expression",
+      "declared_types": [
+        "EntityNameExpression | (LeftHandSideExpression & BindableStaticNameExpression)"
+      ],
+      "families": [
+        "intersection field contract",
+        "tagged object union"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/binder.ts",
+        "line": 3426,
+        "column": 72
+      },
+      "rank": 198,
+      "status": "pending source integration",
+      "owner": "lane 7 queue, overlaps unresolved"
+    }
+  ]
+}

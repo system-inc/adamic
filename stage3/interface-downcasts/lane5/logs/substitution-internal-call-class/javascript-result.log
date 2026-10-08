@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.66s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/substitution-hook/wrong-result (0.42s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node hit
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: previousOnSubstituteNode(hint,node).value is not initialized; expected number, found missing\n" want "onSubstituteNode" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.onSubstituteNode expected (hint: number, node: Node) => Node, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/internal-name/wrong-result (0.39s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node hit
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.getInternalName(node).value is not initialized; expected number, found missing\n" want "getInternalName" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.getInternalName expected (node: Declaration, allowComments?: boolean | undefined, allowSourceMaps?: boolean | undefined) => Identifier, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/call-update/wrong-result (0.39s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node hit
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.updateCallExpression(node,{value:2},[{value:3}],[{value:4}]).value is not initialized; expected number, found missing\n" want "updateCallExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.updateCallExpression expected (node: CallExpression, expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[]) => CallExpression, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-update/wrong-result (0.44s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node hit
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.updateClassDeclaration(classDecl,[{value:2}],{value:3},[{value:4}],[{value:5}],[{value:6}]).value is not initialized; expected number, found missing\n" want "updateClassDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.updateClassDeclaration expected (node: ClassDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: ... | undefined, members: ...) => ClassDeclaration, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.664s
+FAIL

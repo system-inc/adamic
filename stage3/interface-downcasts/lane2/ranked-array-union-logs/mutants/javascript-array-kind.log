@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewRankedArrayUnionContracts (0.00s)
+    --- FAIL: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-array (0.70s)
+        checked_views_ranked_array_unions_test.go:41: exit codes differ; stderr ""; stdout "undefined\n"; exit 0
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.724s
+FAIL

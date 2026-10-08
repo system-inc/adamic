@@ -1,0 +1,11 @@
+field-array-kind: caught by legacy:array-length-kind; /tmp/adamic-lane2-native-array-mutants/field-array-kind.log
+allocation-kind: caught by native-array-join; /tmp/adamic-lane2-native-array-mutants/allocation-kind.log
+element-kind: caught by native-array-copy-bad; /tmp/adamic-lane2-native-array-mutants/element-kind.log
+write-kind: caught by native-array-write-bad; /tmp/adamic-lane2-native-array-mutants/write-kind.log
+push-kind: caught by native-array-push-bad; /tmp/adamic-lane2-native-array-mutants/push-kind.log
+literal: caught by native-array-join-literal; /tmp/adamic-lane2-native-array-mutants/literal.log
+copy-kind: caught by native-array-copy-bad; /tmp/adamic-lane2-native-array-mutants/copy-kind.log
+join-contract: caught by native-array-join-bad; /tmp/adamic-lane2-native-array-mutants/join-contract.log
+sparse-map: caught by native-array-sparse; /tmp/adamic-lane2-native-array-mutants/sparse-map.log
+javascript-write-kind: caught by native-array-write-bad; /tmp/adamic-lane2-native-array-mutants/javascript-write-kind.log
+javascript-pop-hole: caught by native-array-sparse-pop-hole; /tmp/adamic-lane2-native-array-mutants/javascript-pop-hole.log

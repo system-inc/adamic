@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ExportSpecifier {readonly value:number;}
+interface NamedExports {readonly value:number;}
+interface Base {readonly createNamedExports:unknown;}
+interface Target {createNamedExports(elements: readonly ExportSpecifier[]): NamedExports;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createNamedExports([{value:3}]).value}`);}
+probe({createNamedExports:(elements:readonly {readonly value:string}[])=>{const element=elements[0];return {value:element===undefined?"empty":element.value};}});

@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewDictionaryCompilerPaths
+=== RUN   TestCheckedViewDictionaryCompilerPaths/compiler-paths-missing
+    checked_view_dictionary_propagation_test.go:154: exit codes differ
+--- FAIL: TestCheckedViewDictionaryCompilerPaths (19.70s)
+    --- FAIL: TestCheckedViewDictionaryCompilerPaths/compiler-paths-missing (19.70s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	19.748s
+FAIL

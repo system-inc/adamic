@@ -1,0 +1,6 @@
+interface Base { readonly kind: 'runner' | 'other'; }
+interface Runner extends Base { readonly kind: 'runner'; readonly run: (value: number) => number; }
+function runner(node: Base): Runner { return node as Runner; }
+const good = {kind: 'runner' as const, run: (value: number): number => value + 1};
+const raw: Runner = {kind: 'runner', run: undefined!};
+console.log(`${runner(raw).run(7)}`);

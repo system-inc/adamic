@@ -1,0 +1,83 @@
+{
+  "typescript": "6.0.3",
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "sites": 2936,
+  "counts": {
+    "array or tuple contracts": {
+      "tagged": 1758,
+      "untagged": 1151,
+      "total": 2909
+    },
+    "nullish members": {
+      "tagged": 1758,
+      "untagged": 1145,
+      "total": 2903
+    },
+    "callable contracts": {
+      "tagged": 1758,
+      "untagged": 1132,
+      "total": 2890
+    },
+    "optional properties": {
+      "tagged": 1758,
+      "untagged": 1131,
+      "total": 2889
+    },
+    "dictionary contracts": {
+      "tagged": 1758,
+      "untagged": 1117,
+      "total": 2875
+    },
+    "empty or unsupported field contract": {
+      "tagged": 1758,
+      "untagged": 1112,
+      "total": 2870
+    },
+    "mixed primitive union": {
+      "tagged": 1758,
+      "untagged": 1110,
+      "total": 2868
+    },
+    "object plus primitive union": {
+      "tagged": 1758,
+      "untagged": 1110,
+      "total": 2868
+    },
+    "any field contract": {
+      "tagged": 1758,
+      "untagged": 1109,
+      "total": 2867
+    },
+    "intersection field contract": {
+      "tagged": 1758,
+      "untagged": 1107,
+      "total": 2865
+    },
+    "never field contract": {
+      "tagged": 1758,
+      "untagged": 1104,
+      "total": 2862
+    },
+    "untagged object union": {
+      "tagged": 1758,
+      "untagged": 1104,
+      "total": 2862
+    },
+    "union cast admission": {
+      "tagged": 261,
+      "untagged": 25,
+      "total": 286
+    },
+    "nominal class fields": {
+      "tagged": 0,
+      "untagged": 18,
+      "total": 18
+    },
+    "generic field contract": {
+      "tagged": 0,
+      "untagged": 6,
+      "total": 6
+    }
+  },
+  "limits": "Overlapping complete-target dependencies, not successful lowering or runtime frequencies. Stop at arrays/callables, owned by lane 2. Generic/intersection/dictionary boundaries are recorded; their field/index contracts are also inspected where available. Every witness is a declared checker type, never a proof of construction or initialization."
+}

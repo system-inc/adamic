@@ -1,0 +1,6 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/phantom_overload_results.a (0.04s)
+        oracle_test.go:727: Lower: /workspace/adamic/internal/oracle/testdata/phantom_overload_results.a:3:1: stage 0 can't lower a function without a body yet
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.059s
+FAIL

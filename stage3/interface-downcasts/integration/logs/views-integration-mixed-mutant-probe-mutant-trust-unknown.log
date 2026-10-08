@@ -1,0 +1,6 @@
+=== RUN   TestCheckedViewPrimitiveProbe
+    checked_views_primitive_probe_test.go:39: sanitized=false variant=unknown: exit codes differ; got oracle.run{stdout:[]uint8{0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x3a, 0x34, 0x32, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewPrimitiveProbe (4.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	4.147s
+FAIL

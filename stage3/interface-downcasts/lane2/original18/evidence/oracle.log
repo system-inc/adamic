@@ -1,0 +1,151 @@
+=== RUN   TestCheckedViewRanked18OriginalArrays
+=== RUN   TestCheckedViewRanked18OriginalArrays/json-diagnostics-good
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/json-diagnostics-lazy
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/json-diagnostics-wrong-array
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/json-diagnostics-wrong-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/json-diagnostics-missing-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/json-diagnostics-lazy-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-good
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-lazy
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-wrong-array
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-wrong-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-missing-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-lazy-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:114: gate cache node miss
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-join
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-files-join-bad
+    checked_views_original_ranked_arrays_test.go:85: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:114: gate cache node miss
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-diagnostics-good
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-diagnostics-lazy
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-diagnostics-wrong-array
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-diagnostics-wrong-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-diagnostics-missing-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/config-diagnostics-lazy-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/affecting-locations-good
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/affecting-locations-lazy
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/affecting-locations-wrong-array
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/affecting-locations-wrong-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/affecting-locations-missing-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/affecting-locations-lazy-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:114: gate cache node miss
+=== RUN   TestCheckedViewRanked18OriginalArrays/affecting-locations-join
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/affecting-locations-join-bad
+    checked_views_original_ranked_arrays_test.go:85: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:114: gate cache node miss
+=== RUN   TestCheckedViewRanked18OriginalArrays/failed-locations-good
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/failed-locations-lazy
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/failed-locations-wrong-array
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/failed-locations-wrong-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/failed-locations-missing-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/failed-locations-lazy-element
+    checked_views_original_ranked_arrays_test.go:85: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:114: gate cache node miss
+=== RUN   TestCheckedViewRanked18OriginalArrays/failed-locations-join
+    checked_views_original_ranked_arrays_test.go:85: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:114: gate cache node hit
+=== RUN   TestCheckedViewRanked18OriginalArrays/failed-locations-join-bad
+    checked_views_original_ranked_arrays_test.go:85: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:114: gate cache node miss
+--- PASS: TestCheckedViewRanked18OriginalArrays (86.21s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/json-diagnostics-good (2.83s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/json-diagnostics-lazy (2.59s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/json-diagnostics-wrong-array (4.12s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/json-diagnostics-wrong-element (2.44s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/json-diagnostics-missing-element (2.65s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/json-diagnostics-lazy-element (2.69s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-files-good (2.86s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-files-lazy (2.95s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-files-wrong-array (2.72s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-files-wrong-element (2.50s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-files-missing-element (2.60s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-files-lazy-element (3.06s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-files-join (2.65s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-files-join-bad (2.90s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-diagnostics-good (2.16s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-diagnostics-lazy (2.62s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-diagnostics-wrong-array (2.18s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-diagnostics-wrong-element (2.59s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-diagnostics-missing-element (2.74s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/config-diagnostics-lazy-element (2.17s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/affecting-locations-good (3.00s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/affecting-locations-lazy (2.68s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/affecting-locations-wrong-array (2.95s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/affecting-locations-wrong-element (2.71s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/affecting-locations-missing-element (3.03s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/affecting-locations-lazy-element (3.05s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/affecting-locations-join (2.40s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/affecting-locations-join-bad (1.69s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/failed-locations-good (1.39s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/failed-locations-lazy (1.39s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/failed-locations-wrong-array (1.21s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/failed-locations-wrong-element (1.45s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/failed-locations-missing-element (1.14s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/failed-locations-lazy-element (1.41s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/failed-locations-join (1.26s)
+    --- PASS: TestCheckedViewRanked18OriginalArrays/failed-locations-join-bad (1.45s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=60 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	86.231s

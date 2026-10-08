@@ -1,0 +1,14 @@
+=== RUN   TestCensusQualifiedCast
+=== PAUSE TestCensusQualifiedCast
+=== RUN   TestCensusGenericRefusalInsideClosure
+=== PAUSE TestCensusGenericRefusalInsideClosure
+=== RUN   TestCensusComputedRelation
+=== PAUSE TestCensusComputedRelation
+=== CONT  TestCensusQualifiedCast
+=== CONT  TestCensusComputedRelation
+=== CONT  TestCensusGenericRefusalInsideClosure
+--- PASS: TestCensusQualifiedCast (0.11s)
+--- PASS: TestCensusGenericRefusalInsideClosure (0.12s)
+--- PASS: TestCensusComputedRelation (0.12s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.139s

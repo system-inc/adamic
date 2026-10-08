@@ -1,0 +1,21 @@
+import type { SourceFile } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(file: SourceFile): string {
+ const member = file.externalModuleIndicator;
+ if (member === undefined) return 'absent';
+ if (member === null) return 'null';
+ if (typeof member === 'boolean') return `${member}`;
+ return `${member.kind}`;
+}
+const yes = { kind: 308, externalModuleIndicator: true };
+const object = { kind: 308, externalModuleIndicator: { kind: 80 } };
+const explicit = { kind: 308, externalModuleIndicator: undefined };
+const missing = { kind: 308 };
+const yesBase: Base = yes;
+const objectBase: Base = object;
+const explicitBase: Base = explicit;
+const missingBase: Base = missing;
+console.log(read(yesBase as SourceFile));
+console.log(read(objectBase as SourceFile));
+console.log(read(explicitBase as SourceFile));
+console.log(read(missingBase as SourceFile));

@@ -1,0 +1,38 @@
+--- FAIL: TestLazyViewDemandUsesSharedFlow (0.00s)
+    --- FAIL: TestLazyViewDemandUsesSharedFlow/helper_merge (0.00s)
+        view_lazy_test.go:46: want refusal at demanded read, got <nil>
+    --- FAIL: TestLazyViewDemandUsesSharedFlow/wider_helper (0.00s)
+        view_lazy_test.go:46: want refusal at demanded read, got <nil>
+    --- FAIL: TestLazyViewDemandUsesSharedFlow/callback_unknown (0.00s)
+        view_lazy_test.go:46: want refusal at demanded read, got <nil>
+    --- FAIL: TestLazyViewDemandUsesSharedFlow/missing_producer (0.00s)
+        view_lazy_test.go:46: want refusal at demanded read, got <nil>
+--- FAIL: TestLazyViewArrayDemand (0.00s)
+    --- FAIL: TestLazyViewArrayDemand/index (0.00s)
+        view_lazy_test.go:77: want named element refusal, got <nil>
+    --- FAIL: TestLazyViewArrayDemand/map (0.00s)
+        view_lazy_test.go:77: want named element refusal, got <nil>
+    --- FAIL: TestLazyViewArrayDemand/visit (0.00s)
+        view_lazy_test.go:77: want named element refusal, got <nil>
+    --- FAIL: TestLazyViewArrayDemand/reduce (0.00s)
+        view_lazy_test.go:77: want named element refusal, got <nil>
+    --- FAIL: TestLazyViewArrayDemand/pop (0.00s)
+        view_lazy_test.go:77: want named element refusal, got <nil>
+    --- FAIL: TestLazyViewArrayDemand/join (0.00s)
+        view_lazy_test.go:77: want named element refusal, got <nil>
+    --- FAIL: TestLazyViewArrayDemand/for_of (0.00s)
+        view_lazy_test.go:77: want named element refusal, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.019s
+--- FAIL: TestCheckedViewLazyHelperMutant (0.12s)
+    --- FAIL: TestCheckedViewLazyHelperMutant/helper (0.04s)
+        checked_views_lazy_test.go:40: unsupported helper read ran on
+    --- FAIL: TestCheckedViewLazyHelperMutant/generic (0.03s)
+        checked_views_lazy_test.go:40: unsupported helper read ran on
+    --- FAIL: TestCheckedViewLazyHelperMutant/callback (0.03s)
+        checked_views_lazy_test.go:40: unsupported helper read ran on
+    --- FAIL: TestCheckedViewLazyHelperMutant/field (0.03s)
+        checked_views_lazy_test.go:40: unsupported helper read ran on
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.135s
+FAIL

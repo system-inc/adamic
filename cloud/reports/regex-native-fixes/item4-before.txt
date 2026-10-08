@@ -1,0 +1,17 @@
+=== RUN   TestRegExpGroupCompoundRefusals
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g.y +=, got <nil>
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g.y &&=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/002/main.a:1:100: Adamic 0.1 refuses &&=; write the if
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g.y ||=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/003/main.a:1:100: Adamic 0.1 refuses ||=; write the if
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g.y ??=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/004/main.a:1:96: stage 0 can't lower a BinaryExpression as a statement yet
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g['y'] +=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/005/main.a:1:96: stage 0 can't lower assigning an element of a value yet
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g['y'] &&=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/006/main.a:1:103: Adamic 0.1 refuses &&=; write the if
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g['y'] ||=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/007/main.a:1:103: Adamic 0.1 refuses ||=; write the if
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g['y'] ??=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/008/main.a:1:96: stage 0 can't lower a BinaryExpression as a statement yet
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g.x +=, got <nil>
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g.x &&=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/010/main.a:1:100: Adamic 0.1 refuses &&=; write the if
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g.x ||=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/011/main.a:1:100: Adamic 0.1 refuses ||=; write the if
+    regexp_native_fixes_test.go:18: want regex assignment NotYet for g.x ??=, got /tmp/adamic-gate/TestRegExpGroupCompoundRefusals3943824494/012/main.a:1:96: stage 0 can't lower a BinaryExpression as a statement yet
+--- FAIL: TestRegExpGroupCompoundRefusals (0.80s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.815s
+FAIL

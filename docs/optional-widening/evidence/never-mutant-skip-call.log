@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/never_call.a (0.66s)
+        oracle_test.go:750: stdout differs
+            node:   exit 70, stdout "called\n", stderr "adamic: panic: kept original\n"
+            native: exit 70, stdout "", stderr "adamic: panic: unreachable expression stop() at never_call.a:6:1\n"
+        oracle_test.go:756: JavaScript backend: stdout differs
+            node:    exit 70, stdout "called\n", stderr "adamic: panic: kept original\n"
+            backend: exit 70, stdout "", stderr "adamic: panic: unreachable expression stop() at never_call.a:6:1\n"
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.724s
+FAIL

@@ -1,0 +1,150 @@
+=== RUN   TestCheckedViewShapeErasure
+=== RUN   TestCheckedViewShapeErasure/proven
+=== RUN   TestCheckedViewShapeErasure/nonconforming
+    checked_views_erasure_test.go:36: mutant exit=0 stdout="true\nfalse\n"
+    checked_views_erasure_test.go:36: mutant exit=0 stdout="true\n0\n"
+    checked_views_erasure_test.go:41: unsafe erasure mutant caught by pinned output and exit with valid release C
+=== RUN   TestCheckedViewShapeErasure/uninitialized
+    checked_views_erasure_test.go:36: mutant exit=0 stdout="false\n"
+    checked_views_erasure_test.go:36: mutant exit=0 stdout="false\n"
+    checked_views_erasure_test.go:41: unsafe erasure mutant caught by pinned output and exit with valid release C
+--- PASS: TestCheckedViewShapeErasure (1.53s)
+    --- PASS: TestCheckedViewShapeErasure/proven (0.54s)
+    --- PASS: TestCheckedViewShapeErasure/nonconforming (0.50s)
+    --- PASS: TestCheckedViewShapeErasure/uninitialized (0.49s)
+=== RUN   TestShapeGraphCountSnapshot
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_accessor.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_accessor.a | 3 | 3 | 1 | 4 | 3 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_anchor.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_anchor.a | 7 | 7 | 5 | 11 | 5 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_cache.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_cache.a | 9 | 9 | 6 | 14 | 6 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_closure.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_closure.a | 8 | 8 | 2 | 10 | 6 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_counted_container.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_counted_container.a | 9 | 9 | 4 | 10 | 7 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_entries.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_entries.a | 8 | 8 | 6 | 11 | 7 | 0 | 1 | 4 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_escape.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_escape.a | 7 | 7 | 4 | 10 | 5 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_flow.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_flow.a | 11 | 11 | 6 | 15 | 8 | 0 | 2 | 3 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_generic_capture.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_generic_capture.a | 13 | 13 | 6 | 17 | 10 | 0 | 2 | 6 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_list.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_list.a | 12 | 12 | 10 | 19 | 7 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_literal_method.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_literal_method.a | 5 | 5 | 2 | 7 | 5 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_literals.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_literals.a | 13 | 13 | 12 | 22 | 8 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_nested_disjoint.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_nested_disjoint.a | 5 | 5 | 2 | 7 | 5 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_nested_self.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_nested_self.a | 4 | 4 | 1 | 5 | 4 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_parse.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_parse.a | 14 | 14 | 10 | 21 | 10 | 0 | 3 | 5 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_01.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_01.a | 2 | 2 | 3 | 5 | 2 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_02.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_02.a | 1 | 1 | 2 | 5 | 1 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_03.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_03.a | 5 | 5 | 4 | 9 | 3 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_04.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_04.a | 2 | 2 | 2 | 5 | 2 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_05.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_05.a | 4 | 4 | 7 | 10 | 4 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_06.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_06.a | 2 | 2 | 3 | 5 | 2 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_07.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_07.a | 2 | 2 | 4 | 7 | 2 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_08.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_08.a | 2 | 2 | 4 | 7 | 2 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_09.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_09.a | 4 | 4 | 6 | 9 | 4 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_10.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_10.a | 2 | 2 | 5 | 8 | 2 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_11.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_11.a | 9 | 9 | 9 | 16 | 9 | 0 | 1 | 4 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_12.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_12.a | 9 | 9 | 9 | 15 | 6 | 0 | 1 | 2 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_13.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_13.a | 1 | 1 | 2 | 3 | 1 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_14.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_14.a | 1 | 1 | 4 | 5 | 1 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_15.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_regression_15.a | 2 | 2 | 2 | 6 | 2 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_static.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_static.a | 2 | 2 | 4 | 8 | 2 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_static_interface.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_static_interface.a | 5 | 5 | 8 | 16 | 5 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_static_parent.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_static_parent.a | 5 | 5 | 8 | 16 | 5 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_static_private.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_static_private.a | 2 | 2 | 4 | 8 | 2 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_structural_literal.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_structural_literal.a | 4 | 4 | 3 | 7 | 3 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_symbols.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_symbols.a | 11 | 11 | 8 | 16 | 8 | 0 | 1 | 3 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_throw.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_throw.a | 10 | 10 | 8 | 15 | 7 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_weak_mixed.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions_weak_mixed.a | 11 | 11 | 10 | 17 | 6 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/classification_conditional.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions/classification_conditional.a | 3 | 3 | 4 | 6 | 3 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/classification_mixed.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions/classification_mixed.a | 8 | 8 | 4 | 10 | 6 | 0 | 1 | 1 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/classification_override.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions/classification_override.a | 6 | 6 | 4 | 9 | 5 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/classification_return.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions/classification_return.a | 3 | 3 | 2 | 4 | 3 | 0 | 0 | 0 |
+=== RUN   TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/million.a
+    shape_graph_counts_test.go:40: | internal/oracle/testdata/graph_regions/million.a | 1000003 | 1000003 | 950001 | 1950004 | 1000003 | 0 | 1 | 999999 |
+--- PASS: TestShapeGraphCountSnapshot (6.44s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_accessor.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_anchor.a (0.12s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_cache.a (0.12s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_closure.a (0.22s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_counted_container.a (0.15s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_entries.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_escape.a (0.14s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_flow.a (0.15s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_generic_capture.a (0.14s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_list.a (0.16s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_literal_method.a (0.15s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_literals.a (0.18s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_nested_disjoint.a (0.21s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_nested_self.a (0.12s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_parse.a (0.15s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_01.a (0.11s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_02.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_03.a (0.22s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_04.a (0.11s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_05.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_06.a (0.11s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_07.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_08.a (0.16s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_09.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_10.a (0.12s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_11.a (0.14s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_12.a (0.15s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_13.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_14.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_regression_15.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_static.a (0.12s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_static_interface.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_static_parent.a (0.27s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_static_private.a (0.14s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_structural_literal.a (0.15s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_symbols.a (0.14s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_throw.a (0.16s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions_weak_mixed.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/classification_conditional.a (0.14s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/classification_mixed.a (0.13s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/classification_override.a (0.16s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/classification_return.a (0.16s)
+    --- PASS: TestShapeGraphCountSnapshot/internal/oracle/testdata/graph_regions/million.a (0.30s)
+PASS
+gate cache: native hits=0 misses=43
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.979s

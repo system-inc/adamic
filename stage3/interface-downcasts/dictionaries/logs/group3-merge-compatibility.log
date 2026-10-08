@@ -1,0 +1,401 @@
+=== RUN   TestEnumSlotViews
+=== PAUSE TestEnumSlotViews
+=== RUN   TestObjectRefusalsExplainSoundness
+=== PAUSE TestObjectRefusalsExplainSoundness
+=== RUN   TestLibraryStringRefusals
+=== PAUSE TestLibraryStringRefusals
+=== RUN   TestRecordDiscardedReadProof
+=== PAUSE TestRecordDiscardedReadProof
+=== RUN   TestRecordObservationMustNotEscapeGuard
+=== PAUSE TestRecordObservationMustNotEscapeGuard
+=== RUN   TestPartialRecordStorageRefusals
+=== RUN   TestPartialRecordStorageRefusals/const_fixed={first:1};_const_cache:Partial<Record<'first'|'second',number>>=fixed;
+=== RUN   TestPartialRecordStorageRefusals/const_cache:Partial<Record<'first'|'second',number>>={};_const_fixed:{first?:number}=cache;
+=== RUN   TestPartialRecordStorageRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_cache:Partial<Record<'first'|'second',Dog>>={};_const_view:Record<string,Animal>=cache;
+=== RUN   TestPartialRecordStorageRefusals/const_cache:Partial<Record<'first'|'second',number>>={};_const_view:Record<string,number|undefined>=cache;
+--- PASS: TestPartialRecordStorageRefusals (0.13s)
+    --- PASS: TestPartialRecordStorageRefusals/const_fixed={first:1};_const_cache:Partial<Record<'first'|'second',number>>=fixed; (0.04s)
+    --- PASS: TestPartialRecordStorageRefusals/const_cache:Partial<Record<'first'|'second',number>>={};_const_fixed:{first?:number}=cache; (0.03s)
+    --- PASS: TestPartialRecordStorageRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_cache:Partial<Record<'first'|'second',Dog>>={};_const_view:Record<string,Animal>=cache; (0.03s)
+    --- PASS: TestPartialRecordStorageRefusals/const_cache:Partial<Record<'first'|'second',number>>={};_const_view:Record<string,number|undefined>=cache; (0.03s)
+=== RUN   TestRecordForms
+=== PAUSE TestRecordForms
+=== RUN   TestRecordRefusals
+=== PAUSE TestRecordRefusals
+=== RUN   TestRecordPrototypeLiteralNames
+=== PAUSE TestRecordPrototypeLiteralNames
+=== RUN   TestRegExpGroupCompoundRefusals
+--- PASS: TestRegExpGroupCompoundRefusals (0.43s)
+=== RUN   TestLazyViewAdaptedCensus
+    view_adapted_census_test.go:21: set LAZY_ADAPTED_ROOT, LAZY_ADAPTED_SITES and LAZY_ADAPTED_OUTPUT
+--- SKIP: TestLazyViewAdaptedCensus (0.00s)
+=== RUN   TestViewDictionaryDescriptors
+=== PAUSE TestViewDictionaryDescriptors
+=== RUN   TestLazyViewCensus
+    view_lazy_census_test.go:29: set LAZY_VIEW_CENSUS_ROOT, LAZY_VIEW_CENSUS_SEEDS and LAZY_VIEW_CENSUS_OUTPUT
+--- SKIP: TestLazyViewCensus (0.00s)
+=== RUN   TestLazyViewDemandUsesSharedFlow
+=== RUN   TestLazyViewDemandUsesSharedFlow/helper_merge
+=== RUN   TestLazyViewDemandUsesSharedFlow/wider_helper
+=== RUN   TestLazyViewDemandUsesSharedFlow/ordinary_only
+=== RUN   TestLazyViewDemandUsesSharedFlow/callback_unknown
+=== RUN   TestLazyViewDemandUsesSharedFlow/missing_producer
+--- PASS: TestLazyViewDemandUsesSharedFlow (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/helper_merge (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/wider_helper (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/ordinary_only (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/callback_unknown (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/missing_producer (0.00s)
+=== RUN   TestLazyViewArrayDemand
+=== RUN   TestLazyViewArrayDemand/index
+=== RUN   TestLazyViewArrayDemand/map
+=== RUN   TestLazyViewArrayDemand/visit
+=== RUN   TestLazyViewArrayDemand/reduce
+=== RUN   TestLazyViewArrayDemand/pop
+=== RUN   TestLazyViewArrayDemand/join
+=== RUN   TestLazyViewArrayDemand/for_of
+--- PASS: TestLazyViewArrayDemand (0.00s)
+    --- PASS: TestLazyViewArrayDemand/index (0.00s)
+    --- PASS: TestLazyViewArrayDemand/map (0.00s)
+    --- PASS: TestLazyViewArrayDemand/visit (0.00s)
+    --- PASS: TestLazyViewArrayDemand/reduce (0.00s)
+    --- PASS: TestLazyViewArrayDemand/pop (0.00s)
+    --- PASS: TestLazyViewArrayDemand/join (0.00s)
+    --- PASS: TestLazyViewArrayDemand/for_of (0.00s)
+=== CONT  TestEnumSlotViews
+=== CONT  TestRecordPrototypeLiteralNames
+=== CONT  TestViewDictionaryDescriptors
+=== CONT  TestRecordDiscardedReadProof
+=== CONT  TestRecordObservationMustNotEscapeGuard
+=== RUN   TestEnumSlotViews/variable
+=== PAUSE TestEnumSlotViews/variable
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['constructor']));
+=== RUN   TestViewDictionaryDescriptors/interface_Target_{_readonly_[key:string]:_boolean_|_undefined;_readonly_strict?:_boolean_}
+=== RUN   TestRecordDiscardedReadProof/const_r:Record<string,number>={};_r['toString'];
+=== RUN   TestRecordObservationMustNotEscapeGuard/const_r:Record<string,number>={};_const_value=r['toString'];_console.log(String(value));
+=== RUN   TestEnumSlotViews/initializer
+=== PAUSE TestEnumSlotViews/initializer
+=== RUN   TestEnumSlotViews/member_initializer
+=== PAUSE TestEnumSlotViews/member_initializer
+=== RUN   TestEnumSlotViews/argument
+=== PAUSE TestEnumSlotViews/argument
+=== RUN   TestEnumSlotViews/assignment
+=== PAUSE TestEnumSlotViews/assignment
+=== RUN   TestEnumSlotViews/literal_property
+=== PAUSE TestEnumSlotViews/literal_property
+=== RUN   TestEnumSlotViews/array_literal
+=== PAUSE TestEnumSlotViews/array_literal
+=== RUN   TestEnumSlotViews/increment
+=== PAUSE TestEnumSlotViews/increment
+=== RUN   TestEnumSlotViews/compound
+=== PAUSE TestEnumSlotViews/compound
+=== RUN   TestEnumSlotViews/array_alias
+=== PAUSE TestEnumSlotViews/array_alias
+=== RUN   TestEnumSlotViews/readonly_into_enum_array
+=== PAUSE TestEnumSlotViews/readonly_into_enum_array
+=== RUN   TestEnumSlotViews/function_view
+=== PAUSE TestEnumSlotViews/function_view
+=== RUN   TestEnumSlotViews/object_assign
+=== PAUSE TestEnumSlotViews/object_assign
+=== RUN   TestEnumSlotViews/override
+=== PAUSE TestEnumSlotViews/override
+=== RUN   TestEnumSlotViews/class_field
+=== PAUSE TestEnumSlotViews/class_field
+=== RUN   TestEnumSlotViews/optional_union
+=== PAUSE TestEnumSlotViews/optional_union
+=== RUN   TestEnumSlotViews/map_alias
+=== PAUSE TestEnumSlotViews/map_alias
+=== RUN   TestEnumSlotViews/mutable_field_alias
+=== PAUSE TestEnumSlotViews/mutable_field_alias
+=== RUN   TestEnumSlotViews/generic_class_invariant
+=== PAUSE TestEnumSlotViews/generic_class_invariant
+=== RUN   TestEnumSlotViews/structural_numeric_enum_object
+=== PAUSE TestEnumSlotViews/structural_numeric_enum_object
+=== RUN   TestEnumSlotViews/structural_string_enum_object
+=== PAUSE TestEnumSlotViews/structural_string_enum_object
+=== RUN   TestEnumSlotViews/structural_enum_object_array
+=== PAUSE TestEnumSlotViews/structural_enum_object_array
+=== RUN   TestEnumSlotViews/enum_object_writable_view
+=== PAUSE TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestLibraryStringRefusals
+=== RUN   TestLibraryStringRefusals/detached
+=== PAUSE TestLibraryStringRefusals/detached
+=== RUN   TestLibraryStringRefusals/null_receiver
+=== PAUSE TestLibraryStringRefusals/null_receiver
+=== RUN   TestLibraryStringRefusals/undefined_receiver
+=== PAUSE TestLibraryStringRefusals/undefined_receiver
+=== RUN   TestLibraryStringRefusals/String_internal_slot
+=== PAUSE TestLibraryStringRefusals/String_internal_slot
+=== RUN   TestLibraryStringRefusals/object_conversion
+=== PAUSE TestLibraryStringRefusals/object_conversion
+=== RUN   TestLibraryStringRefusals/collation
+=== PAUSE TestLibraryStringRefusals/collation
+=== RUN   TestLibraryStringRefusals/loose_inequality
+=== PAUSE TestLibraryStringRefusals/loose_inequality
+=== RUN   TestLibraryStringRefusals/first_class_constructor
+=== PAUSE TestLibraryStringRefusals/first_class_constructor
+=== RUN   TestLibraryStringRefusals/raw_wider_view
+=== PAUSE TestLibraryStringRefusals/raw_wider_view
+=== CONT  TestRecordRefusals
+=== RUN   TestRecordRefusals/interface_R_{_[key:string]:number;_named:number_}_const_r:R={named:1};
+=== RUN   TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>):void_{if(Object.hasOwn(r,'toString'))_{delete_r['toString'];_console.log(String(r['toString']));}}
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('constructor'_in_r));
+=== RUN   TestViewDictionaryDescriptors/interface_Child_{readonly_children:Target}_interface_Target_{readonly_[key:string]:Child_|_undefined}
+=== RUN   TestRecordRefusals/import_type_{Weak}_from_'adamic';_interface_Item_{name:string}_const_r:Record<string,Weak<Item>>={};
+=== RUN   TestRecordDiscardedReadProof/function_show(r:Record<string,number>):void_{if(Object.hasOwn(r,'constructor'))_{console.log(String(r['constructor']));}}
+=== RUN   TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>):void_{if(Object.hasOwn(r,'other'))_{console.log(String(r['toString']));}}
+=== RUN   TestRecordRefusals/function_show(r:Record<string,number>|null):void_{console.log(String(JSON.stringify(r)));}
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineGetter__']));
+--- PASS: TestViewDictionaryDescriptors (0.26s)
+    --- PASS: TestViewDictionaryDescriptors/interface_Target_{_readonly_[key:string]:_boolean_|_undefined;_readonly_strict?:_boolean_} (0.14s)
+    --- PASS: TestViewDictionaryDescriptors/interface_Child_{readonly_children:Target}_interface_Target_{readonly_[key:string]:Child_|_undefined} (0.10s)
+=== CONT  TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== RUN   TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== PAUSE TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== RUN   TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== PAUSE TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== PAUSE TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestRecordForms
+=== RUN   TestRecordForms/interface_R_{_[key:string]:_number_}_const_r:R={};_r['x']=1;_console.log(String(r['x']));
+=== RUN   TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_console.log('between');_if(Object.hasOwn(r,k)){console.log(String(value));}}
+=== RUN   TestRecordRefusals/interface_R_{_readonly_[key:string]:number_}_const_r:R={};
+=== RUN   TestRecordDiscardedReadProof/const_r:Record<string,number>={};_const_value_=_r['constructor'];
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineGetter__'_in_r));
+=== RUN   TestRecordForms/type_R=Record<string,string>;_const_r:R={x:'one'};_console.log(Object.keys(r).join(','));
+=== RUN   TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_if(Object.hasOwn(r,k)){console.log(String(value));}_else_{console.log(String(value));}}
+=== RUN   TestRecordRefusals/interface_R_{_[key:number]:number_}_const_r:R={};
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineSetter__']));
+=== RUN   TestRecordForms/function_show(r:Record<string,number>|undefined):void_{console.log(String(JSON.stringify(r)));}_show(undefined);_show({x:1});
+=== RUN   TestRecordDiscardedReadProof/function_show(r:Record<string,number>):void_{const_value=r['constructor'];_if(Object.hasOwn(r,'constructor')){console.log(String(value));}}
+=== RUN   TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_if(Object.hasOwn(r,'other')){console.log(String(value));}}
+=== RUN   TestRecordRefusals/const_r:Record<string,()=>string>={};_console.log(r.toString());
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineSetter__'_in_r));
+=== RUN   TestRecordObservationMustNotEscapeGuard/const_r:Record<string,number>={};_console.log(String(r['toString']_===_undefined));
+=== RUN   TestRecordForms/interface_MapLike<T>_{_[key:string]:T_}_const_r:MapLike<number>={};_console.log(String(delete_r['absent']));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['hasOwnProperty']));
+=== RUN   TestRecordDiscardedReadProof/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_if(Object.hasOwn(r,k)){console.log(String(value));}}
+=== RUN   TestRecordForms/const_r:Record<string,number>={};_for(const_k_in_r)_{_console.log(k);_}
+--- PASS: TestRecordObservationMustNotEscapeGuard (0.58s)
+    --- PASS: TestRecordObservationMustNotEscapeGuard/const_r:Record<string,number>={};_const_value=r['toString'];_console.log(String(value)); (0.08s)
+    --- PASS: TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>):void_{if(Object.hasOwn(r,'toString'))_{delete_r['toString'];_console.log(String(r['toString']));}} (0.09s)
+    --- PASS: TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>):void_{if(Object.hasOwn(r,'other'))_{console.log(String(r['toString']));}} (0.11s)
+    --- PASS: TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_console.log('between');_if(Object.hasOwn(r,k)){console.log(String(value));}} (0.08s)
+    --- PASS: TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_if(Object.hasOwn(r,k)){console.log(String(value));}_else_{console.log(String(value));}} (0.08s)
+    --- PASS: TestRecordObservationMustNotEscapeGuard/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_if(Object.hasOwn(r,'other')){console.log(String(value));}} (0.03s)
+    --- PASS: TestRecordObservationMustNotEscapeGuard/const_r:Record<string,number>={};_console.log(String(r['toString']_===_undefined)); (0.10s)
+=== CONT  TestEnumSlotViews/variable
+=== RUN   TestRecordRefusals/const_r:Record<string,number>={};_console.log(String(r['toString']));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('hasOwnProperty'_in_r));
+=== RUN   TestRecordForms/interface_Node_{links:Record<string,Node>}_const_r:Record<string,Node>={};_r['fresh']={links:{}};
+--- PASS: TestRecordDiscardedReadProof (0.63s)
+    --- PASS: TestRecordDiscardedReadProof/const_r:Record<string,number>={};_r['toString']; (0.17s)
+    --- PASS: TestRecordDiscardedReadProof/function_show(r:Record<string,number>):void_{if(Object.hasOwn(r,'constructor'))_{console.log(String(r['constructor']));}} (0.15s)
+    --- PASS: TestRecordDiscardedReadProof/const_r:Record<string,number>={};_const_value_=_r['constructor']; (0.13s)
+    --- PASS: TestRecordDiscardedReadProof/function_show(r:Record<string,number>):void_{const_value=r['constructor'];_if(Object.hasOwn(r,'constructor')){console.log(String(value));}} (0.08s)
+    --- PASS: TestRecordDiscardedReadProof/function_show(r:Record<string,number>,k:string):void_{const_value=r[k];_if(Object.hasOwn(r,k)){console.log(String(value));}} (0.10s)
+=== CONT  TestEnumSlotViews/object_assign
+=== CONT  TestEnumSlotViews/enum_object_writable_view
+=== RUN   TestRecordRefusals/const_r:Record<string,number>={};_console.log(String('constructor'_in_r));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupGetter__']));
+--- PASS: TestRecordForms (0.43s)
+    --- PASS: TestRecordForms/interface_R_{_[key:string]:_number_}_const_r:R={};_r['x']=1;_console.log(String(r['x'])); (0.09s)
+    --- PASS: TestRecordForms/type_R=Record<string,string>;_const_r:R={x:'one'};_console.log(Object.keys(r).join(',')); (0.09s)
+    --- PASS: TestRecordForms/function_show(r:Record<string,number>|undefined):void_{console.log(String(JSON.stringify(r)));}_show(undefined);_show({x:1}); (0.04s)
+    --- PASS: TestRecordForms/interface_MapLike<T>_{_[key:string]:T_}_const_r:MapLike<number>={};_console.log(String(delete_r['absent'])); (0.05s)
+    --- PASS: TestRecordForms/const_r:Record<string,number>={};_for(const_k_in_r)_{_console.log(k);_} (0.08s)
+    --- PASS: TestRecordForms/interface_Node_{links:Record<string,Node>}_const_r:Record<string,Node>={};_r['fresh']={links:{}}; (0.06s)
+=== CONT  TestEnumSlotViews/structural_enum_object_array
+=== CONT  TestEnumSlotViews/structural_string_enum_object
+=== CONT  TestEnumSlotViews/structural_numeric_enum_object
+=== CONT  TestEnumSlotViews/generic_class_invariant
+=== RUN   TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_{name:'dog'}_const_dogs:Record<string,Dog>={};_const_copy:Record<string,Animal>={...dogs};
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupGetter__'_in_r));
+=== CONT  TestEnumSlotViews/mutable_field_alias
+=== CONT  TestEnumSlotViews/map_alias
+=== RUN   TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_dogs:Record<string,Dog>={};_const_animals:Record<string,Animal>=dogs;
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupSetter__']));
+=== CONT  TestEnumSlotViews/optional_union
+=== CONT  TestEnumSlotViews/class_field
+=== CONT  TestEnumSlotViews/override
+=== RUN   TestRecordRefusals/function_view(r:Record<string,number>|{x:number}):{x?:number}_{return_r;}_const_r:Record<string,number>={};_console.log(String(view(r).x));
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupSetter__'_in_r));
+=== RUN   TestRecordRefusals/const_records:Record<string,number>={};_const_view:{x?:number}=records;
+=== CONT  TestEnumSlotViews/array_literal
+=== CONT  TestEnumSlotViews/function_view
+=== CONT  TestEnumSlotViews/readonly_into_enum_array
+=== CONT  TestEnumSlotViews/array_alias
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['isPrototypeOf']));
+=== CONT  TestEnumSlotViews/compound
+=== RUN   TestRecordRefusals/const_inner:Record<string,number>={};_const_holder={inner};_const_view:{inner:{x?:number}}=holder;
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('isPrototypeOf'_in_r));
+=== CONT  TestEnumSlotViews/increment
+=== CONT  TestEnumSlotViews/argument
+=== CONT  TestEnumSlotViews/literal_property
+=== CONT  TestEnumSlotViews/assignment
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['propertyIsEnumerable']));
+=== CONT  TestEnumSlotViews/member_initializer
+=== RUN   TestRecordRefusals/type_R=Readonly<Record<string,number>>;_const_r:R={};_console.log(String(r['x']));
+=== CONT  TestEnumSlotViews/initializer
+=== CONT  TestLibraryStringRefusals/detached
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('propertyIsEnumerable'_in_r));
+=== CONT  TestLibraryStringRefusals/raw_wider_view
+=== RUN   TestRecordRefusals/const_fixed={x:1};_const_r:Record<string,number>=fixed;
+=== CONT  TestLibraryStringRefusals/first_class_constructor
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toString']));
+--- PASS: TestEnumSlotViews (0.01s)
+    --- PASS: TestEnumSlotViews/variable (0.09s)
+    --- PASS: TestEnumSlotViews/object_assign (0.06s)
+    --- PASS: TestEnumSlotViews/enum_object_writable_view (0.08s)
+    --- PASS: TestEnumSlotViews/structural_string_enum_object (0.06s)
+    --- PASS: TestEnumSlotViews/structural_enum_object_array (0.09s)
+    --- PASS: TestEnumSlotViews/structural_numeric_enum_object (0.04s)
+    --- PASS: TestEnumSlotViews/generic_class_invariant (0.10s)
+    --- PASS: TestEnumSlotViews/mutable_field_alias (0.09s)
+    --- PASS: TestEnumSlotViews/map_alias (0.07s)
+    --- PASS: TestEnumSlotViews/override (0.08s)
+    --- PASS: TestEnumSlotViews/optional_union (0.09s)
+    --- PASS: TestEnumSlotViews/class_field (0.10s)
+    --- PASS: TestEnumSlotViews/function_view (0.04s)
+    --- PASS: TestEnumSlotViews/array_literal (0.10s)
+    --- PASS: TestEnumSlotViews/array_alias (0.07s)
+    --- PASS: TestEnumSlotViews/readonly_into_enum_array (0.09s)
+    --- PASS: TestEnumSlotViews/increment (0.07s)
+    --- PASS: TestEnumSlotViews/argument (0.07s)
+    --- PASS: TestEnumSlotViews/compound (0.10s)
+    --- PASS: TestEnumSlotViews/literal_property (0.06s)
+    --- PASS: TestEnumSlotViews/assignment (0.06s)
+    --- PASS: TestEnumSlotViews/member_initializer (0.10s)
+    --- PASS: TestEnumSlotViews/initializer (0.11s)
+=== CONT  TestLibraryStringRefusals/loose_inequality
+=== CONT  TestLibraryStringRefusals/collation
+=== RUN   TestRecordRefusals/interface_R_{[key:string]:R}_const_r:R={};_r['self']=r;
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toString'_in_r));
+=== CONT  TestLibraryStringRefusals/object_conversion
+=== CONT  TestLibraryStringRefusals/String_internal_slot
+=== RUN   TestRecordRefusals/interface_Node_{links:Record<string,Node>}_const_a:Node={links:{}};_a.links['self']=a;
+=== CONT  TestLibraryStringRefusals/undefined_receiver
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['valueOf']));
+=== CONT  TestLibraryStringRefusals/null_receiver
+--- PASS: TestRecordRefusals (1.46s)
+    --- PASS: TestRecordRefusals/interface_R_{_[key:string]:number;_named:number_}_const_r:R={named:1}; (0.14s)
+    --- PASS: TestRecordRefusals/import_type_{Weak}_from_'adamic';_interface_Item_{name:string}_const_r:Record<string,Weak<Item>>={}; (0.08s)
+    --- PASS: TestRecordRefusals/function_show(r:Record<string,number>|null):void_{console.log(String(JSON.stringify(r)));} (0.05s)
+    --- PASS: TestRecordRefusals/interface_R_{_readonly_[key:string]:number_}_const_r:R={}; (0.09s)
+    --- PASS: TestRecordRefusals/interface_R_{_[key:number]:number_}_const_r:R={}; (0.08s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,()=>string>={};_console.log(r.toString()); (0.12s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,number>={};_console.log(String(r['toString'])); (0.09s)
+    --- PASS: TestRecordRefusals/const_r:Record<string,number>={};_console.log(String('constructor'_in_r)); (0.09s)
+    --- PASS: TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_{name:'dog'}_const_dogs:Record<string,Dog>={};_const_copy:Record<string,Animal>={...dogs}; (0.07s)
+    --- PASS: TestRecordRefusals/interface_Animal_{name:string}_interface_Dog_extends_Animal_{bark:string}_const_dogs:Record<string,Dog>={};_const_animals:Record<string,Animal>=dogs; (0.05s)
+    --- PASS: TestRecordRefusals/function_view(r:Record<string,number>|{x:number}):{x?:number}_{return_r;}_const_r:Record<string,number>={};_console.log(String(view(r).x)); (0.06s)
+    --- PASS: TestRecordRefusals/const_records:Record<string,number>={};_const_view:{x?:number}=records; (0.11s)
+    --- PASS: TestRecordRefusals/const_inner:Record<string,number>={};_const_holder={inner};_const_view:{inner:{x?:number}}=holder; (0.13s)
+    --- PASS: TestRecordRefusals/type_R=Readonly<Record<string,number>>;_const_r:R={};_console.log(String(r['x'])); (0.09s)
+    --- PASS: TestRecordRefusals/const_fixed={x:1};_const_r:Record<string,number>=fixed; (0.09s)
+    --- PASS: TestRecordRefusals/interface_R_{[key:string]:R}_const_r:R={};_r['self']=r; (0.06s)
+    --- PASS: TestRecordRefusals/interface_Node_{links:Record<string,Node>}_const_a:Node={links:{}};_a.links['self']=a; (0.06s)
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('valueOf'_in_r));
+=== CONT  TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== CONT  TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+--- PASS: TestLibraryStringRefusals (0.00s)
+    --- PASS: TestLibraryStringRefusals/detached (0.08s)
+    --- PASS: TestLibraryStringRefusals/raw_wider_view (0.11s)
+    --- PASS: TestLibraryStringRefusals/first_class_constructor (0.10s)
+    --- PASS: TestLibraryStringRefusals/loose_inequality (0.09s)
+    --- PASS: TestLibraryStringRefusals/collation (0.10s)
+    --- PASS: TestLibraryStringRefusals/String_internal_slot (0.09s)
+    --- PASS: TestLibraryStringRefusals/object_conversion (0.12s)
+    --- PASS: TestLibraryStringRefusals/undefined_receiver (0.14s)
+    --- PASS: TestLibraryStringRefusals/null_receiver (0.14s)
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__proto__']));
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__proto__'_in_r));
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toLocaleString']));
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== RUN   TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toLocaleString'_in_r));
+--- PASS: TestObjectRefusalsExplainSoundness (0.00s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'}); (0.04s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1}); (0.07s)
+    --- PASS: TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'}); (0.14s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'}); (0.03s)
+    --- PASS: TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]); (0.10s)
+    --- PASS: TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared'); (0.11s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{}); (0.11s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value'); (0.05s)
+    --- PASS: TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view); (0.04s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1}); (0.08s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'}); (0.12s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1}); (0.08s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5}); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}}); (0.06s)
+--- PASS: TestRecordPrototypeLiteralNames (1.87s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['constructor'])); (0.13s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('constructor'_in_r)); (0.12s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineGetter__'])); (0.09s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineGetter__'_in_r)); (0.08s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__defineSetter__'])); (0.05s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__defineSetter__'_in_r)); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['hasOwnProperty'])); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('hasOwnProperty'_in_r)); (0.09s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupGetter__'])); (0.09s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupGetter__'_in_r)); (0.07s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__lookupSetter__'])); (0.09s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__lookupSetter__'_in_r)); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['isPrototypeOf'])); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('isPrototypeOf'_in_r)); (0.09s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['propertyIsEnumerable'])); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('propertyIsEnumerable'_in_r)); (0.09s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toString'])); (0.08s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toString'_in_r)); (0.10s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['valueOf'])); (0.08s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('valueOf'_in_r)); (0.08s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['__proto__'])); (0.06s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('__proto__'_in_r)); (0.07s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String(r['toLocaleString'])); (0.07s)
+    --- PASS: TestRecordPrototypeLiteralNames/const_r:Record<string,number>={};_console.log(String('toLocaleString'_in_r)); (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.500s
+=== RUN   TestEveryPathNodeTakesIsInTheGraph
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph
+=== CONT  TestEveryPathNodeTakesIsInTheGraph
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/require_node_perf_hooks.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/require_node_perf_hooks.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/require_node_perf_hooks.a
+    trace_test.go:50: 37 points walked, 46 events
+--- PASS: TestEveryPathNodeTakesIsInTheGraph (0.05s)
+    --- PASS: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/require_node_perf_hooks.a (0.30s)
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	0.364s

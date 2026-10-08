@@ -1,0 +1,185 @@
+[
+  {
+    "name": "main",
+    "measurement": "measured on a checker-rejected program",
+    "checker": 2165,
+    "counts": {
+      "NotYet": 1938,
+      "Refused": 1813,
+      "SkippedDependency": 23,
+      "error": 0,
+      "panic": 0
+    },
+    "units": {
+      "total": 4530,
+      "functions": 2755,
+      "skipped_checker_body": 256,
+      "attempted_functions": 2499,
+      "attempted_statements": 1775,
+      "panicked_units": 0
+    },
+    "delta": null
+  },
+  {
+    "name": "taste",
+    "measurement": "measured on a checker-rejected program",
+    "checker": 2165,
+    "counts": {
+      "NotYet": 1864,
+      "Refused": 1708,
+      "SkippedDependency": 25,
+      "error": 0,
+      "panic": 0
+    },
+    "units": {
+      "total": 4530,
+      "functions": 2755,
+      "skipped_checker_body": 256,
+      "attempted_functions": 2499,
+      "attempted_statements": 1775,
+      "panicked_units": 0
+    },
+    "delta": {
+      "NotYet": -74,
+      "Refused": -105,
+      "SkippedDependency": 2,
+      "error": 0,
+      "panic": 0
+    }
+  },
+  {
+    "name": "flags",
+    "measurement": "measured on a checker-rejected program",
+    "checker": 1985,
+    "counts": {
+      "NotYet": 1177,
+      "Refused": 2106,
+      "SkippedDependency": 23,
+      "error": 0,
+      "panic": 0
+    },
+    "units": {
+      "total": 4530,
+      "functions": 2755,
+      "skipped_checker_body": 255,
+      "attempted_functions": 2500,
+      "attempted_statements": 1775,
+      "panicked_units": 0
+    },
+    "delta": {
+      "NotYet": -761,
+      "Refused": 293,
+      "SkippedDependency": 0,
+      "error": 0,
+      "panic": 0
+    }
+  },
+  {
+    "name": "namespaces",
+    "measurement": "measured on a checker-rejected program",
+    "checker": 1985,
+    "counts": {
+      "NotYet": 1188,
+      "Refused": 2129,
+      "SkippedDependency": 23,
+      "error": 1,
+      "panic": 0
+    },
+    "units": {
+      "total": 4530,
+      "functions": 2755,
+      "skipped_checker_body": 255,
+      "attempted_functions": 2500,
+      "attempted_statements": 1775,
+      "panicked_units": 0
+    },
+    "delta": {
+      "NotYet": -750,
+      "Refused": 316,
+      "SkippedDependency": 0,
+      "error": 1,
+      "panic": 0
+    }
+  },
+  {
+    "name": "nested",
+    "measurement": "measured on a checker-rejected program",
+    "checker": 2165,
+    "counts": {
+      "NotYet": 1943,
+      "Refused": 1809,
+      "SkippedDependency": 23,
+      "error": 0,
+      "panic": 0
+    },
+    "units": {
+      "total": 4530,
+      "functions": 2755,
+      "skipped_checker_body": 256,
+      "attempted_functions": 2499,
+      "attempted_statements": 1775,
+      "panicked_units": 0
+    },
+    "delta": {
+      "NotYet": 5,
+      "Refused": -4,
+      "SkippedDependency": 0,
+      "error": 0,
+      "panic": 0
+    }
+  },
+  {
+    "name": "cumulative",
+    "measurement": "measured on a checker-rejected program",
+    "checker": 1985,
+    "counts": {
+      "NotYet": 1032,
+      "Refused": 1983,
+      "SkippedDependency": 25,
+      "error": 1,
+      "panic": 0
+    },
+    "units": {
+      "total": 4530,
+      "functions": 2755,
+      "skipped_checker_body": 255,
+      "attempted_functions": 2500,
+      "attempted_statements": 1775,
+      "panicked_units": 0
+    },
+    "delta": {
+      "NotYet": -906,
+      "Refused": 170,
+      "SkippedDependency": 2,
+      "error": 1,
+      "panic": 0
+    }
+  },
+  {
+    "name": "predicates",
+    "measurement": "measured on a checker-rejected program",
+    "checker": 1650,
+    "counts": {
+      "NotYet": 1006,
+      "Refused": 2673,
+      "SkippedDependency": 25,
+      "error": 1,
+      "panic": 0
+    },
+    "units": {
+      "total": 4530,
+      "functions": 2755,
+      "skipped_checker_body": 223,
+      "attempted_functions": 2532,
+      "attempted_statements": 1775,
+      "panicked_units": 0
+    },
+    "delta": {
+      "NotYet": -932,
+      "Refused": 860,
+      "SkippedDependency": 2,
+      "error": 1,
+      "panic": 0
+    }
+  }
+]

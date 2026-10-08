@@ -1,0 +1,43 @@
+// The generic body must exclude both null and undefined on normal return.
+function fail(message?: string): never { throw new Error(message); }
+function assertIsDefined<T>(value: T, message?: string): asserts value is NonNullable<T> {
+    if (value === undefined || value === null) { fail(message); }
+}
+function read(value: string | undefined): string {
+    assertIsDefined(value, "missing");
+    return value.toUpperCase();
+}
+console.log(read("word"));
+try { read(undefined); } catch (error) {
+    if (error instanceof Error) console.log(error.message);
+}
+function match(text: string): string {
+    const value = /word/.exec(text);
+    assertIsDefined(value, "no match");
+    return value[0] ?? "empty";
+}
+console.log(match("word"));
+try { match("none"); } catch (error) {
+    if (error instanceof Error) console.log(error.message);
+}
+function number(value: number | undefined): number {
+    assertIsDefined(value, "no number");
+    return value + 1;
+}
+console.log(number(0).toString());
+try { number(undefined); } catch (error) {
+    if (error instanceof Error) console.log(error.message);
+}
+
+// Even an impossible scalar/null comparison must evaluate the argument once.
+function isNull<T>(get: () => T): boolean { return get() === null; }
+function getZero(): number { console.log("evaluated"); return 0; }
+console.log(isNull(getZero).toString());
+
+// Native's null pointer must not become undefined after generic specialization.
+function isUndefined<T>(get: () => T): boolean { return get() === undefined; }
+function getMissingMatch(): RegExpExecArray | null {
+    console.log("null evaluated");
+    return /word/.exec("none");
+}
+console.log(isUndefined(getMissingMatch).toString());

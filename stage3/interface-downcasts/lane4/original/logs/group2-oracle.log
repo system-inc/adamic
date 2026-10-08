@@ -1,0 +1,91 @@
+=== RUN   TestCheckedViewBrandsOriginalPairs
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/wrong
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/wrong
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/good-other
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/internal-other
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/undefined-other
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/wrong-other
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/null-other
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/missing-other
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/wrong
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/wrong
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/good-other
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/internal-other
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/undefined-other
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/wrong-other
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:138: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/null-other
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/missing-other
+--- PASS: TestCheckedViewBrandsOriginalPairs (63.07s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/good (1.91s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/internal (1.68s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/undefined (1.76s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/wrong (1.51s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/null (1.34s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/missing (1.68s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/good (1.75s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/internal (2.08s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/undefined (2.02s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/wrong (1.92s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/null (1.63s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/missing (1.54s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/good-other (1.74s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/internal-other (1.74s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/undefined-other (1.58s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/wrong-other (1.58s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/null-other (1.53s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/missing-other (1.50s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/good (2.37s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/internal (2.25s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/undefined (2.33s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/wrong (2.28s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/null (2.06s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/missing (2.47s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/good (1.84s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/internal (1.57s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/undefined (1.57s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/wrong (1.56s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/null (1.50s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/missing (1.41s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/good-other (1.56s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/internal-other (1.58s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/undefined-other (1.97s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/wrong-other (1.72s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/null-other (1.26s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/MemberName/missing-other (1.28s)
+PASS
+gate cache: native hits=0 misses=18
+gate cache: node hits=0 misses=78
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	63.094s

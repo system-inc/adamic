@@ -79,12 +79,16 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 	if err := lowering.findCycles(modules); err != nil {
 		return nil, err
 	}
+	readiness(lowering.result)
 	borrow(lowering.result)
 	counters(lowering.result)
 	return lowering.result, nil
 }
 
 type lowering struct {
+	viewCallablePayloadTypes     map[int]viewCallablePayloadType
+	viewCallableProducerPayloads map[int][]viewCallablePayloadType
+
 	program *load.Program
 	checker *checker.Checker
 	result  *ir.Program
@@ -176,8 +180,10 @@ type lowering struct {
 	localAlso      map[int][]*checker.Type
 	localNodes     map[int]*ast.Node
 	closureRecords []closureRecord
-	classType      *checker.Type
-	classNode      *ast.Node
+	// Untagged callable read targets are certified after all producers are lowered.
+	untaggedCallableTargets map[ir.ViewContractID]*checker.Type
+	classType               *checker.Type
+	classNode               *ast.Node
 
 	// typeMapper is what the type parameters of the instantiation being lowered, and of those it's
 	// inside, stand for; instantiated is every class type an instantiation was made for (instantiate.go).

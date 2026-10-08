@@ -1,0 +1,16 @@
+--- FAIL: TestOptionalWideningRefused (0.00s)
+    --- FAIL: TestOptionalWideningRefused/widening_false_as_number (0.19s)
+        optional_widening_test.go:42: want optional-property refusal, got <nil>
+    --- FAIL: TestOptionalWideningRefused/widening_boolean_as_number_return (0.19s)
+        optional_widening_test.go:42: want optional-property refusal, got <nil>
+    --- FAIL: TestOptionalWideningRefused/widening_boolean_as_number_ops (0.19s)
+        optional_widening_test.go:42: want optional-property refusal, got <nil>
+    --- FAIL: TestOptionalWideningRefused/widening_boolean_as_number_parameter (0.20s)
+        optional_widening_test.go:42: want optional-property refusal, got <nil>
+    --- FAIL: TestOptionalWideningRefused/widening_boolean_as_number (0.22s)
+        optional_widening_test.go:42: want optional-property refusal, got <nil>
+    --- FAIL: TestOptionalWideningRefused/widening_boolean_as_number_array (0.07s)
+        optional_widening_test.go:42: want optional-property refusal, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.280s
+FAIL

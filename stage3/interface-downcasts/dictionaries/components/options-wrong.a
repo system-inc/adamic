@@ -1,0 +1,8 @@
+interface Options { readonly [key: string]: string | number | boolean | undefined; }
+interface Base { readonly kind: 'Options'; }
+interface Holder extends Base { readonly options: Options; }
+const payload = { kind: 'Options' as const, options: { value: {} } };
+const base: Base = payload;
+const view = base as Holder;
+console.log(`${view.options['value']}`);
+console.log(`${view.options['missing']}`);

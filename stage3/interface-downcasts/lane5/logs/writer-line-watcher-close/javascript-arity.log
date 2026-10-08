@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.92s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/writer-line/wrong-arity (0.42s)
+        checked_views_callable_later_ranked_test.go:45: gate cache node hit
+        checked_views_callable_later_ranked_test.go:65: gate cache node miss
+        checked_views_callable_later_ranked_test.go:85: backend2 exit 0 stdout "9\n" stderr "" want "writeLine" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: writer.writeLine expected (force?: boolean | undefined) => void, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/watcher-close/wrong-arity (0.50s)
+        checked_views_callable_later_ranked_test.go:45: gate cache node hit
+        checked_views_callable_later_ranked_test.go:65: gate cache node miss
+        checked_views_callable_later_ranked_test.go:85: backend2 exit 0 stdout "9\n" stderr "" want "close" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: watcher.close expected () => void, found function with arity 1\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.934s
+FAIL

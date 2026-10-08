@@ -61,6 +61,9 @@ type cycleFinder struct {
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
 // proven not to close a cycle (fresh.go), or returns nil.
 func (l *lowering) findCycles(modules []*ast.SourceFile) error {
+	if err := l.checkLazyViewReads(); err != nil {
+		return err
+	}
 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
 	for _, module := range modules {
 		var visit ast.Visitor
@@ -96,33 +99,21 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
 	}
+	// Shared record tables remain counted storage; graph regions have no record cleanup adapter.
 	for _, proven := range finder.seen {
-		if err := finder.slotsOf(proven); err != nil {
-			return err
-		}
-	}
-	for local, declared := range l.result.Locals {
-		if !declared.Captured || declared.Global {
-			continue
-		}
-		proven, node := l.localTypes[local], l.localNodes[local]
-		if proven == nil || node == nil || finder.weak(proven) {
-			continue
-		}
-		if finder.reaches(proven, cycleNode{cell: local + 1}) {
-			return &Refused{
-				Where: l.program.Where(node),
-				What:  "'" + declared.Name + "', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
-				Fix:   "write the function as a function declaration (function " + declared.Name + "() {}), which captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
+		if l.recordElement(proven) != nil {
+			if err := finder.slotsOf(proven); err != nil {
+				return err
 			}
 		}
 	}
-	return nil
+	return finder.graphTypes(modules)
 }
 
 // made notes the type of a value just made: an object type as a shape, and what anything else is
 // made of as used.
 func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
+	proven = f.l.phantomArrayView(proven)
 	switch {
 	case proven == nil:
 	case proven.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0:
@@ -131,6 +122,8 @@ func (f *cycleFinder) made(proven *checker.Type, where *ast.Node) {
 		}
 	case proven.Flags()&checker.TypeFlagsObject == 0 || f.isFunction(proven):
 		f.use(proven, where)
+	case f.l.recordElement(proven) != nil:
+		f.use(f.l.recordElement(proven), where)
 	case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		for _, argument := range f.l.checker.GetTypeArguments(proven) {
 			f.use(argument, where)
@@ -158,6 +151,7 @@ func (f *cycleFinder) shape(proven *checker.Type, where *ast.Node) {
 
 // use notes a type the program uses, and every type it's made of.
 func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
+	proven = f.l.phantomArrayView(proven)
 	if proven == nil {
 		return
 	}
@@ -185,6 +179,10 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 		return
 	}
 	if f.isFunction(proven) {
+		return
+	}
+	if element := f.l.recordElement(proven); element != nil {
+		f.use(element, where)
 		return
 	}
 	if f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
@@ -280,6 +278,13 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 				Fix:   "declare the elements weak, Weak<" + target + ">[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly " + target + "[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)",
 			}
 		}
+	case l.recordElement(holder) != nil:
+		element := l.recordElement(holder)
+		if !f.weak(element) && f.reaches(element, cycleNode{proven: holder}) {
+			if write := f.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
+				return &Refused{Where: l.program.Where(f.where[holder]), What: name + ", a record whose values can reach back to its holder: a cycle reference counting cannot free, and " + f.writtenAt(write) + " may close one", Fix: "use weak links or write only values proven unable to reach the record (adamic/cycle-capable)"}
+			}
+		}
 	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
 	case l.isLibraryType(holder, "Set"):
 		arguments := l.checker.GetTypeArguments(holder)
@@ -349,6 +354,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 // reaches reports whether a value of type from can reach target: a value seen as target's type
 // (either way round, since either may be what the value really is), or target's cell.
 func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+	target.proven = f.l.phantomArrayView(target.proven)
 	visited := map[cycleNode]bool{}
 	queue := []cycleNode{{proven: from}}
 	for len(queue) > 0 {
@@ -371,7 +377,7 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			}
 			continue
 		}
-		proven := node.proven
+		proven := f.l.phantomArrayView(node.proven)
 		flags := proven.Flags()
 		if f.weak(proven) || f.template(proven) {
 			// A Weak holds nothing.
@@ -412,6 +418,8 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 					queue = append(queue, cycleNode{cell: local + 1})
 				}
 			}
+		case f.l.recordElement(proven) != nil:
+			queue = append(queue, cycleNode{proven: f.l.recordElement(proven)})
 		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 			for _, argument := range f.l.checker.GetTypeArguments(proven) {
 				queue = append(queue, cycleNode{proven: argument})
