@@ -2,17 +2,13 @@
 package json
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"io/fs"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
-	"syscall"
 	"testing"
-	"time"
 	"unicode/utf8"
 
 	"github.com/system-inc/adamic/internal/gatesample"
@@ -265,14 +261,10 @@ func writeJSON(t *testing.T, path string, value any) {
 	}
 }
 
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
+func bounded(t *testing.T, name string, arguments ...string) *progressCommand {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	command.WaitDelay = 5 * time.Second
+	command := newProgressCommand(jsonProgressPolicy, name, arguments...)
+	t.Cleanup(command.cancel)
 	return command
 }
 
