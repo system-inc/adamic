@@ -36,3 +36,5 @@ One named optional numeric property plus a numeric index is sufficient to reprod
 Node runs all three programs and prints 1. Both compiler backends refuse minimal.a at 3:5. Both lower without-index.a and index-only.a and print 1, matching Node. comparisons.json contains exact exit codes, diagnostics and outputs. JavaScript runs use oracle/node.mjs, the repository runtime resolver; native and JavaScript compilation use the isolated 0d07625c compiler. An earlier JS invocation without that resolver failed package resolution and was discarded.
 
 The prior evidence actually attributes CompilerOptions enclosing stops to five locations totaling 15 rows (classFields 5, generators 3, module/esnextAnd2015 3, checker 2, transformer 2). This reduction selects the classFields group. The requested 11-row description does not match that stored table; it does not alter the 99-row conservation.
+
+Moved off the landing slice (Oct 8): minimal.a and index-only.a refuse an index signature until records-maplike lands. They are attached to task #p9v82wa and return with the records slice; without-index.a stays.

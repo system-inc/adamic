@@ -5,8 +5,9 @@ import sys
 binary=Path(sys.argv[1]).resolve()
 with tempfile.TemporaryDirectory(prefix='latent-indexed-audit-') as tmp:
  root=Path(tmp);source=root/'source';source.mkdir()
- # .a is the authored fixture; .ts is a scratch checker-profile materialization.
- (source/'input.ts').write_bytes((Path(__file__).parent/'fixtures/guard-attribution.a').read_bytes())
+ # A TypeScript input under tsc's checker profile (noUncheckedIndexedAccess off), not an Adamic program:
+ # under Adamic's options its indexed read is TS2322, so it is kept as .ts.
+ (source/'input.ts').write_bytes((Path(__file__).parent/'fixtures/guard-attribution.ts').read_bytes())
  (source/'tsconfig.json').write_text(json.dumps({'compilerOptions':{'strict':True,'noUncheckedIndexedAccess':False,'target':'ES2022'}}))
  with (root/'run.log').open('w') as log:subprocess.run([str(binary),str(source),str(root/'raw.jsonl')],env={**os.environ,'LATENT_ASSERT_NO_OUTPUT':'1'},stdout=log,stderr=subprocess.STDOUT,check=True)
  header,record=[json.loads(x) for x in (root/'raw.jsonl').read_text().splitlines()]

@@ -61,3 +61,5 @@ The five index sites with no same-line replacement are checker.ts:9101, 33479, 3
 These are exact diagnostic-root changes and same-line observations. Other boundaries in the containing attempted units may remain, and the full ledger omits final module ordering, ownership and backend passes. No whole-tsc compilation, hidden-byte reduction or complete-body retirement is claimed.
 
 `python3 review/optional-indexing/summarize-census.py --audit` passes. `python3 review/optional-indexing/audit-mutants.py` independently changes a recorded family count and a compiler hash; both fail the audit, then the original artifacts are restored. audit-mutants.json and logs/ preserve both intended catchers. A manifest-scope assertion initially failed on the mistaken 82-file expectation; it was corrected to the actual compiler-only 79 files before any report was accepted.
+
+Moved off the landing slice (Oct 8): record-index-signature.a refuses an index signature until records-maplike lands, and an .a file lands only when it checks on the tree it lands on. It is attached to task #p9v82wa and returns with the records slice.

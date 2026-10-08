@@ -187,3 +187,5 @@ fix; the namespace implementation is byte-identical after the main merge.
 No full repository gate is claimed. Exact host programs are still NotYet;
 container escape, callable namespace host properties and process cwd lowering
 remain separate work. No main or area branch was pushed, and no PR was opened.
+
+Moved off the landing slice (Oct 8): cwd.a, the exact memoize reduction, is refused on main by the closure capture rule (callback is captured and reachable from what it holds); it checks only with step 06's graph admission. It is attached to task #7g4qv2b and returns with runtime's Program-region slice. cwd-control.a, the structural control, stays.
