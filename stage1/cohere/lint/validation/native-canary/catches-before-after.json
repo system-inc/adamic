@@ -1,0 +1,941 @@
+{
+  "rules": {
+    "await crosses function boundary": {
+      "rule": "no-await-in-loop",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "comma chain reports inner": {
+      "rule": "no-sequences",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "ambiguous-identifier-span": {
+      "rule": "nexus/consistency-no-ambiguous-identifier",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/evidence/mutants.log.gz",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/evidence/mutants.log.gz",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/evidence/mutants.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-octal-escape mutant from batch 8": {
+      "rule": "no-octal-escape",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "nexus long line comment configured threshold ignored": {
+      "rule": "nexus/consistency-no-long-line-comment",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/evidence/mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/evidence/mutants.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/evidence/mutants.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "nested generator owns outer yield": {
+      "rule": "require-yield",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-useless-catch finally repair range reversed": {
+      "rule": "no-useless-catch",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-useless-catch/evidence/gate.log.gz",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-useless-catch/evidence/gate.log.gz",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-useless-catch/evidence/gate.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "concat substituted template ignored": {
+      "rule": "no-useless-concat",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-useless-concat/evidence/gate.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-useless-concat/evidence/gate.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-useless-concat/evidence/gate.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "callback at the limit is reported": {
+      "rule": "max-nested-callbacks",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/max-nested-callbacks/evidence/tests.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/max-nested-callbacks/evidence/tests.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/max-nested-callbacks/evidence/tests.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "boolean inverse changed": {
+      "rule": "no-unneeded-ternary",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "nexus-abbreviated-identifier whole-word finding suppressed": {
+      "rule": "nexus/consistency-no-abbreviated-identifier",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/testdata/evidence/all-mutants-0.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/testdata/evidence/all-mutants-0.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/testdata/evidence/all-mutants-0.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "react-forward-ref-uses-ref mutant from batch 8": {
+      "rule": "react/forward-ref-uses-ref",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "predicate finding widened to its owner": {
+      "rule": "adamic/no-type-predicate",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "debugger fix suppressed": {
+      "rule": "no-debugger",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-empty-pattern reports real bindings": {
+      "rule": "no-empty-pattern",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-empty-pattern/evidence/lint-tests.log.gz",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-empty-pattern/evidence/lint-tests.log.gz",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-empty-pattern/evidence/lint-tests.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "react-no-is-mounted mutant from batch 8": {
+      "rule": "react/no-is-mounted",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-multi-assign-option-reversed": {
+      "rule": "no-multi-assign",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-multi-assign/evidence/mutant-results.txt",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-multi-assign/evidence/mutant-results.txt",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-multi-assign/evidence/mutant-results.txt"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-script-url-case-fold": {
+      "rule": "no-script-url",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-script-url/evidence/harness-base.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-script-url/evidence/harness-base.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-script-url/evidence/harness-base.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "duplicate case suppressed": {
+      "rule": "no-duplicate-case",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "enum bitwise option ignored": {
+      "rule": "@typescript-eslint/prefer-literal-enum-member",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "method listener lost": {
+      "rule": "@typescript-eslint/method-signature-style",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "nexus-stuttering-name-equality": {
+      "rule": "nexus/consistency-no-stuttering-name",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/evidence/nexus-stutter-unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/evidence/nexus-stutter-unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/evidence/nexus-stutter-unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-useless-constructor mutant from batch 8": {
+      "rule": "no-useless-constructor",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "self-comparison-equality-reversed": {
+      "rule": "no-self-compare",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-self-compare/evidence/mutant.txt",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-self-compare/evidence/mutant.txt",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-self-compare/evidence/mutant.txt"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "enum reported at its declaration rather than its name": {
+      "rule": "nexus/consistency-no-enum",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "int32 hint option ignored": {
+      "rule": "no-bitwise",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "empty_character_class_silenced": {
+      "rule": "no-empty-character-class",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-empty-character-class/evidence/oracle.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-empty-character-class/evidence/oracle.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-empty-character-class/evidence/oracle.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "declared BaseError constructor ignored": {
+      "rule": "base/consistency-no-hand-built-declared-error",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/evidence/base-declared-error-mutants-serial.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/evidence/base-declared-error-mutants-serial.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/evidence/base-declared-error-mutants-serial.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "var declaration suppressed": {
+      "rule": "no-var",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "shouting_fourth_token_omitted": {
+      "rule": "nexus/consistency-no-shouting",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-shouting/evidence/mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-shouting/evidence/mutants.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-shouting/evidence/mutants.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "finally continue incorrectly absorbed by switch": {
+      "rule": "no-unsafe-finally",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-unsafe-finally/validation/gate-2.gz",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-unsafe-finally/validation/gate-2.gz",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-unsafe-finally/validation/gate-2.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "directive prefix ignored": {
+      "rule": "vars-on-top",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "parentheses around a discarded construction not seen through": {
+      "rule": "no-new",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-iterator-static-key": {
+      "rule": "no-iterator",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-iterator/evidence/no-iterator-harness-complete.log.gz",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-iterator/evidence/no-iterator-harness-complete.log.gz",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-iterator/evidence/no-iterator-harness-complete.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "react-no-find-dom-node mutant from batch 8": {
+      "rule": "react/no-find-dom-node",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-caller-property": {
+      "rule": "no-caller",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-caller/evidence/mutant.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-caller/evidence/mutant.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-caller/evidence/mutant.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "nexus-for-in-message": {
+      "rule": "nexus/consistency-no-for-in",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-for-in/evidence/nexus-unified-final.log.gz",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-for-in/evidence/nexus-unified-final.log.gz",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-for-in/evidence/nexus-unified-final.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-unexpected-multiline mutant from batch 8": {
+      "rule": "no-unexpected-multiline",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "for update option ignored": {
+      "rule": "no-plusplus",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch1-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch1-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "max-depth-keyword-span": {
+      "rule": "max-depth",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/max-depth/evidence/gate.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/max-depth/evidence/gate.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/max-depth/evidence/gate.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "init_declarations_always_span_includes_annotation": {
+      "rule": "@typescript-eslint/init-declarations",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/typescript-init-declarations/evidence/init-declarations-final.log.gz",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/typescript-init-declarations/evidence/init-declarations-final.log.gz",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/typescript-init-declarations/evidence/init-declarations-final.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "empty function body reported": {
+      "rule": "no-empty",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "pagination_bad_name_accepted": {
+      "rule": "base/consistency-require-pagination-argument-name",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/evidence/unified-gate.log.gz",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/evidence/unified-gate.log.gz",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/evidence/unified-gate.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "react-jsx-no-comment-textnodes mutant from batch 8": {
+      "rule": "react/jsx-no-comment-textnodes",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz",
+        "sanitized native matches mutated Node": "gate.log.gz"
+      }
+    },
+    "interface accepts type suffix": {
+      "rule": "nexus/consistency-require-type-suffix",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch1-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch1-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "JSDoc replacement text corrupted": {
+      "rule": "nexus/consistency-no-single-line-jsdoc",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/validation/final-owned-mutant.txt",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/validation/final-owned-mutant.txt",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/validation/final-owned-mutant.txt"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "empty placeholder reported": {
+      "rule": "no-template-curly-in-string",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "regex fix eats extra byte": {
+      "rule": "no-div-regex",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "with statement underlined whole": {
+      "rule": "no-with",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "suggestion applied as fix": {
+      "rule": "eqeqeq",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "continue finding stops before its semicolon": {
+      "rule": "no-continue",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "prefer-template mutant from batch 8": {
+      "rule": "prefer-template",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "one excess class is silently allowed": {
+      "rule": "max-classes-per-file",
+      "before": {
+        "Node": "refs/remotes/origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/slot05/batch29/evidence/shared-focused.log.gz",
+        "emitted JavaScript": "refs/remotes/origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/slot05/batch29/evidence/shared-focused.log.gz",
+        "native": "refs/remotes/origin/codex/lint-helpers-05:stage1/cohere/lint/helpers/slot05/batch29/evidence/shared-focused.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "react-no-redundant-should-component-update mutant from batch 8": {
+      "rule": "react/no-redundant-should-component-update",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "no-unused-private-class-members mutant from batch 8": {
+      "rule": "no-unused-private-class-members",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "console receiver widened": {
+      "rule": "base/consistency-no-console",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch1-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch1-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "prefer-destructuring-object-fix": {
+      "rule": "prefer-destructuring",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/prefer-destructuring/evidence/prefer-all-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/prefer-destructuring/evidence/prefer-all-mutants.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/prefer-destructuring/evidence/prefer-all-mutants.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "proto accessor suppressed": {
+      "rule": "no-proto",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-proto/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-proto/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-proto/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "condition polarity reversed": {
+      "rule": "no-negated-condition",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "multiline-arrow-single-line-exemption-removed": {
+      "rule": "nexus/consistency-no-multiline-arrow-function",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/evidence/initial-tests.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/evidence/initial-tests.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/evidence/initial-tests.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "miss-postfix-writes": {
+      "rule": "no-ex-assign",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-ex-assign/evidence/gates.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-ex-assign/evidence/gates.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-ex-assign/evidence/gates.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "comment exemption removed": {
+      "rule": "no-empty-static-block",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-empty-static-block/evidence/tests.log.gz",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-empty-static-block/evidence/tests.log.gz",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/no-empty-static-block/evidence/tests.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "return parentheses option reversed": {
+      "rule": "no-return-assign",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "destructuring hole reported": {
+      "rule": "no-sparse-arrays",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "bom removes two marks": {
+      "rule": "unicode-bom",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "adjacent overload separation ignored": {
+      "rule": "@typescript-eslint/adjacent-overload-signatures",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/evidence/owned.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/evidence/owned.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/evidence/owned.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "comment self directive exemption removed": {
+      "rule": "no-warning-comments",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "wrapper Number ignored": {
+      "rule": "@typescript-eslint/no-wrapper-object-types",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "global container name judgement reversed": {
+      "rule": "base/boundary-no-global-container",
+      "before": {
+        "Node": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log",
+        "native": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "label option widened": {
+      "rule": "no-labels",
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/area/stage1-lint:stage1/cohere/lint/rules/base-boundary-no-global-container/evidence/unified.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    }
+  },
+  "other_semantic_mutants": {
+    "count check alone caught": {
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/decoration-and-count-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/decoration-and-count-mutants.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "decoration range collapsed to one character caught on": {
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/decoration-and-count-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/decoration-and-count-mutants.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "position mutant caught on": {
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "emitted JavaScript": "refs/remotes/origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/slot02/landing-48838501/evidence/inherited-harness-oracle.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "fold mutant caught on": {
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/volume_evidence/batch2-full-package.log",
+        "emitted JavaScript": "refs/remotes/origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/slot02/landing-48838501/evidence/inherited-harness-oracle.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "wrong descriptor kind caught on": {
+      "before": {
+        "Node": "refs/remotes/origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01-evidence/packages.log",
+        "native": "refs/remotes/origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01-evidence/packages.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "ignored decoded-option mutant caught on": {
+      "before": {
+        "Node": "refs/remotes/origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/slot02/landing-48838501/evidence/options-witness.log.gz",
+        "native": "refs/remotes/origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/slot02/landing-48838501/evidence/options-witness.log.gz"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "overlap winner misreported caught on": {
+      "before": {
+        "Node": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "native": "refs/remotes/origin/HEAD:stage1/cohere/lint/validation/suite-and-mutants.log",
+        "emitted JavaScript": "refs/remotes/origin/devtools/lint-rule-check:stage1/cohere/lint/check-evidence/full-lint-package-uncached.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "second suggestion edit mutant caught on": {
+      "before": {
+        "Node": "refs/remotes/origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/slot02/landing-area-d65a8f93/evidence/shared-harness.log",
+        "emitted JavaScript": "refs/remotes/origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/slot02/landing-area-d65a8f93/evidence/shared-harness.log",
+        "native": "refs/remotes/origin/codex/lint-helpers-02:stage1/cohere/lint/helpers/slot02/landing-area-d65a8f93/evidence/shared-harness.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    },
+    "finish-hook omission caught on": {
+      "before": {
+        "Node": "refs/remotes/origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01-evidence/packages.log",
+        "native": "refs/remotes/origin/codex/lint-wave1-01:stage1/cohere/lint/claims/wave1-01-evidence/packages.log"
+      },
+      "after": {
+        "Node": "gate.log.gz",
+        "emitted JavaScript": "gate.log.gz"
+      }
+    }
+  }
+}

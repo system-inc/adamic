@@ -7,6 +7,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"sort"
 	"strings"
@@ -257,7 +258,7 @@ func lintOracleKey(t *testing.T, root string) string {
 }
 
 // Selected and full builds validate and render through the same registry API.
-func lintRegistry(t *testing.T, root string) ([]registry.Descriptor, error) {
+func lintRegistry(root string) ([]registry.Descriptor, error) {
 	marker, err := os.ReadFile(filepath.Join(root, ".selected-rule"))
 	if os.IsNotExist(err) {
 		return registry.Generate(root)
@@ -491,17 +492,32 @@ func runJavaScript(t *testing.T, module, manifest string, count bool) execution 
 // absolute paths. Restore the original script filename before the comparison.
 type lintCaptured struct{ Name, Source, Fields string }
 
+// A captured case keeps its file name's directories (captureUpstream: a rule that judges a path reads
+// them), so the name stored is the path under its case directory, not the base name. The layout is in
+// every capture key, so no observation stored under base names is read back.
+const lintCaptureLayout = "case-relative"
+
+var lintCaseDirectory = regexp.MustCompile(`/case-[0-9]{3}/`)
+
+func lintCaseName(path string) string {
+	slashed := filepath.ToSlash(path)
+	if found := lintCaseDirectory.FindStringIndex(slashed); found != nil {
+		return slashed[found[1]:]
+	}
+	return filepath.Base(path)
+}
+
 func lintCapture(t *testing.T, sourceRoot string, d registry.Descriptor) []string {
 	t.Helper()
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
 		return upstreamSelection(t, sourceRoot, &d)
 	}
-	key := lintKey("capture", map[string]string{"cohere": lintCohere(t), "overlay": lintBytes(t, filepath.Join(repository, "cohere/internal/lint/testing/rule_testing.go")), "package": d.UpstreamPackage, "filter": "^" + d.UpstreamTest, "rule": d.Name})
+	key := lintKey("capture", map[string]string{"cohere": lintCohere(t), "overlay": lintBytes(t, filepath.Join(repository, "cohere/internal/lint/testing/rule_testing.go")), "package": d.UpstreamPackage, "filter": "^" + d.UpstreamTest, "rule": d.Name, "layout": lintCaptureLayout})
 	data := lintCachedBytes(t, "capture", key, func() []byte {
 		var records []lintCaptured
 		for _, row := range upstreamSelection(t, sourceRoot, &d) {
 			path, fields, _ := strings.Cut(row, "\t")
-			records = append(records, lintCaptured{filepath.Base(path), lintBytes(t, path), fields})
+			records = append(records, lintCaptured{lintCaseName(path), lintBytes(t, path), fields})
 		}
 		encoded, err := json.Marshal(records)
 		if err != nil {
@@ -516,7 +532,7 @@ func lintCapture(t *testing.T, sourceRoot string, d registry.Descriptor) []strin
 	var rows []string
 	root := t.TempDir()
 	for i, record := range records {
-		path := filepath.Join(root, fmt.Sprint(i), record.Name)
+		path := filepath.Join(root, fmt.Sprint(i), filepath.FromSlash(record.Name))
 		lintPublish(t, path, []byte(record.Source), 0600)
 		rows = append(rows, path+"\t"+record.Fields)
 	}
@@ -533,7 +549,7 @@ func lintFullCapture(t *testing.T, root string) []string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	key := lintKey("capture", map[string]string{"cohere": lintCohere(t), "overlay": lintBytes(t, filepath.Join(repository, "cohere/internal/lint/testing/rule_testing.go")), "package": "all registered packages", "filter": string(encoded), "rule": "all"})
+	key := lintKey("capture", map[string]string{"cohere": lintCohere(t), "overlay": lintBytes(t, filepath.Join(repository, "cohere/internal/lint/testing/rule_testing.go")), "package": "all registered packages", "filter": string(encoded), "rule": "all", "layout": lintCaptureLayout})
 	data := lintCachedBytes(t, "capture", key, func() []byte { return lintCaptureObservation(t, upstreamSelection(t, root, nil)) })
 	var records []lintCaptured
 	if err := json.Unmarshal(data, &records); err != nil {
@@ -542,7 +558,7 @@ func lintFullCapture(t *testing.T, root string) []string {
 	var rows []string
 	directory := t.TempDir()
 	for i, record := range records {
-		path := filepath.Join(directory, fmt.Sprint(i), record.Name)
+		path := filepath.Join(directory, fmt.Sprint(i), filepath.FromSlash(record.Name))
 		lintPublish(t, path, []byte(record.Source), 0600)
 		rows = append(rows, path+"\t"+record.Fields)
 	}
@@ -556,7 +572,7 @@ func lintCaptureObservation(t *testing.T, rows []string) []byte {
 	var records []lintCaptured
 	for _, row := range rows {
 		path, fields, _ := strings.Cut(row, "\t")
-		records = append(records, lintCaptured{filepath.Base(path), lintBytes(t, path), fields})
+		records = append(records, lintCaptured{lintCaseName(path), lintBytes(t, path), fields})
 	}
 	data, err := json.Marshal(records)
 	if err != nil {

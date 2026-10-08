@@ -1,0 +1,15 @@
+{
+  "name": "no-script-url",
+  "kinds": [
+    "StringLiteral",
+    "NoSubstitutionTemplateLiteral"
+  ],
+  "node": true,
+  "parent": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoScriptUrl",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoScriptUrl"
+}
