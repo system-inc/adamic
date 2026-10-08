@@ -1,0 +1,23 @@
+[
+  {
+    "ordinal": 1,
+    "file": "src/compiler/builder.ts",
+    "line": 1246,
+    "column": 69,
+    "message": "error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.",
+    "outside_compiler": false,
+    "split_0_exit": 1,
+    "split_1_exit": 1,
+    "original_line": 1246,
+    "original_column": 69,
+    "probe": "probes/01-indexed-path.a",
+    "phase": "checker",
+    "meter_lowering_message_matches": [],
+    "latent_status": "new",
+    "message_already_in_pristine_diagnostics": true,
+    "node_exit": 0,
+    "node_stdout": "undefined\n",
+    "probe_message": "error TS2345: Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.",
+    "probe_exact_message_match": true
+  }
+]

@@ -9,15 +9,33 @@ import shutil
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('progress', type=Path)
+parser.add_argument('--evidence', type=Path)
+parser.add_argument('--census-report', type=Path)
 args = parser.parse_args()
 here = Path(__file__).resolve().parent
 repository = here.parents[2]
-evidence = here / 'evidence'
+evidence = args.evidence.resolve() if args.evidence else here / 'evidence'
 progress = args.progress.resolve()
 records = json.loads((progress / 'stops.json').read_text())
-run = sorted((repository / 'stage3/meter/runs').glob('*/report.json'))[-1]
-meter = json.loads(run.read_text())['trees']['main']
-reasons = meter['latent_lowering']['per_reason']
+if args.census_report:
+    run = args.census_report.resolve()
+    report = run.read_text()
+    section = report.split('# main-unmerged all exact reasons\n', 1)[1].split('# area-unmerged', 1)[0]
+    reasons = {}
+    for line in section.splitlines():
+        match = re.fullmatch(r'\| ((?:NotYet|Refused): .*) \| (\d+) \|', line)
+        if match:
+            reasons[match[1].replace('\\|', '|')] = int(match[2])
+    if not reasons:
+        raise RuntimeError('main latent census reason table is empty')
+    comparison = {'census_report': str(run.relative_to(repository)),
+        'census_report_sha256': __import__('hashlib').sha256(run.read_bytes()).hexdigest(),
+        'census_source': report.splitlines()[0], 'exact_reason_families': len(reasons)}
+else:
+    run = sorted((repository / 'stage3/meter/runs').glob('*/report.json'))[-1]
+    meter = json.loads(run.read_text())['trees']['main']
+    reasons = meter['latent_lowering']['per_reason']
+    comparison = {'meter_run': str(run.relative_to(repository)), 'meter_compiler': meter['adamic_commit']}
 pristine = (evidence / 'build-0.stderr').read_text()
 provenance = json.loads((evidence / 'provenance.json').read_text())
 original_tree = Path(provenance['tree'])
@@ -43,6 +61,7 @@ for record in records:
     text = re.sub(r'^error TS\d+: ', '', record['message'])
     record['meter_lowering_message_matches'] = [reason for reason in reasons
         if re.sub(r'^(NotYet|Refused): ', '', reason) == text]
+    record['latent_status'] = 'already' if record['meter_lowering_message_matches'] else 'new'
     record['message_already_in_pristine_diagnostics'] = record['message'] in pristine
     record['node_exit'] = int((evidence / f'{stem}-node.exit').read_text())
     record['node_stdout'] = (evidence / f'{stem}-node.stdout').read_text()
@@ -67,7 +86,7 @@ for record in records:
     if replacement.exists():
         shutil.copyfile(replacement, evidence / replacement.name)
 (evidence / 'stops.json').write_text(json.dumps(records, indent=2) + '\n')
-summary = {'meter_run': str(run.relative_to(repository)), 'meter_compiler': meter['adamic_commit'],
+summary = {**comparison,
     'matched_stop_sites': sum(bool(record['meter_lowering_message_matches']) for record in records),
     'unmatched_stop_sites': sum(not record['meter_lowering_message_matches'] for record in records),
     'unmatched_distinct_messages': len({record['message'] for record in records if not record['meter_lowering_message_matches']}),

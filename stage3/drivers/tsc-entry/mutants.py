@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Prove the evidence checks can reject independent artifact mutations."""
+import argparse
 import json
 from pathlib import Path
 import shutil
@@ -7,10 +8,14 @@ import subprocess
 import tempfile
 
 here = Path(__file__).resolve().parent
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--evidence', type=Path, default=here / 'evidence')
+args = parser.parse_args()
+evidence = args.evidence.resolve()
 with tempfile.TemporaryDirectory(prefix='tsc-entry-mutants-') as scratch:
     for name in ('probe-diagnostic', 'node-byte', 'split-byte', 'stop-population'):
         directory = Path(scratch) / name
-        shutil.copytree(here / 'evidence', directory)
+        shutil.copytree(evidence, directory)
         if name == 'probe-diagnostic':
             shutil.copyfile(directory / '01-defined-control.log', directory / '01-indexed-path-build.stderr')
         elif name == 'node-byte':
@@ -22,7 +27,7 @@ with tempfile.TemporaryDirectory(prefix='tsc-entry-mutants-') as scratch:
             p = directory / 'stops.json'
             rows = json.loads(p.read_text())
             p.write_text(json.dumps(rows[:-1]))
-        log = here / 'evidence' / f'mutant-{name}.log'
+        log = evidence / f'mutant-{name}.log'
         with log.open('wb') as output:
             result = subprocess.run(['python3', str(here / 'verify.py'), str(directory)], stdout=output, stderr=subprocess.STDOUT)
         if result.returncode != 1:
