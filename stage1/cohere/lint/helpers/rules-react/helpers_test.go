@@ -7,24 +7,21 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
-	"time"
 )
 
 func run(t *testing.T, dir, name string, args ...string) []byte {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	defer cancel()
-	cmd := exec.CommandContext(ctx, name, args...)
+	cmd := exec.Command(name, args...)
 	cmd.Dir = dir
 	f, err := os.CreateTemp(t.TempDir(), "output-")
 	if err != nil {
@@ -34,8 +31,8 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 	cmd.Stdout = f
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
-	if err = cmd.Run(); err != nil {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	if err = childguard.Run(cmd, runGuard); err != nil {
+		t.Fatalf("%s: %s %v: %v\n%s", t.Name(), name, args, err, &stderr)
 	}
 	if stderr.Len() != 0 {
 		t.Fatalf("%s stderr: %s", name, &stderr)
@@ -64,6 +61,10 @@ func write(t *testing.T, path string, data []byte) {
 	}
 }
 func outputsEntry(t *testing.T, directory, path, entry string) [][]byte {
+	return entryOutputs(t, directory, path, entry, true)
+}
+
+func entryOutputs(t *testing.T, directory, path, entry string, includeNative bool) [][]byte {
 	program, err := load.Load([]string{filepath.Join(directory, entry)})
 	if err != nil {
 		t.Fatal(err)
@@ -72,14 +73,18 @@ func outputsEntry(t *testing.T, directory, path, entry string) [][]byte {
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "native")
-	if err = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+	binary := ""
+	if includeNative {
+		binary = buildNative(t, ir)
 	}
 	script := filepath.Join(t.TempDir(), "emitted.mjs")
 	write(t, script, []byte(javascript.JavaScript(ir)))
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
-	return [][]byte{run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, entry), path), run(t, "", binary, path), run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, script, path)}
+	results := [][]byte{run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, entry), path)}
+	if includeNative {
+		results = append(results, run(t, "", binary, path))
+	}
+	return append(results, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, script, path))
 }
 func TestGoAgreement(t *testing.T) {
 	binary := oracle(t)
@@ -114,6 +119,7 @@ func TestMutants(t *testing.T) {
 	}
 	for _, m := range mutants {
 		t.Run(m.file, func(t *testing.T) {
+			t.Parallel()
 			root := t.TempDir()
 			dir := filepath.Join(root, "lint/helpers/rules-react")
 			if e := os.MkdirAll(dir, 0755); e != nil {
@@ -149,12 +155,7 @@ func TestMutants(t *testing.T) {
 				t.Fatal(e)
 			}
 			write(t, filepath.Join(root, "lint/unicode.ts"), unicode)
-			for i, out := range outputs(t, dir, path) {
-				if bytes.Equal(out, want) {
-					t.Fatalf("backend %d mutant survived", i)
-				}
-				t.Logf("backend %d compiling mutant caught by output", i)
-			}
+			checkMutant(t, dir, path, "main.a", false, want)
 		})
 	}
 }
@@ -227,36 +228,6 @@ func TestAstMutants(t *testing.T) {
 	}
 	input := filepath.Join(t.TempDir(), "ast.json")
 	write(t, input, expanded)
-	originalRoot, _ := filepath.Abs("../../../../../")
-	root := t.TempDir()
-	err = filepath.WalkDir(filepath.Join(originalRoot, "stage1"), func(path string, entry os.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if entry.IsDir() {
-			if entry.Name() == "testdata" || entry.Name() == "gaps" {
-				return filepath.SkipDir
-			}
-			return nil
-		}
-		if !strings.HasSuffix(path, ".a") && !strings.HasSuffix(path, ".ts") {
-			return nil
-		}
-		relative, _ := filepath.Rel(originalRoot, path)
-		target := filepath.Join(root, relative)
-		if err = os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-			return err
-		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(target, data, 0644)
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	directory := filepath.Join(root, "stage1/cohere/lint/helpers/rules-react")
 	var mutations []struct{ File, From, To string }
 	data, err = os.ReadFile("testdata/ast-mutants.json")
 	if err != nil {
@@ -265,8 +236,17 @@ func TestAstMutants(t *testing.T) {
 	if err = json.Unmarshal(data, &mutations); err != nil {
 		t.Fatal(err)
 	}
+	hasCanary := false
+	for _, m := range mutations {
+		hasCanary = hasCanary || m.File == nativeCanaryMutant
+	}
+	if !hasCanary {
+		t.Fatalf("native canary mutant %s is missing", nativeCanaryMutant)
+	}
 	for _, m := range mutations {
 		t.Run(m.File, func(t *testing.T) {
+			t.Parallel()
+			directory := copyAstMutantTree(t)
 			path := filepath.Join(directory, m.File)
 			source, err := os.ReadFile(path)
 			if err != nil {
@@ -276,13 +256,7 @@ func TestAstMutants(t *testing.T) {
 				t.Fatal("anchor")
 			}
 			write(t, path, []byte(strings.Replace(string(source), m.From, m.To, 1)))
-			defer write(t, path, source)
-			for i, out := range outputsEntry(t, directory, input, "ast_main.a") {
-				if bytes.Equal(out, want) {
-					t.Fatalf("backend %d mutant survived", i)
-				}
-				t.Logf("backend %d compiling semantic mutant caught by Go output", i)
-			}
+			checkMutant(t, directory, input, "ast_main.a", m.File == nativeCanaryMutant, want)
 		})
 	}
 }
