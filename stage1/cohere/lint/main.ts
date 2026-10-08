@@ -5,6 +5,9 @@ import { Scanner } from '../../typescript/scanner/scanner.ts';
 import { Linter } from './lint.ts';
 import { Settings } from './settings.ts';
 
+// Test only: see Linter.junkRows.
+const junkRows = programArguments().includes('--junk-rows');
+
 function run(row: string, countOnly: boolean): number {
     const fields = row.split('\t');
     const path = fields[0] ?? panic('missing path');
@@ -26,6 +29,7 @@ function run(row: string, countOnly: boolean): number {
         settings.read('allowemptycatch', fields[4] === 'true' ? 'true' : 'false') === 'true',
         settings,
     );
+    linter.junkRows = junkRows;
     linter.run();
     if(countOnly) {
         return linter.findings.length;
@@ -108,6 +112,11 @@ function run(row: string, countOnly: boolean): number {
         console.log(
             `range ${start} ${end} ${finding.id} ${repair}\t${written(replacement)}\t${written(description)}\t${editStart} ${editEnd}`,
         );
+        for(const extra of finding.extraFixes) {
+            console.log(
+                `fix-edit\t${offsets[extra.start] ?? panic('fix outside source')} ${offsets[extra.end] ?? panic('fix end outside source')}\t${written(extra.text)}`,
+            );
+        }
         if(complete) {
             for(const suggestion of finding.suggestions) {
                 console.log(
@@ -129,6 +138,9 @@ function run(row: string, countOnly: boolean): number {
         for(const rejection of linter.rejected) {
             console.log(rejection);
         }
+        if(linter.unconverged.length > 0) {
+            console.log(`unconverged\t${linter.unconverged.join(',')}`);
+        }
         console.log(`fixed\t${written(fixed)}`);
     }
     return linter.findings.length;
@@ -142,16 +154,33 @@ if(first === '--manifest') {
         panic(manifest.message);
     }
     const countOnly = args.includes('--count');
+    // `--shard <index>/<count>` runs every count-th row starting at index, numbering cases as the whole
+    // manifest does, so the shards' outputs merge by case number into exactly the single-process output
+    // (stage1/cohere/lint/shards). Rows are dealt out in turn rather than in blocks, which spreads a
+    // directory of large files across the shards.
+    let shardIndex = 0;
+    let shardCount = 1;
+    const shardFlag = args.indexOf('--shard');
+    if(shardFlag >= 0) {
+        const shard = (args[shardFlag + 1] ?? panic('missing shard')).split('/');
+        shardIndex = Number.parseInt(shard[0] ?? panic('missing shard index'), 10);
+        shardCount = Number.parseInt(shard[1] ?? panic('missing shard count'), 10);
+        if(!(shardCount >= 1 && shardIndex >= 0 && shardIndex < shardCount)) {
+            panic('shard must be <index>/<count> with 0 <= index < count');
+        }
+    }
     let count = 0;
     let caseNumber = 0;
     for(const row of manifest.text.split('\n')) {
         if(row === '') {
             continue;
         }
-        if(!countOnly) {
-            console.log(`case ${caseNumber}`);
+        if(caseNumber % shardCount === shardIndex) {
+            if(!countOnly) {
+                console.log(`case ${caseNumber}`);
+            }
+            count += run(row, countOnly);
         }
-        count += run(row, countOnly);
         caseNumber++;
     }
     if(countOnly) {

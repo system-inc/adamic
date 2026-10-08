@@ -480,6 +480,33 @@ func (l *lowering) staticClassDeclaration(declaration *ast.Node) error {
 			return l.notYet(clause, "a computed class base; name the base class directly")
 		}
 	}
+	// Instance-private names belong to instance storage, even in the declaring class.
+	// Diagnose this shape before registering static bodies: the wrong method key can
+	// otherwise reach call-target analysis as an internal compiler error.
+	for _, member := range declaration.Members() {
+		if member.Kind != ast.KindClassStaticBlockDeclaration && !ast.HasSyntacticModifier(member, ast.ModifierFlagsStatic) {
+			continue
+		}
+		var failure error
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindPropertyAccessExpression && node.Name().Kind == ast.KindPrivateIdentifier {
+				symbol := l.checker.GetSymbolAtLocation(node.Name())
+				if symbol != nil && len(symbol.Declarations) > 0 {
+					target := symbol.Declarations[0]
+					if target.Parent == declaration && !ast.HasSyntacticModifier(target, ast.ModifierFlagsStatic) {
+						failure = &Refused{Where: l.program.Where(node), What: "instance private storage reached from a static member: " + declaration.Name().Text() + "." + node.Name().Text() + " (adamic/private-instance-from-static)", Fix: "move the private access into an instance method; call that instance method from the static member"}
+						return true
+					}
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		member.ForEachChild(visit)
+		if failure != nil {
+			return failure
+		}
+	}
 	return nil
 }
 

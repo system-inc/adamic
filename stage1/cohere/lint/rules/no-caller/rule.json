@@ -1,0 +1,13 @@
+{
+  "name": "no-caller",
+  "kinds": [
+    "PropertyAccessExpression"
+  ],
+  "visit": "visit",
+  "node": true,
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoCaller",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoCaller"
+}
