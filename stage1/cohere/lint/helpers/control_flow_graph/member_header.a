@@ -1,0 +1,32 @@
+import { emptyNodes, needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+import { IsFunctionLikeDeclaration } from './is_function_like_declaration.a';
+export function memberHeader(b: Builder, node: AstNode | undefined): void {
+    b.decorators(node);
+    if (IsFunctionLikeDeclaration(node)) {
+        for (const parameter of (b.ast.list(needNode(node).Parameters) ?? emptyNodes)) {
+            b.decorators(parameter);
+        }
+    }
+    let name = b.ast.maybe(needNode(node).Name);
+    if (((name !== undefined) && (needNode(name).Kind === 'ComputedPropertyName'))) {
+        b.expr(b.ast.maybe(needNode(name).Expression));
+    }
+    switch (needNode(node).Kind) {
+        case 'PropertyDeclaration':
+        {
+            b.expr(b.ast.maybe(needNode(node).Type));
+            break;
+        }
+        case 'IndexSignature':
+        {
+            for (const parameter of (b.ast.list(needNode(node).Parameters) ?? emptyNodes)) {
+                b.expr(b.ast.maybe(needNode(parameter).Type));
+            }
+            b.expr(b.ast.maybe(needNode(node).Type));
+            break;
+        }
+    }
+}

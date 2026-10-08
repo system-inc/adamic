@@ -1,0 +1,1 @@
+function Component() { let el; try { el = <div />; } catch { return null; } return el; }

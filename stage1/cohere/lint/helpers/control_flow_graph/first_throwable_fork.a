@@ -1,0 +1,24 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+import { throwTarget } from './throw_target.a';
+export function firstThrowableFork(b: Builder): void {
+    if (!b.block(b.cur).Reachable) {
+        return;
+    }
+    let i = b.throwFrame();
+    if ((i < 0)) {
+        return;
+    }
+    let f = at(b.tryStack, i);
+    if (f.thrownForked) {
+        return;
+    }
+    f.thrownForked = true;
+    f.thrownAny = true;
+    b.link(b.cur, throwTarget(f));
+    let next = b.newBlock();
+    b.link(b.cur, next);
+    b.enter(next);
+}

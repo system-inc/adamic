@@ -1,0 +1,12 @@
+{
+  "name": "no-unreachable-loop",
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "oracle": "oracleArenaNoUnreachableLoop",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoUnreachableLoop",
+  "factory": "create",
+  "class": "Rule"
+}

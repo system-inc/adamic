@@ -1,0 +1,348 @@
+{
+  "parser": {
+    "command": [
+      "go",
+      "test",
+      "./stage1/typescript/parser",
+      "-count=1",
+      "-json",
+      "-v",
+      "-failfast=false",
+      "-timeout=90m"
+    ],
+    "exit": 0,
+    "wall_seconds": 952.5709705679983,
+    "load_before": [
+      0.1435546875,
+      0.6708984375,
+      2.16064453125
+    ],
+    "load_after": [
+      6.6171875,
+      6.646484375,
+      5.546875
+    ],
+    "counts": {
+      "pass": 178,
+      "fail": 0,
+      "skip": 0
+    },
+    "package": {
+      "result": "pass",
+      "seconds": 950.524
+    },
+    "tests": [
+      {
+        "test": "TestParserChildGuard",
+        "result": "pass",
+        "seconds": 7.2
+      },
+      {
+        "test": "TestPerformance",
+        "result": "pass",
+        "seconds": 37.55
+      },
+      {
+        "test": "TestJsxNative",
+        "result": "pass",
+        "seconds": 0.51
+      },
+      {
+        "test": "TestTypeOnlyImportCycleCompiles",
+        "result": "pass",
+        "seconds": 1.05
+      },
+      {
+        "test": "TestJsxNode",
+        "result": "pass",
+        "seconds": 0.88
+      },
+      {
+        "test": "TestIncompleteRecoveryCasesAgree",
+        "result": "pass",
+        "seconds": 20.89
+      },
+      {
+        "test": "TestIncompleteCheckerAgrees",
+        "result": "pass",
+        "seconds": 26.88
+      },
+      {
+        "test": "TestJsxMemberNameRejection",
+        "result": "pass",
+        "seconds": 45.92
+      },
+      {
+        "test": "TestIncompleteShardCoverage",
+        "result": "pass",
+        "seconds": 0
+      },
+      {
+        "test": "TestGeneratedExpressionsAgree",
+        "result": "pass",
+        "seconds": 2.64
+      },
+      {
+        "test": "TestConditionalEmptyArrayGap",
+        "result": "pass",
+        "seconds": 0.37
+      },
+      {
+        "test": "TestOptionalFunctionValueGap",
+        "result": "pass",
+        "seconds": 0.35
+      },
+      {
+        "test": "TestClassMethodInterfaceGap",
+        "result": "pass",
+        "seconds": 0.35
+      },
+      {
+        "test": "TestPushSpreadGap",
+        "result": "pass",
+        "seconds": 0.35
+      },
+      {
+        "test": "TestStrongAstParentGap",
+        "result": "pass",
+        "seconds": 0.42
+      },
+      {
+        "test": "TestJsxNameBoundaryRejections",
+        "result": "pass",
+        "seconds": 76.17
+      },
+      {
+        "test": "TestJsxScannerMutants",
+        "result": "pass",
+        "seconds": 80.11
+      },
+      {
+        "test": "TestYieldLookaheadAgrees",
+        "result": "pass",
+        "seconds": 0.86
+      },
+      {
+        "test": "TestContextualNamesAgree",
+        "result": "pass",
+        "seconds": 12.92
+      },
+      {
+        "test": "TestWholeCompilerAgrees",
+        "result": "pass",
+        "seconds": 30.39
+      },
+      {
+        "test": "TestWholeCountCheckCatchesMutant",
+        "result": "pass",
+        "seconds": 38.68
+      },
+      {
+        "test": "TestWholePerformance",
+        "result": "pass",
+        "seconds": 54.77
+      },
+      {
+        "test": "TestWholeMutants",
+        "result": "pass",
+        "seconds": 117.72
+      },
+      {
+        "test": "TestNodeCountCheckCatchesMutant",
+        "result": "pass",
+        "seconds": 37.32
+      },
+      {
+        "test": "TestRecoveredLintCasesAgree",
+        "result": "pass",
+        "seconds": 266.79
+      },
+      {
+        "test": "TestCompilerExpressionsAgree",
+        "result": "pass",
+        "seconds": 31.93
+      },
+      {
+        "test": "TestWholeGeneratedAgrees",
+        "result": "pass",
+        "seconds": 0.82
+      },
+      {
+        "test": "TestObsoleteImportAttributesAgrees",
+        "result": "pass",
+        "seconds": 0.74
+      },
+      {
+        "test": "TestEveryTypeNodeKindAgrees",
+        "result": "pass",
+        "seconds": 0.81
+      },
+      {
+        "test": "TestMethodRecoveryAgrees",
+        "result": "pass",
+        "seconds": 136.96
+      },
+      {
+        "test": "TestLintCasesControls",
+        "result": "pass",
+        "seconds": 38.38
+      },
+      {
+        "test": "TestLintCases",
+        "result": "pass",
+        "seconds": 38.16
+      },
+      {
+        "test": "TestExpressionsAgree",
+        "result": "pass",
+        "seconds": 118.27
+      },
+      {
+        "test": "TestJsxMutants",
+        "result": "pass",
+        "seconds": 0.49
+      },
+      {
+        "test": "TestRecoveryMutants",
+        "result": "pass",
+        "seconds": 335.68
+      },
+      {
+        "test": "TestIncompleteCompilerAgrees",
+        "result": "pass",
+        "seconds": 878.25
+      }
+    ]
+  },
+  "compiler": {
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-count=1",
+      "-json",
+      "-v",
+      "-failfast=false",
+      "-timeout=90m",
+      "-run",
+      "^TestCompilerAndStage1Agree$"
+    ],
+    "exit": 0,
+    "wall_seconds": 459.6304927989986,
+    "load_before": [
+      6.6171875,
+      6.646484375,
+      5.546875
+    ],
+    "load_after": [
+      1.0029296875,
+      2.22802734375,
+      3.77197265625
+    ],
+    "counts": {
+      "pass": 1,
+      "fail": 0,
+      "skip": 0
+    },
+    "package": {
+      "result": "pass",
+      "seconds": 453.727
+    },
+    "tests": [
+      {
+        "test": "TestCompilerAndStage1Agree",
+        "result": "pass",
+        "seconds": 453.67
+      }
+    ]
+  },
+  "rules": {
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-count=1",
+      "-json",
+      "-v",
+      "-failfast=false",
+      "-timeout=90m",
+      "-run",
+      "^TestRulesAgree$"
+    ],
+    "exit": 0,
+    "wall_seconds": 89.04902884800686,
+    "load_before": [
+      1.0029296875,
+      2.22802734375,
+      3.77197265625
+    ],
+    "load_after": [
+      1.4970703125,
+      2.06884765625,
+      3.56982421875
+    ],
+    "counts": {
+      "pass": 1,
+      "fail": 0,
+      "skip": 0
+    },
+    "package": {
+      "result": "pass",
+      "seconds": 86.797
+    },
+    "tests": [
+      {
+        "test": "TestRulesAgree",
+        "result": "pass",
+        "seconds": 86.7
+      }
+    ]
+  },
+  "profiles": {
+    "command": [
+      "go",
+      "test",
+      "./stage1/cohere/lint",
+      "-count=1",
+      "-json",
+      "-v",
+      "-failfast=false",
+      "-timeout=90m",
+      "-run",
+      "^TestProfile(Artifacts|SnapshotsAgree)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 236.45204463900154,
+    "load_before": [
+      1.4970703125,
+      2.06884765625,
+      3.56982421875
+    ],
+    "load_after": [
+      1.083984375,
+      1.54248046875,
+      3.01318359375
+    ],
+    "counts": {
+      "pass": 2,
+      "fail": 0,
+      "skip": 0
+    },
+    "package": {
+      "result": "pass",
+      "seconds": 234.299
+    },
+    "tests": [
+      {
+        "test": "TestProfileArtifacts",
+        "result": "pass",
+        "seconds": 39.82
+      },
+      {
+        "test": "TestProfileSnapshotsAgree",
+        "result": "pass",
+        "seconds": 194.38
+      }
+    ]
+  }
+}

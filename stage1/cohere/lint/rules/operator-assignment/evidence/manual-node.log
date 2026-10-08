@@ -1,0 +1,68 @@
+case 0
+/tmp/operator-assignment-manual/always.ts:1:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (+=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 0 9 replaced fix	x += y		0 9
+/tmp/operator-assignment-manual/always.ts:2:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (*=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 11 20 replaced 			11 20
+/tmp/operator-assignment-manual/always.ts:3:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (+=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 22 37 replaced 			22 37
+/tmp/operator-assignment-manual/always.ts:5:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (+=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 57 75 replaced 			57 75
+/tmp/operator-assignment-manual/always.ts:6:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (+=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 77 97 replaced 			77 97
+/tmp/operator-assignment-manual/always.ts:8:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (+=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 121 136 replaced fix	\u03b2 += 1		121 136
+/tmp/operator-assignment-manual/always.ts:9:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (+=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 138 157 replaced fix	x[0x10] += 1		138 157
+/tmp/operator-assignment-manual/always.ts:10:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (&=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 159 168 replaced 			159 168
+/tmp/operator-assignment-manual/always.ts:11:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (^=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 170 179 replaced 			170 179
+/tmp/operator-assignment-manual/always.ts:12:1
+  operator-assignment  Assignment (=) can be replaced with operator assignment (|=). Writing the target twice makes a reader check that the two spellings match, and a later rename of one and not the other is a bug the shorthand cannot express.
+
+range 181 190 replaced 			181 190
+fixed	x += y;\u000ax = y * x;\u000ax[y] = x[y] + 1;\u000ax.y = x['y'] + 1;\u000aobj.a = obj?.a + b;\u000ax = /* keep */ x + y;\u000aconst label = '\ud83e\udd80';\u000a\u03b2 += 1;\u000ax[0x10] += 1;\u000ax = y & x;\u000ax = y ^ x;\u000ax = y | x;\u000a
+case 1
+/tmp/operator-assignment-manual/never.ts:1:1
+  operator-assignment  Unexpected operator assignment (*=) shorthand. This project writes the operation out, so the target and the operator are read separately rather than fused into one token.
+
+range 0 10 unexpected fix	x = x * (y + 1)		0 10
+/tmp/operator-assignment-manual/never.ts:2:1
+  operator-assignment  Unexpected operator assignment (+=) shorthand. This project writes the operation out, so the target and the operator are read separately rather than fused into one token.
+
+range 12 17 unexpected fix	x= x+ +y		12 17
+/tmp/operator-assignment-manual/never.ts:3:1
+  operator-assignment  Unexpected operator assignment (/=) shorthand. This project writes the operation out, so the target and the operator are read separately rather than fused into one token.
+
+range 19 27 unexpected fix	x= x/ /**/y		19 27
+/tmp/operator-assignment-manual/never.ts:4:1
+  operator-assignment  Unexpected operator assignment (+=) shorthand. This project writes the operation out, so the target and the operator are read separately rather than fused into one token.
+
+range 29 36 unexpected 			29 36
+/tmp/operator-assignment-manual/never.ts:5:1
+  operator-assignment  Unexpected operator assignment (+=) shorthand. This project writes the operation out, so the target and the operator are read separately rather than fused into one token.
+
+range 38 54 unexpected fix	x = x + (1 as number)		38 54
+/tmp/operator-assignment-manual/never.ts:6:1
+  operator-assignment  Unexpected operator assignment (+=) shorthand. This project writes the operation out, so the target and the operator are read separately rather than fused into one token.
+
+range 56 65 unexpected 			56 65
+fixed	x = x * (y + 1);\u000ax= x+ +y;\u000ax= x/ /**/y;\u000ax! += 1;\u000ax = x + (1 as number);\u000ax[y] += 1;\u000a

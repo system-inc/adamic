@@ -1,0 +1,80 @@
+[
+  {
+    "name": "build",
+    "args": [
+      "go",
+      "build",
+      "-overlay=/workspace/consistent-type-definitions-reproducer/overlay.json",
+      "-o",
+      "/workspace/consistent-type-definitions-reproducer/oracle",
+      "/workspace/adamic/cohere/adamic_lint_oracle.go",
+      "/workspace/adamic/cohere/adamic_lint_registry.go",
+      "/workspace/adamic/cohere/adamic_lint_adamic_no_type_predicate.go",
+      "/workspace/adamic/cohere/adamic_lint_base_consistency_no_console.go",
+      "/workspace/adamic/cohere/adamic_lint_eqeqeq.go",
+      "/workspace/adamic/cohere/adamic_lint_nexus_consistency_no_enum.go",
+      "/workspace/adamic/cohere/adamic_lint_nexus_consistency_require_type_suffix.go",
+      "/workspace/adamic/cohere/adamic_lint_no_await_in_loop.go",
+      "/workspace/adamic/cohere/adamic_lint_no_bitwise.go",
+      "/workspace/adamic/cohere/adamic_lint_no_continue.go",
+      "/workspace/adamic/cohere/adamic_lint_no_debugger.go",
+      "/workspace/adamic/cohere/adamic_lint_no_div_regex.go",
+      "/workspace/adamic/cohere/adamic_lint_no_duplicate_case.go",
+      "/workspace/adamic/cohere/adamic_lint_no_empty.go",
+      "/workspace/adamic/cohere/adamic_lint_no_labels.go",
+      "/workspace/adamic/cohere/adamic_lint_no_negated_condition.go",
+      "/workspace/adamic/cohere/adamic_lint_no_new.go",
+      "/workspace/adamic/cohere/adamic_lint_no_octal_escape.go",
+      "/workspace/adamic/cohere/adamic_lint_no_plusplus.go",
+      "/workspace/adamic/cohere/adamic_lint_no_return_assign.go",
+      "/workspace/adamic/cohere/adamic_lint_no_sequences.go",
+      "/workspace/adamic/cohere/adamic_lint_no_sparse_arrays.go",
+      "/workspace/adamic/cohere/adamic_lint_no_template_curly_in_string.go",
+      "/workspace/adamic/cohere/adamic_lint_no_unexpected_multiline.go",
+      "/workspace/adamic/cohere/adamic_lint_no_unneeded_ternary.go",
+      "/workspace/adamic/cohere/adamic_lint_no_unused_private_class_members.go",
+      "/workspace/adamic/cohere/adamic_lint_no_useless_constructor.go",
+      "/workspace/adamic/cohere/adamic_lint_no_var.go",
+      "/workspace/adamic/cohere/adamic_lint_no_warning_comments.go",
+      "/workspace/adamic/cohere/adamic_lint_no_with.go",
+      "/workspace/adamic/cohere/adamic_lint_prefer_template.go",
+      "/workspace/adamic/cohere/adamic_lint_react_forward_ref_uses_ref.go",
+      "/workspace/adamic/cohere/adamic_lint_react_jsx_no_comment_textnodes.go",
+      "/workspace/adamic/cohere/adamic_lint_react_no_find_dom_node.go",
+      "/workspace/adamic/cohere/adamic_lint_react_no_is_mounted.go",
+      "/workspace/adamic/cohere/adamic_lint_react_no_redundant_should_component_update.go",
+      "/workspace/adamic/cohere/adamic_lint_require_yield.go",
+      "/workspace/adamic/cohere/adamic_lint_typescript_eslint_consistent_type_definitions.go",
+      "/workspace/adamic/cohere/adamic_lint_typescript_method_signature_style.go",
+      "/workspace/adamic/cohere/adamic_lint_typescript_no_wrapper_object_types.go",
+      "/workspace/adamic/cohere/adamic_lint_typescript_prefer_literal_enum_member.go",
+      "/workspace/adamic/cohere/adamic_lint_unicode_bom.go",
+      "/workspace/adamic/cohere/adamic_lint_vars_on_top.go"
+    ],
+    "cwd": "/workspace/adamic/cohere",
+    "exit": 0
+  },
+  {
+    "name": "go",
+    "args": [
+      "/workspace/consistent-type-definitions-reproducer/oracle",
+      "--manifest",
+      "/workspace/consistent-type-definitions-reproducer/manifest"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0
+  },
+  {
+    "name": "node",
+    "args": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/oracle/node.mjs",
+      "/workspace/adamic/stage1/cohere/lint/main.ts",
+      "--manifest",
+      "/workspace/consistent-type-definitions-reproducer/manifest"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 70
+  }
+]

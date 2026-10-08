@@ -1,0 +1,2 @@
+import type {RuleContext} from '../../context.ts';
+export function parametersOf(context:RuleContext,index:number):number[] {return context.children(index,'Parameter');}

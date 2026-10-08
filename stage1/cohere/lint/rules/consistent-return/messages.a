@@ -1,0 +1,3 @@
+export const missingReturn="Some paths through this function return a value and some run off the end, which returns undefined. A caller reading one branch cannot tell which kind of function this is, so the undefined arrives somewhere far from here.";
+export const missingReturnValue="This returns nothing while another return in the same function returns a value. The caller receives undefined from one path and a value from another, and nothing in the signature says which.";
+export const unexpectedReturnValue="This returns a value while another return in the same function returns nothing. A reader who saw the bare return will not expect a value to come back from here.";

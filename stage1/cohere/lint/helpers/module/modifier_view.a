@@ -1,0 +1,8 @@
+export interface ModifierListView {
+    readonly present: boolean;
+    readonly tags: readonly string[];
+}
+export interface ExportNodeView {
+    readonly present: boolean;
+    readonly modifiers: ModifierListView;
+}

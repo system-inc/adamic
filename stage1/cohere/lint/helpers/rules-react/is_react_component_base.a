@@ -1,0 +1,10 @@
+import type {RuleContext} from '../../context.ts';
+import {skipParenthesesOptional} from './skip_parentheses_optional.a';
+import {isReactComponentBaseName} from './is_react_component_base_name.a';
+export function isReactComponentBase(context:RuleContext,index:number):boolean {
+ index=skipParenthesesOptional(context,index);if(index<0){return false;}
+ if(context.kind(index)==='Identifier'){return isReactComponentBaseName(context.node(index).text);}
+ if(context.kind(index)!=='PropertyAccessExpression'){return false;}
+ const object=skipParenthesesOptional(context,context.node(index).children[0] ?? -1);if(object<0 || context.kind(object)!=='Identifier' || context.node(object).text!=='React'){return false;}
+ const name=context.property(index);return name>=0 && isReactComponentBaseName(context.node(name).text);
+}

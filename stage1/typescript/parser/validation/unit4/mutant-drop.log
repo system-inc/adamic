@@ -1,0 +1,7 @@
+=== RUN   TestUnit4ScratchShard
+    unit4_scratch_mutant_test.go:10: missing case testdata/recovery/corePublic.ts-cut-37.ts.txt: expected case 0, got "case 1" (missing, extra, or duplicated case)
+--- FAIL: TestUnit4ScratchShard (0.69s)
+FAIL
+parser longest native build child: 0s; build hang guard: 4m0s
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	0.695s
+FAIL

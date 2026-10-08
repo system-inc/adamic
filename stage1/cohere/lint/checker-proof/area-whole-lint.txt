@@ -1,0 +1,796 @@
+=== RUN   TestCheckerNoProgramCoverage
+    checker_pending_test.go:31: before: coverage check caught mutant: case 0
+        skipped @typescript-eslint/no-unnecessary-boolean-literal-compare ignored
+        fixed	declare const b: boolean; if (b === true) {}\u000a
+    checker_pending_test.go:36: after: coverage check passes: case 0
+        skipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program
+        fixed	declare const b: boolean; if (b === true) {}\u000a
+--- PASS: TestCheckerNoProgramCoverage (5.61s)
+=== RUN   TestCheckerBridgeRefusalPending
+    checker_pending_test.go:49: awaits codex/tsgo-errors-as-values: tsgoInspect must return TSGoError from the C error buffer
+--- SKIP: TestCheckerBridgeRefusalPending (0.00s)
+=== RUN   TestCheckerReplayEntryControl
+    checker_pending_test.go:209: before: removed entry fails Node comparison: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerReplayEntryControl3825342229/001/source.ts 30 31 missing transcript entry
+        fixed	declare const b: boolean; if (b === true) {}\u000a
+    checker_pending_test.go:214: after: complete live-bridge transcript matches Go: case 0
+        /tmp/adamic-gate/TestCheckerReplayEntryControl3825342229/001/source.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+    checker_pending_test.go:219: reverse guard rejects an unasked entry
+    checker_pending_test.go:230: program header mismatch refuses replay; restoring it passes
+    checker_pending_test.go:238: pilot type-verdict mutant caught only by findings comparison on Node
+    checker_pending_test.go:245: pilot's harness-owned refusal reaches the wire: case 0
+        refused @typescript-eslint/no-unnecessary-boolean-literal-compare /tmp/adamic-gate/TestCheckerReplayEntryControl3825342229/001/source.ts 0 45 undeclared program read ReadsOtherFiles
+        /tmp/adamic-gate/TestCheckerReplayEntryControl3825342229/001/source.ts:1:31
+          @typescript-eslint/no-unnecessary-boolean-literal-compare  This compares a boolean to a boolean literal, which asks the same question the value already answers. Use the expression on its own.
+        
+        range 30 40 direct fix	b		30 40
+        fixed	declare const b: boolean; if (b) {}\u000a
+--- PASS: TestCheckerReplayEntryControl (6.25s)
+=== RUN   TestCheckerHashes
+--- PASS: TestCheckerHashes (6.99s)
+=== RUN   TestNestedConstructorGap
+    gaps_test.go:35: Node prints 1; native lowering refuses: /workspace/adamic/stage1/cohere/lint/gaps/1_nested_constructor.ts:7:16: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this
+--- PASS: TestNestedConstructorGap (0.14s)
+=== RUN   TestOptionAndComparatorGaps
+=== PAUSE TestOptionAndComparatorGaps
+=== RUN   TestEmittedJavaScriptMismatch
+    harness_test.go:52: wrong mutant failure: exit status 1
+        === RUN   TestEmittedJavaScriptMismatch
+            harness_test.go:21: /workspace/adamic/stage1/cohere/lint/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+                /workspace/adamic/stage1/cohere/lint/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+                /workspace/adamic/stage1/cohere/lint/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+        --- FAIL: TestEmittedJavaScriptMismatch (3.67s)
+        FAIL
+--- FAIL: TestEmittedJavaScriptMismatch (3.71s)
+=== RUN   TestDotARename
+    harness_test.go:64: /workspace/adamic/stage1/cohere/lint/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestDotARename (4.17s)
+=== RUN   TestCompleteSuggestionSerialization
+    harness_test.go:114: /tmp/adamic-gate/TestCompleteSuggestionSerialization1871914734/001/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestCompleteSuggestionSerialization1871914734/001/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestCompleteSuggestionSerialization1871914734/001/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestCompleteSuggestionSerialization (7.79s)
+=== RUN   TestSuggestionAlongsideAutomaticFix
+    harness_test.go:167: /tmp/adamic-gate/TestSuggestionAlongsideAutomaticFix65614709/001/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestSuggestionAlongsideAutomaticFix65614709/001/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestSuggestionAlongsideAutomaticFix65614709/001/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestSuggestionAlongsideAutomaticFix (7.23s)
+=== RUN   TestWitnessScriptKind
+    harness_test.go:188: /tmp/adamic-gate/TestWitnessScriptKind3286960622/001/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestWitnessScriptKind3286960622/001/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestWitnessScriptKind3286960622/001/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestWitnessScriptKind (4.19s)
+=== RUN   TestJsxLintReleaseAndThroughput
+    jsx_integration_test.go:86: set ADAMIC_LINT_BENCH=1 for JSX throughput
+--- SKIP: TestJsxLintReleaseAndThroughput (0.00s)
+=== RUN   TestJsxLintTrees
+    lint_test.go:426: cohere cases: 3879 unique source/rule/options combinations
+    jsx_integration_test.go:162: 63 captured cohere JSX sources: 51432 identical whole-tree bytes
+--- PASS: TestJsxLintTrees (104.60s)
+=== RUN   TestRulesAgree
+    lint_test.go:478: /workspace/adamic/stage1/cohere/lint/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestRulesAgree (5.72s)
+=== RUN   TestCompilerAndStage1Agree
+    lint_test.go:577: compiler and stage1: 718 files
+    lint_test.go:578: /workspace/adamic/stage1/cohere/lint/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestCompilerAndStage1Agree (3.44s)
+=== RUN   TestLegacyMutants
+=== RUN   TestLegacyMutants/overlap_winner_misreported
+    lint_test.go:653: /tmp/adamic-gate/TestLegacyMutantsoverlap_winner_misreported2561521797/001/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestLegacyMutantsoverlap_winner_misreported2561521797/001/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestLegacyMutantsoverlap_winner_misreported2561521797/001/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestLegacyMutants (4.29s)
+    --- FAIL: TestLegacyMutants/overlap_winner_misreported (0.95s)
+=== RUN   TestDecorationOptionMutant
+=== PAUSE TestDecorationOptionMutant
+=== RUN   TestCountGuardMutant
+=== PAUSE TestCountGuardMutant
+=== RUN   TestThroughput
+    lint_test.go:715: set ADAMIC_LINT_BENCH=1
+--- SKIP: TestThroughput (0.00s)
+=== RUN   TestNodeTableIsLinkOnly
+    lint_test.go:426: cohere cases: 3879 unique source/rule/options combinations
+    lint_test.go:808: /workspace/adamic/stage1/cohere/lint/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestNodeTableIsLinkOnly (35.57s)
+=== RUN   TestShardsAgree
+    lint_test.go:426: cohere cases: 3879 unique source/rule/options combinations
+    lint_test.go:847: /workspace/adamic/stage1/cohere/lint/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestShardsAgree (29.03s)
+=== RUN   TestMutants
+=== RUN   TestMutants/debugger_fix_suppressed
+=== PAUSE TestMutants/debugger_fix_suppressed
+=== RUN   TestMutants/empty_function_body_reported
+=== PAUSE TestMutants/empty_function_body_reported
+=== RUN   TestMutants/suggestion_applied_as_fix
+=== PAUSE TestMutants/suggestion_applied_as_fix
+=== RUN   TestMutants/var_declaration_suppressed
+=== PAUSE TestMutants/var_declaration_suppressed
+=== RUN   TestMutants/duplicate_case_suppressed
+=== PAUSE TestMutants/duplicate_case_suppressed
+=== RUN   TestMutants/no-octal-escape_mutant_from_batch_8
+=== PAUSE TestMutants/no-octal-escape_mutant_from_batch_8
+=== RUN   TestMutants/no-unexpected-multiline_mutant_from_batch_8
+=== PAUSE TestMutants/no-unexpected-multiline_mutant_from_batch_8
+=== RUN   TestMutants/no-unused-private-class-members_mutant_from_batch_8
+=== PAUSE TestMutants/no-unused-private-class-members_mutant_from_batch_8
+=== RUN   TestMutants/no-useless-constructor_mutant_from_batch_8
+=== PAUSE TestMutants/no-useless-constructor_mutant_from_batch_8
+=== RUN   TestMutants/prefer-template_mutant_from_batch_8
+=== PAUSE TestMutants/prefer-template_mutant_from_batch_8
+=== RUN   TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8
+=== PAUSE TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8
+=== RUN   TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8
+=== PAUSE TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8
+=== RUN   TestMutants/react-no-find-dom-node_mutant_from_batch_8
+=== PAUSE TestMutants/react-no-find-dom-node_mutant_from_batch_8
+=== RUN   TestMutants/react-no-is-mounted_mutant_from_batch_8
+=== PAUSE TestMutants/react-no-is-mounted_mutant_from_batch_8
+=== RUN   TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8
+=== PAUSE TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8
+=== RUN   TestMutants/adjacent_overload_separation_ignored
+=== PAUSE TestMutants/adjacent_overload_separation_ignored
+=== RUN   TestMutants/init_declarations_always_span_includes_annotation
+=== PAUSE TestMutants/init_declarations_always_span_includes_annotation
+=== RUN   TestMutants/method_listener_lost
+=== PAUSE TestMutants/method_listener_lost
+=== RUN   TestMutants/parenthesized_alias_lost
+=== PAUSE TestMutants/parenthesized_alias_lost
+=== RUN   TestMutants/boolean_type_verdict_inverted
+=== PAUSE TestMutants/boolean_type_verdict_inverted
+=== RUN   TestMutants/wrapper_Number_ignored
+=== PAUSE TestMutants/wrapper_Number_ignored
+=== RUN   TestMutants/enum_bitwise_option_ignored
+=== PAUSE TestMutants/enum_bitwise_option_ignored
+=== RUN   TestMutants/predicate_finding_widened_to_its_owner
+=== PAUSE TestMutants/predicate_finding_widened_to_its_owner
+=== RUN   TestMutants/global_container_name_judgement_reversed
+=== PAUSE TestMutants/global_container_name_judgement_reversed
+=== RUN   TestMutants/console_receiver_widened
+=== PAUSE TestMutants/console_receiver_widened
+=== RUN   TestMutants/declared_BaseError_constructor_ignored
+=== PAUSE TestMutants/declared_BaseError_constructor_ignored
+=== RUN   TestMutants/pagination_bad_name_accepted
+=== PAUSE TestMutants/pagination_bad_name_accepted
+=== RUN   TestMutants/one_excess_class_is_silently_allowed
+=== PAUSE TestMutants/one_excess_class_is_silently_allowed
+=== RUN   TestMutants/max-depth-keyword-span
+=== PAUSE TestMutants/max-depth-keyword-span
+=== RUN   TestMutants/callback_at_the_limit_is_reported
+=== PAUSE TestMutants/callback_at_the_limit_is_reported
+=== RUN   TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed
+=== PAUSE TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed
+=== RUN   TestMutants/ambiguous-identifier-span
+=== PAUSE TestMutants/ambiguous-identifier-span
+=== RUN   TestMutants/enum_reported_at_its_declaration_rather_than_its_name
+=== PAUSE TestMutants/enum_reported_at_its_declaration_rather_than_its_name
+=== RUN   TestMutants/nexus-for-in-message
+=== PAUSE TestMutants/nexus-for-in-message
+=== RUN   TestMutants/nexus_long_line_comment_configured_threshold_ignored
+=== PAUSE TestMutants/nexus_long_line_comment_configured_threshold_ignored
+=== RUN   TestMutants/multiline-arrow-single-line-exemption-removed
+=== PAUSE TestMutants/multiline-arrow-single-line-exemption-removed
+=== RUN   TestMutants/shouting_fourth_token_omitted
+=== PAUSE TestMutants/shouting_fourth_token_omitted
+=== RUN   TestMutants/JSDoc_replacement_text_corrupted
+=== PAUSE TestMutants/JSDoc_replacement_text_corrupted
+=== RUN   TestMutants/nexus-stuttering-name-equality
+=== PAUSE TestMutants/nexus-stuttering-name-equality
+=== RUN   TestMutants/interface_accepts_type_suffix
+=== PAUSE TestMutants/interface_accepts_type_suffix
+=== RUN   TestMutants/await_crosses_function_boundary
+=== PAUSE TestMutants/await_crosses_function_boundary
+=== RUN   TestMutants/int32_hint_option_ignored
+=== PAUSE TestMutants/int32_hint_option_ignored
+=== RUN   TestMutants/no-caller-property
+=== PAUSE TestMutants/no-caller-property
+=== RUN   TestMutants/continue_finding_stops_before_its_semicolon
+=== PAUSE TestMutants/continue_finding_stops_before_its_semicolon
+=== RUN   TestMutants/regex_fix_eats_extra_byte
+=== PAUSE TestMutants/regex_fix_eats_extra_byte
+=== RUN   TestMutants/empty_character_class_silenced
+=== PAUSE TestMutants/empty_character_class_silenced
+=== RUN   TestMutants/no-empty-pattern_reports_real_bindings
+=== PAUSE TestMutants/no-empty-pattern_reports_real_bindings
+=== RUN   TestMutants/comment_exemption_removed
+=== PAUSE TestMutants/comment_exemption_removed
+=== RUN   TestMutants/miss-postfix-writes
+=== PAUSE TestMutants/miss-postfix-writes
+=== RUN   TestMutants/no-iterator-static-key
+=== PAUSE TestMutants/no-iterator-static-key
+=== RUN   TestMutants/label_option_widened
+=== PAUSE TestMutants/label_option_widened
+=== RUN   TestMutants/no-multi-assign-option-reversed
+=== PAUSE TestMutants/no-multi-assign-option-reversed
+=== RUN   TestMutants/condition_polarity_reversed
+=== PAUSE TestMutants/condition_polarity_reversed
+=== RUN   TestMutants/parentheses_around_a_discarded_construction_not_seen_through
+=== PAUSE TestMutants/parentheses_around_a_discarded_construction_not_seen_through
+=== RUN   TestMutants/for_update_option_ignored
+=== PAUSE TestMutants/for_update_option_ignored
+=== RUN   TestMutants/proto_accessor_suppressed
+=== PAUSE TestMutants/proto_accessor_suppressed
+=== RUN   TestMutants/return_parentheses_option_reversed
+=== PAUSE TestMutants/return_parentheses_option_reversed
+=== RUN   TestMutants/no-script-url-case-fold
+=== PAUSE TestMutants/no-script-url-case-fold
+=== RUN   TestMutants/self-comparison-equality-reversed
+=== PAUSE TestMutants/self-comparison-equality-reversed
+=== RUN   TestMutants/comma_chain_reports_inner
+=== PAUSE TestMutants/comma_chain_reports_inner
+=== RUN   TestMutants/destructuring_hole_reported
+=== PAUSE TestMutants/destructuring_hole_reported
+=== RUN   TestMutants/empty_placeholder_reported
+=== PAUSE TestMutants/empty_placeholder_reported
+=== RUN   TestMutants/constructor-property-name-ignored
+=== PAUSE TestMutants/constructor-property-name-ignored
+=== RUN   TestMutants/boolean_inverse_changed
+=== PAUSE TestMutants/boolean_inverse_changed
+=== RUN   TestMutants/finally_continue_incorrectly_absorbed_by_switch
+=== PAUSE TestMutants/finally_continue_incorrectly_absorbed_by_switch
+=== RUN   TestMutants/ordering-relations-ignored
+=== PAUSE TestMutants/ordering-relations-ignored
+=== RUN   TestMutants/and-left-undefined-ignored
+=== PAUSE TestMutants/and-left-undefined-ignored
+=== RUN   TestMutants/no-useless-catch_finally_repair_range_reversed
+=== PAUSE TestMutants/no-useless-catch_finally_repair_range_reversed
+=== RUN   TestMutants/concat_substituted_template_ignored
+=== PAUSE TestMutants/concat_substituted_template_ignored
+=== RUN   TestMutants/comment_self_directive_exemption_removed
+=== PAUSE TestMutants/comment_self_directive_exemption_removed
+=== RUN   TestMutants/with_statement_underlined_whole
+=== PAUSE TestMutants/with_statement_underlined_whole
+=== RUN   TestMutants/prefer-destructuring-object-fix
+=== PAUSE TestMutants/prefer-destructuring-object-fix
+=== RUN   TestMutants/nested_generator_owns_outer_yield
+=== PAUSE TestMutants/nested_generator_owns_outer_yield
+=== RUN   TestMutants/bom_removes_two_marks
+=== PAUSE TestMutants/bom_removes_two_marks
+=== RUN   TestMutants/directive_prefix_ignored
+=== PAUSE TestMutants/directive_prefix_ignored
+=== CONT  TestMutants/debugger_fix_suppressed
+=== CONT  TestMutants/nexus-stuttering-name-equality
+=== CONT  TestMutants/boolean_type_verdict_inverted
+=== CONT  TestMutants/no-script-url-case-fold
+=== NAME  TestMutants/debugger_fix_suppressed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed2159789128/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed2159789128/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsdebugger_fix_suppressed2159789128/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/JSDoc_replacement_text_corrupted
+=== NAME  TestMutants/no-script-url-case-fold
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-script-url-case-fold266656008/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-script-url-case-fold266656008/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-script-url-case-fold266656008/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/shouting_fourth_token_omitted
+=== NAME  TestMutants/boolean_type_verdict_inverted
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsboolean_type_verdict_inverted1851535748/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsboolean_type_verdict_inverted1851535748/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsboolean_type_verdict_inverted1851535748/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/multiline-arrow-single-line-exemption-removed
+=== NAME  TestMutants/nexus-stuttering-name-equality
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsnexus-stuttering-name-equality3971375549/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsnexus-stuttering-name-equality3971375549/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsnexus-stuttering-name-equality3971375549/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/nexus_long_line_comment_configured_threshold_ignored
+=== NAME  TestMutants/shouting_fourth_token_omitted
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsshouting_fourth_token_omitted2858807282/023/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsshouting_fourth_token_omitted2858807282/023/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsshouting_fourth_token_omitted2858807282/023/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/nexus-for-in-message
+=== NAME  TestMutants/multiline-arrow-single-line-exemption-removed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed477260107/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed477260107/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsmultiline-arrow-single-line-exemption-removed477260107/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/enum_reported_at_its_declaration_rather_than_its_name
+=== NAME  TestMutants/JSDoc_replacement_text_corrupted
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsJSDoc_replacement_text_corrupted506797895/024/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsJSDoc_replacement_text_corrupted506797895/024/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsJSDoc_replacement_text_corrupted506797895/024/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/ambiguous-identifier-span
+=== NAME  TestMutants/nexus_long_line_comment_configured_threshold_ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsnexus_long_line_comment_configured_threshold_ignored1334930818/024/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsnexus_long_line_comment_configured_threshold_ignored1334930818/024/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsnexus_long_line_comment_configured_threshold_ignored1334930818/024/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed
+=== NAME  TestMutants/ambiguous-identifier-span
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsambiguous-identifier-span4056756489/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsambiguous-identifier-span4056756489/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsambiguous-identifier-span4056756489/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/callback_at_the_limit_is_reported
+=== NAME  TestMutants/enum_reported_at_its_declaration_rather_than_its_name
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam3389831930/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam3389831930/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsenum_reported_at_its_declaration_rather_than_its_nam3389831930/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/max-depth-keyword-span
+=== NAME  TestMutants/nexus-for-in-message
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsnexus-for-in-message3338467183/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsnexus-for-in-message3338467183/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsnexus-for-in-message3338467183/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== NAME  TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp73570988/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp73570988/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsnexus-abbreviated-identifier_whole-word_finding_supp73570988/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/one_excess_class_is_silently_allowed
+=== CONT  TestMutants/pagination_bad_name_accepted
+=== NAME  TestMutants/callback_at_the_limit_is_reported
+    lint_test.go:914: /tmp/adamic-gate/TestMutantscallback_at_the_limit_is_reported3233038621/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantscallback_at_the_limit_is_reported3233038621/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantscallback_at_the_limit_is_reported3233038621/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/declared_BaseError_constructor_ignored
+=== NAME  TestMutants/pagination_bad_name_accepted
+    lint_test.go:914: /tmp/adamic-gate/TestMutantspagination_bad_name_accepted2913075372/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantspagination_bad_name_accepted2913075372/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantspagination_bad_name_accepted2913075372/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/console_receiver_widened
+=== NAME  TestMutants/max-depth-keyword-span
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsmax-depth-keyword-span3414378560/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsmax-depth-keyword-span3414378560/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsmax-depth-keyword-span3414378560/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/global_container_name_judgement_reversed
+=== NAME  TestMutants/one_excess_class_is_silently_allowed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsone_excess_class_is_silently_allowed2707831840/023/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsone_excess_class_is_silently_allowed2707831840/023/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsone_excess_class_is_silently_allowed2707831840/023/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/predicate_finding_widened_to_its_owner
+=== NAME  TestMutants/console_receiver_widened
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsconsole_receiver_widened3611030353/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened3611030353/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsconsole_receiver_widened3611030353/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/enum_bitwise_option_ignored
+=== NAME  TestMutants/declared_BaseError_constructor_ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsdeclared_BaseError_constructor_ignored1611539760/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsdeclared_BaseError_constructor_ignored1611539760/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsdeclared_BaseError_constructor_ignored1611539760/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/wrapper_Number_ignored
+=== NAME  TestMutants/predicate_finding_widened_to_its_owner
+    lint_test.go:914: /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner1204751748/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner1204751748/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantspredicate_finding_widened_to_its_owner1204751748/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/directive_prefix_ignored
+=== NAME  TestMutants/global_container_name_judgement_reversed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsglobal_container_name_judgement_reversed1616774968/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsglobal_container_name_judgement_reversed1616774968/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsglobal_container_name_judgement_reversed1616774968/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/bom_removes_two_marks
+=== NAME  TestMutants/enum_bitwise_option_ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored4253632171/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored4253632171/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsenum_bitwise_option_ignored4253632171/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/nested_generator_owns_outer_yield
+=== NAME  TestMutants/wrapper_Number_ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantswrapper_Number_ignored1266309931/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored1266309931/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantswrapper_Number_ignored1266309931/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/prefer-destructuring-object-fix
+=== NAME  TestMutants/directive_prefix_ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsdirective_prefix_ignored769422357/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored769422357/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsdirective_prefix_ignored769422357/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/with_statement_underlined_whole
+=== NAME  TestMutants/bom_removes_two_marks
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsbom_removes_two_marks3431648546/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks3431648546/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsbom_removes_two_marks3431648546/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/comment_self_directive_exemption_removed
+=== NAME  TestMutants/nested_generator_owns_outer_yield
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield4027804653/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield4027804653/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsnested_generator_owns_outer_yield4027804653/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/concat_substituted_template_ignored
+=== NAME  TestMutants/with_statement_underlined_whole
+    lint_test.go:914: /tmp/adamic-gate/TestMutantswith_statement_underlined_whole864872618/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantswith_statement_underlined_whole864872618/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantswith_statement_underlined_whole864872618/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/no-useless-catch_finally_repair_range_reversed
+=== NAME  TestMutants/prefer-destructuring-object-fix
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsprefer-destructuring-object-fix1441234794/024/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsprefer-destructuring-object-fix1441234794/024/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsprefer-destructuring-object-fix1441234794/024/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/and-left-undefined-ignored
+=== NAME  TestMutants/comment_self_directive_exemption_removed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed608464037/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed608464037/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantscomment_self_directive_exemption_removed608464037/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/ordering-relations-ignored
+=== NAME  TestMutants/concat_substituted_template_ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsconcat_substituted_template_ignored3324691030/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsconcat_substituted_template_ignored3324691030/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsconcat_substituted_template_ignored3324691030/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/finally_continue_incorrectly_absorbed_by_switch
+=== NAME  TestMutants/no-useless-catch_finally_repair_range_reversed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-useless-catch_finally_repair_range_reversed2070000193/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-useless-catch_finally_repair_range_reversed2070000193/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-useless-catch_finally_repair_range_reversed2070000193/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/boolean_inverse_changed
+=== NAME  TestMutants/and-left-undefined-ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsand-left-undefined-ignored3836544549/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsand-left-undefined-ignored3836544549/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsand-left-undefined-ignored3836544549/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/constructor-property-name-ignored
+=== NAME  TestMutants/ordering-relations-ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsordering-relations-ignored2649602391/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsordering-relations-ignored2649602391/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsordering-relations-ignored2649602391/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/empty_placeholder_reported
+=== NAME  TestMutants/finally_continue_incorrectly_absorbed_by_switch
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsfinally_continue_incorrectly_absorbed_by_switch3720212070/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsfinally_continue_incorrectly_absorbed_by_switch3720212070/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsfinally_continue_incorrectly_absorbed_by_switch3720212070/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/destructuring_hole_reported
+=== NAME  TestMutants/boolean_inverse_changed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsboolean_inverse_changed2205733721/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsboolean_inverse_changed2205733721/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsboolean_inverse_changed2205733721/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/comma_chain_reports_inner
+=== NAME  TestMutants/constructor-property-name-ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsconstructor-property-name-ignored2515558810/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsconstructor-property-name-ignored2515558810/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsconstructor-property-name-ignored2515558810/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/self-comparison-equality-reversed
+=== NAME  TestMutants/empty_placeholder_reported
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsempty_placeholder_reported1479305130/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1479305130/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsempty_placeholder_reported1479305130/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/return_parentheses_option_reversed
+=== NAME  TestMutants/destructuring_hole_reported
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsdestructuring_hole_reported3559167594/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsdestructuring_hole_reported3559167594/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsdestructuring_hole_reported3559167594/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/proto_accessor_suppressed
+=== NAME  TestMutants/comma_chain_reports_inner
+    lint_test.go:914: /tmp/adamic-gate/TestMutantscomma_chain_reports_inner3255350061/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner3255350061/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantscomma_chain_reports_inner3255350061/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/for_update_option_ignored
+=== NAME  TestMutants/self-comparison-equality-reversed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsself-comparison-equality-reversed2355543159/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsself-comparison-equality-reversed2355543159/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsself-comparison-equality-reversed2355543159/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/parentheses_around_a_discarded_construction_not_seen_through
+=== NAME  TestMutants/return_parentheses_option_reversed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed3326032213/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed3326032213/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsreturn_parentheses_option_reversed3326032213/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/condition_polarity_reversed
+=== NAME  TestMutants/proto_accessor_suppressed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsproto_accessor_suppressed1131367748/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsproto_accessor_suppressed1131367748/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsproto_accessor_suppressed1131367748/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/no-multi-assign-option-reversed
+=== NAME  TestMutants/for_update_option_ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsfor_update_option_ignored3435227054/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored3435227054/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsfor_update_option_ignored3435227054/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/label_option_widened
+=== NAME  TestMutants/parentheses_around_a_discarded_construction_not_seen_through
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2197263110/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2197263110/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsparentheses_around_a_discarded_construction_not_seen2197263110/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/no-iterator-static-key
+=== NAME  TestMutants/condition_polarity_reversed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantscondition_polarity_reversed2396028020/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantscondition_polarity_reversed2396028020/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantscondition_polarity_reversed2396028020/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/miss-postfix-writes
+=== NAME  TestMutants/no-multi-assign-option-reversed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-multi-assign-option-reversed3907819873/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-multi-assign-option-reversed3907819873/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-multi-assign-option-reversed3907819873/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/comment_exemption_removed
+=== NAME  TestMutants/label_option_widened
+    lint_test.go:914: /tmp/adamic-gate/TestMutantslabel_option_widened3749597530/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantslabel_option_widened3749597530/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantslabel_option_widened3749597530/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/no-empty-pattern_reports_real_bindings
+=== NAME  TestMutants/miss-postfix-writes
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsmiss-postfix-writes1560427658/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsmiss-postfix-writes1560427658/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsmiss-postfix-writes1560427658/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/empty_character_class_silenced
+=== NAME  TestMutants/no-iterator-static-key
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-iterator-static-key2354317059/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-iterator-static-key2354317059/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-iterator-static-key2354317059/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/regex_fix_eats_extra_byte
+=== NAME  TestMutants/comment_exemption_removed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantscomment_exemption_removed3103132334/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantscomment_exemption_removed3103132334/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantscomment_exemption_removed3103132334/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/continue_finding_stops_before_its_semicolon
+=== NAME  TestMutants/regex_fix_eats_extra_byte
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte4245998492/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte4245998492/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsregex_fix_eats_extra_byte4245998492/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/no-caller-property
+=== NAME  TestMutants/empty_character_class_silenced
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsempty_character_class_silenced3532653280/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsempty_character_class_silenced3532653280/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsempty_character_class_silenced3532653280/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== NAME  TestMutants/no-empty-pattern_reports_real_bindings
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-empty-pattern_reports_real_bindings80118404/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-empty-pattern_reports_real_bindings80118404/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-empty-pattern_reports_real_bindings80118404/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/int32_hint_option_ignored
+=== CONT  TestMutants/await_crosses_function_boundary
+=== NAME  TestMutants/continue_finding_stops_before_its_semicolon
+    lint_test.go:914: /tmp/adamic-gate/TestMutantscontinue_finding_stops_before_its_semicolon3135342410/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantscontinue_finding_stops_before_its_semicolon3135342410/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantscontinue_finding_stops_before_its_semicolon3135342410/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/interface_accepts_type_suffix
+=== NAME  TestMutants/int32_hint_option_ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsint32_hint_option_ignored2219144948/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored2219144948/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsint32_hint_option_ignored2219144948/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/parenthesized_alias_lost
+=== NAME  TestMutants/no-caller-property
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-caller-property1822571801/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-caller-property1822571801/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-caller-property1822571801/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/method_listener_lost
+=== NAME  TestMutants/await_crosses_function_boundary
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1437890212/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1437890212/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsawait_crosses_function_boundary1437890212/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/init_declarations_always_span_includes_annotation
+=== NAME  TestMutants/interface_accepts_type_suffix
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix689953896/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix689953896/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsinterface_accepts_type_suffix689953896/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/adjacent_overload_separation_ignored
+=== NAME  TestMutants/init_declarations_always_span_includes_annotation
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsinit_declarations_always_span_includes_annotation3219941855/023/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsinit_declarations_always_span_includes_annotation3219941855/023/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsinit_declarations_always_span_includes_annotation3219941855/023/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== NAME  TestMutants/method_listener_lost
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsmethod_listener_lost2204108130/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2204108130/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsmethod_listener_lost2204108130/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8
+=== CONT  TestMutants/react-no-is-mounted_mutant_from_batch_8
+=== NAME  TestMutants/parenthesized_alias_lost
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsparenthesized_alias_lost1973660329/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsparenthesized_alias_lost1973660329/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsparenthesized_alias_lost1973660329/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/react-no-find-dom-node_mutant_from_batch_8
+=== NAME  TestMutants/adjacent_overload_separation_ignored
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsadjacent_overload_separation_ignored4090728277/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsadjacent_overload_separation_ignored4090728277/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsadjacent_overload_separation_ignored4090728277/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8
+=== NAME  TestMutants/react-no-is-mounted_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_856646762/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_856646762/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsreact-no-is-mounted_mutant_from_batch_856646762/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8
+=== NAME  TestMutants/react-no-find-dom-node_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsreact-no-find-dom-node_mutant_from_batch_8145407132/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsreact-no-find-dom-node_mutant_from_batch_8145407132/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsreact-no-find-dom-node_mutant_from_batch_8145407132/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/prefer-template_mutant_from_batch_8
+=== NAME  TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr1977114204/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr1977114204/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsreact-no-redundant-should-component-update_mutant_fr1977114204/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/no-useless-constructor_mutant_from_batch_8
+=== NAME  TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83719238913/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83719238913/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsreact-jsx-no-comment-textnodes_mutant_from_batch_83719238913/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/no-unused-private-class-members_mutant_from_batch_8
+=== NAME  TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_8146213670/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_8146213670/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsreact-forward-ref-uses-ref_mutant_from_batch_8146213670/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/no-unexpected-multiline_mutant_from_batch_8
+=== NAME  TestMutants/no-useless-constructor_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_84080245457/023/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_84080245457/023/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-useless-constructor_mutant_from_batch_84080245457/023/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/no-octal-escape_mutant_from_batch_8
+=== NAME  TestMutants/prefer-template_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_8456154671/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_8456154671/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsprefer-template_mutant_from_batch_8456154671/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/duplicate_case_suppressed
+=== NAME  TestMutants/no-unused-private-class-members_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_83183217033/023/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_83183217033/023/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-unused-private-class-members_mutant_from_batch_83183217033/023/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/var_declaration_suppressed
+=== NAME  TestMutants/no-unexpected-multiline_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_82527765666/023/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_82527765666/023/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-unexpected-multiline_mutant_from_batch_82527765666/023/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/suggestion_applied_as_fix
+=== NAME  TestMutants/no-octal-escape_mutant_from_batch_8
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_81163643531/022/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_81163643531/022/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsno-octal-escape_mutant_from_batch_81163643531/022/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== CONT  TestMutants/empty_function_body_reported
+=== NAME  TestMutants/duplicate_case_suppressed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsduplicate_case_suppressed288541743/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed288541743/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsduplicate_case_suppressed288541743/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== NAME  TestMutants/var_declaration_suppressed
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsvar_declaration_suppressed610601114/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed610601114/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsvar_declaration_suppressed610601114/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== NAME  TestMutants/suggestion_applied_as_fix
+    lint_test.go:914: /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1700856522/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1700856522/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantssuggestion_applied_as_fix1700856522/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+=== NAME  TestMutants/empty_function_body_reported
+    lint_test.go:914: /tmp/adamic-gate/TestMutantsempty_function_body_reported1739683977/021/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported1739683977/021/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestMutantsempty_function_body_reported1739683977/021/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestMutants (3.21s)
+    --- FAIL: TestMutants/debugger_fix_suppressed (0.65s)
+    --- FAIL: TestMutants/no-script-url-case-fold (0.66s)
+    --- FAIL: TestMutants/boolean_type_verdict_inverted (0.70s)
+    --- FAIL: TestMutants/nexus-stuttering-name-equality (0.74s)
+    --- FAIL: TestMutants/shouting_fourth_token_omitted (0.53s)
+    --- FAIL: TestMutants/multiline-arrow-single-line-exemption-removed (0.54s)
+    --- FAIL: TestMutants/JSDoc_replacement_text_corrupted (0.60s)
+    --- FAIL: TestMutants/nexus_long_line_comment_configured_threshold_ignored (0.55s)
+    --- FAIL: TestMutants/ambiguous-identifier-span (0.59s)
+    --- FAIL: TestMutants/enum_reported_at_its_declaration_rather_than_its_name (0.65s)
+    --- FAIL: TestMutants/nexus-for-in-message (0.73s)
+    --- FAIL: TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed (0.63s)
+    --- FAIL: TestMutants/callback_at_the_limit_is_reported (0.58s)
+    --- FAIL: TestMutants/pagination_bad_name_accepted (0.52s)
+    --- FAIL: TestMutants/max-depth-keyword-span (0.58s)
+    --- FAIL: TestMutants/one_excess_class_is_silently_allowed (0.57s)
+    --- FAIL: TestMutants/console_receiver_widened (0.53s)
+    --- FAIL: TestMutants/declared_BaseError_constructor_ignored (0.58s)
+    --- FAIL: TestMutants/predicate_finding_widened_to_its_owner (0.56s)
+    --- FAIL: TestMutants/global_container_name_judgement_reversed (0.64s)
+    --- FAIL: TestMutants/enum_bitwise_option_ignored (0.55s)
+    --- FAIL: TestMutants/wrapper_Number_ignored (0.58s)
+    --- FAIL: TestMutants/directive_prefix_ignored (0.55s)
+    --- FAIL: TestMutants/bom_removes_two_marks (0.58s)
+    --- FAIL: TestMutants/nested_generator_owns_outer_yield (0.57s)
+    --- FAIL: TestMutants/with_statement_underlined_whole (0.63s)
+    --- FAIL: TestMutants/prefer-destructuring-object-fix (0.64s)
+    --- FAIL: TestMutants/comment_self_directive_exemption_removed (0.65s)
+    --- FAIL: TestMutants/concat_substituted_template_ignored (0.56s)
+    --- FAIL: TestMutants/no-useless-catch_finally_repair_range_reversed (0.65s)
+    --- FAIL: TestMutants/and-left-undefined-ignored (0.65s)
+    --- FAIL: TestMutants/ordering-relations-ignored (0.58s)
+    --- FAIL: TestMutants/finally_continue_incorrectly_absorbed_by_switch (0.60s)
+    --- FAIL: TestMutants/boolean_inverse_changed (0.55s)
+    --- FAIL: TestMutants/constructor-property-name-ignored (0.58s)
+    --- FAIL: TestMutants/empty_placeholder_reported (0.58s)
+    --- FAIL: TestMutants/destructuring_hole_reported (0.54s)
+    --- FAIL: TestMutants/comma_chain_reports_inner (0.50s)
+    --- FAIL: TestMutants/self-comparison-equality-reversed (0.55s)
+    --- FAIL: TestMutants/return_parentheses_option_reversed (0.60s)
+    --- FAIL: TestMutants/proto_accessor_suppressed (0.56s)
+    --- FAIL: TestMutants/for_update_option_ignored (0.64s)
+    --- FAIL: TestMutants/parentheses_around_a_discarded_construction_not_seen_through (0.56s)
+    --- FAIL: TestMutants/condition_polarity_reversed (0.60s)
+    --- FAIL: TestMutants/no-multi-assign-option-reversed (0.57s)
+    --- FAIL: TestMutants/label_option_widened (0.63s)
+    --- FAIL: TestMutants/miss-postfix-writes (0.53s)
+    --- FAIL: TestMutants/no-iterator-static-key (0.67s)
+    --- FAIL: TestMutants/comment_exemption_removed (0.61s)
+    --- FAIL: TestMutants/regex_fix_eats_extra_byte (0.59s)
+    --- FAIL: TestMutants/empty_character_class_silenced (0.65s)
+    --- FAIL: TestMutants/no-empty-pattern_reports_real_bindings (0.67s)
+    --- FAIL: TestMutants/continue_finding_stops_before_its_semicolon (0.60s)
+    --- FAIL: TestMutants/int32_hint_option_ignored (0.53s)
+    --- FAIL: TestMutants/no-caller-property (0.58s)
+    --- FAIL: TestMutants/await_crosses_function_boundary (0.57s)
+    --- FAIL: TestMutants/interface_accepts_type_suffix (0.55s)
+    --- FAIL: TestMutants/init_declarations_always_span_includes_annotation (0.51s)
+    --- FAIL: TestMutants/method_listener_lost (0.53s)
+    --- FAIL: TestMutants/parenthesized_alias_lost (0.58s)
+    --- FAIL: TestMutants/adjacent_overload_separation_ignored (0.57s)
+    --- FAIL: TestMutants/react-no-is-mounted_mutant_from_batch_8 (0.54s)
+    --- FAIL: TestMutants/react-no-find-dom-node_mutant_from_batch_8 (0.59s)
+    --- FAIL: TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8 (0.67s)
+    --- FAIL: TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8 (0.51s)
+    --- FAIL: TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8 (0.54s)
+    --- FAIL: TestMutants/no-useless-constructor_mutant_from_batch_8 (0.50s)
+    --- FAIL: TestMutants/prefer-template_mutant_from_batch_8 (0.57s)
+    --- FAIL: TestMutants/no-unused-private-class-members_mutant_from_batch_8 (0.54s)
+    --- FAIL: TestMutants/no-unexpected-multiline_mutant_from_batch_8 (0.56s)
+    --- FAIL: TestMutants/no-octal-escape_mutant_from_batch_8 (0.51s)
+    --- FAIL: TestMutants/duplicate_case_suppressed (0.63s)
+    --- FAIL: TestMutants/var_declaration_suppressed (0.49s)
+    --- FAIL: TestMutants/suggestion_applied_as_fix (0.51s)
+    --- FAIL: TestMutants/empty_function_body_reported (0.48s)
+=== RUN   TestProfileArtifacts
+    profile_test.go:78: /workspace/checker-area-whole.nvxuQI/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /workspace/checker-area-whole.nvxuQI/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /workspace/checker-area-whole.nvxuQI/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestProfileArtifacts (3.58s)
+=== RUN   TestProfileCompilation
+    profile_test.go:143: /tmp/adamic-gate/TestProfileCompilation384603793/001/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestProfileCompilation384603793/001/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestProfileCompilation384603793/001/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestProfileCompilation (0.30s)
+=== RUN   TestProfileSnapshotsAgree
+    lint_test.go:426: cohere cases: 3879 unique source/rule/options combinations
+    profile_test.go:226: Go recovered output: case 0
+        recovery findings only
+    profile_test.go:226: expected parser refusal from /workspace/checker-area-whole.nvxuQI/scanner, got fork/exec /workspace/checker-area-whole.nvxuQI/scanner: no such file or directory: 
+--- FAIL: TestProfileSnapshotsAgree (32.92s)
+=== RUN   TestCommentFoldMutant
+=== PAUSE TestCommentFoldMutant
+=== RUN   TestPositionIndexMutant
+=== PAUSE TestPositionIndexMutant
+=== RUN   TestOwnedWitnesses
+    registration_test.go:45: /workspace/adamic/stage1/cohere/lint/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestOwnedWitnesses (3.88s)
+=== RUN   TestRegistrationMutant
+    registration_test.go:75: /tmp/adamic-gate/TestRegistrationMutant1220910768/001/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestRegistrationMutant1220910768/001/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestRegistrationMutant1220910768/001/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestRegistrationMutant (3.87s)
+=== RUN   TestFactoryHooks
+    registration_test.go:138: /tmp/adamic-gate/TestFactoryHooks499478588/001/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestFactoryHooks499478588/001/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestFactoryHooks499478588/001/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestFactoryHooks (0.74s)
+=== RUN   TestNestedOutsideModuleCopy
+    registration_test.go:284: root-only import rewrite mutant caught by Node and native module loading
+--- PASS: TestNestedOutsideModuleCopy (0.69s)
+=== RUN   TestDecodedOptionsAndMutant
+    registration_test.go:298: /workspace/adamic/stage1/cohere/lint/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /workspace/adamic/stage1/cohere/lint/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestDecodedOptionsAndMutant (4.52s)
+=== CONT  TestOptionAndComparatorGaps
+=== RUN   TestOptionAndComparatorGaps/2_optional_index.ts
+=== CONT  TestCommentFoldMutant
+=== CONT  TestCountGuardMutant
+=== CONT  TestPositionIndexMutant
+=== NAME  TestOptionAndComparatorGaps/2_optional_index.ts
+    gaps_test.go:67: Node prints "1\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/2_optional_index.ts:3:16: stage 0 can't lower ?.[] on a value yet
+=== RUN   TestOptionAndComparatorGaps/3_numeric_or.ts
+    gaps_test.go:67: Node prints "2\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/3_numeric_or.ts:2:12: stage 0 can't lower a BinaryExpression with a number and a number yet
+=== RUN   TestOptionAndComparatorGaps/4_last_index_position.ts
+    gaps_test.go:67: Node prints "1\n"; stage 0 refuses: /workspace/adamic/stage1/cohere/lint/gaps/4_last_index_position.ts:7:16: stage 0 can't lower lastIndexOf with these arguments yet
+--- PASS: TestOptionAndComparatorGaps (2.11s)
+    --- PASS: TestOptionAndComparatorGaps/2_optional_index.ts (0.55s)
+    --- PASS: TestOptionAndComparatorGaps/3_numeric_or.ts (0.78s)
+    --- PASS: TestOptionAndComparatorGaps/4_last_index_position.ts (0.78s)
+=== CONT  TestDecorationOptionMutant
+=== NAME  TestCommentFoldMutant
+    profile_test.go:250: /tmp/adamic-gate/TestCommentFoldMutant1943920971/020/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestCommentFoldMutant1943920971/020/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestCommentFoldMutant1943920971/020/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestCommentFoldMutant (7.65s)
+=== NAME  TestCountGuardMutant
+    lint_test.go:694: /tmp/adamic-gate/TestCountGuardMutant3985525472/007/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestCountGuardMutant3985525472/007/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestCountGuardMutant3985525472/007/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestCountGuardMutant (7.66s)
+=== NAME  TestPositionIndexMutant
+    profile_test.go:271: /tmp/adamic-gate/TestPositionIndexMutant1681540692/020/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestPositionIndexMutant1681540692/020/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestPositionIndexMutant1681540692/020/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestPositionIndexMutant (7.90s)
+=== NAME  TestDecorationOptionMutant
+    lint_test.go:668: /tmp/adamic-gate/TestDecorationOptionMutant2232487659/020/checker.a:10:88: error TS2322: Type 'number' is not assignable to type 'ProgramResult'.
+        /tmp/adamic-gate/TestDecorationOptionMutant2232487659/020/checker.a:11:66: error TS2322: Type 'void' is not assignable to type 'ReleaseResult'.
+        /tmp/adamic-gate/TestDecorationOptionMutant2232487659/020/checker.a:13:5: error TS2322: Type 'string' is not assignable to type 'InspectResult'.
+--- FAIL: TestDecorationOptionMutant (6.71s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	302.428s
+FAIL

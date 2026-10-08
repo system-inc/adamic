@@ -1,0 +1,31 @@
+import { panic, readTextFile, programArguments } from 'adamic';
+import { OptionsJson } from '../../options_json.ts';
+import { isLikelyReactComponent } from './is_likely_react_component.a';
+import { typeReferenceName } from './type_reference_name.a';
+import { isNetworkServiceHookCall } from './is_network_service_hook_call.a';
+import { returnArgumentLooksLikeJsx } from '../batch32/return_argument_looks_like_jsx.a';
+import type { JsxNode } from '../batch32/model.a';
+import type { AnalysisNode } from './model.a';
+const input = readTextFile(programArguments()[0] ?? panic('missing corpus'));
+if (input.kind === 'Error') { panic(input.message); }
+const json = new OptionsJson(input.text); const root = json.parse(); if (root < 0) { panic(json.error); }
+function text(index: number, name: string): string { return json.node(json.field(index, name)).text; }
+function truth(index: number, name: string): boolean { return text(index, name) === 'true'; }
+function number(index: number, name: string): number { return Number(text(index, name)); }
+function numbers(index: number, name: string): number[] { const values: number[] = []; for (const n of json.node(json.field(index, name)).children) { values.push(Number(json.node(n).text)); } return values; }
+const mode = text(root, 'mode');
+const methods = new Map<string, boolean>();
+for (const method of json.node(json.field(root, 'methods')).children) { methods.set(text(method, 'name'), truth(method, 'value')); }
+for (const row of json.node(json.field(root, 'rows')).children) {
+    const nodes: AnalysisNode[] = []; const jsx: JsxNode[] = [];
+    for (const n of json.node(json.field(row, 'nodes')).children) {
+        nodes.push({functionLike: truth(n, 'functionLike'), identifier: truth(n, 'identifier'), typeReference: truth(n, 'typeReference'), call: truth(n, 'call'), property: truth(n, 'property'), parenthesized: truth(n, 'parenthesized'), block: truth(n, 'block'), returnStatement: truth(n, 'returnStatement'), text: text(n, 'text'), expression: number(n, 'expression'), name: number(n, 'name'), typeName: number(n, 'typeName'), body: number(n, 'body'), parameters: numbers(n, 'parameters'), statements: numbers(n, 'statements')});
+        jsx.push({element: truth(n, 'element'), fragment: truth(n, 'fragment'), selfClosing: truth(n, 'selfClosing'), parenthesized: truth(n, 'parenthesized'), conditional: truth(n, 'conditional'), expression: number(n, 'expression'), whenTrue: number(n, 'whenTrue'), whenFalse: number(n, 'whenFalse')});
+    }
+    for (const query of json.node(json.field(row, 'queries')).children) {
+        const index = Number(json.node(query).text);
+        if (mode === 'type') { console.log(typeReferenceName(nodes, index)); }
+        else if (mode === 'network') { console.log(`${isNetworkServiceHookCall(nodes, index, methods)}`); }
+        else { console.log(`${isLikelyReactComponent(nodes, index, (expression: number): boolean => returnArgumentLooksLikeJsx(jsx, expression))}`); }
+    }
+}

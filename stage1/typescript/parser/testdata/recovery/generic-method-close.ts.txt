@@ -1,0 +1,1 @@
+interface I { m<T(a: T): T; }

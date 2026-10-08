@@ -1,0 +1,36 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { bestMatch } from '../../helpers/ecmascript/text/best_match.a';
+import { message } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context = context; }
+ visit(node: ParseNode, index: number): void {
+  // Project the upstream path and modifier contracts from the shared parser.
+  const segments = this.context.parser.path.split(/[\\/]/).filter((s) => s !== '');
+  const pages = segments.indexOf('pages');
+  if(pages < 0 || pages + 1 >= segments.length || segments[pages + 1] === 'api') { return; }
+  let exported = false; let defaulted = false;
+  for(const child of node.children) {
+   const kind = this.context.node(child).kind;
+   if(kind === 'ExportKeyword') { exported = true; }
+   if(kind === 'DefaultKeyword') { defaulted = true; }
+  }
+  if(!exported || defaulted) { return; }
+  for(const child of node.children) {
+   const part = this.context.node(child);
+   if(node.kind === 'FunctionDeclaration' && part.kind === 'Identifier') { this.check(child); return; }
+   if(part.kind === 'VariableDeclarationList') {
+    for(const declaration of part.children) { const name = this.context.node(declaration).children[0] ?? -1; if(name >= 0) { this.check(name); } }
+   }
+  }
+ }
+ check(index: number): void {
+  const name = this.context.node(index);
+  if(name.kind !== 'Identifier') { return; }
+  const match = bestMatch(name.text, ['getStaticProps', 'getStaticPaths', 'getServerSideProps'], 1);
+  if(!match.ok) { return; }
+  this.context.reportRange(this.context.start(index), name.end, '@next/next/no-typos', 'noTypos', message(name.text, match.value));
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

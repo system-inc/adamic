@@ -1,0 +1,14 @@
+import { JsxArena } from './ast.a';
+export interface ElementParts {
+    readonly tagName: number;
+    readonly attributes: number;
+}
+// Like Go ElementParts, requires a present node. Closing tags, whole elements
+// and fragments decline. Both opening forms return the original node links.
+export function elementParts(arena: JsxArena, index: number): ElementParts {
+    const node = arena.node(index);
+    if(node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement') {
+        return { tagName: node.tagName, attributes: node.attributes };
+    }
+    return { tagName: -1, attributes: -1 };
+}

@@ -1,0 +1,4 @@
+import type {RuleContext} from '../../context.ts';
+import {isComponentClass} from './is_component_class.a';
+import {isCreateReactClassCall} from './is_create_react_class_call.a';
+export function enclosingComponentOf(context:RuleContext,index:number):number {for(let current=index;current>=0;current=context.parent(current)){if(isComponentClass(context,current) || (context.kind(current)==='CallExpression' && isCreateReactClassCall(context,current))){return current;}}return -1;}

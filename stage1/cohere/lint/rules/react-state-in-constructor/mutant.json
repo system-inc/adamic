@@ -1,0 +1,5 @@
+{
+  "name": "accept-plain-classes",
+  "from": "return false; // no component heritage",
+  "to": "return true; // no component heritage"
+}

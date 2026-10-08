@@ -1,0 +1,17 @@
+{
+    protected = true;
+    protected();
+    protected.value;
+    protected
+}
+{
+    protected
+    class C {}
+}
+{
+    protected
+    function f() {}
+}
+{
+    protected class D {}
+}

@@ -1,0 +1,263 @@
+// @system_adamic Oct 8 07:57: concrete private-constructor indices until generic
+// enclosing-type-parameter instantiation lands. Collapse to ArenaIndex<Tag> here
+// with all call sites in one commit, no shims. Absent is Index | undefined.
+// CFG indices are kept beside the IR indices below; all collapse in place together.
+import { panic } from 'adamic';
+export class FunctionIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: FunctionIndex[]): FunctionIndex {
+        const index = new FunctionIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly FunctionIndex[], index: FunctionIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('FunctionIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('FunctionIndex belongs to another arena'); }
+        return index.slot;
+    }
+}
+export class BlockIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: BlockIndex[]): BlockIndex {
+        const index = new BlockIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly BlockIndex[], index: BlockIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('BlockIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('BlockIndex belongs to another arena'); }
+        return index.slot;
+    }
+}
+export class InstructionIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: InstructionIndex[]): InstructionIndex {
+        const index = new InstructionIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly InstructionIndex[], index: InstructionIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('InstructionIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('InstructionIndex belongs to another arena'); }
+        return index.slot;
+    }
+}
+export class IdentifierIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: IdentifierIndex[]): IdentifierIndex {
+        const index = new IdentifierIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly IdentifierIndex[], index: IdentifierIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('IdentifierIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('IdentifierIndex belongs to another arena'); }
+        return index.slot;
+    }
+}
+export class DeclarationIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: DeclarationIndex[]): DeclarationIndex {
+        const index = new DeclarationIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly DeclarationIndex[], index: DeclarationIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('DeclarationIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('DeclarationIndex belongs to another arena'); }
+        return index.slot;
+    }
+}
+export class SymbolIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: SymbolIndex[]): SymbolIndex {
+        const index = new SymbolIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly SymbolIndex[], index: SymbolIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('SymbolIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('SymbolIndex belongs to another arena'); }
+        return index.slot;
+    }
+}
+export class ModuleIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: ModuleIndex[]): ModuleIndex {
+        const index = new ModuleIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly ModuleIndex[], index: ModuleIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('ModuleIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('ModuleIndex belongs to another arena'); }
+        return index.slot;
+    }
+}
+export class ExpressionIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot = slot; }
+    static push(arena: ExpressionIndex[]): ExpressionIndex {
+        const index = new ExpressionIndex(arena.length); arena.push(index); return index;
+    }
+    static read(arena: readonly ExpressionIndex[], index: ExpressionIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot < 0 || index.slot >= arena.length) { panic('ExpressionIndex out of range'); }
+        if(arena[index.slot] !== index) { panic('ExpressionIndex belongs to another arena'); }
+        return index.slot;
+    }
+}
+
+
+// CFG arena index: record and handle are created together before publication.
+export class CfgBlockIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot=slot; }
+    static push(arena: CfgBlock[]): CfgBlockIndex {
+        const index=new CfgBlockIndex(arena.length);
+        arena.push({ index:index, Events:[], Successors:[], Predecessors:[], Reachable:false, hasIncoming:false, final:false, thrown:false, cycleBarrier:undefined });
+        return index;
+    }
+    static read(arena: readonly CfgBlock[], index: CfgBlockIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot<0 || index.slot>=arena.length) panic('CfgBlockIndex out of range');
+        if(arena[index.slot]?.index!==index) panic('CfgBlockIndex belongs to another arena');
+        return index.slot;
+    }
+}
+// CFG arena index: record and handle are created together before publication.
+export class CfgNodeIndex {
+    readonly slot: number;
+    private constructor(slot: number) { this.slot=slot; }
+    static push(arena: CfgNode[]): CfgNodeIndex {
+        const index=new CfgNodeIndex(arena.length);
+        arena.push({
+ index: index,
+ Parent: undefined,
+ Left: undefined,
+ Right: undefined,
+ Expression: undefined,
+ Operand: undefined,
+ Name: undefined,
+ Body: undefined,
+ Type: undefined,
+ Initializer: undefined,
+ Condition: undefined,
+ Incrementor: undefined,
+ Statement: undefined,
+ ThenStatement: undefined,
+ ElseStatement: undefined,
+ TryBlock: undefined,
+ FinallyBlock: undefined,
+ CatchClause: undefined,
+ VariableDeclaration: undefined,
+ Block: undefined,
+ Label: undefined,
+ CaseBlock: undefined,
+ DeclarationList: undefined,
+ WhenTrue: undefined,
+ WhenFalse: undefined,
+ ArgumentExpression: undefined,
+ Tag: undefined,
+ Template: undefined,
+ Constraint: undefined,
+ DefaultType: undefined,
+ PropertyName: undefined,
+ ObjectAssignmentInitializer: undefined,
+ DotDotDotToken: undefined,
+ OperatorToken: undefined,
+ Statements: undefined,
+ Parameters: undefined,
+ Arguments: undefined,
+ Declarations: undefined,
+ Elements: undefined,
+ Properties: undefined,
+ Clauses: undefined,
+ Members: undefined,
+ Types: undefined,
+ HeritageClauses: undefined,
+ TypeArguments: undefined,
+ TypeParameters: undefined,
+ Decorators: undefined,
+ children: undefined,
+ Kind: '',
+ Text: '',
+ Operator: '',
+ isStatement: false,
+ optionalChain: false,
+ outermostChain: false,
+ optionalRoot: false,
+ functionLike: false,
+ jsxTag: false,
+ });
+        return index;
+    }
+    static read(arena: readonly CfgNode[], index: CfgNodeIndex): number {
+        if(!Number.isInteger(index.slot) || index.slot<0 || index.slot>=arena.length) panic('CfgNodeIndex out of range');
+        if(arena[index.slot]?.index!==index) panic('CfgNodeIndex belongs to another arena');
+        return index.slot;
+    }
+}
+
+export interface CfgBlock {
+    readonly index: CfgBlockIndex;
+    Events: number[];
+    Successors: (CfgBlockIndex | undefined)[];
+    Predecessors: CfgBlockIndex[];
+    Reachable: boolean;
+    hasIncoming: boolean;
+    final: boolean;
+    thrown: boolean;
+    cycleBarrier: boolean[] | undefined;
+}
+
+export interface CfgNode {
+ readonly index: CfgNodeIndex;
+ Parent: CfgNodeIndex | undefined;
+ Left: CfgNodeIndex | undefined;
+ Right: CfgNodeIndex | undefined;
+ Expression: CfgNodeIndex | undefined;
+ Operand: CfgNodeIndex | undefined;
+ Name: CfgNodeIndex | undefined;
+ Body: CfgNodeIndex | undefined;
+ Type: CfgNodeIndex | undefined;
+ Initializer: CfgNodeIndex | undefined;
+ Condition: CfgNodeIndex | undefined;
+ Incrementor: CfgNodeIndex | undefined;
+ Statement: CfgNodeIndex | undefined;
+ ThenStatement: CfgNodeIndex | undefined;
+ ElseStatement: CfgNodeIndex | undefined;
+ TryBlock: CfgNodeIndex | undefined;
+ FinallyBlock: CfgNodeIndex | undefined;
+ CatchClause: CfgNodeIndex | undefined;
+ VariableDeclaration: CfgNodeIndex | undefined;
+ Block: CfgNodeIndex | undefined;
+ Label: CfgNodeIndex | undefined;
+ CaseBlock: CfgNodeIndex | undefined;
+ DeclarationList: CfgNodeIndex | undefined;
+ WhenTrue: CfgNodeIndex | undefined;
+ WhenFalse: CfgNodeIndex | undefined;
+ ArgumentExpression: CfgNodeIndex | undefined;
+ Tag: CfgNodeIndex | undefined;
+ Template: CfgNodeIndex | undefined;
+ Constraint: CfgNodeIndex | undefined;
+ DefaultType: CfgNodeIndex | undefined;
+ PropertyName: CfgNodeIndex | undefined;
+ ObjectAssignmentInitializer: CfgNodeIndex | undefined;
+ DotDotDotToken: CfgNodeIndex | undefined;
+ OperatorToken: CfgNodeIndex | undefined;
+ Statements: readonly CfgNodeIndex[] | undefined;
+ Parameters: readonly CfgNodeIndex[] | undefined;
+ Arguments: readonly CfgNodeIndex[] | undefined;
+ Declarations: readonly CfgNodeIndex[] | undefined;
+ Elements: readonly CfgNodeIndex[] | undefined;
+ Properties: readonly CfgNodeIndex[] | undefined;
+ Clauses: readonly CfgNodeIndex[] | undefined;
+ Members: readonly CfgNodeIndex[] | undefined;
+ Types: readonly CfgNodeIndex[] | undefined;
+ HeritageClauses: readonly CfgNodeIndex[] | undefined;
+ TypeArguments: readonly CfgNodeIndex[] | undefined;
+ TypeParameters: readonly CfgNodeIndex[] | undefined;
+ Decorators: readonly CfgNodeIndex[] | undefined;
+ children: readonly CfgNodeIndex[] | undefined;
+ Kind: string;
+ Text: string;
+ Operator: string;
+ isStatement: boolean;
+ optionalChain: boolean;
+ outermostChain: boolean;
+ optionalRoot: boolean;
+ functionLike: boolean;
+ jsxTag: boolean;
+}

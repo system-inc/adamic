@@ -1,0 +1,84 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+export function switchStatement(b: Builder, node: AstNode | undefined): void {
+    let stmt = node;
+    b.expr(b.ast.maybe(needNode(stmt).Expression));
+    let after = b.newBlock();
+    let clauses: readonly AstNode[] = [];
+    if ((b.ast.maybe(needNode(stmt).CaseBlock) !== undefined)) {
+        {
+            let caseBlock = b.ast.maybe(needNode(stmt).CaseBlock);
+            if (((caseBlock !== undefined) && (b.ast.list(needNode(caseBlock).Clauses) !== undefined))) {
+                clauses = needList(b.ast.list(needNode(caseBlock).Clauses));
+            }
+        }
+    }
+    if (((clauses).length === 0)) {
+        b.link(b.cur, after);
+        b.enter(after);
+        return;
+    }
+    let bodies: (BlockIndex | undefined)[]=[];for(let slot=0;slot<clauses.length;slot++)bodies.push(undefined);
+    let dispatchFrom: (BlockIndex | undefined)[]=[];for(let slot=0;slot<clauses.length;slot++)dispatchFrom.push(undefined);
+    let dispatchEdge = filled((clauses).length, 0);
+    for (let i = 0; i < dispatchEdge.length; i++) {
+        dispatchEdge[i] = -1;
+    }
+    for (let i = 0; i < clauses.length; i++) {
+        bodies[i] = b.newBlock();
+    }
+    let defaultIndex = -1;
+    let firstCaseIndex = -1;
+    let testCur = b.cur;
+    for (let i = 0; i < clauses.length; i++) {
+        const clause = at(clauses, i);
+        if ((needNode(clause).Kind === 'DefaultClause')) {
+            defaultIndex = i;
+            continue;
+        }
+        if ((firstCaseIndex === -1)) {
+            firstCaseIndex = i;
+        }
+        b.cur = testCur;
+        b.expr(b.ast.maybe(needNode(clause).Expression));
+        dispatchFrom[i] = b.cur;
+        dispatchEdge[i] = b.linkWithCycleBarrier(b.cur, at(bodies, i), false);
+        let nextTest = b.newBlock();
+        b.link(b.cur, nextTest);
+        b.enter(nextTest);
+        testCur = b.cur;
+    }
+    if ((defaultIndex >= 0)) {
+        dispatchFrom[defaultIndex] = testCur;
+        dispatchEdge[defaultIndex] = b.linkWithCycleBarrier(testCur, at(bodies, defaultIndex), false);
+    } else {
+        b.link(testCur, after);
+    }
+    b.pushJump(node, after, undefined, undefined);
+    let switchJump = ((b.jumps).length - 1);
+    let hadSwitchBreak = false;
+    let fallthroughFrom: BlockIndex | undefined = undefined;
+    for (let i = 0; i < clauses.length; i++) {
+        const clause = at(clauses, i);
+        let beforeFirstCase = ((firstCaseIndex === -1) || ((needNode(clause).Kind === 'DefaultClause') && (i < firstCaseIndex)));
+        let barrier = (hadSwitchBreak || beforeFirstCase);
+        {
+            let from = at(dispatchFrom, i);
+            if (((from !== undefined) && (at(dispatchEdge, i) >= 0))) {
+                b.setCycleBarrier(from, at(dispatchEdge, i), barrier);
+            }
+        }
+        b.linkWithCycleBarrier(fallthroughFrom, at(bodies, i), barrier);
+        b.enter(at(bodies, i));
+        b.statements(b.ast.list(needNode(clause).Statements));
+        fallthroughFrom = b.cur;
+        if (((i >= firstCaseIndex) && (firstCaseIndex !== -1))) {
+            hadSwitchBreak = at(b.jumps, switchJump).broken;
+        }
+    }
+    b.link(fallthroughFrom, after);
+    b.popJump();
+    b.enter(after);
+}

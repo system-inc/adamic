@@ -1,0 +1,9 @@
+import { panic } from 'adamic';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+import { PathAnalysis, pathCounting, pathCountKnown, pathThrown, pathFinal } from './path_analysis.a';
+export function countFinalPaths(a: PathAnalysis,index: BlockIndex): number {
+ const flags=a.flag(index);if((flags & pathCounting)!==0)return 0;if((flags & pathCountKnown)!==0)return a.paths[index.slot] ?? panic('paths');
+ a.add(index,pathCounting);let count=0;
+ if((flags & pathThrown)===0){if((flags & pathFinal)!==0)count=1;else for(const successor of a.graph.arena.read(index).Successors){if(successor===undefined||!a.graph.arena.read(successor).Reachable)continue;count+=countFinalPaths(a,successor);if(count>1){count=2;break;}}}
+ a.flags[index.slot]=(a.flag(index)&~pathCounting)|pathCountKnown;a.paths[index.slot]=count;return count;
+}

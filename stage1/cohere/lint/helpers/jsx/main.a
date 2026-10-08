@@ -1,0 +1,40 @@
+import { programArguments, readTextFile, panic } from 'adamic';
+import { OptionsJson } from '../options_json.ts';
+import { JsxArena } from './ast.a';
+import type { HelperNode } from './ast.a';
+import { attributeName } from './attribute_name.a';
+import { elementParts } from './element_parts.a';
+import { hasAttributeNamed } from './has_attribute_named.a';
+import { isIntrinsicElementNamed } from './intrinsic_element_named.a';
+import { matchExactly } from './match_exactly.a';
+import { matchIgnoringCase } from './match_ignoring_case.a';
+const file = readTextFile(programArguments()[0] ?? panic('input missing'));
+if (file.kind === 'Error') { panic(file.message); }
+const input = new OptionsJson(file.text);
+const root = input.parse();
+function field(id: number, name: string): number { return input.field(id,name); }
+function text(id: number, name: string): string { return input.node(field(id,name)).text; }
+function num(id: number, name: string): number { return input.node(field(id,name)).number; }
+const nodes: HelperNode[] = [];
+for (const id of input.node(field(root,'Nodes')).children) {
+ const properties: number[] = [];
+ for (const p of input.node(field(id,'Properties')).children) { properties.push(input.node(p).number); }
+ nodes.push({kind:text(id,'Kind'),text:text(id,'Text'),name:num(id,'Name'),tagName:num(id,'TagName'),attributes:num(id,'Attributes'),properties:properties,propertiesPresent:text(id,'PropertiesPresent') === 'true'});
+}
+function units(value: string): string { let out = ''; for (let i=0;i<value.length;i++) { out += `${value.charCodeAt(i)},`; } return out; }
+const arena = new JsxArena(nodes);
+for (let i = 0; i < nodes.length; i++) {
+ const name = attributeName(nodes,i);
+ const parts = elementParts(arena,i);
+ console.log(`${units(name.name)}|${name.named}|${parts.tagName}|${parts.attributes}`);
+}
+for (const p of input.node(field(root,'Pairs')).children) {
+ const left = text(p,'Left'); const right = text(p,'Right');
+ console.log(`${matchExactly(left,right)}|${matchIgnoringCase(left,right)}`);
+}
+for (const q of input.node(field(root,'Queries')).children) {
+ const id = num(q,'Node'); const wanted = text(q,'Wanted');
+ const node = id < 0 ? {kind:'',text:''} : nodes[id] ?? panic('node missing');
+ const has = text(q,'Fold') === 'true' ? hasAttributeNamed(nodes,id,wanted,matchIgnoringCase) : hasAttributeNamed(nodes,id,wanted,matchExactly);
+ console.log(`${isIntrinsicElementNamed(id,node.kind,node.text,wanted)}|${has}`);
+}

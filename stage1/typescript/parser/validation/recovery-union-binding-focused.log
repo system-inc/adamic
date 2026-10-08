@@ -1,0 +1,21 @@
+=== RUN   TestMethodRecoveryAgrees
+    recovery_test.go:101: Node /tmp/adamic-parser-recovery/method-7.ts:  line 2: port "diagnostic 1005 24 1 1\t'}' expected.", Go "diagnostic 1005 24 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 23 1 1	':' expected.
+        diagnostic 1005 24 1 1	',' expected.
+        diagnostic 1109 25 1 1	Expression expected.
+        diagnostic 1128 28 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 29 0 0 -1 0 0				
+    recovery_test.go:101: native /tmp/adamic-parser-recovery/method-7.ts:  line 2: port "diagnostic 1005 24 1 1\t'}' expected.", Go "diagnostic 1005 24 1 1\t',' expected."
+        Go context:
+        diagnostic 1005 23 1 1	':' expected.
+        diagnostic 1005 24 1 1	',' expected.
+        diagnostic 1109 25 1 1	Expression expected.
+        diagnostic 1128 28 1 1	Declaration or statement expected.
+        file
+        0 SourceFile 0 29 0 0 -1 0 0				
+--- FAIL: TestMethodRecoveryAgrees (27.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/typescript/parser	27.195s
+FAIL
