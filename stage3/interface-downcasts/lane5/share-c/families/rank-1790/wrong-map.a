@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface SubstitutionType {readonly value:number;}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, SubstitutionType>;}
+function probe(value:Base):void {const substitutionTypes=(value as Target).items;const incoming:SubstitutionType={value:1};substitutionTypes.set("missing",incoming);console.log("completed");}
+const sourceMap:Map<string,boolean>=new Map<string,boolean>();probe({items:sourceMap});

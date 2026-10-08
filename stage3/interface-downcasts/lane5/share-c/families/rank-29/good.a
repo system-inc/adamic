@@ -1,4 +1,4 @@
-// Original declaration and read; adjacent carriers and bodies reduced.
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
 const enum InternalSymbolName {Call="__call",Constructor="__constructor",New="__new",Index="__index",ExportStar="__export",Global="__global",Missing="__missing",Type="__type",Object="__object",JSXAttributes="__jsxAttributes",Class="__class",Function="__function",Computed="__computed",Resolving="__resolving__",ExportEquals="export=",Default="default",This="this",InstantiationExpression="__instantiationExpression",ImportAttributes="__importAttributes"}
 type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
 type SymbolTable = Map<__String, Symbol>;
@@ -6,5 +6,5 @@ interface Symbol {readonly value:number;}
 interface OriginalMember<K,V> {set(key: K, value: V): this;}
 interface Base {readonly items:unknown;}
 interface Target {readonly items:SymbolTable;}
-function probe(value:Base):void {const globals=(value as Target).items;globals.set(InternalSymbolName.Call,{value:1});console.log("completed");}
-probe({items:new Map<__String,Symbol>()});
+function probe(value:Base):void {const globals=(value as Target).items;const incoming:Symbol={value:1};globals.set(InternalSymbolName.Call,incoming);console.log("completed");}
+const sourceMap:Map<__String,Symbol>=new Map<__String,Symbol>();probe({items:sourceMap});

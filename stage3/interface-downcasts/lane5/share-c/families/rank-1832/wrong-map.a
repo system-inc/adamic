@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+
+interface OriginalMember<K,V> {delete(key: K): boolean;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, string>;}
+function probe(value:Base):void {const wildcardFiles=(value as Target).items;wildcardFiles.delete("missing");console.log("completed");}
+const sourceMap:Map<string,boolean>=new Map<string,boolean>();probe({items:sourceMap});

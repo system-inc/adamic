@@ -1,0 +1,69 @@
+=== RUN   TestCheckedViewCallableShareCMap
+=== RUN   TestCheckedViewCallableShareCMap/rank-422
+=== RUN   TestCheckedViewCallableShareCMap/rank-422/good
+    checked_views_callable_share_c_maps_test.go:32: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:41: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCMap/rank-422/wrong-map
+    checked_views_callable_share_c_maps_test.go:32: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:41: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCMap/rank-1718
+=== RUN   TestCheckedViewCallableShareCMap/rank-1718/good
+    checked_views_callable_share_c_maps_test.go:32: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:41: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCMap/rank-1718/wrong-map
+    checked_views_callable_share_c_maps_test.go:32: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:41: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCMap/rank-1745
+=== RUN   TestCheckedViewCallableShareCMap/rank-1745/good
+    checked_views_callable_share_c_maps_test.go:32: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:41: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCMap/rank-1745/wrong-map
+    checked_views_callable_share_c_maps_test.go:32: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:41: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCMap/rank-1775
+=== RUN   TestCheckedViewCallableShareCMap/rank-1775/good
+    checked_views_callable_share_c_maps_test.go:32: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:41: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCMap/rank-1775/wrong-map
+    checked_views_callable_share_c_maps_test.go:32: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:41: gate cache node miss
+--- PASS: TestCheckedViewCallableShareCMap (3.18s)
+    --- PASS: TestCheckedViewCallableShareCMap/rank-422 (0.84s)
+        --- PASS: TestCheckedViewCallableShareCMap/rank-422/good (0.45s)
+        --- PASS: TestCheckedViewCallableShareCMap/rank-422/wrong-map (0.39s)
+    --- PASS: TestCheckedViewCallableShareCMap/rank-1718 (0.78s)
+        --- PASS: TestCheckedViewCallableShareCMap/rank-1718/good (0.39s)
+        --- PASS: TestCheckedViewCallableShareCMap/rank-1718/wrong-map (0.39s)
+    --- PASS: TestCheckedViewCallableShareCMap/rank-1745 (0.78s)
+        --- PASS: TestCheckedViewCallableShareCMap/rank-1745/good (0.40s)
+        --- PASS: TestCheckedViewCallableShareCMap/rank-1745/wrong-map (0.38s)
+    --- PASS: TestCheckedViewCallableShareCMap/rank-1775 (0.78s)
+        --- PASS: TestCheckedViewCallableShareCMap/rank-1775/good (0.40s)
+        --- PASS: TestCheckedViewCallableShareCMap/rank-1775/wrong-map (0.38s)
+=== RUN   TestCheckedViewCallableShareCMapMutants
+=== RUN   TestCheckedViewCallableShareCMapMutants/rank-422
+    checked_views_callable_share_c_maps_test.go:77: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:81: caught omitted Map receiver certificate: exit codes differ; exit 0 stdout "completed\n" stderr ""
+    checked_views_callable_share_c_maps_test.go:81: caught omitted Map receiver certificate: exit codes differ; exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCMapMutants/rank-1718
+    checked_views_callable_share_c_maps_test.go:77: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:81: caught omitted Map receiver certificate: exit codes differ; exit 0 stdout "completed\n" stderr ""
+    checked_views_callable_share_c_maps_test.go:81: caught omitted Map receiver certificate: exit codes differ; exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCMapMutants/rank-1745
+    checked_views_callable_share_c_maps_test.go:77: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:81: caught omitted Map receiver certificate: exit codes differ; exit 0 stdout "completed\n" stderr ""
+    checked_views_callable_share_c_maps_test.go:81: caught omitted Map receiver certificate: exit codes differ; exit 0 stdout "completed\n" stderr ""
+=== RUN   TestCheckedViewCallableShareCMapMutants/rank-1775
+    checked_views_callable_share_c_maps_test.go:77: gate cache node miss
+    checked_views_callable_share_c_maps_test.go:81: caught omitted Map receiver certificate: exit codes differ; exit 0 stdout "completed\n" stderr ""
+    checked_views_callable_share_c_maps_test.go:81: caught omitted Map receiver certificate: exit codes differ; exit 0 stdout "completed\n" stderr ""
+--- PASS: TestCheckedViewCallableShareCMapMutants (0.56s)
+    --- PASS: TestCheckedViewCallableShareCMapMutants/rank-422 (0.15s)
+    --- PASS: TestCheckedViewCallableShareCMapMutants/rank-1718 (0.15s)
+    --- PASS: TestCheckedViewCallableShareCMapMutants/rank-1745 (0.13s)
+    --- PASS: TestCheckedViewCallableShareCMapMutants/rank-1775 (0.13s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=20
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.750s

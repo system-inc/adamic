@@ -1,0 +1,8 @@
+// Original declarations and read; adjacent carriers and bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface GeneratedNamePart {readonly value:number;}
+interface Base {readonly createTempVariable:unknown;}
+interface Target {createTempVariable(recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean): Identifier;
+createTempVariable(recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean, prefix?: string | GeneratedNamePart, suffix?: string): Identifier;}
+function probe(value:Base):void {const factory=value as Target;factory.createTempVariable(undefined);console.log("completed");}
+probe({createTempVariable:(recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean, prefix?: string | GeneratedNamePart, suffix?: string):Identifier=>({value:1,kind:80})});

@@ -1,0 +1,7 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+const enum SeenPackageName {Exists=0,Modified=1}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, SeenPackageName>;}
+function probe(value:Base):void {const seenPackageNames=(value as Target).items;const incoming:SeenPackageName=SeenPackageName.Exists;seenPackageNames.set("missing",incoming);console.log("completed");}
+const sourceMap:Map<string,SeenPackageName>=new Map<string,SeenPackageName>();probe({items:sourceMap});

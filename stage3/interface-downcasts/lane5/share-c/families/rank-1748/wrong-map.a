@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface ImportSpecifier {readonly value:number;readonly kind:277;}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, ImportSpecifier>;}
+function probe(value:Base):void {const specifierSourceImports=(value as Target).items;const incoming:ImportSpecifier={value:1,kind:277};specifierSourceImports.set("missing",incoming);console.log("completed");}
+const sourceMap:Map<string,boolean>=new Map<string,boolean>();probe({items:sourceMap});

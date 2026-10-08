@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface Signature {readonly value:number;}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, Signature>;}
+function probe(value:Base):void {const instantiations=(value as Target).items;instantiations.get("missing");console.log("completed");}
+const sourceMap:Map<string,boolean>=new Map<string,boolean>();probe({items:sourceMap});

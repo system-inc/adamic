@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface LiteralType {readonly value:number;}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, LiteralType>;}
+function probe(value:Base):void {const enumLiteralTypes=(value as Target).items;enumLiteralTypes.get("missing");console.log("completed");}
+const sourceMap:Map<string,LiteralType>=new Map<string,LiteralType>();probe({items:sourceMap});

@@ -1,3 +1,11 @@
+Built: 20 further Map pairs / 136 ranked candidate reads; cumulative share c 307 pairs / 909 reads. Fixtures, tests, evidence and own counts only.
+Commits: continues 85381238 on codex/views-callables-c; delivery SHA is reported after push.
+Commands and outputs: focused Map oracle PASS 15.771s; alias/enum Map oracle PASS 3.750s; verifier PASS 307 pairs / 614 fixtures; scoped counts update and verification PASS.
+Mutants: twenty Map receiver-certificate omissions caught in both native and JavaScript, forty executed comparisons; each changes exactly one read.
+Uncovered: whole original tsc call contexts and remaining ranked families; Set, optional-host and bind/condition stay delegated or excluded; no compiler/runtime changes.
+
+Latest batch: continuation/batch02/REPORT.md. Prior evidence follows.
+
 Built: 20 further pairs / 43 ranked candidate reads; cumulative share c 287 pairs / 773 reads. Fixtures, tests, own counts and evidence only.
 Commits: continues edee6e6cd on codex/views-callables-c; delivery SHA is reported after push.
 Commands and outputs: array oracle PASS 19.729s; Map oracle PASS 9.317s; original verifier PASS 287 pairs / 574 fixtures; scoped counts update PASS 4.104s and verification PASS 4.321s.

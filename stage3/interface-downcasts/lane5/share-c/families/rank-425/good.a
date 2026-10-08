@@ -1,0 +1,6 @@
+// Original declarations and read; adjacent carriers and bodies reduced.
+interface OriginalMember {abs(x: number): number;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:typeof Math;}
+function probe(value:Base):void {const Math=(value as Target).items;Math.abs(1);console.log("completed");}
+probe({items:Math});

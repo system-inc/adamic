@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface UnionType {readonly value:number;}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, UnionType>;}
+function probe(value:Base):void {const unionTypes=(value as Target).items;const incoming:UnionType={value:1};unionTypes.set("missing",incoming);console.log("completed");}
+const sourceMap:Map<string,UnionType>=new Map<string,UnionType>();probe({items:sourceMap});

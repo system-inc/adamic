@@ -45,7 +45,7 @@
     "type": "SymbolTable",
     "field": "get",
     "read": "moduleExports.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 23,
@@ -53,7 +53,7 @@
     "type": "NodeFactory",
     "field": "createTempVariable",
     "read": "factory.createTempVariable",
-    "status": "overloaded original member"
+    "status": "needs code; see next-code-blocked.json"
   },
   {
     "rank": 29,
@@ -61,7 +61,7 @@
     "type": "SymbolTable",
     "field": "set",
     "read": "globals.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 35,
@@ -264,7 +264,7 @@
     "type": "DiagnosticCollection",
     "field": "getDiagnostics",
     "read": "suggestionDiagnostics.getDiagnostics",
-    "status": "overloaded original member"
+    "status": "needs code; see next-code-blocked.json"
   },
   {
     "rank": 230,
@@ -280,7 +280,7 @@
     "type": "Math",
     "field": "floor",
     "read": "Math.floor",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "needs code; see next-code-blocked.json"
   },
   {
     "rank": 236,
@@ -697,7 +697,7 @@
     "type": "Map<string, HostFileInfo>",
     "field": "set",
     "read": "sourceFilesCache.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 425,
@@ -705,7 +705,7 @@
     "type": "Math",
     "field": "abs",
     "read": "Math.abs",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "needs code; see next-code-blocked.json"
   },
   {
     "rank": 428,
@@ -2505,7 +2505,7 @@
     "type": "SymbolTable",
     "field": "delete",
     "read": "locals.delete",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1100,
@@ -4076,7 +4076,7 @@
     "type": "Map<number, NumberLiteralType>",
     "field": "get",
     "read": "numberLiteralTypes.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1688,
@@ -4116,7 +4116,7 @@
     "type": "Map<number, Type>",
     "field": "delete",
     "read": "context.enclosingSymbolTypes.delete",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1703,
@@ -4164,7 +4164,7 @@
     "type": "Map<string, CommandLineOption>",
     "field": "has",
     "read": "optionsNameMap.has",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1721,
@@ -4220,7 +4220,7 @@
     "type": "Map<string, ExtendedConfigCacheEntry>",
     "field": "set",
     "read": "extendedConfigCache.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1742,
@@ -4236,7 +4236,7 @@
     "type": "Map<string, HostFileInfo>",
     "field": "has",
     "read": "sourceFilesCache.has",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1748,
@@ -4244,7 +4244,7 @@
     "type": "Map<string, ImportSpecifier>",
     "field": "set",
     "read": "specifierSourceImports.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1751,
@@ -4260,7 +4260,7 @@
     "type": "Map<string, IndexedAccessType>",
     "field": "set",
     "read": "indexedAccessTypes.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1757,
@@ -4276,7 +4276,7 @@
     "type": "Map<string, LiteralType>",
     "field": "get",
     "read": "enumLiteralTypes.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1763,
@@ -4316,7 +4316,7 @@
     "type": "Map<string, SeenPackageName>",
     "field": "set",
     "read": "seenPackageNames.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1778,
@@ -4324,7 +4324,7 @@
     "type": "Map<string, Signature>",
     "field": "get",
     "read": "instantiations.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1781,
@@ -4348,7 +4348,7 @@
     "type": "Map<string, StringMappingType>",
     "field": "get",
     "read": "stringMappingTypes.get",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1790,
@@ -4356,7 +4356,7 @@
     "type": "Map<string, SubstitutionType>",
     "field": "set",
     "read": "substitutionTypes.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1793,
@@ -4380,7 +4380,7 @@
     "type": "Map<string, TemplateLiteralType>",
     "field": "set",
     "read": "templateLiteralTypes.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1802,
@@ -4388,7 +4388,7 @@
     "type": "Map<string, Type>",
     "field": "has",
     "read": "typeSet.has",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1805,
@@ -4404,7 +4404,7 @@
     "type": "Map<string, UnionType>",
     "field": "set",
     "read": "unionTypes.set",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1811,
@@ -4468,7 +4468,7 @@
     "type": "Map<string, string>",
     "field": "delete",
     "read": "wildcardFiles.delete",
-    "status": "original intrinsic receiver requires dedicated witness"
+    "status": "certified original Map receiver"
   },
   {
     "rank": 1835,

@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface IndexedAccessType {readonly value:number;}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, IndexedAccessType>;}
+function probe(value:Base):void {const indexedAccessTypes=(value as Target).items;const incoming:IndexedAccessType={value:1};indexedAccessTypes.set("missing",incoming);console.log("completed");}
+const sourceMap:Map<string,IndexedAccessType>=new Map<string,IndexedAccessType>();probe({items:sourceMap});

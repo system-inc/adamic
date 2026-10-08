@@ -1,0 +1,10 @@
+// Original Map receiver, declaration, aliases and read; adjacent interfaces reduced.
+type HostFileInfo = FilePresentOnHost | FileMissingOnHost | FilePresenceUnknownOnHost;
+interface FilePresentOnHost {readonly value:number;}
+type FileMissingOnHost = false;
+interface FilePresenceUnknownOnHost {readonly value:number;}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, HostFileInfo>;}
+function probe(value:Base):void {const sourceFilesCache=(value as Target).items;const incoming:FilePresentOnHost={value:1};sourceFilesCache.set("missing",incoming);console.log("completed");}
+const sourceMap:Map<string,boolean>=new Map<string,boolean>();probe({items:sourceMap});

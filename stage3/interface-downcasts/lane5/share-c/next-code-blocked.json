@@ -1,0 +1,228 @@
+[
+  {
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createTempVariable",
+    "declared_types": [
+      "{ (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined): Identifier; (recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean | undefined, prefix?: string | ... 1 more ... | undefined, suffix?: string | undefined): Identifi..."
+    ],
+    "families": [
+      "callable contracts"
+    ],
+    "reads": 58,
+    "witness": {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 526,
+      "column": 18
+    },
+    "rank": 23,
+    "certified": false,
+    "read": "factory.createTempVariable",
+    "start": 19497,
+    "end": 19523,
+    "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "createTempVariable(recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean): Identifier;",
+        "file": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      },
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "createTempVariable(recordTempVariable: ((node: Identifier) => void) | undefined, reservedInNestedScopes?: boolean, prefix?: string | GeneratedNamePart, suffix?: string): Identifier;",
+        "file": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "c",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-23/good.a:7:64: Adamic 0.1 refuses checked view read of field createTempVariable with unsupported callable contract; prove or implement the callable contract before reading this field\n"
+      },
+      {
+        "backend": "js",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-23/good.a:7:64: Adamic 0.1 refuses checked view read of field createTempVariable with unsupported callable contract; prove or implement the callable contract before reading this field\n"
+      }
+    ],
+    "change_needed": "Support the complete overloaded callable contract and producer dispatch."
+  },
+  {
+    "receiver_type_id": 12312,
+    "type": "DiagnosticCollection",
+    "field": "getDiagnostics",
+    "declared_types": [
+      "{ (): Diagnostic[]; (fileName: string): DiagnosticWithLocation[]; }"
+    ],
+    "families": [
+      "callable contracts"
+    ],
+    "reads": 7,
+    "witness": {
+      "file": "src/compiler/checker.ts",
+      "line": 1922,
+      "column": 53
+    },
+    "rank": 224,
+    "certified": false,
+    "read": "suggestionDiagnostics.getDiagnostics",
+    "start": 68184,
+    "end": 68220,
+    "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "getDiagnostics(): Diagnostic[];",
+        "file": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      },
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "getDiagnostics(fileName: string): DiagnosticWithLocation[];",
+        "file": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ],
+    "observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "c",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-224/good.a:7:78: Adamic 0.1 refuses checked view read of field getDiagnostics with unsupported callable contract; prove or implement the callable contract before reading this field\n"
+      },
+      {
+        "backend": "js",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-224/good.a:7:78: Adamic 0.1 refuses checked view read of field getDiagnostics with unsupported callable contract; prove or implement the callable contract before reading this field\n"
+      }
+    ],
+    "change_needed": "Support the complete overloaded callable contract and producer dispatch."
+  },
+  {
+    "receiver_type_id": 2376,
+    "type": "Math",
+    "field": "floor",
+    "declared_types": [
+      "(x: number) => number"
+    ],
+    "families": [
+      "callable contracts"
+    ],
+    "reads": 7,
+    "witness": {
+      "file": "src/compiler/core.ts",
+      "line": 2170,
+      "column": 49
+    },
+    "rank": 233,
+    "certified": false,
+    "read": "Math.floor",
+    "start": 77277,
+    "end": 77287,
+    "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "floor(x: number): number;",
+        "file": "lib/lib.es5.d.ts",
+        "sha256": "bcd24271a113971ba9eb71ff8cb01bc6b0f872a85c23fdbe5d93065b375933cd"
+      }
+    ],
+    "observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "c",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-233/good.a:5:69: Adamic 0.1 refuses inherited library member floor read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+      },
+      {
+        "backend": "js",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-233/good.a:5:69: Adamic 0.1 refuses inherited library member floor read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+      }
+    ],
+    "change_needed": "Support intrinsic Math receiver reads without own-field lookup or a replacement record closure."
+  },
+  {
+    "receiver_type_id": 2376,
+    "type": "Math",
+    "field": "abs",
+    "declared_types": [
+      "(x: number) => number"
+    ],
+    "families": [
+      "callable contracts"
+    ],
+    "reads": 4,
+    "witness": {
+      "file": "src/compiler/core.ts",
+      "line": 2175,
+      "column": 44
+    },
+    "rank": 425,
+    "certified": false,
+    "read": "Math.abs",
+    "start": 77602,
+    "end": 77610,
+    "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "declarations": [
+      {
+        "kind": "MethodSignature",
+        "inferred": false,
+        "text": "abs(x: number): number;",
+        "file": "lib/lib.es5.d.ts",
+        "sha256": "bcd24271a113971ba9eb71ff8cb01bc6b0f872a85c23fdbe5d93065b375933cd"
+      }
+    ],
+    "observations": [
+      {
+        "backend": "node",
+        "exit": 0,
+        "stdout": "completed\n",
+        "stderr": ""
+      },
+      {
+        "backend": "c",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-425/good.a:5:69: Adamic 0.1 refuses inherited library member abs read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+      },
+      {
+        "backend": "js",
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane5/share-c/families/rank-425/good.a:5:69: Adamic 0.1 refuses inherited library member abs read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+      }
+    ],
+    "change_needed": "Support intrinsic Math receiver reads without own-field lookup or a replacement record closure."
+  }
+]

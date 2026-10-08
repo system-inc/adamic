@@ -1,0 +1,8 @@
+// Original declarations and read; adjacent carriers and bodies reduced.
+interface Diagnostic {readonly value:number;}
+interface DiagnosticWithLocation extends Diagnostic {}
+interface Base {readonly getDiagnostics:unknown;}
+interface Target {getDiagnostics(): Diagnostic[];
+getDiagnostics(fileName: string): DiagnosticWithLocation[];}
+function probe(value:Base):void {const suggestionDiagnostics=value as Target;suggestionDiagnostics.getDiagnostics();console.log("completed");}
+probe({getDiagnostics:(fileName?:string):DiagnosticWithLocation[]=>[]});

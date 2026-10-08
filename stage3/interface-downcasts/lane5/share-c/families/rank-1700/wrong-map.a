@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface Type {readonly value:number;}
+interface OriginalMember<K,V> {delete(key: K): boolean;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<number, Type>;}
+function probe(value:Base):void {const context={enclosingSymbolTypes:(value as Target).items};context.enclosingSymbolTypes.delete(1);console.log("completed");}
+const sourceMap:Map<number,boolean>=new Map<number,boolean>();probe({items:sourceMap});

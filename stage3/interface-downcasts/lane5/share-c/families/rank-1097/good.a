@@ -3,8 +3,8 @@ const enum InternalSymbolName {Call="__call",Constructor="__constructor",New="__
 type __String = (string & { __escapedIdentifier: void; }) | (void & { __escapedIdentifier: void; }) | InternalSymbolName;
 type SymbolTable = Map<__String, Symbol>;
 interface Symbol {readonly value:number;}
-interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface OriginalMember<K,V> {delete(key: K): boolean;}
 interface Base {readonly items:unknown;}
 interface Target {readonly items:SymbolTable;}
-function probe(value:Base):void {const moduleExports=(value as Target).items;moduleExports.get(InternalSymbolName.Call);console.log("completed");}
+function probe(value:Base):void {const locals=(value as Target).items;locals.delete(InternalSymbolName.Call);console.log("completed");}
 const sourceMap:Map<__String,Symbol>=new Map<__String,Symbol>();probe({items:sourceMap});

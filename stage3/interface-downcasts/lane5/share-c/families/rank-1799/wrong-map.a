@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface TemplateLiteralType {readonly value:number;}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, TemplateLiteralType>;}
+function probe(value:Base):void {const templateLiteralTypes=(value as Target).items;const incoming:TemplateLiteralType={value:1};templateLiteralTypes.set("missing",incoming);console.log("completed");}
+const sourceMap:Map<string,boolean>=new Map<string,boolean>();probe({items:sourceMap});

@@ -25,7 +25,7 @@ for(const row of rows){
    if(ts.isPropertyAccessExpression(n)&&normalized(n.getText(source))===normalized(member.read))read=true;
    if(ts.isEnumDeclaration(n)){
     const expected=carriers[n.name.text]?.values;if(!expected||n.members.length!==Object.keys(expected).length)throw Error('original enum shape changed');
-    for(const m of n.members)if(Number(m.initializer?.getText(source))!==expected[m.name.getText(source)])throw Error('original enum value changed');
+    for(const m of n.members)if((m.initializer&&ts.isStringLiteral(m.initializer)?m.initializer.text:Number(m.initializer?.getText(source)))!==expected[m.name.getText(source)])throw Error('original enum value changed');
    }
    if(ts.isTypeAliasDeclaration(n)){
     if(!carriers[n.name.text]||normalized(n.getText(source))!==normalized(carriers[n.name.text].text))throw Error('original alias changed '+n.name.text);

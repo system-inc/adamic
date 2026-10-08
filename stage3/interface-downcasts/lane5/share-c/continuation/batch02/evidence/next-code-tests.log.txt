@@ -1,0 +1,19 @@
+=== RUN   TestCheckedViewCallableShareCCodeBoundaries
+=== RUN   TestCheckedViewCallableShareCCodeBoundaries/rank-23
+    checked_views_callable_share_c_test.go:166: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCCodeBoundaries/rank-224
+    checked_views_callable_share_c_test.go:166: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCCodeBoundaries/rank-233
+    checked_views_callable_share_c_test.go:166: gate cache node miss
+=== RUN   TestCheckedViewCallableShareCCodeBoundaries/rank-425
+    checked_views_callable_share_c_test.go:166: gate cache node miss
+--- PASS: TestCheckedViewCallableShareCCodeBoundaries (0.62s)
+    --- PASS: TestCheckedViewCallableShareCCodeBoundaries/rank-23 (0.19s)
+    --- PASS: TestCheckedViewCallableShareCCodeBoundaries/rank-224 (0.15s)
+    --- PASS: TestCheckedViewCallableShareCCodeBoundaries/rank-233 (0.14s)
+    --- PASS: TestCheckedViewCallableShareCCodeBoundaries/rank-425 (0.14s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.631s

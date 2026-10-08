@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface ExtendedConfigCacheEntry {readonly value:number;}
+interface OriginalMember<K,V> {set(key: K, value: V): this;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<string, ExtendedConfigCacheEntry>;}
+function probe(value:Base):void {const extendedConfigCache=(value as Target).items;const incoming:ExtendedConfigCacheEntry={value:1};extendedConfigCache.set("missing",incoming);console.log("completed");}
+const sourceMap:Map<string,ExtendedConfigCacheEntry>=new Map<string,ExtendedConfigCacheEntry>();probe({items:sourceMap});

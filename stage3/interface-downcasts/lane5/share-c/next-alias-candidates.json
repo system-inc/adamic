@@ -1,0 +1,34 @@
+[
+  {
+    "rank": 422,
+    "reads": 4,
+    "type": "Map<string, HostFileInfo>",
+    "read": "sourceFilesCache.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, HostFileInfo>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1718,
+    "reads": 1,
+    "type": "Map<string, CommandLineOption>",
+    "read": "optionsNameMap.has",
+    "declaration": "has(key: K): boolean;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, CommandLineOption>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1745,
+    "reads": 1,
+    "type": "Map<string, HostFileInfo>",
+    "read": "sourceFilesCache.has",
+    "declaration": "has(key: K): boolean;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, HostFileInfo>, found Map<string, boolean>\n"
+  },
+  {
+    "rank": 1775,
+    "reads": 1,
+    "type": "Map<string, SeenPackageName>",
+    "read": "seenPackageNames.set",
+    "declaration": "set(key: K, value: V): this;",
+    "diagnostic": "adamic: panic: Map contract failed: (value as Target).items; expected Map<string, SeenPackageName>, found Map<string, boolean>\n"
+  }
+]

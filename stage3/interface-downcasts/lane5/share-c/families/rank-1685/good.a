@@ -1,0 +1,7 @@
+// Original Map receiver, declaration and read; adjacent payload interfaces reduced.
+interface NumberLiteralType {readonly value:number;}
+interface OriginalMember<K,V> {get(key: K): V | undefined;}
+interface Base {readonly items:unknown;}
+interface Target {readonly items:Map<number, NumberLiteralType>;}
+function probe(value:Base):void {const numberLiteralTypes=(value as Target).items;numberLiteralTypes.get(1);console.log("completed");}
+const sourceMap:Map<number,NumberLiteralType>=new Map<number,NumberLiteralType>();probe({items:sourceMap});
