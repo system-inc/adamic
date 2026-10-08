@@ -294,6 +294,13 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
+	if element.Flags()&checker.TypeFlagsNever != 0 {
+		// There is no present element to encode. Use ordinary non-reference
+		// array storage so identity, absent reads and cleanup stay unchanged.
+		// This does not widen the checker type: writable aliases still have to
+		// pass the invariant element relation before they can store anything.
+		return ir.Number, nil
+	}
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
 		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
 	}
