@@ -1,0 +1,519 @@
+import type { RuleContext } from '../../context.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { written } from '../../../../typescript/parser/nodes.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Parser } from '../../../../typescript/parser/parser.ts';
+import type { Scanner } from '../../../../typescript/scanner/scanner.ts';
+import { panic } from 'adamic';
+import { message } from './messages.a';
+
+// rule.a
+export class Rule {
+    readonly facts: RuleFacts;
+    readonly engine: PreferReduceTypeParameter;
+    constructor(context: RuleContext) {
+        const facts = new RuleFacts(context);
+        this.facts = facts;
+        this.engine = new PreferReduceTypeParameter(facts, new CheckerFacts(facts));
+    }
+    visit(node: ParseNode, index: number): void {
+        this.engine.visit(node, index);
+        this.facts.flush();
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
+export function byteOffsets(source: string): number[] {
+    const offsets: number[] = [0];
+    let bytes = 0;
+    for(let index = 0; index < source.length; index++) {
+        const code = source.codePointAt(index) ?? panic('missing source code point');
+        if(code > 65535) {
+            offsets.push(bytes);
+            index++;
+        }
+        bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+        offsets.push(bytes);
+    }
+    return offsets;
+}
+
+// repair.ts
+export class Repair {
+    readonly start: number;
+    readonly end: number;
+    readonly text: string;
+    constructor(start: number, end: number, text: string) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+    }
+}
+
+// suggestion.ts
+export class RepairSuggestion {
+    readonly suggestionTag = true;
+    readonly id: string;
+    readonly message: string;
+    readonly repairs: readonly Repair[];
+    constructor(id: string, message: string, repairs: readonly Repair[]) {
+        this.id = id;
+        this.message = message;
+        this.repairs = repairs;
+    }
+}
+
+// diagnostic.ts
+export class Diagnostic {
+    readonly rule: string;
+    readonly id: string;
+    readonly message: string;
+    readonly start: number;
+    readonly end: number;
+    fixStart = -1;
+    fixEnd = -1;
+    replacement = '';
+    sortKey = '';
+    readonly repairs: Repair[] = [];
+    readonly suggestions: RepairSuggestion[] = [];
+    constructor(rule: string, id: string, message: string, start: number, end: number, namespace = '@typescript-eslint/') {
+        this.rule = `${namespace}${rule}`;
+        this.id = id;
+        this.message = message;
+        this.start = start;
+        this.end = end;
+    }
+    written(): string {
+        let line = `${this.start}\t${this.end}\t${this.rule}\t${this.id}\t${written(this.message)}\t${this.repairs.length + (this.fixStart < 0 ? 0 : 1)}\t${this.suggestions.length}${this.fixStart < 0 ? '' : `\t${this.fixStart}\t${this.fixEnd}\t${written(this.replacement)}`}`;
+        for(const fix of this.repairs) {
+            line += `\t${fix.start}\t${fix.end}\t${written(fix.text)}`;
+        }
+        for(const suggestion of this.suggestions) {
+            line += `\t${suggestion.id}\t${written(suggestion.message)}\t${suggestion.repairs.length}`;
+            for(const fix of suggestion.repairs) {
+                line += `\t${fix.start}\t${fix.end}\t${written(fix.text)}`;
+            }
+        }
+        return line;
+    }
+}
+
+// facts.a
+// Compatibility for rule judgments; every fact comes from the area's run-owned checker.
+
+
+
+
+export class RuleFacts {
+    readonly parser: Parser;
+    readonly scanner: Scanner;
+    readonly path: string;
+    readonly offsets: readonly number[];
+    readonly parents: readonly number[];
+    readonly findings: Diagnostic[] = [];
+    readonly context: RuleContext;
+    flushed = 0;
+    constructor(context: RuleContext) {
+        const checker = context.checker;
+        this.context = context;
+        this.parser = context.parser;
+        this.scanner = context.scanner;
+        this.path = context.parser.path;
+        this.offsets = checker === undefined ? byteOffsets(context.source) : checker.offsets;
+        this.parents = context.parents;
+    }
+    byte(pos: number): number { return this.offsets[pos] ?? panic('position outside source'); }
+    start(node: ParseNode): number { this.scanner.pos = node.pos; this.scanner.scan(); return this.scanner.start; }
+    text(node: ParseNode): string { return this.scanner.text.slice(this.start(node), node.end); }
+    skip(index: number, kind = 'ParenthesizedExpression'): number {
+        let current = index;
+        while(this.parser.node(current).kind === kind) { current = this.parser.node(current).children[0] ?? panic('empty parentheses'); }
+        return current;
+    }
+    add(rule: string, id: string, message: string, index: number): Diagnostic {
+        const node = this.parser.node(index);
+        const finding = new Diagnostic(rule, id, message, this.byte(this.start(node)), this.byte(node.end));
+        this.findings.push(finding); return finding;
+    }
+    ask(index: number, question: string): string {
+        const checker = this.context.checker ?? panic('typed rule without checker');
+        const answer = checker.ask(index, question);
+        return answer.value ?? panic(answer.reason);
+    }
+    position(byte: number): number {
+        const position = this.offsets.indexOf(byte);
+        if(position < 0) { panic('finding byte offset is not a UTF-16 boundary'); }
+        return position;
+    }
+    flush(): void {
+        for(const diagnostic of this.findings.slice(this.flushed)) {
+            const edits: SuggestionEdit[] = [];
+            if(diagnostic.fixStart >= 0) { edits.push(new SuggestionEdit(this.position(diagnostic.fixStart), this.position(diagnostic.fixEnd), diagnostic.replacement)); }
+            for(const edit of diagnostic.repairs) { edits.push(new SuggestionEdit(this.position(edit.start), this.position(edit.end), edit.text)); }
+            const suggestions: Suggestion[] = [];
+            for(const suggestion of diagnostic.suggestions) {
+                const repairs = suggestion.repairs.map((edit) => new SuggestionEdit(this.position(edit.start), this.position(edit.end), edit.text));
+                suggestions.push(new Suggestion(suggestion.id, suggestion.message, repairs));
+            }
+            this.context.reportRange(this.position(diagnostic.start), this.position(diagnostic.end), diagnostic.rule, diagnostic.id, diagnostic.message, edits, suggestions);
+        }
+        this.flushed = this.findings.length;
+    }
+}
+
+// flags.ts
+// TypeFlags from the pinned checker. TestSixPinnedFlags holds their values.
+export const unionFlag = 134217728;
+export const intersectionFlag = 268435456;
+export const numberLike = 64 | 2048 | 65536;
+export const bigintLike = 128 | 4096;
+export const stringLike = 32 | 1024 | 4194304 | 8388608;
+export const booleanLike = 256 | 8192;
+export const nullish = 4 | 8;
+
+// type_fact.ts
+// One type identity and its checker metadata. Links are numeric identities.
+export class TypeFact {
+    readonly id: number;
+    readonly flags: number;
+    readonly name: string;
+    readonly error: boolean;
+    readonly target: number;
+    readonly array: boolean;
+    readonly tuple: number;
+    readonly constraint: number;
+    readonly element: number;
+    readonly parts: readonly number[];
+    readonly arguments: readonly number[];
+    constructor(
+        id: number,
+        flags: number,
+        name: string,
+        error: boolean,
+        target: number,
+        array: boolean,
+        tuple: number,
+        constraint: number,
+        element: number,
+        parts: readonly number[],
+        arguments_: readonly number[],
+    ) {
+        this.id = id;
+        this.flags = flags;
+        this.name = name;
+        this.error = error;
+        this.target = target;
+        this.array = array;
+        this.tuple = tuple;
+        this.constraint = constraint;
+        this.element = element;
+        this.parts = parts;
+        this.arguments = arguments_;
+    }
+}
+
+// types.ts
+export class Types {
+    readonly strict: boolean;
+    readonly present: boolean;
+    readonly roots: readonly number[];
+    readonly rests: readonly boolean[];
+    readonly records: readonly TypeFact[];
+    constructor(
+        strict: boolean,
+        present: boolean,
+        roots: readonly number[],
+        rests: readonly boolean[],
+        records: readonly TypeFact[],
+    ) {
+        this.strict = strict;
+        this.present = present;
+        this.roots = roots;
+        this.rests = rests;
+        this.records = records;
+    }
+    type(id: number): TypeFact {
+        for(const record of this.records) {
+            if(record.id === id) {
+                return record;
+            }
+        }
+        panic('missing checker type identity');
+    }
+    root(index = 0): TypeFact {
+        return this.type(this.roots[index] ?? panic('missing checker root'));
+    }
+    parts(type: TypeFact, mask = unionFlag): readonly number[] {
+        return (type.flags & mask) !== 0 ? type.parts : [type.id];
+    }
+    has(type: TypeFact, mask: number): boolean {
+        return this.parts(type).some((part) => (this.type(part).flags & mask) !== 0);
+    }
+}
+
+// frames.ts
+function decimal(text: string, first: number, last: number, message: string): number {
+    const negative = text.charCodeAt(first) === 45;
+    const start = first + (negative ? 1 : 0);
+    if(start >= last || (text.charCodeAt(start) === 48 && (negative || start + 1 < last))) {
+        panic(message);
+    }
+    let value = 0;
+    for(let at = start; at < last; at++) {
+        const digit = text.charCodeAt(at) - 48;
+        if(digit < 0 || digit > 9) {
+            panic(message);
+        }
+        value = value * 10 + digit;
+    }
+    if(!Number.isSafeInteger(value)) {
+        panic(message);
+    }
+    return negative ? -value : value;
+}
+
+export class Frames {
+    readonly text: string;
+    cursor = 0;
+    constructor(text: string) {
+        this.text = text;
+    }
+    next(): number {
+        const newline = this.text.indexOf('\n', this.cursor);
+        if(newline < this.cursor) {
+            panic('invalid checker facts frame');
+        }
+        const length = decimal(this.text, this.cursor, newline, 'invalid checker facts length');
+        if(length < 0 || newline + 1 + length > this.text.length) {
+            panic('invalid checker facts length');
+        }
+        this.cursor = newline + 1 + length;
+        return newline + 1;
+    }
+    field(): string {
+        const first = this.next();
+        return this.text.slice(first, this.cursor);
+    }
+    number(): number {
+        const first = this.next();
+        return decimal(this.text, first, this.cursor, 'invalid checker facts integer');
+    }
+    natural(): number {
+        const value = this.number();
+        if(value < 0) {
+            panic('negative checker fact');
+        }
+        return value;
+    }
+    yes(): boolean {
+        const value = this.number();
+        if(value !== 0 && value !== 1) {
+            panic('invalid checker facts boolean');
+        }
+        return value === 1;
+    }
+    ids(): number[] {
+        const count = this.natural();
+        const ids: number[] = [];
+        for(let index = 0; index < count; index++) {
+            ids.push(this.natural());
+        }
+        return ids;
+    }
+    end(): void {
+        if(this.cursor !== this.text.length) {
+            panic('trailing checker facts');
+        }
+    }
+}
+export function header(frames: Frames, expected: string): void {
+    if(frames.number() !== 1 || frames.field() !== expected) {
+        panic('unsupported checker facts schema');
+    }
+}
+
+// facts.ts
+// Decode checker metadata, validating every field and graph link.
+
+
+
+
+function contains(records: readonly TypeFact[], id: number): boolean {
+    for(const record of records) {
+        if(record.id === id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+export function types(text: string, question: string): Types {
+    const frames = new Frames(text);
+    header(frames, question);
+    const strict = frames.yes();
+    const present = frames.yes();
+    const roots = frames.ids();
+    const rests: boolean[] = [];
+    const restCount = frames.natural();
+    for(let index = 0; index < restCount; index++) {
+        rests.push(frames.yes());
+    }
+    const records: TypeFact[] = [];
+    const count = frames.natural();
+    for(let index = 0; index < count; index++) {
+        const id = frames.natural();
+        const flags = frames.natural();
+        const name = frames.field();
+        const error = frames.yes();
+        const target = frames.natural();
+        const array = frames.yes();
+        const tuple = frames.number();
+        const constraint = frames.natural();
+        const element = frames.natural();
+        const parts = frames.ids();
+        const arguments_ = frames.ids();
+        if(id === 0 || tuple < -1 || contains(records, id)) {
+            panic('invalid checker type record');
+        }
+        records.push(
+            new TypeFact(id, flags, name, error, target, array, tuple, constraint, element, parts, arguments_),
+        );
+    }
+    frames.end();
+    const result = new Types(strict, present, roots, rests, records);
+    for(const root of roots) {
+        result.type(root);
+    }
+    for(const record of records) {
+        for(const id of record.parts) {
+            result.type(id);
+        }
+        for(const id of record.arguments) {
+            result.type(id);
+        }
+        if(record.constraint !== 0) {
+            result.type(record.constraint);
+        }
+        if(record.element !== 0) {
+            result.type(record.element);
+        }
+    }
+    return result;
+}
+
+// checker_facts.ts
+export class TypeMetadata {
+    readonly objectFlags: number;
+    readonly symbol: number;
+    readonly targetFlags: number;
+    readonly targetSymbol: number;
+    readonly readonlyTuple: boolean;
+    constructor(flags: number, symbol: number, targetFlags: number, targetSymbol: number, readonlyTuple: boolean) {
+        this.objectFlags = flags;
+        this.symbol = symbol;
+        this.targetFlags = targetFlags;
+        this.targetSymbol = targetSymbol;
+        this.readonlyTuple = readonlyTuple;
+    }
+    isClass(): boolean {
+        return (this.objectFlags & 1) !== 0 || ((this.objectFlags & 4) !== 0 && (this.targetFlags & 1) !== 0);
+    }
+    classSymbol(): number {
+        return (this.objectFlags & 4) !== 0 ? this.targetSymbol : this.symbol;
+    }
+}
+export class Properties {
+    readonly names: readonly string[];
+    readonly flags: readonly number[];
+    readonly keys: readonly number[];
+    readonly readonlys: readonly boolean[];
+    readonly types: Types;
+    constructor(names: readonly string[], keys: readonly number[], flags: readonly number[], readonlys: readonly boolean[], types_: Types) {
+        this.names = names;
+        this.keys = keys;
+        this.flags = flags;
+        this.readonlys = readonlys;
+        this.types = types_;
+    }
+}
+export class CheckerFacts {
+    readonly rules: RuleFacts;
+    constructor(rules: RuleFacts) { this.rules = rules; }
+    metadata(index: number, type: TypeFact): TypeMetadata {
+        const frames = new Frames(this.rules.ask(index, `type-metadata\n${type.id}`));
+        header(frames, 'type-metadata');
+        const result = new TypeMetadata(frames.natural(), frames.natural(), frames.natural(), frames.natural(), frames.yes());
+        frames.end();
+        return result;
+    }
+    properties(index: number, type: TypeFact): Properties {
+        const frames = new Frames(this.rules.ask(index, `type-properties\n${type.id}`));
+        header(frames, 'type-properties');
+        const count = frames.natural();
+        const names: string[] = [];
+        const flags: number[] = [];
+        const keys: number[] = [];
+        const readonlys: boolean[] = [];
+        for(let at = 0; at < count; at++) {
+            names.push(frames.field()); keys.push(frames.natural()); flags.push(frames.natural()); readonlys.push(frames.yes());
+        }
+        const graph = types(`1\n115\ntype-properties${frames.text.slice(frames.cursor)}`, 'type-properties');
+        return new Properties(names, keys, flags, readonlys, graph);
+    }
+    compare(index: number, left: number, right: number, identical = false): boolean {
+        if(left === right) { return true; }
+        const question = identical ? 'identical-types' : 'assignable-types';
+        const frames = new Frames(this.rules.ask(index, `${question}\n${left}\n${right}`));
+        header(frames, question);
+        const result = frames.yes(); frames.end(); return result;
+    }
+}
+
+// engine.a
+export class PreferReduceTypeParameter {
+    readonly rules: RuleFacts;
+    readonly checker: CheckerFacts;
+    constructor(rules: RuleFacts, checker: CheckerFacts) { this.rules = rules; this.checker = checker; }
+    member(index: number): string {
+        const node = this.rules.parser.node(index);
+        const key = node.children[node.children.length - 1] ?? -1;
+        if(key < 0) { return ''; }
+        const property = this.rules.parser.node(key);
+        if(node.kind === 'PropertyAccessExpression' && property.kind === 'Identifier') { return property.text; }
+        if(node.kind === 'ElementAccessExpression' && property.kind === 'StringLiteral') { return property.text; }
+        return '';
+    }
+    array(facts: Types, subject: TypeFact): boolean {
+        if((subject.flags & (134217728 | 268435456)) !== 0) {
+            return subject.parts.every((id) => this.array(facts, facts.type(id)));
+        }
+        return subject.array || subject.tuple >= 0;
+    }
+    visit(node: ParseNode, index: number): void {
+            const callee = this.rules.skip(node.children[0] ?? -1);
+            if(this.member(callee) !== 'reduce') { return; }
+            const args = node.children.slice(node.children.length - node.list);
+            if(args.length < 2) { return; }
+            const assertion = this.rules.skip(args[1] ?? -1);
+            const expression = this.rules.parser.node(assertion);
+            if(!['AsExpression', 'TypeAssertionExpression'].includes(expression.kind)) { return; }
+            const value = expression.children[expression.kind === 'AsExpression' ? 0 : 1] ?? -1;
+            const annotation = expression.children[expression.kind === 'AsExpression' ? 1 : 0] ?? -1;
+            if(this.rules.text(this.rules.parser.node(annotation)) === 'const') { return; }
+            const source = types(this.rules.ask(value, 'raw-shape'), 'raw-shape');
+            const target = types(this.rules.ask(annotation, 'raw-shape'), 'raw-shape');
+            if(!this.checker.compare(assertion, source.root().id, target.root().id)) { return; }
+            const receiver = this.rules.parser.node(callee).children[0] ?? -1;
+            const facts = types(this.rules.ask(receiver, 'type-shape'), 'type-shape');
+            if(!this.array(facts, facts.root())) { return; }
+            const finding = this.rules.add('prefer-reduce-type-parameter', 'preferTypeParameter', message, assertion);
+            const valueNode = this.rules.parser.node(value);
+            finding.repairs.push(new Repair(this.rules.byte(this.rules.start(expression)), this.rules.byte(this.rules.start(valueNode)), ''));
+            finding.repairs.push(new Repair(this.rules.byte(valueNode.end), this.rules.byte(expression.end), ''));
+            const hasTypes = node.children.slice(1, node.children.length - node.list).some((child) => this.rules.parser.node(child).kind !== 'QuestionDotToken');
+            if(!hasTypes) {
+                const end = this.rules.byte(this.rules.parser.node(callee).end);
+                finding.repairs.push(new Repair(end, end, `<${this.rules.text(this.rules.parser.node(annotation))}>`));
+            }
+    }
+
+}
