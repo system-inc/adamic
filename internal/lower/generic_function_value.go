@@ -22,9 +22,11 @@ func (l *lowering) genericFunctionValue(node, declaration *ast.Node) (ir.Express
 	}
 	target := l.checker.GetSignatureFromDeclaration(declaration)
 	given := signatures[0]
-	if target == nil || len(target.Parameters()) != len(given.Parameters()) {
+	if target == nil || len(target.Parameters()) > len(given.Parameters()) {
 		return nil, l.notYet(node, "a generic function value whose contextual parameter count differs")
 	}
+	// The closure ABI evaluates every supplied argument, then a forwarder reads
+	// only the declaration's parameters. Extra contextual parameters are ignored.
 	concreteTypes := map[*checker.Type]*checker.Type{}
 	for i, parameter := range target.Parameters() {
 		l.inferTypes(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(given.Parameters()[i]), concreteTypes)

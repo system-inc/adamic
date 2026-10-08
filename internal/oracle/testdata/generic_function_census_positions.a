@@ -1,0 +1,10 @@
+function identity<T>(value: T): T { return value; }
+interface Position { readonly fileName: string; readonly pos: number; }
+interface Mapper {
+ readonly source: (value: Position) => Position;
+ readonly generated: (value: Position) => Position;
+}
+const mapper: Mapper = { source: identity, generated: identity };
+const position: Position = { fileName: ['compiler', '.a'].join(''), pos: 17 };
+console.log(`${mapper.source(position).fileName} ${mapper.generated(position).pos}`);
+console.log(`${mapper.source === mapper.generated} ${mapper.source(position) === position}`);

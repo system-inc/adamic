@@ -1,0 +1,15 @@
+function identity<T>(value: T): T { return value; }
+type CanonicalName = (name: string) => string;
+function canonicalName(sensitive: boolean): CanonicalName {
+ const unchanged: CanonicalName = identity;
+ return sensitive ? unchanged : (name: string): string => name.toLowerCase();
+}
+function removePrefix(name: string, prefix: string, canonical: CanonicalName = identity): string | undefined {
+ return canonical(name).startsWith(canonical(prefix)) ? name.substring(prefix.length) : undefined;
+}
+const name = ['Ada', 'mic'].join('');
+console.log(`${canonicalName(true)(name)} ${canonicalName(false)(name)}`);
+console.log(`${removePrefix(name, 'Ada')} ${removePrefix(name, 'ada')} ${removePrefix(name, 'ada', canonicalName(false))}`);
+const first = canonicalName(true);
+const second = canonicalName(true);
+console.log(`${first === second}`);
