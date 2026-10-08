@@ -34,7 +34,7 @@ git -C "${here}" fetch -q origin
 git -C "${here}" branch -r --contains "${tools}" | grep -q . || { echo "the gate's own commit ${tools} is not on origin; push it first" >&2; exit 2; }
 base=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
 if [ -z "${branch}" ]; then
-  branch=$(git -C "${here}" ls-remote origin 'refs/heads/*' | awk -v sha="${sha}" '$1 == sha && $2 !~ /^refs\/heads\/gate-logs\// {sub("refs/heads/", "", $2); print $2; exit}')
+  branch=$(git -C "${here}" ls-remote origin 'refs/heads/*' | awk -v sha="${sha}" '$1 == sha && $2 !~ /^refs\/heads\/gate-logs\// && !found {sub("refs/heads/", "", $2); print $2; found = 1}')
   branchSource="origin branch tip"
 fi
 database=${ADAMIC_AI_DATABASE:-/Users/kirkouimet/Projects/ahra/modules/ai/data/ai.db}
@@ -48,7 +48,8 @@ out=fast-gate/out/${sha:0:12}-${stamp}
 
 echo "fast gate: ${sha} against main ${base}, tools ${tools}, on ${box}"
 set +e
-ssh "${box}" bash -s -- "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}" <<'BOX'
+# ssh joins its arguments into one remote command line, so each is quoted for the remote shell.
+ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${base}" "${tools}" "${out}" "${branch:-}" "${branchSource}" "${session:-}" "${sessionSource}")" <<'BOX'
 set -euo pipefail
 sha=$1 base=$2 tools=$3 out=$4 branch=$5 branchSource=$6 session=$7 sessionSource=$8
 mkdir -p ~/fast-gate
