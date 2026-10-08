@@ -578,3 +578,29 @@ repository gate and whole TypeScript native build remain unrun.
 Final complete witness rerun after the cast correction passes in 80.072s,
 with all 27 row assessments and both nullable runtime mutants rerun; raw output
 is merged-final-witnesses.log. No supported row or hole variant remains.
+
+## Runtime review: inline predicates and migration backstop
+
+The sentinel now has one external declaration in adamic.h and one definition
+in nullable.c. adamic_reference_is_null and adamic_reference_is_sentinel are
+static inline in adamic.h and compare the string sentinel directly by address.
+They do not call adamic_reference_null. Unmigrated kinds retain their previous
+NULL behavior. TestNullReferenceUsesOnlyMigratedKinds asserts that native
+nullReference emits a runtime sentinel constructor only for ir.String, and
+emits NULL for Object, Array, Record, Map, Closure, Union and Weak.
+
+A Node-held 100,000,000-iteration guarded `(string | null)[]` read loop alternates
+"abc" and null and prints 150000000. Five release trials before inlining:
+1.036942, 1.050600, 0.988727, 1.029420, 1.015818 seconds. After inlining:
+0.826715, 0.788082, 0.810806, 0.793662, 0.794983 seconds. Median changes from
+1.029420 to 0.794983 seconds, approximately 22.8% lower elapsed time. This is an
+observation on this worker, not a cross-target performance guarantee. Both
+versions assert one IR indexed-presence check and match Node stdout/exit/stderr.
+No semantic mutant is claimed for the inline optimization.
+
+Logs: runtime-review-before.log and runtime-review-after-inline.log. Commands:
+`ADAMIC_NULL_BENCH=before go test ./stage3/stricter-indexed-d -run '^TestNullableGuardTiming$' -count=1 -v`
+and the same with ADAMIC_NULL_BENCH=after-inline. Migration backstop passes in
+runtime-review-kinds.log. Existing nullable controls and D151 pass in 17.556s,
+including the sentinel-to-NULL and erased-presence mutants
+(runtime-review-inline-controls.log). Setup/environment is reused; nproc 5.
